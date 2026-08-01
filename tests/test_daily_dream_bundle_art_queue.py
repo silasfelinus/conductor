@@ -1,7 +1,6 @@
 """Integration guard: the six-part proposal produces six distinct art requests."""
 
 import json
-from pathlib import Path
 
 import yaml
 
@@ -53,6 +52,13 @@ def test_complete_bundle_queues_six_art_requests(tmp_path, monkeypatch):
 
     requests = yaml.safe_load(art.read_text(encoding="utf-8"))["requests"]
     assert len(requests) == 6
-    assert {request["element"] for request in requests} == {
-        "six-art-dream", "one-place", "one-hero", "one-item", "one-skill", "one-scenario"
+    assert {request["id"] for request in requests} == {
+        "dream-cycle-six-art-dream-six-art-dream",
+        "dream-cycle-six-art-dream-one-place",
+        "dream-cycle-six-art-dream-one-hero",
+        "dream-cycle-six-art-dream-one-item",
+        "dream-cycle-six-art-dream-one-skill",
+        "dream-cycle-six-art-dream-one-scenario",
     }
+    assert all(request["status"] == "pending" for request in requests)
+    assert all(request["target_repo"] == "silasfelinus/kind_robots" for request in requests)
