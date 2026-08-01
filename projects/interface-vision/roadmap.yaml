@@ -223,8 +223,8 @@ tasks:
   - id: t-004
     milestone: m2
     title: 'Add the missing kr-* layout primitives and adopt the one-header rule'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-003
@@ -241,6 +241,9 @@ tasks:
       a page component NEVER renders one. A page needing controls gets ONE .kr-toolbar
       line, never a stacked title block. 57 component files render their own <h1> today;
       each is deleted as a duplicate or demoted into one toolbar.
+    claimed_by: claude-agentrun-2026-08-01T17:13:42Z-t004
+    claimed_at: '2026-08-01T17:13:43Z'
+    updated: '2026-08-01T17:13:43Z'
 
   - id: t-005
     milestone: m2
