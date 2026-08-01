@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
@@ -664,10 +664,12 @@ tasks:
       RAN 2026-08-01T05:50Z (conductor Agent run, session claude-quirky-curie-20260801T0500Z-mb-t029): step (4) follow-on -- dispatched a general-purpose subagent to read the full store, both catalog helpers, all six components/model-builder/*.vue files, every server/api/model-builder/** route, and all seven existing verifyModelBuilder*.ts regression guards, against the exclusion list of every bug class already fixed by prior cycles (all PROGRESS/RAN entries above, most recently the manual-action-vs-auto-build guard in PR #1224). Found a real, previously-unfixed gap distinct from t-037's still-open auto-build-vs-manual-action kaizen: `prepareItemUpdate()` in `server/api/model-builder/runs/index.ts` -- the shared helper behind both `items/[id].patch.ts` and `items/batch.patch.ts` -- applied `body.pitch`/`body.fieldsDraft`/`body.promptDraft` unconditionally, with no server-side check against the item's actual stage status. `modelBuilderStore.ts`'s `isStageEditable` gate (ready/stale/rejected only) governs every content-editing call site client-side, but that gate is client-side only, so a direct PATCH (bad client state, a replayed request, or curl) for an item whose PITCH or FIELDS_AND_PROMPTS stage was already `approved` (or still `locked`) could silently overwrite reviewed content server-side while the badge kept showing `approved`. Same gap class as PR #1139's server-side commit gate, just reached through the item-edit route instead of commit, which had never gotten the equivalent check. Fixed by adding `assertContentStageEditable()`, called from `prepareItemUpdate()` before each content field is applied; both PATCH routes share the helper so one fix covers both. Added `utils/scripts/verifyModelBuilderItemPatchStageGuard.ts` + `.test.ts` following the established narrow-textual-checker convention, wired into `package.json`. Verified independently: new checker + selftest pass; all 6 pre-existing model-builder verify scripts + selftests still pass (no regression); `npx eslint` on changed files clean; `npx prettier --check` clean; full-project `npm run test` (`vue-tsc --noEmit`) exit 0. kind_robots PR #1227 (branch `claude/relaxed-lovelace-by95dz`): all 13 CI checks green (TypeScript, Contract verifiers, facet-catalog, facet-alias-smoke, Storymaker/Narrative/Taskmaster contracts, verify, GitGuardian) -- merged squash `36e40c2d`. Step (1) (dashboard-tab + tutorial .webp art) remains the sole outstanding original deliverable, still blocked on the external art-generation relay in this sandbox. Rearming to `ready` per the recurring-task rule; claim fields cleared below.
 
       RAN 2026-08-01T06:41Z (conductor Agent run, session claude-quirky-curie-20260801T0627Z-mb-t029): step (4) follow-on -- dispatched a general-purpose subagent to read the full store, both catalog helpers, all six components/model-builder/*.vue files, every server/api/model-builder/** route, and all 9 existing verifyModelBuilder*.ts regression guards, against the complete exclusion list of every bug class already fixed by prior cycles (all PROGRESS/RAN entries above, most recently the prepareItemUpdate()/assertContentStageEditable() PITCH/FIELDS_AND_PROMPTS gate in PR #1227). Found a real, previously-unfixed sibling gap in that same function: `prepareItemUpdate()` applied `body.artImageId` to the Prisma update unconditionally, with no server-side check against the item's `GENERATE_ASSETS` stage status -- PR #1227's fix covered `pitch`/`fieldsDraft`/`promptDraft` but missed `artImageId`, the fourth content field the same route can PATCH. Concrete failure: a direct `PATCH /api/model-builder/items/:id` (replayed/retried request, stale client state, or a raw curl call) with `{ artImageId: <someId> }` for an item whose `GENERATE_ASSETS` stage was already `approved` could silently repoint the item at a different `ArtImage` with no re-review, while the badge kept showing `approved` for content the user never actually reviewed. Fixed by extending `assertContentStageEditable`'s `stageKey` union to accept `GENERATE_ASSETS` and calling it before `data.artImageId = normalizeNullableId(body.artImageId)`, mirroring the existing gates exactly. Extended `utils/scripts/verifyModelBuilderItemPatchStageGuard.ts` + `.test.ts` to cover the new gate. Verified independently: `npx eslint`/`npx prettier --check` clean on all 3 changed files; `npx vue-tsc --noEmit -p tsconfig.json` exit 0, full project; `npx tsx utils/scripts/verifyModelBuilderItemPatchStageGuard.test.ts` passes; the guard fails against the pre-fix route (confirmed via `git stash`) and passes post-fix; all 9 pre-existing model-builder verify/selftest scripts still pass (no regression). kind_robots PR #1230: all 11 CI checks green (TypeScript, Contract verifiers, facet-catalog, Storymaker/Narrative/Taskmaster contracts, verify, GitGuardian) -- merged squash `443789a5`. Step (1) (dashboard-tab + tutorial .webp art) remains the sole outstanding original deliverable, still blocked on the external art-generation relay in this sandbox. This closes the last remaining field-level gap in `prepareItemUpdate()`'s stage-approval mirror (pitch/fieldsDraft/promptDraft/artImageId are now all covered) -- no new kaizen filed this cycle. Rearming to `ready` per the recurring-task rule; claim fields cleared below.
-    updated: '2026-08-01T08:29:37Z'
-    owner: worker
-    claimed_by: claude-scheduled-20260801T082937Z-mb-t029
-    claimed_at: '2026-08-01T08:29:37Z'
+
+      RAN 2026-08-01T08:29Z (conductor Agent run, session claude-scheduled-20260801T082937Z-mb-t029): step (4) follow-on -- dispatched a general-purpose subagent to read the full store, both catalog helpers, all six components/model-builder/*.vue files, every server/api/model-builder/** route, and prisma/schema.prisma, against the complete exclusion list of every bug class already fixed by prior cycles (all PROGRESS/RAN entries above, most recently the artImageId stage-gate in PR #1230). Found a real, previously-unfixed gap distinct from every prior client-side cancelledRunIds fix: none of the write-capable item routes (item PATCH, batch PATCH, artifact POST, commit POST) ever checked `ModelBuildRun.status` at all, only ownership via `assertRunAccess`. `cancelRun()` marks a run `CANCELLED` server-side specifically to stop further work landing on it, but that intent was enforced only client-side and only within the one store instance that issued the cancellation (`cancelledRunIds` is an in-memory Set, wiped on reload; `cancelRun()` only clears the *current* tab's own `modelBuilder:runId` localStorage key). A second tab -- or a tab reloaded later with a stale `modelBuilder:runId` -- had no way to learn the run was cancelled elsewhere and could keep editing, generating, and durably `commitItem()`-ing (creates/links/promotes a canonical record, unlike everything else in the surface) into a run the user had already abandoned. This gap was actually already implicitly flagged by `utils/scripts/verifyModelBuilderCommitCancelledRunGuard.ts`'s own comment ("the commit POST durably creates/links/promotes the target server-side regardless -- that can't be undone from here") without ever being closed at the server layer. Fixed by adding `assertRunWritable(run)` next to `assertRunAccess` in `server/api/model-builder/runs/index.ts` (409 if `status === 'CANCELLED'`) and calling it in all four write routes, adding `status: true` to each route's `Run` select. Verified: `npx eslint` clean on all 5 changed files; `npx vue-tsc --noEmit -p tsconfig.json` exit 0, full project; `npx prettier --check` drift on 2 files confirmed pre-existing via `git stash` (same convention as every prior cycle). Did not add a new `verifyModelBuilder*.ts` textual guard this cycle (kept the diff to the 5 route/helper files; a follow-up guard script -- `npm run test:...` + `contract-tests.yml` wiring -- felt like more unverified scope than a single-session cycle should add) -- filed as this cycle's kaizen instead. kind_robots PR #1239: all 11 CI checks green (TypeScript, Contract verifiers, facet-catalog, Storymaker/Narrative/Taskmaster contracts, verify, GitGuardian) -- merged squash `a3de06a0`. Step (1) (dashboard-tab + tutorial .webp art) remains the sole outstanding original deliverable, still blocked on the external art-generation relay in this sandbox. Kaizen suggestion: add `utils/scripts/verifyModelBuilderRunWritableGuard.ts` (+ `.test.ts` + a `contract-tests.yml` step) asserting `assertRunWritable(...)` is called in all four write routes, mirroring `verifyModelBuilderItemPatchStageGuard.ts`'s pattern -- so a future refactor can't silently drop this check the way the client-only `cancelledRunIds` gap sat unfixed for this long. Rearming to `ready` per the recurring-task rule; claim fields cleared below.
+    updated: '2026-08-01T08:56:00Z'
+    owner: null
+    claimed_by: null
+    claimed_at: null
 
   - id: t-030
     milestone: m6
@@ -956,3 +958,27 @@ tasks:
     claimed_by: claude-scheduled-20260801T042657Z-mb-t038
     claimed_at: '2026-08-01T04:47:09Z'
     updated: '2026-08-01T05:04:33Z'
+
+  - id: t-039
+    milestone: m6
+    title: "Add a verifyModelBuilderRunWritableGuard.ts regression guard for the new assertRunWritable() server-side cancelled-run check"
+    status: ready
+    passes: 0
+    stakes: reversible
+    owner: null
+    note: >-
+      Kaizen from t-029 (kind_robots PR #1239, 2026-08-01): assertRunWritable(run) was
+      added in server/api/model-builder/runs/index.ts and is called from all four
+      write-capable item routes (items/[id].patch.ts, items/batch.patch.ts,
+      items/[id]/artifacts.post.ts, items/[id]/commit.post.ts) to refuse writes once
+      ModelBuildRun.status is CANCELLED. Unlike the sibling client-side
+      cancelledRunIds checks, this one has no dedicated textual regression guard --
+      a future refactor could silently drop the assertRunWritable() call from one of
+      the four routes with nothing failing except a live end-to-end test this
+      sandbox can't run. Add
+      utils/scripts/verifyModelBuilderRunWritableGuard.ts (+ .test.ts) following
+      verifyModelBuilderItemPatchStageGuard.ts's narrow-textual-checker convention --
+      assert each of the four routes calls assertRunWritable(...) after
+      assertRunAccess(...) and before its first write -- and wire it into
+      package.json + .github/workflows/contract-tests.yml alongside the other Model
+      Builder guard steps.
