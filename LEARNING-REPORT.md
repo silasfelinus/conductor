@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-01T16:57:53Z
+Generated: 2026-08-01T17:13:50Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **446**
-- Outcomes: blocked: 13, cancelled: 1, done: 432
+- Closed tasks recorded: **447**
+- Outcomes: blocked: 13, cancelled: 1, done: 433
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 5 | 100% |
+| interface-vision | 6 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,14 +59,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 431 | 99% |
+| software | 432 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
+| quality | 9 |
 | actionable | 9 |
-| quality | 8 |
 | transient | 6 |
 | scope | 1 |
 
@@ -74,11 +74,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - project `coat-dance` — 0% success over 8 closed tasks; aim the next kaizen task here
 - kind `content` — 40% success over 15 closed tasks; aim the next kaizen task here
+- failure category `quality` — 9 occurrences; look for the shared cause across its records
 - failure category `actionable` — 9 occurrences; look for the shared cause across its records
-- failure category `quality` — 8 occurrences; look for the shared cause across its records
 - failure category `transient` — 6 occurrences; look for the shared cause across its records
 
 ## Recent lessons
+
+- 2026-08-01 `interface-vision/t-003b` — Flipping app.vue's shared shell from overflow-y-auto to overflow-hidden required auditing which of ~60 candidate page-level components actually needed their own scroll container vs. inherited one from an ancestor (pages/[...slug].vue's content-host for MDC routes, the shared ProjectFrontPage wrapper for conductor pages). A same-PR review catch (kr-hourly session) found the first push added scroll classes to six components that are mounted *inside* content-host, creating nested double-scroll regions -- the exact composition bug the task existed to fix. The file-by-file layout-contract verifier couldn't catch this because it has no parent/child composition awareness; grepping content/*.md for each candidate file's actual mount point before adding a scroll class (not just checking whether the file itself lacks one) would have caught it on the first pass. Fixed same-session via a follow-up commit once flagged. When a shared ancestor already owns scroll, verify a component is actually reachable outside that ancestor before adding its own overflow region -- otherwise ask "does this file's *rendering context* already scroll" before "does this file declare its own overflow."
 
 - 2026-08-01 `interface-vision/t-010` — Clean first-pass except for one CI miss caught by the pipeline itself: a new content/*.md page needs a matching content/channels/<channel>/ <tab>.md registration or verifyChannelContent.ts fails with "references unknown tab" -- worth checking for that registration file up front whenever adding a new channelKey/tabKey pair, not just when CI catches it. Also: when a task note bundles a well-scoped bug fix with a vaguer "and show X on cards" ask that has no existing data model to support it, splitting the vague half into its own ready task (rather than guessing at scope) kept this PR small and reviewable.
 
@@ -98,7 +100,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-01 `coloring-book/t-022` — A "recover instead of resubmit" mechanism that keys off a single stored error-message breadcrumb (semantic_gate_error / referenced_job_id()) must clear that breadcrumb the moment a real, definitive outcome supersedes it -- not just when the outcome is success (mark_done already popped it) or positively-dead (RecoveryAbandoned already popped it). The missed case was the middle one: recovery succeeds, the recovered image is then genuinely semantic-rejected on quality grounds. Because record_semantic_rejection() left the old "job N: ..." text in place, referenced_job_id() kept pointing every future pass at the same already-rejected job, so the recovery path kept re-fetching and re-judging the identical dead image indefinitely instead of ever falling through to a fresh, differently-seeded submission. When auditing a stateful recovery/retry mechanism, enumerate all outcomes of the operation being recovered (not just success/failure) and confirm each one's bookkeeping is handled, rather than assuming the two outcomes already covered are exhaustive.
 
-- 2026-07-31 `dream-cycle/t-022` — Keep operational CLI commands and agent startup instructions under regression tests when a generator contract is rewritten.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-01T16:57:53Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-01T17:13:50Z_
