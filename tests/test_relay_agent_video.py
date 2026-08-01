@@ -18,6 +18,22 @@ MP4_BYTES = b"\x00\x00\x00\x18ftypmp42fakeclip"
 MP4_B64 = base64.b64encode(MP4_BYTES).decode()
 
 
+def test_missing_engine_defaults_to_comfy():
+    assert relay.resolve_job_engine({}) == "COMFY"
+    assert relay.resolve_job_engine({"engine": ""}) == "COMFY"
+
+
+def test_explicit_a1111_remains_supported():
+    assert relay.resolve_job_engine({"engine": "a1111"}) == "A1111"
+
+
+def test_unknown_engine_is_rejected_instead_of_falling_through_to_a1111():
+    import pytest
+
+    with pytest.raises(ValueError, match="unsupported ArtJob engine"):
+        relay.resolve_job_engine({"engine": "mystery"})
+
+
 def test_is_video_filename_matches_clip_extensions():
     assert relay.is_video_filename("kindrobots_ltx_image2video_00001.mp4")
     assert relay.is_video_filename("clip.webm")
