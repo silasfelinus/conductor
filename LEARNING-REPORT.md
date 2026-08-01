@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-01T19:28:14Z
+Generated: 2026-08-01T19:50:38Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **450**
-- Outcomes: blocked: 13, cancelled: 1, done: 436
+- Closed tasks recorded: **451**
+- Outcomes: blocked: 13, cancelled: 1, done: 437
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 9 | 100% |
+| interface-vision | 10 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 435 | 99% |
+| software | 436 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-01 `interface-vision/t-009` — Clean first pass (kind_robots PR #1269, all 14 CI checks green), but the task as originally scoped ("collapse three art-request pipelines into one") bundled a small, well-verified mechanical slice (repoint Project's art-replace onto the already-existing generic entity-art endpoint, delete two confirmed-dead routes, widen one component's type union) together with four genuinely separate decisions (a UX choice on Project's carousel UI, a product choice on Facet's dual art backends, a multi-entity schema migration, and a from-scratch admin UI) that each need their own PR and, in two cases, Silas's input before implementation. Investigating the actual code before implementing (rather than trusting the task note's characterization) also surfaced that one of the note's own technical claims was wrong: FacetArtImage was described as "declared-but-unused" but is live code serving a different purpose (ArtImage-to-Facet tagging, not a Facet art-history join) -- corrected in the split-out follow-up task (t-028) rather than propagated blind. Standing takeaway: a roadmap task note's own technical claims are a starting hypothesis, not verified fact, even when written carefully -- worth a quick repo-side confirmation pass before scoping work against a claim like "X is unused" or "Y already exists," especially when the note is old enough that the codebase could have moved under it.
+
 - 2026-08-01 `interface-vision/t-006` — Clean first pass (kind_robots PR #1267), but the close-out step surfaced a real tooling gap this session had to work around by hand: claim_task.py pushed its claim commit straight to origin/main, and this session's local checkout was never re-fetched before set_task_field.py edited the roadmap to status: review -- set_task_field.py operates on whatever is in the local tree with no fetch of its own (its own docstring names this exact gotcha, conductor/t-077/davinci/t-014), so the resulting commit briefly clobbered the claim commit's owner/claimed_by/claimed_at fields on this session's branch. Caught before it reached main only because rebasing onto origin/main before opening this task's own conductor PR produced a merge conflict on the exact block claim_task.py had written -- resolved by keeping origin/main's claim metadata and folding in the intended status transition. Standing takeaway: after any claim_task.py call (or any other script documented to push straight to origin/main), fetch and fast-forward the local checkout before running set_task_field.py against the same file in the same session, not just before the final close-out push.
 
 - 2026-08-01 `interface-vision/t-008` — A roadmap task assumed 7 differently-purposed Vue components (5 CRUD picker widgets with dashboard/row/dropdown variants, 1 taxonomy-search view, 1 content-collection list) were all "near-duplicates" of one passive browse gallery, based on line-count and surface description alone. Reading each target file's actual prop signature before writing any migration code caught the mismatch before implementation, not after -- a 5-minute grep for variant/mode props (`grep -n "variant\|GalleryVariant\|isDropdownMode"`) across the named files would let a task author flag this in the roadmap task itself instead of a Worker discovering it mid-implementation. Scope was shrunk to the one genuine match plus one confirmed-dead deletion; the remaining 6 objects moved to a new task (t-023) for honest per-object re-assessment rather than forced onto the same shell.
@@ -98,8 +100,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-01 `interface-vision/t-001` — Storymaker aesthetic mockups (kind_robots PR #1252) landed correctly, but the roadmap task sat at status:ready with an open PR for hours -- a session picking up interface-vision should check open kind_robots PRs against roadmap task titles before claiming, since select_role.py's local script currently can't reach the GitHub API in this sandbox (403s), so a manual GitHub MCP check is the only way to catch this.
 
-- 2026-08-01 `model-builder/t-039` — A recurring task (t-029) with a long streak of same-day merges hits diminishing returns fast on its own open-ended "read everything, find one new bug" pattern -- checking sibling ready tasks in the same project for an already-scoped, concrete kaizen (here, a deferred regression-guard task from two prior cycles) is a better use of a cycle than an Nth micro-race-condition hunt once N is already large for the day.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-01T19:28:14Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-01T19:50:38Z_
