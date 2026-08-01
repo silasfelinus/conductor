@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-01T07:41:52Z
+Generated: 2026-08-01T07:48:26Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **439**
-- Outcomes: blocked: 13, cancelled: 1, done: 425
+- Closed tasks recorded: **440**
+- Outcomes: blocked: 13, cancelled: 1, done: 426
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -24,7 +24,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | art-generator-connect | 3 | 100% |
 | challenge-center | 16 | 100% |
 | coat-dance | 8 | 0% |
-| coloring-book | 24 | 100% |
+| coloring-book | 25 | 100% |
 | conductor | 59 | 100% |
 | conductor-app | 2 | 100% |
 | davinci | 2 | 100% |
@@ -58,7 +58,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 424 | 99% |
+| software | 425 | 99% |
 
 ## Failure categories
 
@@ -78,6 +78,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-01 `coloring-book/t-022` — When a recurring art-production task is blocked on a missing local credential (no ANTHROPIC_API_KEY here), the semantic gate's own rejection reasons are structured enough to drive real prompt revision work without live generation access -- mining "what specifically was missing" text into the next prompt attempt is a better use of a credential-blocked cycle than a no-op re-arm to ready. Separately: a full yaml.safe_dump round-trip on a hand-formatted queue file rewraps every folded scalar in the whole file, not just the touched entries -- a targeted line-level edit is the safe way to make a small status change without a large unrelated reformatting diff.
+
 - 2026-08-01 `model-builder/t-038` — A per-item "is this busy" check that already exists as a component-local computed (isManualActionInFlight in model-builder-item-panel.vue) is worth promoting into the shared store the moment a second UI surface needs the same signal, rather than re-deriving it locally in each new component. Doing so here (isItemManualActionInFlight(itemId)) let two independent trigger buttons (batch editor, progress matrix) show an identical pre-click advisory with zero logic duplication and zero risk of the two copies drifting out of sync with the runtime guard inside autoBuildItem() itself.
 
 - 2026-08-01 `coloring-book/t-022` — A "recover instead of resubmit" mechanism that keys off a single stored error-message breadcrumb (semantic_gate_error / referenced_job_id()) must clear that breadcrumb the moment a real, definitive outcome supersedes it -- not just when the outcome is success (mark_done already popped it) or positively-dead (RecoveryAbandoned already popped it). The missed case was the middle one: recovery succeeds, the recovered image is then genuinely semantic-rejected on quality grounds. Because record_semantic_rejection() left the old "job N: ..." text in place, referenced_job_id() kept pointing every future pass at the same already-rejected job, so the recovery path kept re-fetching and re-judging the identical dead image indefinitely instead of ever falling through to a fresh, differently-seeded submission. When auditing a stateful recovery/retry mechanism, enumerate all outcomes of the operation being recovered (not just success/failure) and confirm each one's bookkeeping is handled, rather than assuming the two outcomes already covered are exhaustive.
@@ -94,7 +96,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-29 `model-builder/t-029` — Checking a prior cycle's specific unticketed lead first (this time, batchApproveStage's possible isStageEditable gap) before starting a broad re-read is an efficient variant of the exclusion-list pattern: it closed the lead out cleanly (confirmed already-safe) and freed the rest of the cycle to find a genuinely new bug (autoBuildItem() approving PITCH/FIELDS_AND_PROMPTS with empty content when draftText() fails). Separately, this cycle nearly reverted its own claim_task.py claim: set_task_field.py was run against a stale local roadmap checkout immediately after claim_task.py's direct-to- origin/main push, which would have silently clobbered the claim if committed blind -- caught by diffing against origin/main before pushing, per this file's own repeated "fetch before you push" guidance. A session that calls claim_task.py (or any direct-to-main script) should fetch/rebase locally before its next roadmap edit in the same cycle, not just before the final close-out push.
 
 - 2026-07-29 `model-builder/t-029` — Extended the review-gate-bypass bug class (already fixed for canApproveAssets, batchDraftField/batchSetField, and previewCommit) to the single-item draftText() path: the Approve button for PITCH/FIELDS_AND_PROMPTS has no isDrafting gate, so a stage can be approved while its own AI draft is still resolving, and the draft would silently overwrite the approved content with no re-review. This task's note (67+ PROGRESS/REVIEWED entries) is now the same note-bloat shape the immediately preceding LEARNING.yaml entry describes for coloring-book/t-037 -- worth the same run-log.md extraction next cycle, before it slows down reading/diffing the roadmap further.
-- 2026-07-29 `coloring-book/t-037` — Note-bloat extraction (moving a recurring task's accumulated RAN/incident history out of the roadmap note: field into a dedicated run-log.md, per the ai-art-academy/t-010 precedent) is now a proven, repeatable pattern for any long-running recurring task whose note has grown large enough to slow down reading/diffing the roadmap -- verify the move with a byte-identical diff check before trimming the original, and add a run_log: pointer field rather than just prose, so a script can find the log mechanically later.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-01T07:41:52Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-01T07:48:26Z_
