@@ -65,10 +65,9 @@ jobs:
             tests.test_coloring_queue_status \
             tests.test_coloring_book_package_status
 
-      - name: Check semantic-gate credentials
+      - name: Queue preflight
         id: queue_preflight
         shell: bash
-        env:
         run: |
           set +e
           python scripts/coloring_queue_status.py \
