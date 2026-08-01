@@ -5525,3 +5525,27 @@ records:
     before adding its own overflow region -- otherwise ask "does this
     file's *rendering context* already scroll" before "does this file
     declare its own overflow."
+- date: 2026-08-01
+  project: interface-vision
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    CI caught a real conflict a general layout-contract sweep can't see:
+    verifySerendipityRouteCutover.mjs hard-locks one page's exact <h1>
+    markup as a route-cutover migration contract, unrelated to the
+    one-header rule this task was adopting elsewhere. First push broke
+    it, fixed in a follow-up commit. Filed t-023 (composition-lock audit)
+    so t-017's later sweep can grep for hard-coded-markup contract tests
+    across the remaining allow-list files up front instead of discovering
+    them one CI failure at a time. General principle: a shrink-only CI
+    ratchet only protects against violating ITS OWN rule -- it says
+    nothing about whether some other, unrelated contract test depends on
+    the exact markup being changed. Scope discipline (only fix what's
+    asked, skip files another task/system explicitly owns) also paid off
+    here -- deliberately left 8 of 29 files unfixed (admin routes, two
+    "known offender" files t-017 already owns, one orphaned file, and
+    this locked-contract file) rather than attempting a blind full sweep.
