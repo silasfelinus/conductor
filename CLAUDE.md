@@ -18,12 +18,16 @@ At the start of every session, before responding to any task, run a conductor sw
    over a week). Before proposing a new project-status value to fix a "closed project keeps coming up" complaint,
    confirm the project isn't already correctly marked in `project-overrides.yaml` and simply not being checked.
 5. Check `TALKBACK.md` tail for any unresolved escalations or security flags
-6. Run `python scripts/build_dream_proposal.py --check`. If today's daily-dream
-   proposal is missing, YOU author it — you are the generator (no API calls,
-   no scripts doing the creative work): run `--brief` for the spec and slugs
-   to avoid, invent the starter dream yourself (3 characters, 2 locations,
-   1 narrator bot, 2 rewards — one SKILL, one ITEM — all one world), then
-   write it with `--from-json` and commit it with your session's log commits.
+6. Run `python scripts/build_dream_proposal.py --check --fetch`. If today's
+   daily-dream proposal is missing, YOU author it — you are the creative generator
+   (the script selects and validates the live Facets but does not write the idea):
+   run `--brief` for the deterministic seed plan, then create exactly one dream
+   vibe, one dream location, one Character, one ITEM Reward, one SKILL Reward,
+   and one Scenario, with no narrator. Preserve the brief's `seed_facets`
+   unchanged; the vibe is the umbrella, every dependent asset must follow its
+   assigned Facets, and the Scenario is authored last and explicitly names the
+   vibe, location, and Character. Write it with `--from-json` and commit it with
+   the session's log commits.
 
 Then report:
 - **Branch** and whether the working tree is clean

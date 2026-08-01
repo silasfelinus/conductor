@@ -137,6 +137,9 @@ def normalize(proposal: dict[str, Any], avoid: set[str] | None = None) -> dict[s
     base = slugify(out.get("slug") or out["title"]); used = {x.casefold() for x in (avoid or set())}; out["slug"] = base
     n = 2
     while out["slug"].casefold() in used: out["slug"], n = f"{base}-{n}", n + 1
+    for reward in out.get("rewards", []) if isinstance(out.get("rewards"), list) else []:
+        if isinstance(reward, dict):
+            reward["reward_type"] = str(reward.get("reward_type") or "").strip().upper()
     out.pop("narrator", None)
     return out
 
@@ -223,22 +226,51 @@ def render_markdown(p: dict[str, Any], day: str) -> str:
     return "\n".join(lines)
 
 
-def write_proposal(p: dict[str, Any], *, date: str|None=None, fetch: bool=True) -> Path|None:
-    day=date or _target_date(); BACKLOG.mkdir(parents=True,exist_ok=True)
-    if proposal_exists_for(day) or (fetch and fetch_main() and remote_proposal_for(day)):
+def write_proposal(proposal: dict[str, Any], *, date: str|None=None, fetch: bool=True,
+                   dry_run: bool=False, force: bool=False) -> Path|None:
+    day=date or _target_date()
+    if not force and (proposal_exists_for(day) or (fetch and fetch_main() and remote_proposal_for(day))):
         print(f"Proposal already exists for {day}; refusing duplicate.",file=sys.stderr); return None
-    p=normalize(p,existing_slugs()); bad=validate_proposal(p)
+    proposal=normalize(proposal,existing_slugs()); bad=validate_proposal(proposal)
     if bad: raise ValueError("Invalid proposal:\n- " + "\n- ".join(bad))
-    path=BACKLOG/f"{day}-{p['slug']}.md"; path.write_text(render_markdown(p,day),encoding="utf-8"); print(path); return path
+    path=BACKLOG/f"{day}-{proposal['slug']}.md"; rendered=render_markdown(proposal,day)
+    if dry_run:
+        print(rendered); print(f"# would write: {path}", file=sys.stderr); return path
+    BACKLOG.mkdir(parents=True,exist_ok=True); path.write_text(rendered,encoding="utf-8"); print(path); return path
 
 
 def main(argv=None) -> int:
-    ap=argparse.ArgumentParser(description=__doc__); ap.add_argument("--date"); ap.add_argument("--brief",action="store_true"); ap.add_argument("--from-json"); ap.add_argument("--no-fetch",action="store_true"); a=ap.parse_args(argv); day=a.date or _target_date()
+    ap=argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--check",action="store_true",help="exit 0 if the date has a proposal, otherwise 1")
+    ap.add_argument("--brief",action="store_true",help="print the authoring brief and Facet seed")
+    ap.add_argument("--from-json",metavar="FILE",help="validate and write JSON ('-' for stdin)")
+    ap.add_argument("--sample",action="store_true",help="render or write the built-in sample")
+    ap.add_argument("--date",help="override Pacific date (YYYY-MM-DD)")
+    ap.add_argument("--fetch",action="store_true",help="with --check, consult fresh origin/main")
+    ap.add_argument("--no-fetch",action="store_true",help="skip the origin/main write guard")
+    ap.add_argument("--dry-run",action="store_true",help="print markdown without writing")
+    ap.add_argument("--force",action="store_true",help="write even if the date exists")
+    a=ap.parse_args(argv); day=a.date or _target_date()
+    if a.check:
+        exists=proposal_exists_for(day)
+        if not exists and a.fetch and fetch_main(): exists=remote_proposal_for(day) is not None
+        print(f"Proposal for {day} exists." if exists else
+              f"No proposal for {day}. Run --brief, author the six-asset JSON, then pass it to --from-json.")
+        return 0 if exists else 1
     if a.brief: print(json.dumps(build_brief(day),indent=2,ensure_ascii=False)); return 0
+    if a.sample:
+        return 0 if write_proposal(copy.deepcopy(SAMPLE_PROPOSAL),date=day,fetch=False,
+                                   dry_run=a.dry_run,force=True) else 1
     if a.from_json:
-        p=json.load(sys.stdin) if a.from_json=="-" else json.loads(Path(a.from_json).read_text())
-        p.setdefault("seed_facets",facet_seed_plan(day)); return 0 if write_proposal(p,date=day,fetch=not a.no_fetch) else 2
-    ap.error("choose --brief or --from-json"); return 2
+        try:
+            raw=sys.stdin.read() if a.from_json=="-" else Path(a.from_json).read_text(encoding="utf-8")
+            proposal=json.loads(raw)
+        except (OSError,json.JSONDecodeError) as error:
+            print(f"Could not read proposal JSON: {error}",file=sys.stderr); return 1
+        proposal.setdefault("seed_facets",facet_seed_plan(day))
+        return 0 if write_proposal(proposal,date=day,fetch=not a.no_fetch,
+                                   dry_run=a.dry_run,force=a.force) else 1
+    ap.error("choose --check, --brief, --from-json, or --sample"); return 2
 
 
 def _sample() -> dict[str,Any]:
