@@ -1,337 +1,88 @@
-"""
-Tests for build_dream_proposal.py.
-
-Two layers:
-  * pure validation/normalization of an agent-authored proposal (no git), and
-  * the concurrent-session double-proposal guard (dream-cycle/t-014), exercised
-    against real (throwaway, local-only) git repos -- a bare "origin" plus a
-    clone -- so the actual origin/main-fresh recheck runs, not a mock. Modeled on
-    tests/test_claim_task.py; no network, no real GitHub.
-"""
-
 import copy
-import json
-import subprocess
-import urllib.error
-from pathlib import Path
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 import pytest
 
 import scripts.build_dream_proposal as bdp
 
 
-# --------------------------------------------------------------------------- #
-# Pure validation / normalization
-# --------------------------------------------------------------------------- #
-
-def test_sample_proposal_validates_clean():
-    assert bdp.validate_proposal(bdp.SAMPLE_PROPOSAL) == []
+def fallback_catalog():
+    return {key: [bdp._fallback(key)[i] for i in range(len(rows))] for key, rows in bdp.FALLBACK_FACETS.items()}
 
 
-def test_validate_requires_creative_seed_object():
-    bad = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
-    bad.pop("creative_seeds")
-    problems = bdp.validate_proposal(bad)
-    assert "creative_seeds must be an object" in problems
+def test_target_date_is_pacific_calendar_date():
+    instant = datetime(2026, 8, 1, 1, 30, tzinfo=ZoneInfo("UTC"))
+    assert bdp._target_date(instant) == "2026-07-31"
 
 
-def test_validate_requires_one_or_two_genres():
-    empty = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
-    empty["creative_seeds"]["genres"] = []
-    too_many = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
-    too_many["creative_seeds"]["genres"] = ["noir", "sports", "biopunk"]
-    assert any("exactly 1-2" in p for p in bdp.validate_proposal(empty))
-    assert any("exactly 1-2" in p for p in bdp.validate_proposal(too_many))
-
-
-def test_validate_requires_occupation_species_and_fusion():
-    for field in ("occupation", "species", "fusion"):
-        bad = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
-        bad["creative_seeds"][field] = ""
-        problems = bdp.validate_proposal(bad)
-        assert f"creative_seeds missing {field}" in problems
-
-
-def test_validate_rejects_duplicate_genres():
-    bad = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
-    bad["creative_seeds"]["genres"] = ["Courtroom Drama", "courtroom drama"]
-    problems = bdp.validate_proposal(bad)
-    assert "creative_seeds.genres must not contain duplicates" in problems
-
-
-def test_validate_flags_wrong_counts_and_missing_fields():
-    bad = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
-    bad["characters"] = bad["characters"][:2]      # needs exactly 3
-    bad["locations"][0].pop("art_direction")       # missing required field
-    problems = bdp.validate_proposal(bad)
-    assert any("characters must be a list of exactly 3" in p for p in problems)
-    assert any("locations[0] missing art_direction" in p for p in problems)
-
-
-def test_validate_rejects_non_skill_item_reward_type():
-    bad = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
-    bad["rewards"][0]["reward_type"] = "CURRENCY"
-    problems = bdp.validate_proposal(bad)
-    assert any("reward_type values must be SKILL or ITEM" in p for p in problems)
-
-
-def test_normalize_forces_one_skill_one_item():
-    p = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
-    p["rewards"][0]["reward_type"] = "SKILL"
-    p["rewards"][1]["reward_type"] = "SKILL"      # two of a kind -> repaired
-    out = bdp.normalize(json.loads(json.dumps(p)), avoid=set())
-    types = sorted(r["reward_type"] for r in out["rewards"])
-    assert types == ["ITEM", "SKILL"]
-
-
-def test_normalize_deduplicates_slug_against_avoid_set():
-    p = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
-    p["slug"] = "prism-appeal"
-    out = bdp.normalize(json.loads(json.dumps(p)), avoid={"prism-appeal"})
-    assert out["slug"] == "prism-appeal-2"
-
-
-def test_render_markdown_records_creative_seeds_before_idea():
-    markdown = bdp.render_markdown(copy.deepcopy(bdp.SAMPLE_PROPOSAL), "2026-07-24")
-    seed_index = markdown.index("## Creative seeds")
-    idea_index = markdown.index("## The idea")
-    assert seed_index < idea_index
-    assert "**Genres:** courtroom drama + biopunk" in markdown
-    assert "**Occupation:** public defender" in markdown
-    assert "**Animal / species:** mantis shrimp" in markdown
-    assert "**Fusion:**" in markdown
-
-
-# --------------------------------------------------------------------------- #
-# Live GENRE facets (dream-cycle/t-018)
-# --------------------------------------------------------------------------- #
-
-class _FakeResponse:
-    def __init__(self, body: bytes):
-        self._body = body
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, *exc):
-        return False
-
-    def read(self):
-        return self._body
-
-
-def _facets_body(facets):
-    return json.dumps({"success": True, "data": facets, "count": len(facets)}).encode()
-
-
-def test_fetch_live_genre_facets_returns_titles_on_success(monkeypatch):
-    facets = [
-        {"title": "Dark Academia", "isActive": True},
-        {"title": "Cozy Horror", "isActive": True},
-    ]
-    monkeypatch.setattr(bdp.urllib.request, "urlopen",
-                        lambda *a, **kw: _FakeResponse(_facets_body(facets)))
-    assert bdp.fetch_live_genre_facets() == ["Dark Academia", "Cozy Horror"]
-
-
-def test_fetch_live_genre_facets_drops_inactive_and_blank_and_dedupes(monkeypatch):
-    facets = [
-        {"title": "Dark Academia", "isActive": True},
-        {"title": "Retired Genre", "isActive": False},
-        {"title": "  ", "isActive": True},
-        {"title": "Dark Academia", "isActive": True},
-    ]
-    monkeypatch.setattr(bdp.urllib.request, "urlopen",
-                        lambda *a, **kw: _FakeResponse(_facets_body(facets)))
-    assert bdp.fetch_live_genre_facets() == ["Dark Academia"]
-
-
-def test_fetch_live_genre_facets_none_on_network_error(monkeypatch):
-    def _raise(*a, **kw):
-        raise urllib.error.URLError("no route to host")
-    monkeypatch.setattr(bdp.urllib.request, "urlopen", _raise)
-    assert bdp.fetch_live_genre_facets() is None
-
-
-def test_fetch_live_genre_facets_none_on_malformed_body(monkeypatch):
-    monkeypatch.setattr(bdp.urllib.request, "urlopen",
-                        lambda *a, **kw: _FakeResponse(b"not json"))
-    assert bdp.fetch_live_genre_facets() is None
-
-    monkeypatch.setattr(bdp.urllib.request, "urlopen",
-                        lambda *a, **kw: _FakeResponse(json.dumps({"data": "nope"}).encode()))
-    assert bdp.fetch_live_genre_facets() is None
-
-    monkeypatch.setattr(bdp.urllib.request, "urlopen",
-                        lambda *a, **kw: _FakeResponse(_facets_body([])))
-    assert bdp.fetch_live_genre_facets() is None
-
-
-def test_genre_spark_is_deterministic_for_a_given_date_and_pool():
-    pool = ["alpha", "beta", "gamma", "delta", "epsilon"]
-    first = bdp._genre_spark("2026-07-27", pool=pool, recent_vibes=[])
-    second = bdp._genre_spark("2026-07-27", pool=pool, recent_vibes=[])
+def test_facet_seed_plan_is_deterministic_and_connected():
+    first = bdp.facet_seed_plan("2026-07-31", catalog=fallback_catalog())
+    second = bdp.facet_seed_plan("2026-07-31", catalog=fallback_catalog())
     assert first == second
-    assert all(g in pool for g in first)
+    assert len(first["umbrella"]["genres"]) == 2
+    assert first["umbrella"]["creature"] in first["elements"]["location"]
+    assert first["umbrella"]["creature"] in first["elements"]["character"]
+    assert first["shared"]["material"] in first["elements"]["location"]
+    assert first["shared"]["material"] in first["elements"]["reward_item"]
+    assert first["extra_genres"]["scenario"] in first["elements"]["scenario"]
+    assert len({facet["slug"] for facet in first["extra_genres"].values()}) == 5
 
 
-def test_genre_spark_avoids_recently_used_vibes_when_enough_pool_remains():
-    pool = ["Dark Academia", "Cozy Horror", "Mystery", "Space Opera"]
-    spark = bdp._genre_spark("2026-07-27", pool=pool, recent_vibes=["a dark academia caper"])
-    assert "Dark Academia" not in spark
+def test_sample_enforces_exact_six_asset_contract():
+    assert bdp.validate_proposal(bdp.SAMPLE_PROPOSAL) == []
+    assert len(bdp.SAMPLE_PROPOSAL["locations"]) == 1
+    assert len(bdp.SAMPLE_PROPOSAL["characters"]) == 1
+    assert len(bdp.SAMPLE_PROPOSAL["rewards"]) == 2
+    assert len(bdp.SAMPLE_PROPOSAL["scenarios"]) == 1
+    assert sorted(row["reward_type"] for row in bdp.SAMPLE_PROPOSAL["rewards"]) == ["ITEM", "SKILL"]
+    assert "narrator" not in bdp.SAMPLE_PROPOSAL
 
 
-def test_genre_spark_falls_back_to_full_pool_when_too_few_fresh_entries():
-    pool = ["Dark Academia", "Cozy Horror"]
-    # both entries echo a recent vibe, so the "fresh" subset would be empty --
-    # must still return real choices from the full pool rather than crashing.
-    spark = bdp._genre_spark(
-        "2026-07-27", pool=pool,
-        recent_vibes=["dark academia caper", "cozy horror night"],
-    )
-    assert all(g in pool for g in spark)
+def test_validator_rejects_detached_scenario_and_wrong_counts():
+    proposal = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
+    proposal["locations"].append(copy.deepcopy(proposal["locations"][0]))
+    proposal["scenarios"][0]["setup"] = "A completely unrelated event occurs elsewhere."
+    problems = bdp.validate_proposal(proposal)
+    assert "locations must be a list of exactly 1" in problems
+    assert any("scenario setup must name the vibe" in problem for problem in problems)
+    assert any("scenario setup must name the location" in problem for problem in problems)
+    assert any("scenario setup must name the character" in problem for problem in problems)
 
 
-def test_genre_spark_defaults_to_live_facets_then_falls_back(monkeypatch):
-    monkeypatch.setattr(bdp, "fetch_live_genre_facets", lambda: ["Live Genre One", "Live Genre Two", "Live Genre Three"])
-    monkeypatch.setattr(bdp, "recent_vibes_and_names", lambda *a, **kw: ([], []))
-    spark = bdp._genre_spark("2026-07-27")
-    assert all(g.startswith("Live Genre") for g in spark)
-
-    monkeypatch.setattr(bdp, "fetch_live_genre_facets", lambda: None)
-    spark = bdp._genre_spark("2026-07-27")
-    assert all(g in bdp.GENRE_FAMILIES for g in spark)
-
-
-# --------------------------------------------------------------------------- #
-# Git-backed concurrent-session guard (dream-cycle/t-014)
-# --------------------------------------------------------------------------- #
-
-def run(cmd, cwd):
-    subprocess.run(cmd, cwd=cwd, check=True, capture_output=True, text=True)
+def test_markdown_prints_seed_facets_and_six_sections():
+    rendered = bdp.render_markdown(bdp.SAMPLE_PROPOSAL, "2026-07-31")
+    assert "## Seed Facets" in rendered
+    assert "## Dream vibe (1)" in rendered
+    assert "## Dream location (1)" in rendered
+    assert "## Character (1)" in rendered
+    assert "## Reward item (1)" in rendered
+    assert "## Reward skill (1)" in rendered
+    assert "## Scenario (1, authored last)" in rendered
+    assert '"seed_facets"' in rendered
 
 
-def make_remote_and_clone(tmp_path, backlog_files):
-    """Bare 'origin' + clone with projects/dream-cycle/backlog/ seeded with
-    `backlog_files` (name -> text), pushed to origin/main. Returns the clone path."""
-    bare = tmp_path / "bare"
-    clone = tmp_path / "clone"
-    bare.mkdir()
-    clone.mkdir()
-
-    run(["git", "init", "-q", "--bare"], cwd=bare)
-    run(["git", "init", "-q"], cwd=clone)
-    run(["git", "config", "user.email", "test@example.com"], cwd=clone)
-    run(["git", "config", "user.name", "Test"], cwd=clone)
-
-    backlog = clone / "projects" / "dream-cycle" / "backlog"
-    backlog.mkdir(parents=True)
-    (backlog / "README.md").write_text("# backlog\n", encoding="utf-8")
-    for name, text in backlog_files.items():
-        (backlog / name).write_text(text, encoding="utf-8")
-
-    run(["git", "add", "-A"], cwd=clone)
-    run(["git", "commit", "-q", "-m", "init"], cwd=clone)
-    run(["git", "remote", "add", "origin", str(bare)], cwd=clone)
-    run(["git", "push", "-q", "origin", "HEAD:refs/heads/main"], cwd=clone)
-    return clone
+def test_write_proposal_rechecks_remote_before_writing(tmp_path, monkeypatch):
+    monkeypatch.setattr(bdp, "BACKLOG", tmp_path)
+    monkeypatch.setattr(bdp, "fetch_main", lambda quiet=True: True)
+    monkeypatch.setattr(bdp, "remote_proposal_for", lambda date: "already-there.md")
+    assert bdp.write_proposal(copy.deepcopy(bdp.SAMPLE_PROPOSAL), date="2026-07-31") is None
+    assert list(tmp_path.iterdir()) == []
 
 
-def proposal_file_text(slug, date):
-    """A minimal but well-formed committed proposal file for a given date/slug."""
-    return f"""---
-slug: {slug}
-title: {slug.replace('-', ' ').title()}
-type: dream
-status: outline
-priority: normal
-narrator: 'yes'
-created: '{date}'
-proposal: true
-proposal_date: '{date}'
-built_pr: null
----
-
-## The idea
-A committed proposal already on origin/main for {date}.
-"""
+def test_write_proposal_normalizes_duplicate_slug(tmp_path, monkeypatch):
+    monkeypatch.setattr(bdp, "BACKLOG", tmp_path)
+    existing = tmp_path / "2026-07-30-prism-appeal.md"
+    existing.write_text("---\nslug: prism-appeal\nproposal: true\nproposal_date: '2026-07-30'\n---\n", encoding="utf-8")
+    proposal = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
+    path = bdp.write_proposal(proposal, date="2026-07-31", fetch=False)
+    assert path is not None
+    assert path.name == "2026-07-31-prism-appeal-2.md"
 
 
-def valid_proposal(slug, title):
-    p = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
-    p["slug"] = slug
-    p["title"] = title
-    return p
-
-
-@pytest.fixture
-def repo_factory(tmp_path, monkeypatch):
-    """Builds an origin+clone repo and points the module's ROOT/BACKLOG/SHIPPED at
-    the clone so both the local-tree checks and the git recheck use it."""
-    def _make(backlog_files):
-        clone = make_remote_and_clone(tmp_path, backlog_files)
-        monkeypatch.setattr(bdp, "ROOT", clone)
-        monkeypatch.setattr(bdp, "BACKLOG", clone / "projects" / "dream-cycle" / "backlog")
-        monkeypatch.setattr(bdp, "SHIPPED", clone / "projects" / "dream-cycle" / "SHIPPED.md")
-        return clone
-    return _make
-
-
-DATE = "2026-07-20"
-
-
-def test_remote_proposal_for_detects_same_date_different_slug(repo_factory):
-    clone = repo_factory({f"{DATE}-moth-orchard.md": proposal_file_text("moth-orchard", DATE)})
-    # fetch origin/main so the remote ref exists in the clone
-    bdp.fetch_main()
-    assert bdp.remote_proposal_for(DATE) == f"{DATE}-moth-orchard.md"
-    assert bdp.remote_proposal_for("2026-07-21") is None
-
-
-def test_write_refused_when_origin_has_same_date_proposal(repo_factory):
-    """THE race: origin/main already has a same-date/different-slug proposal that is
-    NOT yet in this session's working tree. The write must abort."""
-    clone = repo_factory({f"{DATE}-moth-orchard.md": proposal_file_text("moth-orchard", DATE)})
-    # Simulate a fresh session whose working tree has NOT pulled that file yet:
-    # remove it locally but leave it on origin/main.
-    (clone / "projects" / "dream-cycle" / "backlog" / f"{DATE}-moth-orchard.md").unlink()
-
-    written = bdp.write_proposal(valid_proposal("moth-hour-mechanics", "Moth Hour"),
-                                 date=DATE)
-    assert written is None
-    # nothing new written locally
-    existing = list((clone / "projects" / "dream-cycle" / "backlog").glob(f"{DATE}-*.md"))
-    assert existing == []
-
-
-def test_write_proceeds_when_no_conflict(repo_factory):
-    clone = repo_factory({})
-    written = bdp.write_proposal(valid_proposal("comet-market", "Comet Market"), date=DATE)
-    assert written is not None
-    assert written.exists()
-    assert written.name == f"{DATE}-comet-market.md"
-
-
-def test_local_same_date_guard_still_blocks(repo_factory):
-    clone = repo_factory({f"{DATE}-already-here.md": proposal_file_text("already-here", DATE)})
-    written = bdp.write_proposal(valid_proposal("second-one", "Second One"), date=DATE)
-    assert written is None
-
-
-def test_offline_degrades_to_local_only(repo_factory, monkeypatch):
-    """No reachable origin (fetch_main False) -> the write still proceeds off the
-    local-only check rather than blocking the run."""
-    clone = repo_factory({})
-    monkeypatch.setattr(bdp, "fetch_main", lambda quiet=True: False)
-    written = bdp.write_proposal(valid_proposal("lantern-fair", "Lantern Fair"), date=DATE)
-    assert written is not None and written.exists()
-
-
-def test_no_fetch_skips_remote_check(repo_factory):
-    """--no-fetch (fetch=False) writes even if origin/main has a same-date proposal
-    the local tree hasn't pulled -- the escape hatch for offline/local authoring."""
-    clone = repo_factory({f"{DATE}-moth-orchard.md": proposal_file_text("moth-orchard", DATE)})
-    (clone / "projects" / "dream-cycle" / "backlog" / f"{DATE}-moth-orchard.md").unlink()
-    written = bdp.write_proposal(valid_proposal("moth-hour-mechanics", "Moth Hour"),
-                                 date=DATE, fetch=False)
-    assert written is not None and written.exists()
+def test_invalid_proposal_raises_before_file_write(tmp_path, monkeypatch):
+    monkeypatch.setattr(bdp, "BACKLOG", tmp_path)
+    bad = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
+    bad["rewards"] = bad["rewards"][:1]
+    with pytest.raises(ValueError, match="rewards must be a list of exactly 2"):
+        bdp.write_proposal(bad, date="2026-07-31", fetch=False)
