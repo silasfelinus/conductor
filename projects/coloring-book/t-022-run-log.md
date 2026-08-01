@@ -353,3 +353,69 @@ Not completed this cycle: still no local ANTHROPIC_API_KEY in this sandbox,
 so no ArtJobs were generated here -- the next hourly GitHub Actions run
 picks up the 18-entry fresh-submission batch. Re-armed to ready per the
 recurring-task rule.
+
+RAN 2026-08-01T07:34Z (conductor scheduled agent run, session
+claude-scheduled-20260801T073408Z-cb-t022): the 04:14Z run had left the queue
+at 5 done, 3 approved, 13 needs_review (exhausted 3 attempts each), 15
+pending. This sandbox still has no local ANTHROPIC_API_KEY, so no fresh
+ArtJobs could be submitted or judged here -- instead reviewed the actual
+production content this cycle produces.
+
+CONTENT REVIEW: read all 13 `needs_review` entries' full rejection histories
+(`semantic_rejections`) directly from `color-art-jobs.yaml` -- every one had
+been rejected 3/3 times on real, specific, well-articulated subject-mismatch
+grounds (scores 22-62, threshold 75), not credential-wall noise. Common
+pattern: the image model was consistently failing to honor specific named
+constraints in the prompt (e.g. mr-001 kept rendering a Bride-of-Frankenstein
+despite the prompt already saying "never a bride" once, near the end of a
+long paragraph; mr-017's "alien hunter" kept reading as a conventionally
+pretty human woman; mr-021's "invisible woman" kept rendering as a solid
+black silhouette instead of true negative space).
+
+Rewrote all 13 prompts in `art-modeler-request.yaml`, front-loading and
+repeating (often as "CRITICAL:"/"CRITICAL REQUIRED ELEMENT:") the exact
+attribute the semantic gate's own reasons said was missing or wrong on the
+final attempt, using the gate's own language where useful (e.g. mr-001 now
+explicitly lists "no wedding gown, no veil, no streaked bouffant updo" as
+negatives; mr-006 leads with "hundreds of varied metal screws... must be
+clearly, unmistakably visible, not hidden or absent" instead of burying that
+detail mid-paragraph; mr-011/mr-012, the two closest misses at 62/58,
+got small targeted fixes -- remove the exposed ribbed torso and skull-face
+resemblance for mr-011, add explicit lacquer-crack/jaw-seam/glossy-eye detail
+for mr-012 -- rather than a full rewrite). Reset all 13 queue entries'
+`status` from `needs_review` back to `pending` and `semantic_attempts` from 3
+to 0 via a targeted line-level script edit (not a full YAML re-dump, to avoid
+reformatting the whole file the way `yaml.safe_dump` would -- confirmed this
+by first trying the naive dump approach, seeing a 579-line diff from pure
+line-unwrapping with zero content change, and reverting to the surgical
+approach instead). `coloring_queue_status.py --book monster-recast` now
+reports `recommended_action=submit-next-batch` (18 actionable: the 5
+originally-pending entries plus these 13 revised ones).
+
+FOUND AND FIXED an unrelated but real bug while reading source material for
+this cycle: `homage-concepts.yaml` (a planning/reference doc, not read by
+any live script -- confirmed via grep across scripts/) had invalid YAML at
+line 433 -- an unquoted plain scalar `hook:` value containing a bare
+`sexualization: crown` mid-string, the same colon-space-in-unquoted-plain-
+scalar class already documented in this project's `TALKBACK.md`. Fixed by
+converting that one hook to a quoted block scalar (`>-`); confirmed the file
+parses now and `check_roadmap_yaml.py` still reports all 45 roadmaps
+spec-compliant.
+
+Verification: full local suite green (782 passed, 1 skipped, same 2
+pre-existing unrelated `test_build_digest_email_v2.py` failures as documented
+in the 2026-08-01T03:31Z entry above -- Python 3.11 f-string/backslash
+syntax incompatibility, out of scope for t-022). Targeted coloring-book test
+files (`test_coloring_queue_recommended_action.py`,
+`test_coloring_queue_status.py`, `test_consume_coloring_book_color_art.py`,
+`test_consume_coloring_book_studio_request.py`) all pass (40/40).
+
+Not completed this cycle: no ArtJobs were generated or judged from this
+sandbox -- the fix is entirely prompt/queue-metadata revision so the next
+hourly GitHub Actions run (which does have ANTHROPIC_API_KEY) can attempt the
+18-entry batch with materially improved prompts for the 13 previously-
+rejected concepts. Whether the revised prompts actually clear the semantic
+gate is unverified until that run happens; if any of the 13 fail a third
+time with the new prompts, the next cycle should read the fresh rejection
+reasons before revising further rather than assuming these particular
+rewrites were sufficient. Re-armed to ready per the recurring-task rule.
