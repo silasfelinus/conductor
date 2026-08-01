@@ -74,6 +74,16 @@ overrides:
     priority: normal
     kind: software
 
+  - slug: interface-vision
+    status: active # opened 2026-08-01 (Silas) -- the release blocker for beta
+    # Successor to global-ui, which was flipped `finished` at 25/25 tasks while the
+    # design system it shipped sat at ~7% adoption (29 of ~421 component files use any
+    # kr-* class; the hand-rolled equivalent appears 366 times across 145 files). This
+    # project re-opens that work with numeric exit criteria enforced by a CI script
+    # whose allow-list only ever shrinks. Do not mark it finished on task count alone.
+    priority: high
+    kind: software
+
   - slug: ecosystem-map
     status: finished # flipped 2026-07-26 -- all 8 tasks done, nothing open
     priority: normal
