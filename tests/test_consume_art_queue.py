@@ -73,6 +73,20 @@ def test_entry_to_job_legacy_a1111_override_migrates_to_comfy():
     assert consumer.normalize_engine("a1111") == consumer.DEFAULT_ENGINE
 
 
+def test_legacy_comfy_and_sdxl_labels_migrate_to_krea2():
+    assert consumer.normalize_engine("comfy") == consumer.DEFAULT_ENGINE
+    assert consumer.normalize_engine("sdxl") == consumer.DEFAULT_ENGINE
+
+
+def test_unknown_conductor_engine_is_rejected():
+    import pytest
+
+    with pytest.raises(ValueError, match="unsupported Conductor art engine"):
+        consumer.entry_to_job(
+            {"image_path": "public/images/x.webp", "prompt": "a fox", "engine": "mystery"}
+        )
+
+
 def test_entry_to_job_flux_schnell_variant():
     job = consumer.entry_to_job(
         {
