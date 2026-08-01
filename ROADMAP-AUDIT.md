@@ -1,21 +1,21 @@
 # Roadmap Audit
 
-Generated: `2026-07-29T22:55:01.149413+00:00`
+Generated: `2026-08-01T01:19:58.984151+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **44** roadmaps, **23** active projects, **759** tasks
-- **30 ready**, **47 waiting**, **28 needs-human**, **3 claimed/review**, **640 done**
-- Findings: **0 errors**, **6 warnings**, **59 informational**
+- **44** roadmaps, **25** active projects, **761** tasks
+- **30 ready**, **47 waiting**, **28 needs-human**, **4 claimed/review**, **641 done**
+- Findings: **2 errors**, **7 warnings**, **59 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
-| 2 | `ai-art-academy` | active | software | 1 | 1 | 2 | 0 | 50 / 54 |
+| 2 | `ai-art-academy` | active | software | 0 | 1 | 2 | 1 | 50 / 54 |
 | 3 | `coloring-book` | active | software | 1 | 9 | 1 | 0 | 26 / 37 |
 | 4 | `humboldt-scoop` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 0 | 0 | 1 | 0 | 11 / 12 |
@@ -29,7 +29,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 13 | `superkate-services-calculator` | finished | software | 0 | 0 | 0 | 0 | 37 / 37 |
 | 14 | `superkate-hairstyle-ai` | paused | software | 1 | 0 | 1 | 0 | 19 / 21 |
 | 15 | `newsfeed` | active | software | 0 | 0 | 0 | 0 | 22 / 22 |
-| 16 | `model-builder` | active | software | 2 | 0 | 0 | 0 | 34 / 36 |
+| 16 | `model-builder` | active | software | 3 | 0 | 0 | 0 | 34 / 37 |
 | 17 | `animation-manager` | active | software | 2 | 0 | 0 | 0 | 15 / 17 |
 | 18 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 19 | `ecosystem-map` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
@@ -37,7 +37,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 21 | `serendipity` | retired | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 22 | `taskmaster` | active | software | 1 | 0 | 0 | 0 | 2 / 3 |
 | 23 | `storymaker` | active | software | 1 | 0 | 0 | 0 | 9 / 10 |
-| 24 | `davinci` | finished | software | 0 | 0 | 0 | 0 | 15 / 15 |
+| 24 | `davinci` | active | software | 0 | 0 | 0 | 0 | 16 / 16 |
 | 25 | `art-generator-connect` | finished | software | 0 | 0 | 0 | 0 | 22 / 22 |
 | 26 | `mural-design` | active | content | 1 | 3 | 0 | 0 | 3 / 7 |
 | 27 | `coat-dance` | active | content | 1 | 0 | 1 | 0 | 1 / 10 |
@@ -57,17 +57,19 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 41 | `dream-cycle` | active | software | 3 | 0 | 0 | 0 | 17 / 21 |
 | — | `approval-portal` | retired | software | 0 | 0 | 0 | 0 | 3 / 5 |
 | — | `humboldt-impropriety-calendar` | retired | brainstorm | 0 | 5 | 0 | 0 | 0 / 6 |
-| — | `lora-ingestion` | missing | infrastructure | 0 | 0 | 1 | 3 | 2 / 6 |
+| — | `lora-ingestion` | active | infrastructure | 0 | 0 | 1 | 3 | 2 / 6 |
 
 ## Findings by severity
 
-### Error (0)
+### Error (2)
 
-_None._
+- **ACTIVE_MISSING_PRIORITY** — `lora-ingestion`: Active project is absent from projects/priority.yaml.
+- **ACTIVE_ROADMAP_MISSING_PRIORITY** — `lora-ingestion`: Active roadmap is not selectable because it is absent from priority.yaml.
 
-### Warning (6)
+### Warning (7)
 
-- **ROADMAP_MISSING_OVERRIDE** — `lora-ingestion`: Roadmap has no project-overrides.yaml entry.
+- **ACTIVE_PROJECT_ALL_DONE** — `davinci`: All tasks are done but project override remains active.
+- **ACTIVE_PROJECT_NO_OPEN_TASKS** — `davinci`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 - **IN_PROGRESS_WITHOUT_TIMESTAMP** — `lora-ingestion` / `t-004`: Claimed/review task has no parseable updated timestamp.
 - **IN_PROGRESS_WITHOUT_TIMESTAMP** — `lora-ingestion` / `t-005`: Claimed/review task has no parseable updated timestamp.
 - **IN_PROGRESS_WITHOUT_TIMESTAMP** — `lora-ingestion` / `t-006`: Claimed/review task has no parseable updated timestamp.

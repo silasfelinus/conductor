@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-07-29T22:55:01.149413+00:00",
+  "generated_at": "2026-08-01T01:19:58.984151+00:00",
   "summary": {
     "roadmaps": 44,
-    "active_projects": 23,
-    "tasks": 759,
+    "active_projects": 25,
+    "tasks": 761,
     "ready": 30,
     "waiting": 47,
     "needs_human": 28,
-    "in_progress": 3,
-    "done": 640,
-    "errors": 0,
-    "warnings": 6,
+    "in_progress": 4,
+    "done": 641,
+    "errors": 2,
+    "warnings": 7,
     "info": 59
   },
   "projects": [
@@ -40,16 +40,16 @@
       "autonomous": true,
       "task_count": 54,
       "counts": {
+        "claimed": 1,
         "done": 50,
         "needs-human": 2,
-        "ready": 1,
         "waiting": 1
       },
       "open_count": 4,
       "human_attention": 2,
-      "ready": 1,
+      "ready": 0,
       "waiting": 1,
-      "claimed": 0,
+      "claimed": 1,
       "review": 0,
       "done": 50
     },
@@ -306,14 +306,14 @@
       "override_status": "active",
       "priority_index": 16,
       "autonomous": false,
-      "task_count": 36,
+      "task_count": 37,
       "counts": {
         "done": 34,
-        "ready": 2
+        "ready": 3
       },
-      "open_count": 2,
+      "open_count": 3,
       "human_attention": 0,
-      "ready": 2,
+      "ready": 3,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
@@ -455,12 +455,12 @@
     {
       "slug": "davinci",
       "kind": "software",
-      "override_status": "finished",
+      "override_status": "active",
       "priority_index": 24,
       "autonomous": false,
-      "task_count": 15,
+      "task_count": 16,
       "counts": {
-        "done": 15
+        "done": 16
       },
       "open_count": 0,
       "human_attention": 0,
@@ -468,7 +468,7 @@
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 15
+      "done": 16
     },
     {
       "slug": "art-generator-connect",
@@ -837,7 +837,7 @@
     {
       "slug": "lora-ingestion",
       "kind": "infrastructure",
-      "override_status": "missing",
+      "override_status": "active",
       "priority_index": null,
       "autonomous": false,
       "task_count": 6,
@@ -857,11 +857,32 @@
   ],
   "findings": [
     {
-      "severity": "warning",
-      "code": "ROADMAP_MISSING_OVERRIDE",
+      "severity": "error",
+      "code": "ACTIVE_MISSING_PRIORITY",
       "project": "lora-ingestion",
       "task": null,
-      "message": "Roadmap has no project-overrides.yaml entry."
+      "message": "Active project is absent from projects/priority.yaml."
+    },
+    {
+      "severity": "error",
+      "code": "ACTIVE_ROADMAP_MISSING_PRIORITY",
+      "project": "lora-ingestion",
+      "task": null,
+      "message": "Active roadmap is not selectable because it is absent from priority.yaml."
+    },
+    {
+      "severity": "warning",
+      "code": "ACTIVE_PROJECT_ALL_DONE",
+      "project": "davinci",
+      "task": null,
+      "message": "All tasks are done but project override remains active."
+    },
+    {
+      "severity": "warning",
+      "code": "ACTIVE_PROJECT_NO_OPEN_TASKS",
+      "project": "davinci",
+      "task": null,
+      "message": "Active project has no open tasks; mark finished/paused or add an intentional recurring task."
     },
     {
       "severity": "warning",

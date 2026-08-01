@@ -5293,3 +5293,23 @@ records:
     initial network-latency window exposes the gap. Worth grepping for this pattern
     (a gate reading a post-await field when a pre-await field exists for the same
     purpose) across other async store actions with a similar two-field shape.
+- date: '2026-08-01'
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A same-item reentrancy guard (autoBuildItem vs itself, PR #1223) is only
+    half the concurrency picture when a "do everything" action (Auto) and
+    several "do one thing" manual actions (Generate candidate/Draft with
+    AI/Execute commit) can both reach the same underlying operation for the
+    same item. Guarding the automatic path against itself doesn't guard it
+    against a manual path already in flight -- the automatic path just sees
+    the stage as "not yet approved" and proceeds, firing a second concurrent
+    request. When a store has both a batch/auto entry point and matching
+    manual single-stage entry points into the same underlying calls, check
+    for a cross-guard (auto vs. manual in-flight state) in addition to the
+    obvious self-vs-self guard.
