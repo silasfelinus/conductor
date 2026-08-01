@@ -44,3 +44,18 @@ def test_payload_uses_v2_section_without_tiny_90px_strip():
     payload = module.build_payload({"tomorrow_proposal": {"title": "Bundle", "idea": "Idea", "assets": assets()}})
     assert "height:90px" not in payload["htmlContent"]
     assert payload["htmlContent"].count("Seed Facets") == 6
+
+
+def test_payload_renders_additional_recent_bundles_without_duplication():
+    module = load_module()
+    digest = {
+        "tomorrow_proposal": {"slug": "today", "title": "Today", "idea": "Idea", "assets": assets()},
+        "yesterday_output": {"slug": "main-yesterday", "title": "Main", "idea": "Idea", "assets": assets()},
+        "recent_dream_outputs": [
+            {"slug": "main-yesterday", "title": "Main", "idea": "Idea", "assets": assets()},
+            {"slug": "another-yesterday", "title": "Another Build", "idea": "Idea", "assets": assets()},
+        ],
+    }
+    payload = module.build_payload(digest)
+    assert "Other objects built today or yesterday" in payload["htmlContent"]
+    assert "Another Build" in payload["htmlContent"]
