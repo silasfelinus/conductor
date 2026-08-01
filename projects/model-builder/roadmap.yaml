@@ -930,10 +930,10 @@ tasks:
   - id: t-037
     milestone: m6
     title: "Cross-check batchAutoBuild/autoBuildRun against a manual per-item action before processing that item"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    owner: null
+    owner: reviewer
     note: >
       Kaizen from t-029 (kind_robots PR #1224, 2026-08-01): autoBuildItem() now
       guards against both overlapping itself (state.autoBuildingItemId, PR #1223)
@@ -954,3 +954,6 @@ tasks:
       and whether re-queuing a skipped item automatically once the manual action
       resolves is worth the added complexity. Front-end/store-only change; no
       schema change expected.
+    claimed_by: claude-quirky-curie-20260801T0130Z-mb-t037
+    claimed_at: '2026-08-01T01:28:25Z'
+    updated: '2026-08-01T01:28:25Z'
