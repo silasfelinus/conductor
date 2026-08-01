@@ -95,7 +95,7 @@ tasks:
   - id: t-001
     milestone: m1
     title: 'Write DESIGN-BRIEF.md and build three Storymaker aesthetic mockups'
-    status: ready
+    status: review
     owner: null
     passes: 0
     stakes: reversible
@@ -112,6 +112,14 @@ tasks:
       expression, generated-art plate, narration text window, choice buttons, free-text
       input, one piece of persistent chrome. Review via Vercel preview deployment at
       phone, tablet and desktop widths. Mockup routes are deleted in t-003.
+      IN REVIEW 2026-08-01: kind_robots PR #1252. Built as ONE route
+      (/storymaker-mockups) with an A/B/C switcher rather than three URLs --
+      instant flipping beats navigating, especially on a phone. One shared
+      structure with three token sets, so the six elements sit in the same order
+      in every variant and the comparison is fair. A "Lights" toggle dims the
+      chrome to 25% to demonstrate what "the UI gets out of the way while a story
+      runs" actually feels like. Fixture data only; art comes from the conductor
+      raw-GitHub path the project gallery already uses. Awaiting Silas's pick.
 
   - id: t-002
     milestone: m1
@@ -177,7 +185,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: 'Add verifyLayoutContract CI script with a shrink-only allow-list'
-    status: ready
+    status: review
     owner: null
     passes: 0
     stakes: reversible
@@ -196,6 +204,18 @@ tasks:
       Baseline counters to record in the note when this lands: <h1> in page components
       57, files with their own overflow-y-auto 94, viewport-height hacks ~45,
       multi-MDC content files 4, files using any kr-* class 29 of ~421.
+      IN REVIEW 2026-08-01: kind_robots PR #1252. Landed ahead of t-004 because
+      the measuring half of the contract needs nothing from the primitives --
+      only the .kr-surface root rule does, and that check is deferred until t-004
+      lands. Ratchet proven in BOTH directions by temporarily adding a probe
+      component breaking three rules: the gate caught all three, --update refused
+      with "these rules got WORSE", and the baseline file was byte-identical
+      afterward. Recorded baseline: 29 one-header, 36 one-scroll, 9 no-viewport,
+      4 one-mdc, 7 ghost-prop. These are lower than the plan's raw greps because
+      the checks are scoped to genuine page components and skip
+      abandonware/archives/cypress -- they are the actionable counts. Runs as its
+      own workflow (.github/workflows/layout-contract.yml); needs no database, so
+      it gates every PR cheaply.
 
   - id: t-006
     milestone: m2
@@ -233,7 +253,7 @@ tasks:
   - id: t-007
     milestone: m2
     title: 'Additive schema migration: card/hero/icon art fields for Bot, Character, Reward, Scenario'
-    status: ready
+    status: review
     owner: null
     passes: 0
     stakes: reversible
@@ -252,6 +272,27 @@ tasks:
       server/utils/entityArt.ts with the new card/hero slots, and add `dream` to
       EntityArtType — Dream has the richest art fields in the schema and is entirely
       absent from the entity-art system.
+      IN REVIEW 2026-08-01: kind_robots PR #1252. Silas authorized directly.
+      Migration 20260801220000_entity_card_hero_icon_art -- 18 ADD COLUMN, zero
+      DROP/MODIFY, no data movement, generated via `prisma migrate diff`
+      schema-to-schema (no shadow DB) and verified byte-identical against the
+      final schema after formatting settled.
+      FOUND AND FIXED A LATENT BUG while doing it: updateEntityRecord hardcoded
+      writes to imagePath/avatarImage for bot/character/scenario/reward and
+      ignored input.field entirely -- only project and facet branched on it.
+      Adding card/hero slots without that fix would have made a requested Bot
+      card render (2:3) silently overwrite the square avatar. The branch is now
+      hoisted once as `slotData` and shared by all six cases, removing the two
+      pre-existing copies.
+      `icon` is deliberately NOT an art slot -- Bot/Character/Scenario `icon`
+      holds an icon NAME ('mdi:radio-tower'), not a path, same as Dream/Project.
+      The four *-interact.vue call sites now pass Card/Hero slots, so the
+      EXISTING art UI gains those tabs with no new tooling -- art is generatable
+      per-record today. Note EntityArtManager takes slots per call site rather
+      than from the server registry; that duplication is folded into t-009.
+      NOT DONE HERE: `dream` is still absent from EntityArtType. Deferred rather
+      than rushed -- it needs its own getEntityArtRecord/updateEntityRecord
+      branches and Dream has the richest art fields, so it deserves its own pass.
 
   - id: t-008
     milestone: m2
