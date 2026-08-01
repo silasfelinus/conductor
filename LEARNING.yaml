@@ -5498,3 +5498,30 @@ records:
     "and show X on cards" ask that has no existing data model to support
     it, splitting the vague half into its own ready task (rather than
     guessing at scope) kept this PR small and reviewable.
+- date: 2026-08-01
+  project: interface-vision
+  task: t-003b
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: quality
+  lesson: >
+    Flipping app.vue's shared shell from overflow-y-auto to overflow-hidden
+    required auditing which of ~60 candidate page-level components actually
+    needed their own scroll container vs. inherited one from an ancestor
+    (pages/[...slug].vue's content-host for MDC routes, the shared
+    ProjectFrontPage wrapper for conductor pages). A same-PR review catch
+    (kr-hourly session) found the first push added scroll classes to six
+    components that are mounted *inside* content-host, creating nested
+    double-scroll regions -- the exact composition bug the task existed to
+    fix. The file-by-file layout-contract verifier couldn't catch this
+    because it has no parent/child composition awareness; grepping
+    content/*.md for each candidate file's actual mount point before adding
+    a scroll class (not just checking whether the file itself lacks one)
+    would have caught it on the first pass. Fixed same-session via a
+    follow-up commit once flagged. When a shared ancestor already owns
+    scroll, verify a component is actually reachable outside that ancestor
+    before adding its own overflow region -- otherwise ask "does this
+    file's *rendering context* already scroll" before "does this file
+    declare its own overflow."
