@@ -1,0 +1,9 @@
+version: 1
+project: coloring-book
+task: t-022
+operation: review
+owner: worker
+session: 2026-08-01T004100Z-coloring-book-t-022-key-restored-8f3a
+updated: '2026-08-01T00:46:00Z'
+note: >-
+  Fixes the Coloring Book Studio credential preflight so a restored ANTHROPIC_API_KEY is checked from the current workflow environment instead of being blocked forever by stale queue errors. Adds regression coverage for restored-key recovery.
