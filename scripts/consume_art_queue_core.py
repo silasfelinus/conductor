@@ -152,6 +152,8 @@ ENGINE_ALIASES = {
     "a1111": "krea2",
     "sd": "krea2",
     "stable-diffusion": "krea2",
+    "comfy": "krea2",
+    "sdxl": "krea2",
     "krea": "krea2",
     "krea2-turbo": "krea2",
     "krea-2": "krea2",
@@ -503,6 +505,11 @@ def entry_to_job(entry):
     seed) are only sent when set, so an untouched batch keeps the relay's own
     defaults."""
     engine = normalize_engine(entry.get("engine"))
+    if engine not in COMFY_WORKFLOW_ENGINES:
+        raise ValueError(
+            f"unsupported Conductor art engine {engine!r}; "
+            f"expected one of {', '.join(COMFY_WORKFLOW_ENGINES)}"
+        )
     width, height = parse_size(entry.get("size"))
     prompt = " ".join(str(entry.get("prompt") or "").split())
     negative = " ".join(
@@ -569,8 +576,8 @@ def entry_to_job(entry):
                 prompt, negative, width, height, steps, resolved_seed, entry
             )
         relay_engine = "COMFY"
-    else:
-        relay_engine = engine.upper()
+    else:  # pragma: no cover - guarded above; all Conductor jobs are COMFY
+        raise AssertionError(f"missing COMFY workflow builder for {engine}")
 
     return {
         "engine": relay_engine,
