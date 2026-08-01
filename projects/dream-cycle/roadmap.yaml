@@ -715,15 +715,17 @@ tasks:
   - id: t-022
     milestone: m4
     title: Make the daily dream bundle facet-seeded, date-correct, and art-complete
-    status: done
+    status: ready
     passes: 0
     stakes: reversible
-    updated: '2026-08-01T02:37:00Z'
+    updated: '2026-08-01T02:40:00Z'
     note: |-
       Silas-directed 2026-07-31. Fix the daily digest so “yesterday” means the prior Pacific calendar day instead of the newest successful historical build, and replace the tiny attached-only strip with a readable gallery covering every known asset for today and yesterday with honest queue, rendered, and attached states. Change future daily output to exactly one dream vibe, one dream location, one Character, one ITEM Reward, one SKILL Reward, and one Scenario. Seed the umbrella vibe from two weighted random GENRE Facets, one random ANIMAL or SPECIES Facet, and one random OCCUPATION Facet; give dependent elements one additional GENRE plus applicable Facets such as MATERIAL and species; build the Scenario last from the completed vibe, location, and Character. Persist the selected seed Facets in proposal and built metadata, attach them through the real per-model Facet assignment endpoints, expose them in the digest, remix eligible unbuilt proposals into the new contract, and verify art requests exist for all six created assets.
 
 
       Completed through conductor PR #1480 and compatibility follow-up PR #1482. The digest now selects yesterday by exact Pacific calendar date, renders all six assets as readable cards with honest art states, and displays the seed Facets. Future daily proposals create exactly one vibe, location, Character, ITEM Reward, SKILL Reward, and Scenario; use deterministic weighted live Facets; attach Facets to the real records; remix Silverfish Concierge into the new contract; and queue six art requests. PR #1482 restored the documented startup CLI flags and aligned CLAUDE.md with the new contract. PR #1480 passed Daily Dream Contract, Worker PR CI, Security Audit, and Process task events; PR #1482 passed the same four completed checks.
+
+      Post-merge verification found one remaining contract gap: LOCATION records relate to the GENRE vibe, but Character, Reward, and Scenario rows only receive the PITCH world in dreamIds. Reopen to attach every created asset directly to the main vibe as well as the world container, with regression coverage.
     claimed_by: 2026-08-01T023400Z-dream-cycle-t022-gpt56
     claimed_at: '2026-08-01T02:34:00Z'
 
