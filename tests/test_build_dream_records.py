@@ -94,6 +94,7 @@ class FakeAPI:
         self.next_id = 1000
         self.deletes = []
         self.posts = []
+        self.created = []
 
     def __call__(self, method, url, body=None, timeout=60):
         if method == "DELETE":
@@ -104,6 +105,7 @@ class FakeAPI:
             return 503, {"success": False, "message": "Database connection was temporarily unavailable."}
         self.post_ok += 1
         self.next_id += 1
+        self.created.append((url, body, self.next_id))
         return 201, {"data": {"id": self.next_id}}
 
 
@@ -155,3 +157,31 @@ def test_total_failure_rolls_back_nothing_and_leaves_unbuilt(env, monkeypatch):
 
     assert fake.deletes == []                        # nothing was created, nothing to undo
     assert "<!-- built-data" not in path.read_text()
+
+def test_real_entities_link_to_world_and_genre_vibe(env, monkeypatch):
+    backlog, _ = env
+    write_proposal_file(backlog)
+    fake = FakeAPI(fail_after=None)
+    monkeypatch.setattr(bdr, "http_json", fake)
+
+    bdr.run_build("2020-01-01", dry_run=False)
+
+    world_id = next(
+        row_id for url, body, row_id in fake.created
+        if url.endswith("/api/dreams") and body.get("dreamType") == "PITCH"
+    )
+    vibe_id = next(
+        row_id for url, body, row_id in fake.created
+        if url.endswith("/api/dreams") and body.get("dreamType") == "GENRE"
+    )
+    linked_paths = ("/api/characters", "/api/bots", "/api/rewards", "/api/scenarios")
+    linked_bodies = [
+        body for url, body, _ in fake.created
+        if any(url.endswith(path) for path in linked_paths)
+    ]
+
+    assert linked_bodies
+    for body in linked_bodies:
+        assert world_id in body["dreamIds"]
+        assert vibe_id in body["dreamIds"]
+

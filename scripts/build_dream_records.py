@@ -16,8 +16,8 @@ the day's world Dream — never a shadow "CHARACTER/NARRATOR/REWARD" dream:
   * 1 GENRE Dream — the vibe (world-graph fidelity; no card)
   * 2 LOCATION Dreams
   * 3 real Character rows, 1 real Bot (BotType NARRATOR), 2 real Reward rows
-    (one SKILL, one ITEM), and 1-2 real Scenario rows — each linked to the
-    world Dream via dreamIds. NO shadow Dreams of those types.
+    (one SKILL, one ITEM), and 1-2 real Scenario rows — each linked to both the
+    world Dream and its GENRE vibe via dreamIds. NO shadow Dreams of those types.
   * a PitchSheet per world/location Dream via POST /api/sheets/by-dream/{id}
     (NOTE: POST /api/sheets is a known-broken handler — never use it)
 
@@ -27,7 +27,7 @@ and removable (the reversibility contract).
 World-graph edges (kind-robots/t-017): the world (PITCH) Dream RELATED to the
 GENRE Dream, world CONTAINS each LOCATION Dream, and each LOCATION RELATED to
 the GENRE Dream — via POST /api/dream-relations. Character/narrator/reward/
-scenario cohesion comes from the dreamIds link to the world Dream.
+scenario cohesion comes from dreamIds links to both the world and GENRE vibe.
 
 Art is queued through the EXISTING self-draining pipeline: one `requests:`
 entry per element appended to projects/art-prompts.yaml targeting kind_robots
@@ -531,7 +531,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
     # 4. Characters (real Character rows linked to the world/vibe Dream — no
     #    shadow CHARACTER dream; art attaches to the Character's own imagePath).
     built["records"]["characters"] = []
-    link_ids = [world_id] if world_id else []
+    link_ids = [i for i in (world_id, genre_id) if i]
     for ch in proposal.get("characters", []):
         el = slugify(ch.get("name", "character"))
         rec = kr_call("POST", "/api/characters", {
@@ -556,7 +556,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
     nar = proposal.get("narrator", {})
     if nar:
         el = slugify(nar.get("name", "narrator")) + "-narrator"
-        link_ids = [world_id] if world_id else []
+        link_ids = [i for i in (world_id, genre_id) if i]
         rec = kr_call("POST", "/api/bots", {
             "name": nar.get("name", "Narrator"), "BotType": "NARRATOR",
             "designer": DESIGNER, "isPublic": True,
@@ -590,7 +590,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         rarity = str(rw.get("rarity", "COMMON")).upper()
         if rarity not in VALID_RARITIES:
             rarity = "COMMON"
-        link_ids = [world_id] if world_id else []
+        link_ids = [i for i in (world_id, genre_id) if i]
         rec = kr_call("POST", "/api/rewards", {
             "name": rw.get("name", "Reward"), "designer": DESIGNER, "isPublic": True,
             "description": rw.get("grants", ""),
@@ -612,10 +612,10 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                   f"({vibe_line}), {HOUSE_PROMPT_TAIL}",
                   "/api/rewards", rec.get("id") if rec else None)
 
-    # 7. Scenarios (real Scenario rows, linked to the world + locations)
+    # 7. Scenarios (real Scenario rows, linked to the world, vibe + locations)
     built["records"]["scenarios"] = []
     loc_titles = ", ".join(l.get("title", "") for l in proposal.get("locations", []))
-    scenario_links = [i for i in [world_id, *location_ids] if i]
+    scenario_links = [i for i in [world_id, genre_id, *location_ids] if i]
     for sc in proposal.get("scenarios", []):
         el = slugify(sc.get("title", "scenario")) + "-scenario"
         rec = kr_call("POST", "/api/scenarios", {
