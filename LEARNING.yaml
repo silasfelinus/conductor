@@ -5313,3 +5313,21 @@ records:
     manual single-stage entry points into the same underlying calls, check
     for a cross-guard (auto vs. manual in-flight state) in addition to the
     obvious self-vs-self guard.
+- date: '2026-08-01'
+  project: model-builder
+  task: t-037
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    When a guard clause and a genuine failure path share one return value
+    (autoBuildItem's `false` covered both "another action already owns this
+    item" and "a stage actually failed"), any caller that tallies outcomes
+    across many calls (batchAutoBuild/autoBuildRun's "N/total committed"
+    summary) loses the distinction and reports a busy-but-fine item the same
+    as a broken one. Widening the return type to name each outcome explicitly
+    (here, a three-way 'committed' | 'skipped' | 'failed' instead of a
+    boolean) fixes it at the source instead of adding a second out-of-band
+    flag the caller has to remember to check.

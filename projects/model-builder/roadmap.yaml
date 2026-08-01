@@ -930,30 +930,36 @@ tasks:
   - id: t-037
     milestone: m6
     title: "Cross-check batchAutoBuild/autoBuildRun against a manual per-item action before processing that item"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
-    owner: worker
-    note: >
-      Kaizen from t-029 (kind_robots PR #1224, 2026-08-01): autoBuildItem() now
-      guards against both overlapping itself (state.autoBuildingItemId, PR #1223)
-      and a manual single-stage action already in flight for the same item
-      (state.generatingItemId/state.committingItemId/draftingField, PR #1224).
-      Both guards only apply once autoBuildItem is entered for a specific item.
-      batchAutoBuild and autoBuildRun iterate multiple items and call
-      autoBuildItem per item sequentially/concurrently, but nothing stops them
-      from *starting* on an item the user is manually mid-action on right as
-      their turn comes up in the batch/run loop -- the two new guards will
-      correctly make that specific autoBuildItem call bail out and return false,
-      but batchAutoBuild/autoBuildRun's own bookkeeping (progress counts, "N
-      items completed" summaries) doesn't distinguish "skipped because a manual
-      action was in flight" from "genuinely nothing to do", so the user gets a
-      silently incomplete batch with no indication why that one item didn't
-      advance. Investigate whether batchAutoBuild/autoBuildRun should surface a
-      distinct outcome (skipped vs completed) for items that bail out this way,
-      and whether re-queuing a skipped item automatically once the manual action
-      resolves is worth the added complexity. Front-end/store-only change; no
-      schema change expected.
+    owner: null
+    note: 'RAN 2026-08-01T01:37Z (conductor Agent run, session claude-quirky-curie-20260801T0130Z-mb-t037): implemented the outcome distinction in kind_robots. autoBuildItem() now returns a three-way outcome (''committed'' | ''skipped'' | ''failed'') instead of a boolean -- the same-item reentrancy guard (PR #1223) and manual-action-in-flight guard (PR #1224) both now return ''skipped'', a failed draft/generate/commit returns ''failed'', and completing (or already complete) returns ''committed''. batchAutoBuild and autoBuildRun tally skipped separately and append a "(N skipped -- manual action in progress, retry after it finishes)" note to their status message when nonzero, so a stalled batch item now reads as busy rather than silently looking identical to a real failure. Did not add automatic re-queuing of skipped items: the task note flagged it as optional to investigate, and re-queuing from inside the same loop risks re-racing the same still-in-flight manual action if the loop reaches the item again before it resolves. Extended verifyModelBuilderAutoBuildDraftGate.ts''s textual checks and self-test fixtures to require the new ''skipped''/''failed'' literals at the same anchor points the prior ''return false'' checks used. Verified: npx eslint/npx prettier --check clean on touched files (2 pre-existing no-empty errors and pre-existing prettier drift in the store confirmed unrelated via git stash); npx vue-tsc --noEmit -p tsconfig.json exit 0 full project; both draft-gate npm test scripts pass. kind_robots PR #1225: all 12 CI checks green, merged (0fa5b70). Kaizen suggestion: batchAutoBuild/autoBuildRun''s own triggering buttons have no pre-run ''N items busy'' advisory before starting, unlike the single-item Auto button''s isManualActionInFlight disable -- filed as t-038.'
     claimed_by: claude-quirky-curie-20260801T0130Z-mb-t037
     claimed_at: '2026-08-01T01:28:25Z'
-    updated: '2026-08-01T01:28:25Z'
+    updated: '2026-08-01T01:40:32Z'
+
+  - id: t-038
+    milestone: m6
+    title: "Pre-run 'N items busy' advisory for batchAutoBuild/autoBuildRun before starting"
+    status: ready
+    passes: 0
+    stakes: reversible
+    owner: null
+    note: >
+      Kaizen from t-037 (kind_robots PR #1225, 2026-08-01): autoBuildItem() now
+      distinguishes 'skipped' (manual action in flight for this item) from 'failed'
+      in its outcome, and batchAutoBuild/autoBuildRun report a skipped count
+      after the run finishes. But the single-item Auto button in
+      model-builder-item-panel.vue is the only one with a pre-click signal
+      (isManualActionInFlight disables it before the user even tries). The
+      batch editor's "Auto-build group" button and the progress matrix's
+      "Auto-build all" button have no equivalent: a user can start a batch/run
+      auto-build while several items in it are mid-manual-action and only find
+      out afterward, from the skipped count in the final status message.
+      Investigate a lightweight pre-run advisory (not a hard block, since a
+      manual action can resolve mid-run) -- e.g. a count or tooltip on the
+      trigger button itself showing how many items in the group/run currently
+      have a manual action in flight, computed the same way
+      isManualActionInFlight already is per-item. Front-end/store-only change;
+      no schema change expected.
