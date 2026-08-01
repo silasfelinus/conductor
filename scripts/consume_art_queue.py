@@ -48,10 +48,14 @@ def stable_retry_seed(entry: dict[str, Any]) -> int:
 
 
 def uses_specialized_attempt_recovery(entry: dict[str, Any]) -> bool:
+    # `semantic_attempts` is the pre-2026-08 spelling, still present on queue
+    # entries written before the vision gate was removed. Accept either so an
+    # un-migrated entry keeps its fresh-seed exploration policy instead of
+    # silently falling back to a stable synthetic seed.
     return (
         bool(entry.get("set"))
         and bool(entry.get("concept_id"))
-        and "semantic_attempts" in entry
+        and ("render_attempts" in entry or "semantic_attempts" in entry)
     )
 
 

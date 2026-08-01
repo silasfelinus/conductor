@@ -149,19 +149,22 @@ class ColoringBookAssetAdoptionTests(unittest.TestCase):
         replace.assert_not_called()
         write.assert_called_once()
 
-    def test_adopt_bw_records_review_instead_of_accepting_failed_pair(self) -> None:
+    def test_adopt_bw_consults_no_model(self) -> None:
+        """Adoption IS the human decision -- no vision pass may veto it."""
+        self.assertFalse(
+            hasattr(MODULE.production, "pair_vision"),
+            "the color/BW pair vision gate must not come back",
+        )
+
+    def test_adopt_bw_still_refuses_a_structurally_broken_file(self) -> None:
         queue_entry = {"status": "approved"}
         proposal = {"accepted": {"color": "approved/color.webp", "bw": None}}
         queue = {"books": []}
         ledger = {"proposals": []}
         source = self.root / "approved" / "bw.webp"
         color = self.root / "approved" / "color.webp"
-        semantic = {
-            "model": "reviewer",
-            "score": 42,
-            "verdict": "revise",
-            "reasons": ["composition changed"],
-        }
+        color.parent.mkdir(parents=True, exist_ok=True)
+        color.write_bytes(b"image")
 
         with (
             patch.object(
@@ -169,49 +172,20 @@ class ColoringBookAssetAdoptionTests(unittest.TestCase):
                 "safe_source",
                 return_value=("approved/bw.webp", source),
             ),
-            patch.object(MODULE, "assess_existing", return_value=(True, [], {})),
+            patch.object(MODULE, "assess_existing", return_value=(False, ["not line art"], {})),
             patch.object(MODULE.production, "mechanical_check"),
-            patch.object(
-                MODULE.production,
-                "load_yaml",
-                side_effect=[queue, ledger],
-            ),
-            patch.object(
-                MODULE.production,
-                "find_queue_entry",
-                return_value=queue_entry,
-            ),
-            patch.object(
-                MODULE.production,
-                "find_proposal",
-                return_value=proposal,
-            ),
-            patch.object(
-                MODULE.production,
-                "absolute_set_path",
-                return_value=color,
-            ),
-            patch.object(Path, "is_file", return_value=True),
-            patch.object(
-                MODULE.production,
-                "pair_vision",
-                return_value=(False, semantic),
-            ),
-            patch.object(MODULE.production, "write_yaml") as write,
+            patch.object(MODULE.production, "load_yaml", side_effect=[queue, ledger]),
+            patch.object(MODULE.production, "find_queue_entry", return_value=queue_entry),
+            patch.object(MODULE.production, "find_proposal", return_value=proposal),
+            patch.object(MODULE.production, "ensure_pair", return_value=proposal["accepted"]),
+            patch.object(MODULE.production, "absolute_set_path", return_value=self.root / "approved" / "color.webp"),
+            patch.object(MODULE.production, "replace_ledger_pair_value") as replace,
+            patch.object(MODULE.production, "write_yaml"),
         ):
-            adopted = MODULE.adopt_bw(
-                "monster-recast",
-                "mr-001",
-                "approved/bw.webp",
-            )
+            adopted = MODULE.adopt_bw("monster-recast", "mr-001", "approved/bw.webp")
 
         self.assertFalse(adopted)
-        self.assertIsNone(proposal["accepted"]["bw"])
         self.assertEqual(queue_entry["bw_status"], "needs_review")
-        self.assertEqual(queue_entry["pair_status"], "needs_review")
-        self.assertEqual(queue_entry["bw_semantic_score"], 42)
-        write.assert_called_once()
-
-
-if __name__ == "__main__":
-    unittest.main()
+        self.assertEqual(queue_entry["bw_render_verdict"], "mechanical-reject")
+        self.assertIsNone(proposal["accepted"]["bw"])
+        replace.assert_not_called()

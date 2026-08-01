@@ -19,7 +19,6 @@ import yaml
 sys.path.insert(0, str(Path(__file__).parent))
 import art_quality  # noqa: E402
 import consume_art_queue as consumer  # noqa: E402
-import semantic_art_quality  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 COLORING_ROOT = ROOT / "projects" / "coloring-book"
@@ -206,10 +205,6 @@ def mechanical(path: Path) -> tuple[bool, list[str], dict[str, Any]]:
     return bool(ok), [str(reason) for reason in reasons], info
 
 
-def semantic(path: Path, prompt: str) -> tuple[bool, dict[str, Any]]:
-    return semantic_art_quality.assess_semantic_file(path, prompt)
-
-
 def job_status(job_id: int) -> dict[str, Any] | None:
     status, response = consumer.http_json("GET", f"{consumer.KR_BASE_URL}/api/art/queue/{job_id}")
     if status != 200 or not response or not response.get("success"):
@@ -330,7 +325,7 @@ def generate_cover(
                 "previous_status": cover.get("status"),
                 "art_image_id": cover.get("art_image_id"),
                 "rendered_path": cover.get("rendered_path"),
-                "semantic_score": cover.get("semantic_score"),
+                "render_verdict": cover.get("render_verdict"),
                 "archived_path": archive_candidate(target),
             }
         )
@@ -343,12 +338,10 @@ def generate_cover(
             "rejected_path",
             "render_engine",
             "rendered_path",
-            "semantic_model",
-            "semantic_reasons",
-            "semantic_score",
-            "semantic_verdict",
+            "render_reasons",
+            "render_verdict",
         ):
-            cover[key] = None if key not in ("semantic_reasons",) else []
+            cover[key] = None if key not in ("render_reasons",) else []
         cover["status"] = "pending"
         write_queue(queue)
     elif str(cover.get("status") or "pending") in ("done", "approved", "final", "needs_review"):
@@ -363,47 +356,29 @@ def generate_cover(
         cover["status"] = "needs_review"
         cover["art_image_id"] = art_image_id
         cover["rejected_path"] = rejected
-        cover["semantic_verdict"] = "mechanical-reject"
-        cover["semantic_reasons"] = reasons
+        cover["render_verdict"] = "mechanical-reject"
+        cover["render_reasons"] = reasons
         cover["mechanical_info"] = info
         cover["completed_at"] = now_iso()
         write_queue(queue)
         print(f"  COVER-REVIEW {book_slug}: {'; '.join(reasons)} -> {rejected}")
         return False
 
-    accepted, review = semantic(target, prompt)
-    if not accepted:
-        rejected = reject_candidate(target, "semantic")
-        cover["status"] = "needs_review"
-        cover["art_image_id"] = art_image_id
-        cover["rejected_path"] = rejected
-        cover["semantic_model"] = review.get("model")
-        cover["semantic_score"] = review.get("score")
-        cover["semantic_verdict"] = review.get("verdict")
-        cover["semantic_reasons"] = review.get("reasons") or []
-        cover["completed_at"] = now_iso()
-        write_queue(queue)
-        print(
-            f"  COVER-REVIEW {book_slug}: "
-            + "; ".join(review.get("reasons") or [])
-            + f" -> {rejected}"
-        )
-        return False
-
+    # Structurally valid: land it and let a human decide whether it is any
+    # good. `done` means "render landed, awaiting review", not "approved".
     cover["status"] = "done"
     cover["art_image_id"] = art_image_id
     cover["rendered_path"] = str(target.relative_to(ROOT))
     cover["render_engine"] = str(cover.get("engine") or defaults.get("engine") or "krea2")
-    cover["semantic_model"] = review.get("model")
-    cover["semantic_score"] = review.get("score")
-    cover["semantic_verdict"] = review.get("verdict")
-    cover["semantic_reasons"] = review.get("reasons") or []
+    cover["render_verdict"] = "landed"
+    cover["render_reasons"] = []
+    cover["mechanical_info"] = info
     cover["completed_at"] = now_iso()
     cover["error"] = None
     write_queue(queue)
     print(
-        f"  COVER-DONE {book_slug} -> {target.relative_to(ROOT)} "
-        f"(ArtImage {art_image_id}, semantic={review.get('score')})"
+        f"  COVER-LANDED {book_slug} -> {target.relative_to(ROOT)} "
+        f"(ArtImage {art_image_id}) - awaiting human review"
     )
     return True
 
@@ -422,20 +397,6 @@ def accept_cover(book_slug: str, source_path: str | None = None) -> bool:
         cover["mechanical_info"] = info
         write_queue(queue)
         print(f"  COVER-REVIEW {book_slug}: {'; '.join(reasons)}")
-        return False
-
-    review_ok, review = semantic(path, clean(cover.get("prompt")))
-    cover["semantic_model"] = review.get("model")
-    cover["semantic_score"] = review.get("score")
-    cover["semantic_verdict"] = review.get("verdict")
-    cover["semantic_reasons"] = review.get("reasons") or []
-    if not review_ok:
-        cover["status"] = "needs_review"
-        write_queue(queue)
-        print(
-            f"  COVER-REVIEW {book_slug}: "
-            + "; ".join(review.get("reasons") or [])
-        )
         return False
 
     cover["status"] = "approved"
@@ -460,15 +421,7 @@ def finalize_cover(book_slug: str) -> bool:
     if not ok:
         cover["status"] = "needs_review"
         cover["mechanical_info"] = info
-        cover["semantic_reasons"] = reasons
-        write_queue(queue)
-        return False
-    review_ok, review = semantic(path, clean(cover.get("prompt")))
-    cover["semantic_score"] = review.get("score")
-    cover["semantic_verdict"] = review.get("verdict")
-    cover["semantic_reasons"] = review.get("reasons") or []
-    if not review_ok:
-        cover["status"] = "needs_review"
+        cover["render_reasons"] = reasons
         write_queue(queue)
         return False
 

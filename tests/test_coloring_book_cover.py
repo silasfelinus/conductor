@@ -126,12 +126,9 @@ cover:
         path = self.root / "kind-robots" / "generated" / "cover" / "kind-robots-cover.webp"
         path.parent.mkdir(parents=True)
         path.write_bytes(b"image")
-        review = {"model": "reviewer", "score": 92, "verdict": "promote", "reasons": []}
-
         with (
             patch.object(MODULE, "load_yaml", return_value=queue),
             patch.object(MODULE, "mechanical", return_value=(True, [], {})),
-            patch.object(MODULE, "semantic", return_value=(True, review)),
             patch.object(MODULE, "replace_ledger_cover_value") as replace,
             patch.object(MODULE, "write_queue") as write,
         ):
@@ -151,12 +148,19 @@ cover:
         )
         write.assert_called_once()
 
-    def test_semantic_rejection_is_terminal_review_not_acceptance(self) -> None:
+    def test_accept_consults_no_model(self) -> None:
+        """A human ran `--accept`. Nothing may re-litigate that decision."""
+        self.assertFalse(
+            hasattr(MODULE, "semantic"),
+            "the vision gate must not come back -- cover quality is a human call",
+        )
+
+    def test_mechanical_failure_still_blocks_acceptance(self) -> None:
         queue = {
             "covers": [
                 {
                     "book_slug": "kind-robots",
-                    "prompt": "A sufficiently detailed cover prompt for semantic review.",
+                    "prompt": "A sufficiently detailed cover prompt.",
                     "status": "done",
                     "rendered_path": "projects/coloring-book/sets/kind-robots/generated/cover/kind-robots-cover.webp",
                 }
@@ -165,17 +169,10 @@ cover:
         path = self.root / "kind-robots" / "generated" / "cover" / "kind-robots-cover.webp"
         path.parent.mkdir(parents=True)
         path.write_bytes(b"image")
-        review = {
-            "model": "reviewer",
-            "score": 45,
-            "verdict": "revise",
-            "reasons": ["title area is cluttered"],
-        }
 
         with (
             patch.object(MODULE, "load_yaml", return_value=queue),
-            patch.object(MODULE, "mechanical", return_value=(True, [], {})),
-            patch.object(MODULE, "semantic", return_value=(False, review)),
+            patch.object(MODULE, "mechanical", return_value=(False, ["blank frame"], {})),
             patch.object(MODULE, "replace_ledger_cover_value") as replace,
             patch.object(MODULE, "write_queue") as write,
         ):
@@ -186,7 +183,3 @@ cover:
         self.assertNotIn("accepted_path", queue["covers"][0])
         replace.assert_not_called()
         write.assert_called_once()
-
-
-if __name__ == "__main__":
-    unittest.main()
