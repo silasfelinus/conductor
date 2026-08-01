@@ -363,6 +363,18 @@ def record_semantic_rejection(
         source["status"] = next_status
         source.pop("art_image_id", None)
         source.pop("completed_at", None)
+        # A definitive semantic verdict just landed (whether from a fresh
+        # submission or a recovered job) -- any stale "job N ..." breadcrumb
+        # from a prior timeout/credential-wall failure no longer describes
+        # this entry's state and must not survive into the next pass.
+        # Leaving it would make referenced_job_id() keep pointing the next
+        # pass at the same already-rejected job forever: recover_timed_out_job()
+        # would keep "recovering" (re-fetching) the identical rejected image
+        # and re-running the semantic gate on it, never submitting a fresh,
+        # differently-seeded attempt (see t-022 2026-08-01: mr-001/005/006 were
+        # stuck re-judging the same rejected image across multiple hourly runs).
+        source.pop("semantic_gate_error", None)
+        source.pop("semantic_gate_error_at", None)
         if next_status == "pending" and bool(source.get("lock_seed")):
             # Locked concept: keep the deterministic seed rotation so a
             # reproducible render can still explore a few variants on retry.
