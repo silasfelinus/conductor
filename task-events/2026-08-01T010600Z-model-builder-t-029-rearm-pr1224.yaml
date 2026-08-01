@@ -1,0 +1,8 @@
+version: 1
+project: model-builder
+task: t-029
+operation: rearm
+owner: worker
+updated: '2026-08-01T01:06:00Z'
+note: >-
+  Reviewed and squash-merged kind_robots PR #1224 after all 11 checks passed. The fix blocks per-item Auto from racing a manual Generate candidate, Draft with AI, or Execute commit action on the same item, with matching UI disable state and regression coverage. Recurring polish task remains ready for a future bounded pass.
