@@ -806,7 +806,7 @@ tasks:
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
     status: ready
-    owner: worker
+    owner: null
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -827,8 +827,8 @@ tasks:
       magic-number/depth-12 cleanup the task note calls out. Re-arming to ready rather than closing --
       per this project's own rule, "do not close a task ... because the work feels done ... close it
       when the counter says so."
-    claimed_by: claude-2026-08-02T052639Z-t017
-    claimed_at: '2026-08-02T05:36:05Z'
+    claimed_by: null
+    claimed_at: null
     updated: '2026-08-02T05:40:21Z'
 
   - id: t-018
@@ -1392,6 +1392,28 @@ tasks:
       following the same per-type-section pattern (getStoreArray/getUserOwnedItems
       helpers already generalize cleanly), so "owned/created objects" is actually
       complete. Low risk, purely additive to an existing component.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-02T00:00:00Z'
+
+  - id: t-044
+    milestone: m3
+    title: 'Restructure artjob-queue-browser.vue: remove magic-number min-heights and depth-12 nesting'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-017's first pass (2026-08-02, kind_robots PR #1295). t-017's own note
+      names components/art/artjob-queue-browser.vue (614 template lines at depth 12, with
+      min-h-[720px]/min-h-[560px] magic numbers forcing ~1280px of height inside an
+      already-nested scroller) as a daily-driver offender (artjob queue is one of Silas's
+      most-used pages) — but none of it is caught by verifyLayoutContract.ts's six tracked
+      categories, so the t-017 ratchet will never surface it or force it to zero. Needs its
+      own scoped pass: reduce nesting depth, replace the magic-number min-heights with
+      content-driven sizing (or a documented, deliberate primitive if a fixed size is
+      genuinely required), and re-check against the layout contract afterward in case
+      flattening the structure incidentally trips one-scroll or zero-scroll.
     claimed_by: null
     claimed_at: null
     updated: '2026-08-02T00:00:00Z'
