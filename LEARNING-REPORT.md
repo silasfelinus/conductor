@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-02T02:27:37Z
+Generated: 2026-08-02T02:48:27Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **456**
-- Outcomes: blocked: 13, cancelled: 1, done: 442
+- Closed tasks recorded: **457**
+- Outcomes: blocked: 13, cancelled: 1, done: 443
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 15 | 100% |
+| interface-vision | 16 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 441 | 99% |
+| software | 442 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-02 `interface-vision/t-038` — When a task's own name echoes the parent it lives under (a 'dashboard' tab inside a 'user' dashboard, mounting user-dashboard.vue), check every sibling for the same slot before picking a fix -- every other dashboardConfigs entry already used a real content-named default tab key, so renaming to match that pattern was a smaller, safer diff than inventing new always-shown-default semantics from scratch.
 - 2026-08-02 `interface-vision/t-023` — Before sweeping a layout allow-list, audit exact-markup verifier locks so product cleanup updates the owning semantic contract instead of restoring obsolete markup.
 - 2026-08-02 `interface-vision/t-037` — The task note asked for 2-3 mockups since the fold "needs real product decisions," mirroring t-001/t-002's blank-canvas aesthetic-pick pattern -- but the three open questions here (does cockpit content collapse to one kr-toolbar line, do the two tab strips merge or does one become a dropdown, does the decorative wrapper become .kr-surface) were already answered by this project's own t-004 contract, which built kr-toolbar and kr-surface specifically for this shape of problem. Not every "needs product decisions" task is a blank aesthetic choice like theater/storybook/playground -- some are structural questions the project's existing rules already resolve. Building throwaway A/B/C toggle scaffolding for a question the contract already answers would have been the over-engineering the task itself warns against elsewhere. Also: vercel.json disables PR-preview deploys for claude/*/worker/*/ agent/*/conductor/* branches (cost-saving), so visual verification for agent-authored branches has to happen post-merge against the production deployment, not via a pre-merge Vercel preview -- AGENTS.md's documented preview technique (~L338-366) doesn't currently note this exception.
 
@@ -97,8 +98,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-01 `interface-vision/t-003b` — Flipping app.vue's shared shell from overflow-y-auto to overflow-hidden required auditing which of ~60 candidate page-level components actually needed their own scroll container vs. inherited one from an ancestor (pages/[...slug].vue's content-host for MDC routes, the shared ProjectFrontPage wrapper for conductor pages). A same-PR review catch (kr-hourly session) found the first push added scroll classes to six components that are mounted *inside* content-host, creating nested double-scroll regions -- the exact composition bug the task existed to fix. The file-by-file layout-contract verifier couldn't catch this because it has no parent/child composition awareness; grepping content/*.md for each candidate file's actual mount point before adding a scroll class (not just checking whether the file itself lacks one) would have caught it on the first pass. Fixed same-session via a follow-up commit once flagged. When a shared ancestor already owns scroll, verify a component is actually reachable outside that ancestor before adding its own overflow region -- otherwise ask "does this file's *rendering context* already scroll" before "does this file declare its own overflow."
 
-- 2026-08-01 `interface-vision/t-010` — Clean first-pass except for one CI miss caught by the pipeline itself: a new content/*.md page needs a matching content/channels/<channel>/ <tab>.md registration or verifyChannelContent.ts fails with "references unknown tab" -- worth checking for that registration file up front whenever adding a new channelKey/tabKey pair, not just when CI catches it. Also: when a task note bundles a well-scoped bug fix with a vaguer "and show X on cards" ask that has no existing data model to support it, splitting the vague half into its own ready task (rather than guessing at scope) kept this PR small and reviewable.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-02T02:27:37Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-02T02:48:27Z_
