@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Replace the legacy digest's fuzzy daily-dream selection with calendar truth.
+"""Replace the legacy digest's fuzzy daily-dream selection with creation truth.
 
 The legacy collector labels the newest built proposal "yesterday" forever. This
-post-processor keeps every unrelated digest field, but selects proposals by Pacific
-calendar date, creates one readable asset row per six-part bundle element, and probes
-known public image paths so freshly generated art can appear even before a later
-metadata attachment pass flips ``attached`` to true.
+post-processor keeps every unrelated digest field, selects today's proposal by Pacific
+calendar date, and selects the prior output from actual completed creations. It creates
+one readable asset row per six-part bundle element and probes known public image paths
+so freshly generated art can appear even before a later metadata attachment pass flips
+``attached`` to true.
 """
 
 from __future__ import annotations
