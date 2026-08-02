@@ -812,7 +812,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -858,10 +858,10 @@ tasks:
       Tenth scoped sweep: zero the remaining zero-scroll bucket (6 entries).
 
       Tenth sweep merged as Kind Robots PR #1319 (f13471f): social-page.vue, rebel-button.vue, pages/auth/google.vue, and pages/build-bench.vue each got a real kr-surface/kr-scroll owner. pages/build-bench.vue's scroll region moved up from its child BuildBench (previously the page's only content and its sole scroll owner) to the page itself, so there's exactly one scroll owner instead of a redundant nested one. kaizen-popup.vue and conductor-art-gallery.vue were both misclassified zero-scroll violations, not real standalone pages -- both are widgets embedded inside conductor-page.vue that only lived under components/pages/ by directory convention; moved to components/conductor/ (same fix the ninth sweep applied to plan-projects-grid.vue), updating the import in conductor-page.vue, the two verifier scripts referencing the old path, and the CI path filter in entity-art-manager-contract.yml. zero-scroll: 6 -> 0. Baseline ratcheted down via --update, all 15 checks green. Flagged for the Reviewer (not fixed in this sweep, out of scope): components/pages/rebel-button.vue appears unreachable from any live route -- content/button.md ("Rebel Button Room") currently mounts :lab-manager instead -- though it's still referenced by the achievement catalog (training/achievementData.ts) and historical WonderLab review-batch data. The layout-contract allow-list is not yet zero (one-scroll 31, own task t-047), so t-017 returns to ready for the next bounded sweep.
-    claimed_by: claude-quirky-curie-20260802T133151Z-t017
-    claimed_at: '2026-08-02T13:31:52Z'
-    updated: '2026-08-02T13:48:11Z'
-    owner: null
+    claimed_by: claude-quirky-curie-20260802T152959Z-t017
+    claimed_at: '2026-08-02T15:30:00Z'
+    updated: '2026-08-02T15:30:00Z'
+    owner: worker
 
   - id: t-018
     milestone: m3
