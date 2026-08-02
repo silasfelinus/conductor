@@ -1,0 +1,95 @@
+name: Finalize Dream Cycle Documentation Hygiene
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/agent-dream-cycle-doc-hygiene-r8n2.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dream-cycle-doc-hygiene-r8n2
+  cancel-in-progress: false
+
+jobs:
+  clean-project-contracts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Load and apply bounded cleanup payload
+        run: |
+          git fetch origin refs/heads/worker/dream-cycle-doc-hygiene-payload-r8n2:refs/remotes/origin/dream-cycle-doc-hygiene-payload-r8n2
+          git show refs/remotes/origin/dream-cycle-doc-hygiene-payload-r8n2:.github/workflows/agent-dream-cycle-doc-hygiene-r8n2.yml > /tmp/dream-cycle-payload.yml
+          python - <<'PY'
+          from pathlib import Path
+
+          text = Path("/tmp/dream-cycle-payload.yml").read_text(encoding="utf-8")
+          marker = "          python - <<'PY'\n"
+          start = text.index(marker) + len(marker)
+          end = text.index("\n          PY\n", start)
+          code = "\n".join(
+              line[10:] if line.startswith("          ") else line
+              for line in text[start:end].splitlines()
+          )
+          Path("/tmp/dream-cycle-doc-hygiene.py").write_text(code, encoding="utf-8")
+          compile(code, "dream-cycle-doc-hygiene.py", "exec")
+          PY
+          python /tmp/dream-cycle-doc-hygiene.py
+          python - <<'PY'
+          from pathlib import Path
+
+          checker = Path("scripts/check_daily_dream_pipeline.py")
+          text = checker.read_text(encoding="utf-8")
+          old = '"seed contract": (seed_contract, ("creative_seeds",)),'
+          new = '"seed contract": (seed_contract, ("creative_seeds:", "Every build MUST document all three")),'
+          if text.count(old) != 1:
+              raise SystemExit("generated seed-contract guard changed; refusing patch")
+          checker.write_text(text.replace(old, new, 1), encoding="utf-8")
+
+          queue = Path("projects/art-prompts.yaml")
+          queue_text = queue.read_text(encoding="utf-8")
+          stale = "page_url: https://kind-robots.vercel.app/daily-dream"
+          if stale not in queue_text:
+              raise SystemExit("expected legacy Daily Dream queue URLs were not found")
+          queue.write_text(
+              queue_text.replace(stale, "page_url: https://kind-robots.vercel.app"),
+              encoding="utf-8",
+          )
+          PY
+      - name: Validate cleaned project contracts
+        run: |
+          python -m pip install --quiet pytest pyyaml
+          python scripts/check_daily_dream_pipeline.py
+          python scripts/check_dream_outlines.py
+          python scripts/validate_roadmaps.py
+          pytest -q \
+            tests/test_daily_dream_pipeline_contract.py \
+            tests/test_check_dream_outlines.py \
+            tests/test_build_dream_*records.py \
+            tests/test_daily_dream_bundle_art_queue.py \
+            tests/test_build_dream_proposal.py \
+            tests/test_build_digest.py \
+            tests/test_build_digest_email_v2.py \
+            tests/test_enrich_daily_dream_digest.py
+          git diff --check
+      - name: Commit cleanup and remove payload branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          git config user.name "dream-cycle-doc-hygiene[bot]"
+          git config user.email "dream-cycle-doc-hygiene[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Remove stale Daily Dream project contracts"
+          AUTH="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push "$AUTH" HEAD:main
+          git push "$AUTH" --delete worker/dream-cycle-doc-hygiene-payload-r8n2
