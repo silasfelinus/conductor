@@ -7,6 +7,7 @@ an agent health check. It guards architecture, not production credentials.
 
 from __future__ import annotations
 
+import ast
 import sys
 from pathlib import Path
 
@@ -48,6 +49,24 @@ def _in_order(text: str, needles: tuple[str, ...]) -> bool:
     return True
 
 
+def _builder_call_count(source: str) -> int:
+    """Count executable build_dream_records.ensure_records() calls, not prose."""
+    tree = ast.parse(source)
+    count = 0
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call):
+            continue
+        func = node.func
+        if (
+            isinstance(func, ast.Attribute)
+            and func.attr == "ensure_records"
+            and isinstance(func.value, ast.Name)
+            and func.value.id == "build_dream_records"
+        ):
+            count += 1
+    return count
+
+
 def check_pipeline(root: Path = ROOT) -> list[str]:
     """Return human-readable contract violations, or an empty list when healthy."""
     errors: list[str] = []
@@ -61,11 +80,16 @@ def check_pipeline(root: Path = ROOT) -> list[str]:
     dream_spec = content[DREAM_SPEC]
     backlog_readme = content[BACKLOG_README]
 
-    if summary.count("build_dream_records.ensure_records(") != 1:
-        errors.append(
-            "build_conductor_summary.py must call "
-            "build_dream_records.ensure_records() exactly once"
-        )
+    try:
+        builder_calls = _builder_call_count(summary)
+    except SyntaxError as error:
+        errors.append(f"could not parse build_conductor_summary.py: {error}")
+    else:
+        if builder_calls != 1:
+            errors.append(
+                "build_conductor_summary.py must call "
+                "build_dream_records.ensure_records() exactly once"
+            )
 
     if hourly.count("python scripts/build_conductor_summary.py") != 1:
         errors.append(
