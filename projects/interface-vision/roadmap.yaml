@@ -812,7 +812,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -882,9 +882,9 @@ tasks:
       Sixteenth scoped sweep: components/user/login-page.vue (safe to convert -- pages/[...slug].vue special-cases this route with v-if="isLoginPath" and renders it directly, not through the ContentRenderer/content-host wrapper the rest of the bucket needs t-057's unbounded primitive for) and components/pages/welcome-page.vue (confirmed orphaned since the eleventh sweep flagged it -- no route, no MDC mount, no importer anywhere in the repo).
 
       Sixteenth sweep merged as Kind Robots PR #1329 (fc044fd). login-page.vue split into a kr-surface (bounded, keeps the background/decorative layers and centering) wrapping a kr-scroll (the one scroll region). welcome-page.vue deleted rather than converted, matching the "reclassify rather than force-fit" pattern earlier sweeps used for other misclassified entries. root-surface: 21 -> 19 via --update; all other buckets unchanged (one-scroll 27, its own follow-on task t-053). vue-tsc and eslint clean, all 14 checks green. The layout-contract allow-list is not yet zero, so t-017 returns to ready for the next bounded sweep; per this cycle's kaizen, most of what remains (13 of 19 root-surface entries) needs t-057's fifth "unbounded" primitive rather than another one-off conversion.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-02T19:38:32Z'
+    claimed_by: claude-conductor-agentrun-20260802T2237Z-iv-t017
+    claimed_at: '2026-08-02T22:36:48Z'
+    updated: '2026-08-02T22:36:48Z'
     owner: worker
 
   - id: t-018
