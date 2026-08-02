@@ -738,25 +738,15 @@ tasks:
   - id: t-014
     milestone: m2
     title: 'Build the first-launch intro and the user dashboard'
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-010
-    note: >
-      Phase 5.3/5.4, and the last thing needed before beta. First-launch intro: a
-      dismissible, re-openable walkthrough covering what Kind Robots is, what karma and
-      mana are and how they differ, what the seven object types are, and where to start.
-      Persist dismissal on the User record rather than localStorage so it follows the
-      account across devices; make it re-openable from the user dashboard.
-      User dashboard: one page exposing karma balance + history, mana balance + cap +
-      refill countdown, achievements, owned/created objects, theme, maturity and server
-      preferences. Build it on kr-surface + kr-toolbar + kr-scroll as the reference
-      implementation of the layout contract — if the contract cannot produce a clean
-      user dashboard, the contract is wrong and should be fixed here.
+    note: 'DONE 2026-08-02: kind_robots PR #1292 (merged). First-launch intro (components/user/first-launch-intro.vue + introStore.ts) built and mounted globally, auto-opens once per session for a logged-in user who has not dismissed it; dismissal persists on the new User.introDismissedAt field (additive migration) via PATCH /api/users/me/intro, and is re-openable from the dashboard toolbar. user-dashboard.vue rebuilt on kr-surface + kr-toolbar + kr-scroll, wiring in karma balance, mana balance/cap/refill countdown, an achievements summary, theme, a real showMature toggle, and server preferences -- reusing t-010s existing karma/mana/achievement plumbing. Scoped out (left for a follow-up): extending user-galleries.vue to cover Facets/Projects (still 5/7 object types).'
     claimed_by: 2026-08-02T032700Z-tv014
     claimed_at: '2026-08-02T03:27:38Z'
-    updated: '2026-08-02T03:27:38Z'
+    updated: '2026-08-02T05:05:15Z'
 
   - id: t-015
     milestone: m3
