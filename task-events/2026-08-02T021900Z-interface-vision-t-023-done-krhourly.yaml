@@ -1,0 +1,15 @@
+version: 1
+project: interface-vision
+task: t-023
+operation: done
+session: 2026-08-02T021118Z-interface-vision-t-023-7f3a
+updated: '2026-08-02T02:19:00Z'
+note: >-
+  Merged Conductor PR #1527. The composition-lock audit identifies Serendipity's exact-markup route contract as the only confirmed layout-sensitive lock and gives t-017 a concrete companion-contract checklist.
+learning:
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Before sweeping a layout allow-list, audit exact-markup verifier locks so product cleanup updates the owning semantic contract instead of restoring obsolete markup.'
