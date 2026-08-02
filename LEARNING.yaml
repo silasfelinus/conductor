@@ -5883,3 +5883,12 @@ records:
   failure_category: null
   lesson: Contract verifiers should emit concise pass/fail output; diagnostic source bundles need a real
     consumer or an explicit verbose mode.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-021
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Re-verifying flagged-orphan components before deletion (not trusting a prior audit's flag blind) caught two false positives with live contract usage.
