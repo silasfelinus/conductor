@@ -1038,8 +1038,8 @@ tasks:
   - id: t-024
     milestone: m2
     title: 'Re-scope t-008''s remaining migration targets: per-object assessment before touching any of them'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-008
@@ -1066,6 +1066,9 @@ tasks:
       migration task per object -- likely starting with whichever CRUD gallery has
       the fewest dropdown/row call sites to verify, since those 5 carry real breakage
       risk the project-gallery migration didn't. Do not attempt a wholesale swap.
+    claimed_by: 2026-08-02T181700Z-interface-vision-t-024-r6c1
+    claimed_at: '2026-08-02T18:17:00Z'
+    updated: '2026-08-02T18:17:00Z'
 
   - id: t-025
     milestone: m2
