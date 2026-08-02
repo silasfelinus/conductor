@@ -281,9 +281,24 @@ def append_art_requests(entries: list[str], dry_run: bool) -> None:
     text = ART_PROMPTS.read_text(encoding="utf-8")
     if "\nrequests:" not in text and not text.startswith("requests:"):
         text += "\nrequests:\n"
-    if not text.endswith("\n"):
-        text += "\n"
-    text += "".join(entries)
+    request_yaml = "".join(entries)
+    # requests is followed by other top-level collections (notably inspirations).
+    # Appending at EOF silently turns request rows into malformed members of the
+    # final collection. Insert immediately before the next top-level section.
+    request_header = re.search(r"(?m)^requests:\s*$", text)
+    next_section = (
+        re.search(r"(?m)^[A-Za-z][A-Za-z0-9_-]*:\s*$", text[request_header.end():])
+        if request_header else None
+    )
+    if request_header and next_section:
+        insertion = request_header.end() + next_section.start()
+        before = text[:insertion].rstrip() + "\n"
+        after = text[insertion:].lstrip("\n")
+        text = before + request_yaml + "\n" + after
+    else:
+        if not text.endswith("\n"):
+            text += "\n"
+        text += request_yaml
     if dry_run:
         print(f"  [dry-run] would append {len(entries)} art request(s) to projects/art-prompts.yaml")
         return
