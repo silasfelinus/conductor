@@ -10,7 +10,10 @@ def load_module():
     stub.proposal_section = None
     stub.build_payload = lambda digest: {
         "subject": "Digest",
-        "htmlContent": stub.proposal_section("🌙 Tomorrow's dream", digest.get("tomorrow_proposal"), cta=True),
+        "htmlContent": (
+            stub.proposal_section("🌙 Tomorrow's dream", digest.get("tomorrow_proposal"), cta=True)
+            + stub.proposal_section("🖼️ Previous completed output", digest.get("yesterday_output"))
+        ),
     }
     sys.modules["build_digest_email"] = stub
     path = Path(__file__).parents[1] / "scripts" / "build_digest_email_v2.py"
