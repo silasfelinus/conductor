@@ -151,11 +151,11 @@ tasks:
   - id: t-006
     milestone: m4
     title: 'Daily Dream maintenance: author proposals and verify the canonical pipeline'
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-02T22:09:00Z'
+    updated: '2026-08-02T22:31:00Z'
     depends_on: t-004
     note: |-
       CURRENT CONTRACT (2026-08-02): Daily dreams use the single path in projects/dream-cycle/PIPELINE.md: committed proposal, one Pacific steering day, transactional build_dream_records.py creation, Facet/art enrichment, then read-only digest reporting.
@@ -184,6 +184,9 @@ tasks:
       Prepared a bounded one-shot cleanup that renames t-006 and prepends the current single-pipeline contract above its historical staged-run notes, validates the roadmap and health guard, then removes its own workflow.
 
       Merged PR #1581 after Worker PR CI, Security Audit, and task-event validation completed successfully. The self-removing follow-up commit renamed t-006 and prepended the canonical proposal-to-builder maintenance contract, validated the single-writer health guard, preserved historical staged-run notes as audit-only, and removed its temporary workflow.
+    owner: worker
+    claimed_by: 2026-08-02T223100Z-dream-cycle-t-006-doc-hygiene-r8n2
+    claimed_at: '2026-08-02T22:31:00Z'
   - id: t-007
     milestone: m5
     title: Generate dream-cycle project art (icon, card, hero)
