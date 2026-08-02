@@ -10,7 +10,7 @@ on:
       - main
     paths:
       - ".github/workflows/hourly-conductor.yml"
-    # one-shot recovery nonce: 2026-08-02T20:44Z
+    # one-shot recovery nonce: 2026-08-02T20:50Z
   schedule:
     - cron: "0 * * * *"   # every hour on the hour
   workflow_dispatch:
@@ -55,6 +55,8 @@ jobs:
           DAILY_DREAM_BUILD_STATUS: /tmp/daily-dream-build-status.json
 
       - name: Attach daily-dream Facets
+        id: daily_dream_facets
+        continue-on-error: true
         run: |
           if [ "${{ inputs.dry_run }}" = "true" ]; then
             python scripts/apply_daily_dream_facets.py --dry-run
@@ -117,3 +119,7 @@ jobs:
           if result.get("status") == "failed":
               raise SystemExit(result.get("message") or "Daily-dream object creation failed.")
           PY
+          if [ "${{ steps.daily_dream_facets.outcome }}" != "success" ]; then
+            echo "::error::Daily-dream Facet attachment failed after the bundle ledger was committed."
+            exit 1
+          fi
