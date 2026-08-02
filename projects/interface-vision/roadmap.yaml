@@ -706,31 +706,34 @@ tasks:
   - id: t-038
     milestone: m2
     title: 'Un-nest user-manager -> user-dashboard and fix its duplicate profile-card header'
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-013
     note: >
-      Split from t-013 (2026-08-01, kind_robots PR #1283). Two confirmed issues in
-      components/user/user-manager.vue + components/user/user-dashboard.vue:
-      (1) user-manager.vue's tab list (dashboard/avatars/friends/achievements/
-      themes/chats) includes a tab literally named 'dashboard' whose only job is
-      to mount <user-dashboard>, i.e. a dashboard-tab named dashboard inside a
-      dashboard named dashboard, exactly as this project's notes_from_silas
-      described. Decide whether 'dashboard' should even be a selectable tab (vs.
-      always-shown default content with the other five as the actual tab strip)
-      and collapse the indirection. (2) user-dashboard.vue (line ~16) renders its
-      own icon+<h1>User Dashboard</h1>+subtitle profile-card header, duplicating
-      the global header per t-004's Header Rule — but unlike the bare <h1>
-      swaps t-004 already did elsewhere, this is a whole styled card (avatar-style
-      icon, title, subtitle), not a trivial tag-swap, and t-004 explicitly
-      deferred exactly this class of "known offender" rather than guess. Needs a
-      look at whether the icon+subtitle content is worth keeping as a slim
-      kr-toolbar line or should just go, per the same mockup-first rule as t-037.
+      DONE 2026-08-02: kind_robots PR #1289 (merged as 5c4c961, production
+      deployment dpl_5ryiDw7owmdTJFXeafRwiaBbeAsb confirmed READY with zero
+      runtime errors). Resolved by renaming the self-referential 'dashboard' tab
+      key to 'profile' in dashboardConfigs.user (stores/helpers/dashboardHelper.ts)
+      rather than removing it as a selectable tab -- every sibling dashboard
+      (bots, characters, dreams, etc.) keeps a real content-named default tab, so
+      this brings 'user' in line with that pattern instead of inventing new
+      always-shown-default semantics for the card-dock UI. Label, route, title,
+      and the user-dashboard.vue component itself are unchanged; propagated the
+      key rename to user-manager.vue and the six content pages referencing
+      dashboardTab: dashboard, and simplified navStore.ts's now-dead 'dashboard'
+      fallback special case (it only ever matched this one key). Removed
+      user-dashboard.vue's duplicate icon+<h1>+subtitle header card outright
+      (not a slimmed kr-toolbar version) per t-004's one-header rule and the same
+      t-037 precedent (structural question already answered by the established
+      contract, no mockup gate needed). Verified: vue-tsc clean, eslint clean,
+      test:nav-manifest 0 errors (same 9 pre-existing warnings, none touching
+      this PR's files), test:channel-content passed, all 14 kind_robots CI
+      checks green.
     claimed_by: 2026-08-02T022705-interface-vision-t-038
     claimed_at: '2026-08-02T02:27:05Z'
-    updated: '2026-08-02T02:27:05Z'
+    updated: '2026-08-02T02:42:18Z'
 
   - id: t-014
     milestone: m2
@@ -1314,3 +1317,30 @@ tasks:
       per the standing merge instruction, then poll list_deployments for the
       resulting production deploy, fetch the relevant route once READY, and
       check get_runtime_errors) instead of looking for a preview first.
+
+  - id: t-041
+    milestone: m2
+    title: 'Audit the 9 pre-existing test:nav-manifest warnings for the same stale-dashboardTab bug class as t-038'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: null
+    note: >
+      Kaizen from t-038 (2026-08-02, kind_robots PR #1289). `npm run
+      test:nav-manifest` currently reports 9 warnings (tracked generically by
+      t-034), several of which look like the same class of bug t-038 fixed --
+      a content page's `dashboardTab` frontmatter pointing at a tab key that
+      doesn't actually exist on the named `dashboardKey`, silently falling back
+      to that dashboard's defaultTab instead of the intended tab. At least four
+      look concrete rather than cosmetic: content/channels/sanctuary/about.md,
+      giving.md, subscriptions.md, and butterflies.md (tabKey: sanctuary) all
+      set `dashboardTab` values ('about', 'giving', 'subscriptions', 'sanctuary')
+      against `dashboardKey: giftshop`, but none of those strings are real tabs
+      of the `giftshop` dashboard in dashboardConfigs -- worth checking whether
+      they were meant to target a different dashboardKey entirely (a 'sanctuary'
+      or similar dashboard that doesn't exist yet) or just have the wrong tab
+      name. Read each of the 9 warnings' actual page + dashboard, decide per-case
+      whether the fix is a `dashboardTab` correction (t-038's pattern) or the
+      `dashboardKey` itself is wrong, and clear as many as land safely; leave a
+      note on any that need a product decision.
