@@ -812,7 +812,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -878,9 +878,9 @@ tasks:
       Fifteenth scoped sweep: pages/coloring-page.vue and pages/resources.vue, both real standalone routed pages (not MDC-mounted), the same low-risk class of fix as sweeps ten through fourteen.
 
       Fifteenth sweep merged as Kind Robots PR #1327 (40647cf, squashed). pages/coloring-page.vue: split its mixed centering+scroll root into a kr-surface (keeps mx-auto/max-w-4xl) wrapping a kr-scroll (keeps the gap/padding/content). pages/resources.vue: root and inner-scroll classes already matched kr-surface/kr-scroll's utility values almost exactly, just not using the named primitives -- swapped to the shared classes with no behavior change. root-surface: 23 -> 21 via --update; one-scroll and all other buckets unchanged (one-scroll 27, own task t-047). vue-tsc and eslint clean on both files; all 13 PR checks green. Filed t-057 as this cycle's kaizen: most remaining root-surface entries are MDC-mounted -page.vue components that the eleventh sweep flagged as unsafe to convert without a fifth "unbounded" primitive (kr-surface/kr-stage both force overflow-hidden, which could clip long-form content relying on pages/[...slug].vue's ContentRenderer host for scroll) -- that primitive was proposed then but never built, and it's the real blocker on the largest remaining chunk of this bucket. The layout-contract allow-list is not yet zero, so t-017 returns to ready for the next bounded sweep.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-02T18:47:45Z'
+    claimed_by: claude-quirky-curie-20260802T192841Z-t017
+    claimed_at: '2026-08-02T19:28:42Z'
+    updated: '2026-08-02T19:28:42Z'
     owner: worker
 
   - id: t-018
