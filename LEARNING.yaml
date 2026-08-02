@@ -5812,3 +5812,20 @@ records:
     dismissal). Deliberately scoped out extending user-galleries.vue to the
     remaining two object types (Facets/Projects) rather than let the task grow
     past its landable core -- filed as a kaizen suggestion instead.
+- date: 2026-08-02
+  project: interface-vision
+  task: t-018
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    The task note's orphan-audit claim ("only 6 components use displayStore.ts")
+    was wrong in a load-bearing way -- it missed memoryStore.ts (a store, not a
+    component) reading displayStore.viewportSize to size the live, routed Memory
+    Dungeon board, and kind-loader.vue calling displayStore.initialize() as real
+    app-startup wiring. Investigating before deleting (grep ALL importers, not
+    just the ones matching the expected shape) caught this before it shipped as
+    a silent behavior regression; the store was left in place and split into its
+    own follow-up task (t-045) instead of forced through under the cleanup label.
