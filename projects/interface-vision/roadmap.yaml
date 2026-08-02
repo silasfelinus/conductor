@@ -1951,3 +1951,84 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-02T15:40:00Z'
+
+  - id: t-061
+    milestone: m3
+    title: 'A CI step piped through tee can never fail: verifyFacetArtworkMigration is dead'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found while consolidating the facet artwork chain (kind_robots, t-055 follow-on).
+      Two separate problems, and the second is the one that matters beyond this one script.
+
+      FIRST: utils/scripts/verifyFacetArtworkMigration.ts is currently FAILING on main, and
+      has been for some time. It asserts components/facets/facet-manager.vue contains
+      `v-model="newImagePath"` among a list of artwork-migration texts, and that string is
+      gone. Confirmed by stashing all local work and re-running against a clean tree. The
+      contract describes a migration whose UI has since moved on; it needs either updating to
+      the current facet-manager or retiring.
+
+      SECOND, and the reusable lesson: nobody noticed because the check CANNOT FAIL.
+      .github/workflows/facet-catalog-contract.yml:125 runs it as
+      `npx tsx utils/scripts/verifyFacetArtworkMigration.ts 2>&1 | tee facet-artwork-report.txt`.
+      A pipeline's exit status is the LAST command's, so the step always exits 0 no matter
+      what the verifier does. The `if: failure() && steps.artwork.outcome == 'failure'`
+      artifact upload that follows it is therefore unreachable too. This is the same class of
+      bug as a test that never asserts: the job is green, the badge is green, and the check
+      has been inert.
+
+      Fix the pipeline first (`set -o pipefail`, or drop the tee and rely on the workflow log),
+      THEN fix or retire the contract -- in that order, because fixing the contract while the
+      step is still inert proves nothing. While there, grep the other workflows for the same
+      `| tee` shape; if this one drifted in, others may share it.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-02T21:15:00Z'
+
+  - id: t-062
+    milestone: m2
+    title: 'kr-gallery cannot absorb the five rich-card galleries as it stands'
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Blocks the back half of t-055, and changes what that task is. Facets adopted cleanly
+      (kind_robots PR #1334) because it renders plain cards. The other five do not, and the
+      reason is structural rather than effort:
+
+      (1) THEY DELEGATE TO RICH PER-OBJECT CARDS. bot-gallery mounts bot-card (479 lines),
+      reward-gallery mounts reward-card (464), character-gallery mounts character-card (449),
+      dream-gallery mounts dream-card (571), scenario-gallery mounts scenario-card (300).
+      Those cards carry select/edit/delete emits, art loading, karma badges and review
+      affordances. kr-gallery renders its OWN <button> with title/description/meta/badges and
+      offers only an `item-trailing` slot -- there is no slot for the item body, so adopting
+      it today means replacing a rich card with a generic one. That is a straight regression,
+      and DESIGN-BRIEF.md explicitly warns this project is "not a .kr-panel crusade" because
+      forcing bespoke surfaces onto shared classes already regressed crafted UI once
+      (global-ui t-012/t-023).
+
+      (2) THEIR LAYOUTS ARE NOT kr-gallery'S FOUR MODES. bot-gallery and reward-gallery each
+      have exactly two: a scoped `.bot-grid` / `.reward-grid` using
+      `repeat(auto-fill, minmax(160px, 1fr))`, and a `.bot-row` / `.reward-row` that is a
+      HORIZONTAL scroller (`display:flex; overflow-x:auto`) for their dropdown/row variants.
+      kr-gallery's cards/heroes/icons/list are fixed breakpoint grids; nothing in it is a
+      horizontal scroller. Mapping row->list would visibly change both layouts on surfaces
+      Silas uses daily.
+
+      So the honest reading is that kr-gallery encodes the PROJECT gallery's vocabulary --
+      unsurprising, it was extracted from conductor-project-gallery-page.vue in t-008 -- and
+      "all seven core objects share one gallery" may mean one SHELL (grid classes, skeleton,
+      error, empty, mode bar, preference persistence) hosting each object's own card, not one
+      card. NEEDS-HUMAN because that is a product decision about how uniform the galleries
+      should look, not a refactor: (a) give kr-gallery a default item slot plus the two
+      missing layouts and adopt shell-only, keeping each rich card; (b) converge the five
+      cards onto one shared card and accept the visual change; or (c) restate the beta gate.
+
+      Whichever way it goes, verify on the Vercel preview per AGENTS.md -- these are daily
+      drivers and no source-text contract can judge a grid change.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-02T21:15:00Z'
