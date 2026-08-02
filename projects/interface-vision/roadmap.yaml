@@ -1038,37 +1038,19 @@ tasks:
   - id: t-024
     milestone: m2
     title: 'Re-scope t-008''s remaining migration targets: per-object assessment before touching any of them'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-008
-    note: >
-      t-008 (kind_robots PR #1265) built the shared kr-gallery shell and migrated the
-      ONE genuine match for its "near-duplicate browse gallery" premise: the conductor
-      project gallery. Before implementing, I read all 7 objects the original task
-      named and the premise does not hold for the rest:
-      components/{bots,dreams,rewards,characters,scenarios}/*-gallery.vue (566-1035
-      lines each) are not passive browse galleries at all -- each shares its own
-      distinct dashboard/row/dropdown-variant pattern with add/edit/clone/delete CRUD,
-      store-integrated selection, and inline forms, used as reusable pickers elsewhere
-      in the app (dropdown mode). Swapping any of these onto the passive kr-gallery
-      shell risks breaking every picker/dropdown call site and can't be verified
-      without exhaustively finding and exercising each usage -- not something to
-      attempt blind in one pass.
-      components/facets/facet-gallery.vue is a taxonomy-grouped search/filter view
-      (unrelated structure). components/conductor/project-gallery-strip.vue is a
-      per-project ArtCollection image strip, not a cross-project picker.
-      components/pages/plan-projects-grid.vue is a small content-collection-driven
-      list with a different data source and no view modes.
-      This task is: for each of the 7, decide (with real evidence, not the original
-      assumption) whether kr-gallery applies at all, and if so scope a focused
-      migration task per object -- likely starting with whichever CRUD gallery has
-      the fewest dropdown/row call sites to verify, since those 5 carry real breakage
-      risk the project-gallery migration didn't. Do not attempt a wholesale swap.
+    note: |-
+      t-008 (kind_robots PR #1265) built the shared kr-gallery shell and migrated the ONE genuine match for its "near-duplicate browse gallery" premise: the conductor project gallery. Before implementing, I read all 7 objects the original task named and the premise does not hold for the rest: components/{bots,dreams,rewards,characters,scenarios}/*-gallery.vue (566-1035 lines each) are not passive browse galleries at all -- each shares its own distinct dashboard/row/dropdown-variant pattern with add/edit/clone/delete CRUD, store-integrated selection, and inline forms, used as reusable pickers elsewhere in the app (dropdown mode). Swapping any of these onto the passive kr-gallery shell risks breaking every picker/dropdown call site and can't be verified without exhaustively finding and exercising each usage -- not something to attempt blind in one pass. components/facets/facet-gallery.vue is a taxonomy-grouped search/filter view (unrelated structure). components/conductor/project-gallery-strip.vue is a per-project ArtCollection image strip, not a cross-project picker. components/pages/plan-projects-grid.vue is a small content-collection-driven list with a different data source and no view modes. This task is: for each of the 7, decide (with real evidence, not the original assumption) whether kr-gallery applies at all, and if so scope a focused migration task per object -- likely starting with whichever CRUD gallery has the fewest dropdown/row call sites to verify, since those 5 carry real breakage risk the project-gallery migration didn't. Do not attempt a wholesale swap.
+
+
+      Completed the live-code classification of the remaining gallery candidates and documented which shared abstractions are safe versus which product behaviors must remain object-owned.
     claimed_by: 2026-08-02T181700Z-interface-vision-t-024-r6c1
     claimed_at: '2026-08-02T18:17:00Z'
-    updated: '2026-08-02T18:17:00Z'
+    updated: '2026-08-02T18:19:00Z'
 
   - id: t-025
     milestone: m2
