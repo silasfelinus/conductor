@@ -952,8 +952,8 @@ tasks:
   - id: t-020
     milestone: m2
     title: 'Wire achievement confirmation into the real karma/mana ledgers'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -967,6 +967,9 @@ tasks:
       award amounts (Silas tunes the numbers per karma.ts's own convention), and call
       awardKarma()/applyMana() from the achievement-confirm endpoint server-side —
       not from the client, to avoid recreating the exact bug t-010 just fixed.
+    claimed_by: 2026-08-02T120700Z-interface-vision-t-020-a91c
+    claimed_at: '2026-08-02T12:07:00Z'
+    updated: '2026-08-02T12:07:00Z'
 
   - id: t-021
     milestone: m3
