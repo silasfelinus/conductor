@@ -5977,3 +5977,28 @@ records:
   lesson: Similar-looking gallery grids may own fundamentally different picker, CRUD, taxonomy, or relationship
     behavior. Classify live responsibilities and callers before extracting a shared shell; reuse behavior-neutral
     primitives rather than forcing a passive browse abstraction onto stateful tools.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-053
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A content page mounting the wrong component doesn't error -- it silently renders
+    whatever the mount resolves to (content/button.md mounted :lab-manager since its
+    creation in PR #1280, a copy-paste mistake with no route in that component's own
+    tab mapping; /button just fell back to WonderLab's review UI). git blame the file's
+    origin before assuming a mount was ever correct and later drifted. Separately: fixing
+    the mount is not automatically safe on its own -- mounting a component via MDC for
+    the first time can expose a pre-existing kr-surface/kr-scroll violation that
+    verifyMdcScrollOwnership.ts (not just verifyLayoutContract.ts) will catch, since an
+    MDC-mounted page must not fight pages/[...slug].vue's content-host for scroll
+    ownership. With no local dev server (DB unreachable) and no Vercel PR-preview for
+    agent branches (vercel.json exclusion), match the proven-safe pattern already used
+    by other MDC-mounted -page.vue components (plain divs, no scroll classes) rather
+    than guessing whether kr-surface's h-full behaves inside an auto-height flex host --
+    and widen the root-surface allow-list deliberately (documented, not gamed) rather
+    than force a scroll primitive onto a component the checker didn't originally
+    evaluate as MDC-mounted.
