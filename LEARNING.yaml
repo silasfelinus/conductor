@@ -5936,3 +5936,16 @@ records:
   failure_category: null
   lesson: When two CI scripts parse the same authored tree, keep one implementation and preserve old script
     names only as compatibility aliases so workflow callers do not drift.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'verifyLayoutContract.ts''s root-tag regex only matches lowercase-first tag names, so a
+    page component whose own template root is a PascalCase component reference (e.g. <ProjectFrontPage>)
+    can never satisfy root-surface, even with the correct class present. When a shared shell is
+    invoked from many call sites, check whether the checker can even parse the call site''s own root
+    tag before assuming a class-attribute fix will register — filed t-055 to fix the regex itself.'

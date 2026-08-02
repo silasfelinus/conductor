@@ -812,7 +812,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -862,10 +862,14 @@ tasks:
       Eleventh scoped sweep: Silas directly added a new `root-surface` rule (kind_robots PR #1320, 51-file baseline) requiring every page component's root wrapper to carry the kr-surface/kr-stage class -- a bucket t-017's own notes hadn't tracked yet. Targeted this instead of one-scroll (unchanged at 27, own task t-047).
 
       Eleventh sweep merged as Kind Robots PR #1322 (squashed 0893da8): restructured 8 standalone routed pages -- confirmed via a content/**/*.md mount-directive scan that none are MDC-mounted, so each genuinely owns its own scroll -- from a bare h-full/overflow-y-auto root into a real kr-surface (bounded, non-scrolling) wrapping a kr-scroll (the one scroll region): components/pages/click-leaderboard.vue, components/pages/sponsor-page.vue, pages/music-mentor.vue, pages/plan/wonderlab/commentary-guide.vue, pages/play/challenges/[slug].vue, pages/play/challenges/leaderboard.vue, pages/play/video-generator.vue, pages/users/[id].vue. vue-tsc and eslint clean on all 8. root-surface: 51 -> 43 via --update; all other buckets unchanged (one-scroll 27, own task t-047). Left out of this pass, flagged for the next: error.vue and login-page.vue (both center content with items-center/justify-center on the same element that also scrolls -- needs the centering moved into the kr-scroll layer, a different restructuring than the simple single-scroll-region pages here); welcome-page.vue (no importers found outside its own file and generated registries -- looks orphaned, better suited to an orphan-cleanup task than a real fix). Flagged for Silas: most of the remaining 43 root-surface entries are MDC-mounted -page.vue components (about-page.vue, registration-page.vue, wallet-page.vue, login-page.vue, etc.) embedded inside pages/[...slug].vue's own scrolling content-host -- kr-surface/kr-stage both force overflow-hidden, which could clip long-form content that currently relies on the parent's scroll to grow past the viewport, since ContentRenderer doesn't give the child a flex context to safely self-bound. These may need a fourth primitive (an unbounded marker class with no overflow/height behavior) before they can be swept safely; filed as this cycle's kaizen. The layout-contract allow-list is not yet zero, so t-017 returns to ready for the next bounded sweep.
-    claimed_by: claude-quirky-curie-20260802T162726
-    claimed_at: '2026-08-02T16:27:27Z'
-    updated: '2026-08-02T16:27:27Z'
-    owner: reviewer
+
+      Twelfth scoped sweep: two distinct causes behind 15 of the 43 root-surface entries. The shared project-front-page.vue shell (used by 13 public project pages -- challenge-center, coat-dance, conductor-app, davinci, humboldt-scoop, newsfeed, packmaker, ruler-hooked, scoop-cms, sketchy, voice-lab, watchlist, coloring-book -- all MDC-mounted via content/**/*.md) mixed scroll ownership onto its own root div instead of a kr-surface/kr-scroll split.
+
+      Merged as Kind Robots PR #1324 (4eb832c): restructured project-front-page.vue to a real kr-surface (bounded, non-scrolling) wrapping a kr-scroll (the one scroll region), same pattern as the eleventh sweep. Passed class="kr-surface" through each of the 13 call sites -- but those call sites invoked the shell as <ProjectFrontPage> (PascalCase), which verifyLayoutContract.ts's root-tag regex can never match, since it only recognizes lowercase-first tag names; switched them to Nuxt's equivalent kebab-case <project-front-page>, a template-only rename with no behavior change, so the checker can actually see the class. Also fixed storybook-page.vue: it already had kr-surface on its root <section>, but a multi-line comment sitting between <template> and the root tag defeated the same regex -- moved the comment above <template>. The eleventh sweep's caution about MDC-mounted -page.vue components possibly needing a height context before a safe kr-surface conversion doesn't apply here: project-front-page.vue's root already carried h-full before this change (unchanged), so no new height constraint was introduced -- only which of two nested divs owns the overflow property changed, not whether a bounding ancestor exists. vue-tsc and eslint clean on all 15 touched files. root-surface: 43 -> 28 via --update; one-scroll unchanged (27, own task t-047). Filed as this cycle's kaizen: verifyLayoutContract.ts's rootClassList regex should match PascalCase component tags too, so future root-surface fixes on component-rooted wrappers don't need an incidental kebab-case rename to be recognized. The layout-contract allow-list is not yet zero, so t-017 returns to ready for the next bounded sweep.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-02T16:41:53Z'
+    owner: null
 
   - id: t-018
     milestone: m3
@@ -1656,3 +1660,30 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-02T15:52:00Z'
+
+  - id: t-055
+    milestone: m3
+    title: 'Fix verifyLayoutContract.ts root-tag regex to recognize PascalCase component tags'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-017's twelfth sweep (2026-08-02, kind_robots PR #1324).
+      verifyLayoutContract.ts's rootClassList() extracts a template's root tag with
+      `/^<([a-z][\w-]*)\b([^>]*)>/` -- the `[a-z]` only matches a lowercase first
+      character, so any page component whose own template root is a PascalCase
+      component reference (e.g. `<ProjectFrontPage class="kr-surface" ...>`) can
+      never match, regardless of whether the class attribute is actually present and
+      correct. This sweep worked around it by renaming 13 call sites from
+      `<ProjectFrontPage>` to Nuxt's equivalent kebab-case `<project-front-page>`
+      (harmless -- Vue/Nuxt resolve both identically -- but incidental, and it will
+      recur for any other component-rooted page wrapper written in PascalCase).
+      Change the regex's tag-name character class to accept an uppercase first
+      character too (e.g. `[A-Za-z]`) so root-surface detection judges the actual
+      class attribute instead of depending on the caller's tag-case convention. Add a
+      regression fixture (a page component whose root is a PascalCase tag carrying
+      kr-surface) so this doesn't silently regress.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-02T16:41:53Z'
