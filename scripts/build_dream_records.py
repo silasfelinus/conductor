@@ -275,23 +275,56 @@ def art_request_entry(slug: str, element_slug: str, label: str, prompt: str) -> 
     return req_id, image_path, yaml_text
 
 
+def _art_request_id(entry: str) -> Optional[str]:
+    """Extract one request ID from a comment-preserving YAML fragment."""
+    match = re.search(r"(?m)^-\s+id:\s*(['\"]?)([^'\"\n]+)\1\s*$", entry)
+    return match.group(2).strip() if match else None
+
+
 def append_art_requests(entries: list[str], dry_run: bool) -> None:
     if not entries:
         return
     text = ART_PROMPTS.read_text(encoding="utf-8")
     if "\nrequests:" not in text and not text.startswith("requests:"):
         text += "\nrequests:\n"
-    request_yaml = "".join(entries)
-    # requests is followed by other top-level collections (notably inspirations).
-    # Appending at EOF silently turns request rows into malformed members of the
-    # final collection. Insert immediately before the next top-level section.
+
+    # Only inspect the requests collection. Other top-level collections can
+    # legitimately contain unrelated id fields.
     request_header = re.search(r"(?m)^requests:\s*$", text)
-    next_section = (
-        re.search(r"(?m)^[A-Za-z][A-Za-z0-9_-]*:\s*$", text[request_header.end():])
-        if request_header else None
+    if request_header is None:
+        raise ValueError("art prompt queue has no requests section")
+    request_start = request_header.end()
+    next_section = re.search(
+        r"(?m)^[A-Za-z][A-Za-z0-9_-]*:\s*$",
+        text[request_start:],
     )
-    if request_header and next_section:
-        insertion = request_header.end() + next_section.start()
+    insertion = request_start + next_section.start() if next_section else len(text)
+    request_id_pattern = re.compile(
+        r"(?m)^-\s+id:\s*(['\"]?)([^'\"\n]+)\1\s*$"
+    )
+    existing_ids = {
+        match.group(2).strip()
+        for match in request_id_pattern.finditer(text[request_start:insertion])
+    }
+
+    unique_entries: list[str] = []
+    seen_ids = set(existing_ids)
+    skipped = 0
+    for entry in entries:
+        request_id = _art_request_id(entry)
+        if request_id and request_id in seen_ids:
+            skipped += 1
+            continue
+        if request_id:
+            seen_ids.add(request_id)
+        unique_entries.append(entry)
+
+    if not unique_entries:
+        print(f"  skipped {skipped} already-queued art request(s)")
+        return
+
+    request_yaml = "".join(unique_entries)
+    if next_section:
         before = text[:insertion].rstrip() + "\n"
         after = text[insertion:].lstrip("\n")
         text = before + request_yaml + "\n" + after
@@ -300,11 +333,16 @@ def append_art_requests(entries: list[str], dry_run: bool) -> None:
             text += "\n"
         text += request_yaml
     if dry_run:
-        print(f"  [dry-run] would append {len(entries)} art request(s) to projects/art-prompts.yaml")
+        print(
+            f"  [dry-run] would append {len(unique_entries)} art request(s) "
+            f"and skip {skipped} duplicate(s)"
+        )
         return
     ART_PROMPTS.write_text(text, encoding="utf-8")
-    print(f"  appended {len(entries)} art request(s) to projects/art-prompts.yaml")
-
+    print(
+        f"  appended {len(unique_entries)} art request(s) "
+        f"and skipped {skipped} duplicate(s)"
+    )
 
 # ── Backlog file bookkeeping ───────────────────────────────────────────
 
