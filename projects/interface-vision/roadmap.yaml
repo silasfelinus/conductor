@@ -812,7 +812,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -882,6 +882,10 @@ tasks:
       Sixteenth scoped sweep: components/user/login-page.vue (safe to convert -- pages/[...slug].vue special-cases this route with v-if="isLoginPath" and renders it directly, not through the ContentRenderer/content-host wrapper the rest of the bucket needs t-057's unbounded primitive for) and components/pages/welcome-page.vue (confirmed orphaned since the eleventh sweep flagged it -- no route, no MDC mount, no importer anywhere in the repo).
 
       Sixteenth sweep merged as Kind Robots PR #1329 (fc044fd). login-page.vue split into a kr-surface (bounded, keeps the background/decorative layers and centering) wrapping a kr-scroll (the one scroll region). welcome-page.vue deleted rather than converted, matching the "reclassify rather than force-fit" pattern earlier sweeps used for other misclassified entries. root-surface: 21 -> 19 via --update; all other buckets unchanged (one-scroll 27, its own follow-on task t-053). vue-tsc and eslint clean, all 14 checks green. The layout-contract allow-list is not yet zero, so t-017 returns to ready for the next bounded sweep; per this cycle's kaizen, most of what remains (13 of 19 root-surface entries) needs t-057's fifth "unbounded" primitive rather than another one-off conversion.
+
+      Seventeenth scoped sweep: components/pages/serendipity-page.vue. Root-surface count had grown to 20 by this cycle (kind_robots PR #1332 legitimately added components/pages/rebel-button.vue as a root-surface entry, matching the ~13-strong MDC-mounted group pending t-057). serendipity-page.vue is also MDC-mounted (content/serendipity.md) but, unlike that group, was already self-bounding: its root already declared kr-surface's exact computed styles by hand (flex h-full min-h-0 w-full flex-col overflow-hidden, plus its own gap-4), and its one scroll region already matched kr-scroll's utilities verbatim -- a genuinely safe, zero-behavior-change swap today, not one that needs t-057's unbounded primitive.
+
+      Seventeenth sweep merged as Kind Robots PR #1336 (a32127c). serendipity-page.vue's root swapped to kr-surface (keeping its gap-4 override and decorative classes) wrapping kr-scroll on the message-feed region. root-surface: 20 -> 19 via --update; all other buckets unchanged (one-scroll 27, its own task t-053). vue-tsc and eslint clean, all 15 PR checks green including layout-contract, verifyMdcScrollOwnership.ts (24 existing violations, no new ones), test:channel-content, test:nav-manifest. The layout-contract allow-list is not yet zero, so t-017 returns to ready for the next bounded sweep; remaining root-surface is 12 MDC-mounted entries still blocked on t-057's unbounded primitive (about-page, appmaker-page, for-you-manager, giving-page, memory-dungeon, mermaids-page, privacy-page, rebel-button, storybook-library-page, super-form, wallet-page, wishmaster-page, registration-page), plus conductor-page.vue (its own large, tracked conversion, t-061), pages/[...slug].vue (the ContentRenderer host itself -- converting its root would need its own careful review given every MDC-mounted page depends on it), and the 4 admin wonderlab-review-*.vue pages (deliberately last).
     claimed_by: null
     claimed_at: null
     updated: '2026-08-02T19:38:32Z'
