@@ -1169,8 +1169,7 @@ tasks:
   - id: t-029
     milestone: m2
     title: 'Build an Achievement art admin UI'
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-009
@@ -1179,9 +1178,11 @@ tasks:
 
 
       Added an administrator-only achievement artwork page in Kind Robots that loads achievement definitions from the canonical store and mounts EntityArtManager for generation, upload, replacement, and history handling.
+
+      Merged Kind Robots PR #1337 as efe354393ad7eee6cbe2a1b94d1914963c22fbc6. The administrator-only achievement artwork page now uses the canonical Achievement fields, preserves the single-scroll layout contract, and mounts EntityArtManager for durable generation, upload, replacement, and history handling. All 12 final-head workflows completed successfully.
     claimed_by: 2026-08-02T231329Z-interface-vision-t-029-f4c8
     claimed_at: '2026-08-02T23:13:29Z'
-    updated: '2026-08-02T23:22:15Z'
+    updated: '2026-08-02T23:25:00Z'
 
   - id: t-030
     milestone: m2
