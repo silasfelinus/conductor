@@ -90,6 +90,8 @@ jobs:
           PY
           python /tmp/dream-cycle-doc-hygiene.py
           python - <<'PY'
+          import json
+          import re
           from pathlib import Path
 
           checker = Path("scripts/check_daily_dream_pipeline.py")
@@ -150,6 +152,74 @@ jobs:
           text = text[:guard_start] + guard + text[main_start:]
           compile(text, str(checker), "exec")
           checker.write_text(text, encoding="utf-8")
+
+          required_assets = {"vibe", "location", "character", "reward_item", "reward_skill", "scenario"}
+
+          def is_canonical(data):
+              if not isinstance(data, dict):
+                  return False
+              facets = data.get("seed_facets")
+              elements = facets.get("elements") if isinstance(facets, dict) else None
+              if not isinstance(facets, dict) or int(facets.get("version") or 0) < 2:
+                  return False
+              if not isinstance(elements, dict) or not required_assets.issubset(elements):
+                  return False
+              if not isinstance(data.get("vibe"), dict):
+                  return False
+              if len(data.get("locations") or []) != 1:
+                  return False
+              if len(data.get("characters") or []) != 1:
+                  return False
+              if len(data.get("rewards") or []) != 2:
+                  return False
+              if len(data.get("scenarios") or []) != 1:
+                  return False
+              reward_types = {
+                  str(row.get("reward_type", "")).upper()
+                  for row in data.get("rewards", [])
+                  if isinstance(row, dict)
+              }
+              return reward_types == {"ITEM", "SKILL"} and not data.get("narrator")
+
+          demoted = []
+          note = "- 2026-08-02 | retired | pre-v2 proposal demoted to idea inventory; not eligible for object creation"
+          for path in sorted(Path("projects/dream-cycle/backlog").glob("*.md")):
+              source = path.read_text(encoding="utf-8")
+              front = re.match(r"^---\n(.*?)\n---\n", source, re.DOTALL)
+              if not front:
+                  continue
+              header = front.group(1)
+              if not re.search(r"(?mi)^type:\s*['\"]?dream['\"]?\s*$", header):
+                  continue
+              if not re.search(r"(?mi)^proposal:\s*true\s*$", header):
+                  continue
+              status = re.search(r"(?mi)^status:\s*['\"]?([a-z-]+)['\"]?\s*$", header)
+              if not status or status.group(1).lower() not in {"outline", "approved"}:
+                  continue
+              block = re.search(r"<!--\s*proposal-data\s*\n(.*?)\n-->", source, re.DOTALL)
+              try:
+                  data = json.loads(block.group(1)) if block else None
+              except json.JSONDecodeError:
+                  data = None
+              if is_canonical(data):
+                  continue
+              new_header, count = re.subn(
+                  r"(?mi)^proposal:\s*true\s*$",
+                  "proposal: false\nlegacy_contract: retired-pre-v2",
+                  header,
+                  count=1,
+              )
+              if count != 1:
+                  raise SystemExit(f"could not demote legacy proposal {path.name}")
+              source = "---\n" + new_header + "\n---\n" + source[front.end():]
+              if note not in source:
+                  if "## Build log\n" in source:
+                      source = source.replace("## Build log\n", "## Build log\n" + note + "\n", 1)
+                  else:
+                      source = source.rstrip() + "\n\n## Build log\n" + note + "\n"
+              path.write_text(source, encoding="utf-8")
+              demoted.append(path.name)
+          print(f"demoted {len(demoted)} retired pre-v2 proposal(s) to idea inventory")
 
           queue = Path("projects/art-prompts.yaml")
           queue_text = queue.read_text(encoding="utf-8")
