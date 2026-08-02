@@ -812,7 +812,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -874,9 +874,13 @@ tasks:
       Fourteenth bounded sweep: fix four root-surface entries around the Conductor tab views. conductor-pitch-manager.vue and conductor-project-gallery-page.vue swap their hand-rolled flex/overflow root utilities for kr-surface, with their scroll region switched to kr-scroll. portos-page.vue was scrolling on its own root instead of delegating to a child -- restructured into a kr-surface wrapping a kr-scroll. conductor-project-chat.vue is a per-project chat widget embedded inside conductor-page.vue, not a standalone page -- it only lived under components/pages/ by directory convention (same misclassification the tenth sweep found for kaizen-popup.vue/conductor-art-gallery.vue), so it moves to components/conductor/ instead of forcing kr-surface onto a widget.
 
       Fourteenth sweep merged as Kind Robots PR #1326 (be7268b). root-surface: 27 -> 23 via --update; one-scroll and all other buckets unchanged. conductor-page.vue itself (2202 lines, carries both a root-surface and a one-scroll violation) is deliberately left for a future bounded sweep given its size and daily-driver priority -- flagged as this cycle's kaizen. The layout-contract allow-list is not yet zero, so t-017 returns to ready for the next bounded sweep.
-    claimed_by: 2026-08-02T183800Z-interface-vision-t017-15th
-    claimed_at: '2026-08-02T18:37:00Z'
-    updated: '2026-08-02T18:37:00Z'
+
+      Fifteenth scoped sweep: pages/coloring-page.vue and pages/resources.vue, both real standalone routed pages (not MDC-mounted), the same low-risk class of fix as sweeps ten through fourteen.
+
+      Fifteenth sweep merged as Kind Robots PR #1327 (40647cf, squashed). pages/coloring-page.vue: split its mixed centering+scroll root into a kr-surface (keeps mx-auto/max-w-4xl) wrapping a kr-scroll (keeps the gap/padding/content). pages/resources.vue: root and inner-scroll classes already matched kr-surface/kr-scroll's utility values almost exactly, just not using the named primitives -- swapped to the shared classes with no behavior change. root-surface: 23 -> 21 via --update; one-scroll and all other buckets unchanged (one-scroll 27, own task t-047). vue-tsc and eslint clean on both files; all 13 PR checks green. Filed t-057 as this cycle's kaizen: most remaining root-surface entries are MDC-mounted -page.vue components that the eleventh sweep flagged as unsafe to convert without a fifth "unbounded" primitive (kr-surface/kr-stage both force overflow-hidden, which could clip long-form content relying on pages/[...slug].vue's ContentRenderer host for scroll) -- that primitive was proposed then but never built, and it's the real blocker on the largest remaining chunk of this bucket. The layout-contract allow-list is not yet zero, so t-017 returns to ready for the next bounded sweep.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-02T18:47:45Z'
     owner: worker
 
   - id: t-018
@@ -1709,3 +1713,33 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-02T17:35:16Z'
+
+  - id: t-057
+    milestone: m3
+    title: 'Design a fifth "unbounded" layout primitive so MDC-mounted -page.vue components can join root-surface safely'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-017's fifteenth sweep (2026-08-02, kind_robots PR #1327). Most of
+      the remaining root-surface entries (about-page.vue, wallet-page.vue,
+      wishmaster-page.vue, giving-page.vue, mermaids-page.vue, privacy-page.vue,
+      storybook-library-page.vue, super-form.vue, login-page.vue, registration-page.vue,
+      appmaker-page.vue, for-you-manager.vue, memory-dungeon.vue) are MDC-mounted
+      -page.vue components embedded inside pages/[...slug].vue's own scrolling
+      content-host. The eleventh sweep flagged this as unsafe to convert directly:
+      kr-surface/kr-stage both force overflow-hidden on a bounded h-full root, which
+      could clip long-form content that currently relies on the parent ContentRenderer
+      host's own scroll to grow past the viewport, since that host gives the child no
+      flex/height context to safely self-bound. Design and add a fifth primitive to the
+      four in assets/css/tailwind.css's "Scroll-ownership primitives" block (t-004) --
+      an unbounded marker class with no overflow/height behavior, satisfying
+      verifyLayoutContract.ts's root-surface check without imposing a height
+      constraint the MDC host doesn't provide. Verify against at least one long-form
+      MDC page (about-page.vue is a good test case) via the Vercel preview, not just
+      the contract count, since clipping would only show up visually. This unblocks
+      the largest remaining chunk of the root-surface bucket for future t-017 sweeps.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-02T18:47:45Z'
