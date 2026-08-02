@@ -961,21 +961,18 @@ tasks:
   - id: t-021
     milestone: m3
     title: 'Confirm and prune orphaned layout-contract components'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-003b (2026-08-01, kind_robots PR #1261): kind-prompts.vue,
-      rebel-button.vue, click-leaderboard.vue, and match-leaderboard.vue appear to be
-      orphaned/unreachable (no route or content-file mount found for any of them during
-      t-003b's audit) but were flagged rather than deleted blind. Confirm via a
-      repo-wide grep across content/, pages/, and every .vue/.ts file, then delete
-      whichever are genuinely dead code (folds into t-018's cleanup scope if still
-      open, otherwise stands alone).
+    note: |-
+      Kaizen from t-003b (2026-08-01, kind_robots PR #1261): kind-prompts.vue, rebel-button.vue, click-leaderboard.vue, and match-leaderboard.vue appear to be orphaned/unreachable (no route or content-file mount found for any of them during t-003b's audit) but were flagged rather than deleted blind. Confirm via a repo-wide grep across content/, pages/, and every .vue/.ts file, then delete whichever are genuinely dead code (folds into t-018's cleanup scope if still open, otherwise stands alone).
+
+
+      Confirmed the four legacy layout components remain isolated to their own orphan cluster, removed them, and ratcheted the zero-scroll baseline accordingly on worker/interface-vision-t-021-20260802T112600Z-r7c2.
     claimed_by: 2026-08-02T112600Z-interface-vision-t-021-r7c2
     claimed_at: '2026-08-02T11:26:00Z'
-    updated: '2026-08-02T11:26:00Z'
+    updated: '2026-08-02T11:33:00Z'
 
   - id: t-022
     milestone: m2
