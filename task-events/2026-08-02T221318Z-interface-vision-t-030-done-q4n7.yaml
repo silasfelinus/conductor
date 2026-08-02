@@ -1,0 +1,15 @@
+version: 1
+project: interface-vision
+task: t-030
+operation: done
+owner: worker
+session: 2026-08-02T221318Z-interface-vision-t-030-q4n7
+updated: '2026-08-02T22:24:00Z'
+note: >-
+  Closed the stale roadmap state after verifying the requested cleanup already shipped in kind_robots PR #1309 (merge eb44b09dc1dbf826da9da456ac13c44ae1e4f55f) and remains on current main. verifyEntityArtManager.ts now emits only its concise success line while retaining every entity-art assertion.
+learning:
+  kind: coordination
+  stakes: reversible
+  passes: 1
+  lesson: >-
+    Before reimplementing a ready task, compare its note, current code, and recent merged PRs. A task can carry a complete merged result but remain incorrectly ready because an earlier closeout targeted a different task ID; repair roadmap state instead of duplicating the code.
