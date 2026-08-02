@@ -812,7 +812,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -846,9 +846,9 @@ tasks:
       Seventh scoped sweep merged as Kind Robots PR #1307 (1a738c7): new-eyeball.vue's root wrapper switched h-screen -> h-full min-h-[320px]; chat-test.vue's .stream-test switched min-height: 100vh -> min-height: 480px. vue-tsc clean, layout-contract holds (no-viewport 2 -> 0, all other buckets unchanged), eslint warnings on both files confirmed pre-existing via git stash (out of scope). Baseline ratcheted down via --update. Filed t-049 as this cycle's kaizen (ghost-prop, 7 entries, the next smallest untouched bucket). The full allow-list is not yet zero (one-scroll 33 -- own task t-047, one-mdc 3, ghost-prop 7, zero-scroll 7), so t-017 returns to ready for the next bounded sweep.
 
       Note (2026-08-02): this session claimed t-017 (the umbrella sweep) but the work it actually did -- zeroing the ghost-prop bucket -- belongs to and is recorded on the dedicated kaizen task t-049 (closed done, kind_robots PR #1310), per the convention t-047/t-049 established of spinning off per-bucket kaizen tasks rather than piling every pass onto t-017 directly. Releasing t-017 back to ready unchanged; remaining buckets: one-scroll (33, own task t-047), one-mdc (3), zero-scroll (7).
-    claimed_by: claude-agentrun-2026-08-02T102642-t017
-    claimed_at: '2026-08-02T10:26:42Z'
-    updated: '2026-08-02T10:37:54Z'
+    claimed_by: 2026-08-02T112810Z-interface-vision-t-017-r4n8
+    claimed_at: '2026-08-02T11:28:10Z'
+    updated: '2026-08-02T11:28:10Z'
     owner: worker
 
   - id: t-018
