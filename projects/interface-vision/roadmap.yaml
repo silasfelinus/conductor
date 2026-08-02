@@ -1363,8 +1363,8 @@ tasks:
   - id: t-039
     milestone: m2
     title: 'Clean up debug stdout noise in verifyEntityArtManager.ts'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: null
@@ -1379,6 +1379,9 @@ tasks:
       check needlessly noisy. Find the source of the dump and gate it behind a
       --verbose flag or remove it outright; verify the script's actual pass/fail
       signal (its final verified line / exit code) is unaffected.
+    claimed_by: 2026-08-02T101142Z-interface-vision-t-039-q8m2
+    claimed_at: '2026-08-02T10:11:42Z'
+    updated: '2026-08-02T10:11:42Z'
 
   - id: t-040
     milestone: m2
