@@ -1520,6 +1520,9 @@ tasks:
 
 
       Closed after kind_robots PR #1321 merged with all required checks green. Batch-fixed four one-scroll manager/tab-switcher offenders and ratcheted the allow-list from 31 to 27. The separate production database outage is tracked as kind-robots/t-052.
+
+
+      CORRECTION (2026-08-02, from a full read-only audit of all 31 entries): this task's stated root cause above was WRONG, and the correction matters because it would have sent the next pass at the wrong 27 files. NOT ONE of the entries was a toolbar/filter strip declaring its own scroll -- every filter row in the bucket is already `shrink-0` and already behaves like .kr-toolbar. The `art/user/wonderlab` framing was also only partly right (13 of 31, split across three different causes). The real taxonomy, verified file by file: SHAPE A, 10 files -- mutually exclusive v-if/v-else-if/v-show tab branches, each declaring its own scroll but only ever one mounted. These are FALSE POSITIVES of the static regex, not runtime bugs; the fix is to hoist one .kr-scroll above the branch. art-manager.vue is the type specimen (seven v-else-if branches, identical scroll class on each). This is the shape PR #1321 fixed four of. SHAPE B, 12 files -- genuine concurrent <aside> + <main>, both live at once (character-interact.vue, art-interact.vue, mural-manager.vue, lab-interact.vue, messenger.vue, animation-manager.vue, reward-interact.vue, dream-brainstorm.vue, scenario-gallery.vue, butterfly-sanctuary.vue, server-manager.vue, stage-manager.vue). These CANNOT be fixed correctly today: they need a two-owner grid idiom where each column is a legitimate .kr-scroll owner, and no such primitive exists in the .kr-* set. SHAPE D, 7 files -- one legitimate scroll owner plus intentional bounded max-h-* sub-regions (log tails, <pre> dumps, swatch grids). Also rule artifacts. SHAPE C/E, 2 files -- sibling scrolling columns (achievement-gallery.vue) and a floating menu portal (channel-select.vue). So roughly 17 of the remaining 27 are the regex counting things that never co-exist at runtime. Sweeping the bucket to zero as currently framed would mean rewriting correct code to satisfy a regex. Follow-on filed as t-053.
     claimed_by: claude-quirky-curie-20260802T143636Z-t047
     claimed_at: '2026-08-02T14:36:36Z'
     updated: '2026-08-02T15:16:00Z'
@@ -1568,12 +1571,35 @@ tasks:
     passes: 0
     stakes: reversible
     note: >
-      Last phase of the redesign plan, and the largest remaining adoption gap: the kit is at
-      3/7 surfaces (verifyNarrativeKit prints the count every CI run). Remaining, biggest
-      first because each landing makes the next smaller: reward-interact (1183 lines),
-      character-interact (945), bot-interact (782), scenario-interact (632). One PR each.
-      scenario-interact additionally has the choice-manager / choice-selector / choice-preview
-      trio to fold into kr-choice-list -- three more copies of the same pick-one widget.
+      Last phase of the redesign plan, and the largest remaining adoption gap. bot-interact
+      landed in kind_robots PR #1316, so the kit is at 4/7 of the ORIGINALLY SURVEYED surfaces
+      (verifyNarrativeKit prints the count every CI run). Remaining from that list:
+      reward-interact (1183 lines), character-interact (945), scenario-interact (632).
+
+      TWO CORRECTIONS from a full duplication audit (2026-08-02), both of which would have
+      bitten whoever picked this up:
+
+      (1) THE ORIGINAL SURVEY UNDERCOUNTED. It listed 7 conversational surfaces; the audit
+      found five more first-tier hand-rolled transcripts that were never on it, so the 4/7
+      counter flatters the real position. conductor-project-chat.vue (229 lines -- the purest
+      duplicate in the repo: daisyUI chat-start/chat-end pair, `loading loading-dots` on
+      !botResponse, ref + scrollTop = scrollHeight); character-flip-card.vue (914 -- a
+      near-verbatim copy of character-interact.vue's transcript AND its two prompt-button
+      grids, so those two are one edit for two surfaces and should be done together);
+      plus a second tier that is structurally the same widget but human-to-human rather than
+      model conversation, and so a separate decision: messenger.vue, chat-gallery.vue,
+      stage-message.vue, forum-thread.vue. Note character-interact.vue has NO scroll helper at
+      all -- it never auto-scrolls -- so adopting kr-chat-window fixes a live bug there.
+      reward-interact.vue and scenario-interact.vue each ship their own .story-dot keyframes
+      (lines 1153 and 582) for the identical three-span indicator kr-chat-window provides.
+
+      (2) THE choice-* TRIO IS NOT THREE DELETIONS. choice-manager.vue is LIVE -- mounted by
+      components/rewards/add-reward.vue:163 and components/scenarios/add-scenario.vue:109, and
+      pinned by utils/scripts/verifyWonderLabLearningControlFixtures.ts. Removing it breaks a
+      contract. Only choice-selector.vue and choice-preview.vue are genuinely orphaned (their
+      sole reference is the gitignored utils/generated/wonderLabSourceEvidence.ts, and the live
+      intro-picking UI was already reimplemented inline at scenario-interact.vue:113-155). So:
+      two deletions and one migration.
       Expect one-scroll to keep dropping as these land, the same way it did in PR #1315;
       ratchet the baseline each time. The kit pieces to adopt are kr-chat-window (with its
       #footer slot for trailing conversation-level content), kr-choice-list, and kr-art-plate
@@ -1743,3 +1769,114 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-02T18:47:45Z'
+
+  - id: t-053
+    milestone: m3
+    title: 'Give one-scroll Shape B a two-owner grid primitive, and stop counting Shapes A/D'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Follow-on from t-047, whose stated root cause was refuted by a full file-by-file audit
+      (see the CORRECTION appended to t-047's note for the verified A/B/C/D/E taxonomy).
+      Two pieces of work, and the order matters:
+
+      FIRST, make the rule mean what the brief means. verifyLayoutContract.ts counts every
+      `overflow-y-auto` occurrence in a template statically, with no awareness of v-if
+      exclusivity or bounded max-h-* sub-regions -- so roughly 17 of the remaining 27 entries
+      are things that never co-exist at runtime. Teach it those two cases and the bucket
+      shrinks honestly instead of by rewriting correct code. Guard against gaming it: the rule
+      already only matches literal h-screen/100vh substrings elsewhere, and t-017's seventh
+      pass documented that swapping to h-dvh would have silently passed while reproducing the
+      bug. Same discipline applies here.
+
+      SECOND, Shape B (12 files) genuinely has two live scroll owners in one grid -- an <aside>
+      and a <main>, both mounted -- and the .kr-* set has no idiom for that. .kr-surface is a
+      single bounded root and .kr-scroll is documented as "exactly one per .kr-surface". Until
+      a two-owner primitive exists these 12 cannot be fixed correctly, only disguised. Design
+      it against the real cases (character-interact.vue and art-interact.vue are the cleanest
+      two-pane examples; mural-manager.vue is the hard one at three concurrent panes).
+
+      THIRD and separately: the rule as written also cannot see the opposite failure. A
+      non-page component declaring EXACTLY ONE scroll region, mounted inside a page that also
+      scrolls, is invisible to it -- there were 69 such components at the time of the audit
+      (85 total single-scroll files, 16 of which are page components legitimately owning their
+      scroll). The brief's rule 2 targets "0 nested"; the bucket can reach zero with all 69
+      still nested. Worth measuring before declaring rule 2 satisfied.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-02T15:00:00Z'
+
+  - id: t-054
+    milestone: m2
+    title: 'Three content routes rendered nothing; MDC mounts are now validated in CI'
+    status: review
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Filed from the 2026-08-02 navigation sweep, shipping in kind_robots PR #1328.
+      /navigation-health and /project-placement -- both ADMIN CHANNEL TABS -- plus /sheets
+      mounted component names that resolve to nothing, so the routes rendered blank rather
+      than erroring. Cause: nuxt.config.ts registers components with pathPrefix:false, so an
+      MDC mount is the BARE filename; all three carried a directory prefix
+      (:navigation-navigation-health for what is really :navigation-health, and so on).
+
+      The reason it survived is the part worth keeping: verifyChannelContent.ts and
+      verifyNavManifest.ts parse frontmatter only, and verifyLayoutContract.ts -- the one
+      script that already extracts MDC mount names for its one-mdc rule -- never checked they
+      resolve to anything. PR #1328 adds that check to verifyChannelContent.ts, resolving
+      against the component files on disk rather than .nuxt/components.d.ts (a build artifact
+      the script must not depend on, since it runs standalone in CI before any nuxi prepare),
+      and reports the near-match in the failure message. It was proved to fail on a
+      re-introduced typo before being trusted. 68 mounts now resolve.
+
+      Also in that PR: pages/[...slug].vue now honours a `redirect:` frontmatter key, guarded
+      to same-origin paths. content/facet-gallery.md had carried `redirect: /facets` since the
+      Facet browser became canonical and verifyFacetGallery.ts accepts that key as valid, but
+      nothing read it -- the contract described an intent the app never implemented. And
+      content/sheets.md was deleted rather than repointed: no manifest entry, no inbound links,
+      and its job is already done by dream-sheet-toolbar.vue inside dream-gallery.vue.
+
+      NEEDS VISUAL CONFIRMATION before this closes: open /navigation-health,
+      /project-placement and /facet-gallery on the preview. A source-text contract can prove
+      the mount resolves; it cannot prove the page looks right.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-02T15:00:00Z'
+
+  - id: t-055
+    milestone: m2
+    title: 'Adopt kr-gallery across the seven core-object galleries'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      "All seven core objects share one gallery" is an explicit beta gate in DESIGN-BRIEF.md,
+      and it is the largest structural item still open. components/gallery/kr-gallery.vue
+      (167 lines) already exists -- extracted in t-008 from conductor-project-gallery-page.vue,
+      the Project gallery Silas named as the shape the rest should follow -- and as of
+      2026-08-02 exactly ONE of the seven uses it.
+
+      kind_robots PR #1328 adds utils/scripts/verifyGalleryAdoption.ts, which prints the count
+      (1/7 core, 1/25 overall) on every CI run and names the holdouts. That counter is the
+      point: `global-ui` closed 25/25 tasks "done" at ~7% adoption because nobody measured the
+      whole, and the conversation kit is the one piece that moved this week precisely because
+      verifyNarrativeKit.ts had been printing its number since it shipped.
+
+      Targets, ~4,000 of the ~12,000 gallery lines: dream-gallery (1035), character-gallery
+      (717), bot-gallery (694), reward-gallery (741), scenario-gallery (567), facet-gallery
+      (233). One PR each; ratchet the counter each time. These are surfaces Silas uses daily,
+      so verify visually on the preview per AGENTS.md, not just by the contract count.
+
+      Fold in while there, both found by the same audit: (a)
+      conductor-project-gallery-page.vue:123 is a one-line reimplementation of
+      resolveArtVariantSrc's variant branch and will silently drift from it; (b) six files
+      repeat an identical `facet.cardPath || facet.imagePath || facet.heroPath` chain --
+      facet-gallery, facet-manager, facet-picker, character-facet-picker, reward-facet-picker,
+      art-facet-selector.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-02T15:00:00Z'
