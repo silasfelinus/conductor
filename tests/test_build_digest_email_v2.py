@@ -57,5 +57,23 @@ def test_payload_renders_additional_recent_bundles_without_duplication():
         ],
     }
     payload = module.build_payload(digest)
-    assert "Other objects built today or yesterday" in payload["htmlContent"]
+    assert "Earlier completed bundles" in payload["htmlContent"]
     assert "Another Build" in payload["htmlContent"]
+
+
+def test_payload_labels_previous_output_without_calendar_claim():
+    module = load_module()
+    payload = module.build_payload({
+        "projects": [],
+        "date": "2026-08-02",
+        "pitches_awaiting_vote": [],
+        "all_needs_attention": [],
+        "yesterday_output": {
+            "slug": "previous",
+            "title": "Previous",
+            "idea": "Built earlier.",
+            "assets": assets(),
+        },
+    })
+    assert "Previous completed output" in payload["htmlContent"]
+    assert "Yesterday's output" not in payload["htmlContent"]
