@@ -5903,3 +5903,14 @@ records:
   lesson: 'Composition-aware contracts need the same ratchet strategy as file-local contracts: measure
     existing debt explicitly, block additions immediately, and let future sweeps shrink the baseline instead
     of making the first honest measurement unmergeable.'
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-025
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: null
+  lesson: New whole-repository conformance rules should first measure the live debt through CI, then record
+    that exact result as a shrink-only baseline so future violations fail without pretending historical
+    debt is new.

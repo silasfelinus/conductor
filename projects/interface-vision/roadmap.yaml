@@ -1052,8 +1052,7 @@ tasks:
   - id: t-025
     milestone: m2
     title: 'Add a .kr-surface root-class conformance check to verifyLayoutContract.ts'
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -1061,9 +1060,11 @@ tasks:
 
 
       Added the root-surface layout contract rule on the Kind Robots worker branch; opening the focused implementation PR for CI-backed baseline discovery.
+
+      Merged Kind Robots PR #1320 as ca689fa. The layout verifier now enforces a shrink-only root-surface rule for page components and records the honest current baseline of 51 files lacking kr-surface or kr-stage roots. All 11 final-head workflows passed.
     claimed_by: 2026-08-02T141323Z-interface-vision-t-025-x7q9
     claimed_at: '2026-08-02T14:13:23Z'
-    updated: '2026-08-02T14:20:00Z'
+    updated: '2026-08-02T14:24:00Z'
 
   - id: t-026
     milestone: m2
