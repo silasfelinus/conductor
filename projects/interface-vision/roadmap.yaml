@@ -1539,20 +1539,9 @@ tasks:
   - id: t-049
     milestone: m3
     title: 'Batch-fix the ghost-prop bucket: stop passing :show-header to components that never declared it'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-017's seventh pass (2026-08-02, kind_robots PR #1307, which zeroed
-      the no-viewport bucket). ghost-prop is now the next smallest untouched bucket (7
-      entries, unlike one-scroll which already has its own dedicated task t-047):
-      components/art/art-manager.vue passing :show-header to <art-gallery> and
-      <art-test>, components/user/user-manager.vue passing it to <chat-gallery> and
-      <theme-gallery>, and components/wonderlab/lab-manager.vue passing it to
-      <lab-interact>, <memory-dungeon>, and <screen-fx>. Each is a silent no-op fallthrough
-      attribute today (Vue drops unknown bound props onto the root element rather than
-      erroring), reading as configurable when it isn't. For each pair: either the child
-      component genuinely needs a showHeader prop (declare it properly and wire the
-      behavior), or the call site should stop passing it. Re-run
-      `npm run test:layout-contract -- --update` afterward to ratchet the bucket down.
+    note: 'Closed 2026-08-02 via kind_robots PR #1310 (merged, all 13 checks green). Added showHeader?: boolean (default true) to art-gallery.vue, art-test.vue, chat-gallery.vue, theme-gallery.vue, lab-interact.vue, and screen-fx.vue, gating only the title-only portion of each header so embedded functional controls (search, back button, stat cards, admin actions, manage-builds link) stay visible when mounted as manager tabs. memory-dungeon.vue''s :show-header=false pass was dead (its header is a gameStarted-gated gameplay HUD, not a duplicate title) -- removed the pass from lab-manager.vue instead of adding fake plumbing. Ratcheted the layout-contract ghost-prop allow-list from 7 to 0 via --update. vue-tsc and eslint clean on every changed file.'
+    updated: '2026-08-02T10:37:42Z'
