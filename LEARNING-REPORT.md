@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-02T06:40:20Z
+Generated: 2026-08-02T06:48:50Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **461**
-- Outcomes: blocked: 13, cancelled: 1, done: 447
+- Closed tasks recorded: **462**
+- Outcomes: blocked: 13, cancelled: 1, done: 448
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 20 | 100% |
+| interface-vision | 21 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 446 | 99% |
+| software | 447 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-02 `interface-vision/t-018` — The task note's orphan-audit claim ("only 6 components use displayStore.ts") was wrong in a load-bearing way -- it missed memoryStore.ts (a store, not a component) reading displayStore.viewportSize to size the live, routed Memory Dungeon board, and kind-loader.vue calling displayStore.initialize() as real app-startup wiring. Investigating before deleting (grep ALL importers, not just the ones matching the expected shape) caught this before it shipped as a silent behavior regression; the store was left in place and split into its own follow-up task (t-045) instead of forced through under the cleanup label.
+
 - 2026-08-02 `interface-vision/t-014` — A dedicated research pass (Explore agent surveying existing layout-contract examples, karma/mana/achievement plumbing already shipped by t-010, and the User schema) before writing any code meant zero rework: every new UI section reused an existing store/component instead of duplicating one, and the only schema change needed was a single additive nullable column (introDismissedAt) for the one genuinely new piece of state (intro dismissal). Deliberately scoped out extending user-galleries.vue to the remaining two object types (Facets/Projects) rather than let the task grow past its landable core -- filed as a kaizen suggestion instead.
 
 - 2026-08-02 `interface-vision/t-014` — kind_robots PR #1292 (implemented and reviewed by a different session earlier in the day) went stale against main after this session merged the unrelated PR #1293 a few minutes later -- both PRs ran `prisma generate` independently against overlapping generated-client scaffolding (prisma/generated/prisma/internal/class.ts), producing a real textual conflict GitHub correctly flagged as `mergeable_state: dirty` despite a local `git merge-tree` dry run initially looking clean. Fix was mechanical and low-risk: merge main into the PR branch, let `prisma generate` regenerate the one conflicting file fresh rather than hand-resolving it, verify (prisma validate + vue-tsc clean), push, wait for CI, merge. Same class of "regenerate, don't hand-merge" fix as the STATUS.md/workspace.html auto-gen convention, just for kind_robots' generated Prisma client -- worth generalizing that convention beyond conductor's own auto-gen files.
@@ -95,8 +97,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-01 `interface-vision/t-011` — A roadmap task note's factual claims about the codebase ("X is the most complete widget", "Y is imported by nothing") are a snapshot from planning time, not a live fact -- t-007 and t-009 both merged the same day this task's note was written, and by the time t-011 was picked up the note's premise (revive art-reactions.vue as canonical) was already stale: reaction-card.vue had already superseded it as the generic, actively-wired review panel. Read the current state of every file a note names before trusting its characterization, and when the literal instruction conflicts with what the code now shows, do the thing that closes the real gap (here: allowReviews was read by no gallery, not "no canonical panel exists") and document the deviation explicitly rather than either blindly following a stale instruction or silently reinterpreting it.
 
-- 2026-08-01 `interface-vision/t-009` — Clean first pass (kind_robots PR #1269, all 14 CI checks green), but the task as originally scoped ("collapse three art-request pipelines into one") bundled a small, well-verified mechanical slice (repoint Project's art-replace onto the already-existing generic entity-art endpoint, delete two confirmed-dead routes, widen one component's type union) together with four genuinely separate decisions (a UX choice on Project's carousel UI, a product choice on Facet's dual art backends, a multi-entity schema migration, and a from-scratch admin UI) that each need their own PR and, in two cases, Silas's input before implementation. Investigating the actual code before implementing (rather than trusting the task note's characterization) also surfaced that one of the note's own technical claims was wrong: FacetArtImage was described as "declared-but-unused" but is live code serving a different purpose (ArtImage-to-Facet tagging, not a Facet art-history join) -- corrected in the split-out follow-up task (t-028) rather than propagated blind. Standing takeaway: a roadmap task note's own technical claims are a starting hypothesis, not verified fact, even when written carefully -- worth a quick repo-side confirmation pass before scoping work against a claim like "X is unused" or "Y already exists," especially when the note is old enough that the codebase could have moved under it.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-02T06:40:20Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-02T06:48:50Z_
