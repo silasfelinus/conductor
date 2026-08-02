@@ -812,8 +812,8 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: review
-    passes: 0
+    status: ready
+    passes: 1
     stakes: reversible
     depends_on: t-005
     note: |-
@@ -848,10 +848,20 @@ tasks:
       Note (2026-08-02): this session claimed t-017 (the umbrella sweep) but the work it actually did -- zeroing the ghost-prop bucket -- belongs to and is recorded on the dedicated kaizen task t-049 (closed done, kind_robots PR #1310), per the convention t-047/t-049 established of spinning off per-bucket kaizen tasks rather than piling every pass onto t-017 directly. Releasing t-017 back to ready unchanged; remaining buckets: one-scroll (33, own task t-047), one-mdc (3), zero-scroll (7).
 
       Scoped the next layout-contract sweep to content/about.md: remove the second MDC mount and ratchet one-mdc from three entries to two.
-    claimed_by: 2026-08-02T112810Z-interface-vision-t-017-r4n8
-    claimed_at: '2026-08-02T11:28:10Z'
-    updated: '2026-08-02T11:32:10Z'
-    owner: worker
+
+      REJECTED (2026-08-02, kind_robots PR #1313 not merged): removing the `:sponsor-page` mount from content/about.md fixed one-mdc (3 -> 2) but newly violates zero-scroll -- components/pages/sponsor-page.vue is now flagged as a standalone page component with no scroll region of its own (zero-scroll +1, net no improvement). sponsor-page.vue is not dead code (still imported directly by components/giftshop/giftshop-manager.vue), so the fix is to give it its own scroll region via the kr-surface/kr-scroll primitives (the same pattern registration-form.vue used in kind_robots PR #1300) before or as part of dropping its about.md co-mount, not to leave it standalone without one.
+    retry_context: >
+      pass 1 failed (quality): kind_robots PR #1313 removed the `:sponsor-page` mount
+      from content/about.md to fix one-mdc, but this left components/pages/sponsor-page.vue
+      newly flagged by the zero-scroll rule (standalone page component, no scroll region of
+      its own) -- CI failure log: "zero-scroll ... + components/pages/sponsor-page.vue".
+      Net effect was trading one violation for another, not a real fix. Do differently:
+      give sponsor-page.vue its own scroll region (kr-surface/kr-scroll primitives, per
+      registration-form.vue in kind_robots PR #1300) as part of the same change that drops
+      its about.md co-mount, so removing the mount doesn't strand it without a scroll owner.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-02T11:35:00Z'
 
   - id: t-018
     milestone: m3
