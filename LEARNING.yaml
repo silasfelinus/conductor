@@ -5728,3 +5728,17 @@ records:
   failure_category: null
   lesson: Before sweeping a layout allow-list, audit exact-markup verifier locks so product cleanup updates
     the owning semantic contract instead of restoring obsolete markup.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-038
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: When a task's own name echoes the parent it lives under (a 'dashboard'
+    tab inside a 'user' dashboard, mounting user-dashboard.vue), check every
+    sibling for the same slot before picking a fix -- every other dashboardConfigs
+    entry already used a real content-named default tab key, so renaming to match
+    that pattern was a smaller, safer diff than inventing new always-shown-default
+    semantics from scratch.
