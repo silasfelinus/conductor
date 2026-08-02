@@ -805,30 +805,31 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: claimed
+    status: ready
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-005
     note: >
-      Phase 6.2. Work the verifyLayoutContract allow-list from its seeded baseline down
-      to zero, in the priority order Silas gave: first the daily-driver tools he actually
-      uses (artjob queue, video-gen, newsfeeds), then the remaining play surfaces, then
-      build surfaces, and ADMIN LAST — he was explicit that admin routes are lowest
-      priority and that several will eventually become user-facing pages anyway.
-      Specific known offenders: pages/play/video-generator.vue ignores the system
-      entirely (ad-hoc `mx-auto max-w-5xl space-y-6 p-6` root with no h-full/min-h-0, an
-      emoji <h1>, and raw btn-accent instead of the house idiom) and is ALSO declared as
-      a channel tab, so its title renders twice; components/art/artjob-queue-browser.vue
-      is 614 template lines at depth 12 with min-h-[720px]/[560px] magic numbers that
-      force ~1280px of height inside an already-nested scroller; and the newsfeed project
-      page shows four stacked headers via project-front-page.vue's hero.
-      Also remove the six :has() global overrides in assets/css/tailwind.css:37-90 as the
-      pages they patch get fixed — they match on Tailwind class SUBSTRINGS and break the
-      moment a class string changes.
+      Phase 6.2, in progress. kind_robots PR #1295 (merged) landed the first pass, daily-drivers
+      first as instructed: removed pages/play/video-generator.vue's duplicate <h1> (daily-driver:
+      video-gen) and demoted project-front-page.vue's hero title from <h1> to <p> (shared shell for
+      14 project pages incl. newsfeed, another daily-driver) -- one-header dropped 8 -> 6. Also
+      removed 4 of the 6 :has() global overrides in tailwind.css by baking the equivalent grid
+      column widths and overflow-x directly into components/pages/conductor-page.vue's public
+      Project gallery (Silas's own most-used page); the 2 remaining overrides patch that same
+      component's ADMIN-only project-detail view and are deliberately left, since admin is
+      explicitly lowest priority. Baseline ratcheted down via --update, all CI green.
+      Remaining before this task can close: one-header (6 left: components/pages/registration-form.vue,
+      components/pages/serendipity-page.vue, 4x pages/admin/wonderlab-review-*.vue -- none are
+      daily-drivers), one-scroll (34), no-viewport (2), one-mdc (3), ghost-prop (7), zero-scroll (8),
+      plus the 2 remaining admin :has() overrides and the non-tracked artjob-queue-browser.vue
+      magic-number/depth-12 cleanup the task note calls out. Re-arming to ready rather than closing --
+      per this project's own rule, "do not close a task ... because the work feels done ... close it
+      when the counter says so."
     claimed_by: claude-2026-08-02T052639Z-t017
     claimed_at: '2026-08-02T05:36:05Z'
-    updated: '2026-08-02T05:36:05Z'
+    updated: '2026-08-02T05:40:21Z'
 
   - id: t-018
     milestone: m3
