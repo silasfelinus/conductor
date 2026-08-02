@@ -920,27 +920,19 @@ tasks:
   - id: t-023
     milestone: m3
     title: 'Composition-lock audit before t-017 sweeps the layout-contract allow-list'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-005
-    note: >
-      Kaizen from t-004 (2026-08-01, kind_robots PR #1264): fixing serendipity-page.vue's
-      one-header violation broke utils/scripts/verifySerendipityRouteCutover.mjs, which
-      hard-asserts the exact markup `<h1 class="text-2xl font-black
-      tracking-tight">Serendipity</h1>` as a route-cutover migration lock, unrelated to
-      the general layout contract. CI caught it, but t-017's planned sweep of the
-      remaining allow-list files should not rely on CI catching every such surprise one
-      file at a time. Before t-017 starts: grep .github/workflows/*.yml and
-      utils/scripts/verify*.ts|mjs for any hard-coded markup string (h1/scroll-class/etc)
-      matching a file still in the layout-contract-baseline.json allow-list, and list
-      which of the remaining one-header/one-scroll/zero-scroll files have a locked
-      contract test elsewhere in the repo so t-017 knows up front which files need a
-      companion contract update, not just a markup change.
+    note: |-
+      Kaizen from t-004 (2026-08-01, kind_robots PR #1264): fixing serendipity-page.vue's one-header violation broke utils/scripts/verifySerendipityRouteCutover.mjs, which hard-asserts the exact markup `<h1 class="text-2xl font-black tracking-tight">Serendipity</h1>` as a route-cutover migration lock, unrelated to the general layout contract. CI caught it, but t-017's planned sweep of the remaining allow-list files should not rely on CI catching every such surprise one file at a time. Before t-017 starts: grep .github/workflows/*.yml and utils/scripts/verify*.ts|mjs for any hard-coded markup string (h1/scroll-class/etc) matching a file still in the layout-contract-baseline.json allow-list, and list which of the remaining one-header/one-scroll/zero-scroll files have a locked contract test elsewhere in the repo so t-017 knows up front which files need a companion contract update, not just a markup change.
+
+
+      Completed the composition-lock audit at projects/interface-vision/COMPOSITION-LOCK-AUDIT.md on branch worker/interface-vision-t-023-20260802T021118Z.
     claimed_by: 2026-08-02T021118Z-interface-vision-t-023-7f3a
     claimed_at: '2026-08-02T02:11:18Z'
-    updated: '2026-08-02T02:11:18Z'
+    updated: '2026-08-02T02:17:00Z'
 
   - id: t-024
     milestone: m2
