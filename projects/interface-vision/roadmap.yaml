@@ -952,8 +952,7 @@ tasks:
   - id: t-020
     milestone: m2
     title: 'Wire achievement confirmation into the real karma/mana ledgers'
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -961,9 +960,11 @@ tasks:
 
 
       Implemented atomic server-side achievement confirmation rewards, removed the failing client mana patch, and normalized The Road Ahead to a one-time 1000-karma reward on branch worker/interface-vision-t-020-20260802t120700z.
+
+      Merged kind_robots PR #1308 as cd341533. All 13 checks passed; production deployment dpl_GnsXJUpLf3mZhLwR5LSmT2UVGtSz reached READY; its additive ledger migration and 25-row achievement reconciliation completed; the live API reports 25 achievements and The Road Ahead as a one-time 1000-karma reward; the two affected alpha confirmations were reopened for authoritative server-ledger recovery.
     claimed_by: 2026-08-02T120700Z-interface-vision-t-020-a91c
     claimed_at: '2026-08-02T12:07:00Z'
-    updated: '2026-08-02T12:34:00Z'
+    updated: '2026-08-02T12:45:00Z'
 
   - id: t-021
     milestone: m3
