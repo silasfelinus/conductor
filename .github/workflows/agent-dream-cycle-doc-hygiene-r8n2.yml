@@ -58,7 +58,7 @@ jobs:
               '        proposal = _data_block(text, "proposal-data")\\n'
               '        contract_errors = _canonical_proposal_errors(proposal)\\n'
               '        if contract_errors:\\n'
-              '            reason = f"{p.name}: invalid canonical proposal — {\'; \'.join(contract_errors)}"\\n'
+              '            reason = f"{p.name}: invalid canonical proposal — " + "; ".join(contract_errors)\\n'
               '            continue\\n'
               '        if _data_block(text, "built-data"):\\n'
               '            continue  # already built'
@@ -78,7 +78,7 @@ jobs:
           run_replacement = (
               '    contract_errors = _canonical_proposal_errors(proposal)\\n'
               '    if contract_errors:\\n'
-              '        message = f"{path.name}: invalid canonical proposal — {\'; \'.join(contract_errors)}"'
+              '        message = f"{path.name}: invalid canonical proposal — " + "; ".join(contract_errors)'
           )
           if run_marker not in builder:
               raise SystemExit("run_build proposal validation marker changed")
