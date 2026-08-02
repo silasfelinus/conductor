@@ -812,7 +812,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -858,10 +858,14 @@ tasks:
       Tenth scoped sweep: zero the remaining zero-scroll bucket (6 entries).
 
       Tenth sweep merged as Kind Robots PR #1319 (f13471f): social-page.vue, rebel-button.vue, pages/auth/google.vue, and pages/build-bench.vue each got a real kr-surface/kr-scroll owner. pages/build-bench.vue's scroll region moved up from its child BuildBench (previously the page's only content and its sole scroll owner) to the page itself, so there's exactly one scroll owner instead of a redundant nested one. kaizen-popup.vue and conductor-art-gallery.vue were both misclassified zero-scroll violations, not real standalone pages -- both are widgets embedded inside conductor-page.vue that only lived under components/pages/ by directory convention; moved to components/conductor/ (same fix the ninth sweep applied to plan-projects-grid.vue), updating the import in conductor-page.vue, the two verifier scripts referencing the old path, and the CI path filter in entity-art-manager-contract.yml. zero-scroll: 6 -> 0. Baseline ratcheted down via --update, all 15 checks green. Flagged for the Reviewer (not fixed in this sweep, out of scope): components/pages/rebel-button.vue appears unreachable from any live route -- content/button.md ("Rebel Button Room") currently mounts :lab-manager instead -- though it's still referenced by the achievement catalog (training/achievementData.ts) and historical WonderLab review-batch data. The layout-contract allow-list is not yet zero (one-scroll 31, own task t-047), so t-017 returns to ready for the next bounded sweep.
+
+      Eleventh scoped sweep: Silas directly added a new `root-surface` rule (kind_robots PR #1320, 51-file baseline) requiring every page component's root wrapper to carry the kr-surface/kr-stage class -- a bucket t-017's own notes hadn't tracked yet. Targeted this instead of one-scroll (unchanged at 27, own task t-047).
+
+      Eleventh sweep merged as Kind Robots PR #1322 (squashed 0893da8): restructured 8 standalone routed pages -- confirmed via a content/**/*.md mount-directive scan that none are MDC-mounted, so each genuinely owns its own scroll -- from a bare h-full/overflow-y-auto root into a real kr-surface (bounded, non-scrolling) wrapping a kr-scroll (the one scroll region): components/pages/click-leaderboard.vue, components/pages/sponsor-page.vue, pages/music-mentor.vue, pages/plan/wonderlab/commentary-guide.vue, pages/play/challenges/[slug].vue, pages/play/challenges/leaderboard.vue, pages/play/video-generator.vue, pages/users/[id].vue. vue-tsc and eslint clean on all 8. root-surface: 51 -> 43 via --update; all other buckets unchanged (one-scroll 27, own task t-047). Left out of this pass, flagged for the next: error.vue and login-page.vue (both center content with items-center/justify-center on the same element that also scrolls -- needs the centering moved into the kr-scroll layer, a different restructuring than the simple single-scroll-region pages here); welcome-page.vue (no importers found outside its own file and generated registries -- looks orphaned, better suited to an orphan-cleanup task than a real fix). Flagged for Silas: most of the remaining 43 root-surface entries are MDC-mounted -page.vue components (about-page.vue, registration-page.vue, wallet-page.vue, login-page.vue, etc.) embedded inside pages/[...slug].vue's own scrolling content-host -- kr-surface/kr-stage both force overflow-hidden, which could clip long-form content that currently relies on the parent's scroll to grow past the viewport, since ContentRenderer doesn't give the child a flex context to safely self-bound. These may need a fourth primitive (an unbounded marker class with no overflow/height behavior) before they can be swept safely; filed as this cycle's kaizen. The layout-contract allow-list is not yet zero, so t-017 returns to ready for the next bounded sweep.
     claimed_by: claude-quirky-curie-20260802T152959Z-t017
-    claimed_at: '2026-08-02T15:30:00Z'
-    updated: '2026-08-02T15:30:00Z'
-    owner: worker
+    claimed_at: '2026-08-02T15:29:59Z'
+    updated: '2026-08-02T15:52:00Z'
+    owner: null
 
   - id: t-018
     milestone: m3
@@ -1623,3 +1627,32 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-02T13:48:11Z'
+
+  - id: t-054
+    milestone: m3
+    title: 'Design the root-surface treatment for MDC-mounted -page.vue components'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-017's eleventh sweep (2026-08-02, kind_robots PR #1322). The
+      root-surface rule (Silas, kind_robots PR #1320) requires every page component's
+      root to carry kr-surface or kr-stage, both of which set overflow-hidden. That's
+      correct for a standalone routed page that owns its own scroll, but most of the
+      remaining 43 root-surface entries are -page.vue components mounted via MDC
+      (content/*.md :directive blocks) inside pages/[...slug].vue's own scrolling
+      content-host -- e.g. about-page.vue, registration-page.vue, wallet-page.vue,
+      login-page.vue. Forcing overflow-hidden onto these risks clipping long-form
+      content that currently relies on the parent content-host's overflow-y-auto to
+      grow past the viewport, since the intervening <ContentRenderer> doesn't give the
+      child a flex context to safely self-bound (kr-stage's flex-1 is a no-op without a
+      flex parent). Decide whether these need a fourth primitive -- e.g. an unbounded
+      marker class (kr-content?) that satisfies the root-surface check with no
+      overflow/height behavior of its own -- or whether the rule should exempt
+      MDC-mounted page components entirely. Once decided, the remaining root-surface
+      sweeps (mostly this bucket) can proceed safely; until then, don't guess at
+      restructuring these files blind.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-02T15:52:00Z'
