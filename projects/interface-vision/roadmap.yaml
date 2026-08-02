@@ -920,8 +920,8 @@ tasks:
   - id: t-023
     milestone: m3
     title: 'Composition-lock audit before t-017 sweeps the layout-contract allow-list'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -938,6 +938,9 @@ tasks:
       which of the remaining one-header/one-scroll/zero-scroll files have a locked
       contract test elsewhere in the repo so t-017 knows up front which files need a
       companion contract update, not just a markup change.
+    claimed_by: 2026-08-02T021118Z-interface-vision-t-023-7f3a
+    claimed_at: '2026-08-02T02:11:18Z'
+    updated: '2026-08-02T02:11:18Z'
 
   - id: t-024
     milestone: m2
