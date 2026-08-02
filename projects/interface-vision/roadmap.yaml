@@ -812,7 +812,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -862,10 +862,10 @@ tasks:
       Eleventh scoped sweep: Silas directly added a new `root-surface` rule (kind_robots PR #1320, 51-file baseline) requiring every page component's root wrapper to carry the kr-surface/kr-stage class -- a bucket t-017's own notes hadn't tracked yet. Targeted this instead of one-scroll (unchanged at 27, own task t-047).
 
       Eleventh sweep merged as Kind Robots PR #1322 (squashed 0893da8): restructured 8 standalone routed pages -- confirmed via a content/**/*.md mount-directive scan that none are MDC-mounted, so each genuinely owns its own scroll -- from a bare h-full/overflow-y-auto root into a real kr-surface (bounded, non-scrolling) wrapping a kr-scroll (the one scroll region): components/pages/click-leaderboard.vue, components/pages/sponsor-page.vue, pages/music-mentor.vue, pages/plan/wonderlab/commentary-guide.vue, pages/play/challenges/[slug].vue, pages/play/challenges/leaderboard.vue, pages/play/video-generator.vue, pages/users/[id].vue. vue-tsc and eslint clean on all 8. root-surface: 51 -> 43 via --update; all other buckets unchanged (one-scroll 27, own task t-047). Left out of this pass, flagged for the next: error.vue and login-page.vue (both center content with items-center/justify-center on the same element that also scrolls -- needs the centering moved into the kr-scroll layer, a different restructuring than the simple single-scroll-region pages here); welcome-page.vue (no importers found outside its own file and generated registries -- looks orphaned, better suited to an orphan-cleanup task than a real fix). Flagged for Silas: most of the remaining 43 root-surface entries are MDC-mounted -page.vue components (about-page.vue, registration-page.vue, wallet-page.vue, login-page.vue, etc.) embedded inside pages/[...slug].vue's own scrolling content-host -- kr-surface/kr-stage both force overflow-hidden, which could clip long-form content that currently relies on the parent's scroll to grow past the viewport, since ContentRenderer doesn't give the child a flex context to safely self-bound. These may need a fourth primitive (an unbounded marker class with no overflow/height behavior) before they can be swept safely; filed as this cycle's kaizen. The layout-contract allow-list is not yet zero, so t-017 returns to ready for the next bounded sweep.
-    claimed_by: claude-quirky-curie-20260802T152959Z-t017
-    claimed_at: '2026-08-02T15:29:59Z'
-    updated: '2026-08-02T15:52:00Z'
-    owner: null
+    claimed_by: claude-quirky-curie-20260802T162726
+    claimed_at: '2026-08-02T16:27:27Z'
+    updated: '2026-08-02T16:27:27Z'
+    owner: reviewer
 
   - id: t-018
     milestone: m3
