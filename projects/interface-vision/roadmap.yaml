@@ -1267,8 +1267,7 @@ tasks:
   - id: t-033
     milestone: m2
     title: 'Extend verifyChannelContent.ts to validate against navManifest.ts'
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-012
@@ -1277,9 +1276,11 @@ tasks:
 
 
       Consolidated navManifest validation into the canonical channel-content contract on the Kind Robots worker branch; opening the focused PR for CI verification.
+
+      Merged Kind Robots PR #1323 as cc27d5a. verifyChannelContent.ts now owns channel, placement, and navManifest validation in one contract; test:nav-manifest remains a compatibility entrypoint to that same implementation. All 11 final-head workflows completed successfully.
     claimed_by: 2026-08-02T161308Z-interface-vision-t-033-m4q7
     claimed_at: '2026-08-02T16:13:08Z'
-    updated: '2026-08-02T16:19:00Z'
+    updated: '2026-08-02T16:21:30Z'
 
   - id: t-034
     milestone: m2

@@ -5926,3 +5926,13 @@ records:
     branches that can be mechanically consolidated under one shared scroll owner, and genuine dual-pane
     layouts that require a deliberate design decision about which pane owns scrolling. Grouping violations
     by shape keeps mechanical cleanup separate from judgment-heavy redesign.'
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-033
+  kind: implementation
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: null
+  lesson: When two CI scripts parse the same authored tree, keep one implementation and preserve old script
+    names only as compatibility aliases so workflow callers do not drift.
