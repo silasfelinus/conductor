@@ -35,11 +35,11 @@ Then report:
 - **Ready tasks** (what the Worker should pick up next, in priority order)
 - **Needs-human gates** (what only Silas can unblock, grouped by project)
 - **Any unresolved escalations** from TALKBACK
-- **Dream cycle** (idle fallback): the active `building` creation (type + next
-  stage), or — if none — the next queued outline in `projects/dream-cycle/backlog/`;
-  flag any new Silas notes in backlog files and warn if buildable outlines < 5
-- **Daily dream**: whether today's proposal exists (and if you just authored it,
-  say so with its title + edit link)
+- **Creation fallback**: any delegated non-dream scheduler card currently
+  `building`, its authoritative home-project stage, and any new Notes from Silas
+- **Daily dream**: whether today's dated proposal exists; its steering/build/retry,
+  Facet, art, and digest state; legacy Dream outlines are idea inventory rather
+  than queued object builds (warn when useful idea inventory falls below five)
 
 After the report, ask Silas what he wants to work on — or proceed directly if his first message is already a clear task.
 

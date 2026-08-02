@@ -6,7 +6,8 @@ status: outline
 priority: normal
 narrator: 'yes'
 created: '2026-07-29'
-proposal: true
+proposal: false
+legacy_contract: retired-pre-v2
 proposal_date: '2026-07-29'
 built_pr: null
 ---
@@ -47,6 +48,7 @@ In Warren Wake, a limestone-quarry city built during the Long Blackout and never
 - (leave notes here — agents fold them in before building and never edit this section)
 
 ## Build log
+- 2026-08-02 | retired | pre-v2 proposal demoted to idea inventory; not eligible for object creation
 - 2026-07-29 | proposed | auto-generated daily proposal
 
 <!-- proposal-data

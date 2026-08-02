@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""Offline buildability checks for dream-cycle backlog outlines.
-
-Legacy/manual outlines follow specs/dream.md's multi-character shape. Daily proposals
-with ``proposal-data.seed_facets.version >= 2`` follow the deterministic six-asset
-contract: one vibe, one location, one character, one item, one skill, and one scenario.
-"""
+"""Validate Daily Dream proposals and legacy idea inventory without network calls."""
 
 from __future__ import annotations
 
@@ -19,18 +14,11 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_BACKLOG = ROOT / "projects" / "dream-cycle" / "backlog"
-RARITIES = {"COMMON", "UNCOMMON", "RARE", "EPIC", "LEGENDARY", "MYTHIC"}
-BUILDABLE_STATUSES = {"outline", "approved"}
-SEED_CONTRACT_DATE = "2026-07-25"
-
-SECTION_KEYS = [
-    ("idea", "idea"),
-    ("location", "location"),
-    ("vibe", "vibe"),
-    ("characters", "character"),
-    ("rewards", "reward"),
-    ("scenarios", "scenario"),
-]
+ELIGIBLE_STATUSES = {"outline", "approved"}
+VALID_RARITIES = {"COMMON", "UNCOMMON", "RARE", "EPIC", "LEGENDARY", "MYTHIC"}
+REQUIRED_FACET_KEYS = {
+    "vibe", "location", "character", "reward_item", "reward_skill", "scenario"
+}
 
 
 class Finding:
@@ -81,7 +69,9 @@ def find_section(sections: dict[str, str], keyword: str) -> Optional[str]:
     return next((body for heading, body in sections.items() if keyword in heading), None)
 
 
-def is_placeholder(body: str) -> bool:
+def is_placeholder(body: Optional[str]) -> bool:
+    if body is None:
+        return True
     stripped = body.strip()
     if len(stripped) < 15:
         return True
@@ -89,91 +79,41 @@ def is_placeholder(body: str) -> bool:
     return bool(lines) and all(line.startswith("- (") for line in lines)
 
 
-def count_entries(body: str) -> int:
-    return sum(
-        1
-        for line in body.splitlines()
-        if re.match(r"^[-*]\s+\S", line) and not line.startswith("- (")
-    )
-
-
-def _rarities_present(body: str) -> set[str]:
-    upper = body.upper()
-    return {rarity for rarity in RARITIES if re.search(rf"\b{rarity}\b", upper)}
-
-
-def _seed_contract_applies(frontmatter: dict[str, Any]) -> bool:
-    raw = frontmatter.get("proposal_date") or frontmatter.get("created")
-    return bool(raw and str(raw) >= SEED_CONTRACT_DATE)
-
-
-def _labeled_value(body: str, *labels: str) -> Optional[str]:
-    for label in labels:
-        match = re.search(
-            rf"^[-*]\s+\*\*{re.escape(label)}:\*\*\s*(.+?)\s*$",
-            body,
-            re.IGNORECASE | re.MULTILINE,
-        )
-        if match:
-            return match.group(1).strip()
-    return None
-
-
-def _check_creative_seeds(name: str, sections: dict[str, str]) -> list[Finding]:
-    body = find_section(sections, "creative seed")
-    if body is None or is_placeholder(body):
-        return [Finding(name, "seed-missing", "no complete 'Creative seeds' section (genres, occupation, animal/species, fusion)")]
-
-    findings: list[Finding] = []
-    genres = _labeled_value(body, "Genres", "Genre")
-    if not genres:
-        findings.append(Finding(name, "seed-genres", "missing Genres value"))
-    else:
-        parts = [part for part in re.split(r"\s*(?:\+|,)\s*", genres) if part.strip()]
-        if not 1 <= len(parts) <= 2:
-            findings.append(Finding(name, "seed-genres", f"{len(parts)} genre seed(s); expected 1–2"))
-    if not _labeled_value(body, "Occupation"):
-        findings.append(Finding(name, "seed-occupation", "missing Occupation value"))
-    if not _labeled_value(body, "Animal / species", "Animal/species", "Species"):
-        findings.append(Finding(name, "seed-species", "missing Animal / species value"))
-    fusion = _labeled_value(body, "Fusion")
-    if not fusion or len(fusion) < 25:
-        findings.append(Finding(name, "seed-fusion", "Fusion must explain concrete consequences of all three seeds"))
-    return findings
-
-
-def _is_six_asset_proposal(data: Optional[dict[str, Any]]) -> bool:
-    facets = (data or {}).get("seed_facets")
-    return isinstance(facets, dict) and int(facets.get("version") or 0) >= 2
-
-
-def _check_six_asset(name: str, data: dict[str, Any]) -> list[Finding]:
-    findings: list[Finding] = []
-
-    def require_count(field: str, expected: int) -> list[Any]:
-        value = data.get(field)
-        items = value if isinstance(value, list) else []
-        if len(items) != expected:
-            findings.append(Finding(name, f"six-asset-{field}", f"{len(items)} {field}; expected exactly {expected}"))
-        return items
+def _canonical_errors(data: Optional[dict[str, Any]]) -> list[str]:
+    if not isinstance(data, dict):
+        return ["missing or invalid proposal-data block"]
+    errors: list[str] = []
+    facets = data.get("seed_facets")
+    if not isinstance(facets, dict) or int(facets.get("version") or 0) < 2:
+        errors.append("seed_facets.version must be at least 2")
+    elements = facets.get("elements") if isinstance(facets, dict) else None
+    if not isinstance(elements, dict) or not REQUIRED_FACET_KEYS.issubset(elements):
+        errors.append("seed_facets.elements must cover all six assets")
 
     vibe = data.get("vibe")
     if not isinstance(vibe, dict) or not vibe.get("title") or not vibe.get("line"):
-        findings.append(Finding(name, "six-asset-vibe", "missing complete vibe"))
-    require_count("locations", 1)
-    require_count("characters", 1)
-    rewards = require_count("rewards", 2)
-    reward_types = {str(item.get("reward_type", "")).upper() for item in rewards if isinstance(item, dict)}
-    if reward_types != {"ITEM", "SKILL"}:
-        findings.append(Finding(name, "six-asset-rewards", "rewards must contain exactly one ITEM and one SKILL"))
-    require_count("scenarios", 1)
+        errors.append("exactly one complete vibe is required")
 
-    facets = data.get("seed_facets")
-    elements = facets.get("elements") if isinstance(facets, dict) else None
-    expected = {"vibe", "location", "character", "reward_item", "reward_skill", "scenario"}
-    if not isinstance(elements, dict) or not expected.issubset(elements):
-        findings.append(Finding(name, "seed-facets", "seed_facets.elements must cover all six assets"))
-    return findings
+    for field, count in (("locations", 1), ("characters", 1), ("rewards", 2), ("scenarios", 1)):
+        value = data.get(field)
+        actual = len(value) if isinstance(value, list) else 0
+        if actual != count:
+            errors.append(f"{field} has {actual}; expected exactly {count}")
+
+    rewards = data.get("rewards") if isinstance(data.get("rewards"), list) else []
+    types = {
+        str(item.get("reward_type", "")).upper()
+        for item in rewards if isinstance(item, dict)
+    }
+    if types != {"ITEM", "SKILL"}:
+        errors.append("rewards must contain exactly one ITEM and one SKILL")
+    for item in rewards:
+        if isinstance(item, dict) and str(item.get("rarity", "")).upper() not in VALID_RARITIES:
+            errors.append(f"invalid reward rarity: {item.get('rarity')!r}")
+
+    if data.get("narrator"):
+        errors.append("Daily Dream proposals must not contain a narrator")
+    return errors
 
 
 def check_outline(path: Path) -> list[Finding]:
@@ -181,61 +121,33 @@ def check_outline(path: Path) -> list[Finding]:
     frontmatter = parse_frontmatter(text)
     if str(frontmatter.get("type", "")).strip() != "dream":
         return []
-    if str(frontmatter.get("status", "")).strip().lower() not in BUILDABLE_STATUSES:
-        return []
 
     name = path.name
-    data = parse_data_block(text, "proposal-data")
-    if _is_six_asset_proposal(data):
-        return _check_six_asset(name, data or {})
+    status = str(frontmatter.get("status", "outline")).strip().lower()
+    proposal = bool(frontmatter.get("proposal"))
+    if proposal:
+        if status not in ELIGIBLE_STATUSES:
+            return []
+        findings = [
+            Finding(name, "proposal-contract", detail)
+            for detail in _canonical_errors(parse_data_block(text, "proposal-data"))
+        ]
+        narrator_flag = str(frontmatter.get("narrator", "no")).strip().lower()
+        if narrator_flag not in {"no", "false", "none", ""}:
+            findings.append(Finding(name, "proposal-narrator", "frontmatter must not enable a narrator"))
+        return findings
 
     findings: list[Finding] = []
+    if status == "building":
+        findings.append(
+            Finding(name, "legacy-building", "non-proposal Dream files are idea inventory and cannot be building")
+        )
     sections = split_sections(text)
-    bodies: dict[str, Optional[str]] = {}
-    for concept, keyword in SECTION_KEYS:
-        body = find_section(sections, keyword)
-        bodies[concept] = body
-        if body is None:
-            findings.append(Finding(name, "missing-section", f"no '{concept}' section"))
-
-    narrator_flag = str(frontmatter.get("narrator", "")).strip().strip("'\"").lower()
-    narrator_body = find_section(sections, "narrator")
-    if narrator_flag in ("yes", "true") and narrator_body is None:
-        findings.append(Finding(name, "missing-section", "no 'narrator' section"))
-
-    if _seed_contract_applies(frontmatter):
-        findings.extend(_check_creative_seeds(name, sections))
-
-    for concept in ("idea", "location", "vibe"):
-        body = bodies.get(concept)
-        if body is not None and is_placeholder(body):
-            findings.append(Finding(name, "empty-section", f"'{concept}' section is empty/placeholder"))
-
-    characters = bodies.get("characters")
-    if characters is not None:
-        count = count_entries(characters)
-        if not 2 <= count <= 5:
-            findings.append(Finding(name, "characters-count", f"{count} character(s); expected 2–5"))
-
-    rewards = bodies.get("rewards")
-    if rewards is not None:
-        count = count_entries(rewards)
-        if not 2 <= count <= 8:
-            findings.append(Finding(name, "rewards-count", f"{count} reward(s); expected 2–8"))
-        if count >= 3 and len(_rarities_present(rewards)) < 2:
-            findings.append(Finding(name, "rewards-rarity", f"{count} rewards but fewer than 2 distinct rarity tiers"))
-
-    scenarios = bodies.get("scenarios")
-    if scenarios is not None:
-        count = count_entries(scenarios)
-        if not 1 <= count <= 3:
-            findings.append(Finding(name, "scenarios-count", f"{count} scenario(s); expected 1–3"))
-
-    if narrator_flag in ("yes", "true"):
-        if narrator_body is None or is_placeholder(narrator_body) or "narrator: no" in narrator_body.lower():
-            findings.append(Finding(name, "narrator-missing", "narrator: yes but no real narrator block"))
-    elif narrator_flag not in ("no", "false"):
-        findings.append(Finding(name, "narrator-flag", f"narrator frontmatter is {narrator_flag!r}; expected yes or no"))
+    idea = find_section(sections, "idea")
+    if is_placeholder(idea):
+        findings.append(Finding(name, "idea-missing", "legacy idea inventory needs a usable 'The idea' section"))
+    if find_section(sections, "notes from silas") is None:
+        findings.append(Finding(name, "notes-missing", "legacy idea inventory needs a Notes from Silas section"))
     return findings
 
 
@@ -260,9 +172,9 @@ def main() -> int:
     if args.json:
         print(json.dumps([finding.as_dict() for finding in findings], indent=2))
     elif not findings:
-        print("All dream outlines are buildable per specs/dream.md.")
+        print("Daily Dream proposal and legacy idea-inventory contracts are clean.")
     else:
-        print(f"Dream outline problems ({len(findings)} finding(s)):\n")
+        print(f"Dream-cycle contract problems ({len(findings)} finding(s)):\n")
         grouped: dict[str, list[Finding]] = {}
         for finding in findings:
             grouped.setdefault(finding.outline, []).append(finding)
@@ -271,7 +183,7 @@ def main() -> int:
             for finding in items:
                 print(finding.line())
             print()
-        print("Fix: complete the outline per specs/dream.md, then re-run this check.")
+        print("Fix the proposal or demote it to non-proposal idea inventory, then re-run this check.")
     return 1 if findings else 0
 
 

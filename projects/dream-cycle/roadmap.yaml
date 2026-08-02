@@ -2,48 +2,36 @@ project: dream-cycle
 kind: software
 autonomous: true
 goal: >
-  When nothing better is ready anywhere, conductor makes something for the site —
-  one creation at a time, roughly one per day, art included. Creation types are
-  pluggable playbooks: complete dreams (location + vibe, characters, rewards,
-  scenarios, optional narrator with expressions/topics/threads), coloring-book
-  production days, and future day-sized types — all driven from a human-steerable
-  backlog of outline files.
+  Use otherwise-idle Conductor capacity to maintain one deterministic six-asset Daily
+  Dream proposal-to-builder-to-digest pipeline, while coordinating delegated non-dream
+  creation types without creating a second source of truth.
 notes_from_silas: >
-  New project 2026-07-10, from my session direction: I want to test a new option
-  for conductor sweeps — if there isn't anything better to do, the agent develops
-  new ideas for the site, one dream at a time. A dream is a location and a vibe,
-  each with characters, rewards, and scenarios; a dream can also have a bot
-  narrator, and a narrator has expressions, topics, and threads. Each idea should
-  take about a day to build out including all the art generation. Keep accessible
-  files that list out further ideas so there's a backlog of outlines for future
-  developments, with the ability for me to leave notes in the files. We have all
-  the pieces — this project is the infrastructure tightening around them.
-  UPDATE (same day): the idler needs to handle multiple types of creations, not
-  just dreams. One type is dream building; another is "spend today drafting and
-  making a coloring book." First coloring book: Monster Recast (Hollywood recast —
-  gender-bending Hollywood movie monsters), already outlined in
-  projects/coloring-book/sets/monster-recast/.
+  Original direction: keep inventing useful site content when nothing higher-priority is
+  ready and leave accessible files Silas can steer. Current implementation translates that
+  into one dated six-asset Daily Dream lane plus delegated scheduler cards for other
+  creation types. PIPELINE.md is authoritative; legacy larger Dream outlines are idea
+  inventory.
 milestones:
   - id: m1
     title: SHAPE — design brief and backlog format
     weight: 15
-    status: in-progress
+    status: done
   - id: m2
     title: TIGHTEN — API audit, loop contract, per-type playbooks
     weight: 30
-    status: not-started
+    status: done
   - id: m3
     title: BACKLOG — seed and sustain the outline runway
     weight: 15
-    status: not-started
+    status: in-progress
   - id: m4
     title: CREATION FACTORY — the recurring one-creation-at-a-time build loop
     weight: 30
-    status: not-started
+    status: in-progress
   - id: m5
     title: POLISH — project art and loop refinement
     weight: 10
-    status: not-started
+    status: in-progress
 tasks:
   - id: t-001
     milestone: m1
@@ -52,16 +40,9 @@ tasks:
     owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T00:00:00Z'
-    note: >
-      DESIGN-BRIEF.md written 2026-07-10 from Silas's session direction: the
-      idle-fallback loop, the complete-dream definition, the 8-stage day cycle,
-      and the backlog file contract (Notes-from-Silas sections, status/priority
-      frontmatter Silas can flip). backlog/ scaffolded with README, per-type
-      templates, three dream seeds (tidepool-arcade, lantern-post, static-garden
-      — one deliberately narratorless to test stage skipping), and the
-      monster-recast coloring-book scheduler card. Revised same day when Silas
-      generalized the idler to multiple creation types.
+    updated: '2026-08-02T22:31:00Z'
+    note: |-
+      Historical scaffold task. It created the first typed backlog and an eight-stage Dream experiment. That experiment was retired on 2026-08-02. Current backlog semantics are in backlog/README.md and the current pipeline is PIPELINE.md.
   - id: t-002
     milestone: m1
     title: Confirm scope and content-write authority with Silas
@@ -86,23 +67,9 @@ tasks:
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T10:03:26Z'
-    note: >
-      Infrastructure tightening, part 1. For each model a dream build touches —
-      Dream, DreamRelation, Character, Reward, Scenario, Bot, ExpressionMedia,
-      ExpressionTransition, NarratorTopic, NarratorThread — verify (read-only:
-      inspect kind_robots server/api routes in the repo, no live writes) whether a
-      create/update endpoint exists, what auth it needs (KR_API_TOKEN pattern per
-      scripts/fetch_todos.py), and required fields. Output
-      projects/dream-cycle/docs/api-surface.md with a per-model verdict:
-      api-ready | gap. Each gap becomes a proposed kind_robots roadmap task or
-      pitch (backend stays read-only/external — never edit it directly).
-      HEAD START (2026-07-14, from t-012's build): Dream/Character/Reward/Bot/
-      Scenario/PitchSheet create+patch contracts are verified and documented in
-      scripts/build_dream_records.py's comments; known gaps already filed as
-      kind-robots t-016 (broken POST /api/sheets) and t-017 (no DreamRelation
-      endpoint). Remaining: ExpressionMedia/ExpressionTransition/NarratorTopic/
-      NarratorThread audit + the consolidated api-surface.md doc.
+    updated: '2026-08-02T22:31:00Z'
+    note: |-
+      Historical API audit completed. The current dated bundle writes only PITCH/LOCATION Dreams, PitchSheets, one Character, two Rewards, one Scenario, and the world/location relation. Facets are a post-ledger sidecar. Current details are in docs/api-surface.md; narrator/expression models are outside the current Daily Dream contract.
     claimed_by: dream-cycle-expansion-8m2dmk
     claimed_at: '2026-07-16T10:03:26Z'
   - id: t-004
@@ -112,18 +79,10 @@ tasks:
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T18:59:16Z'
+    updated: '2026-08-02T22:31:00Z'
     depends_on: t-003
-    note: >
-      Infrastructure tightening, part 2. CREATION-SPEC.md is the type-agnostic
-      contract the recurring build task follows: typed queue order, one-building
-      rule, playbook requirement, home-project delegation rule, Silas-notes
-      handling, build-log/ledger duties, and the backlog replenishment rule
-      (keep >= 5 buildable outlines). specs/dream.md is the first playbook: the
-      8 dream stages with per-stage inputs, concrete create calls or seed-file
-      paths (from t-003's audit), verification per stage, art-prompt queueing
-      through projects/art-prompts.yaml / art-generate.yaml, and metadata
-      requirements (designer/source so a whole dream is traceable and removable).
+    note: |-
+      Completed and later canonicalized. specs/CREATION-SPEC.md and specs/dream.md now define one dated proposal path, one transactional object writer, and read-only digest reporting. The former eight-stage direct-REST Dream playbook is retired; only delegated non-dream types may remain building across cycles.
     claimed_by: dream-cycle-t004-specs
     claimed_at: '2026-07-16T18:59:16Z'
   - id: t-005
@@ -155,41 +114,11 @@ tasks:
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-02T22:52:00Z'
+    updated: '2026-08-02T22:31:00Z'
     depends_on: t-004
     note: |-
-      CURRENT CONTRACT (2026-08-02): Daily dreams use the single path in projects/dream-cycle/PIPELINE.md: committed proposal, one Pacific steering day, transactional build_dream_records.py creation, Facet/art enrichment, then read-only digest reporting.
-      t-006 may fold Silas notes into agent-owned proposal data, author a missing dated proposal, inspect pinned retry evidence, verify Facets/art/digest state, and replenish idea inventory. It must never create daily-dream objects manually. Only delegated non-dream types may advance stage by stage through their home-project playbooks.
-      Historical staged-run notes below predate this retirement and are kept only as an audit trail; they are not current instructions.
-
-      THE idle-fallback loop (recurring — re-arms to ready after every cycle, never reaches done, doesn't count toward milestones). Because dream-cycle sits LAST in projects/priority.yaml, this task is only picked when no other active project has ready work — that's the "nothing better to do" contract. Each cycle: (1) scan every backlog file for new Notes from Silas and frontmatter flips, fold them in first; (2) if a creation is status: building, advance it exactly ONE stage per its type's playbook in specs/ and append its Build log; (3) else promote the top queued outline (approved > outline, then priority, then oldest created — types without a specs/ playbook wait, they don't block) to building and run its first stage; (4) at ship: verify the playbook checklist, mark built, write the SHIPPED.md ledger entry, and replenish the backlog if under 5 buildable outlines. One creation building at a time, ever. Delegating types (coloring-book) advance their home project's tasks and update both records; never double-claim a home task the Worker is already actively building — pick the next queued creation instead. RAN 2026-07-21 (~23:17 UTC, conductor scheduled burst, claude-conductor-burst-20260721T232500Z-dc-t006): no creation was status: building, so step (3) applied. monster-recast is status: approved (highest in the ordering) but its delegated home task (coloring-book/t-022) is status: needs-human, blocked on the art-generation relay -- confirmed still offline this cycle via a direct GET to the live relay-status API (zero registered agents) -- so it cannot advance today. Promoted the oldest buildable dream-type outline instead: backlog/lantern-post.md (created 2026-07-10, tied with static-garden/tidepool-arcade, picked alphabetically first), ran its Stage 1 (Flesh out, no API calls) -- filled in explicit character Look/Drive lines and reward rewardType tags (2 ITEM, 2 SKILL) that were thin, verified against the full Stage 1 checklist, flipped its frontmatter to status: building, appended its Build log entry. Buildable-outline count unaffected (still well above the 5 floor; lantern-post moving to building doesn't remove it from the count until shipped). Re-armed to ready per the recurring-task convention -- next cycle continues with lantern-post's Stage 2 (Dreams: location + vibe + relations). RAN 2026-07-22 (~04:25-04:30 UTC, conductor scheduled burst, claude-conductor-burst-20260722T0425Z-dc-t006): lantern-post is status: building, ran Stage 2 (Dreams -- location + vibe + relations) per specs/dream.md. Searched existing GENRE Dreams first (GET /api/dreams? dreamType=GENRE) and reused elegiac-wonder (id 2330, flavorText "grief, catalogued and kept warm") rather than creating a duplicate vibe node -- the closest existing match to "Gentle Melancholy." Created the PITCH world card (id 3194, slug lantern-post) and LOCATION dream (id 3195, slug sorting-hall -- distinct from the world slug per SLUG-POLICY.md rule 4, since the outline's location shares the world's exact title). Created DreamRelation edges: world CONTAINS location (id 77), location RELATED genre (id 78). Also created a PitchSheet per card Dream (ids 476, 477) with extraData.dreamCycle bundled in now rather than deferred to Stage 8. Verified via GET /api/dreams/3194 and GET /api/dream-relations. Appended the backlog file's Build log. Also separately re-checked the art-generation relay this cycle (see serendipity/t-012's fresh note): relay-status now shows a registered agent for the first time this week, but 3 freshly queued jobs all stayed unclaimed -- so monster-recast's delegated blocker (coloring-book/t-022) is unchanged, agent presence alone isn't sufficient evidence. Re-armed to ready per the recurring-task convention -- next cycle continues with lantern-post's Stage 3 (Characters: Vesper, Smudge, the Dead-Letter Clerk).
-
-
-      Daily-dream creation failures now persist as pinned retries, surface in the hourly report, and fail the workflow after its evidence is committed.
-
-      Merged PR #1561 after Daily Dream Contract, Worker PR CI, Security Audit, and task-event validation completed successfully. Failed object builds now persist as pinned retries and make the hourly workflow report/fail honestly after committing evidence. Production creation remains pending because the live API still reports the database temporarily unavailable.
-
-      One-shot workflow trigger prepared to run the pinned Filing Echidna production retry immediately after database recovery.
-
-      Recovered The Filing Echidna as a durable completed bundle: Dreams 4966 and 4967, Character 2800, Rewards 2439 and 2440, Scenario 1850; six canonical Facet targets complete with zero errors; six card-art requests queued under requests:. Retry reconciliation, ledger-before-Facet persistence, canonical stale-Facet expansion, and queue-section insertion are merged; temporary push trigger removed.
-
-      Verified queue cleanup is ready for review: six exact duplicate Filing Echidna requests removed, append_art_requests now rejects existing and same-batch IDs, two regression tests added, and the full repository test suite passed before the implementation commit was pushed.
-
-      Merged PR #1578 after Daily Dream Contract, Worker PR CI, Security Audit, and task-event validation all completed successfully. The six duplicate Filing Echidna queue rows are removed, 22 unique request IDs remain, the append path now rejects persisted and same-batch duplicates, regression coverage is present, and all temporary trigger infrastructure is removed.
-
-      Consolidated Daily Dream onto one canonical proposal-to-builder pipeline. The legacy staged dream writer is retired, Lantern Post is parked with its existing production IDs preserved, digest reporting is explicitly read-only, and a new CI guard rejects additional object-builder callers or direct-REST playbooks.
-
-      Merged PR #1580 after the single-writer health guard, 54 Daily Dream contract tests, the full 806-test Python suite, Worker PR CI, Security Audit, dream-cycle backlog guards, roadmap validation, and task-event validation all passed. Daily Dream now has one canonical object path through build_dream_records.py; the digest is read-only; the legacy staged playbook is retired; Lantern Post is parked with its existing production IDs preserved.
-
-      Prepared a bounded one-shot cleanup that renames t-006 and prepends the current single-pipeline contract above its historical staged-run notes, validates the roadmap and health guard, then removes its own workflow.
-
-      Merged PR #1581 after Worker PR CI, Security Audit, and task-event validation completed successfully. The self-removing follow-up commit renamed t-006 and prepended the canonical proposal-to-builder maintenance contract, validated the single-writer health guard, preserved historical staged-run notes as audit-only, and removed its temporary workflow.
-
-      Prepared a bounded self-removing cleanup for stale Daily Dream project contracts, validators, builder compatibility paths, and roadmap references. The trigger PR contains no production writes and applies only after its standard checks pass and it is merged.
-
-      Final trigger branch is ready: it fetches the bounded payload after merge, rewrites stale project contracts, validates focused and repository guards, commits the cleanup to main, removes its own workflow, and deletes the temporary payload branch.
-
-      Documentation-hygiene trigger is ready for PR review. Scope is current-contract cleanup only; no kind_robots API calls, deployment, digest send, or production content mutation.
+      CURRENT CONTRACT: read PIPELINE.md. Maintain today's deterministic six-asset proposal, fold in Silas notes, inspect pinned retries, verify Facets/art/digest evidence, and replenish useful idea inventory. Never create Daily Dream objects manually. Only delegated non-dream scheduler cards may advance stage by stage in their home projects.
+      Last consolidated through PRs #1580 and #1581; this pass removes remaining stale project references and extends CI so the old contract cannot return.
     owner: worker
     claimed_by: 2026-08-02T223100Z-dream-cycle-t-006-doc-hygiene-r8n2
     claimed_at: '2026-08-02T22:31:00Z'
@@ -217,35 +146,14 @@ tasks:
   - id: t-008
     milestone: m5
     title: First-creation retrospective — tighten the specs from what actually happened
-    status: blocked
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-25T00:00:00Z'
+    updated: '2026-08-02T22:31:00Z'
     depends_on: t-004
-    note: >
-      After the FIRST creation ships via t-006 (the stage-by-stage idle loop —
-      NOT the daily-dream fast lane/build_dream_records.py, which is a separate
-      track per CREATION-SPEC.md and has already shipped comet-market,
-      marrow-library, and kite-string-exchange in one shot each; those don't
-      count for this retrospective): compare the build against CREATION-SPEC.md
-      and its type playbook — stages that didn't fit a single cycle, missing
-      verification, art-pipeline friction, API gaps hit in practice, delegation
-      friction with the home project (if coloring-book shipped first). Amend
-      the specs and file any new kind_robots or coloring-book tasks. Summarize
-      for Silas in the PR so he can judge whether the one-creation-a-day
-      cadence held.
-
-      BLOCKED 2026-07-25 (audit pass): was sitting at `status: ready` but its
-      precondition isn't met yet — no creation has shipped via t-006 at all.
-      lantern-post is the only card ever promoted into the real t-006 idle
-      loop (`backlog/lantern-post.md`, `status: building`) and is still only at
-      Stage 2 of 8 (Dreams — location + vibe + relations) as of its last build
-      log entry, 2026-07-22. Not a roadmap-resolver-trackable dependency (the
-      gate is a backlog-file state, not another task's `status: done`, so
-      `scripts/resolve_deps.py` can't flip this automatically) — re-check
-      `backlog/lantern-post.md`'s frontmatter `status` by hand each cycle and
-      flip this back to `ready` once it reads `built`.
+    note: |-
+      Superseded. This retrospective waited for a creation from the retired stage-by-stage Dream path, so its precondition can never become true. The replacement retrospective happened through the single-writer health consolidation: atomic retries, exact six-asset validation, Facet/art checks, digest contracts, and CI guards are now part of the canonical pipeline.
   - id: t-009
     milestone: m2
     title: Write specs/coloring-book.md — the coloring-book day-type playbook
@@ -304,43 +212,9 @@ tasks:
     owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-14T00:00:00Z'
-    note: >
-      Silas 2026-07-14: up the ante on auto-created output — the daily digest
-      becomes an art-forward morning ritual. Shipped:
-      (1) scripts/build_dream_proposal.py — LLM (Anthropic, ANTHROPIC_API_KEY)
-      generates tomorrow's "starter dream" (3 characters, 2 locations, 1
-      narrator bot, 2 rewards one SKILL + one ITEM, vibe + scenarios) as a
-      dated backlog outline from backlog/_template-proposal.md; --sample/no-key
-      renders a built-in sample so the path stays verifiable and the run
-      soft-no-ops. (2) scripts/curate_art.py --daily — generalizes the style
-      assessor beyond coloring-book sets to score the day's fresh renders
-      (projects/images + projects/process) against the new steerable
-      AESTHETIC-GUIDELINES.md, writing projects/curation/daily/<date>.yaml with
-      per-image score + scored_at, sorted highest-first. (3) build_digest.py
-      gains tomorrow_proposal / yesterday_output / art_highlights /
-      new_creations; build_digest_email.py renders facsimile pitch cards
-      (per-type theming mirroring kind_robots dream-pitch-sheet.vue +
-      pitchSheetDefaults), a top-scored gallery, a highlight reel, and a
-      comment/edit button linking to the proposal file's Notes-from-Silas.
-      (4) THE SWEEPING LLM AGENT AUTHORS THE PROPOSAL ITSELF (Silas
-      2026-07-14 — corrected same day; the earlier scripted-API version was
-      nixed): no ANTHROPIC_API_KEY anywhere in the proposal path.
-      build_dream_proposal.py is only the validator/renderer — agents run
-      `--check` each sweep (also in the CLAUDE.md startup sweep), author the
-      starter dream with their own reasoning per `--brief`, and write it via
-      `--from-json` (validated: exact counts, one SKILL + one ITEM; guarded:
-      one proposal per Pacific date; slug-deduped vs backlog + SHIPPED). The
-      hourly build_conductor_summary.py only FLAGS a missing proposal in
-      CONDUCTOR-REPORT.md stats. daily-digest.yml makes NO model calls — it
-      only reads committed files and renders/sends the email. Comment/edit
-      link = the GitHub backlog file (Phase 1 default). Fulfils
-      art-generator-connect/t-019 "surface generation results in the daily
-      digest."
-      SWEEP DUTIES: (a) every agent sweep — `build_dream_proposal.py --check`,
-      author today's proposal if missing; (b) the Reviewer runs
-      `python scripts/curate_art.py --daily` each sweep and commits the daily
-      report so the digest's top-scored gallery stays fresh.
+    updated: '2026-08-02T22:31:00Z'
+    note: |-
+      Historical Phase 1 shipped proposal authoring and digest presentation. The current proposal is authored by the sweeping agent from deterministic live Facets and contains exactly six assets with no narrator. Automated LLM art scoring/curation was later removed; current behavior is defined by PIPELINE.md and specs/dream.md.
   - id: t-012
     milestone: m4
     title: 'Phase 2: build the proposal into real records + art'
@@ -348,32 +222,9 @@ tasks:
     owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-14T04:00:00Z'
-    note: >
-      SHIPPED 2026-07-14 (with t-011, Silas-directed session).
-      scripts/build_dream_records.py builds the newest unbuilt proposal past
-      its steering day (proposal_date < today Pacific) into real kind_robots
-      rows via REST (Bearer KR_API_TOKEN): a PITCH Dream world card + GENRE
-      vibe Dream + 2 LOCATION Dreams + 3 CHARACTER Dreams w/ real Character
-      rows + 1 NARRATOR Dream w/ Bot row + 2 REWARD Dreams w/ Reward rows
-      (SKILL+ITEM) + Scenario rows, each card getting a PitchSheet via
-      POST /api/sheets/by-dream/{id} tagged extraData {dreamCycle,
-      proposalDate, elementType, element} and designer "dream-cycle"
-      (traceable/removable). Art queued as 9 requests: entries in
-      art-prompts.yaml targeting public/images/dreams/<slug>/ (existing
-      self-draining pipeline); the --attach pass (each hourly sweep)
-      HEAD-checks the public URLs and PATCHes sheet imagePath when live.
-      Runs from build_conductor_summary.py (hourly sweep, no LLM calls);
-      writes built-data JSON + Build log into the backlog file and flips
-      status straight to built (skipping "building" ON PURPOSE — the
-      one-building-at-a-time invariant belongs to the t-006 idle loop and
-      daily proposals are a parallel fast lane). STEERING GUARD: refuses to
-      auto-build any proposal whose Notes-from-Silas has content — an agent
-      must fold notes in first. Gaps found + filed as kind-robots t-016
-      (POST /api/sheets is a broken mis-copied handler — never use; by-dream
-      is the real create) and t-017 (no DreamRelation endpoint, graph edges
-      skipped). model-builder's relationship-expansion recipe remains the
-      richer interactive path; this builder is the headless daily lane.
+    updated: '2026-08-02T22:31:00Z'
+    note: |-
+      Historical Phase 2 introduced the first headless REST builder. It has since been replaced in-place by the exact six-asset transaction: one PITCH world, one LOCATION, one Character, one ITEM Reward, one SKILL Reward, and one Scenario; six unique art requests; atomic rollback/retry; Facet enrichment; and built-data evidence. It is not a parallel fast lane. It is the sole Daily Dream object path.
   - id: t-013
     milestone: m5
     title: 'Phase 2: kind_robots Daily Dream page (real pitch cards)'
@@ -381,24 +232,9 @@ tasks:
     owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-14T04:00:00Z'
-    note: >
-      SHIPPED 2026-07-14 (Silas-directed session; frontend built directly on
-      the kind_robots session branch claude/daily-digest-art-proposals-nbrxur
-      rather than filed as a task). /daily-dream route via the content-driven
-      convention: content/daily-dream.md embeds :daily-dream-page
-      (components/pages/daily-dream-page.vue), nav tab at
-      content/channels/play/daily-dream.md (Play channel, sort 12). The page
-      fetches PitchSheets via useSheetStore().fetchSheets(), filters
-      extraData.dreamCycle, groups by dream slug (newest proposalDate first),
-      and renders REAL dream-pitch-sheet cards (per-type theming via a
-      {id, dreamType} dream shim; sheets passed directly, no refetch), with a
-      day picker for previous dreams, an attached-art strip, and a
-      "Comment / edit this dream" button linking to the conductor backlog
-      file's Notes-from-Silas. The digest email's "View the Daily Dream page"
-      buttons (tomorrow + yesterday sections) now link here, and yesterday's
-      section shows the built-records summary + attached art from built-data.
-      kind_robots PR #229.
+    updated: '2026-08-02T22:31:00Z'
+    note: |-
+      Historical front-end experiment. The /daily-dream page and its navigation files shipped in kind_robots PR #229, then were intentionally removed in PR #644 on 2026-07-20 because the unfinished page always showed no dreams. The digest no longer links to it. Current Daily Dream output is reported through the digest and normal model surfaces; rebuilding a dedicated page would require a new scoped task.
   - id: t-014
     milestone: m2
     title: Harden build_dream_proposal.py against concurrent-session double-proposal races
@@ -439,22 +275,9 @@ tasks:
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T20:00:00Z'
-    note: >
-      Silas-directed 2026-07-16: the live-API build path (t-006) can't run from an
-      interactive session (kind-robots.vercel.app is egress-blocked here; only the
-      hourly CI runners have egress), so harden the loop offline instead — a
-      sibling to the t-010 scheduler-drift guard for dream outlines.
-      scripts/check_dream_outlines.py validates every buildable type:dream outline
-      (status outline/approved) against specs/dream.md before t-006 tries to build
-      it: required sections present (idea/location/vibe/characters/rewards/
-      scenarios/narrator), 2-5 characters, 2-8 rewards with a rarity spread (>=2
-      tiers when >=3 rewards), 1-3 scenarios, and a real narrator block when
-      narrator: yes (clean skip when narrator: no). Accepts both outline shapes
-      (seed "Location dream" + daily "Locations (2)"). Non-zero exit + readable
-      per-file report; wired into ci.yml's dream-cycle-guards job alongside the
-      scheduler-drift check. tests/test_check_dream_outlines.py covers both shapes,
-      each failure mode, and asserts the real backlog stays buildable.
+    updated: '2026-08-02T22:31:00Z'
+    note: |-
+      The offline preflight remains active but now distinguishes two shapes: eligible proposal:true files must satisfy the exact seed_facets-v2 six-asset contract, while non-proposal Dream files are idea inventory and may never be status: building. CI no longer describes legacy multi-character outlines as independently buildable.
   - id: t-016
     milestone: m4
     title: Make build_dream_records.py atomic (roll back partial builds on intermittent DB failure)
@@ -641,33 +464,13 @@ tasks:
   - id: t-020
     milestone: m5
     title: "Correct t-013's note — the Daily Dream page it describes as shipped was intentionally removed 2026-07-20"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-26T01:00:00Z'
-    note: >
-      Filed 2026-07-26 (weekly site audit, global-ui/SITE-AUDIT-AGENT.md).
-      t-013 is `status: done` with a note describing `/daily-dream`
-      (`components/pages/daily-dream-page.vue`, `content/daily-dream.md`,
-      `content/channels/play/daily-dream.md`, kind_robots PR #229, merged
-      2026-07-14) as a shipped, working page. None of those three files exist
-      on kind_robots `main` today — confirmed via the GitHub API against the
-      live default branch, not just a local shallow-clone gap. Root cause:
-      kind_robots commit `c4e28c6` (PR #644, 2026-07-20, Silas-directed)
-      deliberately removed the page ("was never finished — always showed 'no
-      dreams built yet' — and is no longer wanted"), and
-      `scripts/build_digest.py` was already updated in the same window to stop
-      linking to it (`DAILY_DREAM_PAGE = ""`, `yesterday_output["page"] = ""`)
-      — so there's no live broken link, this is pure roadmap-note drift, not a
-      functional bug.
-      TO DO: update t-013's note (or add a short addendum) to record the
-      2026-07-20 removal instead of leaving it read as still-shipped, so a
-      future reader doesn't rediscover this as a fresh "regression." No code
-      change implied — decide only whether the daily-dream front-end is worth
-      rebuilding properly later (Silas's call) or the pipeline should stay
-      backend-only (art + PitchSheets, no dedicated page) going forward.
-
+    updated: '2026-08-02T22:31:00Z'
+    note: |-
+      Resolved by the 2026-08-02 project-documentation hygiene pass. t-013 now records the intentional 2026-07-20 removal of the dedicated Daily Dream page and no longer presents it as live functionality.
   - id: t-021
     milestone: m4
     title: Log configured/missing media roots at relay_media_agent.py startup

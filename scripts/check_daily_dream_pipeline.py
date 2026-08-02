@@ -20,6 +20,15 @@ PIPELINE = Path("projects/dream-cycle/PIPELINE.md")
 CREATION_SPEC = Path("projects/dream-cycle/specs/CREATION-SPEC.md")
 DREAM_SPEC = Path("projects/dream-cycle/specs/dream.md")
 BACKLOG_README = Path("projects/dream-cycle/backlog/README.md")
+DESIGN_BRIEF = Path("projects/dream-cycle/DESIGN-BRIEF.md")
+SEED_CONTRACT = Path("projects/dream-cycle/CREATIVE-SEED-CONTRACT.md")
+IDEA_TEMPLATE = Path("projects/dream-cycle/backlog/_template.md")
+SHIPPED = Path("projects/dream-cycle/SHIPPED.md")
+API_SURFACE = Path("projects/dream-cycle/docs/api-surface.md")
+OUTLINE_CHECKER = Path("scripts/check_dream_outlines.py")
+ROADMAP = Path("projects/dream-cycle/roadmap.yaml")
+BUILDER = Path("scripts/build_dream_records.py")
+CLAUDE = Path("CLAUDE.md")
 
 REQUIRED_FILES = (
     HOURLY,
@@ -29,6 +38,15 @@ REQUIRED_FILES = (
     CREATION_SPEC,
     DREAM_SPEC,
     BACKLOG_README,
+    DESIGN_BRIEF,
+    SEED_CONTRACT,
+    IDEA_TEMPLATE,
+    SHIPPED,
+    API_SURFACE,
+    OUTLINE_CHECKER,
+    ROADMAP,
+    BUILDER,
+    CLAUDE,
 )
 
 
@@ -79,6 +97,15 @@ def check_pipeline(root: Path = ROOT) -> list[str]:
     creation_spec = content[CREATION_SPEC]
     dream_spec = content[DREAM_SPEC]
     backlog_readme = content[BACKLOG_README]
+    design_brief = content[DESIGN_BRIEF]
+    seed_contract = content[SEED_CONTRACT]
+    idea_template = content[IDEA_TEMPLATE]
+    shipped = content[SHIPPED]
+    api_surface = content[API_SURFACE]
+    outline_checker = content[OUTLINE_CHECKER]
+    roadmap = content[ROADMAP]
+    builder = content[BUILDER]
+    claude = content[CLAUDE]
 
     try:
         builder_calls = _builder_call_count(summary)
@@ -190,8 +217,49 @@ def check_pipeline(root: Path = ROOT) -> list[str]:
                 f"active dream specs must not authorize direct object writes: {endpoint}"
             )
 
-    return errors
+    project_checks = (
+        ("DESIGN-BRIEF.md", design_brief, ("exactly six assets", "sole daily dream object writer")),
+        ("CREATIVE-SEED-CONTRACT.md", seed_contract, ("seed_facets", "build_dream_proposal.py --brief")),
+        ("SHIPPED.md", shipped, ("built-data", "not a second ledger")),
+        ("api-surface.md", api_surface, ("not part of the current dated daily dream contract",)),
+    )
+    for label, surface, required in project_checks:
+        lowered = surface.casefold()
+        for phrase in required:
+            if phrase.casefold() not in lowered:
+                errors.append(f"{label} is missing current contract phrase: {phrase!r}")
 
+    stale_surfaces = {
+        "DESIGN-BRIEF.md": (design_brief, ("the 8-stage", "2–4", "3–6", "optional narrator")),
+        "idea template": (idea_template, ("status: building", "narrator: yes", "## characters")),
+        "seed contract": (seed_contract, ("creative_seeds:", "every build must document all three")),
+        "outline checker": (outline_checker, ("legacy/manual outlines follow", "characters-count", "narrator-missing")),
+        "builder": (builder, ("# 5. narrator", 'page_url = f"{kr_base_url}/daily-dream"')),
+        "CLAUDE.md": (claude, ("the active `building` creation (type + next", "next queued outline")),
+    }
+    for label, (surface, forbidden) in stale_surfaces.items():
+        lowered = surface.casefold()
+        for phrase in forbidden:
+            if phrase.casefold() in lowered:
+                errors.append(f"{label} still exposes retired Daily Dream contract: {phrase!r}")
+
+    if "idea inventory" not in idea_template.casefold() or "proposal: false" not in idea_template:
+        errors.append("legacy Dream template must be explicitly non-buildable idea inventory")
+    if "def _canonical_proposal_errors" not in builder:
+        errors.append("object builder must enforce the exact six-asset input contract")
+    if "page_url = kr_base_url" not in builder.casefold():
+        errors.append("object builder must not emit the removed /daily-dream page URL")
+    t020_start = roadmap.find("  - id: t-020")
+    t020_end = roadmap.find("  - id: t-021", t020_start)
+    if t020_start < 0 or "status: done" not in roadmap[t020_start:t020_end]:
+        errors.append("roadmap t-020 must be closed after correcting the removed page reference")
+    t006_start = roadmap.find("  - id: t-006")
+    t006_end = roadmap.find("  - id: t-007", t006_start)
+    t006 = roadmap[t006_start:t006_end].casefold()
+    if "advance it exactly one stage" in t006 or "stage 3" in t006:
+        errors.append("roadmap t-006 still contains executable retired stage instructions")
+
+    return errors
 
 def main() -> int:
     errors = check_pipeline()

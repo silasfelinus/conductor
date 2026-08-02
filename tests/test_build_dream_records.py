@@ -1,7 +1,7 @@
 """
 Tests for build_dream_records.py's ATOMIC build guarantee (dream-cycle).
 
-The builder creates ~12 kind_robots rows per proposal over ~27 REST calls. If an
+The builder creates one exact six-asset bundle over several REST calls. If an
 intermittent DB 503 hits mid-sequence, a partial build must NOT be marked `built`
 (it would ship an incomplete dream that never retries) — instead every row created
 this run is rolled back so the next sweep retries clean. These tests drive run_build
@@ -135,12 +135,9 @@ PROPOSAL = {
     "vibe": {"title": "Test Vibe", "line": "cozy wonder"},
     "locations": [
         {"title": "Place A", "known_for": "x", "local_rule": "y", "best_scene": "z", "art_direction": "amber"},
-        {"title": "Place B", "known_for": "x", "local_rule": "y", "best_scene": "z", "art_direction": "teal"},
     ],
     "characters": [
         {"name": "Cee", "role_drive": "keeper", "carries": "keys", "complication": "none", "look": "old"},
-        {"name": "Dee", "role_drive": "apprentice", "carries": "wire", "complication": "none", "look": "young"},
-        {"name": "Eee", "role_drive": "presence", "carries": "fog", "complication": "none", "look": "dim"},
     ],
     "rewards": [
         {"name": "Skill One", "reward_type": "SKILL", "rarity": "RARE", "grants": "g", "best_used_when": "w", "catch": "c"},
@@ -149,16 +146,19 @@ PROPOSAL = {
     "scenarios": [
         {"title": "Scene One", "setup": "the cast, the place, the task."},
     ],
-    "narrator": {
-        "name": "Cee", "voice": "warm", "personality": "wry", "appears_as": "portrait",
-        "best_for": "prompts", "expressions": "NEUTRAL, LOVING", "topics": ["Lore"],
+    "seed_facets": {
+        "version": 2,
+        "elements": {
+            key: [{"id": index, "title": key}]
+            for index, key in enumerate(sorted(bdr.REQUIRED_SEED_ASSETS), start=1)
+        },
     },
 }
 
 
 def write_proposal_file(backlog: Path) -> Path:
     fm = ("---\nslug: test-dream\ntitle: Test Dream\ntype: dream\nstatus: outline\n"
-          "narrator: 'yes'\nproposal: true\nproposal_date: '2020-01-01'\nbuilt_pr: null\n---\n")
+          "narrator: 'no'\nproposal: true\nproposal_date: '2020-01-01'\nbuilt_pr: null\n---\n")
     body = ("\n## The idea\nA world.\n\n## Notes from Silas\n- (leave notes here)\n\n"
             f"## Build log\n- proposed\n\n<!-- proposal-data\n{json.dumps(PROPOSAL)}\n-->\n")
     p = backlog / "2020-01-01-test-dream.md"
@@ -233,7 +233,7 @@ def test_full_success_marks_built_and_never_rolls_back(env, monkeypatch):
     outcome = bdr.run_build("2020-01-01", dry_run=False)
 
     assert outcome["status"] == "built"
-    assert outcome["art_requests"] == len(PROPOSAL["locations"]) + len(PROPOSAL["characters"]) + len(PROPOSAL["rewards"]) + len(PROPOSAL["scenarios"]) + 2
+    assert outcome["art_requests"] == 6
     assert fake.deletes == []                       # nothing rolled back
     assert "<!-- built-data" in path.read_text()    # marked built
     assert "requests:" in art.read_text()
@@ -301,7 +301,7 @@ def test_real_entities_link_to_world_without_retired_genre_dream(env, monkeypatc
         url.endswith("/api/dreams") and body.get("dreamType") == "GENRE"
         for url, body, _ in fake.created
     )
-    linked_paths = ("/api/characters", "/api/bots", "/api/rewards", "/api/scenarios")
+    linked_paths = ("/api/characters", "/api/rewards", "/api/scenarios")
     linked_bodies = [
         body for url, body, _ in fake.created
         if any(url.endswith(path) for path in linked_paths)
@@ -366,3 +366,17 @@ def test_unexpected_builder_exception_is_recorded_for_retry(env, monkeypatch):
     assert outcome["status"] == "failed"
     assert "socket vanished" in outcome["message"]
     assert '"status": "retry"' in path.read_text(encoding="utf-8")
+def test_legacy_multi_asset_proposal_is_not_eligible(env):
+    backlog, _ = env
+    path = write_proposal_file(backlog)
+    text = path.read_text(encoding="utf-8")
+    old = json.loads(json.dumps(PROPOSAL))
+    old["characters"].append({"name": "Extra"})
+    old["narrator"] = {"name": "Retired Host"}
+    text = text.replace(json.dumps(PROPOSAL), json.dumps(old))
+    path.write_text(text, encoding="utf-8")
+
+    selected, reason = bdr.eligible_proposal("2020-01-01")
+
+    assert selected is None
+    assert "invalid canonical proposal" in reason

@@ -1,16 +1,16 @@
-# Shipped creations — ledger
+# Daily Dream creation evidence
 
-One entry per completed creation, appended at ship time. Append-only.
+This file is a pointer, not a second ledger.
 
-Format:
+Successful Daily Dream bundles are recorded atomically inside their dated proposal files as `built-data`. That block contains the actual kind_robots model IDs, build timestamp, art-request IDs, attachment targets, and source slug used by the digest and later repair passes.
 
-```
-## YYYY-MM-DD — <title> (`<slug>`, type: <type>)
-- dream: vibe genre (new|reused); N characters, N rewards, N scenarios, narrator yes|no
-  coloring-book: home set path; pages/cover produced; production stage reached
-- where: <API rows | kind_robots seed PR # | home set folder>
-- conductor PRs: #...
-- backlog file: backlog/<slug>.md (status: built)
-```
+To inspect shipped output:
 
-*(nothing shipped yet)*
+1. open a dated `proposal: true` file in `backlog/`;
+2. confirm `status: built`;
+3. inspect its `built-data` block;
+4. use the daily digest for the readable proposal/build/Facet/art presentation.
+
+Failed attempts remain visible as `build-attempt-data` retry evidence until the same canonical builder succeeds. Delegated non-dream creations keep their authoritative completion evidence in their home project.
+
+A hand-maintained list here would drift from those machine-written records, so new Daily Dream bundles are not appended manually.

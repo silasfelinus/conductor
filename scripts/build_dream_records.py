@@ -1,56 +1,25 @@
 #!/usr/bin/env python3
 """
-build_dream_records.py — build a daily-dream proposal into real kind_robots records.
+Build one eligible dated Daily Dream proposal into real kind_robots records.
 
-Phase 2 of the rolling daily-dream pipeline (dream-cycle t-012). Takes the
-newest UNBUILT daily proposal that has had its steering day (proposal_date <
-today, Pacific) and creates the actual content rows via the kind_robots REST
-API (machine auth: Authorization: Bearer KR_API_TOKEN — the beta-admin token;
-rows attribute to the system admin user server-side).
+The current bundle is exact: one PITCH world, one LOCATION Dream, one real
+Character, one ITEM Reward, one SKILL Reward, and one Scenario. Daily Dream
+proposals do not create narrator Bots, shadow Dreams, or a GENRE Dream row.
 
-What gets created. The Dream index holds only the world + locations; every other
-element is created as its REAL model (Character/Bot/Reward/Scenario), linked to
-the day's world Dream — never a shadow "CHARACTER/NARRATOR/REWARD" dream:
-
-  * 1 PITCH Dream — the world card (title + idea + vibe) — the day's dream
-  * 2 LOCATION Dreams
-  * 3 real Character rows, 1 real Bot (BotType NARRATOR), 2 real Reward rows
-    (one SKILL, one ITEM), and 1-2 real Scenario rows — each linked to the world
-    Dream. NO shadow Dreams of those types.
-  * a PitchSheet per world/location Dream via POST /api/sheets/by-dream/{id}
-    (NOTE: POST /api/sheets is a known-broken handler — never use it)
-
-Models that expose a designer field carry "dream-cycle"; the completed-bundle
-ledger records every row ID so the whole creation stays traceable and reversible.
-
-World-graph edges (kind-robots/t-017): the world (PITCH) Dream CONTAINS each
-LOCATION Dream via POST /api/dream-relations. Character/narrator/reward/scenario
-cohesion comes from dreamIds links; reusable genre/style/theme data is attached
-as Facets by apply_daily_dream_facets.py.
-
-Art is queued through the EXISTING self-draining pipeline: one `requests:`
-entry per element appended to projects/art-prompts.yaml targeting kind_robots
-public/images/dreams/<slug>/… — the nightly auto-art-generate workflow renders
-them and distribute_images.py lands them in the site repo. The `--attach`
-pass (run every hourly sweep) HEAD-checks the public URLs and PATCHes the
-imagePath of each element's OWN row (Dream / Character / Bot / Reward /
-Scenario) once its art is live — so every creation renders from its own art.
-
-Steering contract: if the proposal file's `## Notes from Silas` section has
-real content, this script REFUSES to auto-build (agents must fold notes in
-first — see backlog/README.md). `status: parked/vetoed` are never built.
-
-Runs during the conductor sweeps (no LLM calls here — pure REST), NOT in the
-daily-digest cron.
+Hourly Conductor is the only caller. The transaction records every resulting
+ID in proposal built-data, rolls back owned rows after a partial failure, and
+queues exactly six stable art requests. Facets and art attachment enrich the
+recorded bundle afterward. The daily digest is read-only.
 
 Usage:
-  python scripts/build_dream_records.py                # build the eligible proposal (if any)
-  python scripts/build_dream_records.py --dry-run      # show what would be created
-  python scripts/build_dream_records.py --date 2026-07-13   # build a specific proposal_date
-  python scripts/build_dream_records.py --attach       # only attach live art to built proposals
-Env:
-  KR_API_TOKEN   required for live record creation / attach
-  KR_BASE_URL    default https://kind-robots.vercel.app
+  python scripts/build_dream_records.py
+  python scripts/build_dream_records.py --dry-run
+  python scripts/build_dream_records.py --date YYYY-MM-DD
+  python scripts/build_dream_records.py --attach
+
+Environment:
+  KR_API_TOKEN   required for live record creation and attachment
+  KR_BASE_URL    defaults to https://kind-robots.vercel.app
 """
 
 from __future__ import annotations
@@ -85,11 +54,10 @@ KR_MEDIA_ORIGIN = os.environ.get(
     "KR_MEDIA_ORIGIN", "https://media.acrocatranch.com").rstrip("/")
 KR_API_TOKEN = os.environ.get("KR_API_TOKEN", "").strip()
 DESIGNER = "dream-cycle"
-# The daily fast-lane authors dreams autonomously (no human wrote this specific
-# dream), so its rows are AI, not HUMAN. Override to HYBRID via env when the loop
+# The dated proposal lane authors dreams autonomously, so its rows are AI, not HUMAN. Override to HYBRID via env when the loop
 # builds a Silas-seeded proposal. See specs/SLUG-POLICY.md (creationSource note).
 CREATION_SOURCE = os.environ.get("DREAM_CREATION_SOURCE", "AI").strip().upper() or "AI"
-PAGE_URL = f"{KR_BASE_URL}/daily-dream"
+PAGE_URL = KR_BASE_URL
 
 CARD_SIZE = "512x768"  # pitch-card portrait, matches the site's card asset standard
 NOTES_PLACEHOLDER = "(leave notes here"
@@ -154,6 +122,40 @@ def _data_block(text: str, name: str) -> Optional[dict]:
         return None
 
 
+REQUIRED_SEED_ASSETS = {"vibe", "location", "character", "reward_item", "reward_skill", "scenario"}
+
+
+def _canonical_proposal_errors(proposal: Optional[dict]) -> list[str]:
+    """Return violations of the exact version-2 six-asset input contract."""
+    if not isinstance(proposal, dict):
+        return ["missing or invalid proposal-data block"]
+    errors: list[str] = []
+    facets = proposal.get("seed_facets")
+    if not isinstance(facets, dict) or int(facets.get("version") or 0) < 2:
+        errors.append("seed_facets.version must be at least 2")
+    elements = facets.get("elements") if isinstance(facets, dict) else None
+    if not isinstance(elements, dict) or not REQUIRED_SEED_ASSETS.issubset(elements):
+        errors.append("seed_facets.elements must cover all six assets")
+    vibe = proposal.get("vibe")
+    if not isinstance(vibe, dict) or not vibe.get("title") or not vibe.get("line"):
+        errors.append("one complete vibe is required")
+    for field, expected in (("locations", 1), ("characters", 1), ("rewards", 2), ("scenarios", 1)):
+        value = proposal.get(field)
+        actual = len(value) if isinstance(value, list) else 0
+        if actual != expected:
+            errors.append(f"{field} has {actual}; expected exactly {expected}")
+    rewards = proposal.get("rewards") if isinstance(proposal.get("rewards"), list) else []
+    reward_types = {
+        str(row.get("reward_type", "")).upper()
+        for row in rewards if isinstance(row, dict)
+    }
+    if reward_types != {"ITEM", "SKILL"}:
+        errors.append("rewards must contain exactly one ITEM and one SKILL")
+    if proposal.get("narrator"):
+        errors.append("Daily Dream proposals must not contain a narrator")
+    return errors
+
+
 def _outcome(status: str, message: str, **details: Any) -> dict[str, Any]:
     """Return the small, serializable contract consumed by the hourly report.
 
@@ -209,6 +211,11 @@ def eligible_proposal(date_override: Optional[str]) -> tuple[Optional[Path], str
         elif not (pdate and pdate < today):
             continue  # still in its steering day
         if status in ("parked", "vetoed", "built", "building"):
+            continue
+        proposal = _data_block(text, "proposal-data")
+        contract_errors = _canonical_proposal_errors(proposal)
+        if contract_errors:
+            reason = f"{p.name}: invalid canonical proposal — " + "; ".join(contract_errors)
             continue
         if _data_block(text, "built-data"):
             continue  # already built
@@ -641,7 +648,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         "kind-icon:moon", slug,
         {"title": title, "hook": vibe.get("title", ""), "pitch": proposal.get("idea", ""),
          **trio([("Promise", vibe_line),
-                 ("Builds Into", "characters, locations, rewards, a narrator"),
+                 ("Builds Into", "one location, one character, two rewards, one scenario"),
                  ("Status", f"proposed {pdate}, built by dream-cycle")])},
         dream_slug=world_slug,
     )
@@ -718,44 +725,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                   f"in the world of {title} ({vibe_line}), {HOUSE_PROMPT_TAIL}",
                   "/api/characters", rec.get("id") if rec else None)
 
-    # 5. Narrator (real Bot row linked to the world Dream — no shadow
-    #    NARRATOR dream; art attaches to the Bot's own imagePath).
-    nar = proposal.get("narrator", {})
-    if nar:
-        el = slugify(nar.get("name", "narrator")) + "-narrator"
-        link_ids = [world_id] if world_id else []
-        bot_body = {
-            "name": nar.get("name", "Narrator"), "BotType": "NARRATOR",
-            "designer": DESIGNER, "isPublic": True,
-            "subtitle": f"Narrator of {title}",
-            "description": nar.get("personality", ""),
-            "botIntro": nar.get("appears_as", ""),
-            "userIntro": nar.get("best_for", ""),
-            "narrativeVoice": nar.get("voice", ""),
-            "personality": nar.get("personality", ""),
-            "artPrompt": nar.get("appears_as", ""),
-            "prompt": (f"You are {nar.get('name', '')}, narrator of {title}. "
-                       f"Voice: {nar.get('voice', '')} "
-                       f"Personality: {nar.get('personality', '')} "
-                       f"Expressions: {nar.get('expressions', '')} "
-                       f"Topics: {'; '.join(nar.get('topics', []))}"),
-            "dreamIds": link_ids,
-        }
-        rec = kr_call(
-            "POST", "/api/bots", bot_body, dry_run, results,
-            f"Bot: {nar.get('name')}",
-            conflict_identity={key: bot_body[key] for key in
-                               ("name", "BotType", "designer", "narrativeVoice")},
-        )
-        if rec:
-            built["records"]["narrator"] = {"model": "Bot", "id": rec.get("id"),
-                                            "name": nar.get("name")}
-        queue_art(el, nar.get("name", "Narrator"),
-                  f"narrator portrait of {nar.get('name', '')}: {nar.get('appears_as', '')}, "
-                  f"{nar.get('personality', '')}, world of {title} ({vibe_line}), {HOUSE_PROMPT_TAIL}",
-                  "/api/bots", rec.get("id") if rec else None)
-
-    # 6. Rewards (REWARD card Dream + real Reward row; one SKILL, one ITEM)
+    # 5. Rewards (one SKILL and one ITEM; art attaches to each real Reward)
     built["records"]["rewards"] = []
     for rw in proposal.get("rewards", []):
         el = slugify(rw.get("name", "reward"))
@@ -791,7 +761,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                   f"({vibe_line}), {HOUSE_PROMPT_TAIL}",
                   "/api/rewards", rec.get("id") if rec else None)
 
-    # 7. Scenarios (real Scenario rows, linked to the world + locations)
+    # 6. Scenario (one real Scenario linked to the world and location)
     built["records"]["scenarios"] = []
     loc_titles = ", ".join(l.get("title", "") for l in proposal.get("locations", []))
     scenario_links = [i for i in [world_id, *location_ids] if i]
@@ -893,8 +863,9 @@ def run_build(date_override: Optional[str], dry_run: bool) -> dict[str, Any]:
     text = path.read_text(encoding="utf-8")
     fm = _frontmatter(text)
     proposal = _data_block(text, "proposal-data")
-    if not proposal:
-        message = f"{path.name}: no proposal-data block — cannot create objects."
+    contract_errors = _canonical_proposal_errors(proposal)
+    if contract_errors:
+        message = f"{path.name}: invalid canonical proposal — " + "; ".join(contract_errors)
         failure = {
             "status": "retry",
             "attempted_at": datetime.datetime.now(_TZ).isoformat(),
