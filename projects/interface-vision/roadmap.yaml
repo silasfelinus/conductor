@@ -812,7 +812,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -844,9 +844,9 @@ tasks:
       Seventh scoped sweep: zero the no-viewport bucket (2 entries). Confirmed both components (components/wonderlab/new-eyeball.vue, components/servers/chat-test.vue) are live, not dead code, before touching them -- both are registered WonderLab "exhibit" components rendered inline (not in an iframe) by components/wonderlab/wonderlab-preview-host.vue's dynamic <component :is>, whose harness wraps the mount in an auto-sized container with no fixed height. Their raw h-screen/100vh was fighting that harness for viewport height instead of sizing to it.
 
       Seventh scoped sweep merged as Kind Robots PR #1307 (1a738c7): new-eyeball.vue's root wrapper switched h-screen -> h-full min-h-[320px]; chat-test.vue's .stream-test switched min-height: 100vh -> min-height: 480px. vue-tsc clean, layout-contract holds (no-viewport 2 -> 0, all other buckets unchanged), eslint warnings on both files confirmed pre-existing via git stash (out of scope). Baseline ratcheted down via --update. Filed t-049 as this cycle's kaizen (ghost-prop, 7 entries, the next smallest untouched bucket). The full allow-list is not yet zero (one-scroll 33 -- own task t-047, one-mdc 3, ghost-prop 7, zero-scroll 7), so t-017 returns to ready for the next bounded sweep.
-    claimed_by: 2026-08-02T092900Z-interface-vision-t-017-agentrun
-    claimed_at: '2026-08-02T09:29:31Z'
-    updated: '2026-08-02T09:41:00Z'
+    claimed_by: claude-agentrun-2026-08-02T102642-t017
+    claimed_at: '2026-08-02T10:26:42Z'
+    updated: '2026-08-02T10:26:42Z'
     owner: worker
 
   - id: t-018
