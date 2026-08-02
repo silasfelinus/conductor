@@ -761,7 +761,7 @@ tasks:
   - id: t-015
     milestone: m3
     title: 'Close the Builder gaps and the orphaned facet expansions'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -779,6 +779,18 @@ tasks:
       missing .put for Bot. Also normalize the two join conventions — DreamFacet and
       ScenarioFacet have real relations with onDelete: Cascade, while CharacterFacet,
       BotFacet and RewardFacet in facet-catalog.prisma declare no Prisma relations at all.
+
+      Shipped in kind_robots PR #1293 (open, awaiting CI + Reviewer merge — PR body has
+      the full migration SQL for audit): the new ProjectFacet table + additive migration,
+      CharacterFacet/BotFacet/RewardFacet relation normalization (schema-only, no
+      migration needed — their FK constraints already existed from each table's original
+      creation migration), the missing Bot facets.put endpoint, and a client
+      store + UI for Character facets (stores/characterFacetStore.ts,
+      components/characters/character-facet-picker.vue, wired into add-character.vue).
+      Deferred to t-042: registering PROJECT and FACET builders in
+      registerBuilderStore.ts — that sub-part needs its own card-deck-scale UI buildout
+      (comparable to dreamCards.ts/rewardCards.ts) and is substantially larger than the
+      rest of this task, so it was split out rather than rushed.
     claimed_by: 2026-08-02T042700Z-tv015
     claimed_at: '2026-08-02T04:28:16Z'
     updated: '2026-08-02T04:28:16Z'
@@ -1341,3 +1353,31 @@ tasks:
     claimed_by: 2026-08-02T031507Z-interface-vision-t-041-7c9a
     claimed_at: '2026-08-02T03:15:07Z'
     updated: '2026-08-02T03:27:00Z'
+
+  - id: t-042
+    milestone: m3
+    title: 'Register PROJECT and FACET builders in registerBuilderStore.ts'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: null
+    note: >
+      Split out of t-015 (2026-08-02, kind_robots PR #1293) — the other four sub-parts of
+      that task (ProjectFacet table, CharacterFacet/BotFacet/RewardFacet relation
+      normalization, Bot facets.put, Character client facet store + UI) composed cleanly
+      from existing patterns and shipped together, but registering PROJECT and FACET as
+      first-class builders in stores/registerBuilderStore.ts turned out to need its own
+      card-deck-scale UI buildout: a PROJECT_CARDS / FACET_CARDS deck each (see
+      stores/helpers/dreamCards.ts or rewardCards.ts for the shape a deck like this
+      takes), splash screens, a defaultSheet/syncSheetToXForm/save/reset per model
+      (see buildDreamConfig / buildRewardConfig in registerBuilderStore.ts for the
+      pattern), and likely a new BuilderArtPurpose variant ('project'/'facet' aren't in
+      that union yet in stores/helpers/builderCards.ts). Project and Facet both already
+      have working stores (stores/projectStore.ts, stores/facetStore.ts) and admin UI
+      (components/facets/facet-manager.vue etc.) to build the wizard flow on top of —
+      this is UI/UX design work, not just wiring, which is why it didn't fit in the same
+      PR as the rest of t-015's more mechanical gaps.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-02T00:00:00Z'
