@@ -17,6 +17,16 @@ PROPOSAL = {
         {"name": "One Skill", "reward_type": "SKILL", "rarity": "UNCOMMON", "grants": "g", "best_used_when": "w", "catch": "c"},
     ],
     "scenarios": [{"title": "One Scenario", "setup": "Umbrella Vibe at One Place with One Hero."}],
+    "seed_facets": {
+        "version": 2,
+        "elements": {
+            key: [{"id": index, "title": key}]
+            for index, key in enumerate(
+                ("vibe", "location", "character", "reward_item", "reward_skill", "scenario"),
+                start=1,
+            )
+        },
+    },
 }
 
 
