@@ -1536,3 +1536,72 @@ tasks:
     stakes: reversible
     note: 'Closed 2026-08-02 via kind_robots PR #1310 (merged, all 13 checks green). Added showHeader?: boolean (default true) to art-gallery.vue, art-test.vue, chat-gallery.vue, theme-gallery.vue, lab-interact.vue, and screen-fx.vue, gating only the title-only portion of each header so embedded functional controls (search, back button, stat cards, admin actions, manage-builds link) stay visible when mounted as manager tabs. memory-dungeon.vue''s :show-header=false pass was dead (its header is a gameStarted-gated gameplay HUD, not a duplicate title) -- removed the pass from lab-manager.vue instead of adding fake plumbing. Ratcheted the layout-contract ghost-prop allow-list from 7 to 0 via --update. vue-tsc and eslint clean on every changed file.'
     updated: '2026-08-02T10:37:42Z'
+
+  - id: t-050
+    milestone: m2
+    title: 'Retire workspace-narrator: fold the Dreams dock into kr-narrator-stage'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      The unfinished half of Phase 4. kind_robots PR #1315 moved the dock's chat log onto
+      kr-chat-window and both follow-up loops onto kr-choice-list, which dropped one scroll
+      region (layout contract one-scroll 33 -> 32, the first time adoption actually moved
+      that number) and removed the third hand-rolled copy of the transcript. The plan's
+      other half -- add variant="dock" to kr-narrator-stage, port the chrome, delete all
+      1477 lines -- was NOT done, for two reasons worth keeping:
+      (1) The remaining chrome is not conversation. Card flip, emoji bursts, musings toast,
+      card backs, pin. That is Dreams' own character; folding it into the shared stage bloats
+      the component every other surface imports. Reconsider whether full retirement is even
+      the right goal, versus leaving a thin Dreams-specific dock that composes the kit.
+      (2) It is a slide-out panel with a CSS 3D card flip and timed animations. A source-text
+      contract cannot tell you a transform-style:preserve-3d panel still flips, and no browser
+      was available in that session. THIS TASK NEEDS VISUAL VERIFICATION -- open /dreams on the
+      Vercel preview, flip the card, send a message, check the musings toast, before and after.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-02T12:30:00Z'
+
+  - id: t-051
+    milestone: m2
+    title: 'Phase 5: the four interact surfaces onto the shared conversation kit'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Last phase of the redesign plan, and the largest remaining adoption gap: the kit is at
+      3/7 surfaces (verifyNarrativeKit prints the count every CI run). Remaining, biggest
+      first because each landing makes the next smaller: reward-interact (1183 lines),
+      character-interact (945), bot-interact (782), scenario-interact (632). One PR each.
+      scenario-interact additionally has the choice-manager / choice-selector / choice-preview
+      trio to fold into kr-choice-list -- three more copies of the same pick-one widget.
+      Expect one-scroll to keep dropping as these land, the same way it did in PR #1315;
+      ratchet the baseline each time. The kit pieces to adopt are kr-chat-window (with its
+      #footer slot for trailing conversation-level content), kr-choice-list, and kr-art-plate
+      (frame: 'plate' | 'thin' | 'none').
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-02T12:30:00Z'
+
+  - id: t-052
+    milestone: m3
+    title: 'Entity art has no thumbnail variant: a 68-card gallery ships ~37MB'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Flagged during the t-007 card/hero/icon work and never filed. Rendered card PNGs run
+      about 544KB each, and nothing downsamples them for grid views -- a 68-card gallery is
+      roughly 37MB over the wire. resolveArtVariantSrc (utils/artImageSrc.ts) already
+      degrades card -> card base64 -> full-size, and resolveArtImageThumbSrc already prefers
+      thumbnailPath, so the resolver side is in place; what is missing is anything that
+      WRITES a thumbnail for entity art. Check whether the render queue can emit a webp
+      thumbnail alongside each card, or add a backfill in the shape of
+      utils/scripts/backfillEntityCardHeroArt.ts. Measure before and after -- the 37MB
+      figure is an estimate from file sizes, not a captured transfer.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-02T12:30:00Z'
