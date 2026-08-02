@@ -6002,3 +6002,28 @@ records:
     and widen the root-surface allow-list deliberately (documented, not gamed) rather
     than force a scroll primitive onto a component the checker didn't originally
     evaluate as MDC-mounted.
+- date: '2026-08-02'
+  project: dream-cycle
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: transient
+  lesson: >
+    A self-modifying "bootstrap a CI job that patches, tests, then commits" pattern has
+    a sharp edge: if the commit step fails, everything the job did in its ephemeral
+    checkout is silently discarded -- there is no partial-progress trail beyond whatever
+    the job log happened to print. Here the patch applied cleanly and 802 tests passed,
+    but `git diff --check` (run right after tests, right before the commit) caught a
+    stray blank line at EOF the patch script itself introduced, and the job died there
+    -- twice, identically, across two separate one-shot workflow files
+    (agent-run-daily-dream-art-dedup.yml, agent-apply-daily-dream-art-dedup.yml), each
+    triggered by a "push the workflow file to trigger it" bootstrap. Neither failure was
+    ever investigated between attempts; a third workflow was authored instead of reading
+    the first failure's job log, which would have shown the exact line and exit code.
+    When a verified/tested CI step fails on the *next* step, read that step's log before
+    re-authoring the automation -- the fix is often a one-line bug in the patcher itself,
+    not a reason to change approach. Bounded, self-removing one-shot patch scripts are
+    fine, but they should be run and debugged locally first, not iterated against CI
+    round-trips at ~5 minutes per failed attempt.
