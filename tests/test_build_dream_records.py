@@ -150,6 +150,7 @@ def test_partial_failure_rolls_back_and_leaves_unbuilt(env, monkeypatch):
     assert "<!-- built-data" not in path.read_text() # NOT marked built
     assert art.read_text() == "requests:\n"          # no art queued for a failed build
     assert '"status": "retry"' in path.read_text()
+    assert "Database connection was temporarily unavailable." in path.read_text()
 
 
 def test_total_failure_rolls_back_nothing_and_leaves_unbuilt(env, monkeypatch):
@@ -164,7 +165,7 @@ def test_total_failure_rolls_back_nothing_and_leaves_unbuilt(env, monkeypatch):
     assert fake.deletes == []                        # nothing was created, nothing to undo
     assert "<!-- built-data" not in path.read_text()
 
-def test_real_entities_link_to_world_and_genre_vibe(env, monkeypatch):
+def test_real_entities_link_to_world_without_retired_genre_dream(env, monkeypatch):
     backlog, _ = env
     write_proposal_file(backlog)
     fake = FakeAPI(fail_after=None)
@@ -176,9 +177,9 @@ def test_real_entities_link_to_world_and_genre_vibe(env, monkeypatch):
         row_id for url, body, row_id in fake.created
         if url.endswith("/api/dreams") and body.get("dreamType") == "PITCH"
     )
-    vibe_id = next(
-        row_id for url, body, row_id in fake.created
-        if url.endswith("/api/dreams") and body.get("dreamType") == "GENRE"
+    assert not any(
+        url.endswith("/api/dreams") and body.get("dreamType") == "GENRE"
+        for url, body, _ in fake.created
     )
     linked_paths = ("/api/characters", "/api/bots", "/api/rewards", "/api/scenarios")
     linked_bodies = [
@@ -188,8 +189,12 @@ def test_real_entities_link_to_world_and_genre_vibe(env, monkeypatch):
 
     assert linked_bodies
     for body in linked_bodies:
+        assert body["dreamIds"]
         assert world_id in body["dreamIds"]
-        assert vibe_id in body["dreamIds"]
+
+    for url, body, _ in fake.created:
+        if url.endswith("/api/rewards") or url.endswith("/api/scenarios"):
+            assert "designer" not in body
 
 
 def test_failed_proposal_stays_ahead_of_newer_unattempted_proposal(env, monkeypatch):
