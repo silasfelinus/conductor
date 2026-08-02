@@ -812,8 +812,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: review
-    owner: worker
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -822,9 +821,11 @@ tasks:
 
 
       Scoped second layout-contract sweep: remove the duplicate page title from the WonderLab review generator and ratchet one-header from 6 to 5.
+
+      Merged Kind Robots PR #1296 as c12c01e1. Removed the duplicate WonderLab review generator page title and ratcheted the one-header allow-list from 6 to 5. The layout-contract allow-list is not yet zero, so this recurring sweep is re-armed.
     claimed_by: 2026-08-02T061417Z-interface-vision-t-017-a91f
     claimed_at: '2026-08-02T06:14:17Z'
-    updated: '2026-08-02T06:23:00Z'
+    updated: '2026-08-02T06:32:00Z'
 
   - id: t-018
     milestone: m3
