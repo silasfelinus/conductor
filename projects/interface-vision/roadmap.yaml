@@ -920,8 +920,7 @@ tasks:
   - id: t-023
     milestone: m3
     title: 'Composition-lock audit before t-017 sweeps the layout-contract allow-list'
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -930,9 +929,11 @@ tasks:
 
 
       Completed the composition-lock audit at projects/interface-vision/COMPOSITION-LOCK-AUDIT.md on branch worker/interface-vision-t-023-20260802T021118Z.
+
+      Merged Conductor PR #1527. The composition-lock audit identifies Serendipity's exact-markup route contract as the only confirmed layout-sensitive lock and gives t-017 a concrete companion-contract checklist.
     claimed_by: 2026-08-02T021118Z-interface-vision-t-023-7f3a
     claimed_at: '2026-08-02T02:11:18Z'
-    updated: '2026-08-02T02:17:00Z'
+    updated: '2026-08-02T02:19:00Z'
 
   - id: t-024
     milestone: m2

@@ -5718,3 +5718,13 @@ records:
     agent-authored branches has to happen post-merge against the production
     deployment, not via a pre-merge Vercel preview -- AGENTS.md's documented
     preview technique (~L338-366) doesn't currently note this exception.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-023
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Before sweeping a layout allow-list, audit exact-markup verifier locks so product cleanup updates
+    the owning semantic contract instead of restoring obsolete markup.
