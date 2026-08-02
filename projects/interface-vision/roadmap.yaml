@@ -1195,8 +1195,7 @@ tasks:
   - id: t-030
     milestone: m2
     title: 'Wire or remove verifyEntityArtManager.ts''s unused source-bundle log output'
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -1204,9 +1203,11 @@ tasks:
 
 
       Verified the requested cleanup already shipped in kind_robots PR #1309 and remains present on current main: the unused gzip/base64 ENTITY_ART_SOURCE_* output and dead correction helpers are gone, while all assertions and the concise success line remain.
+
+      Closed the stale roadmap state after verifying the requested cleanup already shipped in kind_robots PR #1309 (merge eb44b09dc1dbf826da9da456ac13c44ae1e4f55f) and remains on current main. verifyEntityArtManager.ts now emits only its concise success line while retaining every entity-art assertion.
     claimed_by: 2026-08-02T221318Z-interface-vision-t-030-q4n7
     claimed_at: '2026-08-02T22:13:18Z'
-    updated: '2026-08-02T22:19:00Z'
+    updated: '2026-08-02T22:24:00Z'
 
   - id: t-031
     milestone: m2

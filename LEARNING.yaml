@@ -6027,3 +6027,14 @@ records:
     not a reason to change approach. Bounded, self-removing one-shot patch scripts are
     fine, but they should be run and debugged locally first, not iterated against CI
     round-trips at ~5 minutes per failed attempt.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-030
+  kind: coordination
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: null
+  lesson: Before reimplementing a ready task, compare its note, current code, and recent merged PRs. A
+    task can carry a complete merged result but remain incorrectly ready because an earlier closeout targeted
+    a different task ID; repair roadmap state instead of duplicating the code.
