@@ -1321,8 +1321,7 @@ tasks:
   - id: t-041
     milestone: m2
     title: 'Audit the 9 pre-existing test:nav-manifest warnings for the same stale-dashboardTab bug class as t-038'
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     depends_on: null
@@ -1331,6 +1330,8 @@ tasks:
 
 
       Audited all nine stale dashboardTab warnings. Seven map safely to existing canonical tabs; Music Mentor and Video Generator remain documented product decisions because no matching dashboard tabs exist.
+
+      Merged kind_robots PR #1291 as 33e7f7f. Corrected seven stale dashboardTab hints to canonical existing tabs: account to profile, messages to chats, facets to library, and four Sanctuary pages to giftshop community. Music Mentor and Video Generator remain intentionally unresolved because no matching dashboard tabs exist; broader navigation reconciliation remains tracked by t-034.
     claimed_by: 2026-08-02T031507Z-interface-vision-t-041-7c9a
     claimed_at: '2026-08-02T03:15:07Z'
-    updated: '2026-08-02T03:23:10Z'
+    updated: '2026-08-02T03:27:00Z'
