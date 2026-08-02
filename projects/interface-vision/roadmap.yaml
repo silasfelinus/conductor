@@ -1195,28 +1195,18 @@ tasks:
   - id: t-030
     milestone: m2
     title: 'Wire or remove verifyEntityArtManager.ts''s unused source-bundle log output'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-009 (2026-08-01, kind_robots PR #1269).
-      utils/scripts/verifyEntityArtManager.ts's correctedComponent/
-      correctedService functions gzip-and-base64 a "corrected" source bundle
-      of entity-art-manager.vue + entityArt.ts and print it to stdout in
-      chunked ENTITY_ART_SOURCE_NNN= lines on every run, but
-      .github/workflows/entity-art-manager-contract.yml never captures,
-      compares, or otherwise consumes that output — it just runs the script
-      and checks its exit code like any other verifier. Either this was meant
-      to feed a golden-hash comparison step that was never wired up, or it's
-      leftover debug scaffolding. Read the git history of
-      verifyEntityArtManager.ts to determine which, then either wire it to an
-      actual comparison (if a golden hash was the intent) or delete the
-      gzip/print block entirely (if it's dead) — either way it's currently
-      pure CI log noise on every PR touching these files.
+    note: |-
+      Kaizen from t-009 (2026-08-01, kind_robots PR #1269). utils/scripts/verifyEntityArtManager.ts's correctedComponent/ correctedService functions gzip-and-base64 a "corrected" source bundle of entity-art-manager.vue + entityArt.ts and print it to stdout in chunked ENTITY_ART_SOURCE_NNN= lines on every run, but .github/workflows/entity-art-manager-contract.yml never captures, compares, or otherwise consumes that output — it just runs the script and checks its exit code like any other verifier. Either this was meant to feed a golden-hash comparison step that was never wired up, or it's leftover debug scaffolding. Read the git history of verifyEntityArtManager.ts to determine which, then either wire it to an actual comparison (if a golden hash was the intent) or delete the gzip/print block entirely (if it's dead) — either way it's currently pure CI log noise on every PR touching these files.
+
+
+      Verified the requested cleanup already shipped in kind_robots PR #1309 and remains present on current main: the unused gzip/base64 ENTITY_ART_SOURCE_* output and dead correction helpers are gone, while all assertions and the concise success line remain.
     claimed_by: 2026-08-02T221318Z-interface-vision-t-030-q4n7
     claimed_at: '2026-08-02T22:13:18Z'
-    updated: '2026-08-02T22:13:18Z'
+    updated: '2026-08-02T22:19:00Z'
 
   - id: t-031
     milestone: m2
