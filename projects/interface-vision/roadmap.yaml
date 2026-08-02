@@ -812,31 +812,19 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-005
-    note: >
-      Phase 6.2, in progress. kind_robots PR #1295 (merged) landed the first pass, daily-drivers
-      first as instructed: removed pages/play/video-generator.vue's duplicate <h1> (daily-driver:
-      video-gen) and demoted project-front-page.vue's hero title from <h1> to <p> (shared shell for
-      14 project pages incl. newsfeed, another daily-driver) -- one-header dropped 8 -> 6. Also
-      removed 4 of the 6 :has() global overrides in tailwind.css by baking the equivalent grid
-      column widths and overflow-x directly into components/pages/conductor-page.vue's public
-      Project gallery (Silas's own most-used page); the 2 remaining overrides patch that same
-      component's ADMIN-only project-detail view and are deliberately left, since admin is
-      explicitly lowest priority. Baseline ratcheted down via --update, all CI green.
-      Remaining before this task can close: one-header (6 left: components/pages/registration-form.vue,
-      components/pages/serendipity-page.vue, 4x pages/admin/wonderlab-review-*.vue -- none are
-      daily-drivers), one-scroll (34), no-viewport (2), one-mdc (3), ghost-prop (7), zero-scroll (8),
-      plus the 2 remaining admin :has() overrides and the non-tracked artjob-queue-browser.vue
-      magic-number/depth-12 cleanup the task note calls out. Re-arming to ready rather than closing --
-      per this project's own rule, "do not close a task ... because the work feels done ... close it
-      when the counter says so."
+    note: |-
+      Phase 6.2, in progress. kind_robots PR #1295 (merged) landed the first pass, daily-drivers first as instructed: removed pages/play/video-generator.vue's duplicate <h1> (daily-driver: video-gen) and demoted project-front-page.vue's hero title from <h1> to <p> (shared shell for 14 project pages incl. newsfeed, another daily-driver) -- one-header dropped 8 -> 6. Also removed 4 of the 6 :has() global overrides in tailwind.css by baking the equivalent grid column widths and overflow-x directly into components/pages/conductor-page.vue's public Project gallery (Silas's own most-used page); the 2 remaining overrides patch that same component's ADMIN-only project-detail view and are deliberately left, since admin is explicitly lowest priority. Baseline ratcheted down via --update, all CI green. Remaining before this task can close: one-header (6 left: components/pages/registration-form.vue, components/pages/serendipity-page.vue, 4x pages/admin/wonderlab-review-*.vue -- none are daily-drivers), one-scroll (34), no-viewport (2), one-mdc (3), ghost-prop (7), zero-scroll (8), plus the 2 remaining admin :has() overrides and the non-tracked artjob-queue-browser.vue magic-number/depth-12 cleanup the task note calls out. Re-arming to ready rather than closing -- per this project's own rule, "do not close a task ... because the work feels done ... close it when the counter says so."
+
+
+      Scoped second layout-contract sweep: remove the duplicate page title from the WonderLab review generator and ratchet one-header from 6 to 5.
     claimed_by: 2026-08-02T061417Z-interface-vision-t-017-a91f
     claimed_at: '2026-08-02T06:14:17Z'
-    updated: '2026-08-02T06:14:17Z'
+    updated: '2026-08-02T06:23:00Z'
 
   - id: t-018
     milestone: m3
