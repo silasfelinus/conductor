@@ -5914,3 +5914,17 @@ records:
   lesson: New whole-repository conformance rules should first measure the live debt through CI, then record
     that exact result as a shrink-only baseline so future violations fail without pretending historical
     debt is new.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-047
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'The one-scroll rule''s largest remaining bucket splits into two shapes that need different
+    fixes: mutually-exclusive tab-switcher branches (mechanical -- merge into one shared kr-scroll region
+    with inner v-if/v-else-if, since the checker counts raw template occurrences regardless of runtime
+    exclusivity) and genuinely-simultaneous dual-pane sidebar+content layouts (need a real design decision
+    about which pane owns the scroll before they can be merged). Sorting a bucket by shape before starting
+    a sweep, not just by file, avoids mixing a mechanical pass with a judgment-call pass in the same PR.'
