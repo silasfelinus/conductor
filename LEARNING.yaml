@@ -5752,3 +5752,22 @@ records:
   failure_category: null
   lesson: Resolve stale navigation hints against the live dashboard manifest; do not invent tabs when
     the intended product placement is genuinely undecided.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-015
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    "Close the Builder gaps" bundled five independent fixes at very different
+    scales (a new additive ProjectFacet table + migration, a Prisma-relation
+    normalization needing no migration since the underlying FK constraints
+    already existed, a missing Bot facets.put endpoint, a full Character
+    client facet store + UI) plus registering PROJECT/FACET builders, which
+    turned out to need a card-deck-scale UI buildout of its own. Splitting
+    that one sub-part into t-042 rather than forcing it into the same PR kept
+    the landed diff coherent and fully verified; a task note that lists N
+    "also"s is worth pre-scanning for the one that's actually a different
+    size class before claiming it as a single pass.
