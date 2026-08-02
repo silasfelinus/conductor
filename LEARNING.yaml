@@ -5847,3 +5847,19 @@ records:
     SOCIAL_REACTION/SOCIAL_SHARE defined but never awarded anywhere, so the
     honest move was shipping karma-only and saying so, not fabricating a mana
     number to match the task title.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-046
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Extending an already-shipped pattern (t-019's earned-karma batch fetch) to a new
+    consumer went cleanly because the task note itself flagged the one real risk --
+    "check whether the gallery you pick actually has a tagged award path before wiring
+    it" -- and following that check up front (grepping refType call sites in
+    reactions/index.post.ts and prompts/generate.post.ts) confirmed ArtImage was safe
+    before writing any UI code. Picking the highest-traffic *already-tagged* consumer
+    over an arbitrary one avoided shipping an always-empty badge.
