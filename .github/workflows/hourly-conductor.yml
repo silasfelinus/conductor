@@ -6,9 +6,11 @@ name: Hourly Conductor
 
 on:
   push:
+    branches:
+      - main
     paths:
       - ".github/workflows/hourly-conductor.yml"
-    # one-shot recovery nonce: 2026-08-02T20:22Z
+    # one-shot recovery nonce: 2026-08-02T20:38Z
   schedule:
     - cron: "0 * * * *"   # every hour on the hour
   workflow_dispatch:

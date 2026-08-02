@@ -8,26 +8,25 @@ today, Pacific) and creates the actual content rows via the kind_robots REST
 API (machine auth: Authorization: Bearer KR_API_TOKEN — the beta-admin token;
 rows attribute to the system admin user server-side).
 
-What gets created. The Dream index holds only vibes + locations; every other
+What gets created. The Dream index holds only the world + locations; every other
 element is created as its REAL model (Character/Bot/Reward/Scenario), linked to
 the day's world Dream — never a shadow "CHARACTER/NARRATOR/REWARD" dream:
 
   * 1 PITCH Dream — the world card (title + idea + vibe) — the day's dream
-  * 1 GENRE Dream — the vibe (world-graph fidelity; no card)
   * 2 LOCATION Dreams
   * 3 real Character rows, 1 real Bot (BotType NARRATOR), 2 real Reward rows
-    (one SKILL, one ITEM), and 1-2 real Scenario rows — each linked to both the
-    world Dream and its GENRE vibe via dreamIds. NO shadow Dreams of those types.
+    (one SKILL, one ITEM), and 1-2 real Scenario rows — each linked to the world
+    Dream. NO shadow Dreams of those types.
   * a PitchSheet per world/location Dream via POST /api/sheets/by-dream/{id}
     (NOTE: POST /api/sheets is a known-broken handler — never use it)
 
-Every row carries designer: "dream-cycle" so the whole creation is traceable
-and removable (the reversibility contract).
+Models that expose a designer field carry "dream-cycle"; the completed-bundle
+ledger records every row ID so the whole creation stays traceable and reversible.
 
-World-graph edges (kind-robots/t-017): the world (PITCH) Dream RELATED to the
-GENRE Dream, world CONTAINS each LOCATION Dream, and each LOCATION RELATED to
-the GENRE Dream — via POST /api/dream-relations. Character/narrator/reward/
-scenario cohesion comes from dreamIds links to both the world and GENRE vibe.
+World-graph edges (kind-robots/t-017): the world (PITCH) Dream CONTAINS each
+LOCATION Dream via POST /api/dream-relations. Character/narrator/reward/scenario
+cohesion comes from dreamIds links; reusable genre/style/theme data is attached
+as Facets by apply_daily_dream_facets.py.
 
 Art is queued through the EXISTING self-draining pipeline: one `requests:`
 entry per element appended to projects/art-prompts.yaml targeting kind_robots
@@ -64,6 +63,7 @@ import os
 import re
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 from pathlib import Path
 from typing import Any, Optional
@@ -370,7 +370,7 @@ def rollback_created(results: list, dry_run: bool = False) -> int:
     the rows that did land so the proposal can be retried clean — no orphans, no
     duplicates on the next sweep. Returns the number of rows deleted."""
     created = [(r["delete_base"], r["id"]) for r in results
-               if r.get("ok") and r.get("id")]
+               if r.get("ok") and r.get("created") and r.get("id")]
     if dry_run or not created:
         return 0
     deleted = 0
@@ -385,8 +385,47 @@ def rollback_created(results: list, dry_run: bool = False) -> int:
     return deleted
 
 
+def _matching_existing(endpoint: str, identity: dict[str, Any]) -> Optional[dict]:
+    """Return one exact live row after a create conflict, or None.
+
+    A retry may encounter rows created by an earlier attempt whose ledger commit
+    was lost.  Adoption is intentionally stricter than the API's uniqueness rule:
+    every supplied identity field must equal the live value.  A same-name row with
+    different content remains a failure and is never silently claimed.
+    """
+    params: dict[str, str] = {}
+    if endpoint == "/api/dreams":
+        params = {
+            "search": str(identity.get("title") or ""),
+            "mine": "true",
+            "includeInactive": "true",
+            "includeMature": "true",
+            "take": "200",
+        }
+    elif endpoint == "/api/bots":
+        params = {"pageSize": "1000"}
+    query = f"?{urllib.parse.urlencode(params)}" if params else ""
+    status, resp = http_json("GET", f"{KR_BASE_URL}{endpoint}{query}")
+    if status != 200 or not isinstance(resp, dict):
+        return None
+    rows = resp.get("data")
+    if isinstance(rows, dict):
+        rows = rows.get("rows") or rows.get("items") or rows.get("bot")
+    if isinstance(rows, dict):
+        rows = [rows]
+    if not isinstance(rows, list):
+        return None
+    matches = [
+        row for row in rows
+        if isinstance(row, dict)
+        and all(row.get(key) == value for key, value in identity.items())
+    ]
+    return matches[0] if len(matches) == 1 else None
+
+
 def kr_call(method: str, endpoint: str, body: dict, dry_run: bool,
-            results: list, label: str = "") -> Optional[dict]:
+            results: list, label: str = "",
+            conflict_identity: Optional[dict[str, Any]] = None) -> Optional[dict]:
     """One API call; returns the record dict from data (with id) or None.
 
     Each result carries `id` + `delete_base` so a failed build can roll back the rows
@@ -394,7 +433,8 @@ def kr_call(method: str, endpoint: str, body: dict, dry_run: bool,
     if dry_run:
         print(f"  [dry-run] {method} {endpoint}: {label}")
         results.append({"endpoint": endpoint, "status": 0, "ok": True, "label": label,
-                        "id": None, "delete_base": _delete_base(endpoint)})
+                        "id": None, "delete_base": _delete_base(endpoint),
+                        "created": False})
         return {"id": 0}
     status, resp = http_json(method, f"{KR_BASE_URL}{endpoint}", body)
     record = None
@@ -407,7 +447,14 @@ def kr_call(method: str, endpoint: str, body: dict, dry_run: bool,
             record = data["created"][0]  # scenarios array-mode envelope
         elif "id" in resp:
             record = resp
-    ok = status in (200, 201, 207) and record is not None
+    adopted = False
+    if status == 409 and conflict_identity:
+        record = _matching_existing(endpoint, conflict_identity)
+        adopted = record is not None
+        if adopted:
+            print(f"  adopted existing: {label} (ID {record.get('id')})")
+    ok = (status in (200, 201, 207) and record is not None) or adopted
+    created = ok and not adopted and status in (201, 207)
     failure_message = None
     if not ok:
         if isinstance(resp, dict):
@@ -417,6 +464,8 @@ def kr_call(method: str, endpoint: str, body: dict, dry_run: bool,
     results.append({"endpoint": endpoint, "status": status, "ok": ok, "label": label,
                     "id": record.get("id") if (ok and isinstance(record, dict)) else None,
                     "delete_base": _delete_base(endpoint),
+                    "created": created,
+                    "adopted": adopted,
                     "message": failure_message})
     if not ok:
         print(f"  FAIL {status} {method} {endpoint} ({label}): {str(resp)[:200]}",
@@ -478,13 +527,25 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         same-titled LOCATION — the old bug behind `comet-market` + `the-comet-market-2`).
         Callers that omit it get a de-duplicated slugify of the title. See
         specs/SLUG-POLICY.md."""
-        dream = kr_call("POST", "/api/dreams", {
-            "title": dtitle, "slug": dream_slug or uniq_slug(dtitle),
+        resolved_slug = dream_slug or uniq_slug(dtitle)
+        dream_body = {
+            "title": dtitle, "slug": resolved_slug,
             "dreamType": dream_type, "designer": DESIGNER, "creationSource": CREATION_SOURCE,
             "isPublic": True, "description": description,
             "flavorText": flavor[:500] if flavor else None,
             "artPrompt": art_prompt or None, "icon": icon,
-        }, dry_run, results, f"{dream_type} dream: {dtitle}")
+        }
+        dream = kr_call(
+            "POST", "/api/dreams", dream_body, dry_run, results,
+            f"{dream_type} dream: {dtitle}",
+            conflict_identity={
+                "title": dtitle,
+                "slug": resolved_slug,
+                "dreamType": dream_type,
+                "designer": DESIGNER,
+                "description": description,
+            },
+        )
         if not dream:
             return None
         sheet_body = {
@@ -574,7 +635,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
     link_ids = [world_id] if world_id else []
     for ch in proposal.get("characters", []):
         el = slugify(ch.get("name", "character"))
-        rec = kr_call("POST", "/api/characters", {
+        character_body = {
             "name": ch.get("name", "Character"), "designer": DESIGNER, "isPublic": True,
             "drive": ch.get("role_drive", ""),
             "quirks": ch.get("complication", ""),
@@ -582,7 +643,13 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
             "artPrompt": ch.get("look", ""),
             "genre": vibe.get("title", ""),
             "dreamIds": link_ids,
-        }, dry_run, results, f"Character: {ch.get('name')}")
+        }
+        rec = kr_call(
+            "POST", "/api/characters", character_body, dry_run, results,
+            f"Character: {ch.get('name')}",
+            conflict_identity={key: character_body[key] for key in
+                               ("name", "designer", "drive", "artPrompt")},
+        )
         if rec:
             built["records"]["characters"].append(
                 {"model": "Character", "id": rec.get("id"), "name": ch.get("name")})
@@ -597,7 +664,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
     if nar:
         el = slugify(nar.get("name", "narrator")) + "-narrator"
         link_ids = [world_id] if world_id else []
-        rec = kr_call("POST", "/api/bots", {
+        bot_body = {
             "name": nar.get("name", "Narrator"), "BotType": "NARRATOR",
             "designer": DESIGNER, "isPublic": True,
             "subtitle": f"Narrator of {title}",
@@ -613,7 +680,13 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                        f"Expressions: {nar.get('expressions', '')} "
                        f"Topics: {'; '.join(nar.get('topics', []))}"),
             "dreamIds": link_ids,
-        }, dry_run, results, f"Bot: {nar.get('name')}")
+        }
+        rec = kr_call(
+            "POST", "/api/bots", bot_body, dry_run, results,
+            f"Bot: {nar.get('name')}",
+            conflict_identity={key: bot_body[key] for key in
+                               ("name", "BotType", "designer", "narrativeVoice")},
+        )
         if rec:
             built["records"]["narrator"] = {"model": "Bot", "id": rec.get("id"),
                                             "name": nar.get("name")}
@@ -631,7 +704,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         if rarity not in VALID_RARITIES:
             rarity = "COMMON"
         link_ids = [world_id] if world_id else []
-        rec = kr_call("POST", "/api/rewards", {
+        reward_body = {
             "name": rw.get("name", "Reward"), "isPublic": True,
             "description": rw.get("grants", ""),
             "flavorText": (rw.get("catch", "") or "")[:500],
@@ -641,7 +714,13 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
             "rewardType": rtype if rtype in ("SKILL", "ITEM") else "ITEM",
             "artPrompt": f"{rw.get('name', '')}: {rw.get('grants', '')}",
             "dreamIds": link_ids,
-        }, dry_run, results, f"Reward: {rw.get('name')}")
+        }
+        rec = kr_call(
+            "POST", "/api/rewards", reward_body, dry_run, results,
+            f"Reward: {rw.get('name')}",
+            conflict_identity={key: reward_body[key] for key in
+                               ("name", "description", "rewardType", "artPrompt")},
+        )
         if rec:
             built["records"]["rewards"].append(
                 {"model": "Reward", "id": rec.get("id"), "name": rw.get("name"),
@@ -658,14 +737,20 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
     scenario_links = [i for i in [world_id, *location_ids] if i]
     for sc in proposal.get("scenarios", []):
         el = slugify(sc.get("title", "scenario")) + "-scenario"
-        rec = kr_call("POST", "/api/scenarios", {
+        scenario_body = {
             "title": (sc.get("title", "Scenario"))[:190], "isPublic": True,
             "description": sc.get("setup", ""),
             "intros": sc.get("setup", ""),
             "locations": loc_titles,
             "genres": vibe.get("title", ""),
             "dreamIds": scenario_links,
-        }, dry_run, results, f"Scenario: {sc.get('title')}")
+        }
+        rec = kr_call(
+            "POST", "/api/scenarios", scenario_body, dry_run, results,
+            f"Scenario: {sc.get('title')}",
+            conflict_identity={key: scenario_body[key] for key in
+                               ("title", "description", "intros", "locations")},
+        )
         if rec:
             built["records"]["scenarios"].append(
                 {"model": "Scenario", "id": rec.get("id"), "title": sc.get("title")})
