@@ -5692,3 +5692,29 @@ records:
     rather than assuming a shared premise -- art-manager.vue's "tabs are
     themselves dashboards" claim didn't hold on inspection even though the
     conductor-page.vue and user-manager.vue claims in the same task note did.
+- date: 2026-08-02
+  project: interface-vision
+  task: t-037
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    The task note asked for 2-3 mockups since the fold "needs real product
+    decisions," mirroring t-001/t-002's blank-canvas aesthetic-pick pattern --
+    but the three open questions here (does cockpit content collapse to one
+    kr-toolbar line, do the two tab strips merge or does one become a
+    dropdown, does the decorative wrapper become .kr-surface) were already
+    answered by this project's own t-004 contract, which built kr-toolbar and
+    kr-surface specifically for this shape of problem. Not every
+    "needs product decisions" task is a blank aesthetic choice like
+    theater/storybook/playground -- some are structural questions the
+    project's existing rules already resolve. Building throwaway A/B/C
+    toggle scaffolding for a question the contract already answers would
+    have been the over-engineering the task itself warns against elsewhere.
+    Also: vercel.json disables PR-preview deploys for claude/*/worker/*/
+    agent/*/conductor/* branches (cost-saving), so visual verification for
+    agent-authored branches has to happen post-merge against the production
+    deployment, not via a pre-merge Vercel preview -- AGENTS.md's documented
+    preview technique (~L338-366) doesn't currently note this exception.
