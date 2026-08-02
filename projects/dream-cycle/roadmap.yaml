@@ -151,12 +151,12 @@ tasks:
   - id: t-006
     milestone: m4
     title: 'Creation-a-day: advance the active creation build one stage'
-    status: ready
+    status: claimed
     recurring: true
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-22T04:30:00Z'
+    updated: '2026-08-02T20:00:45Z'
     depends_on: t-004
     note: >
       THE idle-fallback loop (recurring — re-arms to ready after every cycle,
@@ -214,8 +214,8 @@ tasks:
       alone isn't sufficient evidence. Re-armed to ready per the recurring-task
       convention -- next cycle continues with lantern-post's Stage 3
       (Characters: Vesper, Smudge, the Dead-Letter Clerk).
-    claimed_by: null
-    claimed_at: null
+    claimed_by: 2026-08-02T200045Z-daily-loop-repair
+    claimed_at: '2026-08-02T20:00:45Z'
   - id: t-007
     milestone: m5
     title: Generate dream-cycle project art (icon, card, hero)
