@@ -8,6 +8,7 @@ on:
   push:
     paths:
       - ".github/workflows/hourly-conductor.yml"
+    # one-shot recovery nonce: 2026-08-02T20:22Z
   schedule:
     - cron: "0 * * * *"   # every hour on the hour
   workflow_dispatch:
