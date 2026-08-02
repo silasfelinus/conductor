@@ -805,8 +805,8 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -826,6 +826,9 @@ tasks:
       Also remove the six :has() global overrides in assets/css/tailwind.css:37-90 as the
       pages they patch get fixed — they match on Tailwind class SUBSTRINGS and break the
       moment a class string changes.
+    claimed_by: claude-2026-08-02T052639Z-t017
+    claimed_at: '2026-08-02T05:36:05Z'
+    updated: '2026-08-02T05:36:05Z'
 
   - id: t-018
     milestone: m3
