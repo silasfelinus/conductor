@@ -2099,5 +2099,67 @@ tasks:
       `get_runtime_logs`/`get_runtime_errors` show a sustained clean
       window (see kind-robots/t-022's closing note for the confirmation
       pattern used last time).
-    updated: '2026-08-02T14:45:00Z'
+
+      RECOVERED (observed) 2026-08-02T22:35Z (conductor Agent run, triggered
+      by CI-Janitor Todo #1094 flagging a `cancelled` Cypress run at 20:29Z):
+      both symptoms from the original report have cleared. BUILDS: Vercel
+      deployment history shows builds recovered at commit `1233137`
+      (dpl_D38QaSdsNwFC4MTfYfwp9HfRXByi, created 2026-08-02T20:13:44Z,
+      `state: READY`) -- the first successful build after the 11 consecutive
+      `ERROR` builds this task documents, and every build since (through the
+      current production tip, commit `e9eedab9`/#1335) is also `READY`. RUNTIME:
+      `get_runtime_errors` (2h window, checked 2026-08-02T22:33Z) shows the
+      dominant `pool timeout (circuit open)`/P2039 group's last occurrence at
+      21:03:59Z, with zero 500/503/504 in the most recent 30-minute
+      `get_runtime_logs` window (365x200/4x201/3x400/3x401/1x403, no error
+      codes at all) -- a clean window of 90+ minutes, well past t-022's own
+      bar for a sustained recovery. Independently corroborated by
+      kind_robots' own Cypress CI: the run this incident's Todo flagged
+      (30765722439) cancelled mid-suite on the exact same `pool timeout`/
+      `ECONNREFUSED '172.21.0.17'` signature (specs 24-25 of 60, ~20:39-20:40Z),
+      but the very next scheduled run (30767968455, 21:28Z, commit
+      `e9eedab9`) completed cleanly with all 60 specs green and zero DB
+      errors. Root cause of the underlying DB/ProxySQL outage itself is still
+      unconfirmed (no agent has ProxySQL/DB-host access per BOUNDARY.md, same
+      as before) -- this note only confirms recovery, not why it recovered.
+      Leaving `status: needs-human` / `gate_human: true` as-is per this
+      task's own explicit human gate (unlike t-022, which didn't set
+      `gate_human: true`) -- FOR SILAS: this looks safe to set `status: done`
+      on given the above, but I'm not closing a `gate_human: true` task
+      myself. If it relapses, the next incident (CI-Janitor Todo or scheduled
+      sweep) will catch it and this note will reflect that.
+
+  - id: t-053
+    milestone: m1
+    title: "Add a fail-fast guard to cypress.yml so sustained upstream DB-connection failures abort quickly instead of eating the 30-minute job timeout"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from the CI-Janitor incident on Todo #1094 / t-052 (see root
+      TALKBACK.md, 2026-08-02, "ci-janitor: kind_robots Cypress Tests").
+      During the 2026-08-02 ProxySQL/DB outage, the flagged Cypress run
+      (30765722439) ran cleanly through 25 of 60 specs, then hit a cascading
+      wave of Prisma `pool timeout`/`ECONNREFUSED` failures in
+      `dream-input-boundary.cy.ts` and `dream-mutation-boundaries.cy.ts`
+      (0/6 passing, all DB-connection errors) -- a real, correctly-reported
+      upstream outage, not a test bug. After that spec finished at 20:40:29Z,
+      the job produced **zero further log output** (no "Running: ..." banner
+      for spec 26/60 ever appeared) until GitHub's own `timeout-minutes: 30`
+      fired ~19 minutes later, producing an opaque `cancelled` conclusion
+      instead of a fast, diagnosable failure.
+
+      Add a guard so N (e.g. 3-5) consecutive spec-level DB-connection
+      failures (matching the existing Prisma pool-timeout/ECONNREFUSED
+      signatures already surfaced by this suite) abort the Cypress step
+      early with a clear error message pointing at the upstream outage,
+      rather than silently consuming the rest of the 30-minute budget. This
+      makes a future recurrence of this incident class show up in the
+      Actions log within a minute or two instead of at the job timeout, and
+      preserves whatever partial diagnostics (timing/cleanup reports) the
+      run already produces. Do not weaken, skip, or delete any actual test
+      assertions to do this -- this is a workflow/harness guard around
+      genuine infra failures, not a test change.
+    updated: '2026-08-02T22:36:00Z'
 
