@@ -1,0 +1,65 @@
+name: Repair Learning Ledger Kind
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/agent-fix-learning-kind-t030-r8n2.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repair-learning-kind-t030-r8n2
+  cancel-in-progress: false
+
+jobs:
+  repair-validate-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Repair the exact malformed ledger record
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("LEARNING.yaml")
+          text = path.read_text(encoding="utf-8")
+          old = "- date: '2026-08-02'\n  project: interface-vision\n  task: t-030\n  kind: coordination\n"
+          new = "- date: '2026-08-02'\n  project: interface-vision\n  task: t-030\n  kind: software\n"
+          if text.count(old) != 1:
+              raise SystemExit("interface-vision/t-030 malformed record changed or is ambiguous")
+          path.write_text(text.replace(old, new, 1), encoding="utf-8")
+          Path(".github/workflows/agent-fix-learning-kind-t030-r8n2.yml").unlink()
+          PY
+      - name: Validate ledger schema
+        run: |
+          python -m pip install --quiet pytest pyyaml
+          pytest -q tests/test_backfill_learning.py
+          python - <<'PY'
+          from pathlib import Path
+          import yaml
+
+          records = yaml.safe_load(Path("LEARNING.yaml").read_text(encoding="utf-8"))["records"]
+          record = next(row for row in records if row.get("project") == "interface-vision" and row.get("task") == "t-030" and row.get("date") == "2026-08-02")
+          assert record["kind"] == "software"
+          print("validated interface-vision/t-030 learning kind")
+          PY
+          git diff --check
+      - name: Commit the repair
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          git config user.name "learning-ledger-repair[bot]"
+          git config user.email "learning-ledger-repair[bot]@users.noreply.github.com"
+          git add -A LEARNING.yaml .github/workflows/agent-fix-learning-kind-t030-r8n2.yml
+          git commit -m "Fix interface-vision/t-030 learning kind"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:main
