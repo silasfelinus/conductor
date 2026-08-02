@@ -53,5 +53,5 @@ Art: A colossal sunlit echidna-shaped kaiju breaching a turquoise sea, coral cat
 -->
 
 <!-- build-attempt-data
-{"status": "retry", "attempted_at": "2026-08-02T13:05:09.012667-07:00", "message": "the-filing-echidna: 4/10 API calls failed (HTTP 400); rolled back 6 rows.", "failed_calls": [{"endpoint": "/api/dreams", "status": 400, "label": "GENRE dream: Paperwork for a God"}, {"endpoint": "/api/rewards", "status": 400, "label": "Reward: The Starlight Stamp"}, {"endpoint": "/api/rewards", "status": 400, "label": "Reward: Wilderness Filing"}, {"endpoint": "/api/scenarios", "status": 400, "label": "Scenario: The Equinox Inspection"}], "rolled_back": 6}
+{"status": "retry", "attempted_at": "2026-08-02T13:11:46.660835-07:00", "message": "the-filing-echidna: 4/10 API calls failed (HTTP 400); rolled back 6 rows.", "failed_calls": [{"endpoint": "/api/dreams", "status": 400, "label": "GENRE dream: Paperwork for a God"}, {"endpoint": "/api/rewards", "status": 400, "label": "Reward: The Starlight Stamp"}, {"endpoint": "/api/rewards", "status": 400, "label": "Reward: Wilderness Filing"}, {"endpoint": "/api/scenarios", "status": 400, "label": "Scenario: The Equinox Inspection"}], "rolled_back": 6}
 -->
