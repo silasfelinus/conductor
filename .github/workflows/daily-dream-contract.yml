@@ -11,6 +11,7 @@ on:
       - "scripts/build_digest.py"
       - "scripts/build_digest_email.py"
       - "scripts/build_digest_email_v2.py"
+      - "scripts/build_conductor_summary.py"
       - "scripts/build_dream_proposal.py"
       - "scripts/build_dream_records.py"
       - "scripts/enrich_daily_dream_digest.py"
@@ -19,6 +20,7 @@ on:
       - "tests/test_build_digest_email_v2.py"
       - "tests/test_build_dream_proposal.py"
       - "tests/test_build_dream_records.py"
+      - "tests/test_build_conductor_summary_daily_dream.py"
       - "tests/test_daily_dream_bundle_art_queue.py"
       - "tests/test_enrich_daily_dream_digest.py"
   workflow_dispatch:
@@ -43,6 +45,7 @@ jobs:
             scripts/build_digest.py \
             scripts/build_digest_email.py \
             scripts/build_digest_email_v2.py \
+            scripts/build_conductor_summary.py \
             scripts/build_dream_proposal.py \
             scripts/build_dream_records.py \
             scripts/enrich_daily_dream_digest.py
@@ -68,5 +71,6 @@ jobs:
             tests/test_build_digest_email_v2.py \
             tests/test_build_dream_proposal.py \
             tests/test_build_dream_records.py \
+            tests/test_build_conductor_summary_daily_dream.py \
             tests/test_daily_dream_bundle_art_queue.py \
             tests/test_enrich_daily_dream_digest.py

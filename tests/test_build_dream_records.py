@@ -127,8 +127,10 @@ def test_full_success_marks_built_and_never_rolls_back(env, monkeypatch):
     fake = FakeAPI(fail_after=None)
     monkeypatch.setattr(bdr, "http_json", fake)
 
-    bdr.run_build("2020-01-01", dry_run=False)
+    outcome = bdr.run_build("2020-01-01", dry_run=False)
 
+    assert outcome["status"] == "built"
+    assert outcome["art_requests"] == len(PROPOSAL["locations"]) + len(PROPOSAL["characters"]) + len(PROPOSAL["rewards"]) + len(PROPOSAL["scenarios"]) + 2
     assert fake.deletes == []                       # nothing rolled back
     assert "<!-- built-data" in path.read_text()    # marked built
     assert "requests:" in art.read_text()
@@ -140,11 +142,14 @@ def test_partial_failure_rolls_back_and_leaves_unbuilt(env, monkeypatch):
     fake = FakeAPI(fail_after=5)                     # 5 rows land, then the DB "blips"
     monkeypatch.setattr(bdr, "http_json", fake)
 
-    bdr.run_build("2020-01-01", dry_run=False)
+    outcome = bdr.run_build("2020-01-01", dry_run=False)
 
+    assert outcome["status"] == "failed"
+    assert outcome["retry"] is True
     assert len(fake.deletes) == 5                    # exactly the created rows undone
     assert "<!-- built-data" not in path.read_text() # NOT marked built
     assert art.read_text() == "requests:\n"          # no art queued for a failed build
+    assert '"status": "retry"' in path.read_text()
 
 
 def test_total_failure_rolls_back_nothing_and_leaves_unbuilt(env, monkeypatch):
@@ -153,8 +158,9 @@ def test_total_failure_rolls_back_nothing_and_leaves_unbuilt(env, monkeypatch):
     fake = FakeAPI(fail_after=0)                     # every POST 503s from the start
     monkeypatch.setattr(bdr, "http_json", fake)
 
-    bdr.run_build("2020-01-01", dry_run=False)
+    outcome = bdr.run_build("2020-01-01", dry_run=False)
 
+    assert outcome["status"] == "failed"
     assert fake.deletes == []                        # nothing was created, nothing to undo
     assert "<!-- built-data" not in path.read_text()
 
@@ -185,3 +191,53 @@ def test_real_entities_link_to_world_and_genre_vibe(env, monkeypatch):
         assert world_id in body["dreamIds"]
         assert vibe_id in body["dreamIds"]
 
+
+def test_failed_proposal_stays_ahead_of_newer_unattempted_proposal(env, monkeypatch):
+    backlog, _ = env
+    failed = write_proposal_file(backlog)
+    bdr.record_build_failure(
+        failed,
+        {"status": "retry", "attempted_at": "2026-08-02T10:00:00-07:00", "message": "DB down"},
+        dry_run=False,
+    )
+    newer = backlog / "2020-01-02-newer.md"
+    newer.write_text(
+        failed.read_text(encoding="utf-8")
+        .replace("slug: test-dream", "slug: newer")
+        .replace("proposal_date: '2020-01-01'", "proposal_date: '2020-01-02'")
+        .replace("<!-- build-attempt-data\n", "<!-- ignored-build-attempt-data\n"),
+        encoding="utf-8",
+    )
+
+    selected, reason = bdr.eligible_proposal(None)
+
+    assert reason == ""
+    assert selected == failed
+
+
+def test_missing_token_is_a_failed_retry_not_a_green_noop(env, monkeypatch):
+    backlog, _ = env
+    path = write_proposal_file(backlog)
+    monkeypatch.setattr(bdr, "KR_API_TOKEN", "")
+
+    outcome = bdr.run_build("2020-01-01", dry_run=False)
+
+    assert outcome["status"] == "failed"
+    assert outcome["proposal"] == path.name
+    assert '"status": "retry"' in path.read_text(encoding="utf-8")
+
+
+def test_unexpected_builder_exception_is_recorded_for_retry(env, monkeypatch):
+    backlog, _ = env
+    path = write_proposal_file(backlog)
+    monkeypatch.setattr(
+        bdr,
+        "build_records",
+        lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("socket vanished")),
+    )
+
+    outcome = bdr.run_build("2020-01-01", dry_run=False)
+
+    assert outcome["status"] == "failed"
+    assert "socket vanished" in outcome["message"]
+    assert '"status": "retry"' in path.read_text(encoding="utf-8")
