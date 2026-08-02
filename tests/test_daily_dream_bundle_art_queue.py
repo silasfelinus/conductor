@@ -35,7 +35,14 @@ def test_complete_bundle_queues_six_art_requests(tmp_path, monkeypatch):
     backlog = tmp_path / "backlog"
     backlog.mkdir()
     art = tmp_path / "art-prompts.yaml"
-    art.write_text("requests:\n", encoding="utf-8")
+    art.write_text(
+        "requests:\n"
+        "inspirations:\n"
+        "- project: reference-project\n"
+        "  images:\n"
+        "  - image_path: reference.webp\n",
+        encoding="utf-8",
+    )
     path = backlog / "2020-01-01-six-art-dream.md"
     path.write_text(
         "---\nslug: six-art-dream\ntitle: Six Art Dream\ntype: dream\nstatus: outline\n"
@@ -50,7 +57,8 @@ def test_complete_bundle_queues_six_art_requests(tmp_path, monkeypatch):
 
     bdr.run_build("2020-01-01", dry_run=False)
 
-    requests = yaml.safe_load(art.read_text(encoding="utf-8"))["requests"]
+    parsed = yaml.safe_load(art.read_text(encoding="utf-8"))
+    requests = parsed["requests"]
     assert len(requests) == 6
     assert {request["id"] for request in requests} == {
         "dream-cycle-six-art-dream-six-art-dream",
@@ -62,3 +70,7 @@ def test_complete_bundle_queues_six_art_requests(tmp_path, monkeypatch):
     }
     assert all(request["status"] == "pending" for request in requests)
     assert all(request["target_repo"] == "silasfelinus/kind_robots" for request in requests)
+    assert parsed["inspirations"] == [{
+        "project": "reference-project",
+        "images": [{"image_path": "reference.webp"}],
+    }]

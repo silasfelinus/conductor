@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-02T20:52:54Z
+Generated: 2026-08-02T21:10:12Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **474**
-- Outcomes: blocked: 13, cancelled: 1, done: 460
+- Closed tasks recorded: **475**
+- Outcomes: blocked: 13, cancelled: 1, done: 461
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 33 | 100% |
+| interface-vision | 34 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 459 | 99% |
+| software | 460 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-02 `interface-vision/t-053` — A content page mounting the wrong component doesn't error -- it silently renders whatever the mount resolves to (content/button.md mounted :lab-manager since its creation in PR #1280, a copy-paste mistake with no route in that component's own tab mapping; /button just fell back to WonderLab's review UI). git blame the file's origin before assuming a mount was ever correct and later drifted. Separately: fixing the mount is not automatically safe on its own -- mounting a component via MDC for the first time can expose a pre-existing kr-surface/kr-scroll violation that verifyMdcScrollOwnership.ts (not just verifyLayoutContract.ts) will catch, since an MDC-mounted page must not fight pages/[...slug].vue's content-host for scroll ownership. With no local dev server (DB unreachable) and no Vercel PR-preview for agent branches (vercel.json exclusion), match the proven-safe pattern already used by other MDC-mounted -page.vue components (plain divs, no scroll classes) rather than guessing whether kr-surface's h-full behaves inside an auto-height flex host -- and widen the root-surface allow-list deliberately (documented, not gamed) rather than force a scroll primitive onto a component the checker didn't originally evaluate as MDC-mounted.
+
 - 2026-08-02 `interface-vision/t-024` — Similar-looking gallery grids may own fundamentally different picker, CRUD, taxonomy, or relationship behavior. Classify live responsibilities and callers before extracting a shared shell; reuse behavior-neutral primitives rather than forcing a passive browse abstraction onto stateful tools.
 - 2026-08-02 `interface-vision/t-017` — A file classified as a "page" purely by living in components/pages/ (verifyLayoutContract.ts's isPageComponent()) can still be an embedded widget, not a real page -- conductor-project-chat.vue was a per-project chat panel mounted inside conductor-page.vue, not a standalone view. Before forcing kr-surface/kr-scroll onto a root-surface violation, check whether the file is actually reachable as its own route/tab or only ever rendered as a child; moving it out of components/pages/ is often the correct fix, not a class change. Also: a LEARNING.yaml record with an invalid kind value breaks test_backfill_learning.py for every subsequent PR on main regardless of that PR's own diff -- confirm the base branch is broken before assuming a red "Python test suite" check means your own change is at fault.
 - 2026-08-02 `interface-vision/t-017` — verifyLayoutContract.ts's root-tag regex only matches lowercase-first tag names, so a page component whose own template root is a PascalCase component reference (e.g. <ProjectFrontPage>) can never satisfy root-surface, even with the correct class present. When a shared shell is invoked from many call sites, check whether the checker can even parse the call site's own root tag before assuming a class-attribute fix will register — filed t-055 to fix the regex itself.
@@ -89,7 +91,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-02 `interface-vision/t-022` — Composition-aware contracts need the same ratchet strategy as file-local contracts: measure existing debt explicitly, block additions immediately, and let future sweeps shrink the baseline instead of making the first honest measurement unmergeable.
 - 2026-08-02 `interface-vision/t-021` — Re-verifying flagged-orphan components before deletion (not trusting a prior audit's flag blind) caught two false positives with live contract usage.
 - 2026-08-02 `interface-vision/t-039` — Contract verifiers should emit concise pass/fail output; diagnostic source bundles need a real consumer or an explicit verbose mode.
-- 2026-08-02 `interface-vision/t-020` — Achievement rewards must be granted atomically through server-side karma and mana ledgers; direct client balance patches are neither authoritative nor permitted.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-02T20:52:54Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-02T21:10:12Z_
