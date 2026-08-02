@@ -1363,25 +1363,19 @@ tasks:
   - id: t-039
     milestone: m2
     title: 'Clean up debug stdout noise in verifyEntityArtManager.ts'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: null
-    note: >
-      Kaizen from t-013 (2026-08-01, kind_robots PR #1283). Running
-      `npx tsx utils/scripts/verifyEntityArtManager.ts` prints a large
-      base64-looking `ENTITY_ART_SOURCE_000`..`ENTITY_ART_SOURCE_NNN` blob dump
-      (plus an `ENTITY_ART_SOURCE_CHUNKS` count) to stdout before its final
-      "Entity art manager contract verified." line. Looks like leftover debug
-      output (e.g. an accidental console.log of a chunked/base64-encoded source
-      read) rather than deliberate contract output, and makes CI logs for this
-      check needlessly noisy. Find the source of the dump and gate it behind a
-      --verbose flag or remove it outright; verify the script's actual pass/fail
-      signal (its final verified line / exit code) is unaffected.
+    note: |-
+      Kaizen from t-013 (2026-08-01, kind_robots PR #1283). Running `npx tsx utils/scripts/verifyEntityArtManager.ts` prints a large base64-looking `ENTITY_ART_SOURCE_000`..`ENTITY_ART_SOURCE_NNN` blob dump (plus an `ENTITY_ART_SOURCE_CHUNKS` count) to stdout before its final "Entity art manager contract verified." line. Looks like leftover debug output (e.g. an accidental console.log of a chunked/base64-encoded source read) rather than deliberate contract output, and makes CI logs for this check needlessly noisy. Find the source of the dump and gate it behind a --verbose flag or remove it outright; verify the script's actual pass/fail signal (its final verified line / exit code) is unaffected.
+
+
+      Removed the unused gzip/base64 source-bundle output from verifyEntityArtManager.ts while preserving every entity-art assertion and the final verified signal.
     claimed_by: 2026-08-02T101142Z-interface-vision-t-039-q8m2
     claimed_at: '2026-08-02T10:11:42Z'
-    updated: '2026-08-02T10:11:42Z'
+    updated: '2026-08-02T10:15:00Z'
 
   - id: t-040
     milestone: m2
