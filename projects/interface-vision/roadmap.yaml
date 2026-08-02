@@ -123,19 +123,26 @@ tasks:
   - id: t-002
     milestone: m1
     title: 'Pick the aesthetic direction'
-    status: needs-human
+    status: done
     owner: null
-    passes: 0
+    passes: 1
     stakes: reversible
     soft_gate: true
     depends_on: t-001
     note: >
-      FOR SILAS: soft checkpoint. Look at the three mockup routes from t-001 on your
-      phone and on desktop, and pick one (or say which parts of which). Everything
-      after this inherits the choice, so it is worth ten minutes. Development of the
-      layout contract (t-003) does NOT wait on this — the contract is about scroll
-      ownership and header rules, which are aesthetic-neutral. Record the pick in
-      DESIGN-BRIEF.md with the tokens it implies.
+      DECIDED 2026-08-02 — STORYBOOK. Silas, verbatim: "Let's run with Storybook as the
+      design. I don't want to build three different layouts, we're already trying to make
+      clear decisions and have VISION." Theater and Playground were DELETED rather than
+      kept behind a switcher, and the mockup at /storymaker-mockups now shows the one
+      direction only. Implemented as a daisyUI theme named `storybook` in
+      assets/css/tailwind.css rather than as component styling: every .kr-* primitive is
+      already written against the semantic tokens (base-200 canvas, base-100 raised
+      surface, base-300 border, primary action), so one theme definition restyles the
+      whole app. Palette, type and the .kr-prose 65ch rule are recorded in
+      DESIGN-BRIEF.md. Three places must stay in agreement or the default silently fails:
+      the theme block's `default: true`, defaultThemeName in stores/themeStore.ts, and
+      the `storybook` entry in daisyuiThemes (stores/helpers/themeHelper.ts) — the store
+      rejects any name missing from that list. Nothing after this should hardcode a hex.
 
   - id: t-003
     milestone: m2
