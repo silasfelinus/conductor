@@ -812,7 +812,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -840,9 +840,13 @@ tasks:
       Sixth scoped layout-contract sweep: remove the final page-owned duplicate title from pages/admin/wonderlab-reviews.vue and ratchet one-header from one entry to zero.
 
       Sixth scoped sweep merged as Kind Robots PR #1305 (7bee439): removed the final WonderLab review-drafts page-owned duplicate title and ratcheted the one-header layout-contract allow-list from one entry to zero. All 11 PR workflows passed, including Layout Contract, TypeScript, Contract Tests, and Facet Catalog. Other layout-contract buckets remain nonzero, so t-017 returns to ready for the next bounded sweep.
+
+      Seventh scoped sweep: zero the no-viewport bucket (2 entries). Confirmed both components (components/wonderlab/new-eyeball.vue, components/servers/chat-test.vue) are live, not dead code, before touching them -- both are registered WonderLab "exhibit" components rendered inline (not in an iframe) by components/wonderlab/wonderlab-preview-host.vue's dynamic <component :is>, whose harness wraps the mount in an auto-sized container with no fixed height. Their raw h-screen/100vh was fighting that harness for viewport height instead of sizing to it.
+
+      Seventh scoped sweep merged as Kind Robots PR #1307 (1a738c7): new-eyeball.vue's root wrapper switched h-screen -> h-full min-h-[320px]; chat-test.vue's .stream-test switched min-height: 100vh -> min-height: 480px. vue-tsc clean, layout-contract holds (no-viewport 2 -> 0, all other buckets unchanged), eslint warnings on both files confirmed pre-existing via git stash (out of scope). Baseline ratcheted down via --update. Filed t-049 as this cycle's kaizen (ghost-prop, 7 entries, the next smallest untouched bucket). The full allow-list is not yet zero (one-scroll 33 -- own task t-047, one-mdc 3, ghost-prop 7, zero-scroll 7), so t-017 returns to ready for the next bounded sweep.
     claimed_by: 2026-08-02T092900Z-interface-vision-t-017-agentrun
     claimed_at: '2026-08-02T09:29:31Z'
-    updated: '2026-08-02T09:29:31Z'
+    updated: '2026-08-02T09:41:00Z'
     owner: worker
 
   - id: t-018
@@ -1535,3 +1539,24 @@ tasks:
       primitive (verify visually via the Vercel preview per AGENTS.md's front-end
       verification note, not just the contract count), ratchet the baseline down, and
       leave a note on which shape covers the rest so the next pass can go faster.
+
+  - id: t-049
+    milestone: m3
+    title: 'Batch-fix the ghost-prop bucket: stop passing :show-header to components that never declared it'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-017's seventh pass (2026-08-02, kind_robots PR #1307, which zeroed
+      the no-viewport bucket). ghost-prop is now the next smallest untouched bucket (7
+      entries, unlike one-scroll which already has its own dedicated task t-047):
+      components/art/art-manager.vue passing :show-header to <art-gallery> and
+      <art-test>, components/user/user-manager.vue passing it to <chat-gallery> and
+      <theme-gallery>, and components/wonderlab/lab-manager.vue passing it to
+      <lab-interact>, <memory-dungeon>, and <screen-fx>. Each is a silent no-op fallthrough
+      attribute today (Vue drops unknown bound props onto the root element rather than
+      erroring), reading as configurable when it isn't. For each pair: either the child
+      component genuinely needs a showHeader prop (declare it properly and wire the
+      behavior), or the call site should stop passing it. Re-run
+      `npm run test:layout-contract -- --update` afterward to ratchet the bucket down.
