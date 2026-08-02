@@ -16,7 +16,7 @@ notes_from_silas: |
   containers when one would suffice, components fighting for space because there isn't
   a clear vision. I have pages that have three different nested container divs before
   we get anything. I have dashboards nested inside dashboards, and tools like
-  Storymaker and Taskmaster that might work but the navigable interface is a thin
+  Storybook and Taskmaster that might work but the navigable interface is a thin
   sliver blocked by nested dashboards that can't decide where to keep their stuff.
 
   A seriously strong example of the opposite is our taskmaster and storyteller
@@ -94,14 +94,14 @@ milestones:
 tasks:
   - id: t-001
     milestone: m1
-    title: 'Write DESIGN-BRIEF.md and build three Storymaker aesthetic mockups'
+    title: 'Write DESIGN-BRIEF.md and build three Storybook aesthetic mockups'
     status: done
     owner: null
     passes: 0
     stakes: reversible
     note: >
       DONE 2026-08-01: kind_robots PR #1252 (merged) built the three mockups at
-      /storymaker-mockups (components/storymaker/storymaker-mockups.vue), all fixture
+      /storybook-mockups (components/storybook/storybook-mockups.vue), all fixture
       data, no store/DB wiring, all six required elements present in each of A/B/C.
       Mockup routes are intentionally still live — t-003 says to delete them, but t-002
       (Silas's pick) is still open, so deletion is deferred until he has actually seen
@@ -109,7 +109,7 @@ tasks:
       yet record a pick (that's t-002's job once Silas responds).
       Phase 0. Silas judges reliably by eye and unreliably from description, so nothing
       else on this project is decided until he has seen options. Build three static
-      mockups of THE SAME Storymaker screen, fixture data only, no store wiring, no DB
+      mockups of THE SAME Storybook screen, fixture data only, no store wiring, no DB
       reads (the sandbox has no DB): (A) theater / lit stage — dark receding surround,
       bright lit panel holding narrator + art, chrome dims while a story runs;
       (B) storybook — warm paper tones, generous margins, large rounded image plates,
@@ -133,7 +133,7 @@ tasks:
       DECIDED 2026-08-02 — STORYBOOK. Silas, verbatim: "Let's run with Storybook as the
       design. I don't want to build three different layouts, we're already trying to make
       clear decisions and have VISION." Theater and Playground were DELETED rather than
-      kept behind a switcher, and the mockup at /storymaker-mockups now shows the one
+      kept behind a switcher, and the mockup at /storybook-mockups now shows the one
       direction only. Implemented as a daisyUI theme named `storybook` in
       assets/css/tailwind.css rather than as component styling: every .kr-* primitive is
       already written against the semantic tokens (base-200 canvas, base-100 raised
@@ -171,7 +171,7 @@ tasks:
         `.content-host` is `h-full min-h-0 flex-col` with `:deep(*) { flex: 1 1 0%;
         min-height: 0 }` (children fill the viewport exactly). These are contradictory,
         and every page resolves it differently — which is why some scroll the shell,
-        some clip below the fold, and Storymaker/Taskmaster collapse to a sliver.
+        some clip below the fold, and Storybook/Taskmaster collapse to a sliver.
         Pick ONE owner; recommended is "the page owns its scroll". Target <=5 wrappers
         before page content (currently 9-10, now 8-9 after this PR's one-wrapper merge).
     claimed_by: 2026-08-01T13:35:00Z-t003
@@ -303,7 +303,7 @@ tasks:
 
   - id: t-006
     milestone: m2
-    title: 'Build the narrator stage and restore narrators to Storymaker and Taskmaster'
+    title: 'Build the narrator stage and restore narrators to Storybook and Taskmaster'
     status: done
     owner: worker
     passes: 0
@@ -316,16 +316,16 @@ tasks:
       narration window, and a pinned action rail with topic quick-buttons +
       free-text input) instead of the existing overlay drawer
       (workspace-narrator.vue, left unchanged, still used by dream-interact.vue).
-      Mounted via LazyKrNarratorStage on both storymaker-page.vue and
+      Mounted via LazyKrNarratorStage on both storybook-page.vue and
       taskmaster-page.vue, matching the dream-interact.vue Lazy-mount precedent
       so narratorStore's eager 9-store composition stays out of these pages'
       first-paint bundle. Wired dashboardHelper's existing scenario/taskmaster
-      and scenario/storymaker tab images into the stage's art plate (previously
+      and scenario/storybook tab images into the stage's art plate (previously
       only a faint ambient background in workspace-header.vue — both pages
       rendered zero <img> before this). Collapsed both pages from 2 scroll
       regions to 1 (header + narrator stage shrink-0, one shared .kr-scroll
       region, response composer/outcome actions pinned outside it) and removed
-      the redundant "Taskmaster"/"Storymaker" eyebrow label duplicating the
+      the redundant "Taskmaster"/"Storybook" eyebrow label duplicating the
       shell's own title. Collapsed content/taskmaster.md's duplicate MDC mount
       to one (:taskmaster-page); TaskmasterSampleTasks now composes inside
       taskmaster-page.vue instead of as a sibling MDC block — updated
@@ -340,7 +340,7 @@ tasks:
       reading as zero-scroll. Ratcheted the layout-contract baseline down
       (one-scroll -2, one-mdc -1). Verified locally (sandbox has no DB): vue-tsc
       clean, eslint clean, prettier clean, test:layout-contract holds, and every
-      Storymaker/Taskmaster/narrative contract verifier passes. No Vercel
+      Storybook/Taskmaster/narrative contract verifier passes. No Vercel
       preview / live visual check performed this session — flagged on the PR
       for a follow-up visual pass on phone/tablet/desktop widths.
       Not attempted, left as future adoption work: restructuring either page's
@@ -359,7 +359,7 @@ tasks:
       normalizePageNarrator() in [...slug].vue are all still live. It is
       mounted in exactly ONE place: components/dreams/dream-interact.vue:21.
       Two problems, and only the second is real work. (1) It is not mounted
-      where it matters — Storymaker and Taskmaster never mount it. Re-mounting
+      where it matters — Storybook and Taskmaster never mount it. Re-mounting
       is small, but it MUST stay Lazy*: its removal from app.vue was a
       deliberate first-paint fix because narratorStore pulls dreamStore +
       chatStore + serverStore into the eager bundle. (2) It is an overlay, not
@@ -372,7 +372,7 @@ tasks:
       renders both :taskmaster-sample-tasks and :taskmaster-page), and wire the
       tab image that dashboardHelper already has for scenario/taskmaster but
       the page never renders. Exit: Taskmaster shows the word "Taskmaster" ONCE
-      (3 times today), Storymaker shows one title (3 today), each page has one
+      (3 times today), Storybook shows one title (3 today), each page has one
       scroll region, and art is present (both pages render zero <img> today).
       Verify on phone, tablet and desktop via Vercel preview.
     claimed_by: claude-agentrun-2026-08-01T18:26:55-t006

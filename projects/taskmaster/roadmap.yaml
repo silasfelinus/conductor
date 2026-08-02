@@ -15,7 +15,7 @@ notes_from_silas: |
   `serendipity` project (see projects/serendipity/roadmap.yaml, now retired --
   its m1-m5 milestones and t-001..t-011 are the real build history of this
   product, just under the old name). kind_robots
-  docs/products/storymaker-taskmaster-boundary.md documents the rename as
+  docs/products/storybook-taskmaster-boundary.md documents the rename as
   intentional and permanent: "The former task-story product is renamed
   completely to Taskmaster, leaving the Serendipity name and route free for
   the voice-led experience." The file-level cutover was kind_robots commit
@@ -29,9 +29,9 @@ notes_from_silas: |
   Product boundary (from the boundary doc, permanent): Taskmaster owns direct
   objective entry, project and HONEYDO selection, practical checkpoints,
   narrative framing, blocked/deferred outcomes, explicit progress review, and
-  confirmed write-back. It is a sibling of Storymaker (which creates stories
-  for their own sake) and must not inherit Storymaker's persistent-narrative-state
-  concerns, and Storymaker must not inherit Taskmaster's task/write-back
+  confirmed write-back. It is a sibling of Storybook (which creates stories
+  for their own sake) and must not inherit Storybook's persistent-narrative-state
+  concerns, and Storybook must not inherit Taskmaster's task/write-back
   concerns -- separate Pinia stores, separate state machines, on purpose.
 
   Verified via code inspection (2026-07-29): components/pages/taskmaster-page.vue
@@ -41,7 +41,7 @@ notes_from_silas: |
   (`taskmaster: { channelKey: 'play', tabKey: 'taskmaster', route: '/taskmaster' }`)
   and in the dashboard/tutorial-card systems (stores/helpers/dashboardHelper.ts,
   stores/helpers/tutorialCards.ts under the 'scenario' section, alongside
-  Storymaker).
+  Storybook).
 
 milestones:
   - id: m1
@@ -69,7 +69,7 @@ tasks:
     stakes: reversible
     note: >
       AUDIT RESULT (2026-07-29): read components/pages/taskmaster-page.vue (724 lines),
-      stores/taskmasterStore.ts (999 lines), and docs/products/storymaker-taskmaster-boundary.md
+      stores/taskmasterStore.ts (999 lines), and docs/products/storybook-taskmaster-boundary.md
       in kind_robots. (1) Capability check against old serendipity/t-001..t-011: theme
       picker (NarrativeIngredientPicker for location/genre), story weaving loop
       (beats/checkpoints), HONEYDO/needs-human task weaving, write-back
@@ -87,10 +87,10 @@ tasks:
       Taskmaster-created needs-human todo since the rename was silently falling into
       the generic AGENT bucket instead of the Todos surface's "Story" tab -- fixed
       directly this cycle rather than just filed, see t-002. (2) Confirmed Taskmaster
-      still borrows Storymaker's art: both stores/helpers/dashboardHelper.ts and
+      still borrows Storybook's art: both stores/helpers/dashboardHelper.ts and
       stores/helpers/tutorialCards.ts have explicit "Shared temporarily until the
       dedicated Taskmaster art set lands" comments pointing at
-      tabImage('scenario','storymaker') / tutorialImage('scenario','storymaker'); no
+      tabImage('scenario','storybook') / tutorialImage('scenario','storybook'); no
       projects/images/taskmaster-{icon,card,hero}.webp exist in this repo either, and
       taskmaster has no entry yet in root ART-PROMPTS.md. Filed as t-003, the standard
       "Polish and upgrade X front-end surface" pattern used by every other project

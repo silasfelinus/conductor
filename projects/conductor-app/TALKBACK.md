@@ -85,7 +85,7 @@ roadmap task status in the same session so it doesn't sit stale.
 - Checked the actual rendered state before trusting the task note: the note said
   "the scaffold page is live at /conductor-app," but the scaffold
   (`components/conductor/conductor-app-page.vue`) had never been given an
-  `#interactive` slot, unlike storymaker/serendipity/davinci which already added
+  `#interactive` slot, unlike storybook/serendipity/davinci which already added
   one this same day. Confirmed by reading the file rather than assuming from the
   note text.
 - Reused `conductorStore.projects` (the same store `appmaker-page.vue` already

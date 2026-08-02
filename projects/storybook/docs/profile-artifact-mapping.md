@@ -1,6 +1,6 @@
-# Storymaker Profile Artifact Mapping
+# Storybook Profile Artifact Mapping
 
-Storymaker sessions should feel playful in the moment, but the best outputs should also become reusable profile objects. This document defines which rewards, locations, items, characters, and story fragments can persist beyond one session, how they unlock, and how future sessions can remix them without turning every improvised detail into permanent clutter.
+Storybook sessions should feel playful in the moment, but the best outputs should also become reusable profile objects. This document defines which rewards, locations, items, characters, and story fragments can persist beyond one session, how they unlock, and how future sessions can remix them without turning every improvised detail into permanent clutter.
 
 ## Goals
 
@@ -25,7 +25,7 @@ Default rule: new session details stay ephemeral unless the turn lifecycle expli
 
 ### Rewards
 
-Rewards are the strongest fit for direct profile persistence. A Storymaker reward can become a profile object when it represents a meaningful achievement, item, title, badge, or cosmetic unlock.
+Rewards are the strongest fit for direct profile persistence. A Storybook reward can become a profile object when it represents a meaningful achievement, item, title, badge, or cosmetic unlock.
 
 Recommended persisted fields:
 
@@ -62,7 +62,7 @@ Recommended persisted fields:
 
 - `slug` — stable generated slug, namespaced if needed.
 - `title` — display name.
-- `dreamType` — LOCATION if available, otherwise Dream with `genreTags` and `source: storymaker` metadata.
+- `dreamType` — LOCATION if available, otherwise Dream with `genreTags` and `source: storybook` metadata.
 - `vibe` — short mood phrase.
 - `description` — 2-4 sentence place summary.
 - `sourceSessionId` and `sourceTurnId`.
@@ -134,7 +134,7 @@ Examples:
 - `Mystery: Who moved the moon behind the glass mountain?`
 - `Vow: Return the silver seed before winter`
 
-These entries are excellent seeds for future Serendipity or Storymaker sessions.
+These entries are excellent seeds for future Serendipity or Storybook sessions.
 
 ## Rarity model
 
@@ -183,7 +183,7 @@ Examples:
 
 ## Future-session reuse contract
 
-When starting a new Storymaker session, the engine can offer profile artifacts as optional ingredients:
+When starting a new Storybook session, the engine can offer profile artifacts as optional ingredients:
 
 - saved locations as settings;
 - saved characters as companions, rivals, or cameos;
@@ -222,11 +222,11 @@ Suggested seed shape:
 - Do not delete profile artifacts from a session; retire/archive should be a separate user action.
 - Do not overwrite player-authored names without confirmation.
 - Do not persist private or sensitive user text into reusable public-facing objects by default.
-- Do not mint outward-facing marketplace or social content from Storymaker artifacts without a separate human gate.
+- Do not mint outward-facing marketplace or social content from Storybook artifacts without a separate human gate.
 
 ## MVP implementation path
 
-1. Add session-scoped candidate marking in the Storymaker state model.
+1. Add session-scoped candidate marking in the Storybook state model.
 2. Let the player save a candidate as a Reward-backed profile artifact.
 3. Support `rewardType: item`, `rewardType: title`, and `rewardType: lore` first.
 4. Add saved Characters and LOCATION Dreams after the save flow is stable.
@@ -234,7 +234,7 @@ Suggested seed shape:
 
 ## Open questions for implementation
 
-- Should saved locations always become Dreams, or should Storymaker keep an app-owned saved-location table first?
+- Should saved locations always become Dreams, or should Storybook keep an app-owned saved-location table first?
 - Should character persistence require a full Character record immediately, or start with lightweight reward/lore entries?
 - How much control should the player have over rarity, versus the narrator assigning it?
 - Should imported artifacts be consumed, changed, or duplicated when remixed into a new genre?

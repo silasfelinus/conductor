@@ -257,7 +257,7 @@ tasks:
   passes: 0
   stakes: reversible
   note: 'Kaizen from Reviewer on the PR #104 merge (2026-07-03): PR #104 scaffolded apps/ for every existing
-    active project (humboldt-scoop-cms, kind-robots, media-watchlist, sketchy, storymaker, wishmaster)
+    active project (humboldt-scoop-cms, kind-robots, media-watchlist, sketchy, storybook, wishmaster)
     as bare `flutter create` shells with no roadmap task driving them to build-out. Add a check (script
     or CI note) that surfaces apps/<slug>/ folders whose lib/ has never grown past main.dart after N days,
     so Silas can decide build vs. retire instead of the fleet growing silently.
@@ -271,7 +271,7 @@ tasks:
     this session: apps/wishmaster and apps/appmaker each showed only one commit in local history,
     both misleadingly identical), so local git history is not a reliable source of true file age
     here. Currently flags 8 of 10 apps/ as still-bare (appmaker, humboldt-scoop-cms, kind-robots,
-    media-watchlist, recipe-box, sketchy, storymaker, wishmaster); conductor and
+    media-watchlist, recipe-box, sketchy, storybook, wishmaster); conductor and
     superkate-services-calculator are correctly excluded as genuinely built out. Verified locally:
     `python -m py_compile` clean, `python scripts/flag_stale_apps.py` / `--json` / `--strict` all run
     and correctly identify the 8 bare folders. The GitHub API age lookup itself could not be

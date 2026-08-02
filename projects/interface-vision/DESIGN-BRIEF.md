@@ -61,7 +61,7 @@ Everything else follows from these.
 Beta-ready means:
 
 - Every page obeys the three rules, verified by `npm run test:layout-contract`.
-- Storymaker and Taskmaster have a narrator on a stage, with art.
+- Storybook and Taskmaster have a narrator on a stage, with art.
 - All seven core objects (bots, dreams, rewards, facets, projects, characters, scenarios)
   share one gallery with four view modes and one review affordance.
 - One art-request path for every object.
@@ -74,7 +74,7 @@ Beta-ready means:
 Silas, 2026-08-02: *"Let's run with Storybook as the design. I don't want to build three
 different layouts, we're already trying to make clear decisions and have VISION."*
 
-Three mockups were built in t-001 at `/storymaker-mockups`. **Storybook won. Theater and
+Three mockups were built in t-001 at `/storybook-mockups`. **Storybook won. Theater and
 Playground are deleted, not kept behind a switcher** — the mockup page now shows the one
 direction and nothing else.
 

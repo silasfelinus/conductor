@@ -1,14 +1,14 @@
-# Storymaker First UX Flow
+# Storybook First UX Flow
 
 ## Purpose
 
-This document sketches the first implementation-ready Storymaker user experience: starting a collaborative story session, choosing a narrator, selecting story ingredients, taking turns through branch options or custom actions, and reviewing artifacts collected during play.
+This document sketches the first implementation-ready Storybook user experience: starting a collaborative story session, choosing a narrator, selecting story ingredients, taking turns through branch options or custom actions, and reviewing artifacts collected during play.
 
 This is a UX and product-flow plan only. It does not add backend schema, API routes, live data writes, deploy hooks, or publishing behavior.
 
 ## UX goals
 
-Storymaker should feel like a lightweight game table inside Kind Robots, not a form wizard. The first flow should let a user start quickly, understand whose turn it is, make a choice without reading a manual, and leave with visible story loot: characters, items, locations, rewards, or memories that can later become reusable profile artifacts.
+Storybook should feel like a lightweight game table inside Kind Robots, not a form wizard. The first flow should let a user start quickly, understand whose turn it is, make a choice without reading a manual, and leave with visible story loot: characters, items, locations, rewards, or memories that can later become reusable profile artifacts.
 
 The MVP supports two play modes:
 
@@ -19,15 +19,15 @@ The MVP supports two play modes:
 
 ### Project workspace card
 
-A Storymaker card can appear in the project workspace or a future games/story area with project title, hero image, mode chips, status, and a primary Start Story or Resume Story action.
+A Storybook card can appear in the project workspace or a future games/story area with project title, hero image, mode chips, status, and a primary Start Story or Resume Story action.
 
 ### Dream or Scenario detail
 
-A Scenario, Character, Location Dream, or Genre Dream can offer a secondary action to start a Storymaker session from that object. This should seed the session with the selected artifact but still let the user choose narrator and mode.
+A Scenario, Character, Location Dream, or Genre Dream can offer a secondary action to start a Storybook session from that object. This should seed the session with the selected artifact but still let the user choose narrator and mode.
 
 ### Chat surface
 
-A Serendipity or Storymaker Bot conversation can offer a guided handoff into a session. The chat should pass the seed prompt into the session-start flow rather than inventing a separate story state.
+A Serendipity or Storybook Bot conversation can offer a guided handoff into a session. The chat should pass the seed prompt into the session-start flow rather than inventing a separate story state.
 
 ## Session start flow
 
@@ -51,7 +51,7 @@ Default narrator profiles:
 - Mischief narrator: playful and surreal while staying safe.
 - Mystery narrator: atmospheric and puzzle-forward.
 
-The MVP can use existing Bot records or a hard-coded narrator catalog until app-owned Storymaker settings exist. The UI should make it clear that the narrator is the voice of the session, not necessarily a player.
+The MVP can use existing Bot records or a hard-coded narrator catalog until app-owned Storybook settings exist. The UI should make it clear that the narrator is the voice of the session, not necessarily a player.
 
 ### Step 3: choose story seed
 
@@ -190,15 +190,15 @@ Session needs human approval: for any future flow that touches real task queues,
 
 A future implementation can start with these app-owned components:
 
-- StorymakerStartPanel.vue
-- StorymakerModePicker.vue
-- StorymakerNarratorPicker.vue
-- StorymakerSeedPicker.vue
-- StorymakerSessionShell.vue
-- StorymakerStoryPanel.vue
-- StorymakerChoicePanel.vue
-- StorymakerArtifactTray.vue
-- StorymakerResumeCard.vue
+- StorybookStartPanel.vue
+- StorybookModePicker.vue
+- StorybookNarratorPicker.vue
+- StorybookSeedPicker.vue
+- StorybookSessionShell.vue
+- StorybookStoryPanel.vue
+- StorybookChoicePanel.vue
+- StorybookArtifactTray.vue
+- StorybookResumeCard.vue
 
 Suggested store responsibilities:
 
@@ -245,6 +245,6 @@ A future implementation PR should demonstrate:
 
 ## Follow-up candidates
 
-- Build the first StorymakerStartPanel.vue prototype with local mock data.
-- Draft the Storymaker Pinia store contract and mock session fixture.
+- Build the first StorybookStartPanel.vue prototype with local mock data.
+- Draft the Storybook Pinia store contract and mock session fixture.
 - Convert the artifact tray into a reusable profile-save review surface.
