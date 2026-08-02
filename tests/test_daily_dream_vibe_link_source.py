@@ -14,3 +14,13 @@ def test_daily_dream_entities_share_the_world_and_vibe_facets():
         "[world_id, *location_ids] if i]"
     ) in source
     assert 'add("vibe", "Dream", records.get("world"))' in facet_source
+
+
+def test_temporary_hourly_push_trigger_cannot_run_from_pr_branches():
+    workflow = Path(".github/workflows/hourly-conductor.yml").read_text(
+        encoding="utf-8"
+    )
+
+    if "\n  push:\n" in workflow:
+        push_block = workflow.split("\n  push:\n", 1)[1].split("\n  schedule:\n", 1)[0]
+        assert "    branches:\n      - main\n" in push_block
