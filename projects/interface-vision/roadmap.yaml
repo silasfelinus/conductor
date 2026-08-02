@@ -981,8 +981,7 @@ tasks:
   - id: t-022
     milestone: m2
     title: 'Add a composition-aware regression check for MDC page scroll ownership'
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -990,9 +989,11 @@ tasks:
 
 
       Added a dedicated composition-aware MDC scroll ownership verifier and CI workflow on the Kind Robots implementation branch.
+
+      Merged kind_robots PR #1318 as 7ed33bb. Added a composition-aware MDC scroll ownership verifier and focused CI workflow. The first run exposed 24 pre-existing nested-scroll owners, so the final contract records them in a shrink-only baseline and fails only on new regressions. All 12 final-head checks passed, including TypeScript, Contract Tests, Layout Contract, and MDC Scroll Ownership run 30749655294.
     claimed_by: 2026-08-02T131304Z-interface-vision-t-022-n6q4
     claimed_at: '2026-08-02T13:13:04Z'
-    updated: '2026-08-02T13:20:00Z'
+    updated: '2026-08-02T13:23:30Z'
 
   - id: t-023
     milestone: m3

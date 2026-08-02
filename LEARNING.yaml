@@ -5892,3 +5892,14 @@ records:
   outcome: done
   failure_category: null
   lesson: Re-verifying flagged-orphan components before deletion (not trusting a prior audit's flag blind) caught two false positives with live contract usage.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-022
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: null
+  lesson: 'Composition-aware contracts need the same ratchet strategy as file-local contracts: measure
+    existing debt explicitly, block additions immediately, and let future sweeps shrink the baseline instead
+    of making the first honest measurement unmergeable.'
