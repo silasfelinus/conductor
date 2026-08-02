@@ -1,9 +1,0 @@
-version: 1
-project: interface-vision
-task: t-017
-operation: ready
-owner: worker
-session: 2026-08-02T112810Z-interface-vision-t-017-r4n8
-updated: '2026-08-02T11:37:00Z'
-note: >-
-  Eighth scoped layout-contract sweep merged as Kind Robots PR #1313 (130a5ff): content/about.md now mounts only the canonical About component, reducing one-mdc from three entries to two. Removing the Sponsor mount exposed sponsor-page.vue as a standalone zero-scroll page; CI caught it, so the same PR added a bounded h-full/min-h-0 overflow-y-auto scroll owner rather than inflating the baseline. All 12 workflows passed. Remaining buckets are nonzero, so t-017 returns to ready.

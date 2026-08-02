@@ -812,7 +812,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -848,10 +848,11 @@ tasks:
       Note (2026-08-02): this session claimed t-017 (the umbrella sweep) but the work it actually did -- zeroing the ghost-prop bucket -- belongs to and is recorded on the dedicated kaizen task t-049 (closed done, kind_robots PR #1310), per the convention t-047/t-049 established of spinning off per-bucket kaizen tasks rather than piling every pass onto t-017 directly. Releasing t-017 back to ready unchanged; remaining buckets: one-scroll (33, own task t-047), one-mdc (3), zero-scroll (7).
 
       Scoped the next layout-contract sweep to content/about.md: remove the second MDC mount and ratchet one-mdc from three entries to two.
+
+      Eighth scoped layout-contract sweep merged as Kind Robots PR #1313 (130a5ff): content/about.md now mounts only the canonical About component, reducing one-mdc from three entries to two. Removing the Sponsor mount exposed sponsor-page.vue as a standalone zero-scroll page; CI caught it, so the same PR added a bounded h-full/min-h-0 overflow-y-auto scroll owner rather than inflating the baseline. All 12 workflows passed. Remaining buckets are nonzero, so t-017 returns to ready.
     claimed_by: 2026-08-02T112810Z-interface-vision-t-017-r4n8
     claimed_at: '2026-08-02T11:28:10Z'
-    updated: '2026-08-02T11:32:10Z'
-    owner: worker
+    updated: '2026-08-02T11:37:00Z'
 
   - id: t-018
     milestone: m3
