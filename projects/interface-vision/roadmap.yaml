@@ -812,7 +812,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -854,10 +854,14 @@ tasks:
       Ninth scoped sweep: zero the remaining one-mdc bucket (2 entries -- content/conductor.md, content/plan/wonderlab.md).
 
       Ninth sweep merged as Kind Robots PR #1317 (squashed f1ee985): content/conductor.md mounted both :conductor-manager and :plan-projects-grid -- moved plan-projects-grid.vue out of components/pages/ (so it's no longer classified as a standalone page component) into components/conductor/, and nested it inside conductor-manager.vue's own template instead of a second top-level MDC directive. content/plan/wonderlab.md mounted both :component-registry-health and :lab-manager -- nested component-registry-health.vue inside lab-manager.vue, gated on the literal /plan/wonderlab route since lab-manager.vue is reused by four other content pages (memory, screenfx, animation-manager, button) that never showed that panel. A first CI run caught verifyWonderLabRegistryHealth.ts's exact-mount lock on content/plan/wonderlab.md's old two-directive markup (same class of issue t-017's third sweep hit with verifySerendipityRouteCutover.mjs) -- fixed by switching it to a semantic identity assertion (lab-manager.vue actually renders ComponentRegistryHealth gated on /plan/wonderlab) rather than pinning the page's exact text, then all 13 checks passed. one-mdc: 2 -> 0, all other buckets unchanged (one-scroll 31, zero-scroll 6). The layout-contract allow-list is not yet zero, so t-017 returns to ready for the next bounded sweep (one-scroll has its own task, t-047).
+
+      Tenth scoped sweep: zero the remaining zero-scroll bucket (6 entries).
+
+      Tenth sweep merged as Kind Robots PR #1319 (f13471f): social-page.vue, rebel-button.vue, pages/auth/google.vue, and pages/build-bench.vue each got a real kr-surface/kr-scroll owner. pages/build-bench.vue's scroll region moved up from its child BuildBench (previously the page's only content and its sole scroll owner) to the page itself, so there's exactly one scroll owner instead of a redundant nested one. kaizen-popup.vue and conductor-art-gallery.vue were both misclassified zero-scroll violations, not real standalone pages -- both are widgets embedded inside conductor-page.vue that only lived under components/pages/ by directory convention; moved to components/conductor/ (same fix the ninth sweep applied to plan-projects-grid.vue), updating the import in conductor-page.vue, the two verifier scripts referencing the old path, and the CI path filter in entity-art-manager-contract.yml. zero-scroll: 6 -> 0. Baseline ratcheted down via --update, all 15 checks green. Flagged for the Reviewer (not fixed in this sweep, out of scope): components/pages/rebel-button.vue appears unreachable from any live route -- content/button.md ("Rebel Button Room") currently mounts :lab-manager instead -- though it's still referenced by the achievement catalog (training/achievementData.ts) and historical WonderLab review-batch data. The layout-contract allow-list is not yet zero (one-scroll 31, own task t-047), so t-017 returns to ready for the next bounded sweep.
     claimed_by: claude-quirky-curie-20260802T133151Z-t017
     claimed_at: '2026-08-02T13:31:52Z'
-    updated: '2026-08-02T13:31:52Z'
-    owner: worker
+    updated: '2026-08-02T13:48:11Z'
+    owner: null
 
   - id: t-018
     milestone: m3
@@ -1600,3 +1604,32 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-02T12:30:00Z'
+
+  - id: t-053
+    milestone: m3
+    title: 'Check whether components/pages/rebel-button.vue is actually reachable'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-017's tenth sweep (2026-08-02, kind_robots PR #1319). While fixing
+      rebel-button.vue's zero-scroll violation, found it isn't mounted by any content
+      page, route, or WonderLab exhibit registry -- content/button.md ("Rebel Button
+      Room", the page whose title/description/dottiTip clearly describe this exact
+      button-mashing game) currently mounts :lab-manager instead, not :rebel-button.
+      This looks like drift from an earlier WonderLab consolidation sweep rather than a
+      deliberate removal. It's still referenced by training/achievementData.ts (the
+      'rebel-button' achievement trigger code) and utils/scripts/verifyAchievementCatalog.ts,
+      so if it's truly unreachable, that achievement can never fire. Confirm reachability
+      first (grep is not proof -- check the actual rendered page and the WonderLab
+      preview-host registry the seventh t-017 sweep used for new-eyeball.vue/chat-test.vue).
+      If genuinely orphaned: either restore it to content/button.md (verify against
+      lab-manager's current button-room behavior first, in case the migration was
+      intentional and lab-manager already covers the mini-game) or remove it and its
+      achievement trigger like the confirmed orphans t-018 cleaned up. If reachable via
+      some path this search missed, close as a false alarm and note where it actually
+      mounts.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-02T13:48:11Z'
