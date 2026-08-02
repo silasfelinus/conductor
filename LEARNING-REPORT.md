@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-02T04:57:39Z
+Generated: 2026-08-02T05:05:00Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **459**
-- Outcomes: blocked: 13, cancelled: 1, done: 445
+- Closed tasks recorded: **460**
+- Outcomes: blocked: 13, cancelled: 1, done: 446
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 18 | 100% |
+| interface-vision | 19 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 444 | 99% |
+| software | 445 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-02 `interface-vision/t-014` — kind_robots PR #1292 (implemented and reviewed by a different session earlier in the day) went stale against main after this session merged the unrelated PR #1293 a few minutes later -- both PRs ran `prisma generate` independently against overlapping generated-client scaffolding (prisma/generated/prisma/internal/class.ts), producing a real textual conflict GitHub correctly flagged as `mergeable_state: dirty` despite a local `git merge-tree` dry run initially looking clean. Fix was mechanical and low-risk: merge main into the PR branch, let `prisma generate` regenerate the one conflicting file fresh rather than hand-resolving it, verify (prisma validate + vue-tsc clean), push, wait for CI, merge. Same class of "regenerate, don't hand-merge" fix as the STATUS.md/workspace.html auto-gen convention, just for kind_robots' generated Prisma client -- worth generalizing that convention beyond conductor's own auto-gen files.
+
 - 2026-08-02 `interface-vision/t-015` — "Close the Builder gaps" bundled five independent fixes at very different scales (a new additive ProjectFacet table + migration, a Prisma-relation normalization needing no migration since the underlying FK constraints already existed, a missing Bot facets.put endpoint, a full Character client facet store + UI) plus registering PROJECT/FACET builders, which turned out to need a card-deck-scale UI buildout of its own. Splitting that one sub-part into t-042 rather than forcing it into the same PR kept the landed diff coherent and fully verified; a task note that lists N "also"s is worth pre-scanning for the one that's actually a different size class before claiming it as a single pass.
 
 - 2026-08-02 `interface-vision/t-041` — Resolve stale navigation hints against the live dashboard manifest; do not invent tabs when the intended product placement is genuinely undecided.
@@ -95,8 +97,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-01 `interface-vision/t-006` — Clean first pass (kind_robots PR #1267), but the close-out step surfaced a real tooling gap this session had to work around by hand: claim_task.py pushed its claim commit straight to origin/main, and this session's local checkout was never re-fetched before set_task_field.py edited the roadmap to status: review -- set_task_field.py operates on whatever is in the local tree with no fetch of its own (its own docstring names this exact gotcha, conductor/t-077/davinci/t-014), so the resulting commit briefly clobbered the claim commit's owner/claimed_by/claimed_at fields on this session's branch. Caught before it reached main only because rebasing onto origin/main before opening this task's own conductor PR produced a merge conflict on the exact block claim_task.py had written -- resolved by keeping origin/main's claim metadata and folding in the intended status transition. Standing takeaway: after any claim_task.py call (or any other script documented to push straight to origin/main), fetch and fast-forward the local checkout before running set_task_field.py against the same file in the same session, not just before the final close-out push.
 
-- 2026-08-01 `interface-vision/t-008` — A roadmap task assumed 7 differently-purposed Vue components (5 CRUD picker widgets with dashboard/row/dropdown variants, 1 taxonomy-search view, 1 content-collection list) were all "near-duplicates" of one passive browse gallery, based on line-count and surface description alone. Reading each target file's actual prop signature before writing any migration code caught the mismatch before implementation, not after -- a 5-minute grep for variant/mode props (`grep -n "variant\|GalleryVariant\|isDropdownMode"`) across the named files would let a task author flag this in the roadmap task itself instead of a Worker discovering it mid-implementation. Scope was shrunk to the one genuine match plus one confirmed-dead deletion; the remaining 6 objects moved to a new task (t-023) for honest per-object re-assessment rather than forced onto the same shell.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-02T04:57:39Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-02T05:05:00Z_

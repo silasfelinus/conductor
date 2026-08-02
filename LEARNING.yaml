@@ -5771,3 +5771,26 @@ records:
     the landed diff coherent and fully verified; a task note that lists N
     "also"s is worth pre-scanning for the one that's actually a different
     size class before claiming it as a single pass.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    kind_robots PR #1292 (implemented and reviewed by a different session
+    earlier in the day) went stale against main after this session merged
+    the unrelated PR #1293 a few minutes later -- both PRs ran `prisma
+    generate` independently against overlapping generated-client scaffolding
+    (prisma/generated/prisma/internal/class.ts), producing a real textual
+    conflict GitHub correctly flagged as `mergeable_state: dirty` despite a
+    local `git merge-tree` dry run initially looking clean. Fix was
+    mechanical and low-risk: merge main into the PR branch, let `prisma
+    generate` regenerate the one conflicting file fresh rather than
+    hand-resolving it, verify (prisma validate + vue-tsc clean), push, wait
+    for CI, merge. Same class of "regenerate, don't hand-merge" fix as the
+    STATUS.md/workspace.html auto-gen convention, just for kind_robots'
+    generated Prisma client -- worth generalizing that convention beyond
+    conductor's own auto-gen files.
