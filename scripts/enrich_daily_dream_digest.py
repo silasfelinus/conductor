@@ -247,30 +247,36 @@ def enrich_digest(
     current = by_date.get(today_key)
     output["tomorrow_proposal"] = proposal_payload(current, probe_images=probe_images) if current else None
 
-    built_yesterday = [
+    # "Previous output" is a creation-order concept, not a calendar-day promise.
+    # Exclude today's proposal when it has already built so the two lead sections
+    # never repeat the same bundle.
+    completed = [
         proposal for proposal in proposals
-        if proposal.get("built") and _built_date(proposal) == today - timedelta(days=1)
+        if proposal.get("built") and proposal is not current
     ]
-    built_yesterday.sort(
-        key=lambda proposal: str((proposal.get("built") or {}).get("built_at") or "")
+    completed.sort(
+        key=lambda proposal: (
+            str((proposal.get("built") or {}).get("built_at") or ""),
+            str(proposal.get("proposal_date") or ""),
+        )
     )
-    if built_yesterday:
-        chosen = built_yesterday[-1]
+    if completed:
+        chosen = completed[-1]
         output["yesterday_output"] = proposal_payload(chosen, probe_images=probe_images)
+        built_on = _built_date(chosen)
+        built_label = built_on.isoformat() if built_on else "an unknown date"
         output["yesterday_output"]["calendar_label"] = (
-            f"Built on {yesterday_key} from the {chosen['proposal_date']} proposal"
+            f"Most recent completed bundle before today's proposal; built {built_label} "
+            f"from the {chosen['proposal_date']} proposal"
         )
         output["daily_dream_output_status"] = "ready"
     else:
         output["yesterday_output"] = None
-        output["daily_dream_output_status"] = f"No objects were built on {yesterday_key}."
+        output["daily_dream_output_status"] = "No completed Daily Dream bundle exists yet."
 
     recent: list[dict[str, Any]] = []
-    wanted_dates = {today, today - timedelta(days=1)}
-    for proposal in proposals:
-        if proposal.get("built") and _built_date(proposal) in wanted_dates:
-            recent.append(proposal_payload(proposal, probe_images=probe_images))
-    recent.sort(key=lambda row: (str(row.get("built_at") or ""), str(row.get("proposal_date") or "")), reverse=True)
+    for proposal in reversed(completed[-2:]):
+        recent.append(proposal_payload(proposal, probe_images=probe_images))
     output["recent_dream_outputs"] = recent
     output["daily_dream_calendar"] = {"today": today_key, "yesterday": yesterday_key, "timezone": "America/Los_Angeles"}
     return output
