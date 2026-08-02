@@ -2009,3 +2009,32 @@ tasks:
     updated: '2026-07-26T11:14:12Z'
     claimed_by: claude-conductor-scheduled-20260726T111500Z-kr-t050
     claimed_at: '2026-07-26T11:14:12Z'
+
+  - id: t-051
+    milestone: m1
+    title: "Investigate and document the disappearance of server/api/conductor/curate-request.post.ts"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Filed 2026-08-02 (weekly site audit, global-ui/SITE-AUDIT-AGENT.md).
+      An earlier task (2026-07-14, "SHIPPED IN REVIEW") describes shipping a
+      new admin-gated bridge endpoint at
+      `server/api/conductor/curate-request.post.ts` (mirroring
+      art-request.post.ts) so the ArtJob trainer panel could submit curate
+      requests from the front end. A later task (conductor-app,
+      2026-07-20) still references it as a live, already-secured endpoint
+      when broadening verifyConductorApiAuthGuards.ts's accepted auth
+      pattern. As of this audit the file does not exist anywhere in the
+      current kind_robots checkout -- confirmed via Glob/Grep, only a
+      historical comment in utils/scripts/verifyConductorApiAuthGuards.ts
+      still names it as a past example. Unlike the social-publishing
+      removal (digital-storefront/t-027, which has an explicit
+      migration-and-correction trail), nothing in this roadmap documents
+      why or when curate-request.post.ts went away. Confirm whether it was
+      deliberately removed (and if so, find and record the removing PR/
+      migration, and check whether the trainer panel's "Request curation"
+      UI now silently 404s) or whether this is an accidental regression
+      that should be restored.
+

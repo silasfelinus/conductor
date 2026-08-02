@@ -1130,3 +1130,25 @@ tasks:
   updated: '2026-07-26T14:15:42Z'
   claimed_by: claude-conductor-scheduled-20260726T141539Z-ds-t035
   claimed_at: '2026-07-26T14:15:42Z'
+
+- id: t-036
+  milestone: m1
+  title: "Correct t-031's note — the general cart checkout handler lives at server/api/stripe/checkout.post.ts, not server/api/store/checkout.post.ts"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Filed 2026-08-02 (weekly site audit, global-ui/SITE-AUDIT-AGENT.md).
+    t-031's title and note both refer to the general multi-item cart
+    checkout as `server/api/store/checkout.post.ts`. Confirmed via
+    Glob/Grep against the current kind_robots checkout: no such file
+    exists under server/api/store/ (which holds pod-checkout.post.ts,
+    product-checkout.post.ts, entitlements.get.ts, download/). The code
+    t-031 actually describes -- the handler that sets Stripe session
+    `metadata.kind: 'giftshop_checkout'` -- lives at
+    `server/api/stripe/checkout.post.ts`. Functionality is not affected
+    (the file exists and works, just under a different path than
+    documented); this is a small doc-accuracy fix so a future reader
+    searching server/api/store/ for this handler doesn't come up empty.
+
