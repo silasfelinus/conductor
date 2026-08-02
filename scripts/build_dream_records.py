@@ -154,6 +154,16 @@ def _data_block(text: str, name: str) -> Optional[dict]:
         return None
 
 
+def _outcome(status: str, message: str, **details: Any) -> dict[str, Any]:
+    """Return the small, serializable contract consumed by the hourly report.
+
+    ``failed`` is deliberately distinct from ``idle``.  Before this contract the
+    scheduler could roll back a broken build, print an error, and still finish green;
+    neither GitHub nor the next digest retained evidence that creation had failed.
+    """
+    return {"status": status, "message": message, **details}
+
+
 def has_silas_notes(text: str) -> bool:
     """True if the Notes from Silas section holds anything beyond the placeholder."""
     m = re.search(r"^##\s+Notes from Silas\s*\n(.*?)(?=^##\s|\Z)", text, re.DOTALL | re.MULTILINE)
@@ -180,9 +190,15 @@ def find_proposals() -> list[tuple[Path, dict, str]]:
 
 
 def eligible_proposal(date_override: Optional[str]) -> tuple[Optional[Path], str]:
-    """Newest proposal with proposal_date < today (or == override), unbuilt, buildable."""
+    """Choose the proposal to build.
+
+    A proposal whose previous attempt failed stays at the head of the line until it
+    succeeds.  Otherwise a new calendar day could strand yesterday's creation simply
+    because a newer proposal now exists.
+    """
     today = datetime.datetime.now(_TZ).date().isoformat()
     best: Optional[tuple[str, Path]] = None
+    retry: Optional[tuple[str, Path]] = None
     reason = "no unbuilt proposal ready (none past its steering day)"
     for p, fm, text in find_proposals():
         pdate = str(fm.get("proposal_date") or fm.get("created") or "")
@@ -199,8 +215,15 @@ def eligible_proposal(date_override: Optional[str]) -> tuple[Optional[Path], str
         if has_silas_notes(text):
             reason = f"{p.name}: has Notes from Silas — agent must fold them in before building"
             continue
+        attempt = _data_block(text, "build-attempt-data")
+        if isinstance(attempt, dict) and attempt.get("status") == "retry":
+            if retry is None or pdate < retry[0]:
+                retry = (pdate, p)
+            continue
         if best is None or pdate > best[0]:
             best = (pdate, p)
+    if retry:
+        return retry[1], ""
     if best:
         return best[1], ""
     return None, reason
@@ -275,6 +298,13 @@ def record_built(path: Path, built: dict, dry_run: bool) -> None:
     text = path.read_text(encoding="utf-8")
     today = datetime.datetime.now(_TZ).date().isoformat()
     text = re.sub(r"^status:\s*.+$", "status: built", text, count=1, flags=re.MULTILINE)
+    text = re.sub(
+        r"\n?<!--\s*build-attempt-data\s*\n.*?\n-->\n?",
+        "\n",
+        text,
+        count=1,
+        flags=re.DOTALL,
+    )
     n_records = sum(len(v) if isinstance(v, list) else 1
                     for v in built.get("records", {}).values())
     log_line = (f"- {today} | records | created {n_records} kind_robots rows + "
@@ -288,6 +318,24 @@ def record_built(path: Path, built: dict, dry_run: bool) -> None:
         return
     path.write_text(text, encoding="utf-8")
     print(f"  marked {path.name} built (+built-data)")
+
+
+def record_build_failure(path: Path, failure: dict[str, Any], dry_run: bool) -> None:
+    """Persist a retry marker without pretending that any object was created."""
+    if dry_run:
+        return
+    text = path.read_text(encoding="utf-8")
+    block = f"<!-- build-attempt-data\n{json.dumps(failure, ensure_ascii=False)}\n-->"
+    text, count = re.subn(
+        r"<!--\s*build-attempt-data\s*\n.*?\n-->",
+        block,
+        text,
+        count=1,
+        flags=re.DOTALL,
+    )
+    if not count:
+        text = text.rstrip() + "\n\n" + block + "\n"
+    path.write_text(text, encoding="utf-8")
 
 
 def update_built_data(path: Path, built: dict) -> None:
@@ -685,26 +733,51 @@ def attach_art(dry_run: bool) -> int:
 
 # ── Entry point ──────────────────────────────────────────────────────────
 
-def run_build(date_override: Optional[str], dry_run: bool) -> int:
+def run_build(date_override: Optional[str], dry_run: bool) -> dict[str, Any]:
     path, reason = eligible_proposal(date_override)
     if path is None:
         print(f"Nothing to build: {reason}")
-        return 0
+        return _outcome("idle", reason)
     if not KR_API_TOKEN and not dry_run:
-        print("KR_API_TOKEN not set — cannot create records (soft no-op).", file=sys.stderr)
-        return 0
+        message = "KR_API_TOKEN not set — daily objects cannot be created."
+        failure = {
+            "status": "retry",
+            "attempted_at": datetime.datetime.now(_TZ).isoformat(),
+            "message": message,
+        }
+        record_build_failure(path, failure, dry_run)
+        print(message, file=sys.stderr)
+        return _outcome("failed", message, proposal=path.name, retry=True)
     text = path.read_text(encoding="utf-8")
     fm = _frontmatter(text)
     proposal = _data_block(text, "proposal-data")
     if not proposal:
-        print(f"{path.name}: no proposal-data block — cannot auto-build.", file=sys.stderr)
-        return 0
+        message = f"{path.name}: no proposal-data block — cannot create objects."
+        failure = {
+            "status": "retry",
+            "attempted_at": datetime.datetime.now(_TZ).isoformat(),
+            "message": message,
+        }
+        record_build_failure(path, failure, dry_run)
+        print(message, file=sys.stderr)
+        return _outcome("failed", message, proposal=path.name, retry=True)
     slug = str(fm.get("slug") or slugify(proposal.get("title", "dream")))
     pdate = str(fm.get("proposal_date") or fm.get("created") or "")
     print(f"Building {path.name} (slug={slug}, proposal_date={pdate})"
           f"{' [dry-run]' if dry_run else ''}")
 
-    built, results, art_entries = build_records(proposal, slug, pdate, dry_run)
+    try:
+        built, results, art_entries = build_records(proposal, slug, pdate, dry_run)
+    except Exception as error:  # noqa: BLE001 - persist the retry before surfacing it
+        message = f"{slug}: object creation crashed before the bundle could be recorded: {error}"
+        failure = {
+            "status": "retry",
+            "attempted_at": datetime.datetime.now(_TZ).isoformat(),
+            "message": message,
+        }
+        record_build_failure(path, failure, dry_run)
+        print(message, file=sys.stderr)
+        return _outcome("failed", message, proposal=path.name, retry=True)
     failures = [r for r in results if not r["ok"]]
     if not dry_run and failures:
         # Atomic build: never mark a partially-built proposal `built`. Roll back any
@@ -716,27 +789,65 @@ def run_build(date_override: Optional[str], dry_run: bool) -> int:
         print(f"Build failed: {len(failures)}/{len(results)} call(s) failed; "
               f"rolled back {n_deleted} created row(s); {slug} left UNBUILT for the "
               "next sweep.", file=sys.stderr)
-        return 0
+        statuses = sorted({int(row.get("status") or 0) for row in failures})
+        message = (
+            f"{slug}: {len(failures)}/{len(results)} API calls failed "
+            f"(HTTP {', '.join(map(str, statuses))}); rolled back {n_deleted} rows."
+        )
+        failure = {
+            "status": "retry",
+            "attempted_at": datetime.datetime.now(_TZ).isoformat(),
+            "message": message,
+            "failed_calls": [
+                {
+                    "endpoint": row.get("endpoint"),
+                    "status": row.get("status"),
+                    "label": row.get("label"),
+                }
+                for row in failures
+            ],
+            "rolled_back": n_deleted,
+        }
+        record_build_failure(path, failure, dry_run)
+        return _outcome(
+            "failed",
+            message,
+            proposal=path.name,
+            retry=True,
+            failed_calls=len(failures),
+            rolled_back=n_deleted,
+        )
 
     append_art_requests(art_entries, dry_run)
     record_built(path, built, dry_run)
     ok_n = sum(1 for r in results if r["ok"])
     print(f"Done: {ok_n}/{len(results)} API calls ok, {len(art_entries)} art requests queued.")
-    return 0
+    return _outcome(
+        "dry-run" if dry_run else "built",
+        f"{slug}: created and recorded the bundle; queued {len(art_entries)} art requests.",
+        proposal=path.name,
+        built_at=built.get("built_at"),
+        api_calls=ok_n,
+        art_requests=len(art_entries),
+    )
 
 
-def ensure_records(dry_run: bool = False) -> None:
+def ensure_records(dry_run: bool = False) -> dict[str, Any]:
     """Sweep entry point: build the eligible proposal (if any), then attach art.
 
     Guarded + soft-failing: safe to call every hourly sweep."""
     try:
-        run_build(None, dry_run)
+        outcome = run_build(None, dry_run)
     except Exception as e:  # noqa: BLE001
-        print(f"record build skipped: {e}", file=sys.stderr)
+        message = f"Daily-dream build crashed before it could record a bundle: {e}"
+        print(message, file=sys.stderr)
+        outcome = _outcome("failed", message, retry=True)
     try:
-        attach_art(dry_run)
+        outcome["art_attached"] = attach_art(dry_run)
     except Exception as e:  # noqa: BLE001
         print(f"art attach skipped: {e}", file=sys.stderr)
+        outcome["art_attach_error"] = str(e)
+    return outcome
 
 
 def main() -> int:
@@ -749,9 +860,9 @@ def main() -> int:
     if args.attach:
         attach_art(args.dry_run)
         return 0
-    rc = run_build(args.date, args.dry_run)
+    outcome = run_build(args.date, args.dry_run)
     attach_art(args.dry_run)
-    return rc
+    return 1 if outcome.get("status") == "failed" else 0
 
 
 if __name__ == "__main__":
