@@ -42,6 +42,49 @@ jobs:
               line[10:] if line.startswith("          ") else line
               for line in text[start:end].splitlines()
           )
+
+          selection_start = code.index("selection_marker = '''")
+          selection_end_text = "builder = builder.replace(selection_marker, selection_replacement, 1)"
+          selection_end = code.index(selection_end_text, selection_start) + len(selection_end_text)
+          selection_patch = '''selection_marker = (
+              '        if status in ("parked", "vetoed", "built", "building"):\\n'
+              '            continue\\n'
+              '        if _data_block(text, "built-data"):\\n'
+              '            continue  # already built'
+          )
+          selection_replacement = (
+              '        if status in ("parked", "vetoed", "built", "building"):\\n'
+              '            continue\\n'
+              '        proposal = _data_block(text, "proposal-data")\\n'
+              '        contract_errors = _canonical_proposal_errors(proposal)\\n'
+              '        if contract_errors:\\n'
+              '            reason = f"{p.name}: invalid canonical proposal — {\'; \'.join(contract_errors)}"\\n'
+              '            continue\\n'
+              '        if _data_block(text, "built-data"):\\n'
+              '            continue  # already built'
+          )
+          if selection_marker not in builder:
+              raise SystemExit("eligible proposal selection marker changed")
+          builder = builder.replace(selection_marker, selection_replacement, 1)'''
+          code = code[:selection_start] + selection_patch + code[selection_end:]
+
+          run_start = code.index("run_marker = '''")
+          run_end_text = "builder = builder.replace(run_marker, run_replacement, 1)"
+          run_end = code.index(run_end_text, run_start) + len(run_end_text)
+          run_patch = '''run_marker = (
+              '    if not proposal:\\n'
+              '        message = f"{path.name}: no proposal-data block — cannot create objects."'
+          )
+          run_replacement = (
+              '    contract_errors = _canonical_proposal_errors(proposal)\\n'
+              '    if contract_errors:\\n'
+              '        message = f"{path.name}: invalid canonical proposal — {\'; \'.join(contract_errors)}"'
+          )
+          if run_marker not in builder:
+              raise SystemExit("run_build proposal validation marker changed")
+          builder = builder.replace(run_marker, run_replacement, 1)'''
+          code = code[:run_start] + run_patch + code[run_end:]
+
           Path("/tmp/dream-cycle-doc-hygiene.py").write_text(code, encoding="utf-8")
           compile(code, "dream-cycle-doc-hygiene.py", "exec")
           PY
