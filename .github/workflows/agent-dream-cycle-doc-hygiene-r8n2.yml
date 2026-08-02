@@ -94,6 +94,12 @@ jobs:
 
           checker = Path("scripts/check_daily_dream_pipeline.py")
           text = checker.read_text(encoding="utf-8")
+          guard_start = text.index("\nproject_checks = (") + 1
+          guard_end = text.index("\n    return errors", guard_start)
+          guard = text[guard_start:guard_end]
+          guard = "\n".join(("    " + line) if line else "" for line in guard.splitlines())
+          text = text[:guard_start] + guard + text[guard_end:]
+
           old = '"seed contract": (seed_contract, ("creative_seeds",)),'
           new = '"seed contract": (seed_contract, ("creative_seeds:", "Every build MUST document all three")),'
           if text.count(old) != 1:
