@@ -812,7 +812,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -828,9 +828,11 @@ tasks:
       Scoped third layout-contract sweep, daily-drivers first per the composition-lock audit (t-023) checklist: registration-form.vue and serendipity-page.vue, neither admin-only.
 
       Merged kind_robots PR #1300 as 102fce9. registration-form.vue: demoted both page-owned <h1>s to <p>, and gave the page a real scroll owner via the kr-surface/kr-scroll primitives (t-004) instead of relying on the shell -- fixed one-header and zero-scroll. serendipity-page.vue: demoted its own <h1> to <p> and removed the root section's redundant overflow-y-auto so the existing message-feed scroll region is the page's one scroll owner -- fixed one-header and one-scroll. Updated verifySerendipityRouteCutover.mjs's exact-markup lock to a semantic identity assertion per the t-023 checklist (route/tab/dashboard/obsolete-route assertions untouched). Baseline ratcheted down via --update: one-header 5->3, one-scroll 34->33, zero-scroll 8->7. Remaining before this task can close: one-header (3 left, all admin: pages/admin/wonderlab-review-{plan,rollout,reviews}.vue), one-scroll (33, the largest bucket -- see kaizen), no-viewport (2), one-mdc (3), ghost-prop (7), zero-scroll (7). The layout-contract allow-list is not yet zero, so this recurring sweep is re-armed.
+
+      Fourth scoped layout-contract sweep: demote the WonderLab review plan page-owned title and ratchet the one-header allow-list from three to two.
     claimed_by: 2026-08-02T081157Z-interface-vision-t-017-k10a
     claimed_at: '2026-08-02T08:11:57Z'
-    updated: '2026-08-02T08:11:57Z'
+    updated: '2026-08-02T08:19:00Z'
     owner: worker
 
   - id: t-018
