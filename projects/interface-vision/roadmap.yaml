@@ -1195,8 +1195,8 @@ tasks:
   - id: t-030
     milestone: m2
     title: 'Wire or remove verifyEntityArtManager.ts''s unused source-bundle log output'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -1214,6 +1214,9 @@ tasks:
       actual comparison (if a golden hash was the intent) or delete the
       gzip/print block entirely (if it's dead) — either way it's currently
       pure CI log noise on every PR touching these files.
+    claimed_by: 2026-08-02T221318Z-interface-vision-t-030-q4n7
+    claimed_at: '2026-08-02T22:13:18Z'
+    updated: '2026-08-02T22:13:18Z'
 
   - id: t-031
     milestone: m2
