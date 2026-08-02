@@ -829,7 +829,7 @@ tasks:
   - id: t-018
     milestone: m3
     title: 'Delete the confirmed orphans and the dead layout machinery'
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -849,7 +849,7 @@ tasks:
       competing with it. Keep text-smart-*, drop the body ramp.
     claimed_by: claude-quirky-curie-20260802T062809Z-t018
     claimed_at: '2026-08-02T06:28:10Z'
-    updated: '2026-08-02T06:28:10Z'
+    updated: '2026-08-02T06:43:56Z'
 
   - id: t-019
     milestone: m2
@@ -1412,6 +1412,31 @@ tasks:
       content-driven sizing (or a documented, deliberate primitive if a fixed size is
       genuinely required), and re-check against the layout contract afterward in case
       flattening the structure incidentally trips one-scroll or zero-scroll.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-02T00:00:00Z'
+
+  - id: t-045
+    milestone: m3
+    title: 'Extract a slim viewport store from displayStore.ts, delete the rest'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-018 (2026-08-02, kind_robots PR #1298). t-018 set out to delete
+      stores/displayStore.ts (627 lines) as dead header/sidebar/footer state-machine
+      code, but t-018's own investigation found it is NOT fully dead: kind-loader.vue
+      calls displayStore.initialize() as real app-startup wiring, and memoryStore.ts
+      reads displayStore.viewportSize directly to size the live, routed Memory Dungeon
+      game board (cardSize/boardColumns computed properties). 5 of the 6 originally-named
+      consumers (screen-debug.vue, smart-icons.vue, icon-display.vue, smart-nav.vue,
+      butterfly-toggle.vue) ARE genuinely dead — no render site outside WonderLab preview
+      fixtures. Scope: extract a minimal viewport-tracking piece (viewportSize/
+      isMobileViewport/isTouchDevice plus the resize-listener init that kind-loader.vue
+      and memoryStore.ts actually need) into its own small store or composable, rewire
+      those two real callers to it, then delete stores/displayStore.ts and the 5 dead
+      components entirely. Re-run vue-tsc and the layout-contract suite afterward.
     claimed_by: null
     claimed_at: null
     updated: '2026-08-02T00:00:00Z'
