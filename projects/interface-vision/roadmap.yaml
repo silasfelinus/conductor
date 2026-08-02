@@ -1364,8 +1364,7 @@ tasks:
   - id: t-039
     milestone: m2
     title: 'Clean up debug stdout noise in verifyEntityArtManager.ts'
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     depends_on: null
@@ -1374,9 +1373,11 @@ tasks:
 
 
       Removed the unused gzip/base64 source-bundle output from verifyEntityArtManager.ts while preserving every entity-art assertion and the final verified signal.
+
+      Merged kind_robots PR #1309 as eb44b09. Removed the unconsumed gzip/base64 ENTITY_ART_SOURCE_* dump and its dead correction helpers while preserving all entity-art assertions and the concise success signal. Entity Art Manager Contract, TypeScript, Contract Tests, Facet Catalog, Layout, and all required narrative/Storybook/Taskmaster workflows completed successfully.
     claimed_by: 2026-08-02T101142Z-interface-vision-t-039-q8m2
     claimed_at: '2026-08-02T10:11:42Z'
-    updated: '2026-08-02T10:15:00Z'
+    updated: '2026-08-02T10:24:00Z'
 
   - id: t-040
     milestone: m2
