@@ -875,6 +875,33 @@ tasks:
     claimed_at: '2026-08-02T06:49:23Z'
     updated: '2026-08-02T07:09:10Z'
 
+  - id: t-046
+    milestone: m2
+    title: 'Extend earned-karma card badges to the remaining reactable-card consumers'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-019 (2026-08-02, kind_robots PR #1299). t-019 shipped the general
+      mechanism -- KarmaTransaction.refType + index, POST /api/economy/karma-earned
+      (batch groupBy), and an optional earnedKarma prop on
+      components/wonderlab/reactable-card.vue -- but only wired ONE of the 12
+      reactable-card consumers end-to-end (reward-gallery.vue/reward-card.vue), chosen
+      as the reference implementation because it's a self-contained single-object-type
+      grid. Extend the same pattern (batch-fetch earned totals for the visible card set,
+      pass earnedKarma down) to the next highest-traffic consumer -- likely an ArtImage
+      or Dream gallery -- one at a time rather than all eleven at once. Note also that
+      only REACTION_RECEIVED, CONTENT_CREATED_PUBLIC (prompts/generate.post.ts and
+      prompts/index.post.ts) currently tag refType; other object types (Character,
+      Scenario, Project, Bot, etc.) won't show real earned totals until their own
+      award call sites are audited and backfilled the same way t-019 did for
+      ArtImage/Prompt -- check whether the gallery you pick actually has a tagged award
+      path before wiring it, and if not, backfill that call site first.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-02T00:00:00Z'
+
   - id: t-020
     milestone: m2
     title: 'Wire achievement confirmation into the real karma/mana ledgers'
