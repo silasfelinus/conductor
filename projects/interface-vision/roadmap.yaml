@@ -812,7 +812,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -823,10 +823,15 @@ tasks:
       Scoped second layout-contract sweep: remove the duplicate page title from the WonderLab review generator and ratchet one-header from 6 to 5.
 
       Merged Kind Robots PR #1296 as c12c01e1. Removed the duplicate WonderLab review generator page title and ratcheted the one-header allow-list from 6 to 5. The layout-contract allow-list is not yet zero, so this recurring sweep is re-armed.
-    claimed_by: 20260802T073456Z-interface-vision-t-017-c9d2
-    claimed_at: '2026-08-02T07:35:01Z'
-    updated: '2026-08-02T07:35:01Z'
-    owner: worker
+
+
+      Scoped third layout-contract sweep, daily-drivers first per the composition-lock audit (t-023) checklist: registration-form.vue and serendipity-page.vue, neither admin-only.
+
+      Merged kind_robots PR #1300 as 102fce9. registration-form.vue: demoted both page-owned <h1>s to <p>, and gave the page a real scroll owner via the kr-surface/kr-scroll primitives (t-004) instead of relying on the shell -- fixed one-header and zero-scroll. serendipity-page.vue: demoted its own <h1> to <p> and removed the root section's redundant overflow-y-auto so the existing message-feed scroll region is the page's one scroll owner -- fixed one-header and one-scroll. Updated verifySerendipityRouteCutover.mjs's exact-markup lock to a semantic identity assertion per the t-023 checklist (route/tab/dashboard/obsolete-route assertions untouched). Baseline ratcheted down via --update: one-header 5->3, one-scroll 34->33, zero-scroll 8->7. Remaining before this task can close: one-header (3 left, all admin: pages/admin/wonderlab-review-{plan,rollout,reviews}.vue), one-scroll (33, the largest bucket -- see kaizen), no-viewport (2), one-mdc (3), ghost-prop (7), zero-scroll (7). The layout-contract allow-list is not yet zero, so this recurring sweep is re-armed.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-02T07:41:35Z'
+    owner: null
 
   - id: t-018
     milestone: m3
@@ -1472,3 +1477,24 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-02T00:00:00Z'
+
+  - id: t-047
+    milestone: m3
+    title: 'Batch-fix a handful of one-scroll offenders sharing the manager/interact-panel shape'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-017's third pass (2026-08-02, kind_robots PR #1300). one-scroll is
+      now the largest remaining allow-list bucket (33 entries) and barely touched --
+      every other rule has a single-digit-to-low-double-digit count. Many entries share
+      a manager/interact-panel shape (components/{art,user,wonderlab}/*-manager.vue and
+      *-interact.vue pairs, e.g. art-manager.vue, user-manager.vue, lab-manager.vue) that
+      likely all have the same "two overflow-y-auto regions competing" root cause --
+      probably a toolbar/filter strip plus a content list each declaring their own scroll
+      instead of adopting the kr-surface/kr-scroll ownership split t-004 established.
+      Pick 5-8 of these with the same shape, fix them in one PR using the kr-scroll
+      primitive (verify visually via the Vercel preview per AGENTS.md's front-end
+      verification note, not just the contract count), ratchet the baseline down, and
+      leave a note on which shape covers the rest so the next pass can go faster.
