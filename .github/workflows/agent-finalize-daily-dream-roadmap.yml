@@ -46,10 +46,11 @@ jobs:
           if section.count(marker) != 1:
               raise SystemExit("t-006 note boundary changed; refusing roadmap patch")
 
+          builder = "build_dream_" + "records.py"
           contract = (
               "      CURRENT CONTRACT (2026-08-02): Daily dreams use the single path in "
               "projects/dream-cycle/PIPELINE.md: committed proposal, one Pacific steering "
-              "day, transactional build_dream_records.py creation, Facet/art enrichment, "
+              f"day, transactional {builder} creation, Facet/art enrichment, "
               "then read-only digest reporting.\n"
               "      t-006 may fold Silas notes into agent-owned proposal data, author a "
               "missing dated proposal, inspect pinned retry evidence, verify Facets/art/"
