@@ -104,11 +104,18 @@ jobs:
               guard = "\n".join(("    " + line) if line else "" for line in guard.splitlines()) + "\n"
               text = text[:guard_start] + guard + text[guard_end:]
 
+          return_at = text.index("return errors", marker_at)
+          return_start = text.rfind("\n", 0, return_at) + 1
+          return_end = text.index("\n", return_at)
+          text = text[:return_start] + "    return errors" + text[return_end:]
+
           old = '"seed contract": (seed_contract, ("creative_seeds",)),'
           new = '"seed contract": (seed_contract, ("creative_seeds:", "Every build MUST document all three")),'
           if text.count(old) != 1:
               raise SystemExit("generated seed-contract guard changed; refusing patch")
-          checker.write_text(text.replace(old, new, 1), encoding="utf-8")
+          text = text.replace(old, new, 1)
+          compile(text, str(checker), "exec")
+          checker.write_text(text, encoding="utf-8")
 
           queue = Path("projects/art-prompts.yaml")
           queue_text = queue.read_text(encoding="utf-8")
