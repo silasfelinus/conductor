@@ -26,6 +26,22 @@ BASE_URL = os.environ.get("KR_BASE_URL", "https://kind-robots.vercel.app").rstri
 PROPOSAL_RE = re.compile(r"<!-- proposal-data\s*\n(.*?)\n-->", re.DOTALL)
 BUILT_RE = re.compile(r"<!-- built-data\s*\n(.*?)\n-->", re.DOTALL)
 
+# Historical recipe Facets were physically removed after being decomposed into
+# reusable concepts. Proposals persist their original seed for reproducibility,
+# so the attachment boundary expands those retired keys into today's live Facets.
+FACET_KEY_EXPANSIONS: dict[str, tuple[str, ...]] = {
+    "isekai-reluctant": ("isekai", "reluctant-protagonist"),
+    "slice-of-life-complicated": ("slice-of-life", "complicated-relationships"),
+    "shonen-aging-protagonist": ("shonen", "aging-protagonist"),
+    "magical-girl-retired": ("magical-girl", "retired-hero"),
+    "hard-sci-fi-soft-feelings": ("hard-science-fiction", "emotionally-intimate"),
+    "body-horror-tender": ("body-horror", "tender"),
+    "kaiju-from-the-kaiju-s-perspective": ("kaiju", "monster-perspective"),
+    "noir-one-detail-wrong": ("noir", "reality-slightly-wrong"),
+    "carnival-abandoned-still-running": ("carnival", "abandoned", "still-operating"),
+    "western-strange-angle": ("western", "unusual-perspective"),
+}
+
 
 def _json_comment(pattern: re.Pattern[str], text: str) -> dict[str, Any] | None:
     match = pattern.search(text)
@@ -44,11 +60,13 @@ def _facet_selection(facets: Iterable[dict[str, Any]]) -> dict[str, list[Any]]:
     for facet in facets:
         if not isinstance(facet, dict) or facet.get("legacy") is True:
             continue
-        if isinstance(facet.get("id"), int) and facet["id"] > 0:
-            ids.append(facet["id"])
         key = str(facet.get("slug") or facet.get("canonicalValue") or "").strip()
         if key:
-            keys.append(key)
+            keys.extend(FACET_KEY_EXPANSIONS.get(key, (key,)))
+        elif isinstance(facet.get("id"), int) and facet["id"] > 0:
+            # IDs are safe only as a last resort. Unlike aliases/slugs they become
+            # stale when catalog rows are merged, decomposed, or physically deleted.
+            ids.append(facet["id"])
     return {"facetIds": list(dict.fromkeys(ids)), "facetKeys": list(dict.fromkeys(keys))}
 
 
