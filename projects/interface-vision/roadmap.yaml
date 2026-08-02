@@ -1662,7 +1662,7 @@ tasks:
     claimed_at: null
     updated: '2026-08-02T13:48:11Z'
 
-  - id: t-054
+  - id: t-059
     milestone: m3
     title: 'Design the root-surface treatment for MDC-mounted -page.vue components'
     status: ready
@@ -1718,7 +1718,7 @@ tasks:
     claimed_at: null
     updated: '2026-08-02T16:41:53Z'
 
-  - id: t-056
+  - id: t-061
     milestone: m3
     title: 'Give conductor-page.vue a real kr-surface/kr-scroll split (root-surface + one-scroll)'
     status: ready
@@ -1774,7 +1774,33 @@ tasks:
     claimed_at: null
     updated: '2026-08-02T18:47:45Z'
 
-  - id: t-053
+  - id: t-062
+    milestone: m3
+    title: 'Add a duplicate-task-ID check to the roadmap validators'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from a 2026-08-02 conductor Agent-run session-start sweep. Found this
+      roadmap carrying five task entries across four IDs used twice each
+      (t-053/t-054/t-055/t-056), produced by two independent same-day sessions
+      creating kaizen/follow-on tasks from stale local snapshots of `origin/main`
+      without re-checking for ID collisions -- the same "rotation collision" class
+      AGENTS.md already documents for task *claims*, just manifesting in ID
+      *assignment* instead. Neither `scripts/validate_roadmaps.py` nor
+      `scripts/check_roadmap_yaml.py` caught it at PR time on any of the five PRs
+      that landed a colliding ID. Add a check (in one or both scripts) that fails
+      when a single project's `roadmap.yaml` contains two tasks sharing an `id`, so
+      this fails CI immediately instead of silently landing and needing a manual
+      grep-and-renumber pass to untangle later (see this date's root TALKBACK.md
+      entry for the actual renumbering: t-053/t-054/t-055/t-056's duplicate
+      occurrences moved to t-058/t-059/t-060/t-061).
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-02T20:30:00Z'
+
+  - id: t-058
     milestone: m3
     title: 'Give one-scroll Shape B a two-owner grid primitive, and stop counting Shapes A/D'
     status: ready
@@ -1850,7 +1876,7 @@ tasks:
     claimed_at: null
     updated: '2026-08-02T15:00:00Z'
 
-  - id: t-055
+  - id: t-060
     milestone: m2
     title: 'Adopt kr-gallery across the seven core-object galleries'
     status: ready
