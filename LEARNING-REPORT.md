@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-02T09:48:13Z
+Generated: 2026-08-02T10:27:10Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **464**
-- Outcomes: blocked: 13, cancelled: 1, done: 450
+- Closed tasks recorded: **466**
+- Outcomes: blocked: 13, cancelled: 1, done: 452
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 23 | 100% |
+| interface-vision | 25 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 449 | 99% |
+| software | 451 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-02 `interface-vision/t-039` — Contract verifiers should emit concise pass/fail output; diagnostic source bundles need a real consumer or an explicit verbose mode.
+- 2026-08-02 `interface-vision/t-020` — Achievement rewards must be granted atomically through server-side karma and mana ledgers; direct client balance patches are neither authoritative nor permitted.
 - 2026-08-02 `interface-vision/t-046` — Extending an already-shipped pattern (t-019's earned-karma batch fetch) to a new consumer went cleanly because the task note itself flagged the one real risk -- "check whether the gallery you pick actually has a tagged award path before wiring it" -- and following that check up front (grepping refType call sites in reactions/index.post.ts and prompts/generate.post.ts) confirmed ArtImage was safe before writing any UI code. Picking the highest-traffic *already-tagged* consumer over an arbitrary one avoided shipping an always-empty badge.
 
 - 2026-08-02 `interface-vision/t-019` — A task titled "show earned karma/mana" surfaced a real data-attribution bug on investigation, not just a missing display layer: REACTION_RECEIVED karma awards were tagging the Reaction row's own id as refId instead of the reacted-on object's id, making per-object aggregation impossible regardless of any UI work. Also worth remembering: grep for whether a "mana equivalent" code path is actually live before building UI for it -- ManaReason had SOCIAL_REACTION/SOCIAL_SHARE defined but never awarded anywhere, so the honest move was shipping karma-only and saying so, not fabricating a mana number to match the task title.
@@ -94,9 +96,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-02 `interface-vision/t-041` — Resolve stale navigation hints against the live dashboard manifest; do not invent tabs when the intended product placement is genuinely undecided.
 - 2026-08-02 `interface-vision/t-038` — When a task's own name echoes the parent it lives under (a 'dashboard' tab inside a 'user' dashboard, mounting user-dashboard.vue), check every sibling for the same slot before picking a fix -- every other dashboardConfigs entry already used a real content-named default tab key, so renaming to match that pattern was a smaller, safer diff than inventing new always-shown-default semantics from scratch.
-- 2026-08-02 `interface-vision/t-023` — Before sweeping a layout allow-list, audit exact-markup verifier locks so product cleanup updates the owning semantic contract instead of restoring obsolete markup.
-- 2026-08-02 `interface-vision/t-037` — The task note asked for 2-3 mockups since the fold "needs real product decisions," mirroring t-001/t-002's blank-canvas aesthetic-pick pattern -- but the three open questions here (does cockpit content collapse to one kr-toolbar line, do the two tab strips merge or does one become a dropdown, does the decorative wrapper become .kr-surface) were already answered by this project's own t-004 contract, which built kr-toolbar and kr-surface specifically for this shape of problem. Not every "needs product decisions" task is a blank aesthetic choice like theater/storybook/playground -- some are structural questions the project's existing rules already resolve. Building throwaway A/B/C toggle scaffolding for a question the contract already answers would have been the over-engineering the task itself warns against elsewhere. Also: vercel.json disables PR-preview deploys for claude/*/worker/*/ agent/*/conductor/* branches (cost-saving), so visual verification for agent-authored branches has to happen post-merge against the production deployment, not via a pre-merge Vercel preview -- AGENTS.md's documented preview technique (~L338-366) doesn't currently note this exception.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-02T09:48:13Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-02T10:27:10Z_
