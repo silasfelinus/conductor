@@ -915,6 +915,31 @@ tasks:
     claimed_at: '2026-08-02T08:28:25Z'
     updated: '2026-08-02T08:38:31Z'
 
+  - id: t-048
+    milestone: m2
+    title: 'Extend earned-karma card badges to the Dream gallery'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-046 (2026-08-02, kind_robots PR #1303). t-046 wired the t-019
+      earned-karma pattern (batch /api/economy/karma-earned fetch, reactable-card's
+      earned-karma prop) into the ArtImage gallery (components/art/art-gallery.vue /
+      image-card.vue) -- the reference implementation for a paged/large gallery, as
+      opposed to reward-gallery's simpler unpaged one. Dream is the next consumer named
+      by t-019's own note: components/dreams/dream-gallery.vue already reacts on Dreams
+      (target-type="dream" is in karma-earned.post.ts's ALLOWED_REF_TYPES), and Dreams
+      already earn real REACTION_RECEIVED karma via server/api/reactions/index.post.ts's
+      generic target-field-derived refType tagging -- no award-call-site backfill
+      needed, same as ArtImage. Check whether dream-gallery.vue has its own paging/
+      visible-set concept (like art-gallery's pagedActiveImages) or renders everything
+      at once before choosing the batch-fetch scope; follow whichever card component
+      dream-gallery.vue actually wraps in reactable-card.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-02T00:00:00Z'
+
   - id: t-020
     milestone: m2
     title: 'Wire achievement confirmation into the real karma/mana ledgers'
