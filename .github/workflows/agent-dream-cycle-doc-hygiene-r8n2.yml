@@ -9,6 +9,8 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
+  issues: write
 
 concurrency:
   group: dream-cycle-doc-hygiene-r8n2
@@ -93,3 +95,9 @@ jobs:
           AUTH="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           git push "$AUTH" HEAD:main
           git push "$AUTH" --delete worker/dream-cycle-doc-hygiene-payload-r8n2
+      - name: Report cleanup failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr comment 1583 --body "Post-merge Dream Cycle cleanup failed. Inspect run ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}."
