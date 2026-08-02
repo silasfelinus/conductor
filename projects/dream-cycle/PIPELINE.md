@@ -45,7 +45,7 @@ The committed proposal is the human steering surface. It creates no database obj
 
 ## 2. Object creation
 
-`scripts/build_dream_records.py` is the **only** code or agent path allowed to create daily-dream objects.
+`scripts/build_dream_records.py` is the **sole object writer** for daily-dream objects.
 
 The Hourly Conductor calls `build_dream_records.ensure_records()` once through `scripts/build_conductor_summary.py`. The builder selects one eligible proposal, creates the complete bundle transactionally, records every resulting ID in `built-data`, queues exactly six unique art requests, and pins a retry marker when a write fails. Partial attempts are rolled back rather than continued by hand.
 
