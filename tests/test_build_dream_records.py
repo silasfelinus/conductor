@@ -109,6 +109,22 @@ def test_idempotent_200_response_is_not_owned_by_this_attempt(monkeypatch):
     assert bdr.rollback_created(results) == 0
 
 
+def test_dream_relation_upsert_is_never_assumed_new(monkeypatch):
+    monkeypatch.setattr(
+        bdr,
+        "http_json",
+        lambda method, url, body=None, timeout=60: (201, {"data": {"id": 92}}),
+    )
+    results = []
+    assert bdr.kr_call(
+        "POST", "/api/dream-relations",
+        {"fromDreamId": 1, "toDreamId": 2, "relationType": "CONTAINS"},
+        False, results, "existing-or-new relation",
+    ) == {"id": 92}
+    assert results[0]["created"] is False
+    assert bdr.rollback_created(results) == 0
+
+
 # --------------------------------------------------------------------------- #
 # End-to-end run_build with a scripted fake API
 # --------------------------------------------------------------------------- #
@@ -175,6 +191,27 @@ class FakeAPI:
         return 201, {"data": {"id": self.next_id}}
 
 
+class ScenarioConflictAPI(FakeAPI):
+    """The interrupted run created the Scenario but lost its ledger commit."""
+
+    def __init__(self):
+        super().__init__()
+        self.scenario_body = None
+
+    def __call__(self, method, url, body=None, timeout=60):
+        if method == "POST" and url.endswith("/api/scenarios"):
+            self.posts.append(url)
+            self.scenario_body = body
+            return 409, {"message": "Scenario already exists with ID 1850."}
+        if method == "GET" and url.endswith("/api/scenarios"):
+            live = {"id": 1850, **self.scenario_body}
+            live["intros"] = json.dumps(
+                [self.scenario_body["intros"]], ensure_ascii=False
+            )
+            return 200, {"success": True, "data": [live]}
+        return super().__call__(method, url, body, timeout)
+
+
 @pytest.fixture
 def env(tmp_path, monkeypatch):
     backlog = tmp_path / "backlog"
@@ -202,6 +239,20 @@ def test_full_success_marks_built_and_never_rolls_back(env, monkeypatch):
     assert "requests:" in art.read_text()
 
 
+def test_retry_adopts_scenario_after_api_intro_normalization(env, monkeypatch):
+    backlog, _ = env
+    path = write_proposal_file(backlog)
+    fake = ScenarioConflictAPI()
+    monkeypatch.setattr(bdr, "http_json", fake)
+
+    outcome = bdr.run_build("2020-01-01", dry_run=False)
+
+    assert outcome["status"] == "built"
+    assert fake.deletes == []
+    built = bdr._data_block(path.read_text(encoding="utf-8"), "built-data")
+    assert built["records"]["scenarios"][0]["id"] == 1850
+
+
 def test_partial_failure_rolls_back_and_leaves_unbuilt(env, monkeypatch):
     backlog, art = env
     path = write_proposal_file(backlog)
@@ -212,7 +263,10 @@ def test_partial_failure_rolls_back_and_leaves_unbuilt(env, monkeypatch):
 
     assert outcome["status"] == "failed"
     assert outcome["retry"] is True
-    assert len(fake.deletes) == 5                    # exactly the created rows undone
+    # Four owned rows are deleted. The fifth success is a DreamRelation upsert,
+    # whose 201 response cannot distinguish new from pre-existing; deleting the
+    # Dreams cascades a new edge without risking an adopted edge.
+    assert len(fake.deletes) == 4
     assert "<!-- built-data" not in path.read_text() # NOT marked built
     assert art.read_text() == "requests:\n"          # no art queued for a failed build
     assert '"status": "retry"' in path.read_text()
