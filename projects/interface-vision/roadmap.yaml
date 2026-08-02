@@ -812,7 +812,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -850,6 +850,10 @@ tasks:
       Scoped the next layout-contract sweep to content/about.md: remove the second MDC mount and ratchet one-mdc from three entries to two.
 
       Eighth scoped layout-contract sweep merged as Kind Robots PR #1313 (130a5ff): content/about.md now mounts only the canonical About component, reducing one-mdc from three entries to two. Removing the Sponsor mount exposed sponsor-page.vue as a standalone zero-scroll page; CI caught it, so the same PR added a bounded h-full/min-h-0 overflow-y-auto scroll owner rather than inflating the baseline. All 12 workflows passed. Remaining buckets are nonzero, so t-017 returns to ready.
+
+      Ninth scoped sweep: zero the remaining one-mdc bucket (2 entries -- content/conductor.md, content/plan/wonderlab.md).
+
+      Ninth sweep merged as Kind Robots PR #1317 (squashed f1ee985): content/conductor.md mounted both :conductor-manager and :plan-projects-grid -- moved plan-projects-grid.vue out of components/pages/ (so it's no longer classified as a standalone page component) into components/conductor/, and nested it inside conductor-manager.vue's own template instead of a second top-level MDC directive. content/plan/wonderlab.md mounted both :component-registry-health and :lab-manager -- nested component-registry-health.vue inside lab-manager.vue, gated on the literal /plan/wonderlab route since lab-manager.vue is reused by four other content pages (memory, screenfx, animation-manager, button) that never showed that panel. A first CI run caught verifyWonderLabRegistryHealth.ts's exact-mount lock on content/plan/wonderlab.md's old two-directive markup (same class of issue t-017's third sweep hit with verifySerendipityRouteCutover.mjs) -- fixed by switching it to a semantic identity assertion (lab-manager.vue actually renders ComponentRegistryHealth gated on /plan/wonderlab) rather than pinning the page's exact text, then all 13 checks passed. one-mdc: 2 -> 0, all other buckets unchanged (one-scroll 31, zero-scroll 6). The layout-contract allow-list is not yet zero, so t-017 returns to ready for the next bounded sweep (one-scroll has its own task, t-047).
     claimed_by: kr-scheduled-20260802T123417-t017
     claimed_at: '2026-08-02T12:34:17Z'
     updated: '2026-08-02T12:34:17Z'
