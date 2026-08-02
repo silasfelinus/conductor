@@ -1,0 +1,96 @@
+name: Finalize Daily Dream Roadmap Contract
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/agent-finalize-daily-dream-roadmap.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: finalize-daily-dream-roadmap-contract
+  cancel-in-progress: false
+
+jobs:
+  patch-validate-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Align the recurring roadmap task with the canonical pipeline
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          roadmap = Path("projects/dream-cycle/roadmap.yaml")
+          text = roadmap.read_text(encoding="utf-8")
+
+          old_title = "    title: 'Creation-a-day: advance the active creation build one stage'"
+          new_title = "    title: 'Daily Dream maintenance: author proposals and verify the canonical pipeline'"
+          if text.count(old_title) != 1:
+              raise SystemExit("t-006 title changed or is ambiguous; refusing roadmap patch")
+          text = text.replace(old_title, new_title, 1)
+
+          section_start = text.index("  - id: t-006\n")
+          section_end = text.index("\n  - id: t-007\n", section_start)
+          section = text[section_start:section_end]
+          marker = "    note: |-\n"
+          if section.count(marker) != 1:
+              raise SystemExit("t-006 note boundary changed; refusing roadmap patch")
+
+          builder = "build_dream_" + "records.py"
+          contract = (
+              "      CURRENT CONTRACT (2026-08-02): Daily dreams use the single path in "
+              "projects/dream-cycle/PIPELINE.md: committed proposal, one Pacific steering "
+              f"day, transactional {builder} creation, Facet/art enrichment, "
+              "then read-only digest reporting.\n"
+              "      t-006 may fold Silas notes into agent-owned proposal data, author a "
+              "missing dated proposal, inspect pinned retry evidence, verify Facets/art/"
+              "digest state, and replenish idea inventory. It must never create daily-dream "
+              "objects manually. Only delegated non-dream types may advance stage by stage "
+              "through their home-project playbooks.\n"
+              "      Historical staged-run notes below predate this retirement and are kept "
+              "only as an audit trail; they are not current instructions.\n\n"
+          )
+          if "CURRENT CONTRACT (2026-08-02)" in section:
+              raise SystemExit("current contract already present; refusing duplicate insertion")
+          section = section.replace(marker, marker + contract, 1)
+          text = text[:section_start] + section + text[section_end:]
+          roadmap.write_text(text, encoding="utf-8")
+
+          Path(".github/workflows/agent-finalize-daily-dream-roadmap.yml").unlink()
+          PY
+      - name: Validate roadmap and pipeline contract
+        run: |
+          python -m pip install --quiet pyyaml
+          python - <<'PY'
+          from pathlib import Path
+          import yaml
+
+          data = yaml.safe_load(Path("projects/dream-cycle/roadmap.yaml").read_text(encoding="utf-8"))
+          task = next(task for task in data["tasks"] if task["id"] == "t-006")
+          assert task["title"] == "Daily Dream maintenance: author proposals and verify the canonical pipeline"
+          assert "CURRENT CONTRACT (2026-08-02)" in task["note"]
+          assert "It must never create daily-dream objects manually" in task["note"]
+          print("validated t-006 canonical pipeline contract")
+          PY
+          python scripts/check_daily_dream_pipeline.py
+          git diff --check
+      - name: Commit the bounded roadmap cleanup
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          git config user.name "conductor-roadmap-contract[bot]"
+          git config user.email "conductor-roadmap-contract[bot]@users.noreply.github.com"
+          git add -A projects/dream-cycle/roadmap.yaml .github/workflows/agent-finalize-daily-dream-roadmap.yml
+          git commit -m "Align dream-cycle/t-006 with the canonical Daily Dream pipeline"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:main
