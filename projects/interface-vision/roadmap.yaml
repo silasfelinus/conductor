@@ -1038,8 +1038,7 @@ tasks:
   - id: t-024
     milestone: m2
     title: 'Re-scope t-008''s remaining migration targets: per-object assessment before touching any of them'
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-008
@@ -1048,9 +1047,11 @@ tasks:
 
 
       Completed the live-code classification of the remaining gallery candidates and documented which shared abstractions are safe versus which product behaviors must remain object-owned.
+
+      Merged Conductor PR #1557. The assessment classifies all remaining gallery candidates and rejects unsafe wholesale kr-gallery migrations, while identifying the smaller picker-management primitives that may be safely shared later.
     claimed_by: 2026-08-02T181700Z-interface-vision-t-024-r6c1
     claimed_at: '2026-08-02T18:17:00Z'
-    updated: '2026-08-02T18:19:00Z'
+    updated: '2026-08-02T18:21:00Z'
 
   - id: t-025
     milestone: m2

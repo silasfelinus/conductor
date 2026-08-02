@@ -5966,3 +5966,14 @@ records:
     value breaks test_backfill_learning.py for every subsequent PR on main regardless of that PR''s
     own diff -- confirm the base branch is broken before assuming a red "Python test suite" check
     means your own change is at fault.'
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-024
+  kind: architecture
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: null
+  lesson: Similar-looking gallery grids may own fundamentally different picker, CRUD, taxonomy, or relationship
+    behavior. Classify live responsibilities and callers before extracting a shared shell; reuse behavior-neutral
+    primitives rather than forcing a passive browse abstraction onto stateful tools.
