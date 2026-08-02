@@ -981,32 +981,18 @@ tasks:
   - id: t-022
     milestone: m2
     title: 'Add a composition-aware regression check for MDC page scroll ownership'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-003b (2026-08-01, kind_robots PR #1261). t-003b's first push added
-      per-component overflow-y-auto/h-full/min-h-0 to six components/pages/*.vue files
-      that are actually mounted *inside* pages/[...slug].vue's content-host via MDC
-      (about-page, giving-page, mermaids-page, privacy-page, sponsor-page,
-      components/user/registration-page.vue) — content-host already owns scroll for
-      every MDC route, so this created nested double-scroll regions, the exact
-      composition bug the task existed to remove. Caught only by a same-PR human/agent
-      review, not CI: utils/scripts/verifyLayoutContract.ts's `zero-scroll` rule (and
-      every other rule in that file) scores each .vue file in isolation and has no
-      parent/child composition awareness, so it can't see "this file's ANCESTOR already
-      declares overflow-y-auto." Add a check (or extend `one-scroll`) that, for any file
-      matched by an MDC content directive (`grep -rn ":<component-name>" content/`),
-      walks up to confirm the mounting page-level ancestor doesn't already own scroll —
-      or, simpler and more maintainable, build an explicit allow-list mapping known
-      MDC-mounted page components to their owning host (content-host, in practice
-      the only one today) and fail CI if a listed component also declares its own
-      overflow-y-auto/overflow-auto. See kind_robots PR #1261's review thread for the
-      original catch and reasoning.
+    note: |-
+      Kaizen from t-003b (2026-08-01, kind_robots PR #1261). t-003b's first push added per-component overflow-y-auto/h-full/min-h-0 to six components/pages/*.vue files that are actually mounted *inside* pages/[...slug].vue's content-host via MDC (about-page, giving-page, mermaids-page, privacy-page, sponsor-page, components/user/registration-page.vue) — content-host already owns scroll for every MDC route, so this created nested double-scroll regions, the exact composition bug the task existed to remove. Caught only by a same-PR human/agent review, not CI: utils/scripts/verifyLayoutContract.ts's `zero-scroll` rule (and every other rule in that file) scores each .vue file in isolation and has no parent/child composition awareness, so it can't see "this file's ANCESTOR already declares overflow-y-auto." Add a check (or extend `one-scroll`) that, for any file matched by an MDC content directive (`grep -rn ":<component-name>" content/`), walks up to confirm the mounting page-level ancestor doesn't already own scroll — or, simpler and more maintainable, build an explicit allow-list mapping known MDC-mounted page components to their owning host (content-host, in practice the only one today) and fail CI if a listed component also declares its own overflow-y-auto/overflow-auto. See kind_robots PR #1261's review thread for the original catch and reasoning.
+
+
+      Added a dedicated composition-aware MDC scroll ownership verifier and CI workflow on the Kind Robots implementation branch.
     claimed_by: 2026-08-02T131304Z-interface-vision-t-022-n6q4
     claimed_at: '2026-08-02T13:13:04Z'
-    updated: '2026-08-02T13:13:04Z'
+    updated: '2026-08-02T13:20:00Z'
 
   - id: t-023
     milestone: m3
