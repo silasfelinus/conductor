@@ -5771,3 +5771,21 @@ records:
     the landed diff coherent and fully verified; a task note that lists N
     "also"s is worth pre-scanning for the one that's actually a different
     size class before claiming it as a single pass.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A dedicated research pass (Explore agent surveying existing layout-contract
+    examples, karma/mana/achievement plumbing already shipped by t-010, and the
+    User schema) before writing any code meant zero rework: every new UI section
+    reused an existing store/component instead of duplicating one, and the only
+    schema change needed was a single additive nullable column
+    (introDismissedAt) for the one genuinely new piece of state (intro
+    dismissal). Deliberately scoped out extending user-galleries.vue to the
+    remaining two object types (Facets/Projects) rather than let the task grow
+    past its landable core -- filed as a kaizen suggestion instead.
