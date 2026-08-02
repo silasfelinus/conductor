@@ -5,6 +5,9 @@ name: Hourly Conductor
 # produce a brief actionable summary written to CONDUCTOR-REPORT.md.
 
 on:
+  push:
+    paths:
+      - ".github/workflows/hourly-conductor.yml"
   schedule:
     - cron: "0 * * * *"   # every hour on the hour
   workflow_dispatch:
