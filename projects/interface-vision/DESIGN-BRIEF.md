@@ -2,7 +2,7 @@
 
 Version: 1.0
 Date: 2026-08-01
-Status: Draft — aesthetic direction pending Silas's pick (t-002)
+Status: Active — aesthetic direction DECIDED 2026-08-02: Storybook (t-002)
 
 ---
 
@@ -69,20 +69,45 @@ Beta-ready means:
 - A first-launch intro that explains the site and hides afterward.
 - A user dashboard where a person can see and change what matters to them.
 
-## Aesthetic direction — PENDING (t-002)
+## Aesthetic direction — DECIDED: STORYBOOK (t-002)
 
-Three mockups of the same Storymaker screen are built in t-001. Silas picks one, or names
-the parts he wants from each. **Record the decision here** with the tokens it implies
-(surface palette, type pairing, radius, motion), because everything after inherits it.
+Silas, 2026-08-02: *"Let's run with Storybook as the design. I don't want to build three
+different layouts, we're already trying to make clear decisions and have VISION."*
 
-| | Direction | Character |
+Three mockups were built in t-001 at `/storymaker-mockups`. **Storybook won. Theater and
+Playground are deleted, not kept behind a switcher** — the mockup page now shows the one
+direction and nothing else.
+
+> **Direction:** Storybook — *a plate tipped into warm paper.* Light printed ground,
+> generous margins, illustration-forward, serif text reading as caption to picture.
+
+### Tokens
+
+Implemented as a daisyUI theme named `storybook` in `assets/css/tailwind.css`, set
+`default: true` there and mirrored by `defaultThemeName` in `stores/themeStore.ts`. It is
+also listed in `daisyuiThemes` (`stores/helpers/themeHelper.ts`) or the store rejects it.
+
+| Role | daisyUI token | Value |
 |---|---|---|
-| A | Theater / lit stage | Dark receding surround, bright lit panel holding narrator + art, chrome dims while a story runs, cinematic contrast |
-| B | Storybook | Warm paper tones, generous margins, large rounded image plates, display serif for narration vs clean sans for UI |
-| C | Bright playground | Saturated daisyUI brights, chunky friendly buttons, bold cards, playful motion |
+| Page canvas | `base-200` | paper `#f7f1e3` → `oklch(95.2% 0.021 85)` |
+| Raised surface (cards, panels, headers) | `base-100` | plate white → `oklch(99% 0.008 85)` |
+| Borders, dividers | `base-300` | deckle edge → `oklch(89% 0.028 82)` |
+| Text | `base-content` | ink `#3a3128` → `oklch(31% 0.021 55)` |
+| Action, drop caps, speaker names | `primary` | terracotta `#b4653a` → `oklch(57% 0.117 45)` |
 
-> Decision: _pending_
-> Tokens implied: _pending_
+Type: serif body at `1.8` leading, set on `body` in `@layer base`. Controls, code and
+badges are exempted back to sans. Radius `0.75rem` field / `1rem` box, border `1.5px`.
+
+**Why a theme and not component styling:** every `.kr-*` primitive is written against the
+semantic tokens above, so one theme definition restyles the whole app. Nothing that
+follows should hardcode a hex — reach for the token.
+
+**`.kr-prose` is not optional.** The `65ch` measure is the single most load-bearing
+typographic decision in the aesthetic; prose set to full panel width stops reading as a
+storybook page regardless of palette. Pair with `.kr-dropcap` to open a narration block.
+
+Theme *switching* survives — `theme-gallery`, the `Theme` model and per-user themes are a
+real feature. Storybook is the default and the reference, not the only option.
 
 ## What this project is NOT
 
