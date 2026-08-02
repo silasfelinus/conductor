@@ -1169,34 +1169,19 @@ tasks:
   - id: t-029
     milestone: m2
     title: 'Build an Achievement art admin UI'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-009
-    note: >
-      Split out of t-009 (2026-08-01, kind_robots PR #1269). Achievement's
-      server side is confirmed complete: prisma/schema.prisma's Achievement
-      model has artImageId/artPrompt/imagePath and an ArtImage relation,
-      server/api/achievements/definition.ts persists all three, and
-      entityArt.ts's ENTITY_FIELDS/getEntityArtRecord/updateEntityRecord/
-      contextLines already have full `case 'achievement'` support (single
-      primary imagePath slot, no join table needed) -- t-009's PR #1269
-      already widened entity-art-manager.vue's local EntityArtType union to
-      include 'achievement' specifically so this task has nothing left to
-      plumb, only UI to build. Confirmed via grep that every existing
-      components/achievements/*.vue file is read-only display (gallery,
-      popup, earned/unearned cards, leaderboard) -- none call the achievement
-      PATCH endpoint or mount EntityArtManager, and no admin achievements page
-      exists anywhere in components/pages/ or pages/. Work: add an admin page
-      (or a panel on an existing admin surface, if one gets built first) that
-      mounts <EntityArtManager entity-type="achievement" :entity="achievement"
-      :slots="[{ field: 'imagePath', label: 'Achievement', ... }]" /> so
-      achievement art can finally be generated/replaced through the UI instead
-      of only via the one-off scripts/generate_achievement_art.ts script.
+    note: |-
+      Split out of t-009 (2026-08-01, kind_robots PR #1269). Achievement's server side is confirmed complete: prisma/schema.prisma's Achievement model has artImageId/artPrompt/imagePath and an ArtImage relation, server/api/achievements/definition.ts persists all three, and entityArt.ts's ENTITY_FIELDS/getEntityArtRecord/updateEntityRecord/ contextLines already have full `case 'achievement'` support (single primary imagePath slot, no join table needed) -- t-009's PR #1269 already widened entity-art-manager.vue's local EntityArtType union to include 'achievement' specifically so this task has nothing left to plumb, only UI to build. Confirmed via grep that every existing components/achievements/*.vue file is read-only display (gallery, popup, earned/unearned cards, leaderboard) -- none call the achievement PATCH endpoint or mount EntityArtManager, and no admin achievements page exists anywhere in components/pages/ or pages/. Work: add an admin page (or a panel on an existing admin surface, if one gets built first) that mounts <EntityArtManager entity-type="achievement" :entity="achievement" :slots="[{ field: 'imagePath', label: 'Achievement', ... }]" /> so achievement art can finally be generated/replaced through the UI instead of only via the one-off scripts/generate_achievement_art.ts script.
+
+
+      Added an administrator-only achievement artwork page in Kind Robots that loads achievement definitions from the canonical store and mounts EntityArtManager for generation, upload, replacement, and history handling.
     claimed_by: 2026-08-02T231329Z-interface-vision-t-029-f4c8
     claimed_at: '2026-08-02T23:13:29Z'
-    updated: '2026-08-02T23:13:29Z'
+    updated: '2026-08-02T23:22:15Z'
 
   - id: t-030
     milestone: m2
