@@ -103,7 +103,6 @@ def _record_targets(proposal: dict[str, Any], built: dict[str, Any]) -> list[dic
         })
 
     add("vibe", "Dream", records.get("world"))
-    add("vibe", "Dream", records.get("vibe"))
     locations = records.get("locations") if isinstance(records.get("locations"), list) else []
     characters = records.get("characters") if isinstance(records.get("characters"), list) else []
     rewards = records.get("rewards") if isinstance(records.get("rewards"), list) else []
@@ -135,8 +134,8 @@ def apply_file(path: Path, token: str, *, dry_run: bool = False, force: bool = F
         return False, "already complete"
 
     targets = _record_targets(proposal, built)
-    if len(targets) != 7:  # world + vibe + five dependent records
-        return False, f"waiting for complete records ({len(targets)}/7 Facet targets)"
+    if len(targets) != 6:  # world + location + character + two rewards + scenario
+        return False, f"waiting for complete records ({len(targets)}/6 Facet targets)"
 
     applied: list[dict[str, Any]] = []
     errors: list[str] = []
