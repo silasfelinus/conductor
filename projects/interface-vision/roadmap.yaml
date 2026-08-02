@@ -812,7 +812,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -870,8 +870,12 @@ tasks:
       Thirteenth bounded sweep converts pages/error.vue to a kr-surface root with a single kr-scroll child and ratchets root-surface from 28 to 27.
 
       Thirteenth bounded sweep merged Kind Robots PR #1325 as b8f5d2c. pages/error.vue now uses a kr-surface root with one kr-scroll child, preserving centered content and the background image. The root-surface baseline shrank from 28 to 27. All 12 workflows completed successfully, including Layout Contract, TypeScript, Contract Tests, MDC Scroll Ownership, and Facet Catalog. Other root-surface and one-scroll violations remain, so t-017 returns to ready.
-    claimed_by: 2026-08-02T173515Z-interface-vision-t017-14th
-    claimed_at: '2026-08-02T17:35:16Z'
+
+      Fourteenth bounded sweep: fix four root-surface entries around the Conductor tab views. conductor-pitch-manager.vue and conductor-project-gallery-page.vue swap their hand-rolled flex/overflow root utilities for kr-surface, with their scroll region switched to kr-scroll. portos-page.vue was scrolling on its own root instead of delegating to a child -- restructured into a kr-surface wrapping a kr-scroll. conductor-project-chat.vue is a per-project chat widget embedded inside conductor-page.vue, not a standalone page -- it only lived under components/pages/ by directory convention (same misclassification the tenth sweep found for kaizen-popup.vue/conductor-art-gallery.vue), so it moves to components/conductor/ instead of forcing kr-surface onto a widget.
+
+      Fourteenth sweep merged as Kind Robots PR #1326 (be7268b). root-surface: 27 -> 23 via --update; one-scroll and all other buckets unchanged. conductor-page.vue itself (2202 lines, carries both a root-surface and a one-scroll violation) is deliberately left for a future bounded sweep given its size and daily-driver priority -- flagged as this cycle's kaizen. The layout-contract allow-list is not yet zero, so t-017 returns to ready for the next bounded sweep.
+    claimed_by: null
+    claimed_at: null
     updated: '2026-08-02T17:35:16Z'
     owner: worker
 
@@ -1691,3 +1695,29 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-02T16:41:53Z'
+
+  - id: t-056
+    milestone: m3
+    title: 'Give conductor-page.vue a real kr-surface/kr-scroll split (root-surface + one-scroll)'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-017's fourteenth sweep (2026-08-02, kind_robots PR #1326).
+      components/pages/conductor-page.vue (2202 lines, Silas's own most-used page --
+      the default view conductor-manager.vue renders) is the largest remaining
+      root-surface offender and also carries a one-scroll violation (more than one
+      overflow-y-auto/kr-scroll region declared), unlike the other Conductor tab views
+      (conductor-pitch-manager.vue, conductor-project-gallery-page.vue, portos-page.vue)
+      this sweep already converted to kr-surface/kr-scroll. Its size and dual-violation
+      status made it too large to fold into the same bounded pass as the other three.
+      Give it a real kr-surface root wrapping exactly one kr-scroll region (likely
+      requires consolidating whatever currently produces the second scroll region --
+      read the file in full before restructuring, don't guess at which of its several
+      overflow-y-auto declarations is the intended one). Verify visually via the Vercel
+      preview per AGENTS.md's front-end verification note, not just the contract count,
+      since this is the page most users actually look at.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-02T17:35:16Z'
