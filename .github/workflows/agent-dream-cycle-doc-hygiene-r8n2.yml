@@ -221,6 +221,46 @@ jobs:
               demoted.append(path.name)
           print(f"demoted {len(demoted)} retired pre-v2 proposal(s) to idea inventory")
 
+          tests_path = Path("tests/test_daily_dream_pipeline_contract.py")
+          tests_source = tests_path.read_text(encoding="utf-8")
+          tests_marker = "\ndef test_stale_project_brief_is_rejected"
+          tests_start = tests_source.index(tests_marker)
+          test_lines = [
+              "def test_stale_project_brief_is_rejected(tmp_path):",
+              "    root = _copy_contract(tmp_path)",
+              "    brief = root / pipeline.DESIGN_BRIEF",
+              '    brief.write_text(brief.read_text(encoding="utf-8") + "\\nThe 8-stage manual path returns.\\n", encoding="utf-8")',
+              '    assert any("DESIGN-BRIEF.md" in error for error in pipeline.check_pipeline(root))',
+              "",
+              "",
+              "def test_builder_cannot_accept_removed_page_or_narrator_path(tmp_path):",
+              "    root = _copy_contract(tmp_path)",
+              "    builder = root / pipeline.BUILDER",
+              "    builder.write_text(",
+              '        builder.read_text(encoding="utf-8")',
+              '        .replace("PAGE_URL = KR_BASE_URL", \'PAGE_URL = f"{KR_BASE_URL}/daily-dream"\')',
+              '        + \'\\n# 5. Narrator\\nPOST = "/api/bots"\\n\',',
+              '        encoding="utf-8",',
+              "    )",
+              "    errors = pipeline.check_pipeline(root)",
+              '    assert any("builder" in error.lower() for error in errors)',
+              "",
+              "",
+              "def test_roadmap_cannot_reactivate_staged_dream_instructions(tmp_path):",
+              "    root = _copy_contract(tmp_path)",
+              "    roadmap = root / pipeline.ROADMAP",
+              "    roadmap.write_text(",
+              '        roadmap.read_text(encoding="utf-8").replace(',
+              '            "CURRENT CONTRACT:", "advance it exactly ONE stage. CURRENT CONTRACT:"',
+              "        ),",
+              '        encoding="utf-8",',
+              "    )",
+              '    assert any("roadmap t-006" in error for error in pipeline.check_pipeline(root))',
+          ]
+          tests_source = tests_source[:tests_start] + "\n" + "\n".join(test_lines) + "\n"
+          compile(tests_source, str(tests_path), "exec")
+          tests_path.write_text(tests_source, encoding="utf-8")
+
           queue = Path("projects/art-prompts.yaml")
           queue_text = queue.read_text(encoding="utf-8")
           stale = "page_url: https://kind-robots.vercel.app/daily-dream"
