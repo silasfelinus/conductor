@@ -24,3 +24,15 @@ def test_temporary_hourly_push_trigger_cannot_run_from_pr_branches():
     if "\n  push:\n" in workflow:
         push_block = workflow.split("\n  push:\n", 1)[1].split("\n  schedule:\n", 1)[0]
         assert "    branches:\n      - main\n" in push_block
+
+
+def test_facet_failure_cannot_discard_a_completed_bundle_ledger():
+    workflow = Path(".github/workflows/hourly-conductor.yml").read_text(
+        encoding="utf-8"
+    )
+
+    assert "id: daily_dream_facets\n        continue-on-error: true" in workflow
+    assert 'steps.daily_dream_facets.outcome' in workflow
+    assert workflow.index("Commit conductor report + daily proposal") < workflow.index(
+        "Verify daily-dream creation result"
+    )
