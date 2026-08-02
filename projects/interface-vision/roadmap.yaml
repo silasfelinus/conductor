@@ -961,8 +961,8 @@ tasks:
   - id: t-021
     milestone: m3
     title: 'Confirm and prune orphaned layout-contract components'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -973,6 +973,9 @@ tasks:
       repo-wide grep across content/, pages/, and every .vue/.ts file, then delete
       whichever are genuinely dead code (folds into t-018's cleanup scope if still
       open, otherwise stands alone).
+    claimed_by: 2026-08-02T112600Z-interface-vision-t-021-r7c2
+    claimed_at: '2026-08-02T11:26:00Z'
+    updated: '2026-08-02T11:26:00Z'
 
   - id: t-022
     milestone: m2
