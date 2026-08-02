@@ -812,7 +812,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -850,9 +850,10 @@ tasks:
       Scoped the next layout-contract sweep to content/about.md: remove the second MDC mount and ratchet one-mdc from three entries to two.
 
       Eighth scoped layout-contract sweep merged as Kind Robots PR #1313 (130a5ff): content/about.md now mounts only the canonical About component, reducing one-mdc from three entries to two. Removing the Sponsor mount exposed sponsor-page.vue as a standalone zero-scroll page; CI caught it, so the same PR added a bounded h-full/min-h-0 overflow-y-auto scroll owner rather than inflating the baseline. All 12 workflows passed. Remaining buckets are nonzero, so t-017 returns to ready.
-    claimed_by: 2026-08-02T112810Z-interface-vision-t-017-r4n8
-    claimed_at: '2026-08-02T11:28:10Z'
-    updated: '2026-08-02T11:37:00Z'
+    claimed_by: kr-scheduled-20260802T123417-t017
+    claimed_at: '2026-08-02T12:34:17Z'
+    updated: '2026-08-02T12:34:17Z'
+    owner: worker
 
   - id: t-018
     milestone: m3
