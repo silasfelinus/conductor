@@ -1,112 +1,88 @@
 # CREATION-SPEC.md — the creation loop contract
 
-**Task:** dream-cycle/t-004 · **Date:** 2026-07-16
+**Task:** dream-cycle/t-004 · **Canonical daily-dream pipeline:** `../PIPELINE.md`
 
-The type-agnostic contract the recurring build task (dream-cycle/t-006) follows for
-**every** creation type. Per-type mechanics live in `specs/<type>.md` playbooks
-(`specs/dream.md`, `specs/coloring-book.md`); this file is the loop those playbooks
-plug into. When a rule here and a playbook seem to conflict, this file governs the
-loop (queue, one-building rule, ledger) and the playbook governs the stages.
+This is the type-agnostic contract for dream-cycle's idle capacity. Per-type mechanics live in `specs/<type>.md`. When this file and a playbook conflict, this file governs queueing and ownership; the playbook governs only the type-specific work.
 
-## When the loop runs — "nothing better to do"
+## When the loop runs
 
-dream-cycle sits **last** in `projects/priority.yaml`. Its recurring build task is
-therefore only picked when no other active project has a `ready` task — that is the
-"idle fallback" contract, enforced by placement, not by a scheduler change. The
-Worker runs hourly; a creation takes ~6–8 idle cycles ≈ one day.
+dream-cycle sits last in `projects/priority.yaml`, so its recurring task is selected only when no other active project has ready work. It consumes leftover capacity rather than competing with ordinary product work.
 
-The parallel **daily-dream fast lane** (`build_dream_records.py`, t-012) is NOT this
-loop — it builds a dated proposal straight to `built` on a separate track. This
-contract is about the single hand-curated `building` creation advanced one stage per
-idle cycle.
+## One daily-dream object path
 
-## Each cycle — the fixed sequence
+`type: dream` is not a staged REST build anymore. Daily-dream objects follow one path only:
 
-1. **Fold in Silas's steering first.** Scan every backlog file for new content in
-   `## Notes from Silas` and for frontmatter flips (`status`, `priority`). Fold notes
-   in before any build step; **never edit or delete** the Notes section (it is
-   Silas-owned, append-only for agents). A card at `status: parked` or `vetoed` is
-   never selected; `building` at the top of the queue is resumed.
-2. **Advance the active creation, or promote the next one:**
-   - If a card is `status: building`, advance it **exactly one stage** per its type's
-     playbook, then append its `## Build log`.
-   - Else promote the top queued outline to `building` and run its first stage.
-3. **On ship** (final stage reached): verify the playbook's checklist, flip the card
-   to `built`, write the `SHIPPED.md` ledger entry, and replenish the backlog if
-   needed (below).
+1. An agent authors one committed six-asset proposal with `scripts/build_dream_proposal.py`.
+2. The proposal remains editable for its Pacific steering day.
+3. Hourly Conductor invokes `scripts/build_dream_records.py` once through `build_conductor_summary.py`.
+4. The builder creates the whole bundle transactionally, writes `built-data`, and queues six unique art requests.
+5. The Facet sidecar and art attachment passes enrich that same recorded bundle.
+6. The daily digest reads and reports committed state. It never creates objects.
 
-### The one-building invariant
-**Only one creation may be `status: building` at any time, ever.** "One task in
-flight" applies at the creation level. The loop never starts a second creation while
-one is building — not even of a different type.
+The full contract and ownership boundaries are in `../PIPELINE.md`.
 
-## Queue order
+**Hard rule:** no agent or playbook manually calls the Dream, Character, Reward, Scenario, DreamRelation, or PitchSheet creation endpoints for daily dreams. `scripts/build_dream_records.py` is the sole object writer. A failed bundle is retried by the builder, not continued by hand.
 
-Across all types, pick the next creation to promote by, in order:
-1. `status: approved` before `status: outline` (approved = Silas-blessed),
-2. then higher `priority` (`high` > `normal` > `low`),
-3. then oldest `created` date.
+## What the recurring task may do for dreams
 
-**Playbook requirement:** a type is only buildable if `specs/<type>.md` exists. An
-outline whose `type` has no playbook is skipped in the queue (it waits, it does not
-block) until someone writes the playbook. This is how new types come online: land a
-`specs/<type>.md` PR, and outlines of that type become buildable.
+During an idle cycle, dream-cycle/t-006 may:
 
-## Home-project delegation
+- scan proposal and idea files for new Notes from Silas,
+- author today's missing proposal from `build_dream_proposal.py --brief`,
+- adapt a legacy idea outline into the canonical six-asset proposal shape,
+- inspect the builder's durable success/retry status,
+- verify Facet and art completion,
+- replenish the idea runway.
 
-Some types' output belongs to a **home project** (e.g. `coloring-book` → the
-coloring-book project's `sets/<slug>/`). For those:
-- The backlog card is the **scheduler/steering surface only** — it names the home
-  target, tracks the next stage, and carries Silas's notes. The home project's files
-  are authoritative; the card summarizes them.
-- **One owner per task, never double-claim.** If the Worker is already actively
-  building the home project's task through normal priority, the idler does **not**
-  claim it — it picks the next queued creation instead. An idler day for a delegating
-  type only ever absorbs *leftover* capacity on work no one else is driving.
-- The playbook keeps BOTH records in sync each stage: the home roadmap's task status
-  **and** the card's Build log. The scheduler-card drift check
-  (`scripts/check_scheduler_drift.py`, t-010) fails CI if the card and home set diverge.
+It must not advance a dream through direct object-creation stages.
 
-Types whose output is self-contained kind_robots content (e.g. `dream`) create rows
-directly; there is no home project to delegate to.
+## Queue and steering
 
-## Content creation is reversible by construction
+### Daily proposals
 
-Content-writing stages create **content rows or set files, never backend code**:
-- via the kind_robots REST API with `KR_API_TOKEN` where an endpoint exists
-  (see `docs/api-surface.md`, all dream-build models are api-ready), or
-- as seed-data / set-file PRs where no endpoint applies.
+Exactly one proposal may exist per Pacific date. Proposal files are selected by the scheduled builder only after their steering day. Their meaningful states are:
 
-Every created row carries `designer` (`"dream-cycle"`) and source metadata (the
-originating slug / `proposalDate`) so a whole creation is **traceable and removable** —
-this is what keeps the loop reversible. Slugs across every created row follow one
-canonical rule — `specs/SLUG-POLICY.md` — and autonomously-authored dreams carry
-`creationSource: "AI"` (not `HUMAN`). kind_robots backend code stays
-read-only/external: a missing endpoint becomes a kind_robots roadmap task or pitch,
-never a direct backend edit.
+- `outline` or `approved`: waiting for the canonical builder,
+- `parked` or `vetoed`: never selected,
+- `built`: completed bundle recorded in `built-data`,
+- retry evidence: pinned in `build-attempt-data` while remaining eligible.
 
-## Build log & ledger duties
+Daily proposals do not use `status: building`; the transaction is owned by the builder and either completes or rolls back.
 
-- **Build log** (per card, every stage): append one line —
-  `YYYY-MM-DD | <stage> | what was created where | PR`. This is how Silas sees progress
-  without reading PRs.
-- **SHIPPED.md ledger** (once, at ship): append one entry per completed creation in the
-  format the file documents (slug, type, date, PRs, what was created where). Append-only.
-- **LEARNING.yaml**: a creation that blocked or taught something gets a record on close,
-  per AGENTS.md (recurring cycles don't each get one).
+### Legacy dream outlines
 
-## Backlog replenishment — keep the runway full
+Non-proposal dream outlines are idea inventory. Agents may mine them when authoring a future proposal, but they are not independently buildable and never receive direct API stages. The partially created Lantern Post card is parked as the historical record of the retired staged experiment.
 
-The loop's final ship stage checks the backlog: if fewer than **5 buildable outlines**
-remain (`outline`/`approved` with a playbook-backed type, excluding `parked`/`vetoed`),
-generate new outlines to top it back up — a standing runway of future developments
-(dream-cycle/t-005 is the batch version of this). Warn in the cycle's PR when the
-buildable count is low.
+### Delegated creation types
 
-## Hard gates (unchanged)
+Types whose output belongs to a home project, such as `coloring-book`, may still use a multi-cycle playbook. For those only:
 
-Anything outward-facing stays a hard `needs-human` gate and is never auto-fired:
-publishing, POD accounts, store listings, spend/billing, production deploys, secrets,
-DNS, schema changes. The loop lands creations as site content or set inventory under
-existing flags only. Generated internal art is pre-approved (AGENTS.md, 2026-07-06);
-originality/IP guardrails still apply per each playbook.
+- the backlog card is the scheduler and steering surface,
+- the home project's files and roadmap are authoritative,
+- only one delegated creation may be `building`,
+- never double-claim a home task already held by another Worker,
+- keep the card Build log and home project state synchronized.
+
+The one-building invariant applies to these delegated multi-stage types, not to daily-dream database writes.
+
+## Playbook requirement
+
+A delegated type is buildable only when `specs/<type>.md` exists. An idea with no playbook waits without blocking other work. `specs/dream.md` documents the canonical proposal pipeline rather than a second implementation.
+
+## Reversibility and evidence
+
+Daily-dream rows are traceable through the builder's `designer`, source metadata, and `built-data` ledger. Every successful bundle records its actual model IDs before enrichment. Every failure records a retry marker and leaves no claimed success. Art request IDs are stable and unique.
+
+For delegated file-based creations, retain equivalent source, prompt, and provenance metadata in the home project.
+
+## Backlog replenishment
+
+Keep at least five usable dream ideas or active delegated scheduler cards available. Replenishment creates outlines, not database rows. A new idea becomes live content only after it is adapted into a dated canonical proposal and built by the sole writer.
+
+## Hard gates
+
+Publishing, POD accounts, store listings, spend, billing, production deploys, secrets, DNS, schema changes, and destructive cleanup remain human-gated. Internal generated art is reversible and pre-approved under `AGENTS.md`; originality and licensing rules still apply.
+
+## Health guard
+
+`python scripts/check_daily_dream_pipeline.py` verifies the single-writer boundary and runs in Daily Dream Contract CI. Any reintroduction of a parallel direct-REST dream playbook is a contract failure.

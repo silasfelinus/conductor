@@ -1,52 +1,67 @@
 # Dream Cycle backlog
 
-One file per creation idea. This folder is the shared steering surface between
-Silas and the agents — outlines wait here until idle capacity builds them.
+This folder is the shared steering surface for daily proposals, legacy dream ideas, and delegated creation scheduler cards. The canonical daily-dream pipeline is documented in `../PIPELINE.md`.
 
-## File format
+## Three kinds of file
 
-Copy the template for the creation type (`_template.md` for dreams,
-`_template-coloring-book.md` for books). Frontmatter drives the queue:
+### Dated daily proposals
 
-| field      | values                                                     | who sets it |
-|------------|------------------------------------------------------------|-------------|
-| `type`     | `dream` / `coloring-book` / (any type with a `specs/<type>.md` playbook) | either |
-| `status`   | `outline` → `approved` → `building` → `built` (+ `parked`, `vetoed`) | Silas may flip anything; agents move `outline/approved → building → built` only |
-| `priority` | `low` / `normal` / `high`                                  | Silas (agents default `normal`) |
-| `narrator` | `yes` / `no` (dream type only)                             | either — Silas's word wins |
+Files with `proposal: true` and `proposal_date` are the only files eligible to create daily-dream database objects. They contain exactly one vibe, one location, one Character, one ITEM Reward, one SKILL Reward, and one Scenario.
 
-**Slugs** follow one rule everywhere: `specs/SLUG-POLICY.md` (kebab-case, prefer
-two words, no leading `the-` except a genuine two-word name, one slug shared by a
-dream and all its elements + art). The generators enforce it; review flags 4+ word
-or `the-…` multi-word slugs.
+Their lifecycle is:
 
-Queue order (across all types): `approved` before `outline`, then `priority`,
-then oldest `created`. An outline whose `type` has no playbook in `specs/` yet is
-not buildable — it waits, it doesn't block the queue. `parked` and `vetoed`
-files are never built (vetoed files stay as a record of what NOT to make).
-Only ONE creation may be `building` at a time.
+```text
+outline / approved → built
+                     ↘ pinned retry until the same builder succeeds
+```
 
-## Home-project delegation
+They do not use `status: building`. `scripts/build_dream_records.py` owns the complete transaction and is the only daily-dream object writer.
 
-Types whose output belongs to another project (e.g. `coloring-book` → set files
-in `projects/coloring-book/sets/<slug>/`) keep their content THERE — the backlog
-file here is the scheduler card and steering surface only. Never duplicate a
-home project's content into this folder; link to it.
+### Legacy dream ideas
+
+Older `type: dream` files without `proposal: true` are idea inventory. They may supply a premise, image, or character seed when an agent authors a future dated six-asset proposal. They are never resumed as stage-by-stage API builds.
+
+The Lantern Post file is parked as the record of the retired staged experiment. Its already-created production rows are retained, but no further stages may run from that card.
+
+### Delegated creation scheduler cards
+
+Types such as `coloring-book` keep their actual content in their home project. Their file here is only the scheduler and steering surface. A delegated playbook may use `status: building` across idle cycles, but it must keep the home roadmap synchronized and never double-claim a home task another Worker holds.
+
+## Frontmatter
+
+| field | values | meaning |
+|---|---|---|
+| `type` | `dream`, `coloring-book`, or another playbook-backed type | creation family |
+| `proposal` | `true` for dated daily-dream proposals | eligible for the sole object builder |
+| `proposal_date` | Pacific `YYYY-MM-DD` | steering day and digest date |
+| `status` | `outline`, `approved`, `built`, `parked`, `vetoed`; `building` only for delegated types | queue state |
+| `priority` | `low`, `normal`, `high` | Silas steering |
+
+Slugs follow `../specs/SLUG-POLICY.md`. The proposal's world slug is the bundle through-line; the builder derives safe element slugs and art paths.
+
+## Daily proposal authoring
+
+Check and author through the validator:
+
+```bash
+python scripts/build_dream_proposal.py --check --fetch
+python scripts/build_dream_proposal.py --brief
+python scripts/build_dream_proposal.py --from-json proposal.json
+```
+
+Only one proposal may exist per Pacific date. Commit promptly after writing so concurrent agents see it on `origin/main`.
+
+Queue selection for proposals is handled by the builder: pinned retries first, otherwise one eligible unbuilt proposal past its steering day. `parked`, `vetoed`, `built`, and substantive unincorporated Notes from Silas are skipped.
 
 ## Rules for agents
 
-- **Read `## Notes from Silas` before every stage.** Fold notes in, then note in
-  the Build log how you applied them. NEVER edit or delete Silas's notes.
-- Append stage completions to `## Build log` (date, stage, what was created
-  where, PR link).
-- Keep at least 5 buildable outlines (`outline`/`approved`, playbook-backed type)
-  in this folder — replenish at ship time.
-- New outlines must not duplicate existing kind_robots Dreams, home-project sets,
-  or backlog entries; check all before writing one.
+- Read `## Notes from Silas` before authoring or building. Fold notes into agent-owned content and never edit or delete Silas's Notes section.
+- Never manually call daily-dream object endpoints from a backlog card. Fix or retry the sole builder.
+- Never mark a partial API result as built. Trust the committed `built-data` ledger.
+- Keep at least five useful dream ideas or active delegated scheduler cards available.
+- New ideas must not intentionally duplicate existing kind_robots content, home-project sets, or backlog concepts.
+- Art request definitions come from the builder and use stable unique IDs.
 
 ## For Silas
 
-Leave notes in any file's `## Notes from Silas` section, flip `status`/
-`priority`/`narrator` in the frontmatter, or drop a bare-bones idea file with
-just a `type`, a title, and a sentence — agents will grow it into a full
-outline. Veto by setting `status: vetoed` (leave the file in place).
+Leave notes in any file's `## Notes from Silas` section, change proposal priority, or set a proposal to `parked` or `vetoed`. You may also drop a bare premise as a legacy idea file. An agent will adapt a selected idea into a future dated proposal rather than creating objects directly from the rough outline.

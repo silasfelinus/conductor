@@ -2,7 +2,7 @@
 slug: lantern-post
 title: The Lantern Post
 type: dream
-status: building
+status: parked
 priority: normal
 narrator: yes
 created: 2026-07-10
@@ -115,3 +115,10 @@ It Anyway" (helping users draft the letter they never sent).
   edge. Every row carries `designer: "dream-cycle"`, `creationSource: "AI"`. Next: Stage
   3 (Characters — POST /api/characters for Vesper, Smudge, the Dead-Letter Clerk, each
   linked to the world Dream via dreamIds) on a future idle cycle.
+- 2026-08-02 | Legacy staged path retired | Parked this card so no future agent resumes
+  Stage 3 or creates a second bundle. Existing production evidence is retained exactly
+  as created: reused GENRE Dream 2330, PITCH Dream 3194, LOCATION Dream 3195,
+  DreamRelations 77/78, and PitchSheets 476/477. Characters, Rewards, Scenarios,
+  narrator, and art were never created from this card. The concept remains idea inventory;
+  any future adaptation must be authored as a new dated six-asset proposal and must not
+  silently complete or duplicate these historical rows.

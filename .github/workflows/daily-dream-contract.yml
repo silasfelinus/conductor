@@ -6,6 +6,8 @@ on:
       - ".github/workflows/daily-dream-contract.yml"
       - ".github/workflows/daily-digest.yml"
       - ".github/workflows/hourly-conductor.yml"
+      - "projects/dream-cycle/PIPELINE.md"
+      - "projects/dream-cycle/specs/**"
       - "projects/dream-cycle/backlog/**"
       - "scripts/apply_daily_dream_facets.py"
       - "scripts/build_digest.py"
@@ -14,6 +16,7 @@ on:
       - "scripts/build_conductor_summary.py"
       - "scripts/build_dream_proposal.py"
       - "scripts/build_dream_records.py"
+      - "scripts/check_daily_dream_pipeline.py"
       - "scripts/enrich_daily_dream_digest.py"
       - "tests/test_apply_daily_dream_facets.py"
       - "tests/test_build_digest.py"
@@ -22,6 +25,7 @@ on:
       - "tests/test_build_dream_records.py"
       - "tests/test_build_conductor_summary_daily_dream.py"
       - "tests/test_daily_dream_bundle_art_queue.py"
+      - "tests/test_daily_dream_pipeline_contract.py"
       - "tests/test_enrich_daily_dream_digest.py"
   workflow_dispatch:
 
@@ -48,6 +52,7 @@ jobs:
             scripts/build_conductor_summary.py \
             scripts/build_dream_proposal.py \
             scripts/build_dream_records.py \
+            scripts/check_daily_dream_pipeline.py \
             scripts/enrich_daily_dream_digest.py
       - name: Validate workflow YAML
         run: |
@@ -63,6 +68,8 @@ jobs:
               yaml.safe_load(Path(path).read_text(encoding="utf-8"))
               print(f"validated {path}")
           PY
+      - name: Check single-writer pipeline
+        run: python scripts/check_daily_dream_pipeline.py
       - name: Run daily-dream contract tests
         run: |
           python -m pytest -q \
@@ -73,4 +80,5 @@ jobs:
             tests/test_build_dream_records.py \
             tests/test_build_conductor_summary_daily_dream.py \
             tests/test_daily_dream_bundle_art_queue.py \
+            tests/test_daily_dream_pipeline_contract.py \
             tests/test_enrich_daily_dream_digest.py
