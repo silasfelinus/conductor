@@ -1267,23 +1267,19 @@ tasks:
   - id: t-033
     milestone: m2
     title: 'Extend verifyChannelContent.ts to validate against navManifest.ts'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-012
-    note: >
-      Split from t-012 (2026-08-01, kind_robots PR #1272). navManifest.ts (t-012) is a
-      separate CI script (verifyNavManifest.ts) from the existing, older
-      verifyChannelContent.ts content contract -- two scripts doing related but distinct
-      checks on the same content/channels tree. Fold verifyNavManifest.ts's
-      dashboardKey/dashboardTab/cards cross-checks into verifyChannelContent.ts (or vice
-      versa) so there is one content contract, not two, and content/channels remains the
-      single authored source every other system is validated against. Low risk: this is
-      consolidating two already-passing, already-CI-wired scripts, not changing behavior.
+    note: |-
+      Split from t-012 (2026-08-01, kind_robots PR #1272). navManifest.ts (t-012) is a separate CI script (verifyNavManifest.ts) from the existing, older verifyChannelContent.ts content contract -- two scripts doing related but distinct checks on the same content/channels tree. Fold verifyNavManifest.ts's dashboardKey/dashboardTab/cards cross-checks into verifyChannelContent.ts (or vice versa) so there is one content contract, not two, and content/channels remains the single authored source every other system is validated against. Low risk: this is consolidating two already-passing, already-CI-wired scripts, not changing behavior.
+
+
+      Consolidated navManifest validation into the canonical channel-content contract on the Kind Robots worker branch; opening the focused PR for CI verification.
     claimed_by: 2026-08-02T161308Z-interface-vision-t-033-m4q7
     claimed_at: '2026-08-02T16:13:08Z'
-    updated: '2026-08-02T16:13:08Z'
+    updated: '2026-08-02T16:19:00Z'
 
   - id: t-034
     milestone: m2
