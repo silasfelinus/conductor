@@ -1,4 +1,4 @@
-package org.kindrobots.storymaker
+package org.kindrobots.storybook
 
 import io.flutter.embedding.android.FlutterActivity
 
