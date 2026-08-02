@@ -5829,3 +5829,21 @@ records:
     just the ones matching the expected shape) caught this before it shipped as
     a silent behavior regression; the store was left in place and split into its
     own follow-up task (t-045) instead of forced through under the cleanup label.
+- date: 2026-08-02
+  project: interface-vision
+  task: t-019
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A task titled "show earned karma/mana" surfaced a real data-attribution bug
+    on investigation, not just a missing display layer: REACTION_RECEIVED karma
+    awards were tagging the Reaction row's own id as refId instead of the
+    reacted-on object's id, making per-object aggregation impossible regardless
+    of any UI work. Also worth remembering: grep for whether a "mana equivalent"
+    code path is actually live before building UI for it -- ManaReason had
+    SOCIAL_REACTION/SOCIAL_SHARE defined but never awarded anywhere, so the
+    honest move was shipping karma-only and saying so, not fabricating a mana
+    number to match the task title.
