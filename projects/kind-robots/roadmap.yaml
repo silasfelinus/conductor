@@ -2038,3 +2038,66 @@ tasks:
       UI now silently 404s) or whether this is an accidental regression
       that should be restored.
 
+  - id: t-052
+    milestone: m1
+    title: "Production DB (ProxySQL/Alexandria) unreachable: builds ECONNREFUSED, live pool at ~93% failure"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: irreversible
+    gate_human: true
+    security_flag: false
+    note: >
+      FOR SILAS: found during a routine conductor sweep, 2026-08-02T14:41Z.
+      Two related but distinct symptoms, both DB/infra, both outside agent
+      access per BOUNDARY.md (no ProxySQL admin / DB-host access):
+
+      1. Every production BUILD has failed for 4+ hours straight (11
+      consecutive `state: ERROR` deployments in the Vercel API, commits
+      ca689fa/#1320 back through eb44b09/#1309). Build log for the latest
+      (dpl_Gq4w4y9EWkvG264wFNqHA7ECaWB8, commit ca689fa) fails at
+      "Applying production migrations" with a hard `ECONNREFUSED
+      75.111.66.70:5544` -- the ProxySQL host/port from
+      kindrobots-unraid's own setup docs (5544 host-port -> 6033
+      container-port on Alexandria) is refusing the TCP connection
+      outright, not timing out. This is a different signature than
+      kind-robots/t-022's prior pool-timeout/TLS incidents (both closed
+      2026-07-17) -- this one reads as the ProxySQL process/container
+      itself being down or unreachable, not an app-level pool
+      misconfiguration.
+
+      2. The live site is still serving the last successful build
+      (#1308, commit cd341533, dpl_GnsXJUpLf3mZhLwR5LSmT2UVGtSz) since
+      Vercel keeps the last good production deployment aliased when newer
+      builds fail -- so kind-robots.vercel.app returns HTTP 200 for page
+      loads. But that build's own DB-backed API routes are failing hard
+      right now: `get_runtime_logs` (30m window) shows 110x503 + 96x500
+      vs only 16x200 (~93% failure), `get_runtime_errors` (4h) shows a
+      single dominant group, `pool timeout: failed to retrieve a
+      connection from pool (circuit open)` / `P2039` variants, across
+      /api/dreams, /api/projects, /api/characters, /api/rewards,
+      /api/todos, /api/scenarios, /api/art/queue*, /api/server*,
+      /api/facets/catalog, /api/sheets/[id], /api/auth/validate/token --
+      essentially every DB-backed route. Last occurrence 2026-08-02T14:41:02Z,
+      real-time as of this check.
+
+      TO APPROVE / ACT: this needs someone with access to Alexandria's
+      ProxySQL container (t-012 in kindrobots-unraid already documents
+      that its admin interface is local-docker-exec-only, unreachable by
+      any agent sandbox) -- check whether the ProxySQL process is
+      running, whether it's accepting connections on 5544, and whether
+      the backend MariaDB it fronts is healthy. Once restored, the 11
+      backlogged main-branch commits (#1309-#1320, mostly
+      interface-vision layout-contract work) should deploy automatically
+      on the next push to main (or trigger a manual redeploy of the
+      current main tip). No agent action is possible on the DB/infra
+      side; this task exists to make the incident visible and trackable,
+      not to imply an agent will resolve it.
+
+      What unblocks when resolved: production catches up on the 11
+      backlogged commits, and this task can close `done` once
+      `get_runtime_logs`/`get_runtime_errors` show a sustained clean
+      window (see kind-robots/t-022's closing note for the confirmation
+      pattern used last time).
+    updated: '2026-08-02T14:45:00Z'
+
