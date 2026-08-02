@@ -1,0 +1,12 @@
+version: 1
+project: dream-cycle
+task: t-006
+operation: review
+owner: worker
+session: 2026-08-02T214430Z-dream-cycle-t-006-single-pipeline-q7m9
+updated: '2026-08-02T21:53:00Z'
+note: >-
+  Consolidated Daily Dream onto one canonical proposal-to-builder pipeline. The
+  legacy staged dream writer is retired, Lantern Post is parked with its existing
+  production IDs preserved, digest reporting is explicitly read-only, and a new CI
+  guard rejects additional object-builder callers or direct-REST playbooks.
