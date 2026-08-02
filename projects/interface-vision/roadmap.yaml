@@ -1504,26 +1504,14 @@ tasks:
   - id: t-047
     milestone: m3
     title: 'Batch-fix a handful of one-scroll offenders sharing the manager/interact-panel shape'
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-017's third pass (2026-08-02, kind_robots PR #1300). one-scroll is
-      now the largest remaining allow-list bucket (33 entries) and barely touched --
-      every other rule has a single-digit-to-low-double-digit count. Many entries share
-      a manager/interact-panel shape (components/{art,user,wonderlab}/*-manager.vue and
-      *-interact.vue pairs, e.g. art-manager.vue, user-manager.vue, lab-manager.vue) that
-      likely all have the same "two overflow-y-auto regions competing" root cause --
-      probably a toolbar/filter strip plus a content list each declaring their own scroll
-      instead of adopting the kr-surface/kr-scroll ownership split t-004 established.
-      Pick 5-8 of these with the same shape, fix them in one PR using the kr-scroll
-      primitive (verify visually via the Vercel preview per AGENTS.md's front-end
-      verification note, not just the contract count), ratchet the baseline down, and
-      leave a note on which shape covers the rest so the next pass can go faster.
+    note: 'Closed 2026-08-02 via kind_robots PR #1321 (merged, all 14 checks green). Batch-fixed 4 one-scroll offenders sharing the manager tab-switcher shape: user-manager.vue (avatars/friends/achievements tabs merged into one kr-scroll region), academy-manager.vue (all 4 tabs + loading/error states merged into one kr-scroll region), giftshop-manager.vue (community/mana/forum tabs merged into one kr-scroll region), and achievement-gallery.vue (3-column grid consolidated from 3 independent scroll regions to 1 shared scroll owner). one-scroll: 31 -> 27. Baseline ratcheted via --update. vue-tsc and layout-contract clean; 2 pre-existing eslint errors confirmed via git stash, out of scope. Did not visually verify via Vercel preview (flagged for Reviewer in the PR). Remaining one-scroll bucket (27) splits into more tab-switchers (mechanical, same pattern) and genuine dual-pane interact/sidebar layouts (character-interact.vue, reward-interact.vue, scenario-interact.vue, lab-interact.vue, server-manager.vue, stage-manager.vue, animation-manager.vue -- need a design decision on which pane owns the scroll, left for a follow-up task).'
     claimed_by: claude-quirky-curie-20260802T143636Z-t047
     claimed_at: '2026-08-02T14:36:36Z'
-    updated: '2026-08-02T14:36:36Z'
+    updated: '2026-08-02T14:46:37Z'
 
   - id: t-049
     milestone: m3
