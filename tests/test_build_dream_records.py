@@ -31,16 +31,82 @@ def test_rollback_created_deletes_ok_rows_newest_first(monkeypatch):
     monkeypatch.setattr(bdr, "http_json",
                         lambda m, url, body=None, timeout=60: (deletes.append((m, url)) or (200, {})))
     results = [
-        {"ok": True, "id": 1, "delete_base": "/api/dreams"},
-        {"ok": False, "id": None, "delete_base": "/api/dreams"},   # skipped (failed)
-        {"ok": True, "id": 7, "delete_base": "/api/sheets"},
-        {"ok": True, "id": None, "delete_base": "/api/characters"},  # skipped (no id)
+        {"ok": True, "created": True, "id": 1, "delete_base": "/api/dreams"},
+        {"ok": False, "created": False, "id": None, "delete_base": "/api/dreams"},
+        {"ok": True, "created": False, "id": 5, "delete_base": "/api/rewards"},
+        {"ok": True, "created": True, "id": 7, "delete_base": "/api/sheets"},
+        {"ok": True, "created": True, "id": None, "delete_base": "/api/characters"},
     ]
     n = bdr.rollback_created(results)
     assert n == 2
     # newest-first
     assert deletes[0] == ("DELETE", f"{bdr.KR_BASE_URL}/api/sheets/7")
     assert deletes[1] == ("DELETE", f"{bdr.KR_BASE_URL}/api/dreams/1")
+
+
+def test_conflict_adopts_one_exact_row_and_never_rolls_it_back(monkeypatch):
+    identity = {
+        "name": "The Exact Prize",
+        "description": "A prize from the interrupted bundle.",
+        "rewardType": "ITEM",
+        "artPrompt": "a precise prize",
+    }
+
+    def fake_http(method, url, body=None, timeout=60):
+        if method == "POST":
+            return 409, {"success": False, "message": "Record already exists."}
+        if method == "GET":
+            return 200, {"success": True, "data": [{"id": 77, **identity}]}
+        raise AssertionError(f"unexpected {method} {url}")
+
+    monkeypatch.setattr(bdr, "http_json", fake_http)
+    results = []
+    record = bdr.kr_call(
+        "POST", "/api/rewards", {**identity, "isPublic": True}, False, results,
+        "Reward: The Exact Prize", conflict_identity=identity,
+    )
+
+    assert record == {"id": 77, **identity}
+    assert results[0]["ok"] is True
+    assert results[0]["adopted"] is True
+    assert results[0]["created"] is False
+    assert bdr.rollback_created(results) == 0
+
+
+def test_conflict_with_different_content_remains_a_failure(monkeypatch):
+    identity = {"title": "Same Name", "description": "intended"}
+
+    def fake_http(method, url, body=None, timeout=60):
+        if method == "POST":
+            return 409, {"success": False, "message": "Already exists."}
+        return 200, {"success": True, "data": [
+            {"id": 88, "title": "Same Name", "description": "different"},
+        ]}
+
+    monkeypatch.setattr(bdr, "http_json", fake_http)
+    results = []
+    record = bdr.kr_call(
+        "POST", "/api/scenarios", identity, False, results,
+        "Scenario: Same Name", conflict_identity=identity,
+    )
+
+    assert record is None
+    assert results[0]["ok"] is False
+    assert results[0]["created"] is False
+
+
+def test_idempotent_200_response_is_not_owned_by_this_attempt(monkeypatch):
+    monkeypatch.setattr(
+        bdr,
+        "http_json",
+        lambda method, url, body=None, timeout=60: (200, {"data": {"id": 91}}),
+    )
+    results = []
+    assert bdr.kr_call(
+        "POST", "/api/sheets/by-dream/12", {}, False, results, "existing sheet"
+    ) == {"id": 91}
+    assert results[0]["created"] is False
+    assert bdr.rollback_created(results) == 0
 
 
 # --------------------------------------------------------------------------- #
