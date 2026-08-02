@@ -137,7 +137,7 @@ individually named in an active roadmap task. No action proposed.
 ## Projects with no checkable concrete surfaces this cycle
 
 `brainstorm`, `kindrobots-unraid`, `humboldt-scoop-cms`, `mural-design`,
-`storymaker`, `wishmaster`, `taskmaster`, `dream-cycle` (only its already-known
+`storybook`, `wishmaster`, `taskmaster`, `dream-cycle` (only its already-known
 gap above) — these roadmaps name few or no literal file paths (design docs,
 infra, or prose-level milestones), so there was little to cross-reference beyond
 what's covered above.

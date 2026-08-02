@@ -172,11 +172,11 @@ the prompt string; actual image generation stays wherever the rest of Kind
 Robots' art-generation queue already lives — this spec does not add a new
 generation path.
 
-## Relationship to Storymaker's narrator pattern
+## Relationship to Storybook's narrator pattern
 
-Per `storymaker-boundary-comparison.md`, narration prompt assembly is the
+Per `storybook-boundary-comparison.md`, narration prompt assembly is the
 first concrete piece both projects could share (item 1 under "What they
-genuinely could share — later"), but Storymaker has no schema yet, so there
+genuinely could share — later"), but Storybook has no schema yet, so there
 is nothing to extract from today. This spec is written so extraction stays
 possible without a rewrite:
 
@@ -187,9 +187,9 @@ possible without a rewrite:
 - The one Da Vinci–specific piece is the `DaVinciDimension`-keyed `effects`
   map. If/when a shared utility is extracted, that becomes a generic
   `Record<string, number>` at the utility boundary, with each caller
-  (Da Vinci, later Storymaker) supplying its own allowed-keys validator.
+  (Da Vinci, later Storybook) supplying its own allowed-keys validator.
 - Per the boundary doc's standing rule, this stays inside
-  `server/utils/davinciNarration.ts` until Storymaker's own m1 schema lands
+  `server/utils/davinciNarration.ts` until Storybook's own m1 schema lands
   and there's real duplicated code to extract from, not before.
 
 ## First build slice (what unblocks a playable run UI)
@@ -210,7 +210,7 @@ possible without a rewrite:
 
 Explicitly deferred past the first slice: freeform choice input, the
 "heading toward..." `milestoneCandidate` UI treatment, and the shared
-Storymaker narration utility.
+Storybook narration utility.
 
 ## Open question for Silas
 
@@ -261,4 +261,4 @@ one-line change plus a contract-test update.
 Still deferred, unchanged: freeform choice input, the `milestoneCandidate`
 UI treatment beyond a one-line hint, `LifeRunArt` generation from the proposed
 `artPrompt` (the narrator returns the string; nothing consumes it yet), and the
-shared Storymaker narration utility.
+shared Storybook narration utility.

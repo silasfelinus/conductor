@@ -75,7 +75,7 @@ rather than guessing:
 | `ruler-hooked` | active | queued (icon,card,hero) | — | 0 | Unclassified |
 | `serendipity` | active | have | — | 0 | Yes (Class D) |
 | `sketchy` | active | have | — | 3 | Yes (Class D) |
-| `storymaker` | active | have | — | 4 | Yes (Class D) |
+| `storybook` | active | have | — | 4 | Yes (Class D) |
 | `superkate-hairstyle-ai` | active | queued (icon,card,hero) | — | 0 | Yes (Class A, shares Superkate tab) |
 | `superkate-services-calculator` | active | have | — | 0 | Yes (Class A, shares Superkate tab) |
 | `wishmaster` | active | have | — | 4 | Yes (Class A/D) |
@@ -123,7 +123,7 @@ good candidates for the next `art-prompts.yaml` `inspirations:`-style batch (see
 
 Genuinely user-facing projects per `FRONTEND-SURFACE-MAP.md`'s Class A/D — `ai-art-academy`,
 `coloring-book`, `conductor`, `brainstorm`, `challenge-center`, `coat-dance`, `davinci`,
-`media-watchlist`, `mermaids-of-venice`, `packmaker`, `serendipity`, `sketchy`, `storymaker`,
+`media-watchlist`, `mermaids-of-venice`, `packmaker`, `serendipity`, `sketchy`, `storybook`,
 both Superkate projects, `wishmaster`, `appmaker` — are reasonable mock-screenshot candidates.
 Eleven newer or unaudited projects (`animation-manager`, `animation-studio`,
 `kindrobots-unraid`, `model-builder`, `newsfeed`, `ruler-hooked`, and the four retired/finished

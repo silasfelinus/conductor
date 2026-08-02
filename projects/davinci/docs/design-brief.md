@@ -146,13 +146,13 @@ Reusable narrative patterns should guide the life sim toward endpoint outcomes:
 
 These patterns are prompt tools and game-design tools. They are not the source of truth for outcome resolution.
 
-## Relationship to Storymaker
+## Relationship to Storybook
 
-Da Vinci is related to Storymaker but should not be merged immediately.
+Da Vinci is related to Storybook but should not be merged immediately.
 
 Recommended boundary:
 
-- Storymaker is the broader collaborative storytelling engine.
+- Storybook is the broader collaborative storytelling engine.
 - Da Vinci is a playable life-sim ruleset with deterministic achievements and endings.
 - Shared concepts may include sessions, branches, artifacts, generated art, narrator prompts, and character/Dream integrations.
 - Da Vinci should prove the endpoint and milestone system before any merge decision.

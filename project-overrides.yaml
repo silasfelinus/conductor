@@ -228,17 +228,17 @@ overrides:
     channelKey: lab
     tabKey: mural
 
-  - slug: storymaker
+  - slug: storybook
     status: active
     priority: normal
     kind: software
     # Frontend placement — synced to the kind_robots Project row by
     # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry for
-    # 'storymaker' in kind_robots utils/projectPlacements.ts (channelKey: 'play',
-    # tabKey: 'storymaker', route: '/storymaker') — conductor/storymaker t-010.
-    liveUrl: /storymaker
+    # 'storybook' in kind_robots utils/projectPlacements.ts (channelKey: 'play',
+    # tabKey: 'storybook', route: '/storybook') — conductor/storybook t-010.
+    liveUrl: /storybook
     channelKey: play
-    tabKey: storymaker
+    tabKey: storybook
 
   - slug: davinci
     status: active # reopened 2026-07-31 (Silas-directed session: "making da Vinci
@@ -349,7 +349,7 @@ overrides:
     status: retired # retired 2026-07-29 (conductor burst-mode cycle) -- this project's
     # actual kind_robots product (the story-weaving task engine described by this
     # project's own roadmap.yaml m1-m5) was permanently renamed to Taskmaster
-    # (kind_robots docs/products/storymaker-taskmaster-boundary.md: "The former
+    # (kind_robots docs/products/storybook-taskmaster-boundary.md: "The former
     # task-story product is renamed completely to Taskmaster, leaving the Serendipity
     # name and route free for the voice-led experience"; commit 5509ac4 "Complete
     # permanent Taskmaster cutover" did the file-level rename, serendipity-page.vue ->
@@ -369,7 +369,7 @@ overrides:
     status: active # onboarded 2026-07-29 (conductor burst-mode cycle) -- retroactive
     # tracking for an already-shipped kind_robots product: the story-weaving task
     # engine formerly tracked here as `serendipity` (see that entry's retirement note
-    # above), permanently renamed per kind_robots docs/products/storymaker-taskmaster-boundary.md.
+    # above), permanently renamed per kind_robots docs/products/storybook-taskmaster-boundary.md.
     # Verified via code inspection: components/pages/taskmaster-page.vue (724 lines)
     # and stores/taskmasterStore.ts (999 lines) are a mature, complete implementation,
     # not a scaffold.

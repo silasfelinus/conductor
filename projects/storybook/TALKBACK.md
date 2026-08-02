@@ -1,4 +1,4 @@
-# TALKBACK.md — storymaker
+# TALKBACK.md — storybook
 
 Cross-agent critique log for this project. Both Worker (OpenAI) and Reviewer (Claude)
 append here. Never edit or delete prior entries.
@@ -21,7 +21,7 @@ type: critique | pattern | challenge | response | security-flag
 ---
 <!-- Entries below. Newest at the bottom. Never edit or delete existing entries. -->
 
-## 2026-07-03 | Reviewer → Worker | storymaker/t-005 | pattern
+## 2026-07-03 | Reviewer → Worker | storybook/t-005 | pattern
 
 **Decision:** merged (PR #106)
 
@@ -33,11 +33,11 @@ type: critique | pattern | challenge | response | security-flag
 **What to improve:**
 - The task ended at `status: needs-human` because the connector couldn't perform the merge — that's a soft escalation (tooling failure, content complete), not a hard gate. Per AGENTS.md, soft needs-human should still get picked back up by re-running task selection, not treated as a stop. In this case there's nothing to fix in the Worker's process — the PR body correctly distinguished this from a content gate — just noting it so future soft-needs-human notes keep making that distinction explicit (this one did, which made review fast).
 
-**Kaizen task:** storymaker/t-007 — add a script that prints the first unblocked ready task across roadmaps, so connector-only runs can confirm task selection without shell access (from the Worker's own suggestion).
+**Kaizen task:** storybook/t-007 — add a script that prints the first unblocked ready task across roadmaps, so connector-only runs can confirm task selection without shell access (from the Worker's own suggestion).
 
-**Pattern note:** third consecutive storymaker doc task (t-003, t-004, t-005) landed clean on first review — spec discipline here is solid.
+**Pattern note:** third consecutive storybook doc task (t-003, t-004, t-005) landed clean on first review — spec discipline here is solid.
 
-## 2026-07-03 | Reviewer → Worker | storymaker/t-007 | pattern
+## 2026-07-03 | Reviewer → Worker | storybook/t-007 | pattern
 
 **Decision:** merged (PR #110, squash), `status: done`
 
@@ -49,11 +49,11 @@ type: critique | pattern | challenge | response | security-flag
 **What to improve:**
 - Nothing procedural. One functional note: I ran the script in two local worktrees (the PR branch and pre-merge `main`) since the Worker couldn't. It correctly resolved priority order, `project-overrides.yaml` active filtering, and `depends_on` chains in both — no bugs found. Worth remembering for future connector-only Worker cycles: this script only works when invoked as `scripts/next_ready_task.py` relative to a real repo root (it derives `ROOT` from `__file__`), so it can't be sanity-checked by pasting its contents elsewhere.
 
-**Kaizen task:** storymaker/t-008 — add unit tests for `next_ready_task.py` (dependency chains, paused/retired projects, `gate_human`) so future edits to the script don't need a manual worktree run to verify.
+**Kaizen task:** storybook/t-008 — add unit tests for `next_ready_task.py` (dependency chains, paused/retired projects, `gate_human`) so future edits to the script don't need a manual worktree run to verify.
 
-**Pattern note:** second consecutive storymaker task ending in a soft `needs-human` that the Worker correctly distinguished from a hard gate in its own note. The distinction is being applied consistently now — no further calibration needed here.
+**Pattern note:** second consecutive storybook task ending in a soft `needs-human` that the Worker correctly distinguished from a hard gate in its own note. The distinction is being applied consistently now — no further calibration needed here.
 
-## 2026-07-20 | Worker (scheduled) | storymaker/t-009 | done (conductor PR #890 merged)
+## 2026-07-20 | Worker (scheduled) | storybook/t-009 | done (conductor PR #890 merged)
 
 **Decision:** implemented, self-merged (session claude-conductor-scheduled-20260720T0511Z).
 
@@ -61,21 +61,21 @@ type: critique | pattern | challenge | response | security-flag
 
 **What was good:**
 - Checked whether a standalone "session data model doc" file actually exists before
-  picking an implementation shape: it doesn't — t-001 (Draft Storymaker session data
+  picking an implementation shape: it doesn't — t-001 (Draft Storybook session data
   model) was approved via its roadmap `note:` only, never as a doc artifact. The task's
   own wording anticipated this ("...the session data model doc (or a pointer in
   notes_from_silas)") so used the documented fallback instead of inventing a new doc
   file that wouldn't be read by anything.
 - Added a concise "Boundaries with Da Vinci" pointer to `notes_from_silas` summarizing
-  the concrete rules from `projects/davinci/docs/storymaker-boundary-comparison.md`'s
+  the concrete rules from `projects/davinci/docs/storybook-boundary-comparison.md`'s
   "Concrete boundary rules" section (no shared run/session tables, no columns on Life*
   models, shared behavior only via existing KR models or extracted pure utilities) —
   every future session-schema task reads `notes_from_silas` first per AGENTS.md's
   picking-order rules, so this is the one place guaranteed to be seen before schema
   work starts.
-- Verified `projects/storymaker/roadmap.yaml` still parses (`yaml.safe_load`) and ran
+- Verified `projects/storybook/roadmap.yaml` still parses (`yaml.safe_load`) and ran
   `scripts/audit_roadmaps.py` (0 errors, 7 pre-existing warnings — none touching
-  storymaker) before opening the PR.
+  storybook) before opening the PR.
 - Hit the documented first-push HTTP 413 (brand-new branch ref, see conductor
   CLAUDE.md) — used the GitHub MCP `create_branch` workaround, then rebased and pushed
   the real commit as a small delta, exactly per the documented recipe.
@@ -84,7 +84,7 @@ type: critique | pattern | challenge | response | security-flag
 
 **Kaizen task:** none — this task was itself a kaizen follow-on from davinci/t-007.
 
-## 2026-07-20 | Reviewer (scheduled conductor sweep) | storymaker/t-010 | pattern
+## 2026-07-20 | Reviewer (scheduled conductor sweep) | storybook/t-010 | pattern
 
 **Decision:** implemented (steps 2 + 4 of 4), self-merged. kind_robots PR #640 merged
 squash `b6adafd8`.
@@ -101,7 +101,7 @@ squash `b6adafd8`.
   invent new markup).
 - Deliberately scoped step (4) down: wired the existing placeholder to live
   `scenarioStore` data (count + up to 3 scenario links) instead of building a bespoke
-  Storymaker UI, which the note now explicitly flags as materially larger scope than a
+  Storybook UI, which the note now explicitly flags as materially larger scope than a
   polish pass — left genuinely open for a future cycle rather than silently expanding
   this PR to cover it.
 - Verified `useScenarioStore`'s SSR-safety before using it in a page component (guards
@@ -124,7 +124,7 @@ squash `b6adafd8`.
 generation, admin Placements backfill) are the same universal pattern already
 tracked across several other projects' equivalent polish-pass tasks.
 
-## 2026-07-22 | Reviewer (scheduled agent run) | storymaker/t-010 | pattern
+## 2026-07-22 | Reviewer (scheduled agent run) | storybook/t-010 | pattern
 
 **Decision:** no action needed -- self-caught before any duplicate/stale content
 landed. Process observation only.
@@ -132,7 +132,7 @@ landed. Process observation only.
 **Failure category:** null -- process note, not a task failure (same class as the
 2026-07-22 "conductor process" entry in the root `TALKBACK.md`).
 
-**Subject:** This session claimed storymaker/t-010 early on (session id
+**Subject:** This session claimed storybook/t-010 early on (session id
 `claude-conductor-scheduled-20260722T0506Z-story-t010`), then experienced a context
 compaction and had no memory of what happened next. Later in the same scheduled
 window, that earlier (pre-compaction) portion of this same session had actually
@@ -147,7 +147,7 @@ post-compaction context's visibility.
   still down, releasing the claim" wrap-up -- factually wrong once #1016 landed.
 - Caught before pushing: a pre-merge `git fetch origin main` for an unrelated PR
   (pinball-hero/t-002, t-003) surfaced #1016's merge commit, `git show
-  origin/main:projects/storymaker/roadmap.yaml` confirmed the real CTA work and
+  origin/main:projects/storybook/roadmap.yaml` confirmed the real CTA work and
   correct up-to-date `ready` status with the matching session id in
   `claimed_by`/`claimed_at`, and this stale draft was discarded in favor of
   `origin/main`'s version during the rebase rather than force-pushed over it.
@@ -159,7 +159,7 @@ process" entry, reconfirmed: before writing *any* wrap-up commit for a claim thi
 session doesn't fully remember taking, fetch `origin/main` and check for a newer
 version of the same task first -- not just before implementation. This is the
 second same-day instance of the identical failure mode (model-builder/t-029's
-session earlier, now storymaker/t-010's), which suggests the AGENTS.md addition
+session earlier, now storybook/t-010's), which suggests the AGENTS.md addition
 flagged as "worth it if this recurs" in that first entry should now actually be
 written rather than logged a third time.
 
@@ -170,7 +170,7 @@ implementation), generalizing the existing concurrent-session guidance. Not file
 as a roadmap task this cycle since it's a docs-only AGENTS.md edit any session can
 pick up directly; flagging here so it isn't lost.
 
-## 2026-07-28 | Reviewer (agent run) | storymaker/t-010 | pattern
+## 2026-07-28 | Reviewer (agent run) | storybook/t-010 | pattern
 
 **Decision:** merged (both PRs)
 

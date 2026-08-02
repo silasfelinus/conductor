@@ -29,7 +29,7 @@ Robots, or where it should be stitched next.
 > surface" roadmap task to evolve that scaffold into the full interactive experience —
 > 5 are `done` (Humboldt Scoop, Humboldt Scoop CMS, Mermaids of Venice, Packmaker,
 > Challenge Center) and 10 are `ready` and queued (AppMaker, Coat Dance, Conductor App,
-> Da Vinci, Media Watchlist, Alexa Integration, Serendipity, Sketchy, Storymaker,
+> Da Vinci, Media Watchlist, Alexa Integration, Serendipity, Sketchy, Storybook,
 > Wishmaster). No new implementation tasks were filed this cycle — t-006's own job
 > (routing confirmed gaps to project-owned tasks) was already satisfied by that existing
 > work, so this pass only confirmed and closed the loop. See each project's own
@@ -69,7 +69,7 @@ Robots, or where it should be stitched next.
 | `sketchy` | D | Proposed `academy / sketchy` → `/sketchy` | Project images/collection references exist, but no manager/page/tab found | Missing pair | `/sketchy` | **Missing front end**. Academy is the best fit because this teaches drawing practice and critique. |
 | `art-generator-connect` | C | Existing Art/Wonder generation tools are the user surface | Worker-to-art API relay/integration project | N/A | `/art` | **Internal integration**; do not add a duplicate relay tab. |
 | `mural-design` | A | WonderLab Mural surface → `/mural` | Existing Mural page/manager and shared coloring engine | Existing route; verify canonical Wonder tab/tutorial pair | `/mural` | **Complete**. |
-| `storymaker` | D | Proposed `scenario / storymaker` → `/stories` | Story channel exists, but no project-specific Storymaker tab/manager found | Missing pair | `/stories` (after tab wiring) | **Missing project tab**. Reuse the Stories channel. |
+| `storybook` | D | Proposed `scenario / storybook` → `/stories` | Story channel exists, but no project-specific Storybook tab/manager found | Missing pair | `/stories` (after tab wiring) | **Missing project tab**. Reuse the Stories channel. |
 | `davinci` | D | Proposed `games / davinci` → `/davinci` | Life-sim game project; no dedicated manager/tab found | Missing pair | `/davinci` | **Missing game surface**. Reuse Games. |
 | `media-watchlist` | D | Proposed `wonder / watchlist` → `/watchlist` | Conductor card exists; no app manager/tab found | Missing pair | `/watchlist` | **Missing front end**. WonderLab is the honest fallback until a media channel exists. |
 | `conductor-app` | B/D | Proposed admin bridge `conductor / app` | External Flutter client project; Conductor card exists but no launch/bridge tab found | Missing pair | Deployed Flutter web/app landing URL, or `/conductor` until deployed | **Missing bridge surface**. |
@@ -93,7 +93,7 @@ Robots, or where it should be stitched next.
   (Kind Robots itself remains reachable at `/`; the count is six when including it as
   both platform and product.)
 - **15 missing or incomplete surfaces:** Humboldt Scoop, Humboldt Scoop CMS, Sketchy,
-  Storymaker, Da Vinci, Media Watchlist, Conductor App, Alexa Integration, Mermaids of
+  Storybook, Da Vinci, Media Watchlist, Conductor App, Alexa Integration, Mermaids of
   Venice, Packmaker, Coat Dance, Wishmaster canonical tab integration, Challenge Center,
   Serendipity, and AppMaker canonical tab integration.
 
@@ -105,7 +105,7 @@ The arithmetic is 29 active projects: 8 complete, 6 internal/platform, 15 incomp
    Wishmaster. Their data/components/cards already exist; the work is mostly canonical
    tab registration and correct manager rendering.
 2. **Finish explicit product promises:** Mermaids of Venice, Sketchy, Packmaker,
-   Storymaker, Serendipity, Da Vinci.
+   Storybook, Serendipity, Da Vinci.
 3. **Add external/admin bridges:** Humboldt Scoop, Humboldt Scoop CMS, Conductor App,
    Alexa Integration.
 4. **Add creative/support surfaces:** Coat Dance and Media Watchlist.

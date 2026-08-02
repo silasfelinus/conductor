@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Exquisite Corpse mode is Storymaker's async-first collaboration format. Players take turns adding to a shared story while seeing only a bounded slice of prior context. The mode should preserve the surreal surprise of the classic game while still keeping enough structure for Kind Robots sessions, Characters, Scenarios, Rewards, Chats, and future app-owned story state to stay coherent.
+Exquisite Corpse mode is Storybook's async-first collaboration format. Players take turns adding to a shared story while seeing only a bounded slice of prior context. The mode should preserve the surreal surprise of the classic game while still keeping enough structure for Kind Robots sessions, Characters, Scenarios, Rewards, Chats, and future app-owned story state to stay coherent.
 
 This document is a rules and data-contract spec only. It does not create schema, call live APIs, publish content, deploy anything, or mutate production data.
 

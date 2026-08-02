@@ -2,13 +2,13 @@
 
 ## Purpose
 
-Guided Adventure mode is a structured Storymaker session where the narrator bot advances a shared story one turn at a time. Each turn starts from persisted session state, builds a bounded prompt, produces a short narrative beat, offers branch options, accepts either a selected branch or custom player input, applies any allowed reward/stat effects, persists the resulting state mutation, and hands off to the next turn.
+Guided Adventure mode is a structured Storybook session where the narrator bot advances a shared story one turn at a time. Each turn starts from persisted session state, builds a bounded prompt, produces a short narrative beat, offers branch options, accepts either a selected branch or custom player input, applies any allowed reward/stat effects, persists the resulting state mutation, and hands off to the next turn.
 
 This document is a server-side lifecycle spec only. It does not create schema, call live APIs, publish content, deploy anything, or mutate production data.
 
 ## Existing model anchors
 
-The lifecycle assumes the app can read or adapt the existing Kind Robots objects described in `docs/storymaker-session-model.md` and `docs/kr-model-audit.md`:
+The lifecycle assumes the app can read or adapt the existing Kind Robots objects described in `docs/storybook-session-model.md` and `docs/kr-model-audit.md`:
 
 - `Bot` supplies narrator identity, tone, and system voice.
 - `Character` supplies protagonist or party stats, rarity traits, inventory-like rewards, and profile context.
