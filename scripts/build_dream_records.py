@@ -454,7 +454,14 @@ def kr_call(method: str, endpoint: str, body: dict, dry_run: bool,
         if adopted:
             print(f"  adopted existing: {label} (ID {record.get('id')})")
     ok = (status in (200, 201, 207) and record is not None) or adopted
-    created = ok and not adopted and status in (201, 207)
+    # DreamRelation POST is an upsert but always returns 201, including when the
+    # edge already existed. Treat it as non-owned: deleting a newly-created Dream
+    # cascades its edge during rollback, while deleting an adopted edge would damage
+    # the interrupted build we are recovering.
+    created = (
+        ok and not adopted and status in (201, 207)
+        and endpoint != "/api/dream-relations"
+    )
     failure_message = None
     if not ok:
         if isinstance(resp, dict):
@@ -737,10 +744,11 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
     scenario_links = [i for i in [world_id, *location_ids] if i]
     for sc in proposal.get("scenarios", []):
         el = slugify(sc.get("title", "scenario")) + "-scenario"
+        setup = sc.get("setup", "")
         scenario_body = {
             "title": (sc.get("title", "Scenario"))[:190], "isPublic": True,
-            "description": sc.get("setup", ""),
-            "intros": sc.get("setup", ""),
+            "description": setup,
+            "intros": setup,
             "locations": loc_titles,
             "genres": vibe.get("title", ""),
             "dreamIds": scenario_links,
@@ -748,8 +756,13 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         rec = kr_call(
             "POST", "/api/scenarios", scenario_body, dry_run, results,
             f"Scenario: {sc.get('title')}",
-            conflict_identity={key: scenario_body[key] for key in
-                               ("title", "description", "intros", "locations")},
+            conflict_identity={
+                "title": scenario_body["title"],
+                "description": scenario_body["description"],
+                # The API normalizes a plain intro string to a JSON-array string.
+                "intros": json.dumps([setup], ensure_ascii=False),
+                "locations": scenario_body["locations"],
+            },
         )
         if rec:
             built["records"]["scenarios"].append(
