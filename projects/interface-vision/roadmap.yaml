@@ -1321,29 +1321,16 @@ tasks:
   - id: t-041
     milestone: m2
     title: 'Audit the 9 pre-existing test:nav-manifest warnings for the same stale-dashboardTab bug class as t-038'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: null
-    note: >
-      Kaizen from t-038 (2026-08-02, kind_robots PR #1289). `npm run
-      test:nav-manifest` currently reports 9 warnings (tracked generically by
-      t-034), several of which look like the same class of bug t-038 fixed --
-      a content page's `dashboardTab` frontmatter pointing at a tab key that
-      doesn't actually exist on the named `dashboardKey`, silently falling back
-      to that dashboard's defaultTab instead of the intended tab. At least four
-      look concrete rather than cosmetic: content/channels/sanctuary/about.md,
-      giving.md, subscriptions.md, and butterflies.md (tabKey: sanctuary) all
-      set `dashboardTab` values ('about', 'giving', 'subscriptions', 'sanctuary')
-      against `dashboardKey: giftshop`, but none of those strings are real tabs
-      of the `giftshop` dashboard in dashboardConfigs -- worth checking whether
-      they were meant to target a different dashboardKey entirely (a 'sanctuary'
-      or similar dashboard that doesn't exist yet) or just have the wrong tab
-      name. Read each of the 9 warnings' actual page + dashboard, decide per-case
-      whether the fix is a `dashboardTab` correction (t-038's pattern) or the
-      `dashboardKey` itself is wrong, and clear as many as land safely; leave a
-      note on any that need a product decision.
+    note: |-
+      Kaizen from t-038 (2026-08-02, kind_robots PR #1289). `npm run test:nav-manifest` currently reports 9 warnings (tracked generically by t-034), several of which look like the same class of bug t-038 fixed -- a content page's `dashboardTab` frontmatter pointing at a tab key that doesn't actually exist on the named `dashboardKey`, silently falling back to that dashboard's defaultTab instead of the intended tab. At least four look concrete rather than cosmetic: content/channels/sanctuary/about.md, giving.md, subscriptions.md, and butterflies.md (tabKey: sanctuary) all set `dashboardTab` values ('about', 'giving', 'subscriptions', 'sanctuary') against `dashboardKey: giftshop`, but none of those strings are real tabs of the `giftshop` dashboard in dashboardConfigs -- worth checking whether they were meant to target a different dashboardKey entirely (a 'sanctuary' or similar dashboard that doesn't exist yet) or just have the wrong tab name. Read each of the 9 warnings' actual page + dashboard, decide per-case whether the fix is a `dashboardTab` correction (t-038's pattern) or the `dashboardKey` itself is wrong, and clear as many as land safely; leave a note on any that need a product decision.
+
+
+      Audited all nine stale dashboardTab warnings. Seven map safely to existing canonical tabs; Music Mentor and Video Generator remain documented product decisions because no matching dashboard tabs exist.
     claimed_by: 2026-08-02T031507Z-interface-vision-t-041-7c9a
     claimed_at: '2026-08-02T03:15:07Z'
-    updated: '2026-08-02T03:15:07Z'
+    updated: '2026-08-02T03:23:10Z'
