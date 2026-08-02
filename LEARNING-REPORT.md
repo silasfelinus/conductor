@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-02T01:46:44Z
+Generated: 2026-08-02T02:27:37Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **455**
-- Outcomes: blocked: 13, cancelled: 1, done: 441
+- Closed tasks recorded: **456**
+- Outcomes: blocked: 13, cancelled: 1, done: 442
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 14 | 100% |
+| interface-vision | 15 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 440 | 99% |
+| software | 441 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-02 `interface-vision/t-023` — Before sweeping a layout allow-list, audit exact-markup verifier locks so product cleanup updates the owning semantic contract instead of restoring obsolete markup.
 - 2026-08-02 `interface-vision/t-037` — The task note asked for 2-3 mockups since the fold "needs real product decisions," mirroring t-001/t-002's blank-canvas aesthetic-pick pattern -- but the three open questions here (does cockpit content collapse to one kr-toolbar line, do the two tab strips merge or does one become a dropdown, does the decorative wrapper become .kr-surface) were already answered by this project's own t-004 contract, which built kr-toolbar and kr-surface specifically for this shape of problem. Not every "needs product decisions" task is a blank aesthetic choice like theater/storybook/playground -- some are structural questions the project's existing rules already resolve. Building throwaway A/B/C toggle scaffolding for a question the contract already answers would have been the over-engineering the task itself warns against elsewhere. Also: vercel.json disables PR-preview deploys for claude/*/worker/*/ agent/*/conductor/* branches (cost-saving), so visual verification for agent-authored branches has to happen post-merge against the production deployment, not via a pre-merge Vercel preview -- AGENTS.md's documented preview technique (~L338-366) doesn't currently note this exception.
 
 - 2026-08-01 `interface-vision/t-013` — Before touching a large "un-nest this component" task, trace the actual mount path first -- conductor-page.vue's own 'overview' and 'brainstorm' viewMode branches, plus a chunk of its cockpit bar, were structurally unreachable because conductor-manager.vue (its sole importer) intercepts those workspaceCardKey values and renders a different component before ConductorPage ever mounts. A component can look nested/cluttered while actually being half dead code wearing live-code's clothes; grep for the component's importers and read the routing logic one level up before assuming every rendered-looking branch is reachable. Separately: when a task names multiple target files, verify each one's claim independently rather than assuming a shared premise -- art-manager.vue's "tabs are themselves dashboards" claim didn't hold on inspection even though the conductor-page.vue and user-manager.vue claims in the same task note did.
@@ -98,8 +99,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-01 `interface-vision/t-010` — Clean first-pass except for one CI miss caught by the pipeline itself: a new content/*.md page needs a matching content/channels/<channel>/ <tab>.md registration or verifyChannelContent.ts fails with "references unknown tab" -- worth checking for that registration file up front whenever adding a new channelKey/tabKey pair, not just when CI catches it. Also: when a task note bundles a well-scoped bug fix with a vaguer "and show X on cards" ask that has no existing data model to support it, splitting the vague half into its own ready task (rather than guessing at scope) kept this PR small and reviewable.
 
-- 2026-08-01 `interface-vision/t-003` — Task note prescribed a single risky change (flip app.vue's scroll ownership) with no mention of the 18-of-30 components/pages/*.vue files that would silently lose all scroll capability if flipped without per-page backfill first. Landed the safe structural half, split the audit-and-flip half into t-003b rather than attempting it blind in a sandbox with no local dev/DB to verify against -- treat "recommended fix" in a task note as a starting hypothesis to verify against the actual codebase, not a checklist to execute literally, especially for anything touching a shared ancestor every page depends on.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-02T01:46:44Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-02T02:27:37Z_
