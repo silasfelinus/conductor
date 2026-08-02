@@ -761,8 +761,8 @@ tasks:
   - id: t-015
     milestone: m3
     title: 'Close the Builder gaps and the orphaned facet expansions'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -779,6 +779,9 @@ tasks:
       missing .put for Bot. Also normalize the two join conventions — DreamFacet and
       ScenarioFacet have real relations with onDelete: Cascade, while CharacterFacet,
       BotFacet and RewardFacet in facet-catalog.prisma declare no Prisma relations at all.
+    claimed_by: 2026-08-02T042700Z-tv015
+    claimed_at: '2026-08-02T04:28:16Z'
+    updated: '2026-08-02T04:28:16Z'
 
   - id: t-016
     milestone: m3
