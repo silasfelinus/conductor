@@ -100,7 +100,7 @@ def proposal_section(heading: str, proposal: dict[str, Any] | None, cta: bool = 
                      images: list[dict[str, Any]] | None = None, page_link: str = "") -> str:
     del images
     if not proposal:
-        wording = "No calendar-matched built output is available." if "Yesterday" in heading else "No proposal is available yet."
+        wording = "No completed built output is available yet." if "Previous" in heading else "No proposal is available yet."
         return f'<h2 style="margin-bottom:2px">{esc(heading)}</h2><p style="color:#777"><i>{wording}</i></p>'
     title = esc(proposal.get("title"))
     idea = esc(proposal.get("idea"))
@@ -155,7 +155,7 @@ def build_payload(digest: dict[str, Any]) -> dict[str, Any]:
     ]
     if additional:
         recent_html = (
-            '<h2 style="margin-bottom:2px">📅 Other objects built today or yesterday</h2>'
+            '<h2 style="margin-bottom:2px">📅 Earlier completed bundles</h2>'
             + "".join(proposal_section("Built bundle", proposal) for proposal in additional)
         )
         divider = '<hr style="margin:22px 0;border:none;border-top:2px solid #eee">'
@@ -168,7 +168,7 @@ def build_payload(digest: dict[str, Any]) -> dict[str, Any]:
 
     status = str(digest.get("daily_dream_output_status") or "")
     if status and not digest.get("yesterday_output"):
-        marker = '<h2 style="margin-bottom:2px">🖼️ Yesterday\'s output</h2>'
+        marker = '<h2 style="margin-bottom:2px">🖼️ Previous completed output</h2>'
         note = f'<p style="color:#92400e;background:#fffbeb;padding:8px 12px;border-left:4px solid #f59e0b">{esc(status)}</p>'
         payload["htmlContent"] = payload["htmlContent"].replace(marker, marker + note, 1)
     return payload
