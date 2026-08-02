@@ -347,7 +347,7 @@ def update_built_data(path: Path, built: dict) -> None:
 
 
 # ── Record creation (kind_robots REST) ─────────────────────────────────────
-# Contracts verified against kind_robots server/api/* (2026-07-14):
+# Contracts verified against kind_robots server/api/* (2026-08-02):
 #   * response envelope {success, message, data, statusCode}; new id at data.id
 #   * POST /api/dreams, /api/characters: requireApiUser (Bearer beta-admin ok)
 #   * POST /api/rewards, /api/scenarios: validateApiKey (Bearer beta-admin ok)
@@ -408,9 +408,16 @@ def kr_call(method: str, endpoint: str, body: dict, dry_run: bool,
         elif "id" in resp:
             record = resp
     ok = status in (200, 201, 207) and record is not None
+    failure_message = None
+    if not ok:
+        if isinstance(resp, dict):
+            failure_message = str(resp.get("message") or resp.get("error") or resp)
+        else:
+            failure_message = str(resp)
     results.append({"endpoint": endpoint, "status": status, "ok": ok, "label": label,
                     "id": record.get("id") if (ok and isinstance(record, dict)) else None,
-                    "delete_base": _delete_base(endpoint)})
+                    "delete_base": _delete_base(endpoint),
+                    "message": failure_message})
     if not ok:
         print(f"  FAIL {status} {method} {endpoint} ({label}): {str(resp)[:200]}",
               file=sys.stderr)
@@ -525,21 +532,10 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                   "/api/dreams", world.get("id"))
     world_id = world.get("id") if world else None
 
-    # 2. The vibe (GENRE Dream) — world-graph fidelity; no card/sheet.
-    genre = kr_call("POST", "/api/dreams", {
-        "title": vibe.get("title", f"{title} Vibe"), "dreamType": "GENRE",
-        "slug": uniq_slug(vibe.get("title", f"{title} Vibe")),
-        "designer": DESIGNER, "creationSource": CREATION_SOURCE, "isPublic": True, "description": vibe_line,
-        "flavorText": vibe_line[:500], "icon": "kind-icon:palette",
-    }, dry_run, results, f"GENRE dream: {vibe.get('title')}")
-    if genre:
-        built["records"]["vibe"] = {"model": "Dream", "id": genre.get("id"),
-                                    "title": vibe.get("title")}
-    genre_id = genre.get("id") if genre else None
-    if world_id and genre_id:
-        kr_call("POST", "/api/dream-relations",
-                {"fromDreamId": world_id, "toDreamId": genre_id, "relationType": "RELATED"},
-                dry_run, results, f"relation: {title} -> {vibe.get('title')} (RELATED)")
+    # 2. The authored vibe describes the world. Reusable genre/style/theme data
+    #    lives in Facets now; apply_daily_dream_facets.py attaches the proposal's
+    #    persisted seed Facets after these records are created. Do not recreate the
+    #    retired GENRE Dream type as a shadow row.
 
     # 3. Locations (LOCATION Dreams + cards)
     built["records"]["locations"] = []
@@ -567,19 +563,15 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                 kr_call("POST", "/api/dream-relations",
                         {"fromDreamId": world_id, "toDreamId": loc_id, "relationType": "CONTAINS"},
                         dry_run, results, f"relation: {title} -> {loc.get('title')} (CONTAINS)")
-            if loc_id and genre_id:
-                kr_call("POST", "/api/dream-relations",
-                        {"fromDreamId": loc_id, "toDreamId": genre_id, "relationType": "RELATED"},
-                        dry_run, results, f"relation: {loc.get('title')} -> {vibe.get('title')} (RELATED)")
         queue_art(el, loc.get("title", "Location"),
                   f"{loc.get('art_direction', '')}, {vibe_line}, "
                   f"portrait key-art composition, {HOUSE_PROMPT_TAIL}",
                   "/api/dreams", dream.get("id") if dream else None)
 
-    # 4. Characters (real Character rows linked to the world/vibe Dream — no
+    # 4. Characters (real Character rows linked to the world Dream — no
     #    shadow CHARACTER dream; art attaches to the Character's own imagePath).
     built["records"]["characters"] = []
-    link_ids = [i for i in (world_id, genre_id) if i]
+    link_ids = [world_id] if world_id else []
     for ch in proposal.get("characters", []):
         el = slugify(ch.get("name", "character"))
         rec = kr_call("POST", "/api/characters", {
@@ -599,12 +591,12 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                   f"in the world of {title} ({vibe_line}), {HOUSE_PROMPT_TAIL}",
                   "/api/characters", rec.get("id") if rec else None)
 
-    # 5. Narrator (real Bot row linked to the world/vibe Dream — no shadow
+    # 5. Narrator (real Bot row linked to the world Dream — no shadow
     #    NARRATOR dream; art attaches to the Bot's own imagePath).
     nar = proposal.get("narrator", {})
     if nar:
         el = slugify(nar.get("name", "narrator")) + "-narrator"
-        link_ids = [i for i in (world_id, genre_id) if i]
+        link_ids = [world_id] if world_id else []
         rec = kr_call("POST", "/api/bots", {
             "name": nar.get("name", "Narrator"), "BotType": "NARRATOR",
             "designer": DESIGNER, "isPublic": True,
@@ -638,9 +630,9 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         rarity = str(rw.get("rarity", "COMMON")).upper()
         if rarity not in VALID_RARITIES:
             rarity = "COMMON"
-        link_ids = [i for i in (world_id, genre_id) if i]
+        link_ids = [world_id] if world_id else []
         rec = kr_call("POST", "/api/rewards", {
-            "name": rw.get("name", "Reward"), "designer": DESIGNER, "isPublic": True,
+            "name": rw.get("name", "Reward"), "isPublic": True,
             "description": rw.get("grants", ""),
             "flavorText": (rw.get("catch", "") or "")[:500],
             "effect": rw.get("grants", ""),
@@ -660,15 +652,14 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                   f"({vibe_line}), {HOUSE_PROMPT_TAIL}",
                   "/api/rewards", rec.get("id") if rec else None)
 
-    # 7. Scenarios (real Scenario rows, linked to the world, vibe + locations)
+    # 7. Scenarios (real Scenario rows, linked to the world + locations)
     built["records"]["scenarios"] = []
     loc_titles = ", ".join(l.get("title", "") for l in proposal.get("locations", []))
-    scenario_links = [i for i in [world_id, genre_id, *location_ids] if i]
+    scenario_links = [i for i in [world_id, *location_ids] if i]
     for sc in proposal.get("scenarios", []):
         el = slugify(sc.get("title", "scenario")) + "-scenario"
         rec = kr_call("POST", "/api/scenarios", {
-            "title": (sc.get("title", "Scenario"))[:190], "designer": DESIGNER,
-            "isPublic": True,
+            "title": (sc.get("title", "Scenario"))[:190], "isPublic": True,
             "description": sc.get("setup", ""),
             "intros": sc.get("setup", ""),
             "locations": loc_titles,
@@ -803,6 +794,7 @@ def run_build(date_override: Optional[str], dry_run: bool) -> dict[str, Any]:
                     "endpoint": row.get("endpoint"),
                     "status": row.get("status"),
                     "label": row.get("label"),
+                    "message": row.get("message"),
                 }
                 for row in failures
             ],
