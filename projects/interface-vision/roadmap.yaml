@@ -2073,9 +2073,33 @@ tasks:
       confirm its gallery appears with a route in verifyGalleryAdoption.ts's tier table.
       PR #1334 adopted kr-gallery inside a component nothing mounted, and the counter of the
       day scored it as progress -- the same mistake is available to every card in this list.
+
+      PROGRESS, 2026-08-03. components/gallery/kr-entity-card-body.vue exists (kind_robots PR
+      #1352) and three of the five cards are on it: scenario (#1352), bot and character
+      (#1355). verifyGalleryAdoption prints the count with each card's route. Line counts:
+      scenario 300 -> 248, bot 479 -> 399, character 449 -> 375. kr-art-plate picked up the
+      three props the migrations actually needed -- shape="wide" (4:3), an opt-in hoverZoom,
+      and fit (cover|contain, for Character portraits whose edges matter).
+
+      Where bot and character diverged from scenario they were converged ONTO scenario, which
+      is visible rather than pure code motion: compact art became 16:9 instead of a fixed
+      h-44/h-48; the full-cover base-300 gradient became the shared bottom scrim; meta chips
+      moved from inside the art footer to the row below it. One of those was a live bug --
+      both cards drew their selected check at top-2, which is where reactable-card renders its
+      actions row, so a selected card with actions visible was overlapping them.
+
+      THE REMAINING TWO ARE A DECISION, NOT A PORT. dream-card is the full-bleed poster
+      (padded=false, title over edge-to-edge art) and reward-card is an icon tile whose title
+      sits BELOW a fixed-height box that is usually a centred icon rather than art -- a
+      caption-over-art title would sit on a placeholder for most Rewards. The shared body puts
+      the title in the art caption, so both need a title-placement parameter (something like
+      titlePlacement: 'caption' | 'below') agreed first. Guessing at that shape is exactly how
+      a caption-meta row and a surface-toned scrim got written for bot-card in #1352 and then
+      deleted before commit for being unexercised; do not repeat that by porting reward
+      mechanically. Pick the placement rule, then both fall out in one pass.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-03T07:15:00Z'
+    updated: '2026-08-03T08:05:00Z'
 
   - id: t-065
     milestone: m3
