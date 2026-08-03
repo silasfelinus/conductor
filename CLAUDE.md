@@ -17,8 +17,13 @@ At the start of every session, before responding to any task, run a conductor sw
    career-transition/t-003 and pinball-hero/t-002 as live "needs-human" items after both had been `retired` for
    over a week). Before proposing a new project-status value to fix a "closed project keeps coming up" complaint,
    confirm the project isn't already correctly marked in `project-overrides.yaml` and simply not being checked.
-5. Check `TALKBACK.md` tail for any unresolved escalations or security flags
-6. Run `python scripts/build_dream_proposal.py --check --fetch`. If today's
+5. Read `docs/state-reconciliation.md`, then run:
+   - `python scripts/check_pr_merged_drift.py`
+   - `python scripts/audit_human_gates.py`
+   Treat exit 1 from either command as a reconciliation prompt, not permission to bypass a genuine gate. Both
+   commands intentionally exclude paused, retired, and finished projects unless `--include-inactive` is supplied.
+6. Check `TALKBACK.md` tail for any unresolved escalations or security flags
+7. Run `python scripts/build_dream_proposal.py --check --fetch`. If today's
    daily-dream proposal is missing, YOU author it — you are the creative generator
    (the script selects and validates the live Facets but does not write the idea):
    run `--brief` for the deterministic seed plan, then create exactly one dream
@@ -33,7 +38,8 @@ Then report:
 - **Branch** and whether the working tree is clean
 - **Open PRs** (if any Worker PRs are waiting for review)
 - **Ready tasks** (what the Worker should pick up next, in priority order)
-- **Needs-human gates** (what only Silas can unblock, grouped by project)
+- **Needs-human gates** from active projects only (what only Silas can unblock, grouped by project)
+- **State reconciliation** findings (merged-PR drift, stale-gate signals, or milestone/task mismatches)
 - **Any unresolved escalations** from TALKBACK
 - **Creation fallback**: any delegated non-dream scheduler card currently
   `building`, its authoritative home-project stage, and any new Notes from Silas
@@ -44,6 +50,22 @@ Then report:
 After the report, ask Silas what he wants to work on — or proceed directly if his first message is already a clear task.
 
 ## Session end
+
+### State reconciliation is part of done
+
+A merged implementation, recovered production incident, or completed human decision is not fully closed until the
+matching Conductor task agrees with reality. Follow `docs/state-reconciliation.md` before the final report:
+
+1. Re-fetch the live roadmap from `main` after the implementation PR merges or the incident recovery bar is met.
+2. Reconcile task status, `approved_by_human` when Silas decided it in the current session, claim fields,
+   dependencies, completion note, and milestone status.
+3. Use `task-events` or the documented close-out helper and verify the transition was applied. Event creation alone
+   is not completion.
+4. Run `python scripts/check_pr_merged_drift.py` and `python scripts/audit_human_gates.py` again when the session
+   changed roadmap state.
+5. Never keep a recovered incident at `needs-human` solely because root cause remains unknown. Close recovery when
+   its explicit criteria are met and track root-cause prevention separately.
+6. Never report gates from paused, retired, or finished projects unless Silas explicitly asked for an archive sweep.
 
 ### Standing instruction: open PRs automatically, merge when green
 
