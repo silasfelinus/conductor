@@ -2362,3 +2362,63 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-03T12:05:00Z'
+
+  - id: t-074
+    milestone: m3
+    title: 'Retire slot-reel-gallery, hero-showcase, swipe-deck -- now unmounted after the gallery-vocabulary consolidation'
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Follow-on from the 2026-08-03 gallery-vocabulary consolidation (kind_robots
+      branch claude/kind-robots-ui-redesign-g5xjho). Silas, on the Dreams gallery
+      controls: "why are we doing grid, row, reel, etc, when we should just be
+      doing card, hero, icon? ... this is excessive and not vetted." That change
+      collapsed eight overlapping vocabularies into utils/galleryVocabulary.ts and
+      dropped dream-gallery's private grid/row/reel/hero/swipe control down to the
+      shared Cards/List.
+
+      Dropping reel/hero/swipe left three components with no production mount:
+      components/navigation/slot-reel-gallery.vue (178 lines),
+      hero-showcase.vue (265), swipe-deck.vue (349) -- 792 total, previously
+      mounted ONLY by dream-gallery. swipe-deck already carries Silas's own review
+      in its header: "makes me think I'm at risk of deleting something instead of
+      navigating."
+
+      They are not dead code yet: all three remain discoverable WonderLab exhibits,
+      which is a legitimate state in this repo. Retiring them is a curation call,
+      which is why this is needs-human and not ready.
+
+      Two things block a clean delete:
+
+      1. DB half. Per docs/wonderlab-component-retirement-policy.md, retiring is
+         (a) delete the source file, (b) set the Component row's status to RETIRED
+         with a statusReason, (c) let reconcile flip isDiscovered on its next run.
+         Step (b) is an admin-UI action at components/wonderlab/lab-interact.vue:154
+         against the live DB -- an agent session has no DB access, so a Worker can
+         only do (a) and (c). Reviews survive on the retired exhibit either way;
+         reconcile never deletes rows.
+
+      2. Fixture half. hero-showcase is NOT dream-gallery-only, contrary to a first
+         read: it is a WonderLab preview fixture asserted by three verify scripts.
+         utils/scripts/verifyWonderLabAchievementNavigationFixtures.ts:27-40 loops
+         all three keys asserting synthetic items, and pins
+         hero-showcase intervalMs=60000 and slot-reel-gallery itemH=132;
+         verifyWonderLabLearningControlFixtures.ts:44 and
+         verifyWonderLabPassiveCardFixtures.ts:45 each assert
+         hero-showcase's props.items. Deleting the components means editing all
+         three scripts plus the fixture entries in
+         utils/wonderlab/previewFixturesAchievementNavigation.ts. The generated
+         artifacts (public/wonderlab-components.json,
+         utils/generated/wonderLabSourceEvidence.ts) are untracked and regenerate,
+         so they need no edit.
+
+      Silas's call, per the two open questions raised with the consolidation:
+      delete all three, or keep hero-showcase and promote it to a gallery-wide
+      option rather than a Dreams-only one -- a cinematic carousel is a genuinely
+      different job from a grid, and it is the one of the three with a real claim
+      to surviving.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-03T12:05:00Z'
