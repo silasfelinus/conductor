@@ -2017,3 +2017,23 @@ tasks:
     claimed_by: 2026-08-03T011153Z-interface-vision-t065-f8k2
     claimed_at: '2026-08-03T01:11:53Z'
     updated: '2026-08-03T01:35:00Z'
+
+  - id: t-066
+    milestone: m2
+    title: 'Sweep the remaining reactable-card consumers for the earned-karma batch-fetch pattern'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Kaizen from t-048's resolution (2026-08-03, conductor Agent-run session, kind_robots PR #1342).
+      art-gallery (t-046), reward-gallery (reference wiring, t-019), and dream-gallery (t-048) now all
+      batch-fetch /api/economy/karma-earned and pass the result into their card's earned-karma prop on
+      reactable-card. reward-gallery.vue's own comment says "the remaining eleven reactable-card
+      consumers can copy this pattern" -- audit which galleries/lists still don't (Bot, Character,
+      Scenario are likely candidates) and wire each one the same way: batch-fetch scoped to the
+      rendered/visible set (not the whole store), keyed by that object's refType in
+      ALLOWED_REF_TYPES (server/api/economy/karma-earned.post.ts), no award-call-site backfill unless
+      that object type isn't already tagging refType on its award call sites (check
+      server/utils/karma.ts call sites the way t-046's note did for ArtImage/Prompt before assuming).
+
