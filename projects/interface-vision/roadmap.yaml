@@ -1204,20 +1204,11 @@ tasks:
   - id: t-031
     milestone: m2
     title: 'Extend allowReviews-gated review UI to Dream, and give Project/Facet a first gallery card'
-    status: ready
-    owner: null
+    status: done
     passes: 0
     stakes: reversible
-    note: >
-      Split off t-011 (2026-08-01, kind_robots PR #1271) because it's a
-      materially bigger lift than the other four allowReviews-bearing types.
-      t-011 gated reactable-card's review button on allowReviews for
-      Bot/Character/Reward/Scenario -- the four types that already had both
-      the schema field (from t-007) and an existing reactable-card
-      integration. Dream, Project, and Facet are the other three of the seven
-      allowReviews-bearing models but have no reactable-card integration to
-      gate:
-      - Dream: components/dreams/dream-card.vue exists but uses its own
+    note: |-
+      Split off t-011 (2026-08-01, kind_robots PR #1271) because it's a materially bigger lift than the other four allowReviews-bearing types. t-011 gated reactable-card's review button on allowReviews for Bot/Character/Reward/Scenario -- the four types that already had both the schema field (from t-007) and an existing reactable-card integration. Dream, Project, and Facet are the other three of the seven allowReviews-bearing models but have no reactable-card integration to gate: - Dream: components/dreams/dream-card.vue exists but uses its own
         bespoke <article> wrapper/click-handling/selected-state styling, not
         reactable-card -- wrapping it will require reconciling its layout
         with reactable-card's own base classes (flex-col vs flex, bg-base-200
@@ -1228,11 +1219,11 @@ tasks:
         allowReviews UI today is an admin toggle in conductor-page.vue. Needs
         a real project-card.vue (or equivalent) before review UI has anywhere
         to attach.
-      - Facet: no gallery card component exists at all either.
-      This sandbox can't run `nuxt dev` (DATABASE_URL unreachable), so any of
-      this needs Vercel-preview visual verification per AGENTS.md's
-      "Cross-repo tasks" section, especially for the Dream layout
-      reconciliation.
+      - Facet: no gallery card component exists at all either. This sandbox can't run `nuxt dev` (DATABASE_URL unreachable), so any of this needs Vercel-preview visual verification per AGENTS.md's "Cross-repo tasks" section, especially for the Dream layout reconciliation.
+
+
+      Merged Kind Robots PR #1338 as 807577fe. Dream cards now use the shared reactable-card shell, preserving the full-bleed layout while adding allowReviews-gated reactions and review UI. All 13 final-head workflows completed successfully. Project and Facet card convergence remain tracked separately by the corrected ready task t-064.
+    updated: '2026-08-03T02:19:00Z'
 
   - id: t-032
     milestone: m2
