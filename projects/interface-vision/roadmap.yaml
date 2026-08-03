@@ -812,7 +812,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -906,9 +906,11 @@ tasks:
       Twenty-first scoped sweep: components/pages/rebel-button.vue. Confirmed it is genuinely live, not the orphan the tenth sweep once worried about -- content/button.md currently mounts :rebel-button directly, and the achievement catalog/verifier both still reference it. It declares zero scroll regions of its own (mdcMountedComponents exempts it from zero-scroll), so pages/[...slug].vue's ContentRenderer host already owns scroll for it -- the same kr-unbound shape as the wallet/giving/mermaids/privacy-page fixes.
 
       Twenty-first sweep merged as Kind Robots PR #1347 (e0786fc). Root cause of the wasted first attempt, filed as this cycle's kaizen (t-067): the component's actual template root is a classless `<main>`; the styled `hero flex flex-col ...` div one level deeper only looks like the root. verifyLayoutContract.ts's rootClassList checks the literal first tag, so the fix had to land kr-unbound on `<main>` itself, not the visually-styled div. root-surface: 12 -> 11 via --update; all other buckets unchanged (one-scroll 27, its own task t-047). vue-tsc, eslint, verifyMdcScrollOwnership.ts (24 existing violations, no new ones) all clean; all 14 PR checks green. The layout-contract allow-list is not yet zero, so t-017 returns to ready for the next bounded sweep; remaining root-surface is 11 entries: 5 MDC-mounted -page.vue components still needing visual verification before a safe conversion (appmaker-page.vue, super-form.vue, wishmaster-page.vue, registration-page.vue, memory-dungeon.vue), conductor-page.vue (its own tracked conversion, t-061), pages/[...slug].vue (the ContentRenderer host itself), and the 4 admin wonderlab-review-*.vue pages (deliberately last).
+
+      Added the non-opinionated kr-unbound root marker to the Superkate receipt page and ratcheted the root-surface layout-contract baseline from eleven entries to ten.
     claimed_by: 2026-08-03T061500Z-interface-vision-t-017-q6m4
     claimed_at: '2026-08-03T06:15:00Z'
-    updated: '2026-08-03T06:15:00Z'
+    updated: '2026-08-03T06:19:00Z'
     owner: worker
 
   - id: t-018
