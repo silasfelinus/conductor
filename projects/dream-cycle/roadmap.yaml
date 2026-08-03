@@ -110,11 +110,11 @@ tasks:
   - id: t-006
     milestone: m4
     title: 'Daily Dream maintenance: author proposals and verify the canonical pipeline'
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-03T21:43:00Z'
+    updated: '2026-08-03T21:44:00Z'
     depends_on: t-004
     note: |-
       CURRENT CONTRACT: read PIPELINE.md. Maintain today's deterministic six-asset proposal, fold in Silas notes, inspect pinned retries, verify Facets/art/digest evidence, and replenish useful idea inventory. Never create Daily Dream objects manually. Only delegated non-dream scheduler cards may advance stage by stage in their home projects.
@@ -127,9 +127,8 @@ tasks:
       Merged PR #1635. The Daily Dream digest now reports only today's current proposal/build and the immediately preceding completed bundle; older history is suppressed. Process task events, Security Audit, Daily Dream Contract, and Worker PR CI all completed successfully.
 
       Repaired the Home / For You Daily Dream slideshow query. It now loads public canonical dream-cycle PITCH worlds plus the legacy designer fallback, rather than restricting results to the current user's obsolete Facet Engine rows. Canonical vibe shadow rows without PitchSheets are excluded.
-    owner: worker
-    claimed_by: 2026-08-03T213400Z-dream-cycle-t-006-home-slideshow-a4e7
-    claimed_at: '2026-08-03T21:34:00Z'
+
+      Merged kind_robots PR #1383. Home / For You now loads canonical public dream-cycle PITCH worlds plus the legacy Daily Dream fallback, and excludes retired vibe shadow rows without PitchSheets. TypeScript and all twelve contract checks completed successfully; live production API verification found nine actual world builds.
   - id: t-007
     milestone: m5
     title: Generate dream-cycle project art (icon, card, hero)
