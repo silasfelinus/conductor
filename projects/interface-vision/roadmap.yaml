@@ -1861,40 +1861,14 @@ tasks:
   - id: t-054
     milestone: m2
     title: 'Three content routes rendered nothing; MDC mounts are now validated in CI'
-    status: review
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    note: >
-      Filed from the 2026-08-02 navigation sweep, shipping in kind_robots PR #1328.
-      /navigation-health and /project-placement -- both ADMIN CHANNEL TABS -- plus /sheets
-      mounted component names that resolve to nothing, so the routes rendered blank rather
-      than erroring. Cause: nuxt.config.ts registers components with pathPrefix:false, so an
-      MDC mount is the BARE filename; all three carried a directory prefix
-      (:navigation-navigation-health for what is really :navigation-health, and so on).
-
-      The reason it survived is the part worth keeping: verifyChannelContent.ts and
-      verifyNavManifest.ts parse frontmatter only, and verifyLayoutContract.ts -- the one
-      script that already extracts MDC mount names for its one-mdc rule -- never checked they
-      resolve to anything. PR #1328 adds that check to verifyChannelContent.ts, resolving
-      against the component files on disk rather than .nuxt/components.d.ts (a build artifact
-      the script must not depend on, since it runs standalone in CI before any nuxi prepare),
-      and reports the near-match in the failure message. It was proved to fail on a
-      re-introduced typo before being trusted. 68 mounts now resolve.
-
-      Also in that PR: pages/[...slug].vue now honours a `redirect:` frontmatter key, guarded
-      to same-origin paths. content/facet-gallery.md had carried `redirect: /facets` since the
-      Facet browser became canonical and verifyFacetGallery.ts accepts that key as valid, but
-      nothing read it -- the contract described an intent the app never implemented. And
-      content/sheets.md was deleted rather than repointed: no manifest entry, no inbound links,
-      and its job is already done by dream-sheet-toolbar.vue inside dream-gallery.vue.
-
-      NEEDS VISUAL CONFIRMATION before this closes: open /navigation-health,
-      /project-placement and /facet-gallery on the preview. A source-text contract can prove
-      the mount resolves; it cannot prove the page looks right.
+    note: 'Closed via state reconciliation: PR #1328 (kind_robots) merged 2026-08-02, fixing the three blank routes and adding the layout-contract mount-resolution + gallery-adoption checks described in the task note. Task was left at status: review with no queued task-event; check_pr_merged_drift.py flagged it during this session''s startup sweep.'
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-02T15:00:00Z'
+    updated: '2026-08-03T08:29:02Z'
 
   - id: t-060
     milestone: m2
