@@ -7,7 +7,7 @@ def test_daily_dream_entities_share_the_world_and_vibe_facets():
         encoding="utf-8"
     )
 
-    assert source.count("link_ids = [world_id] if world_id else []") == 3
+    assert source.count("link_ids = [world_id] if world_id else []") == 2
     assert '"dreamType": "GENRE"' not in source
     assert (
         "scenario_links = [i for i in "
