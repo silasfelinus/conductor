@@ -6214,3 +6214,27 @@ records:
     sibling, encode that relationship as a structured field (remaining_scope_task) that
     every selector checks, not just prose in the note that only a human or a careful
     session catches by reading the full history.'
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-028
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Deliberately shipped only the schema-only landable core (kind_robots PR #1381,
+    additive EntityArtImage join table) instead of the full "unify art-history +
+    retire path-prefix scheme" scope the task description asked for. Reading
+    entityArt.ts and the history-delete endpoint turned up a real live-endpoint
+    semantics change bundled into what looked like a straightforward migration
+    (history/[artImageId].delete.ts currently destroys the underlying ArtImage row,
+    which is only safe because every non-project history entry today is a private
+    throwaway duplicate -- once real join rows exist, "delete history" must become
+    an unlink, not a delete). Split the wiring into t-079 with that landmine
+    documented up front rather than risk a rushed, subtly-wrong live-endpoint change
+    riding along with an additive migration. Also hit a real task-ID collision
+    mid-session: t-078 got claimed by a concurrent session for an unrelated mobile
+    fix before this session's companion conductor PR merged; recovered per the
+    documented rotation-collision protocol (next_free_task_id.py, merge main,
+    renumber, don't force-push) with no lost work on either side.
