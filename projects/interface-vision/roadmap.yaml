@@ -812,7 +812,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -898,9 +898,13 @@ tasks:
       Scoped nineteenth layout-contract sweep: adopt the shared kr-surface root marker on the For You manager and ratchet root-surface from 14 to 13.
 
       Reviewed and merged kind_robots PR #1344 at 35aae0b758bda19cd62276cd6e0a315779d03ab4 after all 13 final-head workflows completed successfully. The For You manager now adopts the shared kr-surface root marker and the root-surface allow-list shrank from 14 entries to 13. The numeric exit criterion is not yet zero, so the task remains open and returns to ready for the next bounded sweep.
+
+      Twentieth scoped sweep: storybook-library-page.vue, MDC-mounted (content/storybook.md) but already self-bounding -- its root's hand-rolled utility string was byte-for-byte identical to kr-surface's own @apply definition, and it manages its own internal layout (a capped-height recent-stories panel plus a flex-1 overflow-hidden host for StorybookPage) rather than relying on the content-host's scroll, the same shape serendipity-page.vue was in before its own kr-surface swap (PR #1336).
+
+      Twentieth sweep merged as Kind Robots PR #1345 (802fff7, squashed). storybook-library-page.vue's root now uses kr-surface. root-surface: 13 -> 12 via --update; all other buckets unchanged (one-scroll 27, its own task t-047). vue-tsc, eslint, and layout-contract all clean; all 14 PR checks green. The layout-contract allow-list is not yet zero, so t-017 returns to ready for the next bounded sweep; remaining root-surface is 12 entries: 6 MDC-mounted -page.vue components still needing visual verification before a safe conversion (appmaker-page.vue -- already has its own overflow-y-auto/h-full, so converting it is a real behavior change, not a pure rename, and needs confirmation the content-host's own scroll doesn't also need to engage -- super-form.vue, wishmaster-page.vue, registration-page.vue, memory-dungeon.vue, rebel-button.vue), conductor-page.vue (its own tracked conversion, t-061), pages/[...slug].vue (the ContentRenderer host itself), and the 4 admin wonderlab-review-*.vue pages (deliberately last).
     claimed_by: 2026-08-03T042800Z-interface-vision-t-017-agentrun2
     claimed_at: '2026-08-03T04:28:54Z'
-    updated: '2026-08-03T04:28:54Z'
+    updated: '2026-08-03T04:43:53Z'
     owner: worker
 
   - id: t-018
