@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-08-03T01:35:03.931309+00:00",
+  "generated_at": "2026-08-03T07:48:11.083720+00:00",
   "summary": {
     "roadmaps": 45,
     "active_projects": 26,
-    "tasks": 835,
-    "ready": 55,
+    "tasks": 840,
+    "ready": 57,
     "waiting": 47,
-    "needs_human": 32,
-    "in_progress": 6,
-    "done": 685,
+    "needs_human": 27,
+    "in_progress": 3,
+    "done": 696,
     "errors": 3,
-    "warnings": 9,
-    "info": 62
+    "warnings": 4,
+    "info": 61
   },
   "projects": [
     {
@@ -20,20 +20,20 @@
       "override_status": "active",
       "priority_index": 1,
       "autonomous": false,
-      "task_count": 66,
+      "task_count": 71,
       "counts": {
-        "done": 38,
-        "needs-human": 3,
-        "ready": 24,
+        "done": 43,
+        "needs-human": 1,
+        "ready": 26,
         "review": 1
       },
       "open_count": 28,
-      "human_attention": 3,
-      "ready": 24,
+      "human_attention": 1,
+      "ready": 26,
       "waiting": 0,
       "claimed": 0,
       "review": 1,
-      "done": 38
+      "done": 43
     },
     {
       "slug": "challenge-center",
@@ -140,17 +140,16 @@
       "autonomous": false,
       "task_count": 33,
       "counts": {
-        "done": 31,
-        "needs-human": 1,
+        "done": 32,
         "ready": 1
       },
-      "open_count": 2,
-      "human_attention": 1,
+      "open_count": 1,
+      "human_attention": 0,
       "ready": 1,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 31
+      "done": 32
     },
     {
       "slug": "packmaker",
@@ -197,17 +196,17 @@
       "autonomous": false,
       "task_count": 53,
       "counts": {
-        "done": 49,
-        "needs-human": 2,
+        "done": 50,
+        "needs-human": 1,
         "ready": 2
       },
-      "open_count": 4,
-      "human_attention": 2,
+      "open_count": 3,
+      "human_attention": 1,
       "ready": 2,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 49
+      "done": 50
     },
     {
       "slug": "kindrobots-unraid",
@@ -407,16 +406,16 @@
       "autonomous": false,
       "task_count": 95,
       "counts": {
-        "done": 92,
-        "needs-human": 3
+        "done": 93,
+        "needs-human": 2
       },
-      "open_count": 3,
-      "human_attention": 3,
+      "open_count": 2,
+      "human_attention": 2,
       "ready": 0,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 92
+      "done": 93
     },
     {
       "slug": "serendipity",
@@ -864,17 +863,16 @@
       "autonomous": false,
       "task_count": 6,
       "counts": {
-        "done": 2,
-        "needs-human": 1,
-        "review": 3
+        "done": 5,
+        "needs-human": 1
       },
-      "open_count": 4,
+      "open_count": 1,
       "human_attention": 1,
       "ready": 0,
       "waiting": 0,
       "claimed": 0,
-      "review": 3,
-      "done": 2
+      "review": 0,
+      "done": 5
     }
   ],
   "findings": [
@@ -912,41 +910,6 @@
       "project": "davinci",
       "task": null,
       "message": "Active project has no open tasks; mark finished/paused or add an intentional recurring task."
-    },
-    {
-      "severity": "warning",
-      "code": "SOFT_NEEDS_HUMAN",
-      "project": "interface-vision",
-      "task": "t-056",
-      "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
-    },
-    {
-      "severity": "warning",
-      "code": "SOFT_NEEDS_HUMAN",
-      "project": "interface-vision",
-      "task": "t-064",
-      "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
-    },
-    {
-      "severity": "warning",
-      "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
-      "project": "lora-ingestion",
-      "task": "t-004",
-      "message": "Claimed/review task has no parseable updated timestamp."
-    },
-    {
-      "severity": "warning",
-      "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
-      "project": "lora-ingestion",
-      "task": "t-005",
-      "message": "Claimed/review task has no parseable updated timestamp."
-    },
-    {
-      "severity": "warning",
-      "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
-      "project": "lora-ingestion",
-      "task": "t-006",
-      "message": "Claimed/review task has no parseable updated timestamp."
     },
     {
       "severity": "warning",
@@ -1195,17 +1158,10 @@
     },
     {
       "severity": "info",
-      "code": "NEEDS_HUMAN_NOTE_FORMAT",
+      "code": "APPROVAL_WITHOUT_GATE",
       "project": "interface-vision",
       "task": "t-056",
-      "message": "needs-human note does not use the AGENTS.md FOR SILAS action format."
-    },
-    {
-      "severity": "info",
-      "code": "NEEDS_HUMAN_NOTE_FORMAT",
-      "project": "interface-vision",
-      "task": "t-064",
-      "message": "needs-human note does not use the AGENTS.md FOR SILAS action format."
+      "message": "approved_by_human is set on a task that is not human-gated."
     },
     {
       "severity": "info",
