@@ -2469,6 +2469,17 @@ tasks:
       of this is already solved elsewhere before designing something new. Verify visually (Vercel
       preview per AGENTS.md's front-end note) once changed, since this is a real rendered-output bug,
       not just a lint/contract violation.
+
+
+      Cross-reference: t-051's own note independently confirms character-flip-card.vue is "a
+      near-verbatim copy of character-interact.vue's transcript AND its two prompt-button grids,
+      so those two are one edit for two surfaces and should be done together" -- corroborates this
+      task's finding that character-flip-card.vue duplicates character-interact.vue rather than
+      being a distinct flip-card. t-051's scope is migrating both onto the shared kr-chat-window
+      conversation kit (a DRY/consolidation concern); this task's scope is the narrower, more
+      urgent functional bug (wrong character rendered). Whichever lands first should leave a note
+      for the other -- fixing t-076's prop bug by relocating the dashboard content into
+      character-interact.vue may substantially overlap with or complete t-051's consolidation.
     claimed_by: null
     claimed_at: null
     updated: '2026-08-03T17:45:00Z'
