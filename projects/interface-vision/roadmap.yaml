@@ -1612,18 +1612,22 @@ tasks:
     passes: 0
     stakes: reversible
     note: >
-      Flagged during the t-007 card/hero/icon work and never filed. Rendered card PNGs run
-      about 544KB each, and nothing downsamples them for grid views -- a 68-card gallery is
-      roughly 37MB over the wire. resolveArtVariantSrc (utils/artImageSrc.ts) already
-      degrades card -> card base64 -> full-size, and resolveArtImageThumbSrc already prefers
-      thumbnailPath, so the resolver side is in place; what is missing is anything that
-      WRITES a thumbnail for entity art. Check whether the render queue can emit a webp
-      thumbnail alongside each card, or add a backfill in the shape of
-      utils/scripts/backfillEntityCardHeroArt.ts. Measure before and after -- the 37MB
-      figure is an estimate from file sizes, not a captured transfer.
+      Flagged during the t-007 card/hero/icon work and never filed. Rendered card PNGs run about 544KB each, and nothing downsamples them for grid views -- a 68-card gallery is roughly 37MB over the wire. resolveArtVariantSrc (utils/artImageSrc.ts) already degrades card -> card base64 -> full-size, and resolveArtImageThumbSrc already prefers thumbnailPath, so the resolver side is in place.
+
+      SCOPED DOWN (2026-08-03). A source investigation narrowed this considerably. The original framing -- "nothing downsamples them" -- is misleading:
+
+      THE PROBLEM IS FORMAT, NOT DIMENSIONS. The card variant is ALREADY purpose-rendered at 512x768 (utils/scripts/backfillEntityCardHeroArt.ts:60, SLOTS.cardPath). Galleries are not loading full-size art by mistake; a 512x768 PNG simply weighs ~544KB. Re-rendering or transcoding those to webp at the same dimensions is the ~10x win, and it needs no new size logic.
+
+      TOOLING IS ALREADY INSTALLED, ADOPTION IS NOT. sharp@0.34.5 and @nuxt/image@2.0.0 are both already dependencies. But @nuxt/image is registered as a bare module (nuxt.config.ts:202) with NO `image:` config block anywhere, and exactly ONE component in the repo uses NuxtImg (components/user/user-picture.vue). So the delivery-side route is essentially greenfield.
+
+      HIGHEST-LEVERAGE EDIT POINT: components/gallery/kr-gallery.vue:50-55 renders a raw `<img :src>`. It already backs 2 of 7 core-object galleries and is slated to back all 7 (t-060), so one change there covers every gallery at once. Two viable routes, and they are NOT equivalent in risk:
+        (a) DELIVERY SIDE -- swap that `<img>` for `<NuxtImg>` with width/format hints. No backfill, no DB write, no re-render cost. BUT the default IPX provider must be able to fetch and transform the art host, which requires an `image.domains` allowlist entry; a misconfigured IPX breaks EVERY image rather than merely leaving them large. Must be proven against the real art host before it goes near main.
+        (b) STORAGE SIDE -- emit a webp alongside each card in the render queue, plus a backfill in the shape of backfillEntityCardHeroArt.ts. Slower and needs a migration, but it cannot break existing rendering because the resolver already degrades when a variant is absent.
+
+      NOT VERIFIABLE FROM AN AGENT SESSION. Both routes need real art to measure. The sandbox has sharp and Chromium, but DATABASE_URL points at the production host (acrocatranch.com:5544) which is unreachable from the agent network, and public/images/ is empty (4KB) -- there is no local art to transform or weigh. The 37MB figure remains an estimate from file sizes, not a captured transfer, and MUST be measured before and after by someone with real access. Do not ship route (a) without that measurement.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-02T12:30:00Z'
+    updated: '2026-08-03T10:20:30Z'
 
   - id: t-053
     milestone: m3
@@ -2222,26 +2226,22 @@ tasks:
     passes: 0
     stakes: reversible
     note: >
-      Seen in the Projects screenshot Silas sent with the 2026-08-02 UI review (sent as the
-      GOOD example -- Projects is the gallery he named as the shape the rest should follow,
-      which is why this is worth fixing rather than tolerating).
+      Seen in the Projects screenshot Silas sent with the 2026-08-02 UI review (sent as the GOOD example -- Projects is the gallery he named as the shape the rest should follow, which is why this is worth fixing rather than tolerating).
+      On the top row of /conductor, project description text ("Ship a functional MVP quickly..." and its neighbours) renders above or behind the card artwork instead of below it in the body. Lower rows look correct.
 
-      On the top row of /conductor, project description text ("Ship a functional MVP
-      quickly..." and its neighbours) renders above or behind the card artwork instead of
-      below it in the body. Lower rows look correct, which points at a stacking or grid-row
-      sizing issue on the first row rather than at the card markup being wrong outright --
-      possibly the art plate's absolutely-positioned scrim, possibly a row-height collapse
-      before images have loaded and reserved their space.
+      STILL BLOCKED ON A PREVIEW (2026-08-03). A source investigation ruled out the obvious causes but could NOT reproduce or locate the defect, and the fix must not be guessed at -- this is Silas's most-used page and a speculative CSS change could make it worse. What was checked, so the next attempt does not repeat it:
 
-      Start at components/pages/conductor-project-gallery-page.vue and the project card body
-      it renders. Reproduce at the width in the screenshot (desktop, wide) -- it may not
-      appear at narrow widths where the grid drops to one column.
+      - kr-gallery's card markup is structurally sound. components/gallery/kr-gallery.vue:49-100 renders the art inside `<div class="relative overflow-hidden" :class="imageWrapClass">` and the text in a SIBLING `<div class="p-3">` that follows it in normal flow. The text is not absolutely positioned, so it can only overlap the art if the art wrapper collapses to zero height.
+      - The wrapper cannot collapse. imageWrapClass (kr-gallery.vue:190-198) gives every mode a height: heroes `min-h-64`, list `min-h-40`, icons `size-24`, cards `aspect-[4/3]`. min-height on a block element holds even though all the wrapper's children are `absolute inset-0`.
+      - The tailwind.css `:has()` theory is dead. The four global overrides that used to patch the public project gallery were already removed by t-017's first pass (assets/css/tailwind.css:157-163 documents this). The two that remain are scoped to the ADMIN project detail view.
+      - Not a stale-screenshot artifact. kr-gallery landed in this page on 2026-08-01 (d1b652e, PR #1265), before the 2026-08-02 screenshot. The only later touch, be7268b (PR #1326, 2026-08-02 10:37), swapped root utilities for kr-surface/kr-scroll and did not touch card markup.
 
-      Separate defect from the /facets and /dreams work in kind_robots PR #1351; filed so it
-      does not evaporate. No source-text contract can see this one -- it needs the preview.
+      WHICH COMPONENT IS ACTUALLY WRONG IS UNCONFIRMED. content/conductor.md mounts `:conductor-manager`, NOT conductor-project-gallery-page.vue. conductor-page.vue (2202 lines) carries its own public Project gallery -- t-017's note describes baking auto-fit grid columns and overflow-x directly into it. Establish which component renders the row in the screenshot BEFORE editing anything; the original note's pointer at conductor-project-gallery-page.vue may be wrong.
+
+      CANNOT BE VERIFIED FROM AN AGENT SESSION. The sandbox has Chromium and a DATABASE_URL, but the DB is the production host (acrocatranch.com:5544) and is unreachable from the agent network, so /conductor cannot be rendered with real project data locally. This needs either Silas's eyes on a deployed preview, or a fresh screenshot at the failing width (desktop/wide -- it may not appear where the grid drops to one column) with a DOM inspection of the offending card.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-03T07:15:00Z'
+    updated: '2026-08-03T10:19:00Z'
 
   - id: t-070
     milestone: m3
