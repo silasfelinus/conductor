@@ -2297,7 +2297,7 @@ tasks:
   - id: t-073
     milestone: m3
     title: 'Fix the one-scroll SHAPE A false positives by hoisting a shared kr-scroll above mutually-exclusive tab branches'
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: |-
@@ -2315,9 +2315,10 @@ tasks:
       Verified avatar-picker.vue as a genuine SHAPE A candidate: three v-show tabs (gallery/upload/generate) are mutually exclusive at runtime, only upload and generate declared their own overflow-y-auto. Hoisted a single shared .kr-scroll wrapper above all three (v-show keeps hidden siblings in the DOM but display:none excludes them from scroll-height, so this is safe). Ratchets one-scroll from 26 to 25. Also examined mural-manager.vue (three simultaneously-visible panes, genuine Shape B, not a hoist) and butterfly-flip.vue (front/back panels can both be mounted at once when useFlipEffect is false, not safe to merge). kind_robots PR #1372 open against main (claude/relaxed-lovelace-kz9il2).
 
       Merged Kind Robots PR #1372 as e479e3ab4c29a3c507daa778c4a0ae36bd019859. avatar-picker.vue's gallery/upload/generate v-show tabs (mutually exclusive at runtime) now share one .kr-scroll wrapper instead of two independent overflow-y-auto declarations. All 15 required checks passed. Ratchets one-scroll from 26 to 25. Also examined and released (not safe Shape A hoists): mural-manager.vue (three panes visible simultaneously, genuine Shape B) and butterfly-flip.vue (front/back panels can both be mounted at once when useFlipEffect is false). The task remains open for the other unclassified one-scroll candidates.
-    claimed_by: 2026-08-03T123116Z-interface-vision-t-073-agentrun
-    claimed_at: '2026-08-03T12:31:17Z'
-    updated: '2026-08-03T12:47:20+00:00'
+    claimed_by: 2026-08-03T142823Z-interface-vision-t-073-agent
+    claimed_at: '2026-08-03T14:28:23Z'
+    updated: '2026-08-03T14:28:23Z'
+    owner: worker
 
   - id: t-074
     milestone: m3
