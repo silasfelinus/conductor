@@ -812,7 +812,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -894,9 +894,9 @@ tasks:
       Eighteenth scoped sweep: three more single-context MDC-mounted pages already shaped exactly like the wallet-page case -- giving-page.vue, mermaids-page.vue, privacy-page.vue, each mounted from exactly one content/*.md and carrying no height/overflow classes of their own on the root, so kr-unbound is a safe zero-behavior-change fix.
 
       Eighteenth sweep merged as Kind Robots PR #1343 (e67aa33). All three roots now carry kr-unbound. root-surface: 17 -> 14 via --update; all other buckets unchanged (one-scroll 27, its own task t-047). vue-tsc and eslint clean on all three files, verifyMdcScrollOwnership.ts holds (24 existing violations, no new ones), all 14 PR checks green including layout-contract. wishmaster-page.vue was considered and skipped this cycle: unlike the other MDC-mounted entries it's also embedded as a dashboard tab (conductor-manager.vue) and already declares its own overflow-y-auto/h-full min-h-0 on the root, so converting it needs to confirm that self-scroll still makes sense in the bounded tab context before touching it -- not a same-day judgment call without visual verification. memory-dungeon.vue (on both one-scroll and root-surface) was also skipped: a much larger conditional-layout game component (splash screen vs. in-game board+log panes, each with their own internal scroll regions) that needs real visual verification before restructuring. The layout-contract allow-list is not yet zero, so t-017 returns to ready for the next bounded sweep; remaining root-surface is 9 MDC-mounted entries (about-page, appmaker-page, for-you-manager, memory-dungeon, rebel-button, storybook-library-page, super-form, wishmaster-page, registration-page), plus conductor-page.vue (its own tracked conversion, t-061), pages/[...slug].vue (the ContentRenderer host itself), and the 4 admin wonderlab-review-*.vue pages (deliberately last).
-    claimed_by: 2026-08-03T035500Z-interface-vision-t-017-agentrun
-    claimed_at: '2026-08-03T03:58:44Z'
-    updated: '2026-08-03T04:04:15Z'
+    claimed_by: 2026-08-03T041141Z-interface-vision-t-017-m8q4
+    claimed_at: '2026-08-03T04:11:41Z'
+    updated: '2026-08-03T04:11:41Z'
     owner: worker
 
   - id: t-018
