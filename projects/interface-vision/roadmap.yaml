@@ -2049,25 +2049,15 @@ tasks:
   - id: t-065
     milestone: m3
     title: 'Add a next-free-task-id helper so new tasks stop hand-picking ids that can collide'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-062's resolution (2026-08-03, conductor Agent-run session): this
-      roadmap has now collided on the same id twice in one day (t-053/t-054/t-055/t-056
-      each used twice, then the fix for that -- renumbering into t-058..t-061 --
-      landed on top of pre-existing t-061 and t-062). `scripts/validate_roadmaps.py`
-      now fails CI on a collision after the fact, but nothing stops a session from
-      hand-picking an id that's already in use in the first place. Add a small helper
-      (`scripts/next_free_task_id.py`, or extend `claim_task.py`'s existing
-      origin/main-checked reservation pattern) that computes the lowest unused
-      `t-NNN` for a project by reading `origin/main` fresh -- same rotation-collision
-      shape `claim_task.py` already solves for task *claims*, applied to id
-      *assignment* instead. Wire it into the parts of AGENTS.md that tell agents to
-      file a new kaizen/follow-on task (the Reviewer's "Kaizen on merge" step,
-      Worker's "create new ready tasks" rule) so the next collision is prevented,
-      not just caught.
+    note: |-
+      Kaizen from t-062's resolution (2026-08-03, conductor Agent-run session): this roadmap has now collided on the same id twice in one day (t-053/t-054/t-055/t-056 each used twice, then the fix for that -- renumbering into t-058..t-061 -- landed on top of pre-existing t-061 and t-062). `scripts/validate_roadmaps.py` now fails CI on a collision after the fact, but nothing stops a session from hand-picking an id that's already in use in the first place. Add a small helper (`scripts/next_free_task_id.py`, or extend `claim_task.py`'s existing origin/main-checked reservation pattern) that computes the lowest unused `t-NNN` for a project by reading `origin/main` fresh -- same rotation-collision shape `claim_task.py` already solves for task *claims*, applied to id *assignment* instead. Wire it into the parts of AGENTS.md that tell agents to file a new kaizen/follow-on task (the Reviewer's "Kaizen on merge" step, Worker's "create new ready tasks" rule) so the next collision is prevented, not just caught.
+
+
+      Added a live-origin next-free task id helper with unit coverage; implementation PR follows.
     claimed_by: 2026-08-03T011153Z-interface-vision-t065-f8k2
     claimed_at: '2026-08-03T01:11:53Z'
-    updated: '2026-08-03T01:11:53Z'
+    updated: '2026-08-03T01:20:00Z'
