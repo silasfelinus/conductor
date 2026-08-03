@@ -6052,3 +6052,24 @@ records:
     committed to main under a stale one-off branch condition. Detection without enforcement doesn't
     stop the bug; wire the check into something CI actually gates (a pytest-covered script) or it
     will collide again, as it did here even on the very fix meant to prevent it.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-065
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    The implementation half of this task (scripts/next_free_task_id.py, PR #1588) merged, but the
+    task couldn't close because it was left with a queued rearm task-event that the processor
+    rejected every run (`rearm requires recurring: true` -- t-065 isn't a recurring task). A
+    connector-only session can't tell mid-task whether a target task is recurring without reading
+    the live roadmap first; docs/github-connector-worker.md listed `rearm` and `ready` as
+    interchangeable options with no mention of the recurring gate, so the wrong operation was a
+    natural mistake, not carelessness. A concurrent session fixed the stuck event with the correct
+    `operation: ready` while this session was independently mid-flight on the actual remaining
+    work (wiring scripts/next_free_task_id.py into AGENTS.md's task-id-assignment call sites);
+    rebasing onto that fix rather than duplicating it is what let both land cleanly. Documented
+    the rearm-vs-ready distinction in docs/github-connector-worker.md so the next connector
+    session doesn't repeat it.

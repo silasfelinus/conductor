@@ -62,6 +62,16 @@ This is the connector equivalent of `scripts/claim_task.py`: the safety property
 
 For `review`, `done`, `ready`, `rearm`, `needs-human`, or `blocked`, create a small unique YAML file directly on Conductor `main`:
 
+`rearm` and `ready` are NOT interchangeable: the processor rejects `rearm` with a hard
+error (`rearm requires recurring: true`) unless the target task's roadmap entry has
+`recurring: true` (e.g. a `dream-cycle`/`autonomous: true` project's standing sweep).
+For any other task returning to `ready` after partial work — the normal case for a
+one-off software/content/proposal task that isn't finished yet — use `operation: ready`
+instead; it sets `status: ready`, clears `owner`, and appends your `note`, without the
+recurring check. Filing `rearm` against a non-recurring task leaves the event stuck
+failing in `task-events/` every processor run until someone notices and fixes it by
+hand (interface-vision/t-065, 2026-08-03).
+
 ```yaml
 version: 1
 project: ai-art-academy

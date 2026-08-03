@@ -315,6 +315,9 @@ violation regardless of whether the action seems helpful.
 - Set `status: challenged` on a task where it disagrees with the Reviewer's rejection
 - Run `scripts/fetch_todos.py`, `complete_todo.py`, `resolve_deps.py`
 - Create new `ready` tasks in roadmap.yaml for out-of-scope issues discovered during work
+  — get the id from `python scripts/next_free_task_id.py <project>` (checks `origin/main`
+  fresh) rather than hand-picking one, to avoid colliding with an id another session just
+  assigned (see "Rotation collisions")
 
 ### Worker (OpenAI) — CANNOT
 - Merge work that is human-gated, outward-facing, irreversible, security-sensitive, or blocked by failed verification unless Silas explicitly approves it
@@ -463,6 +466,9 @@ delete it now, not an observation for later. (Kaizen from challenge-center/t-002
 - Write, overwrite, or remove the `retry_context:` field on a task per the Failure triage rules
 - Reference past TALKBACK entries when explaining a decision
 - Create new `ready` tasks in roadmap.yaml for unrelated issues spotted during review
+  — get the id from `python scripts/next_free_task_id.py <project>` (checks `origin/main`
+  fresh) rather than hand-picking one, to avoid colliding with an id another session just
+  assigned (see "Rotation collisions")
 - Escalate a `challenged` task to `needs-human` for Silas to resolve
 
 ### Reviewer (Claude) — CANNOT
@@ -649,8 +655,12 @@ in the PR. Recurring tasks don't count toward milestone progress.
   the failure category and a one-line lesson.
 - **Kaizen on merge**: after every successful merge, create exactly one new `ready` task
   in the project's roadmap from the Worker's kaizen suggestion (or substitute your own if
-  theirs is weak). One sentence title, `stakes: reversible`. This compounds improvement
-  across cycles automatically. Check `LEARNING-REPORT.md` first — target a systematic
+  theirs is weak). One sentence title, `stakes: reversible`. Get the id from
+  `python scripts/next_free_task_id.py <project>` (checks `origin/main` fresh) rather than
+  hand-picking one — this is the fix for the id-collision class that produced
+  interface-vision/t-065 (`t-061`/`t-062` each hand-assigned twice in one day). This
+  compounds improvement across cycles automatically. Check `LEARNING-REPORT.md` first
+  — target a systematic
   weakness over a generic improvement when one applies (see "Learning ledger").
 - **On a `challenged` task:** read the Worker's TALKBACK entry carefully. If the Worker's
   case has merit, adjust your decision and append a response. If not, escalate to
