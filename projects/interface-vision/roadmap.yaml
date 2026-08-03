@@ -1952,7 +1952,7 @@ tasks:
     claimed_at: null
     updated: '2026-08-02T15:40:00Z'
 
-  - id: t-061
+  - id: t-063
     milestone: m3
     title: 'A CI step piped through tee can never fail: verifyFacetArtworkMigration is dead'
     status: ready
@@ -1987,48 +1987,60 @@ tasks:
     claimed_at: null
     updated: '2026-08-02T21:15:00Z'
 
-  - id: t-062
+  - id: t-064
     milestone: m2
-    title: 'kr-gallery cannot absorb the five rich-card galleries as it stands'
-    status: needs-human
+    title: 'kr-gallery: the card BODY is the duplication, not the shell'
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
     note: >
-      Blocks the back half of t-055, and changes what that task is. Facets adopted cleanly
-      (kind_robots PR #1334) because it renders plain cards. The other five do not, and the
-      reason is structural rather than effort:
+      Silas, 2026-08-02: "the custom cards are a big aspect to the ui refactor, while they all
+      do have custom fields, a lot of the customization is the same stuff with variations for
+      the schema objects. the final version obviously is wanting a single display that is
+      consistent across galleries, all with those bells and whistles." So the destination is
+      settled -- ONE card, parameterized per object. This records how far it already is.
 
-      (1) THEY DELEGATE TO RICH PER-OBJECT CARDS. bot-gallery mounts bot-card (479 lines),
-      reward-gallery mounts reward-card (464), character-gallery mounts character-card (449),
-      dream-gallery mounts dream-card (571), scenario-gallery mounts scenario-card (300).
-      Those cards carry select/edit/delete emits, art loading, karma badges and review
-      affordances. kr-gallery renders its OWN <button> with title/description/meta/badges and
-      offers only an `item-trailing` slot -- there is no slot for the item body, so adopting
-      it today means replacing a rich card with a generic one. That is a straight regression,
-      and DESIGN-BRIEF.md explicitly warns this project is "not a .kr-panel crusade" because
-      forcing bespoke surfaces onto shared classes already regressed crafted UI once
-      (global-ui t-012/t-023).
+      CORRECTION TO THIS TASK'S FIRST DRAFT: it claimed five bespoke cards. Wrong. FOUR of the
+      five already share components/wonderlab/reactable-card.vue (214 lines), which owns the
+      <article>, the selected border and tint, the karma badge, the reaction button and the
+      review panel -- bot-card, character-card, reward-card and scenario-card all wrap it, as
+      do ten other cards (model, lora, theme, chat, component, collection, image, checkpoint).
+      dream-card was the only holdout and was moved onto it in kind_robots PR #1338 (t-031),
+      which is also how Dreams finally got a reaction affordance at all.
 
-      (2) THEIR LAYOUTS ARE NOT kr-gallery'S FOUR MODES. bot-gallery and reward-gallery each
-      have exactly two: a scoped `.bot-grid` / `.reward-grid` using
-      `repeat(auto-fill, minmax(160px, 1fr))`, and a `.bot-row` / `.reward-row` that is a
-      HORIZONTAL scroller (`display:flex; overflow-x:auto`) for their dropdown/row variants.
-      kr-gallery's cards/heroes/icons/list are fixed breakpoint grids; nothing in it is a
-      horizontal scroller. Mapping row->list would visibly change both layouts on surfaces
-      Silas uses daily.
+      SO THE REMAINING DUPLICATION IS THE BODY, and it is very consistent. Prop surfaces are
+      near-identical across all five: entity, selected, compact, showImage, showActions,
+      showDescription, showMeta, allowEdit, allowDelete on every one; showReaction and
+      showDebug on four; allowClone on three. The genuine per-object extras are small --
+      showPersonality/showPromptPreview/showLaunchButton (bot), showStats/showModeButtons/
+      showInlineInteract (character), showStats/showSelectButton/earnedKarma (reward),
+      showInspirations (scenario), showStats (dream). Emits are the same shape too: edit,
+      delete, clone plus one primary action that differs per object (select / launch /
+      chat+adventure / choose).
 
-      So the honest reading is that kr-gallery encodes the PROJECT gallery's vocabulary --
-      unsurprising, it was extracted from conductor-project-gallery-page.vue in t-008 -- and
-      "all seven core objects share one gallery" may mean one SHELL (grid classes, skeleton,
-      error, empty, mode bar, preference persistence) hosting each object's own card, not one
-      card. NEEDS-HUMAN because that is a product decision about how uniform the galleries
-      should look, not a refactor: (a) give kr-gallery a default item slot plus the two
-      missing layouts and adopt shell-only, keeping each rich card; (b) converge the five
-      cards onto one shared card and accept the visual change; or (c) restate the beta gate.
+      What the body actually repeats: the <figure> art plate with its gradient scrim and
+      overlaid title, the description block, the meta chips, and the Yours/Mature badges.
+      scenario-card.vue:81's scrim class string is CHARACTER-FOR-CHARACTER IDENTICAL to
+      kr-art-plate.vue:41, and scenario-card and character-card already import
+      resolveArtVariantSrc and then hand-roll the frame around it anyway.
 
-      Whichever way it goes, verify on the Vercel preview per AGENTS.md -- these are daily
-      drivers and no source-text contract can judge a grid change.
+      DRIFT WORTH FIXING WHILE CONVERGING (all found by comparing the five side by side):
+      character-card and dream-card each declare BOTH `selected` and `isSelected` for one
+      state (dream's was collapsed to an activeSelected computed in PR #1338, keeping both
+      props since callers pass both spellings; character-card still has the pair);
+      reward-card says `fallbackIcon` where the others say `fallbackImage`; dream-card
+      defaults showDescription false and allowDelete false where every other card defaults
+      both true.
+
+      SUGGESTED SHAPE: a kr-entity-card-body taking {title, description, meta, badges, art
+      source} plus slots for the per-object extras, sitting inside reactable-card. That keeps
+      the bells and whistles (they live in the shell, already shared) and converges the part
+      that is actually copy-pasted. Verify each migration on the Vercel preview per AGENTS.md
+      -- these are daily drivers and no source-text contract can judge a card's look.
+
+      NOT blocked on a decision any more; the decision is made. Kept as m2 because "one
+      review affordance" and "one gallery" both depend on it.
     claimed_by: null
     claimed_at: null
     updated: '2026-08-02T21:15:00Z'
