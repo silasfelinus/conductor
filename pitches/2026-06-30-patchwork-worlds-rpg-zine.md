@@ -1,7 +1,7 @@
 # Pitch: Patchwork Worlds — One-Shot TTRPG Adventure Zine
 date: 2026-06-30
 project-target: digital-storefront
-status: awaiting-silas
+status: rejected
 
 ## The idea
 A rules-light tabletop RPG adventure zine containing 3 self-contained one-shot scenarios designed for 2–4 players and a GM with zero prep. Setting is "patchwork portal fantasy" — travelers pulled from different worlds who must cooperate across culture and language barriers to solve a problem and get home. Tone: queer-positive, low combat, character-driven, hopeful. System-agnostic with stat blocks for one popular free system (likely Cairn or Mörk Borg Lite). Sells as pdf-rpg on itch.io and Gumroad.
