@@ -920,11 +920,13 @@ tasks:
       Merged Kind Robots PR #1357 (kr-unbound on both, root-surface 4 -> 2) reasoning that kr-unbound cannot clip by construction (no overflow-hidden, unlike kr-surface/kr-stage) and that verifyMdcScrollOwnership.ts's clean pass proved the MDC-mount context was safe. That reasoning covered only the MDC route -- missed a SECOND mount site: components/pages/conductor-manager.vue renders `<WishmasterPage v-if=... />` / `<AppmakerPage v-else-if=... />` directly under its own `.kr-surface` root (overflow-hidden, no `.kr-scroll` child), which does not scroll for its children at all. In that context each page's own `overflow-y-auto` was the ONLY scroll mechanism, not a redundant nested one -- exactly the risk t-070 (filed from the twenty-third sweep) had already flagged by name ("wishmaster-page.vue is also embedded as a conductor-manager.vue dashboard tab") but which this sweep's own kr-unbound reasoning didn't re-check before merging. Caught via a routine post-merge codebase grep for all importers of both components, within the same session, before any live user traffic; reverted via Kind Robots PR #1358 (restores original overflow-y-auto classes and the baseline's original 4 root-surface entries). Verified the revert: verifyLayoutContract.ts and verifyMdcScrollOwnership.ts both back to the exact pre-#1357 baseline, vue-tsc clean, all 14 PR checks green.
 
       Lesson for the next sweep on this task (also copied into t-070's note): before converting any component's root scroll-ownership classes, grep the whole repo for every importer of that component, not just its one content/*.md MDC mount -- a component can be reachable through more than one shell with a different scroll contract, and kr-unbound's "cannot clip" property only holds if a scrolling ancestor genuinely exists in every reachable context, not just the one being edited. t-017 returns to ready with root-surface unchanged at 4 (memory-dungeon.vue, pages/[...slug].vue, and now appmaker/wishmaster-page.vue again, pending t-070's proper fix).
+
+      Prepared a bounded root-surface sweep for pages/[...slug].vue, adding a shared kr-unbound root around the content host states and shrinking the root-surface baseline from two entries to one.
     claimed_by: 2026-08-03T101720Z-interface-vision-t-017-v3q8
     claimed_at: '2026-08-03T10:17:20Z'
-    updated: '2026-08-03T10:17:20Z'
+    updated: '2026-08-03T10:23:00Z'
     owner: worker
-    status: claimed
+    status: review
 
   - id: t-018
     milestone: m3
