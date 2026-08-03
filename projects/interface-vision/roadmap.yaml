@@ -795,7 +795,7 @@ tasks:
   - id: t-016
     milestone: m3
     title: 'Decide FacetKind vs FacetTaxonomy'
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: |-
@@ -807,7 +807,10 @@ tasks:
 
       NOW ON THE CRITICAL PATH. The builder revision (see the creation-flow work) makes the Facet catalog the builder's choice vocabulary, so a settled taxonomy is a prerequisite rather than the "nothing else is blocked on this" the old note claimed. Scope: 177 FacetKind refs vs 203 FacetTaxonomy refs across .ts/.vue/.prisma. Needs a prisma migration plus a re-seed check, since seedFacetCatalog rebuilds 1611 rows.
     approved_by_human: true
-    updated: '2026-08-03T10:03:41Z'
+    updated: '2026-08-03T10:28:52Z'
+    owner: worker
+    claimed_by: claude-agentrun-2026-08-03T102852-t016
+    claimed_at: '2026-08-03T10:28:52Z'
 
   - id: t-017
     milestone: m3
