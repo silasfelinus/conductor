@@ -6096,3 +6096,14 @@ records:
     isn't to skip verification -- it's to verify what CAN be checked (CI, structural reasoning about the
     change's own properties) and be explicit in the roadmap/PR about what's still open, rather than silently
     declaring full verification done.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-048
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A task released as actionable/stale (blocked on an unrelated component not yet migrated) can
+    become trivially doable again once other, unrelated work lands -- re-verify the live premise from
+    code before trusting a stale roadmap note, rather than assuming a prior session's blocker still holds.
