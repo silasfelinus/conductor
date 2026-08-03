@@ -2,7 +2,7 @@
 
 date: 2026-07-28
 project-target: digital-storefront
-status: awaiting-silas
+status: approved
 
 ## The idea
 
