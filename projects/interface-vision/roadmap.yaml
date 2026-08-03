@@ -1462,22 +1462,19 @@ tasks:
   - id: t-043
     milestone: m2
     title: 'Extend user-galleries.vue to cover Facets and Projects (5/7 object types today)'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: null
-    note: >
-      Kaizen from t-014 (2026-08-02, kind_robots PR #1292). The new user dashboard's
-      "owned/created objects" section embeds the existing user-galleries.vue, which
-      covers dreams/art/bots/characters/scenarios/rewards but not Facets or Projects —
-      5 of the 7 core object types. Extend it with facetStore/projectStore sections
-      following the same per-type-section pattern (getStoreArray/getUserOwnedItems
-      helpers already generalize cleanly), so "owned/created objects" is actually
-      complete. Low risk, purely additive to an existing component.
+    note: |-
+      Kaizen from t-014 (2026-08-02, kind_robots PR #1292). The new user dashboard's "owned/created objects" section embeds the existing user-galleries.vue, which covers dreams/art/bots/characters/scenarios/rewards but not Facets or Projects — 5 of the 7 core object types. Extend it with facetStore/projectStore sections following the same per-type-section pattern (getStoreArray/getUserOwnedItems helpers already generalize cleanly), so "owned/created objects" is actually complete. Low risk, purely additive to an existing component.
+
+
+      Added Facet and Project sections to user-galleries.vue using the existing store-backed section pattern.
     claimed_by: 2026-08-03T141143Z-interface-vision-t-043-j7p4
     claimed_at: '2026-08-03T14:11:43Z'
-    updated: '2026-08-03T14:11:43Z'
+    updated: '2026-08-03T14:21:00Z'
 
   - id: t-044
     milestone: m3
