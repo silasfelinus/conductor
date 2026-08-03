@@ -7,5 +7,8 @@ session: 2026-08-03T111341Z-interface-vision-t-067-b4n8
 updated: '2026-08-03T11:30:00Z'
 note: >-
   Merged Kind Robots PR #1364 as 0eb1778a4fa44e7e8b954444a917c9bd83f6ccaa. Added an inline warning above rootClassList that the root-surface verifier inspects the literal first element inside template, not a visually dominant nested wrapper. All 11 final-head workflows completed successfully.
-learning: >-
-  Put root-surface markers on the literal opening template element; a styled nested wrapper is invisible to rootClassList and can waste a sweep even when it looks like the page root.
+learning:
+  kind: software
+  stakes: reversible
+  lesson: >-
+    Put root-surface markers on the literal opening template element; a styled nested wrapper is invisible to rootClassList and can waste a sweep even when it looks like the page root.
