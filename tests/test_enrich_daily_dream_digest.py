@@ -121,20 +121,34 @@ def test_today_built_bundle_is_not_repeated_as_previous_output(tmp_path):
     assert result["yesterday_output"]["title"] == "Previous Bundle"
 
 
-def test_recent_outputs_follow_creation_order_not_calendar_window(tmp_path):
-    older = proposal(
-        tmp_path / "older.md",
+def test_digest_reports_only_current_and_previous_bundle(tmp_path):
+    oldest = proposal(
+        tmp_path / "oldest.md",
+        "2026-07-09",
+        built=True,
+        title="Oldest",
+        built_at="2026-07-19T10:00:00-07:00",
+    )
+    previous = proposal(
+        tmp_path / "previous.md",
         "2026-07-10",
         built=True,
-        title="Older",
+        title="Previous",
         built_at="2026-07-20T10:00:00-07:00",
     )
-    latest = proposal(
-        tmp_path / "latest.md",
-        "2026-07-11",
+    current = proposal(
+        tmp_path / "current.md",
+        "2026-07-31",
         built=True,
-        title="Latest",
-        built_at="2026-07-25T10:00:00-07:00",
+        title="Current",
+        built_at="2026-07-31T10:00:00-07:00",
     )
-    result = enrich.enrich_digest({}, [older, latest], today=date(2026, 7, 31), probe_images=False)
-    assert [row["title"] for row in result["recent_dream_outputs"]] == ["Latest", "Older"]
+    result = enrich.enrich_digest(
+        {"recent_dream_outputs": [{"title": "Legacy stale output"}]},
+        [oldest, previous, current],
+        today=date(2026, 7, 31),
+        probe_images=False,
+    )
+    assert result["tomorrow_proposal"]["title"] == "Current"
+    assert result["yesterday_output"]["title"] == "Previous"
+    assert result["recent_dream_outputs"] == []
