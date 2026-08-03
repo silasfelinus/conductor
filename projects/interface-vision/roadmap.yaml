@@ -2146,8 +2146,7 @@ tasks:
   - id: t-067
     milestone: m3
     title: 'Document the root-tag footgun in verifyLayoutContract.ts (root-surface checks the literal first tag, not the visually-styled wrapper)'
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -2161,9 +2160,11 @@ tasks:
       first instead of assuming it's whichever nested element carries the layout classes.
 
       Added a focused inline warning that rootClassList inspects the literal first element inside template, not the visually dominant nested wrapper.
+
+      Merged Kind Robots PR #1364 as 0eb1778a4fa44e7e8b954444a917c9bd83f6ccaa. Added an inline warning above rootClassList that the root-surface verifier inspects the literal first element inside template, not a visually dominant nested wrapper. All 11 final-head workflows completed successfully.
     claimed_by: 2026-08-03T111341Z-interface-vision-t-067-b4n8
     claimed_at: '2026-08-03T11:21:00Z'
-    updated: '2026-08-03T11:24:00Z'
+    updated: '2026-08-03T11:30:00Z'
 
 
   - id: t-068

@@ -6122,3 +6122,13 @@ records:
     scope to a bounded, mechanical consolidation PR instead of a full schema migration. Splitting the
     genuinely destructive half (dropping the physical column) into its own irreversible-stakes task
     (t-072) rather than attempting it in the same pass kept the landed PR reversible and auto-mergeable.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-067
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Put root-surface markers on the literal opening template element; a styled nested wrapper is
+    invisible to rootClassList and can waste a sweep even when it looks like the page root.
