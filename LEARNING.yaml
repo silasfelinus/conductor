@@ -6153,3 +6153,14 @@ records:
   failure_category: null
   lesson: Source-text layout verifiers must accept Vue's supported component-tag casing conventions; regression
     fixtures should exercise component-rooted templates rather than only native lowercase HTML roots.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-061
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Two mutually-exclusive v-if/v-else branches gated by a fixed-per-session flag (admin vs.
+    non-admin) are the same SHAPE A pattern as tab switches -- hoist one shared kr-scroll wrapper
+    above the pair instead of each branch declaring its own overflow-y-auto.
