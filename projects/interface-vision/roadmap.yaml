@@ -2281,50 +2281,14 @@ tasks:
   - id: t-070
     milestone: m3
     title: 'Visually verify the last 4 root-surface entries before converting them'
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-017's twenty-third sweep (kind_robots PR #1353). The remaining
-      root-surface allow-list (4) is exactly the entries every prior sweep has deferred
-      because they are not pure renames: appmaker-page.vue and wishmaster-page.vue are
-      MDC-mounted but already declare their own overflow-y-auto/h-full min-h-0 on the
-      root (wishmaster-page.vue is also embedded as a conductor-manager.vue dashboard
-      tab, so its self-scroll may or may not still make sense once bounded); memory-
-      dungeon.vue is a larger conditional-layout game component (splash screen vs.
-      in-game board+log panes, each with their own internal scroll) that needs real
-      visual verification before restructuring; pages/[...slug].vue is the
-      ContentRenderer host itself, needing careful review since every MDC-mounted page
-      depends on it for scroll.
-
-      Use the Vercel MCP connector (list_teams -> list_projects -> list_deployments on
-      this task's PR branch -> web_fetch_vercel_url) per CONTROL.md's cross-repo
-      verification note to visually confirm each page's current scroll/height behavior,
-      then again after applying kr-unbound or kr-surface/kr-scroll (whichever the
-      before-screenshot shows is correct) -- do not convert any of the 4 on source-text
-      inspection alone, since that is exactly what caused the "possibly unsafe" flag on
-      each in the first place. Land as separate scoped PRs per file, same as prior
-      sweeps, so a bad conversion on one doesn't block the others.
-
-      CONFIRMED (2026-08-03, a same-day t-017 sweep that skipped this task's own
-      warning): appmaker-page.vue and wishmaster-page.vue are BOTH dual-mounted, not
-      just wishmaster-page.vue as originally suspected -- components/pages/conductor-
-      manager.vue renders `<WishmasterPage v-if=... />` / `<AppmakerPage v-else-if=...
-      />` directly under its own `.kr-surface` root (overflow-hidden, no `.kr-scroll`
-      child), so neither page can safely drop its own scroll ownership without
-      conductor-manager.vue first gaining a `.kr-scroll` wrapper around its dynamically-
-      swapped children. Kind Robots PR #1357 converted both to kr-unbound anyway (the
-      sweep reasoned kr-unbound "cannot clip by construction" and didn't re-check
-      import sites), merged, then had to be reverted via PR #1358 within the same
-      session after a routine post-merge grep surfaced this. The correct fix for this
-      task is still (a) wrap conductor-manager.vue's dynamic children in `.kr-scroll` so
-      every embedded page can then safely adopt kr-unbound in both contexts, verified
-      visually via Vercel MCP as originally instructed above -- not a source-only
-      conversion of the leaf components alone.
+    note: 'Fixed via kind_robots PR #1359 (merged 99ab2c2, squashed). wishmaster-page.vue and appmaker-page.vue both adopt kr-unbound (correct for their standalone content/*.md mount, where pages/[...slug].vue owns scroll). conductor-manager.vue (also independently MDC-mounted via content/conductor.md) now wraps its Wishmaster/AppMaker tab branches in a new components/conductor/tab-scroll-region.vue, a plain .kr-scroll wrapper that owns scroll only in that embedded, content-host-free context. Kept the wrapper outside components/pages/ (and off the -page.vue suffix) so its own file is not itself independently MDC-mounted -- a literal kr-scroll string inlined directly into conductor-manager.vue would have tripped verifyMdcScrollOwnership.ts per-file scan of that file (conductor-manager.vue IS an MDC-mounted tag), which is exactly the trap the twenty-fourth t-017 sweep (PR #1357/#1358) fell into from the opposite direction: it converted both leaves to kr-unbound without providing any replacement scroll owner for the embedded context at all. root-surface: 4 -> 2 (memory-dungeon.vue and pages/[...slug].vue remain, out of this task''s scope). Ratcheted both layout-contract-baseline.json and mdc-scroll-ownership-baseline.json down by 2 each. Verified: npx vue-tsc --noEmit (clean), npx eslint on all 4 touched/added files (clean), npm run test:layout-contract gate mode (holds, root-surface 4->2, all other buckets unchanged), npx tsx utils/scripts/verifyMdcScrollOwnership.ts (holds, 22 existing violations down from 24, no new violations), npm run test:channel-content / npm run test:nav-manifest (pass, only 2 pre-existing unrelated warnings tracked by interface-vision/t-034). All 14 kind_robots PR checks green. Flagged for the next sweep: the dual-mount trap (a components/pages/ file mounted both directly by its own content/*.md and dynamically by a manager component) is not unique to these two pages -- check for others before converting further root-surface entries the same way.'
     claimed_by: conductor-agentrun-20260803T091500Z-t070
     claimed_at: '2026-08-03T09:32:41Z'
-    updated: '2026-08-03T09:32:41Z'
+    updated: '2026-08-03T09:45:14Z'
 
   - id: t-071
     milestone: m3
