@@ -1397,25 +1397,23 @@ tasks:
   - id: t-040
     milestone: m2
     title: 'Document the vercel.json PR-preview exclusion for agent branches in AGENTS.md'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     depends_on: null
     note: >
-      Kaizen from t-037 (2026-08-02, kind_robots PR #1288). AGENTS.md's
-      Vercel-preview verification section (~L338-366) documents fetching a PR's
-      preview deployment via list_deployments/web_fetch_vercel_url, but
-      kind_robots' vercel.json sets `git.deploymentEnabled` to false for
-      `claude/*`, `agent/*`, `worker/*`, and `conductor/*` branch prefixes
-      (cost-saving) -- so no preview ever builds for an agent-authored branch,
-      and a session following that section as written will spend time hunting
-      for a deployment that was never going to exist. Add a note to that
-      section: for branches matching those prefixes, skip straight to the
-      post-merge production-deployment verification path (merge on CI-green
-      per the standing merge instruction, then poll list_deployments for the
-      resulting production deploy, fetch the relevant route once READY, and
-      check get_runtime_errors) instead of looking for a preview first.
+      RESOLVED BY REMOVING THE CAUSE (2026-08-03), not by documenting it. Silas, asked what he could do to unblock agent UI verification, approved flipping the flag: "how do i flip it? I approve it happening".
+
+      kind_robots vercel.json now sets `claude/*: true` in git.deploymentEnabled. Agent-authored branches get a real preview deployment, so front-end work can be verified BEFORE it merges instead of only against production afterwards. agent/*, worker/*, and conductor/* stay false for cost -- the original saving is preserved for the prefixes that don't need visual review.
+
+      This surfaced because the exclusion actively cost a session: interface-vision/t-069 (description text over card art on /conductor) could not be visually checked at all, and was handed back unverified with only a list of ruled-out causes. That is the failure mode the flip removes.
+
+      AGENTS.md's Vercel section is corrected in the same change. It previously asserted "Vercel already builds a preview for every PR automatically", which was simply false for every agent branch and sent at least one session hunting for a deployment that could never exist. It now states that git.deploymentEnabled in kind_robots' vercel.json -- not Vercel's defaults -- decides, names which prefixes are enabled, and documents the post-merge production fallback for the disabled ones.
+
+      Also documented while confirming the flip: a docs-only merge shows as CANCELED rather than deploying, because vercel.json's ignoreCommand (scripts/vercel-ignore-build.mjs) skips builds whose changed files are all docs/tests. That is correct behavior and had already been mistaken for a failed deploy once.
+    approved_by_human: true
+    updated: '2026-08-03T10:46:40Z'
 
   - id: t-041
     milestone: m2
