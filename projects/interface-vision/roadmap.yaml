@@ -917,11 +917,17 @@ tasks:
       Twenty-third scoped sweep: the 4 admin wonderlab-review-*.vue pages (pages/admin/wonderlab-review-generator.vue, -plan.vue, -rollout.vue, wonderlab-reviews.vue), deliberately last per the task's own priority order -- daily-drivers first, admin last. All 4 are standalone routed pages (not MDC-mounted) sharing the identical shape: a single root `<main>` combining bounding and scroll in one element, the same pattern already fixed on click-leaderboard.vue/coloring-page.vue/resources.vue earlier in this sweep series.
 
       Merged Kind Robots PR #1353 (squashed 8d71c44). Each root split into a `kr-surface` (bounded, non-scrolling) wrapper around a `kr-scroll` (the one scroll region) child -- zero behavior change, same computed styles just divided across two elements. root-surface: 8 -> 4 via --update; all other buckets unchanged (one-scroll 27, its own task). Verified via `npx vue-tsc --noEmit` (clean), `npx eslint` on all 4 touched files (clean apart from one pre-existing unrelated `no-unused-expressions` error on wonderlab-reviews.vue:243, confirmed present on main via `git stash`), `npm run test:layout-contract` (holds, no new violations), `npx tsx utils/scripts/verifyMdcScrollOwnership.ts` (24 existing violations, no new ones), and the 4 page-specific contract checks (verifyReviewDraftCuratorUi.ts, verifyReviewDraftGeneration.ts, verifyWonderLabReviewBatchPlan.ts, verifyWonderLabReviewRolloutAudit.ts), all passed. All 13 kind_robots PR checks green. The layout-contract allow-list is not yet zero, so t-017 returns to ready for the next bounded sweep; remaining root-surface (4) is entirely the 3 MDC-mounted -page.vue components that already declare their own scroll on the root (appmaker-page.vue, wishmaster-page.vue, memory-dungeon.vue -- converting any of these is a real behavior change needing visual verification, not a pure rename, per t-057's clipping-risk caution) plus pages/[...slug].vue (the ContentRenderer host itself, needing its own careful review since every MDC-mounted page depends on it).
+
+      Twenty-fourth scoped sweep, attempted and reverted: appmaker-page.vue and wishmaster-page.vue, two of the three MDC-mounted -page.vue components t-023's prior note flagged as needing visual verification before converting.
+
+      Merged Kind Robots PR #1357 (kr-unbound on both, root-surface 4 -> 2) reasoning that kr-unbound cannot clip by construction (no overflow-hidden, unlike kr-surface/kr-stage) and that verifyMdcScrollOwnership.ts's clean pass proved the MDC-mount context was safe. That reasoning covered only the MDC route -- missed a SECOND mount site: components/pages/conductor-manager.vue renders `<WishmasterPage v-if=... />` / `<AppmakerPage v-else-if=... />` directly under its own `.kr-surface` root (overflow-hidden, no `.kr-scroll` child), which does not scroll for its children at all. In that context each page's own `overflow-y-auto` was the ONLY scroll mechanism, not a redundant nested one -- exactly the risk t-070 (filed from the twenty-third sweep) had already flagged by name ("wishmaster-page.vue is also embedded as a conductor-manager.vue dashboard tab") but which this sweep's own kr-unbound reasoning didn't re-check before merging. Caught via a routine post-merge codebase grep for all importers of both components, within the same session, before any live user traffic; reverted via Kind Robots PR #1358 (restores original overflow-y-auto classes and the baseline's original 4 root-surface entries). Verified the revert: verifyLayoutContract.ts and verifyMdcScrollOwnership.ts both back to the exact pre-#1357 baseline, vue-tsc clean, all 14 PR checks green.
+
+      Lesson for the next sweep on this task (also copied into t-070's note): before converting any component's root scroll-ownership classes, grep the whole repo for every importer of that component, not just its one content/*.md MDC mount -- a component can be reachable through more than one shell with a different scroll contract, and kr-unbound's "cannot clip" property only holds if a scrolling ancestor genuinely exists in every reachable context, not just the one being edited. t-017 returns to ready with root-surface unchanged at 4 (memory-dungeon.vue, pages/[...slug].vue, and now appmaker/wishmaster-page.vue again, pending t-070's proper fix).
     claimed_by: conductor-agentrun-20260803T083800Z-t017c
     claimed_at: '2026-08-03T08:39:47Z'
     updated: '2026-08-03T08:39:47Z'
-    owner: worker
-    status: claimed
+    owner: null
+    status: ready
 
   - id: t-018
     milestone: m3
@@ -2284,9 +2290,25 @@ tasks:
       inspection alone, since that is exactly what caused the "possibly unsafe" flag on
       each in the first place. Land as separate scoped PRs per file, same as prior
       sweeps, so a bad conversion on one doesn't block the others.
+
+      CONFIRMED (2026-08-03, a same-day t-017 sweep that skipped this task's own
+      warning): appmaker-page.vue and wishmaster-page.vue are BOTH dual-mounted, not
+      just wishmaster-page.vue as originally suspected -- components/pages/conductor-
+      manager.vue renders `<WishmasterPage v-if=... />` / `<AppmakerPage v-else-if=...
+      />` directly under its own `.kr-surface` root (overflow-hidden, no `.kr-scroll`
+      child), so neither page can safely drop its own scroll ownership without
+      conductor-manager.vue first gaining a `.kr-scroll` wrapper around its dynamically-
+      swapped children. Kind Robots PR #1357 converted both to kr-unbound anyway (the
+      sweep reasoned kr-unbound "cannot clip by construction" and didn't re-check
+      import sites), merged, then had to be reverted via PR #1358 within the same
+      session after a routine post-merge grep surfaced this. The correct fix for this
+      task is still (a) wrap conductor-manager.vue's dynamic children in `.kr-scroll` so
+      every embedded page can then safely adopt kr-unbound in both contexts, verified
+      visually via Vercel MCP as originally instructed above -- not a source-only
+      conversion of the leaf components alone.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-03T07:47:00Z'
+    updated: '2026-08-03T09:05:00Z'
 
   - id: t-071
     milestone: m3
