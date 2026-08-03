@@ -3114,3 +3114,28 @@ tasks:
     claimed_by: claude-conductor-burst-20260729T0806Z-t095
     claimed_at: '2026-07-29T08:06:44Z'
     updated: '2026-07-29T09:06:02Z'
+
+  - id: t-096
+    milestone: m2
+    title: "Stop selectors from claiming an umbrella task when its remaining scope is delegated to a sibling ready task"
+    status: claimed
+    owner: reviewer
+    claimed_by: claude-conductor-agentrun-20260803T1900Z-t096
+    claimed_at: '2026-08-03T19:00:00Z'
+    updated: '2026-08-03T19:00:00Z'
+    stakes: reversible
+    passes: 0
+    note: >
+      Filed from conductor issue #1627 (Silas, 2026-08-03): interface-vision/t-017 stayed
+      `ready` and claimable as an umbrella layout-contract sweep even though a prior session's
+      own audit found every bucket except one-scroll at zero, with one-scroll's remaining work
+      explicitly owned by dedicated follow-on interface-vision/t-058. Session
+      2026-08-03T181332Z-interface-vision-t-017-m7q4 claimed t-017 anyway (both `run_worker.py`'s
+      find_ready_task and `next_ready_task.py`'s first_ready_task only check `status: ready` /
+      claimability, not whether a sibling task already owns the remaining scope), found no
+      independent slice to implement, and released the claim.
+
+      Add an optional `remaining_scope_task: <task-id>` field: when set on a task, selectors
+      must treat that task as not-yet-claimable for as long as the referenced sibling task
+      (looked up within the same roadmap) exists and has not reached `status: done`. No field
+      set -- current behavior, unaffected.

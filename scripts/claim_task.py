@@ -57,7 +57,7 @@ from pathlib import Path
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from roadmap_claims import task_is_claimable  # noqa: E402
+from roadmap_claims import remaining_scope_delegate_open, task_is_claimable  # noqa: E402
 from set_task_field import set_task_field_text, TaskFieldError  # noqa: E402
 from git_plumbing import (  # noqa: E402
     GitError,
@@ -102,7 +102,17 @@ def check_claimable(project: str, task_id: str) -> str:
     if task is None:
         raise ClaimError(f"ERROR: {project}/{task_id}: task not found in origin/main roadmap", code=1)
 
-    if not task_is_claimable(task):
+    tasks_by_id = {
+        str(t.get("id")): t for t in doc.get("tasks", []) or [] if isinstance(t, dict) and t.get("id")
+    }
+    if not task_is_claimable(task, tasks_by_id=tasks_by_id):
+        delegate = task.get("remaining_scope_task")
+        if delegate and remaining_scope_delegate_open(task, tasks_by_id):
+            raise ClaimError(
+                f"ALREADY_CLAIMED: {project}/{task_id} delegates its remaining scope to "
+                f"{project}/{delegate}, which is not done yet -- claim that task instead.",
+                code=3,
+            )
         raise ClaimError(
             f"ALREADY_CLAIMED: {project}/{task_id} is status={task.get('status')!r} "
             f"(owner={task.get('owner')!r}, claimed_by={task.get('claimed_by')!r}, "

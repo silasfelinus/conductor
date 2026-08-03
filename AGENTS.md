@@ -221,6 +221,18 @@ When Silas approves an upstream task, the next Worker run calls `scripts/resolve
 which flips any now-satisfied `waiting` tasks to `ready`. So the Worker's FIRST action each
 cycle is to run the resolver, THEN pick a ready task.
 
+### Umbrella sweep tasks — `remaining_scope_task`
+
+A recurring umbrella task (e.g. a layout-contract sweep tracking several buckets toward
+zero) can reach a state where every bucket is at zero except one already owned by a
+dedicated follow-on task. At that point the umbrella has no independent slice left, and
+claiming it directly only duplicates or collides with the follow-on. Set
+`remaining_scope_task: <task-id>` on the umbrella pointing at that sibling task (same
+roadmap): `run_worker.py`'s `find_ready_task`, `next_ready_task.py`'s `first_ready_task`,
+and `claim_task.py` all treat the umbrella as not-yet-claimable for as long as the
+referenced task exists and hasn't reached `status: done`. No field set — current behavior,
+unaffected. (Filed from conductor issue #1627, interface-vision/t-017 vs. t-058.)
+
 ### Human-gated stages
 A task may set `gate_human: true`, meaning its output must be approved by Silas before
 dependents unblock — even for software. The Worker finishes such tasks at `status: needs-human`.
