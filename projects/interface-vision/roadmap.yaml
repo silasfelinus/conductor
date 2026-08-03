@@ -79,17 +79,17 @@ milestones:
   - id: m1
     title: 'SHAPE — design brief, aesthetic direction, mockups'
     weight: 15
-    status: not-started
+    status: done
 
   - id: m2
     title: 'BUILD — layout contract, narrator stage, one gallery, one art system'
     weight: 60
-    status: not-started
+    status: in-progress
 
   - id: m3
     title: 'POLISH & SHIP — builder gaps, sweep to zero, beta-ready'
     weight: 25
-    status: not-started
+    status: in-progress
 
 tasks:
   - id: t-001
@@ -799,12 +799,15 @@ tasks:
     passes: 0
     stakes: reversible
     note: |-
-      FOR SILAS: a product-vocabulary call, not a refactor, so an agent should not merge these blind. There are two parallel taxonomies for one concept: `FacetKind` in prisma/schema.prisma:2183 has 10 values, and `FacetTaxonomy` in prisma/facet-catalog.prisma has 24. They overlap but are not a superset/subset relationship you can mechanically collapse. Decide which is canonical (or what the merged vocabulary should be) and t-015 will normalize onto it. Nothing else is blocked on this — t-015 can land its Project/Character/Bot facet work first.
+      DECIDED by Silas (2026-08-03): FacetTaxonomy is canonical. Verbatim: "Taxonomy is the stronger choice. kind is massively ambiguous, especially given our name" -- FacetKind collides with the Kind Robots brand noun. The coarse grouping becomes a DERIVED category over the 24 taxonomy values, not a second enum.
 
+      THE ORIGINAL NOTE WAS REFUTED (2026-08-03). It claimed the two enums "overlap but are not a superset/subset relationship you can mechanically collapse". They are exactly that. FacetTaxonomy (prisma/facet-catalog.prisma:9, 24 values) contains all 10 FacetKind values (prisma/schema.prisma:2262) verbatim and in the same order: GENRE ANIMAL COLOR THEME CORE MOOD STYLE SETTING ART_DIRECTION, plus OTHER. The other 14 (SPECIES OCCUPATION ARCHETYPE ROLE ALIGNMENT GENDER BOT_TYPE DREAM_TYPE REWARD_TYPE RARITY PERSONALITY BACKSTORY QUIRK MATERIAL PROMPT_ENHANCEMENT) are additions, not conflicts. The old line reference was stale too: schema.prisma:2183 is the Role enum; FacetKind is at 2262.
 
-      SENT BACK by silasfelinus via Kind Robots For You. was this not already solved? Taxonomy is the stronger choice. kind is massively ambiguous, especially given our name
-    approved_by_human: false
-    updated: '2026-08-03 09:29:07.370000+00:00'
+      They are two models in ONE schema, not two databases: Facet.kind (schema.prisma:478) and FacetProfile.taxonomy (facet-catalog.prisma:39), 1:1 via facetId @id. facet-catalog.prisma carries no generator/datasource block, so the prisma/ folder is a single multi-file schema (Prisma 7.9.1, prisma.config.ts). The collapse is therefore an identity value mapping with zero data loss, not a judgement call.
+
+      NOW ON THE CRITICAL PATH. The builder revision (see the creation-flow work) makes the Facet catalog the builder's choice vocabulary, so a settled taxonomy is a prerequisite rather than the "nothing else is blocked on this" the old note claimed. Scope: 177 FacetKind refs vs 203 FacetTaxonomy refs across .ts/.vue/.prisma. Needs a prisma migration plus a re-seed check, since seedFacetCatalog rebuilds 1611 rows.
+    approved_by_human: true
+    updated: '2026-08-03T10:03:41Z'
 
   - id: t-017
     milestone: m3
@@ -1428,31 +1431,27 @@ tasks:
 
   - id: t-042
     milestone: m3
-    title: 'Register PROJECT and FACET builders in registerBuilderStore.ts'
+    title: 'Give Facet and Project creation flows — in /facets and /conductor, not as builder card decks'
     status: ready
     owner: null
     passes: 0
     stakes: reversible
     depends_on: null
     note: >
-      Split out of t-015 (2026-08-02, kind_robots PR #1293) — the other four sub-parts of
-      that task (ProjectFacet table, CharacterFacet/BotFacet/RewardFacet relation
-      normalization, Bot facets.put, Character client facet store + UI) composed cleanly
-      from existing patterns and shipped together, but registering PROJECT and FACET as
-      first-class builders in stores/registerBuilderStore.ts turned out to need its own
-      card-deck-scale UI buildout: a PROJECT_CARDS / FACET_CARDS deck each (see
-      stores/helpers/dreamCards.ts or rewardCards.ts for the shape a deck like this
-      takes), splash screens, a defaultSheet/syncSheetToXForm/save/reset per model
-      (see buildDreamConfig / buildRewardConfig in registerBuilderStore.ts for the
-      pattern), and likely a new BuilderArtPurpose variant ('project'/'facet' aren't in
-      that union yet in stores/helpers/builderCards.ts). Project and Facet both already
-      have working stores (stores/projectStore.ts, stores/facetStore.ts) and admin UI
-      (components/facets/facet-manager.vue etc.) to build the wizard flow on top of —
-      this is UI/UX design work, not just wiring, which is why it didn't fit in the same
-      PR as the rest of t-015's more mechanical gaps.
+      RE-SCOPED (2026-08-03) -- DO NOT BUILD THE CARD DECKS. Silas's builder decision contradicts this task as originally written. Verbatim: "I actually think we should do away with Builder as a channel, and incorporate an add/build option into our relevant galleries... I would much rather there was a /facets page and that is where people go to make, explore, or interact with facets. Builder is this clinging on third thing."
+
+      Registering PROJECT and FACET as first-class builders in stores/registerBuilderStore.ts would add two MORE instances of exactly the surface being retired. Six of the Build channel's 14 tabs (art, bot, character, dream, reward, scenario) already point at the same /builder page differing only by a modelType key, and all six are slated for removal in favour of creation living inside each model's own manager.
+
+      NEW SCOPE, both to be done as part of the builder revision's "fold creation into the model pages" phase, not here and not first:
+      - FACET creation belongs in /facets. components/facets/facet-profile-editor.vue and the facetProfileForm.ts helper already exist and are the natural body -- this is the highest-value half, because /facets is the one core object with NO creation flow anywhere today.
+      - PROJECT creation belongs in /conductor, alongside the existing project gallery.
+
+      STILL TRUE from the original note, and worth keeping: Project and Facet both already have working stores (stores/projectStore.ts, stores/facetStore.ts) and admin UI (components/facets/facet-manager.vue) to build on. What is no longer wanted: PROJECT_CARDS / FACET_CARDS decks, per-model splash screens, defaultSheet/syncSheetToXForm/save/reset in registerBuilderStore.ts, and the new BuilderArtPurpose union variants. Do not follow buildDreamConfig / buildRewardConfig as the pattern here.
+
+      ORIGINAL NOTE, for provenance: split out of t-015 (2026-08-02, kind_robots PR #1293) because registering these two as builders needed card-deck-scale UI buildout that did not fit alongside that task's more mechanical facet-relation gaps.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-02T00:00:00Z'
+    updated: '2026-08-03T10:04:23Z'
 
   - id: t-043
     milestone: m2
@@ -2293,38 +2292,21 @@ tasks:
   - id: t-071
     milestone: m3
     title: 'One Facet named "Curious", two curated images — pick one'
-    status: needs-human
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
     note: >
-      Surfaced by repairing t-063's contract (kind_robots PR #1356). It is the single real
-      failure standing between verifyFacetArtworkMigration and being enforceable again, and it
-      cannot be resolved from a checkout.
+      DECIDED by Silas (2026-08-03): SPLIT IT. Change seedFacetCatalog's merge key from normalized title alone to (title, taxonomy).
 
-      "Curious" is declared twice in stores/helpers/adventureCards.ts -- once as an alignment
-      (a motivation) and once as a personality quirk -- with different curated images,
-      /images/adventure/alignment/curious.webp and /images/adventure/quirks/curious.webp.
-      seedFacetCatalog merges the two into ONE Facet by normalized title. That merge is
-      deliberate and is what verifyFacetCanonicalMerges exists to protect; the defect is only
-      that the merged Facet then has two candidate images and takes whichever its
-      highest-ranked source supplies.
+      Rationale: with FacetTaxonomy canonical (t-016, decided the same day), ALIGNMENT:Curious and QUIRK:Curious are legitimately DIFFERENT facets -- a motivation and a personality quirk are distinct taxonomy members, not two spellings of one concept. Each keeps its own curated art: /images/adventure/alignment/curious.webp and /images/adventure/quirks/curious.webp. Nothing is dropped.
 
-      Deterministic, but arbitrary, and the contract is right to refuse it: which of the two
-      pictures a player sees for "Curious" is currently decided by declaration order rather
-      than by anyone's choice.
+      The bug is the MERGE KEY, not the data. Merging on normalized title alone will collide any word that legitimately appears under two taxonomies, so picking a winner for this one row would leave the whole class live and this exact escalation would recur. Fixing the key fixes the class.
 
-      Two resolutions, both one-liners:
-        (1) point BOTH declarations at the same image -- nothing loses art, the merged Facet
-            is unambiguous. Preferred, IF the chosen file actually exists.
-        (2) drop the image from one declaration -- that Adventure choice then renders without
-            art in the Builder, which is a visible regression.
+      Implementation notes: verifyFacetCanonicalMerges exists specifically to assert the title-merge behaviour -- it must be updated to the new key in the same change, or it will fail on the corrected seed. Re-run the seed and confirm the catalog row count moves by exactly the number of genuine cross-taxonomy duplicates (audit that list before accepting it; other collisions besides "Curious" may surface, and each one is a real facet that was previously being silently swallowed).
 
-      NEEDS-HUMAN because it is a look-at-the-pictures call, not a code call: public/images is
-      gitignored (.gitignore:33), so an agent working from a clone cannot see either image, and
-      cannot even confirm both files exist on the deployed host. Silas (or anyone with the
-      assets synced) should open the two and say which one "Curious" should be. Once it is
-      picked, the edit is trivial and t-063's pipefail flip becomes possible for that workflow.
+      Unblocks verifyFacetArtworkMigration, which cannot be enforced while this fails. Sequence with t-063 (the `| tee` fix that makes that contract capable of failing at all) -- both belong to the same wave.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-03T08:30:00Z'
+    updated: '2026-08-03T10:03:55Z'
+    approved_by_human: true
