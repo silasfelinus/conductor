@@ -39,7 +39,7 @@ try:
     overrides = yaml.safe_load(overrides_path.read_text()) or {}
     active_projects = {
         entry.get("slug")
-        for entry in overrides.get("projects", [])
+        for entry in overrides.get("overrides", [])
         if isinstance(entry, dict) and entry.get("status", "active") == "active"
     }
     ready, needs_human, claimed = [], [], []
