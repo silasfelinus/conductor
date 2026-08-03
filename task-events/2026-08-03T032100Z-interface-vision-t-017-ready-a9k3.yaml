@@ -1,0 +1,11 @@
+version: 1
+project: interface-vision
+task: t-017
+operation: ready
+owner: worker
+session: 2026-08-03T031330Z-interface-vision-t-017-a9k3
+updated: '2026-08-03T03:21:00Z'
+note: >-
+  Merged kind_robots PR #1341. The wallet page now uses kr-unbound because the MDC host owns scrolling; root-surface shrank from 18 to 17. t-017 remains open for the remaining layout-contract allow-list.
+learning: >-
+  MDC-mounted pages that already inherit the content-host scroll owner should adopt kr-unbound rather than kr-surface or kr-stage, avoiding accidental overflow clipping while still satisfying the shared root contract.
