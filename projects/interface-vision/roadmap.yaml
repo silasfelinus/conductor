@@ -1317,7 +1317,7 @@ tasks:
   - id: t-032
     milestone: m2
     title: 'Add an owner-facing allowReviews toggle for Bot/Character/Reward/Scenario'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -1337,6 +1337,15 @@ tasks:
       of them turned up in this session's grep for "allowReviews" outside
       conductor-page.vue) so owners can actually reach the review feature
       t-011 just gated.
+
+      UPDATE (2026-08-03, kind_robots PR #1385): shipped. New shared
+      components/ui/allow-reviews-toggle.vue, wired into conductor-page.vue
+      (Project, extracted) plus add-bot.vue, add-character.vue,
+      add-reward.vue, add-scenario.vue. Also fixed a latent bug found along
+      the way: rewardStore's toRewardPayload() whitelist was missing
+      allowReviews entirely (silent no-op on save). Kaizen filed in the PR
+      body: Reward/Scenario edit forms have no isPublic/isMature UI either,
+      same gap this task just fixed for allowReviews on those two types.
     claimed_by: 2026-08-03T212826Z-t032-agent
     claimed_at: '2026-08-03T21:28:27Z'
     updated: '2026-08-03T21:28:27Z'
