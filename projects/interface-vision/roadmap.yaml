@@ -2275,3 +2275,41 @@ tasks:
     claimed_at: null
     updated: '2026-08-03T10:03:55Z'
     approved_by_human: true
+
+  - id: t-072
+    milestone: m3
+    title: 'Drop the physical Facet.kind column now that it is fully derived from FacetTaxonomy'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: irreversible
+    depends_on: null
+    note: >
+      Split out of t-016 (2026-08-03, kind_robots PR #1362) as the higher-risk second half.
+      t-016 finished consolidating every write/read site onto legacyFacetKindForTaxonomy
+      (server/utils/facetProfileInput.ts) so Facet.kind is now purely write-derived from
+      FacetProfile.taxonomy -- no code path sets or reads it as an independent value anymore.
+
+      What remains is a genuinely destructive production migration: DROP the kind column
+      and its Facet_kind_idx index from schema.prisma (~line 478) and the physical table,
+      modeled on the additive-direction example at
+      prisma/migrations/20260727022500_facet_taxonomy_authority/migration.sql (this one
+      goes the other way -- DROP COLUMN, not ADD).
+
+      REQUIRED PRECONDITION, not yet verified: Facet and FacetProfile are not enforced 1:1
+      at the Prisma level (only a DB-level FK with ON DELETE CASCADE). Any Facet lacking a
+      FacetProfile row becomes unclassifiable once the column is gone. Before this migration
+      ships, confirm every Facet row has a FacetProfile row -- run
+      utils/scripts/repairFacetProfiles.ts --apply against production first (or add a
+      migration-time backfill query), then re-check with a live count query, not a static
+      read. This cannot be verified from an agent sandbox: DATABASE_URL there points at the
+      unreachable production host (acrocatranch.com:5544).
+
+      Given the destructive nature (AGENTS.md hard rule 10; the Reviewer's migration-review
+      exception explicitly excludes DROP of tables/columns/data), this should not be
+      Worker/Reviewer auto-merged even though stakes fits the general software flow --
+      route to needs-human once the precondition is confirmed and the migration is drafted,
+      so Silas signs off on the production DROP COLUMN specifically.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-03T10:47:00Z'

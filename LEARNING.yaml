@@ -6107,3 +6107,18 @@ records:
   lesson: A task released as actionable/stale (blocked on an unrelated component not yet migrated) can
     become trivially doable again once other, unrelated work lands -- re-verify the live premise from
     code before trusting a stale roadmap note, rather than assuming a prior session's blocker still holds.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-016
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A task note framed as a from-scratch decision plus implementation ("needs a prisma migration
+    plus a re-seed check") can already be most of the way done by prior work -- a quick research pass
+    before diving in found the FacetKind/FacetTaxonomy collapse was already load-bearing infrastructure
+    (a prior PR had made taxonomy authoritative and kind write-derived), narrowing the real remaining
+    scope to a bounded, mechanical consolidation PR instead of a full schema migration. Splitting the
+    genuinely destructive half (dropping the physical column) into its own irreversible-stakes task
+    (t-072) rather than attempting it in the same pass kept the landed PR reversible and auto-mergeable.
