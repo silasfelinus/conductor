@@ -1,7 +1,7 @@
 # Pitch: New product-types.yaml entry — `pod-book` (print-on-demand physical books)
 date: 2026-07-18
 project-target: digital-storefront
-status: awaiting-silas
+status: rejected
 
 ## The idea
 Add a new approved product type, `pod-book`, to `projects/digital-storefront/product-types.yaml`:
