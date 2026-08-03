@@ -935,11 +935,12 @@ tasks:
       Butterfly flip cards now keep vertical scrolling on only the active face, and the one-scroll ratchet drops from 23 to 22.
 
       Merged Kind Robots PR #1377 (squashed 6aab8c4). components/butterfly/butterfly-flip.vue's front/back faces both carried a static overflow-y-auto, so fade mode (useFlipEffect: false, which renders both faces simultaneously instead of v-if-excluding one like flip mode does) had two active overlapping scroll regions. Switched both faces to an inline :style toggling overflowY between auto/hidden based on isFlipped, so exactly one face scrolls at a time regardless of mode. one-scroll: 23 -> 22 via --update; all other buckets unchanged and remain at zero. Verified independently this review pass: vue-tsc --noEmit clean, eslint clean on the touched file, npm run test:layout-contract holds with no new violations, verifyMdcScrollOwnership.ts holds (22 existing violations, no new ones), all 13 PR checks green. one-scroll is still nonzero, so t-017 returns to ready for the next bounded sweep.
+
+      Live audit found no independent t-017 implementation slice: every layout-contract bucket except one-scroll is already zero, and the remaining one-scroll work is explicitly owned by ready follow-on t-058. Verified chat-gallery as mutually exclusive Shape A, messenger and stage-manager as genuine concurrent Shape B panes, and theme-gallery as a bounded Shape D inspector case. Released the umbrella claim to avoid colliding with t-058 and filed conductor issue #1627 for selector/task-relationship repair.
     claimed_by: 2026-08-03T181332Z-interface-vision-t-017-m7q4
     claimed_at: '2026-08-03T18:13:32Z'
-    updated: '2026-08-03T18:13:32Z'
-    status: claimed
-    owner: worker
+    updated: '2026-08-03T18:19:25Z'
+    status: ready
 
   - id: t-018
     milestone: m3
