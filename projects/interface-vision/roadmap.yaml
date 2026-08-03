@@ -2300,7 +2300,7 @@ tasks:
   - id: t-073
     milestone: m3
     title: 'Fix the one-scroll SHAPE A false positives by hoisting a shared kr-scroll above mutually-exclusive tab branches'
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     note: |-
@@ -2310,7 +2310,9 @@ tasks:
 
 
       Inspected the live one-scroll baseline and representative candidates. animation-manager.vue is genuine concurrent gallery-plus-aside Shape B; scenario-gallery.vue has a form scroll region that can coexist with its content scroll; user-galleries.vue nests bounded previews inside its parent. None are safe Shape A hoists. Released rather than shrinking the counter dishonestly; remaining candidates need importer and branch-lifecycle classification.
+
+      Hoisted Art Manager's mutually-exclusive tab scrollers into one shared kr-scroll wrapper, preserving Gallery's delegated scroll and ArtJob's responsive 2xl overflow behavior. Ratcheted one-scroll from 27 to 26.
     claimed_by: 2026-08-03T122430Z-interface-vision-t-073-z5h8
     claimed_at: '2026-08-03T12:24:30Z'
-    updated: '2026-08-03T12:24:30Z'
+    updated: '2026-08-03T12:31:00Z'
     owner: worker
