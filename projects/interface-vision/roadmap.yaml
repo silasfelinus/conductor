@@ -2009,9 +2009,48 @@ tasks:
       THEN fix or retire the contract -- in that order, because fixing the contract while the
       step is still inert proves nothing. While there, grep the other workflows for the same
       `| tee` shape; if this one drifted in, others may share it.
+
+      PARTLY DONE, 2026-08-03, kind_robots PR #1356 -- and the grep found more than expected.
+
+      The contract is repaired and runnable. Its stale half was worse than "stale": it
+      required a dozen literal v-model="newImagePath" strings against a facet-manager whose
+      form is now <FacetProfileEditor> plus an <EntityArtManager :slots> covering imagePath,
+      iconPath, cardPath AND heroPath -- strictly MORE art roles than the old form. It was
+      failing against a manager that had got better. It now asserts structure rather than one
+      spelling, and follows the form <-> Facet mapping into utils/facetProfileForm.ts.
+
+      Its other half could never have passed anywhere: it asserted ~280 curated images exist
+      on disk under public/images, which .gitignore:33 excludes from the repo entirely (the
+      art lives on the deployed host). `git ls-files public/images/adventure` returns nothing.
+      That assertion is now conditional on the assets being present and PRINTS that it
+      skipped -- a check that quietly does nothing is the bug, not the fix.
+
+      PIPEFAIL IS DELIBERATELY STILL NOT SET, and this is the part that needs a decision.
+      Flipping it turns main red on three independent pre-existing failures, each needing its
+      own fix:
+
+      (a) verifyFacetArtworkMigration, one failure left and it is a real data defect:
+          "Curious" exists as both an alignment and a personality quirk; seedFacetCatalog
+          merges them into ONE Facet by normalized title (that merge is intentional -- see
+          verifyFacetCanonicalMerges) but the two declarations carry DIFFERENT curated images
+          (alignment/curious.webp vs quirks/curious.webp), so the merged Facet's art depends
+          on source rank. Resolve by pointing both declarations at one image or dropping one;
+          both are user-visible Adventure Builder art changes and neither file can be verified
+          from a checkout, since the images are gitignored. NEEDS SILAS or someone who can see
+          the deployed assets.
+      (b) verifyFacetBuilderCoverage, 4 findings (a missing background/unmade.webp, plus three
+          art:mode choices carrying Builder artwork on a field that is not Facet-backed). Note
+          this step ALSO has a continue-on-error + `if outcome == 'failure' -> exit 1` enforce
+          gate, defeated by the same tee bug -- so that gate has never once fired.
+      (c) audit:wonderlab-previews --strict in contract-tests.yml, 4 components missing fixture
+          props: reward-facet-picker (modelValue), storybook-state-panel (session),
+          video-lora-picker (engine, modelValue, strength), watchlist-entry-detail (entry).
+
+      The remaining two tee'd steps (academy-examples-manifest, audit:channel-assets) both PASS
+      locally, so those two can have `shell: bash` added with no fallout at any time.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-02T21:15:00Z'
+    updated: '2026-08-03T08:30:00Z'
 
   - id: t-064
     milestone: m2
@@ -2274,3 +2313,42 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-03T07:47:00Z'
+
+  - id: t-071
+    milestone: m3
+    title: 'One Facet named "Curious", two curated images — pick one'
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Surfaced by repairing t-063's contract (kind_robots PR #1356). It is the single real
+      failure standing between verifyFacetArtworkMigration and being enforceable again, and it
+      cannot be resolved from a checkout.
+
+      "Curious" is declared twice in stores/helpers/adventureCards.ts -- once as an alignment
+      (a motivation) and once as a personality quirk -- with different curated images,
+      /images/adventure/alignment/curious.webp and /images/adventure/quirks/curious.webp.
+      seedFacetCatalog merges the two into ONE Facet by normalized title. That merge is
+      deliberate and is what verifyFacetCanonicalMerges exists to protect; the defect is only
+      that the merged Facet then has two candidate images and takes whichever its
+      highest-ranked source supplies.
+
+      Deterministic, but arbitrary, and the contract is right to refuse it: which of the two
+      pictures a player sees for "Curious" is currently decided by declaration order rather
+      than by anyone's choice.
+
+      Two resolutions, both one-liners:
+        (1) point BOTH declarations at the same image -- nothing loses art, the merged Facet
+            is unambiguous. Preferred, IF the chosen file actually exists.
+        (2) drop the image from one declaration -- that Adventure choice then renders without
+            art in the Builder, which is a visible regression.
+
+      NEEDS-HUMAN because it is a look-at-the-pictures call, not a code call: public/images is
+      gitignored (.gitignore:33), so an agent working from a clone cannot see either image, and
+      cannot even confirm both files exist on the deployed host. Silas (or anyone with the
+      assets synced) should open the two and say which one "Curious" should be. Once it is
+      picked, the edit is trivial and t-063's pipefail flip becomes possible for that workflow.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-03T08:30:00Z'
