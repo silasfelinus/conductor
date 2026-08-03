@@ -1,13 +1,27 @@
 #!/usr/bin/env python3
 """
 validate_roadmaps.py — confirm every projects/*/roadmap.yaml still parses as a
-mapping with a `tasks` list. Used by the process-task-events workflow after a
-surgical text edit, and safe to run standalone.
+mapping with a `tasks` list, and that no project's tasks reuse an `id`. Used by
+the process-task-events workflow after a surgical text edit, and by the pytest
+suite (tests/test_validate_roadmaps.py) that runs on every PR via
+.github/workflows/ci.yml, so this fails CI immediately rather than silently
+landing. Safe to run standalone.
+
+A duplicate task id lets tooling that keys on id (claim_task.py, set_task_field.py,
+close_task.py -- see scripts/set_task_field.py's find_task_block, which matches the
+FIRST occurrence and silently ignores the rest) operate on the wrong task, or make
+the second occurrence unreachable entirely. This happened for real twice in
+interface-vision's roadmap on 2026-08-02: first t-053/t-054/t-055/t-056 each used
+twice, then the manual renumbering fix (to t-058..t-061) collided with pre-existing
+t-061/t-062 -- see interface-vision/t-062's note and this repo's TALKBACK.md that
+date. audit_roadmaps.py already detects this (DUPLICATE_TASK_ID) but only reports
+it advisorily; it never fails CI, so the second collision landed anyway.
 
 Usage: python scripts/validate_roadmaps.py
 """
 from __future__ import annotations
 
+import collections
 import sys
 from pathlib import Path
 
@@ -16,12 +30,32 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def duplicate_task_ids(tasks: list) -> list[str]:
+    ids = [str(task.get("id")) for task in tasks if isinstance(task, dict) and task.get("id")]
+    counts = collections.Counter(ids)
+    return sorted(task_id for task_id, count in counts.items() if count > 1)
+
+
 def main() -> int:
+    ok = True
     for path in sorted((ROOT / "projects").glob("*/roadmap.yaml")):
         data = yaml.safe_load(path.read_text(encoding="utf-8"))
         if not isinstance(data, dict) or not isinstance(data.get("tasks", []), list):
             print(f"invalid roadmap: {path}", file=sys.stderr)
-            return 1
+            ok = False
+            continue
+
+        dupes = duplicate_task_ids(data["tasks"])
+        if dupes:
+            print(
+                f"duplicate task id(s) in {path}: {', '.join(dupes)} "
+                "-- each task id must be unique within a project's roadmap",
+                file=sys.stderr,
+            )
+            ok = False
+
+    if not ok:
+        return 1
     print("Roadmaps valid")
     return 0
 

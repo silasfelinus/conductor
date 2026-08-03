@@ -1763,7 +1763,7 @@ tasks:
   - id: t-062
     milestone: m3
     title: 'Add a duplicate-task-ID check to the roadmap validators'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -1782,6 +1782,33 @@ tasks:
       grep-and-renumber pass to untangle later (see this date's root TALKBACK.md
       entry for the actual renumbering: t-053/t-054/t-055/t-056's duplicate
       occurrences moved to t-058/t-059/t-060/t-061).
+
+      RESOLUTION (2026-08-03 conductor Agent-run session): that very renumbering
+      collided again -- t-061 landed on top of a pre-existing t-061
+      (conductor-page.vue kr-surface split) and this task's own freshly-assigned
+      t-062 landed on top of a pre-existing t-062 (kr-gallery rich-card blocker),
+      confirmed via `grep -n "^  - id: t-0"` finding both ids twice. Also found
+      `scripts/audit_roadmaps.py` already HAS a DUPLICATE_TASK_ID check (line 222,
+      predates this task) and it correctly flagged both -- but `main()` never
+      returns non-zero, so the check is purely advisory, and the workflow that
+      generates the report (`roadmap-audit.yml`) only auto-commits it to `main` on
+      one hardcoded historical branch ref, so the root `ROADMAP-AUDIT.md` on
+      `main` doesn't reliably reflect current findings either. Detection existed;
+      enforcement did not.
+
+      Fixed by: (1) renumbering the second `t-061` (tee-pipeline dead-check task)
+      to `t-063` and the second `t-062` (kr-gallery blocker) to `t-064`, verified
+      no `depends_on`/cross-references pointed at either by id; (2) adding a
+      duplicate-id check directly to `scripts/validate_roadmaps.py` (`main()` now
+      returns 1 and prints every colliding id per project) since that script is
+      unit-tested by `tests/test_validate_roadmaps.py`, which `pytest tests/` (a
+      required check in `.github/workflows/ci.yml` on every PR) already runs --
+      so a future collision fails CI immediately without touching `ci.yml` or
+      `roadmap-audit.yml`. Did not touch `audit_roadmaps.py`'s advisory report
+      itself (out of scope: making all its "error" findings hard-fail would also
+      gate three unrelated pre-existing findings -- CONTROL_PRIORITY_DRIFT and
+      lora-ingestion's missing priority.yaml entry -- which deserve their own
+      scoped fix, not a side effect of this one).
     claimed_by: conductor-agentrun-20260803T0028Z-iv-t062
     claimed_at: '2026-08-03T00:30:38Z'
     updated: '2026-08-03T00:30:38Z'
@@ -1938,7 +1965,7 @@ tasks:
     claimed_at: null
     updated: '2026-08-02T15:40:00Z'
 
-  - id: t-061
+  - id: t-063
     milestone: m3
     title: 'A CI step piped through tee can never fail: verifyFacetArtworkMigration is dead'
     status: ready
@@ -1973,7 +2000,7 @@ tasks:
     claimed_at: null
     updated: '2026-08-02T21:15:00Z'
 
-  - id: t-062
+  - id: t-064
     milestone: m2
     title: 'kr-gallery cannot absorb the five rich-card galleries as it stands'
     status: needs-human
@@ -2018,3 +2045,29 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-02T21:15:00Z'
+
+  - id: t-065
+    milestone: m3
+    title: 'Add a next-free-task-id helper so new tasks stop hand-picking ids that can collide'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-062's resolution (2026-08-03, conductor Agent-run session): this
+      roadmap has now collided on the same id twice in one day (t-053/t-054/t-055/t-056
+      each used twice, then the fix for that -- renumbering into t-058..t-061 --
+      landed on top of pre-existing t-061 and t-062). `scripts/validate_roadmaps.py`
+      now fails CI on a collision after the fact, but nothing stops a session from
+      hand-picking an id that's already in use in the first place. Add a small helper
+      (`scripts/next_free_task_id.py`, or extend `claim_task.py`'s existing
+      origin/main-checked reservation pattern) that computes the lowest unused
+      `t-NNN` for a project by reading `origin/main` fresh -- same rotation-collision
+      shape `claim_task.py` already solves for task *claims*, applied to id
+      *assignment* instead. Wire it into the parts of AGENTS.md that tell agents to
+      file a new kaizen/follow-on task (the Reviewer's "Kaizen on merge" step,
+      Worker's "create new ready tasks" rule) so the next collision is prevented,
+      not just caught.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-03T00:45:00Z'

@@ -6038,3 +6038,17 @@ records:
   lesson: Before reimplementing a ready task, compare its note, current code, and recent merged PRs. A
     task can carry a complete merged result but remain incorrectly ready because an earlier closeout targeted
     a different task ID; repair roadmap state instead of duplicating the code.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-062
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: null
+  lesson: A roadmap can carry two tasks sharing an id (find_task/find_task_block match the first
+    occurrence, silently stranding the second) because audit_roadmaps.py's DUPLICATE_TASK_ID check
+    existed but was purely advisory -- main() never returned non-zero, and its report only got
+    committed to main under a stale one-off branch condition. Detection without enforcement doesn't
+    stop the bug; wire the check into something CI actually gates (a pytest-covered script) or it
+    will collide again, as it did here even on the very fix meant to prevent it.
