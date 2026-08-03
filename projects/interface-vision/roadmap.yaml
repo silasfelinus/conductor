@@ -795,19 +795,12 @@ tasks:
   - id: t-016
     milestone: m3
     title: 'Decide FacetKind vs FacetTaxonomy'
-    status: review
+    status: done
     passes: 0
     stakes: reversible
-    note: |-
-      DECIDED by Silas (2026-08-03): FacetTaxonomy is canonical. Verbatim: "Taxonomy is the stronger choice. kind is massively ambiguous, especially given our name" -- FacetKind collides with the Kind Robots brand noun. The coarse grouping becomes a DERIVED category over the 24 taxonomy values, not a second enum.
-
-      THE ORIGINAL NOTE WAS REFUTED (2026-08-03). It claimed the two enums "overlap but are not a superset/subset relationship you can mechanically collapse". They are exactly that. FacetTaxonomy (prisma/facet-catalog.prisma:9, 24 values) contains all 10 FacetKind values (prisma/schema.prisma:2262) verbatim and in the same order: GENRE ANIMAL COLOR THEME CORE MOOD STYLE SETTING ART_DIRECTION, plus OTHER. The other 14 (SPECIES OCCUPATION ARCHETYPE ROLE ALIGNMENT GENDER BOT_TYPE DREAM_TYPE REWARD_TYPE RARITY PERSONALITY BACKSTORY QUIRK MATERIAL PROMPT_ENHANCEMENT) are additions, not conflicts. The old line reference was stale too: schema.prisma:2183 is the Role enum; FacetKind is at 2262.
-
-      They are two models in ONE schema, not two databases: Facet.kind (schema.prisma:478) and FacetProfile.taxonomy (facet-catalog.prisma:39), 1:1 via facetId @id. facet-catalog.prisma carries no generator/datasource block, so the prisma/ folder is a single multi-file schema (Prisma 7.9.1, prisma.config.ts). The collapse is therefore an identity value mapping with zero data loss, not a judgement call.
-
-      NOW ON THE CRITICAL PATH. The builder revision (see the creation-flow work) makes the Facet catalog the builder's choice vocabulary, so a settled taxonomy is a prerequisite rather than the "nothing else is blocked on this" the old note claimed. Scope: 177 FacetKind refs vs 203 FacetTaxonomy refs across .ts/.vue/.prisma. Needs a prisma migration plus a re-seed check, since seedFacetCatalog rebuilds 1611 rows.
+    note: 'DONE 2026-08-03: kind_robots PR #1362 (merged, squash 6005f17). Consolidated the last 5 duplicated legacyKind()/legacyKind() taxonomy->kind mapping functions (in curateFacetGenreLeaks.ts, curateFacetTaxonomyLeaks.ts, curateFacetCatalog.ts, seedFacetCatalog.ts, seedArtBuilderFacetCatalog.ts) onto the canonical legacyFacetKindForTaxonomy helper in server/utils/facetProfileInput.ts; fixed 2 hardcoded literal kind writes in applyFacetCatalogDirectives.ts to derive instead; moved the last 2 front-end consumers (storybook-page.vue, taskmaster-page.vue) off facet.kind onto facet.taxonomy; dropped kind from facetStore.ts FacetWithAliases; updated verifyFacetTaxonomyAuthority.ts to drop the now-obsolete Taskmaster carve-out. This is the low-risk consolidation half only -- dropping the physical Facet.kind column/index is a separate, higher-risk production migration, filed as interface-vision/t-072. Verified: vue-tsc clean, eslint clean on all 10 touched files, full facet-catalog-contract.yml script sequence (19 scripts) passing locally.'
     approved_by_human: true
-    updated: '2026-08-03T10:28:52Z'
+    updated: '2026-08-03T10:46:31Z'
     owner: worker
     claimed_by: claude-agentrun-2026-08-03T102852-t016
     claimed_at: '2026-08-03T10:28:52Z'
@@ -2282,3 +2275,41 @@ tasks:
     claimed_at: null
     updated: '2026-08-03T10:03:55Z'
     approved_by_human: true
+
+  - id: t-072
+    milestone: m3
+    title: 'Drop the physical Facet.kind column now that it is fully derived from FacetTaxonomy'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: irreversible
+    depends_on: null
+    note: >
+      Split out of t-016 (2026-08-03, kind_robots PR #1362) as the higher-risk second half.
+      t-016 finished consolidating every write/read site onto legacyFacetKindForTaxonomy
+      (server/utils/facetProfileInput.ts) so Facet.kind is now purely write-derived from
+      FacetProfile.taxonomy -- no code path sets or reads it as an independent value anymore.
+
+      What remains is a genuinely destructive production migration: DROP the kind column
+      and its Facet_kind_idx index from schema.prisma (~line 478) and the physical table,
+      modeled on the additive-direction example at
+      prisma/migrations/20260727022500_facet_taxonomy_authority/migration.sql (this one
+      goes the other way -- DROP COLUMN, not ADD).
+
+      REQUIRED PRECONDITION, not yet verified: Facet and FacetProfile are not enforced 1:1
+      at the Prisma level (only a DB-level FK with ON DELETE CASCADE). Any Facet lacking a
+      FacetProfile row becomes unclassifiable once the column is gone. Before this migration
+      ships, confirm every Facet row has a FacetProfile row -- run
+      utils/scripts/repairFacetProfiles.ts --apply against production first (or add a
+      migration-time backfill query), then re-check with a live count query, not a static
+      read. This cannot be verified from an agent sandbox: DATABASE_URL there points at the
+      unreachable production host (acrocatranch.com:5544).
+
+      Given the destructive nature (AGENTS.md hard rule 10; the Reviewer's migration-review
+      exception explicitly excludes DROP of tables/columns/data), this should not be
+      Worker/Reviewer auto-merged even though stakes fits the general software flow --
+      route to needs-human once the precondition is confirmed and the migration is drafted,
+      so Silas signs off on the production DROP COLUMN specifically.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-03T10:47:00Z'
