@@ -2049,8 +2049,7 @@ tasks:
   - id: t-065
     milestone: m3
     title: 'Add a next-free-task-id helper so new tasks stop hand-picking ids that can collide'
-    status: review
-    owner: worker
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -2058,6 +2057,8 @@ tasks:
 
 
       Added a live-origin next-free task id helper with unit coverage; implementation PR follows.
+
+      Merged Conductor PR #1588 with the live-origin next-free task ID helper and unit coverage. Returning the task to ready because the remaining AGENTS.md call-site guidance still needs to instruct Worker and Reviewer task creation to use the helper; the connector session could not safely patch the complete operating manual through a full-file-only write action.
     claimed_by: 2026-08-03T011153Z-interface-vision-t065-f8k2
     claimed_at: '2026-08-03T01:11:53Z'
-    updated: '2026-08-03T01:20:00Z'
+    updated: '2026-08-03T01:25:00Z'
