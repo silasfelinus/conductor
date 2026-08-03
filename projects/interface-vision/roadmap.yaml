@@ -1684,8 +1684,7 @@ tasks:
   - id: t-055
     milestone: m3
     title: 'Fix verifyLayoutContract.ts root-tag regex to recognize PascalCase component tags'
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -1693,9 +1692,11 @@ tasks:
 
 
       Implemented the PascalCase root-tag parser fix and added a regression fixture on the Kind Robots worker branch.
+
+      Merged Kind Robots PR #1375 as d96ba913a23f8908f53f43ea04128fbc637d83b9. verifyLayoutContract.ts now recognizes PascalCase component roots and includes a regression fixture proving a PascalCase root carrying kr-surface is parsed correctly. All 11 final-head workflows completed successfully before merge.
     claimed_by: 2026-08-03T161347Z-interface-vision-t-055-n8q4
     claimed_at: '2026-08-03T16:13:47Z'
-    updated: '2026-08-03T16:21:00Z'
+    updated: '2026-08-03T16:27:00Z'
 
   - id: t-061
     milestone: m3
