@@ -2,7 +2,7 @@
 
 date: 2026-07-28
 project-target: ai-networker-itself
-status: awaiting-silas
+status: rejected
 
 ## The idea
 
