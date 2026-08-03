@@ -925,11 +925,17 @@ tasks:
       Merged Kind Robots PR #1361 as 20650a66bf0ba6211e94b6820a68270975933517. pages/[...slug].vue now has a shared kr-unbound root while preserving its existing content-host scroll owner and conditional render states. The root-surface baseline shrank from two entries to one. All 12 final-head workflows completed successfully, including TypeScript, Contract Tests, Layout Contract, and MDC Scroll Ownership. The task remains open because memory-dungeon.vue and the separate one-scroll bucket remain nonzero.
 
       Live inspection confirmed memory-dungeon.vue is the final root-surface baseline entry and that adding kr-unbound would preserve its conditional root scroll behavior. This connector exposes only whole-file replacement for the 1,200-line component, so the session released the claim rather than risk rebuilding the file from an abbreviated payload; rotating to another eligible bounded task.
+
+      Twenty-fifth scoped sweep: memory-dungeon.vue, the final root-surface entry. This session had full local git/shell access to kind_robots (not connector-limited), which made a careful fix practical instead of another release.
+
+      Merged Kind Robots PR #1365 as 901c114. The root div previously mixed bounding and scroll ownership on the same element, toggling overflow-hidden/overflow-y-auto based on gameStarted -- and its only mount site (lab-manager.vue's dashboard-tab wrapper) already applies a fallthrough overflow-hidden with no scroll delegation, so the conditional binding was fighting the parent rather than cooperating with it. Root now stays unconditionally kr-surface (min-h-[80vh] and gap-0 added alongside to preserve the original min-height and lack of inter-child spacing exactly); the splash-screen child -- the one region that needs to grow past the viewport before the game starts -- becomes the kr-scroll owner instead. The in-game board+log layout already owns its own scroll further down the tree and was untouched. Also moved a `<!-- root div -->` comment from between `<template>` and the root tag to above `<template>` -- it was defeating verifyLayoutContract.ts's literal-first-tag check, the same footgun t-067 documented. root-surface: 1 -> 0 via --update. vue-tsc clean; eslint's 5 errors on the file are pre-existing (confirmed via git stash); verifyMdcScrollOwnership.ts holds (22 existing violations, no new ones); all 15 kind_robots PR checks green.
+
+      root-surface is now the SEVENTH consecutive bucket at zero (one-header, no-viewport, one-mdc, ghost-prop, zero-scroll, root-surface all 0). The only nonzero bucket left is one-scroll (27), tracked separately since t-047 (done) -- its correction found most of that bucket is a static-regex false positive on mutually-exclusive v-if/v-else-if tab branches (SHAPE A, ~10 files) or genuinely needs a two-column-scroll primitive that doesn't exist yet (SHAPE B, 12 files), not a per-file conversion t-017 can keep doing. Filed t-073 as this cycle's kaizen: build the SHAPE A fix (hoist one shared kr-scroll above the mutually-exclusive branch, art-manager.vue is the type specimen). The layout-contract allow-list is not yet fully zero (one-scroll remains), so t-017 returns to ready; its remaining scope going forward is monitoring one-scroll's dedicated follow-on work, not further per-file root-surface/one-header/etc. sweeps.
     claimed_by: 2026-08-03T112933Z-interface-vision-t-017-md1
     claimed_at: '2026-08-03T11:29:34Z'
-    updated: '2026-08-03T11:29:34Z'
-    status: claimed
-    owner: worker
+    updated: '2026-08-03T12:05:00Z'
+    status: ready
+    owner: null
 
   - id: t-018
     milestone: m3
@@ -2320,3 +2326,35 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-03T10:47:00Z'
+
+  - id: t-073
+    milestone: m3
+    title: 'Fix the one-scroll SHAPE A false positives by hoisting a shared kr-scroll above mutually-exclusive tab branches'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-017's twenty-fifth sweep (2026-08-03, kind_robots PR #1365).
+      t-047's full read-only audit of the one-scroll bucket (27 entries, done
+      2026-08-02) found roughly 10 of them are SHAPE A: mutually-exclusive
+      v-if/v-else-if/v-show tab branches, each declaring its own scroll region,
+      but only ever one mounted at runtime. verifyLayoutContract.ts's static
+      regex counts all of them regardless of mutual exclusivity, so these are
+      false positives, not real nested-scroll bugs. art-manager.vue (seven
+      v-else-if branches, identical scroll class on each) is the type specimen
+      kind_robots PR #1321 already fixed four of this shape for.
+
+      Fix: for each remaining SHAPE A file, hoist one shared .kr-scroll wrapper
+      above the v-if/v-else-if/v-show branch instead of declaring the scroll
+      class on each branch individually -- same zero-behavior-change pattern
+      the rest of t-017's sweeps have used throughout. Verify via vue-tsc,
+      eslint, npm run test:layout-contract (--update to ratchet), and
+      verifyMdcScrollOwnership.ts, same as any other bounded sweep.
+
+      This does not require the still-missing two-column-scroll primitive
+      SHAPE B (12 files: genuine concurrent <aside>+<main>, both live at once)
+      needs -- that's a separate, harder follow-on, out of scope here.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-03T12:05:00Z'
