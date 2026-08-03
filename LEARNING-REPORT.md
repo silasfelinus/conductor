@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-03T02:41:34Z
+Generated: 2026-08-03T03:31:44Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **480**
-- Outcomes: blocked: 13, cancelled: 1, done: 466
+- Closed tasks recorded: **481**
+- Outcomes: blocked: 13, cancelled: 1, done: 467
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 38 | 100% |
+| interface-vision | 39 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 465 | 99% |
+| software | 466 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-03 `interface-vision/t-057` — When a task's own verification instruction assumes infrastructure (a PR preview) that a repo-wide config (vercel.json) silently excludes for the exact branch prefix agent sessions use, the fallback isn't to skip verification -- it's to verify what CAN be checked (CI, structural reasoning about the change's own properties) and be explicit in the roadmap/PR about what's still open, rather than silently declaring full verification done.
 - 2026-08-03 `interface-vision/t-031` — The object-card divergence was concentrated in Dream's shell and the repeated card body, not five wholly bespoke cards; inspect shared wrappers before planning a broad convergence rewrite.
 - 2026-08-03 `interface-vision/t-065` — The implementation half of this task (scripts/next_free_task_id.py, PR #1588) merged, but the task couldn't close because it was left with a queued rearm task-event that the processor rejected every run (`rearm requires recurring: true` -- t-065 isn't a recurring task). A connector-only session can't tell mid-task whether a target task is recurring without reading the live roadmap first; docs/github-connector-worker.md listed `rearm` and `ready` as interchangeable options with no mention of the recurring gate, so the wrong operation was a natural mistake, not carelessness. A concurrent session fixed the stuck event with the correct `operation: ready` while this session was independently mid-flight on the actual remaining work (wiring scripts/next_free_task_id.py into AGENTS.md's task-id-assignment call sites); rebasing onto that fix rather than duplicating it is what let both land cleanly. Documented the rearm-vs-ready distinction in docs/github-connector-worker.md so the next connector session doesn't repeat it.
 
@@ -92,7 +93,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-02 `interface-vision/t-024` — Similar-looking gallery grids may own fundamentally different picker, CRUD, taxonomy, or relationship behavior. Classify live responsibilities and callers before extracting a shared shell; reuse behavior-neutral primitives rather than forcing a passive browse abstraction onto stateful tools.
 - 2026-08-02 `interface-vision/t-017` — A file classified as a "page" purely by living in components/pages/ (verifyLayoutContract.ts's isPageComponent()) can still be an embedded widget, not a real page -- conductor-project-chat.vue was a per-project chat panel mounted inside conductor-page.vue, not a standalone view. Before forcing kr-surface/kr-scroll onto a root-surface violation, check whether the file is actually reachable as its own route/tab or only ever rendered as a child; moving it out of components/pages/ is often the correct fix, not a class change. Also: a LEARNING.yaml record with an invalid kind value breaks test_backfill_learning.py for every subsequent PR on main regardless of that PR's own diff -- confirm the base branch is broken before assuming a red "Python test suite" check means your own change is at fault.
 - 2026-08-02 `interface-vision/t-017` — verifyLayoutContract.ts's root-tag regex only matches lowercase-first tag names, so a page component whose own template root is a PascalCase component reference (e.g. <ProjectFrontPage>) can never satisfy root-surface, even with the correct class present. When a shared shell is invoked from many call sites, check whether the checker can even parse the call site's own root tag before assuming a class-attribute fix will register — filed t-055 to fix the regex itself.
-- 2026-08-02 `interface-vision/t-033` — When two CI scripts parse the same authored tree, keep one implementation and preserve old script names only as compatibility aliases so workflow callers do not drift.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-03T02:41:34Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-03T03:31:44Z_
