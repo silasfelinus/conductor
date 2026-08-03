@@ -1462,8 +1462,7 @@ tasks:
   - id: t-043
     milestone: m2
     title: 'Extend user-galleries.vue to cover Facets and Projects (5/7 object types today)'
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     depends_on: null
@@ -1472,9 +1471,11 @@ tasks:
 
 
       Added Facet and Project sections to user-galleries.vue using the existing store-backed section pattern.
+
+      Merged Kind Robots PR #1373 as 08637445d166827ccd2c5528ea006e2c2b7b62fd. User Galleries now includes owned Facets and Projects, loads both stores through their existing actions, and links to /facets and /conductor. All 13 final-head workflows completed successfully.
     claimed_by: 2026-08-03T141143Z-interface-vision-t-043-j7p4
     claimed_at: '2026-08-03T14:11:43Z'
-    updated: '2026-08-03T14:21:00Z'
+    updated: '2026-08-03T14:29:00Z'
 
   - id: t-044
     milestone: m3
