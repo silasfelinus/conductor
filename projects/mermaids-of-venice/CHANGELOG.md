@@ -3,6 +3,7 @@
 ## 2026-08-03
 - Reopened the project while Silas actively revises edition 3; revision-dialogue milestone is now in progress.
 - Added recurring t-013: once per Pacific day, and only after `Mermaids of Venice v3.doc` changes, generate three fresh reader reactions in the voices of unused Kind Robots characters (Ami and the koala assassin prioritized), with source-hash/date/reviewer state and no manuscript edits.
+- The review loop watches that exact v3 filename; the older `Mermaids of Venice Revision.doc` remains historical context and does not trigger the new cadence.
 
 ## 2026-07-15
 - t-011 done: added docs/subagent-fanout-notes.md documenting the sectional
