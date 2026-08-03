@@ -2298,27 +2298,13 @@ tasks:
   - id: t-073
     milestone: m3
     title: 'Fix the one-scroll SHAPE A false positives by hoisting a shared kr-scroll above mutually-exclusive tab branches'
-    status: review
+    status: done
     passes: 0
     stakes: reversible
-    note: |-
-      Kaizen from t-017's twenty-fifth sweep (2026-08-03, kind_robots PR #1365). t-047's full read-only audit of the one-scroll bucket (27 entries, done 2026-08-02) found roughly 10 of them are SHAPE A: mutually-exclusive v-if/v-else-if/v-show tab branches, each declaring its own scroll region, but only ever one mounted at runtime. verifyLayoutContract.ts's static regex counts all of them regardless of mutual exclusivity, so these are false positives, not real nested-scroll bugs. art-manager.vue (seven v-else-if branches, identical scroll class on each) is the type specimen kind_robots PR #1321 already fixed four of this shape for.
-      Fix: for each remaining SHAPE A file, hoist one shared .kr-scroll wrapper above the v-if/v-else-if/v-show branch instead of declaring the scroll class on each branch individually -- same zero-behavior-change pattern the rest of t-017's sweeps have used throughout. Verify via vue-tsc, eslint, npm run test:layout-contract (--update to ratchet), and verifyMdcScrollOwnership.ts, same as any other bounded sweep.
-      This does not require the still-missing two-column-scroll primitive SHAPE B (12 files: genuine concurrent <aside>+<main>, both live at once) needs -- that's a separate, harder follow-on, out of scope here.
-
-
-      Inspected the live one-scroll baseline and representative candidates. animation-manager.vue is genuine concurrent gallery-plus-aside Shape B; scenario-gallery.vue has a form scroll region that can coexist with its content scroll; user-galleries.vue nests bounded previews inside its parent. None are safe Shape A hoists. Released rather than shrinking the counter dishonestly; remaining candidates need importer and branch-lifecycle classification.
-
-      Hoisted Art Manager's mutually-exclusive tab scrollers into one shared kr-scroll wrapper, preserving Gallery's delegated scroll and ArtJob's responsive 2xl overflow behavior. Ratcheted one-scroll from 27 to 26.
-
-      Merged Kind Robots PR #1371 as 70f2ed545d2c52be8ae8bc852e5c85969257ec99. Art Manager now hoists six mutually-exclusive tab scroll regions into one shared kr-scroll owner, preserves Gallery's delegated scroll and ArtJob's responsive 2xl overflow behavior, and ratchets one-scroll from 27 to 26. All 13 final-head workflows completed successfully. The task remains open for the other verified Shape A files. Classify every one-scroll candidate by whether scroll regions can coexist at runtime before editing: static duplicates are safe to hoist only when branch exclusivity is proven; concurrent panes and bounded nested previews must remain separate until their own primitive or contract exists.
-
-      Verified avatar-picker.vue as a genuine SHAPE A candidate: three v-show tabs (gallery/upload/generate) are mutually exclusive at runtime, only upload and generate declared their own overflow-y-auto. Hoisted a single shared .kr-scroll wrapper above all three (v-show keeps hidden siblings in the DOM but display:none excludes them from scroll-height, so this is safe). Ratchets one-scroll from 26 to 25. Also examined mural-manager.vue (three simultaneously-visible panes, genuine Shape B, not a hoist) and butterfly-flip.vue (front/back panels can both be mounted at once when useFlipEffect is false, not safe to merge). kind_robots PR #1372 open against main (claude/relaxed-lovelace-kz9il2).
-
-      Merged Kind Robots PR #1372 as e479e3ab4c29a3c507daa778c4a0ae36bd019859. avatar-picker.vue's gallery/upload/generate v-show tabs (mutually exclusive at runtime) now share one .kr-scroll wrapper instead of two independent overflow-y-auto declarations. All 15 required checks passed. Ratchets one-scroll from 26 to 25. Also examined and released (not safe Shape A hoists): mural-manager.vue (three panes visible simultaneously, genuine Shape B) and butterfly-flip.vue (front/back panels can both be mounted at once when useFlipEffect is false). The task remains open for the other unclassified one-scroll candidates.
+    note: 'Merged Kind Robots PR #1374 as 80df44b. Hoisted a shared overflow-auto wrapper around wonderlab-preview-host.vue''s mutually-exclusive 4-branch status switch (skip-reason/not-found/error/success), removing the two per-branch scroll declarations (including the error pre''s now-redundant max-h-48 cap). one-scroll: 25 -> 24 via --update. Audited all 13 non-SHAPE-B files remaining in the bucket at claim time: none of the others were clean SHAPE A false positives -- the rest are genuine SHAPE B (concurrent aside+main, 12 files, needs a two-column-scroll primitive that does not exist yet) or SHAPE D (bounded max-h-* sub-regions like log tails and pre dumps, which the regex cannot distinguish from a real second scroll owner). Filed t-075 as this cycle''s kaizen: teach verifyLayoutContract.ts to exempt bounded max-h-* sub-regions from the one-scroll count so SHAPE D stops inflating the bucket. vue-tsc, eslint, test:layout-contract, test:wonderlab-core-fixtures, test:wonderlab-ui-fixtures, and verifyMdcScrollOwnership.ts all clean; all kind_robots PR checks green.'
     claimed_by: 2026-08-03T142823Z-interface-vision-t-073-agent
     claimed_at: '2026-08-03T14:28:23Z'
-    updated: '2026-08-03T14:28:23Z'
+    updated: '2026-08-03T15:13:47Z'
     owner: worker
 
   - id: t-074
