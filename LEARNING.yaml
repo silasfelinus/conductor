@@ -6197,3 +6197,20 @@ records:
     surfaced a real, unrelated bug (CharacterFlipCard has zero defineProps and silently
     ignores its character prop) -- filed separately as t-076 rather than folded into this
     task''s diff, keeping scope discipline even for an accidental discovery.'
+- date: '2026-08-03'
+  project: conductor
+  task: t-096
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A task selector that only checks status/claimability (run_worker.py''s
+    find_ready_task, used by select_role.py) let interface-vision/t-017 -- an umbrella
+    sweep whose own note already said every bucket but one was delegated to t-058 -- get
+    claimed anyway, wasting a session''s cycle. Two independent "pick next ready task"
+    implementations (run_worker.py and next_ready_task.py) had already drifted once before
+    this fix; when a roadmap task can legitimately delegate its remaining scope to a named
+    sibling, encode that relationship as a structured field (remaining_scope_task) that
+    every selector checks, not just prose in the note that only a human or a careful
+    session catches by reading the full history.'
