@@ -1605,17 +1605,36 @@ tasks:
       (2) THE choice-* TRIO IS NOT THREE DELETIONS. choice-manager.vue is LIVE -- mounted by
       components/rewards/add-reward.vue:163 and components/scenarios/add-scenario.vue:109, and
       pinned by utils/scripts/verifyWonderLabLearningControlFixtures.ts. Removing it breaks a
-      contract. Only choice-selector.vue and choice-preview.vue are genuinely orphaned (their
-      sole reference is the gitignored utils/generated/wonderLabSourceEvidence.ts, and the live
-      intro-picking UI was already reimplemented inline at scenario-interact.vue:113-155). So:
-      two deletions and one migration.
+      contract.
+
+      CORRECTION, 2026-08-03: THIS TASK'S "two deletions" IS WRONG. DO NOT DELETE
+      choice-selector.vue OR choice-preview.vue.
+
+      They are not orphans. They are WonderLab exhibits -- component ids 897 and 896 -- with
+      PUBLISHED in-character reviews against them: reaction ids 1791-1794, authored by The
+      Question Mark, The Whispering Woods, The Reanimation Counter's Best Work and Mx. Quorum,
+      pinned by sourceKey in config/wonderlab-voice-polish-batch-011.json. Deleting the files
+      would orphan real published Reaction records and break that batch's source references.
+
+      The original assessment checked which PAGES mount them and found none, which is true and
+      irrelevant: WonderLab mounts by registry, not by route. That is the same reachability
+      mistake as t-060's, run in the opposite direction -- there, a component with a filename
+      match was assumed live and was dead; here, components with no route were assumed dead
+      and are live, with user-visible content attached. "No page mounts it" is not evidence of
+      death in this codebase. Check the WonderLab registry and the voice-polish batch configs
+      before proposing ANY component deletion.
+
+      So: ZERO deletions and one migration. The inline intro-picking UI at
+      scenario-interact.vue:113-155 duplicating choice-preview's job is still worth
+      consolidating, but that means the inline copy adopts kr-choice-list -- not that the
+      exhibit gets removed.
       Expect one-scroll to keep dropping as these land, the same way it did in PR #1315;
       ratchet the baseline each time. The kit pieces to adopt are kr-chat-window (with its
       #footer slot for trailing conversation-level content), kr-choice-list, and kr-art-plate
       (frame: 'plate' | 'thin' | 'none').
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-02T12:30:00Z'
+    updated: '2026-08-03T08:50:00Z'
 
   - id: t-052
     milestone: m3
