@@ -6164,3 +6164,19 @@ records:
   lesson: Two mutually-exclusive v-if/v-else branches gated by a fixed-per-session flag (admin vs.
     non-admin) are the same SHAPE A pattern as tab switches -- hoist one shared kr-scroll wrapper
     above the pair instead of each branch declaring its own overflow-y-auto.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A component with both a 3D-flip mode and a fade mode needs a fundamentally
+    different scroll-ownership fix per mode: flip mode already v-if-excludes the
+    inactive face (never double-scrolls), but fade mode renders both faces
+    simultaneously for the opacity transition, so a static overflow-y-auto on both
+    faces gives two live scroll regions at once. Toggle overflowY per face on the
+    same state (isFlipped) that drives the fade, rather than assuming one static
+    class covers both modes. Other flip/fade-card components (e.g.
+    character-flip-card.vue) likely share the same latent bug -- filed t-075 to check.'
