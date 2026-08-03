@@ -1956,8 +1956,8 @@ tasks:
   - id: t-063
     milestone: m3
     title: 'A CI step piped through tee can never fail: verifyFacetArtworkMigration is dead'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -2023,9 +2023,9 @@ tasks:
 
       The remaining two tee'd steps (academy-examples-manifest, audit:channel-assets) both PASS
       locally, so those two can have `shell: bash` added with no fallout at any time.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-03T08:30:00Z'
+    claimed_by: 2026-08-03T121900Z-interface-vision-t-063-r2m7
+    claimed_at: '2026-08-03T12:19:00Z'
+    updated: '2026-08-03T12:19:00Z'
 
   - id: t-064
     milestone: m2
@@ -2334,31 +2334,16 @@ tasks:
   - id: t-073
     milestone: m3
     title: 'Fix the one-scroll SHAPE A false positives by hoisting a shared kr-scroll above mutually-exclusive tab branches'
-    status: claimed
-    owner: worker
+    status: ready
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-017's twenty-fifth sweep (2026-08-03, kind_robots PR #1365).
-      t-047's full read-only audit of the one-scroll bucket (27 entries, done
-      2026-08-02) found roughly 10 of them are SHAPE A: mutually-exclusive
-      v-if/v-else-if/v-show tab branches, each declaring its own scroll region,
-      but only ever one mounted at runtime. verifyLayoutContract.ts's static
-      regex counts all of them regardless of mutual exclusivity, so these are
-      false positives, not real nested-scroll bugs. art-manager.vue (seven
-      v-else-if branches, identical scroll class on each) is the type specimen
-      kind_robots PR #1321 already fixed four of this shape for.
+    note: |-
+      Kaizen from t-017's twenty-fifth sweep (2026-08-03, kind_robots PR #1365). t-047's full read-only audit of the one-scroll bucket (27 entries, done 2026-08-02) found roughly 10 of them are SHAPE A: mutually-exclusive v-if/v-else-if/v-show tab branches, each declaring its own scroll region, but only ever one mounted at runtime. verifyLayoutContract.ts's static regex counts all of them regardless of mutual exclusivity, so these are false positives, not real nested-scroll bugs. art-manager.vue (seven v-else-if branches, identical scroll class on each) is the type specimen kind_robots PR #1321 already fixed four of this shape for.
+      Fix: for each remaining SHAPE A file, hoist one shared .kr-scroll wrapper above the v-if/v-else-if/v-show branch instead of declaring the scroll class on each branch individually -- same zero-behavior-change pattern the rest of t-017's sweeps have used throughout. Verify via vue-tsc, eslint, npm run test:layout-contract (--update to ratchet), and verifyMdcScrollOwnership.ts, same as any other bounded sweep.
+      This does not require the still-missing two-column-scroll primitive SHAPE B (12 files: genuine concurrent <aside>+<main>, both live at once) needs -- that's a separate, harder follow-on, out of scope here.
 
-      Fix: for each remaining SHAPE A file, hoist one shared .kr-scroll wrapper
-      above the v-if/v-else-if/v-show branch instead of declaring the scroll
-      class on each branch individually -- same zero-behavior-change pattern
-      the rest of t-017's sweeps have used throughout. Verify via vue-tsc,
-      eslint, npm run test:layout-contract (--update to ratchet), and
-      verifyMdcScrollOwnership.ts, same as any other bounded sweep.
 
-      This does not require the still-missing two-column-scroll primitive
-      SHAPE B (12 files: genuine concurrent <aside>+<main>, both live at once)
-      needs -- that's a separate, harder follow-on, out of scope here.
+      Inspected the live one-scroll baseline and representative candidates. animation-manager.vue is genuine concurrent gallery-plus-aside Shape B; scenario-gallery.vue has a form scroll region that can coexist with its content scroll; user-galleries.vue nests bounded previews inside its parent. None are safe Shape A hoists. Released rather than shrinking the counter dishonestly; remaining candidates need importer and branch-lifecycle classification.
     claimed_by: 2026-08-03T121254Z-interface-vision-t-073-k9p4
     claimed_at: '2026-08-03T12:12:54Z'
-    updated: '2026-08-03T12:12:54Z'
+    updated: '2026-08-03T12:18:30Z'
