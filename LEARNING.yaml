@@ -6262,3 +6262,24 @@ records:
     this class of task; the fix is to verify via GitHub MCP tools (as
     CLAUDE.md's own runbook says) rather than treating every drift-check
     non-zero exit as unresolved.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-028
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: transient
+  lesson: >
+    Salvaged from the implementing session's own close-out PR (conductor #1636,
+    opened but never merged -- superseded by this session's reconciliation
+    before it landed). That session hit a real task-ID collision mid-work: its
+    own new task got numbered t-078, but a concurrent session claimed t-078 for
+    an unrelated mobile workspace-header fix and merged first, so GitHub
+    reported the PR unmergeable. Recovered per the documented rotation-collision
+    protocol -- merged current main, kept main's t-078 untouched, renumbered the
+    new task to t-079 via next_free_task_id.py, and verified the diff was scoped
+    to only the intended change before re-pushing. No lost work on either side,
+    no force-push. Filed here as a second confirmed real-world instance of the
+    task-ID collision failure mode the rotation-collision protocol exists to
+    catch.
