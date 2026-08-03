@@ -1250,7 +1250,7 @@ tasks:
       history endpoint returns nothing for project even though project has
       its own working dedicated gallery endpoint) -- worth fixing in the same
       pass by writing EntityArtImage rows for project too. Follow-on task
-      t-078 carries the full wiring scope with these specifics preserved.
+      t-079 carries the full wiring scope with these specifics preserved.
     claimed_by: 2026-08-03T203041Z-t028
     claimed_at: '2026-08-03T20:30:42Z'
     updated: '2026-08-03T20:38:00Z'
@@ -2545,6 +2545,60 @@ tasks:
     updated: '2026-08-03T20:05:00Z'
 
   - id: t-078
+    milestone: m3
+    title: 'workspace-header crushes the page-title strip to a sliver on a phone and overflows the currency widgets'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Silas, reviewing kind-robots.vercel.app on an iPhone (2026-08-03):
+      "please note several overlapping elements, even starting at the dashboard,
+      I don't even know what should be to the right of our channel/tab selector."
+
+      Diagnosed while fixing the Dreams toolbar (kind_robots PR #1382). The thin
+      image sliver right of the "Play" channel selector is the PAGE TITLE STRIP,
+      squeezed to a few pixels wide.
+
+      components/navigation/workspace-header.vue lays its row out as:
+      back button (shrink-0), <channel-select> (shrink-0), a title <section>
+      (flex-1 min-w-0 overflow-hidden, carrying the tab image, icon, room label
+      and title), then .header-control-strip (shrink-0) holding refresh,
+      <server-selector>, <notification-bell>, <login-switcher>, <karma-widget>
+      and <mana-widget>.
+
+      Only the title strip is flexible. Rough widths at 390px: back ~36 +
+      channel-select ~130 + control strip ~250 = ~420px of shrink-0 content in a
+      390px viewport. So the title collapses toward zero (the sliver) AND the
+      strip still overflows the right edge, which is why the karma value renders
+      as a cut-off "395...".
+
+      Candidate fixes, needing real measurement rather than arithmetic:
+      (a) hide karma/mana below sm -- they are already unreadable there, so
+          little is lost and ~100px is freed for the title;
+      (b) give the title strip a min-width and let the control strip scroll;
+      (c) collapse the control strip into a single overflow menu on mobile.
+      (a) is the smallest and most likely correct, but this is chrome on EVERY
+      page and the choice depends on rendered widths, so whoever takes it should
+      measure before committing -- the Dreams toolbar fix used a Chromium
+      harness against the compiled Tailwind (build, then render the markup at
+      390px and 1280px and read back offsetHeight) and that method transfers
+      directly here.
+
+      Related, same review, likely same session of work:
+      - The workspace card hand has dead whitespace above it, runs horizontally
+        underneath the floating action toggle instead of stopping short of it,
+        and cannot be scrolled on mobile.
+      - That floating toggle "needs something visually" -- it currently reads as
+        an unlabelled translucent circle overlapping the card art.
+      Both are in components/navigation/workspace-hand.vue and its host; they
+      are grouped here because they are the same mobile-chrome pass, but split
+      them out if the header fix lands on its own.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-03T21:30:00Z'
+
+  - id: t-079
     milestone: m2
     title: 'Wire entityArt.ts onto EntityArtImage joins and retire the ArtImage.path prefix-string history scheme'
     status: ready
@@ -2602,4 +2656,4 @@ tasks:
       needed, audit it line by line per the standing rule.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-03T20:32:00Z'
+    updated: '2026-08-03T21:35:00Z'
