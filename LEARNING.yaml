@@ -6214,3 +6214,29 @@ records:
     sibling, encode that relationship as a structured field (remaining_scope_task) that
     every selector checks, not just prose in the note that only a human or a careful
     session catches by reading the full history.'
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-032
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Naively calling a store's existing updateX(id, updates) action with only
+    the single field being toggled ({ allowReviews: bool }) is unsafe unless
+    you've read the payload-building function it calls first: rewardStore's
+    toRewardPayload() and scenarioStore's toScenarioPayload() both rebuild
+    the ENTIRE PATCH payload from whatever partial object is passed in,
+    filling missing fields with defaults (toRewardPayload defaults a missing
+    name to '', toScenarioPayload defaults missing intros to '[]') -- a
+    naive single-field patch would have silently wiped the reward's name or
+    the scenario's intros on toggle. Bot's and Character's equivalent
+    payload builders are plain spreads, so a single-field patch is safe
+    there but not elsewhere; the two families look identical from the call
+    site and are not safe to treat the same without reading the payload
+    builder itself. Also found and fixed a real latent bug this way:
+    toRewardPayload's field whitelist was missing allowReviews entirely, so
+    the API-side field t-011 already shipped could never actually be set
+    from the reward edit form even before this task, a silent no-op nobody
+    had noticed.
