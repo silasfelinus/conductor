@@ -812,7 +812,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -1723,6 +1723,21 @@ tasks:
       overflow-y-auto declarations is the intended one). Verify visually via the Vercel
       preview per AGENTS.md's front-end verification note, not just the contract count,
       since this is the page most users actually look at.
+
+
+      Partial progress from t-017's twenty-second sweep (kind_robots PR #1349,
+      2026-08-03): the root-surface half of this task is done. conductor-page.vue's
+      root now reads class="kr-surface p-1.5 sm:p-2.5" -- a zero-behavior-change
+      rename, since its prior hand-rolled utility string (flex h-full min-h-0 w-full
+      flex-col gap-3 overflow-hidden) was byte-for-byte identical to kr-surface's own
+      computed styles, same shape as the storybook-library-page.vue precedent (PR
+      #1345). This does NOT touch the one-scroll violation -- the file still declares
+      two scroll regions (lines ~161 and ~312, gallery vs. admin project-detail view)
+      and remains in the one-scroll allow-list. The actual consolidation work this
+      task exists for (reading the file in full, deciding which scroll region is
+      canonical, verifying visually via the Vercel preview) is still unstarted. Do not
+      redo the root-surface rename -- scope the rest of this task to the one-scroll
+      split only.
     claimed_by: null
     claimed_at: null
     updated: '2026-08-02T17:35:16Z'
