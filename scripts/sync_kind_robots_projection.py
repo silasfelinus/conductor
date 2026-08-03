@@ -14,7 +14,6 @@ import hashlib
 import json
 import os
 import subprocess
-import sys
 import urllib.error
 import urllib.request
 from datetime import datetime, timezone
@@ -158,8 +157,8 @@ def main() -> int:
 
     token = os.environ.get("KR_API_TOKEN", "").strip()
     if not token:
-        print("KR_API_TOKEN is required", file=sys.stderr)
-        return 2
+        print("KR_API_TOKEN is not set; skipping Kind Robots projection sync")
+        return 0
 
     result = post_snapshot(args.api_base, token, payload)
     print(json.dumps({**summary, "result": result.get("data")}, indent=2))
