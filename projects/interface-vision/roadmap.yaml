@@ -2146,8 +2146,8 @@ tasks:
   - id: t-067
     milestone: m3
     title: 'Document the root-tag footgun in verifyLayoutContract.ts (root-surface checks the literal first tag, not the visually-styled wrapper)'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: |-
@@ -2159,6 +2159,9 @@ tasks:
       because `--report` still showed the violation). Add a short comment above `rootClassList` in
       utils/scripts/verifyLayoutContract.ts noting this footgun, so the next sweep checks the literal opening tag
       first instead of assuming it's whichever nested element carries the layout classes.
+    claimed_by: 2026-08-03T111341Z-interface-vision-t-067-b4n8
+    claimed_at: '2026-08-03T11:21:00Z'
+    updated: '2026-08-03T11:21:00Z'
 
 
   - id: t-068
