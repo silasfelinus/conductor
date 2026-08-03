@@ -1724,32 +1724,18 @@ tasks:
   - id: t-057
     milestone: m3
     title: 'Design a fifth "unbounded" layout primitive so MDC-mounted -page.vue components can join root-surface safely'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-017's fifteenth sweep (2026-08-02, kind_robots PR #1327). Most of
-      the remaining root-surface entries (about-page.vue, wallet-page.vue,
-      wishmaster-page.vue, giving-page.vue, mermaids-page.vue, privacy-page.vue,
-      storybook-library-page.vue, super-form.vue, login-page.vue, registration-page.vue,
-      appmaker-page.vue, for-you-manager.vue, memory-dungeon.vue) are MDC-mounted
-      -page.vue components embedded inside pages/[...slug].vue's own scrolling
-      content-host. The eleventh sweep flagged this as unsafe to convert directly:
-      kr-surface/kr-stage both force overflow-hidden on a bounded h-full root, which
-      could clip long-form content that currently relies on the parent ContentRenderer
-      host's own scroll to grow past the viewport, since that host gives the child no
-      flex/height context to safely self-bound. Design and add a fifth primitive to the
-      four in assets/css/tailwind.css's "Scroll-ownership primitives" block (t-004) --
-      an unbounded marker class with no overflow/height behavior, satisfying
-      verifyLayoutContract.ts's root-surface check without imposing a height
-      constraint the MDC host doesn't provide. Verify against at least one long-form
-      MDC page (about-page.vue is a good test case) via the Vercel preview, not just
-      the contract count, since clipping would only show up visually. This unblocks
-      the largest remaining chunk of the root-surface bucket for future t-017 sweeps.
+    note: |-
+      Kaizen from t-017's fifteenth sweep (2026-08-02, kind_robots PR #1327). Most of the remaining root-surface entries (about-page.vue, wallet-page.vue, wishmaster-page.vue, giving-page.vue, mermaids-page.vue, privacy-page.vue, storybook-library-page.vue, super-form.vue, login-page.vue, registration-page.vue, appmaker-page.vue, for-you-manager.vue, memory-dungeon.vue) are MDC-mounted -page.vue components embedded inside pages/[...slug].vue's own scrolling content-host. The eleventh sweep flagged this as unsafe to convert directly: kr-surface/kr-stage both force overflow-hidden on a bounded h-full root, which could clip long-form content that currently relies on the parent ContentRenderer host's own scroll to grow past the viewport, since that host gives the child no flex/height context to safely self-bound. Design and add a fifth primitive to the four in assets/css/tailwind.css's "Scroll-ownership primitives" block (t-004) -- an unbounded marker class with no overflow/height behavior, satisfying verifyLayoutContract.ts's root-surface check without imposing a height constraint the MDC host doesn't provide. Verify against at least one long-form MDC page (about-page.vue is a good test case) via the Vercel preview, not just the contract count, since clipping would only show up visually. This unblocks the largest remaining chunk of the root-surface bucket for future t-017 sweeps.
+
+
+      Opened kind_robots PR #1340: added .kr-unbound root-surface primitive (assets/css/tailwind.css) with no overflow/height behavior, updated verifyLayoutContract.ts to accept it, applied it to about-page.vue as the verification case, documented it in ui-gallery.vue. root-surface baseline 19 -> 18. Also resolves the duplicate kaizen task t-059 (same design question, filed twice from two different t-017 sweeps) -- both will close together once #1340 merges. Still need visual confirmation via the Vercel preview per this task's own instruction before merging (flagged on the PR).
     claimed_by: conductor-agentrun-20260803T0240Z-iv-t057
     claimed_at: '2026-08-03T02:40:39Z'
-    updated: '2026-08-03T02:40:39Z'
+    updated: '2026-08-03T02:45:00Z'
 
   - id: t-062
     milestone: m3
