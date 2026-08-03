@@ -2382,8 +2382,6 @@ tasks:
   - id: t-075
     milestone: m3
     title: 'Audit character-flip-card.vue for the same fade-mode double-scroll-region bug just fixed in butterfly-flip.vue'
-    status: claimed
-    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -2399,6 +2397,78 @@ tasks:
       their own scroll region unconditionally?) before assuming the fix transfers
       as-is; if it matches, apply the same isFlipped-gated overflowY toggle and
       ratchet the one-scroll baseline down by one.
-    claimed_by: 2026-08-03T173600Z-interface-vision-t-075-agentrun
-    claimed_at: '2026-08-03T17:36:44Z'
-    updated: '2026-08-03T17:36:44Z'
+
+
+      CORRECTION: the premise above was wrong. Despite the name and its own stale
+      internal header comment (`<!-- /components/content/characters/character-interact.vue -->`
+      -- a copy/paste leftover from an earlier clone), character-flip-card.vue is not
+      a flip/fade card at all -- it's a 900+ line "Character Interact" dashboard
+      (chat/adventure/prompt/debug tabs) with no relation to butterfly-flip.vue's
+      front/back structure. Its 5 overflow-y-auto/overflow-auto occurrences are 1 real
+      scroll owner (the main content column) plus 4 intentional bounded max-h-*
+      sub-regions (chat log, getting-to-know-you list, 2 debug/preview <pre> blocks) --
+      exactly the SHAPE D pattern t-047's audit already identified ("one legitimate
+      scroll owner plus intentional bounded max-h-* sub-regions... rule artifacts").
+      No code fix applies here; forcing one would mean rewriting already-correct
+      layout to satisfy a regex, the same anti-pattern t-047 warned against. This is
+      a duplicate data point for t-058 ("stop counting Shapes A/D"), not a distinct
+      bug -- closing without a diff.
+
+
+      Separately, and NOT part of this task's scope: reading character-flip-card.vue's
+      script found it has zero `defineProps` -- it silently ignores the `:character="character"`
+      prop passed to it by scenario-gallery.vue (twice, in a v-for over
+      selectedScenarioCharacters) and character-interact.vue, always rendering/operating
+      on `characterStore.selectedCharacter` (the single globally-selected character)
+      instead. In scenario-gallery.vue's Cast grid this means every card in the v-for
+      loop renders an identical copy of the same giant dashboard for the same globally-
+      selected character, not a distinct per-character card -- filed as its own task,
+      interface-vision/t-076, rather than fixed here (real UI/UX bug, out of scope for
+      a layout-contract sweep, and needs a real design decision about what a per-character
+      card should show, not a quick patch).
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-03T17:45:00Z'
+    status: done
+    owner: null
+
+  - id: t-076
+    milestone: m2
+    title: 'CharacterFlipCard silently ignores its character prop, rendering the wrong character in scenario-gallery.vue cast grids'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found while investigating t-075 (2026-08-03). components/characters/character-flip-card.vue
+      (resolved as <CharacterFlipCard> per .nuxt/components.d.ts) has zero `defineProps` in its
+      `<script setup>` -- it never reads a `character` prop at all. It always renders/operates on
+      `characterStore.selectedCharacter` (the single globally-selected character) internally, via
+      its own chat/adventure/prompt/debug "Character Interact" dashboard (900+ lines; it is not
+      actually a flip/fade card despite the name -- see t-075's correction).
+
+
+      Three call sites pass `:character="character"` expecting a distinct per-character card and
+      get the same globally-selected character's full dashboard instead: character-interact.vue:57
+      (single instance, so may look correct there by coincidence if selectedCharacter happens to
+      match) and both v-for loops in scenario-gallery.vue (lines ~179 and ~266, `v-for="character
+      in selectedScenarioCharacters"` inside `.character-card-grid` -- every card in a scenario's
+      Cast grid renders an identical copy of the same giant dashboard for whichever character is
+      globally selected, not one distinct summary card per cast member). Each instance also calls
+      its own onMounted -> characterStore.initialize({fetchRemote: true}) / chatStore.initialize(),
+      so an N-character grid fires N redundant full store initializations.
+
+
+      Needs a real design decision, not a quick patch: either (a) character-flip-card.vue should
+      become a real small per-character summary/flip card (accepting and rendering the `character`
+      prop, no store-fetching side effects, sized for a grid), with the existing full "Character
+      Interact" dashboard content relocated to (or merged with) character-interact.vue which already
+      covers that job, or (b) the grid call sites should use a different, already-correct component
+      (character-card.vue?) instead of CharacterFlipCard if one already fits. Read
+      character-interact.vue, character-card.vue, and character-gallery.vue first to see how much
+      of this is already solved elsewhere before designing something new. Verify visually (Vercel
+      preview per AGENTS.md's front-end note) once changed, since this is a real rendered-output bug,
+      not just a lint/contract violation.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-03T17:45:00Z'
