@@ -6240,3 +6240,25 @@ records:
     the API-side field t-011 already shipped could never actually be set
     from the reward edit form even before this task, a silent no-op nobody
     had noticed.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-028
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Closed as done during this session's state-reconciliation pass: the task's
+    own note already documented that its scope had been deliberately narrowed
+    to a schema-only landable core (kind_robots PR #1381, confirmed merged),
+    with the remaining wiring split into a dependent follow-on (t-079). The
+    roadmap had been left at status: review rather than done after the
+    bookkeeping PR merged, which also meant t-079 (depends_on: t-028) was
+    marked status: ready despite its dependency not showing done -- both
+    corrected together. check_pr_merged_drift.py's own connectivity
+    limitation in this sandbox (raw urllib 403s on api.github.com) means it
+    cannot verify referenced PR numbers itself and always exits non-zero for
+    this class of task; the fix is to verify via GitHub MCP tools (as
+    CLAUDE.md's own runbook says) rather than treating every drift-check
+    non-zero exit as unresolved.
