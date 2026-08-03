@@ -1,0 +1,11 @@
+version: 1
+project: interface-vision
+task: t-034
+operation: done
+owner: worker
+session: 2026-08-03T221341Z-interface-vision-t-034-k7p9
+updated: '2026-08-03T22:26:50Z'
+note: >-
+  Merged Kind Robots PR #1386 as d636e41e8239bc519bf368f09fa485a54187d4ac. navManifest now uses dashboardHelper's exported isDashboardTabKey predicate, matching navStore's runtime vocabulary; Music Mentor and Video Generator no longer carry stale dashboard hints; invalid dashboardTab references are CI-blocking errors. All 12 final-head workflows completed successfully after one TypeScript fix on the same branch.
+learning: >-
+  Once a warning baseline reaches zero, promote the invariant to an error and reuse the same predicate the runtime uses. Keeping a separate validator recreates drift even when both implementations look trivial.
