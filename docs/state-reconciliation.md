@@ -2,7 +2,24 @@
 
 Conductor is the authoritative coordination record for project lifecycle, roadmap task state, dependencies, human gates, and agent claims. Kind Robots may present and cache that state, but it must not invent a second independent truth for the same fields.
 
-A task is not finished when code merely reaches another repository. It is finished when the implementation, verification, and Conductor bookkeeping agree.
+Read [`SOURCE_OF_TRUTH.md`](../SOURCE_OF_TRUTH.md) before changing any cross-repository project data. Kind Robots owns project presentation and live application state; Conductor owns coordination. The Kind Robots database contains a commit-stamped materialized projection, not a peer copy that may be edited independently.
+
+A task is not finished when code merely reaches another repository. It is finished when the implementation, verification, Conductor bookkeeping, and the projected Kind Robots view agree.
+
+## Projection reconciliation
+
+A Conductor coordination change is not visible to Kind Robots until the `Sync Kind Robots projection` workflow successfully posts the new `main` commit snapshot.
+
+After a roadmap, lifecycle registry, pitch, or project-image change reaches Conductor `main`:
+
+1. Confirm the sync workflow ran for that commit.
+2. Confirm the Kind Robots endpoint accepted the exact source commit SHA.
+3. Confirm the For You or project surface reports that projection SHA when diagnosing stale data.
+4. If the sync failed, repair the sync. Do not hand-edit projected task or milestone state in Kind Robots.
+
+Human actions initiated from Kind Robots travel in the opposite direction only as commands: task events and pitch updates. The browser may update optimistically, but canonical completion occurs only after Conductor commits the change and the next projection sync returns it.
+
+Presentation metadata follows the reverse ownership rule. `Project.title`, artwork, route, channel, tab, live URL, and displayed repository URL belong to Kind Robots. Existing matching values in `project-overrides.yaml` are deprecated bootstrap fallbacks; do not add new presentation fields there or copy Kind Robots presentation changes back into Conductor.
 
 ## Lifecycle-aware visibility
 
@@ -71,4 +88,5 @@ Before saying the work is complete:
 2. Confirm the task and milestone state match reality.
 3. Confirm any task event was consumed.
 4. Confirm the implementation PR is merged or explicitly parked at a genuine gate.
-5. Report remaining human gates from active projects only, unless inactive projects were explicitly requested.
+5. Confirm the latest relevant Conductor commit reached the Kind Robots projection when the change affects the app surface.
+6. Report remaining human gates from active projects only, unless inactive projects were explicitly requested.

@@ -1,0 +1,52 @@
+name: Sync Kind Robots projection
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - project-overrides.yaml
+      - projects/**/roadmap.yaml
+      - projects/images/**
+      - pitches/**
+      - scripts/sync_kind_robots_projection.py
+      - scripts/sync_projects.py
+      - .github/workflows/sync-kind-robots-projection.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sync-kind-robots-projection
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    name: Push materialized coordination snapshot
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validate snapshot
+        run: python scripts/sync_kind_robots_projection.py --check
+
+      - name: Require sync credential
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: test -n "${KR_API_TOKEN:-}"
+
+      - name: Push snapshot
+        run: python scripts/sync_kind_robots_projection.py
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_API_BASE: https://kind-robots.vercel.app

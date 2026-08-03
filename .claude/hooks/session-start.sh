@@ -32,14 +32,23 @@ try:
 except Exception as e:
     lines += [f"Git error: {e}", ""]
 
-# Roadmap scan
+# Roadmap scan. The lifecycle registry controls which roadmaps are actionable.
 try:
     import yaml
+    overrides_path = root / "project-overrides.yaml"
+    overrides = yaml.safe_load(overrides_path.read_text()) or {}
+    active_projects = {
+        entry.get("slug")
+        for entry in overrides.get("overrides", [])
+        if isinstance(entry, dict) and entry.get("status", "active") == "active"
+    }
     ready, needs_human, claimed = [], [], []
     for rmap in sorted(root.glob("projects/*/roadmap.yaml")):
         proj = rmap.parent.name
+        if proj not in active_projects:
+            continue
         with open(rmap) as f:
-            data = yaml.safe_load(f)
+            data = yaml.safe_load(f) or {}
         for task in data.get("tasks", []):
             s = task.get("status", "")
             entry = f"  [{proj}/{task.get('id','?')}] {task.get('title','')}"
@@ -86,9 +95,9 @@ try:
             prs = json.loads(resp.read())
         agent_prs = [
             f"  #{p['number']} [{p['head']['ref']}] {p['title']}"
-            for p in prs if p["head"]["ref"].startswith(("worker/", "claude/"))
+            for p in prs if p["head"]["ref"].startswith(("worker/", "claude/", "agent/"))
         ]
-        lines += ["Open agent PRs (worker/* / claude/*):"]
+        lines += ["Open agent PRs (worker/* / claude/* / agent/*):"]
         lines += agent_prs if agent_prs else ["  none"]
         lines += [""]
     else:
@@ -109,7 +118,11 @@ else:
         "",
     ]
 
-lines += ["NOTE: Read AGENTS.md for the full operating manual before responding."]
+lines += [
+    "SOURCE OF TRUTH: Read SOURCE_OF_TRUTH.md. Conductor owns coordination; "
+    "Kind Robots owns presentation/application state and stores only a projected read model.",
+    "NOTE: Read AGENTS.md and docs/state-reconciliation.md before responding.",
+]
 lines += ["=== END SWEEP ==="]
 
 print(json.dumps({"message": "\n".join(lines)}))
