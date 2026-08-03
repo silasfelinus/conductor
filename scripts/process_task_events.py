@@ -201,6 +201,18 @@ def compute_transition_ops(
     elif operation in {"ready", "claim", "done", "blocked", "rearm"}:
         ops.append(("unset", "soft_gate", None))
 
+    if "approved_by_human" in event:
+        approved_by_human = event["approved_by_human"]
+        if not isinstance(approved_by_human, bool):
+            raise ValueError("approved_by_human must be a boolean when supplied")
+        ops.append(
+            (
+                "set",
+                "approved_by_human",
+                "true" if approved_by_human else "false",
+            )
+        )
+
     ops.append(("set", "updated", timestamp))
 
     note = event.get("note")

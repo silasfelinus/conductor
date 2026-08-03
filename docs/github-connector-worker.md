@@ -92,6 +92,11 @@ Rules:
 
 - Quote free-form scalar text or use a YAML block scalar. An unquoted `: ` can make the event invalid.
 - Include `soft_gate`, `owner`, `note`, or `learning` only when applicable.
+- An event may include `approved_by_human: true` or `approved_by_human: false` on any
+  operation to record Silas's decision on a `gate_human: true` task — the connector-only
+  equivalent of `scripts/set_task_field.py <project> <task-id> approved_by_human true`.
+  Only set this when Silas has explicitly cleared (or rejected) the gate in the *current*
+  session per CONTROL.md's "Human gate clearance rule" — never on your own initiative.
 - Optionally include your `session` on `review`/`done`/etc. events. When present, the processor verifies it matches the task's live `claimed_by` and consumes the event as `ALREADY_CLAIMED` (no mutation) if a different session now owns the task — so a session that lost the claim cannot later close the winner's task. Omitting `session` keeps the legacy sessionless behavior.
 - Do not use `force: true` without explicit approval for that override.
 - Do not assume creation means application.
