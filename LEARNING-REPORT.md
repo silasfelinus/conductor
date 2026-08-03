@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-03T00:54:43Z
+Generated: 2026-08-03T01:47:45Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **478**
-- Outcomes: blocked: 13, cancelled: 1, done: 464
+- Closed tasks recorded: **479**
+- Outcomes: blocked: 13, cancelled: 1, done: 465
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 36 | 100% |
+| interface-vision | 37 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 463 | 99% |
+| software | 464 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-03 `interface-vision/t-065` — The implementation half of this task (scripts/next_free_task_id.py, PR #1588) merged, but the task couldn't close because it was left with a queued rearm task-event that the processor rejected every run (`rearm requires recurring: true` -- t-065 isn't a recurring task). A connector-only session can't tell mid-task whether a target task is recurring without reading the live roadmap first; docs/github-connector-worker.md listed `rearm` and `ready` as interchangeable options with no mention of the recurring gate, so the wrong operation was a natural mistake, not carelessness. A concurrent session fixed the stuck event with the correct `operation: ready` while this session was independently mid-flight on the actual remaining work (wiring scripts/next_free_task_id.py into AGENTS.md's task-id-assignment call sites); rebasing onto that fix rather than duplicating it is what let both land cleanly. Documented the rearm-vs-ready distinction in docs/github-connector-worker.md so the next connector session doesn't repeat it.
+
 - 2026-08-03 `interface-vision/t-062` — A roadmap can carry two tasks sharing an id (find_task/find_task_block match the first occurrence, silently stranding the second) because audit_roadmaps.py's DUPLICATE_TASK_ID check existed but was purely advisory -- main() never returned non-zero, and its report only got committed to main under a stale one-off branch condition. Detection without enforcement doesn't stop the bug; wire the check into something CI actually gates (a pytest-covered script) or it will collide again, as it did here even on the very fix meant to prevent it.
 - 2026-08-02 `interface-vision/t-030` — Before reimplementing a ready task, compare its note, current code, and recent merged PRs. A task can carry a complete merged result but remain incorrectly ready because an earlier closeout targeted a different task ID; repair roadmap state instead of duplicating the code.
 - 2026-08-02 `dream-cycle/t-006` — A self-modifying "bootstrap a CI job that patches, tests, then commits" pattern has a sharp edge: if the commit step fails, everything the job did in its ephemeral checkout is silently discarded -- there is no partial-progress trail beyond whatever the job log happened to print. Here the patch applied cleanly and 802 tests passed, but `git diff --check` (run right after tests, right before the commit) caught a stray blank line at EOF the patch script itself introduced, and the job died there -- twice, identically, across two separate one-shot workflow files (agent-run-daily-dream-art-dedup.yml, agent-apply-daily-dream-art-dedup.yml), each triggered by a "push the workflow file to trigger it" bootstrap. Neither failure was ever investigated between attempts; a third workflow was authored instead of reading the first failure's job log, which would have shown the exact line and exit code. When a verified/tested CI step fails on the *next* step, read that step's log before re-authoring the automation -- the fix is often a one-line bug in the patcher itself, not a reason to change approach. Bounded, self-removing one-shot patch scripts are fine, but they should be run and debugged locally first, not iterated against CI round-trips at ~5 minutes per failed attempt.
@@ -91,7 +93,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-02 `interface-vision/t-017` — verifyLayoutContract.ts's root-tag regex only matches lowercase-first tag names, so a page component whose own template root is a PascalCase component reference (e.g. <ProjectFrontPage>) can never satisfy root-surface, even with the correct class present. When a shared shell is invoked from many call sites, check whether the checker can even parse the call site's own root tag before assuming a class-attribute fix will register — filed t-055 to fix the regex itself.
 - 2026-08-02 `interface-vision/t-033` — When two CI scripts parse the same authored tree, keep one implementation and preserve old script names only as compatibility aliases so workflow callers do not drift.
 - 2026-08-02 `interface-vision/t-047` — The one-scroll bucket contains at least two distinct shapes: mutually exclusive tab-switcher branches that can be mechanically consolidated under one shared scroll owner, and genuine dual-pane layouts that require a deliberate design decision about which pane owns scrolling. Grouping violations by shape keeps mechanical cleanup separate from judgment-heavy redesign.
-- 2026-08-02 `interface-vision/t-025` — New whole-repository conformance rules should first measure the live debt through CI, then record that exact result as a shrink-only baseline so future violations fail without pretending historical debt is new.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-03T00:54:43Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-03T01:47:45Z_
