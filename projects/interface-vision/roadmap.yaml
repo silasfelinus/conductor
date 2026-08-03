@@ -1618,22 +1618,26 @@ tasks:
     passes: 0
     stakes: reversible
     note: >
-      Flagged during the t-007 card/hero/icon work and never filed. Rendered card PNGs run about 544KB each, and nothing downsamples them for grid views -- a 68-card gallery is roughly 37MB over the wire. resolveArtVariantSrc (utils/artImageSrc.ts) already degrades card -> card base64 -> full-size, and resolveArtImageThumbSrc already prefers thumbnailPath, so the resolver side is in place.
+      MEASURED FROM PRODUCTION (2026-08-03), no longer an estimate. A real character card downloaded from the live site is a 512x768 PNG at 588,351 bytes (575 KB). Nine-sample average: 508,895 bytes (496 KB). 213 of 219 characters carry a cardPath. So a full character gallery is ~103 MB, not the 37 MB this task originally guessed (that figure was for a 68-card gallery; characters alone are 213). Transcoding that exact file with the already-installed sharp@0.34.5: webp q82 -> 70,492 bytes (8.3x smaller), webp q90 -> 93,510 (6.3x), avif q50 -> 43,206 (13.6x). ~103 MB becomes ~12 MB at webp q82.
 
-      SCOPED DOWN (2026-08-03). A source investigation narrowed this considerably. The original framing -- "nothing downsamples them" -- is misleading:
+      THE FRAMING WAS WRONG TWICE OVER.
 
-      THE PROBLEM IS FORMAT, NOT DIMENSIONS. The card variant is ALREADY purpose-rendered at 512x768 (utils/scripts/backfillEntityCardHeroArt.ts:60, SLOTS.cardPath). Galleries are not loading full-size art by mistake; a 512x768 PNG simply weighs ~544KB. Re-rendering or transcoding those to webp at the same dimensions is the ~10x win, and it needs no new size logic.
+      (1) It is not a missing thumbnail/downsample problem. The card variant is ALREADY 512x768 -- card-sized. The weight is entirely FORMAT (PNG), so transcoding needs no new sizing logic at all.
 
-      TOOLING IS ALREADY INSTALLED, ADOPTION IS NOT. sharp@0.34.5 and @nuxt/image@2.0.0 are both already dependencies. But @nuxt/image is registered as a bare module (nuxt.config.ts:202) with NO `image:` config block anywhere, and exactly ONE component in the repo uses NuxtImg (components/user/user-picture.vue). So the delivery-side route is essentially greenfield.
+      (2) There is no separate "card file" to write a thumbnail beside. A character's cardPath is `/api/art/images/<id>/file?v=<timestamp>`, and server/api/art/images/[id]/file.get.ts serves `Buffer.from(image.imageData, 'base64')` -- the ArtImage row's base64 column, straight out of MySQL. The card variant IS the stored original. Note the corollary: those bytes live in the database as base64, so each 575 KB image occupies ~766 KB of row, and character cards alone are carrying well over 100 MB inside the DB.
 
-      HIGHEST-LEVERAGE EDIT POINT: components/gallery/kr-gallery.vue:50-55 renders a raw `<img :src>`. It already backs 2 of 7 core-object galleries and is slated to back all 7 (t-060), so one change there covers every gallery at once. Two viable routes, and they are NOT equivalent in risk:
-        (a) DELIVERY SIDE -- swap that `<img>` for `<NuxtImg>` with width/format hints. No backfill, no DB write, no re-render cost. BUT the default IPX provider must be able to fetch and transform the art host, which requires an `image.domains` allowlist entry; a misconfigured IPX breaks EVERY image rather than merely leaving them large. Must be proven against the real art host before it goes near main.
-        (b) STORAGE SIDE -- emit a webp alongside each card in the render queue, plus a backfill in the shape of backfillEntityCardHeroArt.ts. Slower and needs a migration, but it cannot break existing rendering because the resolver already degrades when a variant is absent.
+      BEST ROUTE -- TRANSCODE AT THE SERVING ENDPOINT. This beats both options previously written here (client-side NuxtImg, and writing a webp in the render queue), and neither of those considered it:
+      - ONE file changes: server/api/art/images/[id]/file.get.ts. No migration, no backfill, no re-render, no schema change, no client change. Every entity gallery benefits at once, not just characters.
+      - Negotiate on the request's `Accept: image/webp` header and add `Vary: Accept`. The handler already sets `Cache-Control: public, max-age=31536000, immutable` for public images, so each image transcodes once and is then served from CDN cache.
+      - It cannot regress rendering: wrap the sharp call and fall back to the original buffer on any failure, so a transcode error degrades to today's behaviour rather than a broken image.
+      - Watch for: the early `sendRedirect` at line 66 when imagePath points elsewhere (that path serves no bytes and must stay untouched), and CPU/time budget on serverless for the first request per image.
 
-      NOT VERIFIABLE FROM AN AGENT SESSION. Both routes need real art to measure. The sandbox has sharp and Chromium, but DATABASE_URL points at the production host (acrocatranch.com:5544) which is unreachable from the agent network, and public/images/ is empty (4KB) -- there is no local art to transform or weigh. The 37MB figure remains an estimate from file sizes, not a captured transfer, and MUST be measured before and after by someone with real access. Do not ship route (a) without that measurement.
+      DO NOT take the NuxtImg/IPX route. @nuxt/image is registered as a bare module (nuxt.config.ts:202) with no `image:` config block and exactly one consumer in the repo, so it would need an `image.domains` allowlist, and a misconfiguration blanks EVERY image rather than merely leaving them large.
+
+      Still measure a real before/after transfer once it ships -- the numbers above are per-file sizes, captured with curl against the live deployment, not a captured page load.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-03T10:20:30Z'
+    updated: '2026-08-03T11:59:19Z'
 
   - id: t-053
     milestone: m3
