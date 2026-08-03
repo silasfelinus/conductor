@@ -2485,3 +2485,38 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-03T17:45:00Z'
+
+  - id: t-077
+    milestone: m3
+    title: 'Dream is missing an iconPath column, so Icons mode has no dedicated art'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Surfaced 2026-08-03 while giving dream-card variant support (kind_robots
+      PR #1380). Silas, reviewing /dreams: "why are we making it like this when
+      we have the Project model: Card, Hero, Icon views already decided?"
+
+      Answer: Dreams now offers all four views, but one of them is degraded at
+      the schema level. t-024 added card/hero/icon art fields to Bot, Character,
+      Reward and Scenario. Dream was NOT in that set. The Dream model has
+      imagePath, cardPath and heroPath but no iconPath -- and Dream.icon is a
+      String holding a NAME, not a path (the name/path split PR #1258 made
+      explicit for other models). So dream-card's Icons mode falls through to
+      cardPath and crops it square. It renders, but it is the only one of the
+      five object cards whose icon view has no dedicated art to load.
+
+      Fix: add `iconPath String? @db.Text` to the Dream model, mirroring the
+      other four, plus the matching migration. Then extend the variant branch in
+      dream-card.vue's explicitDreamImagePath (currently commented with exactly
+      why the icon branch is absent) to prefer it, and check whether the art
+      generation/backfill paths that populate cardPath/heroPath for Dreams need
+      the same for icons.
+
+      Worth confirming against the other four while in here: this gap existed
+      unnoticed because nothing rendered a Dream icon until now, so it is worth
+      checking no other model in the card/hero/icon set has a similar hole.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-03T20:05:00Z'
