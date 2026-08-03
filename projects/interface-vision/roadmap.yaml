@@ -795,19 +795,16 @@ tasks:
   - id: t-016
     milestone: m3
     title: 'Decide FacetKind vs FacetTaxonomy'
-    status: needs-human
-    owner: null
+    status: ready
     passes: 0
     stakes: reversible
-    soft_gate: true
-    note: >
-      FOR SILAS: a product-vocabulary call, not a refactor, so an agent should not merge
-      these blind. There are two parallel taxonomies for one concept: `FacetKind` in
-      prisma/schema.prisma:2183 has 10 values, and `FacetTaxonomy` in
-      prisma/facet-catalog.prisma has 24. They overlap but are not a superset/subset
-      relationship you can mechanically collapse. Decide which is canonical (or what the
-      merged vocabulary should be) and t-015 will normalize onto it. Nothing else is
-      blocked on this — t-015 can land its Project/Character/Bot facet work first.
+    note: |-
+      FOR SILAS: a product-vocabulary call, not a refactor, so an agent should not merge these blind. There are two parallel taxonomies for one concept: `FacetKind` in prisma/schema.prisma:2183 has 10 values, and `FacetTaxonomy` in prisma/facet-catalog.prisma has 24. They overlap but are not a superset/subset relationship you can mechanically collapse. Decide which is canonical (or what the merged vocabulary should be) and t-015 will normalize onto it. Nothing else is blocked on this — t-015 can land its Project/Character/Bot facet work first.
+
+
+      SENT BACK by silasfelinus via Kind Robots For You. was this not already solved? Taxonomy is the stronger choice. kind is massively ambiguous, especially given our name
+    approved_by_human: false
+    updated: '2026-08-03 09:29:07.370000+00:00'
 
   - id: t-017
     milestone: m3
