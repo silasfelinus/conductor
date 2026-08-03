@@ -931,10 +931,12 @@ tasks:
       Merged Kind Robots PR #1365 as 901c114. The root div previously mixed bounding and scroll ownership on the same element, toggling overflow-hidden/overflow-y-auto based on gameStarted -- and its only mount site (lab-manager.vue's dashboard-tab wrapper) already applies a fallthrough overflow-hidden with no scroll delegation, so the conditional binding was fighting the parent rather than cooperating with it. Root now stays unconditionally kr-surface (min-h-[80vh] and gap-0 added alongside to preserve the original min-height and lack of inter-child spacing exactly); the splash-screen child -- the one region that needs to grow past the viewport before the game starts -- becomes the kr-scroll owner instead. The in-game board+log layout already owns its own scroll further down the tree and was untouched. Also moved a `<!-- root div -->` comment from between `<template>` and the root tag to above `<template>` -- it was defeating verifyLayoutContract.ts's literal-first-tag check, the same footgun t-067 documented. root-surface: 1 -> 0 via --update. vue-tsc clean; eslint's 5 errors on the file are pre-existing (confirmed via git stash); verifyMdcScrollOwnership.ts holds (22 existing violations, no new ones); all 15 kind_robots PR checks green.
 
       root-surface is now the SEVENTH consecutive bucket at zero (one-header, no-viewport, one-mdc, ghost-prop, zero-scroll, root-surface all 0). The only nonzero bucket left is one-scroll (27), tracked separately since t-047 (done) -- its correction found most of that bucket is a static-regex false positive on mutually-exclusive v-if/v-else-if tab branches (SHAPE A, ~10 files) or genuinely needs a two-column-scroll primitive that doesn't exist yet (SHAPE B, 12 files), not a per-file conversion t-017 can keep doing. Filed t-073 as this cycle's kaizen: build the SHAPE A fix (hoist one shared kr-scroll above the mutually-exclusive branch, art-manager.vue is the type specimen). The layout-contract allow-list is not yet fully zero (one-scroll remains), so t-017 returns to ready; its remaining scope going forward is monitoring one-scroll's dedicated follow-on work, not further per-file root-surface/one-header/etc. sweeps.
+
+      Butterfly flip cards now keep vertical scrolling on only the active face, and the one-scroll ratchet drops from 23 to 22.
     claimed_by: 2026-08-03T171333Z-interface-vision-t-017-k9p4
     claimed_at: '2026-08-03T17:13:33Z'
-    updated: '2026-08-03T17:13:33Z'
-    status: claimed
+    updated: '2026-08-03T17:18:00Z'
+    status: review
     owner: worker
 
   - id: t-018
