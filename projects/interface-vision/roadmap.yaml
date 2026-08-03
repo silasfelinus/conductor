@@ -971,19 +971,13 @@ tasks:
   - id: t-048
     milestone: m2
     title: 'Extend earned-karma card badges to the Dream gallery'
-    status: review
+    status: done
     passes: 0
     stakes: reversible
-    note: |-
-      Kaizen from t-046 (2026-08-02, kind_robots PR #1303). t-046 wired the t-019 earned-karma pattern (batch /api/economy/karma-earned fetch, reactable-card's earned-karma prop) into the ArtImage gallery (components/art/art-gallery.vue / image-card.vue) -- the reference implementation for a paged/large gallery, as opposed to reward-gallery's simpler unpaged one. Dream is the next consumer named by t-019's own note: components/dreams/dream-gallery.vue already reacts on Dreams (target-type="dream" is in karma-earned.post.ts's ALLOWED_REF_TYPES), and Dreams already earn real REACTION_RECEIVED karma via server/api/reactions/index.post.ts's generic target-field-derived refType tagging -- no award-call-site backfill needed, same as ArtImage. Check whether dream-gallery.vue has its own paging/ visible-set concept (like art-gallery's pagedActiveImages) or renders everything at once before choosing the batch-fetch scope; follow whichever card component dream-gallery.vue actually wraps in reactable-card.
-
-
-      Live-code verification found the roadmap premise stale: components/dreams/dream-card.vue is not a reactable-card consumer, so this is not a simple earned-karma prop wiring like ArtImage or Reward. Releasing the claim for a focused follow-up that first designs the Dream card's canonical reactable-card integration rather than adding a duplicate badge implementation.
-
-      Live code confirms DreamCard is a bespoke article component rather than a ReactableCard consumer. A safe implementation first needs a canonical Dream-card integration design; adding a second standalone karma badge would duplicate the shared behavior this task is meant to extend.
+    note: 'Merged kind_robots PR #1342 (eaf1aea) — dream-card.vue now accepts an earnedKarma prop passed through to reactable-card (the badge added by t-031, merged after this task premise was re-checked stale on 2026-08-02); dream-gallery.vue batch-fetches /api/economy/karma-earned for the visible pre-filter Dream set and wires it in, mirroring reward-gallery.vue reference pattern. vue-tsc clean; eslint shows the same 4 pre-existing errors as main (none introduced). All 14 CI checks passed.'
     claimed_by: 2026-08-03T033115Z-interface-vision-t-048-agentrun
     claimed_at: '2026-08-03T03:31:15Z'
-    updated: '2026-08-03T03:31:15Z'
+    updated: '2026-08-03T03:37:38Z'
     owner: worker
 
   - id: t-020
