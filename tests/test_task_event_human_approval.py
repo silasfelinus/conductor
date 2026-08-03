@@ -52,6 +52,23 @@ class HumanApprovalTaskEventTests(unittest.TestCase):
         self.assertIn(("set", "approved_by_human", "false"), ops)
         self.assertIn(("set", "note", "Please revise the rollout plan."), ops)
 
+    def test_event_without_approval_flag_does_not_change_approval(self):
+        ops = MODULE.compute_transition_ops(
+            {"id": "t-001", "status": "needs-human"},
+            {
+                "operation": "needs-human",
+                "soft_gate": True,
+                "updated": "2026-08-03T02:31:30Z",
+                "note": "Human left a comment without deciding the gate.",
+            },
+            "needs-human",
+        )
+
+        self.assertFalse(
+            any(field == "approved_by_human" for _, field, _ in ops),
+            "comment-only events must not manufacture a human decision",
+        )
+
     def test_approval_flag_must_be_boolean(self):
         with self.assertRaisesRegex(ValueError, "must be a boolean"):
             MODULE.compute_transition_ops(
