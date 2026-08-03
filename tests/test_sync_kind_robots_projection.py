@@ -80,3 +80,25 @@ def test_encoded_snapshot_rejects_oversized_payload(monkeypatch):
 
     with pytest.raises(RuntimeError, match="projection payload"):
         projection.encoded_snapshot({"payload": "larger than twenty bytes"})
+
+
+def test_agent_entrypoints_name_the_authority_contract():
+    source_contract = (projection.ROOT / "SOURCE_OF_TRUTH.md").read_text(
+        encoding="utf-8"
+    )
+    reconciliation = (
+        projection.ROOT / "docs" / "state-reconciliation.md"
+    ).read_text(encoding="utf-8")
+    connector = (
+        projection.ROOT / "docs" / "github-connector-worker.md"
+    ).read_text(encoding="utf-8")
+    claude_hook = (
+        projection.ROOT / ".claude" / "hooks" / "session-start.sh"
+    ).read_text(encoding="utf-8")
+
+    assert "Conductor is the canonical coordination ledger" in source_contract
+    assert "SOURCE_OF_TRUTH.md" in reconciliation
+    assert "SOURCE_OF_TRUTH.md" in connector
+    assert "SOURCE_OF_TRUTH.md" in claude_hook
+    assert 'overrides.get("overrides", [])' in claude_hook
+    assert "if proj not in active_projects" in claude_hook
