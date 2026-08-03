@@ -1,0 +1,11 @@
+version: 1
+project: interface-vision
+task: t-055
+operation: done
+owner: worker
+session: 2026-08-03T161347Z-interface-vision-t-055-n8q4
+updated: '2026-08-03T16:27:00Z'
+note: >-
+  Merged Kind Robots PR #1375 as d96ba913a23f8908f53f43ea04128fbc637d83b9. verifyLayoutContract.ts now recognizes PascalCase component roots and includes a regression fixture proving a PascalCase root carrying kr-surface is parsed correctly. All 11 final-head workflows completed successfully before merge.
+learning: >-
+  Source-text layout verifiers must accept Vue's supported component-tag casing conventions; regression fixtures should exercise component-rooted templates rather than only native lowercase HTML roots.
