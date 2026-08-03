@@ -2300,7 +2300,7 @@ tasks:
   - id: t-073
     milestone: m3
     title: 'Fix the one-scroll SHAPE A false positives by hoisting a shared kr-scroll above mutually-exclusive tab branches'
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     note: |-
@@ -2314,7 +2314,9 @@ tasks:
       Hoisted Art Manager's mutually-exclusive tab scrollers into one shared kr-scroll wrapper, preserving Gallery's delegated scroll and ArtJob's responsive 2xl overflow behavior. Ratcheted one-scroll from 27 to 26.
 
       Merged Kind Robots PR #1371 as 70f2ed545d2c52be8ae8bc852e5c85969257ec99. Art Manager now hoists six mutually-exclusive tab scroll regions into one shared kr-scroll owner, preserves Gallery's delegated scroll and ArtJob's responsive 2xl overflow behavior, and ratchets one-scroll from 27 to 26. All 13 final-head workflows completed successfully. The task remains open for the other verified Shape A files. Classify every one-scroll candidate by whether scroll regions can coexist at runtime before editing: static duplicates are safe to hoist only when branch exclusivity is proven; concurrent panes and bounded nested previews must remain separate until their own primitive or contract exists.
+
+      Verified avatar-picker.vue as a genuine SHAPE A candidate: three v-show tabs (gallery/upload/generate) are mutually exclusive at runtime, only upload and generate declared their own overflow-y-auto. Hoisted a single shared .kr-scroll wrapper above all three (v-show keeps hidden siblings in the DOM but display:none excludes them from scroll-height, so this is safe). Ratchets one-scroll from 26 to 25. Also examined mural-manager.vue (three simultaneously-visible panes, genuine Shape B, not a hoist) and butterfly-flip.vue (front/back panels can both be mounted at once when useFlipEffect is false, not safe to merge). kind_robots PR #1372 open against main (claude/relaxed-lovelace-kz9il2).
     claimed_by: 2026-08-03T123116Z-interface-vision-t-073-agentrun
     claimed_at: '2026-08-03T12:31:17Z'
-    updated: '2026-08-03T12:31:17Z'
+    updated: '2026-08-03T12:45:30+00:00'
     owner: worker
