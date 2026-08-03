@@ -1132,8 +1132,8 @@ tasks:
   - id: t-026
     milestone: m2
     title: 'Decide the fate of conductor-art-gallery.vue''s carousel/collection UI vs entity-art-manager.vue'
-    status: review
-    owner: worker
+    status: needs-human
+    owner: null
     passes: 0
     stakes: reversible
     depends_on: t-009
@@ -1159,9 +1159,24 @@ tasks:
       weigh in on which UI he prefers before either is built -- this is
       exactly the "build mockups first, Silas picks by eye" pattern this
       project's own notes_from_silas established for t-001/t-002.
+
+
+      FOR SILAS (2026-08-03): The mockup is live and merged — visit
+      /interface-vision-t026-mockup on the site (kind_robots PR #1379). It
+      shows Option A (keep conductor-art-gallery.vue's autoplay carousel as
+      its own component, thin-wrapped over entity-art-manager.vue's shared
+      generate/replace endpoints) side by side with Option B (extend
+      entity-art-manager.vue with a collection-carousel panel and delete
+      conductor-art-gallery.vue entirely) using real project art. TO APPROVE:
+      reply with "A" or "B" (or edit this task's note directly) and set
+      status: ready — the next pass implements whichever you pick. Picking B
+      matches this project's own "one canonical implementation, migrate
+      callers, then DELETE the losers" rule (notes_from_silas scope decision
+      #3) most directly, but both are reversible and either is fine.
     claimed_by: 2026-08-03T192717Z-t026
     claimed_at: '2026-08-03T19:27:17Z'
-    updated: '2026-08-03T19:27:17Z'
+    updated: '2026-08-03T19:44:35Z'
+    soft_gate: true
 
   - id: t-027
     milestone: m2
