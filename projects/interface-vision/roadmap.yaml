@@ -1371,29 +1371,19 @@ tasks:
   - id: t-034
     milestone: m2
     title: 'Reconcile dashboardHelper.ts/navStore.ts with navManifest.ts; resolve the 9 dashboardTab warnings'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-012
-    note: >
-      Split from t-012 (2026-08-01, kind_robots PR #1272). The highest-risk remaining
-      piece: stores/helpers/dashboardHelper.ts (1440 lines, 17 dashboards, 87 tabs) has 15
-      direct importers (navStore.ts's dashboard-shell fallback logic, labCards.ts,
-      navCards.ts, conductorTabs.ts, builderCards.ts, tutorialCards.ts, and several
-      *-manager.vue components) -- deriving it from navManifest.ts instead of maintaining
-      it by hand needs care across all of them, not a rename. Also resolve the 9
-      dashboardTab warnings verifyNavManifest.ts reports today (home/account.md,
-      home/messages.md, play/facets.md, play/music-mentor.md, play/video-generator.md,
-      sanctuary/about.md, sanctuary/butterflies.md, sanctuary/giving.md,
-      sanctuary/subscriptions.md -- each names a dashboardTab that doesn't exist in its
-      declared dashboard's tabs array) by deciding, per page, whether it needs a real new
-      dashboard tab or should just drop the stale hint. Verify with
-      `npm run test:nav-manifest` (warning count should drop to 0) plus Vercel-preview
-      checks on any page whose dashboard-shell behavior actually changes.
+    note: |-
+      Split from t-012 (2026-08-01, kind_robots PR #1272). The highest-risk remaining piece: stores/helpers/dashboardHelper.ts (1440 lines, 17 dashboards, 87 tabs) has 15 direct importers (navStore.ts's dashboard-shell fallback logic, labCards.ts, navCards.ts, conductorTabs.ts, builderCards.ts, tutorialCards.ts, and several *-manager.vue components) -- deriving it from navManifest.ts instead of maintaining it by hand needs care across all of them, not a rename. Also resolve the 9 dashboardTab warnings verifyNavManifest.ts reports today (home/account.md, home/messages.md, play/facets.md, play/music-mentor.md, play/video-generator.md, sanctuary/about.md, sanctuary/butterflies.md, sanctuary/giving.md, sanctuary/subscriptions.md -- each names a dashboardTab that doesn't exist in its declared dashboard's tabs array) by deciding, per page, whether it needs a real new dashboard tab or should just drop the stale hint. Verify with `npm run test:nav-manifest` (warning count should drop to 0) plus Vercel-preview checks on any page whose dashboard-shell behavior actually changes.
+
+
+      Unified nav-manifest dashboard-tab validation with dashboardHelper's runtime predicate and removed the final two stale standalone-page dashboard hints.
     claimed_by: 2026-08-03T221341Z-interface-vision-t-034-k7p9
     claimed_at: '2026-08-03T22:13:41Z'
-    updated: '2026-08-03T22:13:41Z'
+    updated: '2026-08-03T22:22:50Z'
 
   - id: t-035
     milestone: m2
