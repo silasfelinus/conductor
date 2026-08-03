@@ -1894,7 +1894,7 @@ tasks:
 
   - id: t-060
     milestone: m2
-    title: 'Adopt kr-gallery across the seven core-object galleries'
+    title: 'Adopt kr-gallery across the seven core-object galleries (via their managers)'
     status: ready
     owner: null
     passes: 0
@@ -1923,9 +1923,37 @@ tasks:
       repeat an identical `facet.cardPath || facet.imagePath || facet.heroPath` chain --
       facet-gallery, facet-manager, facet-picker, character-facet-picker, reward-facet-picker,
       art-facet-selector.
+
+      CORRECTION, 2026-08-03. This task reasoned about the galleries as if they were the
+      primary surfaces. They are not, and acting on that error cost a whole PR.
+
+      The house pattern, verified by tracing every content route's mount chain:
+
+        content/<model>.md  ->  :<model>-manager   tab router, the primary mount
+                            ->  <model>-interact   the working surface
+                            ->  <model>-gallery    inset picker
+
+      A gallery is typically THREE hops from its route. So "adopt kr-gallery in
+      <model>-gallery.vue" is still the right edit -- but it is only VISIBLE if a manager
+      actually routes to that gallery, and the file list above says nothing about whether one
+      does. In the Facets case none did: facet-gallery.vue was mounted by nothing at all, and
+      PR #1334 adopted kr-gallery inside it with no possible effect on any page. The line
+      above reading "exactly ONE of the seven uses it" was already the honest count; the
+      counter said two.
+
+      verifyGalleryAdoption.ts now walks content/**/*.md to its MDC mount and then transitively
+      through component templates, so it reports adopted AND REACHABLE, names any gallery no
+      route renders, and prints a manager/interact/gallery tier table per model. That table is
+      the actual state of this task. Facets was the only model missing tiers; kind_robots PR
+      #1351 gave it an interact and wired its gallery, so all six models now show
+      manager/interact/gallery reachable and the core count is an honest 2/7.
+
+      Remaining, per model: bot, character, dream, reward, scenario. Each one's gallery IS
+      reachable already, so these are straight adoption PRs -- but check the tier table before
+      and after each, not the filename count.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-02T15:00:00Z'
+    updated: '2026-08-03T07:10:00Z'
 
   - id: t-056
     milestone: m2
@@ -2035,9 +2063,15 @@ tasks:
 
       NOT blocked on a decision any more; the decision is made. Kept as m2 because "one
       review affordance" and "one gallery" both depend on it.
+
+      REACHABILITY, 2026-08-03 (see t-060's correction for the full account): a card is only
+      visible if a manager routes to the gallery that renders it. Before migrating any card,
+      confirm its gallery appears with a route in verifyGalleryAdoption.ts's tier table.
+      PR #1334 adopted kr-gallery inside a component nothing mounted, and the counter of the
+      day scored it as progress -- the same mistake is available to every card in this list.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-02T21:15:00Z'
+    updated: '2026-08-03T07:15:00Z'
 
   - id: t-065
     milestone: m3
@@ -2095,3 +2129,88 @@ tasks:
       utils/scripts/verifyLayoutContract.ts noting this footgun, so the next sweep checks the literal opening tag
       first instead of assuming it's whichever nested element carries the layout classes.
 
+
+  - id: t-068
+    milestone: m3
+    title: 'A doc comment can fail 29 source-text contracts — strip comments before forbid- scans'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      This has now bitten twice in one week, in two unrelated files, and the mechanism is
+      general enough to bite every remaining contract that has a forbid- rule.
+
+      OCCURRENCE 1: a `role="log"` comment in components/narrative/kr-chat-window.vue,
+      written to explain the accessibility attribute, failed
+      utils/scripts/verifyNarrativeAccessibility.mjs -- which was scanning for the very bug
+      the comment documented the absence of. Fixed there by narrowing the match to the scroll
+      container's opening tag.
+
+      OCCURRENCE 2: a comment in components/facets/facet-gallery.vue naming createFacet /
+      updateFacet / archiveFacet / FacetProfileEditor -- so a reader knows WHY the picker only
+      emits a selection -- failed utils/scripts/verifyFacetGallery.ts, whose whole job is to
+      forbid those calls in that file. No such call existed. Fixed in kind_robots PR #1351 by
+      stripping HTML comments, block comments and line comments before every forbid- scan,
+      while leaving requireText reading raw source (so a required token still cannot be
+      satisfied by a comment claiming it is there). Proved both ways: the doc comment passes,
+      an injected updateFacet call still fails.
+
+      THE PROBLEM IS THE PATTERN, NOT THE TWO FILES. 29 verifier scripts in
+      kind_robots/utils/scripts/ do whole-file substring forbid- checks with no comment
+      handling: verifyArtImagePatchOwnerTransfer, verifyBotMutationOwnership,
+      verifyCharacterMutationInputParity, verifyDaVinciNarration, verifyDailyDreamFacets,
+      verifyDreamMutationInputParity, verifyFacetCanonicalMerges, verifyFacetCatalogCutover,
+      verifyFacetClosure, verifyFacetCuration, verifyFacetPersonalityFamilies,
+      verifyFacetTaxonomyAuthority, verifyModelBuilderFacetSync,
+      verifyProjectMutationInputParity, verifyPromptCreateOwnership,
+      verifyReactionCreateInputBoundary, verifyReactionSubPatchEnvelope,
+      verifyResourceMutationOwnership, verifyRewardMutationInputParity,
+      verifyScenarioMutationInputParity, verifyServerMutationOwnership,
+      verifySystemOptionFacetCutover, verifyThemeMutationInputParity,
+      verifyTodoMutationInputParity, verifyUserPatchAllowlist, verifyWonderLabRegistryHealth,
+      verifySerendipityRouteCutover (+ the two already fixed).
+
+      This is worse than an annoyance: a contract you cannot explain in a comment beside the
+      code it governs teaches everyone to stop explaining. The house style is heavily
+      commented precisely so a stranger can pick a file up cold, and these rules quietly
+      punish that.
+
+      DO: extract the stripComments helper added to verifyFacetGallery.ts into a shared module
+      (utils/scripts/lib/ or similar), and route every forbid-style check through it. Keep
+      require-style checks on raw source. Add one test that a comment mentioning a forbidden
+      token passes while a real occurrence still fails -- otherwise the fix is itself
+      unverified. Fold in t-063's `| tee` finding first if it is still open, since a contract
+      that cannot fail and a contract that fails wrongly are the same bug from opposite ends.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-03T07:15:00Z'
+
+  - id: t-069
+    milestone: m2
+    title: 'Project card description text renders over the card art on /conductor'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Seen in the Projects screenshot Silas sent with the 2026-08-02 UI review (sent as the
+      GOOD example -- Projects is the gallery he named as the shape the rest should follow,
+      which is why this is worth fixing rather than tolerating).
+
+      On the top row of /conductor, project description text ("Ship a functional MVP
+      quickly..." and its neighbours) renders above or behind the card artwork instead of
+      below it in the body. Lower rows look correct, which points at a stacking or grid-row
+      sizing issue on the first row rather than at the card markup being wrong outright --
+      possibly the art plate's absolutely-positioned scrim, possibly a row-height collapse
+      before images have loaded and reserved their space.
+
+      Start at components/pages/conductor-project-gallery-page.vue and the project card body
+      it renders. Reproduce at the width in the screenshot (desktop, wide) -- it may not
+      appear at narrow widths where the grid drops to one column.
+
+      Separate defect from the /facets and /dreams work in kind_robots PR #1351; filed so it
+      does not evaporate. No source-text contract can see this one -- it needs the preview.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-03T07:15:00Z'
