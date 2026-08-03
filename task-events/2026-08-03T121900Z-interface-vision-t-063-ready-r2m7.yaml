@@ -1,0 +1,9 @@
+version: 1
+project: interface-vision
+task: t-063
+operation: ready
+owner: null
+session: 2026-08-03T121900Z-interface-vision-t-063-r2m7
+updated: '2026-08-03T12:24:00Z'
+note: >-
+  Re-verified current main after PR #1356. Enabling pipefail on the Facet workflow would immediately expose three independent known-red contracts: Facet artwork cross-taxonomy collision, Builder coverage, and strict WonderLab preview fixtures. The two passing tee steps live in contract-tests.yml but changing them alone would not complete this task. Released without weakening or duplicating CI.
