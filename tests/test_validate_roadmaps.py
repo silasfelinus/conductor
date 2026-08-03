@@ -43,3 +43,43 @@ def test_no_roadmaps_is_fine(_isolate_root, capsys):
 
     assert validate_roadmaps.main() == 0
     assert "Roadmaps valid" in capsys.readouterr().out
+
+
+def test_duplicate_task_id_fails(_isolate_root, capsys):
+    write_roadmap(
+        _isolate_root,
+        "demo",
+        "project: demo\ntasks:\n"
+        "- id: t-001\n  status: ready\n"
+        "- id: t-002\n  status: ready\n"
+        "- id: t-001\n  status: needs-human\n",
+    )
+
+    assert validate_roadmaps.main() == 1
+    err = capsys.readouterr().err
+    assert "duplicate task id(s)" in err
+    assert "t-001" in err
+    assert "t-002" not in err
+
+
+def test_duplicate_task_id_reports_all_projects(_isolate_root, capsys):
+    write_roadmap(
+        _isolate_root,
+        "demo-a",
+        "project: demo-a\ntasks:\n- id: t-001\n  status: ready\n- id: t-001\n  status: ready\n",
+    )
+    write_roadmap(
+        _isolate_root,
+        "demo-b",
+        "project: demo-b\ntasks:\n- id: t-001\n  status: ready\n",
+    )
+
+    assert validate_roadmaps.main() == 1
+    err = capsys.readouterr().err
+    assert "demo-a" in err
+    assert "demo-b" not in err
+
+
+def test_duplicate_task_ids_function_directly():
+    tasks = [{"id": "t-001"}, {"id": "t-002"}, {"id": "t-001"}, {"id": "t-003"}, {"id": "t-003"}]
+    assert validate_roadmaps.duplicate_task_ids(tasks) == ["t-001", "t-003"]
