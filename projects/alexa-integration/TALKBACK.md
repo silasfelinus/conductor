@@ -215,7 +215,7 @@ has direct repo access, rather than waiting for organic rotation.
   within the hour), so picked an unclaimed, un-touched-in-a-week ready task instead of adding to
   that queue's own churn: alexa-integration/t-015 (owner: null, last updated 2026-07-13).
 - Found the exact reusable mechanism first: `project-front-page.vue` documents a `#interactive`
-  slot ("Project specific interactive UI goes in here"), already used by `storymaker-page.vue`.
+  slot ("Project specific interactive UI goes in here"), already used by `storybook-page.vue`.
   Reused it rather than inventing a new page-shell pattern or risking a `pathPrefix: false`
   filename collision by creating a second `voice-lab-page.vue` under `components/pages/`.
 - Reused `serendipityVoiceStore` (the same client `/serendipity-voice` already uses) instead of

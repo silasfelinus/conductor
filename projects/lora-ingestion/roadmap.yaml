@@ -1,18 +1,12 @@
 project: lora-ingestion
 kind: infrastructure
-notes_from_silas: 'Auto-import LoRAs: drop a file into Lora/import on the home box
-
-and have it detected, sorted into <Base>/<SFW|NSFW>/, and registered as a
-
-kind_robots Resource with no manual input. Then a front-end browser (My Library
-
-+ Discover tabs) to browse/manage owned LoRAs and download new ones from
-
-Civitai/CivArchive, with maturity + base-model filters, hide-owned, and
-
-update-to-new-version. Builds on the completed lora-catalog sort/import work.
-
-'
+notes_from_silas: |
+  Auto-import LoRAs: drop a file into Lora/import on the home box
+  and have it detected, sorted into <Base>/<SFW|NSFW>/, and registered as a
+  kind_robots Resource with no manual input. Then a front-end browser (My Library
+  + Discover tabs) to browse/manage owned LoRAs and download new ones from
+  Civitai/CivArchive, with maturity + base-model filters, hide-owned, and
+  update-to-new-version. Builds on the completed lora-catalog sort/import work.
 milestones:
 - id: m1
   title: ArtJob LoRA path resolution (loraResourceId/name -> localPath)
@@ -25,15 +19,15 @@ milestones:
 - id: m3
   title: Resource schema — Civitai version columns + mutation-select echo
   weight: 10
-  status: review
+  status: done
 - id: m4
   title: Front-end My Library browser (images, filters, edit)
   weight: 20
-  status: review
+  status: done
 - id: m5
   title: Discover tab — Civitai/CivArchive browse + download queue + versioning
   weight: 30
-  status: review
+  status: done
 tasks:
 - id: t-001
   milestone: m1
@@ -63,63 +57,44 @@ tasks:
 - id: t-003
   milestone: m2
   title: Verify end-to-end on alexandria with ume_classic_impressionist
-  status: needs-human
-  owner: null
+  status: ready
   stakes: reversible
   gate_human: true
-  note: 'Import half CONFIRMED 2026-07-28: standalone run detected ume as Flux,
-    moved it, and upserted the Resource (created:1). Remaining: (1) run it as
-    the embedded kr-relay thread on the pm2 box (pm2 restart kr-relay after
-    setx CIVITAI_TOKEN), and (2) confirm a krea2/flux2 render selecting that
-    Resource succeeds — closes the path bug end-to-end. Note ume sorted NSFW
-    because Civitai flags the model nsfw; override to SFW if wrong.'
+  note: |-
+    Import half CONFIRMED 2026-07-28: standalone run detected ume as Flux, moved it, and upserted the Resource (created:1). Remaining: (1) run it as the embedded kr-relay thread on the pm2 box (pm2 restart kr-relay after setx CIVITAI_TOKEN), and (2) confirm a krea2/flux2 render selecting that Resource succeeds — closes the path bug end-to-end. Note ume sorted NSFW because Civitai flags the model nsfw; override to SFW if wrong.
+
+    SENT BACK by silasfelinus via Kind Robots For You. this should have been fixed. if not, please report back.
+  approved_by_human: false
+  updated: '2026-08-03 09:15:24.833000+00:00'
 - id: t-004
   milestone: m3
   title: Add civitaiModelId/civitaiModelVersionId + fix resourceMutationSelect
-  status: review
-  owner: claude
+  status: done
   stakes: reversible
-  note: 'Landed on kind_robots branch claude/lora-organization-catalog-coyhav
-    (commit f1a9585). Migration 20260728120000 adds civitaiModelId +
-    civitaiModelVersionId (Int?, indexed, ADD COLUMN IF NOT EXISTS);
-    create.ts validates/emits them and allows them through the field guard;
-    batch.post.ts carries them in the upsert update; resourceMutationSelect
-    now also echoes triggerWords/defaultTrigger/hash/previewImageUrl + the two
-    new columns; scan_loras.py captures modelId/modelVersionId (Civitai +
-    CivArchive) and emits them from to_resource(); prisma client regenerated.
-    Needs: a PR opened + merged to kind_robots main, then migrate deploy on
-    kindblank_fresh.'
+  note: |-
+    Landed on kind_robots branch claude/lora-organization-catalog-coyhav (commit f1a9585). Migration 20260728120000 adds civitaiModelId + civitaiModelVersionId (Int?, indexed, ADD COLUMN IF NOT EXISTS); create.ts validates/emits them and allows them through the field guard; batch.post.ts carries them in the upsert update; resourceMutationSelect now also echoes triggerWords/defaultTrigger/hash/previewImageUrl + the two new columns; scan_loras.py captures modelId/modelVersionId (Civitai + CivArchive) and emits them from to_resource(); prisma client regenerated. Needs: a PR opened + merged to kind_robots main, then migrate deploy on kindblank_fresh.
+
+    Reconciled during the open-roadmap drift audit. Kind Robots PR #1124 merged the Civitai model/version columns, migration, mutation-select fields, and catalog import support described by this task. The implementation is on main, so review is complete.
+  updated: '2026-08-03T07:15:03Z'
 - id: t-005
   milestone: m4
   title: Front-end My Library LoRA browser
-  status: review
-  owner: claude
+  status: done
   stakes: reversible
   depends_on: [t-004]
-  note: 'Landed on kind_robots branch claude/lora-organization-catalog-coyhav
-    (commit c4bdb60). pages/lora.vue (My Library + Discover-stub tabs) +
-    components/lora/{lora-card,add-lora,lora-gallery}.vue built on
-    reactable-card; resourceStore.visibleLoras adds LORA/LYCORIS + maturity
-    gating. Search + base-model + maturity + sort filters, client-side
-    pagination, add/edit via updateResource (PATCH) / batch upsert. All SFCs
-    compile clean. Ships with t-004 in the same PR.'
+  note: |-
+    Landed on kind_robots branch claude/lora-organization-catalog-coyhav (commit c4bdb60). pages/lora.vue (My Library + Discover-stub tabs) + components/lora/{lora-card,add-lora,lora-gallery}.vue built on reactable-card; resourceStore.visibleLoras adds LORA/LYCORIS + maturity gating. Search + base-model + maturity + sort filters, client-side pagination, add/edit via updateResource (PATCH) / batch upsert. All SFCs compile clean. Ships with t-004 in the same PR.
+
+    Reconciled during the open-roadmap drift audit. Kind Robots PR #1124 merged the My Library LoRA browser, filtering, maturity handling, pagination, and add/edit surfaces described by this task. The implementation is on main, so review is complete.
+  updated: '2026-08-03T07:15:04Z'
 - id: t-006
   milestone: m5
   title: Discover tab + DownloadRequest queue + version-update flow
-  status: review
-  owner: claude
+  status: done
   stakes: outward-facing
   depends_on: [t-005]
-  note: 'Landed + gaps closed. kind_robots (PR #1124): DownloadRequest model +
-    migration 20260728133000; /api/lora/download-request (dedupes owned +
-    in-flight), /download/claim (atomic claim + reaper), /download/[id]/complete;
-    browse.get.ts is source-aware — Civitai keyword search AND CivArchive
-    by-id/URL lookup (recovers removed models), owned-flag + updatable
-    (own-a-different-version) + maturity clamp; lora-discover.vue with source
-    toggle + Update action + Discover tab. conductor (088ebfdc):
-    lora_import_agent.py download loop (claim -> fetch, Civitai token redacted,
-    .part atomic write -> complete; direct URLs cover CivArchive downloads).
-    Verified: npm run test (vue-tsc) clean + resource-ownership contract passes;
-    gallery/mutation selects echo the new columns. Remaining nicety: resourceId
-    back-link on complete is best-effort null (owned-detection reads
-    Resource.civitaiModelVersionId set by the catalog).'
+  note: |-
+    Landed + gaps closed. kind_robots (PR #1124): DownloadRequest model + migration 20260728133000; /api/lora/download-request (dedupes owned + in-flight), /download/claim (atomic claim + reaper), /download/[id]/complete; browse.get.ts is source-aware — Civitai keyword search AND CivArchive by-id/URL lookup (recovers removed models), owned-flag + updatable (own-a-different-version) + maturity clamp; lora-discover.vue with source toggle + Update action + Discover tab. conductor (088ebfdc): lora_import_agent.py download loop (claim -> fetch, Civitai token redacted, .part atomic write -> complete; direct URLs cover CivArchive downloads). Verified: npm run test (vue-tsc) clean + resource-ownership contract passes; gallery/mutation selects echo the new columns. Remaining nicety: resourceId back-link on complete is best-effort null (owned-detection reads Resource.civitaiModelVersionId set by the catalog).
+
+    Reconciled during the open-roadmap drift audit. Kind Robots PR #1124 merged the Discover browser and DownloadRequest queue, while the Conductor import agent landed the matching claim/download/complete loop. The task note already records the implementation and verification; review is complete. End-to-end relay verification remains separately and correctly tracked by t-003.
+  updated: '2026-08-03T07:15:05Z'

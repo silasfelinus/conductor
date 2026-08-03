@@ -68,7 +68,7 @@ Each active project SHOULD have a Dream with `dreamType: PROJECT`, matching `slu
 | sketchy                 | normal   | yes                  | `sketchy`                   | ACTIVE                 |
 | pinball-hero            | normal   | yes                  | `pinball-hero`              | ACTIVE                 |
 | art-generator-connect   | normal   | yes                  | `art-generator-connect`     | ACTIVE                 |
-| storymaker              | normal   | yes                  | `storymaker`                | ACTIVE                 |
+| storybook              | normal   | yes                  | `storybook`                | ACTIVE                 |
 | media-watchlist         | normal   | yes                  | `media-watchlist`           | ACTIVE                 |
 | conductor-app           | normal   | yes                  | `conductor-app`             | ACTIVE                 |
 | alexa-integration       | normal   | yes                  | `alexa-integration`         | ACTIVE                 |

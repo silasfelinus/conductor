@@ -62,6 +62,16 @@ This is the connector equivalent of `scripts/claim_task.py`: the safety property
 
 For `review`, `done`, `ready`, `rearm`, `needs-human`, or `blocked`, create a small unique YAML file directly on Conductor `main`:
 
+`rearm` and `ready` are NOT interchangeable: the processor rejects `rearm` with a hard
+error (`rearm requires recurring: true`) unless the target task's roadmap entry has
+`recurring: true` (e.g. a `dream-cycle`/`autonomous: true` project's standing sweep).
+For any other task returning to `ready` after partial work — the normal case for a
+one-off software/content/proposal task that isn't finished yet — use `operation: ready`
+instead; it sets `status: ready`, clears `owner`, and appends your `note`, without the
+recurring check. Filing `rearm` against a non-recurring task leaves the event stuck
+failing in `task-events/` every processor run until someone notices and fixes it by
+hand (interface-vision/t-065, 2026-08-03).
+
 ```yaml
 version: 1
 project: ai-art-academy
@@ -82,6 +92,11 @@ Rules:
 
 - Quote free-form scalar text or use a YAML block scalar. An unquoted `: ` can make the event invalid.
 - Include `soft_gate`, `owner`, `note`, or `learning` only when applicable.
+- An event may include `approved_by_human: true` or `approved_by_human: false` on any
+  operation to record Silas's decision on a `gate_human: true` task — the connector-only
+  equivalent of `scripts/set_task_field.py <project> <task-id> approved_by_human true`.
+  Only set this when Silas has explicitly cleared (or rejected) the gate in the *current*
+  session per CONTROL.md's "Human gate clearance rule" — never on your own initiative.
 - Optionally include your `session` on `review`/`done`/etc. events. When present, the processor verifies it matches the task's live `claimed_by` and consumes the event as `ALREADY_CLAIMED` (no mutation) if a different session now owns the task — so a session that lost the claim cannot later close the winner's task. Omitting `session` keeps the legacy sessionless behavior.
 - Do not use `force: true` without explicit approval for that override.
 - Do not assume creation means application.

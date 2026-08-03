@@ -267,3 +267,155 @@ FOUND AND FIXED A REAL BUG, triggered live by this session's own sandbox gaps: t
 Root-caused and fixed in scripts/consume_coloring_book_color_art.py: recover_timed_out_job() now raises a new RecoveryAbandoned exception (subclass of RuntimeError, so existing pytest.raises(RuntimeError, ...) tests are unaffected) only for the three cases where the backend has positively confirmed the job will never produce a usable render (FAILED/CANCELLED, DONE with no artImageId, or belongs to a different concept) -- the only cases where clearing the reference and letting the next pass submit fresh is correct. main()'s except block now branches on exception type instead of matching "ANTHROPIC_API_KEY" in the message text: RecoveryAbandoned clears the reference as before; every other exception during a recovery attempt (missing local dependency, network error checking/fetching the job, semantic-gate credential wall, or anything else not yet anticipated) now preserves the "job N" reference unconditionally, matching the actual invariant this mechanism needs (job N's fate is unknown, not confirmed-dead). Added three regression tests reproducing both triggering failure modes (missing-dependency and network-error during status-check) plus one confirming RecoveryAbandoned still correctly clears the reference for a genuinely FAILED job. Full local suite green (773 tests) before opening the PR.
 
 Not completed this cycle: none of the 18 pending entries actually advanced to `done` -- this sandbox has KR_API_TOKEN but no ANTHROPIC_API_KEY, so validate_candidate()'s semantic gate can't run here regardless of the fix; the fix only prevents this specific credential/dependency/network gap from destroying recovery state for a future pass that does have the credential. Re-armed to ready per the recurring-task rule; the 18-entry recovery batch (job ids 2776-2793) is unchanged and ready for a future pass with ANTHROPIC_API_KEY to actually recover.
+
+RAN 2026-08-01T03:31Z (conductor scheduled agent run, session
+claude-scheduled-20260801T033136Z-cb-t022): Silas restored ANTHROPIC_API_KEY
+(GitHub Actions secret) since the last cycle; the preserved
+`color-art-events/20260801T005000Z-monster-recast-key-restored-recovery.yaml`
+event (18 ids: mr-001/005-021) had already started working -- the hourly
+`Process Coloring Book Studio events` workflow successfully recovered mr-009
+and mr-016 (both now `status: done`, ArtImage 13144/13164, completed
+2026-08-01T00:50:48Z) on an earlier run this same morning. Every run since
+then (checked via GitHub Actions `get_job_logs`) has failed outright at
+01:01:22Z and is still failing as of this session, because the event's
+`proposal_ids` list is a static 18-id snapshot and
+`consume_coloring_book_studio_request.py`'s `prepare_requested_entries()`
+raised `RuntimeError("Proposal(s) are not pending; use --force ...")` and
+aborted the *entire* batch the moment even one requested id was no longer
+`pending` -- blocking the other 16 genuinely-still-pending recovery ids too,
+not just the 2 that finished.
+
+FOUND AND FIXED A REAL BUG (root cause, not just this event's occurrence):
+`prepare_requested_entries()` now skips already-resolved ids (logs them,
+does not touch their queue entries) instead of raising when `--force` is not
+given, and `main()` proceeds with whatever ids remain pending -- an
+already-fully-resolved request now exits 0 as a no-op rather than failing.
+`--force`'s existing behavior (reset an already-resolved proposal back to
+`pending` for a genuine revision request) is unchanged. This generalizes
+beyond this one event: any studio/recovery request naming a fixed batch of
+proposal ids will hit the same failure the moment any subset of that batch
+completes before the request is (re)processed. Added
+`tests/test_consume_coloring_book_studio_request.py` (5 tests) covering the
+skip-and-continue path, the all-already-resolved no-op path, and unchanged
+`--force` behavior. Also trimmed mr-009/mr-016 out of the preserved event
+file directly (belt-and-suspenders with the code fix) so the next hourly run
+picks up the remaining 16 (mr-001, mr-005-008, mr-010-015, mr-017-021)
+cleanly. Full local suite green (784 tests, 2 pre-existing unrelated
+failures in test_build_digest_email_v2.py -- confirmed via `git stash` that
+they fail identically on main before this change; Python 3.11 sandbox
+f-string/backslash syntax incompatibility in `build_digest_email_v2.py`, out
+of scope for t-022) before opening the PR.
+
+Not completed this cycle: no ArtJobs were generated or recovered from this
+sandbox (still no local ANTHROPIC_API_KEY here) -- the fix only removes the
+code-level blocker so the next hourly GitHub Actions run (which does have
+the credential) can actually process the remaining 16-id recovery batch.
+Re-armed to ready per the recurring-task rule.
+
+RAN 2026-08-01T04:26Z (conductor scheduled agent run, session
+claude-scheduled-20260801T042657Z-cb-t022): the 04:14:28Z hourly workflow run
+(after PR #1485) actually recovered/re-judged all 16 remaining ids: 3
+promoted to done (mr-007, mr-010, mr-020 -- ArtImage 13142/13145/13168), 13
+genuinely semantic-rejected on real quality grounds (wrong subject / missing
+required elements, not a credential wall). Queue now: 5 done, 3 approved, 28
+pending.
+
+FOUND AND FIXED A REAL BUG (root cause): `record_semantic_rejection()` never
+cleared the stale `semantic_gate_error`/`semantic_gate_error_at` breadcrumb
+once a recovered job's image received a genuine semantic verdict. Confirmed
+live in the 04:14Z run's own logs: mr-001/mr-005/mr-006 were re-judged
+against the *same* `art_image_id` (13139/13140/13141) they had already
+failed on once before (attempt 1 at 00:46-00:50Z, attempt 2 at 04:15Z) --
+`referenced_job_id()` kept parsing the old "job N: ANTHROPIC_API_KEY ..."
+text and pointing every pass at the same dead job, so `recover_timed_out_job()`
+would keep re-fetching the identical already-rejected image and re-running
+the (non-deterministic) semantic gate on it forever, never letting a fresh,
+differently-seeded attempt through. `record_semantic_rejection()` now clears
+both fields once a real verdict lands. Added
+`test_live_recovery_of_semantically_rejected_job_clears_stale_job_reference`
+covering the gap; full local suite green (798 tests, same 2 pre-existing
+unrelated `test_build_digest_email_v2.py` failures as the 2026-08-01T03:31Z
+entry above -- Python 3.11 f-string/backslash syntax incompatibility, out of
+scope for t-022) before opening the PR.
+
+Also cleared the now-stale `semantic_gate_error`/`semantic_gate_error_at`
+fields directly on the 13 affected entries (mr-001, mr-005, mr-006, mr-008,
+mr-011-015, mr-017-019, mr-021) via the same `load_yaml`/`write_queue`
+helpers the consumer script uses, so the very next hourly run submits
+genuine fresh ArtJobs for them instead of wasting one more cycle
+re-recovering and re-judging the same dead images. No ArtJobs were
+submitted, retried, or mutated -- this is a queue-metadata-only change.
+`coloring_queue_status.py --book monster-recast` now reports
+`recommended_action=submit-next-batch` (18 actionable) instead of the stale
+`recover-existing-jobs`.
+
+Not completed this cycle: still no local ANTHROPIC_API_KEY in this sandbox,
+so no ArtJobs were generated here -- the next hourly GitHub Actions run
+picks up the 18-entry fresh-submission batch. Re-armed to ready per the
+recurring-task rule.
+
+RAN 2026-08-01T07:34Z (conductor scheduled agent run, session
+claude-scheduled-20260801T073408Z-cb-t022): the 04:14Z run had left the queue
+at 5 done, 3 approved, 13 needs_review (exhausted 3 attempts each), 15
+pending. This sandbox still has no local ANTHROPIC_API_KEY, so no fresh
+ArtJobs could be submitted or judged here -- instead reviewed the actual
+production content this cycle produces.
+
+CONTENT REVIEW: read all 13 `needs_review` entries' full rejection histories
+(`semantic_rejections`) directly from `color-art-jobs.yaml` -- every one had
+been rejected 3/3 times on real, specific, well-articulated subject-mismatch
+grounds (scores 22-62, threshold 75), not credential-wall noise. Common
+pattern: the image model was consistently failing to honor specific named
+constraints in the prompt (e.g. mr-001 kept rendering a Bride-of-Frankenstein
+despite the prompt already saying "never a bride" once, near the end of a
+long paragraph; mr-017's "alien hunter" kept reading as a conventionally
+pretty human woman; mr-021's "invisible woman" kept rendering as a solid
+black silhouette instead of true negative space).
+
+Rewrote all 13 prompts in `art-modeler-request.yaml`, front-loading and
+repeating (often as "CRITICAL:"/"CRITICAL REQUIRED ELEMENT:") the exact
+attribute the semantic gate's own reasons said was missing or wrong on the
+final attempt, using the gate's own language where useful (e.g. mr-001 now
+explicitly lists "no wedding gown, no veil, no streaked bouffant updo" as
+negatives; mr-006 leads with "hundreds of varied metal screws... must be
+clearly, unmistakably visible, not hidden or absent" instead of burying that
+detail mid-paragraph; mr-011/mr-012, the two closest misses at 62/58,
+got small targeted fixes -- remove the exposed ribbed torso and skull-face
+resemblance for mr-011, add explicit lacquer-crack/jaw-seam/glossy-eye detail
+for mr-012 -- rather than a full rewrite). Reset all 13 queue entries'
+`status` from `needs_review` back to `pending` and `semantic_attempts` from 3
+to 0 via a targeted line-level script edit (not a full YAML re-dump, to avoid
+reformatting the whole file the way `yaml.safe_dump` would -- confirmed this
+by first trying the naive dump approach, seeing a 579-line diff from pure
+line-unwrapping with zero content change, and reverting to the surgical
+approach instead). `coloring_queue_status.py --book monster-recast` now
+reports `recommended_action=submit-next-batch` (18 actionable: the 5
+originally-pending entries plus these 13 revised ones).
+
+FOUND AND FIXED an unrelated but real bug while reading source material for
+this cycle: `homage-concepts.yaml` (a planning/reference doc, not read by
+any live script -- confirmed via grep across scripts/) had invalid YAML at
+line 433 -- an unquoted plain scalar `hook:` value containing a bare
+`sexualization: crown` mid-string, the same colon-space-in-unquoted-plain-
+scalar class already documented in this project's `TALKBACK.md`. Fixed by
+converting that one hook to a quoted block scalar (`>-`); confirmed the file
+parses now and `check_roadmap_yaml.py` still reports all 45 roadmaps
+spec-compliant.
+
+Verification: full local suite green (782 passed, 1 skipped, same 2
+pre-existing unrelated `test_build_digest_email_v2.py` failures as documented
+in the 2026-08-01T03:31Z entry above -- Python 3.11 f-string/backslash
+syntax incompatibility, out of scope for t-022). Targeted coloring-book test
+files (`test_coloring_queue_recommended_action.py`,
+`test_coloring_queue_status.py`, `test_consume_coloring_book_color_art.py`,
+`test_consume_coloring_book_studio_request.py`) all pass (40/40).
+
+Not completed this cycle: no ArtJobs were generated or judged from this
+sandbox -- the fix is entirely prompt/queue-metadata revision so the next
+hourly GitHub Actions run (which does have ANTHROPIC_API_KEY) can attempt the
+18-entry batch with materially improved prompts for the 13 previously-
+rejected concepts. Whether the revised prompts actually clear the semantic
+gate is unverified until that run happens; if any of the 13 fail a third
+time with the new prompts, the next cycle should read the fresh rejection
+reasons before revising further rather than assuming these particular
+rewrites were sufficient. Re-armed to ready per the recurring-task rule.

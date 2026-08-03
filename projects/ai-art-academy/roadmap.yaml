@@ -502,11 +502,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-30T16:21:04Z'
+    updated: '2026-07-31T16:15:29Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
     continuous_improvement:
@@ -516,8 +516,8 @@ tasks:
       last_pr: 'kind_robots PR #1189 (academyStyles.ts sync, american-luminism) + this conductor PR (curriculum-outline.md §41 American Luminism + stale sync-note fix on §39/§40); see run_log for full detail'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
     owner: worker
-    claimed_by: claude-conductor-scheduled-20260730T160640Z-aa-t010
-    claimed_at: '2026-07-30T16:06:41Z'
+    claimed_by: claude-conductor-scheduled-20260731T161528Z-aa-t010
+    claimed_at: '2026-07-31T16:15:29Z'
 
   - id: t-015
     milestone: m4
@@ -1258,11 +1258,11 @@ tasks:
   - id: t-044
     milestone: m2
     title: 'kind_robots: fix Kontext LoRA loading -- every lora_name naming convention rejected by ComfyUI as not-in-list'
-    status: needs-human
+    status: ready
     gate_human: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-28T14:22:16Z'
+    updated: '2026-08-03 09:32:54.964000+00:00'
     note: |-
       LIVE VERIFICATION 2026-07-28 (~14:22 UTC, conductor Reviewer scheduled run, session 2026-07-28T140745-conductor-scheduled-aa-t044-liveverify): Ran the exact test the prior note called for -- POST /api/art/enqueue against https://kind-robots.vercel.app (the live production API, reachable with KR_API_TOKEN), engine: kontext, source image = the project's own rights-clean projects/images/ai-art-academy-card.webp. TWO real ArtJobs, both FAILED with the identical pre-PR-#1090 error: ArtJob 2773 (Kontext-native LoRA, Resource 1284, localPath "Kontext/SFW/acrylic.safetensors") -- ComfyUI /prompt HTTP 400 `lora_name: 'Kontext/SFW/acrylic.safetensors' not in (list of length 2096)`; ArtJob 2774 (FLUX-dev LoRA, Resource 1055, localPath "Flux/SFW/3D_Cartoon_Vision_flux_v1.safetensors") -- same error, `lora_name: 'Flux/SFW/3D_Cartoon_Vision_flux_v1.safetensors' not in (list of length 2096)`. This DISPROVES the prior note's optimistic reading of PR #1090: that PR fixed the *routing* (`server/utils/artLoraResource.ts`'s `resolveEnqueueLoraResource()` now reliably forwards the Resource's own `localPath` as `lora_name` instead of a stale caller-provided string) but did NOT touch the underlying data -- the Resource `localPath` values in the DB still do not match whatever ComfyUI's local `models/loras` folder scan actually returns for the `LoraLoaderModelOnly` dropdown. Confirmed with two independent Resources under two different localPath prefix conventions (`Kontext/SFW/` and `Flux/SFW/`), both rejected identically, so this is not a one-off bad row -- the whole convention is off.
 
@@ -1295,9 +1295,11 @@ tasks:
       It compares Kind Robots Resource `localPath` values against ComfyUI's authoritative `LoraLoaderModelOnly` dropdown, accepts normalized exact or unique-basename matches, and refuses ambiguous guesses.
       TO RESUME: from a Tailscale-connected machine, save ComfyUI `/object_info` and Kind Robots `/api/resources` as private local JSON files, run the documented comparator command, and use the report to correct exact Resource paths or implement one shared resolver. Do not commit the captures because they may expose private model inventory and local paths.
       Before marking this task done, run one Kontext-native and one FLUX-dev LoRA through the real queue and confirm ComfyUI accepts the workflow and saves an image. Then return t-044 to ready for the implementation/live-verification pass; this unblocks t-045.
+
+      SENT BACK by silasfelinus via Kind Robots For You. I think this is fixed, please let me know if otherwise
     claimed_at: null
     claimed_by: null
-    owner: reviewer
+    approved_by_human: false
 
   - id: t-045
     milestone: m2
@@ -1325,11 +1327,10 @@ tasks:
   - id: t-043
     milestone: m6
     title: 'FOR SILAS: decide how to use the rights-clear Winold Reiss portraits in the Harlem Renaissance candidate'
-    status: needs-human
-    soft_gate: true
+    status: ready
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T06:30:00Z'
+    updated: '2026-08-03 09:31:53.502000+00:00'
     note: |-
       FOR SILAS: what was found and where. This cycle's curriculum-depth research
       (ai-art-academy/t-010, lane 4) found four public-domain, CC0-licensed
@@ -1365,8 +1366,11 @@ tasks:
       What unblocks when he does: a future ai-art-academy/t-010 curriculum-depth
       cycle promotes the candidate into `curriculum-outline.md` (or documents
       why it stays historical-only) following whichever path Silas picks.
+
+      SENT BACK by silasfelinus via Kind Robots For You. I actually think the policy should be: don't use people who are currently alive....but that was a much tighter rule anyway because we cared about reworking works that might become commercial images. If someone is historically significant, period, we should be able to use their works. Cultural conversation should be a valid opening to discuss and interact with pieces.
     claimed_by: null
     claimed_at: null
+    approved_by_human: false
 
   - id: t-046
     milestone: m6

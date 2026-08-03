@@ -8,6 +8,7 @@ Use this runbook to keep scheduled conductor maintenance cycles productive witho
 - Avoid spending a whole cycle on missing optional credentials, unavailable local runtimes, stale generated files, or other soft blockers.
 - Preserve every human gate for content, proposal, outward-facing, irreversible, security-sensitive, production-data, deployment, secrets, billing, DNS, or publish/send work.
 - Leave clear notes so the next cycle or Silas knows exactly what happened.
+- End with implementation state, roadmap state, and milestone state agreeing.
 
 ## Startup checklist
 
@@ -17,10 +18,20 @@ Read these files before selecting work:
 2. `CONTROL.md`
 3. `project-overrides.yaml`
 4. `projects/priority.yaml`
-5. The selected project's `roadmap.yaml`
-6. The selected project's `TALKBACK.md`, if present
+5. `docs/state-reconciliation.md`
+6. The selected project's `roadmap.yaml`
+7. The selected project's `TALKBACK.md`, if present
 
 `CONTROL.md` overrides roadmap direction. `project-overrides.yaml` decides whether a project is active.
+
+Before selecting work, run:
+
+```bash
+python scripts/check_pr_merged_drift.py
+python scripts/audit_human_gates.py
+```
+
+Both commands exclude paused, retired, and finished projects by default. Findings are prompts to inspect current evidence, not authorization to bypass a real gate.
 
 ## Productive cycle behavior
 
@@ -67,9 +78,14 @@ Read these files before selecting work:
      retry loop, consumes a pass), **scope** (too big — split into smaller tasks).
    - Never spend a second pass on an actionable failure; never escalate a transient one.
 
-9. Close the loop when a task ends.
+9. Close and reconcile the loop when a task ends.
    - On closing a task at `done`/`blocked`, append the outcome record to `LEARNING.yaml`
      (see AGENTS.md "Learning ledger").
+   - After the implementation PR merges, a production incident recovers, or Silas makes a decision, re-fetch the live roadmap from `main`.
+   - Reconcile task status, `approved_by_human` when applicable, claim fields, dependencies, completion note, and milestone status in the same cycle.
+   - Use task-events or the documented close-out helper and verify the transition was applied. Creating an event file is not enough.
+   - If recovery criteria are met but root cause remains unknown, close the recovery task and file root-cause/prevention work separately instead of leaving a permanent human gate.
+   - Re-run `check_pr_merged_drift.py` and `audit_human_gates.py` after changing roadmap state.
 
 10. Finish on clean main — merge and clean up.
    - The cycle's terminal state for reversible, scoped, verified, non-gated work is
@@ -95,11 +111,13 @@ Continue to another safe task after documenting:
 
 Stop and ask for Silas action when work would require:
 
-- Setting `approved_by_human: true`.
+- Setting `approved_by_human: true` without Silas's decision in the current session.
 - Publishing, sending, deploying, or changing DNS/billing/secrets.
 - Touching production data.
 - Destructive database operations.
 - Skipping a `gate_human: true` dependency.
+
+A direct action by Silas, such as merging the exact gated PR or explicitly approving the task in the current conversation, is the decision. Reconcile that decision instead of asking him to repeat it.
 
 ## Final report template
 
@@ -107,5 +125,6 @@ Stop and ask for Silas action when work would require:
 - Result:
 - Files changed:
 - Verification:
+- State reconciled? (task, approval, milestone, dependencies, event consumed):
 - Main clean? (PR merged + branch gone, or why parked at needs-human):
-- Blockers or follow-up:
+- Active human gates or follow-up:

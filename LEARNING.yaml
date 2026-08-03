@@ -1,4 +1,28 @@
 records:
+- date: 2026-08-01
+  project: interface-vision
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    PR #1518 landed the roadmap side of this task (status: review, t-033..t-036
+    split out) while its companion kind_robots PR #1272 was still open, on the
+    explicit plan to close t-012 to done once #1272 merged -- but the closing
+    session ended without doing so, leaving the PR open and t-033..t-036 stuck
+    at status: waiting for a full day. Meanwhile a concurrent direct push
+    completed interface-vision/t-027 on main, so PR #1518's stale branch
+    snapshot (which still carried t-027 at status: review) would have reverted
+    that completion if merged as-is -- caught by diffing origin/main before
+    merging and resolved with `git merge origin/main` (keeping main's t-027,
+    keeping the branch's t-012/t-033..t-036 additions) rather than force-pushing
+    over it. A companion-PR task with a stated "I'll close this once X merges"
+    plan is a real, easy-to-drop loose end if the closing step isn't done in
+    the same session that opens the PR -- a later Reviewer sweep should check
+    for exactly this shape (review-status task + already-merged companion PR)
+    rather than assuming an open PR's own body is still accurate.
 - date: 2026-07-29
   project: animation-manager
   task: t-006
@@ -5241,3 +5265,845 @@ records:
     claim_task.py (or any direct-to-main script) should fetch/rebase locally
     before its next roadmap edit in the same cycle, not just before the final
     close-out push.
+- date: 2026-07-31
+  project: davinci
+  task: t-016
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Two source-of-truth divergences found in one sweep, both invisible to status
+    counts. (1) The kind_robots Projects board computed progress from milestone
+    status alone while conductor's build_status.py falls back to the task ratio;
+    since agents close tasks but rarely flip milestones, 16 of 43 projects showed
+    0% against real values up to 100%. The board looked plausible rather than
+    broken, which is why it survived -- the 27 correct rows made the 16 wrong ones
+    read as genuinely-unstarted work. Lesson: when the same number is computed in
+    two repos, the parity check belongs in CI from the start; a transcription of
+    the other side's formula asserted against fixtures is cheap and catches drift
+    that no amount of reading either implementation alone would surface.
+    (2) davinci was flipped `finished` while its central gap sat unfiled, because
+    the task whose output was a spec deliberately deferred filing the build task it
+    specced. "All tasks done" and "project done" diverge exactly at spec-only
+    closures. A spec task that defers its own implementation should file the
+    follow-up before going done, even as a stub -- otherwise the deferral exists
+    only in prose inside a note field, where every lifecycle check is structurally
+    blind to it.
+    Also confirmed a third instance of the roadmap-scan-without-lifecycle-join bug
+    class, this time in build_conductor_summary.py's fetch_roadmaps(): it was
+    surfacing retired approval-portal tasks under ACTION NEEDED every cycle.
+    CLAUDE.md documents this bug for the human sweep; the automated builder had it
+    independently. Fixing it removed 15 phantom needs-human gates. Worth auditing
+    every glob("projects/*/roadmap.yaml") caller rather than waiting for a fourth.
+- date: 2026-07-31
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Extended the isGenerating/isQueued gate class (PR #900) with a subtler variant:
+    isQueued read item.artJobId, but the async regenerate path sets item.queueState
+    synchronously and item.artJobId only after two awaited network round-trips
+    resolve, leaving a real window where the gate read false during a genuine
+    in-flight regenerate. When a store documents two fields for the same async
+    operation (an immediate synchronous progress flag vs. a value only available
+    after I/O resolves), a UI gate checking the wrong one is easy to miss because
+    both fields end up true/set for most of the operation's lifetime -- only the
+    initial network-latency window exposes the gap. Worth grepping for this pattern
+    (a gate reading a post-await field when a pre-await field exists for the same
+    purpose) across other async store actions with a similar two-field shape.
+- date: '2026-08-01'
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A same-item reentrancy guard (autoBuildItem vs itself, PR #1223) is only
+    half the concurrency picture when a "do everything" action (Auto) and
+    several "do one thing" manual actions (Generate candidate/Draft with
+    AI/Execute commit) can both reach the same underlying operation for the
+    same item. Guarding the automatic path against itself doesn't guard it
+    against a manual path already in flight -- the automatic path just sees
+    the stage as "not yet approved" and proceeds, firing a second concurrent
+    request. When a store has both a batch/auto entry point and matching
+    manual single-stage entry points into the same underlying calls, check
+    for a cross-guard (auto vs. manual in-flight state) in addition to the
+    obvious self-vs-self guard.
+- date: '2026-08-01'
+  project: model-builder
+  task: t-037
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    When a guard clause and a genuine failure path share one return value
+    (autoBuildItem's `false` covered both "another action already owns this
+    item" and "a stage actually failed"), any caller that tallies outcomes
+    across many calls (batchAutoBuild/autoBuildRun's "N/total committed"
+    summary) loses the distinction and reports a busy-but-fine item the same
+    as a broken one. Widening the return type to name each outcome explicitly
+    (here, a three-way 'committed' | 'skipped' | 'failed' instead of a
+    boolean) fixes it at the source instead of adding a second out-of-band
+    flag the caller has to remember to check.
+- date: '2026-07-31'
+  project: dream-cycle
+  task: t-022
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Keep operational CLI commands and agent startup instructions under regression tests when a generator
+    contract is rewritten.
+- date: '2026-08-01'
+  project: coloring-book
+  task: t-022
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: quality
+  lesson: >
+    A "recover instead of resubmit" mechanism that keys off a single stored
+    error-message breadcrumb (semantic_gate_error / referenced_job_id()) must
+    clear that breadcrumb the moment a real, definitive outcome supersedes it
+    -- not just when the outcome is success (mark_done already popped it) or
+    positively-dead (RecoveryAbandoned already popped it). The missed case was
+    the middle one: recovery succeeds, the recovered image is then genuinely
+    semantic-rejected on quality grounds. Because record_semantic_rejection()
+    left the old "job N: ..." text in place, referenced_job_id() kept pointing
+    every future pass at the same already-rejected job, so the recovery path
+    kept re-fetching and re-judging the identical dead image indefinitely
+    instead of ever falling through to a fresh, differently-seeded submission.
+    When auditing a stateful recovery/retry mechanism, enumerate all outcomes
+    of the operation being recovered (not just success/failure) and confirm
+    each one's bookkeeping is handled, rather than assuming the two outcomes
+    already covered are exhaustive.
+- date: '2026-08-01'
+  project: model-builder
+  task: t-038
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A per-item "is this busy" check that already exists as a component-local
+    computed (isManualActionInFlight in model-builder-item-panel.vue) is worth
+    promoting into the shared store the moment a second UI surface needs the
+    same signal, rather than re-deriving it locally in each new component.
+    Doing so here (isItemManualActionInFlight(itemId)) let two independent
+    trigger buttons (batch editor, progress matrix) show an identical
+    pre-click advisory with zero logic duplication and zero risk of the two
+    copies drifting out of sync with the runtime guard inside autoBuildItem()
+    itself.
+- date: 2026-08-01
+  project: coloring-book
+  task: t-022
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    When a recurring art-production task is blocked on a missing local
+    credential (no ANTHROPIC_API_KEY here), the semantic gate's own
+    rejection reasons are structured enough to drive real prompt revision
+    work without live generation access -- mining "what specifically was
+    missing" text into the next prompt attempt is a better use of a
+    credential-blocked cycle than a no-op re-arm to ready. Separately: a
+    full yaml.safe_dump round-trip on a hand-formatted queue file rewraps
+    every folded scalar in the whole file, not just the touched entries --
+    a targeted line-level edit is the safe way to make a small status
+    change without a large unrelated reformatting diff.
+- date: 2026-08-01
+  project: model-builder
+  task: t-039
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A recurring task (t-029) with a long streak of same-day merges hits
+    diminishing returns fast on its own open-ended "read everything, find
+    one new bug" pattern -- checking sibling ready tasks in the same project
+    for an already-scoped, concrete kaizen (here, a deferred regression-guard
+    task from two prior cycles) is a better use of a cycle than an Nth
+    micro-race-condition hunt once N is already large for the day.
+- date: 2026-08-01
+  project: interface-vision
+  task: t-001
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Storymaker aesthetic mockups (kind_robots PR #1252) landed correctly, but
+    the roadmap task sat at status:ready with an open PR for hours -- a
+    session picking up interface-vision should check open kind_robots PRs
+    against roadmap task titles before claiming, since select_role.py's
+    local script currently can't reach the GitHub API in this sandbox
+    (403s), so a manual GitHub MCP check is the only way to catch this.
+- date: 2026-08-01
+  project: interface-vision
+  task: t-005
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    verifyLayoutContract CI ratchet shipped inside the same PR as t-001,
+    ahead of its declared depends_on (t-004) -- the dependency was
+    aesthetic-neutral tooling work, not a hard blocker, so building it early
+    was fine, but it means depends_on isn't a reliable signal for "has this
+    actually not started yet" when a Worker judges a prerequisite doesn't
+    really gate the dependent task's content.
+- date: 2026-08-01
+  project: interface-vision
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Migration was audited line-by-line only after merge, not before --
+    caught the scope mismatch by luck (checking the migration for the audit
+    rule) rather than by process (diffing file list against PR body before
+    merging). Next time: pull_request_read get_files before merge_pull_request,
+    every time, not just when the PR body itself flags a migration.
+- date: 2026-08-01
+  project: interface-vision
+  task: t-003
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: scope
+  lesson: >
+    Task note prescribed a single risky change (flip app.vue's scroll
+    ownership) with no mention of the 18-of-30 components/pages/*.vue
+    files that would silently lose all scroll capability if flipped
+    without per-page backfill first. Landed the safe structural half,
+    split the audit-and-flip half into t-003b rather than attempting it
+    blind in a sandbox with no local dev/DB to verify against -- treat
+    "recommended fix" in a task note as a starting hypothesis to verify
+    against the actual codebase, not a checklist to execute literally,
+    especially for anything touching a shared ancestor every page
+    depends on.
+- date: 2026-08-01
+  project: interface-vision
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Clean first-pass except for one CI miss caught by the pipeline itself:
+    a new content/*.md page needs a matching content/channels/<channel>/
+    <tab>.md registration or verifyChannelContent.ts fails with "references
+    unknown tab" -- worth checking for that registration file up front
+    whenever adding a new channelKey/tabKey pair, not just when CI catches
+    it. Also: when a task note bundles a well-scoped bug fix with a vaguer
+    "and show X on cards" ask that has no existing data model to support
+    it, splitting the vague half into its own ready task (rather than
+    guessing at scope) kept this PR small and reviewable.
+- date: 2026-08-01
+  project: interface-vision
+  task: t-003b
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: quality
+  lesson: >
+    Flipping app.vue's shared shell from overflow-y-auto to overflow-hidden
+    required auditing which of ~60 candidate page-level components actually
+    needed their own scroll container vs. inherited one from an ancestor
+    (pages/[...slug].vue's content-host for MDC routes, the shared
+    ProjectFrontPage wrapper for conductor pages). A same-PR review catch
+    (kr-hourly session) found the first push added scroll classes to six
+    components that are mounted *inside* content-host, creating nested
+    double-scroll regions -- the exact composition bug the task existed to
+    fix. The file-by-file layout-contract verifier couldn't catch this
+    because it has no parent/child composition awareness; grepping
+    content/*.md for each candidate file's actual mount point before adding
+    a scroll class (not just checking whether the file itself lacks one)
+    would have caught it on the first pass. Fixed same-session via a
+    follow-up commit once flagged. When a shared ancestor already owns
+    scroll, verify a component is actually reachable outside that ancestor
+    before adding its own overflow region -- otherwise ask "does this
+    file's *rendering context* already scroll" before "does this file
+    declare its own overflow."
+- date: 2026-08-01
+  project: interface-vision
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    CI caught a real conflict a general layout-contract sweep can't see:
+    verifySerendipityRouteCutover.mjs hard-locks one page's exact <h1>
+    markup as a route-cutover migration contract, unrelated to the
+    one-header rule this task was adopting elsewhere. First push broke
+    it, fixed in a follow-up commit. Filed t-023 (composition-lock audit)
+    so t-017's later sweep can grep for hard-coded-markup contract tests
+    across the remaining allow-list files up front instead of discovering
+    them one CI failure at a time. General principle: a shrink-only CI
+    ratchet only protects against violating ITS OWN rule -- it says
+    nothing about whether some other, unrelated contract test depends on
+    the exact markup being changed. Scope discipline (only fix what's
+    asked, skip files another task/system explicitly owns) also paid off
+    here -- deliberately left 8 of 29 files unfixed (admin routes, two
+    "known offender" files t-017 already owns, one orphaned file, and
+    this locked-contract file) rather than attempting a blind full sweep.
+- date: 2026-08-01
+  project: interface-vision
+  task: t-008
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A roadmap task assumed 7 differently-purposed Vue components (5 CRUD picker
+    widgets with dashboard/row/dropdown variants, 1 taxonomy-search view, 1
+    content-collection list) were all "near-duplicates" of one passive browse
+    gallery, based on line-count and surface description alone. Reading each
+    target file's actual prop signature before writing any migration code
+    caught the mismatch before implementation, not after -- a 5-minute grep for
+    variant/mode props (`grep -n "variant\|GalleryVariant\|isDropdownMode"`)
+    across the named files would let a task author flag this in the roadmap
+    task itself instead of a Worker discovering it mid-implementation. Scope
+    was shrunk to the one genuine match plus one confirmed-dead deletion; the
+    remaining 6 objects moved to a new task (t-023) for honest per-object
+    re-assessment rather than forced onto the same shell.
+- date: 2026-08-01
+  project: interface-vision
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Clean first pass (kind_robots PR #1267), but the close-out step surfaced a
+    real tooling gap this session had to work around by hand: claim_task.py
+    pushed its claim commit straight to origin/main, and this session's local
+    checkout was never re-fetched before set_task_field.py edited the roadmap
+    to status: review -- set_task_field.py operates on whatever is in the local
+    tree with no fetch of its own (its own docstring names this exact gotcha,
+    conductor/t-077/davinci/t-014), so the resulting commit briefly clobbered
+    the claim commit's owner/claimed_by/claimed_at fields on this session's
+    branch. Caught before it reached main only because rebasing onto
+    origin/main before opening this task's own conductor PR produced a merge
+    conflict on the exact block claim_task.py had written -- resolved by
+    keeping origin/main's claim metadata and folding in the intended status
+    transition. Standing takeaway: after any claim_task.py call (or any other
+    script documented to push straight to origin/main), fetch and fast-forward
+    the local checkout before running set_task_field.py against the same file
+    in the same session, not just before the final close-out push.
+- date: 2026-08-01
+  project: interface-vision
+  task: t-009
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Clean first pass (kind_robots PR #1269, all 14 CI checks green), but the
+    task as originally scoped ("collapse three art-request pipelines into
+    one") bundled a small, well-verified mechanical slice (repoint Project's
+    art-replace onto the already-existing generic entity-art endpoint, delete
+    two confirmed-dead routes, widen one component's type union) together
+    with four genuinely separate decisions (a UX choice on Project's carousel
+    UI, a product choice on Facet's dual art backends, a multi-entity schema
+    migration, and a from-scratch admin UI) that each need their own PR and,
+    in two cases, Silas's input before implementation. Investigating the
+    actual code before implementing (rather than trusting the task note's
+    characterization) also surfaced that one of the note's own technical
+    claims was wrong: FacetArtImage was described as
+    "declared-but-unused" but is live code serving a different purpose
+    (ArtImage-to-Facet tagging, not a Facet art-history join) -- corrected in
+    the split-out follow-up task (t-028) rather than propagated blind.
+    Standing takeaway: a roadmap task note's own technical claims are a
+    starting hypothesis, not verified fact, even when written carefully --
+    worth a quick repo-side confirmation pass before scoping work against a
+    claim like "X is unused" or "Y already exists," especially when the note
+    is old enough that the codebase could have moved under it.
+- date: 2026-08-01
+  project: interface-vision
+  task: t-011
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A roadmap task note's factual claims about the codebase ("X is the most
+    complete widget", "Y is imported by nothing") are a snapshot from
+    planning time, not a live fact -- t-007 and t-009 both merged the same
+    day this task's note was written, and by the time t-011 was picked up
+    the note's premise (revive art-reactions.vue as canonical) was already
+    stale: reaction-card.vue had already superseded it as the generic,
+    actively-wired review panel. Read the current state of every file a
+    note names before trusting its characterization, and when the literal
+    instruction conflicts with what the code now shows, do the thing that
+    closes the real gap (here: allowReviews was read by no gallery, not
+    "no canonical panel exists") and document the deviation explicitly
+    rather than either blindly following a stale instruction or silently
+    reinterpreting it.
+- date: 2026-08-01
+  project: interface-vision
+  task: t-013
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Before touching a large "un-nest this component" task, trace the actual
+    mount path first -- conductor-page.vue's own 'overview' and 'brainstorm'
+    viewMode branches, plus a chunk of its cockpit bar, were structurally
+    unreachable because conductor-manager.vue (its sole importer) intercepts
+    those workspaceCardKey values and renders a different component before
+    ConductorPage ever mounts. A component can look nested/cluttered while
+    actually being half dead code wearing live-code's clothes; grep for the
+    component's importers and read the routing logic one level up before
+    assuming every rendered-looking branch is reachable. Separately: when a
+    task names multiple target files, verify each one's claim independently
+    rather than assuming a shared premise -- art-manager.vue's "tabs are
+    themselves dashboards" claim didn't hold on inspection even though the
+    conductor-page.vue and user-manager.vue claims in the same task note did.
+- date: 2026-08-02
+  project: interface-vision
+  task: t-037
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    The task note asked for 2-3 mockups since the fold "needs real product
+    decisions," mirroring t-001/t-002's blank-canvas aesthetic-pick pattern --
+    but the three open questions here (does cockpit content collapse to one
+    kr-toolbar line, do the two tab strips merge or does one become a
+    dropdown, does the decorative wrapper become .kr-surface) were already
+    answered by this project's own t-004 contract, which built kr-toolbar and
+    kr-surface specifically for this shape of problem. Not every
+    "needs product decisions" task is a blank aesthetic choice like
+    theater/storybook/playground -- some are structural questions the
+    project's existing rules already resolve. Building throwaway A/B/C
+    toggle scaffolding for a question the contract already answers would
+    have been the over-engineering the task itself warns against elsewhere.
+    Also: vercel.json disables PR-preview deploys for claude/*/worker/*/
+    agent/*/conductor/* branches (cost-saving), so visual verification for
+    agent-authored branches has to happen post-merge against the production
+    deployment, not via a pre-merge Vercel preview -- AGENTS.md's documented
+    preview technique (~L338-366) doesn't currently note this exception.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-023
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Before sweeping a layout allow-list, audit exact-markup verifier locks so product cleanup updates
+    the owning semantic contract instead of restoring obsolete markup.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-038
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: When a task's own name echoes the parent it lives under (a 'dashboard'
+    tab inside a 'user' dashboard, mounting user-dashboard.vue), check every
+    sibling for the same slot before picking a fix -- every other dashboardConfigs
+    entry already used a real content-named default tab key, so renaming to match
+    that pattern was a smaller, safer diff than inventing new always-shown-default
+    semantics from scratch.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-041
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Resolve stale navigation hints against the live dashboard manifest; do not invent tabs when
+    the intended product placement is genuinely undecided.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-015
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    "Close the Builder gaps" bundled five independent fixes at very different
+    scales (a new additive ProjectFacet table + migration, a Prisma-relation
+    normalization needing no migration since the underlying FK constraints
+    already existed, a missing Bot facets.put endpoint, a full Character
+    client facet store + UI) plus registering PROJECT/FACET builders, which
+    turned out to need a card-deck-scale UI buildout of its own. Splitting
+    that one sub-part into t-042 rather than forcing it into the same PR kept
+    the landed diff coherent and fully verified; a task note that lists N
+    "also"s is worth pre-scanning for the one that's actually a different
+    size class before claiming it as a single pass.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    kind_robots PR #1292 (implemented and reviewed by a different session
+    earlier in the day) went stale against main after this session merged
+    the unrelated PR #1293 a few minutes later -- both PRs ran `prisma
+    generate` independently against overlapping generated-client scaffolding
+    (prisma/generated/prisma/internal/class.ts), producing a real textual
+    conflict GitHub correctly flagged as `mergeable_state: dirty` despite a
+    local `git merge-tree` dry run initially looking clean. Fix was
+    mechanical and low-risk: merge main into the PR branch, let `prisma
+    generate` regenerate the one conflicting file fresh rather than
+    hand-resolving it, verify (prisma validate + vue-tsc clean), push, wait
+    for CI, merge. Same class of "regenerate, don't hand-merge" fix as the
+    STATUS.md/workspace.html auto-gen convention, just for kind_robots'
+    generated Prisma client -- worth generalizing that convention beyond
+    conductor's own auto-gen files.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A dedicated research pass (Explore agent surveying existing layout-contract
+    examples, karma/mana/achievement plumbing already shipped by t-010, and the
+    User schema) before writing any code meant zero rework: every new UI section
+    reused an existing store/component instead of duplicating one, and the only
+    schema change needed was a single additive nullable column
+    (introDismissedAt) for the one genuinely new piece of state (intro
+    dismissal). Deliberately scoped out extending user-galleries.vue to the
+    remaining two object types (Facets/Projects) rather than let the task grow
+    past its landable core -- filed as a kaizen suggestion instead.
+- date: 2026-08-02
+  project: interface-vision
+  task: t-018
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    The task note's orphan-audit claim ("only 6 components use displayStore.ts")
+    was wrong in a load-bearing way -- it missed memoryStore.ts (a store, not a
+    component) reading displayStore.viewportSize to size the live, routed Memory
+    Dungeon board, and kind-loader.vue calling displayStore.initialize() as real
+    app-startup wiring. Investigating before deleting (grep ALL importers, not
+    just the ones matching the expected shape) caught this before it shipped as
+    a silent behavior regression; the store was left in place and split into its
+    own follow-up task (t-045) instead of forced through under the cleanup label.
+- date: 2026-08-02
+  project: interface-vision
+  task: t-019
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A task titled "show earned karma/mana" surfaced a real data-attribution bug
+    on investigation, not just a missing display layer: REACTION_RECEIVED karma
+    awards were tagging the Reaction row's own id as refId instead of the
+    reacted-on object's id, making per-object aggregation impossible regardless
+    of any UI work. Also worth remembering: grep for whether a "mana equivalent"
+    code path is actually live before building UI for it -- ManaReason had
+    SOCIAL_REACTION/SOCIAL_SHARE defined but never awarded anywhere, so the
+    honest move was shipping karma-only and saying so, not fabricating a mana
+    number to match the task title.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-046
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Extending an already-shipped pattern (t-019's earned-karma batch fetch) to a new
+    consumer went cleanly because the task note itself flagged the one real risk --
+    "check whether the gallery you pick actually has a tagged award path before wiring
+    it" -- and following that check up front (grepping refType call sites in
+    reactions/index.post.ts and prompts/generate.post.ts) confirmed ArtImage was safe
+    before writing any UI code. Picking the highest-traffic *already-tagged* consumer
+    over an arbitrary one avoided shipping an always-empty badge.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-020
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Achievement rewards must be granted atomically through server-side karma and mana ledgers; direct
+    client balance patches are neither authoritative nor permitted.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-039
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Contract verifiers should emit concise pass/fail output; diagnostic source bundles need a real
+    consumer or an explicit verbose mode.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-021
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Re-verifying flagged-orphan components before deletion (not trusting a prior audit's flag blind) caught two false positives with live contract usage.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-022
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: null
+  lesson: 'Composition-aware contracts need the same ratchet strategy as file-local contracts: measure
+    existing debt explicitly, block additions immediately, and let future sweeps shrink the baseline instead
+    of making the first honest measurement unmergeable.'
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-025
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: null
+  lesson: New whole-repository conformance rules should first measure the live debt through CI, then record
+    that exact result as a shrink-only baseline so future violations fail without pretending historical
+    debt is new.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-047
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'The one-scroll bucket contains at least two distinct shapes: mutually exclusive tab-switcher
+    branches that can be mechanically consolidated under one shared scroll owner, and genuine dual-pane
+    layouts that require a deliberate design decision about which pane owns scrolling. Grouping violations
+    by shape keeps mechanical cleanup separate from judgment-heavy redesign.'
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-033
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: null
+  lesson: When two CI scripts parse the same authored tree, keep one implementation and preserve old script
+    names only as compatibility aliases so workflow callers do not drift.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'verifyLayoutContract.ts''s root-tag regex only matches lowercase-first tag names, so a
+    page component whose own template root is a PascalCase component reference (e.g. <ProjectFrontPage>)
+    can never satisfy root-surface, even with the correct class present. When a shared shell is
+    invoked from many call sites, check whether the checker can even parse the call site''s own root
+    tag before assuming a class-attribute fix will register — filed t-055 to fix the regex itself.'
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A file classified as a "page" purely by living in components/pages/ (verifyLayoutContract.ts''s
+    isPageComponent()) can still be an embedded widget, not a real page -- conductor-project-chat.vue
+    was a per-project chat panel mounted inside conductor-page.vue, not a standalone view. Before
+    forcing kr-surface/kr-scroll onto a root-surface violation, check whether the file is actually
+    reachable as its own route/tab or only ever rendered as a child; moving it out of components/pages/
+    is often the correct fix, not a class change. Also: a LEARNING.yaml record with an invalid kind
+    value breaks test_backfill_learning.py for every subsequent PR on main regardless of that PR''s
+    own diff -- confirm the base branch is broken before assuming a red "Python test suite" check
+    means your own change is at fault.'
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-024
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: null
+  lesson: Similar-looking gallery grids may own fundamentally different picker, CRUD, taxonomy, or relationship
+    behavior. Classify live responsibilities and callers before extracting a shared shell; reuse behavior-neutral
+    primitives rather than forcing a passive browse abstraction onto stateful tools.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-053
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A content page mounting the wrong component doesn't error -- it silently renders
+    whatever the mount resolves to (content/button.md mounted :lab-manager since its
+    creation in PR #1280, a copy-paste mistake with no route in that component's own
+    tab mapping; /button just fell back to WonderLab's review UI). git blame the file's
+    origin before assuming a mount was ever correct and later drifted. Separately: fixing
+    the mount is not automatically safe on its own -- mounting a component via MDC for
+    the first time can expose a pre-existing kr-surface/kr-scroll violation that
+    verifyMdcScrollOwnership.ts (not just verifyLayoutContract.ts) will catch, since an
+    MDC-mounted page must not fight pages/[...slug].vue's content-host for scroll
+    ownership. With no local dev server (DB unreachable) and no Vercel PR-preview for
+    agent branches (vercel.json exclusion), match the proven-safe pattern already used
+    by other MDC-mounted -page.vue components (plain divs, no scroll classes) rather
+    than guessing whether kr-surface's h-full behaves inside an auto-height flex host --
+    and widen the root-surface allow-list deliberately (documented, not gamed) rather
+    than force a scroll primitive onto a component the checker didn't originally
+    evaluate as MDC-mounted.
+- date: '2026-08-02'
+  project: dream-cycle
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: transient
+  lesson: >
+    A self-modifying "bootstrap a CI job that patches, tests, then commits" pattern has
+    a sharp edge: if the commit step fails, everything the job did in its ephemeral
+    checkout is silently discarded -- there is no partial-progress trail beyond whatever
+    the job log happened to print. Here the patch applied cleanly and 802 tests passed,
+    but `git diff --check` (run right after tests, right before the commit) caught a
+    stray blank line at EOF the patch script itself introduced, and the job died there
+    -- twice, identically, across two separate one-shot workflow files
+    (agent-run-daily-dream-art-dedup.yml, agent-apply-daily-dream-art-dedup.yml), each
+    triggered by a "push the workflow file to trigger it" bootstrap. Neither failure was
+    ever investigated between attempts; a third workflow was authored instead of reading
+    the first failure's job log, which would have shown the exact line and exit code.
+    When a verified/tested CI step fails on the *next* step, read that step's log before
+    re-authoring the automation -- the fix is often a one-line bug in the patcher itself,
+    not a reason to change approach. Bounded, self-removing one-shot patch scripts are
+    fine, but they should be run and debugged locally first, not iterated against CI
+    round-trips at ~5 minutes per failed attempt.
+- date: '2026-08-02'
+  project: interface-vision
+  task: t-030
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: null
+  lesson: Before reimplementing a ready task, compare its note, current code, and recent merged PRs. A
+    task can carry a complete merged result but remain incorrectly ready because an earlier closeout targeted
+    a different task ID; repair roadmap state instead of duplicating the code.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-062
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: null
+  lesson: A roadmap can carry two tasks sharing an id (find_task/find_task_block match the first
+    occurrence, silently stranding the second) because audit_roadmaps.py's DUPLICATE_TASK_ID check
+    existed but was purely advisory -- main() never returned non-zero, and its report only got
+    committed to main under a stale one-off branch condition. Detection without enforcement doesn't
+    stop the bug; wire the check into something CI actually gates (a pytest-covered script) or it
+    will collide again, as it did here even on the very fix meant to prevent it.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-065
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    The implementation half of this task (scripts/next_free_task_id.py, PR #1588) merged, but the
+    task couldn't close because it was left with a queued rearm task-event that the processor
+    rejected every run (`rearm requires recurring: true` -- t-065 isn't a recurring task). A
+    connector-only session can't tell mid-task whether a target task is recurring without reading
+    the live roadmap first; docs/github-connector-worker.md listed `rearm` and `ready` as
+    interchangeable options with no mention of the recurring gate, so the wrong operation was a
+    natural mistake, not carelessness. A concurrent session fixed the stuck event with the correct
+    `operation: ready` while this session was independently mid-flight on the actual remaining
+    work (wiring scripts/next_free_task_id.py into AGENTS.md's task-id-assignment call sites);
+    rebasing onto that fix rather than duplicating it is what let both land cleanly. Documented
+    the rearm-vs-ready distinction in docs/github-connector-worker.md so the next connector
+    session doesn't repeat it.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-031
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: The object-card divergence was concentrated in Dream's shell and the repeated card body, not
+    five wholly bespoke cards; inspect shared wrappers before planning a broad convergence rewrite.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-057
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: When a task's own verification instruction assumes infrastructure (a PR preview) that a repo-wide
+    config (vercel.json) silently excludes for the exact branch prefix agent sessions use, the fallback
+    isn't to skip verification -- it's to verify what CAN be checked (CI, structural reasoning about the
+    change's own properties) and be explicit in the roadmap/PR about what's still open, rather than silently
+    declaring full verification done.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-048
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A task released as actionable/stale (blocked on an unrelated component not yet migrated) can
+    become trivially doable again once other, unrelated work lands -- re-verify the live premise from
+    code before trusting a stale roadmap note, rather than assuming a prior session's blocker still holds.

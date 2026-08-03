@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-30T16:22:54Z
+Generated: 2026-08-03T10:42:20Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **432**
-- Outcomes: blocked: 13, cancelled: 1, done: 418
+- Closed tasks recorded: **482**
+- Outcomes: blocked: 13, cancelled: 1, done: 468
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -24,22 +24,23 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | art-generator-connect | 3 | 100% |
 | challenge-center | 16 | 100% |
 | coat-dance | 8 | 0% |
-| coloring-book | 23 | 100% |
+| coloring-book | 25 | 100% |
 | conductor | 59 | 100% |
 | conductor-app | 2 | 100% |
-| davinci | 1 | 100% |
+| davinci | 2 | 100% |
 | digital-storefront | 24 | 100% |
-| dream-cycle | 17 | 100% |
+| dream-cycle | 19 | 100% |
 | ecosystem-map | 5 | 100% |
 | global-ui | 13 | 100% |
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
+| interface-vision | 40 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 43 | 100% |
+| model-builder | 48 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -58,39 +59,40 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 417 | 99% |
+| software | 467 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
+| quality | 9 |
 | actionable | 9 |
-| quality | 7 |
-| transient | 6 |
+| transient | 7 |
+| scope | 1 |
 
 ## Kaizen targets
 
 - project `coat-dance` — 0% success over 8 closed tasks; aim the next kaizen task here
 - kind `content` — 40% success over 15 closed tasks; aim the next kaizen task here
+- failure category `quality` — 9 occurrences; look for the shared cause across its records
 - failure category `actionable` — 9 occurrences; look for the shared cause across its records
-- failure category `quality` — 7 occurrences; look for the shared cause across its records
-- failure category `transient` — 6 occurrences; look for the shared cause across its records
+- failure category `transient` — 7 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
-- 2026-07-29 `model-builder/t-029` — Checking a prior cycle's specific unticketed lead first (this time, batchApproveStage's possible isStageEditable gap) before starting a broad re-read is an efficient variant of the exclusion-list pattern: it closed the lead out cleanly (confirmed already-safe) and freed the rest of the cycle to find a genuinely new bug (autoBuildItem() approving PITCH/FIELDS_AND_PROMPTS with empty content when draftText() fails). Separately, this cycle nearly reverted its own claim_task.py claim: set_task_field.py was run against a stale local roadmap checkout immediately after claim_task.py's direct-to- origin/main push, which would have silently clobbered the claim if committed blind -- caught by diffing against origin/main before pushing, per this file's own repeated "fetch before you push" guidance. A session that calls claim_task.py (or any direct-to-main script) should fetch/rebase locally before its next roadmap edit in the same cycle, not just before the final close-out push.
+- 2026-08-03 `interface-vision/t-048` — A task released as actionable/stale (blocked on an unrelated component not yet migrated) can become trivially doable again once other, unrelated work lands -- re-verify the live premise from code before trusting a stale roadmap note, rather than assuming a prior session's blocker still holds.
+- 2026-08-03 `interface-vision/t-057` — When a task's own verification instruction assumes infrastructure (a PR preview) that a repo-wide config (vercel.json) silently excludes for the exact branch prefix agent sessions use, the fallback isn't to skip verification -- it's to verify what CAN be checked (CI, structural reasoning about the change's own properties) and be explicit in the roadmap/PR about what's still open, rather than silently declaring full verification done.
+- 2026-08-03 `interface-vision/t-031` — The object-card divergence was concentrated in Dream's shell and the repeated card body, not five wholly bespoke cards; inspect shared wrappers before planning a broad convergence rewrite.
+- 2026-08-03 `interface-vision/t-065` — The implementation half of this task (scripts/next_free_task_id.py, PR #1588) merged, but the task couldn't close because it was left with a queued rearm task-event that the processor rejected every run (`rearm requires recurring: true` -- t-065 isn't a recurring task). A connector-only session can't tell mid-task whether a target task is recurring without reading the live roadmap first; docs/github-connector-worker.md listed `rearm` and `ready` as interchangeable options with no mention of the recurring gate, so the wrong operation was a natural mistake, not carelessness. A concurrent session fixed the stuck event with the correct `operation: ready` while this session was independently mid-flight on the actual remaining work (wiring scripts/next_free_task_id.py into AGENTS.md's task-id-assignment call sites); rebasing onto that fix rather than duplicating it is what let both land cleanly. Documented the rearm-vs-ready distinction in docs/github-connector-worker.md so the next connector session doesn't repeat it.
 
-- 2026-07-29 `model-builder/t-029` — Extended the review-gate-bypass bug class (already fixed for canApproveAssets, batchDraftField/batchSetField, and previewCommit) to the single-item draftText() path: the Approve button for PITCH/FIELDS_AND_PROMPTS has no isDrafting gate, so a stage can be approved while its own AI draft is still resolving, and the draft would silently overwrite the approved content with no re-review. This task's note (67+ PROGRESS/REVIEWED entries) is now the same note-bloat shape the immediately preceding LEARNING.yaml entry describes for coloring-book/t-037 -- worth the same run-log.md extraction next cycle, before it slows down reading/diffing the roadmap further.
-- 2026-07-29 `coloring-book/t-037` — Note-bloat extraction (moving a recurring task's accumulated RAN/incident history out of the roadmap note: field into a dedicated run-log.md, per the ai-art-academy/t-010 precedent) is now a proven, repeatable pattern for any long-running recurring task whose note has grown large enough to slow down reading/diffing the roadmap -- verify the move with a byte-identical diff check before trimming the original, and add a run_log: pointer field rather than just prose, so a script can find the log mechanically later.
-- 2026-07-29 `taskmaster/t-002` — kind_robots PR #1157 merged clean on first pass, all 11 checks green including the project-specific "Taskmaster checkpoint contract" -- confirming in advance that the contract verifiers only assert against stores/taskmasterStore.ts and components/pages/taskmaster-page.vue content (not stores/todoStore.ts, the actual file touched) avoided a wasted CI round trip on a fix that was never going to trip those specific checks.
-- 2026-07-29 `taskmaster/t-001` — The audit surfaced a real, silent regression rather than a documentation gap: a Serendipity->Taskmaster rename left stores/todoStore.ts's AGENT-todo badging heuristic matching the pre-rename icon/title/description shapes only, so every Taskmaster-created needs-human todo since the rename silently miscategorized with no error. Renames that touch generated-content shape (icons, title/description prefixes used elsewhere as string-matched classifiers) need a grep for every consumer of the old string shape, not just the producer -- an audit task that reads the producer in isolation would have reported this capability as "present and working" when it was actually broken for every row created after the rename.
-- 2026-07-29 `dream-cycle/t-019` — An unrelated-looking PR (#1399) had already landed both a fix and its matching tests for public/rewards/... path handling in relay_media_agent.py, all green -- but the tests locked in the same wrong assumption as the code (folding the reward-asset root into the images root instead of treating it as a real sibling directory), including a test explicitly named to assert away the correct sibling-root design. A passing, internally-consistent test suite is not proof a fix matches reality when the tests were written by the same reasoning that produced the bug -- cross-check against the actual external system (here: the target repo's real folder layout) before trusting "tests pass" as sufficient verification, especially when correcting or building on another agent's recent, already-merged work.
-- 2026-07-29 `coloring-book/t-022` — recover_timed_out_job()'s except-block guard in consume_coloring_book_color_art.py only preserved a stuck job's "job N" reference when the failure text literally contained "ANTHROPIC_API_KEY" -- any other exception during a recovery attempt (missing local dependency, transient network error checking job status) silently destroyed the reference, forcing the next pass into a genuine duplicate ArtJob submission for an already-completed render. Same failure shape as the ai-art-academy/t-010 fauvism incident: "status implies delivered/dead" reasoning is too eager whenever a script decides to discard a recovery pointer. Fixed with a narrow RecoveryAbandoned exception marking only the backend-confirmed-dead cases; every other exception now preserves the reference unconditionally. General lesson: a recovery/reconciliation guard should default to "preserve the pointer," and require an explicit, backend-confirmed signal to discard it -- never infer "safe to discard" from matching one specific known error string.
-- 2026-07-29 `conductor/t-095` — consume_art_requests.py's enqueue()->wait_for_job() gap: a submitted ArtJob's id was only ever printed to stdout, never persisted, before the (up to 600s) wait for completion -- so a timeout, FAILED/CANCELLED job, or killed process left no durable trace of which ArtJob had actually been submitted for a given request, exactly the shape of the ai-art-academy/t-010 fauvism incident (an id known only from a session's own prose, unrecoverable once out of context). Fixed by recording the id onto the request's own entry immediately after submission succeeds, before the blocking wait -- the general lesson: any script that submits an async job and then blocks waiting on it should persist the job id at submission time, not at completion time, so a timeout or crash mid-wait still leaves a recoverable trail. Separately confirmed via a new regression test that the non-zero-exit half of this kaizen was already correct; not every suspected two-part gap turns out to have two real parts.
-- 2026-07-29 `media-watchlist/t-006` — This recurring polish task's own note pointed at a stale kaizen (Month/Season filters) that t-012 and t-016 had already closed two cycles earlier -- re-implementing it blind would have been a pure no-op. Re-diffing BROWSE-UX.md against the live components before picking a slice caught the drift and surfaced a different, still-open gap (Entry Detail's "Related entries" section, §3) that the note never flagged. Kaizen: on a recurring task with a multi-cycle PROGRESS history, treat the latest PROGRESS note's "not done yet" list as a hypothesis to verify against current main, not a ready-made todo -- prior cycles closing kaizens out-of-band (via their own follow-on tasks) can leave the recurring task's own note pointing at already-finished work.
+- 2026-08-03 `interface-vision/t-062` — A roadmap can carry two tasks sharing an id (find_task/find_task_block match the first occurrence, silently stranding the second) because audit_roadmaps.py's DUPLICATE_TASK_ID check existed but was purely advisory -- main() never returned non-zero, and its report only got committed to main under a stale one-off branch condition. Detection without enforcement doesn't stop the bug; wire the check into something CI actually gates (a pytest-covered script) or it will collide again, as it did here even on the very fix meant to prevent it.
+- 2026-08-02 `interface-vision/t-030` — Before reimplementing a ready task, compare its note, current code, and recent merged PRs. A task can carry a complete merged result but remain incorrectly ready because an earlier closeout targeted a different task ID; repair roadmap state instead of duplicating the code.
+- 2026-08-02 `dream-cycle/t-006` — A self-modifying "bootstrap a CI job that patches, tests, then commits" pattern has a sharp edge: if the commit step fails, everything the job did in its ephemeral checkout is silently discarded -- there is no partial-progress trail beyond whatever the job log happened to print. Here the patch applied cleanly and 802 tests passed, but `git diff --check` (run right after tests, right before the commit) caught a stray blank line at EOF the patch script itself introduced, and the job died there -- twice, identically, across two separate one-shot workflow files (agent-run-daily-dream-art-dedup.yml, agent-apply-daily-dream-art-dedup.yml), each triggered by a "push the workflow file to trigger it" bootstrap. Neither failure was ever investigated between attempts; a third workflow was authored instead of reading the first failure's job log, which would have shown the exact line and exit code. When a verified/tested CI step fails on the *next* step, read that step's log before re-authoring the automation -- the fix is often a one-line bug in the patcher itself, not a reason to change approach. Bounded, self-removing one-shot patch scripts are fine, but they should be run and debugged locally first, not iterated against CI round-trips at ~5 minutes per failed attempt.
 
-- 2026-07-29 `model-builder/t-029` — After ~20 cycles finding only client-side store races (singleton-ownership guards, watch-clobber bugs, cancelled-run checks), this cycle found a genuinely different bug class: the server-side commit route (server/api/model-builder/items/[id]/commit.post.ts) never checked item.stageStatuses before executing the durable write, so the entire PITCH->FIELDS_AND_PROMPTS->GENERATE_ASSETS->COMMIT human-approval gate was enforced only client-side and could be bypassed by a direct POST. Kaizen: when a recurring bug-hunt task has exhausted one layer of a feature (here, the Pinia store's in-memory races), the next productive lens is the layer below it (the server route trusting client-enforced invariants) rather than re-scanning the same layer for a smaller variant of the same bug shape.
+- 2026-08-02 `interface-vision/t-053` — A content page mounting the wrong component doesn't error -- it silently renders whatever the mount resolves to (content/button.md mounted :lab-manager since its creation in PR #1280, a copy-paste mistake with no route in that component's own tab mapping; /button just fell back to WonderLab's review UI). git blame the file's origin before assuming a mount was ever correct and later drifted. Separately: fixing the mount is not automatically safe on its own -- mounting a component via MDC for the first time can expose a pre-existing kr-surface/kr-scroll violation that verifyMdcScrollOwnership.ts (not just verifyLayoutContract.ts) will catch, since an MDC-mounted page must not fight pages/[...slug].vue's content-host for scroll ownership. With no local dev server (DB unreachable) and no Vercel PR-preview for agent branches (vercel.json exclusion), match the proven-safe pattern already used by other MDC-mounted -page.vue components (plain divs, no scroll classes) rather than guessing whether kr-surface's h-full behaves inside an auto-height flex host -- and widen the root-surface allow-list deliberately (documented, not gamed) rather than force a scroll primitive onto a component the checker didn't originally evaluate as MDC-mounted.
 
+- 2026-08-02 `interface-vision/t-024` — Similar-looking gallery grids may own fundamentally different picker, CRUD, taxonomy, or relationship behavior. Classify live responsibilities and callers before extracting a shared shell; reuse behavior-neutral primitives rather than forcing a passive browse abstraction onto stateful tools.
+- 2026-08-02 `interface-vision/t-017` — A file classified as a "page" purely by living in components/pages/ (verifyLayoutContract.ts's isPageComponent()) can still be an embedded widget, not a real page -- conductor-project-chat.vue was a per-project chat panel mounted inside conductor-page.vue, not a standalone view. Before forcing kr-surface/kr-scroll onto a root-surface violation, check whether the file is actually reachable as its own route/tab or only ever rendered as a child; moving it out of components/pages/ is often the correct fix, not a class change. Also: a LEARNING.yaml record with an invalid kind value breaks test_backfill_learning.py for every subsequent PR on main regardless of that PR's own diff -- confirm the base branch is broken before assuming a red "Python test suite" check means your own change is at fault.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-30T16:22:54Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-03T10:42:20Z_

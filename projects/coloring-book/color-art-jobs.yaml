@@ -15,8 +15,8 @@ defaults:
   output_version: color-proposals-v1
 status_meanings:
   pending: ready to submit as a color ArtJob
-  done: render landed; human review may accept it, request revision, or keep it as inspiration
-  approved: accepted color master already exists; no new color ArtJob is required
+  done: render landed and passed the structural gate; awaiting human review in the ArtJob trainer panel
+  approved: a human accepted this color master; no new color ArtJob is required
 books:
 - order: 1
   slug: monster-recast
@@ -31,8 +31,7 @@ books:
     seed: 840001
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-001-perfect-woman.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-001
-    semantic_gate_error: 'job 2776: ANTHROPIC_API_KEY is required for the production semantic art gate'
-    semantic_gate_error_at: '2026-07-28T17:23:00Z'
+    last_render_seed: 18282877
   - slot: 2
     id: mr-002
     slug: dream-killer
@@ -61,12 +60,17 @@ books:
     id: mr-005
     slug: moon-torn
     title: Moon-Torn
-    status: pending
+    status: done
     seed: 840005
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-005-moon-torn.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-005
-    semantic_gate_error: 'job 2777: ANTHROPIC_API_KEY is required for the production semantic art gate'
-    semantic_gate_error_at: '2026-07-28T17:25:29Z'
+    last_render_seed: 1609196991
+    rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-005-moon-torn.webp
+    art_image_id: 13716
+    render_seed: 535015451
+    render_engine: krea2
+    completed_at: '2026-08-01T08:29:48Z'
+    prompt_fingerprint: f5031ee17543338505b06e5c96e5a1f7730d1eba9c5a1812e945f5f5835902d1
   - slot: 6
     id: mr-006
     slug: screwhead
@@ -75,18 +79,22 @@ books:
     seed: 840006
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-006-screwhead.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-006
-    semantic_gate_error: 'job 2778: ANTHROPIC_API_KEY is required for the production semantic art gate'
-    semantic_gate_error_at: '2026-07-28T17:28:03Z'
+    last_render_seed: 632860831
   - slot: 7
     id: mr-007
     slug: pound-foolish
     title: Pound Foolish
-    status: pending
+    status: done
     seed: 840007
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-007-pound-foolish.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-007
-    semantic_gate_error: 'job 2779: ANTHROPIC_API_KEY is required for the production semantic art gate'
-    semantic_gate_error_at: '2026-07-28T17:30:47Z'
+    last_render_seed: 426923064
+    rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-007-pound-foolish.webp
+    art_image_id: 13142
+    render_seed: 426923064
+    render_engine: krea2
+    completed_at: '2026-08-01T04:19:01Z'
+    prompt_fingerprint: c40243edaaf7eb0e6e4a5b5444088b64eaa16964f7d0f20c413a94135c0868f5
   - slot: 8
     id: mr-008
     slug: game-mistress
@@ -95,28 +103,36 @@ books:
     seed: 840008
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-008-game-mistress.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-008
-    semantic_gate_error: 'job 2780: ANTHROPIC_API_KEY is required for the production semantic art gate'
-    semantic_gate_error_at: '2026-07-28T17:33:22Z'
+    last_render_seed: 1434029146
   - slot: 9
     id: mr-009
     slug: draculina-husbands
     title: Draculina and Her Three Husbands
-    status: pending
+    status: done
     seed: 840009
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-009-draculina-husbands.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-009
-    semantic_gate_error: 'job 2781: ANTHROPIC_API_KEY is required for the production semantic art gate'
-    semantic_gate_error_at: '2026-07-28T17:35:50Z'
+    rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-009-draculina-husbands.webp
+    art_image_id: 13144
+    render_seed: 1730222737
+    render_engine: krea2
+    completed_at: '2026-08-01T00:50:48Z'
+    prompt_fingerprint: e2cb31eba945d6a905c22c68e686cf68a41beef907aef22be3483edbc045e3aa
   - slot: 10
     id: mr-010
     slug: madam-hat
     title: The Madam in the Hat
-    status: pending
+    status: done
     seed: 840010
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-010-madam-hat.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-010
-    semantic_gate_error: 'job 2782: ANTHROPIC_API_KEY is required for the production semantic art gate'
-    semantic_gate_error_at: '2026-07-28T17:38:24Z'
+    last_render_seed: 861130701
+    rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-010-madam-hat.webp
+    art_image_id: 13145
+    render_seed: 861130701
+    render_engine: krea2
+    completed_at: '2026-08-01T04:19:01Z'
+    prompt_fingerprint: 339a05921d33f4a846aba708090a9f4742020752183280957a9d01bef7e290ea
   - slot: 11
     id: mr-011
     slug: alien-king
@@ -125,8 +141,7 @@ books:
     seed: 840011
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-011-alien-king.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-011
-    semantic_gate_error: 'job 2783: ANTHROPIC_API_KEY is required for the production semantic art gate'
-    semantic_gate_error_at: '2026-07-28T17:41:44Z'
+    last_render_seed: 1080138732
   - slot: 12
     id: mr-012
     slug: hush-dummy
@@ -135,8 +150,7 @@ books:
     seed: 840012
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-012-hush-dummy.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-012
-    semantic_gate_error: 'job 2784: ANTHROPIC_API_KEY is required for the production semantic art gate'
-    semantic_gate_error_at: '2026-07-28T17:44:18Z'
+    last_render_seed: 1596228836
   - slot: 13
     id: mr-013
     slug: ansel-bell
@@ -145,8 +159,7 @@ books:
     seed: 840013
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-013-ansel-bell.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-013
-    semantic_gate_error: 'job 2785: ANTHROPIC_API_KEY is required for the production semantic art gate'
-    semantic_gate_error_at: '2026-07-28T17:46:52Z'
+    last_render_seed: 1490652904
   - slot: 14
     id: mr-014
     slug: bathtub-shave
@@ -155,8 +168,7 @@ books:
     seed: 840014
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-014-bathtub-shave.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-014
-    semantic_gate_error: 'job 2786: ANTHROPIC_API_KEY is required for the production semantic art gate'
-    semantic_gate_error_at: '2026-07-28T17:49:30Z'
+    last_render_seed: 1591230950
   - slot: 15
     id: mr-015
     slug: red-carpet-mummy
@@ -165,18 +177,21 @@ books:
     seed: 840015
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-015-red-carpet-mummy.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-015
-    semantic_gate_error: 'job 2787: ANTHROPIC_API_KEY is required for the production semantic art gate'
-    semantic_gate_error_at: '2026-07-28T17:52:05Z'
+    last_render_seed: 345956463
   - slot: 16
     id: mr-016
     slug: creature-drag
     title: Creature in Drag
-    status: pending
+    status: done
     seed: 840016
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-016-creature-drag.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-016
-    semantic_gate_error: 'job 2788: ANTHROPIC_API_KEY is required for the production semantic art gate'
-    semantic_gate_error_at: '2026-07-28T17:54:27Z'
+    rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-016-creature-drag.webp
+    art_image_id: 13164
+    render_seed: 1911635965
+    render_engine: krea2
+    completed_at: '2026-08-01T00:50:48Z'
+    prompt_fingerprint: 3c166044c1f2c341bd83e59c8afd77d4a90fbca447f026aa7c77be2c9d1b03ef
   - slot: 17
     id: mr-017
     slug: trophy-queen
@@ -185,8 +200,7 @@ books:
     seed: 840017
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-017-trophy-queen.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-017
-    semantic_gate_error: 'job 2789: ANTHROPIC_API_KEY is required for the production semantic art gate'
-    semantic_gate_error_at: '2026-07-28T17:56:56Z'
+    last_render_seed: 332009971
   - slot: 18
     id: mr-018
     slug: doctor-feast
@@ -195,8 +209,7 @@ books:
     seed: 840018
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-018-doctor-feast.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-018
-    semantic_gate_error: 'job 2790: ANTHROPIC_API_KEY is required for the production semantic art gate'
-    semantic_gate_error_at: '2026-07-28T17:59:30Z'
+    last_render_seed: 1559153984
   - slot: 19
     id: mr-019
     slug: countess-vermin
@@ -205,18 +218,22 @@ books:
     seed: 840019
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-019-countess-vermin.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-019
-    semantic_gate_error: 'job 2791: ANTHROPIC_API_KEY is required for the production semantic art gate'
-    semantic_gate_error_at: '2026-07-28T18:02:03Z'
+    last_render_seed: 314880941
   - slot: 20
     id: mr-020
     slug: fly-girl-summer
     title: Fly Girl Summer
-    status: pending
+    status: done
     seed: 840020
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-020-fly-girl-summer.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-020
-    semantic_gate_error: 'job 2792: ANTHROPIC_API_KEY is required for the production semantic art gate'
-    semantic_gate_error_at: '2026-07-28T18:04:31Z'
+    last_render_seed: 421918277
+    rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-020-fly-girl-summer.webp
+    art_image_id: 13168
+    render_seed: 421918277
+    render_engine: krea2
+    completed_at: '2026-08-01T04:19:01Z'
+    prompt_fingerprint: 132db7a87f0fa1dc00031e01bdaaec19898c709dc7571ac3d5ddf94be212dd60
   - slot: 21
     id: mr-021
     slug: invisible-flasher
@@ -225,8 +242,7 @@ books:
     seed: 840021
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-021-invisible-flasher.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-021
-    semantic_gate_error: 'job 2793: ANTHROPIC_API_KEY is required for the production semantic art gate'
-    semantic_gate_error_at: '2026-07-28T18:06:53Z'
+    last_render_seed: 1406307282
   - slot: 22
     id: mr-022
     slug: prom-king
@@ -235,6 +251,7 @@ books:
     seed: 840022
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-022-prom-king.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-022
+    last_render_seed: 282588380
   - slot: 23
     id: mr-023
     slug: babs-blob
@@ -243,6 +260,7 @@ books:
     seed: 840023
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-023-babs-blob.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-023
+    last_render_seed: 1371316519
   - slot: 24
     id: mr-024
     slug: madame-phantasm
@@ -251,14 +269,21 @@ books:
     seed: 840024
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-024-madame-phantasm.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-024
+    last_render_seed: 1975243171
   - slot: 25
     id: mr-025
     slug: little-miss-omen
     title: Little Miss Omen
-    status: pending
+    status: done
     seed: 840025
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-025-little-miss-omen.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-025
+    rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-025-little-miss-omen.webp
+    art_image_id: 13700
+    render_seed: 604431883
+    render_engine: krea2
+    completed_at: '2026-08-01T05:27:56Z'
+    prompt_fingerprint: 2b6f56dd4a54532875965ad68e78fb502e66f0156df9e41aa0ae7f2b7da587bb
   - slot: 26
     id: mr-026
     slug: madam-satan
@@ -267,6 +292,7 @@ books:
     seed: 840026
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-026-madam-satan.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-026
+    last_render_seed: 728197564
   - slot: 27
     id: mr-027
     slug: half-possessed
@@ -275,6 +301,7 @@ books:
     seed: 840027
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-027-half-possessed.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-027
+    last_render_seed: 609220913
   - slot: 28
     id: mr-028
     slug: backward-boy
@@ -369,8 +396,6 @@ books:
     seed: 850001
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-001
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-001-starlight-mechanic.webp
-    semantic_gate_error: job 2360 timed out after 600s (still queued/running)
-    semantic_gate_error_at: '2026-07-25T23:13:31Z'
   - slot: 2
     id: hwr-002
     slug: the-grand-staircase
@@ -379,8 +404,6 @@ books:
     seed: 850002
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-002
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-002-the-grand-staircase.webp
-    semantic_gate_error: job 2362 timed out after 600s (still queued/running)
-    semantic_gate_error_at: '2026-07-25T23:23:37Z'
   - slot: 3
     id: hwr-003
     slug: desert-wheel-queen
@@ -389,8 +412,6 @@ books:
     seed: 850003
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-003
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-003-desert-wheel-queen.webp
-    semantic_gate_error: job 2365 timed out after 600s (still queued/running)
-    semantic_gate_error_at: '2026-07-25T23:33:42Z'
   - slot: 4
     id: hwr-004
     slug: rain-on-the-backlot
@@ -399,8 +420,6 @@ books:
     seed: 850004
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-004
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-004-rain-on-the-backlot.webp
-    semantic_gate_error: job 2368 timed out after 600s (still queued/running)
-    semantic_gate_error_at: '2026-07-25T23:43:48Z'
   - slot: 5
     id: hwr-005
     slug: midnight-detective
@@ -409,8 +428,6 @@ books:
     seed: 850005
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-005
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-005-midnight-detective.webp
-    semantic_gate_error: job 2371 timed out after 600s (still queued/running)
-    semantic_gate_error_at: '2026-07-25T23:53:52Z'
   - slot: 6
     id: hwr-006
     slug: temple-of-the-sun-engine
@@ -419,8 +436,6 @@ books:
     seed: 850006
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-006
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-006-temple-of-the-sun-engine.webp
-    semantic_gate_error: job 2374 timed out after 600s (still queued/running)
-    semantic_gate_error_at: '2026-07-26T00:03:59Z'
   - slot: 7
     id: hwr-007
     slug: the-silver-swashbuckler
@@ -429,8 +444,6 @@ books:
     seed: 850007
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-007
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-007-the-silver-swashbuckler.webp
-    semantic_gate_error: job 2377 timed out after 600s (still queued/running)
-    semantic_gate_error_at: '2026-07-26T00:14:06Z'
   - slot: 8
     id: hwr-008
     slug: laboratory-tenor
@@ -439,8 +452,6 @@ books:
     seed: 850008
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-008
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-008-laboratory-tenor.webp
-    semantic_gate_error: job 2380 timed out after 600s (still queued/running)
-    semantic_gate_error_at: '2026-07-26T00:24:11Z'
   - slot: 9
     id: hwr-009
     slug: ballroom-double-take
@@ -449,8 +460,6 @@ books:
     seed: 850009
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-009
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-009-ballroom-double-take.webp
-    semantic_gate_error: job 2383 timed out after 600s (still queued/running)
-    semantic_gate_error_at: '2026-07-26T00:34:16Z'
   - slot: 10
     id: hwr-010
     slug: rooftop-sign-song
@@ -459,8 +468,6 @@ books:
     seed: 850010
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-010
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-010-rooftop-sign-song.webp
-    semantic_gate_error: job 2386 timed out after 600s (still queued/running)
-    semantic_gate_error_at: '2026-07-26T00:44:19Z'
   - slot: 11
     id: hwr-011
     slug: the-gentle-giant-visitor
@@ -469,8 +476,6 @@ books:
     seed: 850011
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-011
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-011-the-gentle-giant-visitor.webp
-    semantic_gate_error: job 2389 timed out after 600s (still queued/running)
-    semantic_gate_error_at: '2026-07-26T00:54:23Z'
   - slot: 12
     id: hwr-012
     slug: last-train-first-kiss
@@ -479,8 +484,6 @@ books:
     seed: 850012
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-012
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-012-last-train-first-kiss.webp
-    semantic_gate_error: job 2392 timed out after 600s (still queued/running)
-    semantic_gate_error_at: '2026-07-26T01:04:26Z'
   - slot: 13
     id: hwr-013
     slug: high-noon-marshal
@@ -489,8 +492,6 @@ books:
     seed: 850013
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-013
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-013-high-noon-marshal.webp
-    semantic_gate_error: job 2395 timed out after 600s (still queued/running)
-    semantic_gate_error_at: '2026-07-26T01:14:33Z'
   - slot: 14
     id: hwr-014
     slug: chrome-thunder
@@ -499,8 +500,6 @@ books:
     seed: 850014
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-014
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-014-chrome-thunder.webp
-    semantic_gate_error: job 2398 timed out after 600s (still queued/running)
-    semantic_gate_error_at: '2026-07-26T01:24:41Z'
   - slot: 15
     id: hwr-015
     slug: prince-of-the-deep
@@ -509,8 +508,6 @@ books:
     seed: 850015
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-015
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-015-prince-of-the-deep.webp
-    semantic_gate_error: job 2401 timed out after 600s (still queued/running)
-    semantic_gate_error_at: '2026-07-26T01:34:47Z'
   - slot: 16
     id: hwr-016
     slug: the-verdict
@@ -519,8 +516,6 @@ books:
     seed: 850016
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-016
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-016-the-verdict.webp
-    semantic_gate_error: job 2404 timed out after 600s (still queued/running)
-    semantic_gate_error_at: '2026-07-26T01:44:54Z'
   - slot: 17
     id: hwr-017
     slug: casino-grandmother
@@ -529,8 +524,6 @@ books:
     seed: 850017
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-017
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-017-casino-grandmother.webp
-    semantic_gate_error: job 2407 timed out after 600s (still queued/running)
-    semantic_gate_error_at: '2026-07-26T01:54:57Z'
   - slot: 18
     id: hwr-018
     slug: nebula-crooner
@@ -539,8 +532,6 @@ books:
     seed: 850018
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-018
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-018-nebula-crooner.webp
-    semantic_gate_error: job 2410 timed out after 600s (still queued/running)
-    semantic_gate_error_at: '2026-07-26T02:04:59Z'
   - slot: 19
     id: hwr-019
     slug: the-house-on-marigold-hill

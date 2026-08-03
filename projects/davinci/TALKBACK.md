@@ -160,10 +160,10 @@ risk. Same-agent build-and-merge, documented per the running pattern.
 
 **What to improve:**
 - The doc's proposed standing boundary rules only bind if they're visible
-  from Storymaker's side too — that gap is this merge's kaizen.
+  from Storybook's side too — that gap is this merge's kaizen.
 
-**Kaizen task:** storymaker/t-009 — cross-link the Da Vinci boundary rules
-from Storymaker's roadmap so future session-schema work reads them first.
+**Kaizen task:** storybook/t-009 — cross-link the Da Vinci boundary rules
+from Storybook's roadmap so future session-schema work reads them first.
 
 ## 2026-07-05 | Reviewer → system | davinci/t-012 | response
 
@@ -283,9 +283,9 @@ egress dependency, so nothing blocked this cycle.
   play-loop doc's "AI narrates, app owns state" boundary holds.
 - Wrote projects/davinci/docs/narration-layer-spec.md rather than editing
   design-brief.md in place — the design brief is the project-level pitch
-  doc (already referenced by storymaker-boundary-comparison.md); this is a
+  doc (already referenced by storybook-boundary-comparison.md); this is a
   focused implementation-contract doc for one layer, consistent with how
-  storymaker-boundary-comparison.md itself is a separate focused doc.
+  storybook-boundary-comparison.md itself is a separate focused doc.
 - Left the actual `/narrate` route + client run-screen implementation
   unfiled as a new task rather than scoping it myself in the same pass —
   a docs-only spec cycle shouldn't also invent the next task's exact

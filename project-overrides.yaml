@@ -74,6 +74,16 @@ overrides:
     priority: normal
     kind: software
 
+  - slug: interface-vision
+    status: active # opened 2026-08-01 (Silas) -- the release blocker for beta
+    # Successor to global-ui, which was flipped `finished` at 25/25 tasks while the
+    # design system it shipped sat at ~7% adoption (29 of ~421 component files use any
+    # kr-* class; the hand-rolled equivalent appears 366 times across 145 files). This
+    # project re-opens that work with numeric exit criteria enforced by a CI script
+    # whose allow-list only ever shrinks. Do not mark it finished on task count alone.
+    priority: high
+    kind: software
+
   - slug: ecosystem-map
     status: finished # flipped 2026-07-26 -- all 8 tasks done, nothing open
     priority: normal
@@ -218,20 +228,28 @@ overrides:
     channelKey: lab
     tabKey: mural
 
-  - slug: storymaker
+  - slug: storybook
     status: active
     priority: normal
     kind: software
     # Frontend placement — synced to the kind_robots Project row by
     # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry for
-    # 'storymaker' in kind_robots utils/projectPlacements.ts (channelKey: 'play',
-    # tabKey: 'storymaker', route: '/storymaker') — conductor/storymaker t-010.
-    liveUrl: /storymaker
+    # 'storybook' in kind_robots utils/projectPlacements.ts (channelKey: 'play',
+    # tabKey: 'storybook', route: '/storybook') — conductor/storybook t-010.
+    liveUrl: /storybook
     channelKey: play
-    tabKey: storymaker
+    tabKey: storybook
 
   - slug: davinci
-    status: finished # flipped 2026-07-26 -- all 15 tasks done, nothing open
+    status: active # reopened 2026-07-31 (Silas-directed session: "making da Vinci
+    # work start to finish"). Was flipped `finished` 2026-07-26 on the reading that
+    # all 15 tasks were done with nothing open -- true of the task list, but t-015
+    # closed by writing the AI-narration spec and explicitly declining to file the
+    # build task ("left for Silas/next cycle to scope as its own task rather than
+    # bundling a large implementation into this spec-only pass"). The project was
+    # therefore marked finished with its central gap unfiled: a play-loop API and
+    # 1024 seeded endings with nothing generating the prose a player reads. t-016
+    # files and closes that build.
     priority: normal
     kind: software
     # Frontend placement — synced to the kind_robots Project row by
@@ -275,8 +293,8 @@ overrides:
     tabKey: voice-lab
 
   - slug: mermaids-of-venice
-    status: paused # paused 2026-07-26 by Silas (previously retired 2026-07-16) — not fixed on current tasks; may revisit
-    priority: low
+    status: active # reopened 2026-08-03 by Silas — edition 3 revision is in progress; keep editorial support and progress-gated character reviews moving
+    priority: normal
     kind: content
 
   - slug: packmaker
@@ -331,7 +349,7 @@ overrides:
     status: retired # retired 2026-07-29 (conductor burst-mode cycle) -- this project's
     # actual kind_robots product (the story-weaving task engine described by this
     # project's own roadmap.yaml m1-m5) was permanently renamed to Taskmaster
-    # (kind_robots docs/products/storymaker-taskmaster-boundary.md: "The former
+    # (kind_robots docs/products/storybook-taskmaster-boundary.md: "The former
     # task-story product is renamed completely to Taskmaster, leaving the Serendipity
     # name and route free for the voice-led experience"; commit 5509ac4 "Complete
     # permanent Taskmaster cutover" did the file-level rename, serendipity-page.vue ->
@@ -351,7 +369,7 @@ overrides:
     status: active # onboarded 2026-07-29 (conductor burst-mode cycle) -- retroactive
     # tracking for an already-shipped kind_robots product: the story-weaving task
     # engine formerly tracked here as `serendipity` (see that entry's retirement note
-    # above), permanently renamed per kind_robots docs/products/storymaker-taskmaster-boundary.md.
+    # above), permanently renamed per kind_robots docs/products/storybook-taskmaster-boundary.md.
     # Verified via code inspection: components/pages/taskmaster-page.vue (724 lines)
     # and stores/taskmasterStore.ts (999 lines) are a mature, complete implementation,
     # not a scaffold.
@@ -407,3 +425,14 @@ overrides:
     status: active
     priority: low # idle fallback by design — must never outrank real ready work
     kind: software
+
+  - slug: lora-ingestion
+    status: active # onboarded 2026-07-31 -- this project had a roadmap.yaml and
+    # appeared in STATUS.md (32.5%, m1 done) but was never added here, and the
+    # registry is what defines projects for the kind_robots front end
+    # (server/api/conductor/projects.get.ts iterates the overrides list, not the
+    # projects/ directory). It was therefore invisible on the site and skipped by
+    # sync_projects.py entirely. `kind` deliberately omitted so the endpoint falls
+    # back to the roadmap's own `infrastructure`, which the override vocabulary
+    # (software|content|proposal|brainstorm) does not cover.
+    priority: normal

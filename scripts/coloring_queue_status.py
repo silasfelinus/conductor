@@ -12,7 +12,6 @@ import yaml
 
 DEFAULT_QUEUE = Path("projects/coloring-book/color-art-jobs.yaml")
 JOB_ID_PATTERN = re.compile(r"\bjob\s+#?(\d+)\b", re.IGNORECASE)
-CREDENTIAL_GATE_ERROR_PATTERN = re.compile(r"ANTHROPIC_API_KEY is required", re.IGNORECASE)
 RECOMMENDED_ACTIONS = (
     "repair-queue-integrity",
     "recover-existing-jobs",
@@ -35,17 +34,9 @@ def duplicate_values(values: list[Any]) -> list[Any]:
     return sorted(value for value, count in counts.items() if count > 1)
 
 
-def semantic_gate_job_id(entry: dict[str, Any]) -> int | None:
-    match = JOB_ID_PATTERN.search(str(entry.get("semantic_gate_error", "")))
+def render_gate_job_id(entry: dict[str, Any]) -> int | None:
+    match = JOB_ID_PATTERN.search(str(entry.get("render_gate_error", "")))
     return int(match.group(1)) if match else None
-
-
-def is_credential_gate_error(entry: dict[str, Any]) -> bool:
-    """True when a pending entry's semantic_gate_error is the missing
-    ANTHROPIC_API_KEY credential wall (scripts/semantic_art_quality.py), as
-    opposed to a recoverable timeout or a transient enqueue failure. No
-    retry -- live or recovery -- clears this one; only fixing the secret does."""
-    return bool(CREDENTIAL_GATE_ERROR_PATTERN.search(str(entry.get("semantic_gate_error", ""))))
 
 
 def requirement_satisfied(summary: dict[str, Any], required_action: str | None) -> bool:
@@ -68,11 +59,10 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
     normalized = [entry for entry in entries if isinstance(entry, dict)]
     statuses = Counter(str(entry.get("status", "missing")) for entry in normalized)
     pending = [entry for entry in normalized if entry.get("status") == "pending"]
-    errored = [entry for entry in pending if entry.get("semantic_gate_error")]
-    clean_pending = [entry for entry in pending if not entry.get("semantic_gate_error")]
-    recovery_candidates = [entry for entry in errored if semantic_gate_job_id(entry) is not None]
-    fresh_submission_blocked = [entry for entry in errored if semantic_gate_job_id(entry) is None]
-    credential_gate_errors = [entry for entry in errored if is_credential_gate_error(entry)]
+    errored = [entry for entry in pending if entry.get("render_gate_error")]
+    clean_pending = [entry for entry in pending if not entry.get("render_gate_error")]
+    recovery_candidates = [entry for entry in errored if render_gate_job_id(entry) is not None]
+    fresh_submission_blocked = [entry for entry in errored if render_gate_job_id(entry) is None]
 
     configured_batch_size = data.get("batch_policy", {}).get("worker_pass_size", 18)
     effective_batch_size = batch_size or int(configured_batch_size)
@@ -80,8 +70,8 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
         raise ValueError("batch size must be at least 1")
     next_batch = clean_pending[:effective_batch_size]
 
-    semantic_job_ids = [job_id for entry in errored if (job_id := semantic_gate_job_id(entry)) is not None]
-    duplicate_job_ids = duplicate_values(semantic_job_ids)
+    render_job_ids = [job_id for entry in errored if (job_id := render_gate_job_id(entry)) is not None]
+    duplicate_job_ids = duplicate_values(render_job_ids)
     duplicate_entry_ids = duplicate_values([entry.get("id") for entry in normalized])
     duplicate_slots = duplicate_values([entry.get("slot") for entry in normalized])
 
@@ -90,9 +80,9 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
             "slot": entry.get("slot"),
             "id": entry.get("id"),
             "status": entry.get("status"),
-            "semantic_gate_error": entry.get("semantic_gate_error"),
-            "semantic_gate_error_at": entry.get("semantic_gate_error_at"),
-            "semantic_gate_job_id": semantic_gate_job_id(entry),
+            "render_gate_error": entry.get("render_gate_error"),
+            "render_gate_error_at": entry.get("render_gate_error_at"),
+            "render_gate_job_id": render_gate_job_id(entry),
         }
 
     queue_integrity_safe = len(duplicate_entry_ids) == 0 and len(duplicate_slots) == 0
@@ -120,8 +110,8 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
         "total_entries": len(normalized),
         "statuses": dict(sorted(statuses.items())),
         "pending": len(pending),
-        "pending_with_semantic_gate_error": len(errored),
-        "pending_without_semantic_gate_error": len(clean_pending),
+        "pending_with_render_gate_error": len(errored),
+        "pending_without_render_gate_error": len(clean_pending),
         "next_batch": [entry_summary(entry) for entry in next_batch],
         "blocked_pending": [entry_summary(entry) for entry in errored],
         "recovery_candidates": [entry_summary(entry) for entry in recovery_candidates],
@@ -131,9 +121,7 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
         "recovery_actionable_count": len(recovery_batch),
         "fresh_submission_blocked": [entry_summary(entry) for entry in fresh_submission_blocked],
         "fresh_submission_blocked_count": len(fresh_submission_blocked),
-        "credential_gate_errors": [entry_summary(entry) for entry in credential_gate_errors],
-        "credential_gate_error_count": len(credential_gate_errors),
-        "duplicate_semantic_gate_job_ids": duplicate_job_ids,
+        "duplicate_render_gate_job_ids": duplicate_job_ids,
         "duplicate_entry_ids": duplicate_entry_ids,
         "duplicate_slots": duplicate_slots,
         "queue_integrity_safe": queue_integrity_safe,
@@ -155,15 +143,6 @@ def main() -> int:
     parser.add_argument("--require-recovery-candidates", action="store_true")
     parser.add_argument("--require-recovery-actionable", action="store_true")
     parser.add_argument("--require-recommended-action", choices=RECOMMENDED_ACTIONS)
-    parser.add_argument(
-        "--require-no-semantic-gate-error",
-        action="store_true",
-        help=(
-            "Fail if any pending entry is stuck on the ANTHROPIC_API_KEY credential "
-            "wall -- lets automation detect 'don't bother retrying, it's the same "
-            "credential wall' without re-deriving it from raw queue state."
-        ),
-    )
     args = parser.parse_args()
 
     try:
@@ -182,8 +161,6 @@ def main() -> int:
     if args.require_recovery_actionable and not summary["recovery_actionable"]:
         return 1
     if not requirement_satisfied(summary, getattr(args, "require_recommended_action", None)):
-        return 1
-    if args.require_no_semantic_gate_error and summary["credential_gate_error_count"] > 0:
         return 1
     return 0
 

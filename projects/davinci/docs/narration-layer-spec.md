@@ -172,11 +172,11 @@ the prompt string; actual image generation stays wherever the rest of Kind
 Robots' art-generation queue already lives — this spec does not add a new
 generation path.
 
-## Relationship to Storymaker's narrator pattern
+## Relationship to Storybook's narrator pattern
 
-Per `storymaker-boundary-comparison.md`, narration prompt assembly is the
+Per `storybook-boundary-comparison.md`, narration prompt assembly is the
 first concrete piece both projects could share (item 1 under "What they
-genuinely could share — later"), but Storymaker has no schema yet, so there
+genuinely could share — later"), but Storybook has no schema yet, so there
 is nothing to extract from today. This spec is written so extraction stays
 possible without a rewrite:
 
@@ -187,9 +187,9 @@ possible without a rewrite:
 - The one Da Vinci–specific piece is the `DaVinciDimension`-keyed `effects`
   map. If/when a shared utility is extracted, that becomes a generic
   `Record<string, number>` at the utility boundary, with each caller
-  (Da Vinci, later Storymaker) supplying its own allowed-keys validator.
+  (Da Vinci, later Storybook) supplying its own allowed-keys validator.
 - Per the boundary doc's standing rule, this stays inside
-  `server/utils/davinciNarration.ts` until Storymaker's own m1 schema lands
+  `server/utils/davinciNarration.ts` until Storybook's own m1 schema lands
   and there's real duplicated code to extract from, not before.
 
 ## First build slice (what unblocks a playable run UI)
@@ -210,7 +210,7 @@ possible without a rewrite:
 
 Explicitly deferred past the first slice: freeform choice input, the
 "heading toward..." `milestoneCandidate` UI treatment, and the shared
-Storymaker narration utility.
+Storybook narration utility.
 
 ## Open question for Silas
 
@@ -219,3 +219,46 @@ The per-choice effect clamp (`[-2, 2]`) and the "offer end-run after chapter
 spec — flag if either should be tuned once real playtesting data exists
 (this doc's defaults are meant to be revisited after the first build slice
 plays a few live runs, not treated as final).
+
+---
+
+## Implementation status (added 2026-07-31, davinci/t-016)
+
+**Built.** kind_robots commit `fa7db9c` implements the "First build slice"
+section above: `server/utils/davinciNarration.ts`, `POST /api/davinci/runs/:id/narrate`,
+and the run-screen wiring in `components/conductor/davinci-page.vue`. Contract
+coverage lives in `utils/scripts/verifyDaVinciNarration.ts`
+(`npm run test:davinci-narration`, 35 checks, wired into `contract-tests.yml`).
+
+Two deliberate deviations from this document, both forced by OpenAI strict mode
+rather than by preference:
+
+1. **`effects` is not an optional-key map.** Strict mode forbids optional
+   properties, so all ten dimensions are declared `required` and typed
+   `["integer", "null"]`. Null means "this choice does not move that dimension"
+   and is dropped during validation, which preserves this spec's rule that a
+   choice may be pure flavor with zero mechanical effect.
+2. **Bounds are enforced server-side only.** `minimum`/`maximum`/`minItems`/
+   `maxItems` are omitted from the schema — strict-mode support for them is
+   uneven — and the `[-2, 2]` clamp and 2–4 choice band are enforced in
+   `validateNarrationPayload` instead. This spec already required that
+   re-validation, so nothing is weakened; the schema just stops carrying
+   bounds it cannot be relied on to apply.
+
+One deviation of convenience: narrator selection reads the Bot/Character rows
+through prisma directly rather than calling `GET /api/narrators/[type]/[slug]`
+over HTTP from inside a server util. Same two-branch `botId → characterId →
+default bot 433` order, same columns, same normalized shape — just no self-HTTP
+hop.
+
+**The open question above is still open.** The `[-2, 2]` clamp and the
+"offer end-run after chapter 3" gate shipped as specced, both still design
+defaults awaiting real playtesting. They are now single constants
+(`NARRATION_EFFECT_MIN`/`MAX` in `davinciNarration.ts`,
+`MIN_CHAPTERS_BEFORE_ENDING` in `davinci-page.vue`), so tuning them is a
+one-line change plus a contract-test update.
+
+Still deferred, unchanged: freeform choice input, the `milestoneCandidate`
+UI treatment beyond a one-line hint, `LifeRunArt` generation from the proposed
+`artPrompt` (the narrator returns the string; nothing consumes it yet), and the
+shared Storybook narration utility.

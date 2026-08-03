@@ -6,7 +6,8 @@ status: outline
 priority: normal
 narrator: 'yes'
 created: '2026-07-28'
-proposal: true
+proposal: false
+legacy_contract: retired-pre-v2
 proposal_date: '2026-07-28'
 built_pr: null
 ---
@@ -47,6 +48,7 @@ A retired sea-fortress embassy where the color-speaking Tallowfin Concord negoti
 - (leave notes here — agents fold them in before building and never edit this section)
 
 ## Build log
+- 2026-08-02 | retired | pre-v2 proposal demoted to idea inventory; not eligible for object creation
 - 2026-07-28 | proposed | auto-generated daily proposal
 
 <!-- proposal-data

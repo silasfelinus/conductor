@@ -1,57 +1,25 @@
 #!/usr/bin/env python3
 """
-build_dream_records.py — build a daily-dream proposal into real kind_robots records.
+Build one eligible dated Daily Dream proposal into real kind_robots records.
 
-Phase 2 of the rolling daily-dream pipeline (dream-cycle t-012). Takes the
-newest UNBUILT daily proposal that has had its steering day (proposal_date <
-today, Pacific) and creates the actual content rows via the kind_robots REST
-API (machine auth: Authorization: Bearer KR_API_TOKEN — the beta-admin token;
-rows attribute to the system admin user server-side).
+The current bundle is exact: one PITCH world, one LOCATION Dream, one real
+Character, one ITEM Reward, one SKILL Reward, and one Scenario. Daily Dream
+proposals do not create narrator Bots, shadow Dreams, or a GENRE Dream row.
 
-What gets created. The Dream index holds only vibes + locations; every other
-element is created as its REAL model (Character/Bot/Reward/Scenario), linked to
-the day's world Dream — never a shadow "CHARACTER/NARRATOR/REWARD" dream:
-
-  * 1 PITCH Dream — the world card (title + idea + vibe) — the day's dream
-  * 1 GENRE Dream — the vibe (world-graph fidelity; no card)
-  * 2 LOCATION Dreams
-  * 3 real Character rows, 1 real Bot (BotType NARRATOR), 2 real Reward rows
-    (one SKILL, one ITEM), and 1-2 real Scenario rows — each linked to the
-    world Dream via dreamIds. NO shadow Dreams of those types.
-  * a PitchSheet per world/location Dream via POST /api/sheets/by-dream/{id}
-    (NOTE: POST /api/sheets is a known-broken handler — never use it)
-
-Every row carries designer: "dream-cycle" so the whole creation is traceable
-and removable (the reversibility contract).
-
-World-graph edges (kind-robots/t-017): the world (PITCH) Dream RELATED to the
-GENRE Dream, world CONTAINS each LOCATION Dream, and each LOCATION RELATED to
-the GENRE Dream — via POST /api/dream-relations. Character/narrator/reward/
-scenario cohesion comes from the dreamIds link to the world Dream.
-
-Art is queued through the EXISTING self-draining pipeline: one `requests:`
-entry per element appended to projects/art-prompts.yaml targeting kind_robots
-public/images/dreams/<slug>/… — the nightly auto-art-generate workflow renders
-them and distribute_images.py lands them in the site repo. The `--attach`
-pass (run every hourly sweep) HEAD-checks the public URLs and PATCHes the
-imagePath of each element's OWN row (Dream / Character / Bot / Reward /
-Scenario) once its art is live — so every creation renders from its own art.
-
-Steering contract: if the proposal file's `## Notes from Silas` section has
-real content, this script REFUSES to auto-build (agents must fold notes in
-first — see backlog/README.md). `status: parked/vetoed` are never built.
-
-Runs during the conductor sweeps (no LLM calls here — pure REST), NOT in the
-daily-digest cron.
+Hourly Conductor is the only caller. The transaction records every resulting
+ID in proposal built-data, rolls back owned rows after a partial failure, and
+queues exactly six stable art requests. Facets and art attachment enrich the
+recorded bundle afterward. The daily digest is read-only.
 
 Usage:
-  python scripts/build_dream_records.py                # build the eligible proposal (if any)
-  python scripts/build_dream_records.py --dry-run      # show what would be created
-  python scripts/build_dream_records.py --date 2026-07-13   # build a specific proposal_date
-  python scripts/build_dream_records.py --attach       # only attach live art to built proposals
-Env:
-  KR_API_TOKEN   required for live record creation / attach
-  KR_BASE_URL    default https://kind-robots.vercel.app
+  python scripts/build_dream_records.py
+  python scripts/build_dream_records.py --dry-run
+  python scripts/build_dream_records.py --date YYYY-MM-DD
+  python scripts/build_dream_records.py --attach
+
+Environment:
+  KR_API_TOKEN   required for live record creation and attachment
+  KR_BASE_URL    defaults to https://kind-robots.vercel.app
 """
 
 from __future__ import annotations
@@ -64,6 +32,7 @@ import os
 import re
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 from pathlib import Path
 from typing import Any, Optional
@@ -85,11 +54,10 @@ KR_MEDIA_ORIGIN = os.environ.get(
     "KR_MEDIA_ORIGIN", "https://media.acrocatranch.com").rstrip("/")
 KR_API_TOKEN = os.environ.get("KR_API_TOKEN", "").strip()
 DESIGNER = "dream-cycle"
-# The daily fast-lane authors dreams autonomously (no human wrote this specific
-# dream), so its rows are AI, not HUMAN. Override to HYBRID via env when the loop
+# The dated proposal lane authors dreams autonomously, so its rows are AI, not HUMAN. Override to HYBRID via env when the loop
 # builds a Silas-seeded proposal. See specs/SLUG-POLICY.md (creationSource note).
 CREATION_SOURCE = os.environ.get("DREAM_CREATION_SOURCE", "AI").strip().upper() or "AI"
-PAGE_URL = f"{KR_BASE_URL}/daily-dream"
+PAGE_URL = KR_BASE_URL
 
 CARD_SIZE = "512x768"  # pitch-card portrait, matches the site's card asset standard
 NOTES_PLACEHOLDER = "(leave notes here"
@@ -154,6 +122,50 @@ def _data_block(text: str, name: str) -> Optional[dict]:
         return None
 
 
+REQUIRED_SEED_ASSETS = {"vibe", "location", "character", "reward_item", "reward_skill", "scenario"}
+
+
+def _canonical_proposal_errors(proposal: Optional[dict]) -> list[str]:
+    """Return violations of the exact version-2 six-asset input contract."""
+    if not isinstance(proposal, dict):
+        return ["missing or invalid proposal-data block"]
+    errors: list[str] = []
+    facets = proposal.get("seed_facets")
+    if not isinstance(facets, dict) or int(facets.get("version") or 0) < 2:
+        errors.append("seed_facets.version must be at least 2")
+    elements = facets.get("elements") if isinstance(facets, dict) else None
+    if not isinstance(elements, dict) or not REQUIRED_SEED_ASSETS.issubset(elements):
+        errors.append("seed_facets.elements must cover all six assets")
+    vibe = proposal.get("vibe")
+    if not isinstance(vibe, dict) or not vibe.get("title") or not vibe.get("line"):
+        errors.append("one complete vibe is required")
+    for field, expected in (("locations", 1), ("characters", 1), ("rewards", 2), ("scenarios", 1)):
+        value = proposal.get(field)
+        actual = len(value) if isinstance(value, list) else 0
+        if actual != expected:
+            errors.append(f"{field} has {actual}; expected exactly {expected}")
+    rewards = proposal.get("rewards") if isinstance(proposal.get("rewards"), list) else []
+    reward_types = {
+        str(row.get("reward_type", "")).upper()
+        for row in rewards if isinstance(row, dict)
+    }
+    if reward_types != {"ITEM", "SKILL"}:
+        errors.append("rewards must contain exactly one ITEM and one SKILL")
+    if proposal.get("narrator"):
+        errors.append("Daily Dream proposals must not contain a narrator")
+    return errors
+
+
+def _outcome(status: str, message: str, **details: Any) -> dict[str, Any]:
+    """Return the small, serializable contract consumed by the hourly report.
+
+    ``failed`` is deliberately distinct from ``idle``.  Before this contract the
+    scheduler could roll back a broken build, print an error, and still finish green;
+    neither GitHub nor the next digest retained evidence that creation had failed.
+    """
+    return {"status": status, "message": message, **details}
+
+
 def has_silas_notes(text: str) -> bool:
     """True if the Notes from Silas section holds anything beyond the placeholder."""
     m = re.search(r"^##\s+Notes from Silas\s*\n(.*?)(?=^##\s|\Z)", text, re.DOTALL | re.MULTILINE)
@@ -180,9 +192,15 @@ def find_proposals() -> list[tuple[Path, dict, str]]:
 
 
 def eligible_proposal(date_override: Optional[str]) -> tuple[Optional[Path], str]:
-    """Newest proposal with proposal_date < today (or == override), unbuilt, buildable."""
+    """Choose the proposal to build.
+
+    A proposal whose previous attempt failed stays at the head of the line until it
+    succeeds.  Otherwise a new calendar day could strand yesterday's creation simply
+    because a newer proposal now exists.
+    """
     today = datetime.datetime.now(_TZ).date().isoformat()
     best: Optional[tuple[str, Path]] = None
+    retry: Optional[tuple[str, Path]] = None
     reason = "no unbuilt proposal ready (none past its steering day)"
     for p, fm, text in find_proposals():
         pdate = str(fm.get("proposal_date") or fm.get("created") or "")
@@ -194,13 +212,25 @@ def eligible_proposal(date_override: Optional[str]) -> tuple[Optional[Path], str
             continue  # still in its steering day
         if status in ("parked", "vetoed", "built", "building"):
             continue
+        proposal = _data_block(text, "proposal-data")
+        contract_errors = _canonical_proposal_errors(proposal)
+        if contract_errors:
+            reason = f"{p.name}: invalid canonical proposal — " + "; ".join(contract_errors)
+            continue
         if _data_block(text, "built-data"):
             continue  # already built
         if has_silas_notes(text):
             reason = f"{p.name}: has Notes from Silas — agent must fold them in before building"
             continue
+        attempt = _data_block(text, "build-attempt-data")
+        if isinstance(attempt, dict) and attempt.get("status") == "retry":
+            if retry is None or pdate < retry[0]:
+                retry = (pdate, p)
+            continue
         if best is None or pdate > best[0]:
             best = (pdate, p)
+    if retry:
+        return retry[1], ""
     if best:
         return best[1], ""
     return None, reason
@@ -252,21 +282,74 @@ def art_request_entry(slug: str, element_slug: str, label: str, prompt: str) -> 
     return req_id, image_path, yaml_text
 
 
+def _art_request_id(entry: str) -> Optional[str]:
+    """Extract one request ID from a comment-preserving YAML fragment."""
+    match = re.search(r"(?m)^-\s+id:\s*(['\"]?)([^'\"\n]+)\1\s*$", entry)
+    return match.group(2).strip() if match else None
+
+
 def append_art_requests(entries: list[str], dry_run: bool) -> None:
     if not entries:
         return
     text = ART_PROMPTS.read_text(encoding="utf-8")
     if "\nrequests:" not in text and not text.startswith("requests:"):
         text += "\nrequests:\n"
-    if not text.endswith("\n"):
-        text += "\n"
-    text += "".join(entries)
+
+    # Only inspect the requests collection. Other top-level collections can
+    # legitimately contain unrelated id fields.
+    request_header = re.search(r"(?m)^requests:\s*$", text)
+    if request_header is None:
+        raise ValueError("art prompt queue has no requests section")
+    request_start = request_header.end()
+    next_section = re.search(
+        r"(?m)^[A-Za-z][A-Za-z0-9_-]*:\s*$",
+        text[request_start:],
+    )
+    insertion = request_start + next_section.start() if next_section else len(text)
+    request_id_pattern = re.compile(
+        r"(?m)^-\s+id:\s*(['\"]?)([^'\"\n]+)\1\s*$"
+    )
+    existing_ids = {
+        match.group(2).strip()
+        for match in request_id_pattern.finditer(text[request_start:insertion])
+    }
+
+    unique_entries: list[str] = []
+    seen_ids = set(existing_ids)
+    skipped = 0
+    for entry in entries:
+        request_id = _art_request_id(entry)
+        if request_id and request_id in seen_ids:
+            skipped += 1
+            continue
+        if request_id:
+            seen_ids.add(request_id)
+        unique_entries.append(entry)
+
+    if not unique_entries:
+        print(f"  skipped {skipped} already-queued art request(s)")
+        return
+
+    request_yaml = "".join(unique_entries)
+    if next_section:
+        before = text[:insertion].rstrip() + "\n"
+        after = text[insertion:].lstrip("\n")
+        text = before + request_yaml + "\n" + after
+    else:
+        if not text.endswith("\n"):
+            text += "\n"
+        text += request_yaml
     if dry_run:
-        print(f"  [dry-run] would append {len(entries)} art request(s) to projects/art-prompts.yaml")
+        print(
+            f"  [dry-run] would append {len(unique_entries)} art request(s) "
+            f"and skip {skipped} duplicate(s)"
+        )
         return
     ART_PROMPTS.write_text(text, encoding="utf-8")
-    print(f"  appended {len(entries)} art request(s) to projects/art-prompts.yaml")
-
+    print(
+        f"  appended {len(unique_entries)} art request(s) "
+        f"and skipped {skipped} duplicate(s)"
+    )
 
 # ── Backlog file bookkeeping ───────────────────────────────────────────
 
@@ -275,6 +358,13 @@ def record_built(path: Path, built: dict, dry_run: bool) -> None:
     text = path.read_text(encoding="utf-8")
     today = datetime.datetime.now(_TZ).date().isoformat()
     text = re.sub(r"^status:\s*.+$", "status: built", text, count=1, flags=re.MULTILINE)
+    text = re.sub(
+        r"\n?<!--\s*build-attempt-data\s*\n.*?\n-->\n?",
+        "\n",
+        text,
+        count=1,
+        flags=re.DOTALL,
+    )
     n_records = sum(len(v) if isinstance(v, list) else 1
                     for v in built.get("records", {}).values())
     log_line = (f"- {today} | records | created {n_records} kind_robots rows + "
@@ -290,6 +380,24 @@ def record_built(path: Path, built: dict, dry_run: bool) -> None:
     print(f"  marked {path.name} built (+built-data)")
 
 
+def record_build_failure(path: Path, failure: dict[str, Any], dry_run: bool) -> None:
+    """Persist a retry marker without pretending that any object was created."""
+    if dry_run:
+        return
+    text = path.read_text(encoding="utf-8")
+    block = f"<!-- build-attempt-data\n{json.dumps(failure, ensure_ascii=False)}\n-->"
+    text, count = re.subn(
+        r"<!--\s*build-attempt-data\s*\n.*?\n-->",
+        block,
+        text,
+        count=1,
+        flags=re.DOTALL,
+    )
+    if not count:
+        text = text.rstrip() + "\n\n" + block + "\n"
+    path.write_text(text, encoding="utf-8")
+
+
 def update_built_data(path: Path, built: dict) -> None:
     text = path.read_text(encoding="utf-8")
     new_block = f"<!-- built-data\n{json.dumps(built, ensure_ascii=False)}\n-->"
@@ -299,7 +407,7 @@ def update_built_data(path: Path, built: dict) -> None:
 
 
 # ── Record creation (kind_robots REST) ─────────────────────────────────────
-# Contracts verified against kind_robots server/api/* (2026-07-14):
+# Contracts verified against kind_robots server/api/* (2026-08-02):
 #   * response envelope {success, message, data, statusCode}; new id at data.id
 #   * POST /api/dreams, /api/characters: requireApiUser (Bearer beta-admin ok)
 #   * POST /api/rewards, /api/scenarios: validateApiKey (Bearer beta-admin ok)
@@ -322,7 +430,7 @@ def rollback_created(results: list, dry_run: bool = False) -> int:
     the rows that did land so the proposal can be retried clean — no orphans, no
     duplicates on the next sweep. Returns the number of rows deleted."""
     created = [(r["delete_base"], r["id"]) for r in results
-               if r.get("ok") and r.get("id")]
+               if r.get("ok") and r.get("created") and r.get("id")]
     if dry_run or not created:
         return 0
     deleted = 0
@@ -337,8 +445,47 @@ def rollback_created(results: list, dry_run: bool = False) -> int:
     return deleted
 
 
+def _matching_existing(endpoint: str, identity: dict[str, Any]) -> Optional[dict]:
+    """Return one exact live row after a create conflict, or None.
+
+    A retry may encounter rows created by an earlier attempt whose ledger commit
+    was lost.  Adoption is intentionally stricter than the API's uniqueness rule:
+    every supplied identity field must equal the live value.  A same-name row with
+    different content remains a failure and is never silently claimed.
+    """
+    params: dict[str, str] = {}
+    if endpoint == "/api/dreams":
+        params = {
+            "search": str(identity.get("title") or ""),
+            "mine": "true",
+            "includeInactive": "true",
+            "includeMature": "true",
+            "take": "200",
+        }
+    elif endpoint == "/api/bots":
+        params = {"pageSize": "1000"}
+    query = f"?{urllib.parse.urlencode(params)}" if params else ""
+    status, resp = http_json("GET", f"{KR_BASE_URL}{endpoint}{query}")
+    if status != 200 or not isinstance(resp, dict):
+        return None
+    rows = resp.get("data")
+    if isinstance(rows, dict):
+        rows = rows.get("rows") or rows.get("items") or rows.get("bot")
+    if isinstance(rows, dict):
+        rows = [rows]
+    if not isinstance(rows, list):
+        return None
+    matches = [
+        row for row in rows
+        if isinstance(row, dict)
+        and all(row.get(key) == value for key, value in identity.items())
+    ]
+    return matches[0] if len(matches) == 1 else None
+
+
 def kr_call(method: str, endpoint: str, body: dict, dry_run: bool,
-            results: list, label: str = "") -> Optional[dict]:
+            results: list, label: str = "",
+            conflict_identity: Optional[dict[str, Any]] = None) -> Optional[dict]:
     """One API call; returns the record dict from data (with id) or None.
 
     Each result carries `id` + `delete_base` so a failed build can roll back the rows
@@ -346,7 +493,8 @@ def kr_call(method: str, endpoint: str, body: dict, dry_run: bool,
     if dry_run:
         print(f"  [dry-run] {method} {endpoint}: {label}")
         results.append({"endpoint": endpoint, "status": 0, "ok": True, "label": label,
-                        "id": None, "delete_base": _delete_base(endpoint)})
+                        "id": None, "delete_base": _delete_base(endpoint),
+                        "created": False})
         return {"id": 0}
     status, resp = http_json(method, f"{KR_BASE_URL}{endpoint}", body)
     record = None
@@ -359,10 +507,33 @@ def kr_call(method: str, endpoint: str, body: dict, dry_run: bool,
             record = data["created"][0]  # scenarios array-mode envelope
         elif "id" in resp:
             record = resp
-    ok = status in (200, 201, 207) and record is not None
+    adopted = False
+    if status == 409 and conflict_identity:
+        record = _matching_existing(endpoint, conflict_identity)
+        adopted = record is not None
+        if adopted:
+            print(f"  adopted existing: {label} (ID {record.get('id')})")
+    ok = (status in (200, 201, 207) and record is not None) or adopted
+    # DreamRelation POST is an upsert but always returns 201, including when the
+    # edge already existed. Treat it as non-owned: deleting a newly-created Dream
+    # cascades its edge during rollback, while deleting an adopted edge would damage
+    # the interrupted build we are recovering.
+    created = (
+        ok and not adopted and status in (201, 207)
+        and endpoint != "/api/dream-relations"
+    )
+    failure_message = None
+    if not ok:
+        if isinstance(resp, dict):
+            failure_message = str(resp.get("message") or resp.get("error") or resp)
+        else:
+            failure_message = str(resp)
     results.append({"endpoint": endpoint, "status": status, "ok": ok, "label": label,
                     "id": record.get("id") if (ok and isinstance(record, dict)) else None,
-                    "delete_base": _delete_base(endpoint)})
+                    "delete_base": _delete_base(endpoint),
+                    "created": created,
+                    "adopted": adopted,
+                    "message": failure_message})
     if not ok:
         print(f"  FAIL {status} {method} {endpoint} ({label}): {str(resp)[:200]}",
               file=sys.stderr)
@@ -423,13 +594,25 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         same-titled LOCATION — the old bug behind `comet-market` + `the-comet-market-2`).
         Callers that omit it get a de-duplicated slugify of the title. See
         specs/SLUG-POLICY.md."""
-        dream = kr_call("POST", "/api/dreams", {
-            "title": dtitle, "slug": dream_slug or uniq_slug(dtitle),
+        resolved_slug = dream_slug or uniq_slug(dtitle)
+        dream_body = {
+            "title": dtitle, "slug": resolved_slug,
             "dreamType": dream_type, "designer": DESIGNER, "creationSource": CREATION_SOURCE,
             "isPublic": True, "description": description,
             "flavorText": flavor[:500] if flavor else None,
             "artPrompt": art_prompt or None, "icon": icon,
-        }, dry_run, results, f"{dream_type} dream: {dtitle}")
+        }
+        dream = kr_call(
+            "POST", "/api/dreams", dream_body, dry_run, results,
+            f"{dream_type} dream: {dtitle}",
+            conflict_identity={
+                "title": dtitle,
+                "slug": resolved_slug,
+                "dreamType": dream_type,
+                "designer": DESIGNER,
+                "description": description,
+            },
+        )
         if not dream:
             return None
         sheet_body = {
@@ -465,7 +648,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         "kind-icon:moon", slug,
         {"title": title, "hook": vibe.get("title", ""), "pitch": proposal.get("idea", ""),
          **trio([("Promise", vibe_line),
-                 ("Builds Into", "characters, locations, rewards, a narrator"),
+                 ("Builds Into", "one location, one character, two rewards, one scenario"),
                  ("Status", f"proposed {pdate}, built by dream-cycle")])},
         dream_slug=world_slug,
     )
@@ -477,21 +660,10 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                   "/api/dreams", world.get("id"))
     world_id = world.get("id") if world else None
 
-    # 2. The vibe (GENRE Dream) — world-graph fidelity; no card/sheet.
-    genre = kr_call("POST", "/api/dreams", {
-        "title": vibe.get("title", f"{title} Vibe"), "dreamType": "GENRE",
-        "slug": uniq_slug(vibe.get("title", f"{title} Vibe")),
-        "designer": DESIGNER, "creationSource": CREATION_SOURCE, "isPublic": True, "description": vibe_line,
-        "flavorText": vibe_line[:500], "icon": "kind-icon:palette",
-    }, dry_run, results, f"GENRE dream: {vibe.get('title')}")
-    if genre:
-        built["records"]["vibe"] = {"model": "Dream", "id": genre.get("id"),
-                                    "title": vibe.get("title")}
-    genre_id = genre.get("id") if genre else None
-    if world_id and genre_id:
-        kr_call("POST", "/api/dream-relations",
-                {"fromDreamId": world_id, "toDreamId": genre_id, "relationType": "RELATED"},
-                dry_run, results, f"relation: {title} -> {vibe.get('title')} (RELATED)")
+    # 2. The authored vibe describes the world. Reusable genre/style/theme data
+    #    lives in Facets now; apply_daily_dream_facets.py attaches the proposal's
+    #    persisted seed Facets after these records are created. Do not recreate the
+    #    retired GENRE Dream type as a shadow row.
 
     # 3. Locations (LOCATION Dreams + cards)
     built["records"]["locations"] = []
@@ -519,22 +691,18 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                 kr_call("POST", "/api/dream-relations",
                         {"fromDreamId": world_id, "toDreamId": loc_id, "relationType": "CONTAINS"},
                         dry_run, results, f"relation: {title} -> {loc.get('title')} (CONTAINS)")
-            if loc_id and genre_id:
-                kr_call("POST", "/api/dream-relations",
-                        {"fromDreamId": loc_id, "toDreamId": genre_id, "relationType": "RELATED"},
-                        dry_run, results, f"relation: {loc.get('title')} -> {vibe.get('title')} (RELATED)")
         queue_art(el, loc.get("title", "Location"),
                   f"{loc.get('art_direction', '')}, {vibe_line}, "
                   f"portrait key-art composition, {HOUSE_PROMPT_TAIL}",
                   "/api/dreams", dream.get("id") if dream else None)
 
-    # 4. Characters (real Character rows linked to the world/vibe Dream — no
+    # 4. Characters (real Character rows linked to the world Dream — no
     #    shadow CHARACTER dream; art attaches to the Character's own imagePath).
     built["records"]["characters"] = []
     link_ids = [world_id] if world_id else []
     for ch in proposal.get("characters", []):
         el = slugify(ch.get("name", "character"))
-        rec = kr_call("POST", "/api/characters", {
+        character_body = {
             "name": ch.get("name", "Character"), "designer": DESIGNER, "isPublic": True,
             "drive": ch.get("role_drive", ""),
             "quirks": ch.get("complication", ""),
@@ -542,7 +710,13 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
             "artPrompt": ch.get("look", ""),
             "genre": vibe.get("title", ""),
             "dreamIds": link_ids,
-        }, dry_run, results, f"Character: {ch.get('name')}")
+        }
+        rec = kr_call(
+            "POST", "/api/characters", character_body, dry_run, results,
+            f"Character: {ch.get('name')}",
+            conflict_identity={key: character_body[key] for key in
+                               ("name", "designer", "drive", "artPrompt")},
+        )
         if rec:
             built["records"]["characters"].append(
                 {"model": "Character", "id": rec.get("id"), "name": ch.get("name")})
@@ -551,38 +725,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                   f"in the world of {title} ({vibe_line}), {HOUSE_PROMPT_TAIL}",
                   "/api/characters", rec.get("id") if rec else None)
 
-    # 5. Narrator (real Bot row linked to the world/vibe Dream — no shadow
-    #    NARRATOR dream; art attaches to the Bot's own imagePath).
-    nar = proposal.get("narrator", {})
-    if nar:
-        el = slugify(nar.get("name", "narrator")) + "-narrator"
-        link_ids = [world_id] if world_id else []
-        rec = kr_call("POST", "/api/bots", {
-            "name": nar.get("name", "Narrator"), "BotType": "NARRATOR",
-            "designer": DESIGNER, "isPublic": True,
-            "subtitle": f"Narrator of {title}",
-            "description": nar.get("personality", ""),
-            "botIntro": nar.get("appears_as", ""),
-            "userIntro": nar.get("best_for", ""),
-            "narrativeVoice": nar.get("voice", ""),
-            "personality": nar.get("personality", ""),
-            "artPrompt": nar.get("appears_as", ""),
-            "prompt": (f"You are {nar.get('name', '')}, narrator of {title}. "
-                       f"Voice: {nar.get('voice', '')} "
-                       f"Personality: {nar.get('personality', '')} "
-                       f"Expressions: {nar.get('expressions', '')} "
-                       f"Topics: {'; '.join(nar.get('topics', []))}"),
-            "dreamIds": link_ids,
-        }, dry_run, results, f"Bot: {nar.get('name')}")
-        if rec:
-            built["records"]["narrator"] = {"model": "Bot", "id": rec.get("id"),
-                                            "name": nar.get("name")}
-        queue_art(el, nar.get("name", "Narrator"),
-                  f"narrator portrait of {nar.get('name', '')}: {nar.get('appears_as', '')}, "
-                  f"{nar.get('personality', '')}, world of {title} ({vibe_line}), {HOUSE_PROMPT_TAIL}",
-                  "/api/bots", rec.get("id") if rec else None)
-
-    # 6. Rewards (REWARD card Dream + real Reward row; one SKILL, one ITEM)
+    # 5. Rewards (one SKILL and one ITEM; art attaches to each real Reward)
     built["records"]["rewards"] = []
     for rw in proposal.get("rewards", []):
         el = slugify(rw.get("name", "reward"))
@@ -591,8 +734,8 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         if rarity not in VALID_RARITIES:
             rarity = "COMMON"
         link_ids = [world_id] if world_id else []
-        rec = kr_call("POST", "/api/rewards", {
-            "name": rw.get("name", "Reward"), "designer": DESIGNER, "isPublic": True,
+        reward_body = {
+            "name": rw.get("name", "Reward"), "isPublic": True,
             "description": rw.get("grants", ""),
             "flavorText": (rw.get("catch", "") or "")[:500],
             "effect": rw.get("grants", ""),
@@ -601,7 +744,13 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
             "rewardType": rtype if rtype in ("SKILL", "ITEM") else "ITEM",
             "artPrompt": f"{rw.get('name', '')}: {rw.get('grants', '')}",
             "dreamIds": link_ids,
-        }, dry_run, results, f"Reward: {rw.get('name')}")
+        }
+        rec = kr_call(
+            "POST", "/api/rewards", reward_body, dry_run, results,
+            f"Reward: {rw.get('name')}",
+            conflict_identity={key: reward_body[key] for key in
+                               ("name", "description", "rewardType", "artPrompt")},
+        )
         if rec:
             built["records"]["rewards"].append(
                 {"model": "Reward", "id": rec.get("id"), "name": rw.get("name"),
@@ -612,21 +761,32 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                   f"({vibe_line}), {HOUSE_PROMPT_TAIL}",
                   "/api/rewards", rec.get("id") if rec else None)
 
-    # 7. Scenarios (real Scenario rows, linked to the world + locations)
+    # 6. Scenario (one real Scenario linked to the world and location)
     built["records"]["scenarios"] = []
     loc_titles = ", ".join(l.get("title", "") for l in proposal.get("locations", []))
     scenario_links = [i for i in [world_id, *location_ids] if i]
     for sc in proposal.get("scenarios", []):
         el = slugify(sc.get("title", "scenario")) + "-scenario"
-        rec = kr_call("POST", "/api/scenarios", {
-            "title": (sc.get("title", "Scenario"))[:190], "designer": DESIGNER,
-            "isPublic": True,
-            "description": sc.get("setup", ""),
-            "intros": sc.get("setup", ""),
+        setup = sc.get("setup", "")
+        scenario_body = {
+            "title": (sc.get("title", "Scenario"))[:190], "isPublic": True,
+            "description": setup,
+            "intros": setup,
             "locations": loc_titles,
             "genres": vibe.get("title", ""),
             "dreamIds": scenario_links,
-        }, dry_run, results, f"Scenario: {sc.get('title')}")
+        }
+        rec = kr_call(
+            "POST", "/api/scenarios", scenario_body, dry_run, results,
+            f"Scenario: {sc.get('title')}",
+            conflict_identity={
+                "title": scenario_body["title"],
+                "description": scenario_body["description"],
+                # The API normalizes a plain intro string to a JSON-array string.
+                "intros": json.dumps([setup], ensure_ascii=False),
+                "locations": scenario_body["locations"],
+            },
+        )
         if rec:
             built["records"]["scenarios"].append(
                 {"model": "Scenario", "id": rec.get("id"), "title": sc.get("title")})
@@ -685,26 +845,52 @@ def attach_art(dry_run: bool) -> int:
 
 # ── Entry point ──────────────────────────────────────────────────────────
 
-def run_build(date_override: Optional[str], dry_run: bool) -> int:
+def run_build(date_override: Optional[str], dry_run: bool) -> dict[str, Any]:
     path, reason = eligible_proposal(date_override)
     if path is None:
         print(f"Nothing to build: {reason}")
-        return 0
+        return _outcome("idle", reason)
     if not KR_API_TOKEN and not dry_run:
-        print("KR_API_TOKEN not set — cannot create records (soft no-op).", file=sys.stderr)
-        return 0
+        message = "KR_API_TOKEN not set — daily objects cannot be created."
+        failure = {
+            "status": "retry",
+            "attempted_at": datetime.datetime.now(_TZ).isoformat(),
+            "message": message,
+        }
+        record_build_failure(path, failure, dry_run)
+        print(message, file=sys.stderr)
+        return _outcome("failed", message, proposal=path.name, retry=True)
     text = path.read_text(encoding="utf-8")
     fm = _frontmatter(text)
     proposal = _data_block(text, "proposal-data")
-    if not proposal:
-        print(f"{path.name}: no proposal-data block — cannot auto-build.", file=sys.stderr)
-        return 0
+    contract_errors = _canonical_proposal_errors(proposal)
+    if contract_errors:
+        message = f"{path.name}: invalid canonical proposal — " + "; ".join(contract_errors)
+        failure = {
+            "status": "retry",
+            "attempted_at": datetime.datetime.now(_TZ).isoformat(),
+            "message": message,
+        }
+        record_build_failure(path, failure, dry_run)
+        print(message, file=sys.stderr)
+        return _outcome("failed", message, proposal=path.name, retry=True)
     slug = str(fm.get("slug") or slugify(proposal.get("title", "dream")))
     pdate = str(fm.get("proposal_date") or fm.get("created") or "")
     print(f"Building {path.name} (slug={slug}, proposal_date={pdate})"
           f"{' [dry-run]' if dry_run else ''}")
 
-    built, results, art_entries = build_records(proposal, slug, pdate, dry_run)
+    try:
+        built, results, art_entries = build_records(proposal, slug, pdate, dry_run)
+    except Exception as error:  # noqa: BLE001 - persist the retry before surfacing it
+        message = f"{slug}: object creation crashed before the bundle could be recorded: {error}"
+        failure = {
+            "status": "retry",
+            "attempted_at": datetime.datetime.now(_TZ).isoformat(),
+            "message": message,
+        }
+        record_build_failure(path, failure, dry_run)
+        print(message, file=sys.stderr)
+        return _outcome("failed", message, proposal=path.name, retry=True)
     failures = [r for r in results if not r["ok"]]
     if not dry_run and failures:
         # Atomic build: never mark a partially-built proposal `built`. Roll back any
@@ -716,27 +902,66 @@ def run_build(date_override: Optional[str], dry_run: bool) -> int:
         print(f"Build failed: {len(failures)}/{len(results)} call(s) failed; "
               f"rolled back {n_deleted} created row(s); {slug} left UNBUILT for the "
               "next sweep.", file=sys.stderr)
-        return 0
+        statuses = sorted({int(row.get("status") or 0) for row in failures})
+        message = (
+            f"{slug}: {len(failures)}/{len(results)} API calls failed "
+            f"(HTTP {', '.join(map(str, statuses))}); rolled back {n_deleted} rows."
+        )
+        failure = {
+            "status": "retry",
+            "attempted_at": datetime.datetime.now(_TZ).isoformat(),
+            "message": message,
+            "failed_calls": [
+                {
+                    "endpoint": row.get("endpoint"),
+                    "status": row.get("status"),
+                    "label": row.get("label"),
+                    "message": row.get("message"),
+                }
+                for row in failures
+            ],
+            "rolled_back": n_deleted,
+        }
+        record_build_failure(path, failure, dry_run)
+        return _outcome(
+            "failed",
+            message,
+            proposal=path.name,
+            retry=True,
+            failed_calls=len(failures),
+            rolled_back=n_deleted,
+        )
 
     append_art_requests(art_entries, dry_run)
     record_built(path, built, dry_run)
     ok_n = sum(1 for r in results if r["ok"])
     print(f"Done: {ok_n}/{len(results)} API calls ok, {len(art_entries)} art requests queued.")
-    return 0
+    return _outcome(
+        "dry-run" if dry_run else "built",
+        f"{slug}: created and recorded the bundle; queued {len(art_entries)} art requests.",
+        proposal=path.name,
+        built_at=built.get("built_at"),
+        api_calls=ok_n,
+        art_requests=len(art_entries),
+    )
 
 
-def ensure_records(dry_run: bool = False) -> None:
+def ensure_records(dry_run: bool = False) -> dict[str, Any]:
     """Sweep entry point: build the eligible proposal (if any), then attach art.
 
     Guarded + soft-failing: safe to call every hourly sweep."""
     try:
-        run_build(None, dry_run)
+        outcome = run_build(None, dry_run)
     except Exception as e:  # noqa: BLE001
-        print(f"record build skipped: {e}", file=sys.stderr)
+        message = f"Daily-dream build crashed before it could record a bundle: {e}"
+        print(message, file=sys.stderr)
+        outcome = _outcome("failed", message, retry=True)
     try:
-        attach_art(dry_run)
+        outcome["art_attached"] = attach_art(dry_run)
     except Exception as e:  # noqa: BLE001
         print(f"art attach skipped: {e}", file=sys.stderr)
+        outcome["art_attach_error"] = str(e)
+    return outcome
 
 
 def main() -> int:
@@ -749,9 +974,9 @@ def main() -> int:
     if args.attach:
         attach_art(args.dry_run)
         return 0
-    rc = run_build(args.date, args.dry_run)
+    outcome = run_build(args.date, args.dry_run)
     attach_art(args.dry_run)
-    return rc
+    return 1 if outcome.get("status") == "failed" else 0
 
 
 if __name__ == "__main__":

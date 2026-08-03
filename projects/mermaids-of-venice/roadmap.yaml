@@ -24,7 +24,7 @@ milestones:
 - id: m3
   title: Revision dialogue with Silas (docs/revision-questions.md)
   weight: 15
-  status: not-started
+  status: in-progress
 - id: m4
   title: mermaidsofvenice.com full site (parked until Silas unparks it)
   weight: 20
@@ -244,3 +244,32 @@ tasks:
     note (verify PROJECT Dream liveUrl) is a live-admin Placements-button
     action, not a code change — code-side channelKey/tabKey/route were
     already correct, so nothing to patch there.
+
+- id: t-013
+  milestone: m3
+  title: Generate progress-gated Kind Robots character reviews of edition 3
+  status: ready
+  recurring: true
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-08-03T10:29:00Z'
+  note: |-
+    DAILY/PROGRESS-GATED CONTRACT (Silas, 2026-08-03): watch
+    `projects/mermaids-of-venice/manuscript/Mermaids of Venice v3.doc`. At most
+    once per Pacific calendar day, and only when that manuscript's blob or commit
+    has changed since the last successful batch, add exactly three new reader
+    reactions under `editorial/character-reviews/YYYY-MM-DD.md`. If the v3 file is
+    absent, unchanged, or already reviewed that day, produce no review file and no
+    notification.
+
+    Select three existing Kind Robots Characters or Bots from live site data and
+    never reuse a reviewer already recorded in
+    `editorial/character-reviews/state.yaml`. Prioritize Ami-butterfly and the koala
+    assassin until each has appeared, then choose random new characters. Write each
+    response in the character's established voice, but ground it in the current
+    manuscript rather than generic persona jokes. Reviews are playful fictional
+    reader reactions, not authoritative editorial verdicts. Never edit the
+    manuscript or draft replacement prose for it. Record the source blob/commit,
+    Pacific date, and selected character IDs/slugs in state.yaml. Re-arm this task
+    after either a successful batch or a verified no-op.

@@ -1,155 +1,57 @@
-# Dream Cycle — Design Brief
+# Dream Cycle — current design brief
 
-date: 2026-07-10 (revised same day: generalized from dreams-only to typed creations; revised 2026-07-24: seed-first Dream planning)
-author: Reviewer (Claude), from Silas's session direction
-status: scope confirmed; later direction in `CREATIVE-SEED-CONTRACT.md` is authoritative for Dreams
+**Current contract:** `PIPELINE.md`
+**Original project direction:** 2026-07-10
+**Canonicalized:** 2026-08-02
 
-## What this is
+## Purpose
 
-A new **idle fallback for conductor sweeps**: when no higher-priority project has a
-ready task, the agent doesn't stop — it makes something for the site, **one creation
-at a time**, roughly one per day, art included. The project keeps the name
-"dream-cycle" (it dreams things up nightly), but a creation is not always a Dream:
+Dream Cycle is Conductor's idle-capacity project. When no higher-priority work is ready, it keeps the creative machinery warm without inventing a second product pipeline.
 
-## Creation types
+It now has two clearly separated responsibilities:
 
-Each backlog outline declares a `type`. Each type has a **playbook** in `specs/`
-defining its build stages, verification, and ship checklist. The recurring build
-task only picks outlines whose type has a playbook — new types come online by
-writing one.
+1. maintain the rolling Daily Dream proposal, creation, art, and digest pipeline;
+2. coordinate delegated, non-dream creation types whose real work lives in another project, such as coloring books.
 
-### `type: dream` (playbook: specs/dream.md, from t-004)
+## Daily Dream product
 
-A complete, self-consistent slice of kind_robots content. Every newly planned
-Dream begins with the mandatory creative seed contract in
-`CREATIVE-SEED-CONTRACT.md`:
+A dated Daily Dream proposal contains exactly six assets:
 
-- **1-2 story genres**
-- **1 occupation, trade, duty, or vocation**
-- **1 animal or species**
+- one dream vibe,
+- one dream location,
+- one Character,
+- one ITEM Reward,
+- one SKILL Reward,
+- one Scenario authored last from the preceding assets.
 
-The author chooses those before inventing the location. The three ingredients
-must fuse into consequences: each changes at least two parts of the world,
-conflict, work routines, bodies/senses, locations, rewards, or visual language.
-A removable seed is decorative and fails the contract.
+Daily bundles do not include a narrator. The deterministic creative constraints come from `scripts/build_dream_proposal.py --brief` and are persisted as `seed_facets` in the proposal data.
 
-The resulting Dream includes:
+## One creation path
 
-- a **location** (a LOCATION Dream) with a **genre-bearing vibe** (a GENRE Dream,
-  new or existing), joined by DreamRelation edges
-- **characters** who inhabit it, **rewards** it can grant, **scenarios** that play
-  out there
-- optionally a **bot narrator** who hosts it — with an expression set, topics, threads
+The proposal file is the human steering surface. It creates no database rows.
 
-Everything already exists in the kind_robots schema (Dream, DreamRelation,
-Character, Reward, Scenario, Bot, ExpressionMedia, ExpressionTransition,
-NarratorTopic, NarratorThread). No new models. Stages:
+After one Pacific steering day, Hourly Conductor reaches `scripts/build_dream_records.py` through `scripts/build_conductor_summary.py`. That builder is the sole Daily Dream object writer. It creates the complete bundle transactionally, records every ID in `built-data`, and queues six stable art requests. Facet assignment and art attachment enrich that recorded bundle afterward.
 
-1. **Seed, fuse, and flesh out** — record the genre(s), occupation, and species,
-   pass the fusion test, then promote the outline into a full spec in its backlog file.
-2. **Dreams** — LOCATION + vibe GENRE Dream (reuse existing GENRE when it fits) + relations.
-3. **Characters** — 2–4, with backstory, drive, quirks, stats, art prompts.
-4. **Rewards** — 3–6 with a rarity spread.
-5. **Scenarios** — 1–2 wiring location, vibe, and cast together.
-6. **Narrator** (if the outline calls for one) — Bot + NarratorThreads to fitting
-   NarratorTopics (new topics only when none fit) + ExpressionMedia set
-   (NEUTRAL + ≥5 emotions + ≥2 actions).
-7. **Art** — everything via the pre-approved pipeline, prompt/model/seed metadata kept.
-8. **Ship** — verify checklist, mark `built`, ledger entry, replenish backlog.
+The daily digest is read-only. It reports committed proposal, build, Facet, and art evidence and never creates or repairs objects.
 
-**Variety law:** do not default to another enchanted lighthouse, mystical bell
-tower, magical archive, cozy market, lantern-lit workshop, or vaguely whimsical
-tower with renamed nouns. Architecture follows from the seed fusion; it is not
-the seed.
+Full ownership and ordering rules live in `PIPELINE.md`. Active implementation details live in `specs/dream.md` and `specs/CREATION-SPEC.md`.
 
-### `type: coloring-book` (playbook: specs/coloring-book.md, from t-009)
+## Steering and idea inventory
 
-"Spend today drafting and making a coloring book." A creation day produces or
-advances one book set following the coloring-book project's production sequence
-(design → concept art → selection → Character creation → coloring conversion →
-book assembly → PAUSE before publishing/POD, which stay hard-gated).
+Dated files with `proposal: true` are the only Daily Dream inputs eligible for object creation. Silas can edit priority, add notes, park, or veto them during their steering day.
 
-**Coordination rule — no second source of truth:** book sets live in
-`projects/coloring-book/sets/<slug>/` and follow that project's specs and
-originality guardrails. The dream-cycle backlog entry is the *scheduler card and
-steering surface*: it names the set, tracks which production stage is next, and
-carries Silas's notes; the set's actual content files belong to coloring-book.
-For a brand-new book idea, stage 1 (design: cast bible + page plan, modeled on
-`sets/monster-recast/`) happens as the creation's first day-stages, creating the
-set folder in coloring-book; from then on it's the same delegation.
+Older non-proposal `type: dream` files are idea inventory only. They may inspire a future dated six-asset proposal, but no agent advances them through API stages. `_template.md` creates this lightweight idea-inventory shape.
 
-First coloring-book creation: **Monster Recast** (backlog/monster-recast.md) —
-already design-ready in `projects/coloring-book/sets/monster-recast/`, so the
-idler's job is driving its concept-art → selection → conversion → assembly
-stages when idle capacity allows.
+## Delegated creation types
 
-### Future types
+A delegated type such as `coloring-book` may use a multi-cycle `status: building` scheduler card because its authoritative content and production stages live in its home project. Dream Cycle never forks that content into a second source of truth.
 
-Anything day-sized and reversible can become a type: an art-collection drop, a
-curriculum unit for ai-art-academy, a scenario pack for an existing dream, a
-davinci ending batch. Rule: write the playbook first (a `specs/<type>.md` PR),
-then outlines of that type become buildable. Types whose output belongs to a home
-project always delegate like coloring-book does.
+## Operational truth
 
-## The backlog — accessible files Silas can steer
+- `PIPELINE.md` is the current end-to-end contract.
+- Proposal `built-data` is the durable creation ledger.
+- `projects/art-prompts.yaml` is the art queue.
+- The digest reports state; it does not mutate it.
+- `SHIPPED.md` points readers to durable evidence rather than maintaining a competing manual ledger.
 
-`projects/dream-cycle/backlog/` holds one markdown file per creation idea. These
-files are the product surface between Silas and the agents:
-
-- Frontmatter: `type`, and `status` (`outline | approved | building | built |
-  parked | vetoed`) plus `priority` (`low | normal | high`) that Silas can flip
-  directly.
-- Every Dream file begins with **`## Creative seeds`**, recording Genres,
-  Occupation, Animal / species, and a Fusion explanation. Daily proposal JSON
-  carries the same data as `creative_seeds` and is rejected when it is missing.
-- Every file has a **`## Notes from Silas`** section. Agents MUST read and fold in
-  any notes there before starting or continuing that creation's build, and must
-  never edit or delete Silas's notes (append-only for agents, Silas-owned).
-- Every file has a **`## Build log`** section agents append to as stages complete,
-  so Silas can see progress at a glance without reading PRs.
-- Templates: `backlog/_template.md` (dream), `backlog/_template-coloring-book.md`.
-  `backlog/README.md` documents the format.
-- Shipped creations are recorded in `SHIPPED.md` (ledger: slug, type, date, PRs,
-  what was created where).
-
-Replenishment is part of the loop: when fewer than 5 buildable outlines
-(`outline`/`approved` with a playbook-backed type) remain, the build task's final
-stage generates new ones — a standing runway of future developments. Every new
-Dream added during replenishment follows the creative seed contract.
-
-## The build loop — one creation, one day
-
-The Worker runs hourly; a creation takes ~6–8 idle cycles ≈ one day. Each cycle
-advances the **single active creation** (only one may be `building` at a time —
-"one task at a time" applies at the creation level too) by exactly one stage of
-its type's playbook. Queue order: `approved` before `outline`, then `priority`,
-then oldest `created` — regardless of type.
-
-Content-writing stages create **content rows or set files, not backend code** —
-via the kind_robots REST API with KR_API_TOKEN where endpoints exist (t-003
-audit), or as seed-data/set-file PRs where they don't. Rows are created with
-`designer`/source metadata so a whole creation is traceable and removable — this
-is what keeps the loop reversible.
-
-## What this is NOT
-
-- Not a scheduler change: "nothing better to do" is enforced by placement —
-  dream-cycle sits last in `projects/priority.yaml`, so its always-ready
-  recurring task is only picked when no other active project has ready work.
-  (Corollary: when coloring-book itself has ready tasks, the Worker gets to them
-  through normal priority long before the idler — a coloring-book *idler day*
-  just means that pipeline also absorbs leftover capacity.)
-- Not a backend project: kind_robots backend code stays read-only/external.
-  Missing endpoints become kind_robots roadmap tasks or pitches, never direct edits.
-- Not autonomous publishing: creations land as site content or set inventory
-  under existing flags; anything outward-facing (publishing, POD accounts,
-  store listings, spend, deploys) stays hard-gated as always.
-
-## Autonomy contract
-
-`autonomous: true` under the never-idle rule (AGENTS.md, 2026-07-10).
-Pre-approved: art generation for all creation entities (generated-art rule,
-2026-07-06); content-row creation via existing API endpoints once t-003/t-004
-verify the path. Hard gates unchanged: spend, publishing, schema changes,
-secrets, deploys. Silas steers through backlog file notes, frontmatter flips,
-CONTROL.md, and the seed contract — course correction is expected and cheap.
+The original eight-stage, multi-character, optional-narrator Dream experiment is retired. Its history remains in git, TALKBACK, and parked cards such as Lantern Post, not in active instructions.

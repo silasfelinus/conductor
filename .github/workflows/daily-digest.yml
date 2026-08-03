@@ -28,31 +28,22 @@ jobs:
           python-version: "3.12"
       - run: pip install pyyaml Pillow
 
-      - name: Curate finished ArtJobs for trainer review
-        continue-on-error: true
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
-          KR_BASE_URL: https://kind-robots.vercel.app
-        run: python scripts/curate_art_jobs.py --limit 12
-
-      # The daily-dream proposal and repository image scoring are generated during
-      # the hourly conductor/reviewer sweeps. This job adds the durable ArtJob
-      # curation round trip, then reads committed proposal/report files and sends.
       - name: Build digest JSON
         run: |
-          python scripts/build_digest.py --since "24 hours ago" > digest.json
+          python scripts/build_digest.py --since "24 hours ago" > digest-base.json
+          python scripts/enrich_daily_dream_digest.py digest-base.json --output digest.json
           cat digest.json
       - name: Validate digest JSON
         run: python scripts/validate_digest.py digest.json
       - name: Build Brevo payload preview
-        run: python scripts/build_digest_email.py digest.json digest-email.json
+        run: python scripts/build_digest_email_v2.py digest.json digest-email.json
       - name: Upload digest artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: daily-digest-artifacts
           path: |
+            digest-base.json
             digest.json
             digest-email.json
           if-no-files-found: warn

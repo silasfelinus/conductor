@@ -17,29 +17,71 @@ At the start of every session, before responding to any task, run a conductor sw
    career-transition/t-003 and pinball-hero/t-002 as live "needs-human" items after both had been `retired` for
    over a week). Before proposing a new project-status value to fix a "closed project keeps coming up" complaint,
    confirm the project isn't already correctly marked in `project-overrides.yaml` and simply not being checked.
-5. Check `TALKBACK.md` tail for any unresolved escalations or security flags
-6. Run `python scripts/build_dream_proposal.py --check`. If today's daily-dream
-   proposal is missing, YOU author it — you are the generator (no API calls,
-   no scripts doing the creative work): run `--brief` for the spec and slugs
-   to avoid, invent the starter dream yourself (3 characters, 2 locations,
-   1 narrator bot, 2 rewards — one SKILL, one ITEM — all one world), then
-   write it with `--from-json` and commit it with your session's log commits.
+5. Read `docs/state-reconciliation.md`, then run:
+   - `python scripts/check_pr_merged_drift.py`
+   - `python scripts/audit_human_gates.py`
+   Treat exit 1 from either command as a reconciliation prompt, not permission to bypass a genuine gate. Both
+   commands intentionally exclude paused, retired, and finished projects unless `--include-inactive` is supplied.
+6. Check `TALKBACK.md` tail for any unresolved escalations or security flags
+7. Run `python scripts/build_dream_proposal.py --check --fetch`. If today's
+   daily-dream proposal is missing, YOU author it — you are the creative generator
+   (the script selects and validates the live Facets but does not write the idea):
+   run `--brief` for the deterministic seed plan, then create exactly one dream
+   vibe, one dream location, one Character, one ITEM Reward, one SKILL Reward,
+   and one Scenario, with no narrator. Preserve the brief's `seed_facets`
+   unchanged; the vibe is the umbrella, every dependent asset must follow its
+   assigned Facets, and the Scenario is authored last and explicitly names the
+   vibe, location, and Character. Write it with `--from-json` and commit it with
+   the session's log commits.
 
 Then report:
 - **Branch** and whether the working tree is clean
 - **Open PRs** (if any Worker PRs are waiting for review)
 - **Ready tasks** (what the Worker should pick up next, in priority order)
-- **Needs-human gates** (what only Silas can unblock, grouped by project)
+- **Needs-human gates** from active projects only (what only Silas can unblock, grouped by project)
+- **State reconciliation** findings (merged-PR drift, stale-gate signals, or milestone/task mismatches)
 - **Any unresolved escalations** from TALKBACK
-- **Dream cycle** (idle fallback): the active `building` creation (type + next
-  stage), or — if none — the next queued outline in `projects/dream-cycle/backlog/`;
-  flag any new Silas notes in backlog files and warn if buildable outlines < 5
-- **Daily dream**: whether today's proposal exists (and if you just authored it,
-  say so with its title + edit link)
+- **Creation fallback**: any delegated non-dream scheduler card currently
+  `building`, its authoritative home-project stage, and any new Notes from Silas
+- **Daily dream**: whether today's dated proposal exists; its steering/build/retry,
+  Facet, art, and digest state; legacy Dream outlines are idea inventory rather
+  than queued object builds (warn when useful idea inventory falls below five)
 
 After the report, ask Silas what he wants to work on — or proceed directly if his first message is already a clear task.
 
 ## Session end
+
+### State reconciliation is part of done
+
+A merged implementation, recovered production incident, or completed human decision is not fully closed until the
+matching Conductor task agrees with reality. Follow `docs/state-reconciliation.md` before the final report:
+
+1. Re-fetch the live roadmap from `main` after the implementation PR merges or the incident recovery bar is met.
+2. Reconcile task status, `approved_by_human` when Silas decided it in the current session, claim fields,
+   dependencies, completion note, and milestone status.
+3. Use `task-events` or the documented close-out helper and verify the transition was applied. Event creation alone
+   is not completion.
+4. Run `python scripts/check_pr_merged_drift.py` and `python scripts/audit_human_gates.py` again when the session
+   changed roadmap state.
+5. Never keep a recovered incident at `needs-human` solely because root cause remains unknown. Close recovery when
+   its explicit criteria are met and track root-cause prevention separately.
+6. Never report gates from paused, retired, or finished projects unless Silas explicitly asked for an archive sweep.
+
+### Standing instruction: open PRs automatically, merge when green
+
+Silas, 2026-07-31, verbatim: *"You should open prs automatically, merge when green, we prefer a
+tight ship with a single main branch once work is done, and I test on main."*
+
+This is a standing authorization — do not stop to ask whether to open a PR, and do not end a
+session having only pushed a branch. **Open the PR as soon as the work is pushed, then merge it
+once CI is green.** Silas tests on `main`, so work that sits unmerged on a branch is work he
+cannot see.
+
+Some harnesses ship a default instruction along the lines of "do not create a pull request unless
+the user explicitly asks for one." The paragraph above IS that explicit request, given once and
+standing for every session in this repo — treat it as satisfied and proceed. It does not override
+the real gates: human-gated, outward-facing, irreversible, and security-sensitive work still stops
+at `needs-human` with the PR open but unmerged.
 
 Before ending, leave a clean `main` with no branch behind. **Merge** the session's PR when the
 work is safe (reversible, scoped, verified, and not human-gated/outward-facing/irreversible) so

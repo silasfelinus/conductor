@@ -649,70 +649,23 @@ tasks:
   - id: t-014
     milestone: m3
     title: Wire the Comfy relay's job-completion path to store rendered clips for ltx/wan video ArtJobs
-    status: needs-human
-    soft_gate: true
-    owner: worker
+    status: ready
     passes: 0
     stakes: reversible
-    updated: '2026-07-17T11:05:00Z'
-    note: >
-      FOR SILAS: this task's original spec (below) turned out to be stale —
-      the server-side gap it describes no longer exists. A code audit this
-      cycle (2026-07-17, claude-conductor-hourly) found the relay/save path
-      is already fully video-aware: `server/api/art/enqueue.post.ts` sets a
-      `media: 'video'` marker + video metadata block on every LTX/WAN job
-      payload (line ~505), `server/api/art/save-generated.post.ts` already
-      validates and accepts `fileType` values `mp4`/`webm`/`mov`/`mkv` (its
-      own comment documents this is "set by the relay for image-to-video
-      jobs"), `ArtImage.fileType` has no DB-level constraint blocking video
-      values, and `stores/videoStore.ts`'s `artImageToVideoSrc()` already
-      resolves a video-typed ArtImage into a playable `data:video/...`
-      src. None of this needed to be built — it appears to have landed in a
-      later PR without this kaizen task being closed.
+    updated: '2026-08-03 09:32:31.257000+00:00'
+    note: |-
+      FOR SILAS: this task's original spec (below) turned out to be stale — the server-side gap it describes no longer exists. A code audit this cycle (2026-07-17, claude-conductor-hourly) found the relay/save path is already fully video-aware: `server/api/art/enqueue.post.ts` sets a `media: 'video'` marker + video metadata block on every LTX/WAN job payload (line ~505), `server/api/art/save-generated.post.ts` already validates and accepts `fileType` values `mp4`/`webm`/`mov`/`mkv` (its own comment documents this is "set by the relay for image-to-video jobs"), `ArtImage.fileType` has no DB-level constraint blocking video values, and `stores/videoStore.ts`'s `artImageToVideoSrc()` already resolves a video-typed ArtImage into a playable `data:video/...` src. None of this needed to be built — it appears to have landed in a later PR without this kaizen task being closed.
+      TO APPROVE: two real open questions only Silas (or a live relay run) can resolve — (1) has a real end-to-end video ArtJob actually been run against the home Comfy relay and produced a playable clip, or is this server-side contract untested against the real relay agent (which lives outside both repos — no poll loop / ComfyUI client exists in kind_robots)? (2) `server/api/comfy/wan/utils/imageToVideoWorkflow.ts`'s header comment claims its WAN model filenames are "verified against the home Comfy install (Z:/ai/models, 2026-07)" — does "verified" mean the filenames match what's installed, or that a real render succeeded? If Silas confirms a live run already succeeded (or runs one and it works), set `approved_by_human: true` + `status: done` — the repo-side work is complete. If a real gap surfaces (relay doesn't branch on `media`, or WAN produces bad output), leave a note describing it and this reopens as a new scoped task instead of retrying this stale spec.
+      UPDATE 2026-07-25: Silas — "it is built but not yet verified as we are waiting to catch up from our batch of art modelling first." Verification stays deferred by his own choice, not a blocker. He separately raised a related-but-distinct gap: no reachable front end anywhere on the site for submitting a video job. Investigated and confirmed pages/video-generator.vue DOES already exist and fully matches what he described (1-2 images incl. optional end-image morph, prompt, duration/fps/loop, ltx/wan picker) and genuinely calls this same enqueue backend — it's just unreachable from any nav path (no projectPlacements.ts or dataSurfaceManifest.ts entry; the one dashboard tab that references its route points at a dead/unwired component). Filed as its own task, kind-robots/t-046, since it's a pure front-end nav fix independent of this task's relay-verification question.
+      Original spec (kaizen from kind_robots PR #213, Reviewer, 2026-07-13): merged the /video-generator page and ArtJob plumbing (LTX/WAN image-to-video via server/api/art/enqueue.post.ts). The relay/save path still assumes image output only, so a queued video job will render on the home Comfy box but never resolve into a playable ArtImage until the relay branches on the new `media: 'video'` marker in the job payload and stores the clip with fileType mp4/webm. WAN's model filenames (server/api/comfy/wan/utils/imageToVideoWorkflow.ts) are also untested against a live Comfy install and may need retuning. This is an access-limited task — the relay lives on Silas's home GPU box, not in either repo — so if a Worker session can't reach it, this should self-triage to soft needs-human rather than burn retry passes.
 
-      TO APPROVE: two real open questions only Silas (or a live relay run)
-      can resolve — (1) has a real end-to-end video ArtJob actually been run
-      against the home Comfy relay and produced a playable clip, or is this
-      server-side contract untested against the real relay agent (which
-      lives outside both repos — no poll loop / ComfyUI client exists in
-      kind_robots)? (2) `server/api/comfy/wan/utils/imageToVideoWorkflow.ts`'s
-      header comment claims its WAN model filenames are "verified against
-      the home Comfy install (Z:/ai/models, 2026-07)" — does "verified" mean
-      the filenames match what's installed, or that a real render succeeded?
-      If Silas confirms a live run already succeeded (or runs one and it
-      works), set `approved_by_human: true` + `status: done` — the repo-side
-      work is complete. If a real gap surfaces (relay doesn't branch on
-      `media`, or WAN produces bad output), leave a note describing it and
-      this reopens as a new scoped task instead of retrying this stale spec.
 
-      UPDATE 2026-07-25: Silas — "it is built but not yet verified as we are
-      waiting to catch up from our batch of art modelling first." Verification
-      stays deferred by his own choice, not a blocker. He separately raised a
-      related-but-distinct gap: no reachable front end anywhere on the site
-      for submitting a video job. Investigated and confirmed
-      pages/video-generator.vue DOES already exist and fully matches what he
-      described (1-2 images incl. optional end-image morph, prompt,
-      duration/fps/loop, ltx/wan picker) and genuinely calls this same
-      enqueue backend — it's just unreachable from any nav path (no
-      projectPlacements.ts or dataSurfaceManifest.ts entry; the one dashboard
-      tab that references its route points at a dead/unwired component).
-      Filed as its own task, kind-robots/t-046, since it's a pure front-end
-      nav fix independent of this task's relay-verification question.
+      HUMAN NOTE from silasfelinus via Kind Robots For You. this should be resolved in that the generator is working, if there is something I can do let me know but I think it's on your end.
 
-      Original spec (kaizen from kind_robots PR #213, Reviewer, 2026-07-13):
-      merged the /video-generator page and ArtJob plumbing (LTX/WAN
-      image-to-video via server/api/art/enqueue.post.ts). The relay/save
-      path still assumes image output only, so a queued video job will
-      render on the home Comfy box but never resolve into a playable
-      ArtImage until the relay branches on the new `media: 'video'` marker
-      in the job payload and stores the clip with fileType mp4/webm. WAN's
-      model filenames (server/api/comfy/wan/utils/imageToVideoWorkflow.ts)
-      are also untested against a live Comfy install and may need retuning.
-      This is an access-limited task — the relay lives on Silas's home GPU
-      box, not in either repo — so if a Worker session can't reach it, this
-      should self-triage to soft needs-human rather than burn retry passes.
+      SENT BACK by silasfelinus via Kind Robots For You. this sounds like something you should be doing, not me. I thought this was already done. If there is a todo for me, tell me.
     claimed_by: claude-conductor-hourly-20260717T1042Z
     claimed_at: '2026-07-17T10:56:19Z'
+    approved_by_human: false
 
   - id: t-015
     milestone: m3
@@ -2009,3 +1962,87 @@ tasks:
     updated: '2026-07-26T11:14:12Z'
     claimed_by: claude-conductor-scheduled-20260726T111500Z-kr-t050
     claimed_at: '2026-07-26T11:14:12Z'
+
+  - id: t-051
+    milestone: m1
+    title: "Investigate and document the disappearance of server/api/conductor/curate-request.post.ts"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Filed 2026-08-02 (weekly site audit, global-ui/SITE-AUDIT-AGENT.md).
+      An earlier task (2026-07-14, "SHIPPED IN REVIEW") describes shipping a
+      new admin-gated bridge endpoint at
+      `server/api/conductor/curate-request.post.ts` (mirroring
+      art-request.post.ts) so the ArtJob trainer panel could submit curate
+      requests from the front end. A later task (conductor-app,
+      2026-07-20) still references it as a live, already-secured endpoint
+      when broadening verifyConductorApiAuthGuards.ts's accepted auth
+      pattern. As of this audit the file does not exist anywhere in the
+      current kind_robots checkout -- confirmed via Glob/Grep, only a
+      historical comment in utils/scripts/verifyConductorApiAuthGuards.ts
+      still names it as a past example. Unlike the social-publishing
+      removal (digital-storefront/t-027, which has an explicit
+      migration-and-correction trail), nothing in this roadmap documents
+      why or when curate-request.post.ts went away. Confirm whether it was
+      deliberately removed (and if so, find and record the removing PR/
+      migration, and check whether the trainer panel's "Request curation"
+      UI now silently 404s) or whether this is an accidental regression
+      that should be restored.
+
+  - id: t-052
+    milestone: m1
+    title: "Production DB (ProxySQL/Alexandria) unreachable: builds ECONNREFUSED, live pool at ~93% failure"
+    status: done
+    passes: 0
+    stakes: irreversible
+    gate_human: true
+    security_flag: false
+    note: |-
+      FOR SILAS: found during a routine conductor sweep, 2026-08-02T14:41Z. Two related but distinct symptoms, both DB/infra, both outside agent access per BOUNDARY.md (no ProxySQL admin / DB-host access):
+      1. Every production BUILD has failed for 4+ hours straight (11 consecutive `state: ERROR` deployments in the Vercel API, commits ca689fa/#1320 back through eb44b09/#1309). Build log for the latest (dpl_Gq4w4y9EWkvG264wFNqHA7ECaWB8, commit ca689fa) fails at "Applying production migrations" with a hard `ECONNREFUSED 75.111.66.70:5544` -- the ProxySQL host/port from kindrobots-unraid's own setup docs (5544 host-port -> 6033 container-port on Alexandria) is refusing the TCP connection outright, not timing out. This is a different signature than kind-robots/t-022's prior pool-timeout/TLS incidents (both closed 2026-07-17) -- this one reads as the ProxySQL process/container itself being down or unreachable, not an app-level pool misconfiguration.
+      2. The live site is still serving the last successful build (#1308, commit cd341533, dpl_GnsXJUpLf3mZhLwR5LSmT2UVGtSz) since Vercel keeps the last good production deployment aliased when newer builds fail -- so kind-robots.vercel.app returns HTTP 200 for page loads. But that build's own DB-backed API routes are failing hard right now: `get_runtime_logs` (30m window) shows 110x503 + 96x500 vs only 16x200 (~93% failure), `get_runtime_errors` (4h) shows a single dominant group, `pool timeout: failed to retrieve a connection from pool (circuit open)` / `P2039` variants, across /api/dreams, /api/projects, /api/characters, /api/rewards, /api/todos, /api/scenarios, /api/art/queue*, /api/server*, /api/facets/catalog, /api/sheets/[id], /api/auth/validate/token -- essentially every DB-backed route. Last occurrence 2026-08-02T14:41:02Z, real-time as of this check.
+      TO APPROVE / ACT: this needs someone with access to Alexandria's ProxySQL container (t-012 in kindrobots-unraid already documents that its admin interface is local-docker-exec-only, unreachable by any agent sandbox) -- check whether the ProxySQL process is running, whether it's accepting connections on 5544, and whether the backend MariaDB it fronts is healthy. Once restored, the 11 backlogged main-branch commits (#1309-#1320, mostly interface-vision layout-contract work) should deploy automatically on the next push to main (or trigger a manual redeploy of the current main tip). No agent action is possible on the DB/infra side; this task exists to make the incident visible and trackable, not to imply an agent will resolve it.
+      What unblocks when resolved: production catches up on the 11 backlogged commits, and this task can close `done` once `get_runtime_logs`/`get_runtime_errors` show a sustained clean window (see kind-robots/t-022's closing note for the confirmation pattern used last time).
+      RECOVERED (observed) 2026-08-02T22:35Z (conductor Agent run, triggered by CI-Janitor Todo #1094 flagging a `cancelled` Cypress run at 20:29Z): both symptoms from the original report have cleared. BUILDS: Vercel deployment history shows builds recovered at commit `1233137` (dpl_D38QaSdsNwFC4MTfYfwp9HfRXByi, created 2026-08-02T20:13:44Z, `state: READY`) -- the first successful build after the 11 consecutive `ERROR` builds this task documents, and every build since (through the current production tip, commit `e9eedab9`/#1335) is also `READY`. RUNTIME: `get_runtime_errors` (2h window, checked 2026-08-02T22:33Z) shows the dominant `pool timeout (circuit open)`/P2039 group's last occurrence at 21:03:59Z, with zero 500/503/504 in the most recent 30-minute `get_runtime_logs` window (365x200/4x201/3x400/3x401/1x403, no error codes at all) -- a clean window of 90+ minutes, well past t-022's own bar for a sustained recovery. Independently corroborated by kind_robots' own Cypress CI: the run this incident's Todo flagged (30765722439) cancelled mid-suite on the exact same `pool timeout`/ `ECONNREFUSED '172.21.0.17'` signature (specs 24-25 of 60, ~20:39-20:40Z), but the very next scheduled run (30767968455, 21:28Z, commit `e9eedab9`) completed cleanly with all 60 specs green and zero DB errors. Root cause of the underlying DB/ProxySQL outage itself is still unconfirmed (no agent has ProxySQL/DB-host access per BOUNDARY.md, same as before) -- this note only confirms recovery, not why it recovered. Leaving `status: needs-human` / `gate_human: true` as-is per this task's own explicit human gate (unlike t-022, which didn't set `gate_human: true`) -- FOR SILAS: this looks safe to set `status: done` on given the above, but I'm not closing a `gate_human: true` task myself. If it relapses, the next incident (CI-Janitor Todo or scheduled sweep) will catch it and this note will reflect that.
+
+
+      Closed during Silas's explicit human-gate pertinence audit. The roadmap's own recovery evidence shows production builds returned to READY, runtime errors cleared for a sustained 90+ minute window, and the next scheduled Cypress run passed all 60 specs. The incident recovery criteria were satisfied; unknown root cause does not justify leaving a resolved outage as a permanent human gate. Any recurrence should be tracked as a new incident or the existing fail-fast follow-up.
+    approved_by_human: true
+    updated: '2026-08-03T07:15:00Z'
+
+  - id: t-053
+    milestone: m1
+    title: "Add a fail-fast guard to cypress.yml so sustained upstream DB-connection failures abort quickly instead of eating the 30-minute job timeout"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from the CI-Janitor incident on Todo #1094 / t-052 (see root
+      TALKBACK.md, 2026-08-02, "ci-janitor: kind_robots Cypress Tests").
+      During the 2026-08-02 ProxySQL/DB outage, the flagged Cypress run
+      (30765722439) ran cleanly through 25 of 60 specs, then hit a cascading
+      wave of Prisma `pool timeout`/`ECONNREFUSED` failures in
+      `dream-input-boundary.cy.ts` and `dream-mutation-boundaries.cy.ts`
+      (0/6 passing, all DB-connection errors) -- a real, correctly-reported
+      upstream outage, not a test bug. After that spec finished at 20:40:29Z,
+      the job produced **zero further log output** (no "Running: ..." banner
+      for spec 26/60 ever appeared) until GitHub's own `timeout-minutes: 30`
+      fired ~19 minutes later, producing an opaque `cancelled` conclusion
+      instead of a fast, diagnosable failure.
+
+      Add a guard so N (e.g. 3-5) consecutive spec-level DB-connection
+      failures (matching the existing Prisma pool-timeout/ECONNREFUSED
+      signatures already surfaced by this suite) abort the Cypress step
+      early with a clear error message pointing at the upstream outage,
+      rather than silently consuming the rest of the 30-minute budget. This
+      makes a future recurrence of this incident class show up in the
+      Actions log within a minute or two instead of at the job timeout, and
+      preserves whatever partial diagnostics (timing/cleanup reports) the
+      run already produces. Do not weaken, skip, or delete any actual test
+      assertions to do this -- this is a workflow/harness guard around
+      genuine infra failures, not a test change.
+    updated: '2026-08-02T22:36:00Z'
+

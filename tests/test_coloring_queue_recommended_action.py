@@ -28,7 +28,7 @@ def test_recommends_recovering_existing_jobs_before_fresh_submissions():
     assert (
         recommendation(
             [
-                {"slot": 1, "id": "mr-001", "status": "pending", "semantic_gate_error": "job 2474 timed out"},
+                {"slot": 1, "id": "mr-001", "status": "pending", "render_gate_error": "job 2474 timed out"},
                 {"slot": 2, "id": "mr-002", "status": "pending"},
             ]
         )
@@ -44,7 +44,7 @@ def test_recommends_resolving_enqueue_errors_without_job_ids():
                     "slot": 1,
                     "id": "mr-001",
                     "status": "pending",
-                    "semantic_gate_error": "enqueue failed: HTTP 503",
+                    "render_gate_error": "enqueue failed: HTTP 503",
                 }
             ]
         )

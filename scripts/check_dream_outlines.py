@@ -1,41 +1,5 @@
 #!/usr/bin/env python3
-"""
-check_dream_outlines.py — CI preflight: is each dream backlog outline buildable?
-
-The dream-cycle build loop (t-006) turns a `type: dream` backlog outline into real
-kind_robots records following `specs/dream.md`. If an outline is missing a required
-piece — no seed fusion, no vibe, too few characters, rewards with no rarity spread,
-a `narrator: yes` with no narrator block — the loop can't build it cleanly, and
-today that's only caught when a build actually runs (which needs live API egress).
-This preflight catches it offline, in CI, the way `check_scheduler_drift.py` guards
-coloring-book cards.
-
-Read-only, no API calls. For each buildable dream outline (`type: dream`, status
-`outline`/`approved`), it checks the structure `specs/dream.md` requires and exits
-non-zero with a readable per-file report if any outline is not buildable.
-
-Both outline shapes are accepted (matched by heading keyword, not exact text):
-- seed shape:  ## Location dream / ## Characters (2-4) / ## Rewards (3-6)
-- daily shape: ## Locations (2) / ## Characters (3) / ## Rewards (2 — one skill…)
-
-Requirements per outline:
-  * sections present: idea, location(s), vibe/genre, characters, rewards, scenarios, narrator
-  * idea / location / vibe / narrator: non-placeholder prose
-  * for outlines planned on/after 2026-07-25: a Creative seeds section containing
-    1-2 genres, one occupation, one animal/species, and a fusion explanation
-  * characters: 2–5 entries
-  * rewards: 2–8 entries; if ≥3, at least 2 distinct rarities (a spread)
-  * scenarios: 1–3 entries
-  * narrator: `narrator: yes` → a real narrator block; `narrator: no` → fine (skips cleanly)
-
-The date gate grandfathers outlines already planned earlier on 2026-07-24 before
-Silas gave the new direction, while enforcing the contract on the next planning
-day and every proposal after it.
-
-Usage:
-  python scripts/check_dream_outlines.py            # check the real backlog, exit 1 on problems
-  python scripts/check_dream_outlines.py --json     # machine-readable findings
-"""
+"""Validate Daily Dream proposals and legacy idea inventory without network calls."""
 
 from __future__ import annotations
 
@@ -50,26 +14,11 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_BACKLOG = ROOT / "projects" / "dream-cycle" / "backlog"
-
-RARITIES = {"COMMON", "UNCOMMON", "RARE", "EPIC", "LEGENDARY", "MYTHIC"}
-BUILDABLE_STATUSES = {"outline", "approved"}
-SEED_CONTRACT_DATE = "2026-07-25"
-
-# (concept, heading-keyword) — first section whose heading contains the keyword.
-SECTION_KEYS = [
-    ("idea", "idea"),
-    ("location", "location"),
-    ("vibe", "vibe"),          # "Vibe / genre dream"
-    ("characters", "character"),
-    ("rewards", "reward"),
-    ("scenarios", "scenario"),
-    ("narrator", "narrator"),
-]
-
-# Ranges (inclusive) for the counted sections.
-CHAR_MIN, CHAR_MAX = 2, 5
-REWARD_MIN, REWARD_MAX = 2, 8
-SCENARIO_MIN, SCENARIO_MAX = 1, 3
+ELIGIBLE_STATUSES = {"outline", "approved"}
+VALID_RARITIES = {"COMMON", "UNCOMMON", "RARE", "EPIC", "LEGENDARY", "MYTHIC"}
+REQUIRED_FACET_KEYS = {
+    "vibe", "location", "character", "reward_item", "reward_skill", "scenario"
+}
 
 
 class Finding:
@@ -86,181 +35,119 @@ class Finding:
 
 
 def parse_frontmatter(text: str) -> dict[str, Any]:
-    m = re.match(r"^---\n(.*?)\n---\n", text, re.DOTALL)
-    if not m:
+    match = re.match(r"^---\n(.*?)\n---\n", text, re.DOTALL)
+    if not match:
         return {}
     try:
-        data = yaml.safe_load(m.group(1))
+        data = yaml.safe_load(match.group(1))
     except yaml.YAMLError:
         return {}
     return data if isinstance(data, dict) else {}
 
 
+def parse_data_block(text: str, name: str) -> Optional[dict[str, Any]]:
+    match = re.search(rf"<!--\s*{re.escape(name)}\s*\n(.*?)\n-->", text, re.DOTALL)
+    if not match:
+        return None
+    try:
+        data = json.loads(match.group(1))
+    except json.JSONDecodeError:
+        return None
+    return data if isinstance(data, dict) else None
+
+
 def split_sections(text: str) -> dict[str, str]:
-    """Map each `## Heading` to its body text (up to the next `## `)."""
     body = re.sub(r"^---\n.*?\n---\n", "", text, count=1, flags=re.DOTALL)
-    sections: dict[str, str] = {}
     parts = re.split(r"^##\s+(.+?)\s*$", body, flags=re.MULTILINE)
-    # parts[0] is preamble; then alternating (heading, body)
-    for i in range(1, len(parts) - 1, 2):
-        sections[parts[i].strip().lower()] = parts[i + 1]
-    return sections
+    return {
+        parts[index].strip().lower(): parts[index + 1]
+        for index in range(1, len(parts) - 1, 2)
+    }
 
 
 def find_section(sections: dict[str, str], keyword: str) -> Optional[str]:
-    for heading, body in sections.items():
-        if keyword in heading:
-            return body
-    return None
+    return next((body for heading, body in sections.items() if keyword in heading), None)
 
 
-def is_placeholder(body: str) -> bool:
+def is_placeholder(body: Optional[str]) -> bool:
+    if body is None:
+        return True
     stripped = body.strip()
     if len(stripped) < 15:
         return True
-    # a section that is only the template's parenthetical placeholder bullet
-    non_empty = [ln for ln in stripped.splitlines() if ln.strip()]
-    return all(ln.strip().startswith("- (") or not ln.strip() for ln in non_empty)
+    lines = [line.strip() for line in stripped.splitlines() if line.strip()]
+    return bool(lines) and all(line.startswith("- (") for line in lines)
 
 
-def count_entries(body: str) -> int:
-    """Count top-level list entries, ignoring template placeholder bullets `- (…`."""
-    n = 0
-    for line in body.splitlines():
-        s = line.strip()
-        if re.match(r"^[-*]\s+\S", s) and not s.startswith("- ("):
-            # only top-level bullets (not deeper indentation)
-            if not line.startswith((" ", "\t")) or line[: len(line) - len(line.lstrip())] == "":
-                n += 1
-    return n
+def _canonical_errors(data: Optional[dict[str, Any]]) -> list[str]:
+    if not isinstance(data, dict):
+        return ["missing or invalid proposal-data block"]
+    errors: list[str] = []
+    facets = data.get("seed_facets")
+    if not isinstance(facets, dict) or int(facets.get("version") or 0) < 2:
+        errors.append("seed_facets.version must be at least 2")
+    elements = facets.get("elements") if isinstance(facets, dict) else None
+    if not isinstance(elements, dict) or not REQUIRED_FACET_KEYS.issubset(elements):
+        errors.append("seed_facets.elements must cover all six assets")
 
+    vibe = data.get("vibe")
+    if not isinstance(vibe, dict) or not vibe.get("title") or not vibe.get("line"):
+        errors.append("exactly one complete vibe is required")
 
-def _rarities_present(body: str) -> set[str]:
-    up = body.upper()
-    return {r for r in RARITIES if re.search(rf"\b{r}\b", up)}
+    for field, count in (("locations", 1), ("characters", 1), ("rewards", 2), ("scenarios", 1)):
+        value = data.get(field)
+        actual = len(value) if isinstance(value, list) else 0
+        if actual != count:
+            errors.append(f"{field} has {actual}; expected exactly {count}")
 
+    rewards = data.get("rewards") if isinstance(data.get("rewards"), list) else []
+    types = {
+        str(item.get("reward_type", "")).upper()
+        for item in rewards if isinstance(item, dict)
+    }
+    if types != {"ITEM", "SKILL"}:
+        errors.append("rewards must contain exactly one ITEM and one SKILL")
+    for item in rewards:
+        if isinstance(item, dict) and str(item.get("rarity", "")).upper() not in VALID_RARITIES:
+            errors.append(f"invalid reward rarity: {item.get('rarity')!r}")
 
-def _seed_contract_applies(fm: dict[str, Any]) -> bool:
-    """Apply to plans dated on/after the first planning day after Silas's direction.
-
-    Daily proposals use proposal_date; manually planned outlines use created.
-    YAML date objects stringify to ISO, so lexical comparison is safe here.
-    """
-    raw = fm.get("proposal_date") or fm.get("created")
-    return bool(raw and str(raw) >= SEED_CONTRACT_DATE)
-
-
-def _labeled_value(body: str, *labels: str) -> Optional[str]:
-    """Return the value after a bold markdown label such as `**Genres:**`."""
-    for label in labels:
-        m = re.search(rf"^[-*]\s+\*\*{re.escape(label)}:\*\*\s*(.+?)\s*$",
-                      body, re.IGNORECASE | re.MULTILINE)
-        if m:
-            return m.group(1).strip()
-    return None
-
-
-def _check_creative_seeds(name: str, sections: dict[str, str]) -> list[Finding]:
-    findings: list[Finding] = []
-    body = find_section(sections, "creative seed")
-    if body is None or is_placeholder(body):
-        return [Finding(name, "seed-missing",
-                        "no complete 'Creative seeds' section (genres, occupation, "
-                        "animal/species, fusion)")]
-
-    genres = _labeled_value(body, "Genres", "Genre")
-    if not genres:
-        findings.append(Finding(name, "seed-genres", "missing Genres value"))
-    else:
-        parts = [part.strip() for part in re.split(r"\s*(?:\+|,)\s*", genres) if part.strip()]
-        if not (1 <= len(parts) <= 2):
-            findings.append(Finding(name, "seed-genres",
-                                    f"{len(parts)} genre seed(s); expected 1–2"))
-
-    occupation = _labeled_value(body, "Occupation")
-    if not occupation:
-        findings.append(Finding(name, "seed-occupation", "missing Occupation value"))
-
-    species = _labeled_value(body, "Animal / species", "Animal/species", "Species")
-    if not species:
-        findings.append(Finding(name, "seed-species", "missing Animal / species value"))
-
-    fusion = _labeled_value(body, "Fusion")
-    if not fusion or len(fusion) < 25:
-        findings.append(Finding(name, "seed-fusion",
-                                "Fusion must explain concrete consequences of all three seeds"))
-    return findings
+    if data.get("narrator"):
+        errors.append("Daily Dream proposals must not contain a narrator")
+    return errors
 
 
 def check_outline(path: Path) -> list[Finding]:
     text = path.read_text(encoding="utf-8")
-    fm = parse_frontmatter(text)
-    if str(fm.get("type", "")).strip() != "dream":
+    frontmatter = parse_frontmatter(text)
+    if str(frontmatter.get("type", "")).strip() != "dream":
         return []
-    status = str(fm.get("status", "")).strip().lower()
-    if status not in BUILDABLE_STATUSES:
-        return []  # parked/vetoed/built are not the loop's concern
 
     name = path.name
+    status = str(frontmatter.get("status", "outline")).strip().lower()
+    proposal = bool(frontmatter.get("proposal"))
+    if proposal:
+        if status not in ELIGIBLE_STATUSES:
+            return []
+        findings = [
+            Finding(name, "proposal-contract", detail)
+            for detail in _canonical_errors(parse_data_block(text, "proposal-data"))
+        ]
+        narrator_flag = str(frontmatter.get("narrator", "no")).strip().lower()
+        if narrator_flag not in {"no", "false", "none", ""}:
+            findings.append(Finding(name, "proposal-narrator", "frontmatter must not enable a narrator"))
+        return findings
+
     findings: list[Finding] = []
+    if status == "building":
+        findings.append(
+            Finding(name, "legacy-building", "non-proposal Dream files are idea inventory and cannot be building")
+        )
     sections = split_sections(text)
-    bodies: dict[str, Optional[str]] = {}
-    for concept, keyword in SECTION_KEYS:
-        body = find_section(sections, keyword)
-        bodies[concept] = body
-        if body is None:
-            findings.append(Finding(name, "missing-section", f"no '{concept}' section"))
-
-    if _seed_contract_applies(fm):
-        findings.extend(_check_creative_seeds(name, sections))
-
-    # Prose sections must have real content.
-    for concept in ("idea", "location", "vibe"):
-        body = bodies.get(concept)
-        if body is not None and is_placeholder(body):
-            findings.append(Finding(name, "empty-section", f"'{concept}' section is empty/placeholder"))
-
-    # Characters: 2–5 entries.
-    cbody = bodies.get("characters")
-    if cbody is not None:
-        n = count_entries(cbody)
-        if not (CHAR_MIN <= n <= CHAR_MAX):
-            findings.append(Finding(name, "characters-count",
-                                    f"{n} character(s); expected {CHAR_MIN}–{CHAR_MAX}"))
-
-    # Rewards: 2–8 entries; rarity spread if ≥3.
-    rbody = bodies.get("rewards")
-    if rbody is not None:
-        n = count_entries(rbody)
-        if not (REWARD_MIN <= n <= REWARD_MAX):
-            findings.append(Finding(name, "rewards-count",
-                                    f"{n} reward(s); expected {REWARD_MIN}–{REWARD_MAX}"))
-        rarities = _rarities_present(rbody)
-        if n >= 3 and len(rarities) < 2:
-            findings.append(Finding(name, "rewards-rarity",
-                                    f"{n} rewards but {len(rarities)} distinct rarity tier(s); "
-                                    "need a spread (≥2)"))
-
-    # Scenarios: 1–3 entries.
-    sbody = bodies.get("scenarios")
-    if sbody is not None:
-        n = count_entries(sbody)
-        if not (SCENARIO_MIN <= n <= SCENARIO_MAX):
-            findings.append(Finding(name, "scenarios-count",
-                                    f"{n} scenario(s); expected {SCENARIO_MIN}–{SCENARIO_MAX}"))
-
-    # Narrator: yes → real block; no → clean skip is fine.
-    narrator_flag = str(fm.get("narrator", "")).strip().strip("'\"").lower()
-    nbody = bodies.get("narrator")
-    if narrator_flag in ("yes", "true"):
-        if nbody is None or is_placeholder(nbody) or "narrator: no" in nbody.lower():
-            findings.append(Finding(name, "narrator-missing",
-                                    "narrator: yes but no real narrator block "
-                                    "(name/voice/expressions)"))
-    elif narrator_flag not in ("no", "false"):
-        findings.append(Finding(name, "narrator-flag",
-                                f"narrator frontmatter is {narrator_flag!r}; expected yes or no"))
-
+    idea = find_section(sections, "idea")
+    if is_placeholder(idea):
+        findings.append(Finding(name, "idea-missing", "legacy idea inventory needs a usable 'The idea' section"))
+    if find_section(sections, "notes from silas") is None:
+        findings.append(Finding(name, "notes-missing", "legacy idea inventory needs a Notes from Silas section"))
     return findings
 
 
@@ -274,35 +161,29 @@ def collect(backlog_dir: Path) -> list[Finding]:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description=__doc__,
-                                 formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--backlog-dir", type=Path, default=DEFAULT_BACKLOG,
-                    help=f"dream-cycle backlog directory (default: {DEFAULT_BACKLOG})")
-    ap.add_argument("--json", action="store_true", help="print findings as JSON")
-    args = ap.parse_args()
-
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--backlog-dir", type=Path, default=DEFAULT_BACKLOG)
+    parser.add_argument("--json", action="store_true")
+    args = parser.parse_args()
     if not args.backlog_dir.exists():
         print(f"ERROR: backlog dir not found: {args.backlog_dir}", file=sys.stderr)
         return 2
-
     findings = collect(args.backlog_dir)
-
     if args.json:
-        print(json.dumps([f.as_dict() for f in findings], indent=2))
+        print(json.dumps([finding.as_dict() for finding in findings], indent=2))
     elif not findings:
-        print("All dream outlines are buildable per specs/dream.md.")
+        print("Daily Dream proposal and legacy idea-inventory contracts are clean.")
     else:
-        print(f"Dream outline problems ({len(findings)} finding(s)):\n")
-        by_file: dict[str, list[Finding]] = {}
-        for f in findings:
-            by_file.setdefault(f.outline, []).append(f)
-        for outline, items in by_file.items():
+        print(f"Dream-cycle contract problems ({len(findings)} finding(s)):\n")
+        grouped: dict[str, list[Finding]] = {}
+        for finding in findings:
+            grouped.setdefault(finding.outline, []).append(finding)
+        for outline, items in grouped.items():
             print(f"{outline}:")
-            for f in items:
-                print(f.line())
+            for finding in items:
+                print(finding.line())
             print()
-        print("Fix: complete the outline per specs/dream.md, then re-run this check.")
-
+        print("Fix the proposal or demote it to non-proposal idea inventory, then re-run this check.")
     return 1 if findings else 0
 
 

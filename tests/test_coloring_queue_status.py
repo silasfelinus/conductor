@@ -36,7 +36,7 @@ def test_summarizes_statuses_and_next_batch():
     assert summary["recommended_action"] == "submit-next-batch"
 
 
-def test_semantic_gate_errors_are_classified_for_recovery_or_fresh_submission():
+def test_render_gate_errors_are_classified_for_recovery_or_fresh_submission():
     summary = summarize_queue(
         queue(
             [
@@ -44,14 +44,14 @@ def test_semantic_gate_errors_are_classified_for_recovery_or_fresh_submission():
                     "slot": 1,
                     "id": "mr-001",
                     "status": "pending",
-                    "semantic_gate_error": "job 2474 timed out after 600s (still queued/running)",
-                    "semantic_gate_error_at": "2026-07-26T12:18:00Z",
+                    "render_gate_error": "job 2474 timed out after 600s (still queued/running)",
+                    "render_gate_error_at": "2026-07-26T12:18:00Z",
                 },
                 {
                     "slot": 2,
                     "id": "mr-002",
                     "status": "pending",
-                    "semantic_gate_error": "enqueue failed: HTTP 503 Database connection was temporarily unavailable",
+                    "render_gate_error": "enqueue failed: HTTP 503 Database connection was temporarily unavailable",
                 },
                 {"slot": 3, "id": "mr-003", "status": "pending"},
                 {"slot": 4, "id": "mr-004", "status": "pending"},
@@ -60,12 +60,12 @@ def test_semantic_gate_errors_are_classified_for_recovery_or_fresh_submission():
         "monster-recast",
     )
 
-    assert summary["pending_with_semantic_gate_error"] == 2
-    assert summary["pending_without_semantic_gate_error"] == 2
+    assert summary["pending_with_render_gate_error"] == 2
+    assert summary["pending_without_render_gate_error"] == 2
     assert [entry["id"] for entry in summary["next_batch"]] == ["mr-003", "mr-004"]
     assert [entry["id"] for entry in summary["blocked_pending"]] == ["mr-001", "mr-002"]
     assert [entry["id"] for entry in summary["recovery_candidates"]] == ["mr-001"]
-    assert summary["recovery_candidates"][0]["semantic_gate_job_id"] == 2474
+    assert summary["recovery_candidates"][0]["render_gate_job_id"] == 2474
     assert summary["recovery_candidate_count"] == 1
     assert [entry["id"] for entry in summary["recovery_batch"]] == ["mr-001"]
     assert summary["recovery_actionable"] is True
@@ -83,9 +83,9 @@ def test_recovery_batch_is_bounded_by_worker_pass_size():
     summary = summarize_queue(
         queue(
             [
-                {"slot": 1, "id": "mr-001", "status": "pending", "semantic_gate_error": "job 2474 timed out"},
-                {"slot": 2, "id": "mr-002", "status": "pending", "semantic_gate_error": "job 2475 timed out"},
-                {"slot": 3, "id": "mr-003", "status": "pending", "semantic_gate_error": "job 2476 timed out"},
+                {"slot": 1, "id": "mr-001", "status": "pending", "render_gate_error": "job 2474 timed out"},
+                {"slot": 2, "id": "mr-002", "status": "pending", "render_gate_error": "job 2475 timed out"},
+                {"slot": 3, "id": "mr-003", "status": "pending", "render_gate_error": "job 2476 timed out"},
             ]
         ),
         "monster-recast",
@@ -101,14 +101,14 @@ def test_duplicate_job_ids_make_recovery_unsafe():
     summary = summarize_queue(
         queue(
             [
-                {"slot": 1, "id": "mr-001", "status": "pending", "semantic_gate_error": "Job #2474 timed out"},
-                {"slot": 2, "id": "mr-002", "status": "pending", "semantic_gate_error": "job 2474 still running"},
+                {"slot": 1, "id": "mr-001", "status": "pending", "render_gate_error": "Job #2474 timed out"},
+                {"slot": 2, "id": "mr-002", "status": "pending", "render_gate_error": "job 2474 still running"},
             ]
         ),
         "monster-recast",
     )
 
-    assert summary["duplicate_semantic_gate_job_ids"] == [2474]
+    assert summary["duplicate_render_gate_job_ids"] == [2474]
     assert summary["next_batch"] == []
     assert summary["recovery_safe"] is False
     assert summary["recovery_candidate_count"] == 0
@@ -170,58 +170,6 @@ def test_empty_safe_queue_is_not_actionable():
     assert summary["recovery_batch"] == []
     assert summary["recovery_actionable"] is False
     assert summary["recommended_action"] == "complete"
-
-
-def test_credential_gate_errors_are_identified_and_distinct_from_other_semantic_errors():
-    summary = summarize_queue(
-        queue(
-            [
-                {
-                    "slot": 1,
-                    "id": "mr-001",
-                    "status": "pending",
-                    "semantic_gate_error": "job 2788: ANTHROPIC_API_KEY is required for the production semantic art gate",
-                },
-                {
-                    "slot": 2,
-                    "id": "mr-002",
-                    "status": "pending",
-                    "semantic_gate_error": "job 2474 timed out after 600s (still queued/running)",
-                },
-                {
-                    "slot": 3,
-                    "id": "mr-003",
-                    "status": "pending",
-                    "semantic_gate_error": "enqueue failed: HTTP 503 Database connection was temporarily unavailable",
-                },
-                {"slot": 4, "id": "mr-004", "status": "pending"},
-            ]
-        ),
-        "monster-recast",
-    )
-
-    assert [entry["id"] for entry in summary["credential_gate_errors"]] == ["mr-001"]
-    assert summary["credential_gate_error_count"] == 1
-
-
-def test_no_credential_gate_errors_when_none_present():
-    summary = summarize_queue(
-        queue(
-            [
-                {
-                    "slot": 1,
-                    "id": "mr-001",
-                    "status": "pending",
-                    "semantic_gate_error": "job 2474 timed out after 600s (still queued/running)",
-                },
-                {"slot": 2, "id": "mr-002", "status": "pending"},
-            ]
-        ),
-        "monster-recast",
-    )
-
-    assert summary["credential_gate_errors"] == []
-    assert summary["credential_gate_error_count"] == 0
 
 
 def test_recommended_action_requirement_matches_exactly():

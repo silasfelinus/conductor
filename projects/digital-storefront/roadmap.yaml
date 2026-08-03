@@ -724,53 +724,24 @@ tasks:
 - id: t-026
   milestone: m5
   title: 'kind_robots: extend Stripe webhook fulfillment to DLC products (Entitlement + Grant)'
-  status: needs-human
-  owner: worker
+  status: done
   passes: 0
   stakes: outward-facing
   gate_human: true
-  approved_by_human: false
+  approved_by_human: true
   depends_on: t-022
-  note: >
-    FOR SILAS: kind_robots PR #1018 (branch `claude/confident-bardeen-qxqhun`)
-    extends `server/api/stripe/webhook.post.ts`'s per-product purchase
-    handler so a `Product.type = DLC` checkout also grants Pack access, not
-    just a bare Entitlement. All CI checks pass (TypeScript, eslint,
-    prettier); no live Stripe keys or deploy involved — this only changes
-    application code.
+  note: |-
+    FOR SILAS: kind_robots PR #1018 (branch `claude/confident-bardeen-qxqhun`) extends `server/api/stripe/webhook.post.ts`'s per-product purchase handler so a `Product.type = DLC` checkout also grants Pack access, not just a bare Entitlement. All CI checks pass (TypeScript, eslint, prettier); no live Stripe keys or deploy involved — this only changes application code.
+    What it does: on a DLC product's `checkout.session.completed`, it reads `packId` from the product's metadata (same JSON convention already used for POD's artImageId/printfulVariantId) and creates a `Grant` row (subjectType: PACK, level: VIEW, source: PURCHASE, status: ACTIVE) alongside the existing Entitlement, inside the same transaction as the Order/OrderItem.
+    ONE DECISION FOR YOU: the original task note (2026-07-18) specified `level: UNLOCK`, but `GrantLevel` only defines VIEW/ADMIN (kind-robots/ t-037's schema, approved 2026-07-25/26) — no UNLOCK value exists. I used VIEW, since `server/utils/contentAccess.ts` already gates Pack-owned content on an active PACK Grant at GrantLevel.VIEW, so VIEW is what actually unlocks a pack's content today. If you'd rather add a distinct UNLOCK level (via a new additive migration) instead of reusing VIEW, say so and a future task can do that migration + this file's one-line update.
+    ALSO NOTE: no checkout-creation route yet produces a DLC-type Product with packId metadata (packmaker/t-004's admin generator builds Pack content bundles, not a priced Product row), so this fulfillment path is real but currently unexercised end-to-end — a follow-up task to wire a DLC product-page/checkout-creation route (mirroring t-023's Mermaids PDF page) would let it actually run in test mode.
+    TO APPROVE: review kind_robots PR #1018, and if the VIEW-vs-UNLOCK choice and the code look right, merge it and set `approved_by_human: true` + `status: done` here. What unblocks: nothing else currently depends on this — it's the last open piece of the original DLC-unlock design (projects/digital-storefront/docs/dlc-unlock-design.md) besides the product-page/checkout-creation follow-up noted above.
 
-    What it does: on a DLC product's `checkout.session.completed`, it reads
-    `packId` from the product's metadata (same JSON convention already used
-    for POD's artImageId/printfulVariantId) and creates a `Grant` row
-    (subjectType: PACK, level: VIEW, source: PURCHASE, status: ACTIVE)
-    alongside the existing Entitlement, inside the same transaction as the
-    Order/OrderItem.
 
-    ONE DECISION FOR YOU: the original task note (2026-07-18) specified
-    `level: UNLOCK`, but `GrantLevel` only defines VIEW/ADMIN (kind-robots/
-    t-037's schema, approved 2026-07-25/26) — no UNLOCK value exists. I used
-    VIEW, since `server/utils/contentAccess.ts` already gates Pack-owned
-    content on an active PACK Grant at GrantLevel.VIEW, so VIEW is what
-    actually unlocks a pack's content today. If you'd rather add a distinct
-    UNLOCK level (via a new additive migration) instead of reusing VIEW, say
-    so and a future task can do that migration + this file's one-line update.
-
-    ALSO NOTE: no checkout-creation route yet produces a DLC-type Product
-    with packId metadata (packmaker/t-004's admin generator builds Pack
-    content bundles, not a priced Product row), so this fulfillment path is
-    real but currently unexercised end-to-end — a follow-up task to wire a
-    DLC product-page/checkout-creation route (mirroring t-023's Mermaids PDF
-    page) would let it actually run in test mode.
-
-    TO APPROVE: review kind_robots PR #1018, and if the VIEW-vs-UNLOCK choice
-    and the code look right, merge it and set `approved_by_human: true` +
-    `status: done` here. What unblocks: nothing else currently depends on
-    this — it's the last open piece of the original DLC-unlock design
-    (projects/digital-storefront/docs/dlc-unlock-design.md) besides the
-    product-page/checkout-creation follow-up noted above.
+    Closed during Silas's explicit human-gate pertinence audit. Silas directly merged Kind Robots PR #1018, which implemented the proposed DLC Entitlement plus PACK Grant fulfillment using GrantLevel.VIEW. That merge is the completed human decision the roadmap was waiting for; leaving this at needs-human after the approved implementation reached main was stale state.
   claimed_by: claude-conductor-agentrun-20260726T182000Z-ds-t026
   claimed_at: '2026-07-26T18:08:11Z'
-  updated: '2026-07-26T18:20:00Z'
+  updated: '2026-08-03T07:15:02Z'
 
 - id: t-027
   milestone: m1
@@ -1130,3 +1101,25 @@ tasks:
   updated: '2026-07-26T14:15:42Z'
   claimed_by: claude-conductor-scheduled-20260726T141539Z-ds-t035
   claimed_at: '2026-07-26T14:15:42Z'
+
+- id: t-036
+  milestone: m1
+  title: "Correct t-031's note — the general cart checkout handler lives at server/api/stripe/checkout.post.ts, not server/api/store/checkout.post.ts"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Filed 2026-08-02 (weekly site audit, global-ui/SITE-AUDIT-AGENT.md).
+    t-031's title and note both refer to the general multi-item cart
+    checkout as `server/api/store/checkout.post.ts`. Confirmed via
+    Glob/Grep against the current kind_robots checkout: no such file
+    exists under server/api/store/ (which holds pod-checkout.post.ts,
+    product-checkout.post.ts, entitlements.get.ts, download/). The code
+    t-031 actually describes -- the handler that sets Stripe session
+    `metadata.kind: 'giftshop_checkout'` -- lives at
+    `server/api/stripe/checkout.post.ts`. Functionality is not affected
+    (the file exists and works, just under a different path than
+    documented); this is a small doc-accuracy fix so a future reader
+    searching server/api/store/ for this handler doesn't come up empty.
+

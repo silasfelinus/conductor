@@ -318,7 +318,7 @@ tasks:
     PROGRESS 2026-07-20 (conductor burst-rotation session, kind_robots PR #643 merged squash fd3d3b3):
     step (2) confirmed already done in a prior cycle -- tutorialChannels.wonder.sections already carries
     a ''voice-lab'' entry in stores/helpers/tutorialCards.ts. Step (4) done this cycle: replaced the bare
-    ProjectFrontPage scaffold with a live #interactive slot (the same pattern storymaker-page.vue uses) --
+    ProjectFrontPage scaffold with a live #interactive slot (the same pattern storybook-page.vue uses) --
     a relay-status readout plus a "try it" console that sends a sample "Serendipity: ..." request through
     the existing serendipityVoiceStore (the same client /serendipity-voice uses), and an adapter reference
     table (chat/character/dream/art/music/project/control) mirroring serendipity-voice''s README status
@@ -387,3 +387,27 @@ tasks:
   note: 'Found while capturing the t-010 dry-run transcript. blockedActions in serendipity-voice src/voice-router.ts (~line 36) is [approve, merge, publish, release, spend, buy, purchase, delete, rename, force push, force-push] -- it does not include deploy, expose, or dns, even though rollout-safety-checklist.md Section 3''s Blocked-mode table explicitly lists "publish, deploy, expose endpoints, spend money, change DNS...". "Serendipity: deploy the relay." and "Serendipity: change DNS." both still take no action (they fall through to the generic router clarification, same as any unmatched phrase), so this is not a safety gap, but the spoken response does not name the specific blocked action the way approve/merge/publish/etc. do. Fix: add deploy, expose, dns (and consider endpoint) to blockedActions, and add a regression test asserting both checklist sample lines now return the specific "needs a safer review path" blockedReason. See projects/alexa-integration/docs/t-010-dry-run-transcript.md Finding 4 for the full repro. RESOLVED (2026-07-21, burst-mode session): added deploy and dns to blockedActions (expose also added, which covers "expose endpoints" as a substring match; left bare "endpoint" out of the list since it would also match safe read questions like "what is the relay endpoint", not just the blocking verb). Verified "deploy the relay" and "change DNS" both now return the specific safer-review-path blockedReason via npm run handle. Added regression tests for both checklist sample lines. npm test (12 suites, voice-router 27/27) and npm run typecheck both clean. serendipity-voice PR #26 merged (squash cbffa3c).'
   claimed_by: claude-conductor-burst-20260721T1007Z
   claimed_at: '2026-07-21T10:07:34Z'
+- id: t-019
+  milestone: m4
+  title: "Correct t-012's note — components/pages/serendipity-voice-page.vue was renamed to serendipity-page.vue"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Filed 2026-08-02 (weekly site audit, global-ui/SITE-AUDIT-AGENT.md).
+    t-012 (2026-07-06, done) describes shipping
+    `components/pages/serendipity-voice-page.vue` at the `/serendipity-voice`
+    route. Confirmed via Glob against the current kind_robots checkout: that
+    exact file no longer exists. `stores/serendipityVoiceStore.ts` is still
+    present, but the page component is now `components/pages/serendipity-page.vue`.
+    This matches project-overrides.yaml's `serendipity` retirement note: the
+    story-weaving product that used to own the `/serendipity` route and name
+    was permanently renamed to Taskmaster, freeing `/serendipity` for this
+    project's voice-led surface (previously at `/serendipity-voice`), reclaimed
+    the same day (kind_robots commit 36a86bf, "refactor: make Serendipity the
+    canonical voice route"). The rename is real and already correctly reflected
+    in project-overrides.yaml; only t-012's older note text is stale. Update
+    t-012's note (or add a short addendum, per the t-027/dream-cycle
+    correction-task convention) to name the current file and route so this
+    project's history doesn't silently point future readers at a deleted file.

@@ -1,7 +1,7 @@
 # Pitch: Franchise Guide PDF — Starting Your Own Pet Waste Removal Business
 date: 2026-06-30
 project-target: digital-storefront
-status: awaiting-silas
+status: rejected
 
 ## The idea
 A practical, no-fluff downloadable PDF guide for aspiring pet-waste removal entrepreneurs. Draws directly on Silas's own experience running Humboldt Scoop: how to price routes, acquire customers, handle equipment, schedule efficiently, and survive bad-weather days. Sells as a pdf-manual product on Gumroad or Etsy. Low production cost since the knowledge already exists — it just needs to be organized and written.

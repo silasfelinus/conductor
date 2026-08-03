@@ -56,7 +56,7 @@ def test_entry_to_job_untargeted_lands_in_default_engine_folder():
     assert "workflow" in job["payload"]
 
 
-def test_entry_to_job_a1111_override_emits_raw_keys():
+def test_entry_to_job_legacy_a1111_override_migrates_to_comfy():
     job = consumer.entry_to_job(
         {
             "project": "alpha",
@@ -66,11 +66,25 @@ def test_entry_to_job_a1111_override_emits_raw_keys():
             "engine": "a1111",
         }
     )
-    assert job["engine"] == "A1111"
-    # A1111 path stays txt2img — no ComfyUI workflow graph
-    assert "workflow" not in job["payload"]
-    assert job["payload"]["steps"] == consumer.DEFAULT_STEPS
-    assert job["payload"]["cfg"] == consumer.DEFAULT_CFG
+    assert job["engine"] == "COMFY"
+    assert job["payload"]["collection"] == "alpha"
+    assert job["payload"]["steps"] == consumer.KREA2_STEPS
+    assert job["payload"]["workflow"]["1"]["inputs"]["unet_name"] == consumer.KREA2_MODEL
+    assert consumer.normalize_engine("a1111") == consumer.DEFAULT_ENGINE
+
+
+def test_legacy_comfy_and_sdxl_labels_migrate_to_krea2():
+    assert consumer.normalize_engine("comfy") == consumer.DEFAULT_ENGINE
+    assert consumer.normalize_engine("sdxl") == consumer.DEFAULT_ENGINE
+
+
+def test_unknown_conductor_engine_is_rejected():
+    import pytest
+
+    with pytest.raises(ValueError, match="unsupported Conductor art engine"):
+        consumer.entry_to_job(
+            {"image_path": "public/images/x.webp", "prompt": "a fox", "engine": "mystery"}
+        )
 
 
 def test_entry_to_job_flux_schnell_variant():

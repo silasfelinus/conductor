@@ -45,7 +45,7 @@ def test_specialized_coloring_attempts_keep_fresh_seed_policy(monkeypatch):
         **generic_entry(),
         "set": "monster-recast",
         "concept_id": "mr-001",
-        "semantic_attempts": 0,
+        "render_attempts": 0,
     }
 
     first = consumer.entry_to_job(entry)

@@ -1,0 +1,59 @@
+name: Coloring Render Gate Contract
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/consume_coloring_book_color_art.py"
+      - "scripts/render_retry.py"
+      - "scripts/art_quality.py"
+      - "ops/home-server/relay_agent.py"
+      - "ops/home-server/relay_media_agent.py"
+      - "tests/test_coloring_book_render_gate.py"
+      - "tests/test_relay_completion_provenance.py"
+      - ".github/workflows/coloring-semantic-contract.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "scripts/consume_coloring_book_color_art.py"
+      - "scripts/render_retry.py"
+      - "scripts/art_quality.py"
+      - "ops/home-server/relay_agent.py"
+      - "ops/home-server/relay_media_agent.py"
+      - "tests/test_coloring_book_render_gate.py"
+      - "tests/test_relay_completion_provenance.py"
+      - ".github/workflows/coloring-semantic-contract.yml"
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install --disable-pip-version-check pyyaml Pillow pytest
+
+      - name: Compile production scripts
+        run: |
+          python -m py_compile \
+            scripts/consume_coloring_book_color_art.py \
+            scripts/render_retry.py \
+            scripts/art_quality.py \
+            ops/home-server/relay_agent.py \
+            ops/home-server/relay_media_agent.py
+
+      - name: Verify render rejection and retry contracts
+        run: python -m unittest discover -s tests -p "test_coloring_book_render_gate.py"
+
+      - name: Verify relay completion provenance
+        run: python -m pytest -q tests/test_relay_completion_provenance.py
+
+      - name: Verify dry-run queue construction
+        run: python scripts/consume_coloring_book_color_art.py --limit 1

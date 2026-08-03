@@ -30,7 +30,6 @@ import yaml
 sys.path.insert(0, str(Path(__file__).parent))
 import art_quality  # noqa: E402
 import consume_art_queue as queue_consumer  # noqa: E402
-import curate_art  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 COLORING_ROOT = ROOT / "projects" / "coloring-book"
@@ -49,51 +48,6 @@ BW_PROMPT = (
     "color, gray tone, gradient, shadow fill, halftone, and painterly texture. Do not "
     "redesign, simplify away important details, add text, add a border, or change the scene."
 )
-
-PAIR_SCHEMA = {
-    "type": "object",
-    "properties": {
-        "composition_match": {"type": "boolean"},
-        "identity_match": {"type": "boolean"},
-        "line_art_valid": {"type": "boolean"},
-        "print_ready": {"type": "boolean"},
-        "score": {"type": "integer"},
-        "verdict": {"type": "string", "enum": ["promote", "revise", "reject"]},
-        "reasons": {"type": "array", "items": {"type": "string"}},
-    },
-    "required": [
-        "composition_match",
-        "identity_match",
-        "line_art_valid",
-        "print_ready",
-        "score",
-        "verdict",
-        "reasons",
-    ],
-    "additionalProperties": False,
-}
-
-PAIR_RUBRIC = """\
-You are checking a proposed matched pair for a professional coloring book.
-
-The first image is the accepted full-color master. The second image is the
-black-and-white candidate derived from it.
-
-Judge whether the black-and-white image faithfully preserves the same composition,
-subject identities, body types, pose, framing, perspective, expressions, contact
-points, props, and major scene details. It must not be a loose reinterpretation or a
-different pose.
-
-The black-and-white candidate must also be clean coloring-page line art: pure white
-open regions, confident black contours, no color, no gray shading, no gradients, no
-halftone, no border, no readable text, and no large accidental black fills. It should
-be suitable for print and flood-fill coloring.
-
-Score 0-100. Use promote only when the pair is faithful and review-ready, revise for
-a repairable mismatch, and reject for a different composition or structurally invalid
-line art. Return only the requested JSON object.
-"""
-
 
 def now_iso() -> str:
     return (
@@ -299,80 +253,6 @@ def reject_file(path: Path, category: str) -> str:
     return str(destination.relative_to(ROOT))
 
 
-def pair_vision(source: Path, candidate: Path) -> tuple[bool, dict[str, Any]]:
-    api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
-    if not api_key:
-        raise RuntimeError("ANTHROPIC_API_KEY is required for the BW pair gate")
-
-    source_block = curate_art.encode_image(source)
-    candidate_block = curate_art.encode_image(candidate)
-    if not source_block or not candidate_block:
-        raise RuntimeError("could not read color/BW pair for semantic review")
-
-    content = [
-        {"type": "text", "text": "ACCEPTED FULL-COLOR MASTER:"},
-        {"type": "image", "source": source_block},
-        {"type": "text", "text": "PROPOSED BLACK-AND-WHITE COUNTERPART:"},
-        {"type": "image", "source": candidate_block},
-        {"type": "text", "text": PAIR_RUBRIC},
-    ]
-    body = json.dumps(
-        {
-            "model": curate_art.MODEL,
-            "max_tokens": 2048,
-            "thinking": {"type": "adaptive"},
-            "output_config": {
-                "effort": "medium",
-                "format": {"type": "json_schema", "schema": PAIR_SCHEMA},
-            },
-            "messages": [{"role": "user", "content": content}],
-        }
-    ).encode()
-    request = urllib.request.Request(
-        curate_art.API_URL,
-        data=body,
-        headers={
-            "Content-Type": "application/json",
-            "x-api-key": api_key,
-            "anthropic-version": "2023-06-01",
-        },
-        method="POST",
-    )
-    with urllib.request.urlopen(request, timeout=180) as response:
-        payload = json.loads(response.read())
-    text = next(
-        (
-            block.get("text", "")
-            for block in payload.get("content", [])
-            if block.get("type") == "text"
-        ),
-        "",
-    )
-    verdict = json.loads(text)
-    reasons = [str(reason) for reason in verdict.get("reasons") or []]
-    score = int(verdict.get("score") or 0)
-    accepted = (
-        verdict.get("composition_match") is True
-        and verdict.get("identity_match") is True
-        and verdict.get("line_art_valid") is True
-        and verdict.get("print_ready") is True
-        and score >= PAIR_MIN_SCORE
-        and str(verdict.get("verdict") or "reject").lower() != "reject"
-    )
-    normalized = {
-        "model": curate_art.MODEL,
-        "score": score,
-        "verdict": str(verdict.get("verdict") or "reject").lower(),
-        "composition_match": verdict.get("composition_match") is True,
-        "identity_match": verdict.get("identity_match") is True,
-        "line_art_valid": verdict.get("line_art_valid") is True,
-        "print_ready": verdict.get("print_ready") is True,
-        "reasons": reasons,
-        "min_score": PAIR_MIN_SCORE,
-    }
-    return accepted, normalized
-
-
 def queue_job_status(job_id: int) -> dict[str, Any] | None:
     status, response = queue_consumer.http_json(
         "GET", f"{queue_consumer.KR_BASE_URL}/api/art/queue/{job_id}"
@@ -554,43 +434,26 @@ def generate_bw(
         queue_entry["bw_art_image_id"] = int(art_image_id)
         queue_entry["bw_rejected_path"] = rejected
         queue_entry["bw_mechanical_info"] = info
-        queue_entry["bw_semantic_reasons"] = reasons
+        queue_entry["bw_render_reasons"] = reasons
         queue_entry["bw_completed_at"] = now_iso()
         write_yaml(QUEUE_FILE, queue)
         print(f"  BW-REJECT {book_slug}/{proposal_id}: {'; '.join(reasons)} -> {rejected}")
         return
 
-    pair_ok, semantic = pair_vision(source, candidate)
-    if not pair_ok:
-        rejected = reject_file(candidate, "semantic")
-        queue_entry["bw_status"] = "needs_review"
-        queue_entry["bw_art_image_id"] = int(art_image_id)
-        queue_entry["bw_rejected_path"] = rejected
-        queue_entry["bw_semantic_model"] = semantic.get("model")
-        queue_entry["bw_semantic_score"] = semantic.get("score")
-        queue_entry["bw_semantic_verdict"] = semantic.get("verdict")
-        queue_entry["bw_semantic_reasons"] = semantic.get("reasons")
-        queue_entry["bw_completed_at"] = now_iso()
-        write_yaml(QUEUE_FILE, queue)
-        print(
-            f"  BW-SEMANTIC-REJECT {book_slug}/{proposal_id}: "
-            f"{'; '.join(semantic.get('reasons') or [])} -> {rejected}"
-        )
-        return
-
+    # Structurally sound line art. Whether it is a faithful counterpart to the
+    # color master is a judgement call, so it lands as `done` (awaiting review)
+    # and a human promotes it from the trainer panel.
     queue_entry["bw_status"] = "done"
     queue_entry["bw_art_image_id"] = int(art_image_id)
     queue_entry["bw_rendered_path"] = candidate_rel
-    queue_entry["bw_semantic_model"] = semantic.get("model")
-    queue_entry["bw_semantic_score"] = semantic.get("score")
-    queue_entry["bw_semantic_verdict"] = semantic.get("verdict")
-    queue_entry["bw_semantic_reasons"] = semantic.get("reasons")
+    queue_entry["bw_mechanical_info"] = info
+    queue_entry["bw_render_reasons"] = []
     queue_entry["bw_completed_at"] = now_iso()
     queue_entry.pop("bw_error", None)
     write_yaml(QUEUE_FILE, queue)
     print(
-        f"  BW-DONE {book_slug}/{proposal_id} -> {candidate.relative_to(ROOT)} "
-        f"(ArtImage {art_image_id}, pair score={semantic.get('score')})"
+        f"  BW-LANDED {book_slug}/{proposal_id} -> {candidate.relative_to(ROOT)} "
+        f"(ArtImage {art_image_id}) - awaiting human review"
     )
 
 
@@ -639,18 +502,6 @@ def finalize_pair(
         raise RuntimeError(f"{proposal_id} accepted pair is missing from disk")
     mechanical_check(color, "color")
     mechanical_check(bw, "bw")
-    pair_ok, semantic = pair_vision(color, bw)
-    if not pair_ok:
-        queue_entry["pair_status"] = "needs_review"
-        queue_entry["pair_semantic_score"] = semantic.get("score")
-        queue_entry["pair_semantic_reasons"] = semantic.get("reasons")
-        write_yaml(QUEUE_FILE, queue)
-        print(
-            f"  PAIR-REVIEW {book_slug}/{proposal_id}: "
-            + "; ".join(semantic.get("reasons") or [])
-        )
-        return
-
     final_color = relative_to_set(book_slug, color_rel)
     final_bw = relative_to_set(book_slug, bw_rel)
     final["color"] = final_color

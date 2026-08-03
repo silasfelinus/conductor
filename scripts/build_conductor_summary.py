@@ -40,7 +40,6 @@ except ImportError:
 sys.path.insert(0, str(Path(__file__).parent))
 import build_dream_proposal  # noqa: E402 — proposal existence check only (agents author proposals)
 import build_dream_records  # noqa: E402 — proposal → kind_robots records builder (Phase 2)
-import curate_art  # noqa: E402 — drains front-end curate-request queue (art trainer loop)
 
 REPOS = [
     {"owner": "silasfelinus", "name": "conductor"},
@@ -48,6 +47,7 @@ REPOS = [
 ]
 KR_API_URL = "https://kind-robots.vercel.app/api/todos"
 REPORT_PATH = "CONDUCTOR-REPORT.md"
+DAILY_DREAM_STATUS_PATH = os.environ.get("DAILY_DREAM_BUILD_STATUS", "")
 STALE_CLAIMED_HOURS = 4   # flag tasks stuck in "claimed" longer than this
 STALE_PR_HOURS = 8        # flag worker/* PRs open longer than this without review
 UTC = datetime.timezone.utc
@@ -160,13 +160,42 @@ def fetch_repo(owner: str, name: str, token: str | None) -> dict:
     }
 
 
+def inactive_project_slugs() -> set[str]:
+    """Slugs whose project-overrides.yaml status is anything but `active`.
+
+    roadmap.yaml has no lifecycle field, so a scan that reads it directly
+    resurfaces tasks from paused/retired/finished projects forever — their
+    roadmaps are deliberately kept as historical records, blocked and
+    needs-human entries included. This is the same bug CLAUDE.md documents for
+    the session-startup sweep; the summary builder had it too, which is why
+    retired `approval-portal` tasks (t-004, t-005) kept appearing under
+    ACTION NEEDED months after the project was closed.
+    """
+    try:
+        with open("project-overrides.yaml", encoding="utf-8") as handle:
+            doc = yaml.safe_load(handle) or {}
+    except FileNotFoundError:
+        return set()
+    return {
+        override["slug"]
+        for override in doc.get("overrides", [])
+        if override.get("slug")
+        and str(override.get("status", "active")).lower() != "active"
+    }
+
+
 def fetch_roadmaps() -> dict:
-    """Scan all local project roadmaps for health signals."""
+    """Scan active project roadmaps for health signals."""
     blocked, needs_human, stale_claimed = [], [], []
     ready = waiting = in_review = 0
+    inactive = inactive_project_slugs()
 
     for path in sorted(glob.glob("projects/*/roadmap.yaml")):
         if "_template" in path:
+            continue
+        # The directory name is the canonical slug — it is what
+        # project-overrides.yaml and sync_projects.py both key on.
+        if os.path.basename(os.path.dirname(path)) in inactive:
             continue
         rm = yaml.safe_load(open(path)) or {}
         project = rm.get("project", "?")
@@ -302,8 +331,9 @@ You run every hour to assess the health of two GitHub repos:
 - kind_robots (the main app and public-facing service)
 
 Review the state data and produce a brief, scannable report. Your job:
-1. Identify real signals: CI failures, Vercel deploy failures, blocked tasks, needs-human gates,
-   stale PRs, open todos, images waiting to distribute, pending art generation queue.
+1. Identify real signals: CI failures, Vercel deploy failures, failed daily-dream object builds,
+   blocked tasks, needs-human gates, stale PRs, open todos, images waiting to distribute,
+   pending art generation queue.
 2. Ignore noise: chore commits, skip-ci, bot status refreshes.
 3. Decide: does anything need Silas's attention, or is the autonomous loop running smoothly?
 
@@ -363,6 +393,14 @@ def _fallback(state: dict) -> str:
     art = state.get("art_queue", {})
     vercel = state.get("vercel", {})
     items = []
+
+    daily_dream = state.get("daily_dream_build", {})
+    if daily_dream.get("status") == "failed":
+        items.append(
+            "**Daily-dream creation failed** — "
+            f"{daily_dream.get('message', 'the object bundle was not recorded')}. "
+            "The proposal is pinned for retry; inspect the Hourly Conductor run."
+        )
 
     for r in state.get("repos", []):
         for wf in r.get("failing_ci", []):
@@ -444,6 +482,35 @@ def write_report(summary: str, as_of: str, dry_run: bool) -> None:
         print(f"  wrote {REPORT_PATH}", file=sys.stderr)
 
 
+def write_daily_dream_status(outcome: dict) -> None:
+    """Leave a same-job status file for the workflow's final truth check."""
+    if not DAILY_DREAM_STATUS_PATH:
+        return
+    Path(DAILY_DREAM_STATUS_PATH).write_text(
+        json.dumps(outcome, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+
+
+def ensure_daily_dream_failure_is_visible(summary: str, outcome: dict) -> str:
+    """Do not let the prose model omit the one signal this workflow just observed."""
+    if outcome.get("status") != "failed":
+        return summary
+    message = str(outcome.get("message") or "the object bundle was not recorded")
+    bullet = (
+        "- **Daily-dream creation failed** — "
+        f"{message} The proposal is pinned for retry; no completed bundle was recorded."
+    )
+    if "Daily-dream creation failed" in summary:
+        return summary
+    if summary.startswith("## ALL CLEAR"):
+        rest = summary.split("\n", 1)[1] if "\n" in summary else ""
+        return f"## ACTION NEEDED\n\n{bullet}\n\n{rest}".rstrip()
+    if summary.startswith("## ACTION NEEDED"):
+        return summary.replace("## ACTION NEEDED", f"## ACTION NEEDED\n\n{bullet}", 1)
+    return f"## ACTION NEEDED\n\n{bullet}\n\n{summary}"
+
+
 # ── Entry point ────────────────────────────────
 
 def main() -> None:
@@ -456,6 +523,14 @@ def main() -> None:
     as_of = _now().strftime("%Y-%m-%d %H:%M UTC")
 
     print(f"[conductor] {as_of}", file=sys.stderr)
+
+    # Build first, then report exactly what happened.  This is the daily creation
+    # transaction: successful API writes, art requests, and the durable built-data
+    # record land together.  A failure leaves a retry marker instead of disappearing
+    # into stderr while the workflow reports green.
+    print("  daily-dream records + art attach...", file=sys.stderr)
+    daily_dream_build = build_dream_records.ensure_records(dry_run=args.dry_run)
+    write_daily_dream_status(daily_dream_build)
 
     repos = []
     for r in REPOS:
@@ -487,32 +562,15 @@ def main() -> None:
         "art_queue": art_queue,
         "vercel": vercel,
         "daily_dream_proposal_missing": proposal_missing_today,
+        "daily_dream_build": daily_dream_build,
     }
 
     print("  assessing...", file=sys.stderr)
     summary = assess(state)
+    summary = ensure_daily_dream_failure_is_visible(summary, daily_dream_build)
 
     write_report(summary, as_of, args.dry_run)
 
-    # Phase 2: build yesterday's proposal into real kind_robots records (pure
-    # REST via KR_API_TOKEN — no model calls) and attach any freshly-rendered
-    # art to its pitch sheets. Guarded (one unbuilt proposal past its steering
-    # day; skips if Silas left notes) and soft-failing, so it's sweep-safe.
-    # NOTE: proposal AUTHORING is not done here — the sweeping LLM agent writes
-    # it (build_dream_proposal.py --brief / --from-json); this run only flagged
-    # a missing proposal in the state above.
-    print("  daily-dream records + art attach...", file=sys.stderr)
-    build_dream_records.ensure_records(dry_run=args.dry_run)
-
-    # Service front-end curate requests: run the vision assessor on ArtJobs Silas
-    # flagged in the ArtJob trainer panel and POST CURATOR verdicts back. Soft-fails
-    # without ANTHROPIC_API_KEY / KR_API_TOKEN (leaves the queue pending).
-    print("  curate-request drain (art trainer)...", file=sys.stderr)
-    try:
-        curate_args = argparse.Namespace(dry_run=args.dry_run, limit=0)
-        curate_art.run_requests(curate_args)
-    except Exception as error:  # noqa: BLE001 - never let curation break the sweep
-        print(f"  curate-request drain skipped: {error}", file=sys.stderr)
 
 
 if __name__ == "__main__":

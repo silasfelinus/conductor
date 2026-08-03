@@ -315,6 +315,9 @@ violation regardless of whether the action seems helpful.
 - Set `status: challenged` on a task where it disagrees with the Reviewer's rejection
 - Run `scripts/fetch_todos.py`, `complete_todo.py`, `resolve_deps.py`
 - Create new `ready` tasks in roadmap.yaml for out-of-scope issues discovered during work
+  — get the id from `python scripts/next_free_task_id.py <project>` (checks `origin/main`
+  fresh) rather than hand-picking one, to avoid colliding with an id another session just
+  assigned (see "Rotation collisions")
 
 ### Worker (OpenAI) — CANNOT
 - Merge work that is human-gated, outward-facing, irreversible, security-sensitive, or blocked by failed verification unless Silas explicitly approves it
@@ -405,6 +408,14 @@ uv tool install pytest --with pyyaml --force
 
 ### Finish on clean main — no leftover branches
 
+**Silas, 2026-07-31 (standing):** *"You should open prs automatically, merge when green, we
+prefer a tight ship with a single main branch once work is done, and I test on main."* Open the
+PR as soon as the work is pushed — never end a session having only pushed a branch, and never
+pause to ask permission to open one. If your harness carries a default "do not open a PR unless
+asked," this line is the ask, standing for every session. The real gates are unchanged: human-gated,
+outward-facing, irreversible, and security-sensitive work still ends at `needs-human` with its PR
+open but unmerged.
+
 The goal of every run is an updated `main` with the run's safe work merged and **no branch
 left behind**. This is not conditional on a human saying "merge" — for reversible, scoped,
 verified, non-human-gated work, merging is the default terminal state (see the Worker/Reviewer
@@ -455,6 +466,9 @@ delete it now, not an observation for later. (Kaizen from challenge-center/t-002
 - Write, overwrite, or remove the `retry_context:` field on a task per the Failure triage rules
 - Reference past TALKBACK entries when explaining a decision
 - Create new `ready` tasks in roadmap.yaml for unrelated issues spotted during review
+  — get the id from `python scripts/next_free_task_id.py <project>` (checks `origin/main`
+  fresh) rather than hand-picking one, to avoid colliding with an id another session just
+  assigned (see "Rotation collisions")
 - Escalate a `challenged` task to `needs-human` for Silas to resolve
 
 ### Reviewer (Claude) — CANNOT
@@ -641,8 +655,12 @@ in the PR. Recurring tasks don't count toward milestone progress.
   the failure category and a one-line lesson.
 - **Kaizen on merge**: after every successful merge, create exactly one new `ready` task
   in the project's roadmap from the Worker's kaizen suggestion (or substitute your own if
-  theirs is weak). One sentence title, `stakes: reversible`. This compounds improvement
-  across cycles automatically. Check `LEARNING-REPORT.md` first — target a systematic
+  theirs is weak). One sentence title, `stakes: reversible`. Get the id from
+  `python scripts/next_free_task_id.py <project>` (checks `origin/main` fresh) rather than
+  hand-picking one — this is the fix for the id-collision class that produced
+  interface-vision/t-065 (`t-061`/`t-062` each hand-assigned twice in one day). This
+  compounds improvement across cycles automatically. Check `LEARNING-REPORT.md` first
+  — target a systematic
   weakness over a generic improvement when one applies (see "Learning ledger").
 - **On a `challenged` task:** read the Worker's TALKBACK entry carefully. If the Worker's
   case has merit, adjust your decision and append a response. If not, escalate to
@@ -992,6 +1010,58 @@ main's copy of `STATUS.md` / `workspace.html` / `ROADMAP-AUDIT.*` / `LEARNING-RE
 and regenerate; for append-only files both sides touched (`TALKBACK.md`, `LEARNING.yaml`),
 keep both sides' entries rather than picking one. (Kaizen from the 2026-07-16 8-PR
 Reviewer sweep, conductor/t-056.)
+
+## Don't hand work back that you can do yourself
+
+Migrated from Silas's per-origin prompts (2026-07-31) so every agent gets it, not just the
+one whose prompt happened to carry it.
+
+Do not ask Silas to switch branches, merge work that is already green, or verify something
+that code, tests, CI, logs, or a Vercel preview can verify. Do not assign routine cleanup
+back to him. Do not open with speculative access disclaimers ("I may not be able to reach
+X") — attempt the thing, then report what actually happened. Claim a tooling limitation only
+after a specific operation has failed and you have tried the alternatives.
+
+Stop only at a real human gate: secrets, billing, DNS, account creation, destructive or
+irreversible production changes, physical access, anything outward-facing or published, and
+explicitly requested subjective approval. Those still end at `needs-human` with the PR open.
+
+Everything short of that is yours to finish.
+
+## Companion PRs across repos
+
+When a change spans `conductor` and a target repo (usually `kind_robots`), the two PRs are
+one unit of work:
+
+- Work out the dependency direction first, and merge in that order — if the conductor doc
+  references a file the kind_robots PR creates, kind_robots merges first.
+- Merge **both** when green. Half-landed companion work is worse than neither half: it
+  leaves a reference pointing at something that does not exist yet.
+- Clean up both sides — stale branches, claims, and superseded PRs — in the same session.
+- If only one side can land (the other is gated or blocked), say so explicitly in the merged
+  side's PR body and in the roadmap note, so the dangling reference is discoverable rather
+  than silent.
+
+## Reporting back to Silas
+
+Migrated from Silas's per-origin prompts (2026-07-31). Every agent report should cover:
+
+- root cause (not just the symptom you fixed)
+- what changed
+- PRs opened and merged
+- the tests and checks you **actually ran**, and their results
+- merge and deploy status
+- relevant workflow-run and ArtJob IDs
+- cleanup done
+- genuine human gates only — nothing speculative
+
+Say what you verified and what you assumed; never blur the two. If something was blocked or
+skipped, say so plainly with the evidence. State finished work plainly, without hedging.
+
+"Green" means the checks completed and passed — not that a PR exists. Confirm the check runs
+themselves rather than trusting a `mergeable_state` that can read `clean` while checks are
+still queued. (2026-07-31: a PR was merged 65 seconds after opening with 23 checks still
+running. They passed, but that was luck, not verification.)
 
 ## PR handoff template (Worker fills in)
 ```

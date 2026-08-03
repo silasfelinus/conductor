@@ -10,6 +10,10 @@ import scripts.challenge_submit as challenge_submit
 BASE_URL = "https://kind-robots.example"
 
 
+def test_legacy_art_sd_contender_uses_comfy_krea2():
+    assert matchup.ART_GENERATORS["art-sd"] == "krea2"
+
+
 def test_load_inline_json_and_list_shortcut():
     spec = matchup.load_matchup_spec(
         json.dumps([{"contender": "claude-fable"}, {"contender": "openai-gpt"}])

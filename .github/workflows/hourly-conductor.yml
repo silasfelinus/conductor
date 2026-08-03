@@ -46,6 +46,20 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          DAILY_DREAM_BUILD_STATUS: /tmp/daily-dream-build-status.json
+
+      - name: Attach daily-dream Facets
+        id: daily_dream_facets
+        continue-on-error: true
+        run: |
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            python scripts/apply_daily_dream_facets.py --dry-run
+          else
+            python scripts/apply_daily_dream_facets.py
+          fi
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_BASE_URL: https://kind-robots.vercel.app
 
       - name: Upload report artifact
         if: always()
@@ -60,10 +74,9 @@ jobs:
         run: |
           git config user.name "conductor-bot"
           git config user.email "conductor-bot@users.noreply.github.com"
-          # build_conductor_summary.py also generates the daily-dream proposal
-          # (once/day), builds yesterday's proposal into kind_robots records
-          # (built-data in the backlog file), and queues its art requests —
-          # commit those surfaces alongside the report.
+          # build_conductor_summary.py builds the eligible proposal into
+          # kind_robots records, queues six art requests, records the completed
+          # bundle (or a pinned retry), and the Facet sidecar updates built-data.
           git add CONDUCTOR-REPORT.md projects/dream-cycle/backlog/ projects/art-prompts.yaml
           if git diff --staged --quiet; then
             echo "No changes to commit"
@@ -84,3 +97,23 @@ jobs:
 
           echo "::error::Unable to push conductor report after 3 attempts."
           exit 1
+
+      - name: Verify daily-dream creation result
+        if: ${{ always() && inputs.dry_run != 'true' }}
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path("/tmp/daily-dream-build-status.json")
+          if not path.exists():
+              raise SystemExit("Daily-dream builder produced no status record.")
+          result = json.loads(path.read_text(encoding="utf-8"))
+          print(json.dumps(result, indent=2))
+          if result.get("status") == "failed":
+              raise SystemExit(result.get("message") or "Daily-dream object creation failed.")
+          PY
+          if [ "${{ steps.daily_dream_facets.outcome }}" != "success" ]; then
+            echo "::error::Daily-dream Facet attachment failed after the bundle ledger was committed."
+            exit 1
+          fi

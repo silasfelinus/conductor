@@ -3,7 +3,7 @@
 
 The digest is art-forward: it leads with tomorrow's dream proposal (facsimile
 pitch cards mirroring kind_robots' dream-pitch-sheet, with a comment/edit link),
-then yesterday's built output, the day's highest-scored art, and a highlight
+then the previously completed built output, the day's highest-scored art, and a highlight
 reel of new creations — followed by the usual project-management sections.
 """
 import html
@@ -228,7 +228,7 @@ def build_payload(digest):
     tomorrow = proposal_section("🌙 Tomorrow's dream", digest.get("tomorrow_proposal"),
                                 cta=True, page_link=page_link)
     yo = digest.get("yesterday_output")
-    yesterday = proposal_section("🖼️ Yesterday's output", yo,
+    yesterday = proposal_section("🖼️ Previous completed output", yo,
                                  images=(yo or {}).get("images") if yo else None,
                                  page_link=(yo or {}).get("page", "") if yo else "")
     gallery = gallery_section(digest.get("art_highlights", []))
