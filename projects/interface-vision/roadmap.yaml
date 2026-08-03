@@ -1684,29 +1684,18 @@ tasks:
   - id: t-055
     milestone: m3
     title: 'Fix verifyLayoutContract.ts root-tag regex to recognize PascalCase component tags'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-017's twelfth sweep (2026-08-02, kind_robots PR #1324).
-      verifyLayoutContract.ts's rootClassList() extracts a template's root tag with
-      `/^<([a-z][\w-]*)\b([^>]*)>/` -- the `[a-z]` only matches a lowercase first
-      character, so any page component whose own template root is a PascalCase
-      component reference (e.g. `<ProjectFrontPage class="kr-surface" ...>`) can
-      never match, regardless of whether the class attribute is actually present and
-      correct. This sweep worked around it by renaming 13 call sites from
-      `<ProjectFrontPage>` to Nuxt's equivalent kebab-case `<project-front-page>`
-      (harmless -- Vue/Nuxt resolve both identically -- but incidental, and it will
-      recur for any other component-rooted page wrapper written in PascalCase).
-      Change the regex's tag-name character class to accept an uppercase first
-      character too (e.g. `[A-Za-z]`) so root-surface detection judges the actual
-      class attribute instead of depending on the caller's tag-case convention. Add a
-      regression fixture (a page component whose root is a PascalCase tag carrying
-      kr-surface) so this doesn't silently regress.
+    note: |-
+      Kaizen from t-017's twelfth sweep (2026-08-02, kind_robots PR #1324). verifyLayoutContract.ts's rootClassList() extracts a template's root tag with `/^<([a-z][\w-]*)\b([^>]*)>/` -- the `[a-z]` only matches a lowercase first character, so any page component whose own template root is a PascalCase component reference (e.g. `<ProjectFrontPage class="kr-surface" ...>`) can never match, regardless of whether the class attribute is actually present and correct. This sweep worked around it by renaming 13 call sites from `<ProjectFrontPage>` to Nuxt's equivalent kebab-case `<project-front-page>` (harmless -- Vue/Nuxt resolve both identically -- but incidental, and it will recur for any other component-rooted page wrapper written in PascalCase). Change the regex's tag-name character class to accept an uppercase first character too (e.g. `[A-Za-z]`) so root-surface detection judges the actual class attribute instead of depending on the caller's tag-case convention. Add a regression fixture (a page component whose root is a PascalCase tag carrying kr-surface) so this doesn't silently regress.
+
+
+      Implemented the PascalCase root-tag parser fix and added a regression fixture on the Kind Robots worker branch.
     claimed_by: 2026-08-03T161347Z-interface-vision-t-055-n8q4
     claimed_at: '2026-08-03T16:13:47Z'
-    updated: '2026-08-03T16:13:47Z'
+    updated: '2026-08-03T16:21:00Z'
 
   - id: t-061
     milestone: m3
