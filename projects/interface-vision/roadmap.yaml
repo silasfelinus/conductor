@@ -2298,7 +2298,7 @@ tasks:
   - id: t-073
     milestone: m3
     title: 'Fix the one-scroll SHAPE A false positives by hoisting a shared kr-scroll above mutually-exclusive tab branches'
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -2318,10 +2318,12 @@ tasks:
       Merged Kind Robots PR #1372 as e479e3ab4c29a3c507daa778c4a0ae36bd019859. avatar-picker.vue's gallery/upload/generate v-show tabs (mutually exclusive at runtime) now share one .kr-scroll wrapper instead of two independent overflow-y-auto declarations. All 15 required checks passed. Ratchets one-scroll from 26 to 25. Also examined and released (not safe Shape A hoists): mural-manager.vue (three panes visible simultaneously, genuine Shape B) and butterfly-flip.vue (front/back panels can both be mounted at once when useFlipEffect is false). The task remains open for the other unclassified one-scroll candidates.
 
       Merged kind_robots PR #1374 at 80df44ba0b6fd9d545a68e81035884c582382cf4 after all 13 final-head workflows completed successfully. Hoisted one shared scroll owner above the mutually exclusive WonderLab preview status branches and reduced the one-scroll baseline from 25 to 24. The task remains open because the bucket is not yet zero and the remaining entries require separate Shape B/Shape D treatment. Lesson: mutually exclusive render branches can share one scroll owner, but bounded diagnostic regions and genuine concurrent two-column panes should not be collapsed merely to reduce a static counter.
+
+      Twenty-sixth cycle: examined the remaining 23-entry one-scroll bucket for a safe Shape A hoist and found none this pass. server-manager.vue's five dashboard-mode branches (art/text/checkpoints/all/interact) are a clean identical-shape Shape A set, but the file's sixth branch (overview) already declares two concurrently-visible columns of its own (a real Shape B), so hoisting only the five would not zero the file's violation count and was not worth the diff. chat-gallery.vue and scenario-interact.vue are genuinely mutually-exclusive top-level branches (thread-list vs active-thread; browse/configure vs play) but each branch has a different internal shape -- one branch scrolls its whole body, the other pins a header and/or composer around a narrower scroll region -- so a naive shared wrapper would make the pinned header/footer scroll away too, a real behavior change, not a hoist. art-styler.vue's two occurrences are small max-h-52 thumbnail grids on two of three mutually-exclusive sourceTab branches (gallery/starter, not upload), genuinely identical in shape, but nested at different depths under branch-specific markup (search box vs none) with no shared ancestor a hoist could attach to without restructuring the branch chain itself. art-gallery.vue's second region is a full-screen fixed image-overlay modal that stays mounted alongside the gallery grid behind it (not a v-if/v-else sibling), so the two scroll regions are concurrent by construction, not a false positive. artjob-editor.vue and theme-gallery.vue's second regions are both small bounded diagnostic/JSON previews nested inside their page's own single scroll region -- the same "bounded preview nested in parent" shape already ruled unsafe for user-galleries.vue. messenger.vue and dream-brainstorm.vue are genuine persistent two-column layouts (conversation list + thread; dream list + detail), both concurrently visible and scrollable, real Shape B. channel-select.vue's two regions are a dropdown menu and its flyout submenu, which can be open at the same time -- concurrent, not mutually exclusive. Released without any change rather than force a hoist that would either misrepresent a genuine Shape B as fixed or alter pinned-header/footer behavior; the remaining bucket needs either the still-missing two-column-scroll primitive (Shape B, e.g. server-manager.vue's overview pane, messenger.vue, dream-brainstorm.vue) or a header/scroll/footer three-region primitive (chat-gallery.vue, scenario-interact.vue) rather than more single-file Shape A sweeps.
     claimed_by: 2026-08-03T152742Z-interface-vision-t-073-sweep2
     claimed_at: '2026-08-03T15:27:43Z'
-    updated: '2026-08-03T15:27:43Z'
-    owner: worker
+    updated: '2026-08-03T15:33:05Z'
+    owner: null
 
   - id: t-074
     milestone: m3
