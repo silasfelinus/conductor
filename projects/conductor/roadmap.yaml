@@ -2820,11 +2820,11 @@ tasks:
   - id: t-090
     milestone: m2
     title: "LEARNING.yaml schema conformance test now fails on main (invalid failure_category value from PR #1330)"
-    status: needs-human
+    status: done
     gate_human: true
     passes: 0
     stakes: reversible
-    note: |
+    note: |-
       FOR SILAS: `tests/test_backfill_learning.py::test_committed_ledger_schema_conformance` is
       failing on `main` (confirmed at commit `fb39820`, PR #1330's merge) and will fail on
       every subsequent PR's "Python test suite" check until fixed.
@@ -2877,8 +2877,13 @@ tasks:
       AGENTS.md -- but there is nothing left to approve or decide; this is now just waiting on
       confirmation. TO APPROVE: if this matches your recollection (or you're fine trusting the
       test result), set `status: done`. Nothing else depends on this.
+
+
+      Closed during Silas's explicit human-gate pertinence audit. The invalid LEARNING.yaml failure_category had already been corrected to actionable, the committed-ledger schema conformance test passed, and the task note states there is nothing left to approve or decide. This was stale close-out bookkeeping, not a live gate.
     claimed_by: null
     claimed_at: null
+    approved_by_human: true
+    updated: '2026-08-03T07:15:01Z'
 
   - id: t-091
     milestone: m2
