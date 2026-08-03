@@ -2051,3 +2051,20 @@ tasks:
       that object type isn't already tagging refType on its award call sites (check
       server/utils/karma.ts call sites the way t-046's note did for ArtImage/Prompt before assuming).
 
+  - id: t-067
+    milestone: m3
+    title: 'Document the root-tag footgun in verifyLayoutContract.ts (root-surface checks the literal first tag, not the visually-styled wrapper)'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Kaizen from t-017's twenty-first sweep (2026-08-03, kind_robots PR #1347). components/pages/rebel-button.vue's
+      template opened with a bare `<main>` (no class at all) wrapping a styled `<div class="hero flex flex-col ...">`
+      one level deeper -- the div that visually reads as "the page root." verifyLayoutContract.ts's rootClassList
+      only reads the literal first tag after `<template>`, so it was checking the classless `<main>`, not the styled
+      div. Wasted the sweep's first attempt (added kr-unbound to the wrong element, caught before commit only
+      because `--report` still showed the violation). Add a short comment above `rootClassList` in
+      utils/scripts/verifyLayoutContract.ts noting this footgun, so the next sweep checks the literal opening tag
+      first instead of assuming it's whichever nested element carries the layout classes.
+
