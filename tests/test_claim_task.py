@@ -62,6 +62,21 @@ tasks:
   owner: worker
 """
 
+DELEGATED_ROADMAP = """\
+project: demo
+kind: software
+tasks:
+- id: t-001
+  title: Umbrella task
+  status: ready
+  owner: null
+  remaining_scope_task: t-002
+- id: t-002
+  title: Dedicated follow-on
+  status: ready
+  owner: null
+"""
+
 
 @pytest.fixture
 def demo_repo(tmp_path, monkeypatch):
@@ -135,6 +150,21 @@ def test_second_session_cannot_claim_after_first_lands(demo_repo):
     with pytest.raises(ct.ClaimError) as excinfo:
         ct.claim("demo", "t-001", "reviewer", "session-b", dry_run=False)
     assert excinfo.value.code == 3
+
+
+def test_umbrella_task_cannot_be_claimed_while_delegate_is_open(tmp_path, monkeypatch):
+    clone = make_remote_and_clone(tmp_path, DELEGATED_ROADMAP)
+    monkeypatch.setattr(ct, "ROOT", clone)
+    monkeypatch.setattr(ct, "PROJECTS_DIR", clone / "projects")
+
+    with pytest.raises(ct.ClaimError) as excinfo:
+        ct.claim("demo", "t-001", "reviewer", "session-a", dry_run=False)
+    assert excinfo.value.code == 3
+    assert "ALREADY_CLAIMED" in str(excinfo.value)
+    assert "t-002" in str(excinfo.value)
+
+    # The dedicated follow-on itself is unaffected and remains claimable.
+    ct.claim("demo", "t-002", "reviewer", "session-a", dry_run=False)
 
 
 def test_identical_session_string_does_not_bypass_collision_check(demo_repo):

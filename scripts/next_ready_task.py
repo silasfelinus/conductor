@@ -112,7 +112,7 @@ def first_ready_task(order: list[str], active: dict[str, dict[str, Any]]) -> dic
         tasks_by_id = {str(task.get("id")): task for task in tasks if task.get("id")}
 
         for task in tasks:
-            if not task_is_claimable(task):
+            if not task_is_claimable(task, tasks_by_id=tasks_by_id):
                 continue
             if not task_is_unblocked(task, tasks_by_id):
                 continue

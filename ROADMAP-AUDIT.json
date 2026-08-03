@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-08-03T07:48:11.083720+00:00",
+  "generated_at": "2026-08-03T18:36:09.435208+00:00",
   "summary": {
     "roadmaps": 45,
-    "active_projects": 26,
-    "tasks": 840,
-    "ready": 57,
+    "active_projects": 27,
+    "tasks": 848,
+    "ready": 62,
     "waiting": 47,
-    "needs_human": 27,
+    "needs_human": 21,
     "in_progress": 3,
-    "done": 696,
+    "done": 705,
     "errors": 3,
-    "warnings": 4,
-    "info": 61
+    "warnings": 6,
+    "info": 64
   },
   "projects": [
     {
@@ -20,20 +20,19 @@
       "override_status": "active",
       "priority_index": 1,
       "autonomous": false,
-      "task_count": 71,
+      "task_count": 77,
       "counts": {
-        "done": 43,
+        "done": 52,
         "needs-human": 1,
-        "ready": 26,
-        "review": 1
+        "ready": 24
       },
-      "open_count": 28,
+      "open_count": 25,
       "human_attention": 1,
-      "ready": 26,
+      "ready": 24,
       "waiting": 0,
       "claimed": 0,
-      "review": 1,
-      "done": 43
+      "review": 0,
+      "done": 52
     },
     {
       "slug": "challenge-center",
@@ -63,12 +62,12 @@
       "counts": {
         "claimed": 1,
         "done": 50,
-        "needs-human": 2,
+        "ready": 2,
         "waiting": 1
       },
       "open_count": 4,
-      "human_attention": 2,
-      "ready": 0,
+      "human_attention": 0,
+      "ready": 2,
       "waiting": 1,
       "claimed": 1,
       "review": 0,
@@ -172,17 +171,18 @@
     {
       "slug": "mermaids-of-venice",
       "kind": "content",
-      "override_status": "paused",
+      "override_status": "active",
       "priority_index": 9,
       "autonomous": false,
-      "task_count": 12,
+      "task_count": 13,
       "counts": {
         "done": 4,
-        "needs-human": 8
+        "needs-human": 8,
+        "ready": 1
       },
-      "open_count": 8,
+      "open_count": 9,
       "human_attention": 8,
-      "ready": 0,
+      "ready": 1,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
@@ -197,12 +197,11 @@
       "task_count": 53,
       "counts": {
         "done": 50,
-        "needs-human": 1,
-        "ready": 2
+        "ready": 3
       },
       "open_count": 3,
-      "human_attention": 1,
-      "ready": 2,
+      "human_attention": 0,
+      "ready": 3,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
@@ -217,12 +216,12 @@
       "task_count": 12,
       "counts": {
         "done": 4,
-        "needs-human": 1,
+        "ready": 1,
         "waiting": 7
       },
       "open_count": 8,
-      "human_attention": 1,
-      "ready": 0,
+      "human_attention": 0,
+      "ready": 1,
       "waiting": 7,
       "claimed": 0,
       "review": 0,
@@ -404,16 +403,18 @@
       "override_status": "active",
       "priority_index": 21,
       "autonomous": false,
-      "task_count": 95,
+      "task_count": 96,
       "counts": {
+        "claimed": 1,
         "done": 93,
-        "needs-human": 2
+        "needs-human": 1,
+        "ready": 1
       },
-      "open_count": 2,
-      "human_attention": 2,
-      "ready": 0,
+      "open_count": 3,
+      "human_attention": 1,
+      "ready": 1,
       "waiting": 0,
-      "claimed": 0,
+      "claimed": 1,
       "review": 0,
       "done": 93
     },
@@ -864,11 +865,11 @@
       "task_count": 6,
       "counts": {
         "done": 5,
-        "needs-human": 1
+        "ready": 1
       },
       "open_count": 1,
-      "human_attention": 1,
-      "ready": 0,
+      "human_attention": 0,
+      "ready": 1,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
@@ -899,6 +900,13 @@
     },
     {
       "severity": "warning",
+      "code": "STALE_IN_PROGRESS",
+      "project": "ai-art-academy",
+      "task": "t-010",
+      "message": "Task has remained claimed for 3 days."
+    },
+    {
+      "severity": "warning",
       "code": "ACTIVE_PROJECT_ALL_DONE",
       "project": "davinci",
       "task": null,
@@ -910,6 +918,13 @@
       "project": "davinci",
       "task": null,
       "message": "Active project has no open tasks; mark finished/paused or add an intentional recurring task."
+    },
+    {
+      "severity": "warning",
+      "code": "SOFT_NEEDS_HUMAN",
+      "project": "interface-vision",
+      "task": "t-074",
+      "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
     },
     {
       "severity": "warning",
@@ -1160,8 +1175,36 @@
       "severity": "info",
       "code": "APPROVAL_WITHOUT_GATE",
       "project": "interface-vision",
+      "task": "t-016",
+      "message": "approved_by_human is set on a task that is not human-gated."
+    },
+    {
+      "severity": "info",
+      "code": "APPROVAL_WITHOUT_GATE",
+      "project": "interface-vision",
+      "task": "t-040",
+      "message": "approved_by_human is set on a task that is not human-gated."
+    },
+    {
+      "severity": "info",
+      "code": "APPROVAL_WITHOUT_GATE",
+      "project": "interface-vision",
       "task": "t-056",
       "message": "approved_by_human is set on a task that is not human-gated."
+    },
+    {
+      "severity": "info",
+      "code": "APPROVAL_WITHOUT_GATE",
+      "project": "interface-vision",
+      "task": "t-071",
+      "message": "approved_by_human is set on a task that is not human-gated."
+    },
+    {
+      "severity": "info",
+      "code": "NEEDS_HUMAN_NOTE_FORMAT",
+      "project": "interface-vision",
+      "task": "t-074",
+      "message": "needs-human note does not use the AGENTS.md FOR SILAS action format."
     },
     {
       "severity": "info",
@@ -1197,13 +1240,6 @@
       "project": "lora-ingestion",
       "task": null,
       "message": "Roadmap has no friendly goal/definition of done."
-    },
-    {
-      "severity": "info",
-      "code": "NEEDS_HUMAN_NOTE_FORMAT",
-      "project": "lora-ingestion",
-      "task": "t-003",
-      "message": "needs-human note does not use the AGENTS.md FOR SILAS action format."
     },
     {
       "severity": "info",
