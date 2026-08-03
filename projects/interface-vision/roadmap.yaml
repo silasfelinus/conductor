@@ -1389,29 +1389,15 @@ tasks:
   - id: t-035
     milestone: m2
     title: 'Wire getModelCards() for real; derive card decks from navManifest.ts'
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-012
-    note: >
-      Split from t-012 (2026-08-01, kind_robots PR #1272). stores/helpers/modelCards.ts's
-      getModelCards() is defined but never called anywhere -- pageStore.ts's `cards`
-      computed only accepts an already-resolved array (isBuilderCardArray /
-      isNavigationCardArray), never looks up the raw `cards:` frontmatter string against
-      the registry. So today every `cards:` value except the literal 'builderCards'
-      sentinel (workspace-hand.vue / workspace-sheet.vue's special case deferring to
-      builderStore.cards) is decorative and has zero runtime effect. Wire getModelCards()
-      into pageStore.cards for real, fold conductorCards.ts's CONDUCTOR_CARDS into the
-      registry (it already exists and is used elsewhere, just never registered), and
-      decide whether content/characters.md's gallery deserves its own CHARACTER_CARDS (a
-      genuine content-authoring task, the same shape as BOT_CARDS/DREAM_CARDS/etc. --
-      t-012 deliberately left it pointed at the generic navCards fallback rather than
-      fabricate wizard content). Verify with `npm run test:nav-manifest` plus a
-      Vercel-preview check that card decks actually render per tab.
+    note: 'kind_robots PR #1389 (merged, squash e641da6). Wired getModelCards() into pageStore.ts''s cards computed -- string cards: frontmatter values (navCards/artCards/botCards/dreamCards/labCards/rewardCards/scenarioCards/conductorCards) now resolve to their registry deck instead of silently falling back to channelTabsToCards(). Folded conductorCards.ts''s CONDUCTOR_CARDS into modelCards.ts''s BuilderCardsKey registry as ''conductorCards'' (content/conductor.md already declared cards: conductorCards with nowhere to resolve). Left content/characters.md on the generic navCards fallback rather than fabricating a CHARACTER_CARDS deck, same call t-012 made originally -- no wizard content exists yet to justify a dedicated deck. Verified: npm run test:nav-manifest (0 errors), vue-tsc --noEmit (clean), eslint clean on both touched files, and a live Vercel-preview SSR check of /conductor (conductorCards labels present), /characters and /dashboard (navCards icons present) confirming decks render per tab.'
     claimed_by: claude-scheduled-20260803T232937Z-iv-t035
     claimed_at: '2026-08-03T23:29:37Z'
-    updated: '2026-08-03T23:29:37Z'
+    updated: '2026-08-03T23:45:45Z'
 
   - id: t-036
     milestone: m2
