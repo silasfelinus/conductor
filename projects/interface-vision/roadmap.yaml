@@ -2049,7 +2049,8 @@ tasks:
   - id: t-065
     milestone: m3
     title: 'Add a next-free-task-id helper so new tasks stop hand-picking ids that can collide'
-    status: ready
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     note: |-
@@ -2059,6 +2060,8 @@ tasks:
       Added a live-origin next-free task id helper with unit coverage; implementation PR follows.
 
       Merged Conductor PR #1588 with the live-origin next-free task ID helper and unit coverage. Returning the task to ready because the remaining AGENTS.md call-site guidance still needs to instruct Worker and Reviewer task creation to use the helper; the connector session could not safely patch the complete operating manual through a full-file-only write action.
+
+      Closing (2026-08-03, separate conductor Agent-run session): wired `scripts/next_free_task_id.py` into the three AGENTS.md call sites that hand-pick a task id (Worker's "create new ready tasks" CAN item, Reviewer's equivalent CAN item, and the "Kaizen on merge" step) -- the gap the connector session's note above called out. Along the way, found that connector session's *first* attempt at returning this task to ready had queued a task-event using `operation: rearm`, which errored on every processor run and never applied because `rearm` requires `recurring: true` and this is a one-off task; a concurrent session fixed that by re-queuing the correct `operation: ready` event (see the note above, and `docs/github-connector-worker.md`'s new rearm-vs-ready clarification landed in this same PR) while this session was independently mid-flight on the AGENTS.md wiring -- rebased onto that fix rather than redoing it. Verified: `pytest tests/test_next_free_task_id.py tests/test_process_task_events.py tests/test_validate_roadmaps.py`, `python scripts/validate_roadmaps.py`, `python scripts/audit_roadmaps.py`.
     claimed_by: 2026-08-03T011153Z-interface-vision-t065-f8k2
     claimed_at: '2026-08-03T01:11:53Z'
-    updated: '2026-08-03T01:25:00Z'
+    updated: '2026-08-03T01:35:00Z'

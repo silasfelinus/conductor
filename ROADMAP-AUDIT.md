@@ -1,20 +1,20 @@
 # Roadmap Audit
 
-Generated: `2026-08-02T22:35:11.144381+00:00`
+Generated: `2026-08-03T01:35:03.931309+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **45** roadmaps, **26** active projects, **834** tasks
-- **58 ready**, **47 waiting**, **32 needs-human**, **6 claimed/review**, **680 done**
-- Findings: **5 errors**, **9 warnings**, **62 informational**
+- **45** roadmaps, **26** active projects, **835** tasks
+- **55 ready**, **47 waiting**, **32 needs-human**, **6 claimed/review**, **685 done**
+- Findings: **3 errors**, **9 warnings**, **62 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
-| 1 | `interface-vision` | active | software | 26 | 0 | 3 | 1 | 35 / 65 |
+| 1 | `interface-vision` | active | software | 24 | 0 | 3 | 1 | 38 / 66 |
 | 2 | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
 | 3 | `ai-art-academy` | active | software | 0 | 1 | 2 | 1 | 50 / 54 |
 | 4 | `coloring-book` | active | software | 0 | 9 | 1 | 1 | 26 / 37 |
@@ -55,18 +55,16 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 39 | `engagement` | finished | software | 0 | 0 | 0 | 0 | 3 / 3 |
 | 40 | `ruler-hooked` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 41 | `music-mentor` | active | software | 1 | 0 | 0 | 0 | 8 / 9 |
-| 42 | `dream-cycle` | active | software | 3 | 0 | 0 | 0 | 18 / 22 |
+| 42 | `dream-cycle` | active | software | 2 | 0 | 0 | 0 | 20 / 22 |
 | — | `approval-portal` | retired | software | 0 | 0 | 0 | 0 | 3 / 5 |
 | — | `humboldt-impropriety-calendar` | retired | brainstorm | 0 | 5 | 0 | 0 | 0 / 6 |
 | — | `lora-ingestion` | active | infrastructure | 0 | 0 | 1 | 3 | 2 / 6 |
 
 ## Findings by severity
 
-### Error (5)
+### Error (3)
 
 - **CONTROL_PRIORITY_DRIFT** — `_global`: CONTROL.md priority band ['challenge-center', 'ai-art-academy', 'coloring-book', 'humboldt-scoop', 'humboldt-scoop-cms', 'digital-storefront', 'packmaker', 'mermaids-of-venice', 'kind-robots', 'kindrobots-unraid', 'global-ui'] does not match priority.yaml prefix ['interface-vision', 'challenge-center', 'ai-art-academy', 'coloring-book', 'humboldt-scoop', 'humboldt-scoop-cms', 'digital-storefront', 'packmaker', 'mermaids-of-venice', 'kind-robots', 'kindrobots-unraid'].
-- **DUPLICATE_TASK_ID** — `interface-vision` / `t-061`: Task id appears more than once.
-- **DUPLICATE_TASK_ID** — `interface-vision` / `t-062`: Task id appears more than once.
 - **ACTIVE_MISSING_PRIORITY** — `lora-ingestion`: Active project is absent from projects/priority.yaml.
 - **ACTIVE_ROADMAP_MISSING_PRIORITY** — `lora-ingestion`: Active roadmap is not selectable because it is absent from priority.yaml.
 
@@ -75,7 +73,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 - **ACTIVE_PROJECT_ALL_DONE** — `davinci`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `davinci`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 - **SOFT_NEEDS_HUMAN** — `interface-vision` / `t-056`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
-- **SOFT_NEEDS_HUMAN** — `interface-vision` / `t-062`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
+- **SOFT_NEEDS_HUMAN** — `interface-vision` / `t-064`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
 - **IN_PROGRESS_WITHOUT_TIMESTAMP** — `lora-ingestion` / `t-004`: Claimed/review task has no parseable updated timestamp.
 - **IN_PROGRESS_WITHOUT_TIMESTAMP** — `lora-ingestion` / `t-005`: Claimed/review task has no parseable updated timestamp.
 - **IN_PROGRESS_WITHOUT_TIMESTAMP** — `lora-ingestion` / `t-006`: Claimed/review task has no parseable updated timestamp.
@@ -118,7 +116,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 - **MISSING_GOAL** — `humboldt-scoop-cms`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `interface-vision`: Roadmap has no friendly goal/definition of done.
 - **NEEDS_HUMAN_NOTE_FORMAT** — `interface-vision` / `t-056`: needs-human note does not use the AGENTS.md FOR SILAS action format.
-- **NEEDS_HUMAN_NOTE_FORMAT** — `interface-vision` / `t-062`: needs-human note does not use the AGENTS.md FOR SILAS action format.
+- **NEEDS_HUMAN_NOTE_FORMAT** — `interface-vision` / `t-064`: needs-human note does not use the AGENTS.md FOR SILAS action format.
 - **MISSING_GOAL** — `kind-robots`: Roadmap has no friendly goal/definition of done.
 - **APPROVAL_WITHOUT_GATE** — `kind-robots` / `t-029`: approved_by_human is set on a task that is not human-gated.
 - **MISSING_GOAL** — `kindrobots-unraid`: Roadmap has no friendly goal/definition of done.
