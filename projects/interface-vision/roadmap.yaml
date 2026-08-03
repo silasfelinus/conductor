@@ -1199,7 +1199,7 @@ tasks:
   - id: t-028
     milestone: m2
     title: 'Unify art-history on ProjectArtImage-style joins; retire the ArtImage.path prefix-string scheme'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -1231,9 +1231,29 @@ tasks:
       line per this repo's standing migration rules. Out of scope for one PR
       alongside t-009's smaller items; touches bot/character/scenario/reward/
       facet/achievement simultaneously and needs its own careful pass.
+
+      UPDATE (2026-08-03, kind_robots PR #1381): shipped the schema-only
+      landable core -- new `EntityArtImage` model + additive migration
+      (entityType, entityId, artImageId; real FK on artImageId to ArtImage,
+      cascade). Deliberately did NOT wire entityArt.ts yet: reading
+      history/[artImageId].delete.ts turned up a real behavior change bundled
+      into "retire the prefix scheme" that this note didn't originally call
+      out -- every non-project history entry today is a throwaway duplicate
+      ArtImage row (created solely to carry the prefix-tagged path), and the
+      delete endpoint does `prisma.artImage.delete(...)` on it. Once real
+      join rows exist, "remove from history" must become
+      `entityArtImage.deleteMany(...)` (unlink only) instead of deleting a
+      row that's no longer necessarily a private duplicate -- a live-endpoint
+      semantics change, not a schema swap. Also noticed: `listEntityArtHistory`
+      is already broken today for entityType 'project' (its archived rows go
+      into ProjectArtImage, never get the prefix tag, so the *generic*
+      history endpoint returns nothing for project even though project has
+      its own working dedicated gallery endpoint) -- worth fixing in the same
+      pass by writing EntityArtImage rows for project too. Follow-on task
+      t-079 carries the full wiring scope with these specifics preserved.
     claimed_by: 2026-08-03T203041Z-t028
     claimed_at: '2026-08-03T20:30:42Z'
-    updated: '2026-08-03T20:30:42Z'
+    updated: '2026-08-03T20:38:00Z'
 
   - id: t-029
     milestone: m2
@@ -2577,3 +2597,63 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-03T21:30:00Z'
+
+  - id: t-079
+    milestone: m2
+    title: 'Wire entityArt.ts onto EntityArtImage joins and retire the ArtImage.path prefix-string history scheme'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-028
+    note: >
+      Follow-on from t-028 (kind_robots PR #1381), which shipped only the
+      additive EntityArtImage schema (entityType, entityId, artImageId; FK on
+      artImageId to ArtImage). This task is the actual wiring, split out
+      because it bundles a live-endpoint behavior change that deserves its
+      own review pass rather than riding along with a schema migration:
+
+      1. In server/utils/entityArt.ts, generalize the `entityType ===
+      'project'` fast path in archiveCurrentEntityArt (upsert a join row
+      against the existing artImageId, no duplicate ArtImage row) to ALL
+      entity types when a real source artImageId is resolvable. Keep
+      createHistoryReference's duplicate-row creation only for the legacy
+      fallback where there is no existing artImageId (a bare path string) --
+      that path still needs a real ArtImage row to attach a join to.
+
+      2. Rewrite listEntityArtHistory to query EntityArtImage for
+      (entityType, entityId) instead of ArtImage.path-startsWith. Also write
+      EntityArtImage rows for entityType 'project' alongside its existing
+      ProjectArtImage rows (project's own dedicated gallery endpoint,
+      /api/projects/[id]/art, keeps using ProjectArtImage unchanged) --
+      today the *generic* history endpoint silently returns nothing for
+      project since project's archives never got the prefix tag; this fixes
+      that as a side effect of unifying on real joins.
+
+      3. server/api/art/entities/[entityType]/[id]/history/[artImageId].delete.ts
+      currently does `prisma.artImage.delete(...)` gated by a path-prefix
+      existence check -- this is safe ONLY because today's history rows are
+      always private throwaway duplicates. Once join rows can point at a
+      non-duplicated, possibly-still-referenced ArtImage row, "remove from
+      history" must become `entityArtImage.deleteMany(...)` (unlink only,
+      gated by an EntityArtImage row existing for that
+      entityType/entityId/artImageId) instead of deleting the ArtImage row
+      itself. Get this right first -- it is the main correctness risk in the
+      whole task.
+
+      4. Once every entity type has real join rows and the delete endpoint
+      is fixed, remove the ArtImage.path-prefix write in
+      createHistoryReference's placeholder-creation branch (it can keep a
+      descriptive path for humans debugging in Studio, just stop relying on
+      startsWith for discovery) and drop entityArtHistoryPrefix's use as a
+      *query* mechanism (the function itself can stay if still used for the
+      placeholder's descriptive path).
+
+      Verify with vue-tsc (npm test) plus a manual read-through of the two
+      endpoints' new Prisma calls -- no local DB to exercise end-to-end.
+      Additive-only migrations are not expected for this task (schema
+      already landed in t-028); if a further migration turns out to be
+      needed, audit it line by line per the standing rule.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-03T21:35:00Z'
