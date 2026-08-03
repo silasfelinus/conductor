@@ -1918,43 +1918,21 @@ tasks:
   - id: t-056
     milestone: m2
     title: 'HONEYDO has a consumer and no producer — build it or retire the surface'
-    status: needs-human
-    owner: null
+    status: done
     passes: 0
     stakes: reversible
-    note: >
-      Silas, 2026-08-02, on the For You tab: "it never has anything, just delete it unless it
-      has a particular need that I'm not privy to, but if so, it should be completely hidden
-      if it's not used."
+    note: |-
+      Silas, 2026-08-02, on the For You tab: "it never has anything, just delete it unless it has a particular need that I'm not privy to, but if so, it should be completely hidden if it's not used."
+      It never has anything because NOTHING WRITES A HONEYDO TODO. The consumer half is real and built: stores/taskmasterStore.ts constructs quest checkpoints from todoStore.honeyDoTodos, and components/pages/conductor-page.vue has a HONEYDO tab with a badge count. The producer half does not exist. Conductor's own agents write `category: "AGENT"` (scripts/ci_janitor.py:190, scripts/new_app.py:303); grepping the entire agent side for HONEYDO returns nothing. The only way a HONEYDO exists is a human selecting it from a dropdown in conductor-page. So /for-you's promise -- "action items your AI assigned to you" -- has never once been true.
+      kind_robots PR (branch claude/kind-robots-ui-redesign-g5xjho) hid the nav tab and set utils/dataSurfaceManifest.ts's honeydo-inbox entry to navEntry: null with acknowledgedGap pointing here. The route survives and is still deep-linkable; that was deliberate, because the manifest exists specifically to stop honeydo regressing to "reachable only from inside conductor-page's per-project detail view", which is the bug global-ui/t-014 was filed to fix after a manual audit caught it (NAVIGATION-MAP.md, 2026-07-15).
+      NEEDS-HUMAN because it is a product call, not a cleanup: either (a) teach the agent side to file HONEYDO todos when it wants Silas to do something -- which is what the feature was evidently for, and would make Taskmaster's checkpoint-building meaningful -- and then restore navEntry to home/for-you; or (b) decide no AI-to-human queue is wanted, in which case delete /for-you, components/pages/for-you-manager.vue, the honeydo-inbox manifest entry, and drop the HONEYDO branch from taskmasterStore and conductor-page. Do not leave it in the current half-state indefinitely -- an acknowledged gap is a promise to resolve it, not a parking space.
 
-      It never has anything because NOTHING WRITES A HONEYDO TODO. The consumer half is real
-      and built: stores/taskmasterStore.ts constructs quest checkpoints from
-      todoStore.honeyDoTodos, and components/pages/conductor-page.vue has a HONEYDO tab with a
-      badge count. The producer half does not exist. Conductor's own agents write
-      `category: "AGENT"` (scripts/ci_janitor.py:190, scripts/new_app.py:303); grepping the
-      entire agent side for HONEYDO returns nothing. The only way a HONEYDO exists is a human
-      selecting it from a dropdown in conductor-page. So /for-you's promise -- "action items
-      your AI assigned to you" -- has never once been true.
 
-      kind_robots PR (branch claude/kind-robots-ui-redesign-g5xjho) hid the nav tab and set
-      utils/dataSurfaceManifest.ts's honeydo-inbox entry to navEntry: null with
-      acknowledgedGap pointing here. The route survives and is still deep-linkable; that was
-      deliberate, because the manifest exists specifically to stop honeydo regressing to
-      "reachable only from inside conductor-page's per-project detail view", which is the bug
-      global-ui/t-014 was filed to fix after a manual audit caught it (NAVIGATION-MAP.md,
-      2026-07-15).
-
-      NEEDS-HUMAN because it is a product call, not a cleanup: either (a) teach the agent side
-      to file HONEYDO todos when it wants Silas to do something -- which is what the feature
-      was evidently for, and would make Taskmaster's checkpoint-building meaningful -- and then
-      restore navEntry to home/for-you; or (b) decide no AI-to-human queue is wanted, in which
-      case delete /for-you, components/pages/for-you-manager.vue, the honeydo-inbox manifest
-      entry, and drop the HONEYDO branch from taskmasterStore and conductor-page. Do not leave
-      it in the current half-state indefinitely -- an acknowledged gap is a promise to resolve
-      it, not a parking space.
+      RESOLVED from Silas's explicit 2026-08-02 direction to make Home / For You the human-attention bridge for Conductor rather than retire it. Conductor PR #1591 merged as 56e73670, adding task-event support for recording human approval decisions. Kind Robots PR #1339 merged as d58a1a5f, restoring the Home / For You tab and wiring live Conductor needs-human gates, approve/send-back/note actions, pending pitch proposals, admin attention notifications, and the existing personal HONEYDO follow-ups into one attention desk. All required CI checks passed in both repositories; production deployment verification is in progress on Vercel deployment dpl_HY8zLcjUdJzU1Cqqn98ToqZ1XMiB.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-02T15:40:00Z'
+    updated: '2026-08-03T02:42:25Z'
+    approved_by_human: true
 
   - id: t-063
     milestone: m3
