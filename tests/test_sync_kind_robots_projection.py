@@ -82,6 +82,12 @@ def test_encoded_snapshot_rejects_oversized_payload(monkeypatch):
         projection.encoded_snapshot({"payload": "larger than twenty bytes"})
 
 
+def test_repository_snapshot_fits_transport_limit():
+    payload = projection.encoded_snapshot(projection.build_snapshot())
+
+    assert len(payload) < projection.MAX_PAYLOAD_BYTES
+
+
 def test_agent_entrypoints_name_the_authority_contract():
     source_contract = (projection.ROOT / "SOURCE_OF_TRUTH.md").read_text(
         encoding="utf-8"
