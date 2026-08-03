@@ -1389,8 +1389,8 @@ tasks:
   - id: t-035
     milestone: m2
     title: 'Wire getModelCards() for real; derive card decks from navManifest.ts'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-012
@@ -1409,6 +1409,9 @@ tasks:
       t-012 deliberately left it pointed at the generic navCards fallback rather than
       fabricate wizard content). Verify with `npm run test:nav-manifest` plus a
       Vercel-preview check that card decks actually render per tab.
+    claimed_by: claude-scheduled-20260803T232937Z-iv-t035
+    claimed_at: '2026-08-03T23:29:37Z'
+    updated: '2026-08-03T23:29:37Z'
 
   - id: t-036
     milestone: m2
