@@ -34,18 +34,30 @@ def write_roadmap(root, slug, tasks):
     project_dir = root / "projects" / slug
     project_dir.mkdir(parents=True, exist_ok=True)
     lines = ["tasks:"]
-    for t in tasks:
-        lines.append(f"  - id: {t['id']}")
-        lines.append(f"    status: {t['status']}")
-        lines.append(f"    title: \"{t['title']}\"")
-        if t.get("note"):
-            lines.append(f"    note: \"{t['note']}\"")
-    (project_dir / "roadmap.yaml").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    for task in tasks:
+        lines.append(f"  - id: {task['id']}")
+        lines.append(f"    status: {task['status']}")
+        lines.append(f"    title: \"{task['title']}\"")
+        if task.get("note"):
+            lines.append(f"    note: \"{task['note']}\"")
+    (project_dir / "roadmap.yaml").write_text(
+        "\n".join(lines) + "\n", encoding="utf-8"
+    )
+
+
+def write_overrides(root, entries):
+    lines = ["overrides:"]
+    for slug, status in entries:
+        lines.extend([f"  - slug: {slug}", f"    status: {status}"])
+    (root / "project-overrides.yaml").write_text(
+        "\n".join(lines) + "\n", encoding="utf-8"
+    )
 
 
 # --------------------------------------------------------------------------- #
 # find_pr_refs
 # --------------------------------------------------------------------------- #
+
 
 def test_find_pr_refs_matches_known_repo_alias():
     text = "Kaizen from newsfeed/t-020 (kind_robots PR #517, merged)."
@@ -79,41 +91,122 @@ def test_find_pr_refs_multiple_repos():
 # scan
 # --------------------------------------------------------------------------- #
 
+
 def test_scan_only_picks_up_claimed_and_review_tasks(tmp_path):
-    write_roadmap(tmp_path, "newsfeed", [
-        {"id": "t-020", "status": "claimed", "title": "x", "note": "kind_robots PR #517"},
-        {"id": "t-021", "status": "review", "title": "y", "note": "kind_robots PR #518"},
-        {"id": "t-022", "status": "done", "title": "z", "note": "kind_robots PR #519"},
-        {"id": "t-023", "status": "ready", "title": "w", "note": "kind_robots PR #520"},
-    ])
+    write_roadmap(
+        tmp_path,
+        "newsfeed",
+        [
+            {
+                "id": "t-020",
+                "status": "claimed",
+                "title": "x",
+                "note": "kind_robots PR #517",
+            },
+            {
+                "id": "t-021",
+                "status": "review",
+                "title": "y",
+                "note": "kind_robots PR #518",
+            },
+            {
+                "id": "t-022",
+                "status": "done",
+                "title": "z",
+                "note": "kind_robots PR #519",
+            },
+            {
+                "id": "t-023",
+                "status": "ready",
+                "title": "w",
+                "note": "kind_robots PR #520",
+            },
+        ],
+    )
     result = dr.scan(tmp_path / "projects")
-    pr_numbers = sorted(c["pr_number"] for c in result)
+    pr_numbers = sorted(candidate["pr_number"] for candidate in result)
     assert pr_numbers == [517, 518]
 
 
 def test_scan_skips_tasks_with_no_pr_reference(tmp_path):
-    write_roadmap(tmp_path, "davinci", [
-        {"id": "t-001", "status": "claimed", "title": "no reference here"},
-    ])
+    write_roadmap(
+        tmp_path,
+        "davinci",
+        [{"id": "t-001", "status": "claimed", "title": "no reference here"}],
+    )
     assert dr.scan(tmp_path / "projects") == []
 
 
 def test_scan_skips_template_project(tmp_path):
-    write_roadmap(tmp_path, "_template", [
-        {"id": "t-001", "status": "claimed", "title": "x", "note": "kind_robots PR #1"},
-    ])
+    write_roadmap(
+        tmp_path,
+        "_template",
+        [
+            {
+                "id": "t-001",
+                "status": "claimed",
+                "title": "x",
+                "note": "kind_robots PR #1",
+            }
+        ],
+    )
     assert dr.scan(tmp_path / "projects") == []
+
+
+def test_scan_skips_paused_projects_by_default(tmp_path):
+    write_roadmap(
+        tmp_path,
+        "mermaids-of-venice",
+        [
+            {
+                "id": "t-001",
+                "status": "review",
+                "title": "x",
+                "note": "kind_robots PR #517",
+            }
+        ],
+    )
+    write_overrides(tmp_path, [("mermaids-of-venice", "paused")])
+
+    assert dr.scan(tmp_path / "projects") == []
+
+
+def test_scan_can_include_paused_projects_explicitly(tmp_path):
+    write_roadmap(
+        tmp_path,
+        "mermaids-of-venice",
+        [
+            {
+                "id": "t-001",
+                "status": "review",
+                "title": "x",
+                "note": "kind_robots PR #517",
+            }
+        ],
+    )
+    write_overrides(tmp_path, [("mermaids-of-venice", "paused")])
+
+    result = dr.scan(tmp_path / "projects", include_inactive=True)
+    assert len(result) == 1
+    assert result[0]["project_status"] == "paused"
 
 
 # --------------------------------------------------------------------------- #
 # check (mocked GitHub API)
 # --------------------------------------------------------------------------- #
 
+
 def test_check_flags_merged_pr():
-    candidates = [{
-        "project": "newsfeed", "task_id": "t-020", "title": "x", "status": "claimed",
-        "repo": "silasfelinus/kind_robots", "pr_number": 517,
-    }]
+    candidates = [
+        {
+            "project": "newsfeed",
+            "task_id": "t-020",
+            "title": "x",
+            "status": "claimed",
+            "repo": "silasfelinus/kind_robots",
+            "pr_number": 517,
+        }
+    ]
     body = b'{"merged": true, "merged_at": "2026-07-19T16:16:31Z", "title": "newsfeed/t-020"}'
 
     with patch("urllib.request.urlopen", return_value=FakeResponse(body)):
@@ -125,10 +218,16 @@ def test_check_flags_merged_pr():
 
 
 def test_check_does_not_flag_open_pr():
-    candidates = [{
-        "project": "newsfeed", "task_id": "t-020", "title": "x", "status": "claimed",
-        "repo": "silasfelinus/kind_robots", "pr_number": 517,
-    }]
+    candidates = [
+        {
+            "project": "newsfeed",
+            "task_id": "t-020",
+            "title": "x",
+            "status": "claimed",
+            "repo": "silasfelinus/kind_robots",
+            "pr_number": 517,
+        }
+    ]
     body = b'{"merged": false, "merged_at": null, "title": "newsfeed/t-020"}'
 
     with patch("urllib.request.urlopen", return_value=FakeResponse(body)):
@@ -139,10 +238,16 @@ def test_check_does_not_flag_open_pr():
 
 
 def test_check_reports_pr_lookup_failure_as_unresolved_not_clean():
-    candidates = [{
-        "project": "newsfeed", "task_id": "t-020", "title": "x", "status": "claimed",
-        "repo": "silasfelinus/kind_robots", "pr_number": 404,
-    }]
+    candidates = [
+        {
+            "project": "newsfeed",
+            "task_id": "t-020",
+            "title": "x",
+            "status": "claimed",
+            "repo": "silasfelinus/kind_robots",
+            "pr_number": 404,
+        }
+    ]
 
     with patch("urllib.request.urlopen", side_effect=http_error(404)):
         findings, unresolved = dr.check(candidates, token=None)
@@ -155,27 +260,40 @@ def test_check_reports_pr_lookup_failure_as_unresolved_not_clean():
 # render
 # --------------------------------------------------------------------------- #
 
+
 def test_render_reports_clean_state():
     assert "No drift found" in dr.render([], [], total=1)
 
 
 def test_render_lists_each_finding():
-    findings = [{
-        "project": "newsfeed", "task_id": "t-020", "status": "claimed",
-        "repo": "silasfelinus/kind_robots", "pr_number": 517,
-        "pr_title": "newsfeed/t-020: fix", "pr_merged_at": "2026-07-19T16:16:31Z",
-    }]
-    out = dr.render(findings, [], total=1)
-    assert "newsfeed/t-020" in out
-    assert "silasfelinus/kind_robots#517" in out
+    findings = [
+        {
+            "project": "newsfeed",
+            "task_id": "t-020",
+            "status": "claimed",
+            "repo": "silasfelinus/kind_robots",
+            "pr_number": 517,
+            "pr_title": "newsfeed/t-020: fix",
+            "pr_merged_at": "2026-07-19T16:16:31Z",
+        }
+    ]
+    output = dr.render(findings, [], total=1)
+    assert "newsfeed/t-020" in output
+    assert "silasfelinus/kind_robots#517" in output
 
 
 def test_render_flags_unresolved_instead_of_claiming_clean():
-    unresolved = [{
-        "project": "newsfeed", "task_id": "t-020", "title": "x", "status": "claimed",
-        "repo": "silasfelinus/kind_robots", "pr_number": 404,
-    }]
-    out = dr.render([], unresolved, total=1)
-    assert "No drift found" not in out
-    assert "could NOT be verified" in out
-    assert "newsfeed/t-020" in out
+    unresolved = [
+        {
+            "project": "newsfeed",
+            "task_id": "t-020",
+            "title": "x",
+            "status": "claimed",
+            "repo": "silasfelinus/kind_robots",
+            "pr_number": 404,
+        }
+    ]
+    output = dr.render([], unresolved, total=1)
+    assert "No drift found" not in output
+    assert "could NOT be verified" in output
+    assert "newsfeed/t-020" in output
