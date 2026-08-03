@@ -6143,3 +6143,14 @@ records:
   lesson: The existing generic user-owned section pattern extended cleanly to Facet and Project; use each
     store's mine-filtered fetch action so the dashboard does not depend on an unrelated gallery having
     loaded first.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-061
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Two mutually-exclusive v-if/v-else branches gated by a fixed-per-session flag (admin vs.
+    non-admin) are the same SHAPE A pattern as tab switches -- hoist one shared kr-scroll wrapper
+    above the pair instead of each branch declaring its own overflow-y-auto.
