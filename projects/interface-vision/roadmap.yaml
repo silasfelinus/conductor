@@ -812,7 +812,6 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -914,10 +913,15 @@ tasks:
       Twenty-second scoped sweep: conductor-page.vue and registration-page.vue, both zero-behavior-change root renames. conductor-page.vue's root already matched kr-surface's computed styles byte-for-byte (plus its own p-1.5 sm:p-2.5 padding, preserved alongside the class); registration-page.vue is MDC-mounted (content/register.md) with no scroll region of its own, so the ContentRenderer host already owns scroll for it, same kr-unbound shape as prior MDC fixes.
 
       Merged Kind Robots PR #1349 as 82868bd99d13284f5653fc2d2e1236bf127f5b17 (squashed). root-surface: 10 -> 8 via --update; all other buckets unchanged (one-scroll 27, its own task). Verified via `npm run test:layout-contract` (--report and normal gate mode), `npx vue-tsc --noEmit` (clean), `npx eslint` on both touched files (clean); all 14 kind_robots PR checks green. conductor-page.vue's root-surface half was also tracked by the dedicated t-061 (root-surface + one-scroll split) -- appended a note there so a future sweep doesn't redo this rename; t-061's remaining scope is the one-scroll consolidation only. Remaining root-surface (8) is now entirely the 4 admin wonderlab-review-*.vue pages plus pages/[...slug].vue (the ContentRenderer host itself) and 3 more MDC-mounted -page.vue components needing visual verification before a safe kr-unbound conversion (per t-057's caution about clipping risk on self-scrolling roots). The layout-contract allow-list is not yet zero, so t-017 returns to ready for the next bounded sweep.
+
+      Twenty-third scoped sweep: the 4 admin wonderlab-review-*.vue pages (pages/admin/wonderlab-review-generator.vue, -plan.vue, -rollout.vue, wonderlab-reviews.vue), deliberately last per the task's own priority order -- daily-drivers first, admin last. All 4 are standalone routed pages (not MDC-mounted) sharing the identical shape: a single root `<main>` combining bounding and scroll in one element, the same pattern already fixed on click-leaderboard.vue/coloring-page.vue/resources.vue earlier in this sweep series.
+
+      Merged Kind Robots PR #1353 (squashed 8d71c44). Each root split into a `kr-surface` (bounded, non-scrolling) wrapper around a `kr-scroll` (the one scroll region) child -- zero behavior change, same computed styles just divided across two elements. root-surface: 8 -> 4 via --update; all other buckets unchanged (one-scroll 27, its own task). Verified via `npx vue-tsc --noEmit` (clean), `npx eslint` on all 4 touched files (clean apart from one pre-existing unrelated `no-unused-expressions` error on wonderlab-reviews.vue:243, confirmed present on main via `git stash`), `npm run test:layout-contract` (holds, no new violations), `npx tsx utils/scripts/verifyMdcScrollOwnership.ts` (24 existing violations, no new ones), and the 4 page-specific contract checks (verifyReviewDraftCuratorUi.ts, verifyReviewDraftGeneration.ts, verifyWonderLabReviewBatchPlan.ts, verifyWonderLabReviewRolloutAudit.ts), all passed. All 13 kind_robots PR checks green. The layout-contract allow-list is not yet zero, so t-017 returns to ready for the next bounded sweep; remaining root-surface (4) is entirely the 3 MDC-mounted -page.vue components that already declare their own scroll on the root (appmaker-page.vue, wishmaster-page.vue, memory-dungeon.vue -- converting any of these is a real behavior change needing visual verification, not a pure rename, per t-057's clipping-risk caution) plus pages/[...slug].vue (the ContentRenderer host itself, needing its own careful review since every MDC-mounted page depends on it).
     claimed_by: conductor-agent-20260803T072953Z-t017b
     claimed_at: '2026-08-03T07:30:31Z'
-    updated: '2026-08-03T07:30:31Z'
+    updated: '2026-08-03T07:47:00Z'
     owner: worker
+    status: ready
 
   - id: t-018
     milestone: m3
@@ -2214,3 +2218,35 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-03T07:15:00Z'
+
+  - id: t-070
+    milestone: m3
+    title: 'Visually verify the last 4 root-surface entries before converting them'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-017's twenty-third sweep (kind_robots PR #1353). The remaining
+      root-surface allow-list (4) is exactly the entries every prior sweep has deferred
+      because they are not pure renames: appmaker-page.vue and wishmaster-page.vue are
+      MDC-mounted but already declare their own overflow-y-auto/h-full min-h-0 on the
+      root (wishmaster-page.vue is also embedded as a conductor-manager.vue dashboard
+      tab, so its self-scroll may or may not still make sense once bounded); memory-
+      dungeon.vue is a larger conditional-layout game component (splash screen vs.
+      in-game board+log panes, each with their own internal scroll) that needs real
+      visual verification before restructuring; pages/[...slug].vue is the
+      ContentRenderer host itself, needing careful review since every MDC-mounted page
+      depends on it for scroll.
+
+      Use the Vercel MCP connector (list_teams -> list_projects -> list_deployments on
+      this task's PR branch -> web_fetch_vercel_url) per CONTROL.md's cross-repo
+      verification note to visually confirm each page's current scroll/height behavior,
+      then again after applying kr-unbound or kr-surface/kr-scroll (whichever the
+      before-screenshot shows is correct) -- do not convert any of the 4 on source-text
+      inspection alone, since that is exactly what caused the "possibly unsafe" flag on
+      each in the first place. Land as separate scoped PRs per file, same as prior
+      sweeps, so a bad conversion on one doesn't block the others.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-03T07:47:00Z'
