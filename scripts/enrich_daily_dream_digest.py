@@ -274,10 +274,10 @@ def enrich_digest(
         output["yesterday_output"] = None
         output["daily_dream_output_status"] = "No completed Daily Dream bundle exists yet."
 
-    recent: list[dict[str, Any]] = []
-    for proposal in reversed(completed[-2:]):
-        recent.append(proposal_payload(proposal, probe_images=probe_images))
-    output["recent_dream_outputs"] = recent
+    # The digest reports exactly two Daily Dream generations: today's current
+    # proposal/build and the immediately preceding completed bundle. Keep the
+    # legacy collection key empty so older builds cannot reappear downstream.
+    output["recent_dream_outputs"] = []
     output["daily_dream_calendar"] = {"today": today_key, "yesterday": yesterday_key, "timezone": "America/Los_Angeles"}
     return output
 
