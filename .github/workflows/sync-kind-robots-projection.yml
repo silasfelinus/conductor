@@ -13,6 +13,9 @@ on:
       - .github/workflows/sync-kind-robots-projection.yml
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 concurrency:
   group: sync-kind-robots-projection
   cancel-in-progress: true
