@@ -1818,40 +1818,21 @@ tasks:
   - id: t-058
     milestone: m3
     title: 'Give one-scroll Shape B a two-owner grid primitive, and stop counting Shapes A/D'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Follow-on from t-047, whose stated root cause was refuted by a full file-by-file audit
-      (see the CORRECTION appended to t-047's note for the verified A/B/C/D/E taxonomy).
-      Two pieces of work, and the order matters:
+    note: |-
+      Follow-on from t-047, whose stated root cause was refuted by a full file-by-file audit (see the CORRECTION appended to t-047's note for the verified A/B/C/D/E taxonomy). Two pieces of work, and the order matters:
+      FIRST, make the rule mean what the brief means. verifyLayoutContract.ts counts every `overflow-y-auto` occurrence in a template statically, with no awareness of v-if exclusivity or bounded max-h-* sub-regions -- so roughly 17 of the remaining 27 entries are things that never co-exist at runtime. Teach it those two cases and the bucket shrinks honestly instead of by rewriting correct code. Guard against gaming it: the rule already only matches literal h-screen/100vh substrings elsewhere, and t-017's seventh pass documented that swapping to h-dvh would have silently passed while reproducing the bug. Same discipline applies here.
+      SECOND, Shape B (12 files) genuinely has two live scroll owners in one grid -- an <aside> and a <main>, both mounted -- and the .kr-* set has no idiom for that. .kr-surface is a single bounded root and .kr-scroll is documented as "exactly one per .kr-surface". Until a two-owner primitive exists these 12 cannot be fixed correctly, only disguised. Design it against the real cases (character-interact.vue and art-interact.vue are the cleanest two-pane examples; mural-manager.vue is the hard one at three concurrent panes).
+      THIRD and separately: the rule as written also cannot see the opposite failure. A non-page component declaring EXACTLY ONE scroll region, mounted inside a page that also scrolls, is invisible to it -- there were 69 such components at the time of the audit (85 total single-scroll files, 16 of which are page components legitimately owning their scroll). The brief's rule 2 targets "0 nested"; the bucket can reach zero with all 69 still nested. Worth measuring before declaring rule 2 satisfied.
 
-      FIRST, make the rule mean what the brief means. verifyLayoutContract.ts counts every
-      `overflow-y-auto` occurrence in a template statically, with no awareness of v-if
-      exclusivity or bounded max-h-* sub-regions -- so roughly 17 of the remaining 27 entries
-      are things that never co-exist at runtime. Teach it those two cases and the bucket
-      shrinks honestly instead of by rewriting correct code. Guard against gaming it: the rule
-      already only matches literal h-screen/100vh substrings elsewhere, and t-017's seventh
-      pass documented that swapping to h-dvh would have silently passed while reproducing the
-      bug. Same discipline applies here.
 
-      SECOND, Shape B (12 files) genuinely has two live scroll owners in one grid -- an <aside>
-      and a <main>, both mounted -- and the .kr-* set has no idiom for that. .kr-surface is a
-      single bounded root and .kr-scroll is documented as "exactly one per .kr-surface". Until
-      a two-owner primitive exists these 12 cannot be fixed correctly, only disguised. Design
-      it against the real cases (character-interact.vue and art-interact.vue are the cleanest
-      two-pane examples; mural-manager.vue is the hard one at three concurrent panes).
-
-      THIRD and separately: the rule as written also cannot see the opposite failure. A
-      non-page component declaring EXACTLY ONE scroll region, mounted inside a page that also
-      scrolls, is invisible to it -- there were 69 such components at the time of the audit
-      (85 total single-scroll files, 16 of which are page components legitimately owning their
-      scroll). The brief's rule 2 targets "0 nested"; the bucket can reach zero with all 69
-      still nested. Worth measuring before declaring rule 2 satisfied.
+      Implemented the first bounded t-058 slice on worker/interface-vision-t-058-20260803T191237Z-q7m4: count actual static scroll-owner elements, exclude max-h-* bounded preview regions, keep kr-scroll explicit, and report exact ratchet removals for review.
     claimed_by: 2026-08-03T191237Z-interface-vision-t-058-q7m4
     claimed_at: '2026-08-03T19:12:37Z'
-    updated: '2026-08-03T19:12:37Z'
+    updated: '2026-08-03T19:18:00Z'
 
   - id: t-054
     milestone: m2
