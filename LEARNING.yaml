@@ -6143,3 +6143,16 @@ records:
   lesson: The existing generic user-owned section pattern extended cleanly to Facet and Project; use each
     store's mine-filtered fetch action so the dashboard does not depend on an unrelated gallery having
     loaded first.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-073
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: The one-scroll static count conflates two different shapes -- genuine concurrent scroll owners
+    (SHAPE B, needs a new two-column primitive) and bounded max-h-* sub-regions nested inside one real
+    scroll owner (SHAPE D, a rule artifact) -- so most of a "SHAPE A" sweep task's remaining bucket
+    turns out not to be SHAPE A at all. Audit file-by-file before attempting a mechanical hoist; only one
+    of 13 non-SHAPE-B candidates was a genuine mutually-exclusive-branches false positive this cycle.

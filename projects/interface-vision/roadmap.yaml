@@ -2366,3 +2366,36 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-03T12:05:00Z'
+
+  - id: t-075
+    milestone: m3
+    title: 'Exempt bounded max-h-* sub-regions from the one-scroll count in verifyLayoutContract.ts'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-073 (2026-08-03, kind_robots PR #1374). t-073's audit of the one-scroll
+      bucket (25 entries at claim time, one file fixed, 24 remaining) found the static
+      overflow-y-auto/overflow-auto count conflates two different things: SHAPE B (12 files,
+      genuine concurrent scroll owners like an aside+main split, real second regions that
+      need a two-column-scroll primitive to fix) and SHAPE D (the rest of the non-SHAPE-B
+      files -- bounded max-h-* sub-regions such as log tails, <pre> error/JSON dumps, and
+      swatch grids nested inside a single real scroll owner, e.g. theme-gallery.vue's
+      "Active Theme Snapshot" <pre>, character-flip-card.vue's chat/adventure/prompt history
+      panes, user-galleries.vue's per-section inline preview grids). SHAPE D entries are rule
+      artifacts, not real nested-scroll bugs -- they already have exactly one true page-level
+      scroll owner, plus small internally-bounded regions that never grow past their own
+      max-height and never compete with the page scroll for space.
+      Teach verifyLayoutContract.ts's one-scroll rule to recognize a bounded sub-region
+      (an element whose class list includes a max-h-* utility alongside overflow-auto/
+      overflow-y-auto) and exclude it from the scrollers count, so only genuine additional
+      full-height/flex-1 scroll owners still trigger a violation. Verify against the current
+      24-entry bucket: SHAPE D files should drop out entirely (re-ratchet the baseline via
+      --update), SHAPE B files should remain flagged (they are real violations, just not
+      fixable without a new primitive -- do not silently exempt them too). Re-run
+      test:layout-contract, test:wonderlab-core-fixtures/ui-fixtures, and
+      verifyMdcScrollOwnership.ts to confirm no regression.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-03T15:15:00Z'
