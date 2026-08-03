@@ -812,7 +812,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -886,9 +886,11 @@ tasks:
       Seventeenth scoped sweep: components/pages/serendipity-page.vue. Root-surface count had grown to 20 by this cycle (kind_robots PR #1332 legitimately added components/pages/rebel-button.vue as a root-surface entry, matching the ~13-strong MDC-mounted group pending t-057). serendipity-page.vue is also MDC-mounted (content/serendipity.md) but, unlike that group, was already self-bounding: its root already declared kr-surface's exact computed styles by hand (flex h-full min-h-0 w-full flex-col overflow-hidden, plus its own gap-4), and its one scroll region already matched kr-scroll's utilities verbatim -- a genuinely safe, zero-behavior-change swap today, not one that needs t-057's unbounded primitive.
 
       Seventeenth sweep merged as Kind Robots PR #1336 (a32127c). serendipity-page.vue's root swapped to kr-surface (keeping its gap-4 override and decorative classes) wrapping kr-scroll on the message-feed region. root-surface: 20 -> 19 via --update; all other buckets unchanged (one-scroll 27, its own task t-053). vue-tsc and eslint clean, all 15 PR checks green including layout-contract, verifyMdcScrollOwnership.ts (24 existing violations, no new ones), test:channel-content, test:nav-manifest. The layout-contract allow-list is not yet zero, so t-017 returns to ready for the next bounded sweep; remaining root-surface is 12 MDC-mounted entries still blocked on t-057's unbounded primitive (about-page, appmaker-page, for-you-manager, giving-page, memory-dungeon, mermaids-page, privacy-page, rebel-button, storybook-library-page, super-form, wallet-page, wishmaster-page, registration-page), plus conductor-page.vue (its own large, tracked conversion, t-061), pages/[...slug].vue (the ContentRenderer host itself -- converting its root would need its own careful review given every MDC-mounted page depends on it), and the 4 admin wonderlab-review-*.vue pages (deliberately last).
+
+      Prepared a bounded layout-contract pass adopting kr-unbound on the wallet page and shrinking root-surface by one.
     claimed_by: 2026-08-03T031330Z-interface-vision-t-017-a9k3
     claimed_at: '2026-08-03T03:13:30Z'
-    updated: '2026-08-03T03:13:30Z'
+    updated: '2026-08-03T03:17:00Z'
     owner: worker
 
   - id: t-018
