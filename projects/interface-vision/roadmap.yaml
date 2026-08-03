@@ -1957,53 +1957,17 @@ tasks:
     milestone: m3
     title: 'A CI step piped through tee can never fail: verifyFacetArtworkMigration is dead'
     status: ready
-    owner: null
     passes: 0
     stakes: reversible
-    note: >
-      Found while consolidating the facet artwork chain (kind_robots, t-055 follow-on).
-      Two separate problems, and the second is the one that matters beyond this one script.
-
-      FIRST: utils/scripts/verifyFacetArtworkMigration.ts is currently FAILING on main, and
-      has been for some time. It asserts components/facets/facet-manager.vue contains
-      `v-model="newImagePath"` among a list of artwork-migration texts, and that string is
-      gone. Confirmed by stashing all local work and re-running against a clean tree. The
-      contract describes a migration whose UI has since moved on; it needs either updating to
-      the current facet-manager or retiring.
-
-      SECOND, and the reusable lesson: nobody noticed because the check CANNOT FAIL.
-      .github/workflows/facet-catalog-contract.yml:125 runs it as
-      `npx tsx utils/scripts/verifyFacetArtworkMigration.ts 2>&1 | tee facet-artwork-report.txt`.
-      A pipeline's exit status is the LAST command's, so the step always exits 0 no matter
-      what the verifier does. The `if: failure() && steps.artwork.outcome == 'failure'`
-      artifact upload that follows it is therefore unreachable too. This is the same class of
-      bug as a test that never asserts: the job is green, the badge is green, and the check
-      has been inert.
-
-      Fix the pipeline first (`set -o pipefail`, or drop the tee and rely on the workflow log),
-      THEN fix or retire the contract -- in that order, because fixing the contract while the
-      step is still inert proves nothing. While there, grep the other workflows for the same
-      `| tee` shape; if this one drifted in, others may share it.
-
+    note: |-
+      Found while consolidating the facet artwork chain (kind_robots, t-055 follow-on). Two separate problems, and the second is the one that matters beyond this one script.
+      FIRST: utils/scripts/verifyFacetArtworkMigration.ts is currently FAILING on main, and has been for some time. It asserts components/facets/facet-manager.vue contains `v-model="newImagePath"` among a list of artwork-migration texts, and that string is gone. Confirmed by stashing all local work and re-running against a clean tree. The contract describes a migration whose UI has since moved on; it needs either updating to the current facet-manager or retiring.
+      SECOND, and the reusable lesson: nobody noticed because the check CANNOT FAIL. .github/workflows/facet-catalog-contract.yml:125 runs it as `npx tsx utils/scripts/verifyFacetArtworkMigration.ts 2>&1 | tee facet-artwork-report.txt`. A pipeline's exit status is the LAST command's, so the step always exits 0 no matter what the verifier does. The `if: failure() && steps.artwork.outcome == 'failure'` artifact upload that follows it is therefore unreachable too. This is the same class of bug as a test that never asserts: the job is green, the badge is green, and the check has been inert.
+      Fix the pipeline first (`set -o pipefail`, or drop the tee and rely on the workflow log), THEN fix or retire the contract -- in that order, because fixing the contract while the step is still inert proves nothing. While there, grep the other workflows for the same `| tee` shape; if this one drifted in, others may share it.
       PARTLY DONE, 2026-08-03, kind_robots PR #1356 -- and the grep found more than expected.
-
-      The contract is repaired and runnable. Its stale half was worse than "stale": it
-      required a dozen literal v-model="newImagePath" strings against a facet-manager whose
-      form is now <FacetProfileEditor> plus an <EntityArtManager :slots> covering imagePath,
-      iconPath, cardPath AND heroPath -- strictly MORE art roles than the old form. It was
-      failing against a manager that had got better. It now asserts structure rather than one
-      spelling, and follows the form <-> Facet mapping into utils/facetProfileForm.ts.
-
-      Its other half could never have passed anywhere: it asserted ~280 curated images exist
-      on disk under public/images, which .gitignore:33 excludes from the repo entirely (the
-      art lives on the deployed host). `git ls-files public/images/adventure` returns nothing.
-      That assertion is now conditional on the assets being present and PRINTS that it
-      skipped -- a check that quietly does nothing is the bug, not the fix.
-
-      PIPEFAIL IS DELIBERATELY STILL NOT SET, and this is the part that needs a decision.
-      Flipping it turns main red on three independent pre-existing failures, each needing its
-      own fix:
-
+      The contract is repaired and runnable. Its stale half was worse than "stale": it required a dozen literal v-model="newImagePath" strings against a facet-manager whose form is now <FacetProfileEditor> plus an <EntityArtManager :slots> covering imagePath, iconPath, cardPath AND heroPath -- strictly MORE art roles than the old form. It was failing against a manager that had got better. It now asserts structure rather than one spelling, and follows the form <-> Facet mapping into utils/facetProfileForm.ts.
+      Its other half could never have passed anywhere: it asserted ~280 curated images exist on disk under public/images, which .gitignore:33 excludes from the repo entirely (the art lives on the deployed host). `git ls-files public/images/adventure` returns nothing. That assertion is now conditional on the assets being present and PRINTS that it skipped -- a check that quietly does nothing is the bug, not the fix.
+      PIPEFAIL IS DELIBERATELY STILL NOT SET, and this is the part that needs a decision. Flipping it turns main red on three independent pre-existing failures, each needing its own fix:
       (a) verifyFacetArtworkMigration, one failure left and it is a real data defect:
           "Curious" exists as both an alignment and a personality quirk; seedFacetCatalog
           merges them into ONE Facet by normalized title (that merge is intentional -- see
@@ -2021,11 +1985,13 @@ tasks:
           props: reward-facet-picker (modelValue), storybook-state-panel (session),
           video-lora-picker (engine, modelValue, strength), watchlist-entry-detail (entry).
 
-      The remaining two tee'd steps (academy-examples-manifest, audit:channel-assets) both PASS
-      locally, so those two can have `shell: bash` added with no fallout at any time.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-03T08:30:00Z'
+      The remaining two tee'd steps (academy-examples-manifest, audit:channel-assets) both PASS locally, so those two can have `shell: bash` added with no fallout at any time.
+
+
+      Re-verified current main after PR #1356. Enabling pipefail on the Facet workflow would immediately expose three independent known-red contracts: Facet artwork cross-taxonomy collision, Builder coverage, and strict WonderLab preview fixtures. The two passing tee steps live in contract-tests.yml but changing them alone would not complete this task. Released without weakening or duplicating CI.
+    claimed_by: 2026-08-03T121900Z-interface-vision-t-063-r2m7
+    claimed_at: '2026-08-03T12:19:00Z'
+    updated: '2026-08-03T12:24:00Z'
 
   - id: t-064
     milestone: m2
@@ -2335,33 +2301,26 @@ tasks:
     milestone: m3
     title: 'Fix the one-scroll SHAPE A false positives by hoisting a shared kr-scroll above mutually-exclusive tab branches'
     status: ready
-    owner: null
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-017's twenty-fifth sweep (2026-08-03, kind_robots PR #1365).
-      t-047's full read-only audit of the one-scroll bucket (27 entries, done
-      2026-08-02) found roughly 10 of them are SHAPE A: mutually-exclusive
-      v-if/v-else-if/v-show tab branches, each declaring its own scroll region,
-      but only ever one mounted at runtime. verifyLayoutContract.ts's static
-      regex counts all of them regardless of mutual exclusivity, so these are
-      false positives, not real nested-scroll bugs. art-manager.vue (seven
-      v-else-if branches, identical scroll class on each) is the type specimen
-      kind_robots PR #1321 already fixed four of this shape for.
+    note: |-
+      Kaizen from t-017's twenty-fifth sweep (2026-08-03, kind_robots PR #1365). t-047's full read-only audit of the one-scroll bucket (27 entries, done 2026-08-02) found roughly 10 of them are SHAPE A: mutually-exclusive v-if/v-else-if/v-show tab branches, each declaring its own scroll region, but only ever one mounted at runtime. verifyLayoutContract.ts's static regex counts all of them regardless of mutual exclusivity, so these are false positives, not real nested-scroll bugs. art-manager.vue (seven v-else-if branches, identical scroll class on each) is the type specimen kind_robots PR #1321 already fixed four of this shape for.
+      Fix: for each remaining SHAPE A file, hoist one shared .kr-scroll wrapper above the v-if/v-else-if/v-show branch instead of declaring the scroll class on each branch individually -- same zero-behavior-change pattern the rest of t-017's sweeps have used throughout. Verify via vue-tsc, eslint, npm run test:layout-contract (--update to ratchet), and verifyMdcScrollOwnership.ts, same as any other bounded sweep.
+      This does not require the still-missing two-column-scroll primitive SHAPE B (12 files: genuine concurrent <aside>+<main>, both live at once) needs -- that's a separate, harder follow-on, out of scope here.
 
-      Fix: for each remaining SHAPE A file, hoist one shared .kr-scroll wrapper
-      above the v-if/v-else-if/v-show branch instead of declaring the scroll
-      class on each branch individually -- same zero-behavior-change pattern
-      the rest of t-017's sweeps have used throughout. Verify via vue-tsc,
-      eslint, npm run test:layout-contract (--update to ratchet), and
-      verifyMdcScrollOwnership.ts, same as any other bounded sweep.
 
-      This does not require the still-missing two-column-scroll primitive
-      SHAPE B (12 files: genuine concurrent <aside>+<main>, both live at once)
-      needs -- that's a separate, harder follow-on, out of scope here.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-03T12:05:00Z'
+      Inspected the live one-scroll baseline and representative candidates. animation-manager.vue is genuine concurrent gallery-plus-aside Shape B; scenario-gallery.vue has a form scroll region that can coexist with its content scroll; user-galleries.vue nests bounded previews inside its parent. None are safe Shape A hoists. Released rather than shrinking the counter dishonestly; remaining candidates need importer and branch-lifecycle classification.
+
+      Hoisted Art Manager's mutually-exclusive tab scrollers into one shared kr-scroll wrapper, preserving Gallery's delegated scroll and ArtJob's responsive 2xl overflow behavior. Ratcheted one-scroll from 27 to 26.
+
+      Merged Kind Robots PR #1371 as 70f2ed545d2c52be8ae8bc852e5c85969257ec99. Art Manager now hoists six mutually-exclusive tab scroll regions into one shared kr-scroll owner, preserves Gallery's delegated scroll and ArtJob's responsive 2xl overflow behavior, and ratchets one-scroll from 27 to 26. All 13 final-head workflows completed successfully. The task remains open for the other verified Shape A files. Classify every one-scroll candidate by whether scroll regions can coexist at runtime before editing: static duplicates are safe to hoist only when branch exclusivity is proven; concurrent panes and bounded nested previews must remain separate until their own primitive or contract exists.
+
+      Verified avatar-picker.vue as a genuine SHAPE A candidate: three v-show tabs (gallery/upload/generate) are mutually exclusive at runtime, only upload and generate declared their own overflow-y-auto. Hoisted a single shared .kr-scroll wrapper above all three (v-show keeps hidden siblings in the DOM but display:none excludes them from scroll-height, so this is safe). Ratchets one-scroll from 26 to 25. Also examined mural-manager.vue (three simultaneously-visible panes, genuine Shape B, not a hoist) and butterfly-flip.vue (front/back panels can both be mounted at once when useFlipEffect is false, not safe to merge). kind_robots PR #1372 open against main (claude/relaxed-lovelace-kz9il2).
+
+      Merged Kind Robots PR #1372 as e479e3ab4c29a3c507daa778c4a0ae36bd019859. avatar-picker.vue's gallery/upload/generate v-show tabs (mutually exclusive at runtime) now share one .kr-scroll wrapper instead of two independent overflow-y-auto declarations. All 15 required checks passed. Ratchets one-scroll from 26 to 25. Also examined and released (not safe Shape A hoists): mural-manager.vue (three panes visible simultaneously, genuine Shape B) and butterfly-flip.vue (front/back panels can both be mounted at once when useFlipEffect is false). The task remains open for the other unclassified one-scroll candidates.
+    claimed_by: 2026-08-03T123116Z-interface-vision-t-073-agentrun
+    claimed_at: '2026-08-03T12:31:17Z'
+    updated: '2026-08-03T12:47:20+00:00'
 
   - id: t-074
     milestone: m3

@@ -4,6 +4,18 @@ This runbook is for Worker sessions that have the connected GitHub tools but do 
 
 The absence of local execution is not a reason to skip Conductor bookkeeping. The connector can safely read long files in pages, perform compare-and-swap file updates with blob SHAs, create branches and commits, inspect Actions, and merge pull requests.
 
+## Source-of-truth contract
+
+Read [`SOURCE_OF_TRUTH.md`](../SOURCE_OF_TRUTH.md) before changing project data across Conductor and Kind Robots.
+
+- Conductor owns lifecycle, priority, roadmaps, tasks, milestones, claims, human gates, pitches, and coordination history.
+- Kind Robots owns Project presentation fields, UI placement, artwork, user state, and runtime/application data.
+- Kind Robots reads coordination from a commit-stamped database projection. Never patch projected task state directly.
+- Kind Robots human actions are commands into Conductor. Verify the task event or pitch write, then verify the committed Conductor result, then verify the projection sync.
+- Do not add new `liveUrl`, `channelKey`, `tabKey`, or `repoUrl` presentation values to `project-overrides.yaml`. Existing values are temporary bootstrap fallbacks only.
+
+When diagnosing disagreement, use the source commit SHA carried by the projection. Repair the event or projection pipeline instead of making matching edits in both repositories.
+
 ## Read long files without truncation
 
 A default `fetch_file` response may be abbreviated for display. That does not mean the file is unavailable.
@@ -110,6 +122,7 @@ After creating an event:
 3. If the workflow fails, inspect job logs.
 4. Repair or delete only the current session's malformed or stale event using its current blob SHA.
 5. Never leave a poison event blocking the shared queue.
+6. When the change affects Kind Robots, inspect the `Sync Kind Robots projection` workflow and verify the projected source commit SHA.
 
 ## TALKBACK and learning closeout
 
@@ -128,7 +141,8 @@ Implementation work still follows the normal flow:
 5. Fix failures on the same branch.
 6. Merge only reversible, scoped, verified work allowed by `AGENTS.md`, using the expected head SHA.
 7. Queue and verify `done` or `rearm` after merge.
-8. Confirm no stale claim, event, PR, or branch remains.
+8. Confirm the Conductor projection sync succeeded when the change affects Kind Robots.
+9. Confirm no stale claim, event, PR, or branch remains.
 
 ## Invalid stopping reasons
 
@@ -140,4 +154,4 @@ These are not valid reasons to perform no work:
 - the task transition required changing a large roadmap;
 - a tiny event file had not yet been verified.
 
-Use paginated reads, exact-SHA writes, the task-event processor, and Actions evidence instead.
+Use paginated reads, exact-SHA writes, the task-event processor, Actions evidence, and the projection workflow instead.
