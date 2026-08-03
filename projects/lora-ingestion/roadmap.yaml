@@ -57,16 +57,15 @@ tasks:
 - id: t-003
   milestone: m2
   title: Verify end-to-end on alexandria with ume_classic_impressionist
-  status: needs-human
-  owner: null
+  status: ready
   stakes: reversible
   gate_human: true
-  note: 'Import half CONFIRMED 2026-07-28: standalone run detected ume as Flux,
-    moved it, and upserted the Resource (created:1). Remaining: (1) run it as
-    the embedded kr-relay thread on the pm2 box (pm2 restart kr-relay after
-    setx CIVITAI_TOKEN), and (2) confirm a krea2/flux2 render selecting that
-    Resource succeeds — closes the path bug end-to-end. Note ume sorted NSFW
-    because Civitai flags the model nsfw; override to SFW if wrong.'
+  note: |-
+    Import half CONFIRMED 2026-07-28: standalone run detected ume as Flux, moved it, and upserted the Resource (created:1). Remaining: (1) run it as the embedded kr-relay thread on the pm2 box (pm2 restart kr-relay after setx CIVITAI_TOKEN), and (2) confirm a krea2/flux2 render selecting that Resource succeeds — closes the path bug end-to-end. Note ume sorted NSFW because Civitai flags the model nsfw; override to SFW if wrong.
+
+    SENT BACK by silasfelinus via Kind Robots For You. this should have been fixed. if not, please report back.
+  approved_by_human: false
+  updated: '2026-08-03 09:15:24.833000+00:00'
 - id: t-004
   milestone: m3
   title: Add civitaiModelId/civitaiModelVersionId + fix resourceMutationSelect
