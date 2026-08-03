@@ -3130,3 +3130,40 @@ tasks:
       Add an optional `remaining_scope_task: <task-id>` field: when set on a task, selectors must treat that task as not-yet-claimable for as long as the referenced sibling task (looked up within the same roadmap) exists and has not reached `status: done`. No field set -- current behavior, unaffected.
 
       CLOSED 2026-08-03 (conductor-agentrun session): added `remaining_scope_delegate_open()` to `scripts/roadmap_claims.py` and wired it into `run_worker.py::find_ready_task`, `next_ready_task.py::first_ready_task`, and `claim_task.py::check_claimable`. Set `remaining_scope_task: t-058` on interface-vision/t-017. Documented the field in AGENTS.md. New/updated tests in test_roadmap_claims.py, test_next_ready_task.py, test_claim_task.py, and a new test_run_worker.py (no prior test exercised find_ready_task's behavior directly). Full local pytest suite green (828 passed, 1 skipped, 4 pre-existing unrelated failures -- documented sandbox Python 3.11 vs CI 3.12 f-string issue). validate_roadmaps.py clean; audit_roadmaps.py's 3 errors are pre-existing and unrelated. Merged conductor PR #1628 (squash 4d859d3), all 22 non-CodeQL checks green before merge (2 CodeQL matrix jobs still in_progress at merge time -- confirmed not required checks on this repo, matching established precedent). Closed GitHub issue #1627 referencing the merged PR.
+
+  - id: t-097
+    milestone: m2
+    title: "Malformed task-events learning field keeps landing on main uncaught -- validate_task_events.py is only wired into PR-time CI, but events are committed straight to main"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      t-068 (PR #851) added scripts/validate_task_events.py and wired it into a
+      validate-task-events PR CI job, but task-events/README.md's own documented
+      workflow is "create one uniquely named YAML file ... and commit it to main" --
+      a direct push, not a PR. So the PR-time gate never runs for the normal case,
+      and a malformed `learning:` field (string instead of the required
+      {kind, stakes, lesson} mapping) only surfaces when process-task-events.yml's
+      push-triggered job fails, which silently red-flags the shared "process" check
+      for every unrelated PR until some other session happens to notice and hand-fix
+      the file. This exact failure shape recurred at least 4 times in one day
+      (2026-08-03): interface-vision/t-065, t-073, t-061 (all per TALKBACK.md
+      "pattern" entries), and this session's own fix to interface-vision/t-034's
+      stuck done-event. Each time the fix was the same manual edit: reshape
+      `learning` into the required mapping (or fold it into `note` and drop the
+      field), re-run --dry-run, then let the scheduled processor pick it up.
+      Fix at the source rather than repeating the manual triage a 5th time. Two
+      candidate directions (pick one, or combine): (a) teach
+      process_task_events.py to auto-coerce a bare string `learning:` into
+      {kind: null, stakes: null, lesson: <string>} when kind/stakes cannot be
+      inferred from the task's own roadmap entry (data-preserving, no information
+      lost, but weakens the schema); or (b) when process_task_events.py's
+      validate() rejects a file, have process-task-events.yml also drop a visible
+      breadcrumb (e.g. append a short entry to root TALKBACK.md, or set a
+      `soft_gate: true`/note on the referenced task if the project/task fields
+      themselves parsed even though `learning` didn't) so the stuck event is
+      discoverable without a session stumbling onto the failing "process" check by
+      chance. Whichever direction is chosen, add a regression test using the exact
+      shape from this incident (`learning: >-` folded scalar) so it can't recur
+      silently a 6th time.

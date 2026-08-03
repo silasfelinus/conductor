@@ -1371,8 +1371,7 @@ tasks:
   - id: t-034
     milestone: m2
     title: 'Reconcile dashboardHelper.ts/navStore.ts with navManifest.ts; resolve the 9 dashboardTab warnings'
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-012
@@ -1381,9 +1380,11 @@ tasks:
 
 
       Unified nav-manifest dashboard-tab validation with dashboardHelper's runtime predicate and removed the final two stale standalone-page dashboard hints.
+
+      Merged Kind Robots PR #1386 as d636e41e8239bc519bf368f09fa485a54187d4ac. navManifest now uses dashboardHelper's exported isDashboardTabKey predicate, matching navStore's runtime vocabulary; Music Mentor and Video Generator no longer carry stale dashboard hints; invalid dashboardTab references are CI-blocking errors. All 12 final-head workflows completed successfully after one TypeScript fix on the same branch.
     claimed_by: 2026-08-03T221341Z-interface-vision-t-034-k7p9
     claimed_at: '2026-08-03T22:13:41Z'
-    updated: '2026-08-03T22:22:50Z'
+    updated: '2026-08-03T22:26:50Z'
 
   - id: t-035
     milestone: m2
