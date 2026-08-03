@@ -1,0 +1,15 @@
+version: 1
+project: interface-vision
+task: t-057
+operation: review
+session: conductor-agentrun-20260803T0240Z-iv-t057
+updated: '2026-08-03T02:45:00Z'
+note: >-
+  Opened kind_robots PR #1340: added .kr-unbound root-surface primitive
+  (assets/css/tailwind.css) with no overflow/height behavior, updated
+  verifyLayoutContract.ts to accept it, applied it to about-page.vue as the
+  verification case, documented it in ui-gallery.vue. root-surface baseline
+  19 -> 18. Also resolves the duplicate kaizen task t-059 (same design
+  question, filed twice from two different t-017 sweeps) -- both will close
+  together once #1340 merges. Still need visual confirmation via the Vercel
+  preview per this task's own instruction before merging (flagged on the PR).
