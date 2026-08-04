@@ -2710,3 +2710,24 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-04T01:35:00Z'
+
+  - id: t-084
+    milestone: m3
+    title: 'components/art/art-manager.vue has a min-h-[720px] magic number on its mount point'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from t-045 (2026-08-04, kind_robots PR #1395). t-045 removed the
+      magic-number `min-h-[...]` heights that used to live inside
+      artjob-queue-browser.vue's own template (already resolved separately
+      before t-045 landed), but `art-manager.vue:97` still has a
+      `min-h-[720px]` on the `<component :is>` mount point that hosts it --
+      same category of defect (a fixed-size box forcing height instead of
+      content-driven sizing), just one file over. Small, scoped: replace with
+      content-driven sizing or a documented, deliberate primitive if a fixed
+      size is genuinely required, then re-check the layout contract.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T00:00:00Z'
