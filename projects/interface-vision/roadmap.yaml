@@ -2779,3 +2779,31 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-04T03:10:00Z'
+
+  - id: t-090
+    milestone: m2
+    title: 'kr-chat-window: add a selectedKey pass-through to its embedded kr-choice-list'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-088's close-out (kind_robots PR #1408), promoted from "deferred" now that
+      it has hit two real surfaces. reward-interact.vue (t-087, PR #1406) and scenario-interact.vue
+      (t-088, PR #1408) both used to render a "highlight the currently-picked choice" style
+      (a ring/border swap on the selected option) before their migration onto kr-chat-window +
+      kr-choice-list. Neither migration could preserve it: kr-chat-window hardcodes its embedded
+      choice lists with no way for a caller to say "this key is the one already picked", so both
+      PRs accepted the visual regression and left the gap as a kaizen note (t-087's TALKBACK entry
+      deferred it as "not filed since no current surface is blocked on it" -- that condition no
+      longer holds).
+
+      Add an optional `selectedKey` prop to kr-chat-window.vue that forwards to each turn's
+      embedded kr-choice-list (which already supports `selectedKey` directly, per
+      scenario-interact.vue's own top-level intro-picker usage in PR #1408). Callers that don't
+      pass it see no change. Once landed, restore the highlight in reward-interact.vue and
+      scenario-interact.vue's story-transcript choice lists (small follow-up diffs, or fold into
+      this same task if trivial).
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T06:34:00Z'
