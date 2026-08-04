@@ -43,6 +43,13 @@ learning:
 
 `learning` is accepted only for `done` and `blocked`. The processor derives `project`, `task`, and `outcome` from the event and appends no duplicate record for the same project/task/outcome.
 
+Prefer the full mapping above. If `learning` is supplied as a bare string instead (a recurring
+mistake — see conductor/t-097), the processor coerces it into `{kind, stakes, lesson}`, inferring
+`kind` from the project's roadmap `kind` and `stakes` from the task's own `stakes` field when
+either is a recognized value, and using the string itself as `lesson`. This keeps the processor
+from hard-failing on the shape, at the cost of `kind`/`stakes` landing `null` in `LEARNING.yaml`
+when they can't be inferred — write the full mapping when you know the answer.
+
 ## Atomic claim protocol
 
 When direct full-file Git access is unavailable, the event-file commit is the Worker's one atomic claim commit. The Worker must not start implementation until current `main` shows that the event was consumed and the task is `claimed` by `worker`.

@@ -227,7 +227,12 @@ def compute_transition_ops(
 
 
 def prepare_learning(
-    event: dict[str, Any], project: str, task_id: str, operation: str
+    event: dict[str, Any],
+    project: str,
+    task_id: str,
+    operation: str,
+    task: dict[str, Any] | None = None,
+    roadmap: dict[str, Any] | None = None,
 ) -> dict[str, Any] | None:
     """Validate the event's optional `learning` payload and return the record to
     append, or None if there's nothing to append (absent, or already recorded).
@@ -241,8 +246,31 @@ def prepare_learning(
         return None
     if operation not in CLOSED_OPERATIONS:
         raise ValueError("learning may only accompany done or blocked events")
+
+    if isinstance(learning, str):
+        # conductor/t-097: a bare string `learning:` (task-events/README.md's
+        # documented direct-push-to-main path never runs the PR-time
+        # validate_task_events.py gate) recurred at least 5 times in one week
+        # and each time silently red-flagged the shared "process" check for
+        # every unrelated PR until a session stumbled onto it. Coerce it into
+        # the required mapping instead of hard-failing the whole run, inferring
+        # kind/stakes from the task's own roadmap entry when possible. This
+        # loses schema precision (kind/stakes may end up null) but preserves
+        # the lesson text and keeps the processor unblocked -- strictly-shaped
+        # events are unaffected.
+        lesson = learning.strip()
+        if not lesson:
+            raise ValueError("learning must be a non-empty string when supplied as a string")
+        kind = roadmap.get("kind") if isinstance(roadmap, dict) else None
+        if kind not in {"software", "content", "proposal"}:
+            kind = None
+        stakes = task.get("stakes") if isinstance(task, dict) else None
+        if stakes not in {"reversible", "outward-facing", "irreversible"}:
+            stakes = None
+        learning = {"kind": kind, "stakes": stakes, "lesson": lesson}
+
     if not isinstance(learning, dict):
-        raise ValueError("learning must be a mapping")
+        raise ValueError("learning must be a mapping or a plain string lesson")
 
     required = {"kind", "stakes", "lesson"}
     missing = sorted(required - learning.keys())
@@ -359,7 +387,7 @@ def process(path: Path, dry_run: bool) -> str:
             path.unlink()
         return f"{project}/{task_id}: {collision}"
 
-    learning_record = prepare_learning(event, project, task_id, operation)
+    learning_record = prepare_learning(event, project, task_id, operation, task=task, roadmap=roadmap)
 
     if not dry_run:
         if ops:

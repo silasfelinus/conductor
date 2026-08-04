@@ -166,6 +166,67 @@ class TaskEventProcessorTests(unittest.TestCase):
         ledger = yaml.safe_load(ledger_text)  # raises yaml.scanner.ScannerError if malformed
         self.assertEqual(ledger["records"][0]["lesson"], tricky_lesson)
 
+    def test_bare_string_learning_is_coerced_not_rejected(self):
+        # conductor/t-097: task-events/README.md's documented workflow is a direct
+        # push to main, so validate_task_events.py's PR-time gate never runs for the
+        # normal case -- a bare string `learning:` (the exact "learning: >-" folded
+        # scalar shape hit at least 5 times in a week: interface-vision/t-065, t-073,
+        # t-061, t-034) used to hard-fail the whole processor run instead of landing.
+        roadmap = self.roadmap()
+        roadmap["tasks"][0]["status"] = "review"
+        roadmap["tasks"][0]["stakes"] = "reversible"
+        (self.root / "projects" / "demo" / "roadmap.yaml").write_text(
+            yaml.safe_dump(roadmap, sort_keys=False), encoding="utf-8"
+        )
+        event = self.write_event(
+            "string-learning.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "done",
+                "learning": "Small event files avoid whole-roadmap connector rewrites.",
+            },
+        )
+
+        result = MODULE.process(event, dry_run=False)
+
+        self.assertEqual(result, "demo/t-001: done")
+        self.assertFalse(event.exists())
+        task = self.roadmap()["tasks"][0]
+        self.assertEqual(task["status"], "done")
+        ledger = yaml.safe_load((self.root / "LEARNING.yaml").read_text(encoding="utf-8"))
+        record = ledger["records"][0]
+        self.assertEqual(
+            record["lesson"], "Small event files avoid whole-roadmap connector rewrites."
+        )
+        # Inferred from the demo roadmap's project-level kind and the task's own
+        # stakes field, set above.
+        self.assertEqual(record["kind"], "software")
+        self.assertEqual(record["stakes"], "reversible")
+
+    def test_blank_string_learning_is_rejected(self):
+        roadmap = self.roadmap()
+        roadmap["tasks"][0]["status"] = "review"
+        (self.root / "projects" / "demo" / "roadmap.yaml").write_text(
+            yaml.safe_dump(roadmap, sort_keys=False), encoding="utf-8"
+        )
+        event = self.write_event(
+            "blank-string-learning.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "done",
+                "learning": "   ",
+            },
+        )
+
+        with self.assertRaisesRegex(ValueError, "non-empty string"):
+            MODULE.process(event, dry_run=False)
+
+        self.assertTrue(event.exists())
+
     def test_rearm_requires_recurring_task(self):
         event = self.write_event(
             "bad-rearm.yaml",

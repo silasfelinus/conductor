@@ -173,6 +173,37 @@ class ValidateTaskEventsTests(unittest.TestCase):
         error = MODULE.validate(event)
         self.assertIn("learning is missing required fields", error)
 
+    def test_bare_string_learning_is_accepted(self):
+        # conductor/t-097: matches process_task_events.py's prepare_learning()
+        # coercion for the same shape -- the PR-time gate must not reject what the
+        # processor will happily accept.
+        event = self.write_event(
+            "string-learning.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "done",
+                "learning": "Small event files avoid whole-roadmap connector rewrites.",
+            },
+        )
+        error = MODULE.validate(event)
+        self.assertIsNone(error)
+
+    def test_blank_string_learning_is_rejected(self):
+        event = self.write_event(
+            "blank-string-learning.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "done",
+                "learning": "   ",
+            },
+        )
+        error = MODULE.validate(event)
+        self.assertIn("non-empty string", error)
+
     def test_empty_note_is_rejected(self):
         event = self.write_event(
             "blank-note.yaml",
