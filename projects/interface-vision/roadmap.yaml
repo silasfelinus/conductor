@@ -2869,3 +2869,26 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-04T09:53:00Z'
+
+  - id: t-093
+    milestone: m3
+    title: 'Audit TALKBACK for kaizen tasks promised but never created in roadmap.yaml'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from merging kind_robots PR #1431 (t-058 slice 6, 2026-08-04 conductor Agent-run
+      session). This project's own TALKBACK.md already contains a "Kaizen task: t-093 --
+      investigate animation-manager.vue, which reappeared in the one-scroll flagged list ..."
+      entry from the fourth t-058 slice (PR #1430) -- but `python scripts/next_free_task_id.py
+      interface-vision` still returned `t-093` as unclaimed when this session checked, meaning
+      that promised task was never actually written to the roadmap. (The investigation itself
+      is now moot -- this same session's slice 6 confirmed animation-manager.vue was a genuine
+      Shape B two-owner grid, not a stale false-positive classification, and migrated it onto
+      kr-panes/kr-pane/kr-pane-scroll via PR #1431.) Worth a one-time sweep of TALKBACK.md across
+      active projects for other "Kaizen task: t-NNN" mentions whose id was never actually created
+      in the matching roadmap.yaml, so promised follow-on scope doesn't silently evaporate.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T13:45:00Z'
