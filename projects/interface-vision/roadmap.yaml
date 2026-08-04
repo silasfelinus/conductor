@@ -2166,7 +2166,7 @@ tasks:
   - id: t-068
     milestone: m3
     title: 'A doc comment can fail 29 source-text contracts — strip comments before forbid- scans'
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     note: |-
@@ -2181,9 +2181,11 @@ tasks:
       Extracted the comment-aware source scanner into a shared helper, migrated the two Facet contracts that already carried or needed this behavior, and added a focused self-test proving comments are ignored while executable occurrences still fail. This is a bounded first migration slice; the remaining forbid-style verifiers still need conversion.
 
       Merged Kind Robots PR #1407 as 8a83d38a10a2a1e5af778439fcc173f59c940573. The shared comment-aware scanner now lives at utils/scripts/lib/sourceText.ts; verifyFacetGallery.ts and verifyFacetClosure.ts use it, and verifySourceTextComments.test.ts proves comments do not satisfy forbid scans while executable occurrences still do. All 11 final-head workflows completed successfully. The remaining forbid-style verifier scripts still need the same mechanical migration, so this task returns to ready rather than being falsely closed.
+
+      Migrated verifyUserPatchAllowlist.ts forbid scans to the shared comment-aware source scanner as the next bounded t-068 slice.
     claimed_by: 2026-08-04T071303Z-interface-vision-t-068-n4q7
     claimed_at: '2026-08-04T07:13:03Z'
-    updated: '2026-08-04T07:13:03Z'
+    updated: '2026-08-04T07:18:00Z'
     owner: worker
 
   - id: t-069
