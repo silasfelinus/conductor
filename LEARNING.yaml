@@ -6294,3 +6294,17 @@ records:
   lesson: Once a warning baseline reaches zero, promote the invariant to an error and reuse the same predicate
     the runtime uses. Keeping a separate validator recreates drift even when both implementations look
     trivial.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-035
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A registry helper (getModelCards()) existing, exporting cleanly, and being independently correct
+    is not evidence it is wired in -- grep call sites, not just definitions, whenever a task note says
+    a function "is defined but never called anywhere." pageStore.cards had two isX() type-guard branches
+    that looked exhaustive but silently fell through to a channel-tab fallback for every string cards:
+    value; the missing branch was a single conditional, but nothing in the type system or existing tests
+    flagged the dead code path.'
