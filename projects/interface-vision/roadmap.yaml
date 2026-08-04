@@ -1906,8 +1906,7 @@ tasks:
   - id: t-098
     milestone: m3
     title: 'Add a fixture asserting kr-panes and kr-anchor-panes cannot be mixed in one component'
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -1915,9 +1914,11 @@ tasks:
 
 
       Added an executable fixture that injects a temporary component mixing kr-panes and kr-anchor-panes, runs the real layout-contract collector, and requires the mixed component to appear as a one-scroll violation.
+
+      Merged kind_robots PR #1438 as ac5335edff2ac7333e922a94249ad539ccfa4ec4. Added an executable end-to-end fixture that injects a temporary component mixing kr-panes and kr-anchor-panes, runs the real layout-contract collector, and requires it to appear as a one-scroll violation. All eleven final-head workflows completed successfully, including Layout Contract 30942476281 and Contract Tests 30942475849.
     claimed_by: 2026-08-04T191148Z-interface-vision-t098-j4q8
     claimed_at: '2026-08-04T19:11:48Z'
-    updated: '2026-08-04T19:18:00Z'
+    updated: '2026-08-04T19:24:30Z'
   - id: t-054
     milestone: m2
     title: 'Three content routes rendered nothing; MDC mounts are now validated in CI'
