@@ -1,7 +1,0 @@
-version: 1
-project: interface-vision
-task: t-014
-operation: ready
-updated: '2026-08-04T10:58:00Z'
-note: >-
-  Reopened after a production regression report from Silas. The canonical /account route renders account-settings.vue directly, but the browser-local preference that reveals the workspace-header maturity toggle remained only in user-dashboard.vue. Restore that opt-in control on the actual Account & Privacy surface and add a contract guard so future route migrations cannot strand it again.
