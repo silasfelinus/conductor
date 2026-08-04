@@ -1887,84 +1887,30 @@ tasks:
     milestone: m2
     title: 'Adopt kr-gallery across the seven core-object galleries (via their managers)'
     status: ready
-    owner: null
     passes: 0
     stakes: reversible
-    note: >
-      "All seven core objects share one gallery" is an explicit beta gate in DESIGN-BRIEF.md,
-      and it is the largest structural item still open. components/gallery/kr-gallery.vue
-      (167 lines) already exists -- extracted in t-008 from conductor-project-gallery-page.vue,
-      the Project gallery Silas named as the shape the rest should follow -- and as of
-      2026-08-02 exactly ONE of the seven uses it.
-
-      kind_robots PR #1328 adds utils/scripts/verifyGalleryAdoption.ts, which prints the count
-      (1/7 core, 1/25 overall) on every CI run and names the holdouts. That counter is the
-      point: `global-ui` closed 25/25 tasks "done" at ~7% adoption because nobody measured the
-      whole, and the conversation kit is the one piece that moved this week precisely because
-      verifyNarrativeKit.ts had been printing its number since it shipped.
-
-      Targets, ~4,000 of the ~12,000 gallery lines: dream-gallery (1035), character-gallery
-      (717), bot-gallery (694), reward-gallery (741), scenario-gallery (567), facet-gallery
-      (233). One PR each; ratchet the counter each time. These are surfaces Silas uses daily,
-      so verify visually on the preview per AGENTS.md, not just by the contract count.
-
-      UPDATE 2026-08-04 (conductor Agent-run session, reviewer role): kind_robots PR #1414
-      merged -- kr-gallery gained additive `item`/`empty` slots (falls back to built-in
-      rendering when absent, so facet-gallery and conductor-project-gallery-page are
-      untouched) and scenario-gallery adopted the shell for its grid variant, keeping
-      ScenarioCard via the slot. Counter: core-object galleries 2/7 -> 3/7 (overall 2/24 ->
-      3/24, per verifyGalleryAdoption.ts). All structural CI green (TypeScript, Contract
-      verifiers, layout-contract, GitGuardian, verifyGalleryAdoption itself). True visual
-      preview verification was NOT possible this session -- no Vercel MCP connector was
-      available (still-connecting per the session's tool list) and direct headless-browser
-      egress to *.vercel.app was blocked by the sandbox proxy (ERR_CONNECTION_RESET even
-      with --proxy-server set to the configured HTTPS_PROXY) -- the same access limitation
-      AGENTS.md already documents for local `nuxt dev`. Merged anyway on the strength of the
-      structural signal: the change is additive/backward-compatible by construction (opt-in
-      slots, existing render path untouched when absent), stakes: reversible, and easy to
-      revert if the scenario-gallery grid renders wrong against real data. Remaining targets
-      unchanged: bot-gallery (694), character-gallery (717), reward-gallery (741),
-      dream-gallery (1035) -- all confirmed reachable from /academy per the PR. Next agent
-      with working Vercel/browser access should spot-check the merged scenario-gallery grid
-      on production before starting the next slice.
-
-      Fold in while there, both found by the same audit: (a)
-      conductor-project-gallery-page.vue:123 is a one-line reimplementation of
-      resolveArtVariantSrc's variant branch and will silently drift from it; (b) six files
-      repeat an identical `facet.cardPath || facet.imagePath || facet.heroPath` chain --
-      facet-gallery, facet-manager, facet-picker, character-facet-picker, reward-facet-picker,
-      art-facet-selector.
-
-      CORRECTION, 2026-08-03. This task reasoned about the galleries as if they were the
-      primary surfaces. They are not, and acting on that error cost a whole PR.
-
+    note: |-
+      "All seven core objects share one gallery" is an explicit beta gate in DESIGN-BRIEF.md, and it is the largest structural item still open. components/gallery/kr-gallery.vue (167 lines) already exists -- extracted in t-008 from conductor-project-gallery-page.vue, the Project gallery Silas named as the shape the rest should follow -- and as of 2026-08-02 exactly ONE of the seven uses it.
+      kind_robots PR #1328 adds utils/scripts/verifyGalleryAdoption.ts, which prints the count (1/7 core, 1/25 overall) on every CI run and names the holdouts. That counter is the point: `global-ui` closed 25/25 tasks "done" at ~7% adoption because nobody measured the whole, and the conversation kit is the one piece that moved this week precisely because verifyNarrativeKit.ts had been printing its number since it shipped.
+      Targets, ~4,000 of the ~12,000 gallery lines: dream-gallery (1035), character-gallery (717), bot-gallery (694), reward-gallery (741), scenario-gallery (567), facet-gallery (233). One PR each; ratchet the counter each time. These are surfaces Silas uses daily, so verify visually on the preview per AGENTS.md, not just by the contract count.
+      UPDATE 2026-08-04 (conductor Agent-run session, reviewer role): kind_robots PR #1414 merged -- kr-gallery gained additive `item`/`empty` slots (falls back to built-in rendering when absent, so facet-gallery and conductor-project-gallery-page are untouched) and scenario-gallery adopted the shell for its grid variant, keeping ScenarioCard via the slot. Counter: core-object galleries 2/7 -> 3/7 (overall 2/24 -> 3/24, per verifyGalleryAdoption.ts). All structural CI green (TypeScript, Contract verifiers, layout-contract, GitGuardian, verifyGalleryAdoption itself). True visual preview verification was NOT possible this session -- no Vercel MCP connector was available (still-connecting per the session's tool list) and direct headless-browser egress to *.vercel.app was blocked by the sandbox proxy (ERR_CONNECTION_RESET even with --proxy-server set to the configured HTTPS_PROXY) -- the same access limitation AGENTS.md already documents for local `nuxt dev`. Merged anyway on the strength of the structural signal: the change is additive/backward-compatible by construction (opt-in slots, existing render path untouched when absent), stakes: reversible, and easy to revert if the scenario-gallery grid renders wrong against real data. Remaining targets unchanged: bot-gallery (694), character-gallery (717), reward-gallery (741), dream-gallery (1035) -- all confirmed reachable from /academy per the PR. Next agent with working Vercel/browser access should spot-check the merged scenario-gallery grid on production before starting the next slice.
+      Fold in while there, both found by the same audit: (a) conductor-project-gallery-page.vue:123 is a one-line reimplementation of resolveArtVariantSrc's variant branch and will silently drift from it; (b) six files repeat an identical `facet.cardPath || facet.imagePath || facet.heroPath` chain -- facet-gallery, facet-manager, facet-picker, character-facet-picker, reward-facet-picker, art-facet-selector.
+      CORRECTION, 2026-08-03. This task reasoned about the galleries as if they were the primary surfaces. They are not, and acting on that error cost a whole PR.
       The house pattern, verified by tracing every content route's mount chain:
 
         content/<model>.md  ->  :<model>-manager   tab router, the primary mount
                             ->  <model>-interact   the working surface
                             ->  <model>-gallery    inset picker
 
-      A gallery is typically THREE hops from its route. So "adopt kr-gallery in
-      <model>-gallery.vue" is still the right edit -- but it is only VISIBLE if a manager
-      actually routes to that gallery, and the file list above says nothing about whether one
-      does. In the Facets case none did: facet-gallery.vue was mounted by nothing at all, and
-      PR #1334 adopted kr-gallery inside it with no possible effect on any page. The line
-      above reading "exactly ONE of the seven uses it" was already the honest count; the
-      counter said two.
+      A gallery is typically THREE hops from its route. So "adopt kr-gallery in <model>-gallery.vue" is still the right edit -- but it is only VISIBLE if a manager actually routes to that gallery, and the file list above says nothing about whether one does. In the Facets case none did: facet-gallery.vue was mounted by nothing at all, and PR #1334 adopted kr-gallery inside it with no possible effect on any page. The line above reading "exactly ONE of the seven uses it" was already the honest count; the counter said two.
+      verifyGalleryAdoption.ts now walks content/**/*.md to its MDC mount and then transitively through component templates, so it reports adopted AND REACHABLE, names any gallery no route renders, and prints a manager/interact/gallery tier table per model. That table is the actual state of this task. Facets was the only model missing tiers; kind_robots PR #1351 gave it an interact and wired its gallery, so all six models now show manager/interact/gallery reachable and the core count is an honest 2/7.
+      Remaining, per model: bot, character, dream, reward, scenario. Each one's gallery IS reachable already, so these are straight adoption PRs -- but check the tier table before and after each, not the filename count.
 
-      verifyGalleryAdoption.ts now walks content/**/*.md to its MDC mount and then transitively
-      through component templates, so it reports adopted AND REACHABLE, names any gallery no
-      route renders, and prints a manager/interact/gallery tier table per model. That table is
-      the actual state of this task. Facets was the only model missing tiers; kind_robots PR
-      #1351 gave it an interact and wired its gallery, so all six models now show
-      manager/interact/gallery reachable and the core count is an honest 2/7.
 
-      Remaining, per model: bot, character, dream, reward, scenario. Each one's gallery IS
-      reachable already, so these are straight adoption PRs -- but check the tier table before
-      and after each, not the filename count.
+      Reviewer cycle merged Kind Robots PR #1415 as e17449d5d7fe0bd0857afc269babf0e8bb1d4891 after repairing its capture-group guard CI failure on the existing branch. The shared gallery grid now sizes to its actual container, card variants follow the Cards/Heroes/Icons mode, scenario-gallery's mode bar is wired, and bot-gallery raises the reachable core adoption counter to 4/7. All 14 final-head workflows completed successfully, including Contract Tests 30891526110 and TypeScript 30891525616. Character, Reward, and Dream galleries remain, so t-060 returns to ready rather than being falsely closed.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-03T07:10:00Z'
+    updated: '2026-08-04T08:25:00Z'
 
   - id: t-056
     milestone: m2
