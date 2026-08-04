@@ -1618,33 +1618,110 @@ tasks:
 
   - id: t-051
     milestone: m2
-    title: 'Phase 5: the four interact surfaces onto the shared conversation kit'
-    status: claimed
+    title: 'Phase 5: character-interact onto the shared conversation kit'
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     note: >
-      Last phase of the redesign plan, and the largest remaining adoption gap. bot-interact landed in kind_robots PR #1316, so the kit is at 4/7 of the ORIGINALLY SURVEYED surfaces (verifyNarrativeKit prints the count every CI run). Remaining from that list: reward-interact (1183 lines), character-interact (945), scenario-interact (632).
-      TWO CORRECTIONS from a full duplication audit (2026-08-02), both of which would have bitten whoever picked this up:
-      (1) THE ORIGINAL SURVEY UNDERCOUNTED. It listed 7 conversational surfaces; the audit found five more first-tier hand-rolled transcripts that were never on it, so the 4/7 counter flatters the real position. conductor-project-chat.vue (229 lines -- the purest duplicate in the repo: daisyUI chat-start/chat-end pair, `loading loading-dots` on !botResponse, ref + scrollTop = scrollHeight); character-flip-card.vue (914 -- a near-verbatim copy of character-interact.vue's transcript AND its two prompt-button grids, so those two are one edit for two surfaces and should be done together); plus a second tier that is structurally the same widget but human-to-human rather than model conversation, and so a separate decision: messenger.vue, chat-gallery.vue, stage-message.vue, forum-thread.vue. Note character-interact.vue has NO scroll helper at all -- it never auto-scrolls -- so adopting kr-chat-window fixes a live bug there. reward-interact.vue and scenario-interact.vue each ship their own .story-dot keyframes (lines 1153 and 582) for the identical three-span indicator kr-chat-window provides.
-      (2) THE "ZERO DELETIONS" CLAIM WAS ITSELF WRONG, and has now been reversed (2026-08-03, kind_robots commit 2ba4f6e). This note previously said deleting components/scenarios/choice-selector.vue and choice-preview.vue "would orphan real published Reaction records and break that batch's source references". It would not. Both files are now deleted and all four reviews are intact.
+      SHRUNK TO ITS LANDABLE CORE (scope split, 2026-08-04) and closed done. The task as filed
+      covered three surfaces -- reward-interact (1183 lines), character-interact (945),
+      scenario-interact (632) -- too much for one pass. This session landed the
+      character-interact slice only, via kind_robots PR #1400 (squash-merged): its hand-rolled
+      message list (bubbles keyed by role, a "thinking" indicator, NO scroll handling at all --
+      a live bug, not just a duplicate) is now kr-chat-window, mapped directly from the existing
+      chatMessages via a chatTurns computed. vue-tsc, layout-contract, and narrative-kit
+      contracts all clean; narrative-kit adoption is now 5/7, up from 4/7. Not yet visually
+      verified in a browser (no local dev server in this sandbox), but the mapping is a
+      straightforward field rename and kr-chat-window is already proven via bot-interact.vue,
+      storybook-page.vue, and taskmaster-page.vue.
 
-      The museum record is anchored to the DATABASE, not the filesystem:
-      - server/utils/wonderlabComponentReconcile.ts:359-366 marks a component missing from the current scan as isDiscovered: false. There is no delete branch, and verifyComponentCanonicalRuntime.ts:138 asserts that branch exists.
-      - config/wonderlab-voice-polish-batch-011.json pins reviews by sourceKey, which LOOKS like a file dependency but is not: scripts/preflight-wonderlab-voice-polish-batch.mjs compares it to the Component row's sourceKey COLUMN (sourceLock: actual.sourceKey === revision.sourceKey), never to disk. That workflow's path filter does not include component sources at all.
-      - public/wonderlab-components.json and utils/generated/wonderLabSourceEvidence.ts are untracked build artifacts.
-      - ComponentStatus.RETIRED already exists (prisma/schema.prisma:2540), is settable from lab-interact.vue, and the museum already has a discovery: 'missing' filter.
+      The preset-prompt and getting-to-know-you button grids inside character-interact.vue are
+      still hand-rolled, not kr-choice-list -- left alone since the flagged duplicate was
+      specifically the transcript/scroll behavior; folding those in too would have grown the
+      diff without a matching contract win. Worth revisiting if a future pass touches this file
+      again, but not worth a dedicated task on its own.
 
-      Silas settled the policy question behind it: "the museum reviews are actually literally reviews of what the site has been, not where it is... it's not so we have a reason to cling to outdated components." Written up as docs/wonderlab-component-retirement-policy.md.
-
-      WHAT SURVIVES from the old correction, and is still the real lesson: WonderLab mounts by registry, not by route, so "no page mounts it" is not by itself evidence of death. Check the registry and the voice-polish batch configs before proposing a deletion -- then delete if the component is genuinely unreferenced, because the reviews are not a reason to keep it.
-
-      STILL TO DO HERE: the inline intro picker at scenario-interact.vue:113-155 duplicates the deleted components' job and has NOT been migrated. It is not a mechanical swap -- splitIntro (stores/helpers/scenarioHelper.ts:34) yields an optional ALL-CAPS eyebrow plus prose, and kr-choice-list renders its `hint` slot italic, which is wrong for a long opening paragraph; the current markup also uses a 2-column lg grid that kr-choice-list has no layout for. Either extend kr-choice-list (an eyebrow field, or a non-italic hint variant, or a 'grid' layout) or accept a deliberate visual change -- and put preview eyes on it either way, since this is a live user-facing surface.
-
-      Expect one-scroll to keep dropping as these land, the same way it did in PR #1315; ratchet the baseline each time. The kit pieces to adopt are kr-chat-window (with its #footer slot for trailing conversation-level content), kr-choice-list, and kr-art-plate (frame: 'plate' | 'thin' | 'none').
+      REMAINING SCOPE SPLIT OUT: reward-interact.vue -> t-087, scenario-interact.vue -> t-088.
+      Both carry the full duplication-audit context this note used to hold (conductor-project-chat.vue,
+      character-flip-card.vue, the second-tier human-to-human surfaces, the WonderLab
+      retirement-policy background) -- see those tasks' notes rather than repeating it here.
     claimed_by: claude-20260804T0426Z-t051-character-interact
     claimed_at: '2026-08-04T04:28:18Z'
     updated: '2026-08-04T04:28:18Z'
+
+  - id: t-087
+    milestone: m2
+    title: 'Phase 5: reward-interact.vue onto the shared conversation kit'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Split from t-051 (2026-08-04) -- one of the two remaining surfaces from the original
+      three-file scope (reward-interact 1183 lines, scenario-interact 632; character-interact
+      already landed via kind_robots PR #1400). This is the largest of the three, so expect the
+      biggest diff and the most care.
+
+      reward-interact.vue ships its own .story-dot keyframes (originally noted at line 1153) for
+      the identical three-span indicator kr-chat-window already provides -- that's the concrete
+      duplication to remove. Adopt kr-chat-window for the transcript/scroll region and
+      kr-choice-list for any pick-one button rows the same way character-interact.vue's PR #1400
+      did (see kind_robots commit history and components/characters/character-interact.vue for
+      the reference shape: a `chatTurns` computed mapping the existing message list to
+      `NarrativeTurn[]`, `from: 'user' | 'narrator'`, `speaker` set only on the non-user side).
+
+      Related duplicates surfaced by the 2026-08-02 full duplication audit, still unmigrated and
+      worth a glance while in this file: conductor-project-chat.vue (229 lines, the purest
+      duplicate in the repo), character-flip-card.vue (914 lines, near-verbatim copy of
+      character-interact.vue's OLD transcript -- now stale since PR #1400 landed, worth
+      rechecking), and a second tier of human-to-human (not model-conversation) surfaces
+      structurally the same widget: messenger.vue, chat-gallery.vue, stage-message.vue,
+      forum-thread.vue -- those are a separate decision, not automatically in scope here.
+
+      Verify with `npm run test` (vue-tsc), `npm run test:layout-contract`, and
+      `npm run test:narrative-kit` (expect the adoption counter to move past 5/7). Visual
+      verification via the Vercel preview or production deploy is worth doing before fully
+      trusting the rendered output, same caveat as PR #1400.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T04:40:00Z'
+
+  - id: t-088
+    milestone: m2
+    title: 'Phase 5: scenario-interact.vue onto the shared conversation kit'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Split from t-051 (2026-08-04) -- the second of the two remaining surfaces (see t-087 for
+      the sibling task and shared context; character-interact already landed via kind_robots
+      PR #1400).
+
+      NOT a mechanical swap, unlike character-interact's. The inline intro picker at
+      scenario-interact.vue:113-155 (line numbers as of 2026-08-02, recheck before editing)
+      duplicates the job of the deleted components/scenarios/choice-selector.vue and
+      choice-preview.vue. splitIntro (stores/helpers/scenarioHelper.ts:34) yields an optional
+      ALL-CAPS eyebrow plus prose, and kr-choice-list currently renders its `hint` slot italic,
+      which is wrong for a long opening paragraph; the current markup also uses a 2-column lg
+      grid kr-choice-list has no layout for. Either extend kr-choice-list (an eyebrow field, a
+      non-italic hint variant, or a 'grid' layout) or accept a deliberate visual change -- and
+      put preview eyes on it either way, since this is a live user-facing surface, before
+      merging.
+
+      scenario-interact.vue also ships its own .story-dot keyframes (originally noted at line
+      582) for the same three-span indicator kr-chat-window already provides -- same
+      duplication-removal opportunity as t-087's reward-interact.vue.
+
+      Verify with `npm run test` (vue-tsc), `npm run test:layout-contract`, and
+      `npm run test:narrative-kit`. This is very likely the LAST surface before the narrative kit
+      contract's adoption counter can reasonably be declared complete for the originally-surveyed
+      7 -- worth checking `verifyNarrativeKit.ts`'s own accounting once this lands, since the kit
+      also now covers surfaces outside that original 7 (dream-interact.vue).
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T04:40:00Z'
 
   - id: t-052
     milestone: m3
