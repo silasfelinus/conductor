@@ -1519,18 +1519,15 @@ tasks:
   - id: t-044
     milestone: m3
     title: 'Restructure artjob-queue-browser.vue: remove magic-number min-heights and depth-12 nesting'
-    status: needs-human
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Implementation complete and verified: kind_robots PR #1394 (https://github.com/silasfelinus/kind_robots/pull/1394) extracts artjob-queue-card.vue from artjob-queue-browser.vue, addressing the nesting-depth half of this task (the magic-number-height half was already resolved separately before this pass). All 14 CI checks green, mergeable_state: clean.
-
-      FOR SILAS: PR #1394 cannot be merged via the GitHub API this session -- 12 consecutive merge attempts (mixing squash/merge methods, plus enable_pr_auto_merge) all failed with alternating HTTP 502 and 405 "Merge already in progress" errors, despite the PR staying green and clean throughout with no actual merge ever completing. This does not match the known documented 413-push pattern (CLAUDE.md) or a real required-check block (the #1392 case earlier this session) -- there is no failing check here at all. Likely a transient connector/proxy issue on the merge endpoint specifically. TO APPROVE: merge PR #1394 directly on github.com (should be a routine green-checks merge), or ask a future session to retry -- the API call itself may simply need the underlying lock to clear. What unblocks: this task flips to done once #1394 merges.
+    note: 'kind_robots PR #1394 merged (2026-08-04), extracting artjob-queue-card.vue and resolving the depth-12 nesting half of this task; the magic-number-height half was already resolved separately before this pass. Prior session had verified 14/14 CI green and mergeable_state clean but hit 12 consecutive merge-endpoint failures (alternating HTTP 502 / 405 "merge already in progress") and parked this at needs-human for a retry. Retried this session: merge succeeded on the first attempt, confirming the prior failures were transient.'
     claimed_by: claude-20260804T0140Z-t044-artjob-queue
     claimed_at: '2026-08-04T01:37:08Z'
-    updated: '2026-08-04T02:02:10Z'
-    soft_gate: true
+    updated: '2026-08-04T02:27:29Z'
+    soft_gate: false
 
   - id: t-045
     milestone: m3
