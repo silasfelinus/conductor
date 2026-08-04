@@ -745,7 +745,7 @@ tasks:
   - id: t-014
     milestone: m2
     title: 'Build the first-launch intro and the user dashboard'
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on: t-010
@@ -753,9 +753,11 @@ tasks:
       DONE 2026-08-02: kind_robots PR #1292 (merged). First-launch intro (components/user/first-launch-intro.vue + introStore.ts) built and mounted globally, auto-opens once per session for a logged-in user who has not dismissed it; dismissal persists on the new User.introDismissedAt field (additive migration) via PATCH /api/users/me/intro, and is re-openable from the dashboard toolbar. user-dashboard.vue rebuilt on kr-surface + kr-toolbar + kr-scroll, wiring in karma balance, mana balance/cap/refill countdown, an achievements summary, theme, a real showMature toggle, and server preferences -- reusing t-010s existing karma/mana/achievement plumbing. Scoped out (left for a follow-up): extending user-galleries.vue to cover Facets/Projects (still 5/7 object types).
 
       Reopened after a production regression report from Silas. The canonical /account route renders account-settings.vue directly, but the browser-local preference that reveals the workspace-header maturity toggle remained only in user-dashboard.vue. Restore that opt-in control on the actual Account & Privacy surface and add a contract guard so future route migrations cannot strand it again.
+
+      Restored the browser-local header maturity preference on the canonical /account Account & Privacy surface. The new reusable preference row uses maturityPreferenceStore, remains distinct from the persisted showMature consent, and the maturity/privacy contract now locks the canonical route, mounted settings component, preference store wiring, and authenticated workspace-header condition.
     claimed_by: 2026-08-04T110000Z-interface-vision-t-014-maturity-a7c9
     claimed_at: '2026-08-04T11:00:00Z'
-    updated: '2026-08-04T11:00:00Z'
+    updated: '2026-08-04T11:08:00Z'
     owner: worker
 
   - id: t-015
