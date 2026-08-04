@@ -6504,3 +6504,37 @@ records:
     styling" gap reward-interact/t-087 hit -- two real surfaces is the signal to actually file
     the kr-chat-window selectedKey pass-through as a task (t-090) instead of deferring a third
     time.
+- date: 2026-08-04
+  project: interface-vision
+  task: t-089
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A plain "who imports this .vue file" grep at deletion time is not enough --
+    kind_robots PR #1405's conductor-art-gallery.vue deletion (t-026) missed a plugin that
+    DOM-scraped the component's specific rendered markup and a CI workflow that named the
+    file directly in its paths: trigger list. Documented the checklist in kind_robots'
+    AGENTS.md (PR #1417): grep the deleted filename repo-wide (not just import sites), check
+    .github/workflows/*.yml paths: blocks, and check plugins/*.client.ts for DOM-scraping
+    selector strings before deleting a superseded component.
+- date: 2026-08-04
+  project: conductor
+  task: t-097
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    task-events/README.md documents a direct push to main as the normal workflow, so
+    validate_task_events.py's PR-time gate never runs for the common case -- a malformed
+    bare-string learning: field (the "learning: >-" folded scalar shape) recurred at least 5
+    times in a week and each time hard-failed process_task_events.py, silently red-flagging
+    the shared "process" check for every unrelated PR. Coercing the string into
+    {kind, stakes, lesson} (inferring kind/stakes from the task's own roadmap entry) instead
+    of hard-rejecting it keeps the processor unblocked without losing the lesson text -- worth
+    considering the same "recover gracefully from a common malformed shape" pattern for other
+    task-events fields prone to hand-authoring mistakes.
