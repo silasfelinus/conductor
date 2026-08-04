@@ -6338,3 +6338,17 @@ records:
     + facetProfileForm.ts feeding a create form) had already shipped via an unrelated commit by the time
     this task was worked, so the actual remaining scope was half the size the note described. Only the
     Project half needed new UI; the store/API layer (createProject()) was already complete on both sides.
+- date: '2026-08-04'
+  project: interface-vision
+  task: t-080
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: scope
+  lesson: >-
+    Task title covered two symmetric entities (Reward + Scenario isPublic/isMature
+    toggles) but the PR only implemented one; split the remainder into t-082 rather
+    than either blocking the merged half or silently closing the task as fully done.
+    Titles spanning multiple entities should be split into per-entity tasks at claim
+    time to avoid this ambiguity recurring.
