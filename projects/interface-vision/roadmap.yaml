@@ -1402,26 +1402,15 @@ tasks:
   - id: t-036
     milestone: m2
     title: 'Wire navigation-health.vue to navManifest.ts'
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-012
-    note: >
-      Split from t-012 (2026-08-01, kind_robots PR #1272). components/navigation/
-      navigation-health.vue currently audits only the channel/tab system (channel count,
-      tab count, shared routes, a raw "legacy adapters" count of tabs with a non-empty
-      dashboardKey, broken-artwork detection) via useChannelContentStore() -- it doesn't
-      cross-check dashboardKey/dashboardTab/cards resolution at all. Swap in (or add
-      alongside) navManifest.ts's validateNavManifest() so the "legacy adapters" stat
-      becomes a real pass/fail count instead of a raw tally, surfacing the same
-      errors/warnings verifyNavManifest.ts reports in CI, live in the admin UI. Preserve
-      the existing stat-grid/card-grid UI shape; this is a data-source swap plus real
-      validation, not a rebuild. navManifest.ts is already isomorphic (no node:fs) so it
-      is safe to import client-side as-is.
+    note: 'kind_robots PR #1390 (merged). Wired navManifest.ts''s validateNavManifest() into components/navigation/navigation-health.vue: built a NavManifestEntry per resolved tab (same field mapping utils/scripts/verifyChannelContent.ts uses in CI) and ran it client-side. The ''Legacy adapters'' stat is now a real pass/fail count (passing/total dashboardKey-bridging tabs) instead of a raw tally, and a new ''Nav manifest issues'' section surfaces the same error/warning messages verifyNavManifest.ts reports in CI, live in the admin UI when any exist. Preserved the existing stat-grid/card-grid shape. Verified: npm run test:nav-manifest (0 errors, matches expected empty-issues state), vue-tsc --noEmit (clean), eslint (clean). Could not visually verify on the Vercel preview -- navigation-health.vue is gated requiredRole: ADMIN and this sandbox has no admin credentials -- flagged for reviewer in the PR; merged by a concurrent Reviewer session after CI/Vercel went green.'
     claimed_by: claude-scheduled-20260804T000414Z-iv-t036
     claimed_at: '2026-08-04T00:04:15Z'
-    updated: '2026-08-04T00:04:15Z'
+    updated: '2026-08-04T00:13:02Z'
 
   - id: t-039
     milestone: m2
