@@ -2833,3 +2833,36 @@ tasks:
       record today's count as a baseline that may only shrink, and fail on anything new.
       Scope the decision first -- lint-staged/pre-commit, a ratcheted CI job, or explicitly
       choosing to keep relying on review -- rather than assuming the CI job is wanted.
+  - id: t-100
+    milestone: m3
+    title: 'A missing image under a non-/images path returns HTTP 200 with the app shell, so broken art is invisible to every status-code check'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found while fixing Reward.imagePath (kind_robots PR #1446, Silas 2026-08-04:
+      "literally every path in imagePath is wrong for rewards"). All 227 rewards with an
+      imagePath stored `/rewards/...` instead of `/images/rewards/...`. 214 of them were
+      serving a 142 KB Nuxt app shell as `text/html` at HTTP 200, because `/rewards/x.webp`
+      does not 404 -- it falls through to the SPA catch-all. Only 13 served a real image,
+      and only because a separate tracked directory (public/rewards/) happens to shadow the
+      legacy prefix.
+      The data half is fixed by the repair workflow. The GAP is that nothing could see it:
+      curl, uptime monitors, and link checkers all read 200 as healthy, and only a consumer
+      that tries to DECODE the bytes can tell. The responsive-layout audit was the only
+      check with a chance, and it flagged exactly ONE reward -- Molt-Jar, the one with no
+      imagePath at all, whose fallback path genuinely 404s. The other 214 were invisible by
+      construction.
+      Two candidate guards, cheapest first. (1) A contract check that fetches every distinct
+      stored art path for the core objects against production and asserts the response
+      content-type starts with `image/` -- 227 rewards took about 90 seconds at -P 12, so
+      this is affordable nightly rather than per-PR. (2) Teach auditResponsiveLayout.mjs's
+      BROKEN-ART detector to report an `<img>` whose response content-type is not an image,
+      not just one whose naturalWidth is 0 -- narrower, since it only sees images actually
+      rendered at the audited widths. Verify a fix by reintroducing a `/rewards/...` path and
+      confirming the check goes red; a guard that has only ever been seen to pass is
+      indistinguishable from one that cannot fail (see t-063).
+      Scope note: only Reward was affected. Bots (64 avatarImage), Characters (201
+      imagePath) and Dreams already store `/images/...` and were spot-checked as serving
+      real `image/webp`.
