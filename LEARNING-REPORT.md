@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-04T04:32:41Z
+Generated: 2026-08-04T04:41:02Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **501**
-- Outcomes: blocked: 13, cancelled: 1, done: 487
+- Closed tasks recorded: **502**
+- Outcomes: blocked: 13, cancelled: 1, done: 488
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 58 | 100% |
+| interface-vision | 59 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 486 | 99% |
+| software | 487 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-04 `interface-vision/t-051` — A three-surface migration task (reward/character/scenario-interact) was scoped correctly for "what's left" but not for "what fits in one pass." Splitting after landing the first surface (character-interact, kind_robots PR #1400) into t-087/t-088 for the remaining two, rather than trying all three in one diff, kept each PR small, independently verifiable, and reviewable -- and let the roadmap track real partial progress instead of one task note growing indefinitely across sessions. When a task note already enumerates N similarly-sized remaining items, file it as N tasks up front rather than one task that will need a mid-flight split.
+
 - 2026-08-04 `interface-vision/t-050` — A "retire component X, fold into shared component Y" task can resolve correctly with zero code changes when the premise doesn't survive a full read: the task's own note said kr-narrator-stage was imported by "every other surface," but grep found exactly two real consumers, and grafting the remaining Dreams-specific chrome (card flip, emoji bursts, musings toast, pin) onto it would have more than doubled a 189-line shared component for those two consumers' benefit. When a retirement/consolidation task's justification rests on an unverified breadth claim ("every surface," "the shared X"), verify the actual consumer count with grep before implementing the merge -- the corrected count can flip the right answer from "fold it in" to "leave it alone."
 - 2026-08-04 `interface-vision/t-064` — A task tracking N/M sub-item progress (5 cards converging onto a shared body) had its note fall one merge behind reality: reward-card had already migrated in a prior session/PR with no note update recording it, so the task read as 2 items remaining when only 1 actually was. Caught by checking the merged tree directly (grep for the new import) rather than trusting the note's own count. When landing one item of an N/M tracked task, update the note's count even if the task can't close yet.
 - 2026-08-04 `interface-vision/t-045` — A plain repo-wide grep for a deleted component's filename missed a real dependency: verifyWonderLabInteractionDisplayFixtures.ts read smart-nav.vue's source directly via fs.readFile to assert on its prop contract, which only surfaced as an ENOENT in the "Contract verifiers" CI job, not in any local grep or vue-tsc/eslint pass. Before deleting a component with WonderLab preview fixture coverage, grep the utils/scripts/verifyWonderLab*.ts files specifically for readFile calls against that component's path, not just import/reference greps.
@@ -90,8 +92,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-03 `interface-vision/t-034` — Once a warning baseline reaches zero, promote the invariant to an error and reuse the same predicate the runtime uses. Keeping a separate validator recreates drift even when both implementations look trivial.
 - 2026-08-03 `interface-vision/t-028` — Salvaged from the implementing session's own close-out PR (conductor #1636, opened but never merged -- superseded by this session's reconciliation before it landed). That session hit a real task-ID collision mid-work: its own new task got numbered t-078, but a concurrent session claimed t-078 for an unrelated mobile workspace-header fix and merged first, so GitHub reported the PR unmergeable. Recovered per the documented rotation-collision protocol -- merged current main, kept main's t-078 untouched, renumbered the new task to t-079 via next_free_task_id.py, and verified the diff was scoped to only the intended change before re-pushing. No lost work on either side, no force-push. Filed here as a second confirmed real-world instance of the task-ID collision failure mode the rotation-collision protocol exists to catch.
 
-- 2026-08-03 `interface-vision/t-028` — Closed as done during this session's state-reconciliation pass: the task's own note already documented that its scope had been deliberately narrowed to a schema-only landable core (kind_robots PR #1381, confirmed merged), with the remaining wiring split into a dependent follow-on (t-079). The roadmap had been left at status: review rather than done after the bookkeeping PR merged, which also meant t-079 (depends_on: t-028) was marked status: ready despite its dependency not showing done -- both corrected together. check_pr_merged_drift.py's own connectivity limitation in this sandbox (raw urllib 403s on api.github.com) means it cannot verify referenced PR numbers itself and always exits non-zero for this class of task; the fix is to verify via GitHub MCP tools (as CLAUDE.md's own runbook says) rather than treating every drift-check non-zero exit as unresolved.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-04T04:32:41Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-04T04:41:02Z_
