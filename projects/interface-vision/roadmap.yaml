@@ -1618,39 +1618,14 @@ tasks:
   - id: t-087
     milestone: m2
     title: 'Phase 5: reward-interact.vue onto the shared conversation kit'
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Split from t-051 (2026-08-04) -- one of the two remaining surfaces from the original
-      three-file scope (reward-interact 1183 lines, scenario-interact 632; character-interact
-      already landed via kind_robots PR #1400). This is the largest of the three, so expect the
-      biggest diff and the most care.
-
-      reward-interact.vue ships its own .story-dot keyframes (originally noted at line 1153) for
-      the identical three-span indicator kr-chat-window already provides -- that's the concrete
-      duplication to remove. Adopt kr-chat-window for the transcript/scroll region and
-      kr-choice-list for any pick-one button rows the same way character-interact.vue's PR #1400
-      did (see kind_robots commit history and components/characters/character-interact.vue for
-      the reference shape: a `chatTurns` computed mapping the existing message list to
-      `NarrativeTurn[]`, `from: 'user' | 'narrator'`, `speaker` set only on the non-user side).
-
-      Related duplicates surfaced by the 2026-08-02 full duplication audit, still unmigrated and
-      worth a glance while in this file: conductor-project-chat.vue (229 lines, the purest
-      duplicate in the repo), character-flip-card.vue (914 lines, near-verbatim copy of
-      character-interact.vue's OLD transcript -- now stale since PR #1400 landed, worth
-      rechecking), and a second tier of human-to-human (not model-conversation) surfaces
-      structurally the same widget: messenger.vue, chat-gallery.vue, stage-message.vue,
-      forum-thread.vue -- those are a separate decision, not automatically in scope here.
-
-      Verify with `npm run test` (vue-tsc), `npm run test:layout-contract`, and
-      `npm run test:narrative-kit` (expect the adoption counter to move past 5/7). Visual
-      verification via the Vercel preview or production deploy is worth doing before fully
-      trusting the rendered output, same caveat as PR #1400.
+    note: 'Migrated reward-interact.vue''s 1183-line hand-rolled story log onto kr-chat-window + kr-choice-list (the shared conversation kit character-interact.vue adopted via PR #1400). Removed the bespoke .story-dot keyframes and manual scroll management; conversation-kit adoption counter moved to 6/7 (test:narrative-kit), one-scroll violation count dropped by 1 (test:layout-contract, baseline ratcheted). scenario-interact.vue is the sibling task t-088, not touched here. kind_robots PR #1406 merged (71f0178).'
     claimed_by: 2026-08-04T055600Z-t087
     claimed_at: '2026-08-04T05:54:06Z'
-    updated: '2026-08-04T05:54:06Z'
+    updated: '2026-08-04T06:09:08Z'
 
   - id: t-088
     milestone: m2
