@@ -1630,38 +1630,14 @@ tasks:
   - id: t-088
     milestone: m2
     title: 'Phase 5: scenario-interact.vue onto the shared conversation kit'
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Split from t-051 (2026-08-04) -- the second of the two remaining surfaces (see t-087 for
-      the sibling task and shared context; character-interact already landed via kind_robots
-      PR #1400).
-
-      NOT a mechanical swap, unlike character-interact's. The inline intro picker at
-      scenario-interact.vue:113-155 (line numbers as of 2026-08-02, recheck before editing)
-      duplicates the job of the deleted components/scenarios/choice-selector.vue and
-      choice-preview.vue. splitIntro (stores/helpers/scenarioHelper.ts:34) yields an optional
-      ALL-CAPS eyebrow plus prose, and kr-choice-list currently renders its `hint` slot italic,
-      which is wrong for a long opening paragraph; the current markup also uses a 2-column lg
-      grid kr-choice-list has no layout for. Either extend kr-choice-list (an eyebrow field, a
-      non-italic hint variant, or a 'grid' layout) or accept a deliberate visual change -- and
-      put preview eyes on it either way, since this is a live user-facing surface, before
-      merging.
-
-      scenario-interact.vue also ships its own .story-dot keyframes (originally noted at line
-      582) for the same three-span indicator kr-chat-window already provides -- same
-      duplication-removal opportunity as t-087's reward-interact.vue.
-
-      Verify with `npm run test` (vue-tsc), `npm run test:layout-contract`, and
-      `npm run test:narrative-kit`. This is very likely the LAST surface before the narrative kit
-      contract's adoption counter can reasonably be declared complete for the originally-surveyed
-      7 -- worth checking `verifyNarrativeKit.ts`'s own accounting once this lands, since the kit
-      also now covers surfaces outside that original 7 (dream-interact.vue).
+    note: 'CLOSED 2026-08-04: merged via kind_robots PR #1408 (scenario-interact.vue onto the shared conversation kit, plus kr-choice-list hintProse addition). All 18 CI checks green before merge. See PR body for verification details and accepted visual-diff notes (dropped last-picked-choice highlight, transcript type-scale change) -- same tradeoffs already accepted for character-interact.vue (#1400) and reward-interact.vue (#1406/t-087). retry_context cleared.'
     claimed_by: 2026-08-04T061400Z-t088
     claimed_at: '2026-08-04T06:12:09Z'
-    updated: '2026-08-04T06:12:09Z'
+    updated: '2026-08-04T06:34:09Z'
 
   - id: t-089
     milestone: m2
