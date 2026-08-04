@@ -1,0 +1,10 @@
+version: 1
+project: interface-vision
+task: t-014
+operation: done
+session: 2026-08-04T110000Z-interface-vision-t-014-maturity-a7c9
+updated: '2026-08-04T11:16:30Z'
+note: >-
+  Fixed the production regression in kind_robots PR #1428, merged as 850a43e. The canonical Account & Privacy surface now exposes the browser-local opt-in that reveals the authenticated workspace-header maturity toggle, distinct from persisted showMature consent. All 13 PR workflows passed. The first production deploy was blocked by the existing transient ProxySQL user limit; a no-content retry commit 00b3257 deployed the identical tested tree successfully as Vercel deployment dpl_9tT1EepKzJ3q6mz2CSny3t8aKnGP. The canonical /account route returns 200 on production and the fresh deployment has no error or fatal runtime logs.
+learning: >-
+  Route metadata and legacy dashboard components are not evidence that a setting is reachable. Regression contracts for user settings must assert the canonical content route and the component it actually mounts.
