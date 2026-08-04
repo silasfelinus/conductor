@@ -1389,50 +1389,31 @@ tasks:
   - id: t-035
     milestone: m2
     title: 'Wire getModelCards() for real; derive card decks from navManifest.ts'
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-012
-    note: >
-      Split from t-012 (2026-08-01, kind_robots PR #1272). stores/helpers/modelCards.ts's
-      getModelCards() is defined but never called anywhere -- pageStore.ts's `cards`
-      computed only accepts an already-resolved array (isBuilderCardArray /
-      isNavigationCardArray), never looks up the raw `cards:` frontmatter string against
-      the registry. So today every `cards:` value except the literal 'builderCards'
-      sentinel (workspace-hand.vue / workspace-sheet.vue's special case deferring to
-      builderStore.cards) is decorative and has zero runtime effect. Wire getModelCards()
-      into pageStore.cards for real, fold conductorCards.ts's CONDUCTOR_CARDS into the
-      registry (it already exists and is used elsewhere, just never registered), and
-      decide whether content/characters.md's gallery deserves its own CHARACTER_CARDS (a
-      genuine content-authoring task, the same shape as BOT_CARDS/DREAM_CARDS/etc. --
-      t-012 deliberately left it pointed at the generic navCards fallback rather than
-      fabricate wizard content). Verify with `npm run test:nav-manifest` plus a
-      Vercel-preview check that card decks actually render per tab.
+    note: 'kind_robots PR #1389 (merged, squash e641da6). Wired getModelCards() into pageStore.ts''s cards computed -- string cards: frontmatter values (navCards/artCards/botCards/dreamCards/labCards/rewardCards/scenarioCards/conductorCards) now resolve to their registry deck instead of silently falling back to channelTabsToCards(). Folded conductorCards.ts''s CONDUCTOR_CARDS into modelCards.ts''s BuilderCardsKey registry as ''conductorCards'' (content/conductor.md already declared cards: conductorCards with nowhere to resolve). Left content/characters.md on the generic navCards fallback rather than fabricating a CHARACTER_CARDS deck, same call t-012 made originally -- no wizard content exists yet to justify a dedicated deck. Verified: npm run test:nav-manifest (0 errors), vue-tsc --noEmit (clean), eslint clean on both touched files, and a live Vercel-preview SSR check of /conductor (conductorCards labels present), /characters and /dashboard (navCards icons present) confirming decks render per tab.'
     claimed_by: claude-scheduled-20260803T232937Z-iv-t035
     claimed_at: '2026-08-03T23:29:37Z'
-    updated: '2026-08-03T23:29:37Z'
+    updated: '2026-08-03T23:45:45Z'
 
   - id: t-036
     milestone: m2
     title: 'Wire navigation-health.vue to navManifest.ts'
-    status: ready
-    owner: null
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-012
-    note: >
-      Split from t-012 (2026-08-01, kind_robots PR #1272). components/navigation/
-      navigation-health.vue currently audits only the channel/tab system (channel count,
-      tab count, shared routes, a raw "legacy adapters" count of tabs with a non-empty
-      dashboardKey, broken-artwork detection) via useChannelContentStore() -- it doesn't
-      cross-check dashboardKey/dashboardTab/cards resolution at all. Swap in (or add
-      alongside) navManifest.ts's validateNavManifest() so the "legacy adapters" stat
-      becomes a real pass/fail count instead of a raw tally, surfacing the same
-      errors/warnings verifyNavManifest.ts reports in CI, live in the admin UI. Preserve
-      the existing stat-grid/card-grid UI shape; this is a data-source swap plus real
-      validation, not a rebuild. navManifest.ts is already isomorphic (no node:fs) so it
-      is safe to import client-side as-is.
+    note: |-
+      Split from t-012 (2026-08-01, kind_robots PR #1272). components/navigation/ navigation-health.vue currently audits only the channel/tab system (channel count, tab count, shared routes, a raw "legacy adapters" count of tabs with a non-empty dashboardKey, broken-artwork detection) via useChannelContentStore() -- it doesn't cross-check dashboardKey/dashboardTab/cards resolution at all. Swap in (or add alongside) navManifest.ts's validateNavManifest() so the "legacy adapters" stat becomes a real pass/fail count instead of a raw tally, surfacing the same errors/warnings verifyNavManifest.ts reports in CI, live in the admin UI. Preserve the existing stat-grid/card-grid UI shape; this is a data-source swap plus real validation, not a rebuild. navManifest.ts is already isomorphic (no node:fs) so it is safe to import client-side as-is.
+
+
+      Merged Kind Robots PR #1390 as a88524a81eba684b3e41d06b5b096c8d70478d8c. navigation-health.vue now validates the live channel/tab registry through the shared isomorphic navManifest validator, reports legacy adapter pass/fail counts, and surfaces manifest issues in the administrator health view. All 13 final-head GitHub Actions workflows completed successfully before merge.
+    claimed_by: claude-scheduled-20260804T000414Z-iv-t036
+    claimed_at: '2026-08-04T00:04:15Z'
+    updated: '2026-08-04T00:11:22Z'
 
   - id: t-039
     milestone: m2
