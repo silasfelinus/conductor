@@ -1860,7 +1860,7 @@ tasks:
   - id: t-058
     milestone: m3
     title: 'Give one-scroll Shape B a two-owner grid primitive, and stop counting Shapes A/D'
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -1879,10 +1879,11 @@ tasks:
       Implemented a third t-058 slice (conductor Agent run, kind_robots PR #1427, merged as 1e973e5ceda78a79583e7248017b90996b381a12): migrated messenger.vue onto kr-panes/kr-pane/kr-pane-scroll. Baseline ratchets one-scroll from 11 to 10. Investigated server-manager.vue as a second candidate first: its "overview" tab genuinely has two live scroll owners (a two-owner grid, fixed), but its five OTHER tabs (art/text/checkpoints/all/interact) are mutually-exclusive v-if/v-else-if branches that each carry their own raw overflow-y-auto -- and verifyLayoutContract.ts's scrollRegionCount has no v-if-exclusivity awareness (confirmed by reading the script: it statically counts every element with kr-scroll or unbounded overflow-y-auto/overflow-auto regardless of branch structure). Fixing only the overview tab left the file's total static count still >1, so it could not be ratcheted out of the baseline -- reverted that partial edit rather than leave unverified diff with no measurable benefit. This confirms the note's own FIRST work item (teach the verifier v-if exclusivity) is still genuinely unstarted and blocks server-manager.vue, stage-manager.vue, lab-interact.vue, memory-dungeon.vue, butterfly-sanctuary.vue, chat-gallery.vue, and art-gallery.vue from being cleanly closeable via primitive migration alone -- each mixes a real Shape B region with mutually-exclusive single-owner branches. Also confirmed channel-select.vue's second scroll region is an absolutely-positioned flyout overlay (position: absolute; left-full) rather than a grid pane -- applying kr-panes' overflow-hidden to its parent risks clipping the flyout, so it needs visual verification before migration, not just a CI-green check. dream-brainstorm.vue is a genuine 3-column grid (aside/main/aside) but main itself nests a nested nested grid-rows layout (header/scroll-body/footer) -- doable but higher-risk without visual verification than this session had time to budget. Remaining true next candidates once the verifier gains v-if-exclusivity: after that lands, re-audit all 10 remaining files since several may drop out of one-scroll for free. mural-manager.vue's 3-pane case remains the named hard case. Re-arming to ready.
 
       Retry of the review transition: the first attempt (2026-08-04T113000Z-interface-vision-t-058-review-q7m4.yaml) was rejected as ALREADY_CLAIMED because its session field was hand-typed without colons (2026-08-04T112754Z-t058-verifier) and didn't match the actual claim session (2026-08-04T11:27:54Z-t058-verifier) recorded by claim_task.py. Same underlying work: verifier v-if-exclusivity slice, kind_robots PR #1429 (merged), interface-vision/t-058.
+
+      Merged Kind Robots PR #1429 as 9bb22fcf55b8c39711563d9ef8c6aa1055a0a319. The one-scroll verifier now treats v-if/v-else-if/v-else chains as mutually exclusive, fixes quoted-attribute parsing when expressions contain a literal greater-than sign, adds focused fixtures, and ratchets the baseline from 10 to 9. All final-head checks completed successfully. The broader task remains open because the remaining genuine multi-owner layouts still need kr-panes migrations and visual verification, so return t-058 to ready.
     claimed_by: 2026-08-04T11:27:54Z-t058-verifier
     claimed_at: '2026-08-04T11:27:55Z'
-    updated: '2026-08-04T12:15:00Z'
-    owner: worker
+    updated: '2026-08-04T12:18:00Z'
 
   - id: t-054
     milestone: m2
