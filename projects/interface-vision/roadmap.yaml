@@ -1475,8 +1475,8 @@ tasks:
   - id: t-042
     milestone: m3
     title: 'Give Facet and Project creation flows — in /facets and /conductor, not as builder card decks'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: null
@@ -1492,9 +1492,9 @@ tasks:
       STILL TRUE from the original note, and worth keeping: Project and Facet both already have working stores (stores/projectStore.ts, stores/facetStore.ts) and admin UI (components/facets/facet-manager.vue) to build on. What is no longer wanted: PROJECT_CARDS / FACET_CARDS decks, per-model splash screens, defaultSheet/syncSheetToXForm/save/reset in registerBuilderStore.ts, and the new BuilderArtPurpose union variants. Do not follow buildDreamConfig / buildRewardConfig as the pattern here.
 
       ORIGINAL NOTE, for provenance: split out of t-015 (2026-08-02, kind_robots PR #1293) because registering these two as builders needed card-deck-scale UI buildout that did not fit alongside that task's more mechanical facet-relation gaps.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-03T10:04:23Z'
+    claimed_by: claude-scheduled-20260804T002832Z-iv-t042
+    claimed_at: '2026-08-04T00:28:33Z'
+    updated: '2026-08-04T00:28:33Z'
 
   - id: t-043
     milestone: m2
