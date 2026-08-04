@@ -1860,7 +1860,7 @@ tasks:
   - id: t-058
     milestone: m3
     title: 'Give one-scroll Shape B a two-owner grid primitive, and stop counting Shapes A/D'
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -1891,10 +1891,12 @@ tasks:
       Seventh t-058 slice (conductor Agent run, kind_robots PR #1435, merged as c1f9009aae68c7ca99c133d72cc51498f3f2e83f): rather than another risky primitive migration, fixed a genuine verifier gap first. art-gallery.vue's second overflow-auto region turned out to live inside a `fixed inset-0` lightbox overlay (the selected-image modal) layered on top of the gallery grid, not a co-resident Shape B pane like the character-interact.vue/art-interact.vue cases this task's primitive targets -- the background gallery and the modal's own scroll region are never simultaneously visible/interactive the way a real aside+main pair is. Taught verifyLayoutContract.ts to exempt the whole subtree of any fixed+inset-0 wrapper (same treatment as the existing max-h-* bounded-region and v-if/v-else-if/v-else exemptions), with fixture coverage including a negative case (fixed without inset-0 still counts, so this is not a blanket fixed-position exemption). No component markup changed -- zero production layout risk. Ratchets one-scroll from 6 to 5. Remaining one-scroll entries, all still needing live visual verification before a kr-panes migration per prior slices' findings: stage-manager.vue (footer-composer risk), mural-manager.vue (3-pane, hardest case), butterfly-sanctuary.vue (nested scroll tangled with v-show, distinct bug shape), dream-brainstorm.vue (nested 3-column grid), channel-select.vue (global-nav flyout overlay -- genuinely two concurrent scroll owners when expanded, unlike art-gallery.vue's modal case, so it still needs the real primitive treatment plus visual confirmation the flyout isn't clipped). Re-arming to ready -- the allow-list is not yet zero.
 
       Recovered the stranded task state after Kind Robots PR #1435 merged as c1f9009aae68c7ca99c133d72cc51498f3f2e83f. That verifier-only slice exempts fixed inset-0 modal-overlay subtrees from the one-scroll contract, adds positive and negative fixtures, and ratchets the baseline from 6 to 5 without changing production component markup. The broader t-058 task remains incomplete because butterfly-sanctuary.vue, dream-brainstorm.vue, channel-select.vue, stage-manager.vue, and mural-manager.vue still require separate layout work and visual verification, so return it to ready rather than marking it done.
-    claimed_by: 2026-08-04T173500Z-interface-vision-t-058-slice8
-    claimed_at: '2026-08-04T17:33:13Z'
-    updated: '2026-08-04T17:33:13Z'
-    owner: worker
+
+      Eighth t-058 slice (conductor Agent-run session, kind_robots PR #1436, merged as 062fd9264aa710cdbcc3409b7a7ce9615e2053e9): migrated dream-brainstorm.vue onto kr-panes/kr-pane/kr-pane-scroll, the same shape already proven on character-interact.vue, art-interact.vue, messenger.vue, lab-interact.vue, and animation-manager.vue. Its aside/main/aside grid is a genuine two-owner case -- the source-Dreams list (left aside) and the Fresh Ideas body (nested inside main) both scroll independently at once. main's header/scroll-body/footer rows moved from an explicit `grid grid-rows-[auto_minmax(0,1fr)_auto]` layout to kr-pane's flex-col shape (identical visual result, since each row was already effectively auto/1fr/auto sized) so kr-pane's baked-in `flex flex-col` wouldn't fight an explicit `grid` display on the same element. No visual/behavioral change to any of the three panes' own content. Verified with `test:layout-contract` (confirmed the fix, then ratcheted), `vue-tsc --noEmit` (clean), and `eslint` on the changed file (clean); all 15 kind_robots CI checks plus the Vercel deployment check passed green before merge. Ratchets one-scroll from 5 to 4. Remaining one-scroll-flagged files, all still needing separate investigation per prior slices' findings: butterfly-sanctuary.vue (nested scroll tangled with v-show, distinct bug shape), channel-select.vue (global-nav flyout overlay -- genuine two-owner case needing visual confirmation the flyout isn't clipped), mural-manager.vue (3-pane, hardest case), stage-manager.vue (footer-composer risk). Re-arming to ready -- the allow-list is not yet zero.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T17:40:00Z'
+    owner: null
 
   - id: t-054
     milestone: m2
@@ -2937,3 +2939,27 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-04T16:32:38Z'
+
+  - id: t-097
+    milestone: m3
+    title: 'Guard against kr-pane/kr-panes classes coexisting with a literal grid/grid-rows/grid-cols class on the same element'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from merging kind_robots PR #1436 (t-058's eighth slice, dream-brainstorm.vue).
+      .kr-pane and .kr-panes both bake in `flex`/`flex-col` via @apply, which silently
+      conflicts with an explicit `grid`/`grid-rows-*`/`grid-cols-*` class left on the same
+      element by an in-progress kr-panes migration (dream-brainstorm.vue's `main` originally
+      used `grid grid-rows-[auto_minmax(0,1fr)_auto]` and had to be converted to a flex-col
+      header/kr-pane-scroll/footer shape instead of just adding `kr-pane` alongside the
+      existing `grid` classes). This slice caught it by reading the primitive's CSS directly
+      before migrating, not via any automated check. Add a lint rule, a
+      verifyLayoutContract.ts check, or at minimum a documented note in the kr-panes primitive
+      comment in assets/css/tailwind.css warning about this conflict, so a future migration
+      doesn't ship a broken flex/grid mix that CI's structural checks (TypeScript, ESLint,
+      layout-contract's class-name-only checks) wouldn't catch, only a live visual check would.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T17:40:00Z'
