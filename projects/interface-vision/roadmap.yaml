@@ -1906,8 +1906,8 @@ tasks:
   - id: t-098
     milestone: m3
     title: 'Add a fixture asserting kr-panes and kr-anchor-panes cannot be mixed in one component'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -1922,6 +1922,9 @@ tasks:
       one kr-pane-scroll region and one kr-anchor-scroll region) confirming
       scrollRegionCount-adjacent logic still flags it, so a future refactor of the gating
       conditional can't silently stop catching the combination without a test noticing.
+    claimed_by: 2026-08-04T191148Z-interface-vision-t098-j4q8
+    claimed_at: '2026-08-04T19:11:48Z'
+    updated: '2026-08-04T19:11:48Z'
   - id: t-054
     milestone: m2
     title: 'Three content routes rendered nothing; MDC mounts are now validated in CI'
