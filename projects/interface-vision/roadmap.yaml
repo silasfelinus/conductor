@@ -2212,27 +2212,40 @@ tasks:
   - id: t-069
     milestone: m2
     title: 'Project card description text renders over the card art on /conductor'
-    status: ready
+    status: needs-human
+    soft_gate: true
     owner: null
     passes: 0
     stakes: reversible
-    note: >
-      Seen in the Projects screenshot Silas sent with the 2026-08-02 UI review (sent as the GOOD example -- Projects is the gallery he named as the shape the rest should follow, which is why this is worth fixing rather than tolerating).
-      On the top row of /conductor, project description text ("Ship a functional MVP quickly..." and its neighbours) renders above or behind the card artwork instead of below it in the body. Lower rows look correct.
+    note: >-
+      ROOT CAUSE FOUND AND FIXED IN AN OPEN PR (2026-08-04): kind_robots PR #1392
+      identifies the actual mechanism -- not misplaced markup, but a broken/failed
+      `<img>` painting its `alt` text inside the layout box where the art should
+      be. A new CI audit (`BROKEN-ART` check in auditResponsiveLayout.mjs) rendered
+      `/conductor` against production and reproduced it on the first run. The fix
+      (kr-gallery.vue: track failed-art URLs, fall back to the existing art-absent
+      placeholder on `@error`) reduces `/conductor` to a single unrelated broken
+      icon (44x44, empty alt -- no text-sprawl, different mechanism) across phone/
+      tablet/desktop. Reviewed and confirmed correct this session.
 
-      STILL BLOCKED ON A PREVIEW (2026-08-03). A source investigation ruled out the obvious causes but could NOT reproduce or locate the defect, and the fix must not be guessed at -- this is Silas's most-used page and a speculative CSS change could make it worse. What was checked, so the next attempt does not repeat it:
+      FOR SILAS: the PR (https://github.com/silasfelinus/kind_robots/pull/1392)
+      cannot be merged via the API -- `mergeable_state` stayed `unstable` across
+      five attempts, most likely because the new `audit` check is a required
+      status check and it fails overall (not because of this fix, see below).
+      TO APPROVE: either (a) merge PR #1392 manually if `audit` isn't meant to
+      hard-block yet, or (b) confirm `audit` should stay required and let t-083
+      (new task, same project) resolve the underlying failures first, then
+      re-run/merge #1392. What unblocks: this task closes to `done` once #1392
+      is merged.
 
-      - kr-gallery's card markup is structurally sound. components/gallery/kr-gallery.vue:49-100 renders the art inside `<div class="relative overflow-hidden" :class="imageWrapClass">` and the text in a SIBLING `<div class="p-3">` that follows it in normal flow. The text is not absolutely positioned, so it can only overlap the art if the art wrapper collapses to zero height.
-      - The wrapper cannot collapse. imageWrapClass (kr-gallery.vue:190-198) gives every mode a height: heroes `min-h-64`, list `min-h-40`, icons `size-24`, cards `aspect-[4/3]`. min-height on a block element holds even though all the wrapper's children are `absolute inset-0`.
-      - The tailwind.css `:has()` theory is dead. The four global overrides that used to patch the public project gallery were already removed by t-017's first pass (assets/css/tailwind.css:157-163 documents this). The two that remain are scoped to the ADMIN project detail view.
-      - Not a stale-screenshot artifact. kr-gallery landed in this page on 2026-08-01 (d1b652e, PR #1265), before the 2026-08-02 screenshot. The only later touch, be7268b (PR #1326, 2026-08-02 10:37), swapped root utilities for kr-surface/kr-scroll and did not touch card markup.
-
-      WHICH COMPONENT IS ACTUALLY WRONG IS UNCONFIRMED. content/conductor.md mounts `:conductor-manager`, NOT conductor-project-gallery-page.vue. conductor-page.vue (2202 lines) carries its own public Project gallery -- t-017's note describes baking auto-fit grid columns and overflow-x directly into it. Establish which component renders the row in the screenshot BEFORE editing anything; the original note's pointer at conductor-project-gallery-page.vue may be wrong.
-
-      CANNOT BE VERIFIED FROM AN AGENT SESSION. The sandbox has Chromium and a DATABASE_URL, but the DB is the production host (acrocatranch.com:5544) and is unreachable from the agent network, so /conductor cannot be rendered with real project data locally. This needs either Silas's eyes on a deployed preview, or a fresh screenshot at the failing width (desktop/wide -- it may not appear where the grid drops to one column) with a DOM inspection of the offending card.
+      Why `audit` is failing: adding `/conductor` to the default route list also
+      surfaced pre-existing, unrelated findings -- `/bots`, `/characters`,
+      `/rewards`, and `/dreams` all report large numbers (16-231) of `<img>`
+      elements that never finish loading before networkidle. That's a stall, not
+      a 404/error, so this PR's `@error`-only fix can't catch it -- see t-083.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-03T10:19:00Z'
+    updated: '2026-08-04T01:35:00Z'
 
   - id: t-070
     milestone: m3
@@ -2653,3 +2666,41 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-04T00:37:59Z'
+
+  - id: t-083
+    milestone: m2
+    title: 'Investigate widespread stalled/never-loaded art images on /bots, /characters, /rewards, /dreams'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Surfaced by kind_robots PR #1392 (2026-08-04, see t-069's note): the new
+      `audit` CI check's `BROKEN-ART` detector found large numbers of `<img>`
+      elements that never finish loading before networkidle when rendered against
+      the production preview -- `/bots` (21-62 per viewport), `/characters`
+      (142-211), `/rewards` (142-231), `/dreams` (5-16). Most `/bots` and
+      `/characters`/`/rewards` sources are `/api/art/images/{id}/file`; `/dreams`
+      sources are self-hosted `/images/...` paths. This is a STALL (never
+      `complete`), not a 404/error, so it will not be caught by t-069's PR #1392
+      fix (which only wires an `@error` handler) -- a stalled `<img>` still paints
+      its `alt` text in the layout box exactly like a failed one.
+
+      Two separate things worth ruling in/out before picking a fix:
+      1. Is `/api/art/images/[id]/file` itself slow/rate-limited/timing out under
+         the audit's headless-browser conditions (hundreds of concurrent image
+         requests per page)? If so this may be a real production reliability gap,
+         not just a CI artifact.
+      2. Does `kr-gallery.vue` need a load-timeout fallback (in addition to
+         `@error`) so a stalled image degrades to the placeholder the same way a
+         failed one now does, regardless of root cause?
+
+      Start by reproducing against the deployed preview (not local -- see t-069's
+      PR #1392 for why local `public/images` 404s are not signal) and reading
+      `utils/scripts/auditResponsiveLayout.mjs`'s `BROKEN-ART` detector for the
+      exact repro steps: `npm run audit:responsive -- --base <preview-url> --routes /bots,/characters,/rewards,/dreams`.
+      Once root cause is understood, t-069's own PR #1392 is gated on the `audit`
+      check this task is meant to clear -- coordinate rather than duplicating.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T01:35:00Z'
