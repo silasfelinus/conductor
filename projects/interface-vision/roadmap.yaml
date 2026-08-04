@@ -745,7 +745,7 @@ tasks:
   - id: t-014
     milestone: m2
     title: 'Build the first-launch intro and the user dashboard'
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-010
@@ -755,10 +755,11 @@ tasks:
       Reopened after a production regression report from Silas. The canonical /account route renders account-settings.vue directly, but the browser-local preference that reveals the workspace-header maturity toggle remained only in user-dashboard.vue. Restore that opt-in control on the actual Account & Privacy surface and add a contract guard so future route migrations cannot strand it again.
 
       Restored the browser-local header maturity preference on the canonical /account Account & Privacy surface. The new reusable preference row uses maturityPreferenceStore, remains distinct from the persisted showMature consent, and the maturity/privacy contract now locks the canonical route, mounted settings component, preference store wiring, and authenticated workspace-header condition.
+
+      Fixed the production regression in kind_robots PR #1428, merged as 850a43e. The canonical Account & Privacy surface now exposes the browser-local opt-in that reveals the authenticated workspace-header maturity toggle, distinct from persisted showMature consent. All 13 PR workflows passed. The first production deploy was blocked by the existing transient ProxySQL user limit; a no-content retry commit 00b3257 deployed the identical tested tree successfully as Vercel deployment dpl_9tT1EepKzJ3q6mz2CSny3t8aKnGP. The canonical /account route returns 200 on production and the fresh deployment has no error or fatal runtime logs.
     claimed_by: 2026-08-04T110000Z-interface-vision-t-014-maturity-a7c9
     claimed_at: '2026-08-04T11:00:00Z'
-    updated: '2026-08-04T11:08:00Z'
-    owner: worker
+    updated: '2026-08-04T11:16:30Z'
 
   - id: t-015
     milestone: m3
