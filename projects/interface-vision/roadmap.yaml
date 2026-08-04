@@ -1889,7 +1889,7 @@ tasks:
   - id: t-060
     milestone: m2
     title: 'Adopt kr-gallery across the seven core-object galleries (via their managers)'
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -1911,9 +1911,11 @@ tasks:
 
 
       Reviewer cycle merged Kind Robots PR #1415 as e17449d5d7fe0bd0857afc269babf0e8bb1d4891 after repairing its capture-group guard CI failure on the existing branch. The shared gallery grid now sizes to its actual container, card variants follow the Cards/Heroes/Icons mode, scenario-gallery's mode bar is wired, and bot-gallery raises the reachable core adoption counter to 4/7. All 14 final-head workflows completed successfully, including Contract Tests 30891526110 and TypeScript 30891525616. Character, Reward, and Dream galleries remain, so t-060 returns to ready rather than being falsely closed.
+
+      Merged Kind Robots PR #1418 as 6b541a3ed4c65570659c37aed9d7748fb087d734. Character, Reward, and Dream galleries now adopt the shared kr-gallery shell while preserving their object-specific cards and bespoke row/dropdown behavior. The reachable core-object adoption counter is 7/7, closing the DESIGN-BRIEF beta gate. All 13 final-head GitHub Actions workflows completed successfully, and the Vercel preview reported Ready before merge.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-04T08:25:00Z'
+    updated: '2026-08-04T09:18:30Z'
 
   - id: t-056
     milestone: m2
