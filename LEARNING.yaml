@@ -6484,3 +6484,32 @@ records:
     fixed nothing broken but removed real state (a scroll ref, three call sites, a manual watcher)
     that existed only to fight the layout the bespoke markup created in the first place --
     duplication removal often deletes more state than template.
+- date: 2026-08-04
+  project: interface-vision
+  task: t-088
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Closes the full three-surface Phase 5 migration (character/reward/scenario, t-051's split)
+    to conversation-kit adoption 7/7. The task's own note correctly flagged this one as "not a
+    mechanical swap" -- unlike t-087, the intro picker needed a real design call: kr-choice-list's
+    hint slot renders italic, wrong for the full-paragraph opening choices this surface has.
+    Rather than accept the regression, added a small opt-in `hintProse` prop to the shared
+    component (default false, grepped every caller to confirm none pass it) instead of either
+    forcing the bad visual or hand-rolling a bespoke picker again -- when a shared component's
+    fixed styling doesn't fit one caller's real content shape, a narrow additive prop is usually
+    cheaper than reinventing the caller's own version. Also discovered kr-choice-list already had
+    a working `selectedKey` prop that no caller in the repo was using (t-087 assumed no highlight
+    hook existed at all) -- calling kr-choice-list directly for the intro picker rather than
+    through kr-chat-window's fixed wrapper let this surface keep its "highlight the picked
+    option" styling that t-087's reply options lost. Two operational notes worth flagging for
+    future sessions: (1) a PR's CI checks can fail to trigger via the normal pull_request webhook
+    for several minutes with no visible error -- manually dispatching the relevant workflows via
+    workflow_dispatch (same workflow files, same ref) is a safe, fast unblock once confirmed via
+    the Actions API that a run is not already in flight; (2) a "Pull Request has merge conflicts"
+    405 on a merge attempt can be a stale `mergeable_state` read rather than a real conflict --
+    `git rebase origin/main` and diffing the changed files before/after the rebase confirms
+    which case it is before assuming a real conflict needs manual resolution.
