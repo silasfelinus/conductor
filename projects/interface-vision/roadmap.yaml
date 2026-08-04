@@ -1519,24 +1519,18 @@ tasks:
   - id: t-044
     milestone: m3
     title: 'Restructure artjob-queue-browser.vue: remove magic-number min-heights and depth-12 nesting'
-    status: review
+    status: needs-human
     owner: worker
     passes: 0
     stakes: reversible
     note: >
-      Kaizen from t-017's first pass (2026-08-02, kind_robots PR #1295). t-017's own note
-      names components/art/artjob-queue-browser.vue (614 template lines at depth 12, with
-      min-h-[720px]/min-h-[560px] magic numbers forcing ~1280px of height inside an
-      already-nested scroller) as a daily-driver offender (artjob queue is one of Silas's
-      most-used pages) — but none of it is caught by verifyLayoutContract.ts's six tracked
-      categories, so the t-017 ratchet will never surface it or force it to zero. Needs its
-      own scoped pass: reduce nesting depth, replace the magic-number min-heights with
-      content-driven sizing (or a documented, deliberate primitive if a fixed size is
-      genuinely required), and re-check against the layout contract afterward in case
-      flattening the structure incidentally trips one-scroll or zero-scroll.
+      Implementation complete and verified: kind_robots PR #1394 (https://github.com/silasfelinus/kind_robots/pull/1394) extracts artjob-queue-card.vue from artjob-queue-browser.vue, addressing the nesting-depth half of this task (the magic-number-height half was already resolved separately before this pass). All 14 CI checks green, mergeable_state: clean.
+
+      FOR SILAS: PR #1394 cannot be merged via the GitHub API this session -- 12 consecutive merge attempts (mixing squash/merge methods, plus enable_pr_auto_merge) all failed with alternating HTTP 502 and 405 "Merge already in progress" errors, despite the PR staying green and clean throughout with no actual merge ever completing. This does not match the known documented 413-push pattern (CLAUDE.md) or a real required-check block (the #1392 case earlier this session) -- there is no failing check here at all. Likely a transient connector/proxy issue on the merge endpoint specifically. TO APPROVE: merge PR #1394 directly on github.com (should be a routine green-checks merge), or ask a future session to retry -- the API call itself may simply need the underlying lock to clear. What unblocks: this task flips to done once #1394 merges.
     claimed_by: claude-20260804T0140Z-t044-artjob-queue
     claimed_at: '2026-08-04T01:37:08Z'
-    updated: '2026-08-04T01:51:53Z'
+    updated: '2026-08-04T02:02:10Z'
+    soft_gate: true
 
   - id: t-045
     milestone: m3
