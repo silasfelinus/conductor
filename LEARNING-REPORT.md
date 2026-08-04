@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-04T15:02:06Z
+Generated: 2026-08-04T15:04:07Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **509**
-- Outcomes: blocked: 13, cancelled: 1, done: 495
+- Closed tasks recorded: **510**
+- Outcomes: blocked: 13, cancelled: 1, done: 496
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 65 | 100% |
+| interface-vision | 66 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 494 | 99% |
+| software | 495 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-04 `interface-vision/t-082` — A prior connector-only session released this task ("connector patch limitation" -- could not safely patch a 500+ line file, and had no local git/DNS). A session with full shell/git access hit no such limitation: mirrored add-reward.vue's Publishing section (isPublic/isMature toggles, t-080) onto add-scenario.vue verbatim, no store changes needed since scenarioStore already round-trips both fields. kind_robots PR #1433, merge 82f61b1e5d3ed5d0e992ecf76ab5fa1beb5aa501. Lesson: a connector-limited session's "actionable" release reason should be read literally -- it is a tooling gap for that session, not evidence the task itself is hard, so a shell-capable session should retry it directly rather than assuming the release implies deeper difficulty.
 - 2026-08-04 `interface-vision/t-060` — Completed the final three reachable core-gallery migrations (character, reward, dream) and closed the measured 7/7 core-object beta gate without forcing row or dropdown variants into a shared grid abstraction. kind_robots PR #1418, merge 6b541a3ed4c65570659c37aed9d7748fb087d734.
 - 2026-08-04 `conductor/t-097` — task-events/README.md documents a direct push to main as the normal workflow, so validate_task_events.py's PR-time gate never runs for the common case -- a malformed bare-string learning: field (the "learning: >-" folded scalar shape) recurred at least 5 times in a week and each time hard-failed process_task_events.py, silently red-flagging the shared "process" check for every unrelated PR. Coercing the string into {kind, stakes, lesson} (inferring kind/stakes from the task's own roadmap entry) instead of hard-rejecting it keeps the processor unblocked without losing the lesson text -- worth considering the same "recover gracefully from a common malformed shape" pattern for other task-events fields prone to hand-authoring mistakes.
 - 2026-08-04 `interface-vision/t-089` — A plain "who imports this .vue file" grep at deletion time is not enough -- kind_robots PR #1405's conductor-art-gallery.vue deletion (t-026) missed a plugin that DOM-scraped the component's specific rendered markup and a CI workflow that named the file directly in its paths: trigger list. Documented the checklist in kind_robots' AGENTS.md (PR #1417): grep the deleted filename repo-wide (not just import sites), check .github/workflows/*.yml paths: blocks, and check plugins/*.client.ts for DOM-scraping selector strings before deleting a superseded component.
@@ -90,7 +91,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-04 `interface-vision/t-051` — A three-surface migration task (reward/character/scenario-interact) was scoped correctly for "what's left" but not for "what fits in one pass." Splitting after landing the first surface (character-interact, kind_robots PR #1400) into t-087/t-088 for the remaining two, rather than trying all three in one diff, kept each PR small, independently verifiable, and reviewable -- and let the roadmap track real partial progress instead of one task note growing indefinitely across sessions. When a task note already enumerates N similarly-sized remaining items, file it as N tasks up front rather than one task that will need a mid-flight split.
 
 - 2026-08-04 `interface-vision/t-050` — A "retire component X, fold into shared component Y" task can resolve correctly with zero code changes when the premise doesn't survive a full read: the task's own note said kr-narrator-stage was imported by "every other surface," but grep found exactly two real consumers, and grafting the remaining Dreams-specific chrome (card flip, emoji bursts, musings toast, pin) onto it would have more than doubled a 189-line shared component for those two consumers' benefit. When a retirement/consolidation task's justification rests on an unverified breadth claim ("every surface," "the shared X"), verify the actual consumer count with grep before implementing the merge -- the corrected count can flip the right answer from "fold it in" to "leave it alone."
-- 2026-08-04 `interface-vision/t-064` — A task tracking N/M sub-item progress (5 cards converging onto a shared body) had its note fall one merge behind reality: reward-card had already migrated in a prior session/PR with no note update recording it, so the task read as 2 items remaining when only 1 actually was. Caught by checking the merged tree directly (grep for the new import) rather than trusting the note's own count. When landing one item of an N/M tracked task, update the note's count even if the task can't close yet.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-04T15:02:06Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-04T15:04:07Z_
