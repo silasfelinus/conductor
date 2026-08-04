@@ -1475,7 +1475,7 @@ tasks:
   - id: t-042
     milestone: m3
     title: 'Give Facet and Project creation flows — in /facets and /conductor, not as builder card decks'
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1492,9 +1492,11 @@ tasks:
       STILL TRUE from the original note, and worth keeping: Project and Facet both already have working stores (stores/projectStore.ts, stores/facetStore.ts) and admin UI (components/facets/facet-manager.vue) to build on. What is no longer wanted: PROJECT_CARDS / FACET_CARDS decks, per-model splash screens, defaultSheet/syncSheetToXForm/save/reset in registerBuilderStore.ts, and the new BuilderArtPurpose union variants. Do not follow buildDreamConfig / buildRewardConfig as the pattern here.
 
       ORIGINAL NOTE, for provenance: split out of t-015 (2026-08-02, kind_robots PR #1293) because registering these two as builders needed card-deck-scale UI buildout that did not fit alongside that task's more mechanical facet-relation gaps.
+
+      CLOSED 2026-08-04. Checked the FACET half first and found it already shipped: components/facets/facet-manager.vue's "Library" tab (reachable from /facets) already has a working "+ Create a canonical Facet" flow built on facet-profile-editor.vue + facetProfileForm.ts, exactly the building blocks this note predicted -- no new work needed there. Built the missing PROJECT half: kind_robots PR #1391 added a collapsible "+ Create a Project" section to conductor-project-gallery-page.vue (title, description, status, priority), reusing projectStore.ts's existing createProject() action and POST /api/projects (both already fully supported creation, just had no UI). Verified vue-tsc --noEmit and eslint clean, then visually confirmed via the Vercel preview (`claude/*` gets one) that "Create a Project" renders in the SSR markup at /conductor before merging. Filed interface-vision/t-081 as the kaizen follow-up: facet-manager.vue's create flow is buried in the non-default Library tab, so /facets' default Gallery landing tab still has no visible create affordance.
     claimed_by: claude-scheduled-20260804T002832Z-iv-t042
     claimed_at: '2026-08-04T00:28:33Z'
-    updated: '2026-08-04T00:28:33Z'
+    updated: '2026-08-04T00:37:59Z'
 
   - id: t-043
     milestone: m2
@@ -2642,3 +2644,22 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-03T21:58:00Z'
+
+  - id: t-081
+    milestone: m3
+    title: 'Surface a Facet create affordance on the default /facets Gallery tab, not just Library'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-042 (2026-08-04, kind_robots PR #1391). components/facets/facet-manager.vue's
+      "Library" tab already has a working "+ Create a canonical Facet" flow (facet-profile-editor.vue
+      + facetProfileForm.ts), but /facets defaults to the "Gallery" tab (facet-interact.vue ->
+      facet-gallery.vue), which has no create affordance at all -- a visitor has to already know to
+      switch tabs to find it. Add a lightweight "+ New Facet" entry point directly on the gallery view
+      (e.g. a button that opens the same create form, or switches to Library pre-expanded) so Facet
+      creation doesn't require discovering the admin tab first.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T00:37:59Z'
