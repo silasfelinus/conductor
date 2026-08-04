@@ -1987,42 +1987,13 @@ tasks:
   - id: t-063
     milestone: m3
     title: 'A CI step piped through tee can never fail: verifyFacetArtworkMigration is dead'
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
-    note: |-
-      Found while consolidating the facet artwork chain (kind_robots, t-055 follow-on). Two separate problems, and the second is the one that matters beyond this one script.
-      FIRST: utils/scripts/verifyFacetArtworkMigration.ts is currently FAILING on main, and has been for some time. It asserts components/facets/facet-manager.vue contains `v-model="newImagePath"` among a list of artwork-migration texts, and that string is gone. Confirmed by stashing all local work and re-running against a clean tree. The contract describes a migration whose UI has since moved on; it needs either updating to the current facet-manager or retiring.
-      SECOND, and the reusable lesson: nobody noticed because the check CANNOT FAIL. .github/workflows/facet-catalog-contract.yml:125 runs it as `npx tsx utils/scripts/verifyFacetArtworkMigration.ts 2>&1 | tee facet-artwork-report.txt`. A pipeline's exit status is the LAST command's, so the step always exits 0 no matter what the verifier does. The `if: failure() && steps.artwork.outcome == 'failure'` artifact upload that follows it is therefore unreachable too. This is the same class of bug as a test that never asserts: the job is green, the badge is green, and the check has been inert.
-      Fix the pipeline first (`set -o pipefail`, or drop the tee and rely on the workflow log), THEN fix or retire the contract -- in that order, because fixing the contract while the step is still inert proves nothing. While there, grep the other workflows for the same `| tee` shape; if this one drifted in, others may share it.
-      PARTLY DONE, 2026-08-03, kind_robots PR #1356 -- and the grep found more than expected.
-      The contract is repaired and runnable. Its stale half was worse than "stale": it required a dozen literal v-model="newImagePath" strings against a facet-manager whose form is now <FacetProfileEditor> plus an <EntityArtManager :slots> covering imagePath, iconPath, cardPath AND heroPath -- strictly MORE art roles than the old form. It was failing against a manager that had got better. It now asserts structure rather than one spelling, and follows the form <-> Facet mapping into utils/facetProfileForm.ts.
-      Its other half could never have passed anywhere: it asserted ~280 curated images exist on disk under public/images, which .gitignore:33 excludes from the repo entirely (the art lives on the deployed host). `git ls-files public/images/adventure` returns nothing. That assertion is now conditional on the assets being present and PRINTS that it skipped -- a check that quietly does nothing is the bug, not the fix.
-      PIPEFAIL IS DELIBERATELY STILL NOT SET, and this is the part that needs a decision. Flipping it turns main red on three independent pre-existing failures, each needing its own fix:
-      (a) verifyFacetArtworkMigration, one failure left and it is a real data defect:
-          "Curious" exists as both an alignment and a personality quirk; seedFacetCatalog
-          merges them into ONE Facet by normalized title (that merge is intentional -- see
-          verifyFacetCanonicalMerges) but the two declarations carry DIFFERENT curated images
-          (alignment/curious.webp vs quirks/curious.webp), so the merged Facet's art depends
-          on source rank. Resolve by pointing both declarations at one image or dropping one;
-          both are user-visible Adventure Builder art changes and neither file can be verified
-          from a checkout, since the images are gitignored. NEEDS SILAS or someone who can see
-          the deployed assets.
-      (b) verifyFacetBuilderCoverage, 4 findings (a missing background/unmade.webp, plus three
-          art:mode choices carrying Builder artwork on a field that is not Facet-backed). Note
-          this step ALSO has a continue-on-error + `if outcome == 'failure' -> exit 1` enforce
-          gate, defeated by the same tee bug -- so that gate has never once fired.
-      (c) audit:wonderlab-previews --strict in contract-tests.yml, 4 components missing fixture
-          props: reward-facet-picker (modelValue), storybook-state-panel (session),
-          video-lora-picker (engine, modelValue, strength), watchlist-entry-detail (entry).
-
-      The remaining two tee'd steps (academy-examples-manifest, audit:channel-assets) both PASS locally, so those two can have `shell: bash` added with no fallout at any time.
-
-
-      Re-verified current main after PR #1356. Enabling pipefail on the Facet workflow would immediately expose three independent known-red contracts: Facet artwork cross-taxonomy collision, Builder coverage, and strict WonderLab preview fixtures. The two passing tee steps live in contract-tests.yml but changing them alone would not complete this task. Released without weakening or duplicating CI.
+    note: 'DONE 2026-08-04 (kind_robots PR #1426). Bigger than filed: FIVE piped CI steps were inert across two workflows, not one. All now name `shell: bash` so GitHub uses -eo pipefail. The dependent guards were unreachable too -- including an explicit "Enforce illustrated Builder Facet coverage / if outcome == failure / run: exit 1" that could never fire because the outcome it tested was always success. Arming them found two real failures: the t-071 Curious collision (fixed, see that task) and verifyFacetBuilderCoverage, which fails only on missing art and is now explicitly continue-on-error per Silas 2026-08-04 ("there are still 600+ or so images in the queue"), with the unreachable hard-fail removed. Reusable lesson contracted as utils/scripts/verifyWorkflowPipefail.ts, self-tested both directions and wired into contract-tests.yml.'
     claimed_by: 2026-08-03T121900Z-interface-vision-t-063-r2m7
     claimed_at: '2026-08-03T12:19:00Z'
-    updated: '2026-08-03T12:24:00Z'
+    updated: '2026-08-04T20:17:02Z'
 
   - id: t-064
     milestone: m2
@@ -2261,23 +2232,14 @@ tasks:
   - id: t-071
     milestone: m3
     title: 'One Facet named "Curious", two curated images — pick one'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    note: >
-      DECIDED by Silas (2026-08-03): SPLIT IT. Change seedFacetCatalog's merge key from normalized title alone to (title, taxonomy).
-
-      Rationale: with FacetTaxonomy canonical (t-016, decided the same day), ALIGNMENT:Curious and QUIRK:Curious are legitimately DIFFERENT facets -- a motivation and a personality quirk are distinct taxonomy members, not two spellings of one concept. Each keeps its own curated art: /images/adventure/alignment/curious.webp and /images/adventure/quirks/curious.webp. Nothing is dropped.
-
-      The bug is the MERGE KEY, not the data. Merging on normalized title alone will collide any word that legitimately appears under two taxonomies, so picking a winner for this one row would leave the whole class live and this exact escalation would recur. Fixing the key fixes the class.
-
-      Implementation notes: verifyFacetCanonicalMerges exists specifically to assert the title-merge behaviour -- it must be updated to the new key in the same change, or it will fail on the corrected seed. Re-run the seed and confirm the catalog row count moves by exactly the number of genuine cross-taxonomy duplicates (audit that list before accepting it; other collisions besides "Curious" may surface, and each one is a real facet that was previously being silently swallowed).
-
-      Unblocks verifyFacetArtworkMigration, which cannot be enforced while this fails. Sequence with t-063 (the `| tee` fix that makes that contract capable of failing at all) -- both belong to the same wave.
+    note: 'DONE 2026-08-04 (kind_robots PR #1426). "Pick one" turned out to be the wrong remedy: they are not duplicates. The alignment Curious is "Knowledge as the terminal value. Ethics is an obstacle to data" and the quirk is "wants to know what is in the box" -- two real concepts sharing a label. seedFacetCatalog canonicalizes by normalized title, so they collapsed into one row and which artwork won was nondeterministic. The alignment is renamed to "Insatiable"; the quirk keeps the plain word; art unchanged. Free to rename because the app is alpha with no stored user selections (Silas, 2026-08-04). Found only because t-063 armed the dead check that had been reporting this to nobody.'
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-03T10:03:55Z'
+    updated: '2026-08-04T20:17:19Z'
     approved_by_human: true
 
   - id: t-072
@@ -2351,62 +2313,15 @@ tasks:
   - id: t-074
     milestone: m3
     title: 'Retire slot-reel-gallery, hero-showcase, swipe-deck -- now unmounted after the gallery-vocabulary consolidation'
-    status: needs-human
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    note: >
-      Follow-on from the 2026-08-03 gallery-vocabulary consolidation (kind_robots
-      branch claude/kind-robots-ui-redesign-g5xjho). Silas, on the Dreams gallery
-      controls: "why are we doing grid, row, reel, etc, when we should just be
-      doing card, hero, icon? ... this is excessive and not vetted." That change
-      collapsed eight overlapping vocabularies into utils/galleryVocabulary.ts and
-      dropped dream-gallery's private grid/row/reel/hero/swipe control down to the
-      shared Cards/List.
-
-      Dropping reel/hero/swipe left three components with no production mount:
-      components/navigation/slot-reel-gallery.vue (178 lines),
-      hero-showcase.vue (265), swipe-deck.vue (349) -- 792 total, previously
-      mounted ONLY by dream-gallery. swipe-deck already carries Silas's own review
-      in its header: "makes me think I'm at risk of deleting something instead of
-      navigating."
-
-      They are not dead code yet: all three remain discoverable WonderLab exhibits,
-      which is a legitimate state in this repo. Retiring them is a curation call,
-      which is why this is needs-human and not ready.
-
-      Two things block a clean delete:
-
-      1. DB half. Per docs/wonderlab-component-retirement-policy.md, retiring is
-         (a) delete the source file, (b) set the Component row's status to RETIRED
-         with a statusReason, (c) let reconcile flip isDiscovered on its next run.
-         Step (b) is an admin-UI action at components/wonderlab/lab-interact.vue:154
-         against the live DB -- an agent session has no DB access, so a Worker can
-         only do (a) and (c). Reviews survive on the retired exhibit either way;
-         reconcile never deletes rows.
-
-      2. Fixture half. hero-showcase is NOT dream-gallery-only, contrary to a first
-         read: it is a WonderLab preview fixture asserted by three verify scripts.
-         utils/scripts/verifyWonderLabAchievementNavigationFixtures.ts:27-40 loops
-         all three keys asserting synthetic items, and pins
-         hero-showcase intervalMs=60000 and slot-reel-gallery itemH=132;
-         verifyWonderLabLearningControlFixtures.ts:44 and
-         verifyWonderLabPassiveCardFixtures.ts:45 each assert
-         hero-showcase's props.items. Deleting the components means editing all
-         three scripts plus the fixture entries in
-         utils/wonderlab/previewFixturesAchievementNavigation.ts. The generated
-         artifacts (public/wonderlab-components.json,
-         utils/generated/wonderLabSourceEvidence.ts) are untracked and regenerate,
-         so they need no edit.
-
-      Silas's call, per the two open questions raised with the consolidation:
-      delete all three, or keep hero-showcase and promote it to a gallery-wide
-      option rather than a Dreams-only one -- a cinematic carousel is a genuinely
-      different job from a grid, and it is the one of the three with a real claim
-      to surviving.
+    note: 'DONE 2026-08-04. Silas approved the curation call: "if they are not used, yes retire" -- verified they were not, following the t-089 checklist rather than a plain import grep (no mounts, no MDC in content/, no .github/workflows paths: entries, no plugin DOM-scraping selectors). 792 lines deleted in kind_robots PR #1411, with their WonderLab preview fixtures and three verifier assertions updated; two of those used hero-showcase only as a canary that the fixture layer resolves, so they now assert leaderboard-table from the same module rather than being deleted. Step (b) of the retirement policy -- setting the Component rows to RETIRED with a statusReason -- is no longer an admin-UI-only action: utils/scripts/retireWonderLabComponents.ts plus a workflow_dispatch-only workflow do it from CI, which is the one place with a route to the database (the agent sandbox has the credentials but TCP to the ProxySQL port is blocked). The script only ever writes status and statusReason, never deletes, and is idempotent -- the Component rows and their Reactions ARE the museum record the policy exists to protect.'
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-03T12:05:00Z'
+    updated: '2026-08-04T20:17:38Z'
+    approved_by_human: true
 
   - id: t-075
     milestone: m3
@@ -2508,37 +2423,14 @@ tasks:
   - id: t-077
     milestone: m3
     title: 'Dream is missing an iconPath column, so Icons mode has no dedicated art'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    note: >
-      Surfaced 2026-08-03 while giving dream-card variant support (kind_robots
-      PR #1380). Silas, reviewing /dreams: "why are we making it like this when
-      we have the Project model: Card, Hero, Icon views already decided?"
-
-      Answer: Dreams now offers all four views, but one of them is degraded at
-      the schema level. t-024 added card/hero/icon art fields to Bot, Character,
-      Reward and Scenario. Dream was NOT in that set. The Dream model has
-      imagePath, cardPath and heroPath but no iconPath -- and Dream.icon is a
-      String holding a NAME, not a path (the name/path split PR #1258 made
-      explicit for other models). So dream-card's Icons mode falls through to
-      cardPath and crops it square. It renders, but it is the only one of the
-      five object cards whose icon view has no dedicated art to load.
-
-      Fix: add `iconPath String? @db.Text` to the Dream model, mirroring the
-      other four, plus the matching migration. Then extend the variant branch in
-      dream-card.vue's explicitDreamImagePath (currently commented with exactly
-      why the icon branch is absent) to prefer it, and check whether the art
-      generation/backfill paths that populate cardPath/heroPath for Dreams need
-      the same for icons.
-
-      Worth confirming against the other four while in here: this gap existed
-      unnoticed because nothing rendered a Dream icon until now, so it is worth
-      checking no other model in the card/hero/icon set has a similar hole.
+    note: 'DONE 2026-08-04 (kind_robots PR #1421). Dream.iconPath added via an additive migration. Found a second, unfiled instance of the same gap while auditing: PROJECT was also missing iconPath. All seven core objects now carry imagePath/cardPath/heroPath/iconPath, contracted as check 6 in verifyGalleryConsistency.ts so a new core object cannot ship a gallery mode it has no column for. This mattered beyond tidiness: resolveArtVariantSrc degrades silently, so Icons on a Dream rendered whatever other art the record carried -- indistinguishable from the shape bug fixed in the same PR, and misdiagnosed as a layout problem for exactly that reason.'
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-03T20:05:00Z'
+    updated: '2026-08-04T20:17:23Z'
 
   - id: t-078
     milestone: m3
