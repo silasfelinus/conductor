@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-04T02:38:53Z
+Generated: 2026-08-04T03:05:42Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **498**
-- Outcomes: blocked: 13, cancelled: 1, done: 484
+- Closed tasks recorded: **499**
+- Outcomes: blocked: 13, cancelled: 1, done: 485
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 55 | 100% |
+| interface-vision | 56 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 483 | 99% |
+| software | 484 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-04 `interface-vision/t-045` — A plain repo-wide grep for a deleted component's filename missed a real dependency: verifyWonderLabInteractionDisplayFixtures.ts read smart-nav.vue's source directly via fs.readFile to assert on its prop contract, which only surfaced as an ENOENT in the "Contract verifiers" CI job, not in any local grep or vue-tsc/eslint pass. Before deleting a component with WonderLab preview fixture coverage, grep the utils/scripts/verifyWonderLab*.ts files specifically for readFile calls against that component's path, not just import/reference greps.
 - 2026-08-04 `interface-vision/t-080` — Task title covered two symmetric entities (Reward + Scenario isPublic/isMature toggles) but the PR only implemented one; split the remainder into t-082 rather than either blocking the merged half or silently closing the task as fully done. Titles spanning multiple entities should be split into per-entity tasks at claim time to avoid this ambiguity recurring.
 - 2026-08-04 `interface-vision/t-042` — Before building a "creation flow" task from scratch, check the note's own predicted building blocks against the current codebase first -- the Facet half of this task (facet-profile-editor.vue + facetProfileForm.ts feeding a create form) had already shipped via an unrelated commit by the time this task was worked, so the actual remaining scope was half the size the note described. Only the Project half needed new UI; the store/API layer (createProject()) was already complete on both sides.
 - 2026-08-04 `interface-vision/t-036` — When a task note gives you the exact CI-side validator to reuse client-side (navManifest.ts here), mirror its field-construction one-to-one rather than approximating -- the isomorphic-by-design comment in the module was the signal that a straight port, not a reinterpretation, was correct. Also: a component gated requiredRole: ADMIN cannot be visually verified from an agent sandbox without admin credentials -- typecheck plus the same CI script the component now reuses is the honest substitute, and it belongs explicitly in the PR flags rather than silently skipped. Separately: an automated close-task-event can land on main between opening a manual close_task.py PR and merging it -- check task-events/ and the live roadmap status again immediately before merging a close-out, not just once before opening it, or the merge 405s on a conflict against a transition that already happened.
@@ -92,7 +93,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-03 `interface-vision/t-032` — Naively calling a store's existing updateX(id, updates) action with only the single field being toggled ({ allowReviews: bool }) is unsafe unless you've read the payload-building function it calls first: rewardStore's toRewardPayload() and scenarioStore's toScenarioPayload() both rebuild the ENTIRE PATCH payload from whatever partial object is passed in, filling missing fields with defaults (toRewardPayload defaults a missing name to '', toScenarioPayload defaults missing intros to '[]') -- a naive single-field patch would have silently wiped the reward's name or the scenario's intros on toggle. Bot's and Character's equivalent payload builders are plain spreads, so a single-field patch is safe there but not elsewhere; the two families look identical from the call site and are not safe to treat the same without reading the payload builder itself. Also found and fixed a real latent bug this way: toRewardPayload's field whitelist was missing allowReviews entirely, so the API-side field t-011 already shipped could never actually be set from the reward edit form even before this task, a silent no-op nobody had noticed.
 
 - 2026-08-03 `conductor/t-096` — A task selector that only checks status/claimability (run_worker.py's find_ready_task, used by select_role.py) let interface-vision/t-017 -- an umbrella sweep whose own note already said every bucket but one was delegated to t-058 -- get claimed anyway, wasting a session's cycle. Two independent "pick next ready task" implementations (run_worker.py and next_ready_task.py) had already drifted once before this fix; when a roadmap task can legitimately delegate its remaining scope to a named sibling, encode that relationship as a structured field (remaining_scope_task) that every selector checks, not just prose in the note that only a human or a careful session catches by reading the full history.
-- 2026-08-03 `interface-vision/t-075` — A kaizen task filed from a filename match alone ("character-flip-card.vue" looks like it should share butterfly-flip.vue's bug) can be wrong -- this file turned out to be an unrelated 900-line dashboard with a stale copy-pasted header comment from a similarly-named file. Verify the actual file content disproves or confirms the premise before writing any fix; closing a task with a corrected note and no diff is the right outcome when the premise does not hold, not a failure. Reading the disproven file also surfaced a real, unrelated bug (CharacterFlipCard has zero defineProps and silently ignores its character prop) -- filed separately as t-076 rather than folded into this task's diff, keeping scope discipline even for an accidental discovery.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-04T02:38:53Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-04T03:05:42Z_
