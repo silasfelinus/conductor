@@ -1860,7 +1860,7 @@ tasks:
   - id: t-058
     milestone: m3
     title: 'Give one-scroll Shape B a two-owner grid primitive, and stop counting Shapes A/D'
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -1887,9 +1887,11 @@ tasks:
       Fifth+ layout-contract sweep slice: migrated animation-manager.vue onto kr-panes/kr-pane/kr-pane-scroll, ratcheting one-scroll 7->6. kind_robots PR #1431 open, awaiting CI.
 
       Sixth t-058 slice: migrated animation-manager.vue (filtered effect grid + selected-item/compare aside, a genuine two-owner grid) onto kr-panes/kr-pane/kr-pane-scroll, the same shape already proven on character-interact/art-interact/messenger/lab-interact. kind_robots PR #1431 merged as 516ac856fcfcb06331af1722a7126eec9ac97d65. Ratchets one-scroll from 7 to 6. All diff-relevant checks green (TypeScript, layout-contract, ESLint); the PR's "Contract verifiers" check failed only on the pre-existing, unrelated audit:wonderlab-previews --strict fixture-prop gap (confirmed identical failure list with and without this diff -- the same pre-existing issue prior slice PR #1430 already documented). Remaining one-scroll entries still needing live visual verification before migration: stage-manager.vue, mural-manager.vue (3-pane, hardest case), butterfly-sanctuary.vue, dream-brainstorm.vue, channel-select.vue, art-gallery.vue. Re-arming to ready rather than closing -- the allow-list is not yet zero.
+
+      Seventh t-058 slice (conductor Agent run, kind_robots PR #1435, merged as c1f9009aae68c7ca99c133d72cc51498f3f2e83f): rather than another risky primitive migration, fixed a genuine verifier gap first. art-gallery.vue's second overflow-auto region turned out to live inside a `fixed inset-0` lightbox overlay (the selected-image modal) layered on top of the gallery grid, not a co-resident Shape B pane like the character-interact.vue/art-interact.vue cases this task's primitive targets -- the background gallery and the modal's own scroll region are never simultaneously visible/interactive the way a real aside+main pair is. Taught verifyLayoutContract.ts to exempt the whole subtree of any fixed+inset-0 wrapper (same treatment as the existing max-h-* bounded-region and v-if/v-else-if/v-else exemptions), with fixture coverage including a negative case (fixed without inset-0 still counts, so this is not a blanket fixed-position exemption). No component markup changed -- zero production layout risk. Ratchets one-scroll from 6 to 5. Remaining one-scroll entries, all still needing live visual verification before a kr-panes migration per prior slices' findings: stage-manager.vue (footer-composer risk), mural-manager.vue (3-pane, hardest case), butterfly-sanctuary.vue (nested scroll tangled with v-show, distinct bug shape), dream-brainstorm.vue (nested 3-column grid), channel-select.vue (global-nav flyout overlay -- genuinely two concurrent scroll owners when expanded, unlike art-gallery.vue's modal case, so it still needs the real primitive treatment plus visual confirmation the flyout isn't clipped). Re-arming to ready -- the allow-list is not yet zero.
     claimed_by: 2026-08-04T163237Z-t058-slice7
     claimed_at: '2026-08-04T16:32:38Z'
-    updated: '2026-08-04T16:32:38Z'
+    updated: '2026-08-04T16:39:43Z'
     owner: worker
 
   - id: t-054
