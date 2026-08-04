@@ -1860,7 +1860,7 @@ tasks:
   - id: t-058
     milestone: m3
     title: 'Give one-scroll Shape B a two-owner grid primitive, and stop counting Shapes A/D'
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: |-
@@ -1881,9 +1881,10 @@ tasks:
       Retry of the review transition: the first attempt (2026-08-04T113000Z-interface-vision-t-058-review-q7m4.yaml) was rejected as ALREADY_CLAIMED because its session field was hand-typed without colons (2026-08-04T112754Z-t058-verifier) and didn't match the actual claim session (2026-08-04T11:27:54Z-t058-verifier) recorded by claim_task.py. Same underlying work: verifier v-if-exclusivity slice, kind_robots PR #1429 (merged), interface-vision/t-058.
 
       Merged Kind Robots PR #1429 as 9bb22fcf55b8c39711563d9ef8c6aa1055a0a319. The one-scroll verifier now treats v-if/v-else-if/v-else chains as mutually exclusive, fixes quoted-attribute parsing when expressions contain a literal greater-than sign, adds focused fixtures, and ratchets the baseline from 10 to 9. All final-head checks completed successfully. The broader task remains open because the remaining genuine multi-owner layouts still need kr-panes migrations and visual verification, so return t-058 to ready.
-    claimed_by: 2026-08-04T11:27:54Z-t058-verifier
-    claimed_at: '2026-08-04T11:27:55Z'
-    updated: '2026-08-04T12:18:00Z'
+    claimed_by: 2026-08-04T123417Z-t058-panes
+    claimed_at: '2026-08-04T12:34:18Z'
+    updated: '2026-08-04T12:34:18Z'
+    owner: worker
 
   - id: t-054
     milestone: m2
