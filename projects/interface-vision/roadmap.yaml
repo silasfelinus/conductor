@@ -1987,42 +1987,13 @@ tasks:
   - id: t-063
     milestone: m3
     title: 'A CI step piped through tee can never fail: verifyFacetArtworkMigration is dead'
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
-    note: |-
-      Found while consolidating the facet artwork chain (kind_robots, t-055 follow-on). Two separate problems, and the second is the one that matters beyond this one script.
-      FIRST: utils/scripts/verifyFacetArtworkMigration.ts is currently FAILING on main, and has been for some time. It asserts components/facets/facet-manager.vue contains `v-model="newImagePath"` among a list of artwork-migration texts, and that string is gone. Confirmed by stashing all local work and re-running against a clean tree. The contract describes a migration whose UI has since moved on; it needs either updating to the current facet-manager or retiring.
-      SECOND, and the reusable lesson: nobody noticed because the check CANNOT FAIL. .github/workflows/facet-catalog-contract.yml:125 runs it as `npx tsx utils/scripts/verifyFacetArtworkMigration.ts 2>&1 | tee facet-artwork-report.txt`. A pipeline's exit status is the LAST command's, so the step always exits 0 no matter what the verifier does. The `if: failure() && steps.artwork.outcome == 'failure'` artifact upload that follows it is therefore unreachable too. This is the same class of bug as a test that never asserts: the job is green, the badge is green, and the check has been inert.
-      Fix the pipeline first (`set -o pipefail`, or drop the tee and rely on the workflow log), THEN fix or retire the contract -- in that order, because fixing the contract while the step is still inert proves nothing. While there, grep the other workflows for the same `| tee` shape; if this one drifted in, others may share it.
-      PARTLY DONE, 2026-08-03, kind_robots PR #1356 -- and the grep found more than expected.
-      The contract is repaired and runnable. Its stale half was worse than "stale": it required a dozen literal v-model="newImagePath" strings against a facet-manager whose form is now <FacetProfileEditor> plus an <EntityArtManager :slots> covering imagePath, iconPath, cardPath AND heroPath -- strictly MORE art roles than the old form. It was failing against a manager that had got better. It now asserts structure rather than one spelling, and follows the form <-> Facet mapping into utils/facetProfileForm.ts.
-      Its other half could never have passed anywhere: it asserted ~280 curated images exist on disk under public/images, which .gitignore:33 excludes from the repo entirely (the art lives on the deployed host). `git ls-files public/images/adventure` returns nothing. That assertion is now conditional on the assets being present and PRINTS that it skipped -- a check that quietly does nothing is the bug, not the fix.
-      PIPEFAIL IS DELIBERATELY STILL NOT SET, and this is the part that needs a decision. Flipping it turns main red on three independent pre-existing failures, each needing its own fix:
-      (a) verifyFacetArtworkMigration, one failure left and it is a real data defect:
-          "Curious" exists as both an alignment and a personality quirk; seedFacetCatalog
-          merges them into ONE Facet by normalized title (that merge is intentional -- see
-          verifyFacetCanonicalMerges) but the two declarations carry DIFFERENT curated images
-          (alignment/curious.webp vs quirks/curious.webp), so the merged Facet's art depends
-          on source rank. Resolve by pointing both declarations at one image or dropping one;
-          both are user-visible Adventure Builder art changes and neither file can be verified
-          from a checkout, since the images are gitignored. NEEDS SILAS or someone who can see
-          the deployed assets.
-      (b) verifyFacetBuilderCoverage, 4 findings (a missing background/unmade.webp, plus three
-          art:mode choices carrying Builder artwork on a field that is not Facet-backed). Note
-          this step ALSO has a continue-on-error + `if outcome == 'failure' -> exit 1` enforce
-          gate, defeated by the same tee bug -- so that gate has never once fired.
-      (c) audit:wonderlab-previews --strict in contract-tests.yml, 4 components missing fixture
-          props: reward-facet-picker (modelValue), storybook-state-panel (session),
-          video-lora-picker (engine, modelValue, strength), watchlist-entry-detail (entry).
-
-      The remaining two tee'd steps (academy-examples-manifest, audit:channel-assets) both PASS locally, so those two can have `shell: bash` added with no fallout at any time.
-
-
-      Re-verified current main after PR #1356. Enabling pipefail on the Facet workflow would immediately expose three independent known-red contracts: Facet artwork cross-taxonomy collision, Builder coverage, and strict WonderLab preview fixtures. The two passing tee steps live in contract-tests.yml but changing them alone would not complete this task. Released without weakening or duplicating CI.
+    note: 'DONE 2026-08-04 (kind_robots PR #1426). Bigger than filed: FIVE piped CI steps were inert across two workflows, not one. All now name `shell: bash` so GitHub uses -eo pipefail. The dependent guards were unreachable too -- including an explicit "Enforce illustrated Builder Facet coverage / if outcome == failure / run: exit 1" that could never fire because the outcome it tested was always success. Arming them found two real failures: the t-071 Curious collision (fixed, see that task) and verifyFacetBuilderCoverage, which fails only on missing art and is now explicitly continue-on-error per Silas 2026-08-04 ("there are still 600+ or so images in the queue"), with the unreachable hard-fail removed. Reusable lesson contracted as utils/scripts/verifyWorkflowPipefail.ts, self-tested both directions and wired into contract-tests.yml.'
     claimed_by: 2026-08-03T121900Z-interface-vision-t-063-r2m7
     claimed_at: '2026-08-03T12:19:00Z'
-    updated: '2026-08-03T12:24:00Z'
+    updated: '2026-08-04T20:17:02Z'
 
   - id: t-064
     milestone: m2
