@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-04T03:05:42Z
+Generated: 2026-08-04T03:13:40Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **499**
-- Outcomes: blocked: 13, cancelled: 1, done: 485
+- Closed tasks recorded: **500**
+- Outcomes: blocked: 13, cancelled: 1, done: 486
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 56 | 100% |
+| interface-vision | 57 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 484 | 99% |
+| software | 485 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-04 `interface-vision/t-064` — A task tracking N/M sub-item progress (5 cards converging onto a shared body) had its note fall one merge behind reality: reward-card had already migrated in a prior session/PR with no note update recording it, so the task read as 2 items remaining when only 1 actually was. Caught by checking the merged tree directly (grep for the new import) rather than trusting the note's own count. When landing one item of an N/M tracked task, update the note's count even if the task can't close yet.
 - 2026-08-04 `interface-vision/t-045` — A plain repo-wide grep for a deleted component's filename missed a real dependency: verifyWonderLabInteractionDisplayFixtures.ts read smart-nav.vue's source directly via fs.readFile to assert on its prop contract, which only surfaced as an ENOENT in the "Contract verifiers" CI job, not in any local grep or vue-tsc/eslint pass. Before deleting a component with WonderLab preview fixture coverage, grep the utils/scripts/verifyWonderLab*.ts files specifically for readFile calls against that component's path, not just import/reference greps.
 - 2026-08-04 `interface-vision/t-080` — Task title covered two symmetric entities (Reward + Scenario isPublic/isMature toggles) but the PR only implemented one; split the remainder into t-082 rather than either blocking the merged half or silently closing the task as fully done. Titles spanning multiple entities should be split into per-entity tasks at claim time to avoid this ambiguity recurring.
 - 2026-08-04 `interface-vision/t-042` — Before building a "creation flow" task from scratch, check the note's own predicted building blocks against the current codebase first -- the Facet half of this task (facet-profile-editor.vue + facetProfileForm.ts feeding a create form) had already shipped via an unrelated commit by the time this task was worked, so the actual remaining scope was half the size the note described. Only the Project half needed new UI; the store/API layer (createProject()) was already complete on both sides.
@@ -92,7 +93,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-03 `interface-vision/t-032` — Naively calling a store's existing updateX(id, updates) action with only the single field being toggled ({ allowReviews: bool }) is unsafe unless you've read the payload-building function it calls first: rewardStore's toRewardPayload() and scenarioStore's toScenarioPayload() both rebuild the ENTIRE PATCH payload from whatever partial object is passed in, filling missing fields with defaults (toRewardPayload defaults a missing name to '', toScenarioPayload defaults missing intros to '[]') -- a naive single-field patch would have silently wiped the reward's name or the scenario's intros on toggle. Bot's and Character's equivalent payload builders are plain spreads, so a single-field patch is safe there but not elsewhere; the two families look identical from the call site and are not safe to treat the same without reading the payload builder itself. Also found and fixed a real latent bug this way: toRewardPayload's field whitelist was missing allowReviews entirely, so the API-side field t-011 already shipped could never actually be set from the reward edit form even before this task, a silent no-op nobody had noticed.
 
-- 2026-08-03 `conductor/t-096` — A task selector that only checks status/claimability (run_worker.py's find_ready_task, used by select_role.py) let interface-vision/t-017 -- an umbrella sweep whose own note already said every bucket but one was delegated to t-058 -- get claimed anyway, wasting a session's cycle. Two independent "pick next ready task" implementations (run_worker.py and next_ready_task.py) had already drifted once before this fix; when a roadmap task can legitimately delegate its remaining scope to a named sibling, encode that relationship as a structured field (remaining_scope_task) that every selector checks, not just prose in the note that only a human or a careful session catches by reading the full history.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-04T03:05:42Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-04T03:13:40Z_
