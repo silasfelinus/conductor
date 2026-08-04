@@ -2672,17 +2672,18 @@ tasks:
   - id: t-084
     milestone: m3
     title: 'components/art/art-manager.vue has a min-h-[720px] magic number on its mount point'
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     note: |-
       Kaizen from t-045 (2026-08-04, kind_robots PR #1395). t-045 removed the magic-number `min-h-[...]` heights that used to live inside artjob-queue-browser.vue's own template (already resolved separately before t-045 landed), but `art-manager.vue:97` still has a `min-h-[720px]` on the `<component :is>` mount point that hosts it -- same category of defect (a fixed-size box forcing height instead of content-driven sizing), just one file over. Small, scoped: replace with content-driven sizing or a documented, deliberate primitive if a fixed size is genuinely required, then re-check the layout contract.
 
       Removed the fixed 720px minimum height from the ArtJob queue mount and switched it to content-driven min-h-0 sizing on worker/interface-vision-t-084-20260804t142435z-q7m2.
+
+      Closed after Kind Robots PR #1432 merged. The scoped change removed the fixed min-h-[720px] ArtJob queue mount height in favor of min-h-0 content-driven sizing. Final head 490b00c90c04c2675ac9710489acf837c0ab1b60 passed TypeScript, Layout Contract, MDC Scroll Ownership, Facet Catalog, API Client Follow-ups, and all narrative/storybook/taskmaster workflows. Contract Tests run 30919167846 remained red only on the pre-existing WonderLab preview-fixture no-regression debt, which did not include components/art/art-manager.vue. PR merge was observed live at 2026-08-04T15:15:59Z; this event completes the required Conductor closeout.
     claimed_by: 2026-08-04T142435Z-interface-vision-t-084-q7m2
     claimed_at: '2026-08-04T14:24:35Z'
-    updated: '2026-08-04T14:29:10Z'
+    updated: '2026-08-04T15:15:05Z'
 
   - id: t-085
     milestone: m2
