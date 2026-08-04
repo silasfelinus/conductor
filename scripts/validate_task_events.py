@@ -99,12 +99,19 @@ def validate(path: Path) -> str | None:
     if learning is not None:
         if operation not in CLOSED_OPERATIONS:
             return "learning may only accompany done or blocked events"
-        if not isinstance(learning, dict):
-            return "learning must be a mapping"
-        required = {"kind", "stakes", "lesson"}
-        missing = sorted(required - learning.keys())
-        if missing:
-            return f"learning is missing required fields: {', '.join(missing)}"
+        if isinstance(learning, str):
+            # process_task_events.py's prepare_learning() coerces a bare string
+            # into {kind, stakes, lesson} (conductor/t-097) rather than
+            # rejecting it, so this PR-time gate accepts the same shape.
+            if not learning.strip():
+                return "learning must be a non-empty string when supplied as a string"
+        elif isinstance(learning, dict):
+            required = {"kind", "stakes", "lesson"}
+            missing = sorted(required - learning.keys())
+            if missing:
+                return f"learning is missing required fields: {', '.join(missing)}"
+        else:
+            return "learning must be a mapping or a plain string lesson"
 
     return None
 
