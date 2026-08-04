@@ -1860,7 +1860,7 @@ tasks:
   - id: t-058
     milestone: m3
     title: 'Give one-scroll Shape B a two-owner grid primitive, and stop counting Shapes A/D'
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -1895,11 +1895,33 @@ tasks:
       Eighth t-058 slice (conductor Agent-run session, kind_robots PR #1436, merged as 062fd9264aa710cdbcc3409b7a7ce9615e2053e9): migrated dream-brainstorm.vue onto kr-panes/kr-pane/kr-pane-scroll, the same shape already proven on character-interact.vue, art-interact.vue, messenger.vue, lab-interact.vue, and animation-manager.vue. Its aside/main/aside grid is a genuine two-owner case -- the source-Dreams list (left aside) and the Fresh Ideas body (nested inside main) both scroll independently at once. main's header/scroll-body/footer rows moved from an explicit `grid grid-rows-[auto_minmax(0,1fr)_auto]` layout to kr-pane's flex-col shape (identical visual result, since each row was already effectively auto/1fr/auto sized) so kr-pane's baked-in `flex flex-col` wouldn't fight an explicit `grid` display on the same element. No visual/behavioral change to any of the three panes' own content. Verified with `test:layout-contract` (confirmed the fix, then ratcheted), `vue-tsc --noEmit` (clean), and `eslint` on the changed file (clean); all 15 kind_robots CI checks plus the Vercel deployment check passed green before merge. Ratchets one-scroll from 5 to 4. Remaining one-scroll-flagged files, all still needing separate investigation per prior slices' findings: butterfly-sanctuary.vue (nested scroll tangled with v-show, distinct bug shape), channel-select.vue (global-nav flyout overlay -- genuine two-owner case needing visual confirmation the flyout isn't clipped), mural-manager.vue (3-pane, hardest case), stage-manager.vue (footer-composer risk). Re-arming to ready -- the allow-list is not yet zero.
 
       Audited the remaining channel-select.vue one-scroll entry against current Kind Robots main. Its channel list and absolute left-full tab flyout are genuinely simultaneous scroll owners, but the current kr-panes primitive applies overflow-hidden and would clip the flyout if used directly; adding a dummy marker would only game the verifier. Filed conductor issue #1690 with the verified geometry, the required overlay-safe multi-owner primitive contract, positive/negative fixture requirements, and Vercel narrow/wide visual checks. No production code was changed because the obvious migration is unsafe. Return t-058 to ready for the next bounded implementation slice; the one-scroll baseline remains above zero.
+
+
+      Ninth t-058 slice (conductor Agent run, kind_robots PR #1437, merged as 06bee16ae4f6fb28c5af6f833ef22561eb3a61fa): rather than another risky primitive migration or gaming the verifier, built the overlay-safe multi-owner scroll primitive conductor issue #1690 specified. .kr-panes/.kr-pane-scroll's overflow-hidden would clip channel-select.vue's absolutely-positioned left-full tab flyout, so added a dedicated sibling pair -- .kr-anchor-panes (no grid/overflow-hidden, explicitly overflow-visible) and .kr-anchor-scroll (the same overflow-y-auto/overscroll-contain CSS the two scroll regions already had via raw utility classes) -- to assets/css/tailwind.css, and taught verifyLayoutContract.ts's one-scroll rule to recognize .kr-anchor-scroll regions once .kr-anchor-panes is declared, mirroring the kr-panes/kr-pane-scroll gating including the guard against a lone .kr-anchor-scroll bypassing the rule with no .kr-anchor-panes anywhere in the file (issue #1690 item 4), with a new verifyAnchorScrollFixture() covering both directions. channel-select.vue's two scroll regions (channelMenu, channelFlyout) and their shared .dropdown-content ancestor were migrated onto the new classes -- a pure class rename (byte-identical CSS), zero layout/behavior change, so no Vercel visual check was needed for this slice unlike the three remaining files. Verified via test:layout-contract (confirmed the fix, ratcheted one-scroll 4->3), vue-tsc --noEmit (clean), and eslint on both changed files (clean); all 15 kind_robots CI checks green before merge. Resolves conductor issue #1690. Remaining one-scroll entries, all still needing live visual verification before a kr-panes migration per prior slices' findings: stage-manager.vue (footer-composer risk), mural-manager.vue (3-pane, hardest case), butterfly-sanctuary.vue (nested scroll tangled with v-show, distinct bug shape). Re-arming to ready -- the allow-list is not yet zero.
     claimed_by: 2026-08-04T182820Z-interface-vision-t058-cs9v
     claimed_at: '2026-08-04T18:28:21Z'
     updated: '2026-08-04T18:28:21Z'
-    owner: worker
+    owner: null
 
+  - id: t-098
+    milestone: m3
+    title: 'Add a fixture asserting kr-panes and kr-anchor-panes cannot be mixed in one component'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from merging kind_robots PR #1437 (t-058's ninth slice, the kr-anchor-panes/
+      kr-anchor-scroll overlay-safe primitive, conductor issue #1690). The gating logic in
+      verifyLayoutContract.ts's collect() already treats a component that mixes .kr-panes/
+      .kr-pane-scroll with .kr-anchor-panes/.kr-anchor-scroll as a one-scroll violation
+      (each primitive's else-if branch checks the other's scroller count), but there is no
+      fixture asserting this directly -- verifyPaneScrollFixture() and
+      verifyAnchorScrollFixture() each only exercise their own primitive in isolation.
+      Add a small fixture (e.g. a component declaring both kr-panes and kr-anchor-panes,
+      one kr-pane-scroll region and one kr-anchor-scroll region) confirming
+      scrollRegionCount-adjacent logic still flags it, so a future refactor of the gating
+      conditional can't silently stop catching the combination without a test noticing.
   - id: t-054
     milestone: m2
     title: 'Three content routes rendered nothing; MDC mounts are now validated in CI'
