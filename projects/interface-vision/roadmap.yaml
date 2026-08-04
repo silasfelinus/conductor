@@ -2603,16 +2603,13 @@ tasks:
   - id: t-082
     milestone: m2
     title: 'Add isPublic/isMature toggle UI to the Scenario edit form'
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
-    note: |-
-      Split out from t-080 (2026-08-04, kind_robots PR #1393): the Reward half landed (add-reward.vue now has a Publishing section with isPublic/isMature checkbox toggles). Scenario's add-scenario.vue still has zero isPublic/isMature UI -- those fields are only ever shown read-only as badges elsewhere (scenario-card.vue/scenario-interact.vue). Mirror the same checkbox-style Publishing section just added to add-reward.vue (and the existing Bot/Character pattern in add-bot.vue's Publishing section and add-character.vue's Record Settings section) rather than inventing a new UI style. Check scenarioStore's toScenarioPayload() whitelist includes isPublic/isMature before wiring the toggles -- t-080's note on the Reward side found toRewardPayload() already had them, but verify the Scenario equivalent explicitly rather than assuming parity.
-
-      Released without implementation: this connector-only runtime can create branches and replace files, but cannot apply a targeted patch to the 500+ line add-scenario.vue without first reassembling the complete file byte-for-byte. Local git and GitHub DNS were unavailable. No code was changed; rotate to a smaller connector-safe task rather than risk truncating the component.
+    note: 'Closed via kind_robots PR #1433 (merged): mirrors t-080''s Reward Publishing section onto add-scenario.vue (isPublic/isMature checkbox toggles), with matching resetForAdd() defaults. No store changes needed -- scenarioStore already round-trips both fields. Verified vue-tsc/eslint/prettier clean, layout-contract and gallery-consistency hold.'
     claimed_by: 2026-08-04T142950Z-interface-vision-t-082-retry-5904
     claimed_at: '2026-08-04T14:29:51Z'
-    updated: '2026-08-04T14:29:51Z'
+    updated: '2026-08-04T14:50:40Z'
     owner: worker
 
   - id: t-081
