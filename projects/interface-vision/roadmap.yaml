@@ -1906,25 +1906,18 @@ tasks:
   - id: t-098
     milestone: m3
     title: 'Add a fixture asserting kr-panes and kr-anchor-panes cannot be mixed in one component'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from merging kind_robots PR #1437 (t-058's ninth slice, the kr-anchor-panes/
-      kr-anchor-scroll overlay-safe primitive, conductor issue #1690). The gating logic in
-      verifyLayoutContract.ts's collect() already treats a component that mixes .kr-panes/
-      .kr-pane-scroll with .kr-anchor-panes/.kr-anchor-scroll as a one-scroll violation
-      (each primitive's else-if branch checks the other's scroller count), but there is no
-      fixture asserting this directly -- verifyPaneScrollFixture() and
-      verifyAnchorScrollFixture() each only exercise their own primitive in isolation.
-      Add a small fixture (e.g. a component declaring both kr-panes and kr-anchor-panes,
-      one kr-pane-scroll region and one kr-anchor-scroll region) confirming
-      scrollRegionCount-adjacent logic still flags it, so a future refactor of the gating
-      conditional can't silently stop catching the combination without a test noticing.
+    note: |-
+      Kaizen from merging kind_robots PR #1437 (t-058's ninth slice, the kr-anchor-panes/ kr-anchor-scroll overlay-safe primitive, conductor issue #1690). The gating logic in verifyLayoutContract.ts's collect() already treats a component that mixes .kr-panes/ .kr-pane-scroll with .kr-anchor-panes/.kr-anchor-scroll as a one-scroll violation (each primitive's else-if branch checks the other's scroller count), but there is no fixture asserting this directly -- verifyPaneScrollFixture() and verifyAnchorScrollFixture() each only exercise their own primitive in isolation. Add a small fixture (e.g. a component declaring both kr-panes and kr-anchor-panes, one kr-pane-scroll region and one kr-anchor-scroll region) confirming scrollRegionCount-adjacent logic still flags it, so a future refactor of the gating conditional can't silently stop catching the combination without a test noticing.
+
+
+      Added an executable fixture that injects a temporary component mixing kr-panes and kr-anchor-panes, runs the real layout-contract collector, and requires the mixed component to appear as a one-scroll violation.
     claimed_by: 2026-08-04T191148Z-interface-vision-t098-j4q8
     claimed_at: '2026-08-04T19:11:48Z'
-    updated: '2026-08-04T19:11:48Z'
+    updated: '2026-08-04T19:18:00Z'
   - id: t-054
     milestone: m2
     title: 'Three content routes rendered nothing; MDC mounts are now validated in CI'
