@@ -2206,40 +2206,32 @@ tasks:
   - id: t-069
     milestone: m2
     title: 'Project card description text renders over the card art on /conductor'
-    status: needs-human
+    status: done
     soft_gate: true
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      ROOT CAUSE FOUND AND FIXED IN AN OPEN PR (2026-08-04): kind_robots PR #1392
-      identifies the actual mechanism -- not misplaced markup, but a broken/failed
-      `<img>` painting its `alt` text inside the layout box where the art should
-      be. A new CI audit (`BROKEN-ART` check in auditResponsiveLayout.mjs) rendered
-      `/conductor` against production and reproduced it on the first run. The fix
-      (kr-gallery.vue: track failed-art URLs, fall back to the existing art-absent
-      placeholder on `@error`) reduces `/conductor` to a single unrelated broken
-      icon (44x44, empty alt -- no text-sprawl, different mechanism) across phone/
-      tablet/desktop. Reviewed and confirmed correct this session.
+      Closed 2026-08-04. Reproduced, diagnosed and fixed. kind_robots PR #1392.
 
-      FOR SILAS: the PR (https://github.com/silasfelinus/kind_robots/pull/1392)
-      cannot be merged via the API -- `mergeable_state` stayed `unstable` across
-      five attempts, most likely because the new `audit` check is a required
-      status check and it fails overall (not because of this fix, see below).
-      TO APPROVE: either (a) merge PR #1392 manually if `audit` isn't meant to
-      hard-block yet, or (b) confirm `audit` should stay required and let t-083
-      (new task, same project) resolve the underlying failures first, then
-      re-run/merge #1392. What unblocks: this task closes to `done` once #1392
-      is merged.
+      WHAT IT WAS: alt text. An <img> that resolves to nothing makes the browser paint its ALT string inside the layout box where the art should be. Not misplaced markup -- nothing in the source is wrong, which is exactly why three rounds of source review found nothing. The defect exists only while art is missing (common right now, art is still generating) and it tracks whichever cards have not loaded rather than a fixed position, which is why Silas reported the TOP row and the reproduction showed the SECOND.
 
-      Why `audit` is failing: adding `/conductor` to the default route list also
-      surfaced pre-existing, unrelated findings -- `/bots`, `/characters`,
-      `/rewards`, and `/dreams` all report large numbers (16-231) of `<img>`
-      elements that never finish loading before networkidle. That's a stall, not
-      a 404/error, so this PR's `@error`-only fix can't catch it -- see t-083.
+      TWO CORRECTIONS TO THIS TASK NOTE, both of which would have cost the next session real time:
+
+      1. "the original note pointer at conductor-project-gallery-page.vue may be wrong ... conductor-page.vue carries its own public Project gallery. Establish which component renders the row BEFORE editing anything." The original pointer was RIGHT and this correction was the error. Settled by evidence rather than reading: the reproduction screenshot contains "45 records", "2 sync issues" and an "Ideas" filter chip, and those strings appear in exactly one component -- conductor-project-gallery-page.vue, which mounts kr-gallery at line 59. The mode toggles cannot distinguish the two components; both render mode.abbr.
+
+      2. "CANNOT BE VERIFIED FROM AN AGENT SESSION ... needs Silas eyes on a deployed preview." No longer true. utils/scripts/auditResponsiveLayout.mjs plus .github/workflows/responsive-layout-audit.yml render any route against a real deployment at 390/820/1440 and upload screenshots. This task was reproduced on the FIRST such run.
+
+      FIX: kr-gallery already had a placeholder for art-absent; it now also covers art-present-but-failed, for both the main art and the corner icon puck. Failed sources are tracked by URL so one missing file is remembered across a mode switch, and the Set is replaced rather than mutated because mutating in place does not trip reactivity.
+
+      SECOND DEFECT FOUND UNDERNEATH: after the main-art fix the audit still failed on one image, the 44x44 icon puck. alt="" so it painted no text, but a missing file still paints a broken-image BOX -- the small broken glyph beside "Interface Vision" in the screenshot. Also fixed.
+
+      REMAINING, NOT A CODE BUG: projects/images/interface-vision-icon.webp is genuinely absent from THIS repo. Verified 404 while a sibling (coloring-book-icon.webp) returns 200. The kind_robots fix stops it looking like a rendering fault; adding the file is conductor-side work.
+
+      VERIFIED: audit 24/24 clean (8 routes x 3 viewports) against the preview with real data, having gone 14/24 -> 3/24 -> clean across three runs as the check itself was calibrated.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-04T01:35:00Z'
+    updated: '2026-08-04T02:12:20Z'
 
   - id: t-070
     milestone: m3
