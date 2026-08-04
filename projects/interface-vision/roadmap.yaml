@@ -1908,6 +1908,26 @@ tasks:
       (233). One PR each; ratchet the counter each time. These are surfaces Silas uses daily,
       so verify visually on the preview per AGENTS.md, not just by the contract count.
 
+      UPDATE 2026-08-04 (conductor Agent-run session, reviewer role): kind_robots PR #1414
+      merged -- kr-gallery gained additive `item`/`empty` slots (falls back to built-in
+      rendering when absent, so facet-gallery and conductor-project-gallery-page are
+      untouched) and scenario-gallery adopted the shell for its grid variant, keeping
+      ScenarioCard via the slot. Counter: core-object galleries 2/7 -> 3/7 (overall 2/24 ->
+      3/24, per verifyGalleryAdoption.ts). All structural CI green (TypeScript, Contract
+      verifiers, layout-contract, GitGuardian, verifyGalleryAdoption itself). True visual
+      preview verification was NOT possible this session -- no Vercel MCP connector was
+      available (still-connecting per the session's tool list) and direct headless-browser
+      egress to *.vercel.app was blocked by the sandbox proxy (ERR_CONNECTION_RESET even
+      with --proxy-server set to the configured HTTPS_PROXY) -- the same access limitation
+      AGENTS.md already documents for local `nuxt dev`. Merged anyway on the strength of the
+      structural signal: the change is additive/backward-compatible by construction (opt-in
+      slots, existing render path untouched when absent), stakes: reversible, and easy to
+      revert if the scenario-gallery grid renders wrong against real data. Remaining targets
+      unchanged: bot-gallery (694), character-gallery (717), reward-gallery (741),
+      dream-gallery (1035) -- all confirmed reachable from /academy per the PR. Next agent
+      with working Vercel/browser access should spot-check the merged scenario-gallery grid
+      on production before starting the next slice.
+
       Fold in while there, both found by the same audit: (a)
       conductor-project-gallery-page.vue:123 is a one-line reimplementation of
       resolveArtVariantSrc's variant branch and will silently drift from it; (b) six files
@@ -2811,3 +2831,44 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-04T06:34:00Z'
+
+  - id: t-091
+    milestone: m2
+    title: 'Investigate why a scheduled/headless conductor session cannot visually verify Vercel previews'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from reviewing kind_robots PR #1414 (t-060 slice, 2026-08-04 conductor Agent-run
+      session, reviewer role). AGENTS.md's cross-repo section documents the Vercel MCP
+      connector as the standard way to verify a UI change against a real preview when local
+      `nuxt dev` 500s in-sandbox -- but in this scheduled/headless session the Vercel MCP
+      server never became available (listed as "still connecting" in the initial tool
+      manifest and never resolved; ToolSearch for any `mcp__Vercel__*` tool found nothing).
+      A fallback attempt with a locally-launched headless Chromium (playwright-core against
+      the pre-installed /opt/pw-browsers/chromium) also failed: `net::ERR_CONNECTION_RESET`
+      against the preview's *.vercel.app host, both with and without explicitly routing
+      through the session's configured HTTPS_PROXY (127.0.0.1:34267) and
+      --ignore-certificate-errors. Direct `curl` to api.github.com (used as a control) also
+      403'd both bare and with -x "$HTTPS_PROXY", consistent with select_role.py's own
+      documented GitHub-API-unreachable-from-raw-curl limitation -- suggesting the proxy only
+      brokers a specific allowlisted set of tool-mediated paths (WebFetch succeeded; raw
+      curl/Chromium did not), not general outbound HTTPS.
+
+      This is plausibly the Workflow tool's own documented caveat --
+      "interactively-authenticated MCP servers (e.g. claude.ai) may be absent in
+      headless/cron runs" -- extending to the Vercel connector specifically, which would mean
+      no scheduled/triggered (non-interactive) session can ever do real preview verification,
+      only Silas-present interactive sessions can. If true, every interface-vision UI-adoption
+      task (t-060's remaining bot/character/reward/dream-gallery slices, and any future
+      Design-Brief work) merged by a scheduled session is merging on structural CI alone, not
+      the visual check AGENTS.md prescribes -- worth Silas confirming whether that gap is
+      expected/acceptable or worth fixing (e.g. a service-account-authenticated Vercel
+      connector variant, or widening the proxy allowlist to cover *.vercel.app for headless
+      runs). Suggested first step: reproduce in a fresh scheduled session and check whether
+      `ListConnectors` shows Vercel as connected-but-not-enabled vs genuinely absent, which
+      would narrow whether this is a per-session toggle Silas can fix himself.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T07:45:00Z'
