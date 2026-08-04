@@ -2912,3 +2912,26 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-04T15:43:52Z'
+
+  - id: t-096
+    milestone: m3
+    title: 'Check whether t-058''s remaining one-scroll files share server-manager.vue''s tab-mixing shape before treating each as a from-scratch investigation'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from merging kind_robots PR #1435 (t-058's seventh slice, the fixed-inset-0
+      modal-overlay verifier exemption). A prior t-058 slice found server-manager.vue's
+      "overview" tab genuinely needed kr-panes, but the one-scroll rule rejects mixing the
+      multi-owner primitive with sibling single-owner v-else-if tabs in the same file --
+      the fix was extracting the two-owner tab into its own component
+      (server-overview.vue). Worth checking whether any of t-058's remaining five
+      one-scroll entries (stage-manager.vue, mural-manager.vue, butterfly-sanctuary.vue,
+      dream-brainstorm.vue, channel-select.vue) hit this same tab-mixing shape rather
+      than assuming each needs its own from-scratch investigation -- if so, the
+      extract-to-its-own-component pattern already proven on server-manager.vue can be
+      reused directly instead of re-derived.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T16:32:38Z'
