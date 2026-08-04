@@ -417,14 +417,29 @@ hold:
   host at all. So this is a Chromium-through-the-proxy limitation, not egress
   policy, not TLS trust, and nothing to do with the preview being protected.
 
-The practical consequence: `web_fetch_vercel_url` is the verification path, and it
-returns **pre-hydration HTML**. That is enough to prove a route loads, isn't a 500,
-and contains the markup you expect from SSR — it is NOT enough to check a class
-that only appears after hydration, nor layout, spacing, or anything pixel-level.
-Say which of those you actually checked. For real pixel review, a
-screenshot from Silas remains the only route; the kind_robots layout contract
-(`utils/scripts/verifyLayoutContract.ts`) is what covers the structural half
-automatically in between.
+The practical consequence: `web_fetch_vercel_url` is the verification path a
+session drives itself, and it returns **pre-hydration HTML**. That is enough to
+prove a route loads, isn't a 500, and contains the markup you expect from SSR —
+it is NOT enough to check a class that only appears after hydration, nor layout,
+spacing, or anything pixel-level. Say which of those you actually checked.
+
+**But a session does not have to drive a browser to get real geometry.**
+kind_robots' `responsive-layout-audit.yml` (the `audit` check, ~10 min) already
+launches headless Chromium against the PR's own Vercel preview, measures rendered
+geometry at phone/tablet/desktop widths, fails on elements that spill past the
+viewport or get crushed to a sliver, and uploads **screenshots as artifacts on
+every run, pass or fail**. It waits for the deployment to answer 200 and for three
+consecutive healthy `/api/health/database` checks first, so it measures real
+galleries rather than empty states, and it treats a 401/403 preview as an error
+rather than "passed". It runs in CI, where the network works, so the Chromium
+limitation above never applies to it.
+
+So a UI change on a `claude/*` branch is NOT merging on structural CI alone. The
+honest summary of what a non-interactive session can claim: SSR markup via
+`web_fetch_vercel_url` (itself), real cross-width geometry plus screenshots via
+the `audit` check (CI), structural invariants via the layout contract (CI), and
+nothing about aesthetics. Wait for `audit` before merging a layout change — it is
+slower than the rest and it is the one carrying the pixels.
 
 When a cross-repo task is selected:
 1. Claim the conductor roadmap task exactly as usual on `main`.
