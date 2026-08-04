@@ -6403,3 +6403,20 @@ records:
     on an unverified breadth claim ("every surface," "the shared X"), verify the actual
     consumer count with grep before implementing the merge -- the corrected count can flip
     the right answer from "fold it in" to "leave it alone."
+- date: '2026-08-04'
+  project: interface-vision
+  task: t-051
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A three-surface migration task (reward/character/scenario-interact) was scoped correctly
+    for "what's left" but not for "what fits in one pass." Splitting after landing the first
+    surface (character-interact, kind_robots PR #1400) into t-087/t-088 for the remaining two,
+    rather than trying all three in one diff, kept each PR small, independently verifiable, and
+    reviewable -- and let the roadmap track real partial progress instead of one task note
+    growing indefinitely across sessions. When a task note already enumerates N similarly-sized
+    remaining items, file it as N tasks up front rather than one task that will need a
+    mid-flight split.
