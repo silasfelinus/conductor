@@ -1860,7 +1860,7 @@ tasks:
   - id: t-058
     milestone: m3
     title: 'Give one-scroll Shape B a two-owner grid primitive, and stop counting Shapes A/D'
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     note: |-
@@ -1883,9 +1883,11 @@ tasks:
       Merged Kind Robots PR #1429 as 9bb22fcf55b8c39711563d9ef8c6aa1055a0a319. The one-scroll verifier now treats v-if/v-else-if/v-else chains as mutually exclusive, fixes quoted-attribute parsing when expressions contain a literal greater-than sign, adds focused fixtures, and ratchets the baseline from 10 to 9. All final-head checks completed successfully. The broader task remains open because the remaining genuine multi-owner layouts still need kr-panes migrations and visual verification, so return t-058 to ready.
 
       Implemented a fourth t-058 slice (conductor Agent run, kind_robots PR #1430, merged as 7ac452db0ed8ed90f3c36fe78ae4eb2614d0f60d): re-audited the one-scroll flagged list now that PR #1429 taught the verifier v-if/v-else-if/v-else exclusivity. The baseline was already at 9 (down from 10) -- memory-dungeon.vue and chat-gallery.vue had already dropped out for free, while animation-manager.vue newly appeared as a genuine (unrelated) violation. Migrated two more files onto kr-panes/kr-pane/kr-pane-scroll: server-manager.vue's "overview" tab (the note's own fixed-shape-known case) was extracted into a new server-overview.vue, since the one-scroll rule rejects mixing the multi-owner primitive with the file's five other genuinely single-owner v-else-if tabs in the same component -- a partial in-place edit, as the third slice found, cannot be ratcheted out. lab-interact.vue's aside(list)+main(detail) pair was migrated using the same shape already proven on character-interact.vue/art-interact.vue. Baseline ratchets one-scroll from 9 to 7. Investigated stage-manager.vue and butterfly-sanctuary.vue as further candidates and judged both too risky without live preview access: stage-manager.vue's sidebar scrolls independently of a main area whose "run" card needs a fixed (non-scrolling) footer composer bar, so collapsing it to one pane risks breaking that footer; butterfly-sanctuary.vue has a genuinely nested scroll (an outer aside that itself scrolls, wrapping an inner roster list that also scrolls) tangled with v-show panel toggling rather than v-if/v-else -- a distinct bug shape deserving its own investigation, not a quick primitive swap. channel-select.vue and dream-brainstorm.vue remain out of scope pending visual verification per the third slice's findings. mural-manager.vue's 3-pane case remains the named hardest case, untouched. Remaining one-scroll-flagged files after this slice: stage-manager.vue, mural-manager.vue, butterfly-sanctuary.vue, dream-brainstorm.vue, channel-select.vue, art-gallery.vue, animation-manager.vue (7 total). Also noted: PR #1430's "Contract verifiers" check failed on a pre-existing, unrelated main-branch issue (audit:wonderlab-previews --strict fixture-prop gaps, confirmed already red on PR #1426 which merged immediately before this branch point) -- merged anyway since this diff's own checks (layout-contract, TypeScript, ESLint) were all clean and the failure predates this diff. Re-arming to ready.
+
+      Fifth+ layout-contract sweep slice: migrated animation-manager.vue onto kr-panes/kr-pane/kr-pane-scroll, ratcheting one-scroll 7->6. kind_robots PR #1431 open, awaiting CI.
     claimed_by: 2026-08-04T132944Z-t058-slice6
     claimed_at: '2026-08-04T13:29:45Z'
-    updated: '2026-08-04T13:29:45Z'
+    updated: '2026-08-04T13:40:29+00:00'
     owner: worker
 
   - id: t-054
