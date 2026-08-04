@@ -1860,7 +1860,7 @@ tasks:
   - id: t-058
     milestone: m3
     title: 'Give one-scroll Shape B a two-owner grid primitive, and stop counting Shapes A/D'
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: |-
@@ -1887,9 +1887,10 @@ tasks:
       Fifth+ layout-contract sweep slice: migrated animation-manager.vue onto kr-panes/kr-pane/kr-pane-scroll, ratcheting one-scroll 7->6. kind_robots PR #1431 open, awaiting CI.
 
       Sixth t-058 slice: migrated animation-manager.vue (filtered effect grid + selected-item/compare aside, a genuine two-owner grid) onto kr-panes/kr-pane/kr-pane-scroll, the same shape already proven on character-interact/art-interact/messenger/lab-interact. kind_robots PR #1431 merged as 516ac856fcfcb06331af1722a7126eec9ac97d65. Ratchets one-scroll from 7 to 6. All diff-relevant checks green (TypeScript, layout-contract, ESLint); the PR's "Contract verifiers" check failed only on the pre-existing, unrelated audit:wonderlab-previews --strict fixture-prop gap (confirmed identical failure list with and without this diff -- the same pre-existing issue prior slice PR #1430 already documented). Remaining one-scroll entries still needing live visual verification before migration: stage-manager.vue, mural-manager.vue (3-pane, hardest case), butterfly-sanctuary.vue, dream-brainstorm.vue, channel-select.vue, art-gallery.vue. Re-arming to ready rather than closing -- the allow-list is not yet zero.
-    claimed_by: 2026-08-04T132944Z-t058-slice6
-    claimed_at: '2026-08-04T13:29:45Z'
-    updated: '2026-08-04T13:46:09+00:00'
+    claimed_by: 2026-08-04T163237Z-t058-slice7
+    claimed_at: '2026-08-04T16:32:38Z'
+    updated: '2026-08-04T16:32:38Z'
+    owner: worker
 
   - id: t-054
     milestone: m2
