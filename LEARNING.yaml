@@ -6566,3 +6566,21 @@ records:
     session's "actionable" release reason should be read literally -- it is a tooling gap for that session,
     not evidence the task itself is hard, so a shell-capable session should retry it directly rather than
     assuming the release implies deeper difficulty.
+- date: 2026-08-04
+  project: interface-vision
+  task: t-094
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Applied verifyLayoutContract.ts's existing baseline/ratchet pattern to a second contract check
+    (auditWonderLabPreviews.ts) with an almost line-for-line-identical shape: allow-list of known-bad
+    entries in a JSON file, --strict fails only on entries not in the allow-list, --update ratchets the
+    baseline down and refuses to grow it. kind_robots PR #1434, merge 41b334248747da904c92245d7fabc9f1abca3f7e.
+    Verified the negative case explicitly (injected a synthetic new required-prop component with no
+    fixture, confirmed --strict flagged only the new one and not the pre-existing 29) rather than just
+    the positive case -- worth doing for any future ratchet-pattern port, since a baseline that silently
+    allow-lists everything (e.g. from a coding mistake) looks identical to a correct one on the happy path
+    alone.
