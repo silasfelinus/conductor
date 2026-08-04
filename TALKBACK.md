@@ -12255,12 +12255,12 @@ commit the run was pinned to.
   stats only reachable via local `docker exec` on Alexandria -- outside any agent's sandbox access.
   There is no code-level fix available to an agent for this specific incident; the CI test itself
   (a soak test explicitly designed to catch pool-health regressions) is doing its job correctly.
-- Attempted `scripts/complete_todo.py 1146` twice at the end of this session to close the loop;
-  both calls hit the same live incident (`503 Database connection was temporarily unavailable`,
-  then a bare timeout) against the kind_robots API itself, confirming the instability extends to
-  the Todo-tracking API and isn't CI-workflow-specific. Todo #1146 is left OPEN rather than force-
-  closed against a failing write API -- a future session (or Silas) should retry
-  `complete_todo.py 1146` once the incident clears, or close it manually.
+- `scripts/complete_todo.py 1146` failed twice mid-session against the same live incident (`503
+  Database connection was temporarily unavailable`, then a bare timeout) against the kind_robots
+  API itself -- confirming the instability extended to the Todo-tracking API too, not just
+  CI/Cypress. A third attempt several minutes later succeeded (`Todo #1146 marked DONE`),
+  consistent with the intermittent-circuit-breaker read on this incident throughout: individual
+  requests succeed once the breaker resets, concurrent/soak load re-trips it.
 
 **What was good:**
 - Did not weaken, skip, or retry-loop the Cypress test suite itself; distinguished "the test is
