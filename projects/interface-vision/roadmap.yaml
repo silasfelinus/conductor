@@ -2867,3 +2867,27 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-04T17:40:00Z'
+  - id: t-099
+    milestone: m3
+    title: 'ESLint is not a CI gate in kind_robots, so dead code ships unnoticed -- decide whether to make it one'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from finishing t-072 (kind_robots PR #1444). Dropping Facet.kind left five pieces
+      of dead code behind -- a computed-and-discarded `legacyKind` in the create API, an
+      imported-but-uncalled helper in two more server files, an unused import in
+      facetAssignments.ts, and a `const extra` whose only consumer had been removed. Every one
+      of them is a plain `@typescript-eslint/no-unused-vars` error, and `npx eslint` reports
+      them immediately. They survived the original t-072 PR because ESLint does not run in CI:
+      vue-tsc does (the TypeScript check), and it does not care about unused values. The
+      dead code only surfaced because a text-scan contract happened to assert on the helper's
+      name.
+      Adding `npx eslint` to contract-tests.yml is NOT a one-line change -- a full run over
+      server/ and utils/scripts/ currently reports 129 problems, all pre-existing. So this
+      needs the same ratchet treatment the layout contract already uses (see
+      utils/scripts/ratchetBaseline.ts, extracted in t-095 for exactly this kind of reuse):
+      record today's count as a baseline that may only shrink, and fail on anything new.
+      Scope the decision first -- lint-staged/pre-commit, a ratcheted CI job, or explicitly
+      choosing to keep relying on review -- rather than assuming the CI job is wanted.

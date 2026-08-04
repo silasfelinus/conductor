@@ -391,6 +391,56 @@ example: the 2026-07-19 t-017 check found production in `ERROR` — a genuine ba
 bug, unquoted `Character` table name in raw SQL breaking every deploy since PR #515;
 see kind_robots PR #517.)
 
+**What "visual verification" actually means here, and what a browser can't add**
+(interface-vision/t-091, measured 2026-08-04). t-091 recorded a session where the
+Vercel MCP server never became available and a headless-Chromium fallback got
+`net::ERR_CONNECTION_RESET` against `*.vercel.app`, and hypothesised that no
+scheduled/non-interactive session can ever verify a preview. A later
+non-interactive session re-ran every probe. Three of the four premises did not
+hold:
+
+- **Vercel MCP was present** and `list_teams` / `list_deployments` /
+  `web_fetch_vercel_url` all worked, returning HTTP 200 and full SSR markup. Its
+  absence in the earlier session was that session's condition, not a property of
+  headless runs — so treat a missing connector as "retry/report", not "impossible".
+- **Raw `curl` reached both `*.vercel.app` and `api.github.com`** — 200 each, bare
+  and via `$HTTPS_PROXY`. The "the proxy only brokers tool-mediated paths"
+  hypothesis is wrong; ordinary HTTPS egress works.
+- **Chromium fails on every HTTPS host, not just Vercel.** `example.com` resets
+  identically. Passing an explicit `proxy:`, `--proxy-server`, `--disable-http2`,
+  `--disable-quic`, `--ignore-certificate-errors`, and context
+  `ignoreHTTPSErrors` each changed nothing, and results were byte-identical with
+  and without an explicit proxy option (a no-proxy launch still returned
+  `ERR_TUNNEL_CONNECTION_FAILED`, so Chromium picks the proxy up regardless). The
+  proxy's own `__agentproxy/status` logged only Chromium's plain-HTTP telemetry
+  calls to `clients2.google.com` (`kind: not_connect`) — no failure for the target
+  host at all. So this is a Chromium-through-the-proxy limitation, not egress
+  policy, not TLS trust, and nothing to do with the preview being protected.
+
+The practical consequence: `web_fetch_vercel_url` is the verification path a
+session drives itself, and it returns **pre-hydration HTML**. That is enough to
+prove a route loads, isn't a 500, and contains the markup you expect from SSR —
+it is NOT enough to check a class that only appears after hydration, nor layout,
+spacing, or anything pixel-level. Say which of those you actually checked.
+
+**But a session does not have to drive a browser to get real geometry.**
+kind_robots' `responsive-layout-audit.yml` (the `audit` check, ~10 min) already
+launches headless Chromium against the PR's own Vercel preview, measures rendered
+geometry at phone/tablet/desktop widths, fails on elements that spill past the
+viewport or get crushed to a sliver, and uploads **screenshots as artifacts on
+every run, pass or fail**. It waits for the deployment to answer 200 and for three
+consecutive healthy `/api/health/database` checks first, so it measures real
+galleries rather than empty states, and it treats a 401/403 preview as an error
+rather than "passed". It runs in CI, where the network works, so the Chromium
+limitation above never applies to it.
+
+So a UI change on a `claude/*` branch is NOT merging on structural CI alone. The
+honest summary of what a non-interactive session can claim: SSR markup via
+`web_fetch_vercel_url` (itself), real cross-width geometry plus screenshots via
+the `audit` check (CI), structural invariants via the layout contract (CI), and
+nothing about aesthetics. Wait for `audit` before merging a layout change — it is
+slower than the rest and it is the one carrying the pixels.
+
 When a cross-repo task is selected:
 1. Claim the conductor roadmap task exactly as usual on `main`.
 2. Create the implementation branch in the target repository as `worker/<project>-<task-id>`
