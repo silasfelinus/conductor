@@ -1610,8 +1610,8 @@ tasks:
   - id: t-051
     milestone: m2
     title: 'Phase 5: the four interact surfaces onto the shared conversation kit'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -1633,9 +1633,9 @@ tasks:
       STILL TO DO HERE: the inline intro picker at scenario-interact.vue:113-155 duplicates the deleted components' job and has NOT been migrated. It is not a mechanical swap -- splitIntro (stores/helpers/scenarioHelper.ts:34) yields an optional ALL-CAPS eyebrow plus prose, and kr-choice-list renders its `hint` slot italic, which is wrong for a long opening paragraph; the current markup also uses a 2-column lg grid that kr-choice-list has no layout for. Either extend kr-choice-list (an eyebrow field, or a non-italic hint variant, or a 'grid' layout) or accept a deliberate visual change -- and put preview eyes on it either way, since this is a live user-facing surface.
 
       Expect one-scroll to keep dropping as these land, the same way it did in PR #1315; ratchet the baseline each time. The kit pieces to adopt are kr-chat-window (with its #footer slot for trailing conversation-level content), kr-choice-list, and kr-art-plate (frame: 'plate' | 'thin' | 'none').
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-03T10:11:54Z'
+    claimed_by: claude-20260804T0426Z-t051-character-interact
+    claimed_at: '2026-08-04T04:28:18Z'
+    updated: '2026-08-04T04:28:18Z'
 
   - id: t-052
     milestone: m3
