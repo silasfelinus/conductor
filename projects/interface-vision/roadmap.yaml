@@ -1535,8 +1535,8 @@ tasks:
   - id: t-045
     milestone: m3
     title: 'Extract a slim viewport store from displayStore.ts, delete the rest'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -1553,9 +1553,9 @@ tasks:
       and memoryStore.ts actually need) into its own small store or composable, rewire
       those two real callers to it, then delete stores/displayStore.ts and the 5 dead
       components entirely. Re-run vue-tsc and the layout-contract suite afterward.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-02T00:00:00Z'
+    claimed_by: claude-20260804T0235Z-t045-viewport
+    claimed_at: '2026-08-04T02:28:25Z'
+    updated: '2026-08-04T02:28:25Z'
 
   - id: t-047
     milestone: m3
