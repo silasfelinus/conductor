@@ -6439,3 +6439,25 @@ records:
     absence of prop typing had let go unnoticed indefinitely. When a task's own note offers "use
     an existing correct component instead" as an option, read that component's actual prop
     surface before assuming a rewrite is the only path -- the smaller fix is often already built.
+- date: 2026-08-04
+  project: interface-vision
+  task: t-026
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Deleting a bespoke duplicate component in favor of a shared canonical one (Silas's "one
+    source ... kill the others" pick, resolving an A/B mockup) needs a full-repo grep for the
+    deleted file's name, not just its obvious call site. Two silent-breakage risks turned up
+    that a component-only diff would have missed: a DOM-scraping client plugin
+    (project-art-prompt-suggest.client.ts) that keyed its button-injection logic on the deleted
+    component's specific textarea maxlength and a <code> element it rendered -- fixed by gating
+    on the shared component's entityType prop instead of brittle per-entity DOM shape -- and a
+    GitHub Actions workflow (entity-art-manager-contract.yml) whose trigger `paths:` list still
+    named the deleted file, caught by CI's verifyWorkflowPaths.ts after merge-adjacent push
+    rather than before. Also worth noting: placing a new UI panel *before* an existing one in a
+    component's template silently changes which element a `querySelector('img')`-style DOM
+    heuristic elsewhere in the codebase picks up first -- moved the new panel after the existing
+    one specifically to keep that heuristic pointed at the right image.

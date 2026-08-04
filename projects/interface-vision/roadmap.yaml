@@ -1688,6 +1688,34 @@ tasks:
     claimed_at: null
     updated: '2026-08-04T04:40:00Z'
 
+  - id: t-089
+    milestone: m2
+    title: 'Component-deletion checklist: grep for DOM-attribute-level plugin/workflow deps, not just call sites'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-026's close-out (kind_robots PR #1405, deleting conductor-art-gallery.vue in
+      favor of entity-art-manager.vue). A component-only grep ("who imports this .vue file")
+      missed two real dependents: plugins/project-art-prompt-suggest.client.ts DOM-scraped the
+      deleted component's specific markup (a textarea maxlength value and a <code> element) to
+      decide where to inject a button, and .github/workflows/entity-art-manager-contract.yml
+      named the file directly in its trigger `paths:` list (caught by CI's
+      verifyWorkflowPaths.ts, not by review). Neither shows up in a normal
+      import/component-usage search.
+
+      Write a short checklist (a section in AGENTS.md or a docs/ note) for "deleting a
+      superseded component" that adds: (1) grep the deleted filename across the whole repo, not
+      just .vue/.ts import sites -- .yml workflow files and DOM-scraping plugins are real
+      dependents too; (2) check .github/workflows/*.yml paths: blocks specifically;
+      (3) check plugins/*.client.ts for selector strings that could key off the deleted
+      component's specific rendered markup. This is documentation/process work, not code --
+      small and reversible.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T05:52:00Z'
+
   - id: t-052
     milestone: m3
     title: 'Entity art has no thumbnail variant: a 68-card gallery ships ~37MB'
