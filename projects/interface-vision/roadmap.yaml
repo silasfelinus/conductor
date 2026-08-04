@@ -1854,7 +1854,7 @@ tasks:
   - id: t-058
     milestone: m3
     title: 'Give one-scroll Shape B a two-owner grid primitive, and stop counting Shapes A/D'
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -1869,10 +1869,12 @@ tasks:
       Merged Kind Robots PR #1378 as 8af165a0d2c1bc81d00ebf7fd2b89b8306bc0912 after all 11 final-head workflows completed successfully. The one-scroll verifier now counts actual static scroll-owner elements, excludes max-h-* bounded previews, keeps kr-scroll explicit, and ratchets the baseline from 22 to 15. Removed seven Shape D false positives: animation-manager, art-styler, artjob-editor, character-flip-card, scenario-gallery, theme-gallery, and user-galleries. Shape A branch exclusivity and the Shape B two-owner primitive remain open, so this task returns to ready.
 
       Implemented a second t-058 slice on claude/relaxed-lovelace-y66nf1 (kind_robots PR #1423, merged as 23b94bce70bd7f78ae5c9139043a46ea46afb626): added the .kr-panes/.kr-pane/.kr-pane-scroll multi-owner scroll primitive to assets/css/tailwind.css, taught verifyLayoutContract.ts's one-scroll rule to allow any number of kr-pane-scroll regions once kr-panes is declared (still rejects kr-pane-scroll without kr-panes, and rejects mixing it with the single-owner kr-scroll primitive in the same component), and migrated the two cleanest two-owner cases the note above names: character-interact.vue and art-interact.vue. Baseline ratchets one-scroll from 13 to 11. Shape A branch exclusivity is still open, and 10 more Shape B files (butterfly-sanctuary, chat-gallery, dream-brainstorm, messenger, channel-select, memory-dungeon, server-manager, stage-manager, lab-interact, art-gallery) plus mural-manager.vue's three-pane case still need migrating onto the new primitive, so this task returns to ready again for the remaining slices.
-    claimed_by: 2026-08-04T102920Z-interface-vision-t-058-conductor2
-    claimed_at: '2026-08-04T10:29:24Z'
-    updated: '2026-08-04T10:29:24Z'
-    owner: worker
+
+      Implemented a third t-058 slice (conductor Agent run, kind_robots PR #1427, merged as 1e973e5ceda78a79583e7248017b90996b381a12): migrated messenger.vue onto kr-panes/kr-pane/kr-pane-scroll. Baseline ratchets one-scroll from 11 to 10. Investigated server-manager.vue as a second candidate first: its "overview" tab genuinely has two live scroll owners (a two-owner grid, fixed), but its five OTHER tabs (art/text/checkpoints/all/interact) are mutually-exclusive v-if/v-else-if branches that each carry their own raw overflow-y-auto -- and verifyLayoutContract.ts's scrollRegionCount has no v-if-exclusivity awareness (confirmed by reading the script: it statically counts every element with kr-scroll or unbounded overflow-y-auto/overflow-auto regardless of branch structure). Fixing only the overview tab left the file's total static count still >1, so it could not be ratcheted out of the baseline -- reverted that partial edit rather than leave unverified diff with no measurable benefit. This confirms the note's own FIRST work item (teach the verifier v-if exclusivity) is still genuinely unstarted and blocks server-manager.vue, stage-manager.vue, lab-interact.vue, memory-dungeon.vue, butterfly-sanctuary.vue, chat-gallery.vue, and art-gallery.vue from being cleanly closeable via primitive migration alone -- each mixes a real Shape B region with mutually-exclusive single-owner branches. Also confirmed channel-select.vue's second scroll region is an absolutely-positioned flyout overlay (position: absolute; left-full) rather than a grid pane -- applying kr-panes' overflow-hidden to its parent risks clipping the flyout, so it needs visual verification before migration, not just a CI-green check. dream-brainstorm.vue is a genuine 3-column grid (aside/main/aside) but main itself nests a nested nested grid-rows layout (header/scroll-body/footer) -- doable but higher-risk without visual verification than this session had time to budget. Remaining true next candidates once the verifier gains v-if-exclusivity: after that lands, re-audit all 10 remaining files since several may drop out of one-scroll for free. mural-manager.vue's 3-pane case remains the named hard case. Re-arming to ready.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T11:00:00Z'
+    owner: null
 
   - id: t-054
     milestone: m2
