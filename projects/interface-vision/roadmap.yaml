@@ -2207,58 +2207,23 @@ tasks:
   - id: t-068
     milestone: m3
     title: 'A doc comment can fail 29 source-text contracts — strip comments before forbid- scans'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      This has now bitten twice in one week, in two unrelated files, and the mechanism is
-      general enough to bite every remaining contract that has a forbid- rule.
+    note: |-
+      This has now bitten twice in one week, in two unrelated files, and the mechanism is general enough to bite every remaining contract that has a forbid- rule.
+      OCCURRENCE 1: a `role="log"` comment in components/narrative/kr-chat-window.vue, written to explain the accessibility attribute, failed utils/scripts/verifyNarrativeAccessibility.mjs -- which was scanning for the very bug the comment documented the absence of. Fixed there by narrowing the match to the scroll container's opening tag.
+      OCCURRENCE 2: a comment in components/facets/facet-gallery.vue naming createFacet / updateFacet / archiveFacet / FacetProfileEditor -- so a reader knows WHY the picker only emits a selection -- failed utils/scripts/verifyFacetGallery.ts, whose whole job is to forbid those calls in that file. No such call existed. Fixed in kind_robots PR #1351 by stripping HTML comments, block comments and line comments before every forbid- scan, while leaving requireText reading raw source (so a required token still cannot be satisfied by a comment claiming it is there). Proved both ways: the doc comment passes, an injected updateFacet call still fails.
+      THE PROBLEM IS THE PATTERN, NOT THE TWO FILES. 29 verifier scripts in kind_robots/utils/scripts/ do whole-file substring forbid- checks with no comment handling: verifyArtImagePatchOwnerTransfer, verifyBotMutationOwnership, verifyCharacterMutationInputParity, verifyDaVinciNarration, verifyDailyDreamFacets, verifyDreamMutationInputParity, verifyFacetCanonicalMerges, verifyFacetCatalogCutover, verifyFacetClosure, verifyFacetCuration, verifyFacetPersonalityFamilies, verifyFacetTaxonomyAuthority, verifyModelBuilderFacetSync, verifyProjectMutationInputParity, verifyPromptCreateOwnership, verifyReactionCreateInputBoundary, verifyReactionSubPatchEnvelope, verifyResourceMutationOwnership, verifyRewardMutationInputParity, verifyScenarioMutationInputParity, verifyServerMutationOwnership, verifySystemOptionFacetCutover, verifyThemeMutationInputParity, verifyTodoMutationInputParity, verifyUserPatchAllowlist, verifyWonderLabRegistryHealth, verifySerendipityRouteCutover (+ the two already fixed).
+      This is worse than an annoyance: a contract you cannot explain in a comment beside the code it governs teaches everyone to stop explaining. The house style is heavily commented precisely so a stranger can pick a file up cold, and these rules quietly punish that.
+      DO: extract the stripComments helper added to verifyFacetGallery.ts into a shared module (utils/scripts/lib/ or similar), and route every forbid-style check through it. Keep require-style checks on raw source. Add one test that a comment mentioning a forbidden token passes while a real occurrence still fails -- otherwise the fix is itself unverified. Fold in t-063's `| tee` finding first if it is still open, since a contract that cannot fail and a contract that fails wrongly are the same bug from opposite ends.
 
-      OCCURRENCE 1: a `role="log"` comment in components/narrative/kr-chat-window.vue,
-      written to explain the accessibility attribute, failed
-      utils/scripts/verifyNarrativeAccessibility.mjs -- which was scanning for the very bug
-      the comment documented the absence of. Fixed there by narrowing the match to the scroll
-      container's opening tag.
 
-      OCCURRENCE 2: a comment in components/facets/facet-gallery.vue naming createFacet /
-      updateFacet / archiveFacet / FacetProfileEditor -- so a reader knows WHY the picker only
-      emits a selection -- failed utils/scripts/verifyFacetGallery.ts, whose whole job is to
-      forbid those calls in that file. No such call existed. Fixed in kind_robots PR #1351 by
-      stripping HTML comments, block comments and line comments before every forbid- scan,
-      while leaving requireText reading raw source (so a required token still cannot be
-      satisfied by a comment claiming it is there). Proved both ways: the doc comment passes,
-      an injected updateFacet call still fails.
-
-      THE PROBLEM IS THE PATTERN, NOT THE TWO FILES. 29 verifier scripts in
-      kind_robots/utils/scripts/ do whole-file substring forbid- checks with no comment
-      handling: verifyArtImagePatchOwnerTransfer, verifyBotMutationOwnership,
-      verifyCharacterMutationInputParity, verifyDaVinciNarration, verifyDailyDreamFacets,
-      verifyDreamMutationInputParity, verifyFacetCanonicalMerges, verifyFacetCatalogCutover,
-      verifyFacetClosure, verifyFacetCuration, verifyFacetPersonalityFamilies,
-      verifyFacetTaxonomyAuthority, verifyModelBuilderFacetSync,
-      verifyProjectMutationInputParity, verifyPromptCreateOwnership,
-      verifyReactionCreateInputBoundary, verifyReactionSubPatchEnvelope,
-      verifyResourceMutationOwnership, verifyRewardMutationInputParity,
-      verifyScenarioMutationInputParity, verifyServerMutationOwnership,
-      verifySystemOptionFacetCutover, verifyThemeMutationInputParity,
-      verifyTodoMutationInputParity, verifyUserPatchAllowlist, verifyWonderLabRegistryHealth,
-      verifySerendipityRouteCutover (+ the two already fixed).
-
-      This is worse than an annoyance: a contract you cannot explain in a comment beside the
-      code it governs teaches everyone to stop explaining. The house style is heavily
-      commented precisely so a stranger can pick a file up cold, and these rules quietly
-      punish that.
-
-      DO: extract the stripComments helper added to verifyFacetGallery.ts into a shared module
-      (utils/scripts/lib/ or similar), and route every forbid-style check through it. Keep
-      require-style checks on raw source. Add one test that a comment mentioning a forbidden
-      token passes while a real occurrence still fails -- otherwise the fix is itself
-      unverified. Fold in t-063's `| tee` finding first if it is still open, since a contract
-      that cannot fail and a contract that fails wrongly are the same bug from opposite ends.
+      Extracted the comment-aware source scanner into a shared helper, migrated the two Facet contracts that already carried or needed this behavior, and added a focused self-test proving comments are ignored while executable occurrences still fail. This is a bounded first migration slice; the remaining forbid-style verifiers still need conversion.
     claimed_by: 2026-08-04T061213Z-interface-vision-t-068-k9v4
     claimed_at: '2026-08-04T06:12:13Z'
-    updated: '2026-08-04T06:12:13Z'
+    updated: '2026-08-04T06:24:00Z'
 
   - id: t-069
     milestone: m2

@@ -1,9 +1,0 @@
-version: 1
-project: interface-vision
-task: t-068
-operation: review
-owner: worker
-session: 2026-08-04T061213Z-interface-vision-t-068-k9v4
-updated: '2026-08-04T06:24:00Z'
-note: >-
-  Extracted the comment-aware source scanner into a shared helper, migrated the two Facet contracts that already carried or needed this behavior, and added a focused self-test proving comments are ignored while executable occurrences still fail. This is a bounded first migration slice; the remaining forbid-style verifiers still need conversion.
