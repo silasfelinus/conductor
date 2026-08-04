@@ -2876,3 +2876,31 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-04T13:45:00Z'
+
+  - id: t-094
+    milestone: m3
+    title: 'Baseline/ratchet the WonderLab preview-fixture strict audit instead of failing the full 29-component backlog on every PR'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from merging kind_robots PR #1432 (t-084, 2026-08-04 conductor Agent-run session,
+      self-assigned reviewer role). `npm run audit:wonderlab-previews -- --strict` (the
+      "Contract verifiers" CI check) fails on the full pre-existing 29-required-prop-component
+      backlog on every single PR, regardless of whether that PR touches any of the 29. This is
+      already documented as a known, non-blocking, unrelated gap across multiple PRs (#1426,
+      #1430, #1431, #1432, #1433) and multiple sessions have independently re-diagnosed it from
+      scratch each time -- one session (t-084's original implementer) even read the red check as
+      a hard merge blocker and left a fully-verified, correctly-scoped PR open for ~40 minutes
+      as a result (see projects/interface-vision/TALKBACK.md, 2026-08-04, t-084 critique).
+      `utils/scripts/verifyLayoutContract.ts` already solves the identical shape of problem with
+      a documented baseline-ratchet (the one-scroll count only needs to go down or stay flat,
+      never up) -- apply the same pattern to `auditWonderLabPreviews.ts --strict`: record the
+      current 29 as a baseline, fail only if the count increases or a *new* component (not
+      already in the baseline) is missing fixture coverage, and let the existing 29 be worked
+      down opportunistically without blocking unrelated PRs. Small, scoped, reversible; no
+      behavior change for PRs that already pass.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T15:17:05Z'
