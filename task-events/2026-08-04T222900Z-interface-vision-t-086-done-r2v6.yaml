@@ -1,0 +1,11 @@
+version: 1
+project: interface-vision
+task: t-086
+operation: done
+owner: worker
+session: 2026-08-04T222130Z-interface-vision-t-086-r2v6
+updated: '2026-08-04T22:29:00Z'
+note: >-
+  Completed via Kind Robots PR #1445, squash-merged as a9f71c5532e9e95094458276ba568b60ad7545e4 after all 14 final-head workflows completed successfully. Root cause: kr-art-plate.vue used one boolean for the whole fallback chain, so after the primary failed and the fallback also failed, the computed src returned the same broken fallback forever. It now tracks failed source URLs individually, advances primary to fallback, and advances a failed fallback to the placeholder icon. One component changed; no API, schema, migration, ArtJob, or production-data mutation.
+learning: >-
+  Multi-stage media fallback state must identify which candidate failed. A single failed boolean can represent one transition but cannot safely drive a chain with two or more candidates.
