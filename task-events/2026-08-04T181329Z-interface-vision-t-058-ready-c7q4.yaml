@@ -1,8 +1,0 @@
-version: 1
-project: interface-vision
-task: t-058
-operation: ready
-session: 2026-08-04T181329Z-interface-vision-t058-c7q4
-updated: '2026-08-04T18:18:29Z'
-note: >-
-  Audited the remaining channel-select.vue one-scroll entry against current Kind Robots main. Its channel list and absolute left-full tab flyout are genuinely simultaneous scroll owners, but the current kr-panes primitive applies overflow-hidden and would clip the flyout if used directly; adding a dummy marker would only game the verifier. Filed conductor issue #1690 with the verified geometry, the required overlay-safe multi-owner primitive contract, positive/negative fixture requirements, and Vercel narrow/wide visual checks. No production code was changed because the obvious migration is unsafe. Return t-058 to ready for the next bounded implementation slice; the one-scroll baseline remains above zero.
