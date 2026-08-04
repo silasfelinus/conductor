@@ -2231,23 +2231,14 @@ tasks:
   - id: t-071
     milestone: m3
     title: 'One Facet named "Curious", two curated images — pick one'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    note: >
-      DECIDED by Silas (2026-08-03): SPLIT IT. Change seedFacetCatalog's merge key from normalized title alone to (title, taxonomy).
-
-      Rationale: with FacetTaxonomy canonical (t-016, decided the same day), ALIGNMENT:Curious and QUIRK:Curious are legitimately DIFFERENT facets -- a motivation and a personality quirk are distinct taxonomy members, not two spellings of one concept. Each keeps its own curated art: /images/adventure/alignment/curious.webp and /images/adventure/quirks/curious.webp. Nothing is dropped.
-
-      The bug is the MERGE KEY, not the data. Merging on normalized title alone will collide any word that legitimately appears under two taxonomies, so picking a winner for this one row would leave the whole class live and this exact escalation would recur. Fixing the key fixes the class.
-
-      Implementation notes: verifyFacetCanonicalMerges exists specifically to assert the title-merge behaviour -- it must be updated to the new key in the same change, or it will fail on the corrected seed. Re-run the seed and confirm the catalog row count moves by exactly the number of genuine cross-taxonomy duplicates (audit that list before accepting it; other collisions besides "Curious" may surface, and each one is a real facet that was previously being silently swallowed).
-
-      Unblocks verifyFacetArtworkMigration, which cannot be enforced while this fails. Sequence with t-063 (the `| tee` fix that makes that contract capable of failing at all) -- both belong to the same wave.
+    note: 'DONE 2026-08-04 (kind_robots PR #1426). "Pick one" turned out to be the wrong remedy: they are not duplicates. The alignment Curious is "Knowledge as the terminal value. Ethics is an obstacle to data" and the quirk is "wants to know what is in the box" -- two real concepts sharing a label. seedFacetCatalog canonicalizes by normalized title, so they collapsed into one row and which artwork won was nondeterministic. The alignment is renamed to "Insatiable"; the quirk keeps the plain word; art unchanged. Free to rename because the app is alpha with no stored user selections (Silas, 2026-08-04). Found only because t-063 armed the dead check that had been reporting this to nobody.'
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-03T10:03:55Z'
+    updated: '2026-08-04T20:17:19Z'
     approved_by_human: true
 
   - id: t-072
