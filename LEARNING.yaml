@@ -6325,3 +6325,16 @@ records:
     can land on main between opening a manual close_task.py PR and merging it -- check task-events/ and
     the live roadmap status again immediately before merging a close-out, not just once before opening
     it, or the merge 405s on a conflict against a transition that already happened.'
+- date: '2026-08-04'
+  project: interface-vision
+  task: t-042
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Before building a "creation flow" task from scratch, check the note's own predicted building
+    blocks against the current codebase first -- the Facet half of this task (facet-profile-editor.vue
+    + facetProfileForm.ts feeding a create form) had already shipped via an unrelated commit by the time
+    this task was worked, so the actual remaining scope was half the size the note described. Only the
+    Project half needed new UI; the store/API layer (createProject()) was already complete on both sides.
