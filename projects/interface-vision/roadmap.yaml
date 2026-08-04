@@ -1132,20 +1132,14 @@ tasks:
   - id: t-026
     milestone: m2
     title: 'Decide the fate of conductor-art-gallery.vue''s carousel/collection UI vs entity-art-manager.vue'
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-009
-    note: |-
-      Split out of t-009 (2026-08-01, kind_robots PR #1269). t-009's first pass unified Project's art *replace* plumbing onto the generic /api/art/entities/[entityType]/[id]/replace endpoint (already fully supported server-side), but deliberately left conductor-art-gallery.vue's UI as its own bespoke component rather than swapping it for entity-art-manager.vue. Investigation found conductor-art-gallery.vue's `slides` computed merges Project's own hero/card/icon paths, its ProjectArtImage history, AND a linked ArtCollection into one autoplay carousel -- real, non-duplicate UX (collection art + autoplay) that entity-art-manager.vue has no equivalent for (it's a single current-image + history-grid layout, no slideshow/collection concept). This is a UX decision, not a plumbing refactor: either (a) keep conductor-art-gallery.vue's carousel chrome as a thin wrapper that calls the same generate/replace endpoints entity-art-manager.vue uses internally (dedupe the polling logic, which is currently a near-verbatim copy of entity-art-manager.vue's), or (b) extend entity-art-manager.vue itself with an optional collection-carousel mode so Project can adopt it directly and the bespoke component goes away entirely. Silas should weigh in on which UI he prefers before either is built -- this is exactly the "build mockups first, Silas picks by eye" pattern this project's own notes_from_silas established for t-001/t-002.
-
-      FOR SILAS (2026-08-03): The mockup is live and merged — visit /interface-vision-t026-mockup on the site (kind_robots PR #1379). It shows Option A (keep conductor-art-gallery.vue's autoplay carousel as its own component, thin-wrapped over entity-art-manager.vue's shared generate/replace endpoints) side by side with Option B (extend entity-art-manager.vue with a collection-carousel panel and delete conductor-art-gallery.vue entirely) using real project art. TO APPROVE: reply with "A" or "B" (or edit this task's note directly) and set status: ready — the next pass implements whichever you pick. Picking B matches this project's own "one canonical implementation, migrate callers, then DELETE the losers" rule (notes_from_silas scope decision #3) most directly, but both are reversible and either is fine.
-
-
-      SENT BACK by silasfelinus via Kind Robots For You. I would rather we have one source for these things, rather than custom making individual elements for each model. make it one thing and kill the others.
+    note: 'Implemented Option B (Silas picked via SENT BACK note: ''one source ... make it one thing and kill the others''). entity-art-manager.vue is now the one canonical art component, gaining an optional collectionSlides autoplay-carousel panel used only by Project. conductor-art-gallery.vue and the resolved t-026 mockup are deleted; the DOM-scraping prompt-suggest plugin was repointed at the shared component. kind_robots PR #1405 merged (34f11c3).'
     claimed_by: 2026-08-04T052736Z-t026-run2
     claimed_at: '2026-08-04T05:27:37Z'
-    updated: '2026-08-04T05:27:37Z'
+    updated: '2026-08-04T05:49:53Z'
     approved_by_human: false
     owner: worker
 
