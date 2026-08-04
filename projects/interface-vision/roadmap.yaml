@@ -1532,27 +1532,26 @@ tasks:
   - id: t-045
     milestone: m3
     title: 'Extract a slim viewport store from displayStore.ts, delete the rest'
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-018 (2026-08-02, kind_robots PR #1298). t-018 set out to delete
-      stores/displayStore.ts (627 lines) as dead header/sidebar/footer state-machine
-      code, but t-018's own investigation found it is NOT fully dead: kind-loader.vue
-      calls displayStore.initialize() as real app-startup wiring, and memoryStore.ts
-      reads displayStore.viewportSize directly to size the live, routed Memory Dungeon
-      game board (cardSize/boardColumns computed properties). 5 of the 6 originally-named
-      consumers (screen-debug.vue, smart-icons.vue, icon-display.vue, smart-nav.vue,
-      butterfly-toggle.vue) ARE genuinely dead — no render site outside WonderLab preview
-      fixtures. Scope: extract a minimal viewport-tracking piece (viewportSize/
-      isMobileViewport/isTouchDevice plus the resize-listener init that kind-loader.vue
-      and memoryStore.ts actually need) into its own small store or composable, rewire
-      those two real callers to it, then delete stores/displayStore.ts and the 5 dead
-      components entirely. Re-run vue-tsc and the layout-contract suite afterward.
+    note: >-
+      kind_robots PR #1395 merged (2026-08-04): new stores/viewportStore.ts
+      carries viewportSize/isTouchDevice/isMobileViewport/initialize() for the
+      two real callers (kind-loader.vue, memoryStore.ts); deleted
+      displayStore.ts, the 5 dead components (screen-debug, smart-icons,
+      icon-display, smart-nav, butterfly-toggle), their dead-orbit helpers
+      (displayHelper.ts, applyQuerySelections.ts, seeds/modeLinks.ts), and the
+      dangling loadDisplayStore export. A follow-up commit removed the
+      resulting orphaned WonderLab preview fixture entries after the
+      Contract verifiers CI check caught a source-file read of the deleted
+      smart-nav.vue. Kaizen filed as t-084 (art-manager.vue magic-number
+      height) and t-085 (an unrelated broken /rewards art asset the audit
+      check surfaced in the same PR).
     claimed_by: claude-20260804T0235Z-t045-viewport
     claimed_at: '2026-08-04T02:28:25Z'
-    updated: '2026-08-04T02:28:25Z'
+    updated: '2026-08-04T03:01:00Z'
 
   - id: t-047
     milestone: m3
@@ -2707,3 +2706,54 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-08-04T01:35:00Z'
+
+  - id: t-084
+    milestone: m3
+    title: 'components/art/art-manager.vue has a min-h-[720px] magic number on its mount point'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from t-045 (2026-08-04, kind_robots PR #1395). t-045 removed the
+      magic-number `min-h-[...]` heights that used to live inside
+      artjob-queue-browser.vue's own template (already resolved separately
+      before t-045 landed), but `art-manager.vue:97` still has a
+      `min-h-[720px]` on the `<component :is>` mount point that hosts it --
+      same category of defect (a fixed-size box forcing height instead of
+      content-driven sizing), just one file over. Small, scoped: replace with
+      content-driven sizing or a documented, deliberate primitive if a fixed
+      size is genuinely required, then re-check the layout contract.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T00:00:00Z'
+
+  - id: t-085
+    milestone: m2
+    title: 'Missing reward image file breaks BROKEN-ART audit on /rewards'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Found by the `audit` CI check on kind_robots PR #1395 (2026-08-04, unrelated
+      to that PR's actual diff -- a viewport-store extraction with no reward/art
+      code touched). `tablet /rewards` failed BROKEN-ART: `<img alt="Almost
+      Invisible" src=".../images/rewards/power/almost-invisible.webp">`.
+      Confirmed by direct fetch that
+      `https://media.acrocatranch.com/images/rewards/power/almost-invisible.webp`
+      genuinely 404s (not a transient stall like t-083's broader investigation --
+      this file does not exist on the media host). Since this is base-branch/data
+      state rather than a code regression, it will keep failing the `audit` check
+      on any PR that happens to touch `/rewards`, regardless of that PR's own
+      diff, until fixed.
+
+      Two things worth checking: (1) does kr-gallery.vue's t-069 `@error` fallback
+      (kind_robots PR #1392) not cover whatever component renders this specific
+      reward card, or did the image fail before the handler could fire? (2)
+      regenerate/re-upload the missing `almost-invisible.webp` reward-power art
+      asset. Coordinate with t-083 if the same root cause turns out to explain
+      both.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T00:00:00Z'

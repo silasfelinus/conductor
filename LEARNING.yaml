@@ -6352,3 +6352,20 @@ records:
     than either blocking the merged half or silently closing the task as fully done.
     Titles spanning multiple entities should be split into per-entity tasks at claim
     time to avoid this ambiguity recurring.
+- date: 2026-08-04
+  project: interface-vision
+  task: t-045
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A plain repo-wide grep for a deleted component's filename missed a real
+    dependency: verifyWonderLabInteractionDisplayFixtures.ts read
+    smart-nav.vue's source directly via fs.readFile to assert on its prop
+    contract, which only surfaced as an ENOENT in the "Contract verifiers" CI
+    job, not in any local grep or vue-tsc/eslint pass. Before deleting a
+    component with WonderLab preview fixture coverage, grep the
+    utils/scripts/verifyWonderLab*.ts files specifically for readFile calls
+    against that component's path, not just import/reference greps.
