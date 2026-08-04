@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-04T09:36:39Z
+Generated: 2026-08-04T09:54:20Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **508**
-- Outcomes: blocked: 13, cancelled: 1, done: 494
+- Closed tasks recorded: **509**
+- Outcomes: blocked: 13, cancelled: 1, done: 495
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 64 | 100% |
+| interface-vision | 65 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 493 | 99% |
+| software | 494 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-04 `interface-vision/t-060` — Completed the final three reachable core-gallery migrations (character, reward, dream) and closed the measured 7/7 core-object beta gate without forcing row or dropdown variants into a shared grid abstraction. kind_robots PR #1418, merge 6b541a3ed4c65570659c37aed9d7748fb087d734.
 - 2026-08-04 `conductor/t-097` — task-events/README.md documents a direct push to main as the normal workflow, so validate_task_events.py's PR-time gate never runs for the common case -- a malformed bare-string learning: field (the "learning: >-" folded scalar shape) recurred at least 5 times in a week and each time hard-failed process_task_events.py, silently red-flagging the shared "process" check for every unrelated PR. Coercing the string into {kind, stakes, lesson} (inferring kind/stakes from the task's own roadmap entry) instead of hard-rejecting it keeps the processor unblocked without losing the lesson text -- worth considering the same "recover gracefully from a common malformed shape" pattern for other task-events fields prone to hand-authoring mistakes.
 - 2026-08-04 `interface-vision/t-089` — A plain "who imports this .vue file" grep at deletion time is not enough -- kind_robots PR #1405's conductor-art-gallery.vue deletion (t-026) missed a plugin that DOM-scraped the component's specific rendered markup and a CI workflow that named the file directly in its paths: trigger list. Documented the checklist in kind_robots' AGENTS.md (PR #1417): grep the deleted filename repo-wide (not just import sites), check .github/workflows/*.yml paths: blocks, and check plugins/*.client.ts for DOM-scraping selector strings before deleting a superseded component.
 - 2026-08-04 `interface-vision/t-088` — The last of the three Phase 5 conversation-kit migrations (character-interact #1400, reward-interact t-087/#1406, scenario-interact t-088/#1408) was flagged in its own task note as "not a mechanical swap" -- it had two distinct duplications (a chat transcript and a separate intro-picker reusing the deleted choice-selector.vue's job), and the intro picker's long-paragraph hint text needed a non-italic kr-choice-list variant that didn't exist yet. Adding an opt-in `hintProse` prop (default false, every existing caller unaffected) was cheaper than a bespoke non-italic wrapper and kept the shared component as the single source of truth. Second occurrence of the same "lost the highlighted last-pick styling" gap reward-interact/t-087 hit -- two real surfaces is the signal to actually file the kr-chat-window selectedKey pass-through as a task (t-090) instead of deferring a third time.
@@ -90,7 +91,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-04 `interface-vision/t-050` — A "retire component X, fold into shared component Y" task can resolve correctly with zero code changes when the premise doesn't survive a full read: the task's own note said kr-narrator-stage was imported by "every other surface," but grep found exactly two real consumers, and grafting the remaining Dreams-specific chrome (card flip, emoji bursts, musings toast, pin) onto it would have more than doubled a 189-line shared component for those two consumers' benefit. When a retirement/consolidation task's justification rests on an unverified breadth claim ("every surface," "the shared X"), verify the actual consumer count with grep before implementing the merge -- the corrected count can flip the right answer from "fold it in" to "leave it alone."
 - 2026-08-04 `interface-vision/t-064` — A task tracking N/M sub-item progress (5 cards converging onto a shared body) had its note fall one merge behind reality: reward-card had already migrated in a prior session/PR with no note update recording it, so the task read as 2 items remaining when only 1 actually was. Caught by checking the merged tree directly (grep for the new import) rather than trusting the note's own count. When landing one item of an N/M tracked task, update the note's count even if the task can't close yet.
-- 2026-08-04 `interface-vision/t-045` — A plain repo-wide grep for a deleted component's filename missed a real dependency: verifyWonderLabInteractionDisplayFixtures.ts read smart-nav.vue's source directly via fs.readFile to assert on its prop contract, which only surfaced as an ENOENT in the "Contract verifiers" CI job, not in any local grep or vue-tsc/eslint pass. Before deleting a component with WonderLab preview fixture coverage, grep the utils/scripts/verifyWonderLab*.ts files specifically for readFile calls against that component's path, not just import/reference greps.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-04T09:36:39Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-04T09:54:20Z_
