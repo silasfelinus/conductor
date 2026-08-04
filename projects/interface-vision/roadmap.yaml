@@ -2622,28 +2622,18 @@ tasks:
   - id: t-080
     milestone: m2
     title: 'Add isPublic/isMature toggle UI to Reward and Scenario edit forms'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-032 (2026-08-03, kind_robots PR #1385). While wiring an
-      allowReviews toggle into all four entity edit surfaces, found that
-      add-reward.vue and add-scenario.vue have zero isPublic/isMature UI at
-      all -- those fields are only ever shown read-only as badges elsewhere
-      (reward-gallery.vue, scenario-card.vue/scenario-interact.vue). Bot and
-      Character both already have working checkbox-style toggles for these
-      two fields in their own edit forms (add-bot.vue's Publishing section,
-      add-character.vue's Record Settings section) -- mirror that pattern
-      for Reward and Scenario rather than the instant-click allow-reviews-toggle
-      button style, to match the existing Bot/Character convention rather
-      than introduce a third UI pattern. Note reward's toRewardPayload()
-      whitelist (stores/rewardStore.ts) already includes isPublic/isMature
-      (unlike allowReviews, which t-032 had to add), so no store-layer fix
-      should be needed there, just the missing form UI.
+    note: |-
+      Kaizen from t-032 (2026-08-03, kind_robots PR #1385). While wiring an allowReviews toggle into all four entity edit surfaces, found that add-reward.vue and add-scenario.vue have zero isPublic/isMature UI at all -- those fields are only ever shown read-only as badges elsewhere (reward-gallery.vue, scenario-card.vue/scenario-interact.vue). Bot and Character both already have working checkbox-style toggles for these two fields in their own edit forms (add-bot.vue's Publishing section, add-character.vue's Record Settings section) -- mirror that pattern for Reward and Scenario rather than the instant-click allow-reviews-toggle button style, to match the existing Bot/Character convention rather than introduce a third UI pattern. Note reward's toRewardPayload() whitelist (stores/rewardStore.ts) already includes isPublic/isMature (unlike allowReviews, which t-032 had to add), so no store-layer fix should be needed there, just the missing form UI.
+
+
+      Added the missing isPublic and isMature publishing controls to the Reward edit/create form. Scenario remains for the next bounded pass.
     claimed_by: 2026-08-04T011347Z-interface-vision-t-080-r8m4
     claimed_at: '2026-08-04T01:13:47Z'
-    updated: '2026-08-04T01:13:47Z'
+    updated: '2026-08-04T01:21:00Z'
 
   - id: t-081
     milestone: m3
