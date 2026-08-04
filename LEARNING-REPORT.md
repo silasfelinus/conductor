@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-04T00:04:44Z
+Generated: 2026-08-04T00:26:48Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **495**
-- Outcomes: blocked: 13, cancelled: 1, done: 481
+- Closed tasks recorded: **496**
+- Outcomes: blocked: 13, cancelled: 1, done: 482
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 52 | 100% |
+| interface-vision | 53 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 480 | 99% |
+| software | 481 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-04 `interface-vision/t-036` — When a task note gives you the exact CI-side validator to reuse client-side (navManifest.ts here), mirror its field-construction one-to-one rather than approximating -- the isomorphic-by-design comment in the module was the signal that a straight port, not a reinterpretation, was correct. Also: a component gated requiredRole: ADMIN cannot be visually verified from an agent sandbox without admin credentials -- typecheck plus the same CI script the component now reuses is the honest substitute, and it belongs explicitly in the PR flags rather than silently skipped. Separately: an automated close-task-event can land on main between opening a manual close_task.py PR and merging it -- check task-events/ and the live roadmap status again immediately before merging a close-out, not just once before opening it, or the merge 405s on a conflict against a transition that already happened.
 - 2026-08-03 `interface-vision/t-035` — A registry helper (getModelCards()) existing, exporting cleanly, and being independently correct is not evidence it is wired in -- grep call sites, not just definitions, whenever a task note says a function "is defined but never called anywhere." pageStore.cards had two isX() type-guard branches that looked exhaustive but silently fell through to a channel-tab fallback for every string cards: value; the missing branch was a single conditional, but nothing in the type system or existing tests flagged the dead code path.
 - 2026-08-03 `interface-vision/t-034` — Once a warning baseline reaches zero, promote the invariant to an error and reuse the same predicate the runtime uses. Keeping a separate validator recreates drift even when both implementations look trivial.
 - 2026-08-03 `interface-vision/t-028` — Salvaged from the implementing session's own close-out PR (conductor #1636, opened but never merged -- superseded by this session's reconciliation before it landed). That session hit a real task-ID collision mid-work: its own new task got numbered t-078, but a concurrent session claimed t-078 for an unrelated mobile workspace-header fix and merged first, so GitHub reported the PR unmergeable. Recovered per the documented rotation-collision protocol -- merged current main, kept main's t-078 untouched, renumbered the new task to t-079 via next_free_task_id.py, and verified the diff was scoped to only the intended change before re-pushing. No lost work on either side, no force-push. Filed here as a second confirmed real-world instance of the task-ID collision failure mode the rotation-collision protocol exists to catch.
@@ -92,7 +93,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-03 `interface-vision/t-075` — A kaizen task filed from a filename match alone ("character-flip-card.vue" looks like it should share butterfly-flip.vue's bug) can be wrong -- this file turned out to be an unrelated 900-line dashboard with a stale copy-pasted header comment from a similarly-named file. Verify the actual file content disproves or confirms the premise before writing any fix; closing a task with a corrected note and no diff is the right outcome when the premise does not hold, not a failure. Reading the disproven file also surfaced a real, unrelated bug (CharacterFlipCard has zero defineProps and silently ignores its character prop) -- filed separately as t-076 rather than folded into this task's diff, keeping scope discipline even for an accidental discovery.
 - 2026-08-03 `interface-vision/t-017` — A component with both a 3D-flip mode and a fade mode needs a fundamentally different scroll-ownership fix per mode: flip mode already v-if-excludes the inactive face (never double-scrolls), but fade mode renders both faces simultaneously for the opacity transition, so a static overflow-y-auto on both faces gives two live scroll regions at once. Toggle overflowY per face on the same state (isFlipped) that drives the fade, rather than assuming one static class covers both modes. Other flip/fade-card components (e.g. character-flip-card.vue) likely share the same latent bug -- filed t-075 to check.
 - 2026-08-03 `interface-vision/t-061` — Two mutually-exclusive v-if/v-else branches gated by a fixed-per-session flag (admin vs. non-admin) are the same SHAPE A pattern as tab switches -- hoist one shared kr-scroll wrapper above the pair instead of each branch declaring its own overflow-y-auto.
-- 2026-08-03 `interface-vision/t-055` — Source-text layout verifiers must accept Vue's supported component-tag casing conventions; regression fixtures should exercise component-rooted templates rather than only native lowercase HTML roots.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-04T00:04:44Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-04T00:26:48Z_
