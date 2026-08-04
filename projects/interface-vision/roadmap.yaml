@@ -2458,8 +2458,8 @@ tasks:
   - id: t-079
     milestone: m2
     title: 'Wire entityArt.ts onto EntityArtImage joins and retire the ArtImage.path prefix-string history scheme'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-028
@@ -2511,9 +2511,9 @@ tasks:
       Additive-only migrations are not expected for this task (schema
       already landed in t-028); if a further migration turns out to be
       needed, audit it line by line per the standing rule.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-03T21:35:00Z'
+    claimed_by: 2026-08-04T221457Z-interface-vision-t-079-q5m8
+    claimed_at: '2026-08-04T22:14:57Z'
+    updated: '2026-08-04T22:14:57Z'
 
   - id: t-080
     milestone: m2
