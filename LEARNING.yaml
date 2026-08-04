@@ -6308,3 +6308,17 @@ records:
     that looked exhaustive but silently fell through to a channel-tab fallback for every string cards:
     value; the missing branch was a single conditional, but nothing in the type system or existing tests
     flagged the dead code path.'
+- date: '2026-08-04'
+  project: interface-vision
+  task: t-036
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'When a task note gives you the exact CI-side validator to reuse client-side (navManifest.ts
+    here), mirror its field-construction one-to-one rather than approximating -- the isomorphic-by-design
+    comment in the module was the signal that a straight port, not a reinterpretation, was correct. Also:
+    a component gated requiredRole: ADMIN cannot be visually verified from an agent sandbox without admin
+    credentials -- typecheck plus the same CI script the component now reuses is the honest substitute,
+    and it belongs explicitly in the PR flags rather than silently skipped.'
