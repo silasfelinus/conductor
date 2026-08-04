@@ -1860,7 +1860,7 @@ tasks:
   - id: t-058
     milestone: m3
     title: 'Give one-scroll Shape B a two-owner grid primitive, and stop counting Shapes A/D'
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: |-
@@ -1898,10 +1898,10 @@ tasks:
 
 
       Ninth t-058 slice (conductor Agent run, kind_robots PR #1437, merged as 06bee16ae4f6fb28c5af6f833ef22561eb3a61fa): rather than another risky primitive migration or gaming the verifier, built the overlay-safe multi-owner scroll primitive conductor issue #1690 specified. .kr-panes/.kr-pane-scroll's overflow-hidden would clip channel-select.vue's absolutely-positioned left-full tab flyout, so added a dedicated sibling pair -- .kr-anchor-panes (no grid/overflow-hidden, explicitly overflow-visible) and .kr-anchor-scroll (the same overflow-y-auto/overscroll-contain CSS the two scroll regions already had via raw utility classes) -- to assets/css/tailwind.css, and taught verifyLayoutContract.ts's one-scroll rule to recognize .kr-anchor-scroll regions once .kr-anchor-panes is declared, mirroring the kr-panes/kr-pane-scroll gating including the guard against a lone .kr-anchor-scroll bypassing the rule with no .kr-anchor-panes anywhere in the file (issue #1690 item 4), with a new verifyAnchorScrollFixture() covering both directions. channel-select.vue's two scroll regions (channelMenu, channelFlyout) and their shared .dropdown-content ancestor were migrated onto the new classes -- a pure class rename (byte-identical CSS), zero layout/behavior change, so no Vercel visual check was needed for this slice unlike the three remaining files. Verified via test:layout-contract (confirmed the fix, ratcheted one-scroll 4->3), vue-tsc --noEmit (clean), and eslint on both changed files (clean); all 15 kind_robots CI checks green before merge. Resolves conductor issue #1690. Remaining one-scroll entries, all still needing live visual verification before a kr-panes migration per prior slices' findings: stage-manager.vue (footer-composer risk), mural-manager.vue (3-pane, hardest case), butterfly-sanctuary.vue (nested scroll tangled with v-show, distinct bug shape). Re-arming to ready -- the allow-list is not yet zero.
-    claimed_by: 2026-08-04T182820Z-interface-vision-t058-cs9v
-    claimed_at: '2026-08-04T18:28:21Z'
-    updated: '2026-08-04T18:28:21Z'
-    owner: null
+    claimed_by: 2026-08-04T192900Z-interface-vision-t058-w3n2
+    claimed_at: '2026-08-04T19:29:19Z'
+    updated: '2026-08-04T19:29:19Z'
+    owner: worker
 
   - id: t-098
     milestone: m3
