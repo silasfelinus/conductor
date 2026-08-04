@@ -3134,8 +3134,8 @@ tasks:
   - id: t-097
     milestone: m2
     title: "Malformed task-events learning field keeps landing on main uncaught -- validate_task_events.py is only wired into PR-time CI, but events are committed straight to main"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -3167,3 +3167,6 @@ tasks:
       chance. Whichever direction is chosen, add a regression test using the exact
       shape from this incident (`learning: >-` folded scalar) so it can't recur
       silently a 6th time.
+    claimed_by: claude-quirky-curie-20260804-t097
+    claimed_at: '2026-08-04T08:36:22Z'
+    updated: '2026-08-04T08:36:22Z'
