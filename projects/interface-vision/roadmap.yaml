@@ -1854,7 +1854,7 @@ tasks:
   - id: t-058
     milestone: m3
     title: 'Give one-scroll Shape B a two-owner grid primitive, and stop counting Shapes A/D'
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: |-
@@ -1867,9 +1867,10 @@ tasks:
       Implemented the first bounded t-058 slice on worker/interface-vision-t-058-20260803T191237Z-q7m4: count actual static scroll-owner elements, exclude max-h-* bounded preview regions, keep kr-scroll explicit, and report exact ratchet removals for review.
 
       Merged Kind Robots PR #1378 as 8af165a0d2c1bc81d00ebf7fd2b89b8306bc0912 after all 11 final-head workflows completed successfully. The one-scroll verifier now counts actual static scroll-owner elements, excludes max-h-* bounded previews, keeps kr-scroll explicit, and ratchets the baseline from 22 to 15. Removed seven Shape D false positives: animation-manager, art-styler, artjob-editor, character-flip-card, scenario-gallery, theme-gallery, and user-galleries. Shape A branch exclusivity and the Shape B two-owner primitive remain open, so this task returns to ready.
-    claimed_by: 2026-08-03T191237Z-interface-vision-t-058-q7m4
-    claimed_at: '2026-08-03T19:12:37Z'
-    updated: '2026-08-03T19:23:30Z'
+    claimed_by: 2026-08-04T093600Z-interface-vision-t-058-conductor
+    claimed_at: '2026-08-04T09:36:00Z'
+    updated: '2026-08-04T09:36:00Z'
+    owner: reviewer
 
   - id: t-054
     milestone: m2
