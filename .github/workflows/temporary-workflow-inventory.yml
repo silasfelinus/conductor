@@ -9,7 +9,6 @@ on:
       - main
 
 permissions:
-  actions: read
   contents: read
 
 jobs:
@@ -18,74 +17,29 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Report workflow definitions and recent runs
-        env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPOSITORY: ${{ github.repository }}
+      - name: Locate current coloring-book gates
         run: |
+          echo TEST_FILES_BEGIN
+          find tests -maxdepth 2 -type f | sort | grep -Ei 'color|semantic|render|artjob' || true
+          echo TEST_FILES_END
+          echo SEMANTIC_REFERENCES_BEGIN
+          grep -R -n -E 'coloring_book_semantic_gate|semantic gate|semantic_gate' tests scripts .github/workflows projects/coloring-book || true
+          echo SEMANTIC_REFERENCES_END
+          echo WORKFLOW_VALIDATION_BEGIN
           python - <<'PY'
-          import json
-          import os
           import pathlib
-          import urllib.request
+          import sys
+          import yaml
 
-          root = pathlib.Path('.github/workflows')
-          paths = sorted([*root.glob('*.yml'), *root.glob('*.yaml')])
-          print(f'WORKFLOW_FILE_COUNT={len(paths)}')
-          print('WORKFLOW_FILES_BEGIN')
-          for path in paths:
-              print(path.as_posix())
-          print('WORKFLOW_FILES_END')
-
-          for path in paths:
-              print(f'WORKFLOW_DEFINITION_BEGIN {path.as_posix()}')
-              print(path.read_text(encoding='utf-8'))
-              print(f'WORKFLOW_DEFINITION_END {path.as_posix()}')
-
-          repo = os.environ['GH_REPOSITORY']
-          token = os.environ['GH_TOKEN']
-
-          def api(path):
-              request = urllib.request.Request(
-                  f'https://api.github.com/repos/{repo}{path}',
-                  headers={
-                      'Accept': 'application/vnd.github+json',
-                      'Authorization': f'Bearer {token}',
-                      'X-GitHub-Api-Version': '2022-11-28',
-                  },
-              )
-              with urllib.request.urlopen(request) as response:
-                  return json.load(response)
-
-          workflows = api('/actions/workflows?per_page=100').get('workflows', [])
-          print('WORKFLOW_API_BEGIN')
-          print(json.dumps(workflows, sort_keys=True))
-          print('WORKFLOW_API_END')
-
-          summaries = []
-          for workflow in workflows:
-              workflow_id = workflow['id']
-              runs = api(f'/actions/workflows/{workflow_id}/runs?per_page=5').get('workflow_runs', [])
-              summaries.append({
-                  'id': workflow_id,
-                  'name': workflow.get('name'),
-                  'path': workflow.get('path'),
-                  'state': workflow.get('state'),
-                  'runs': [
-                      {
-                          'id': run.get('id'),
-                          'event': run.get('event'),
-                          'status': run.get('status'),
-                          'conclusion': run.get('conclusion'),
-                          'created_at': run.get('created_at'),
-                          'updated_at': run.get('updated_at'),
-                          'head_branch': run.get('head_branch'),
-                          'head_sha': run.get('head_sha'),
-                      }
-                      for run in runs
-                  ],
-              })
-          print('WORKFLOW_RUN_SUMMARIES_BEGIN')
-          print(json.dumps(summaries, sort_keys=True))
-          print('WORKFLOW_RUN_SUMMARIES_END')
+          failures = []
+          for path in sorted(pathlib.Path('.github/workflows').glob('*.y*ml')):
+              try:
+                  yaml.safe_load(path.read_text(encoding='utf-8'))
+              except Exception as exc:
+                  failures.append(f'{path}: {exc}')
+          if failures:
+              print('\n'.join(failures))
+              sys.exit(1)
+          print('All workflow YAML parsed successfully.')
           PY
+          echo WORKFLOW_VALIDATION_END
