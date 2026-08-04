@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-04T15:46:31Z
+Generated: 2026-08-04T15:48:08Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **510**
-- Outcomes: blocked: 13, cancelled: 1, done: 496
+- Closed tasks recorded: **511**
+- Outcomes: blocked: 13, cancelled: 1, done: 497
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 66 | 100% |
+| interface-vision | 67 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 495 | 99% |
+| software | 496 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-04 `interface-vision/t-094` — Applied verifyLayoutContract.ts's existing baseline/ratchet pattern to a second contract check (auditWonderLabPreviews.ts) with an almost line-for-line-identical shape: allow-list of known-bad entries in a JSON file, --strict fails only on entries not in the allow-list, --update ratchets the baseline down and refuses to grow it. kind_robots PR #1434, merge 41b334248747da904c92245d7fabc9f1abca3f7e. Verified the negative case explicitly (injected a synthetic new required-prop component with no fixture, confirmed --strict flagged only the new one and not the pre-existing 29) rather than just the positive case -- worth doing for any future ratchet-pattern port, since a baseline that silently allow-lists everything (e.g. from a coding mistake) looks identical to a correct one on the happy path alone.
 - 2026-08-04 `interface-vision/t-082` — A prior connector-only session released this task ("connector patch limitation" -- could not safely patch a 500+ line file, and had no local git/DNS). A session with full shell/git access hit no such limitation: mirrored add-reward.vue's Publishing section (isPublic/isMature toggles, t-080) onto add-scenario.vue verbatim, no store changes needed since scenarioStore already round-trips both fields. kind_robots PR #1433, merge 82f61b1e5d3ed5d0e992ecf76ab5fa1beb5aa501. Lesson: a connector-limited session's "actionable" release reason should be read literally -- it is a tooling gap for that session, not evidence the task itself is hard, so a shell-capable session should retry it directly rather than assuming the release implies deeper difficulty.
 - 2026-08-04 `interface-vision/t-060` — Completed the final three reachable core-gallery migrations (character, reward, dream) and closed the measured 7/7 core-object beta gate without forcing row or dropdown variants into a shared grid abstraction. kind_robots PR #1418, merge 6b541a3ed4c65570659c37aed9d7748fb087d734.
 - 2026-08-04 `conductor/t-097` — task-events/README.md documents a direct push to main as the normal workflow, so validate_task_events.py's PR-time gate never runs for the common case -- a malformed bare-string learning: field (the "learning: >-" folded scalar shape) recurred at least 5 times in a week and each time hard-failed process_task_events.py, silently red-flagging the shared "process" check for every unrelated PR. Coercing the string into {kind, stakes, lesson} (inferring kind/stakes from the task's own roadmap entry) instead of hard-rejecting it keeps the processor unblocked without losing the lesson text -- worth considering the same "recover gracefully from a common malformed shape" pattern for other task-events fields prone to hand-authoring mistakes.
@@ -90,7 +91,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-04 `interface-vision/t-076` — A "needs a real design decision" task with two named options (rewrite the broken component, or swap in an already-correct one) resolved fast once the already-correct option's actual prop contract was read in full: character-card.vue already did everything option (a) would have had to build (a real character prop, no side-effecting store init, grid-proven usage), so option (b) collapsed to a small, mechanical swap. The type system caught a real latent gap the swap needed to resolve (a curated Pick<Character,...> relation missing two fields the target component's full prop type required) -- something the previous component's total absence of prop typing had let go unnoticed indefinitely. When a task's own note offers "use an existing correct component instead" as an option, read that component's actual prop surface before assuming a rewrite is the only path -- the smaller fix is often already built.
 - 2026-08-04 `interface-vision/t-051` — A three-surface migration task (reward/character/scenario-interact) was scoped correctly for "what's left" but not for "what fits in one pass." Splitting after landing the first surface (character-interact, kind_robots PR #1400) into t-087/t-088 for the remaining two, rather than trying all three in one diff, kept each PR small, independently verifiable, and reviewable -- and let the roadmap track real partial progress instead of one task note growing indefinitely across sessions. When a task note already enumerates N similarly-sized remaining items, file it as N tasks up front rather than one task that will need a mid-flight split.
 
-- 2026-08-04 `interface-vision/t-050` — A "retire component X, fold into shared component Y" task can resolve correctly with zero code changes when the premise doesn't survive a full read: the task's own note said kr-narrator-stage was imported by "every other surface," but grep found exactly two real consumers, and grafting the remaining Dreams-specific chrome (card flip, emoji bursts, musings toast, pin) onto it would have more than doubled a 189-line shared component for those two consumers' benefit. When a retirement/consolidation task's justification rests on an unverified breadth claim ("every surface," "the shared X"), verify the actual consumer count with grep before implementing the merge -- the corrected count can flip the right answer from "fold it in" to "leave it alone."
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-04T15:46:31Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-04T15:48:08Z_

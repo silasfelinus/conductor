@@ -2888,3 +2888,24 @@ tasks:
     claimed_by: 2026-08-04T153300Z-t094-audit-ratchet
     claimed_at: '2026-08-04T15:38:09Z'
     updated: '2026-08-04T15:43:52Z'
+
+  - id: t-095
+    milestone: m3
+    title: 'Extract a shared loadRatchetBaseline/reportRatchetDelta helper — two contract checks now duplicate the same baseline-ratchet shape'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from merging kind_robots PR #1434 (t-094). `verifyLayoutContract.ts` and
+      `auditWonderLabPreviews.ts` now each hand-roll the same baseline/ratchet shape: load a
+      JSON allow-list, compare current violations/uncovered-entries against it, fail only on
+      entries not already allow-listed, and support an `--update` flag that ratchets the
+      baseline down while refusing to record a larger count. Worth extracting a small shared
+      helper (e.g. `utils/scripts/ratchetBaseline.ts` exporting `loadRatchetBaseline` and
+      `reportRatchetDelta`) so a third contract check that wants the same pattern doesn't
+      copy-paste it a third time. Small, scoped, reversible -- pure refactor, no behavior
+      change for either existing check.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T15:43:52Z'
