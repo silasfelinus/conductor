@@ -2245,7 +2245,7 @@ tasks:
   - id: t-072
     milestone: m3
     title: 'Drop the physical Facet.kind column now that it is fully derived from FacetTaxonomy'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: irreversible
@@ -2278,7 +2278,7 @@ tasks:
       so Silas signs off on the production DROP COLUMN specifically.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-03T10:47:00Z'
+    updated: '2026-08-04T22:11:49Z'
 
   - id: t-073
     milestone: m3
@@ -2701,7 +2701,7 @@ tasks:
   - id: t-091
     milestone: m2
     title: 'Investigate why a scheduled/headless conductor session cannot visually verify Vercel previews'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -2737,12 +2737,12 @@ tasks:
       would narrow whether this is a per-session toggle Silas can fix himself.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-04T07:45:00Z'
+    updated: '2026-08-04T22:11:52Z'
 
   - id: t-092
     milestone: m3
     title: 'Migrate the remaining Shape B files onto kr-panes/kr-pane/kr-pane-scroll'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -2763,12 +2763,12 @@ tasks:
       pass across all eleven, same discipline as t-058 itself.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-04T09:53:00Z'
+    updated: '2026-08-04T22:11:54Z'
 
   - id: t-093
     milestone: m3
     title: 'Audit TALKBACK for kaizen tasks promised but never created in roadmap.yaml'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -2786,7 +2786,7 @@ tasks:
       in the matching roadmap.yaml, so promised follow-on scope doesn't silently evaporate.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-04T13:45:00Z'
+    updated: '2026-08-04T22:11:57Z'
 
   - id: t-094
     milestone: m3
@@ -2803,7 +2803,7 @@ tasks:
   - id: t-095
     milestone: m3
     title: 'Extract a shared loadRatchetBaseline/reportRatchetDelta helper — two contract checks now duplicate the same baseline-ratchet shape'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -2819,12 +2819,12 @@ tasks:
       change for either existing check.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-04T15:43:52Z'
+    updated: '2026-08-04T22:12:00Z'
 
   - id: t-096
     milestone: m3
     title: 'Check whether t-058''s remaining one-scroll files share server-manager.vue''s tab-mixing shape before treating each as a from-scratch investigation'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -2842,12 +2842,12 @@ tasks:
       reused directly instead of re-derived.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-04T16:32:38Z'
+    updated: '2026-08-04T22:12:03Z'
 
   - id: t-097
     milestone: m3
     title: 'Guard against kr-pane/kr-panes classes coexisting with a literal grid/grid-rows/grid-cols class on the same element'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -2866,7 +2866,7 @@ tasks:
       layout-contract's class-name-only checks) wouldn't catch, only a live visual check would.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-04T17:40:00Z'
+    updated: '2026-08-04T22:12:06Z'
   - id: t-099
     milestone: m3
     title: 'ESLint is not a CI gate in kind_robots, so dead code ships unnoticed -- decide whether to make it one'
