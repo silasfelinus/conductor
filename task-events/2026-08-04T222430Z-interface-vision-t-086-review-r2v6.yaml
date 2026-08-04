@@ -1,0 +1,9 @@
+version: 1
+project: interface-vision
+task: t-086
+operation: review
+owner: worker
+session: 2026-08-04T222130Z-interface-vision-t-086-r2v6
+updated: '2026-08-04T22:24:30Z'
+note: >-
+  Root cause found in kr-art-plate.vue: one boolean remembered only that some source failed. After a primary image failed, the component switched to fallback; if that fallback also failed, the boolean was already true and the computed src kept returning the broken fallback forever. The implementation now tracks failed source URLs individually, advances primary to fallback, and advances a failed fallback to the placeholder.
