@@ -2207,8 +2207,8 @@ tasks:
   - id: t-068
     milestone: m3
     title: 'A doc comment can fail 29 source-text contracts — strip comments before forbid- scans'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -2256,9 +2256,9 @@ tasks:
       token passes while a real occurrence still fails -- otherwise the fix is itself
       unverified. Fold in t-063's `| tee` finding first if it is still open, since a contract
       that cannot fail and a contract that fails wrongly are the same bug from opposite ends.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-03T07:15:00Z'
+    claimed_by: 2026-08-04T061213Z-interface-vision-t-068-k9v4
+    claimed_at: '2026-08-04T06:12:13Z'
+    updated: '2026-08-04T06:12:13Z'
 
   - id: t-069
     milestone: m2
