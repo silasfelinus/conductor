@@ -2137,7 +2137,7 @@ tasks:
   - id: t-068
     milestone: m3
     title: 'A doc comment can fail 29 source-text contracts — strip comments before forbid- scans'
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: |-
@@ -2156,9 +2156,10 @@ tasks:
       Migrated verifyUserPatchAllowlist.ts forbid scans to the shared comment-aware source scanner as the next bounded t-068 slice.
 
       Merged Kind Robots PR #1413 as 3d9b5e9f1d24e931fb8fae8a3dcfbc1ba92c9602. verifyUserPatchAllowlist.ts now routes forbid scans through the shared comment-aware containsCode helper while require checks continue reading raw source. All 12 final-head workflows completed successfully. The broader t-068 migration remains incomplete, so return it to ready for another bounded verifier slice.
-    claimed_by: 2026-08-04T071303Z-interface-vision-t-068-n4q7
-    claimed_at: '2026-08-04T07:13:03Z'
-    updated: '2026-08-04T07:21:30Z'
+    claimed_by: 2026-08-04T101327Z-interface-vision-t-068-r6k3
+    claimed_at: '2026-08-04T10:13:27Z'
+    updated: '2026-08-04T10:13:27Z'
+    owner: worker
 
   - id: t-069
     milestone: m2
