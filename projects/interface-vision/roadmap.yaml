@@ -1860,7 +1860,7 @@ tasks:
   - id: t-058
     milestone: m3
     title: 'Give one-scroll Shape B a two-owner grid primitive, and stop counting Shapes A/D'
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: |-
@@ -1902,9 +1902,10 @@ tasks:
       Tenth t-058 slice (conductor Agent run, kind_robots PR #1439): fixed a genuine nested-scroll bug in butterfly-sanctuary.vue rather than a Shape B two-owner migration. The roster <aside> (both single-pane and two-pane branches) wrapped a fixed Summon/Selected header plus a flex-1 min-h-0 roster-list that already owns its own overflow-y-auto scroll, but the aside itself also carried overflow-y-auto -- so the whole aside and the inner roster list were both live, independent scroll owners simultaneously. Swapped the aside's overflow-y-auto for overflow-hidden in both branches (overflow:hidden sets the same used min-height:0 as overflow-y-auto per spec, so flex sizing is unaffected); the roster-list remains the sole real scroll owner. Verified via test:layout-contract (confirms the fix, ratchets one-scroll 3->2), vue-tsc --noEmit (clean), and eslint on the changed file (same 3 pre-existing import-ordering errors already on main before this change, confirmed via git stash -- unrelated, left untouched). Remaining one-scroll entries: stage-manager.vue (footer-composer risk), mural-manager.vue (3-pane, hardest case) -- both still need visual verification per prior slices' findings before a safe migration. Re-arming to ready once PR #1439 merges -- the allow-list is not yet zero.
 
       Merged Kind Robots PR #1439 as 03f5816aad8cb2d0048eb4815d82e6a3978d498e. Tenth t-058 slice: fixed a genuine nested-scroll bug in butterfly-sanctuary.vue rather than a Shape B two-owner migration. The roster <aside> (single-pane and two-pane branches) wrapped a fixed Summon/Selected header plus a flex-1 min-h-0 roster-list that already owned its own overflow-y-auto scroll, but the aside itself also carried overflow-y-auto, so the whole aside and the inner roster list were both live, independent scroll owners at once. Swapped the aside's overflow-y-auto for overflow-hidden in both branches (overflow:hidden sets the same used min-height:0 as overflow-y-auto per spec, so flex sizing is unaffected); the roster-list remains the sole real scroll owner. Verified via test:layout-contract (ratchets one-scroll 3->2), vue-tsc --noEmit (clean), and eslint on the changed file (same 3 pre-existing import-ordering errors already on main before this change, confirmed via git stash -- unrelated, left untouched). All 15 kind_robots CI checks plus the Vercel deployment check passed green before merge. Remaining one-scroll entries: stage-manager.vue (footer-composer risk), mural-manager.vue (3-pane, hardest case) -- both still need visual verification per prior slices' findings before a safe migration. Re-arming to ready -- the allow-list is not yet zero.
-    claimed_by: 2026-08-04T192900Z-interface-vision-t058-w3n2
-    claimed_at: '2026-08-04T19:29:19Z'
-    updated: '2026-08-04T19:38:21+00:00'
+    claimed_by: 2026-08-04T22:26:53Z-t058-slice10-k9x2
+    claimed_at: '2026-08-04T22:26:53Z'
+    updated: '2026-08-04T22:26:53Z'
+    owner: worker
 
   - id: t-098
     milestone: m3
