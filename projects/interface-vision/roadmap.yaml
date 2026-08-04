@@ -1402,26 +1402,18 @@ tasks:
   - id: t-036
     milestone: m2
     title: 'Wire navigation-health.vue to navManifest.ts'
-    status: claimed
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-012
-    note: >
-      Split from t-012 (2026-08-01, kind_robots PR #1272). components/navigation/
-      navigation-health.vue currently audits only the channel/tab system (channel count,
-      tab count, shared routes, a raw "legacy adapters" count of tabs with a non-empty
-      dashboardKey, broken-artwork detection) via useChannelContentStore() -- it doesn't
-      cross-check dashboardKey/dashboardTab/cards resolution at all. Swap in (or add
-      alongside) navManifest.ts's validateNavManifest() so the "legacy adapters" stat
-      becomes a real pass/fail count instead of a raw tally, surfacing the same
-      errors/warnings verifyNavManifest.ts reports in CI, live in the admin UI. Preserve
-      the existing stat-grid/card-grid UI shape; this is a data-source swap plus real
-      validation, not a rebuild. navManifest.ts is already isomorphic (no node:fs) so it
-      is safe to import client-side as-is.
+    note: |-
+      Split from t-012 (2026-08-01, kind_robots PR #1272). components/navigation/ navigation-health.vue currently audits only the channel/tab system (channel count, tab count, shared routes, a raw "legacy adapters" count of tabs with a non-empty dashboardKey, broken-artwork detection) via useChannelContentStore() -- it doesn't cross-check dashboardKey/dashboardTab/cards resolution at all. Swap in (or add alongside) navManifest.ts's validateNavManifest() so the "legacy adapters" stat becomes a real pass/fail count instead of a raw tally, surfacing the same errors/warnings verifyNavManifest.ts reports in CI, live in the admin UI. Preserve the existing stat-grid/card-grid UI shape; this is a data-source swap plus real validation, not a rebuild. navManifest.ts is already isomorphic (no node:fs) so it is safe to import client-side as-is.
+
+
+      Merged Kind Robots PR #1390 as a88524a81eba684b3e41d06b5b096c8d70478d8c. navigation-health.vue now validates the live channel/tab registry through the shared isomorphic navManifest validator, reports legacy adapter pass/fail counts, and surfaces manifest issues in the administrator health view. All 13 final-head GitHub Actions workflows completed successfully before merge.
     claimed_by: claude-scheduled-20260804T000414Z-iv-t036
     claimed_at: '2026-08-04T00:04:15Z'
-    updated: '2026-08-04T00:04:15Z'
+    updated: '2026-08-04T00:11:22Z'
 
   - id: t-039
     milestone: m2
