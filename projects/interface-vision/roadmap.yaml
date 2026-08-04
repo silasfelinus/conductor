@@ -1694,31 +1694,14 @@ tasks:
   - id: t-052
     milestone: m3
     title: 'Entity art has no thumbnail variant: a 68-card gallery ships ~37MB'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    note: >
-      MEASURED FROM PRODUCTION (2026-08-03), no longer an estimate. A real character card downloaded from the live site is a 512x768 PNG at 588,351 bytes (575 KB). Nine-sample average: 508,895 bytes (496 KB). 213 of 219 characters carry a cardPath. So a full character gallery is ~103 MB, not the 37 MB this task originally guessed (that figure was for a 68-card gallery; characters alone are 213). Transcoding that exact file with the already-installed sharp@0.34.5: webp q82 -> 70,492 bytes (8.3x smaller), webp q90 -> 93,510 (6.3x), avif q50 -> 43,206 (13.6x). ~103 MB becomes ~12 MB at webp q82.
-
-      THE FRAMING WAS WRONG TWICE OVER.
-
-      (1) It is not a missing thumbnail/downsample problem. The card variant is ALREADY 512x768 -- card-sized. The weight is entirely FORMAT (PNG), so transcoding needs no new sizing logic at all.
-
-      (2) There is no separate "card file" to write a thumbnail beside. A character's cardPath is `/api/art/images/<id>/file?v=<timestamp>`, and server/api/art/images/[id]/file.get.ts serves `Buffer.from(image.imageData, 'base64')` -- the ArtImage row's base64 column, straight out of MySQL. The card variant IS the stored original. Note the corollary: those bytes live in the database as base64, so each 575 KB image occupies ~766 KB of row, and character cards alone are carrying well over 100 MB inside the DB.
-
-      BEST ROUTE -- TRANSCODE AT THE SERVING ENDPOINT. This beats both options previously written here (client-side NuxtImg, and writing a webp in the render queue), and neither of those considered it:
-      - ONE file changes: server/api/art/images/[id]/file.get.ts. No migration, no backfill, no re-render, no schema change, no client change. Every entity gallery benefits at once, not just characters.
-      - Negotiate on the request's `Accept: image/webp` header and add `Vary: Accept`. The handler already sets `Cache-Control: public, max-age=31536000, immutable` for public images, so each image transcodes once and is then served from CDN cache.
-      - It cannot regress rendering: wrap the sharp call and fall back to the original buffer on any failure, so a transcode error degrades to today's behaviour rather than a broken image.
-      - Watch for: the early `sendRedirect` at line 66 when imagePath points elsewhere (that path serves no bytes and must stay untouched), and CPU/time budget on serverless for the first request per image.
-
-      DO NOT take the NuxtImg/IPX route. @nuxt/image is registered as a bare module (nuxt.config.ts:202) with no `image:` config block and exactly one consumer in the repo, so it would need an `image.domains` allowlist, and a misconfiguration blanks EVERY image rather than merely leaving them large.
-
-      Still measure a real before/after transfer once it ships -- the numbers above are per-file sizes, captured with curl against the live deployment, not a captured page load.
+    note: 'RECONCILED 2026-08-04, not newly implemented. Already shipped in kind_robots PR #1369 ("perf(art): serve entity art as webp, ~8x smaller, from the existing endpoint"), merged to main; this roadmap entry was never flipped. Verified on main at server/api/art/images/[id]/file.get.ts: the endpoint takes exactly the BEST ROUTE this note prescribed -- Accept: image/webp negotiation with Vary: Accept, sharp webp q82 (the measured 8.3x setting), a guard that keeps the original when the transcode would grow the file, and a try/catch that degrades to the original bytes rather than 500 on any sharp failure. The early sendRedirect for an external imagePath is untouched, as required. No migration, backfill, re-render or client change; every entity gallery benefits at once. CAVEAT: not re-measured against live production in this session -- the sandbox proxy returned ERR_CONNECTION_RESET on four consecutive attempts to kind-robots.vercel.app, so a byte-level spot check on real character cards is still worth doing.'
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-03T11:59:19Z'
+    updated: '2026-08-04T06:27:54Z'
 
   - id: t-053
     milestone: m3
