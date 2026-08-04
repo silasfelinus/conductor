@@ -2631,6 +2631,30 @@ tasks:
     claimed_at: '2026-08-04T01:13:47Z'
     updated: '2026-08-04T01:28:39Z'
 
+  - id: t-082
+    milestone: m2
+    title: 'Add isPublic/isMature toggle UI to the Scenario edit form'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Split out from t-080 (2026-08-04, kind_robots PR #1393): the Reward half
+      landed (add-reward.vue now has a Publishing section with isPublic/isMature
+      checkbox toggles). Scenario's add-scenario.vue still has zero isPublic/isMature
+      UI -- those fields are only ever shown read-only as badges elsewhere
+      (scenario-card.vue/scenario-interact.vue). Mirror the same checkbox-style
+      Publishing section just added to add-reward.vue (and the existing
+      Bot/Character pattern in add-bot.vue's Publishing section and
+      add-character.vue's Record Settings section) rather than inventing a new UI
+      style. Check scenarioStore's toScenarioPayload() whitelist includes
+      isPublic/isMature before wiring the toggles -- t-080's note on the Reward
+      side found toRewardPayload() already had them, but verify the Scenario
+      equivalent explicitly rather than assuming parity.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T01:28:39Z'
+
   - id: t-081
     milestone: m3
     title: 'Surface a Facet create affordance on the default /facets Gallery tab, not just Library'
