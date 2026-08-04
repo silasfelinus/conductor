@@ -1,0 +1,9 @@
+version: 1
+project: interface-vision
+task: t-068
+operation: ready
+owner: worker
+session: 2026-08-04T061213Z-interface-vision-t-068-k9v4
+updated: '2026-08-04T06:31:30Z'
+note: >-
+  Merged Kind Robots PR #1407 as 8a83d38a10a2a1e5af778439fcc173f59c940573. The shared comment-aware scanner now lives at utils/scripts/lib/sourceText.ts; verifyFacetGallery.ts and verifyFacetClosure.ts use it, and verifySourceTextComments.test.ts proves comments do not satisfy forbid scans while executable occurrences still do. All 11 final-head workflows completed successfully. The remaining forbid-style verifier scripts still need the same mechanical migration, so this task returns to ready rather than being falsely closed.
