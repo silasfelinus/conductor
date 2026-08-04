@@ -795,19 +795,12 @@ tasks:
   - id: t-016
     milestone: m3
     title: 'Decide FacetKind vs FacetTaxonomy'
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
-    note: |-
-      DECIDED by Silas (2026-08-03): FacetTaxonomy is canonical. Verbatim: "Taxonomy is the stronger choice. kind is massively ambiguous, especially given our name" -- FacetKind collides with the Kind Robots brand noun. The coarse grouping becomes a DERIVED category over the 24 taxonomy values, not a second enum.
-
-      THE ORIGINAL NOTE WAS REFUTED (2026-08-03). It claimed the two enums "overlap but are not a superset/subset relationship you can mechanically collapse". They are exactly that. FacetTaxonomy (prisma/facet-catalog.prisma:9, 24 values) contains all 10 FacetKind values (prisma/schema.prisma:2262) verbatim and in the same order: GENRE ANIMAL COLOR THEME CORE MOOD STYLE SETTING ART_DIRECTION, plus OTHER. The other 14 (SPECIES OCCUPATION ARCHETYPE ROLE ALIGNMENT GENDER BOT_TYPE DREAM_TYPE REWARD_TYPE RARITY PERSONALITY BACKSTORY QUIRK MATERIAL PROMPT_ENHANCEMENT) are additions, not conflicts. The old line reference was stale too: schema.prisma:2183 is the Role enum; FacetKind is at 2262.
-
-      They are two models in ONE schema, not two databases: Facet.kind (schema.prisma:478) and FacetProfile.taxonomy (facet-catalog.prisma:39), 1:1 via facetId @id. facet-catalog.prisma carries no generator/datasource block, so the prisma/ folder is a single multi-file schema (Prisma 7.9.1, prisma.config.ts). The collapse is therefore an identity value mapping with zero data loss, not a judgement call.
-
-      NOW ON THE CRITICAL PATH. The builder revision (see the creation-flow work) makes the Facet catalog the builder's choice vocabulary, so a settled taxonomy is a prerequisite rather than the "nothing else is blocked on this" the old note claimed. Scope: 177 FacetKind refs vs 203 FacetTaxonomy refs across .ts/.vue/.prisma. Needs a prisma migration plus a re-seed check, since seedFacetCatalog rebuilds 1611 rows.
+    note: 'DONE 2026-08-03: kind_robots PR #1362 (merged, squash 6005f17). Consolidated the last 5 duplicated legacyKind()/legacyKind() taxonomy->kind mapping functions (in curateFacetGenreLeaks.ts, curateFacetTaxonomyLeaks.ts, curateFacetCatalog.ts, seedFacetCatalog.ts, seedArtBuilderFacetCatalog.ts) onto the canonical legacyFacetKindForTaxonomy helper in server/utils/facetProfileInput.ts; fixed 2 hardcoded literal kind writes in applyFacetCatalogDirectives.ts to derive instead; moved the last 2 front-end consumers (storybook-page.vue, taskmaster-page.vue) off facet.kind onto facet.taxonomy; dropped kind from facetStore.ts FacetWithAliases; updated verifyFacetTaxonomyAuthority.ts to drop the now-obsolete Taskmaster carve-out. This is the low-risk consolidation half only -- dropping the physical Facet.kind column/index is a separate, higher-risk production migration, filed as interface-vision/t-072. Verified: vue-tsc clean, eslint clean on all 10 touched files, full facet-catalog-contract.yml script sequence (19 scripts) passing locally.'
     approved_by_human: true
-    updated: '2026-08-03T10:28:52Z'
+    updated: '2026-08-03T10:46:31Z'
     owner: worker
     claimed_by: claude-agentrun-2026-08-03T102852-t016
     claimed_at: '2026-08-03T10:28:52Z'
@@ -818,6 +811,7 @@ tasks:
     passes: 0
     stakes: reversible
     depends_on: t-005
+    remaining_scope_task: t-058
     note: |-
       Phase 6.2, in progress. kind_robots PR #1295 (merged) landed the first pass, daily-drivers first as instructed: removed pages/play/video-generator.vue's duplicate <h1> (daily-driver: video-gen) and demoted project-front-page.vue's hero title from <h1> to <p> (shared shell for 14 project pages incl. newsfeed, another daily-driver) -- one-header dropped 8 -> 6. Also removed 4 of the 6 :has() global overrides in tailwind.css by baking the equivalent grid column widths and overflow-x directly into components/pages/conductor-page.vue's public Project gallery (Silas's own most-used page); the 2 remaining overrides patch that same component's ADMIN-only project-detail view and are deliberately left, since admin is explicitly lowest priority. Baseline ratcheted down via --update, all CI green. Remaining before this task can close: one-header (6 left: components/pages/registration-form.vue, components/pages/serendipity-page.vue, 4x pages/admin/wonderlab-review-*.vue -- none are daily-drivers), one-scroll (34), no-viewport (2), one-mdc (3), ghost-prop (7), zero-scroll (8), plus the 2 remaining admin :has() overrides and the non-tracked artjob-queue-browser.vue magic-number/depth-12 cleanup the task note calls out. Re-arming to ready rather than closing -- per this project's own rule, "do not close a task ... because the work feels done ... close it when the counter says so."
 
@@ -930,9 +924,23 @@ tasks:
       Prepared a bounded root-surface sweep for pages/[...slug].vue, adding a shared kr-unbound root around the content host states and shrinking the root-surface baseline from two entries to one.
 
       Merged Kind Robots PR #1361 as 20650a66bf0ba6211e94b6820a68270975933517. pages/[...slug].vue now has a shared kr-unbound root while preserving its existing content-host scroll owner and conditional render states. The root-surface baseline shrank from two entries to one. All 12 final-head workflows completed successfully, including TypeScript, Contract Tests, Layout Contract, and MDC Scroll Ownership. The task remains open because memory-dungeon.vue and the separate one-scroll bucket remain nonzero.
-    claimed_by: 2026-08-03T101720Z-interface-vision-t-017-v3q8
-    claimed_at: '2026-08-03T10:17:20Z'
-    updated: '2026-08-03T10:34:00Z'
+
+      Live inspection confirmed memory-dungeon.vue is the final root-surface baseline entry and that adding kr-unbound would preserve its conditional root scroll behavior. This connector exposes only whole-file replacement for the 1,200-line component, so the session released the claim rather than risk rebuilding the file from an abbreviated payload; rotating to another eligible bounded task.
+
+      Twenty-fifth scoped sweep: memory-dungeon.vue, the final root-surface entry. This session had full local git/shell access to kind_robots (not connector-limited), which made a careful fix practical instead of another release.
+
+      Merged Kind Robots PR #1365 as 901c114. The root div previously mixed bounding and scroll ownership on the same element, toggling overflow-hidden/overflow-y-auto based on gameStarted -- and its only mount site (lab-manager.vue's dashboard-tab wrapper) already applies a fallthrough overflow-hidden with no scroll delegation, so the conditional binding was fighting the parent rather than cooperating with it. Root now stays unconditionally kr-surface (min-h-[80vh] and gap-0 added alongside to preserve the original min-height and lack of inter-child spacing exactly); the splash-screen child -- the one region that needs to grow past the viewport before the game starts -- becomes the kr-scroll owner instead. The in-game board+log layout already owns its own scroll further down the tree and was untouched. Also moved a `<!-- root div -->` comment from between `<template>` and the root tag to above `<template>` -- it was defeating verifyLayoutContract.ts's literal-first-tag check, the same footgun t-067 documented. root-surface: 1 -> 0 via --update. vue-tsc clean; eslint's 5 errors on the file are pre-existing (confirmed via git stash); verifyMdcScrollOwnership.ts holds (22 existing violations, no new ones); all 15 kind_robots PR checks green.
+
+      root-surface is now the SEVENTH consecutive bucket at zero (one-header, no-viewport, one-mdc, ghost-prop, zero-scroll, root-surface all 0). The only nonzero bucket left is one-scroll (27), tracked separately since t-047 (done) -- its correction found most of that bucket is a static-regex false positive on mutually-exclusive v-if/v-else-if tab branches (SHAPE A, ~10 files) or genuinely needs a two-column-scroll primitive that doesn't exist yet (SHAPE B, 12 files), not a per-file conversion t-017 can keep doing. Filed t-073 as this cycle's kaizen: build the SHAPE A fix (hoist one shared kr-scroll above the mutually-exclusive branch, art-manager.vue is the type specimen). The layout-contract allow-list is not yet fully zero (one-scroll remains), so t-017 returns to ready; its remaining scope going forward is monitoring one-scroll's dedicated follow-on work, not further per-file root-surface/one-header/etc. sweeps.
+
+      Butterfly flip cards now keep vertical scrolling on only the active face, and the one-scroll ratchet drops from 23 to 22.
+
+      Merged Kind Robots PR #1377 (squashed 6aab8c4). components/butterfly/butterfly-flip.vue's front/back faces both carried a static overflow-y-auto, so fade mode (useFlipEffect: false, which renders both faces simultaneously instead of v-if-excluding one like flip mode does) had two active overlapping scroll regions. Switched both faces to an inline :style toggling overflowY between auto/hidden based on isFlipped, so exactly one face scrolls at a time regardless of mode. one-scroll: 23 -> 22 via --update; all other buckets unchanged and remain at zero. Verified independently this review pass: vue-tsc --noEmit clean, eslint clean on the touched file, npm run test:layout-contract holds with no new violations, verifyMdcScrollOwnership.ts holds (22 existing violations, no new ones), all 13 PR checks green. one-scroll is still nonzero, so t-017 returns to ready for the next bounded sweep.
+
+      Live audit found no independent t-017 implementation slice: every layout-contract bucket except one-scroll is already zero, and the remaining one-scroll work is explicitly owned by ready follow-on t-058. Verified chat-gallery as mutually exclusive Shape A, messenger and stage-manager as genuine concurrent Shape B panes, and theme-gallery as a bounded Shape D inspector case. Released the umbrella claim to avoid colliding with t-058 and filed conductor issue #1627 for selector/task-relationship repair.
+    claimed_by: 2026-08-03T181332Z-interface-vision-t-017-m7q4
+    claimed_at: '2026-08-03T18:13:32Z'
+    updated: '2026-08-03T18:19:25Z'
     status: ready
 
   - id: t-018
@@ -1124,33 +1132,16 @@ tasks:
   - id: t-026
     milestone: m2
     title: 'Decide the fate of conductor-art-gallery.vue''s carousel/collection UI vs entity-art-manager.vue'
-    status: ready
-    owner: null
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-009
-    note: >
-      Split out of t-009 (2026-08-01, kind_robots PR #1269). t-009's first pass
-      unified Project's art *replace* plumbing onto the generic
-      /api/art/entities/[entityType]/[id]/replace endpoint (already fully
-      supported server-side), but deliberately left conductor-art-gallery.vue's
-      UI as its own bespoke component rather than swapping it for
-      entity-art-manager.vue. Investigation found conductor-art-gallery.vue's
-      `slides` computed merges Project's own hero/card/icon paths, its
-      ProjectArtImage history, AND a linked ArtCollection into one autoplay
-      carousel -- real, non-duplicate UX (collection art + autoplay) that
-      entity-art-manager.vue has no equivalent for (it's a single
-      current-image + history-grid layout, no slideshow/collection concept).
-      This is a UX decision, not a plumbing refactor: either (a) keep
-      conductor-art-gallery.vue's carousel chrome as a thin wrapper that calls
-      the same generate/replace endpoints entity-art-manager.vue uses
-      internally (dedupe the polling logic, which is currently a near-verbatim
-      copy of entity-art-manager.vue's), or (b) extend entity-art-manager.vue
-      itself with an optional collection-carousel mode so Project can adopt it
-      directly and the bespoke component goes away entirely. Silas should
-      weigh in on which UI he prefers before either is built -- this is
-      exactly the "build mockups first, Silas picks by eye" pattern this
-      project's own notes_from_silas established for t-001/t-002.
+    note: 'Implemented Option B (Silas picked via SENT BACK note: ''one source ... make it one thing and kill the others''). entity-art-manager.vue is now the one canonical art component, gaining an optional collectionSlides autoplay-carousel panel used only by Project. conductor-art-gallery.vue and the resolved t-026 mockup are deleted; the DOM-scraping prompt-suggest plugin was repointed at the shared component. kind_robots PR #1405 merged (34f11c3).'
+    claimed_by: 2026-08-04T052736Z-t026-run2
+    claimed_at: '2026-08-04T05:27:37Z'
+    updated: '2026-08-04T05:49:53Z'
+    approved_by_human: false
+    owner: worker
 
   - id: t-027
     milestone: m2
@@ -1173,8 +1164,8 @@ tasks:
   - id: t-028
     milestone: m2
     title: 'Unify art-history on ProjectArtImage-style joins; retire the ArtImage.path prefix-string scheme'
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-009
@@ -1205,6 +1196,29 @@ tasks:
       line per this repo's standing migration rules. Out of scope for one PR
       alongside t-009's smaller items; touches bot/character/scenario/reward/
       facet/achievement simultaneously and needs its own careful pass.
+
+      UPDATE (2026-08-03, kind_robots PR #1381): shipped the schema-only
+      landable core -- new `EntityArtImage` model + additive migration
+      (entityType, entityId, artImageId; real FK on artImageId to ArtImage,
+      cascade). Deliberately did NOT wire entityArt.ts yet: reading
+      history/[artImageId].delete.ts turned up a real behavior change bundled
+      into "retire the prefix scheme" that this note didn't originally call
+      out -- every non-project history entry today is a throwaway duplicate
+      ArtImage row (created solely to carry the prefix-tagged path), and the
+      delete endpoint does `prisma.artImage.delete(...)` on it. Once real
+      join rows exist, "remove from history" must become
+      `entityArtImage.deleteMany(...)` (unlink only) instead of deleting a
+      row that's no longer necessarily a private duplicate -- a live-endpoint
+      semantics change, not a schema swap. Also noticed: `listEntityArtHistory`
+      is already broken today for entityType 'project' (its archived rows go
+      into ProjectArtImage, never get the prefix tag, so the *generic*
+      history endpoint returns nothing for project even though project has
+      its own working dedicated gallery endpoint) -- worth fixing in the same
+      pass by writing EntityArtImage rows for project too. Follow-on task
+      t-079 carries the full wiring scope with these specifics preserved.
+    claimed_by: 2026-08-03T203041Z-t028
+    claimed_at: '2026-08-03T20:30:42Z'
+    updated: '2026-08-03T20:38:00Z'
 
   - id: t-029
     milestone: m2
@@ -1268,8 +1282,8 @@ tasks:
   - id: t-032
     milestone: m2
     title: 'Add an owner-facing allowReviews toggle for Bot/Character/Reward/Scenario'
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -1288,6 +1302,18 @@ tasks:
       of them turned up in this session's grep for "allowReviews" outside
       conductor-page.vue) so owners can actually reach the review feature
       t-011 just gated.
+
+      UPDATE (2026-08-03, kind_robots PR #1385): shipped. New shared
+      components/ui/allow-reviews-toggle.vue, wired into conductor-page.vue
+      (Project, extracted) plus add-bot.vue, add-character.vue,
+      add-reward.vue, add-scenario.vue. Also fixed a latent bug found along
+      the way: rewardStore's toRewardPayload() whitelist was missing
+      allowReviews entirely (silent no-op on save). Kaizen filed in the PR
+      body: Reward/Scenario edit forms have no isPublic/isMature UI either,
+      same gap this task just fixed for allowReviews on those two types.
+    claimed_by: 2026-08-03T212826Z-t032-agent
+    claimed_at: '2026-08-03T21:28:27Z'
+    updated: '2026-08-03T21:54:34Z'
 
   - id: t-033
     milestone: m2
@@ -1310,71 +1336,49 @@ tasks:
   - id: t-034
     milestone: m2
     title: 'Reconcile dashboardHelper.ts/navStore.ts with navManifest.ts; resolve the 9 dashboardTab warnings'
-    status: ready
-    owner: null
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-012
-    note: >
-      Split from t-012 (2026-08-01, kind_robots PR #1272). The highest-risk remaining
-      piece: stores/helpers/dashboardHelper.ts (1440 lines, 17 dashboards, 87 tabs) has 15
-      direct importers (navStore.ts's dashboard-shell fallback logic, labCards.ts,
-      navCards.ts, conductorTabs.ts, builderCards.ts, tutorialCards.ts, and several
-      *-manager.vue components) -- deriving it from navManifest.ts instead of maintaining
-      it by hand needs care across all of them, not a rename. Also resolve the 9
-      dashboardTab warnings verifyNavManifest.ts reports today (home/account.md,
-      home/messages.md, play/facets.md, play/music-mentor.md, play/video-generator.md,
-      sanctuary/about.md, sanctuary/butterflies.md, sanctuary/giving.md,
-      sanctuary/subscriptions.md -- each names a dashboardTab that doesn't exist in its
-      declared dashboard's tabs array) by deciding, per page, whether it needs a real new
-      dashboard tab or should just drop the stale hint. Verify with
-      `npm run test:nav-manifest` (warning count should drop to 0) plus Vercel-preview
-      checks on any page whose dashboard-shell behavior actually changes.
+    note: |-
+      Split from t-012 (2026-08-01, kind_robots PR #1272). The highest-risk remaining piece: stores/helpers/dashboardHelper.ts (1440 lines, 17 dashboards, 87 tabs) has 15 direct importers (navStore.ts's dashboard-shell fallback logic, labCards.ts, navCards.ts, conductorTabs.ts, builderCards.ts, tutorialCards.ts, and several *-manager.vue components) -- deriving it from navManifest.ts instead of maintaining it by hand needs care across all of them, not a rename. Also resolve the 9 dashboardTab warnings verifyNavManifest.ts reports today (home/account.md, home/messages.md, play/facets.md, play/music-mentor.md, play/video-generator.md, sanctuary/about.md, sanctuary/butterflies.md, sanctuary/giving.md, sanctuary/subscriptions.md -- each names a dashboardTab that doesn't exist in its declared dashboard's tabs array) by deciding, per page, whether it needs a real new dashboard tab or should just drop the stale hint. Verify with `npm run test:nav-manifest` (warning count should drop to 0) plus Vercel-preview checks on any page whose dashboard-shell behavior actually changes.
+
+
+      Unified nav-manifest dashboard-tab validation with dashboardHelper's runtime predicate and removed the final two stale standalone-page dashboard hints.
+
+      Merged Kind Robots PR #1386 as d636e41e8239bc519bf368f09fa485a54187d4ac. navManifest now uses dashboardHelper's exported isDashboardTabKey predicate, matching navStore's runtime vocabulary; Music Mentor and Video Generator no longer carry stale dashboard hints; invalid dashboardTab references are CI-blocking errors. All 12 final-head workflows completed successfully after one TypeScript fix on the same branch.
+    claimed_by: 2026-08-03T221341Z-interface-vision-t-034-k7p9
+    claimed_at: '2026-08-03T22:13:41Z'
+    updated: '2026-08-03T22:26:50Z'
 
   - id: t-035
     milestone: m2
     title: 'Wire getModelCards() for real; derive card decks from navManifest.ts'
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-012
-    note: >
-      Split from t-012 (2026-08-01, kind_robots PR #1272). stores/helpers/modelCards.ts's
-      getModelCards() is defined but never called anywhere -- pageStore.ts's `cards`
-      computed only accepts an already-resolved array (isBuilderCardArray /
-      isNavigationCardArray), never looks up the raw `cards:` frontmatter string against
-      the registry. So today every `cards:` value except the literal 'builderCards'
-      sentinel (workspace-hand.vue / workspace-sheet.vue's special case deferring to
-      builderStore.cards) is decorative and has zero runtime effect. Wire getModelCards()
-      into pageStore.cards for real, fold conductorCards.ts's CONDUCTOR_CARDS into the
-      registry (it already exists and is used elsewhere, just never registered), and
-      decide whether content/characters.md's gallery deserves its own CHARACTER_CARDS (a
-      genuine content-authoring task, the same shape as BOT_CARDS/DREAM_CARDS/etc. --
-      t-012 deliberately left it pointed at the generic navCards fallback rather than
-      fabricate wizard content). Verify with `npm run test:nav-manifest` plus a
-      Vercel-preview check that card decks actually render per tab.
+    note: 'kind_robots PR #1389 (merged, squash e641da6). Wired getModelCards() into pageStore.ts''s cards computed -- string cards: frontmatter values (navCards/artCards/botCards/dreamCards/labCards/rewardCards/scenarioCards/conductorCards) now resolve to their registry deck instead of silently falling back to channelTabsToCards(). Folded conductorCards.ts''s CONDUCTOR_CARDS into modelCards.ts''s BuilderCardsKey registry as ''conductorCards'' (content/conductor.md already declared cards: conductorCards with nowhere to resolve). Left content/characters.md on the generic navCards fallback rather than fabricating a CHARACTER_CARDS deck, same call t-012 made originally -- no wizard content exists yet to justify a dedicated deck. Verified: npm run test:nav-manifest (0 errors), vue-tsc --noEmit (clean), eslint clean on both touched files, and a live Vercel-preview SSR check of /conductor (conductorCards labels present), /characters and /dashboard (navCards icons present) confirming decks render per tab.'
+    claimed_by: claude-scheduled-20260803T232937Z-iv-t035
+    claimed_at: '2026-08-03T23:29:37Z'
+    updated: '2026-08-03T23:45:45Z'
 
   - id: t-036
     milestone: m2
     title: 'Wire navigation-health.vue to navManifest.ts'
-    status: ready
-    owner: null
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-012
-    note: >
-      Split from t-012 (2026-08-01, kind_robots PR #1272). components/navigation/
-      navigation-health.vue currently audits only the channel/tab system (channel count,
-      tab count, shared routes, a raw "legacy adapters" count of tabs with a non-empty
-      dashboardKey, broken-artwork detection) via useChannelContentStore() -- it doesn't
-      cross-check dashboardKey/dashboardTab/cards resolution at all. Swap in (or add
-      alongside) navManifest.ts's validateNavManifest() so the "legacy adapters" stat
-      becomes a real pass/fail count instead of a raw tally, surfacing the same
-      errors/warnings verifyNavManifest.ts reports in CI, live in the admin UI. Preserve
-      the existing stat-grid/card-grid UI shape; this is a data-source swap plus real
-      validation, not a rebuild. navManifest.ts is already isomorphic (no node:fs) so it
-      is safe to import client-side as-is.
+    note: |-
+      Split from t-012 (2026-08-01, kind_robots PR #1272). components/navigation/ navigation-health.vue currently audits only the channel/tab system (channel count, tab count, shared routes, a raw "legacy adapters" count of tabs with a non-empty dashboardKey, broken-artwork detection) via useChannelContentStore() -- it doesn't cross-check dashboardKey/dashboardTab/cards resolution at all. Swap in (or add alongside) navManifest.ts's validateNavManifest() so the "legacy adapters" stat becomes a real pass/fail count instead of a raw tally, surfacing the same errors/warnings verifyNavManifest.ts reports in CI, live in the admin UI. Preserve the existing stat-grid/card-grid UI shape; this is a data-source swap plus real validation, not a rebuild. navManifest.ts is already isomorphic (no node:fs) so it is safe to import client-side as-is.
+
+
+      Merged Kind Robots PR #1390 as a88524a81eba684b3e41d06b5b096c8d70478d8c. navigation-health.vue now validates the live channel/tab registry through the shared isomorphic navManifest validator, reports legacy adapter pass/fail counts, and surfaces manifest issues in the administrator health view. All 13 final-head GitHub Actions workflows completed successfully before merge.
+    claimed_by: claude-scheduled-20260804T000414Z-iv-t036
+    claimed_at: '2026-08-04T00:04:15Z'
+    updated: '2026-08-04T00:11:22Z'
 
   - id: t-039
     milestone: m2
@@ -1397,25 +1401,23 @@ tasks:
   - id: t-040
     milestone: m2
     title: 'Document the vercel.json PR-preview exclusion for agent branches in AGENTS.md'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     depends_on: null
     note: >
-      Kaizen from t-037 (2026-08-02, kind_robots PR #1288). AGENTS.md's
-      Vercel-preview verification section (~L338-366) documents fetching a PR's
-      preview deployment via list_deployments/web_fetch_vercel_url, but
-      kind_robots' vercel.json sets `git.deploymentEnabled` to false for
-      `claude/*`, `agent/*`, `worker/*`, and `conductor/*` branch prefixes
-      (cost-saving) -- so no preview ever builds for an agent-authored branch,
-      and a session following that section as written will spend time hunting
-      for a deployment that was never going to exist. Add a note to that
-      section: for branches matching those prefixes, skip straight to the
-      post-merge production-deployment verification path (merge on CI-green
-      per the standing merge instruction, then poll list_deployments for the
-      resulting production deploy, fetch the relevant route once READY, and
-      check get_runtime_errors) instead of looking for a preview first.
+      RESOLVED BY REMOVING THE CAUSE (2026-08-03), not by documenting it. Silas, asked what he could do to unblock agent UI verification, approved flipping the flag: "how do i flip it? I approve it happening".
+
+      kind_robots vercel.json now sets `claude/*: true` in git.deploymentEnabled. Agent-authored branches get a real preview deployment, so front-end work can be verified BEFORE it merges instead of only against production afterwards. agent/*, worker/*, and conductor/* stay false for cost -- the original saving is preserved for the prefixes that don't need visual review.
+
+      This surfaced because the exclusion actively cost a session: interface-vision/t-069 (description text over card art on /conductor) could not be visually checked at all, and was handed back unverified with only a list of ruled-out causes. That is the failure mode the flip removes.
+
+      AGENTS.md's Vercel section is corrected in the same change. It previously asserted "Vercel already builds a preview for every PR automatically", which was simply false for every agent branch and sent at least one session hunting for a deployment that could never exist. It now states that git.deploymentEnabled in kind_robots' vercel.json -- not Vercel's defaults -- decides, names which prefixes are enabled, and documents the post-merge production fallback for the disabled ones.
+
+      Also documented while confirming the flip: a docs-only merge shows as CANCELED rather than deploying, because vercel.json's ignoreCommand (scripts/vercel-ignore-build.mjs) skips builds whose changed files are all docs/tests. That is correct behavior and had already been mistaken for a failed deploy once.
+    approved_by_human: true
+    updated: '2026-08-03T10:46:40Z'
 
   - id: t-041
     milestone: m2
@@ -1438,8 +1440,8 @@ tasks:
   - id: t-042
     milestone: m3
     title: 'Give Facet and Project creation flows — in /facets and /conductor, not as builder card decks'
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: null
@@ -1455,76 +1457,66 @@ tasks:
       STILL TRUE from the original note, and worth keeping: Project and Facet both already have working stores (stores/projectStore.ts, stores/facetStore.ts) and admin UI (components/facets/facet-manager.vue) to build on. What is no longer wanted: PROJECT_CARDS / FACET_CARDS decks, per-model splash screens, defaultSheet/syncSheetToXForm/save/reset in registerBuilderStore.ts, and the new BuilderArtPurpose union variants. Do not follow buildDreamConfig / buildRewardConfig as the pattern here.
 
       ORIGINAL NOTE, for provenance: split out of t-015 (2026-08-02, kind_robots PR #1293) because registering these two as builders needed card-deck-scale UI buildout that did not fit alongside that task's more mechanical facet-relation gaps.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-03T10:04:23Z'
+
+      CLOSED 2026-08-04. Checked the FACET half first and found it already shipped: components/facets/facet-manager.vue's "Library" tab (reachable from /facets) already has a working "+ Create a canonical Facet" flow built on facet-profile-editor.vue + facetProfileForm.ts, exactly the building blocks this note predicted -- no new work needed there. Built the missing PROJECT half: kind_robots PR #1391 added a collapsible "+ Create a Project" section to conductor-project-gallery-page.vue (title, description, status, priority), reusing projectStore.ts's existing createProject() action and POST /api/projects (both already fully supported creation, just had no UI). Verified vue-tsc --noEmit and eslint clean, then visually confirmed via the Vercel preview (`claude/*` gets one) that "Create a Project" renders in the SSR markup at /conductor before merging. Filed interface-vision/t-081 as the kaizen follow-up: facet-manager.vue's create flow is buried in the non-default Library tab, so /facets' default Gallery landing tab still has no visible create affordance.
+    claimed_by: claude-scheduled-20260804T002832Z-iv-t042
+    claimed_at: '2026-08-04T00:28:33Z'
+    updated: '2026-08-04T00:37:59Z'
 
   - id: t-043
     milestone: m2
     title: 'Extend user-galleries.vue to cover Facets and Projects (5/7 object types today)'
-    status: ready
-    owner: null
+    status: done
     passes: 0
     stakes: reversible
     depends_on: null
-    note: >
-      Kaizen from t-014 (2026-08-02, kind_robots PR #1292). The new user dashboard's
-      "owned/created objects" section embeds the existing user-galleries.vue, which
-      covers dreams/art/bots/characters/scenarios/rewards but not Facets or Projects —
-      5 of the 7 core object types. Extend it with facetStore/projectStore sections
-      following the same per-type-section pattern (getStoreArray/getUserOwnedItems
-      helpers already generalize cleanly), so "owned/created objects" is actually
-      complete. Low risk, purely additive to an existing component.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-02T00:00:00Z'
+    note: |-
+      Kaizen from t-014 (2026-08-02, kind_robots PR #1292). The new user dashboard's "owned/created objects" section embeds the existing user-galleries.vue, which covers dreams/art/bots/characters/scenarios/rewards but not Facets or Projects — 5 of the 7 core object types. Extend it with facetStore/projectStore sections following the same per-type-section pattern (getStoreArray/getUserOwnedItems helpers already generalize cleanly), so "owned/created objects" is actually complete. Low risk, purely additive to an existing component.
+
+
+      Added Facet and Project sections to user-galleries.vue using the existing store-backed section pattern.
+
+      Merged Kind Robots PR #1373 as 08637445d166827ccd2c5528ea006e2c2b7b62fd. User Galleries now includes owned Facets and Projects, loads both stores through their existing actions, and links to /facets and /conductor. All 13 final-head workflows completed successfully.
+    claimed_by: 2026-08-03T141143Z-interface-vision-t-043-j7p4
+    claimed_at: '2026-08-03T14:11:43Z'
+    updated: '2026-08-03T14:29:00Z'
 
   - id: t-044
     milestone: m3
     title: 'Restructure artjob-queue-browser.vue: remove magic-number min-heights and depth-12 nesting'
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-017's first pass (2026-08-02, kind_robots PR #1295). t-017's own note
-      names components/art/artjob-queue-browser.vue (614 template lines at depth 12, with
-      min-h-[720px]/min-h-[560px] magic numbers forcing ~1280px of height inside an
-      already-nested scroller) as a daily-driver offender (artjob queue is one of Silas's
-      most-used pages) — but none of it is caught by verifyLayoutContract.ts's six tracked
-      categories, so the t-017 ratchet will never surface it or force it to zero. Needs its
-      own scoped pass: reduce nesting depth, replace the magic-number min-heights with
-      content-driven sizing (or a documented, deliberate primitive if a fixed size is
-      genuinely required), and re-check against the layout contract afterward in case
-      flattening the structure incidentally trips one-scroll or zero-scroll.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-02T00:00:00Z'
+    note: 'kind_robots PR #1394 merged (2026-08-04), extracting artjob-queue-card.vue and resolving the depth-12 nesting half of this task; the magic-number-height half was already resolved separately before this pass. Prior session had verified 14/14 CI green and mergeable_state clean but hit 12 consecutive merge-endpoint failures (alternating HTTP 502 / 405 "merge already in progress") and parked this at needs-human for a retry. Retried this session: merge succeeded on the first attempt, confirming the prior failures were transient.'
+    claimed_by: claude-20260804T0140Z-t044-artjob-queue
+    claimed_at: '2026-08-04T01:37:08Z'
+    updated: '2026-08-04T02:27:29Z'
+    soft_gate: false
 
   - id: t-045
     milestone: m3
     title: 'Extract a slim viewport store from displayStore.ts, delete the rest'
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-018 (2026-08-02, kind_robots PR #1298). t-018 set out to delete
-      stores/displayStore.ts (627 lines) as dead header/sidebar/footer state-machine
-      code, but t-018's own investigation found it is NOT fully dead: kind-loader.vue
-      calls displayStore.initialize() as real app-startup wiring, and memoryStore.ts
-      reads displayStore.viewportSize directly to size the live, routed Memory Dungeon
-      game board (cardSize/boardColumns computed properties). 5 of the 6 originally-named
-      consumers (screen-debug.vue, smart-icons.vue, icon-display.vue, smart-nav.vue,
-      butterfly-toggle.vue) ARE genuinely dead — no render site outside WonderLab preview
-      fixtures. Scope: extract a minimal viewport-tracking piece (viewportSize/
-      isMobileViewport/isTouchDevice plus the resize-listener init that kind-loader.vue
-      and memoryStore.ts actually need) into its own small store or composable, rewire
-      those two real callers to it, then delete stores/displayStore.ts and the 5 dead
-      components entirely. Re-run vue-tsc and the layout-contract suite afterward.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-02T00:00:00Z'
+    note: >-
+      kind_robots PR #1395 merged (2026-08-04): new stores/viewportStore.ts
+      carries viewportSize/isTouchDevice/isMobileViewport/initialize() for the
+      two real callers (kind-loader.vue, memoryStore.ts); deleted
+      displayStore.ts, the 5 dead components (screen-debug, smart-icons,
+      icon-display, smart-nav, butterfly-toggle), their dead-orbit helpers
+      (displayHelper.ts, applyQuerySelections.ts, seeds/modeLinks.ts), and the
+      dangling loadDisplayStore export. A follow-up commit removed the
+      resulting orphaned WonderLab preview fixture entries after the
+      Contract verifiers CI check caught a source-file read of the deleted
+      smart-nav.vue. Kaizen filed as t-084 (art-manager.vue magic-number
+      height) and t-085 (an unrelated broken /rewards art asset the audit
+      check surfaced in the same PR).
+    claimed_by: claude-20260804T0235Z-t045-viewport
+    claimed_at: '2026-08-04T02:28:25Z'
+    updated: '2026-08-04T03:01:00Z'
 
   - id: t-047
     milestone: m3
@@ -1557,83 +1549,135 @@ tasks:
   - id: t-050
     milestone: m2
     title: 'Retire workspace-narrator: fold the Dreams dock into kr-narrator-stage'
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
-      The unfinished half of Phase 4. kind_robots PR #1315 moved the dock's chat log onto
-      kr-chat-window and both follow-up loops onto kr-choice-list, which dropped one scroll
-      region (layout contract one-scroll 33 -> 32, the first time adoption actually moved
-      that number) and removed the third hand-rolled copy of the transcript. The plan's
-      other half -- add variant="dock" to kr-narrator-stage, port the chrome, delete all
-      1477 lines -- was NOT done, for two reasons worth keeping:
-      (1) The remaining chrome is not conversation. Card flip, emoji bursts, musings toast,
-      card backs, pin. That is Dreams' own character; folding it into the shared stage bloats
-      the component every other surface imports. Reconsider whether full retirement is even
-      the right goal, versus leaving a thin Dreams-specific dock that composes the kit.
-      (2) It is a slide-out panel with a CSS 3D card flip and timed animations. A source-text
-      contract cannot tell you a transform-style:preserve-3d panel still flips, and no browser
-      was available in that session. THIS TASK NEEDS VISUAL VERIFICATION -- open /dreams on the
-      Vercel preview, flip the card, send a message, check the musings toast, before and after.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-02T12:30:00Z'
+      RESOLVED as scope-correction, no code change: full retirement was the wrong goal, so
+      the deferred half of Phase 4 does not happen. Read workspace-narrator.vue in full
+      (components/navigation/workspace-narrator.vue, 1420 lines -- the "1477" in the prior
+      note had already drifted) and kr-narrator-stage.vue (components/narrative/kr-narrator-stage.vue,
+      189 lines) side by side. Findings: (1) the "every other surface imports [kr-narrator-stage]"
+      premise was wrong -- grep found exactly two real consumers, storybook-page.vue:83 and
+      taskmaster-page.vue:48 (LazyKrNarratorStage), not a broad shared surface. (2) The chrome
+      left in workspace-narrator after PR #1315 (card flip/preserve-3d faces ~82-105/247-270/
+      509-533/1305-1331, card backs+pin ~646-965, emoji bursts ~138-151/542-555/619-625/1104-1175/
+      1333-1391, musings toast ~107-136/468-495/605-711/1075-1102) is genuinely Dreams-specific
+      character, not conversation plumbing -- PR #1315 already extracted the conversation-kit
+      pieces onto kr-chat-window/kr-choice-list. (3) Grafting a variant="dock" branch onto
+      kr-narrator-stage to hold that chrome would add an estimated +330 to +400 lines and 4+
+      new props to a 189-line component -- more than doubling it -- almost all guarded behind
+      v-if="variant==='dock'" that Storybook/Taskmaster never trigger but must still ship and
+      reason about. That confirms the task's own instinct from the prior session: this is not
+      conversation, it's Dreams' own character. Decision: leave workspace-narrator.vue as the
+      Dreams-scoped component it already correctly is; do not fold its chrome into the shared
+      kr-narrator-stage. A cosmetic-only relocation into components/dreams/ was considered and
+      explicitly declined -- zero functional benefit, non-zero risk to the LazyWorkspaceNarrator
+      import in dream-interact.vue:21, not worth the diff. No kind_robots PR opened: there is no
+      code change, only this roadmap scope correction. Nothing to visually verify since no
+      behavior changes.
+    claimed_by: claude-20260804T0400Z-t050-scope
+    claimed_at: '2026-08-04T04:23:58Z'
+    updated: '2026-08-04T04:23:58Z'
 
   - id: t-051
     milestone: m2
-    title: 'Phase 5: the four interact surfaces onto the shared conversation kit'
+    title: 'Phase 5: character-interact onto the shared conversation kit'
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >
+      SHRUNK TO ITS LANDABLE CORE (scope split, 2026-08-04) and closed done. The task as filed
+      covered three surfaces -- reward-interact (1183 lines), character-interact (945),
+      scenario-interact (632) -- too much for one pass. This session landed the
+      character-interact slice only, via kind_robots PR #1400 (squash-merged): its hand-rolled
+      message list (bubbles keyed by role, a "thinking" indicator, NO scroll handling at all --
+      a live bug, not just a duplicate) is now kr-chat-window, mapped directly from the existing
+      chatMessages via a chatTurns computed. vue-tsc, layout-contract, and narrative-kit
+      contracts all clean; narrative-kit adoption is now 5/7, up from 4/7. Not yet visually
+      verified in a browser (no local dev server in this sandbox), but the mapping is a
+      straightforward field rename and kr-chat-window is already proven via bot-interact.vue,
+      storybook-page.vue, and taskmaster-page.vue.
+
+      The preset-prompt and getting-to-know-you button grids inside character-interact.vue are
+      still hand-rolled, not kr-choice-list -- left alone since the flagged duplicate was
+      specifically the transcript/scroll behavior; folding those in too would have grown the
+      diff without a matching contract win. Worth revisiting if a future pass touches this file
+      again, but not worth a dedicated task on its own.
+
+      REMAINING SCOPE SPLIT OUT: reward-interact.vue -> t-087, scenario-interact.vue -> t-088.
+      Both carry the full duplication-audit context this note used to hold (conductor-project-chat.vue,
+      character-flip-card.vue, the second-tier human-to-human surfaces, the WonderLab
+      retirement-policy background) -- see those tasks' notes rather than repeating it here.
+    claimed_by: claude-20260804T0426Z-t051-character-interact
+    claimed_at: '2026-08-04T04:28:18Z'
+    updated: '2026-08-04T04:28:18Z'
+
+  - id: t-087
+    milestone: m2
+    title: 'Phase 5: reward-interact.vue onto the shared conversation kit'
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: 'Migrated reward-interact.vue''s 1183-line hand-rolled story log onto kr-chat-window + kr-choice-list (the shared conversation kit character-interact.vue adopted via PR #1400). Removed the bespoke .story-dot keyframes and manual scroll management; conversation-kit adoption counter moved to 6/7 (test:narrative-kit), one-scroll violation count dropped by 1 (test:layout-contract, baseline ratcheted). scenario-interact.vue is the sibling task t-088, not touched here. kind_robots PR #1406 merged (71f0178).'
+    claimed_by: 2026-08-04T055600Z-t087
+    claimed_at: '2026-08-04T05:54:06Z'
+    updated: '2026-08-04T06:09:08Z'
+
+  - id: t-088
+    milestone: m2
+    title: 'Phase 5: scenario-interact.vue onto the shared conversation kit'
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: 'CLOSED 2026-08-04: merged via kind_robots PR #1408 (scenario-interact.vue onto the shared conversation kit, plus kr-choice-list hintProse addition). All 18 CI checks green before merge. See PR body for verification details and accepted visual-diff notes (dropped last-picked-choice highlight, transcript type-scale change) -- same tradeoffs already accepted for character-interact.vue (#1400) and reward-interact.vue (#1406/t-087). retry_context cleared.'
+    claimed_by: 2026-08-04T061400Z-t088
+    claimed_at: '2026-08-04T06:12:09Z'
+    updated: '2026-08-04T06:34:09Z'
+
+  - id: t-089
+    milestone: m2
+    title: 'Component-deletion checklist: grep for DOM-attribute-level plugin/workflow deps, not just call sites'
     status: ready
     owner: null
     passes: 0
     stakes: reversible
     note: >
-      Last phase of the redesign plan, and the largest remaining adoption gap. bot-interact landed in kind_robots PR #1316, so the kit is at 4/7 of the ORIGINALLY SURVEYED surfaces (verifyNarrativeKit prints the count every CI run). Remaining from that list: reward-interact (1183 lines), character-interact (945), scenario-interact (632).
-      TWO CORRECTIONS from a full duplication audit (2026-08-02), both of which would have bitten whoever picked this up:
-      (1) THE ORIGINAL SURVEY UNDERCOUNTED. It listed 7 conversational surfaces; the audit found five more first-tier hand-rolled transcripts that were never on it, so the 4/7 counter flatters the real position. conductor-project-chat.vue (229 lines -- the purest duplicate in the repo: daisyUI chat-start/chat-end pair, `loading loading-dots` on !botResponse, ref + scrollTop = scrollHeight); character-flip-card.vue (914 -- a near-verbatim copy of character-interact.vue's transcript AND its two prompt-button grids, so those two are one edit for two surfaces and should be done together); plus a second tier that is structurally the same widget but human-to-human rather than model conversation, and so a separate decision: messenger.vue, chat-gallery.vue, stage-message.vue, forum-thread.vue. Note character-interact.vue has NO scroll helper at all -- it never auto-scrolls -- so adopting kr-chat-window fixes a live bug there. reward-interact.vue and scenario-interact.vue each ship their own .story-dot keyframes (lines 1153 and 582) for the identical three-span indicator kr-chat-window provides.
-      (2) THE "ZERO DELETIONS" CLAIM WAS ITSELF WRONG, and has now been reversed (2026-08-03, kind_robots commit 2ba4f6e). This note previously said deleting components/scenarios/choice-selector.vue and choice-preview.vue "would orphan real published Reaction records and break that batch's source references". It would not. Both files are now deleted and all four reviews are intact.
+      Kaizen from t-026's close-out (kind_robots PR #1405, deleting conductor-art-gallery.vue in
+      favor of entity-art-manager.vue). A component-only grep ("who imports this .vue file")
+      missed two real dependents: plugins/project-art-prompt-suggest.client.ts DOM-scraped the
+      deleted component's specific markup (a textarea maxlength value and a <code> element) to
+      decide where to inject a button, and .github/workflows/entity-art-manager-contract.yml
+      named the file directly in its trigger `paths:` list (caught by CI's
+      verifyWorkflowPaths.ts, not by review). Neither shows up in a normal
+      import/component-usage search.
 
-      The museum record is anchored to the DATABASE, not the filesystem:
-      - server/utils/wonderlabComponentReconcile.ts:359-366 marks a component missing from the current scan as isDiscovered: false. There is no delete branch, and verifyComponentCanonicalRuntime.ts:138 asserts that branch exists.
-      - config/wonderlab-voice-polish-batch-011.json pins reviews by sourceKey, which LOOKS like a file dependency but is not: scripts/preflight-wonderlab-voice-polish-batch.mjs compares it to the Component row's sourceKey COLUMN (sourceLock: actual.sourceKey === revision.sourceKey), never to disk. That workflow's path filter does not include component sources at all.
-      - public/wonderlab-components.json and utils/generated/wonderLabSourceEvidence.ts are untracked build artifacts.
-      - ComponentStatus.RETIRED already exists (prisma/schema.prisma:2540), is settable from lab-interact.vue, and the museum already has a discovery: 'missing' filter.
-
-      Silas settled the policy question behind it: "the museum reviews are actually literally reviews of what the site has been, not where it is... it's not so we have a reason to cling to outdated components." Written up as docs/wonderlab-component-retirement-policy.md.
-
-      WHAT SURVIVES from the old correction, and is still the real lesson: WonderLab mounts by registry, not by route, so "no page mounts it" is not by itself evidence of death. Check the registry and the voice-polish batch configs before proposing a deletion -- then delete if the component is genuinely unreferenced, because the reviews are not a reason to keep it.
-
-      STILL TO DO HERE: the inline intro picker at scenario-interact.vue:113-155 duplicates the deleted components' job and has NOT been migrated. It is not a mechanical swap -- splitIntro (stores/helpers/scenarioHelper.ts:34) yields an optional ALL-CAPS eyebrow plus prose, and kr-choice-list renders its `hint` slot italic, which is wrong for a long opening paragraph; the current markup also uses a 2-column lg grid that kr-choice-list has no layout for. Either extend kr-choice-list (an eyebrow field, or a non-italic hint variant, or a 'grid' layout) or accept a deliberate visual change -- and put preview eyes on it either way, since this is a live user-facing surface.
-
-      Expect one-scroll to keep dropping as these land, the same way it did in PR #1315; ratchet the baseline each time. The kit pieces to adopt are kr-chat-window (with its #footer slot for trailing conversation-level content), kr-choice-list, and kr-art-plate (frame: 'plate' | 'thin' | 'none').
+      Write a short checklist (a section in AGENTS.md or a docs/ note) for "deleting a
+      superseded component" that adds: (1) grep the deleted filename across the whole repo, not
+      just .vue/.ts import sites -- .yml workflow files and DOM-scraping plugins are real
+      dependents too; (2) check .github/workflows/*.yml paths: blocks specifically;
+      (3) check plugins/*.client.ts for selector strings that could key off the deleted
+      component's specific rendered markup. This is documentation/process work, not code --
+      small and reversible.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-03T10:11:54Z'
+    updated: '2026-08-04T05:52:00Z'
 
   - id: t-052
     milestone: m3
     title: 'Entity art has no thumbnail variant: a 68-card gallery ships ~37MB'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    note: >
-      Flagged during the t-007 card/hero/icon work and never filed. Rendered card PNGs run about 544KB each, and nothing downsamples them for grid views -- a 68-card gallery is roughly 37MB over the wire. resolveArtVariantSrc (utils/artImageSrc.ts) already degrades card -> card base64 -> full-size, and resolveArtImageThumbSrc already prefers thumbnailPath, so the resolver side is in place.
-
-      SCOPED DOWN (2026-08-03). A source investigation narrowed this considerably. The original framing -- "nothing downsamples them" -- is misleading:
-
-      THE PROBLEM IS FORMAT, NOT DIMENSIONS. The card variant is ALREADY purpose-rendered at 512x768 (utils/scripts/backfillEntityCardHeroArt.ts:60, SLOTS.cardPath). Galleries are not loading full-size art by mistake; a 512x768 PNG simply weighs ~544KB. Re-rendering or transcoding those to webp at the same dimensions is the ~10x win, and it needs no new size logic.
-
-      TOOLING IS ALREADY INSTALLED, ADOPTION IS NOT. sharp@0.34.5 and @nuxt/image@2.0.0 are both already dependencies. But @nuxt/image is registered as a bare module (nuxt.config.ts:202) with NO `image:` config block anywhere, and exactly ONE component in the repo uses NuxtImg (components/user/user-picture.vue). So the delivery-side route is essentially greenfield.
-
-      HIGHEST-LEVERAGE EDIT POINT: components/gallery/kr-gallery.vue:50-55 renders a raw `<img :src>`. It already backs 2 of 7 core-object galleries and is slated to back all 7 (t-060), so one change there covers every gallery at once. Two viable routes, and they are NOT equivalent in risk:
-        (a) DELIVERY SIDE -- swap that `<img>` for `<NuxtImg>` with width/format hints. No backfill, no DB write, no re-render cost. BUT the default IPX provider must be able to fetch and transform the art host, which requires an `image.domains` allowlist entry; a misconfigured IPX breaks EVERY image rather than merely leaving them large. Must be proven against the real art host before it goes near main.
-        (b) STORAGE SIDE -- emit a webp alongside each card in the render queue, plus a backfill in the shape of backfillEntityCardHeroArt.ts. Slower and needs a migration, but it cannot break existing rendering because the resolver already degrades when a variant is absent.
-
-      NOT VERIFIABLE FROM AN AGENT SESSION. Both routes need real art to measure. The sandbox has sharp and Chromium, but DATABASE_URL points at the production host (acrocatranch.com:5544) which is unreachable from the agent network, and public/images/ is empty (4KB) -- there is no local art to transform or weigh. The 37MB figure remains an estimate from file sizes, not a captured transfer, and MUST be measured before and after by someone with real access. Do not ship route (a) without that measurement.
+    note: 'RECONCILED 2026-08-04, not newly implemented. Already shipped in kind_robots PR #1369 ("perf(art): serve entity art as webp, ~8x smaller, from the existing endpoint"), merged to main; this roadmap entry was never flipped. Verified on main at server/api/art/images/[id]/file.get.ts: the endpoint takes exactly the BEST ROUTE this note prescribed -- Accept: image/webp negotiation with Vary: Accept, sharp webp q82 (the measured 8.3x setting), a guard that keeps the original when the transcode would grow the file, and a try/catch that degrades to the original bytes rather than 500 on any sharp failure. The early sendRedirect for an external imagePath is untouched, as required. No migration, backfill, re-render or client change; every entity gallery benefits at once. CAVEAT: not re-measured against live production in this session -- the sandbox proxy returned ERR_CONNECTION_RESET on four consecutive attempts to kind-robots.vercel.app, so a byte-level spot check on real character cards is still worth doing.'
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-03T10:20:30Z'
+    updated: '2026-08-04T06:27:54Z'
 
   - id: t-053
     milestone: m3
@@ -1682,35 +1726,25 @@ tasks:
   - id: t-055
     milestone: m3
     title: 'Fix verifyLayoutContract.ts root-tag regex to recognize PascalCase component tags'
-    status: ready
-    owner: null
+    status: done
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-017's twelfth sweep (2026-08-02, kind_robots PR #1324).
-      verifyLayoutContract.ts's rootClassList() extracts a template's root tag with
-      `/^<([a-z][\w-]*)\b([^>]*)>/` -- the `[a-z]` only matches a lowercase first
-      character, so any page component whose own template root is a PascalCase
-      component reference (e.g. `<ProjectFrontPage class="kr-surface" ...>`) can
-      never match, regardless of whether the class attribute is actually present and
-      correct. This sweep worked around it by renaming 13 call sites from
-      `<ProjectFrontPage>` to Nuxt's equivalent kebab-case `<project-front-page>`
-      (harmless -- Vue/Nuxt resolve both identically -- but incidental, and it will
-      recur for any other component-rooted page wrapper written in PascalCase).
-      Change the regex's tag-name character class to accept an uppercase first
-      character too (e.g. `[A-Za-z]`) so root-surface detection judges the actual
-      class attribute instead of depending on the caller's tag-case convention. Add a
-      regression fixture (a page component whose root is a PascalCase tag carrying
-      kr-surface) so this doesn't silently regress.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-02T16:41:53Z'
+    note: |-
+      Kaizen from t-017's twelfth sweep (2026-08-02, kind_robots PR #1324). verifyLayoutContract.ts's rootClassList() extracts a template's root tag with `/^<([a-z][\w-]*)\b([^>]*)>/` -- the `[a-z]` only matches a lowercase first character, so any page component whose own template root is a PascalCase component reference (e.g. `<ProjectFrontPage class="kr-surface" ...>`) can never match, regardless of whether the class attribute is actually present and correct. This sweep worked around it by renaming 13 call sites from `<ProjectFrontPage>` to Nuxt's equivalent kebab-case `<project-front-page>` (harmless -- Vue/Nuxt resolve both identically -- but incidental, and it will recur for any other component-rooted page wrapper written in PascalCase). Change the regex's tag-name character class to accept an uppercase first character too (e.g. `[A-Za-z]`) so root-surface detection judges the actual class attribute instead of depending on the caller's tag-case convention. Add a regression fixture (a page component whose root is a PascalCase tag carrying kr-surface) so this doesn't silently regress.
+
+
+      Implemented the PascalCase root-tag parser fix and added a regression fixture on the Kind Robots worker branch.
+
+      Merged Kind Robots PR #1375 as d96ba913a23f8908f53f43ea04128fbc637d83b9. verifyLayoutContract.ts now recognizes PascalCase component roots and includes a regression fixture proving a PascalCase root carrying kr-surface is parsed correctly. All 11 final-head workflows completed successfully before merge.
+    claimed_by: 2026-08-03T161347Z-interface-vision-t-055-n8q4
+    claimed_at: '2026-08-03T16:13:47Z'
+    updated: '2026-08-03T16:27:00Z'
 
   - id: t-061
     milestone: m3
     title: 'Give conductor-page.vue a real kr-surface/kr-scroll split (root-surface + one-scroll)'
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -1743,9 +1777,9 @@ tasks:
       canonical, verifying visually via the Vercel preview) is still unstarted. Do not
       redo the root-surface rename -- scope the rest of this task to the one-scroll
       split only.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-02T17:35:16Z'
+    claimed_by: 2026-08-03T164500Z-interface-vision-t-061-cw7
+    claimed_at: '2026-08-03T16:29:36Z'
+    updated: '2026-08-03T16:44:42Z'
 
   - id: t-057
     milestone: m3
@@ -1821,39 +1855,21 @@ tasks:
     milestone: m3
     title: 'Give one-scroll Shape B a two-owner grid primitive, and stop counting Shapes A/D'
     status: ready
-    owner: null
     passes: 0
     stakes: reversible
-    note: >
-      Follow-on from t-047, whose stated root cause was refuted by a full file-by-file audit
-      (see the CORRECTION appended to t-047's note for the verified A/B/C/D/E taxonomy).
-      Two pieces of work, and the order matters:
+    note: |-
+      Follow-on from t-047, whose stated root cause was refuted by a full file-by-file audit (see the CORRECTION appended to t-047's note for the verified A/B/C/D/E taxonomy). Two pieces of work, and the order matters:
+      FIRST, make the rule mean what the brief means. verifyLayoutContract.ts counts every `overflow-y-auto` occurrence in a template statically, with no awareness of v-if exclusivity or bounded max-h-* sub-regions -- so roughly 17 of the remaining 27 entries are things that never co-exist at runtime. Teach it those two cases and the bucket shrinks honestly instead of by rewriting correct code. Guard against gaming it: the rule already only matches literal h-screen/100vh substrings elsewhere, and t-017's seventh pass documented that swapping to h-dvh would have silently passed while reproducing the bug. Same discipline applies here.
+      SECOND, Shape B (12 files) genuinely has two live scroll owners in one grid -- an <aside> and a <main>, both mounted -- and the .kr-* set has no idiom for that. .kr-surface is a single bounded root and .kr-scroll is documented as "exactly one per .kr-surface". Until a two-owner primitive exists these 12 cannot be fixed correctly, only disguised. Design it against the real cases (character-interact.vue and art-interact.vue are the cleanest two-pane examples; mural-manager.vue is the hard one at three concurrent panes).
+      THIRD and separately: the rule as written also cannot see the opposite failure. A non-page component declaring EXACTLY ONE scroll region, mounted inside a page that also scrolls, is invisible to it -- there were 69 such components at the time of the audit (85 total single-scroll files, 16 of which are page components legitimately owning their scroll). The brief's rule 2 targets "0 nested"; the bucket can reach zero with all 69 still nested. Worth measuring before declaring rule 2 satisfied.
 
-      FIRST, make the rule mean what the brief means. verifyLayoutContract.ts counts every
-      `overflow-y-auto` occurrence in a template statically, with no awareness of v-if
-      exclusivity or bounded max-h-* sub-regions -- so roughly 17 of the remaining 27 entries
-      are things that never co-exist at runtime. Teach it those two cases and the bucket
-      shrinks honestly instead of by rewriting correct code. Guard against gaming it: the rule
-      already only matches literal h-screen/100vh substrings elsewhere, and t-017's seventh
-      pass documented that swapping to h-dvh would have silently passed while reproducing the
-      bug. Same discipline applies here.
 
-      SECOND, Shape B (12 files) genuinely has two live scroll owners in one grid -- an <aside>
-      and a <main>, both mounted -- and the .kr-* set has no idiom for that. .kr-surface is a
-      single bounded root and .kr-scroll is documented as "exactly one per .kr-surface". Until
-      a two-owner primitive exists these 12 cannot be fixed correctly, only disguised. Design
-      it against the real cases (character-interact.vue and art-interact.vue are the cleanest
-      two-pane examples; mural-manager.vue is the hard one at three concurrent panes).
+      Implemented the first bounded t-058 slice on worker/interface-vision-t-058-20260803T191237Z-q7m4: count actual static scroll-owner elements, exclude max-h-* bounded preview regions, keep kr-scroll explicit, and report exact ratchet removals for review.
 
-      THIRD and separately: the rule as written also cannot see the opposite failure. A
-      non-page component declaring EXACTLY ONE scroll region, mounted inside a page that also
-      scrolls, is invisible to it -- there were 69 such components at the time of the audit
-      (85 total single-scroll files, 16 of which are page components legitimately owning their
-      scroll). The brief's rule 2 targets "0 nested"; the bucket can reach zero with all 69
-      still nested. Worth measuring before declaring rule 2 satisfied.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-02T15:00:00Z'
+      Merged Kind Robots PR #1378 as 8af165a0d2c1bc81d00ebf7fd2b89b8306bc0912 after all 11 final-head workflows completed successfully. The one-scroll verifier now counts actual static scroll-owner elements, excludes max-h-* bounded previews, keeps kr-scroll explicit, and ratchets the baseline from 22 to 15. Removed seven Shape D false positives: animation-manager, art-styler, artjob-editor, character-flip-card, scenario-gallery, theme-gallery, and user-galleries. Shape A branch exclusivity and the Shape B two-owner primitive remain open, so this task returns to ready.
+    claimed_by: 2026-08-03T191237Z-interface-vision-t-058-q7m4
+    claimed_at: '2026-08-03T19:12:37Z'
+    updated: '2026-08-03T19:23:30Z'
 
   - id: t-054
     milestone: m2
@@ -1953,53 +1969,17 @@ tasks:
     milestone: m3
     title: 'A CI step piped through tee can never fail: verifyFacetArtworkMigration is dead'
     status: ready
-    owner: null
     passes: 0
     stakes: reversible
-    note: >
-      Found while consolidating the facet artwork chain (kind_robots, t-055 follow-on).
-      Two separate problems, and the second is the one that matters beyond this one script.
-
-      FIRST: utils/scripts/verifyFacetArtworkMigration.ts is currently FAILING on main, and
-      has been for some time. It asserts components/facets/facet-manager.vue contains
-      `v-model="newImagePath"` among a list of artwork-migration texts, and that string is
-      gone. Confirmed by stashing all local work and re-running against a clean tree. The
-      contract describes a migration whose UI has since moved on; it needs either updating to
-      the current facet-manager or retiring.
-
-      SECOND, and the reusable lesson: nobody noticed because the check CANNOT FAIL.
-      .github/workflows/facet-catalog-contract.yml:125 runs it as
-      `npx tsx utils/scripts/verifyFacetArtworkMigration.ts 2>&1 | tee facet-artwork-report.txt`.
-      A pipeline's exit status is the LAST command's, so the step always exits 0 no matter
-      what the verifier does. The `if: failure() && steps.artwork.outcome == 'failure'`
-      artifact upload that follows it is therefore unreachable too. This is the same class of
-      bug as a test that never asserts: the job is green, the badge is green, and the check
-      has been inert.
-
-      Fix the pipeline first (`set -o pipefail`, or drop the tee and rely on the workflow log),
-      THEN fix or retire the contract -- in that order, because fixing the contract while the
-      step is still inert proves nothing. While there, grep the other workflows for the same
-      `| tee` shape; if this one drifted in, others may share it.
-
+    note: |-
+      Found while consolidating the facet artwork chain (kind_robots, t-055 follow-on). Two separate problems, and the second is the one that matters beyond this one script.
+      FIRST: utils/scripts/verifyFacetArtworkMigration.ts is currently FAILING on main, and has been for some time. It asserts components/facets/facet-manager.vue contains `v-model="newImagePath"` among a list of artwork-migration texts, and that string is gone. Confirmed by stashing all local work and re-running against a clean tree. The contract describes a migration whose UI has since moved on; it needs either updating to the current facet-manager or retiring.
+      SECOND, and the reusable lesson: nobody noticed because the check CANNOT FAIL. .github/workflows/facet-catalog-contract.yml:125 runs it as `npx tsx utils/scripts/verifyFacetArtworkMigration.ts 2>&1 | tee facet-artwork-report.txt`. A pipeline's exit status is the LAST command's, so the step always exits 0 no matter what the verifier does. The `if: failure() && steps.artwork.outcome == 'failure'` artifact upload that follows it is therefore unreachable too. This is the same class of bug as a test that never asserts: the job is green, the badge is green, and the check has been inert.
+      Fix the pipeline first (`set -o pipefail`, or drop the tee and rely on the workflow log), THEN fix or retire the contract -- in that order, because fixing the contract while the step is still inert proves nothing. While there, grep the other workflows for the same `| tee` shape; if this one drifted in, others may share it.
       PARTLY DONE, 2026-08-03, kind_robots PR #1356 -- and the grep found more than expected.
-
-      The contract is repaired and runnable. Its stale half was worse than "stale": it
-      required a dozen literal v-model="newImagePath" strings against a facet-manager whose
-      form is now <FacetProfileEditor> plus an <EntityArtManager :slots> covering imagePath,
-      iconPath, cardPath AND heroPath -- strictly MORE art roles than the old form. It was
-      failing against a manager that had got better. It now asserts structure rather than one
-      spelling, and follows the form <-> Facet mapping into utils/facetProfileForm.ts.
-
-      Its other half could never have passed anywhere: it asserted ~280 curated images exist
-      on disk under public/images, which .gitignore:33 excludes from the repo entirely (the
-      art lives on the deployed host). `git ls-files public/images/adventure` returns nothing.
-      That assertion is now conditional on the assets being present and PRINTS that it
-      skipped -- a check that quietly does nothing is the bug, not the fix.
-
-      PIPEFAIL IS DELIBERATELY STILL NOT SET, and this is the part that needs a decision.
-      Flipping it turns main red on three independent pre-existing failures, each needing its
-      own fix:
-
+      The contract is repaired and runnable. Its stale half was worse than "stale": it required a dozen literal v-model="newImagePath" strings against a facet-manager whose form is now <FacetProfileEditor> plus an <EntityArtManager :slots> covering imagePath, iconPath, cardPath AND heroPath -- strictly MORE art roles than the old form. It was failing against a manager that had got better. It now asserts structure rather than one spelling, and follows the form <-> Facet mapping into utils/facetProfileForm.ts.
+      Its other half could never have passed anywhere: it asserted ~280 curated images exist on disk under public/images, which .gitignore:33 excludes from the repo entirely (the art lives on the deployed host). `git ls-files public/images/adventure` returns nothing. That assertion is now conditional on the assets being present and PRINTS that it skipped -- a check that quietly does nothing is the bug, not the fix.
+      PIPEFAIL IS DELIBERATELY STILL NOT SET, and this is the part that needs a decision. Flipping it turns main red on three independent pre-existing failures, each needing its own fix:
       (a) verifyFacetArtworkMigration, one failure left and it is a real data defect:
           "Curious" exists as both an alignment and a personality quirk; seedFacetCatalog
           merges them into ONE Facet by normalized title (that merge is intentional -- see
@@ -2017,16 +1997,18 @@ tasks:
           props: reward-facet-picker (modelValue), storybook-state-panel (session),
           video-lora-picker (engine, modelValue, strength), watchlist-entry-detail (entry).
 
-      The remaining two tee'd steps (academy-examples-manifest, audit:channel-assets) both PASS
-      locally, so those two can have `shell: bash` added with no fallout at any time.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-03T08:30:00Z'
+      The remaining two tee'd steps (academy-examples-manifest, audit:channel-assets) both PASS locally, so those two can have `shell: bash` added with no fallout at any time.
+
+
+      Re-verified current main after PR #1356. Enabling pipefail on the Facet workflow would immediately expose three independent known-red contracts: Facet artwork cross-taxonomy collision, Builder coverage, and strict WonderLab preview fixtures. The two passing tee steps live in contract-tests.yml but changing them alone would not complete this task. Released without weakening or duplicating CI.
+    claimed_by: 2026-08-03T121900Z-interface-vision-t-063-r2m7
+    claimed_at: '2026-08-03T12:19:00Z'
+    updated: '2026-08-03T12:24:00Z'
 
   - id: t-064
     milestone: m2
     title: 'kr-gallery: the card BODY is the duplication, not the shell'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -2107,9 +2089,16 @@ tasks:
       a caption-meta row and a surface-toned scrim got written for bot-card in #1352 and then
       deleted before commit for being unexercised; do not repeat that by porting reward
       mechanically. Pick the placement rule, then both fall out in one pass.
+
+      CLOSED, 2026-08-04. reward-card converged onto kr-entity-card-body separately (found
+      already migrated when reviewing PR #1396 -- not tracked by an intermediate note update
+      on this task, but confirmed present in the merged tree: components/rewards/reward-card.vue
+      imports kr-entity-card-body). kind_robots PR #1396 finished the fifth and last card,
+      dream-card (verifyGalleryAdoption: 5/5). All five object cards now share both the shell
+      (reactable-card) and the body (kr-entity-card-body).
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-03T08:05:00Z'
+    updated: '2026-08-04T03:10:00Z'
 
   - id: t-065
     milestone: m3
@@ -2153,8 +2142,7 @@ tasks:
   - id: t-067
     milestone: m3
     title: 'Document the root-tag footgun in verifyLayoutContract.ts (root-surface checks the literal first tag, not the visually-styled wrapper)'
-    status: ready
-    owner: null
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -2167,87 +2155,69 @@ tasks:
       utils/scripts/verifyLayoutContract.ts noting this footgun, so the next sweep checks the literal opening tag
       first instead of assuming it's whichever nested element carries the layout classes.
 
+      Added a focused inline warning that rootClassList inspects the literal first element inside template, not the visually dominant nested wrapper.
+
+      Merged Kind Robots PR #1364 as 0eb1778a4fa44e7e8b954444a917c9bd83f6ccaa. Added an inline warning above rootClassList that the root-surface verifier inspects the literal first element inside template, not a visually dominant nested wrapper. All 11 final-head workflows completed successfully.
+    claimed_by: 2026-08-03T111341Z-interface-vision-t-067-b4n8
+    claimed_at: '2026-08-03T11:21:00Z'
+    updated: '2026-08-03T11:30:00Z'
+
 
   - id: t-068
     milestone: m3
     title: 'A doc comment can fail 29 source-text contracts — strip comments before forbid- scans'
     status: ready
-    owner: null
     passes: 0
     stakes: reversible
-    note: >
-      This has now bitten twice in one week, in two unrelated files, and the mechanism is
-      general enough to bite every remaining contract that has a forbid- rule.
+    note: |-
+      This has now bitten twice in one week, in two unrelated files, and the mechanism is general enough to bite every remaining contract that has a forbid- rule.
+      OCCURRENCE 1: a `role="log"` comment in components/narrative/kr-chat-window.vue, written to explain the accessibility attribute, failed utils/scripts/verifyNarrativeAccessibility.mjs -- which was scanning for the very bug the comment documented the absence of. Fixed there by narrowing the match to the scroll container's opening tag.
+      OCCURRENCE 2: a comment in components/facets/facet-gallery.vue naming createFacet / updateFacet / archiveFacet / FacetProfileEditor -- so a reader knows WHY the picker only emits a selection -- failed utils/scripts/verifyFacetGallery.ts, whose whole job is to forbid those calls in that file. No such call existed. Fixed in kind_robots PR #1351 by stripping HTML comments, block comments and line comments before every forbid- scan, while leaving requireText reading raw source (so a required token still cannot be satisfied by a comment claiming it is there). Proved both ways: the doc comment passes, an injected updateFacet call still fails.
+      THE PROBLEM IS THE PATTERN, NOT THE TWO FILES. 29 verifier scripts in kind_robots/utils/scripts/ do whole-file substring forbid- checks with no comment handling: verifyArtImagePatchOwnerTransfer, verifyBotMutationOwnership, verifyCharacterMutationInputParity, verifyDaVinciNarration, verifyDailyDreamFacets, verifyDreamMutationInputParity, verifyFacetCanonicalMerges, verifyFacetCatalogCutover, verifyFacetClosure, verifyFacetCuration, verifyFacetPersonalityFamilies, verifyFacetTaxonomyAuthority, verifyModelBuilderFacetSync, verifyProjectMutationInputParity, verifyPromptCreateOwnership, verifyReactionCreateInputBoundary, verifyReactionSubPatchEnvelope, verifyResourceMutationOwnership, verifyRewardMutationInputParity, verifyScenarioMutationInputParity, verifyServerMutationOwnership, verifySystemOptionFacetCutover, verifyThemeMutationInputParity, verifyTodoMutationInputParity, verifyUserPatchAllowlist, verifyWonderLabRegistryHealth, verifySerendipityRouteCutover (+ the two already fixed).
+      This is worse than an annoyance: a contract you cannot explain in a comment beside the code it governs teaches everyone to stop explaining. The house style is heavily commented precisely so a stranger can pick a file up cold, and these rules quietly punish that.
+      DO: extract the stripComments helper added to verifyFacetGallery.ts into a shared module (utils/scripts/lib/ or similar), and route every forbid-style check through it. Keep require-style checks on raw source. Add one test that a comment mentioning a forbidden token passes while a real occurrence still fails -- otherwise the fix is itself unverified. Fold in t-063's `| tee` finding first if it is still open, since a contract that cannot fail and a contract that fails wrongly are the same bug from opposite ends.
 
-      OCCURRENCE 1: a `role="log"` comment in components/narrative/kr-chat-window.vue,
-      written to explain the accessibility attribute, failed
-      utils/scripts/verifyNarrativeAccessibility.mjs -- which was scanning for the very bug
-      the comment documented the absence of. Fixed there by narrowing the match to the scroll
-      container's opening tag.
 
-      OCCURRENCE 2: a comment in components/facets/facet-gallery.vue naming createFacet /
-      updateFacet / archiveFacet / FacetProfileEditor -- so a reader knows WHY the picker only
-      emits a selection -- failed utils/scripts/verifyFacetGallery.ts, whose whole job is to
-      forbid those calls in that file. No such call existed. Fixed in kind_robots PR #1351 by
-      stripping HTML comments, block comments and line comments before every forbid- scan,
-      while leaving requireText reading raw source (so a required token still cannot be
-      satisfied by a comment claiming it is there). Proved both ways: the doc comment passes,
-      an injected updateFacet call still fails.
+      Extracted the comment-aware source scanner into a shared helper, migrated the two Facet contracts that already carried or needed this behavior, and added a focused self-test proving comments are ignored while executable occurrences still fail. This is a bounded first migration slice; the remaining forbid-style verifiers still need conversion.
 
-      THE PROBLEM IS THE PATTERN, NOT THE TWO FILES. 29 verifier scripts in
-      kind_robots/utils/scripts/ do whole-file substring forbid- checks with no comment
-      handling: verifyArtImagePatchOwnerTransfer, verifyBotMutationOwnership,
-      verifyCharacterMutationInputParity, verifyDaVinciNarration, verifyDailyDreamFacets,
-      verifyDreamMutationInputParity, verifyFacetCanonicalMerges, verifyFacetCatalogCutover,
-      verifyFacetClosure, verifyFacetCuration, verifyFacetPersonalityFamilies,
-      verifyFacetTaxonomyAuthority, verifyModelBuilderFacetSync,
-      verifyProjectMutationInputParity, verifyPromptCreateOwnership,
-      verifyReactionCreateInputBoundary, verifyReactionSubPatchEnvelope,
-      verifyResourceMutationOwnership, verifyRewardMutationInputParity,
-      verifyScenarioMutationInputParity, verifyServerMutationOwnership,
-      verifySystemOptionFacetCutover, verifyThemeMutationInputParity,
-      verifyTodoMutationInputParity, verifyUserPatchAllowlist, verifyWonderLabRegistryHealth,
-      verifySerendipityRouteCutover (+ the two already fixed).
+      Merged Kind Robots PR #1407 as 8a83d38a10a2a1e5af778439fcc173f59c940573. The shared comment-aware scanner now lives at utils/scripts/lib/sourceText.ts; verifyFacetGallery.ts and verifyFacetClosure.ts use it, and verifySourceTextComments.test.ts proves comments do not satisfy forbid scans while executable occurrences still do. All 11 final-head workflows completed successfully. The remaining forbid-style verifier scripts still need the same mechanical migration, so this task returns to ready rather than being falsely closed.
 
-      This is worse than an annoyance: a contract you cannot explain in a comment beside the
-      code it governs teaches everyone to stop explaining. The house style is heavily
-      commented precisely so a stranger can pick a file up cold, and these rules quietly
-      punish that.
+      Migrated verifyUserPatchAllowlist.ts forbid scans to the shared comment-aware source scanner as the next bounded t-068 slice.
 
-      DO: extract the stripComments helper added to verifyFacetGallery.ts into a shared module
-      (utils/scripts/lib/ or similar), and route every forbid-style check through it. Keep
-      require-style checks on raw source. Add one test that a comment mentioning a forbidden
-      token passes while a real occurrence still fails -- otherwise the fix is itself
-      unverified. Fold in t-063's `| tee` finding first if it is still open, since a contract
-      that cannot fail and a contract that fails wrongly are the same bug from opposite ends.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-03T07:15:00Z'
+      Merged Kind Robots PR #1413 as 3d9b5e9f1d24e931fb8fae8a3dcfbc1ba92c9602. verifyUserPatchAllowlist.ts now routes forbid scans through the shared comment-aware containsCode helper while require checks continue reading raw source. All 12 final-head workflows completed successfully. The broader t-068 migration remains incomplete, so return it to ready for another bounded verifier slice.
+    claimed_by: 2026-08-04T071303Z-interface-vision-t-068-n4q7
+    claimed_at: '2026-08-04T07:13:03Z'
+    updated: '2026-08-04T07:21:30Z'
 
   - id: t-069
     milestone: m2
     title: 'Project card description text renders over the card art on /conductor'
-    status: ready
+    status: done
+    soft_gate: true
     owner: null
     passes: 0
     stakes: reversible
-    note: >
-      Seen in the Projects screenshot Silas sent with the 2026-08-02 UI review (sent as the GOOD example -- Projects is the gallery he named as the shape the rest should follow, which is why this is worth fixing rather than tolerating).
-      On the top row of /conductor, project description text ("Ship a functional MVP quickly..." and its neighbours) renders above or behind the card artwork instead of below it in the body. Lower rows look correct.
+    note: >-
+      Closed 2026-08-04. Reproduced, diagnosed and fixed. kind_robots PR #1392.
 
-      STILL BLOCKED ON A PREVIEW (2026-08-03). A source investigation ruled out the obvious causes but could NOT reproduce or locate the defect, and the fix must not be guessed at -- this is Silas's most-used page and a speculative CSS change could make it worse. What was checked, so the next attempt does not repeat it:
+      WHAT IT WAS: alt text. An <img> that resolves to nothing makes the browser paint its ALT string inside the layout box where the art should be. Not misplaced markup -- nothing in the source is wrong, which is exactly why three rounds of source review found nothing. The defect exists only while art is missing (common right now, art is still generating) and it tracks whichever cards have not loaded rather than a fixed position, which is why Silas reported the TOP row and the reproduction showed the SECOND.
 
-      - kr-gallery's card markup is structurally sound. components/gallery/kr-gallery.vue:49-100 renders the art inside `<div class="relative overflow-hidden" :class="imageWrapClass">` and the text in a SIBLING `<div class="p-3">` that follows it in normal flow. The text is not absolutely positioned, so it can only overlap the art if the art wrapper collapses to zero height.
-      - The wrapper cannot collapse. imageWrapClass (kr-gallery.vue:190-198) gives every mode a height: heroes `min-h-64`, list `min-h-40`, icons `size-24`, cards `aspect-[4/3]`. min-height on a block element holds even though all the wrapper's children are `absolute inset-0`.
-      - The tailwind.css `:has()` theory is dead. The four global overrides that used to patch the public project gallery were already removed by t-017's first pass (assets/css/tailwind.css:157-163 documents this). The two that remain are scoped to the ADMIN project detail view.
-      - Not a stale-screenshot artifact. kr-gallery landed in this page on 2026-08-01 (d1b652e, PR #1265), before the 2026-08-02 screenshot. The only later touch, be7268b (PR #1326, 2026-08-02 10:37), swapped root utilities for kr-surface/kr-scroll and did not touch card markup.
+      TWO CORRECTIONS TO THIS TASK NOTE, both of which would have cost the next session real time:
 
-      WHICH COMPONENT IS ACTUALLY WRONG IS UNCONFIRMED. content/conductor.md mounts `:conductor-manager`, NOT conductor-project-gallery-page.vue. conductor-page.vue (2202 lines) carries its own public Project gallery -- t-017's note describes baking auto-fit grid columns and overflow-x directly into it. Establish which component renders the row in the screenshot BEFORE editing anything; the original note's pointer at conductor-project-gallery-page.vue may be wrong.
+      1. "the original note pointer at conductor-project-gallery-page.vue may be wrong ... conductor-page.vue carries its own public Project gallery. Establish which component renders the row BEFORE editing anything." The original pointer was RIGHT and this correction was the error. Settled by evidence rather than reading: the reproduction screenshot contains "45 records", "2 sync issues" and an "Ideas" filter chip, and those strings appear in exactly one component -- conductor-project-gallery-page.vue, which mounts kr-gallery at line 59. The mode toggles cannot distinguish the two components; both render mode.abbr.
 
-      CANNOT BE VERIFIED FROM AN AGENT SESSION. The sandbox has Chromium and a DATABASE_URL, but the DB is the production host (acrocatranch.com:5544) and is unreachable from the agent network, so /conductor cannot be rendered with real project data locally. This needs either Silas's eyes on a deployed preview, or a fresh screenshot at the failing width (desktop/wide -- it may not appear where the grid drops to one column) with a DOM inspection of the offending card.
+      2. "CANNOT BE VERIFIED FROM AN AGENT SESSION ... needs Silas eyes on a deployed preview." No longer true. utils/scripts/auditResponsiveLayout.mjs plus .github/workflows/responsive-layout-audit.yml render any route against a real deployment at 390/820/1440 and upload screenshots. This task was reproduced on the FIRST such run.
+
+      FIX: kr-gallery already had a placeholder for art-absent; it now also covers art-present-but-failed, for both the main art and the corner icon puck. Failed sources are tracked by URL so one missing file is remembered across a mode switch, and the Set is replaced rather than mutated because mutating in place does not trip reactivity.
+
+      SECOND DEFECT FOUND UNDERNEATH: after the main-art fix the audit still failed on one image, the 44x44 icon puck. alt="" so it painted no text, but a missing file still paints a broken-image BOX -- the small broken glyph beside "Interface Vision" in the screenshot. Also fixed.
+
+      REMAINING, NOT A CODE BUG: projects/images/interface-vision-icon.webp is genuinely absent from THIS repo. Verified 404 while a sibling (coloring-book-icon.webp) returns 200. The kind_robots fix stops it looking like a rendering fault; adding the file is conductor-side work.
+
+      VERIFIED: audit 24/24 clean (8 routes x 3 viewports) against the preview with real data, having gone 14/24 -> 3/24 -> clean across three runs as the check itself was calibrated.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-03T10:19:00Z'
+    updated: '2026-08-04T02:12:20Z'
 
   - id: t-070
     milestone: m3
@@ -2282,3 +2252,562 @@ tasks:
     claimed_at: null
     updated: '2026-08-03T10:03:55Z'
     approved_by_human: true
+
+  - id: t-072
+    milestone: m3
+    title: 'Drop the physical Facet.kind column now that it is fully derived from FacetTaxonomy'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: irreversible
+    depends_on: null
+    note: >
+      Split out of t-016 (2026-08-03, kind_robots PR #1362) as the higher-risk second half.
+      t-016 finished consolidating every write/read site onto legacyFacetKindForTaxonomy
+      (server/utils/facetProfileInput.ts) so Facet.kind is now purely write-derived from
+      FacetProfile.taxonomy -- no code path sets or reads it as an independent value anymore.
+
+      What remains is a genuinely destructive production migration: DROP the kind column
+      and its Facet_kind_idx index from schema.prisma (~line 478) and the physical table,
+      modeled on the additive-direction example at
+      prisma/migrations/20260727022500_facet_taxonomy_authority/migration.sql (this one
+      goes the other way -- DROP COLUMN, not ADD).
+
+      REQUIRED PRECONDITION, not yet verified: Facet and FacetProfile are not enforced 1:1
+      at the Prisma level (only a DB-level FK with ON DELETE CASCADE). Any Facet lacking a
+      FacetProfile row becomes unclassifiable once the column is gone. Before this migration
+      ships, confirm every Facet row has a FacetProfile row -- run
+      utils/scripts/repairFacetProfiles.ts --apply against production first (or add a
+      migration-time backfill query), then re-check with a live count query, not a static
+      read. This cannot be verified from an agent sandbox: DATABASE_URL there points at the
+      unreachable production host (acrocatranch.com:5544).
+
+      Given the destructive nature (AGENTS.md hard rule 10; the Reviewer's migration-review
+      exception explicitly excludes DROP of tables/columns/data), this should not be
+      Worker/Reviewer auto-merged even though stakes fits the general software flow --
+      route to needs-human once the precondition is confirmed and the migration is drafted,
+      so Silas signs off on the production DROP COLUMN specifically.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-03T10:47:00Z'
+
+  - id: t-073
+    milestone: m3
+    title: 'Fix the one-scroll SHAPE A false positives by hoisting a shared kr-scroll above mutually-exclusive tab branches'
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: |-
+      Kaizen from t-017's twenty-fifth sweep (2026-08-03, kind_robots PR #1365). t-047's full read-only audit of the one-scroll bucket (27 entries, done 2026-08-02) found roughly 10 of them are SHAPE A: mutually-exclusive v-if/v-else-if/v-show tab branches, each declaring its own scroll region, but only ever one mounted at runtime. verifyLayoutContract.ts's static regex counts all of them regardless of mutual exclusivity, so these are false positives, not real nested-scroll bugs. art-manager.vue (seven v-else-if branches, identical scroll class on each) is the type specimen kind_robots PR #1321 already fixed four of this shape for.
+      Fix: for each remaining SHAPE A file, hoist one shared .kr-scroll wrapper above the v-if/v-else-if/v-show branch instead of declaring the scroll class on each branch individually -- same zero-behavior-change pattern the rest of t-017's sweeps have used throughout. Verify via vue-tsc, eslint, npm run test:layout-contract (--update to ratchet), and verifyMdcScrollOwnership.ts, same as any other bounded sweep.
+      This does not require the still-missing two-column-scroll primitive SHAPE B (12 files: genuine concurrent <aside>+<main>, both live at once) needs -- that's a separate, harder follow-on, out of scope here.
+
+
+      Inspected the live one-scroll baseline and representative candidates. animation-manager.vue is genuine concurrent gallery-plus-aside Shape B; scenario-gallery.vue has a form scroll region that can coexist with its content scroll; user-galleries.vue nests bounded previews inside its parent. None are safe Shape A hoists. Released rather than shrinking the counter dishonestly; remaining candidates need importer and branch-lifecycle classification.
+
+      Hoisted Art Manager's mutually-exclusive tab scrollers into one shared kr-scroll wrapper, preserving Gallery's delegated scroll and ArtJob's responsive 2xl overflow behavior. Ratcheted one-scroll from 27 to 26.
+
+      Merged Kind Robots PR #1371 as 70f2ed545d2c52be8ae8bc852e5c85969257ec99. Art Manager now hoists six mutually-exclusive tab scroll regions into one shared kr-scroll owner, preserves Gallery's delegated scroll and ArtJob's responsive 2xl overflow behavior, and ratchets one-scroll from 27 to 26. All 13 final-head workflows completed successfully. The task remains open for the other verified Shape A files. Classify every one-scroll candidate by whether scroll regions can coexist at runtime before editing: static duplicates are safe to hoist only when branch exclusivity is proven; concurrent panes and bounded nested previews must remain separate until their own primitive or contract exists.
+
+      Verified avatar-picker.vue as a genuine SHAPE A candidate: three v-show tabs (gallery/upload/generate) are mutually exclusive at runtime, only upload and generate declared their own overflow-y-auto. Hoisted a single shared .kr-scroll wrapper above all three (v-show keeps hidden siblings in the DOM but display:none excludes them from scroll-height, so this is safe). Ratchets one-scroll from 26 to 25. Also examined mural-manager.vue (three simultaneously-visible panes, genuine Shape B, not a hoist) and butterfly-flip.vue (front/back panels can both be mounted at once when useFlipEffect is false, not safe to merge). kind_robots PR #1372 open against main (claude/relaxed-lovelace-kz9il2).
+
+      Merged Kind Robots PR #1372 as e479e3ab4c29a3c507daa778c4a0ae36bd019859. avatar-picker.vue's gallery/upload/generate v-show tabs (mutually exclusive at runtime) now share one .kr-scroll wrapper instead of two independent overflow-y-auto declarations. All 15 required checks passed. Ratchets one-scroll from 26 to 25. Also examined and released (not safe Shape A hoists): mural-manager.vue (three panes visible simultaneously, genuine Shape B) and butterfly-flip.vue (front/back panels can both be mounted at once when useFlipEffect is false). The task remains open for the other unclassified one-scroll candidates.
+
+      Merged kind_robots PR #1374 at 80df44ba0b6fd9d545a68e81035884c582382cf4 after all 13 final-head workflows completed successfully. Hoisted one shared scroll owner above the mutually exclusive WonderLab preview status branches and reduced the one-scroll baseline from 25 to 24. The task remains open because the bucket is not yet zero and the remaining entries require separate Shape B/Shape D treatment. Lesson: mutually exclusive render branches can share one scroll owner, but bounded diagnostic regions and genuine concurrent two-column panes should not be collapsed merely to reduce a static counter.
+
+      Twenty-sixth cycle: examined the remaining 23-entry one-scroll bucket for a safe Shape A hoist and found none this pass. server-manager.vue's five dashboard-mode branches (art/text/checkpoints/all/interact) are a clean identical-shape Shape A set, but the file's sixth branch (overview) already declares two concurrently-visible columns of its own (a real Shape B), so hoisting only the five would not zero the file's violation count and was not worth the diff. chat-gallery.vue and scenario-interact.vue are genuinely mutually-exclusive top-level branches (thread-list vs active-thread; browse/configure vs play) but each branch has a different internal shape -- one branch scrolls its whole body, the other pins a header and/or composer around a narrower scroll region -- so a naive shared wrapper would make the pinned header/footer scroll away too, a real behavior change, not a hoist. art-styler.vue's two occurrences are small max-h-52 thumbnail grids on two of three mutually-exclusive sourceTab branches (gallery/starter, not upload), genuinely identical in shape, but nested at different depths under branch-specific markup (search box vs none) with no shared ancestor a hoist could attach to without restructuring the branch chain itself. art-gallery.vue's second region is a full-screen fixed image-overlay modal that stays mounted alongside the gallery grid behind it (not a v-if/v-else sibling), so the two scroll regions are concurrent by construction, not a false positive. artjob-editor.vue and theme-gallery.vue's second regions are both small bounded diagnostic/JSON previews nested inside their page's own single scroll region -- the same "bounded preview nested in parent" shape already ruled unsafe for user-galleries.vue. messenger.vue and dream-brainstorm.vue are genuine persistent two-column layouts (conversation list + thread; dream list + detail), both concurrently visible and scrollable, real Shape B. channel-select.vue's two regions are a dropdown menu and its flyout submenu, which can be open at the same time -- concurrent, not mutually exclusive. Released without any change rather than force a hoist that would either misrepresent a genuine Shape B as fixed or alter pinned-header/footer behavior; the remaining bucket needs either the still-missing two-column-scroll primitive (Shape B, e.g. server-manager.vue's overview pane, messenger.vue, dream-brainstorm.vue) or a header/scroll/footer three-region primitive (chat-gallery.vue, scenario-interact.vue) rather than more single-file Shape A sweeps.
+    claimed_by: 2026-08-03T152742Z-interface-vision-t-073-sweep2
+    claimed_at: '2026-08-03T15:27:43Z'
+    updated: '2026-08-03T15:33:05Z'
+    owner: null
+
+  - id: t-074
+    milestone: m3
+    title: 'Retire slot-reel-gallery, hero-showcase, swipe-deck -- now unmounted after the gallery-vocabulary consolidation'
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Follow-on from the 2026-08-03 gallery-vocabulary consolidation (kind_robots
+      branch claude/kind-robots-ui-redesign-g5xjho). Silas, on the Dreams gallery
+      controls: "why are we doing grid, row, reel, etc, when we should just be
+      doing card, hero, icon? ... this is excessive and not vetted." That change
+      collapsed eight overlapping vocabularies into utils/galleryVocabulary.ts and
+      dropped dream-gallery's private grid/row/reel/hero/swipe control down to the
+      shared Cards/List.
+
+      Dropping reel/hero/swipe left three components with no production mount:
+      components/navigation/slot-reel-gallery.vue (178 lines),
+      hero-showcase.vue (265), swipe-deck.vue (349) -- 792 total, previously
+      mounted ONLY by dream-gallery. swipe-deck already carries Silas's own review
+      in its header: "makes me think I'm at risk of deleting something instead of
+      navigating."
+
+      They are not dead code yet: all three remain discoverable WonderLab exhibits,
+      which is a legitimate state in this repo. Retiring them is a curation call,
+      which is why this is needs-human and not ready.
+
+      Two things block a clean delete:
+
+      1. DB half. Per docs/wonderlab-component-retirement-policy.md, retiring is
+         (a) delete the source file, (b) set the Component row's status to RETIRED
+         with a statusReason, (c) let reconcile flip isDiscovered on its next run.
+         Step (b) is an admin-UI action at components/wonderlab/lab-interact.vue:154
+         against the live DB -- an agent session has no DB access, so a Worker can
+         only do (a) and (c). Reviews survive on the retired exhibit either way;
+         reconcile never deletes rows.
+
+      2. Fixture half. hero-showcase is NOT dream-gallery-only, contrary to a first
+         read: it is a WonderLab preview fixture asserted by three verify scripts.
+         utils/scripts/verifyWonderLabAchievementNavigationFixtures.ts:27-40 loops
+         all three keys asserting synthetic items, and pins
+         hero-showcase intervalMs=60000 and slot-reel-gallery itemH=132;
+         verifyWonderLabLearningControlFixtures.ts:44 and
+         verifyWonderLabPassiveCardFixtures.ts:45 each assert
+         hero-showcase's props.items. Deleting the components means editing all
+         three scripts plus the fixture entries in
+         utils/wonderlab/previewFixturesAchievementNavigation.ts. The generated
+         artifacts (public/wonderlab-components.json,
+         utils/generated/wonderLabSourceEvidence.ts) are untracked and regenerate,
+         so they need no edit.
+
+      Silas's call, per the two open questions raised with the consolidation:
+      delete all three, or keep hero-showcase and promote it to a gallery-wide
+      option rather than a Dreams-only one -- a cinematic carousel is a genuinely
+      different job from a grid, and it is the one of the three with a real claim
+      to surviving.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-03T12:05:00Z'
+
+  - id: t-075
+    milestone: m3
+    title: 'Audit character-flip-card.vue for the same fade-mode double-scroll-region bug just fixed in butterfly-flip.vue'
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-017's latest pass (2026-08-03, kind_robots PR #1377). butterfly-flip.vue's
+      front/back faces both carried a static overflow-y-auto; in fade mode
+      (useFlipEffect: false) both faces render simultaneously instead of one being
+      v-if-excluded like flip mode does, so both scroll regions were active at once.
+      Fixed by toggling overflowY between auto/hidden per face based on isFlipped.
+      components/characters/character-flip-card.vue is still in the one-scroll
+      allow-list and, going by its name, is very likely the same flip/fade-card
+      component shape with the identical bug -- confirm by reading its template
+      (does it support a fade mode alongside the 3D flip, and do both faces declare
+      their own scroll region unconditionally?) before assuming the fix transfers
+      as-is; if it matches, apply the same isFlipped-gated overflowY toggle and
+      ratchet the one-scroll baseline down by one.
+
+
+      CORRECTION: the premise above was wrong. Despite the name and its own stale
+      internal header comment (`<!-- /components/content/characters/character-interact.vue -->`
+      -- a copy/paste leftover from an earlier clone), character-flip-card.vue is not
+      a flip/fade card at all -- it's a 900+ line "Character Interact" dashboard
+      (chat/adventure/prompt/debug tabs) with no relation to butterfly-flip.vue's
+      front/back structure. Its 5 overflow-y-auto/overflow-auto occurrences are 1 real
+      scroll owner (the main content column) plus 4 intentional bounded max-h-*
+      sub-regions (chat log, getting-to-know-you list, 2 debug/preview <pre> blocks) --
+      exactly the SHAPE D pattern t-047's audit already identified ("one legitimate
+      scroll owner plus intentional bounded max-h-* sub-regions... rule artifacts").
+      No code fix applies here; forcing one would mean rewriting already-correct
+      layout to satisfy a regex, the same anti-pattern t-047 warned against. This is
+      a duplicate data point for t-058 ("stop counting Shapes A/D"), not a distinct
+      bug -- closing without a diff.
+
+
+      Separately, and NOT part of this task's scope: reading character-flip-card.vue's
+      script found it has zero `defineProps` -- it silently ignores the `:character="character"`
+      prop passed to it by scenario-gallery.vue (twice, in a v-for over
+      selectedScenarioCharacters) and character-interact.vue, always rendering/operating
+      on `characterStore.selectedCharacter` (the single globally-selected character)
+      instead. In scenario-gallery.vue's Cast grid this means every card in the v-for
+      loop renders an identical copy of the same giant dashboard for the same globally-
+      selected character, not a distinct per-character card -- filed as its own task,
+      interface-vision/t-076, rather than fixed here (real UI/UX bug, out of scope for
+      a layout-contract sweep, and needs a real design decision about what a per-character
+      card should show, not a quick patch).
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-03T17:45:00Z'
+    status: done
+    owner: null
+
+  - id: t-076
+    milestone: m2
+    title: 'CharacterFlipCard silently ignores its character prop, rendering the wrong character in scenario-gallery.vue cast grids'
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >
+      RESOLVED: kind_robots PR #1402 (merged). Went with option (b) from the prior note --
+      swapped both scenario-gallery.vue v-for call sites (~179, ~266) from <CharacterFlipCard>
+      onto <character-card>, which already declares and correctly reads a real `character` prop
+      and is proven in production grid usage (character-gallery.vue:240). Configured compact,
+      show-actions=false, show-reaction=false to match the summary-card intent of a small cast
+      listing. Updated the stale "Tap a card to flip..." copy to match the sibling section.
+
+      Option (a) (rewrite character-flip-card.vue into a slim card, relocate its dashboard into
+      character-interact.vue) turned out to be redundant work: character-interact.vue already
+      independently contains that entire chat/adventure/prompt/debug dashboard with only ~15
+      lines of real difference from character-flip-card.vue's script -- there was nothing to
+      relocate.
+
+      Fixing this surfaced a real type gap the swap had to resolve: scenarioStore's Characters
+      relation is a curated Pick<Character, ...> (see ScenarioCharacter in scenarioStore.ts)
+      missing userId/allowReviews, both of which character-card.vue's full Character prop type
+      technically requires but neither of which is read once show-actions/show-reaction are off.
+      Documented a scoped cast at the one call site that needs it rather than widening the shared
+      prop type or the backend `characterSelect` (real scope creep for this bug fix).
+
+      character-interact.vue:57 still renders <CharacterFlipCard> (a second, independent bug --
+      nesting one full dashboard inside a small sidebar "cockpit" panel of another) and was left
+      alone on purpose: that file was claimed concurrently by t-051 for its kr-chat-window
+      migration during this session, so touching it risked a collision. character-flip-card.vue
+      is now down to that single remaining call site.
+
+      Verified: vue-tsc --noEmit clean (this is what caught the type gap above), eslint clean,
+      test:gallery-adoption / test:narrative-kit / test:layout-contract all pass. Interactive
+      Playwright verification against the Vercel preview was attempted but hit a sandbox
+      proxy/TLS limitation for the browser context (not a code issue) -- confidence instead comes
+      from the type/lint/contract checks plus character-card.vue's existing proven production
+      usage in the identical grid pattern at character-gallery.vue.
+    claimed_by: claude-20260804T0430Z-t076-charflip
+    claimed_at: '2026-08-04T04:32:12Z'
+    updated: '2026-08-04T04:32:12Z'
+
+  - id: t-077
+    milestone: m3
+    title: 'Dream is missing an iconPath column, so Icons mode has no dedicated art'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Surfaced 2026-08-03 while giving dream-card variant support (kind_robots
+      PR #1380). Silas, reviewing /dreams: "why are we making it like this when
+      we have the Project model: Card, Hero, Icon views already decided?"
+
+      Answer: Dreams now offers all four views, but one of them is degraded at
+      the schema level. t-024 added card/hero/icon art fields to Bot, Character,
+      Reward and Scenario. Dream was NOT in that set. The Dream model has
+      imagePath, cardPath and heroPath but no iconPath -- and Dream.icon is a
+      String holding a NAME, not a path (the name/path split PR #1258 made
+      explicit for other models). So dream-card's Icons mode falls through to
+      cardPath and crops it square. It renders, but it is the only one of the
+      five object cards whose icon view has no dedicated art to load.
+
+      Fix: add `iconPath String? @db.Text` to the Dream model, mirroring the
+      other four, plus the matching migration. Then extend the variant branch in
+      dream-card.vue's explicitDreamImagePath (currently commented with exactly
+      why the icon branch is absent) to prefer it, and check whether the art
+      generation/backfill paths that populate cardPath/heroPath for Dreams need
+      the same for icons.
+
+      Worth confirming against the other four while in here: this gap existed
+      unnoticed because nothing rendered a Dream icon until now, so it is worth
+      checking no other model in the card/hero/icon set has a similar hole.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-03T20:05:00Z'
+
+  - id: t-078
+    milestone: m3
+    title: 'workspace-header crushes the page-title strip to a sliver on a phone and overflows the currency widgets'
+    status: done
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Closed 2026-08-03. All four items landed and were measured, not eyeballed.
+
+      HEADER SLIVER (kind_robots #1387). The thin image right of the channel selector was the page-title strip at EIGHTEEN pixels: workspace-header made it the only flexible element in a row whose other groups were all shrink-0 and totalled ~420px against a 390px viewport. Hiding the three readouts/utilities below sm (refresh, karma, mana) took it 18px -> 148px. The title section then became a real tab selector sharing one shell with the channel picker, per Silas: "it really should be a tab selector for the current channel".
+
+      CARD HAND, all three sub-items (kind_robots #1387 + #1388). Measured at 428px with four cards, before: hand right edge 382 vs dock left edge 294, so 88px of cards sat under the toggle; scrollWidth 324 == clientWidth 324, i.e. scroll range ZERO; 67px of dead band above the cards. The footer now reserves the dock width via --dock-circle (16px clear), restingCardWidthPx stopped dividing available width by card count (which guaranteed cards fit and therefore guaranteed they never scrolled), and the hand reports its MEASURED height so .kr-main reserves exactly what renders. After: 240px of scroll range, cards 72 -> 132px, dead band 67 -> 12px.
+
+      Note the "cannot scroll on mobile" report was never a touch bug -- there was genuinely nothing to scroll, while the last card hid under the dock and made it look like unreachable content.
+
+      TOGGLE VISUAL. Opaque background, stronger primary border and a ring; it had read as a washed-out translucent circle over the card art.
+
+      METHOD, which is the durable part: utils/scripts/auditResponsiveLayout.mjs plus .github/workflows/responsive-layout-audit.yml now measure real rendered geometry at 390/820/1440 against a real deployment, and this task furnished several of its regression cases. Confirmed running as a per-PR gate via deployment_status, 21/21 clean against real data.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-03T23:50:58Z'
+
+  - id: t-079
+    milestone: m2
+    title: 'Wire entityArt.ts onto EntityArtImage joins and retire the ArtImage.path prefix-string history scheme'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-028
+    note: >
+      Follow-on from t-028 (kind_robots PR #1381), which shipped only the
+      additive EntityArtImage schema (entityType, entityId, artImageId; FK on
+      artImageId to ArtImage). This task is the actual wiring, split out
+      because it bundles a live-endpoint behavior change that deserves its
+      own review pass rather than riding along with a schema migration:
+
+      1. In server/utils/entityArt.ts, generalize the `entityType ===
+      'project'` fast path in archiveCurrentEntityArt (upsert a join row
+      against the existing artImageId, no duplicate ArtImage row) to ALL
+      entity types when a real source artImageId is resolvable. Keep
+      createHistoryReference's duplicate-row creation only for the legacy
+      fallback where there is no existing artImageId (a bare path string) --
+      that path still needs a real ArtImage row to attach a join to.
+
+      2. Rewrite listEntityArtHistory to query EntityArtImage for
+      (entityType, entityId) instead of ArtImage.path-startsWith. Also write
+      EntityArtImage rows for entityType 'project' alongside its existing
+      ProjectArtImage rows (project's own dedicated gallery endpoint,
+      /api/projects/[id]/art, keeps using ProjectArtImage unchanged) --
+      today the *generic* history endpoint silently returns nothing for
+      project since project's archives never got the prefix tag; this fixes
+      that as a side effect of unifying on real joins.
+
+      3. server/api/art/entities/[entityType]/[id]/history/[artImageId].delete.ts
+      currently does `prisma.artImage.delete(...)` gated by a path-prefix
+      existence check -- this is safe ONLY because today's history rows are
+      always private throwaway duplicates. Once join rows can point at a
+      non-duplicated, possibly-still-referenced ArtImage row, "remove from
+      history" must become `entityArtImage.deleteMany(...)` (unlink only,
+      gated by an EntityArtImage row existing for that
+      entityType/entityId/artImageId) instead of deleting the ArtImage row
+      itself. Get this right first -- it is the main correctness risk in the
+      whole task.
+
+      4. Once every entity type has real join rows and the delete endpoint
+      is fixed, remove the ArtImage.path-prefix write in
+      createHistoryReference's placeholder-creation branch (it can keep a
+      descriptive path for humans debugging in Studio, just stop relying on
+      startsWith for discovery) and drop entityArtHistoryPrefix's use as a
+      *query* mechanism (the function itself can stay if still used for the
+      placeholder's descriptive path).
+
+      Verify with vue-tsc (npm test) plus a manual read-through of the two
+      endpoints' new Prisma calls -- no local DB to exercise end-to-end.
+      Additive-only migrations are not expected for this task (schema
+      already landed in t-028); if a further migration turns out to be
+      needed, audit it line by line per the standing rule.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-03T21:35:00Z'
+
+  - id: t-080
+    milestone: m2
+    title: 'Add isPublic/isMature toggle UI to Reward and Scenario edit forms'
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: 'Kaizen from t-032 (2026-08-03, kind_robots PR #1385). While wiring an allowReviews toggle into all four entity edit surfaces, found that add-reward.vue and add-scenario.vue have zero isPublic/isMature UI at all -- those fields are only ever shown read-only as badges elsewhere (reward-gallery.vue, scenario-card.vue/scenario-interact.vue). Bot and Character both already have working checkbox-style toggles for these two fields in their own edit forms -- mirror that pattern for Reward and Scenario rather than the instant-click allow-reviews-toggle button style.\n\nReward half landed: kind_robots PR #1393 merged (isPublic/isMature checkbox toggles added to add-reward.vue, mirroring Bot/Character Publishing pattern). Scenario half split out to interface-vision/t-082 -- same UI pattern, add-scenario.vue.'
+    claimed_by: 2026-08-04T011347Z-interface-vision-t-080-r8m4
+    claimed_at: '2026-08-04T01:13:47Z'
+    updated: '2026-08-04T01:28:39Z'
+
+  - id: t-082
+    milestone: m2
+    title: 'Add isPublic/isMature toggle UI to the Scenario edit form'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Split out from t-080 (2026-08-04, kind_robots PR #1393): the Reward half
+      landed (add-reward.vue now has a Publishing section with isPublic/isMature
+      checkbox toggles). Scenario's add-scenario.vue still has zero isPublic/isMature
+      UI -- those fields are only ever shown read-only as badges elsewhere
+      (scenario-card.vue/scenario-interact.vue). Mirror the same checkbox-style
+      Publishing section just added to add-reward.vue (and the existing
+      Bot/Character pattern in add-bot.vue's Publishing section and
+      add-character.vue's Record Settings section) rather than inventing a new UI
+      style. Check scenarioStore's toScenarioPayload() whitelist includes
+      isPublic/isMature before wiring the toggles -- t-080's note on the Reward
+      side found toRewardPayload() already had them, but verify the Scenario
+      equivalent explicitly rather than assuming parity.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T01:28:39Z'
+
+  - id: t-081
+    milestone: m3
+    title: 'Surface a Facet create affordance on the default /facets Gallery tab, not just Library'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-042 (2026-08-04, kind_robots PR #1391). components/facets/facet-manager.vue's
+      "Library" tab already has a working "+ Create a canonical Facet" flow (facet-profile-editor.vue
+      + facetProfileForm.ts), but /facets defaults to the "Gallery" tab (facet-interact.vue ->
+      facet-gallery.vue), which has no create affordance at all -- a visitor has to already know to
+      switch tabs to find it. Add a lightweight "+ New Facet" entry point directly on the gallery view
+      (e.g. a button that opens the same create form, or switches to Library pre-expanded) so Facet
+      creation doesn't require discovering the admin tab first.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T00:37:59Z'
+
+  - id: t-083
+    milestone: m2
+    title: 'Investigate widespread stalled/never-loaded art images on /bots, /characters, /rewards, /dreams'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Surfaced by kind_robots PR #1392 (2026-08-04, see t-069's note): the new
+      `audit` CI check's `BROKEN-ART` detector found large numbers of `<img>`
+      elements that never finish loading before networkidle when rendered against
+      the production preview -- `/bots` (21-62 per viewport), `/characters`
+      (142-211), `/rewards` (142-231), `/dreams` (5-16). Most `/bots` and
+      `/characters`/`/rewards` sources are `/api/art/images/{id}/file`; `/dreams`
+      sources are self-hosted `/images/...` paths. This is a STALL (never
+      `complete`), not a 404/error, so it will not be caught by t-069's PR #1392
+      fix (which only wires an `@error` handler) -- a stalled `<img>` still paints
+      its `alt` text in the layout box exactly like a failed one.
+
+      Two separate things worth ruling in/out before picking a fix:
+      1. Is `/api/art/images/[id]/file` itself slow/rate-limited/timing out under
+         the audit's headless-browser conditions (hundreds of concurrent image
+         requests per page)? If so this may be a real production reliability gap,
+         not just a CI artifact.
+      2. Does `kr-gallery.vue` need a load-timeout fallback (in addition to
+         `@error`) so a stalled image degrades to the placeholder the same way a
+         failed one now does, regardless of root cause?
+
+      Start by reproducing against the deployed preview (not local -- see t-069's
+      PR #1392 for why local `public/images` 404s are not signal) and reading
+      `utils/scripts/auditResponsiveLayout.mjs`'s `BROKEN-ART` detector for the
+      exact repro steps: `npm run audit:responsive -- --base <preview-url> --routes /bots,/characters,/rewards,/dreams`.
+      Once root cause is understood, t-069's own PR #1392 is gated on the `audit`
+      check this task is meant to clear -- coordinate rather than duplicating.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T01:35:00Z'
+
+  - id: t-084
+    milestone: m3
+    title: 'components/art/art-manager.vue has a min-h-[720px] magic number on its mount point'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from t-045 (2026-08-04, kind_robots PR #1395). t-045 removed the
+      magic-number `min-h-[...]` heights that used to live inside
+      artjob-queue-browser.vue's own template (already resolved separately
+      before t-045 landed), but `art-manager.vue:97` still has a
+      `min-h-[720px]` on the `<component :is>` mount point that hosts it --
+      same category of defect (a fixed-size box forcing height instead of
+      content-driven sizing), just one file over. Small, scoped: replace with
+      content-driven sizing or a documented, deliberate primitive if a fixed
+      size is genuinely required, then re-check the layout contract.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T00:00:00Z'
+
+  - id: t-085
+    milestone: m2
+    title: 'Missing reward image file breaks BROKEN-ART audit on /rewards'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Found by the `audit` CI check on kind_robots PR #1395 (2026-08-04, unrelated
+      to that PR's actual diff -- a viewport-store extraction with no reward/art
+      code touched). `tablet /rewards` failed BROKEN-ART: `<img alt="Almost
+      Invisible" src=".../images/rewards/power/almost-invisible.webp">`.
+      Confirmed by direct fetch that
+      `https://media.acrocatranch.com/images/rewards/power/almost-invisible.webp`
+      genuinely 404s (not a transient stall like t-083's broader investigation --
+      this file does not exist on the media host). Since this is base-branch/data
+      state rather than a code regression, it will keep failing the `audit` check
+      on any PR that happens to touch `/rewards`, regardless of that PR's own
+      diff, until fixed.
+
+      CORRECTION, 2026-08-04 (kind_robots PR #1396's docs update, quoting Silas
+      directly): do NOT "fix" this by regenerating or re-uploading the missing
+      file. There is a large art-generation backlog and an auto-generator that
+      fills gaps -- missing art is expected and self-healing. A `BROKEN-ART` hit
+      means the COMPONENT does not degrade to a placeholder, which is a code
+      defect, not a content one. Confirmed the pattern is not a one-off: the
+      same PR's own audit run hit two more, different, missing `/rewards` items
+      (`item-bottled-comet-light.webp`, `item-molt-jar.webp`, both verified 404
+      directly). Reward power/item art is missing at a rate wide enough that
+      any PR touching `/rewards` will likely keep tripping this until the
+      component-side fix lands -- see t-086 for the code-side investigation
+      this now points to. Coordinate with t-083 if the same root cause turns
+      out to explain both.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T03:10:00Z'
+
+  - id: t-086
+    milestone: m2
+    title: 'kr-art-plate has @error handling but /rewards BROKEN-ART hits persist anyway -- find out why'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Puzzle found while reviewing kind_robots PR #1396 (2026-08-04, t-064's
+      close-out) and investigating t-085: reward-card.vue already renders
+      through kr-entity-card-body.vue -> components/narrative/kr-art-plate.vue,
+      and kr-art-plate.vue DOES have proper `@error` handling (a `failed` ref
+      that swaps to the placeholder icon, matching the same shape as t-069's
+      kr-gallery.vue fix) -- yet the `audit` check still caught two failed
+      `/rewards` images painting their `alt` text on kind_robots PR #1396's own
+      run (desktop viewport, after `/bots` and `/characters` had already
+      rendered cleanly at the same viewport, so it is not a
+      not-yet-settled-page timing issue across the board).
+
+      Why the fallback isn't taking effect for these specific images is
+      unknown. Possibilities worth checking: (1) a redirect chain
+      (kind-robots.vercel.app -> media.acrocatranch.com, confirmed via
+      t-085's direct fetches) causing the `error` event to fire later or
+      differently than a same-origin 404 would, past whatever window the
+      audit's networkidle wait allows; (2) reward-card or kr-entity-card-body
+      passing something into kr-art-plate that bypasses its `failed` state
+      (e.g. a `:key` forcing a remount before the swap commits); (3) the
+      specific image URLs resolving through a different code path than the
+      one kr-art-plate's `src` computed expects (check
+      `resolveArtVariantSrc`'s handling of reward `power`/`item` art
+      specifically, since both known failures are that category). Reproduce
+      against a live preview (see AGENTS.md's Vercel MCP steps) rather than
+      guessing from the audit screenshots alone.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T03:10:00Z'
+
+  - id: t-090
+    milestone: m2
+    title: 'kr-chat-window: add a selectedKey pass-through to its embedded kr-choice-list'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-088's close-out (kind_robots PR #1408), promoted from "deferred" now that
+      it has hit two real surfaces. reward-interact.vue (t-087, PR #1406) and scenario-interact.vue
+      (t-088, PR #1408) both used to render a "highlight the currently-picked choice" style
+      (a ring/border swap on the selected option) before their migration onto kr-chat-window +
+      kr-choice-list. Neither migration could preserve it: kr-chat-window hardcodes its embedded
+      choice lists with no way for a caller to say "this key is the one already picked", so both
+      PRs accepted the visual regression and left the gap as a kaizen note (t-087's TALKBACK entry
+      deferred it as "not filed since no current surface is blocked on it" -- that condition no
+      longer holds).
+
+      Add an optional `selectedKey` prop to kr-chat-window.vue that forwards to each turn's
+      embedded kr-choice-list (which already supports `selectedKey` directly, per
+      scenario-interact.vue's own top-level intro-picker usage in PR #1408). Callers that don't
+      pass it see no change. Once landed, restore the highlight in reward-interact.vue and
+      scenario-interact.vue's story-transcript choice lists (small follow-up diffs, or fold into
+      this same task if trivial).
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T06:34:00Z'

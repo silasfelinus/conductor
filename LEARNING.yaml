@@ -6107,3 +6107,400 @@ records:
   lesson: A task released as actionable/stale (blocked on an unrelated component not yet migrated) can
     become trivially doable again once other, unrelated work lands -- re-verify the live premise from
     code before trusting a stale roadmap note, rather than assuming a prior session's blocker still holds.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-016
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A task note framed as a from-scratch decision plus implementation ("needs a prisma migration
+    plus a re-seed check") can already be most of the way done by prior work -- a quick research pass
+    before diving in found the FacetKind/FacetTaxonomy collapse was already load-bearing infrastructure
+    (a prior PR had made taxonomy authoritative and kind write-derived), narrowing the real remaining
+    scope to a bounded, mechanical consolidation PR instead of a full schema migration. Splitting the
+    genuinely destructive half (dropping the physical column) into its own irreversible-stakes task
+    (t-072) rather than attempting it in the same pass kept the landed PR reversible and auto-mergeable.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-067
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Put root-surface markers on the literal opening template element; a styled nested wrapper is
+    invisible to rootClassList and can waste a sweep even when it looks like the page root.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-043
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: The existing generic user-owned section pattern extended cleanly to Facet and Project; use each
+    store's mine-filtered fetch action so the dashboard does not depend on an unrelated gallery having
+    loaded first.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-055
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Source-text layout verifiers must accept Vue's supported component-tag casing conventions; regression
+    fixtures should exercise component-rooted templates rather than only native lowercase HTML roots.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-061
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Two mutually-exclusive v-if/v-else branches gated by a fixed-per-session flag (admin vs.
+    non-admin) are the same SHAPE A pattern as tab switches -- hoist one shared kr-scroll wrapper
+    above the pair instead of each branch declaring its own overflow-y-auto.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A component with both a 3D-flip mode and a fade mode needs a fundamentally
+    different scroll-ownership fix per mode: flip mode already v-if-excludes the
+    inactive face (never double-scrolls), but fade mode renders both faces
+    simultaneously for the opacity transition, so a static overflow-y-auto on both
+    faces gives two live scroll regions at once. Toggle overflowY per face on the
+    same state (isFlipped) that drives the fade, rather than assuming one static
+    class covers both modes. Other flip/fade-card components (e.g.
+    character-flip-card.vue) likely share the same latent bug -- filed t-075 to check.'
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-075
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A kaizen task filed from a filename match alone ("character-flip-card.vue" looks
+    like it should share butterfly-flip.vue''s bug) can be wrong -- this file turned out to
+    be an unrelated 900-line dashboard with a stale copy-pasted header comment from a
+    similarly-named file. Verify the actual file content disproves or confirms the premise
+    before writing any fix; closing a task with a corrected note and no diff is the right
+    outcome when the premise does not hold, not a failure. Reading the disproven file also
+    surfaced a real, unrelated bug (CharacterFlipCard has zero defineProps and silently
+    ignores its character prop) -- filed separately as t-076 rather than folded into this
+    task''s diff, keeping scope discipline even for an accidental discovery.'
+- date: '2026-08-03'
+  project: conductor
+  task: t-096
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A task selector that only checks status/claimability (run_worker.py''s
+    find_ready_task, used by select_role.py) let interface-vision/t-017 -- an umbrella
+    sweep whose own note already said every bucket but one was delegated to t-058 -- get
+    claimed anyway, wasting a session''s cycle. Two independent "pick next ready task"
+    implementations (run_worker.py and next_ready_task.py) had already drifted once before
+    this fix; when a roadmap task can legitimately delegate its remaining scope to a named
+    sibling, encode that relationship as a structured field (remaining_scope_task) that
+    every selector checks, not just prose in the note that only a human or a careful
+    session catches by reading the full history.'
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-032
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Naively calling a store's existing updateX(id, updates) action with only
+    the single field being toggled ({ allowReviews: bool }) is unsafe unless
+    you've read the payload-building function it calls first: rewardStore's
+    toRewardPayload() and scenarioStore's toScenarioPayload() both rebuild
+    the ENTIRE PATCH payload from whatever partial object is passed in,
+    filling missing fields with defaults (toRewardPayload defaults a missing
+    name to '', toScenarioPayload defaults missing intros to '[]') -- a
+    naive single-field patch would have silently wiped the reward's name or
+    the scenario's intros on toggle. Bot's and Character's equivalent
+    payload builders are plain spreads, so a single-field patch is safe
+    there but not elsewhere; the two families look identical from the call
+    site and are not safe to treat the same without reading the payload
+    builder itself. Also found and fixed a real latent bug this way:
+    toRewardPayload's field whitelist was missing allowReviews entirely, so
+    the API-side field t-011 already shipped could never actually be set
+    from the reward edit form even before this task, a silent no-op nobody
+    had noticed.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-028
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Closed as done during this session's state-reconciliation pass: the task's
+    own note already documented that its scope had been deliberately narrowed
+    to a schema-only landable core (kind_robots PR #1381, confirmed merged),
+    with the remaining wiring split into a dependent follow-on (t-079). The
+    roadmap had been left at status: review rather than done after the
+    bookkeeping PR merged, which also meant t-079 (depends_on: t-028) was
+    marked status: ready despite its dependency not showing done -- both
+    corrected together. check_pr_merged_drift.py's own connectivity
+    limitation in this sandbox (raw urllib 403s on api.github.com) means it
+    cannot verify referenced PR numbers itself and always exits non-zero for
+    this class of task; the fix is to verify via GitHub MCP tools (as
+    CLAUDE.md's own runbook says) rather than treating every drift-check
+    non-zero exit as unresolved.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-028
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: transient
+  lesson: >
+    Salvaged from the implementing session's own close-out PR (conductor #1636,
+    opened but never merged -- superseded by this session's reconciliation
+    before it landed). That session hit a real task-ID collision mid-work: its
+    own new task got numbered t-078, but a concurrent session claimed t-078 for
+    an unrelated mobile workspace-header fix and merged first, so GitHub
+    reported the PR unmergeable. Recovered per the documented rotation-collision
+    protocol -- merged current main, kept main's t-078 untouched, renumbered the
+    new task to t-079 via next_free_task_id.py, and verified the diff was scoped
+    to only the intended change before re-pushing. No lost work on either side,
+    no force-push. Filed here as a second confirmed real-world instance of the
+    task-ID collision failure mode the rotation-collision protocol exists to
+    catch.
+- date: 2026-08-03
+  project: interface-vision
+  task: t-034
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Once a warning baseline reaches zero, promote the invariant to an error and reuse the same predicate
+    the runtime uses. Keeping a separate validator recreates drift even when both implementations look
+    trivial.
+- date: '2026-08-03'
+  project: interface-vision
+  task: t-035
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A registry helper (getModelCards()) existing, exporting cleanly, and being independently correct
+    is not evidence it is wired in -- grep call sites, not just definitions, whenever a task note says
+    a function "is defined but never called anywhere." pageStore.cards had two isX() type-guard branches
+    that looked exhaustive but silently fell through to a channel-tab fallback for every string cards:
+    value; the missing branch was a single conditional, but nothing in the type system or existing tests
+    flagged the dead code path.'
+- date: '2026-08-04'
+  project: interface-vision
+  task: t-036
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'When a task note gives you the exact CI-side validator to reuse client-side (navManifest.ts
+    here), mirror its field-construction one-to-one rather than approximating -- the isomorphic-by-design
+    comment in the module was the signal that a straight port, not a reinterpretation, was correct. Also:
+    a component gated requiredRole: ADMIN cannot be visually verified from an agent sandbox without admin
+    credentials -- typecheck plus the same CI script the component now reuses is the honest substitute,
+    and it belongs explicitly in the PR flags rather than silently skipped. Separately: an automated close-task-event
+    can land on main between opening a manual close_task.py PR and merging it -- check task-events/ and
+    the live roadmap status again immediately before merging a close-out, not just once before opening
+    it, or the merge 405s on a conflict against a transition that already happened.'
+- date: '2026-08-04'
+  project: interface-vision
+  task: t-042
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Before building a "creation flow" task from scratch, check the note's own predicted building
+    blocks against the current codebase first -- the Facet half of this task (facet-profile-editor.vue
+    + facetProfileForm.ts feeding a create form) had already shipped via an unrelated commit by the time
+    this task was worked, so the actual remaining scope was half the size the note described. Only the
+    Project half needed new UI; the store/API layer (createProject()) was already complete on both sides.
+- date: '2026-08-04'
+  project: interface-vision
+  task: t-080
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: scope
+  lesson: >-
+    Task title covered two symmetric entities (Reward + Scenario isPublic/isMature
+    toggles) but the PR only implemented one; split the remainder into t-082 rather
+    than either blocking the merged half or silently closing the task as fully done.
+    Titles spanning multiple entities should be split into per-entity tasks at claim
+    time to avoid this ambiguity recurring.
+- date: 2026-08-04
+  project: interface-vision
+  task: t-045
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A plain repo-wide grep for a deleted component's filename missed a real
+    dependency: verifyWonderLabInteractionDisplayFixtures.ts read
+    smart-nav.vue's source directly via fs.readFile to assert on its prop
+    contract, which only surfaced as an ENOENT in the "Contract verifiers" CI
+    job, not in any local grep or vue-tsc/eslint pass. Before deleting a
+    component with WonderLab preview fixture coverage, grep the
+    utils/scripts/verifyWonderLab*.ts files specifically for readFile calls
+    against that component's path, not just import/reference greps.
+- date: 2026-08-04
+  project: interface-vision
+  task: t-064
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A task tracking N/M sub-item progress (5 cards converging onto a shared
+    body) had its note fall one merge behind reality: reward-card had already
+    migrated in a prior session/PR with no note update recording it, so the
+    task read as 2 items remaining when only 1 actually was. Caught by
+    checking the merged tree directly (grep for the new import) rather than
+    trusting the note's own count. When landing one item of an N/M tracked
+    task, update the note's count even if the task can't close yet.
+- date: '2026-08-04'
+  project: interface-vision
+  task: t-050
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A "retire component X, fold into shared component Y" task can resolve correctly with
+    zero code changes when the premise doesn't survive a full read: the task's own note said
+    kr-narrator-stage was imported by "every other surface," but grep found exactly two real
+    consumers, and grafting the remaining Dreams-specific chrome (card flip, emoji bursts,
+    musings toast, pin) onto it would have more than doubled a 189-line shared component for
+    those two consumers' benefit. When a retirement/consolidation task's justification rests
+    on an unverified breadth claim ("every surface," "the shared X"), verify the actual
+    consumer count with grep before implementing the merge -- the corrected count can flip
+    the right answer from "fold it in" to "leave it alone."
+- date: '2026-08-04'
+  project: interface-vision
+  task: t-051
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A three-surface migration task (reward/character/scenario-interact) was scoped correctly
+    for "what's left" but not for "what fits in one pass." Splitting after landing the first
+    surface (character-interact, kind_robots PR #1400) into t-087/t-088 for the remaining two,
+    rather than trying all three in one diff, kept each PR small, independently verifiable, and
+    reviewable -- and let the roadmap track real partial progress instead of one task note
+    growing indefinitely across sessions. When a task note already enumerates N similarly-sized
+    remaining items, file it as N tasks up front rather than one task that will need a
+    mid-flight split.
+- date: '2026-08-04'
+  project: interface-vision
+  task: t-076
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A "needs a real design decision" task with two named options (rewrite the broken component,
+    or swap in an already-correct one) resolved fast once the already-correct option's actual
+    prop contract was read in full: character-card.vue already did everything option (a) would
+    have had to build (a real character prop, no side-effecting store init, grid-proven usage),
+    so option (b) collapsed to a small, mechanical swap. The type system caught a real latent gap
+    the swap needed to resolve (a curated Pick<Character,...> relation missing two fields the
+    target component's full prop type required) -- something the previous component's total
+    absence of prop typing had let go unnoticed indefinitely. When a task's own note offers "use
+    an existing correct component instead" as an option, read that component's actual prop
+    surface before assuming a rewrite is the only path -- the smaller fix is often already built.
+- date: 2026-08-04
+  project: interface-vision
+  task: t-026
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Deleting a bespoke duplicate component in favor of a shared canonical one (Silas's "one
+    source ... kill the others" pick, resolving an A/B mockup) needs a full-repo grep for the
+    deleted file's name, not just its obvious call site. Two silent-breakage risks turned up
+    that a component-only diff would have missed: a DOM-scraping client plugin
+    (project-art-prompt-suggest.client.ts) that keyed its button-injection logic on the deleted
+    component's specific textarea maxlength and a <code> element it rendered -- fixed by gating
+    on the shared component's entityType prop instead of brittle per-entity DOM shape -- and a
+    GitHub Actions workflow (entity-art-manager-contract.yml) whose trigger `paths:` list still
+    named the deleted file, caught by CI's verifyWorkflowPaths.ts after merge-adjacent push
+    rather than before. Also worth noting: placing a new UI panel *before* an existing one in a
+    component's template silently changes which element a `querySelector('img')`-style DOM
+    heuristic elsewhere in the codebase picks up first -- moved the new panel after the existing
+    one specifically to keep that heuristic pointed at the right image.
+- date: 2026-08-04
+  project: interface-vision
+  task: t-087
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A prior PR (character-interact.vue, #1400) landing the exact same migration pattern
+    (bespoke chat log -> kr-chat-window + kr-choice-list) turned this 1183-line surface into a
+    same-session close rather than a design exploration -- read the reference implementation in
+    full before starting, not just its diff summary. The one real design decision was mapping a
+    caller's existing choice data onto kr-choice-list's fixed embedded contract: kr-chat-window
+    hardcodes its per-turn choice list to layout="row" with no index badge, so a caller with
+    long descriptive choice text (not short quick-topics) has to decide which of
+    label/hint carries the short vs. long half -- picked short category as label, full text as
+    hint, to keep the inline row pills compact. A second non-obvious win from adopting the
+    shared kit: kr-chat-window's built-in streaming placeholder made a "keep it hidden until
+    the request resolves, then push a finished turn" simplification natural, which incidentally
+    fixed nothing broken but removed real state (a scroll ref, three call sites, a manual watcher)
+    that existed only to fight the layout the bespoke markup created in the first place --
+    duplication removal often deletes more state than template.
+- date: 2026-08-04
+  project: interface-vision
+  task: t-088
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    The last of the three Phase 5 conversation-kit migrations (character-interact #1400,
+    reward-interact t-087/#1406, scenario-interact t-088/#1408) was flagged in its own task
+    note as "not a mechanical swap" -- it had two distinct duplications (a chat transcript and
+    a separate intro-picker reusing the deleted choice-selector.vue's job), and the intro
+    picker's long-paragraph hint text needed a non-italic kr-choice-list variant that didn't
+    exist yet. Adding an opt-in `hintProse` prop (default false, every existing caller
+    unaffected) was cheaper than a bespoke non-italic wrapper and kept the shared component as
+    the single source of truth. Second occurrence of the same "lost the highlighted last-pick
+    styling" gap reward-interact/t-087 hit -- two real surfaces is the signal to actually file
+    the kr-chat-window selectedKey pass-through as a task (t-090) instead of deferring a third
+    time.

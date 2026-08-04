@@ -36,6 +36,9 @@ try:
 except ImportError:
     sys.exit('PyYAML not installed — run: pip install pyyaml')
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from roadmap_claims import remaining_scope_delegate_open  # noqa: E402
+
 PRIORITY_FILE = Path('projects/priority.yaml')
 OVERRIDES_FILE = Path('project-overrides.yaml')
 PROJECTS_DIR = Path('projects')
@@ -98,14 +101,21 @@ def find_ready_task(priority_order: list[str], roadmaps: list[dict[str, Any]]) -
     remaining = [roadmap for roadmap in roadmaps if roadmap.get('_project') not in priority_order]
 
     for roadmap in ordered + remaining:
-        for task in roadmap.get('tasks', []):
-            if task.get('status') == 'ready':
-                return {
-                    'project': roadmap.get('_project'),
-                    'task_id': task.get('id'),
-                    'title': task.get('title'),
-                    'roadmap_path': roadmap.get('_path'),
-                }
+        tasks = roadmap.get('tasks', [])
+        tasks_by_id = {
+            str(task.get('id')): task for task in tasks if isinstance(task, dict) and task.get('id')
+        }
+        for task in tasks:
+            if task.get('status') != 'ready':
+                continue
+            if remaining_scope_delegate_open(task, tasks_by_id):
+                continue
+            return {
+                'project': roadmap.get('_project'),
+                'task_id': task.get('id'),
+                'title': task.get('title'),
+                'roadmap_path': roadmap.get('_path'),
+            }
 
     return None
 

@@ -221,6 +221,18 @@ When Silas approves an upstream task, the next Worker run calls `scripts/resolve
 which flips any now-satisfied `waiting` tasks to `ready`. So the Worker's FIRST action each
 cycle is to run the resolver, THEN pick a ready task.
 
+### Umbrella sweep tasks — `remaining_scope_task`
+
+A recurring umbrella task (e.g. a layout-contract sweep tracking several buckets toward
+zero) can reach a state where every bucket is at zero except one already owned by a
+dedicated follow-on task. At that point the umbrella has no independent slice left, and
+claiming it directly only duplicates or collides with the follow-on. Set
+`remaining_scope_task: <task-id>` on the umbrella pointing at that sibling task (same
+roadmap): `run_worker.py`'s `find_ready_task`, `next_ready_task.py`'s `first_ready_task`,
+and `claim_task.py` all treat the umbrella as not-yet-claimable for as long as the
+referenced task exists and hasn't reached `status: done`. No field set — current behavior,
+unaffected. (Filed from conductor issue #1627, interface-vision/t-017 vs. t-058.)
+
 ### Human-gated stages
 A task may set `gate_human: true`, meaning its output must be approved by Silas before
 dependents unblock — even for software. The Worker finishes such tasks at `status: needs-human`.
@@ -348,9 +360,14 @@ session a real rendered page instead (confirmed working, newsfeed/t-017, 2026-07
    `silasfelinus-projects`).
 2. `mcp__Vercel__list_projects` (with that team ID) — get the kind-robots project ID
    (`prj_x6HB2IPpQbvqNqiYVgu3IibJ6FZf` as of 2026-07-19; re-fetch if this ever changes).
-3. `mcp__Vercel__list_deployments` (project ID + team ID) — every open kind_robots PR
-   gets its own preview deployment here (matched via `meta.githubPrId`/`githubCommitRef`);
-   find the one for the branch/PR you care about and take its `url`.
+3. `mcp__Vercel__list_deployments` (project ID + team ID) — find the deployment for the
+   branch/PR you care about (matched via `meta.githubPrId`/`githubCommitRef`) and take
+   its `url`. **Which branches get a preview is controlled by `git.deploymentEnabled` in
+   kind_robots' `vercel.json`, not by Vercel's defaults.** As of 2026-08-03 `claude/*` is
+   `true` (Silas approved enabling it, so agent-authored UI work can be verified BEFORE
+   it merges rather than only after); `agent/*`, `worker/*`, and `conductor/*` remain
+   `false` for cost. On one of those three prefixes, no preview will ever exist — skip
+   straight to the post-merge production path below instead of hunting for one.
 4. `mcp__Vercel__web_fetch_vercel_url` on `https://<that url>/<route>` — returns the
    actual rendered HTML (full SSR markup, not the stock Nuxt welcome page). Use a
    regular `WebFetch` first only if the deployment has no Vercel Authentication
@@ -359,8 +376,14 @@ session a real rendered page instead (confirmed working, newsfeed/t-017, 2026-07
    `mcp__Vercel__get_deployment_build_logs` / `get_runtime_errors` on the same
    project/deployment are useful alongside this for diagnosing a build or runtime
    failure rather than just confirming markup.
-This does NOT require deploying anything new — Vercel already builds a preview for
-every PR automatically. `list_deployments`' `state` field also surfaces the current
+This does NOT require deploying anything new — Vercel builds the preview automatically
+for every PR on an enabled branch prefix (see step 3 for which). For a prefix that is
+disabled, verify against the PRODUCTION deployment after merging on CI-green instead:
+poll `list_deployments` for the deploy carrying your merge commit, wait for `READY`,
+then fetch the route. Note that `vercel.json`'s `ignoreCommand`
+(`scripts/vercel-ignore-build.mjs`) skips builds whose changed files are all docs/tests,
+so a documentation-only merge shows as `CANCELED` rather than deploying — that is
+correct behavior, not a failure. `list_deployments`' `state` field also surfaces the current
 production deployment's health (`READY` vs `ERROR`) — worth a glance whenever a
 session is investigating why a change "isn't showing up," since that can mean
 production itself is failing to build rather than the change being wrong. (Concrete

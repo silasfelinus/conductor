@@ -188,3 +188,59 @@ def test_gate_human_dependency_allows_approved_done_task(tmp_path: Path, monkeyp
     assert result is not None
     assert result["project"] == "gated"
     assert result["task_id"] == "t-002"
+
+
+def test_umbrella_task_skipped_while_delegate_is_open(tmp_path: Path, monkeypatch) -> None:
+    projects_dir = configure_repo(tmp_path, monkeypatch)
+    write_yaml(projects_dir / "priority.yaml", "order:\n  - interface-vision\n")
+    write_yaml(
+        tmp_path / "project-overrides.yaml",
+        "overrides:\n  - slug: interface-vision\n    status: active\n",
+    )
+    write_project(
+        projects_dir,
+        "interface-vision",
+        """- id: t-017
+  title: Umbrella sweep
+  status: ready
+  stakes: reversible
+  remaining_scope_task: t-058
+- id: t-058
+  title: Dedicated follow-on
+  status: ready
+  stakes: reversible
+""",
+    )
+
+    result = selector.first_ready_task(selector.load_priority_order(), selector.load_active_overrides())
+
+    assert result is not None
+    assert result["task_id"] == "t-058"
+
+
+def test_umbrella_task_claimable_again_once_delegate_done(tmp_path: Path, monkeypatch) -> None:
+    projects_dir = configure_repo(tmp_path, monkeypatch)
+    write_yaml(projects_dir / "priority.yaml", "order:\n  - interface-vision\n")
+    write_yaml(
+        tmp_path / "project-overrides.yaml",
+        "overrides:\n  - slug: interface-vision\n    status: active\n",
+    )
+    write_project(
+        projects_dir,
+        "interface-vision",
+        """- id: t-017
+  title: Umbrella sweep
+  status: ready
+  stakes: reversible
+  remaining_scope_task: t-058
+- id: t-058
+  title: Dedicated follow-on
+  status: done
+  stakes: reversible
+""",
+    )
+
+    result = selector.first_ready_task(selector.load_priority_order(), selector.load_active_overrides())
+
+    assert result is not None
+    assert result["task_id"] == "t-017"

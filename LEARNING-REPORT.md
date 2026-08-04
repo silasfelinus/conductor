@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-03T10:42:20Z
+Generated: 2026-08-04T06:40:14Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **482**
-- Outcomes: blocked: 13, cancelled: 1, done: 468
+- Closed tasks recorded: **506**
+- Outcomes: blocked: 13, cancelled: 1, done: 492
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -25,7 +25,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 8 | 0% |
 | coloring-book | 25 | 100% |
-| conductor | 59 | 100% |
+| conductor | 60 | 100% |
 | conductor-app | 2 | 100% |
 | davinci | 2 | 100% |
 | digital-storefront | 24 | 100% |
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 40 | 100% |
+| interface-vision | 63 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 467 | 99% |
+| software | 491 | 99% |
 
 ## Failure categories
 
@@ -67,8 +67,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 |---|---|
 | quality | 9 |
 | actionable | 9 |
-| transient | 7 |
-| scope | 1 |
+| transient | 8 |
+| scope | 2 |
 
 ## Kaizen targets
 
@@ -76,23 +76,21 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - kind `content` — 40% success over 15 closed tasks; aim the next kaizen task here
 - failure category `quality` — 9 occurrences; look for the shared cause across its records
 - failure category `actionable` — 9 occurrences; look for the shared cause across its records
-- failure category `transient` — 7 occurrences; look for the shared cause across its records
+- failure category `transient` — 8 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
-- 2026-08-03 `interface-vision/t-048` — A task released as actionable/stale (blocked on an unrelated component not yet migrated) can become trivially doable again once other, unrelated work lands -- re-verify the live premise from code before trusting a stale roadmap note, rather than assuming a prior session's blocker still holds.
-- 2026-08-03 `interface-vision/t-057` — When a task's own verification instruction assumes infrastructure (a PR preview) that a repo-wide config (vercel.json) silently excludes for the exact branch prefix agent sessions use, the fallback isn't to skip verification -- it's to verify what CAN be checked (CI, structural reasoning about the change's own properties) and be explicit in the roadmap/PR about what's still open, rather than silently declaring full verification done.
-- 2026-08-03 `interface-vision/t-031` — The object-card divergence was concentrated in Dream's shell and the repeated card body, not five wholly bespoke cards; inspect shared wrappers before planning a broad convergence rewrite.
-- 2026-08-03 `interface-vision/t-065` — The implementation half of this task (scripts/next_free_task_id.py, PR #1588) merged, but the task couldn't close because it was left with a queued rearm task-event that the processor rejected every run (`rearm requires recurring: true` -- t-065 isn't a recurring task). A connector-only session can't tell mid-task whether a target task is recurring without reading the live roadmap first; docs/github-connector-worker.md listed `rearm` and `ready` as interchangeable options with no mention of the recurring gate, so the wrong operation was a natural mistake, not carelessness. A concurrent session fixed the stuck event with the correct `operation: ready` while this session was independently mid-flight on the actual remaining work (wiring scripts/next_free_task_id.py into AGENTS.md's task-id-assignment call sites); rebasing onto that fix rather than duplicating it is what let both land cleanly. Documented the rearm-vs-ready distinction in docs/github-connector-worker.md so the next connector session doesn't repeat it.
+- 2026-08-04 `interface-vision/t-088` — The last of the three Phase 5 conversation-kit migrations (character-interact #1400, reward-interact t-087/#1406, scenario-interact t-088/#1408) was flagged in its own task note as "not a mechanical swap" -- it had two distinct duplications (a chat transcript and a separate intro-picker reusing the deleted choice-selector.vue's job), and the intro picker's long-paragraph hint text needed a non-italic kr-choice-list variant that didn't exist yet. Adding an opt-in `hintProse` prop (default false, every existing caller unaffected) was cheaper than a bespoke non-italic wrapper and kept the shared component as the single source of truth. Second occurrence of the same "lost the highlighted last-pick styling" gap reward-interact/t-087 hit -- two real surfaces is the signal to actually file the kr-chat-window selectedKey pass-through as a task (t-090) instead of deferring a third time.
+- 2026-08-04 `interface-vision/t-087` — A prior PR (character-interact.vue, #1400) landing the exact same migration pattern (bespoke chat log -> kr-chat-window + kr-choice-list) turned this 1183-line surface into a same-session close rather than a design exploration -- read the reference implementation in full before starting, not just its diff summary. The one real design decision was mapping a caller's existing choice data onto kr-choice-list's fixed embedded contract: kr-chat-window hardcodes its per-turn choice list to layout="row" with no index badge, so a caller with long descriptive choice text (not short quick-topics) has to decide which of label/hint carries the short vs. long half -- picked short category as label, full text as hint, to keep the inline row pills compact. A second non-obvious win from adopting the shared kit: kr-chat-window's built-in streaming placeholder made a "keep it hidden until the request resolves, then push a finished turn" simplification natural, which incidentally fixed nothing broken but removed real state (a scroll ref, three call sites, a manual watcher) that existed only to fight the layout the bespoke markup created in the first place -- duplication removal often deletes more state than template.
+- 2026-08-04 `interface-vision/t-026` — Deleting a bespoke duplicate component in favor of a shared canonical one (Silas's "one source ... kill the others" pick, resolving an A/B mockup) needs a full-repo grep for the deleted file's name, not just its obvious call site. Two silent-breakage risks turned up that a component-only diff would have missed: a DOM-scraping client plugin (project-art-prompt-suggest.client.ts) that keyed its button-injection logic on the deleted component's specific textarea maxlength and a <code> element it rendered -- fixed by gating on the shared component's entityType prop instead of brittle per-entity DOM shape -- and a GitHub Actions workflow (entity-art-manager-contract.yml) whose trigger `paths:` list still named the deleted file, caught by CI's verifyWorkflowPaths.ts after merge-adjacent push rather than before. Also worth noting: placing a new UI panel *before* an existing one in a component's template silently changes which element a `querySelector('img')`-style DOM heuristic elsewhere in the codebase picks up first -- moved the new panel after the existing one specifically to keep that heuristic pointed at the right image.
+- 2026-08-04 `interface-vision/t-076` — A "needs a real design decision" task with two named options (rewrite the broken component, or swap in an already-correct one) resolved fast once the already-correct option's actual prop contract was read in full: character-card.vue already did everything option (a) would have had to build (a real character prop, no side-effecting store init, grid-proven usage), so option (b) collapsed to a small, mechanical swap. The type system caught a real latent gap the swap needed to resolve (a curated Pick<Character,...> relation missing two fields the target component's full prop type required) -- something the previous component's total absence of prop typing had let go unnoticed indefinitely. When a task's own note offers "use an existing correct component instead" as an option, read that component's actual prop surface before assuming a rewrite is the only path -- the smaller fix is often already built.
+- 2026-08-04 `interface-vision/t-051` — A three-surface migration task (reward/character/scenario-interact) was scoped correctly for "what's left" but not for "what fits in one pass." Splitting after landing the first surface (character-interact, kind_robots PR #1400) into t-087/t-088 for the remaining two, rather than trying all three in one diff, kept each PR small, independently verifiable, and reviewable -- and let the roadmap track real partial progress instead of one task note growing indefinitely across sessions. When a task note already enumerates N similarly-sized remaining items, file it as N tasks up front rather than one task that will need a mid-flight split.
 
-- 2026-08-03 `interface-vision/t-062` — A roadmap can carry two tasks sharing an id (find_task/find_task_block match the first occurrence, silently stranding the second) because audit_roadmaps.py's DUPLICATE_TASK_ID check existed but was purely advisory -- main() never returned non-zero, and its report only got committed to main under a stale one-off branch condition. Detection without enforcement doesn't stop the bug; wire the check into something CI actually gates (a pytest-covered script) or it will collide again, as it did here even on the very fix meant to prevent it.
-- 2026-08-02 `interface-vision/t-030` — Before reimplementing a ready task, compare its note, current code, and recent merged PRs. A task can carry a complete merged result but remain incorrectly ready because an earlier closeout targeted a different task ID; repair roadmap state instead of duplicating the code.
-- 2026-08-02 `dream-cycle/t-006` — A self-modifying "bootstrap a CI job that patches, tests, then commits" pattern has a sharp edge: if the commit step fails, everything the job did in its ephemeral checkout is silently discarded -- there is no partial-progress trail beyond whatever the job log happened to print. Here the patch applied cleanly and 802 tests passed, but `git diff --check` (run right after tests, right before the commit) caught a stray blank line at EOF the patch script itself introduced, and the job died there -- twice, identically, across two separate one-shot workflow files (agent-run-daily-dream-art-dedup.yml, agent-apply-daily-dream-art-dedup.yml), each triggered by a "push the workflow file to trigger it" bootstrap. Neither failure was ever investigated between attempts; a third workflow was authored instead of reading the first failure's job log, which would have shown the exact line and exit code. When a verified/tested CI step fails on the *next* step, read that step's log before re-authoring the automation -- the fix is often a one-line bug in the patcher itself, not a reason to change approach. Bounded, self-removing one-shot patch scripts are fine, but they should be run and debugged locally first, not iterated against CI round-trips at ~5 minutes per failed attempt.
-
-- 2026-08-02 `interface-vision/t-053` — A content page mounting the wrong component doesn't error -- it silently renders whatever the mount resolves to (content/button.md mounted :lab-manager since its creation in PR #1280, a copy-paste mistake with no route in that component's own tab mapping; /button just fell back to WonderLab's review UI). git blame the file's origin before assuming a mount was ever correct and later drifted. Separately: fixing the mount is not automatically safe on its own -- mounting a component via MDC for the first time can expose a pre-existing kr-surface/kr-scroll violation that verifyMdcScrollOwnership.ts (not just verifyLayoutContract.ts) will catch, since an MDC-mounted page must not fight pages/[...slug].vue's content-host for scroll ownership. With no local dev server (DB unreachable) and no Vercel PR-preview for agent branches (vercel.json exclusion), match the proven-safe pattern already used by other MDC-mounted -page.vue components (plain divs, no scroll classes) rather than guessing whether kr-surface's h-full behaves inside an auto-height flex host -- and widen the root-surface allow-list deliberately (documented, not gamed) rather than force a scroll primitive onto a component the checker didn't originally evaluate as MDC-mounted.
-
-- 2026-08-02 `interface-vision/t-024` — Similar-looking gallery grids may own fundamentally different picker, CRUD, taxonomy, or relationship behavior. Classify live responsibilities and callers before extracting a shared shell; reuse behavior-neutral primitives rather than forcing a passive browse abstraction onto stateful tools.
-- 2026-08-02 `interface-vision/t-017` — A file classified as a "page" purely by living in components/pages/ (verifyLayoutContract.ts's isPageComponent()) can still be an embedded widget, not a real page -- conductor-project-chat.vue was a per-project chat panel mounted inside conductor-page.vue, not a standalone view. Before forcing kr-surface/kr-scroll onto a root-surface violation, check whether the file is actually reachable as its own route/tab or only ever rendered as a child; moving it out of components/pages/ is often the correct fix, not a class change. Also: a LEARNING.yaml record with an invalid kind value breaks test_backfill_learning.py for every subsequent PR on main regardless of that PR's own diff -- confirm the base branch is broken before assuming a red "Python test suite" check means your own change is at fault.
+- 2026-08-04 `interface-vision/t-050` — A "retire component X, fold into shared component Y" task can resolve correctly with zero code changes when the premise doesn't survive a full read: the task's own note said kr-narrator-stage was imported by "every other surface," but grep found exactly two real consumers, and grafting the remaining Dreams-specific chrome (card flip, emoji bursts, musings toast, pin) onto it would have more than doubled a 189-line shared component for those two consumers' benefit. When a retirement/consolidation task's justification rests on an unverified breadth claim ("every surface," "the shared X"), verify the actual consumer count with grep before implementing the merge -- the corrected count can flip the right answer from "fold it in" to "leave it alone."
+- 2026-08-04 `interface-vision/t-064` — A task tracking N/M sub-item progress (5 cards converging onto a shared body) had its note fall one merge behind reality: reward-card had already migrated in a prior session/PR with no note update recording it, so the task read as 2 items remaining when only 1 actually was. Caught by checking the merged tree directly (grep for the new import) rather than trusting the note's own count. When landing one item of an N/M tracked task, update the note's count even if the task can't close yet.
+- 2026-08-04 `interface-vision/t-045` — A plain repo-wide grep for a deleted component's filename missed a real dependency: verifyWonderLabInteractionDisplayFixtures.ts read smart-nav.vue's source directly via fs.readFile to assert on its prop contract, which only surfaced as an ENOENT in the "Contract verifiers" CI job, not in any local grep or vue-tsc/eslint pass. Before deleting a component with WonderLab preview fixture coverage, grep the utils/scripts/verifyWonderLab*.ts files specifically for readFile calls against that component's path, not just import/reference greps.
+- 2026-08-04 `interface-vision/t-080` — Task title covered two symmetric entities (Reward + Scenario isPublic/isMature toggles) but the PR only implemented one; split the remainder into t-082 rather than either blocking the merged half or silently closing the task as fully done. Titles spanning multiple entities should be split into per-entity tasks at claim time to avoid this ambiguity recurring.
+- 2026-08-04 `interface-vision/t-042` — Before building a "creation flow" task from scratch, check the note's own predicted building blocks against the current codebase first -- the Facet half of this task (facet-profile-editor.vue + facetProfileForm.ts feeding a create form) had already shipped via an unrelated commit by the time this task was worked, so the actual remaining scope was half the size the note described. Only the Project half needed new UI; the store/API layer (createProject()) was already complete on both sides.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-03T10:42:20Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-04T06:40:14Z_
