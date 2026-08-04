@@ -6461,3 +6461,26 @@ records:
     component's template silently changes which element a `querySelector('img')`-style DOM
     heuristic elsewhere in the codebase picks up first -- moved the new panel after the existing
     one specifically to keep that heuristic pointed at the right image.
+- date: 2026-08-04
+  project: interface-vision
+  task: t-087
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A prior PR (character-interact.vue, #1400) landing the exact same migration pattern
+    (bespoke chat log -> kr-chat-window + kr-choice-list) turned this 1183-line surface into a
+    same-session close rather than a design exploration -- read the reference implementation in
+    full before starting, not just its diff summary. The one real design decision was mapping a
+    caller's existing choice data onto kr-choice-list's fixed embedded contract: kr-chat-window
+    hardcodes its per-turn choice list to layout="row" with no index badge, so a caller with
+    long descriptive choice text (not short quick-topics) has to decide which of
+    label/hint carries the short vs. long half -- picked short category as label, full text as
+    hint, to keep the inline row pills compact. A second non-obvious win from adopting the
+    shared kit: kr-chat-window's built-in streaming placeholder made a "keep it hidden until
+    the request resolves, then push a finished turn" simplification natural, which incidentally
+    fixed nothing broken but removed real state (a scroll ref, three call sites, a manual watcher)
+    that existed only to fight the layout the bespoke markup created in the first place --
+    duplication removal often deletes more state than template.
