@@ -1402,8 +1402,8 @@ tasks:
   - id: t-036
     milestone: m2
     title: 'Wire navigation-health.vue to navManifest.ts'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-012
@@ -1419,6 +1419,9 @@ tasks:
       the existing stat-grid/card-grid UI shape; this is a data-source swap plus real
       validation, not a rebuild. navManifest.ts is already isomorphic (no node:fs) so it
       is safe to import client-side as-is.
+    claimed_by: claude-scheduled-20260804T000414Z-iv-t036
+    claimed_at: '2026-08-04T00:04:15Z'
+    updated: '2026-08-04T00:04:15Z'
 
   - id: t-039
     milestone: m2
