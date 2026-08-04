@@ -6584,3 +6584,13 @@ records:
     the positive case -- worth doing for any future ratchet-pattern port, since a baseline that silently
     allow-lists everything (e.g. from a coding mistake) looks identical to a correct one on the happy path
     alone.
+- date: '2026-08-04'
+  project: interface-vision
+  task: t-086
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Multi-stage media fallback state must identify which candidate failed. A single failed boolean
+    can represent one transition but cannot safely drive a chain with two or more candidates.

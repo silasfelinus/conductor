@@ -2613,8 +2613,7 @@ tasks:
   - id: t-086
     milestone: m2
     title: 'kr-art-plate has @error handling but /rewards BROKEN-ART hits persist anyway -- find out why'
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -2622,9 +2621,11 @@ tasks:
       Why the fallback isn't taking effect for these specific images is unknown. Possibilities worth checking: (1) a redirect chain (kind-robots.vercel.app -> media.acrocatranch.com, confirmed via t-085's direct fetches) causing the `error` event to fire later or differently than a same-origin 404 would, past whatever window the audit's networkidle wait allows; (2) reward-card or kr-entity-card-body passing something into kr-art-plate that bypasses its `failed` state (e.g. a `:key` forcing a remount before the swap commits); (3) the specific image URLs resolving through a different code path than the one kr-art-plate's `src` computed expects (check `resolveArtVariantSrc`'s handling of reward `power`/`item` art specifically, since both known failures are that category). Reproduce against a live preview (see AGENTS.md's Vercel MCP steps) rather than guessing from the audit screenshots alone.
 
       Root cause found in kr-art-plate.vue: one boolean remembered only that some source failed. After a primary image failed, the component switched to fallback; if that fallback also failed, the boolean was already true and the computed src kept returning the broken fallback forever. The implementation now tracks failed source URLs individually, advances primary to fallback, and advances a failed fallback to the placeholder.
+
+      Completed via Kind Robots PR #1445, squash-merged as a9f71c5532e9e95094458276ba568b60ad7545e4 after all 14 final-head workflows completed successfully. Root cause: kr-art-plate.vue used one boolean for the whole fallback chain, so after the primary failed and the fallback also failed, the computed src returned the same broken fallback forever. It now tracks failed source URLs individually, advances primary to fallback, and advances a failed fallback to the placeholder icon. One component changed; no API, schema, migration, ArtJob, or production-data mutation.
     claimed_by: 2026-08-04T222130Z-interface-vision-t-086-r2v6
     claimed_at: '2026-08-04T22:21:30Z'
-    updated: '2026-08-04T22:24:30Z'
+    updated: '2026-08-04T22:29:00Z'
 
   - id: t-090
     milestone: m2
