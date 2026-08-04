@@ -6385,3 +6385,21 @@ records:
     checking the merged tree directly (grep for the new import) rather than
     trusting the note's own count. When landing one item of an N/M tracked
     task, update the note's count even if the task can't close yet.
+- date: '2026-08-04'
+  project: interface-vision
+  task: t-050
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A "retire component X, fold into shared component Y" task can resolve correctly with
+    zero code changes when the premise doesn't survive a full read: the task's own note said
+    kr-narrator-stage was imported by "every other surface," but grep found exactly two real
+    consumers, and grafting the remaining Dreams-specific chrome (card flip, emoji bursts,
+    musings toast, pin) onto it would have more than doubled a 189-line shared component for
+    those two consumers' benefit. When a retirement/consolidation task's justification rests
+    on an unverified breadth claim ("every surface," "the shared X"), verify the actual
+    consumer count with grep before implementing the merge -- the corrected count can flip
+    the right answer from "fold it in" to "leave it alone."
