@@ -1995,7 +1995,7 @@ tasks:
   - id: t-064
     milestone: m2
     title: 'kr-gallery: the card BODY is the duplication, not the shell'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -2076,9 +2076,16 @@ tasks:
       a caption-meta row and a surface-toned scrim got written for bot-card in #1352 and then
       deleted before commit for being unexercised; do not repeat that by porting reward
       mechanically. Pick the placement rule, then both fall out in one pass.
+
+      CLOSED, 2026-08-04. reward-card converged onto kr-entity-card-body separately (found
+      already migrated when reviewing PR #1396 -- not tracked by an intermediate note update
+      on this task, but confirmed present in the merged tree: components/rewards/reward-card.vue
+      imports kr-entity-card-body). kind_robots PR #1396 finished the fifth and last card,
+      dream-card (verifyGalleryAdoption: 5/5). All five object cards now share both the shell
+      (reactable-card) and the body (kr-entity-card-body).
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-03T08:05:00Z'
+    updated: '2026-08-04T03:10:00Z'
 
   - id: t-065
     milestone: m3
@@ -2748,12 +2755,56 @@ tasks:
       on any PR that happens to touch `/rewards`, regardless of that PR's own
       diff, until fixed.
 
-      Two things worth checking: (1) does kr-gallery.vue's t-069 `@error` fallback
-      (kind_robots PR #1392) not cover whatever component renders this specific
-      reward card, or did the image fail before the handler could fire? (2)
-      regenerate/re-upload the missing `almost-invisible.webp` reward-power art
-      asset. Coordinate with t-083 if the same root cause turns out to explain
-      both.
+      CORRECTION, 2026-08-04 (kind_robots PR #1396's docs update, quoting Silas
+      directly): do NOT "fix" this by regenerating or re-uploading the missing
+      file. There is a large art-generation backlog and an auto-generator that
+      fills gaps -- missing art is expected and self-healing. A `BROKEN-ART` hit
+      means the COMPONENT does not degrade to a placeholder, which is a code
+      defect, not a content one. Confirmed the pattern is not a one-off: the
+      same PR's own audit run hit two more, different, missing `/rewards` items
+      (`item-bottled-comet-light.webp`, `item-molt-jar.webp`, both verified 404
+      directly). Reward power/item art is missing at a rate wide enough that
+      any PR touching `/rewards` will likely keep tripping this until the
+      component-side fix lands -- see t-086 for the code-side investigation
+      this now points to. Coordinate with t-083 if the same root cause turns
+      out to explain both.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-04T00:00:00Z'
+    updated: '2026-08-04T03:10:00Z'
+
+  - id: t-086
+    milestone: m2
+    title: 'kr-art-plate has @error handling but /rewards BROKEN-ART hits persist anyway -- find out why'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Puzzle found while reviewing kind_robots PR #1396 (2026-08-04, t-064's
+      close-out) and investigating t-085: reward-card.vue already renders
+      through kr-entity-card-body.vue -> components/narrative/kr-art-plate.vue,
+      and kr-art-plate.vue DOES have proper `@error` handling (a `failed` ref
+      that swaps to the placeholder icon, matching the same shape as t-069's
+      kr-gallery.vue fix) -- yet the `audit` check still caught two failed
+      `/rewards` images painting their `alt` text on kind_robots PR #1396's own
+      run (desktop viewport, after `/bots` and `/characters` had already
+      rendered cleanly at the same viewport, so it is not a
+      not-yet-settled-page timing issue across the board).
+
+      Why the fallback isn't taking effect for these specific images is
+      unknown. Possibilities worth checking: (1) a redirect chain
+      (kind-robots.vercel.app -> media.acrocatranch.com, confirmed via
+      t-085's direct fetches) causing the `error` event to fire later or
+      differently than a same-origin 404 would, past whatever window the
+      audit's networkidle wait allows; (2) reward-card or kr-entity-card-body
+      passing something into kr-art-plate that bypasses its `failed` state
+      (e.g. a `:key` forcing a remount before the swap commits); (3) the
+      specific image URLs resolving through a different code path than the
+      one kr-art-plate's `src` computed expects (check
+      `resolveArtVariantSrc`'s handling of reward `power`/`item` art
+      specifically, since both known failures are that category). Reproduce
+      against a live preview (see AGENTS.md's Vercel MCP steps) rather than
+      guessing from the audit screenshots alone.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-04T03:10:00Z'

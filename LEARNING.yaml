@@ -6369,3 +6369,19 @@ records:
     component with WonderLab preview fixture coverage, grep the
     utils/scripts/verifyWonderLab*.ts files specifically for readFile calls
     against that component's path, not just import/reference greps.
+- date: 2026-08-04
+  project: interface-vision
+  task: t-064
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A task tracking N/M sub-item progress (5 cards converging onto a shared
+    body) had its note fall one merge behind reality: reward-card had already
+    migrated in a prior session/PR with no note update recording it, so the
+    task read as 2 items remaining when only 1 actually was. Caught by
+    checking the merged tree directly (grep for the new import) rather than
+    trusting the note's own count. When landing one item of an N/M tracked
+    task, update the note's count even if the task can't close yet.
