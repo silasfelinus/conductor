@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-05T12:51:37Z
+Generated: 2026-08-05T13:42:51Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **522**
-- Outcomes: blocked: 13, cancelled: 1, done: 508
+- Closed tasks recorded: **523**
+- Outcomes: blocked: 13, cancelled: 1, done: 509
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -15,7 +15,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 | Project | Closed | Success rate |
 |---|---|---|
-| ai-art-academy | 58 | 98% |
+| ai-art-academy | 59 | 98% |
 | alexa-integration | 2 | 100% |
 | animation-manager | 13 | 100% |
 | animation-studio | 2 | 50% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 507 | 99% |
+| software | 508 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-05 `ai-art-academy/t-056` — A kaizen note asking for a field that doesn't exist in the source data (here: "region") is worth implementing as closely as the real schema allows rather than skipping outright -- era-based sort/overlap-detection delivered the same practical benefit (spotting a coverage gap before adding a new curriculum entry) using only fields that actually exist.
 - 2026-08-05 `ai-art-academy/t-043` — Keep curriculum inclusion, reproduction rights, and generation-preset permissions as separate policy questions. Collapsing them into one death-date cutoff can erase historically important artists while still failing to express the actual copyright and commercial-use constraints.
 - 2026-08-05 `conductor/t-099` — Adding a "strongest evidence" field/tier to a multi-pass classifier isn't complete until the code path that decides "does this field apply" also distinguishes absent-and-should-fall-back from present-but-corrupt-and-should-not. A single parse_x() -> Optional[T] helper collapses both into None, which reads fine until a caller uses "is None" as the fallback trigger -- a malformed value then silently gets treated as if the stronger evidence were never there at all, quietly replaced by a weaker heuristic instead of surfacing. Caught by external review before merge (PR #1737) rather than by the implementing session's own test pass, since the tests written alongside the feature covered field-present/field-absent but not field-present-but-malformed -- a reminder to enumerate all three states explicitly whenever a field is optional AND has a shape to validate, not just "present vs. absent."
 - 2026-08-05 `conductor/t-099` — A dedicated implementation_pr field, written once at close time, is strictly stronger evidence than any post-hoc heuristic (title search or note-quoted PR reference) for reconciling roadmap state against reality -- it's self-reported by the session that actually did the work, immune to title-convention drift, and free to check (one direct PR lookup vs. a search). The one sharp edge worth remembering: a field that is present-but-malformed is not the same case as a field that is absent -- both `parse` to None, but conflating them lets corrupted roadmap data silently fall back to weaker search/note evidence and report a false "clean" instead of surfacing as unresolved. Route "truthy but unparseable" to unresolved explicitly, never through the same branch as "falsy/missing".
@@ -89,7 +90,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-05 `digital-storefront/t-036` — Doc-accuracy corrections to a roadmap note should fix the wrong text in place with a short parenthetical marking what changed, not append a whole new correction paragraph — keeps the note's primary content readable instead of burying the fix at the bottom of an already-long history.
 - 2026-08-05 `ai-art-academy/t-010` — A shared-component "clear/reset" function that touches several unrelated global Pinia singletons (deselectBot/deselectCharacter/deselectDream/deselectReward/deselectScenario) is only safe when gated on the same prop that controls whether the UI exposing those fields was ever shown. Unconditional cleanup in a function called automatically on every successful action (not just an explicit user click) silently wipes state the current view never gave the user any way to see or intend to clear. Before implementing a subagent's bug report, independently re-verified the specific store calls and their persistence side effects rather than trusting the report at face value.
 - 2026-08-05 `interface-vision/t-081` — When a "picker" component is contract-fenced read-only (verifyFacetGallery.ts forbids create/update/archive text in facet-gallery.vue), add the missing create affordance to its thin wrapper component instead, and hand off to the real admin flow via a one-shot query-param flag (?create=1, consumed and cleared by the tab it lands on) rather than duplicating the create form or loosening the contract. Kept the read-only contract test green with zero changes needed to the fenced file itself.
-- 2026-08-05 `interface-vision/t-068` — Re-check recent merges immediately before merging a scoped follow-up on a frequently claimed umbrella task; a concurrent broader PR can complete the same slice between CI start and merge.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-05T12:51:37Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-05T13:42:51Z_
