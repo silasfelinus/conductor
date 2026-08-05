@@ -502,7 +502,7 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
@@ -510,16 +510,12 @@ tasks:
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
-      Lane 1 front-end polish pass: added `role="group"` (+ `aria-label` where missing) to three toggle-button clusters that already had correct per-button `aria-pressed` but no group semantics on their wrapping container — Academy Style Gallery's All/New/Explored progress filter, and art-styler's source-image tab (Upload/Gallery/Starters) and style-category filter row. Merged kind_robots PR #1474 (squash e14e781f). Rotate next lane to roadmap accuracy (lane 2). See run_log for full detail.
-
-      Completed lane 2 roadmap accuracy audit in projects/ai-art-academy/docs/roadmap-audits/2026-08-05-roadmap-accuracy.md; implementation branch is worker/ai-art-academy-t-010-20260805-r7m4.
-
-      Lane 2 roadmap accuracy audit merged in conductor PR #1732 (squash af511942). The audit reconciles t-010's structured rotation state with t-044's latest live evidence, records the inline-note/run-log drift, and recommends lane 3 inspiration assets next without adding ArtJobs while the shared render queue is unhealthy.
+      Lane 3 (2026-08-05): render queue still unhealthy (HTTP 503). Queued 3 previously-missing style-preview requests (american-luminism, egyptian-painting, heidelberg-school — all 404 at delivery, none previously queued in art-prompts.yaml), status: pending, not submitted live. See run_log for full detail.
     continuous_improvement:
-      last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 2
-      last_run: '2026-08-05T05:48:23Z'
-      last_pr: 'kind_robots PR #1474 (squash e14e781f)'
+      last_lane: 3  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 4
+      last_run: '2026-08-05T10:30:00Z'
+      last_pr: 'conductor PR (branch worker/ai-art-academy-t010-20260805-lane3, see run_log)'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
     owner: worker
     claimed_by: 2026-08-05T102837Z-ai-art-academy-t-010-lane3
