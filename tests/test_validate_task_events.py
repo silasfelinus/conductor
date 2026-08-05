@@ -159,6 +159,31 @@ class ValidateTaskEventsTests(unittest.TestCase):
         error = MODULE.validate(event)
         self.assertIn("learning may only accompany done or blocked", error)
 
+    def test_learning_rejected_on_every_non_closed_operation(self):
+        # conductor/t-101: the 2026-08-05 stuck-event incident (a queued `rearm`
+        # for ai-art-academy/t-010 carrying a `learning:` field) was this exact
+        # rejection, just on an operation the prior test above never exercised.
+        # ALLOWED_OPERATIONS minus CLOSED_OPERATIONS ({done, blocked}) is
+        # {claim, ready, review, needs-human, rearm} -- cover all five so a future
+        # operation added to ALLOWED_OPERATIONS without a matching test here would
+        # still be caught the moment someone tries `learning:` on it.
+        non_closed = MODULE.ALLOWED_OPERATIONS - MODULE.CLOSED_OPERATIONS
+        self.assertEqual(non_closed, {"claim", "ready", "review", "needs-human", "rearm"})
+        for operation in sorted(non_closed):
+            with self.subTest(operation=operation):
+                event_body = {
+                    "version": 1,
+                    "project": "demo",
+                    "task": "t-001",
+                    "operation": operation,
+                    "learning": {"kind": "software", "stakes": "reversible", "lesson": "x"},
+                }
+                if operation == "claim":
+                    event_body["session"] = "sess-A"
+                event = self.write_event(f"bad-learning-{operation}.yaml", event_body)
+                error = MODULE.validate(event)
+                self.assertIn("learning may only accompany done or blocked", error)
+
     def test_learning_missing_required_field_is_rejected(self):
         event = self.write_event(
             "bad-learning-fields.yaml",

@@ -279,3 +279,6 @@ queueDepth: PENDING=3072, RUNNING=1, DONE=3731, CANCELLED=789 (all-time). oldest
 
 ## 2026-08-05T18:34:38Z | growing
 queueDepth: PENDING=3065, RUNNING=1, DONE=3738, CANCELLED=789 (all-time). oldestPending: id=4570, age=331878s (~92.2h), engine=COMFY. windowThroughput (24h): PENDING=2757. recentFailed: none.
+
+## 2026-08-05T20:38:50Z | growing
+queueDepth: PENDING=3089, DONE=3750, FAILED=25, CANCELLED=789 (all-time). oldestPending: id=4581, age=339304s (~94.3h), engine=COMFY. windowThroughput (24h): PENDING=2792, FAILED=25. recentFailed (last 25): 25/25 = connection-refused to ComfyUI.

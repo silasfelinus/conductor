@@ -3239,26 +3239,81 @@ tasks:
   - id: t-101
     milestone: m2
     title: "Have validate_task_events.py reject a learning: field on non-done/blocked operations at PR time"
-    status: claimed
+    status: review
     owner: worker
     stakes: reversible
     passes: 0
     note: >
-      Kaizen from the 2026-08-05 scheduled conductor sweep (PR #1762): a queued
-      `rearm` task-event for ai-art-academy/t-010 carried a `learning:` field,
-      which `process_task_events.py`'s `prepare_learning()` correctly rejects
-      (learning may only accompany `done`/`blocked` operations), but nothing
-      caught this at PR time -- the event sat unprocessed in `task-events/`
-      for hours across multiple scheduled runs before a manual sweep noticed
-      the stuck file and traced the cause. `.github/workflows/ci.yml`'s
-      "Validate queued task-events YAML" step already runs
-      `scripts/validate_task_events.py` on every PR touching `task-events/*.yaml`;
-      add the same operation/field compatibility check there (reusing
-      `process_task_events.py`'s existing rule, not reimplementing it) so a
-      malformed event fails CI on the PR that introduces it instead of
-      silently sitting in the queue until the next manual sweep. Add a
-      regression test covering a `learning:` field on each non-closed
-      operation (`claim`, `ready`, `review`, `needs-human`, `rearm`).
+      RESOLVED 2026-08-05 (conductor scheduled agent run,
+      session 2026-08-05T203207Z-conductor-t101): this task's premise was
+      partially stale by the time it was filed. `scripts/validate_task_events.py`
+      already rejects a `learning:` field on any non-closed operation -- that
+      check landed in PR #851 (conductor/t-068, merged 2026-07-19), well before
+      today's stuck-event incident, and already had one passing regression test
+      (`test_learning_on_non_closed_operation_is_rejected`, covering `claim`).
+      So the PR-time gate this task asked for already existed; only the
+      "cover every non-closed operation" half of the ask was still open.
+
+      ROOT CAUSE of why that gate didn't catch this incident: it runs inside
+      `ci.yml`'s `pull_request`-triggered job only. The actual `rearm` event for
+      ai-art-academy/t-010 was written by a direct commit straight to `main`
+      (`13455d6c rearm: ai-art-academy/t-010 after PR #1761`) -- consistent with
+      how connector-session task-events are documented to land (AGENTS.md's
+      "Connector-only Workers" section) -- so no PR ever touched
+      `task-events/*.yaml` for this event and the PR-time check never ran on
+      it. `process-task-events.yml` (the push-triggered processor) DID catch
+      it correctly: `process_task_events.py`'s `prepare_learning()` raises
+      `ValueError("learning may only accompany done or blocked events")`
+      before any file is touched (atomic, per its own docstring), which fails
+      that workflow run loudly and leaves the malformed event queued for the
+      next run to fail on again -- it just kept failing silently in the
+      Actions tab with nobody watching until a manual sweep noticed, since
+      nothing currently surfaces a repeatedly-failing scheduled workflow on
+      its own.
+
+      DONE THIS PASS: added `test_learning_rejected_on_every_non_closed_operation`
+      to `tests/test_validate_task_events.py`, parametrized over
+      `ALLOWED_OPERATIONS - CLOSED_OPERATIONS` (`claim`, `ready`, `review`,
+      `needs-human`, `rearm`) so a future operation added without a matching
+      test would still be exercised automatically. Full suite green
+      (`pytest tests/`: 877 passed, 1 skipped, same 4 pre-existing
+      sandbox-only Python 3.11-vs-CI-3.12 f-string failures in
+      `test_build_digest_email_v2.py` documented repeatedly elsewhere in this
+      file, unrelated and untouched).
+
+      NOT done, and deliberately left as a separate follow-up rather than
+      folded into this same pass: making a repeatedly-failing scheduled
+      workflow (like this incident) surface itself instead of relying on a
+      manual sweep to notice. Filed as conductor/t-102.
     updated: '2026-08-05T20:45:12Z'
     claimed_by: 2026-08-05T203207Z-conductor-t101
     claimed_at: '2026-08-05T20:45:12Z'
+
+  - id: t-102
+    milestone: m2
+    title: "Surface a repeatedly-failing scheduled workflow instead of relying on a manual sweep to notice"
+    status: ready
+    owner: null
+    stakes: reversible
+    passes: 0
+    note: >
+      Kaizen from conductor/t-101 (2026-08-05): `process-task-events.yml` (cron
+      `17 * * * *` plus pushes touching `task-events/*.yaml`) correctly fails
+      loudly every time it hits a malformed event (e.g. a `learning:` field on
+      a non-closed operation) -- `process_task_events.py`'s `main()` prints an
+      `ERROR ...` line and returns exit 1 -- but a scheduled workflow's failure
+      only shows up in the Actions tab; nothing pings a session or Silas. The
+      2026-08-05 ai-art-academy/t-010 stuck-`rearm` incident sat failing on
+      every run for hours before a manual sweep happened to notice. Add a
+      cheap self-check: either (a) have `select_role.py` (or a small new
+      check alongside it) query the GitHub Actions API for
+      `process-task-events.yml`'s last N runs and flag N consecutive failures
+      as a new soft-needs-human-worthy signal a session should act on, or
+      (b) add a workflow step that, on failure, posts/updates a single
+      pinned tracking issue instead of relying on the raw Actions log. Prefer
+      (a) if feasible without adding a new direct GitHub-API dependency this
+      sandbox can't reach (see AGENTS.md's documented `select_role.py`
+      404/403-from-sandbox caveat) -- reuse whatever transport
+      `check_pr_merged_drift.py`/`audit_human_gates.py` already use
+      successfully from this environment.
+    updated: '2026-08-05T20:45:12Z'
