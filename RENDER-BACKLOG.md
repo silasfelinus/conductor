@@ -285,3 +285,6 @@ queueDepth: PENDING=3089, DONE=3750, FAILED=25, CANCELLED=789 (all-time). oldest
 
 ## 2026-08-05T22:37:25Z | coloring-book/t-022 | growing
 queueDepth: PENDING=3099, RUNNING=1, DONE=3764, CANCELLED=789 (all-time). oldestPending: id=4581, age=346419s (~96.2h), engine=COMFY. windowThroughput (24h): PENDING=2802, RUNNING=1, DONE=14. recentFailed: none.
+
+## 2026-08-05T23:26:52Z | growing
+queueDepth: PENDING=3080, RUNNING=1, DONE=3783, CANCELLED=789 (all-time). oldestPending: id=4581, age=349387s (~97.1h), engine=COMFY. windowThroughput (24h): PENDING=2783, RUNNING=1, DONE=33. recentFailed: none.
