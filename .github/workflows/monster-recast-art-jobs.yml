@@ -16,13 +16,14 @@ on:
       # Canonical queue changes may intentionally wake the regular batch runner.
       # Proposal-ledger edits do not: the Coloring Book Studio must be able to
       # save a prompt without silently launching up to eighteen unrelated jobs.
+      # Workflow-definition changes are validated by PR CI and must not launch
+      # a live production batch merely because this YAML was maintained.
       - "projects/coloring-book/color-art-jobs.yaml"
       - "scripts/consume_coloring_book_color_art.py"
       - "scripts/consume_monster_recast_art.py"
       - "scripts/render_retry.py"
       - "scripts/art_quality.py"
       - "tests/test_coloring_book_render_gate.py"
-      - ".github/workflows/monster-recast-art-jobs.yml"
   workflow_dispatch:
     inputs:
       limit:
