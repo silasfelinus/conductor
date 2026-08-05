@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-05T20:46:27.476981+00:00",
+  "generated_at": "2026-08-05T21:44:23.708587+00:00",
   "summary": {
     "roadmaps": 45,
     "active_projects": 27,
@@ -7,10 +7,10 @@
     "ready": 41,
     "waiting": 47,
     "needs_human": 12,
-    "in_progress": 4,
-    "done": 767,
+    "in_progress": 3,
+    "done": 768,
     "errors": 0,
-    "warnings": 10,
+    "warnings": 9,
     "info": 65
   },
   "projects": [
@@ -421,17 +421,16 @@
       "autonomous": false,
       "task_count": 102,
       "counts": {
-        "done": 100,
-        "ready": 1,
-        "review": 1
+        "done": 101,
+        "ready": 1
       },
-      "open_count": 2,
+      "open_count": 1,
       "human_attention": 0,
       "ready": 1,
       "waiting": 0,
       "claimed": 0,
-      "review": 1,
-      "done": 100
+      "review": 0,
+      "done": 101
     },
     {
       "slug": "serendipity",
@@ -872,13 +871,6 @@
     }
   ],
   "findings": [
-    {
-      "severity": "warning",
-      "code": "CONTINUOUS_IMPROVEMENT_NOTE_DRIFT",
-      "project": "ai-art-academy",
-      "task": "t-010",
-      "message": "Task note mentions a lane rotation but continuous_improvement.last_run predates the task's updated timestamp \u2014 the continuous_improvement block (last_lane/next_lane/last_run/last_pr) may be stale relative to the note."
-    },
     {
       "severity": "warning",
       "code": "STALE_IN_PROGRESS",

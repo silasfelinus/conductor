@@ -583,6 +583,12 @@ movements:
     artist_slugs: [diego-velazquez, francisco-de-zurbaran, bartolome-esteban-murillo]
     example_count: 3
     remix_hint: "Repaint this image in the Spanish Golden Age style: a single strong light source against a near-black or plain neutral ground (tenebrism), a restrained palette of umber, ochre, and black, sculptural clarity of form, and a quiet, solemn, devotional mood with minimal ornament. Preserve the source composition and subject."
+  - slug: mannerism
+    name: Mannerism
+    era: "c. 1520-1580 (Italy)"
+    artist_slugs: [bronzino, parmigianino, perino-del-vaga]
+    example_count: 3
+    remix_hint: "Repaint this image as an Italian Mannerist painting: elegant, elongated figures in artificial, twisting poses, cool porcelain-smooth skin, a restrained jewel-toned palette against a plain or ambiguous dark ground, and a composed, faintly aloof emotional temperature rather than Baroque drama. Preserve the source composition and subject."
 ```
 
 ---
@@ -3222,6 +3228,100 @@ ornament. Preserve the source composition and subject."
 
 ---
 
+## 44. Mannerism (`mannerism`)
+
+**Era:** c. 1520-1580 (Italy)
+
+**Key ideas.** Mannerism grew directly out of the High Renaissance taught
+in Section 4 but deliberately pushed past its balance and naturalism into
+elegant artifice. Where Leonardo, Raphael, and Botticelli sought
+anatomical correctness and calm, stable compositions, Mannerist painters
+stretched the figure into impossibly long limbs and swan necks, twisted
+poses into serpentine, off-balance spirals (the *figura serpentinata*),
+and cooled the palette into acidic, jewel-like color harmonies that read
+as sophisticated rather than natural. Faces became smooth, porcelain-cool,
+and faintly emotionally distant — beautiful but unreadable, a style built
+for court sophistication rather than devotional warmth. Space itself often
+turns ambiguous or crowded, with figures compressed into a shallow stage
+or a plain dark ground that flattens depth rather than opening it up.
+Working mostly for the Medici court in Florence and the papal court in
+Rome, Mannerist painters treated technical virtuosity as its own subject:
+a portrait's elongated fingers or a Madonna's impossibly long neck weren't
+mistakes, they were the point. The movement sits at a different pole from
+the Spanish Golden Age (Section 43): where Velázquez, Zurbarán, and
+Murillo used tenebrism to root figures in sculptural, unblinking realism,
+Mannerism dissolves the same devotional and portrait subjects into
+elegant, artificial unreality. El Greco, already noted in Section 43 as a
+distinct Mannerist strand working a generation later in Toledo, is this
+movement's most famous inheritor outside Italy, but (as in that entry) is
+named for historical context only and not individually rights-verified
+here.
+
+**Recognition cues:**
+- Impossibly elongated limbs, necks, and fingers — figures stretched past
+  anatomical correctness on purpose
+- Twisting, off-balance poses (the *figura serpentinata*) rather than the
+  Renaissance's stable, centered stances
+- Smooth, cool, porcelain-like skin with a composed, faintly aloof
+  expression — beautiful rather than warm or devotional
+- A restrained, acidic jewel-toned palette (cool pinks, acid greens, deep
+  blues) rather than the Renaissance's warm earth tones
+- Shallow, ambiguous, or compressed pictorial space — a plain dark ground
+  or a crowded stage rather than the Renaissance's deep, legible perspective
+- Technical virtuosity treated as the subject itself: the distortion reads
+  as sophistication, not error
+
+**Notable artists:**
+- **Agnolo Bronzino** (1503-1572) — Medici court portraitist; this lesson's
+  clearest generation-style anchor for cool, smooth, emotionally composed
+  court portraiture.
+- **Parmigianino** (Girolamo Francesco Maria Mazzola, 1503-1540) — Named
+  for the elongation he pushed furthest (his *Madonna with the Long Neck*
+  is the movement's most-cited example of the style, though that specific
+  panel was not itself rights-verified this cycle); this entry's verified
+  work is instead one of his figure drawings.
+- **Perino del Vaga** (Pietro Buonaccorsi, 1501-1547) — A leading pupil of
+  Raphael who carried Roman Mannerism's crowded, elegant figure groups
+  into large-scale religious painting.
+
+Jacopo Pontormo (1494-1557), one of the movement's founding figures
+alongside Rosso Fiorentino, is deliberately **not named** in this entry:
+this session could not locate a matching rights-verified work at the Met
+or AIC within this cycle's time budget (see the safety-check appendix
+below for the full account), and per PUBLIC-DOMAIN-POLICY.md §5 an artist
+who was not successfully checked does not get even a historical-context
+mention — a stricter bar than El Greco's inclusion in Section 43, where
+the artist *was* checked and simply found unverified-this-cycle. El Greco
+(1541-1614) is named above for historical-context continuity with Section
+43 only; no work of his is exhibited here either.
+
+**Example works:**
+- *Portrait of a Young Man*, Agnolo Bronzino, 1530s — Metropolitan Museum
+  of Art, accession 29.100.16 (object 435802). **VERIFIED** public domain
+  (`isPublicDomain: true`) this cycle directly via the Met Collection API:
+  https://www.metmuseum.org/art/collection/search/435802
+- *Seated Figure of Mercury*, Parmigianino, 1524-26 — Metropolitan Museum
+  of Art, accession 1997.154 (object 340445). **VERIFIED** public domain
+  (`isPublicDomain: true`) this cycle directly via the Met Collection API:
+  https://www.metmuseum.org/art/collection/search/340445
+- *The Holy Family with the Infant Saint John the Baptist*, Perino del
+  Vaga, ca. 1524-26 — Metropolitan Museum of Art, accession 2011.26
+  (object 441227). **VERIFIED** public domain (`isPublicDomain: true`)
+  this cycle directly via the Met Collection API:
+  https://www.metmuseum.org/art/collection/search/441227
+
+Do not add a Pontormo or El Greco example here without first verifying
+that specific work's rights status directly (Wikimedia Commons file page
+or an institution's own collection API), the same standard applied above.
+
+**remix_hint:** "Repaint this image as an Italian Mannerist painting:
+elegant, elongated figures in artificial, twisting poses, cool
+porcelain-smooth skin, a restrained jewel-toned palette against a plain or
+ambiguous dark ground, and a composed, faintly aloof emotional temperature
+rather than Baroque drama. Preserve the source composition and subject."
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -3885,3 +3985,43 @@ under ambiguity — he clears §1.3's death-date prong easily but was not
 individually rights-verified this cycle, and no work of his is listed as an
 example. No named artist overlaps with Section 5's Baroque entry
 (Caravaggio, Gentileschi, Rembrandt, Vermeer).
+
+**v1.24 addition (2026-08-05) re-check (t-010 cycle, lane 4).** Section 44
+(Mannerism) clears PUBLIC-DOMAIN-POLICY.md §1.3's both-prongs rule for all
+three generation-style anchors with wide margin: Agnolo Bronzino (d. 1572),
+Parmigianino (d. 1540), and Perino del Vaga (d. 1547) all died well over
+four centuries before this policy's 1956 cutoff, and their verified example
+works (1530s, 1524-26, ca. 1524-26) all predate the 1930 US-publication
+cutoff by the same margin — none moves the curriculum's most-recent-
+example-work record (still 1930, §24). This session verified all three
+directly against the Metropolitan Museum of Art Collection API's
+`isPublicDomain` field (`collectionapi.metmuseum.org`, reachable directly
+from this session's egress, the same direct rights-status-field method used
+for §28, §35, §36, §37, §41, and §43): Bronzino's *Portrait of a Young Man*
+(object 435802, accession 29.100.16), Parmigianino's *Seated Figure of
+Mercury* (object 340445, accession 1997.154), and Perino del Vaga's *The
+Holy Family with the Infant Saint John the Baptist* (object 441227,
+accession 2011.26). Jacopo Pontormo, the movement's other founding figure
+alongside Rosso Fiorentino, clears §1.3's death-date prong easily (d. 1557)
+but this session's Met API text search for his name returned only
+unrelated works by other artists within the results actually inspected —
+per §5, an artist not successfully matched to a specific rights-checked
+work is excluded from the entry entirely, not merely left unverified in
+prose (a stricter bar than the El Greco/Díaz/Conder precedent in
+§40/§42/§43, where the named artist *was* checked and simply found
+unverified-this-cycle). A prior candidate researched for this lane, Russian
+Constructivism (El Lissitzky, Lyubov Popova, and — after Vladimir Tatlin's
+work proved to be mostly non-2D reliefs/sculpture — Alexandra Exter), was
+**rejected**: all three artists clear §1.3's death-date prong comfortably,
+but every matching work found at both the Met and AIC collection APIs came
+back `isPublicDomain`/`is_public_domain: false` (Met objects 265543,
+753995, 421988; AIC objects 150813, 119454, 150814, 196104, 76277) — the
+same §2 digitization-license failure pattern as Fauvism's Derain/Dufy
+exclusion in §38, but here covering the entire candidate trio rather than
+two secondary names. Per §5, do not re-attempt Constructivism from these
+same two institutions without a new digitization-rights source (Wikimedia
+Commons was not checked this cycle); a future session with different
+museum access should try there before treating this movement as
+permanently excluded. No named artist in Section 44 overlaps with Section
+4's Renaissance entry (Leonardo, Botticelli, Raphael, Dürer) or any other
+prior section.
