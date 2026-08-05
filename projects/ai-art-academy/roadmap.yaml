@@ -1706,31 +1706,17 @@ tasks:
   - id: t-056
     milestone: m6
     title: 'Add scripts/list_curriculum_coverage.py to print existing academy movement coverage in one shot'
-    status: ready
-    owner: null
+    status: done
     passes: 0
     stakes: reversible
-    updated: '2026-08-05T11:34:28Z'
-    note: >
-      Kaizen from conductor PR #1745 (2026-08-05, ai-art-academy/t-010 lane 4, Spanish
-      Golden Age Painting). Every lane-4 cycle so far has independently re-derived "check
-      curriculum-outline.md's existing sections and academyStyles.ts's existing slugs for
-      coverage gaps" from scratch by prose/manual grep, rather than a shared tool. Add a
-      small script that parses `docs/curriculum-outline.md`'s machine-readable skeleton
-      YAML block and prints each movement's slug/name/era/region in one shot (grouped or
-      sortable by region/era), so a future lane-4 session can scan for gaps (e.g. an
-      underrepresented region, an era overlap worth double-checking before adding a new
-      entry) in seconds instead of re-grepping `## N.` headers and skeleton entries by
-      hand. Read-only, no roadmap/YAML mutation; a plain reporting utility alongside
-      `scripts/validate_roadmaps.py`/`scripts/audit_roadmaps.py`.
+    updated: '2026-08-05T13:38:35+00:00'
+    note: |-
+      Kaizen from conductor PR #1745 (2026-08-05, ai-art-academy/t-010 lane 4, Spanish Golden Age Painting). Every lane-4 cycle so far has independently re-derived "check curriculum-outline.md's existing sections and academyStyles.ts's existing slugs for coverage gaps" from scratch by prose/manual grep, rather than a shared tool. Add a small script that parses `docs/curriculum-outline.md`'s machine-readable skeleton YAML block and prints each movement's slug/name/era/region in one shot (grouped or sortable by region/era), so a future lane-4 session can scan for gaps (e.g. an underrepresented region, an era overlap worth double-checking before adding a new entry) in seconds instead of re-grepping `## N.` headers and skeleton entries by hand. Read-only, no roadmap/YAML mutation; a plain reporting utility alongside `scripts/validate_roadmaps.py`/`scripts/audit_roadmaps.py`.
+      Fix: when a lane-4 cycle syncs a new curriculum entry into `academyStyles.ts`, queue its `kind-robots-academy-style-preview-<slug>` request in `art-prompts.yaml` in the *same* cycle (status: pending is fine if the render queue is unhealthy at sync time -- the point is the request exists, not that it renders immediately). Update the lane-4 section of t-010's standing instructions (or a short project doc) to say so explicitly, so this isn't tribal knowledge picked up by re-reading run_log history each time. Alternatively/additionally, a small script could diff `academyStyles.ts` slugs against `art-prompts.yaml` style-preview ids and flag any gap -- lane-2 (roadmap accuracy) or lane-3 (inspiration assets) could run it as a cheap first check instead of the manual curl-every-slug sweep t-010's 2026-08-05 lane-3 cycle used.
 
-      Fix: when a lane-4 cycle syncs a new curriculum entry into `academyStyles.ts`, queue
-      its `kind-robots-academy-style-preview-<slug>` request in `art-prompts.yaml` in the
-      *same* cycle (status: pending is fine if the render queue is unhealthy at sync time --
-      the point is the request exists, not that it renders immediately). Update the lane-4
-      section of t-010's standing instructions (or a short project doc) to say so explicitly,
-      so this isn't tribal knowledge picked up by re-reading run_log history each time.
-      Alternatively/additionally, a small script could diff `academyStyles.ts` slugs against
-      `art-prompts.yaml` style-preview ids and flag any gap -- lane-2 (roadmap accuracy) or
-      lane-3 (inspiration assets) could run it as a cheap first check instead of the manual
-      curl-every-slug sweep t-010's 2026-08-05 lane-3 cycle used.
+
+      Implementing the read-only curriculum-coverage reporting script requested by this task's kaizen note.
+
+      Added scripts/list_curriculum_coverage.py, a read-only reporter that parses curriculum-outline.md's machine-readable skeleton YAML block and prints each movement's slug/name/era/artist/example coverage in file, era, or slug order, plus an --overlaps flag that flags era-range overlaps worth double-checking before adding a new movement. No `region` field exists in the skeleton (only slug/name/era/artist_slugs/example_count/remix_hint), so region-based grouping mentioned in the original kaizen note wasn't implemented — era-based sorting and overlap detection cover the same "spot a gap before adding a new entry" goal with the fields that actually exist. 10 new pytest cases in tests/test_list_curriculum_coverage.py (synthetic skeleton fixture plus one smoke test against the real file), all passing. Full pytest suite run: 875 passed, 1 skipped, 4 pre-existing failures in tests/test_build_digest_email_v2.py unrelated to this change (a Python 3.12+ f-string-with-backslash syntax construct that this sandbox's Python 3.11 can't parse -- confirmed pre-existing via git log on that file).
+    claimed_by: 2026-08-05T134200Z-ai-art-academy-t056-qcm
+    claimed_at: '2026-08-05T13:38:18+00:00'
