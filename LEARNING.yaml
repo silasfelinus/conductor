@@ -6646,3 +6646,19 @@ records:
     with a short parenthetical marking what changed, not append a whole new
     correction paragraph — keeps the note's primary content readable instead of
     burying the fix at the bottom of an already-long history.
+- date: '2026-08-05'
+  project: kind-robots
+  task: t-053
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: When adding a new failure-signature check, search for and reuse an existing
+    detection pattern in the codebase (scripts/lib/databaseRetry.ts's isTransientDatabaseError()
+    and cypress/e2e/api/users.cy.ts's inline pool-timeout regex) rather than inventing a
+    parallel one -- keeps the two detectors from drifting apart as the real error shapes
+    change. Separately, after running a local `prisma generate` for verification, diff
+    generated files against git before committing -- local generation can drift from what's
+    committed even with no schema change, and that drift is easy to sweep in by accident via
+    `git add -A`.
