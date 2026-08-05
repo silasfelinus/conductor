@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-05T01:56:09Z
+Generated: 2026-08-05T02:15:55Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **514**
-- Outcomes: blocked: 13, cancelled: 1, done: 500
+- Closed tasks recorded: **515**
+- Outcomes: blocked: 13, cancelled: 1, done: 501
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -15,7 +15,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 | Project | Closed | Success rate |
 |---|---|---|
-| ai-art-academy | 55 | 98% |
+| ai-art-academy | 56 | 98% |
 | alexa-integration | 2 | 100% |
 | animation-manager | 13 | 100% |
 | animation-studio | 2 | 50% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 499 | 99% |
+| software | 500 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-05 `ai-art-academy/t-010` — A shared-component "clear/reset" function that touches several unrelated global Pinia singletons (deselectBot/deselectCharacter/deselectDream/deselectReward/deselectScenario) is only safe when gated on the same prop that controls whether the UI exposing those fields was ever shown. Unconditional cleanup in a function called automatically on every successful action (not just an explicit user click) silently wipes state the current view never gave the user any way to see or intend to clear. Before implementing a subagent's bug report, independently re-verified the specific store calls and their persistence side effects rather than trusting the report at face value.
 - 2026-08-05 `interface-vision/t-081` — When a "picker" component is contract-fenced read-only (verifyFacetGallery.ts forbids create/update/archive text in facet-gallery.vue), add the missing create affordance to its thin wrapper component instead, and hand off to the real admin flow via a one-shot query-param flag (?create=1, consumed and cleared by the tab it lands on) rather than duplicating the create form or loosening the contract. Kept the read-only contract test green with zero changes needed to the fenced file itself.
 - 2026-08-05 `interface-vision/t-068` — Re-check recent merges immediately before merging a scoped follow-up on a frequently claimed umbrella task; a concurrent broader PR can complete the same slice between CI start and merge.
 - 2026-08-04 `interface-vision/t-086` — Multi-stage media fallback state must identify which candidate failed. A single failed boolean can represent one transition but cannot safely drive a chain with two or more candidates.
@@ -89,7 +90,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-04 `conductor/t-097` — task-events/README.md documents a direct push to main as the normal workflow, so validate_task_events.py's PR-time gate never runs for the common case -- a malformed bare-string learning: field (the "learning: >-" folded scalar shape) recurred at least 5 times in a week and each time hard-failed process_task_events.py, silently red-flagging the shared "process" check for every unrelated PR. Coercing the string into {kind, stakes, lesson} (inferring kind/stakes from the task's own roadmap entry) instead of hard-rejecting it keeps the processor unblocked without losing the lesson text -- worth considering the same "recover gracefully from a common malformed shape" pattern for other task-events fields prone to hand-authoring mistakes.
 - 2026-08-04 `interface-vision/t-089` — A plain "who imports this .vue file" grep at deletion time is not enough -- kind_robots PR #1405's conductor-art-gallery.vue deletion (t-026) missed a plugin that DOM-scraped the component's specific rendered markup and a CI workflow that named the file directly in its paths: trigger list. Documented the checklist in kind_robots' AGENTS.md (PR #1417): grep the deleted filename repo-wide (not just import sites), check .github/workflows/*.yml paths: blocks, and check plugins/*.client.ts for DOM-scraping selector strings before deleting a superseded component.
 - 2026-08-04 `interface-vision/t-088` — The last of the three Phase 5 conversation-kit migrations (character-interact #1400, reward-interact t-087/#1406, scenario-interact t-088/#1408) was flagged in its own task note as "not a mechanical swap" -- it had two distinct duplications (a chat transcript and a separate intro-picker reusing the deleted choice-selector.vue's job), and the intro picker's long-paragraph hint text needed a non-italic kr-choice-list variant that didn't exist yet. Adding an opt-in `hintProse` prop (default false, every existing caller unaffected) was cheaper than a bespoke non-italic wrapper and kept the shared component as the single source of truth. Second occurrence of the same "lost the highlighted last-pick styling" gap reward-interact/t-087 hit -- two real surfaces is the signal to actually file the kr-chat-window selectedKey pass-through as a task (t-090) instead of deferring a third time.
-- 2026-08-04 `interface-vision/t-087` — A prior PR (character-interact.vue, #1400) landing the exact same migration pattern (bespoke chat log -> kr-chat-window + kr-choice-list) turned this 1183-line surface into a same-session close rather than a design exploration -- read the reference implementation in full before starting, not just its diff summary. The one real design decision was mapping a caller's existing choice data onto kr-choice-list's fixed embedded contract: kr-chat-window hardcodes its per-turn choice list to layout="row" with no index badge, so a caller with long descriptive choice text (not short quick-topics) has to decide which of label/hint carries the short vs. long half -- picked short category as label, full text as hint, to keep the inline row pills compact. A second non-obvious win from adopting the shared kit: kr-chat-window's built-in streaming placeholder made a "keep it hidden until the request resolves, then push a finished turn" simplification natural, which incidentally fixed nothing broken but removed real state (a scroll ref, three call sites, a manual watcher) that existed only to fight the layout the bespoke markup created in the first place -- duplication removal often deletes more state than template.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-05T01:56:09Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-05T02:15:55Z_
