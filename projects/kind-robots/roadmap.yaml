@@ -2051,45 +2051,18 @@ tasks:
   - id: t-054
     milestone: m1
     title: Add a kind_robots branch-cleanup workflow mirroring conductor's branch-janitor
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from a conductor sweep pattern entry (root TALKBACK.md, 2026-08-05,
-      "kind_robots branch hygiene gap"). conductor has a working branch-janitor
-      workflow (scripts/branch_janitor.py + .github/workflows/branch-janitor.yml)
-      that deletes fully-merged claude/*/worker/* branches and reports (never
-      auto-deletes) stranded unmerged ones. No equivalent exists for kind_robots:
-      branch_janitor.py only operates on the local conductor checkout, so merged
-      and stranded branches accumulate here with no automated or session-executable
-      cleanup path. Session credentials 403 on direct ref deletion in kind_robots,
-      same as conductor -- only a repo-scoped GITHUB_TOKEN inside an Actions
-      workflow can delete refs.
+    note: |-
+      Kaizen from a conductor sweep pattern entry (root TALKBACK.md, 2026-08-05, "kind_robots branch hygiene gap"). conductor has a working branch-janitor workflow (scripts/branch_janitor.py + .github/workflows/branch-janitor.yml) that deletes fully-merged claude/*/worker/* branches and reports (never auto-deletes) stranded unmerged ones. No equivalent exists for kind_robots: branch_janitor.py only operates on the local conductor checkout, so merged and stranded branches accumulate here with no automated or session-executable cleanup path. Session credentials 403 on direct ref deletion in kind_robots, same as conductor -- only a repo-scoped GITHUB_TOKEN inside an Actions workflow can delete refs.
+      Confirmed still present 2026-08-05 (this sweep, via list_branches): worker/interface-vision-t-082-20260804t141838z-b7q4 and claude/relaxed-lovelace-1w3bkd (both already confirmed fully merged into main by the prior sweep's merge-base check), plus worker/issue-1451-live-verification-20260804 (scratch CI-verification branch, confirmed superseded/safe by its own last commit message), and worker/interface-vision-t-080-reward-r8m4 (real ~40-line diff, unverified against current rewardStore.ts -- needs a human-judgment pass, not auto-deletion).
+      Build either (a) a kind_robots-scope GitHub Actions workflow analogous to branch-janitor.yml, using kind_robots' own GITHUB_TOKEN, that deletes fully-merged claude/*/worker/*/agent/* branches and reports (never auto-deletes) stranded unmerged ones -- or (b) extend scripts/branch_janitor.py / branch-janitor.yml to accept a second repo via the GitHub API the same way select_role.py's STRANDED check already does, so a session doesn't need a fresh full-history clone of kind_robots to get an accurate merged/unmerged read (a shallow default clone gives falsely huge "commits ahead" counts, per the same TALKBACK entry). Either shape is fine; pick whichever is less code. Once it exists, use it to clear the four branches confirmed above (three safe-to-delete, one needs a quick diff read against current rewardStore.ts first).
 
-      Confirmed still present 2026-08-05 (this sweep, via list_branches):
-      worker/interface-vision-t-082-20260804t141838z-b7q4 and
-      claude/relaxed-lovelace-1w3bkd (both already confirmed fully merged into
-      main by the prior sweep's merge-base check), plus
-      worker/issue-1451-live-verification-20260804 (scratch CI-verification
-      branch, confirmed superseded/safe by its own last commit message), and
-      worker/interface-vision-t-080-reward-r8m4 (real ~40-line diff, unverified
-      against current rewardStore.ts -- needs a human-judgment pass, not
-      auto-deletion).
 
-      Build either (a) a kind_robots-scope GitHub Actions workflow analogous to
-      branch-janitor.yml, using kind_robots' own GITHUB_TOKEN, that deletes
-      fully-merged claude/*/worker/*/agent/* branches and reports (never
-      auto-deletes) stranded unmerged ones -- or (b) extend
-      scripts/branch_janitor.py / branch-janitor.yml to accept a second repo via
-      the GitHub API the same way select_role.py's STRANDED check already does,
-      so a session doesn't need a fresh full-history clone of kind_robots to get
-      an accurate merged/unmerged read (a shallow default clone gives falsely
-      huge "commits ahead" counts, per the same TALKBACK entry). Either shape is
-      fine; pick whichever is less code. Once it exists, use it to clear the
-      four branches confirmed above (three safe-to-delete, one needs a quick
-      diff read against current rewardStore.ts first).
+      Implemented a conservative kind_robots branch janitor that deletes only branches fully merged into main and reports old unmerged branches without deleting them.
     claimed_by: 2026-08-05T161305Z-kind-robots-t-054-v6k3
     claimed_at: '2026-08-05T16:13:05Z'
-    updated: '2026-08-05T16:13:05Z'
+    updated: '2026-08-05T16:19:00Z'
 
