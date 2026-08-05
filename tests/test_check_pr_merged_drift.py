@@ -6,6 +6,7 @@ no real project files touched.
 """
 
 import io
+import json
 import urllib.error
 from unittest.mock import patch
 
@@ -297,3 +298,216 @@ def test_render_flags_unresolved_instead_of_claiming_clean():
     assert "No drift found" not in output
     assert "could NOT be verified" in output
     assert "newsfeed/t-020" in output
+
+
+def test_render_labels_weak_findings_as_unconfirmed():
+    weak = [
+        {
+            "project": "interface-vision",
+            "task_id": "t-081",
+            "status": "claimed",
+            "repo": "silasfelinus/kind_robots",
+            "pr_number": 1391,
+            "pr_title": "some other task's kaizen PR",
+            "pr_merged_at": "2026-07-28T00:00:00Z",
+        }
+    ]
+    output = dr.render([], [], total=1, weak=weak)
+    assert "No drift found" not in output
+    assert "weak evidence" in output
+    assert "interface-vision/t-081" in output
+    assert "silasfelinus/kind_robots#1391" in output
+
+
+def test_render_reports_clean_state_with_no_weak_findings():
+    assert "No drift found" in dr.render([], [], total=1, weak=[])
+
+
+# --------------------------------------------------------------------------- #
+# scan_in_progress_tasks
+# --------------------------------------------------------------------------- #
+
+
+def test_scan_in_progress_tasks_includes_tasks_with_no_pr_reference(tmp_path):
+    write_roadmap(
+        tmp_path,
+        "davinci",
+        [
+            {"id": "t-001", "status": "claimed", "title": "no reference here"},
+            {"id": "t-002", "status": "done", "title": "done, excluded"},
+        ],
+    )
+    result = dr.scan_in_progress_tasks(tmp_path / "projects")
+    assert [t["task_id"] for t in result] == ["t-001"]
+
+
+# --------------------------------------------------------------------------- #
+# gh_search_task_prs
+# --------------------------------------------------------------------------- #
+
+
+def test_gh_search_task_prs_parses_repository_url():
+    body = json.dumps({
+        "items": [
+            {
+                "number": 1464,
+                "repository_url": "https://api.github.com/repos/silasfelinus/kind_robots",
+            }
+        ]
+    }).encode()
+
+    with patch("urllib.request.urlopen", return_value=FakeResponse(body)):
+        results = dr.gh_search_task_prs(
+            ["silasfelinus/kind_robots"], "interface-vision", "t-081", token=None
+        )
+
+    assert results == [{"repo": "silasfelinus/kind_robots", "number": 1464}]
+
+
+def test_gh_search_task_prs_returns_none_on_api_failure():
+    with patch("urllib.request.urlopen", side_effect=http_error(403)):
+        results = dr.gh_search_task_prs(
+            ["silasfelinus/kind_robots"], "interface-vision", "t-081", token=None
+        )
+    assert results is None
+
+
+def test_gh_search_task_prs_skips_call_with_no_repos():
+    with patch("urllib.request.urlopen") as mock_urlopen:
+        results = dr.gh_search_task_prs([], "interface-vision", "t-081", token=None)
+    assert results == []
+    mock_urlopen.assert_not_called()
+
+
+# --------------------------------------------------------------------------- #
+# check_drift — the combined two-pass orchestration (conductor/t-098)
+# --------------------------------------------------------------------------- #
+
+
+def test_check_drift_prefers_task_id_search_over_note_reference(tmp_path):
+    # interface-vision/t-081: note quotes kind_robots#1391 (the kaizen-filing
+    # PR, merged, but NOT the implementation), while the real implementation
+    # kind_robots#1464 is only discoverable via task-id search — never
+    # mentioned in the note. The authoritative pass must find #1464 as the
+    # high-confidence finding and NOT also report #1391 as a competing one.
+    write_roadmap(
+        tmp_path,
+        "interface-vision",
+        [
+            {
+                "id": "t-081",
+                "status": "claimed",
+                "title": "Facet create affordance",
+                "note": "Filed from kind_robots PR #1391's kaizen suggestion.",
+            }
+        ],
+    )
+
+    search_body = json.dumps({
+        "items": [
+            {
+                "number": 1464,
+                "repository_url": "https://api.github.com/repos/silasfelinus/kind_robots",
+            }
+        ]
+    }).encode()
+    pr_1464_body = json.dumps({
+        "merged": True,
+        "merged_at": "2026-08-01T00:00:00Z",
+        "title": "interface-vision/t-081: facet create affordance",
+    }).encode()
+
+    def fake_urlopen(req, timeout=10):
+        url = req.full_url if hasattr(req, "full_url") else req
+        if "search/issues" in url:
+            return FakeResponse(search_body)
+        return FakeResponse(pr_1464_body)
+
+    with patch("urllib.request.urlopen", side_effect=fake_urlopen):
+        result = dr.check_drift(tmp_path / "projects", token=None)
+
+    assert len(result["high"]) == 1
+    assert result["high"][0]["pr_number"] == 1464
+    assert result["high"][0]["confidence"] == "high"
+    assert result["weak"] == []
+    assert result["unresolved"] == []
+
+
+def test_check_drift_falls_back_to_note_reference_when_no_task_id_match(tmp_path):
+    write_roadmap(
+        tmp_path,
+        "newsfeed",
+        [
+            {
+                "id": "t-020",
+                "status": "claimed",
+                "title": "x",
+                "note": "kind_robots PR #517",
+            }
+        ],
+    )
+
+    empty_search_body = json.dumps({"items": []}).encode()
+    pr_517_body = json.dumps({
+        "merged": True,
+        "merged_at": "2026-07-19T16:16:31Z",
+        "title": "newsfeed/t-020: fix",
+    }).encode()
+
+    def fake_urlopen(req, timeout=10):
+        url = req.full_url if hasattr(req, "full_url") else req
+        if "search/issues" in url:
+            return FakeResponse(empty_search_body)
+        return FakeResponse(pr_517_body)
+
+    with patch("urllib.request.urlopen", side_effect=fake_urlopen):
+        result = dr.check_drift(tmp_path / "projects", token=None)
+
+    assert result["high"] == []
+    assert len(result["weak"]) == 1
+    assert result["weak"][0]["pr_number"] == 517
+    assert result["weak"][0]["confidence"] == "low"
+    assert result["unresolved"] == []
+
+
+def test_check_drift_does_not_downgrade_to_weak_when_search_itself_failed(tmp_path):
+    # If the authoritative search call errors out for a task, that task must
+    # land in `unresolved` -- NOT silently fall back to a "weak" note-based
+    # finding presented as if the authoritative pass came back clean/empty.
+    write_roadmap(
+        tmp_path,
+        "newsfeed",
+        [
+            {
+                "id": "t-020",
+                "status": "claimed",
+                "title": "x",
+                "note": "kind_robots PR #517",
+            }
+        ],
+    )
+
+    def fake_urlopen(req, timeout=10):
+        raise http_error(403)
+
+    with patch("urllib.request.urlopen", side_effect=fake_urlopen):
+        result = dr.check_drift(tmp_path / "projects", token=None)
+
+    assert result["high"] == []
+    assert result["weak"] == []
+    assert len(result["unresolved"]) == 1
+    assert result["unresolved"][0]["task_id"] == "t-020"
+
+
+def test_check_drift_clean_when_no_evidence_either_way(tmp_path):
+    write_roadmap(
+        tmp_path,
+        "davinci",
+        [{"id": "t-001", "status": "claimed", "title": "in progress, no PR yet"}],
+    )
+    empty_search_body = json.dumps({"items": []}).encode()
+
+    with patch("urllib.request.urlopen", return_value=FakeResponse(empty_search_body)):
+        result = dr.check_drift(tmp_path / "projects", token=None)
+
+    assert result == {"high": [], "weak": [], "unresolved": []}
