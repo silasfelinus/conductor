@@ -2629,8 +2629,8 @@ tasks:
   - id: t-099
     milestone: m3
     title: 'ESLint is not a CI gate in kind_robots, so dead code ships unnoticed -- decide whether to make it one'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -2650,6 +2650,9 @@ tasks:
       record today's count as a baseline that may only shrink, and fail on anything new.
       Scope the decision first -- lint-staged/pre-commit, a ratcheted CI job, or explicitly
       choosing to keep relying on review -- rather than assuming the CI job is wanted.
+    claimed_by: 2026-08-05T010500Z-interface-vision-t-099-e9lq
+    claimed_at: '2026-08-05T00:59:49Z'
+    updated: '2026-08-05T00:59:49Z'
   - id: t-100
     milestone: m3
     title: 'A missing image under a non-/images path returns HTTP 200 with the app shell, so broken art is invisible to every status-code check'
