@@ -502,15 +502,17 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-05T23:14:26Z'
+    updated: '2026-08-05T23:20:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
       Lane 4 (2026-08-05T21:28Z): curriculum depth — added Mannerism (curriculum-outline.md §44, v1.24; Bronzino/Parmigianino/Perino del Vaga, all Met-API-verified CC0) and synced into kind_robots' academyStyles.ts (vue-tsc clean). Also researched and rejected a Constructivism candidate for §2 rights-license failure across all three artists — see run_log for the full account. See `run_log` for full cycle detail.
+
+      Lane 1 front-end polish: defer Academy art-server initialization until Remix Studio or Style Lab is opened, avoiding unnecessary server and gallery fetches for Timeline and Style Gallery visitors.
     continuous_improvement:
       last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
       next_lane: 1
