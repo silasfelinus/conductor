@@ -3239,7 +3239,7 @@ tasks:
   - id: t-101
     milestone: m2
     title: "Have validate_task_events.py reject a learning: field on non-done/blocked operations at PR time"
-    status: review
+    status: done
     owner: worker
     stakes: reversible
     passes: 0
@@ -3285,9 +3285,10 @@ tasks:
       folded into this same pass: making a repeatedly-failing scheduled
       workflow (like this incident) surface itself instead of relying on a
       manual sweep to notice. Filed as conductor/t-102.
-    updated: '2026-08-05T20:45:12Z'
+    updated: '2026-08-05T20:49:57Z'
     claimed_by: 2026-08-05T203207Z-conductor-t101
     claimed_at: '2026-08-05T20:45:12Z'
+    implementation_pr: 'silasfelinus/conductor#1766'
 
   - id: t-102
     milestone: m2
