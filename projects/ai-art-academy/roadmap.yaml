@@ -1258,12 +1258,19 @@ tasks:
   - id: t-044
     milestone: m2
     title: 'kind_robots: fix Kontext LoRA loading -- every lora_name naming convention rejected by ComfyUI as not-in-list'
-    status: claimed
+    status: ready
     gate_human: true
+    soft_gate: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-05T02:32:08Z'
+    updated: '2026-08-05T02:40:00Z'
     note: |-
+      LIVE VERIFICATION ATTEMPT 2026-08-05 (~02:33 UTC, conductor scheduled agent run, session claude-scheduled-20260805T023207Z-aa-t044-liveverify): Silas sent back "I think this is fixed, please let me know if otherwise" (via Kind Robots For You) and a prior cycle returned this task to `ready` per its own instruction. Ran the same live test again: `GET /api/resources` confirmed Resource 1284's `localPath` is still the exact same string that failed before (`Kontext/SFW/acrylic.safetensors`), likewise Resource 1055 (`Flux/SFW/3D_Cartoon_Vision_flux_v1.safetensors`) -- so the DB rows themselves were not edited. Queued two real jobs anyway (`POST /api/art/enqueue`, `engine: kontext`, same source image, `loraResourceIds: [1284]` and `[1055]`): ArtJob 7622 and 7623, both HTTP 201. Inspected the resulting job payloads directly: `resolveEnqueueLoraResource()` correctly resolved `lora_name` to each Resource's own `localPath` in both workflows (`61.inputs.lora_name: "Kontext/SFW/acrylic.safetensors"` for 7622) -- so the routing side (PR #1090) is confirmed still working as designed.
+
+      COULD NOT COMPLETE VERIFICATION: both jobs sat `PENDING` for the full observation window (2+ minutes, no `error`, never reached ComfyUI) rather than failing fast with the expected `value_not_in_list` 400 the way every prior live attempt did within seconds. `python scripts/recheck_render_queue.py` explains why -- this is a separate, severe infrastructure incident, not this task's bug: queue depth PENDING=3140 (oldest job age ~76.3h), 24h window shows PENDING=2749 added vs DONE=2 completed, and 16 of the last 25 failures are `connection-refused` to ComfyUI (the relay's own local ComfyUI process appears down or unreachable, not merely slow). This is a much larger and more severe backlog than the same-day 2026-08-04 mural-design entries in root `TALKBACK.md` (which were single stuck jobs on an otherwise-answering relay) -- filed as its own incident there rather than duplicated here. Jobs 7622/7623 are left in the queue; once the relay recovers, re-check them directly (`GET /api/art/queue/7622` and `/7623`) instead of re-submitting -- if they complete without the `value_not_in_list` error, that confirms t-044's fix without spending mana again. `soft_gate: true` added (this is a tooling/infra failure blocking verification, not a new gate on the content itself -- `gate_human: true` and `status: ready` are left unchanged so the original Silas-only diagnostic path this task also depends on is unaffected). Released the claim uncompleted rather than guessing at an outcome.
+
+      --- prior history below ---
+
       LIVE VERIFICATION 2026-07-28 (~14:22 UTC, conductor Reviewer scheduled run, session 2026-07-28T140745-conductor-scheduled-aa-t044-liveverify): Ran the exact test the prior note called for -- POST /api/art/enqueue against https://kind-robots.vercel.app (the live production API, reachable with KR_API_TOKEN), engine: kontext, source image = the project's own rights-clean projects/images/ai-art-academy-card.webp. TWO real ArtJobs, both FAILED with the identical pre-PR-#1090 error: ArtJob 2773 (Kontext-native LoRA, Resource 1284, localPath "Kontext/SFW/acrylic.safetensors") -- ComfyUI /prompt HTTP 400 `lora_name: 'Kontext/SFW/acrylic.safetensors' not in (list of length 2096)`; ArtJob 2774 (FLUX-dev LoRA, Resource 1055, localPath "Flux/SFW/3D_Cartoon_Vision_flux_v1.safetensors") -- same error, `lora_name: 'Flux/SFW/3D_Cartoon_Vision_flux_v1.safetensors' not in (list of length 2096)`. This DISPROVES the prior note's optimistic reading of PR #1090: that PR fixed the *routing* (`server/utils/artLoraResource.ts`'s `resolveEnqueueLoraResource()` now reliably forwards the Resource's own `localPath` as `lora_name` instead of a stale caller-provided string) but did NOT touch the underlying data -- the Resource `localPath` values in the DB still do not match whatever ComfyUI's local `models/loras` folder scan actually returns for the `LoraLoaderModelOnly` dropdown. Confirmed with two independent Resources under two different localPath prefix conventions (`Kontext/SFW/` and `Flux/SFW/`), both rejected identically, so this is not a one-off bad row -- the whole convention is off.
 
       FOR SILAS: this task cannot progress further from a conductor sandbox -- there is no code fix left to guess at (five naming conventions have now failed identically across two sessions). What's needed is exactly what docs/t-044-comfy-lora-path-diagnostics.md has asked for since 2026-07-27 and still hasn't been run: from your own Tailscale-connected machine, save ComfyUI's `/object_info` response and Kind Robots `/api/resources` response as local JSON files, then run `python scripts/compare_comfy_lora_paths.py --object-info object-info.json --resources resources.json --output lora-path-report.json` (the comparator, merged via PR #1212). That report will show which Resource `localPath` values need correcting in the DB, or reveal a stable prefix-rewrite rule agents can implement in `resolveEnqueueLoraResource`. Do not commit the captures -- they may expose private model inventory and local folder paths. TO APPROVE: once the DB rows are corrected (or a rewrite rule is implemented and deployed), set `status: ready` so the next cycle re-runs this same live test -- the exact repro is saved (POST /api/art/enqueue, engine: kontext, loraResourceIds: [1284] or [1055], sourceImageBase64 from projects/images/ai-art-academy-card.webp) and will confirm before marking t-044 done. This unblocks t-045.
@@ -1297,9 +1304,10 @@ tasks:
       Before marking this task done, run one Kontext-native and one FLUX-dev LoRA through the real queue and confirm ComfyUI accepts the workflow and saves an image. Then return t-044 to ready for the implementation/live-verification pass; this unblocks t-045.
 
       SENT BACK by silasfelinus via Kind Robots For You. I think this is fixed, please let me know if otherwise
-    claimed_at: '2026-08-05T02:32:08Z'
-    claimed_by: claude-scheduled-20260805T023207Z-aa-t044-liveverify
+    claimed_at: null
+    claimed_by: null
     approved_by_human: false
+    owner: null
     owner: worker
 
   - id: t-045
