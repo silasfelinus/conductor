@@ -378,6 +378,67 @@ requests:
     late-day atmospheric light, a specific rural landscape with humble unposed rural labor
     -- woodcutters, farmers, gleaners, or grazing livestock -- treated with quiet dignity,
     no mythological or historical staging, centered square composition, no text, no watermark'
+- id: kind-robots-academy-style-preview-american-luminism
+  source: ai-art-academy-style-preview
+  status: pending
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/academy/styles/american-luminism.webp
+  variant: image
+  size: 256x256
+  label: 'Academy style preview: American Luminism'
+  note: 'Queued 2026-08-05 (ai-art-academy/t-010 lane 3, conductor scheduled cycle): academyStyles.ts''s
+    american-luminism entry already sets previewImageSrc pointing at this path but no request
+    had ever been queued for it -- confirmed the delivered file itself 404s at media.acrocatranch.com,
+    the same seed-ahead-of-asset gap the fauvism/tonalism/barbizon-school entries above document.
+    scripts/recheck_render_queue.py returned HTTP 503 (queue/stats unavailable) this cycle, so
+    per t-010''s 2026-08-05 lane-2 roadmap-accuracy audit guidance this request is prepared and
+    queued but NOT submitted live -- a future cycle should re-check render-queue health before
+    running consume_art_requests.py --live against this id.'
+  prompt: 'A museum-quality example of an American Luminist landscape painting: an exceptionally
+    calm, glassy, mirror-flat body of water or sky rendered in extremely smooth, almost invisible
+    brushwork, precise scientific-feeling gradation of still natural light (dawn haze, quiet
+    midday heat, or a pre-storm low sun), a hushed motionless mood, minimal incidental human
+    presence -- a single small sailboat or distant figure at most -- coastal or salt-marsh
+    subject matter, centered square composition, no text, no watermark'
+- id: kind-robots-academy-style-preview-egyptian-painting
+  source: ai-art-academy-style-preview
+  status: pending
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/academy/styles/egyptian-painting.webp
+  variant: image
+  size: 256x256
+  label: 'Academy style preview: Ancient Egyptian Painting'
+  note: 'Queued 2026-08-05 (ai-art-academy/t-010 lane 3, conductor scheduled cycle): same gap
+    class as american-luminism above -- previewImageSrc already set in academyStyles.ts, delivered
+    file 404s at media.acrocatranch.com, no request previously queued. Not submitted live this
+    cycle -- scripts/recheck_render_queue.py returned HTTP 503; re-check queue health before
+    running consume_art_requests.py --live against this id.'
+  prompt: 'A museum-quality example of ancient Egyptian tomb and papyrus painting: a human
+    figure rendered in composite ("twisted") perspective with profile head, legs, and feet
+    and a frontal eye and shoulders, the composition organized into stacked horizontal register
+    bands with a ground line, flat unmodeled color fill inside firm dark outlines with no cast
+    shadow, the most significant figure drawn noticeably larger than secondary figures, small
+    integrated hieroglyphic-style caption marks worked directly into the scene, centered square
+    composition, no modern text overlay, no watermark'
+- id: kind-robots-academy-style-preview-heidelberg-school
+  source: ai-art-academy-style-preview
+  status: pending
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/academy/styles/heidelberg-school.webp
+  variant: image
+  size: 256x256
+  label: 'Academy style preview: Heidelberg School'
+  note: 'Queued 2026-08-05 (ai-art-academy/t-010 lane 3, conductor scheduled cycle): same gap
+    class as american-luminism/egyptian-painting above -- previewImageSrc already set in academyStyles.ts,
+    delivered file 404s at media.acrocatranch.com, no request previously queued. Not submitted
+    live this cycle -- scripts/recheck_render_queue.py returned HTTP 503; re-check queue health
+    before running consume_art_requests.py --live against this id.'
+  prompt: 'A museum-quality example of a Heidelberg School Australian landscape painting: broad,
+    confident plein-air brushwork applied directly from life, a bright high-key palette of
+    saturated blue sky and sun-bleached ochre and gold earth tones capturing harsh direct Australian
+    sunlight, a hazy heat-shimmer atmosphere, a dusty Australian bush or rural-labor scene --
+    a shearing shed, drought-stressed paddock, or swagman -- treated with plain unsentimental
+    dignity, a matter-of-fact unforced mood, centered square composition, no text, no watermark'
 - id: "kind-robots-profile-image-95ed965e-msbmggtx"
   last_art_job_id: 4845
   source: "kind-robots-missing-image"
