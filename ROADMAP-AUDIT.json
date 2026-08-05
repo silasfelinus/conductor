@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-08-05T02:38:37.725634+00:00",
+  "generated_at": "2026-08-05T13:33:48.477752+00:00",
   "summary": {
     "roadmaps": 45,
     "active_projects": 27,
-    "tasks": 874,
-    "ready": 49,
+    "tasks": 877,
+    "ready": 47,
     "waiting": 47,
     "needs_human": 10,
     "in_progress": 1,
-    "done": 757,
+    "done": 762,
     "errors": 3,
-    "warnings": 7,
+    "warnings": 10,
     "info": 65
   },
   "projects": [
@@ -56,19 +56,19 @@
       "override_status": "active",
       "priority_index": 3,
       "autonomous": true,
-      "task_count": 54,
+      "task_count": 56,
       "counts": {
-        "done": 50,
-        "ready": 3,
+        "done": 51,
+        "ready": 4,
         "waiting": 1
       },
-      "open_count": 4,
+      "open_count": 5,
       "human_attention": 0,
-      "ready": 3,
+      "ready": 4,
       "waiting": 1,
       "claimed": 0,
       "review": 0,
-      "done": 50
+      "done": 51
     },
     {
       "slug": "coloring-book",
@@ -136,16 +136,15 @@
       "autonomous": false,
       "task_count": 33,
       "counts": {
-        "done": 32,
-        "ready": 1
+        "done": 33
       },
-      "open_count": 1,
+      "open_count": 0,
       "human_attention": 0,
-      "ready": 1,
+      "ready": 0,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 32
+      "done": 33
     },
     {
       "slug": "packmaker",
@@ -192,16 +191,16 @@
       "autonomous": false,
       "task_count": 53,
       "counts": {
-        "done": 50,
-        "ready": 3
+        "done": 51,
+        "ready": 2
       },
-      "open_count": 3,
+      "open_count": 2,
       "human_attention": 0,
-      "ready": 3,
+      "ready": 2,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 50
+      "done": 51
     },
     {
       "slug": "kindrobots-unraid",
@@ -399,18 +398,18 @@
       "override_status": "active",
       "priority_index": 21,
       "autonomous": false,
-      "task_count": 98,
+      "task_count": 99,
       "counts": {
-        "done": 96,
-        "ready": 2
+        "done": 98,
+        "ready": 1
       },
-      "open_count": 2,
+      "open_count": 1,
       "human_attention": 0,
-      "ready": 2,
+      "ready": 1,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 96
+      "done": 98
     },
     {
       "slug": "serendipity",
@@ -893,10 +892,17 @@
     },
     {
       "severity": "warning",
+      "code": "CONTINUOUS_IMPROVEMENT_NOTE_DRIFT",
+      "project": "ai-art-academy",
+      "task": "t-010",
+      "message": "Task note mentions a lane rotation but continuous_improvement.last_run predates the task's updated timestamp \u2014 the continuous_improvement block (last_lane/next_lane/last_run/last_pr) may be stale relative to the note."
+    },
+    {
+      "severity": "warning",
       "code": "STALE_IN_PROGRESS",
       "project": "coloring-book",
       "task": "t-022",
-      "message": "Task has remained claimed for 3 days."
+      "message": "Task has remained claimed for 4 days."
     },
     {
       "severity": "warning",
@@ -909,6 +915,20 @@
       "severity": "warning",
       "code": "ACTIVE_PROJECT_NO_OPEN_TASKS",
       "project": "davinci",
+      "task": null,
+      "message": "Active project has no open tasks; mark finished/paused or add an intentional recurring task."
+    },
+    {
+      "severity": "warning",
+      "code": "ACTIVE_PROJECT_ALL_DONE",
+      "project": "digital-storefront",
+      "task": null,
+      "message": "All tasks are done but project override remains active."
+    },
+    {
+      "severity": "warning",
+      "code": "ACTIVE_PROJECT_NO_OPEN_TASKS",
+      "project": "digital-storefront",
       "task": null,
       "message": "Active project has no open tasks; mark finished/paused or add an intentional recurring task."
     },
