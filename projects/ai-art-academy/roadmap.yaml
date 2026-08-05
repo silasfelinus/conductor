@@ -502,15 +502,17 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-05T06:13:35Z'
+    updated: '2026-08-05T06:20:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
       Lane 1 front-end polish pass: added `role="group"` (+ `aria-label` where missing) to three toggle-button clusters that already had correct per-button `aria-pressed` but no group semantics on their wrapping container — Academy Style Gallery's All/New/Explored progress filter, and art-styler's source-image tab (Upload/Gallery/Starters) and style-category filter row. Merged kind_robots PR #1474 (squash e14e781f). Rotate next lane to roadmap accuracy (lane 2). See run_log for full detail.
+
+      Completed lane 2 roadmap accuracy audit in projects/ai-art-academy/docs/roadmap-audits/2026-08-05-roadmap-accuracy.md; implementation branch is worker/ai-art-academy-t-010-20260805-r7m4.
     continuous_improvement:
       last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
       next_lane: 2
