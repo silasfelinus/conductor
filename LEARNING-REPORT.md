@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-05T03:38:52Z
+Generated: 2026-08-05T04:06:12Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **516**
-- Outcomes: blocked: 13, cancelled: 1, done: 502
+- Closed tasks recorded: **517**
+- Outcomes: blocked: 13, cancelled: 1, done: 503
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -36,7 +36,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
 | interface-vision | 70 | 100% |
-| kind-robots | 39 | 97% |
+| kind-robots | 40 | 98% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 501 | 99% |
+| software | 502 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-05 `kind-robots/t-053` — When adding a new failure-signature check, search for and reuse an existing detection pattern in the codebase (scripts/lib/databaseRetry.ts's isTransientDatabaseError() and cypress/e2e/api/users.cy.ts's inline pool-timeout regex) rather than inventing a parallel one -- keeps the two detectors from drifting apart as the real error shapes change. Separately, after running a local `prisma generate` for verification, diff generated files against git before committing -- local generation can drift from what's committed even with no schema change, and that drift is easy to sweep in by accident via `git add -A`.
 - 2026-08-05 `digital-storefront/t-036` — Doc-accuracy corrections to a roadmap note should fix the wrong text in place with a short parenthetical marking what changed, not append a whole new correction paragraph — keeps the note's primary content readable instead of burying the fix at the bottom of an already-long history.
 - 2026-08-05 `ai-art-academy/t-010` — A shared-component "clear/reset" function that touches several unrelated global Pinia singletons (deselectBot/deselectCharacter/deselectDream/deselectReward/deselectScenario) is only safe when gated on the same prop that controls whether the UI exposing those fields was ever shown. Unconditional cleanup in a function called automatically on every successful action (not just an explicit user click) silently wipes state the current view never gave the user any way to see or intend to clear. Before implementing a subagent's bug report, independently re-verified the specific store calls and their persistence side effects rather than trusting the report at face value.
 - 2026-08-05 `interface-vision/t-081` — When a "picker" component is contract-fenced read-only (verifyFacetGallery.ts forbids create/update/archive text in facet-gallery.vue), add the missing create affordance to its thin wrapper component instead, and hand off to the real admin flow via a one-shot query-param flag (?create=1, consumed and cleared by the tab it lands on) rather than duplicating the create form or loosening the contract. Kept the read-only contract test green with zero changes needed to the fenced file itself.
@@ -89,7 +90,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-04 `interface-vision/t-082` — A prior connector-only session released this task ("connector patch limitation" -- could not safely patch a 500+ line file, and had no local git/DNS). A session with full shell/git access hit no such limitation: mirrored add-reward.vue's Publishing section (isPublic/isMature toggles, t-080) onto add-scenario.vue verbatim, no store changes needed since scenarioStore already round-trips both fields. kind_robots PR #1433, merge 82f61b1e5d3ed5d0e992ecf76ab5fa1beb5aa501. Lesson: a connector-limited session's "actionable" release reason should be read literally -- it is a tooling gap for that session, not evidence the task itself is hard, so a shell-capable session should retry it directly rather than assuming the release implies deeper difficulty.
 - 2026-08-04 `interface-vision/t-060` — Completed the final three reachable core-gallery migrations (character, reward, dream) and closed the measured 7/7 core-object beta gate without forcing row or dropdown variants into a shared grid abstraction. kind_robots PR #1418, merge 6b541a3ed4c65570659c37aed9d7748fb087d734.
 - 2026-08-04 `conductor/t-097` — task-events/README.md documents a direct push to main as the normal workflow, so validate_task_events.py's PR-time gate never runs for the common case -- a malformed bare-string learning: field (the "learning: >-" folded scalar shape) recurred at least 5 times in a week and each time hard-failed process_task_events.py, silently red-flagging the shared "process" check for every unrelated PR. Coercing the string into {kind, stakes, lesson} (inferring kind/stakes from the task's own roadmap entry) instead of hard-rejecting it keeps the processor unblocked without losing the lesson text -- worth considering the same "recover gracefully from a common malformed shape" pattern for other task-events fields prone to hand-authoring mistakes.
-- 2026-08-04 `interface-vision/t-089` — A plain "who imports this .vue file" grep at deletion time is not enough -- kind_robots PR #1405's conductor-art-gallery.vue deletion (t-026) missed a plugin that DOM-scraped the component's specific rendered markup and a CI workflow that named the file directly in its paths: trigger list. Documented the checklist in kind_robots' AGENTS.md (PR #1417): grep the deleted filename repo-wide (not just import sites), check .github/workflows/*.yml paths: blocks, and check plugins/*.client.ts for DOM-scraping selector strings before deleting a superseded component.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-05T03:38:52Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-05T04:06:12Z_
