@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-08-05T20:46:27.476981+00:00`
+Generated: `2026-08-05T21:44:34.010472+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **45** roadmaps, **27** active projects, **881** tasks
-- **41 ready**, **47 waiting**, **12 needs-human**, **4 claimed/review**, **767 done**
-- Findings: **0 errors**, **10 warnings**, **65 informational**
+- **41 ready**, **47 waiting**, **12 needs-human**, **3 claimed/review**, **768 done**
+- Findings: **0 errors**, **9 warnings**, **65 informational**
 
 ## Project inventory
 
@@ -35,7 +35,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 19 | `animation-manager` | active | software | 2 | 0 | 0 | 0 | 15 / 17 |
 | 20 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 21 | `ecosystem-map` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
-| 22 | `conductor` | active | software | 1 | 0 | 0 | 1 | 100 / 102 |
+| 22 | `conductor` | active | software | 1 | 0 | 0 | 0 | 101 / 102 |
 | 23 | `serendipity` | retired | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 24 | `taskmaster` | active | software | 1 | 0 | 0 | 0 | 2 / 3 |
 | 25 | `storybook` | active | software | 1 | 0 | 0 | 0 | 9 / 10 |
@@ -66,9 +66,8 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 _None._
 
-### Warning (10)
+### Warning (9)
 
-- **CONTINUOUS_IMPROVEMENT_NOTE_DRIFT** — `ai-art-academy` / `t-010`: Task note mentions a lane rotation but continuous_improvement.last_run predates the task's updated timestamp — the continuous_improvement block (last_lane/next_lane/last_run/last_pr) may be stale relative to the note.
 - **STALE_IN_PROGRESS** — `coloring-book` / `t-022`: Task has remained claimed for 4 days.
 - **ACTIVE_PROJECT_ALL_DONE** — `davinci`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `davinci`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
