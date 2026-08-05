@@ -1951,8 +1951,8 @@ tasks:
   - id: t-066
     milestone: m2
     title: 'Sweep the remaining reactable-card consumers for the earned-karma batch-fetch pattern'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: |-
@@ -1966,6 +1966,9 @@ tasks:
       ALLOWED_REF_TYPES (server/api/economy/karma-earned.post.ts), no award-call-site backfill unless
       that object type isn't already tagging refType on its award call sites (check
       server/utils/karma.ts call sites the way t-046's note did for ArtImage/Prompt before assuming).
+    claimed_by: 2026-08-05T003700Z-interface-vision-t-066-cq9x
+    claimed_at: '2026-08-05T00:36:32Z'
+    updated: '2026-08-05T00:36:32Z'
 
   - id: t-067
     milestone: m3
