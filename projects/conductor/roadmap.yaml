@@ -2080,34 +2080,15 @@ tasks:
   - id: t-073
     milestone: m2
     title: 'kind_robots: main branch protection does not require the "TypeScript" CI check to pass before merge'
-    status: ready
+    status: done
     gate_human: true
     passes: 0
     stakes: reversible
-    note: |-
-      Filed 2026-07-20 (Reviewer sweep), consolidated from a since-superseded conductor/t-072 investigation branch (PR #882, closed unmerged — that PR's own regression-scan finding was independently and more thoroughly covered by the actual t-072 fix, kind_robots PR #598, which landed a real automated contract check; this task carries forward only #882's second, still-unaddressed finding).
-
-      FOR SILAS: kind_robots' "TypeScript" CI check (workflow .github/workflows/typecheck.yml, runs `npm run test` / vue-tsc on every PR) is not currently a required status check on the `main` branch protection rule — so a PR can merge into kind_robots main while that check is red. This is exactly how PR #569 landed a real type error (the Character.userId nullability mismatch conductor/t-072 fixed) that sat broken on main for several hours on 2026-07-19 until an unrelated PR happened to trip vue-tsc and surface it. No GitHub MCP tool available to any agent session here can read or write branch protection / required-status-check settings, so this cannot be closed out by an agent — it is a one-time GitHub Settings change only Silas can make.
-
-      TO APPROVE: in GitHub, silasfelinus/kind_robots → Settings → Branches → the `main` protection rule → "Require status checks to pass before merging" → add "TypeScript" to the required list (worth also considering "Contract verifiers" and "verify" while there, which cover a similar class of currently-optional correctness gates, though those are not the specific gap that let PR #569 through). This is a reversible settings-only change with no code/deploy/spend involved. Once done, set `approved_by_human: true` and `status: done` on this task — nothing downstream depends on it, it's a standalone regression-prevention gap.
-      ANSWERED 2026-07-25 (Silas asked "how do I set it?"): exact path is already above — in the **kind_robots** repo (not conductor): 1. github.com/silasfelinus/kind_robots → Settings → Branches 2. Click "Edit" (or "..." → Edit) on the `main` branch protection rule 3. Under "Require status checks to pass before merging," use the
-         search box to find and add "TypeScript" to the required list
-      4. Optionally also add "Contract verifiers" and "verify" while there 5. Save No code change, no deploy, fully reversible from the same screen. Separately, unrelated to this task but a heads-up: this session renamed conductor's own `authz-regression` CI job to `pytest-suite` (t-048, since it now runs the full suite) — if "Authz regression tests" was ever a required check in *conductor's* branch protection (github.com/silasfelinus/conductor → Settings → Branches), that required-check name needs updating to "Python test suite" or PRs may stop being mergeable there. No tool available to any agent session can check this either way — worth a quick look while you're in Settings.
-      CORRECTED 2026-07-26 (Silas reported the above instructions don't match current GitHub UI): investigated via the GitHub API directly. `list_branches` on silasfelinus/kind_robots shows `main` has `"protected": false` — there is currently NO branch protection rule AND no ruleset configured on `main` at all. That's the real reason the "Settings → Branches → edit rule → search box" path didn't exist for Silas: that UI only appears once a rule/ruleset already exists to edit; with nothing configured, GitHub instead shows the empty-state options Silas actually saw ("Add branch protection rule" / "Add branch ruleset"). Separately confirmed the check name itself is exactly right: `.github/workflows/typecheck.yml`'s job is literally named `TypeScript` (workflow name: "TypeScript Type Check"), and it has run successfully on `main` today — so once a rule/ruleset exists, "TypeScript" will be selectable.
-      CORRECTED STEPS (GitHub's current Rulesets UI, matching what Silas saw — "Add Branch Ruleset"): 1. silasfelinus/kind_robots → Settings → Rules → Rulesets → New branch
-         ruleset
-      2. Name it (e.g. "main protection"), set Enforcement status: Active 3. Target branches → Add target → Include default branch (or add
-         `main` explicitly)
-      4. Under Branch rules, check "Require status checks to pass" 5. Click "Add checks", search "TypeScript" — it should now appear
-         since the check has reported on `main` recently
-      6. Save/Create Classic path (Settings → Branches → Add branch protection rule) works identically if preferred instead of Rulesets — same search box, same check name, just a different settings page. Either way, once the TypeScript check is required, set approved_by_human: true and status: done here.
-
-
-      SENT BACK by silasfelinus via Kind Robots For You. activated. i did all three mentioned, typescript, and the two verifies.
+    note: 'Closed on Silas explicit confirmation plus independent verification. Silas replied in-task: "activated. i did all three mentioned, typescript, and the two verifies." Verified rather than taken on the note alone: mcp list_branches on silasfelinus/kind_robots now reports main protected:true, where this tasks own CORRECTED 2026-07-26 investigation had recorded protected:false with no rule or ruleset configured -- that flip is the objective evidence the requested outcome happened. Task instruction was explicit that once the TypeScript check is required, set approved_by_human true and status done, so both are set. Knock-on found while verifying and fixed in kind_robots #1465: interface-vision/t-099 had just added an ESLint ratchet, and I had moved it into its own job named "ESLint ratchet" -- which is NOT in the required list Silas activated, so that gate ran and reported but could never block a merge. Folded back inline into the Contract verifiers job, which IS required. My stated reason for the split (step observed blocking the chain over ten minutes) was also wrong, read off a stale checks API; measured cost is 36s of ESLint on a 94s job under a 10-minute budget. The workflow comment now records that moving it out again requires adding that jobs name to the rulesets required-checks list in the same change. Also unverifiable from here and still worth Silas glancing at, carried forward from this tasks own note: conductor renamed its authz-regression CI job to pytest-suite in t-048, so if "Authz regression tests" was ever required in conductors own branch protection, that name needs updating to "Python test suite" -- no agent tool can read conductors protection settings either way.'
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-04 22:41:33.020000+00:00'
-    approved_by_human: false
+    updated: '2026-08-05T01:37:23Z'
+    approved_by_human: true
 
   - id: t-074
     milestone: m2
