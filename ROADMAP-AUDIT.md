@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-08-05T18:51:48.948710+00:00`
+Generated: `2026-08-05T20:46:27.476981+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **45** roadmaps, **27** active projects, **880** tasks
-- **43 ready**, **47 waiting**, **11 needs-human**, **2 claimed/review**, **767 done**
+- **45** roadmaps, **27** active projects, **881** tasks
+- **41 ready**, **47 waiting**, **12 needs-human**, **4 claimed/review**, **767 done**
 - Findings: **0 errors**, **10 warnings**, **65 informational**
 
 ## Project inventory
@@ -16,13 +16,13 @@ This is a conservative structural audit. It reports suspicious state; it does no
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `interface-vision` | active | software | 0 | 0 | 0 | 0 | 101 / 101 |
 | 2 | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
-| 3 | `ai-art-academy` | active | software | 2 | 1 | 0 | 1 | 52 / 56 |
+| 3 | `ai-art-academy` | active | software | 1 | 1 | 0 | 2 | 52 / 56 |
 | 4 | `coloring-book` | active | software | 0 | 9 | 1 | 1 | 26 / 37 |
 | 5 | `humboldt-scoop` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 6 | `humboldt-scoop-cms` | active | software | 0 | 0 | 1 | 0 | 11 / 12 |
 | 7 | `digital-storefront` | active | software | 0 | 0 | 0 | 0 | 33 / 33 |
 | 8 | `packmaker` | finished | software | 0 | 0 | 0 | 0 | 10 / 10 |
-| 9 | `mermaids-of-venice` | active | content | 9 | 0 | 0 | 0 | 4 / 13 |
+| 9 | `mermaids-of-venice` | active | content | 8 | 0 | 1 | 0 | 4 / 13 |
 | 10 | `kind-robots` | active | software | 1 | 0 | 0 | 0 | 53 / 54 |
 | 11 | `kindrobots-unraid` | active | software | 1 | 7 | 0 | 0 | 4 / 12 |
 | 12 | `global-ui` | finished | software | 0 | 0 | 0 | 0 | 25 / 25 |
@@ -35,7 +35,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 19 | `animation-manager` | active | software | 2 | 0 | 0 | 0 | 15 / 17 |
 | 20 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 21 | `ecosystem-map` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
-| 22 | `conductor` | active | software | 1 | 0 | 0 | 0 | 100 / 101 |
+| 22 | `conductor` | active | software | 1 | 0 | 0 | 1 | 100 / 102 |
 | 23 | `serendipity` | retired | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 24 | `taskmaster` | active | software | 1 | 0 | 0 | 0 | 2 / 3 |
 | 25 | `storybook` | active | software | 1 | 0 | 0 | 0 | 9 / 10 |
