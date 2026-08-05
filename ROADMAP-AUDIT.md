@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-08-05T16:34:15.083616+00:00`
+Generated: `2026-08-05T18:41:35.127705+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **45** roadmaps, **27** active projects, **878** tasks
-- **42 ready**, **47 waiting**, **11 needs-human**, **3 claimed/review**, **765 done**
-- Findings: **3 errors**, **11 warnings**, **65 informational**
+- **45** roadmaps, **27** active projects, **879** tasks
+- **43 ready**, **47 waiting**, **11 needs-human**, **2 claimed/review**, **766 done**
+- Findings: **0 errors**, **12 warnings**, **65 informational**
 
 ## Project inventory
 
@@ -16,7 +16,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `interface-vision` | active | software | 0 | 0 | 0 | 0 | 101 / 101 |
 | 2 | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
-| 3 | `ai-art-academy` | active | software | 1 | 1 | 0 | 2 | 52 / 56 |
+| 3 | `ai-art-academy` | active | software | 2 | 1 | 0 | 1 | 52 / 56 |
 | 4 | `coloring-book` | active | software | 0 | 9 | 1 | 1 | 26 / 37 |
 | 5 | `humboldt-scoop` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 6 | `humboldt-scoop-cms` | active | software | 0 | 0 | 1 | 0 | 11 / 12 |
@@ -31,45 +31,44 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 15 | `superkate-hairstyle-ai` | paused | software | 1 | 0 | 1 | 0 | 19 / 21 |
 | 16 | `newsfeed` | active | software | 0 | 0 | 0 | 0 | 22 / 22 |
 | 17 | `model-builder` | active | software | 2 | 0 | 0 | 0 | 37 / 39 |
-| 18 | `animation-manager` | active | software | 2 | 0 | 0 | 0 | 15 / 17 |
-| 19 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
-| 20 | `ecosystem-map` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
-| 21 | `conductor` | active | software | 0 | 0 | 0 | 0 | 99 / 99 |
-| 22 | `serendipity` | retired | software | 1 | 0 | 0 | 0 | 11 / 12 |
-| 23 | `taskmaster` | active | software | 1 | 0 | 0 | 0 | 2 / 3 |
-| 24 | `storybook` | active | software | 1 | 0 | 0 | 0 | 9 / 10 |
-| 25 | `davinci` | active | software | 0 | 0 | 0 | 0 | 16 / 16 |
-| 26 | `art-generator-connect` | finished | software | 0 | 0 | 0 | 0 | 22 / 22 |
-| 27 | `mural-design` | active | content | 0 | 3 | 1 | 0 | 3 / 7 |
-| 28 | `coat-dance` | active | content | 2 | 0 | 0 | 0 | 1 / 10 |
-| 29 | `career-transition` | retired | content | 0 | 4 | 3 | 0 | 1 / 8 |
-| 30 | `alexa-integration` | active | software | 2 | 0 | 1 | 0 | 16 / 19 |
-| 31 | `conductor-app` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
-| 32 | `appmaker` | active | software | 2 | 0 | 0 | 0 | 10 / 12 |
-| 33 | `media-watchlist` | active | software | 1 | 0 | 0 | 0 | 15 / 16 |
-| 34 | `sketchy` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
-| 35 | `pinball-hero` | retired | content | 0 | 2 | 2 | 0 | 2 / 6 |
-| 36 | `recipe-box` | retired | software | 0 | 2 | 1 | 0 | 0 / 3 |
-| 37 | `brainstorm` | active | proposal | 1 | 0 | 0 | 0 | 0 / 1 |
-| 38 | `wishmaster` | active | software | 1 | 0 | 0 | 0 | 2 / 3 |
-| 39 | `engagement` | finished | software | 0 | 0 | 0 | 0 | 3 / 3 |
-| 40 | `ruler-hooked` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
-| 41 | `music-mentor` | active | software | 1 | 0 | 0 | 0 | 8 / 9 |
-| 42 | `dream-cycle` | active | software | 2 | 0 | 0 | 0 | 20 / 22 |
+| 18 | `lora-ingestion` | active | infrastructure | 1 | 0 | 0 | 0 | 5 / 6 |
+| 19 | `animation-manager` | active | software | 2 | 0 | 0 | 0 | 15 / 17 |
+| 20 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
+| 21 | `ecosystem-map` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
+| 22 | `conductor` | active | software | 0 | 0 | 0 | 0 | 100 / 100 |
+| 23 | `serendipity` | retired | software | 1 | 0 | 0 | 0 | 11 / 12 |
+| 24 | `taskmaster` | active | software | 1 | 0 | 0 | 0 | 2 / 3 |
+| 25 | `storybook` | active | software | 1 | 0 | 0 | 0 | 9 / 10 |
+| 26 | `davinci` | active | software | 0 | 0 | 0 | 0 | 16 / 16 |
+| 27 | `art-generator-connect` | finished | software | 0 | 0 | 0 | 0 | 22 / 22 |
+| 28 | `mural-design` | active | content | 0 | 3 | 1 | 0 | 3 / 7 |
+| 29 | `coat-dance` | active | content | 2 | 0 | 0 | 0 | 1 / 10 |
+| 30 | `career-transition` | retired | content | 0 | 4 | 3 | 0 | 1 / 8 |
+| 31 | `alexa-integration` | active | software | 2 | 0 | 1 | 0 | 16 / 19 |
+| 32 | `conductor-app` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
+| 33 | `appmaker` | active | software | 2 | 0 | 0 | 0 | 10 / 12 |
+| 34 | `media-watchlist` | active | software | 1 | 0 | 0 | 0 | 15 / 16 |
+| 35 | `sketchy` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
+| 36 | `pinball-hero` | retired | content | 0 | 2 | 2 | 0 | 2 / 6 |
+| 37 | `recipe-box` | retired | software | 0 | 2 | 1 | 0 | 0 / 3 |
+| 38 | `brainstorm` | active | proposal | 1 | 0 | 0 | 0 | 0 / 1 |
+| 39 | `wishmaster` | active | software | 1 | 0 | 0 | 0 | 2 / 3 |
+| 40 | `engagement` | finished | software | 0 | 0 | 0 | 0 | 3 / 3 |
+| 41 | `ruler-hooked` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
+| 42 | `music-mentor` | active | software | 1 | 0 | 0 | 0 | 8 / 9 |
+| 43 | `dream-cycle` | active | software | 2 | 0 | 0 | 0 | 20 / 22 |
 | — | `approval-portal` | retired | software | 0 | 0 | 0 | 0 | 3 / 5 |
 | — | `humboldt-impropriety-calendar` | retired | brainstorm | 0 | 5 | 0 | 0 | 0 / 6 |
-| — | `lora-ingestion` | active | infrastructure | 1 | 0 | 0 | 0 | 5 / 6 |
 
 ## Findings by severity
 
-### Error (3)
+### Error (0)
 
-- **CONTROL_PRIORITY_DRIFT** — `_global`: CONTROL.md priority band ['challenge-center', 'ai-art-academy', 'coloring-book', 'humboldt-scoop', 'humboldt-scoop-cms', 'digital-storefront', 'packmaker', 'mermaids-of-venice', 'kind-robots', 'kindrobots-unraid', 'global-ui'] does not match priority.yaml prefix ['interface-vision', 'challenge-center', 'ai-art-academy', 'coloring-book', 'humboldt-scoop', 'humboldt-scoop-cms', 'digital-storefront', 'packmaker', 'mermaids-of-venice', 'kind-robots', 'kindrobots-unraid'].
-- **ACTIVE_MISSING_PRIORITY** — `lora-ingestion`: Active project is absent from projects/priority.yaml.
-- **ACTIVE_ROADMAP_MISSING_PRIORITY** — `lora-ingestion`: Active roadmap is not selectable because it is absent from priority.yaml.
+_None._
 
-### Warning (11)
+### Warning (12)
 
+- **CONTINUOUS_IMPROVEMENT_NOTE_DRIFT** — `ai-art-academy` / `t-010`: Task note mentions a lane rotation but continuous_improvement.last_run predates the task's updated timestamp — the continuous_improvement block (last_lane/next_lane/last_run/last_pr) may be stale relative to the note.
 - **STALE_IN_PROGRESS** — `coloring-book` / `t-022`: Task has remained claimed for 4 days.
 - **ACTIVE_PROJECT_ALL_DONE** — `conductor`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `conductor`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.

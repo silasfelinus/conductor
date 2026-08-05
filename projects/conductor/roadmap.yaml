@@ -3208,3 +3208,30 @@ tasks:
     claimed_at: '2026-08-05T08:31:19Z'
     updated: '2026-08-05T09:29:24Z'
     implementation_pr: 'silasfelinus/conductor#1737'
+
+  - id: t-100
+    milestone: m3
+    title: Fix priority.yaml/CONTROL.md drift — add lora-ingestion to priority.yaml, interface-vision to CONTROL.md's band text
+    status: done
+    owner: reviewer
+    stakes: reversible
+    passes: 0
+    note: >
+      Found during the 2026-08-05 scheduled conductor sweep: `scripts/audit_roadmaps.py`
+      reported 3 pre-existing errors, already flagged as deferred in a prior session's
+      TALKBACK note (`pytest`/CI kaizen entry, 2026-08-05) as "deserve their own scoped
+      fix" -- this task is that fix. (1) `CONTROL_PRIORITY_DRIFT`: `priority.yaml` has
+      led with `interface-vision` since 2026-08-01 (Silas named the front end the single
+      biggest thing holding back the beta release), but CONTROL.md's "Priority order
+      this week" text was never updated to match -- same prose-drift class as t-038
+      (kindrobots-unraid) and t-060 (four missing projects), resolved the same way:
+      prepended interface-vision to CONTROL.md's band text with a dated note, no
+      reprioritization intended. (2) `ACTIVE_MISSING_PRIORITY`/`ACTIVE_ROADMAP_MISSING_PRIORITY`
+      for lora-ingestion: onboarded active 2026-07-31 (per project-overrides.yaml) but
+      never added to priority.yaml's `order:` list, so it was invisible to
+      CONTROL.md/priority-order commentary even though task-picking still worked via
+      roadmap fallback. Added it after model-builder (same infra/art-pipeline cluster)
+      per t-060's "reasonable position, alongside similarly-scoped projects" convention.
+      `python scripts/validate_roadmaps.py` and `python scripts/audit_roadmaps.py` both
+      clean afterward (0 errors). No code/behavior change.
+    updated: '2026-08-05T00:00:00Z'

@@ -276,3 +276,6 @@ queueDepth: PENDING=3081, RUNNING=1, DONE=3722, CANCELLED=789 (all-time). oldest
 
 ## 2026-08-05T17:38:22Z | growing
 queueDepth: PENDING=3072, RUNNING=1, DONE=3731, CANCELLED=789 (all-time). oldestPending: id=4563, age=328518s (~91.3h), engine=COMFY. windowThroughput (24h): PENDING=2757. recentFailed: none.
+
+## 2026-08-05T18:34:38Z | growing
+queueDepth: PENDING=3065, RUNNING=1, DONE=3738, CANCELLED=789 (all-time). oldestPending: id=4570, age=331878s (~92.2h), engine=COMFY. windowThroughput (24h): PENDING=2757. recentFailed: none.

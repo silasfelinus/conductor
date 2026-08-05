@@ -16,8 +16,8 @@ happened. Don't edit it; edit here.
 reversible until the first clean cycle is done. Nothing publishes, deploys, or spends
 money without my explicit approval (set `approved_by_human: true` on the gated task).
 
-**Priority order this week:** challenge-center → ai-art-academy → coloring-book →
-humboldt-scoop → humboldt-scoop-cms → digital-storefront → packmaker →
+**Priority order this week:** interface-vision → challenge-center → ai-art-academy →
+coloring-book → humboldt-scoop → humboldt-scoop-cms → digital-storefront → packmaker →
 mermaids-of-venice → kind-robots → kindrobots-unraid → global-ui.
 (Mirror changes into projects/priority.yaml. Updated 2026-07-13: both Superkate apps
 are normal-priority and sit below this current priority cluster. ai-art-academy is the
@@ -25,7 +25,10 @@ autonomous initiative test run and should get Worker attention early while it's 
 proven. dream-cycle sits last on purpose: it's the idle fallback, never a competitor for
 real ready work. Updated 2026-07-14 (conductor/t-038): added kindrobots-unraid to this
 band's text — priority.yaml has carried it in this exact slot since the file was
-created, so its absence here was prose drift, not an intended reprioritization.)
+created, so its absence here was prose drift, not an intended reprioritization. Updated
+2026-08-05 (conductor/t-100): added interface-vision to the front of this band —
+priority.yaml has led with it since 2026-08-01 (Silas named the front end the single
+biggest thing holding back the beta release), so this text simply hadn't caught up.)
 
 **Standing rules for all agents:** Respect each project's `kind`. Honor `depends_on` gates.
 Never expand product-types.yaml — pitch it. When unsure, do less and escalate to
