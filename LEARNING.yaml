@@ -6797,3 +6797,15 @@ records:
     add/remove history even a few weeks back on a very active repo -- git fetch --unshallow before
     concluding a path was "never added" or "vanished without a trace" (same trap already documented
     for branch_janitor.py's merge-base classification).
+- date: '2026-08-05'
+  project: conductor
+  task: t-101
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Before implementing a kaizen task, re-verify its premise against current code -- validate_task_events.py
+    already had the exact check this task asked for (since PR #851, 2026-07-19), so the real remaining
+    work was narrower (test coverage) plus a root-cause finding (task-events written by direct push to
+    main never hit the PR-time gate at all) that the original task note didn''t anticipate.'
