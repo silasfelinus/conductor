@@ -363,8 +363,9 @@ def check_drift(
       (may be the kaizen-filing PR, not the implementation — say so, don't
       assert drift).
     `unresolved` — a field lookup, search, or PR-lookup call itself failed
-      for a task with no other confirmation either way; a clean result must
-      not be reported for it.
+      for a task with no other confirmation either way (including a task
+      whose `implementation_pr` field is present but malformed — see below);
+      a clean result must not be reported for it.
     """
     all_tasks = scan_in_progress_tasks(projects_dir, overrides_path, include_inactive)
     note_candidates = scan(projects_dir, overrides_path, include_inactive)
@@ -377,12 +378,31 @@ def check_drift(
     # the title-search pass -- the field is itself stronger, task-authored
     # evidence than a search heuristic, so a task that has one is either
     # confirmed or unresolved here, not silently re-evaluated by pass 1.
+    #
+    # Absence and malformation are NOT the same thing (review finding on
+    # PR #1737, conductor/t-099): `parse_implementation_pr` returns None for
+    # both, so testing that alone would send a task with a corrupted field
+    # (e.g. "kind_robots PR #1464" -- missing the owner, wrong separator)
+    # into the same bucket as a task that never had the field at all, and it
+    # would silently fall back to weaker search/note evidence -- exactly the
+    # false "clean" this field was added to prevent. A present-but-malformed
+    # value is therefore routed to `unresolved` directly and never reaches
+    # `search_tasks`, so it cannot be masked by a search or note-reference
+    # hit either.
     field_candidates = []
+    malformed_field_tasks = []
     search_tasks = []
     for task in all_tasks:
-        parsed = parse_implementation_pr(task.get("implementation_pr"))
-        if parsed is None:
+        raw_implementation_pr = task.get("implementation_pr")
+        if not raw_implementation_pr:
             search_tasks.append(task)
+            continue
+        parsed = parse_implementation_pr(raw_implementation_pr)
+        if parsed is None:
+            malformed_field_tasks.append({
+                **task,
+                "implementation_pr": raw_implementation_pr,
+            })
             continue
         repo, number = parsed
         field_candidates.append({**task, "repo": repo, "pr_number": number})
@@ -438,7 +458,8 @@ def check_drift(
         finding["source"] = "note-reference"
 
     unresolved = (
-        field_unresolved
+        malformed_field_tasks
+        + field_unresolved
         + list(search_failed_tasks)
         + search_unresolved
         + weak_unresolved
@@ -463,11 +484,17 @@ def render(
             f"re-check the unresolved task(s) via the GitHub connector instead:"
         )
         for candidate in unresolved:
-            ref = (
-                f"{candidate['repo']}#{candidate['pr_number']}"
-                if "repo" in candidate and "pr_number" in candidate
-                else "task-id search"
-            )
+            # Order matters: a candidate that made it to an actual PR lookup
+            # (field-based or search-based) carries repo/pr_number even if
+            # that lookup then failed -- check that first so a *malformed*
+            # implementation_pr (never parsed into repo/pr_number at all)
+            # doesn't get mislabeled the same way further down.
+            if "repo" in candidate and "pr_number" in candidate:
+                ref = f"{candidate['repo']}#{candidate['pr_number']}"
+            elif candidate.get("implementation_pr"):
+                ref = f"malformed implementation_pr field: {candidate['implementation_pr']!r}"
+            else:
+                ref = "task-id search"
             lines.append(f"    {candidate['project']}/{candidate['task_id']} -> {ref}")
         lines.append("")
     if findings:

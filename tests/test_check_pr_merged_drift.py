@@ -660,3 +660,79 @@ def test_check_drift_field_lookup_failure_is_unresolved_not_downgraded(tmp_path)
     assert result["weak"] == []
     assert len(result["unresolved"]) == 1
     assert result["unresolved"][0]["task_id"] == "t-020"
+
+
+def test_check_drift_malformed_field_is_unresolved_not_search_fallback(tmp_path):
+    # Review finding on PR #1737 (conductor/t-099): a task whose
+    # implementation_pr field is PRESENT but malformed (doesn't parse into
+    # owner/repo#number, e.g. missing the owner) must be treated differently
+    # from a task where the field is simply absent. It must land in
+    # `unresolved` directly -- it must NOT fall through to the title-search
+    # pass (that would silently replace stronger, task-authored-but-corrupt
+    # evidence with a weaker heuristic and could return a false "clean"),
+    # and it must NOT be confused with a task-id-search or PR-lookup failure.
+    write_roadmap(
+        tmp_path,
+        "newsfeed",
+        [
+            {
+                "id": "t-020",
+                "status": "claimed",
+                "title": "x",
+                "implementation_pr": "kind_robots PR #1464",
+                "note": "kind_robots PR #517",
+            }
+        ],
+    )
+
+    def fake_urlopen(req, timeout=10):
+        url = req.full_url if hasattr(req, "full_url") else req
+        raise AssertionError(
+            f"a malformed implementation_pr field must never trigger any API call, got {url!r}"
+        )
+
+    with patch("urllib.request.urlopen", side_effect=fake_urlopen):
+        result = dr.check_drift(tmp_path / "projects", token=None)
+
+    assert result["high"] == []
+    assert result["weak"] == []
+    assert len(result["unresolved"]) == 1
+    unresolved = result["unresolved"][0]
+    assert unresolved["task_id"] == "t-020"
+    assert unresolved["implementation_pr"] == "kind_robots PR #1464"
+    assert "repo" not in unresolved
+    assert "pr_number" not in unresolved
+
+
+def test_render_labels_malformed_implementation_pr_distinctly(tmp_path):
+    unresolved = [
+        {
+            "project": "newsfeed",
+            "task_id": "t-020",
+            "title": "x",
+            "status": "claimed",
+            "implementation_pr": "kind_robots PR #1464",
+        }
+    ]
+    output = dr.render([], unresolved, total=1)
+    assert "malformed implementation_pr field" in output
+    assert "kind_robots PR #1464" in output
+
+
+def test_render_does_not_mislabel_absent_field_task_as_malformed(tmp_path):
+    # A search-failed task's dict carries implementation_pr=None (the key
+    # exists, just falsy) -- render() must key on truthiness, not mere key
+    # presence, or every ordinary search failure would misreport as a
+    # "malformed implementation_pr field: None".
+    unresolved = [
+        {
+            "project": "newsfeed",
+            "task_id": "t-020",
+            "title": "x",
+            "status": "claimed",
+            "implementation_pr": None,
+        }
+    ]
+    output = dr.render([], unresolved, total=1)
+    assert "malformed implementation_pr field" not in output
+    assert "task-id search" in output
