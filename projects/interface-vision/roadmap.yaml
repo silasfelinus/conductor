@@ -2350,21 +2350,14 @@ tasks:
   - id: t-081
     milestone: m3
     title: 'Surface a Facet create affordance on the default /facets Gallery tab, not just Library'
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-042 (2026-08-04, kind_robots PR #1391). components/facets/facet-manager.vue's
-      "Library" tab already has a working "+ Create a canonical Facet" flow (facet-profile-editor.vue
-      + facetProfileForm.ts), but /facets defaults to the "Gallery" tab (facet-interact.vue ->
-      facet-gallery.vue), which has no create affordance at all -- a visitor has to already know to
-      switch tabs to find it. Add a lightweight "+ New Facet" entry point directly on the gallery view
-      (e.g. a button that opens the same create form, or switches to Library pre-expanded) so Facet
-      creation doesn't require discovering the admin tab first.
+    note: 'Landed in kind_robots #1464 (branch worker/interface-vision-t-081-facet-create-affordance, merged 2026-08-05T01:38:26Z, 2 files, +122/-28). Implemented by another worker session; reconciled here because the PR merged and the roadmap task was left at claimed. Per CLAUDE.md, a merged implementation is not closed until the matching task agrees with reality. What shipped: facet-interact.vue gained a "+ New Facet" button above the gallery view -- placed on the wrapper rather than facet-gallery.vue, which is contractually read-only per utils/scripts/verifyFacetGallery.ts (that verifier forbids createFacet/updateFacet/archiveFacet/FacetProfileEditor text in the gallery file). The button switches the Facets dashboard to Library via navStore.setDashboardTab and sets a one-shot ?create=1 query param; facet-manager.vue watches for it, pre-expands the existing create form, and clears the param immediately so it cannot re-fire on later same-tab navigation or survive a bookmarked/shared URL. That implementer chose the switch-to-Library-pre-expanded option over inline-on-Gallery precisely because the create form is fenced out of the gallery surface by contract. Their stated verification: vue-tsc clean, eslint and prettier clean on both touched files, test:layout-contract 0 violations across all 8 rules unchanged, and test:facet-gallery still passing. They explicitly flagged no live browser or preview check this pass, consistent with prior interface-vision sessions sandbox limitation. DRIFT-CHECKER GAP worth recording: check_pr_merged_drift.py never would have caught this. It keys on PR references in the task note, and t-081 note cites #1391 -- the t-042 PR whose kaizen suggestion this task was FILED FROM, not its implementation. So on this one task the checker produces both a false positive (repeatedly flagging #1391, which is merged but belongs to t-042) and a false negative (no knowledge of #1464 at all). A provenance reference and an implementation reference are not distinguishable to it.'
     claimed_by: 2026-08-05T012725Z-interface-vision-t-081-rt2
     claimed_at: '2026-08-05T01:27:25Z'
-    updated: '2026-08-05T01:27:25Z'
+    updated: '2026-08-05T01:43:18Z'
 
   - id: t-083
     milestone: m2
