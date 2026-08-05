@@ -2051,8 +2051,7 @@ tasks:
   - id: t-054
     milestone: m1
     title: Add a kind_robots branch-cleanup workflow mirroring conductor's branch-janitor
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -2062,7 +2061,9 @@ tasks:
 
 
       Implemented a conservative kind_robots branch janitor that deletes only branches fully merged into main and reports old unmerged branches without deleting them.
+
+      Merged kind_robots PR #1496 as 7315071aa5292f95ce046712bcc0c531469f17ce. The hourly/manual janitor uses a full-history checkout, deletes only fully merged claude/worker/agent branches, and reports stale unmerged branches without deleting them.
     claimed_by: 2026-08-05T161305Z-kind-robots-t-054-v6k3
     claimed_at: '2026-08-05T16:13:05Z'
-    updated: '2026-08-05T16:19:00Z'
+    updated: '2026-08-05T16:26:00Z'
 

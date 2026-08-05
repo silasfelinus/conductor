@@ -6775,3 +6775,13 @@ records:
     requirement can be closed straight from a "SENT BACK ... confirmed" Kind Robots For You note once the
     task''s own closing instruction says so explicitly -- unlike a gate_human task, there is no ambiguity
     to preserve for Silas here.'
+- date: '2026-08-05'
+  project: kind-robots
+  task: t-054
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Branch cleanup must use full history for reliable merge-base classification; stale unmerged
+    branches remain review-only so automation cannot erase unique work.
