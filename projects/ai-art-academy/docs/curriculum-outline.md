@@ -174,6 +174,26 @@ chronologically among the earlier movements — read the `era` field in the
 machine-readable skeleton for true ordering; the front-end seed (t-020, t-031)
 inserts them in chronological position.
 
+Section 42 is the 2026-08-05 v1.22 addition (t-010 cycle, lane 4): Heidelberg
+School (`heidelberg-school`) — the curriculum's first entry from Australia
+and Oceania, a fresh addition with no source candidate file in
+`docs/curriculum-candidates/` (Harlem Renaissance remains the one candidate
+correctly held at ai-art-academy/t-043; researched and written this cycle
+instead). It applies plein-air Impressionist-adjacent technique to a light
+and landscape no other entry teaches — the harsh, high-key glare of the
+Australian bush, answered with a distinctive "blue and gold" palette —
+giving the curriculum a fourth deliberately-contrasted lens on
+Impressionist-family plein-air landscape practice alongside French
+Impressionism (§10), the Barbizon School (§40), and (in mood rather than
+technique) American Luminism (§41). It also names the movement's own
+settler-nationalist ideological weight directly in its lesson prose, the
+same treatment this document gives the Hudson River School (§32). Three
+generation-style anchors — Tom Roberts (1856-1931), Arthur Streeton
+(1867-1943), and Frederick McCubbin (1855-1917) — were verified this cycle
+one work each via their live Wikimedia Commons file pages (Public Domain
+Mark / PD-Art / PD-Australia tags, not Met/AIC CC0 this time, since none of
+the three works is held by a US open-access institution).
+
 Verification method note: direct API/page fetches to museum hosts are blocked by the
 session egress proxy, so verification was done via web search returning the live
 collection URLs (titles + object pages confirmed per movement). Entries marked
@@ -519,6 +539,19 @@ movements:
     artist_slugs: [fitz-henry-lane, martin-johnson-heade, john-frederick-kensett]
     example_count: 3
     remix_hint: "Repaint this image in the American Luminist style: extremely smooth, near-invisible brushwork, a perfectly calm glassy body of water or sky reflecting a precise gradation of still natural light (dawn haze, quiet midday, or pre-storm low sun), a hushed and motionless mood, and minimal incidental human presence. Preserve the source composition and subject."
+  # --- v1.22 addition (2026-08-05, t-010 cycle, lane 4) ---
+  # First entry from Australia/Oceania. Belongs chronologically alongside
+  # impressionism/post-impressionism (see `era`); appended here to avoid
+  # renumbering the sections above, per the same convention as every prior
+  # addition. A future seed-sync task inserts it in chronological position
+  # in academyStyles.ts, mirroring t-020/t-031/t-034 (or this cycle already
+  # did it directly — see this section's own note in the document body).
+  - slug: heidelberg-school
+    name: Heidelberg School
+    era: "c. 1885-1900 (Australia)"
+    artist_slugs: [tom-roberts, arthur-streeton, frederick-mccubbin]
+    example_count: 3
+    remix_hint: "Repaint this image in the Heidelberg School style: broad, confident plein-air brushwork applied directly from life, a bright high-key palette of blue and gold capturing harsh direct Australian sunlight, a dusty ochre-and-olive bush or rural-labor scene with a hazy heat-shimmer atmosphere, and an unsentimental, matter-of-fact mood. Preserve the source composition and subject."
 ```
 
 ---
@@ -2969,6 +3002,99 @@ subject."
 
 ---
 
+## 42. Heidelberg School (`heidelberg-school`)
+
+**Era:** c. 1885-1900 (Australia)
+
+**Key ideas.** The Heidelberg School gives the curriculum its first entry
+from Australia and Oceania — a group of painters, based for a time in
+artists' camps around Box Hill and Eaglemont near the Melbourne suburb of
+Heidelberg, who applied plein-air Impressionist-adjacent technique to a
+landscape and light no European movement had painted: the harsh, high-key
+glare of the Australian bush and outback. Where French Impressionism (§10)
+built its palette from the soft, temperate light of the Île-de-France, and
+the Barbizon School (§40) worked in muted greens and greys under overcast
+northern skies, Heidelberg School painters confronted a hotter, drier,
+brighter light and answered it with a distinctive "blue and gold" palette —
+saturated cobalt sky and sun-bleached ochre earth — applied in broad,
+confident strokes laid down directly from observation, often on small
+cigar-box-lid-sized panels (the famous 1889 "9 by 5 Impression Exhibition"
+takes its name from the standard panel size, 9 by 5 inches). The school also
+gave Australian painting its first sustained attempt at a national visual
+identity: sheep stations, drought-cracked paddocks, bushfires, and itinerant
+rural laborers, treated not as picturesque colonial scenery but as the
+ordinary, unglamorized subject of a new country defining itself in paint —
+a project with real ideological weight (a settler-nationalist vision of the
+land that had little room for Aboriginal presence or dispossession), named
+here directly rather than left implicit, the same treatment this document
+gives the Hudson River School's (§32) Manifest Destiny undertone.
+
+**Recognition cues:**
+- a bright, high-key "blue and gold" palette — saturated blue sky paired
+  with sun-bleached ochre, olive, and gold earth tones — capturing harsh
+  direct Australian sunlight rather than soft or overcast light
+- broad, confident, visible brushwork applied directly from life outdoors,
+  looser than academic finish but built from continuous descriptive strokes
+  rather than Impressionism's broken optical dabs or Pointillism's dots
+- a hazy, heat-shimmer atmospheric quality suggesting dry heat rather than
+  cool or misty air
+- Australian bush, sheep-station, or rural-labor subject matter — shearing
+  sheds, drought-stressed paddocks, bushfires, swagmen — treated with plain,
+  unsentimental dignity rather than picturesque exoticism
+- a matter-of-fact, unforced mood: dramatic in scale or subject sometimes,
+  but rendered with directness rather than Romantic theatricality
+- occasionally a small, squarish panel format (a legacy of the movement's
+  "9 by 5" plein-air sketches), though many major canvases are large-scale
+  studio-finished works built from such sketches
+
+**Notable artists:**
+- **Tom Roberts** (1856-1931) — English-born, Melbourne-based painter and
+  the school's organizing figure; his large narrative bush-labor scenes are
+  this lesson's clearest generation-style anchor for figure-and-landscape
+  composition.
+- **Arthur Streeton** (1867-1943) — painted the movement's most
+  characteristic high-key "blue and gold" summer landscapes, working
+  alongside Roberts at the Eaglemont artists' camp.
+- **Frederick McCubbin** (1855-1917) — brought a narrative, often
+  melancholic sensibility to bush-settler subjects, frequently in a looser,
+  more textured brushwork than Roberts or Streeton.
+
+Charles Conder (1868-1909), a fourth painter often named alongside this
+trio and a co-organizer of the 1889 "9 by 5" exhibition, clears
+PUBLIC-DOMAIN-POLICY.md §1.3's death-date prong easily but was not
+individually rights-verified this cycle; named here for historical context
+only, per §5's default-deny under ambiguity.
+
+**Example works:**
+- *Shearing the Rams*, Tom Roberts, 1888-1890 — National Gallery of
+  Victoria, accession 4654-3. VERIFIED public domain (Public Domain Mark 1.0
+  / PD-Art) this cycle via its Wikimedia Commons file page:
+  https://commons.wikimedia.org/wiki/File:Tom_Roberts_-_Shearing_the_Rams.jpg
+- *Golden Summer, Eaglemont*, Arthur Streeton, 1889 — National Gallery of
+  Australia, accession 61325. VERIFIED public domain (PD-Australia; also PD
+  in the US as published before 1931) this cycle via its Wikimedia Commons
+  file page:
+  https://commons.wikimedia.org/wiki/File:Arthur_Streeton_-_Golden_summer,_Eaglemont_-_Google_Art_Project.jpg
+- *Down on His Luck*, Frederick McCubbin, 1889 — Art Gallery of Western
+  Australia, accession 1896/00P7 (per Wikidata Q5302978, cross-referencing
+  the museum's own catalog; the Commons file page itself does not list an
+  accession number). VERIFIED public domain (PD-Art / PD-Australia) this
+  cycle via its Wikimedia Commons file page:
+  https://commons.wikimedia.org/wiki/File:Down_on_his_luck_Frederick_McCubbin.jpg
+
+Do not add a Conder example here without first verifying that specific
+work's rights status directly (Wikimedia Commons file page or an
+institution's own collection API), the same standard applied above.
+
+**remix_hint:** "Repaint this image in the Heidelberg School style: broad,
+confident plein-air brushwork applied directly from life, a bright high-key
+palette of blue and gold capturing harsh direct Australian sunlight, a
+dusty ochre-and-olive bush or rural-labor scene with a hazy heat-shimmer
+atmosphere, and an unsentimental, matter-of-fact mood. Preserve the source
+composition and subject."
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -3566,3 +3692,48 @@ work of his is listed as an example work, per §5's default-deny under
 ambiguity. Synced into kind_robots' `stores/seeds/academyStyles.ts` via
 PR #1158 (2026-07-29, alongside Tonalism above), closing the follow-up
 noted here at the time of writing.
+
+**v1.21 addition (2026-07-30) re-check (backfilled 2026-08-05, t-010 cycle,
+lane 4).** Section 41 (American Luminism) clears PUBLIC-DOMAIN-POLICY.md
+§1.3's both-prongs rule for all three generation-style anchors with the
+widest margin of any artist trio added since Barbizon School (§40): Fitz
+Henry Lane (d. 1865), Martin Johnson Heade (d. 1904), and John Frederick
+Kensett (d. 1872) all died well over a century before this policy's 1956
+cutoff. That cycle verified all three directly against the Metropolitan
+Museum of Art Collection API's `isPublicDomain` field (`collectionapi.
+metmuseum.org`, reachable directly from that session's egress): Lane's
+*Stage Fort across Gloucester Harbor* (1862, object 11396, accession
+1978.203), Heade's *Approaching Thunder Storm* (1859, object 11050,
+accession 1975.160), and Kensett's *Lake George* (1869, object 11311,
+accession 15.30.61) — none moves the curriculum's most-recent-example-work
+record (still 1930, §24). Synced into kind_robots' `stores/seeds/
+academyStyles.ts` via PR #1189 (2026-07-30) in the same cycle the section
+was written — this document's own safety-check appendix simply never
+recorded a paragraph for it at the time; noticed and closed while adding
+§42's own re-check paragraph below, the same kind of documentation gap
+already fixed for §27/§31/§34-36.
+
+**v1.22 addition (2026-08-05) re-check.** Section 42 (Heidelberg School) is
+the curriculum's first entry from Australia/Oceania and its first case where
+none of the verified example works is held by a Met/AIC/Smithsonian
+open-access US institution — all three generation-style anchors clear
+PUBLIC-DOMAIN-POLICY.md §1.3's both-prongs rule with wide margin (Tom
+Roberts, d. 1931; Arthur Streeton, d. 1943; Frederick McCubbin, d. 1917; all
+three example works 1888-1889, well before the 1930 US-publication cutoff,
+and none moves the curriculum's most-recent-example-work record, still 1930
+at §24) but this session verified each directly against its live Wikimedia
+Commons file page instead, under the accepted Public Domain Mark / PD-Art
+tag tier (policy §2.2 tier 2), since the National Gallery of Victoria,
+National Gallery of Australia, and Art Gallery of Western Australia are not
+CC0 open-access programs the way Met/AIC/Smithsonian are: Roberts's
+*Shearing the Rams* (1888-1890, NGV accession 4654-3), Streeton's *Golden
+Summer, Eaglemont* (1889, NGA Australia accession 61325), and McCubbin's
+*Down on His Luck* (1889, AGWA — accession 1896/00P7 per Wikidata Q5302978,
+since the Commons file page itself omits one). Charles Conder (d. 1909), a
+fourth painter commonly grouped with this trio, clears §1.3's death-date
+prong easily but was not individually rights-verified this cycle — named in
+the entry's prose for historical context only, per §5's default-deny under
+ambiguity, with no work of his listed as an example. Synced into
+kind_robots' `stores/seeds/academyStyles.ts` in the same cycle via PR #1472
+— `exampleWorks`/`failureMode` omitted per the established newly-added-style
+precedent, same as Tonalism and Barbizon School.

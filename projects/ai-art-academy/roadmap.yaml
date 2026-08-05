@@ -502,7 +502,7 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
@@ -510,14 +510,14 @@ tasks:
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
-      Lane 3 inspiration-assets pass: added a controlled four-movement comparison lesson using Byzantine Mosaic, Illuminated Manuscript, Vienna Secession, and Suprematism.
+      Lane 4 curriculum-depth pass: added Heidelberg School (`heidelberg-school`), the curriculum's first entry from Australia/Oceania, as curriculum-outline.md §42.
 
-      Merged Conductor PR #1720 (65988e8). Lane 3 added Gold and Geometry, a controlled same-composition inspiration lesson comparing Byzantine Mosaic, Illuminated Manuscript, Vienna Secession, and Suprematism. Worker PR CI, Security Audit, and Process task events all completed successfully. No generation jobs, production mutation, publishing, spend, or Kind Robots code changes occurred. Rotate next lane to curriculum depth (lane 4). Lesson: comparison sets are strongest when the fixed source isolates one formal axis -- this set uses a seated portrait to make material gold, page border, decorative geometry, and non-objective abstraction visibly comparable without relying on named-artist prompts.
+      Verified three generation-style anchors one work each against their live Wikimedia Commons file pages (Public Domain Mark / PD-Art / PD-Australia tags — Met is 429-rate-limited this cycle, and none of these three works is Met/AIC/Smithsonian-held anyway): Tom Roberts (d. 1931) *Shearing the Rams* (NGV 4654-3), Arthur Streeton (d. 1943) *Golden Summer, Eaglemont* (NGA Australia 61325), Frederick McCubbin (d. 1917) *Down on His Luck* (AGWA 1896/00P7). All three clear PUBLIC-DOMAIN-POLICY.md §1.3 (both prongs) with wide margin. Merged kind_robots PR #1472 (squash a88f7ce) syncing the entry into stores/seeds/academyStyles.ts in the same cycle. Rotate next lane to front-end polish (lane 1). See run_log for full detail.
     continuous_improvement:
-      last_lane: 2  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 3
-      last_run: '2026-08-05T02:28:23Z'
-      last_pr: 'no-op audit (roadmap accurate, 0 errors); see run_log for full detail'
+      last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 1
+      last_run: '2026-08-05T04:33:00Z'
+      last_pr: 'kind_robots PR #1472 (squash a88f7ce); conductor PR to follow with this note'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
     owner: worker
     claimed_by: 2026-08-05T043000Z-aa-t010-lane4
