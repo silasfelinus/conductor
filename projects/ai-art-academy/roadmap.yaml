@@ -1684,7 +1684,7 @@ tasks:
   - id: t-055
     milestone: m6
     title: 'Queue a style-preview art-prompts.yaml request in the same lane-4 cycle a curriculum entry syncs into academyStyles.ts'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -1700,6 +1700,21 @@ tasks:
       not-yet-generated path) but deferred image generation to "a future lane 3," and no
       later lane-3 cycle reliably caught the gap except by re-diffing live delivery against
       every slug from scratch.
+
+
+      RESOLVED 2026-08-05 (this cycle, after reclaiming an abandoned 8h-stale claim from an
+      earlier session that never opened a PR): added `scripts/verify_academy_style_preview_coverage.py`
+      -- cross-references every `academyStyles.ts` slug with `previewImageSrc` set against a live
+      HEAD check of `media.acrocatranch.com` and, for anything not yet delivered, against
+      `art-prompts.yaml`'s existing requests. Ran it against the real files: of 42 previewImageSrc
+      slugs, 39 are delivered and the remaining 3 (american-luminism, egyptian-painting,
+      heidelberg-school) already have a queued `pending` request from the prior lane-3 cycle --
+      zero real gaps right now. This gives future lane-3/lane-4 cycles the one-command check the
+      note above says was previously missing, instead of re-deriving it by hand each time. Also
+      confirmed `mannerism` (added by the most recent lane-4 cycle, kind_robots PR #1502) has no
+      `previewImageSrc` set at all yet -- a different, lesser gap (component gracefully skips
+      rendering when unset, no 404) than the one this task addresses; left as-is, a future lane-3
+      cycle can queue it.
     claimed_by: 2026-08-05T222700Z-aa-t055-reclaim
     claimed_at: '2026-08-05T22:33:00Z'
 

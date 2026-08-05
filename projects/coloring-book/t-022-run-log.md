@@ -419,3 +419,41 @@ gate is unverified until that run happens; if any of the 13 fail a third
 time with the new prompts, the next cycle should read the fresh rejection
 reasons before revising further rather than assuming these particular
 rewrites were sufficient. Re-armed to ready per the recurring-task rule.
+
+## 2026-08-05T22:37Z | Agent run (scheduled conductor sweep, ai-networker) | coloring-book/t-022
+
+Reclaimed an abandoned stale claim: this task had sat at `status: claimed`
+(`claimed_by: claude-scheduled-20260801T092747Z-cb-t022`) since 2026-08-01T09:27:47Z --
+over 4 days past `CLAIM_TTL_MINUTES` (90 min) -- with no follow-up PR ever opened
+against it (checked via GitHub MCP `search_pull_requests`, no match after PR #1493's
+2026-08-01T07:42:31Z re-arm). `check_pr_merged_drift.py` flagged this task as an
+unresolved candidate this cycle; reclaiming and reconciling it closes that gap.
+
+CURRENT STATE (2026-08-05T22:37Z): did NOT attempt a live recovery/submission pass.
+`coloring_queue_status.py --book monster-recast` reports `recommended_action=recover-existing-jobs`
+(17 recovery-actionable), but every `render_gate_error` on those entries is a ComfyUI
+job timeout (jobs 7629-7634, all "timed out after 600s (still queued/running)")
+plus one fresh-submission Prisma transaction-timeout error -- both symptoms of the
+same production ComfyUI render-relay outage already tracked project-wide (see root
+`RENDER-BACKLOG.md`; `recheck_render_queue.py` this cycle: oldestPending ~96.2h old
+and growing, 25/25 most-recent job failures are connection-refused to ComfyUI). This
+is the identical multi-day incident blocking `ai-art-academy/t-044` and `kind-robots/t-014`,
+already escalated to Silas repeatedly and requiring his hands-on access to the relay
+box -- not something a recovery pass run right now would clear; attempting one would
+just add more timed-out job records to the queue. Per Failure-triage, this is a
+**transient** infra failure -- no pass consumed, task re-armed to `ready` rather than
+left stranded at `claimed`.
+
+Also fixed the process gap that let the prior claim go stale silently: none identified
+beyond the already-standing claim-TTL/staleness mechanism (`next_ready_task.py` already
+treats a >90min-stale claim as pickable) -- the actual gap was that nobody picked it
+back up until this session's `check_pr_merged_drift.py` sweep surfaced it. No code
+change needed; noting for the record.
+
+Verification: `python scripts/coloring_queue_status.py --book monster-recast`,
+`python scripts/recheck_render_queue.py --task coloring-book/t-022` (appended to
+`RENDER-BACKLOG.md`), `python scripts/validate_roadmaps.py` (clean). No live ArtJob
+submission attempted. Re-armed to `ready` per the recurring-task rule; the next cycle
+should re-run `coloring_queue_status.py` first and only attempt `recover-existing-jobs`
+once `RENDER-BACKLOG.md`'s most recent reading shows the relay healthy again (no
+`connection-refused` in `recentFailed`).
