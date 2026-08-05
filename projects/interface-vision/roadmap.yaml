@@ -2653,33 +2653,9 @@ tasks:
   - id: t-100
     milestone: m3
     title: 'A missing image under a non-/images path returns HTTP 200 with the app shell, so broken art is invisible to every status-code check'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    note: >
-      Found while fixing Reward.imagePath (kind_robots PR #1446, Silas 2026-08-04:
-      "literally every path in imagePath is wrong for rewards"). All 227 rewards with an
-      imagePath stored `/rewards/...` instead of `/images/rewards/...`. 214 of them were
-      serving a 142 KB Nuxt app shell as `text/html` at HTTP 200, because `/rewards/x.webp`
-      does not 404 -- it falls through to the SPA catch-all. Only 13 served a real image,
-      and only because a separate tracked directory (public/rewards/) happens to shadow the
-      legacy prefix.
-      The data half is fixed by the repair workflow. The GAP is that nothing could see it:
-      curl, uptime monitors, and link checkers all read 200 as healthy, and only a consumer
-      that tries to DECODE the bytes can tell. The responsive-layout audit was the only
-      check with a chance, and it flagged exactly ONE reward -- Molt-Jar, the one with no
-      imagePath at all, whose fallback path genuinely 404s. The other 214 were invisible by
-      construction.
-      Two candidate guards, cheapest first. (1) A contract check that fetches every distinct
-      stored art path for the core objects against production and asserts the response
-      content-type starts with `image/` -- 227 rewards took about 90 seconds at -P 12, so
-      this is affordable nightly rather than per-PR. (2) Teach auditResponsiveLayout.mjs's
-      BROKEN-ART detector to report an `<img>` whose response content-type is not an image,
-      not just one whose naturalWidth is 0 -- narrower, since it only sees images actually
-      rendered at the audited widths. Verify a fix by reintroducing a `/rewards/...` path and
-      confirming the check goes red; a guard that has only ever been seen to pass is
-      indistinguishable from one that cannot fail (see t-063).
-      Scope note: only Reward was affected. Bots (64 avatarImage), Characters (201
-      imagePath) and Dreams already store `/images/...` and were spot-checked as serving
-      real `image/webp`.
+    note: 'Landed in kind_robots #1457 as candidate guard (1), the sweep the task named cheapest-first. utils/scripts/verifyStoredArtPaths.ts collects every distinct stored art path across the seven models that hold one (imagePath/cardPath/heroPath/iconPath plus Bot.avatarImage) and asserts the RESPONSE IS AN IMAGE rather than that the request succeeded. Failure/backlog split is the design decision that keeps it usable: only a 2xx with a non-image body fails (the silent path bug); a genuine 404 is art backlog, reported and never failing, per Silas standing direction that missing art is self-healing. Verified live against production, meeting this task explicit bar of reintroducing a /rewards/ path and confirming the check goes red: /rewards/item/alien-communicator.webp still returns 200 text/html and classifies shell, while /images/rewards/item/alien-communicator.webp returns 200 image/webp 174KB and an absent file returns 404 classified missing. Classifier additionally mutation-verified three ways (treat any 2xx as healthy; conflate 404 with a path bug; stop skipping /api/art routes) -- each fails the self-test. Runs nightly via .github/workflows/stored-art-paths.yml rather than per-PR because it checks DATA, which changes when rows are written, not when code merges; joins the tailnet first, the trap that has now bitten two dispatch-only DB workflows. Candidate guard (2), teaching auditResponsiveLayout BROKEN-ART detector about content-type, was deliberately NOT done and should not be filed as follow-up: investigation showed the audit missed the 214 rewards not because its detector is too narrow but because kr-art-plate caught the decode failure and swapped in its fallback exactly as designed, so naturalWidth was nonzero and the page genuinely was not broken. Did the UI break and is the stored data correct are different questions; guard (1) answers the second and the audit correctly answers the first. Unrelated incident found while doing this and filed in TALKBACK (conductor #1706): kindrobots.org and www.kindrobots.org both return 404 x-vercel-error DEPLOYMENT_NOT_FOUND while kind-robots.vercel.app serves fine, and no check noticed because the responsive-layout audit production fallback is the deployment URL, not the apex domain.'
+    updated: '2026-08-05T00:56:03Z'
