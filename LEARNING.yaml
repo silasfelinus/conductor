@@ -6785,3 +6785,15 @@ records:
   failure_category: null
   lesson: Branch cleanup must use full history for reliable merge-base classification; stale unmerged
     branches remain review-only so automation cannot erase unique work.
+- date: '2026-08-05'
+  project: kind-robots
+  task: t-051
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A shallow kind_robots clone's default commit horizon can be too short to find a file's
+    add/remove history even a few weeks back on a very active repo -- git fetch --unshallow before
+    concluding a path was "never added" or "vanished without a trace" (same trap already documented
+    for branch_janitor.py's merge-base classification).
