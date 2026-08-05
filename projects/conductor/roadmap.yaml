@@ -3239,8 +3239,8 @@ tasks:
   - id: t-101
     milestone: m2
     title: "Have validate_task_events.py reject a learning: field on non-done/blocked operations at PR time"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     stakes: reversible
     passes: 0
     note: >
@@ -3259,4 +3259,6 @@ tasks:
       silently sitting in the queue until the next manual sweep. Add a
       regression test covering a `learning:` field on each non-closed
       operation (`claim`, `ready`, `review`, `needs-human`, `rearm`).
-    updated: '2026-08-05T00:00:00Z'
+    updated: '2026-08-05T20:45:12Z'
+    claimed_by: 2026-08-05T203207Z-conductor-t101
+    claimed_at: '2026-08-05T20:45:12Z'
