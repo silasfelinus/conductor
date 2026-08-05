@@ -2658,30 +2658,14 @@ tasks:
   - id: t-099
     milestone: m3
     title: 'ESLint is not a CI gate in kind_robots, so dead code ships unnoticed -- decide whether to make it one'
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from finishing t-072 (kind_robots PR #1444). Dropping Facet.kind left five pieces
-      of dead code behind -- a computed-and-discarded `legacyKind` in the create API, an
-      imported-but-uncalled helper in two more server files, an unused import in
-      facetAssignments.ts, and a `const extra` whose only consumer had been removed. Every one
-      of them is a plain `@typescript-eslint/no-unused-vars` error, and `npx eslint` reports
-      them immediately. They survived the original t-072 PR because ESLint does not run in CI:
-      vue-tsc does (the TypeScript check), and it does not care about unused values. The
-      dead code only surfaced because a text-scan contract happened to assert on the helper's
-      name.
-      Adding `npx eslint` to contract-tests.yml is NOT a one-line change -- a full run over
-      server/ and utils/scripts/ currently reports 129 problems, all pre-existing. So this
-      needs the same ratchet treatment the layout contract already uses (see
-      utils/scripts/ratchetBaseline.ts, extracted in t-095 for exactly this kind of reuse):
-      record today's count as a baseline that may only shrink, and fail on anything new.
-      Scope the decision first -- lint-staged/pre-commit, a ratcheted CI job, or explicitly
-      choosing to keep relying on review -- rather than assuming the CI job is wanted.
+    note: 'Landed in kind_robots #1461. Decision, which this task asked to scope rather than assume: a ratcheted CI job, not a pre-commit hook and not continuing to rely on review. Reasons, in order of weight. (1) Review demonstrably does not catch this -- t-072 (#1444) shipped five dead pieces, every one a plain no-unused-vars error eslint reports instantly, and it recurred in t-066 (#1456) where collapsing three fetch copies into a composable left three unused imports that typechecked clean. (2) A pre-commit hook does not fit this repo, where much work arrives from agent sandboxes and API pushes that never run local hooks, so the check must live where commits land. (3) The ratchet is already house style and ratchetBaseline.ts was extracted in t-095 precisely so a third consumer would not copy it -- this is that consumer. Problems bucket BY RULE and a bucket may only shrink; a single total would let twenty deleted unused vars silently pay for twenty new anys, and a rule absent from the baseline counts as zero so a newly-enabled rule reads as growth. The gate never asks anyone to fix pre-existing problems, only not to add new ones. Measuring for the baseline surfaced a second bug: the eslint ignores list was inert, because in flat config ignores acts globally only as the sole key of a config object and this one sat beside rules, so cypress (named three separate ways) was linted anyway. Confirmed via ESLint#isPathIgnored returning false for every listed path before the split and true after. Honouring that intent dropped the baseline 554 -> 398, recorded as a shrink. Note this does change lint scope: cypress specs and sample/ are now genuinely unlinted as the config always meant. Verified in both directions rather than only seen to pass: a probe file adding one unused var and one any fails the check naming both new entries by file:line, and --update refuses the larger count leaving the baseline byte-identical. Pure bucketing is self-tested including the null-ruleId parse-error case, and the self-test runs before every real invocation. Baseline reproduces in CI (the real unknown, since eslint.config.mjs extends a generated .nuxt config): CI reports the same 397. Two corrections worth recording. The ratchet first shipped as an inline step in the ~105-step contract-verifiers job; it now has its own parallel job, and the final run shows both completing green in parallel (ratchet 67s total with a 36s eslint step; verifiers 94s). My first justification for that move claimed the inline step had been observed running over ten minutes -- that was wrong, read off the checks API while it served stale in-progress state, and the workflow comment now cites the measured figures instead. The separate job is still correct on its merits: slowest single check, depends on nothing in that chain, should not spend that jobs shared 10-minute budget.'
     claimed_by: 2026-08-05T010500Z-interface-vision-t-099-e9lq
     claimed_at: '2026-08-05T00:59:49Z'
-    updated: '2026-08-05T00:59:49Z'
+    updated: '2026-08-05T01:29:18Z'
   - id: t-100
     milestone: m3
     title: 'A missing image under a non-/images path returns HTTP 200 with the app shell, so broken art is invisible to every status-code check'
