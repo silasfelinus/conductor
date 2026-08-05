@@ -2275,23 +2275,52 @@ tasks:
   - id: t-079
     milestone: m2
     title: 'Wire entityArt.ts onto EntityArtImage joins and retire the ArtImage.path prefix-string history scheme'
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-028
     note: |-
-      Follow-on from t-028 (kind_robots PR #1381), which shipped only the additive EntityArtImage schema (entityType, entityId, artImageId; FK on artImageId to ArtImage). This task is the actual wiring, split out because it bundles a live-endpoint behavior change that deserves its own review pass rather than riding along with a schema migration:
-      1. In server/utils/entityArt.ts, generalize the `entityType === 'project'` fast path in archiveCurrentEntityArt (upsert a join row against the existing artImageId, no duplicate ArtImage row) to ALL entity types when a real source artImageId is resolvable. Keep createHistoryReference's duplicate-row creation only for the legacy fallback where there is no existing artImageId (a bare path string) -- that path still needs a real ArtImage row to attach a join to.
-      2. Rewrite listEntityArtHistory to query EntityArtImage for (entityType, entityId) instead of ArtImage.path-startsWith. Also write EntityArtImage rows for entityType 'project' alongside its existing ProjectArtImage rows (project's own dedicated gallery endpoint, /api/projects/[id]/art, keeps using ProjectArtImage unchanged) -- today the *generic* history endpoint silently returns nothing for project since project's archives never got the prefix tag; this fixes that as a side effect of unifying on real joins.
-      3. server/api/art/entities/[entityType]/[id]/history/[artImageId].delete.ts currently does `prisma.artImage.delete(...)` gated by a path-prefix existence check -- this is safe ONLY because today's history rows are always private throwaway duplicates. Once join rows can point at a non-duplicated, possibly-still-referenced ArtImage row, "remove from history" must become `entityArtImage.deleteMany(...)` (unlink only, gated by an EntityArtImage row existing for that entityType/entityId/artImageId) instead of deleting the ArtImage row itself. Get this right first -- it is the main correctness risk in the whole task.
-      4. Once every entity type has real join rows and the delete endpoint is fixed, remove the ArtImage.path-prefix write in createHistoryReference's placeholder-creation branch (it can keep a descriptive path for humans debugging in Studio, just stop relying on startsWith for discovery) and drop entityArtHistoryPrefix's use as a *query* mechanism (the function itself can stay if still used for the placeholder's descriptive path).
-      Verify with vue-tsc (npm test) plus a manual read-through of the two endpoints' new Prisma calls -- no local DB to exercise end-to-end. Additive-only migrations are not expected for this task (schema already landed in t-028); if a further migration turns out to be needed, audit it line by line per the standing rule.
+      Follow-on from t-028 (kind_robots PR #1381), which shipped only the additive EntityArtImage schema
+      (entityType, entityId, artImageId; FK on artImageId to ArtImage). This task is the actual wiring, split out
+      because it bundles a live-endpoint behavior change that deserves its own review pass rather than riding
+      along with a schema migration.
 
+      Landed in kind_robots #1459. All four parts of the split:
 
-      Released without code changes. The connector can inspect the required entityArt.ts ranges but only supports whole-file replacement for edits; this 900+ line service cannot be safely reconstructed from abbreviated responses. The delete-endpoint correctness risk was verified, but implementation needs a local checkout or a connector patch operation. Rotating to another eligible task rather than leaving a false claim.
+      1. archiveCurrentEntityArt's project-only "reuse the existing ArtImage row instead of duplicating" fast path
+         is generalized to every entity type via a new linkEntityArtImage() helper: when the current slot already
+         names a real ArtImage row, archiving upserts an EntityArtImage join (and, for project, the existing
+         ProjectArtImage row too) instead of creating a throwaway duplicate. createHistoryReference's duplicate-row
+         creation is now reached only by the legacy fallback -- a bare path string with no artImageId behind it.
+      2. listEntityArtHistory now queries EntityArtImage for (entityType, entityId) instead of
+         ArtImage.path.startsWith. field/fieldLabel (used to scope the history panel to the selected slot) are
+         recovered best-effort from the joined ArtImage's own path tag when present; a shared/plain ArtImage row
+         has neither tag, so field comes back undefined, which entity-art-manager.vue's existing filteredHistory
+         fallback already treats as "show under every slot" rather than hiding it.
+      3. The history delete endpoint now unlinks (EntityArtImage.deleteMany) and never deletes the underlying
+         ArtImage row -- the main correctness fix the task called out. History entries can now point at real,
+         still-referenced art (an entity's own primary image, reused rather than duplicated), so the old
+         prisma.artImage.delete(...) could have taken down art another slot/entity/collection still depends on.
+      4. entityArtHistoryPrefix is no longer used as a query mechanism anywhere (no more path: {startsWith} in a
+         Prisma where-clause); the function and its path tag stay only for the descriptive Studio path and the
+         best-effort field recovery in #2.
+
+      Fixed in passing: applyEntityArtImage's archivedArtImageId branch (hit by the queue's overwrite-retry
+      completion path) was calling createHistoryReference on an ArtImage id the caller had already freshly created
+      as a standalone snapshot row -- duplicating it a second time. It now links that row directly.
+
+      Verified: npm test (vue-tsc) clean; verifyEntityArtManager.ts and verifyEntityArtPromptSuggest.ts contracts
+      both pass; eslint clean; prisma validate clean; all PR CI green (TypeScript, Contract verifiers, facet-catalog,
+      layout-contract, narrative/storybook contracts, Vercel deploy). No local DB to exercise the Prisma calls
+      end-to-end -- verified by read-through against the schema's compound unique key and the callers' actual
+      argument shapes, including tracing both applyEntityArtCompletion call sites in the queue completion endpoint.
+
+      field/fieldLabel on history rows is best-effort by design (the join table itself doesn't carry a field
+      column, and this task deliberately scoped out further schema migrations) -- not visually verified, no local
+      dev server reachable in this sandbox.
     claimed_by: 2026-08-05T005500Z-interface-vision-t-079-w3rz
     claimed_at: '2026-08-05T00:52:19Z'
-    updated: '2026-08-05T00:52:19Z'
+    updated: '2026-08-05T01:05:26Z'
     owner: worker
 
   - id: t-080
