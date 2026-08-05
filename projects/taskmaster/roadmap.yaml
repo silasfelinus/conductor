@@ -122,11 +122,14 @@ tasks:
   - id: t-003
     milestone: m3
     title: "Polish and upgrade Taskmaster front-end surface"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: 'Kaizen from t-003 (kind_robots PR #1160, conductor PR #1443, 2026-07-29). Queued taskmaster''s dedicated icon/card/hero + dashboard-tab/tutorial art via consume_art_queue.py --live --no-wait (ArtJobs 2846-2850) and pointed dashboardHelper.ts/tutorialCards.ts at the new paths. Step (4) liveUrl/channelKey/tabKey confirmed already correct via sync_projects.py (UNCHANGED). Remaining: confirm jobs 2846-2850 rendered and run distribute_images.py (or confirm the distribute-images workflow already placed them) before closing to done.'
+    note: |-
+      Kaizen from t-003 (kind_robots PR #1160, conductor PR #1443, 2026-07-29). Queued taskmaster's dedicated icon/card/hero + dashboard-tab/tutorial art via consume_art_queue.py --live --no-wait (ArtJobs 2846-2850) and pointed dashboardHelper.ts/tutorialCards.ts at the new paths. Step (4) liveUrl/channelKey/tabKey confirmed already correct via sync_projects.py (UNCHANGED). Remaining: confirm jobs 2846-2850 rendered and run distribute_images.py (or confirm the distribute-images workflow already placed them) before closing to done.
+
+      Implemented the objective-first Quest Desk redesign on a focused Kind Robots branch. Setup now removes the generic narrator slab, groups optional story ingredients into compact disclosures, adds a mobile-safe action rail, and moves active quests into a story-plus-mission-rail layout with an explicit minimum stage height.
     claimed_by: 2026-08-05T034300Z-taskmaster-t-003-gpt56-8f42
     claimed_at: '2026-08-05T03:43:00Z'
-    updated: '2026-08-05T03:43:00Z'
+    updated: '2026-08-05T03:53:00Z'
