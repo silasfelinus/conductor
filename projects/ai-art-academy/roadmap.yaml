@@ -502,29 +502,20 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-05T23:28:04Z'
+    updated: '2026-08-05T23:36:15Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
-
-      Lane 4 (2026-08-05T21:28Z): curriculum depth — added Mannerism (curriculum-outline.md §44, v1.24; Bronzino/Parmigianino/Perino del Vaga, all Met-API-verified CC0) and synced into kind_robots' academyStyles.ts (vue-tsc clean). Also researched and rejected a Constructivism candidate for §2 rights-license failure across all three artists — see run_log for the full account. See `run_log` for full cycle detail.
-
-      Lane 1 front-end polish: defer Academy art-server initialization until Remix Studio or Style Lab is opened, avoiding unnecessary server and gallery fetches for Timeline and Style Gallery visitors.
-
-      Lane 1 front-end polish merged in kind_robots PR #1506 as 7ab6a7f084457a0446135a7d0458e64069298078. Academy now initializes remote server and art data only when Remix Studio or Style Lab is opened, while Timeline and Style Gallery stay seed-only. Final head 979a211069a9587121d514f7ca26a7d0c913a601 passed TypeScript, Contract Tests, layout, MDC scroll ownership, facet catalog, API client follow-ups, and every triggered narrative, Storybook, and Taskmaster contract. Next lane: 2.
     continuous_improvement:
-      last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 1
-      last_run: '2026-08-05T21:27:54Z'
-      last_pr: 'conductor PR (this cycle)'
+      last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 2
+      last_run: '2026-08-05T23:36:15Z'
+      last_pr: 'kind_robots#1508'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
     implementation_pr: 'silasfelinus/kind_robots#1502'
-    owner: worker
-    claimed_by: 2026-08-05T23:28:03Z-aa-t010-lane1
-    claimed_at: '2026-08-05T23:28:04Z'
 
   - id: t-015
     milestone: m4
