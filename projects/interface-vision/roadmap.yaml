@@ -1994,7 +1994,7 @@ tasks:
   - id: t-068
     milestone: m3
     title: 'A doc comment can fail 29 source-text contracts — strip comments before forbid- scans'
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -2023,10 +2023,11 @@ tasks:
       Merged Kind Robots PR #1440 as 2ef4369ae3d42683a2da5b6644dd04b33dc437b0 after all 14 final-head workflows completed successfully. Prompt create ownership, Dream mutation input parity, and Reaction create input boundary now route forbid checks through the shared comment-aware containsCode helper while require checks continue reading raw source. The broader verifier migration still has remaining scripts, so this one-off task returns to ready for another bounded slice.
 
       Migrated the Daily Dream Facet verifier's forbid checks to the shared comment-aware containsCode helper while preserving require checks on raw source text.
+
+      Completed the comment-aware forbid-scan migration. Concurrent Kind Robots PR #1452 merged the remaining fifteen verifiers as 7856ebfd1a513301608ff432e7eb33ddcb24669a, including verifyDailyDreamFacets.ts. This session's narrower PR #1453 then merged as 86b9554abe72fa169609725cdb34e7b7c963e729 after all 12 final-head workflows passed; its one-file change was already equivalent to the canonical #1452 result. The full sweep is now complete, so close t-068.
     claimed_by: 2026-08-04T171309-0700-interface-vision-t-068-v6n2
     claimed_at: '2026-08-05T00:13:09Z'
-    updated: '2026-08-05T00:20:00Z'
-    owner: worker
+    updated: '2026-08-05T00:31:00Z'
 
   - id: t-069
     milestone: m2
