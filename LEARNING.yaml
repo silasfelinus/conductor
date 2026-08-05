@@ -6604,3 +6604,17 @@ records:
   failure_category: null
   lesson: Re-check recent merges immediately before merging a scoped follow-up on a frequently claimed
     umbrella task; a concurrent broader PR can complete the same slice between CI start and merge.
+- date: '2026-08-05'
+  project: interface-vision
+  task: t-081
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: When a "picker" component is contract-fenced read-only (verifyFacetGallery.ts forbids
+    create/update/archive text in facet-gallery.vue), add the missing create affordance to its
+    thin wrapper component instead, and hand off to the real admin flow via a one-shot query-param
+    flag (?create=1, consumed and cleared by the tab it lands on) rather than duplicating the create
+    form or loosening the contract. Kept the read-only contract test green with zero changes needed
+    to the fenced file itself.
