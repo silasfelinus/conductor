@@ -41,6 +41,8 @@ def write_roadmap(root, slug, tasks):
         lines.append(f"    title: \"{task['title']}\"")
         if task.get("note"):
             lines.append(f"    note: \"{task['note']}\"")
+        if task.get("implementation_pr"):
+            lines.append(f"    implementation_pr: \"{task['implementation_pr']}\"")
     (project_dir / "roadmap.yaml").write_text(
         "\n".join(lines) + "\n", encoding="utf-8"
     )
@@ -86,6 +88,36 @@ def test_find_pr_refs_multiple_repos():
         ("silasfelinus/conductor", 40),
         ("silasfelinus/kind_robots", 517),
     ]
+
+
+# --------------------------------------------------------------------------- #
+# parse_implementation_pr (conductor/t-099)
+# --------------------------------------------------------------------------- #
+
+
+def test_parse_implementation_pr_parses_owner_repo_number():
+    assert dr.parse_implementation_pr("silasfelinus/kind_robots#1464") == (
+        "silasfelinus/kind_robots",
+        1464,
+    )
+
+
+def test_parse_implementation_pr_strips_surrounding_whitespace():
+    assert dr.parse_implementation_pr("  silasfelinus/kind_robots#1464  ") == (
+        "silasfelinus/kind_robots",
+        1464,
+    )
+
+
+def test_parse_implementation_pr_returns_none_for_missing_field():
+    assert dr.parse_implementation_pr(None) is None
+    assert dr.parse_implementation_pr("") is None
+
+
+def test_parse_implementation_pr_returns_none_for_malformed_value():
+    assert dr.parse_implementation_pr("kind_robots PR #1464") is None
+    assert dr.parse_implementation_pr("silasfelinus/kind_robots") is None
+    assert dr.parse_implementation_pr("#1464") is None
 
 
 # --------------------------------------------------------------------------- #
@@ -511,3 +543,120 @@ def test_check_drift_clean_when_no_evidence_either_way(tmp_path):
         result = dr.check_drift(tmp_path / "projects", token=None)
 
     assert result == {"high": [], "weak": [], "unresolved": []}
+
+
+# --------------------------------------------------------------------------- #
+# check_drift — implementation_pr field pass (conductor/t-099)
+# --------------------------------------------------------------------------- #
+
+
+def test_check_drift_field_present_confirms_without_search_call(tmp_path):
+    # Field-present path: a task carrying implementation_pr is checked
+    # directly against that PR and never triggers the title-search call at
+    # all -- the field is stronger evidence, so pass 1 is skipped entirely.
+    write_roadmap(
+        tmp_path,
+        "newsfeed",
+        [
+            {
+                "id": "t-020",
+                "status": "claimed",
+                "title": "x",
+                "implementation_pr": "silasfelinus/kind_robots#1464",
+            }
+        ],
+    )
+
+    pr_body = json.dumps({
+        "merged": True,
+        "merged_at": "2026-08-01T00:00:00Z",
+        "title": "some unrelated PR title",
+    }).encode()
+
+    def fake_urlopen(req, timeout=10):
+        url = req.full_url if hasattr(req, "full_url") else req
+        assert "search/issues" not in url, "field-present task must not hit the search API"
+        return FakeResponse(pr_body)
+
+    with patch("urllib.request.urlopen", side_effect=fake_urlopen):
+        result = dr.check_drift(tmp_path / "projects", token=None)
+
+    assert len(result["high"]) == 1
+    assert result["high"][0]["repo"] == "silasfelinus/kind_robots"
+    assert result["high"][0]["pr_number"] == 1464
+    assert result["high"][0]["confidence"] == "high"
+    assert result["high"][0]["source"] == "implementation-pr-field"
+    assert result["weak"] == []
+    assert result["unresolved"] == []
+
+
+def test_check_drift_field_absent_still_uses_title_search(tmp_path):
+    # Field-absent path: a task with no implementation_pr field (the common
+    # case for tasks closed before this field existed) is unaffected and
+    # still goes through the title-search pass exactly as before.
+    write_roadmap(
+        tmp_path,
+        "newsfeed",
+        [{"id": "t-020", "status": "claimed", "title": "x"}],
+    )
+
+    search_body = json.dumps({
+        "items": [
+            {
+                "number": 1464,
+                "repository_url": "https://api.github.com/repos/silasfelinus/kind_robots",
+            }
+        ]
+    }).encode()
+    pr_body = json.dumps({
+        "merged": True,
+        "merged_at": "2026-08-01T00:00:00Z",
+        "title": "newsfeed/t-020: fix",
+    }).encode()
+
+    def fake_urlopen(req, timeout=10):
+        url = req.full_url if hasattr(req, "full_url") else req
+        if "search/issues" in url:
+            return FakeResponse(search_body)
+        return FakeResponse(pr_body)
+
+    with patch("urllib.request.urlopen", side_effect=fake_urlopen):
+        result = dr.check_drift(tmp_path / "projects", token=None)
+
+    assert len(result["high"]) == 1
+    assert result["high"][0]["source"] == "task-id-search"
+    assert result["high"][0]["pr_number"] == 1464
+
+
+def test_check_drift_field_lookup_failure_is_unresolved_not_downgraded(tmp_path):
+    # A task whose implementation_pr field is present but whose PR lookup
+    # itself fails must land in `unresolved` -- not fall back to the
+    # title-search or note-reference passes (which would risk reporting a
+    # false "clean" or a downgraded "weak" result for evidence that was
+    # never actually checked).
+    write_roadmap(
+        tmp_path,
+        "newsfeed",
+        [
+            {
+                "id": "t-020",
+                "status": "claimed",
+                "title": "x",
+                "implementation_pr": "silasfelinus/kind_robots#404",
+                "note": "kind_robots PR #517",
+            }
+        ],
+    )
+
+    def fake_urlopen(req, timeout=10):
+        url = req.full_url if hasattr(req, "full_url") else req
+        assert "search/issues" not in url, "a field-present task must not fall back to search"
+        raise http_error(404)
+
+    with patch("urllib.request.urlopen", side_effect=fake_urlopen):
+        result = dr.check_drift(tmp_path / "projects", token=None)
+
+    assert result["high"] == []
+    assert result["weak"] == []
+    assert len(result["unresolved"]) == 1
+    assert result["unresolved"][0]["task_id"] == "t-020"

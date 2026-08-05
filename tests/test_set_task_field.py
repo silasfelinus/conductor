@@ -165,6 +165,17 @@ def test_disallowed_field_is_rejected():
         stf.set_task_field_text(ROADMAP, "t-001", "title", "sneaky rename")
 
 
+def test_implementation_pr_field_is_allowed_and_round_trips(tmp_path):
+    # conductor/t-099: close_task.py's --implementation-pr writes this field
+    # directly. It must be allowed, and a value containing `#` (owner/repo#N)
+    # must survive quoted so no YAML parser reads it as a comment.
+    out = stf.set_task_field_text(
+        ROADMAP, "t-001", "implementation_pr", "silasfelinus/kind_robots#1464"
+    )
+    tasks = parse_tasks(out)
+    assert tasks["t-001"]["implementation_pr"] == "silasfelinus/kind_robots#1464"
+
+
 def test_scalar_normalization():
     assert stf.normalize_scalar("true") == "true"
     assert stf.normalize_scalar("null") == "null"

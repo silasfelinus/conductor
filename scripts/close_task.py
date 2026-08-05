@@ -20,12 +20,21 @@ verify, merge) is what actually lands the change.
 
 Usage:
     python scripts/close_task.py <project> <task-id> <status> --session <id> \\
-        [--branch <name>] [--set field=value ...] [--dry-run]
+        [--branch <name>] [--set field=value ...] [--implementation-pr OWNER/REPO#N] [--dry-run]
 
     python scripts/close_task.py model-builder t-029 done --session claude-20260728T2200Z-mb-t029
     python scripts/close_task.py media-watchlist t-016 needs-human \\
         --session claude-20260728T2200Z-mw-t016 --set soft_gate=true \\
         --set note='blocked on X, see task note'
+    python scripts/close_task.py newsfeed t-020 done --session claude-20260805T0900Z-nf-t020 \\
+        --implementation-pr silasfelinus/kind_robots#1464
+
+`--implementation-pr` (conductor/t-099) records the PR that actually implemented the
+task on a dedicated `implementation_pr` roadmap field (e.g.
+`silasfelinus/kind_robots#1464`), separate from any note-quoted PR reference.
+check_pr_merged_drift.py's authoritative pass keys on this field first when present --
+strictly stronger evidence than its title-text search, and immune to a close-out PR
+whose title doesn't follow the `<project>/<task-id>:` convention.
 
 What it does:
     1. Fetches `origin/main` and reads the task straight out of that ref's
@@ -88,6 +97,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PROJECTS_DIR = ROOT / "projects"
 MAX_ATTEMPTS = 4
 SLUG_RE = re.compile(r"[^A-Za-z0-9_.-]+")
+IMPLEMENTATION_PR_RE = re.compile(r"^[\w.-]+/[\w.-]+#\d+$")
 
 
 class CloseError(Exception):
@@ -230,6 +240,16 @@ def main() -> int:
     parser.add_argument("--session", required=True, help="Opaque session/run identifier, for the audit trail")
     parser.add_argument("--branch", help="Branch to push the close-out commit to (default: close/<project>-<task>-<session>)")
     parser.add_argument("--set", action="append", default=[], metavar="field=value", help="Extra roadmap field to set alongside status (repeatable)")
+    parser.add_argument(
+        "--implementation-pr",
+        metavar="OWNER/REPO#NUMBER",
+        help=(
+            "Record the PR that actually implemented this task (e.g. "
+            "silasfelinus/kind_robots#1464) as a dedicated `implementation_pr` "
+            "roadmap field, so check_pr_merged_drift.py's authoritative pass can key "
+            "on it directly instead of a title-text search (conductor/t-099)."
+        ),
+    )
     parser.add_argument("--force", action="store_true", help="Allow closing a task already at the target status")
     parser.add_argument("--dry-run", action="store_true", help="Check state and print intent; push nothing")
     args = parser.parse_args()
@@ -238,8 +258,17 @@ def main() -> int:
         print(f"ERROR: unknown project {args.project!r}", file=sys.stderr)
         return 1
 
+    if args.implementation_pr and not IMPLEMENTATION_PR_RE.match(args.implementation_pr):
+        print(
+            f"ERROR: --implementation-pr must look like owner/repo#123, got {args.implementation_pr!r}",
+            file=sys.stderr,
+        )
+        return 1
+
     try:
         extra_fields = parse_set_args(args.set)
+        if args.implementation_pr:
+            extra_fields["implementation_pr"] = args.implementation_pr
         close(
             args.project,
             args.task_id,
