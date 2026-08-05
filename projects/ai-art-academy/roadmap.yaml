@@ -502,11 +502,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-05T14:31:43Z'
+    updated: '2026-08-05T15:29:19Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
@@ -520,13 +520,15 @@ tasks:
       Lane 4 curriculum-depth implementation is complete on worker/ai-art-academy-t-010-20260805t141820z-n4v7: a finalized Harlem Renaissance lesson with movement-level remixing, rights boundaries, patronage framing, exercises, and failure corrections.
 
       Merged conductor PR #1752 for lane 4 curriculum depth. Added a finalized Harlem Renaissance lesson that separates historical teaching from image-reuse rights and generation policy, uses the four verified CC0 Winold Reiss portraits only as contextual evidence about patronage and circulation, keeps generation movement-level and artist-anchor-free, and adds exercises plus concrete corrections for stereotype and identity drift. Rotate next to lane 1 front-end polish.
+
+      Lane 1 front-end polish complete: kind_robots PR #1495 fixed components/art/image-card.vue's Retry button being gated behind showDebug (never set true anywhere in the repo, so unreachable in practice) — a transient image-load failure permanently pinned any card to the fallback image with no recovery path for real users across every gallery surface using this component. Decoupled the Retry button from showDebug so it now shows whenever imageLoadFailed is true. Verified clean via eslint/prettier/vue-tsc plus all 16 kind_robots CI checks (including the layout-contract audit) green; merged by the Reviewer session. No companion conductor PR needed this cycle. Rotate next to lane 2 roadmap-accuracy audit.
     continuous_improvement:
       last_lane: 2  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
       next_lane: 3
       last_run: '2026-08-05T12:41:00Z'
       last_pr: 'conductor PR #1749'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    implementation_pr: 'silasfelinus/conductor#1745'
+    implementation_pr: 'silasfelinus/kind_robots#1495'
     owner: worker
     claimed_by: 2026-08-05T143142Z-ai-art-academy-t010-l1-
     claimed_at: '2026-08-05T14:31:43Z'
