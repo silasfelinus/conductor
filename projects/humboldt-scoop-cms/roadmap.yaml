@@ -347,7 +347,7 @@ tasks:
   - id: t-010
     milestone: m6
     title: "Review real-address privacy, map costs, and launch gates"
-    status: ready
+    status: needs-human
     passes: 0
     stakes: sensitive
     depends_on:
@@ -363,9 +363,12 @@ tasks:
 
 
       SENT BACK by silasfelinus via Kind Robots For You. approved
+
+      State-reconciliation correction (conductor scheduled agent run, 2026-08-05): status was `ready` with the review deliverable (PRIVACY-LAUNCH-REVIEW.md) already complete since 2026-07-27 -- nothing further for an agent to build until Silas answers the "FOR SILAS" ask already in this task's note (approve or resequence the two flagged prerequisite-task gaps: auth/access-role system, geocoding provider). Corrected to `needs-human` (gate_human: true was already set) so it stops looking pickable. Could not confirm from PR/commit history what the note's existing "SENT BACK by silasfelinus via Kind Robots For You. approved" line (dated ~2026-08-04) is scoped to -- the whole review, or just an acknowledgement -- so this event does NOT set approved_by_human or status: done, per the "neither agent, ever" rule. Flagged directly to Silas in this session's report instead. TO APPROVE: if "approved" meant the full review including both prerequisite-task gaps, set approved_by_human: true and status: done directly (or tell the next cycle to file the two prerequisite tasks first, per the original FOR SILAS ask).
     claimed_by: claude-conductor-burst-20260727T1900Z-hscms-t010
     claimed_at: '2026-07-27T19:08:07Z'
-    updated: '2026-08-04 22:42:29.019000+00:00'
+    updated: '2026-08-05T15:41:17+00:00'
+    soft_gate: false
 
   - id: t-011
     milestone: m1
