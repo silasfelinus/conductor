@@ -1966,10 +1966,11 @@ tasks:
   - id: t-051
     milestone: m1
     title: "Investigate and document the disappearance of server/api/conductor/curate-request.post.ts"
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
+    updated: '2026-08-05T00:00:00Z'
     note: >
       Filed 2026-08-02 (weekly site audit, global-ui/SITE-AUDIT-AGENT.md).
       An earlier task (2026-07-14, "SHIPPED IN REVIEW") describes shipping a
@@ -1990,6 +1991,38 @@ tasks:
       migration, and check whether the trainer panel's "Request curation"
       UI now silently 404s) or whether this is an accidental regression
       that should be restored.
+
+      RESOLVED 2026-08-05 (scheduled conductor Agent run): unshallowed the
+      kind_robots clone (the shallow default checkout's 50-commit horizon
+      doesn't reach back to 2026-07-14/08-01, the same classification trap
+      documented for `branch_janitor.py` elsewhere -- unshallowing is
+      required to search history this old) and found both the add and the
+      removal directly. Added 2026-07-14 in commit 90e115751 ("feat(artjob):
+      front-end curate request for the ArtJob trainer"), exactly matching
+      the "SHIPPED IN REVIEW" task's description. Deliberately removed
+      2026-08-01 in kind_robots PR #1244 ("Show finished art for human
+      review without a curator pass"), merged directly by Silas: the ArtJob
+      trainer panel's filter previously required a CURATOR verdict to show
+      a job at all, and conductor is retiring that vision-model curation
+      pass entirely (art quality is a human judgment call now), so PR #1244
+      removed the endpoint, its YAML helper
+      (server/utils/curationRequestYaml.ts), both `artJobStore.ts` actions
+      and their in-flight state, AND the front-end "Request curation"
+      button/CTA in the same commit -- end to end, not a partial regression.
+      278 previously-queued curation requests were already sitting
+      unserviced at the time of removal (conductor's drain for
+      `projects/curation/requests.yaml` was gone), which is what prompted
+      the cleanup. Answers both open questions: (1) deliberate, not
+      accidental -- PR #1244 is the removing PR; (2) the trainer panel does
+      NOT silently 404 -- the UI entry point that would have called the
+      endpoint was removed in the same PR, so there is no dangling caller.
+      Updated the stale comment in
+      kind_robots' utils/scripts/verifyConductorApiAuthGuards.ts (still
+      named curate-request.post.ts as a live pattern example) to note the
+      removal and link back to this task, so a future grep for the
+      filename finds an answer instead of a dead end. No functional code
+      change needed beyond that comment -- PR #1244 already left the
+      codebase in a fully consistent state.
 
   - id: t-052
     milestone: m1

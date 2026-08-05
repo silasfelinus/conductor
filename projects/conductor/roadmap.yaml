@@ -3235,3 +3235,28 @@ tasks:
       `python scripts/validate_roadmaps.py` and `python scripts/audit_roadmaps.py` both
       clean afterward (0 errors). No code/behavior change.
     updated: '2026-08-05T00:00:00Z'
+
+  - id: t-101
+    milestone: m2
+    title: "Have validate_task_events.py reject a learning: field on non-done/blocked operations at PR time"
+    status: ready
+    owner: null
+    stakes: reversible
+    passes: 0
+    note: >
+      Kaizen from the 2026-08-05 scheduled conductor sweep (PR #1762): a queued
+      `rearm` task-event for ai-art-academy/t-010 carried a `learning:` field,
+      which `process_task_events.py`'s `prepare_learning()` correctly rejects
+      (learning may only accompany `done`/`blocked` operations), but nothing
+      caught this at PR time -- the event sat unprocessed in `task-events/`
+      for hours across multiple scheduled runs before a manual sweep noticed
+      the stuck file and traced the cause. `.github/workflows/ci.yml`'s
+      "Validate queued task-events YAML" step already runs
+      `scripts/validate_task_events.py` on every PR touching `task-events/*.yaml`;
+      add the same operation/field compatibility check there (reusing
+      `process_task_events.py`'s existing rule, not reimplementing it) so a
+      malformed event fails CI on the PR that introduces it instead of
+      silently sitting in the queue until the next manual sweep. Add a
+      regression test covering a `learning:` field on each non-closed
+      operation (`claim`, `ready`, `review`, `needs-human`, `rearm`).
+    updated: '2026-08-05T00:00:00Z'
