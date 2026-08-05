@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-05T20:45:41Z
+Generated: 2026-08-05T20:50:55Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **526**
-- Outcomes: blocked: 13, cancelled: 1, done: 512
+- Closed tasks recorded: **527**
+- Outcomes: blocked: 13, cancelled: 1, done: 513
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -25,7 +25,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 8 | 0% |
 | coloring-book | 25 | 100% |
-| conductor | 65 | 100% |
+| conductor | 66 | 100% |
 | conductor-app | 2 | 100% |
 | davinci | 2 | 100% |
 | digital-storefront | 25 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 511 | 99% |
+| software | 512 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-05 `conductor/t-101` — Before implementing a kaizen task, re-verify its premise against current code -- validate_task_events.py already had the exact check this task asked for (since PR #851, 2026-07-19), so the real remaining work was narrower (test coverage) plus a root-cause finding (task-events written by direct push to main never hit the PR-time gate at all) that the original task note didn't anticipate.
 - 2026-08-05 `kind-robots/t-051` — A shallow kind_robots clone's default commit horizon can be too short to find a file's add/remove history even a few weeks back on a very active repo -- git fetch --unshallow before concluding a path was "never added" or "vanished without a trace" (same trap already documented for branch_janitor.py's merge-base classification).
 - 2026-08-05 `kind-robots/t-054` — Branch cleanup must use full history for reliable merge-base classification; stale unmerged branches remain review-only so automation cannot erase unique work.
 - 2026-08-05 `conductor/t-082` — A standalone FOR-SILAS confirmation task with no dependents and no gate_human/approved_by_human requirement can be closed straight from a "SENT BACK ... confirmed" Kind Robots For You note once the task's own closing instruction says so explicitly -- unlike a gate_human task, there is no ambiguity to preserve for Silas here.
@@ -89,7 +90,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-05 `conductor/t-099` — A dedicated implementation_pr field, written once at close time, is strictly stronger evidence than any post-hoc heuristic (title search or note-quoted PR reference) for reconciling roadmap state against reality -- it's self-reported by the session that actually did the work, immune to title-convention drift, and free to check (one direct PR lookup vs. a search). The one sharp edge worth remembering: a field that is present-but-malformed is not the same case as a field that is absent -- both `parse` to None, but conflating them lets corrupted roadmap data silently fall back to weaker search/note evidence and report a false "clean" instead of surfacing as unresolved. Route "truthy but unparseable" to unresolved explicitly, never through the same branch as "falsy/missing".
 - 2026-08-05 `conductor/t-098` — A note-quoted PR reference cannot distinguish a task's implementing PR from the PR whose kaizen suggestion filed the task -- both are quoted the same way in prose. A much stronger signal, and one that's basically free once the convention holds, is searching for a merged PR whose own TITLE names "<project>/<task-id>" (the convention close-out PRs already follow in practice). Prefer that self-reported, task-authored signal over parsing free-text notes whenever a tool needs to associate a task with "the PR that actually did this," and treat any weaker/inferred signal (like a note reference) as advisory, not proof, in the tool's own output.
 - 2026-08-05 `ai-art-academy/t-010` — A sibling kind_robots checkout's shallow-clone boundary can silently sit stale relative to origin/main (fetched to a different, non-overlapping depth in an earlier session), which makes `git rebase origin/main` report spurious add/add conflicts on nearly every file (no shared merge-base) even though the branches are not actually unrelated -- `git merge-base HEAD origin/main` returning empty combined with `git rev-parse --is-shallow-repository` returning true is the tell; `git fetch --unshallow origin` before rebasing resolves it cleanly. Separately, after any operation that changes the checked-out commit graph (unshallow, rebase, branch switch), re-run `nuxi prepare` before trusting a `vue-tsc --noEmit` result -- stale `.nuxt` type stubs produced a handful of spurious `useEarnedKarma`/`useStorybookMode` auto-import errors that disappeared entirely after regenerating types against the current tree.
-- 2026-08-05 `kind-robots/t-053` — When adding a new failure-signature check, search for and reuse an existing detection pattern in the codebase (scripts/lib/databaseRetry.ts's isTransientDatabaseError() and cypress/e2e/api/users.cy.ts's inline pool-timeout regex) rather than inventing a parallel one -- keeps the two detectors from drifting apart as the real error shapes change. Separately, after running a local `prisma generate` for verification, diff generated files against git before committing -- local generation can drift from what's committed even with no schema change, and that drift is easy to sweep in by accident via `git add -A`.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-05T20:45:41Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-05T20:50:55Z_
