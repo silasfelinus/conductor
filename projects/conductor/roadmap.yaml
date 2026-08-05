@@ -3093,7 +3093,7 @@ tasks:
     title: >-
       check_pr_merged_drift.py cannot tell a task's implementation PR from the PR
       it was filed out of, so it flags one and misses the other
-    status: claimed
+    status: review
     owner: worker
     stakes: reversible
     passes: 0
@@ -3143,6 +3143,35 @@ tasks:
       Add a regression test using this exact shape: a task whose note cites a
       merged PR belonging to a DIFFERENT task, and whose own implementation PR
       is referenced nowhere.
+
+      IMPLEMENTED 2026-08-05 (combining options b + c): the checker is now
+      two-pass. Pass 1 (authoritative) searches every tracked repo for a
+      merged PR whose TITLE literally names "<project>/<task-id>" -- the
+      convention close-out PRs already follow (confirmed against real data:
+      kind_robots#1474 is titled "ai-art-academy/t-010: group semantics for
+      Academy/art-styler toggle clusters"). This runs for EVERY claimed/review
+      task, not just ones a note happens to reference, closing the
+      interface-vision/t-081-style false-negative gap. Pass 2 (fallback) only
+      runs for tasks pass 1 did NOT confirm, reuses the old note-quoted-PR
+      heuristic, but reports it as an explicitly labeled "weak/unconfirmed"
+      finding (new exit code 3) rather than asserting drift -- fixing the
+      false-positive half. A task whose authoritative search call itself
+      fails is reported as `unresolved`, never silently downgraded to a weak
+      finding. `check_drift()` is the new orchestration entry point;
+      `check()`/`scan()`/`render()` keep their existing signatures (all 16
+      pre-existing tests pass unchanged) with `render()` gaining an optional
+      `weak` param. Added 10 new tests (scripts/check_pr_merged_drift.py,
+      tests/test_check_pr_merged_drift.py) covering: task-id search preferred
+      over note reference, fallback when no task-id match exists, unresolved
+      (not weak) when the search call itself fails, and clean when neither
+      pass finds evidence -- 26/26 pass. Live-ran the updated script against
+      this repo's real roadmaps: correctly found 2 in-progress tasks
+      (coloring-book/t-022, this task) and reported both `unresolved` (403,
+      the documented sandbox limitation) rather than a false "clean". Full
+      suite: 851 passed, 4 pre-existing failures in
+      test_build_digest_email_v2.py (confirmed via `git stash` unrelated to
+      this change -- a pre-existing f-string/Python-version syntax error).
+      `validate_roadmaps.py`: valid.
     claimed_by: 2026-08-05T063500Z-conductor-t098
     claimed_at: '2026-08-05T06:40:08Z'
     updated: '2026-08-05T06:40:08Z'
