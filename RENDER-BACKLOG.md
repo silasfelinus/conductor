@@ -267,3 +267,6 @@ Invalid `prisma.artImage.update()` invocation:
 Transaction.
 ## 2026-08-05T09:27:17Z | growing
 queueDepth: PENDING=3109, RUNNING=1, DONE=3681, CANCELLED=789 (all-time). oldestPending: id=4327, age=299778s (~83.3h), engine=COMFY. windowThroughput (24h): PENDING=2744. recentFailed: none.
+
+## 2026-08-05T14:30:40Z | growing
+queueDepth: PENDING=3094, RUNNING=1, DONE=3707, CANCELLED=789 (all-time). oldestPending: id=4539, age=317314s (~88.1h), engine=COMFY. windowThroughput (24h): PENDING=2755. recentFailed: none.
