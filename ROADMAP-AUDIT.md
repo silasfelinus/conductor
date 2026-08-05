@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-08-05T13:38:39.666609+00:00`
+Generated: `2026-08-05T16:34:15.083616+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **45** roadmaps, **27** active projects, **877** tasks
-- **46 ready**, **47 waiting**, **10 needs-human**, **1 claimed/review**, **763 done**
-- Findings: **3 errors**, **10 warnings**, **65 informational**
+- **45** roadmaps, **27** active projects, **878** tasks
+- **42 ready**, **47 waiting**, **11 needs-human**, **3 claimed/review**, **765 done**
+- Findings: **3 errors**, **11 warnings**, **65 informational**
 
 ## Project inventory
 
@@ -16,14 +16,14 @@ This is a conservative structural audit. It reports suspicious state; it does no
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `interface-vision` | active | software | 0 | 0 | 0 | 0 | 101 / 101 |
 | 2 | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
-| 3 | `ai-art-academy` | active | software | 3 | 1 | 0 | 0 | 52 / 56 |
+| 3 | `ai-art-academy` | active | software | 1 | 1 | 0 | 2 | 52 / 56 |
 | 4 | `coloring-book` | active | software | 0 | 9 | 1 | 1 | 26 / 37 |
 | 5 | `humboldt-scoop` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
-| 6 | `humboldt-scoop-cms` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
+| 6 | `humboldt-scoop-cms` | active | software | 0 | 0 | 1 | 0 | 11 / 12 |
 | 7 | `digital-storefront` | active | software | 0 | 0 | 0 | 0 | 33 / 33 |
 | 8 | `packmaker` | finished | software | 0 | 0 | 0 | 0 | 10 / 10 |
 | 9 | `mermaids-of-venice` | active | content | 9 | 0 | 0 | 0 | 4 / 13 |
-| 10 | `kind-robots` | active | software | 2 | 0 | 0 | 0 | 51 / 53 |
+| 10 | `kind-robots` | active | software | 2 | 0 | 0 | 0 | 52 / 54 |
 | 11 | `kindrobots-unraid` | active | software | 1 | 7 | 0 | 0 | 4 / 12 |
 | 12 | `global-ui` | finished | software | 0 | 0 | 0 | 0 | 25 / 25 |
 | 13 | `mona-salai` | paused | software | 2 | 10 | 0 | 0 | 1 / 13 |
@@ -34,7 +34,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 18 | `animation-manager` | active | software | 2 | 0 | 0 | 0 | 15 / 17 |
 | 19 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 20 | `ecosystem-map` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
-| 21 | `conductor` | active | software | 1 | 0 | 0 | 0 | 98 / 99 |
+| 21 | `conductor` | active | software | 0 | 0 | 0 | 0 | 99 / 99 |
 | 22 | `serendipity` | retired | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 23 | `taskmaster` | active | software | 1 | 0 | 0 | 0 | 2 / 3 |
 | 24 | `storybook` | active | software | 1 | 0 | 0 | 0 | 9 / 10 |
@@ -68,10 +68,11 @@ This is a conservative structural audit. It reports suspicious state; it does no
 - **ACTIVE_MISSING_PRIORITY** — `lora-ingestion`: Active project is absent from projects/priority.yaml.
 - **ACTIVE_ROADMAP_MISSING_PRIORITY** — `lora-ingestion`: Active roadmap is not selectable because it is absent from priority.yaml.
 
-### Warning (10)
+### Warning (11)
 
-- **CONTINUOUS_IMPROVEMENT_NOTE_DRIFT** — `ai-art-academy` / `t-010`: Task note mentions a lane rotation but continuous_improvement.last_run predates the task's updated timestamp — the continuous_improvement block (last_lane/next_lane/last_run/last_pr) may be stale relative to the note.
 - **STALE_IN_PROGRESS** — `coloring-book` / `t-022`: Task has remained claimed for 4 days.
+- **ACTIVE_PROJECT_ALL_DONE** — `conductor`: All tasks are done but project override remains active.
+- **ACTIVE_PROJECT_NO_OPEN_TASKS** — `conductor`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 - **ACTIVE_PROJECT_ALL_DONE** — `davinci`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `davinci`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 - **ACTIVE_PROJECT_ALL_DONE** — `digital-storefront`: All tasks are done but project override remains active.
