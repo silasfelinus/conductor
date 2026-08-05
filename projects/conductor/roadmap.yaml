@@ -2511,20 +2511,20 @@ tasks:
     milestone: m2
     title: 'FOR SILAS: confirm the home relay has restarted since t-080/PR
       #1137 — recent ComfyUI failures still show the old generic error string'
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
     note: |-
       FOR SILAS: what was found and where. conductor/t-080 (PR #1137, merged
       2026-07-26T12:22:29Z) changed `ops/home-server/relay_agent.py` so that
-      when ComfyUI fails a job, the stored error should read `"ComfyUI reported
-      a workflow error: <node/exception detail>"` instead of the bare generic
+      when ComfyUI fails a job, the stored error should read "ComfyUI reported
+      a workflow error: <node/exception detail>" instead of the bare generic
       string it used before. A live probe of kind_robots' `GET
       /api/art/queue/stats` at 2026-07-26T16:15 UTC (see RENDER-BACKLOG.md's
       first entry, and conductor/t-081 which built the tool that ran this
       probe) shows the 24 most recent exhausted-attempts ComfyUI failures,
-      including several as late as 15:27-15:33 UTC — about 3 hours after the
-      fix merged — still carry the bare old string with no colon or detail
+      including several as late as 15:27-15:33 UTC -- about 3 hours after the
+      fix merged -- still carry the bare old string with no colon or detail
       after it.
       What this does and doesn't prove: this is consistent with the home relay
       process (a long-running local Python script on your machine, not
@@ -2532,26 +2532,28 @@ tasks:
       merged, so it's still running the pre-fix code. It could also mean
       `describe_comfy_error()` found no `execution_error` message in ComfyUI's
       history entry for these particular failures (the function returns `None`
-      and falls back to the same bare string in that case) — i.e. the fix is
+      and falls back to the same bare string in that case) -- i.e. the fix is
       live but these specific jobs didn't produce the message shape it looks
       for. This session has no way to tell which of the two from here.
       TO CONFIRM: if you haven't restarted the relay process(es)
       (`relay_agent.py` / `relay_media_agent.py`) since ~12:22 UTC today,
-      restarting them will resolve this on its own — no code change needed.
+      restarting them will resolve this on its own -- no code change needed.
       If they're already running the updated code and failures still show the
       bare string, that means real ComfyUI executions aren't populating an
       `execution_error` message for these specific failures, which would be
       worth a fresh look at what `GET /history/<prompt_id>` actually returns
       for one of them while it's still fresh.
-      What unblocks when he responds: nothing else depends on this — it's a
+      What unblocks when he responds: nothing else depends on this -- it's a
       standalone confirmation. Once confirmed either way, set `status: done`
-      with a note on which case it was (or leave it — this doesn't block any
+      with a note on which case it was (or leave it -- this doesn't block any
       other task).
 
       SENT BACK by silasfelinus via Kind Robots For You. confirmed
+
+      Closed 2026-08-05 (conductor scheduled agent run): Silas confirmed via Kind Robots For You. Per this task's own closing instruction ("once confirmed either way, set status: done"), closing here -- this was a standalone confirmation with no dependents and no approved_by_human gate on it. Nothing further to build.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-03 09:29:20.456000+00:00'
+    updated: '2026-08-05T15:38:54Z'
     approved_by_human: false
 
   - id: t-083
