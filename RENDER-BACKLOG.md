@@ -118,3 +118,30 @@ queueDepth: RUNNING=1, DONE=2062, FAILED=7, CANCELLED=774 (all-time). oldestPend
 
 ## 2026-07-29T21:04:48Z | draining
 queueDepth: PENDING=6, RUNNING=1, DONE=2073, CANCELLED=774 (all-time). oldestPending: id=2621, age=226356s (~62.9h), engine=COMFY. windowThroughput (24h): PENDING=1, DONE=61. recentFailed: none.
+
+## 2026-08-05T04:07:24Z | growing
+queueDepth: PENDING=3130, RUNNING=1, DONE=3651, FAILED=51, CANCELLED=789 (all-time). oldestPending: id=4492, age=280071s (~77.8h), engine=COMFY. windowThroughput (24h): PENDING=2744, DONE=1. recentFailed (last 25): 16/25 = connection-refused to ComfyUI; 3/25 = ComfyUI image job timed out after 1800.0s; 1/25 = complete(4329) failed: HTTP 500 Database operation failed: 
+Invalid `prisma.character.update()` invocation:
+
+
+Transactio; 1/25 = complete(4328) failed: HTTP 500 Database operation failed: 
+Invalid `prisma.artImage.update()` invocation:
+
+
+Transaction; 1/25 = complete(4327) failed: HTTP 500 Database operation failed: 
+Invalid `prisma.artImage.update()` invocation:
+
+
+Transaction; 1/25 = complete(4304) failed: HTTP 500 Database operation failed: 
+Invalid `prisma.character.update()` invocation:
+
+
+Transactio; 1/25 = complete(4270) failed: HTTP 500 Database operation failed: 
+Invalid `prisma.facetArtImage.deleteMany()` invocation:
+
+
+Tr; 1/25 = complete(4265) failed: HTTP 500 Database operation failed: 
+Invalid `prisma.artImage.update()` invocation:
+
+
+Transaction.
