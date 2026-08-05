@@ -3087,3 +3087,59 @@ tasks:
     claimed_by: claude-quirky-curie-20260804-t097
     claimed_at: '2026-08-04T08:36:22Z'
     updated: '2026-08-04T08:40:43Z'
+
+  - id: t-098
+    milestone: m2
+    title: >-
+      check_pr_merged_drift.py cannot tell a task's implementation PR from the PR
+      it was filed out of, so it flags one and misses the other
+    status: ready
+    owner: worker
+    stakes: reversible
+    passes: 0
+    note: >
+      Found 2026-08-05 during an interface-vision reconciliation sweep. The
+      checker matches PR references found in a task's note. That is not
+      sufficient, because a note legitimately cites TWO kinds of PR: the one
+      that IMPLEMENTED the task, and the one whose kaizen suggestion the task
+      was FILED OUT OF. They are indistinguishable to it.
+
+      interface-vision/t-081 demonstrated both failure directions at once. Its
+      note cites kind_robots#1391 -- the t-042 PR whose "Kaizen suggestion"
+      section proposed this task. #1391 is merged, so every sweep flagged
+      t-081 as merged-PR drift (FALSE POSITIVE; the merge says nothing about
+      t-081). Meanwhile the real implementation, kind_robots#1464, was never
+      referenced in the note at all, so when it merged and the worker left the
+      task at `status: claimed`, the checker had no idea (FALSE NEGATIVE). The
+      task sat claimed-with-merged-work and only got reconciled because a
+      session happened to read the merge list by eye.
+
+      That second half is the expensive one: AGENTS.md already records this
+      exact "claimed past a merged PR" pattern biting superkate-hairstyle-ai
+      /t-017 TWICE (TALKBACK 2026-07-10 and 2026-07-16) plus /t-020. A checker
+      that silently cannot see it is worse than no checker, because sweeps
+      report "no drift found" and move on.
+
+      Direction (do not just widen the regex -- that makes the false positive
+      worse): prefer a reference the IMPLEMENTING session wrote about its own
+      work over one that is merely quoted. Options, pick or combine:
+      (a) have close_task.py / the review transition record the PR number in a
+      dedicated field (e.g. `implementation_pr:`) and have the checker key on
+      that field alone, treating free-text note references as untrusted;
+      (b) when a task is `claimed`/`review`, search the repo for a merged PR
+      whose head branch or title names the task id (kind_robots#1464's branch
+      was literally worker/interface-vision-t-081-facet-create-affordance and
+      its title began "interface-vision/t-081:"), which catches the
+      never-referenced case the note cannot;
+      (c) at minimum, stop treating a note-quoted PR as evidence about THIS
+      task unless nothing better is available, and say so in the output.
+
+      Also worth fixing while in there: the script's API lookup 403s in agent
+      sandboxes (it warns about this and tells the reader to re-check via the
+      GitHub connector), so in practice its verification arm does not run at
+      all in the sessions that most need it. Sweeps therefore see the raw
+      candidate list, false positives included, every single time.
+
+      Add a regression test using this exact shape: a task whose note cites a
+      merged PR belonging to a DIFFERENT task, and whose own implementation PR
+      is referenced nowhere.
