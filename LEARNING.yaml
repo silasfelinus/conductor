@@ -6809,3 +6809,16 @@ records:
     already had the exact check this task asked for (since PR #851, 2026-07-19), so the real remaining
     work was narrower (test coverage) plus a root-cause finding (task-events written by direct push to
     main never hit the PR-time gate at all) that the original task note didn''t anticipate.'
+- date: '2026-08-05'
+  project: ai-art-academy
+  task: t-055
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'The task''s own claim had gone stale for ~8h with no PR ever opened (found via check_pr_merged_drift.py, unrelated
+    to this task''s content) -- a session should treat a claimed-but-un-PR''d task surfaced by that sweep as reclaimable
+    once past CLAIM_TTL_MINUTES rather than assuming it''s still in flight. Also: art-prompts.yaml alone is not a reliable
+    coverage signal for delivered assets since fulfilled entries get pruned -- a live delivery check is required to tell
+    "already fine" from "needs a request," which is why verify_academy_style_preview_coverage.py checks live by default.'
