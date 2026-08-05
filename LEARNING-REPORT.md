@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-05T22:47:32Z
+Generated: 2026-08-05T22:53:39Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **527**
-- Outcomes: blocked: 13, cancelled: 1, done: 513
+- Closed tasks recorded: **528**
+- Outcomes: blocked: 13, cancelled: 1, done: 514
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -15,7 +15,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 | Project | Closed | Success rate |
 |---|---|---|
-| ai-art-academy | 59 | 98% |
+| ai-art-academy | 60 | 98% |
 | alexa-integration | 2 | 100% |
 | animation-manager | 13 | 100% |
 | animation-studio | 2 | 50% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 512 | 99% |
+| software | 513 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-05 `ai-art-academy/t-055` — The task's own claim had gone stale for ~8h with no PR ever opened (found via check_pr_merged_drift.py, unrelated to this task's content) -- a session should treat a claimed-but-un-PR'd task surfaced by that sweep as reclaimable once past CLAIM_TTL_MINUTES rather than assuming it's still in flight. Also: art-prompts.yaml alone is not a reliable coverage signal for delivered assets since fulfilled entries get pruned -- a live delivery check is required to tell "already fine" from "needs a request," which is why verify_academy_style_preview_coverage.py checks live by default.
 - 2026-08-05 `conductor/t-101` — Before implementing a kaizen task, re-verify its premise against current code -- validate_task_events.py already had the exact check this task asked for (since PR #851, 2026-07-19), so the real remaining work was narrower (test coverage) plus a root-cause finding (task-events written by direct push to main never hit the PR-time gate at all) that the original task note didn't anticipate.
 - 2026-08-05 `kind-robots/t-051` — A shallow kind_robots clone's default commit horizon can be too short to find a file's add/remove history even a few weeks back on a very active repo -- git fetch --unshallow before concluding a path was "never added" or "vanished without a trace" (same trap already documented for branch_janitor.py's merge-base classification).
 - 2026-08-05 `kind-robots/t-054` — Branch cleanup must use full history for reliable merge-base classification; stale unmerged branches remain review-only so automation cannot erase unique work.
@@ -89,7 +90,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-05 `conductor/t-099` — Adding a "strongest evidence" field/tier to a multi-pass classifier isn't complete until the code path that decides "does this field apply" also distinguishes absent-and-should-fall-back from present-but-corrupt-and-should-not. A single parse_x() -> Optional[T] helper collapses both into None, which reads fine until a caller uses "is None" as the fallback trigger -- a malformed value then silently gets treated as if the stronger evidence were never there at all, quietly replaced by a weaker heuristic instead of surfacing. Caught by external review before merge (PR #1737) rather than by the implementing session's own test pass, since the tests written alongside the feature covered field-present/field-absent but not field-present-but-malformed -- a reminder to enumerate all three states explicitly whenever a field is optional AND has a shape to validate, not just "present vs. absent."
 - 2026-08-05 `conductor/t-099` — A dedicated implementation_pr field, written once at close time, is strictly stronger evidence than any post-hoc heuristic (title search or note-quoted PR reference) for reconciling roadmap state against reality -- it's self-reported by the session that actually did the work, immune to title-convention drift, and free to check (one direct PR lookup vs. a search). The one sharp edge worth remembering: a field that is present-but-malformed is not the same case as a field that is absent -- both `parse` to None, but conflating them lets corrupted roadmap data silently fall back to weaker search/note evidence and report a false "clean" instead of surfacing as unresolved. Route "truthy but unparseable" to unresolved explicitly, never through the same branch as "falsy/missing".
 - 2026-08-05 `conductor/t-098` — A note-quoted PR reference cannot distinguish a task's implementing PR from the PR whose kaizen suggestion filed the task -- both are quoted the same way in prose. A much stronger signal, and one that's basically free once the convention holds, is searching for a merged PR whose own TITLE names "<project>/<task-id>" (the convention close-out PRs already follow in practice). Prefer that self-reported, task-authored signal over parsing free-text notes whenever a tool needs to associate a task with "the PR that actually did this," and treat any weaker/inferred signal (like a note reference) as advisory, not proof, in the tool's own output.
-- 2026-08-05 `ai-art-academy/t-010` — A sibling kind_robots checkout's shallow-clone boundary can silently sit stale relative to origin/main (fetched to a different, non-overlapping depth in an earlier session), which makes `git rebase origin/main` report spurious add/add conflicts on nearly every file (no shared merge-base) even though the branches are not actually unrelated -- `git merge-base HEAD origin/main` returning empty combined with `git rev-parse --is-shallow-repository` returning true is the tell; `git fetch --unshallow origin` before rebasing resolves it cleanly. Separately, after any operation that changes the checked-out commit graph (unshallow, rebase, branch switch), re-run `nuxi prepare` before trusting a `vue-tsc --noEmit` result -- stale `.nuxt` type stubs produced a handful of spurious `useEarnedKarma`/`useStorybookMode` auto-import errors that disappeared entirely after regenerating types against the current tree.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-05T22:47:32Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-05T22:53:39Z_
