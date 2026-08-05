@@ -6662,3 +6662,24 @@ records:
     generated files against git before committing -- local generation can drift from what's
     committed even with no schema change, and that drift is easy to sweep in by accident via
     `git add -A`.
+- date: '2026-08-05'
+  project: ai-art-academy
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A sibling kind_robots checkout's shallow-clone boundary can silently sit stale
+    relative to origin/main (fetched to a different, non-overlapping depth in an earlier
+    session), which makes `git rebase origin/main` report spurious add/add conflicts on
+    nearly every file (no shared merge-base) even though the branches are not actually
+    unrelated -- `git merge-base HEAD origin/main` returning empty combined with
+    `git rev-parse --is-shallow-repository` returning true is the tell; `git fetch
+    --unshallow origin` before rebasing resolves it cleanly. Separately, after any
+    operation that changes the checked-out commit graph (unshallow, rebase, branch
+    switch), re-run `nuxi prepare` before trusting a `vue-tsc --noEmit` result -- stale
+    `.nuxt` type stubs produced a handful of spurious `useEarnedKarma`/`useStorybookMode`
+    auto-import errors that disappeared entirely after regenerating types against the
+    current tree.
