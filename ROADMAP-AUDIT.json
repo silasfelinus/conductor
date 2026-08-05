@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-08-03T18:36:09.435208+00:00",
+  "generated_at": "2026-08-05T02:29:05.125396+00:00",
   "summary": {
     "roadmaps": 45,
     "active_projects": 27,
-    "tasks": 848,
-    "ready": 62,
+    "tasks": 874,
+    "ready": 48,
     "waiting": 47,
-    "needs_human": 21,
-    "in_progress": 3,
-    "done": 705,
+    "needs_human": 10,
+    "in_progress": 2,
+    "done": 757,
     "errors": 3,
-    "warnings": 6,
-    "info": 64
+    "warnings": 7,
+    "info": 65
   },
   "projects": [
     {
@@ -20,19 +20,17 @@
       "override_status": "active",
       "priority_index": 1,
       "autonomous": false,
-      "task_count": 77,
+      "task_count": 101,
       "counts": {
-        "done": 52,
-        "needs-human": 1,
-        "ready": 24
+        "done": 101
       },
-      "open_count": 25,
-      "human_attention": 1,
-      "ready": 24,
+      "open_count": 0,
+      "human_attention": 0,
+      "ready": 0,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 52
+      "done": 101
     },
     {
       "slug": "challenge-center",
@@ -121,11 +119,11 @@
       "task_count": 12,
       "counts": {
         "done": 11,
-        "needs-human": 1
+        "ready": 1
       },
       "open_count": 1,
-      "human_attention": 1,
-      "ready": 0,
+      "human_attention": 0,
+      "ready": 1,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
@@ -177,12 +175,11 @@
       "task_count": 13,
       "counts": {
         "done": 4,
-        "needs-human": 8,
-        "ready": 1
+        "ready": 9
       },
       "open_count": 9,
-      "human_attention": 8,
-      "ready": 1,
+      "human_attention": 0,
+      "ready": 9,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
@@ -403,20 +400,18 @@
       "override_status": "active",
       "priority_index": 21,
       "autonomous": false,
-      "task_count": 96,
+      "task_count": 98,
       "counts": {
-        "claimed": 1,
-        "done": 93,
-        "needs-human": 1,
-        "ready": 1
+        "done": 96,
+        "ready": 2
       },
-      "open_count": 3,
-      "human_attention": 1,
-      "ready": 1,
+      "open_count": 2,
+      "human_attention": 0,
+      "ready": 2,
       "waiting": 0,
-      "claimed": 1,
+      "claimed": 0,
       "review": 0,
-      "done": 93
+      "done": 96
     },
     {
       "slug": "serendipity",
@@ -520,12 +515,12 @@
       "task_count": 7,
       "counts": {
         "done": 3,
-        "ready": 1,
+        "needs-human": 1,
         "waiting": 3
       },
       "open_count": 4,
-      "human_attention": 0,
-      "ready": 1,
+      "human_attention": 1,
+      "ready": 0,
       "waiting": 3,
       "claimed": 0,
       "review": 0,
@@ -541,12 +536,11 @@
       "counts": {
         "blocked": 7,
         "done": 1,
-        "needs-human": 1,
-        "ready": 1
+        "ready": 2
       },
       "open_count": 9,
-      "human_attention": 1,
-      "ready": 1,
+      "human_attention": 0,
+      "ready": 2,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
@@ -901,8 +895,8 @@
     {
       "severity": "warning",
       "code": "STALE_IN_PROGRESS",
-      "project": "ai-art-academy",
-      "task": "t-010",
+      "project": "coloring-book",
+      "task": "t-022",
       "message": "Task has remained claimed for 3 days."
     },
     {
@@ -921,10 +915,17 @@
     },
     {
       "severity": "warning",
-      "code": "SOFT_NEEDS_HUMAN",
+      "code": "ACTIVE_PROJECT_ALL_DONE",
       "project": "interface-vision",
-      "task": "t-074",
-      "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
+      "task": null,
+      "message": "All tasks are done but project override remains active."
+    },
+    {
+      "severity": "warning",
+      "code": "ACTIVE_PROJECT_NO_OPEN_TASKS",
+      "project": "interface-vision",
+      "task": null,
+      "message": "Active project has no open tasks; mark finished/paused or add an intentional recurring task."
     },
     {
       "severity": "warning",
@@ -1201,10 +1202,10 @@
     },
     {
       "severity": "info",
-      "code": "NEEDS_HUMAN_NOTE_FORMAT",
+      "code": "APPROVAL_WITHOUT_GATE",
       "project": "interface-vision",
       "task": "t-074",
-      "message": "needs-human note does not use the AGENTS.md FOR SILAS action format."
+      "message": "approved_by_human is set on a task that is not human-gated."
     },
     {
       "severity": "info",
@@ -1261,6 +1262,13 @@
       "project": "mona-salai",
       "task": null,
       "message": "Inactive project retains 2 ready task(s); harmless but misleading in generated status."
+    },
+    {
+      "severity": "info",
+      "code": "NEEDS_HUMAN_NOTE_FORMAT",
+      "project": "mural-design",
+      "task": "t-002",
+      "message": "needs-human note does not use the AGENTS.md FOR SILAS action format."
     },
     {
       "severity": "info",
