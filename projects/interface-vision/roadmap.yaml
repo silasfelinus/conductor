@@ -2275,7 +2275,7 @@ tasks:
   - id: t-079
     milestone: m2
     title: 'Wire entityArt.ts onto EntityArtImage joins and retire the ArtImage.path prefix-string history scheme'
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-028
@@ -2289,9 +2289,10 @@ tasks:
 
 
       Released without code changes. The connector can inspect the required entityArt.ts ranges but only supports whole-file replacement for edits; this 900+ line service cannot be safely reconstructed from abbreviated responses. The delete-endpoint correctness risk was verified, but implementation needs a local checkout or a connector patch operation. Rotating to another eligible task rather than leaving a false claim.
-    claimed_by: 2026-08-04T221457Z-interface-vision-t-079-q5m8
-    claimed_at: '2026-08-04T22:14:57Z'
-    updated: '2026-08-04T22:21:00Z'
+    claimed_by: 2026-08-05T005500Z-interface-vision-t-079-w3rz
+    claimed_at: '2026-08-05T00:52:19Z'
+    updated: '2026-08-05T00:52:19Z'
+    owner: worker
 
   - id: t-080
     milestone: m2
