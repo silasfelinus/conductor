@@ -1,0 +1,11 @@
+version: 1
+project: ai-art-academy
+task: t-010
+operation: rearm
+owner: worker
+session: 2026-08-05T061335Z-ai-art-academy-t-010-r7m4
+updated: '2026-08-05T06:25:00Z'
+note: >-
+  Lane 2 roadmap accuracy audit merged in conductor PR #1732 (squash af511942). The audit reconciles t-010's structured rotation state with t-044's latest live evidence, records the inline-note/run-log drift, and recommends lane 3 inspiration assets next without adding ArtJobs while the shared render queue is unhealthy.
+learning: >-
+  For recurring tasks with a structured continuous_improvement mapping, treat last_lane/next_lane as canonical when prose drifts, and keep operational backend incidents separate from the feature defect they temporarily prevent verifying.
