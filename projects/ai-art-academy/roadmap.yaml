@@ -502,7 +502,7 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
@@ -510,23 +510,12 @@ tasks:
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
-      Lane 2 (2026-08-05): roadmap-accuracy audit — clean, no drift found (milestones, curriculum-candidates promotion, curriculum-outline.md/academyStyles.ts sync all consistent). Re-checked t-044's stuck live-verify jobs and flagged two already-logged, still-unresolved production incidents (render-queue backlog, kindrobots.org apex-domain 404) to Silas. See run_log for full detail.
-
-      Lane 3 inspiration-assets pass complete on branch worker/ai-art-academy-t-010-20260805t131445z-k7q9: added a controlled four-movement remix set covering Ukiyo-e, Romanticism, Pointillism, and Bauhaus with prompts, failure criteria, blind comparison, and reproducibility gates.
-
-      Merged conductor PR #1750 for lane 3 inspiration assets. Added line-light-and-structure-four-movements.md, a controlled fixed-composition remix set for Ukiyo-e, Romanticism, Pointillism, and Bauhaus with production prompts, failure criteria, blind recognition questions, metadata requirements, and promotion gates. No ArtJobs were queued because the existing render relay backlog remains an already-documented operational incident. Rotate next to lane 4 curriculum depth.
-      Learning (this recurring task never reaches done/blocked, so `learning` cannot accompany this rearm event per task-events/README.md; folded into note instead): fixed-composition comparison sets make style differences testable — holding subject, camera, and object inventory stable exposes whether a remix changed visual grammar or merely replaced the scene.
-
-      Lane 4 curriculum-depth implementation is complete on worker/ai-art-academy-t-010-20260805t141820z-n4v7: a finalized Harlem Renaissance lesson with movement-level remixing, rights boundaries, patronage framing, exercises, and failure corrections.
-
-      Merged conductor PR #1752 for lane 4 curriculum depth. Added a finalized Harlem Renaissance lesson that separates historical teaching from image-reuse rights and generation policy, uses the four verified CC0 Winold Reiss portraits only as contextual evidence about patronage and circulation, keeps generation movement-level and artist-anchor-free, and adds exercises plus concrete corrections for stereotype and identity drift. Rotate next to lane 1 front-end polish.
-
-      Lane 1 front-end polish complete: kind_robots PR #1495 fixed components/art/image-card.vue's Retry button being gated behind showDebug (never set true anywhere in the repo, so unreachable in practice) — a transient image-load failure permanently pinned any card to the fallback image with no recovery path for real users across every gallery surface using this component. Decoupled the Retry button from showDebug so it now shows whenever imageLoadFailed is true. Verified clean via eslint/prettier/vue-tsc plus all 16 kind_robots CI checks (including the layout-contract audit) green; merged by the Reviewer session. No companion conductor PR needed this cycle. Rotate next to lane 2 roadmap-accuracy audit.
+      Lane 2 (2026-08-05T16:27Z): roadmap-accuracy audit — clean, no drift found in task state (milestones, curriculum-candidates promotion, curriculum-outline.md/academyStyles.ts sync all consistent, t-044 unchanged/still-degraded relay). Found and fixed real note-bloat: lanes 3/4/1 had accumulated as raw prose in this note instead of `run_log`; moved to `run_log`, restored this note to short form, corrected the `continuous_improvement` block to match. See `run_log` for full detail of this cycle and the three backfilled ones.
     continuous_improvement:
       last_lane: 2  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
       next_lane: 3
-      last_run: '2026-08-05T12:41:00Z'
-      last_pr: 'conductor PR #1749'
+      last_run: '2026-08-05T16:27:54Z'
+      last_pr: 'conductor PR (this cycle)'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
     implementation_pr: 'silasfelinus/kind_robots#1495'
     owner: worker

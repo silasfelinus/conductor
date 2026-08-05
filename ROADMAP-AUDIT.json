@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-08-05T13:38:39.666609+00:00",
+  "generated_at": "2026-08-05T16:34:08.605177+00:00",
   "summary": {
     "roadmaps": 45,
     "active_projects": 27,
-    "tasks": 877,
-    "ready": 46,
+    "tasks": 878,
+    "ready": 42,
     "waiting": 47,
-    "needs_human": 10,
-    "in_progress": 1,
-    "done": 763,
+    "needs_human": 11,
+    "in_progress": 3,
+    "done": 765,
     "errors": 3,
-    "warnings": 10,
+    "warnings": 11,
     "info": 65
   },
   "projects": [
@@ -58,15 +58,16 @@
       "autonomous": true,
       "task_count": 56,
       "counts": {
+        "claimed": 2,
         "done": 52,
-        "ready": 3,
+        "ready": 1,
         "waiting": 1
       },
       "open_count": 4,
       "human_attention": 0,
-      "ready": 3,
+      "ready": 1,
       "waiting": 1,
-      "claimed": 0,
+      "claimed": 2,
       "review": 0,
       "done": 52
     },
@@ -118,11 +119,11 @@
       "task_count": 12,
       "counts": {
         "done": 11,
-        "ready": 1
+        "needs-human": 1
       },
       "open_count": 1,
-      "human_attention": 0,
-      "ready": 1,
+      "human_attention": 1,
+      "ready": 0,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
@@ -189,9 +190,9 @@
       "override_status": "active",
       "priority_index": 10,
       "autonomous": false,
-      "task_count": 53,
+      "task_count": 54,
       "counts": {
-        "done": 51,
+        "done": 52,
         "ready": 2
       },
       "open_count": 2,
@@ -200,7 +201,7 @@
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 51
+      "done": 52
     },
     {
       "slug": "kindrobots-unraid",
@@ -400,16 +401,15 @@
       "autonomous": false,
       "task_count": 99,
       "counts": {
-        "done": 98,
-        "ready": 1
+        "done": 99
       },
-      "open_count": 1,
+      "open_count": 0,
       "human_attention": 0,
-      "ready": 1,
+      "ready": 0,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 98
+      "done": 99
     },
     {
       "slug": "serendipity",
@@ -892,17 +892,24 @@
     },
     {
       "severity": "warning",
-      "code": "CONTINUOUS_IMPROVEMENT_NOTE_DRIFT",
-      "project": "ai-art-academy",
-      "task": "t-010",
-      "message": "Task note mentions a lane rotation but continuous_improvement.last_run predates the task's updated timestamp \u2014 the continuous_improvement block (last_lane/next_lane/last_run/last_pr) may be stale relative to the note."
-    },
-    {
-      "severity": "warning",
       "code": "STALE_IN_PROGRESS",
       "project": "coloring-book",
       "task": "t-022",
       "message": "Task has remained claimed for 4 days."
+    },
+    {
+      "severity": "warning",
+      "code": "ACTIVE_PROJECT_ALL_DONE",
+      "project": "conductor",
+      "task": null,
+      "message": "All tasks are done but project override remains active."
+    },
+    {
+      "severity": "warning",
+      "code": "ACTIVE_PROJECT_NO_OPEN_TASKS",
+      "project": "conductor",
+      "task": null,
+      "message": "Active project has no open tasks; mark finished/paused or add an intentional recurring task."
     },
     {
       "severity": "warning",
