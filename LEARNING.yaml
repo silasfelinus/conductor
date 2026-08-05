@@ -6719,3 +6719,24 @@ records:
     silently fall back to weaker search/note evidence and report a false "clean" instead
     of surfacing as unresolved. Route "truthy but unparseable" to unresolved explicitly,
     never through the same branch as "falsy/missing".
+- date: 2026-08-05
+  project: conductor
+  task: t-099
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Adding a "strongest evidence" field/tier to a multi-pass classifier isn't complete
+    until the code path that decides "does this field apply" also distinguishes
+    absent-and-should-fall-back from present-but-corrupt-and-should-not. A single
+    parse_x() -> Optional[T] helper collapses both into None, which reads fine until a
+    caller uses "is None" as the fallback trigger -- a malformed value then silently
+    gets treated as if the stronger evidence were never there at all, quietly replaced
+    by a weaker heuristic instead of surfacing. Caught by external review before merge
+    (PR #1737) rather than by the implementing session's own test pass, since the tests
+    written alongside the feature covered field-present/field-absent but not
+    field-present-but-malformed -- a reminder to enumerate all three states explicitly
+    whenever a field is optional AND has a shape to validate, not just "present vs.
+    absent."
