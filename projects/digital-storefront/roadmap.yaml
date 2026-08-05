@@ -1105,8 +1105,8 @@ tasks:
 - id: t-036
   milestone: m1
   title: "Correct t-031's note — the general cart checkout handler lives at server/api/stripe/checkout.post.ts, not server/api/store/checkout.post.ts"
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >
@@ -1122,4 +1122,7 @@ tasks:
     (the file exists and works, just under a different path than
     documented); this is a small doc-accuracy fix so a future reader
     searching server/api/store/ for this handler doesn't come up empty.
+  claimed_by: claude-scheduled-20260805T032756Z-ds-t036
+  claimed_at: '2026-08-05T03:27:57Z'
+  updated: '2026-08-05T03:27:57Z'
 
