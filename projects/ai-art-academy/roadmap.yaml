@@ -1697,6 +1697,27 @@ tasks:
       later lane-3 cycle reliably caught the gap except by re-diffing live delivery against
       every slug from scratch.
 
+  - id: t-056
+    milestone: m6
+    title: 'Add scripts/list_curriculum_coverage.py to print existing academy movement coverage in one shot'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-05T11:34:28Z'
+    note: >
+      Kaizen from conductor PR #1745 (2026-08-05, ai-art-academy/t-010 lane 4, Spanish
+      Golden Age Painting). Every lane-4 cycle so far has independently re-derived "check
+      curriculum-outline.md's existing sections and academyStyles.ts's existing slugs for
+      coverage gaps" from scratch by prose/manual grep, rather than a shared tool. Add a
+      small script that parses `docs/curriculum-outline.md`'s machine-readable skeleton
+      YAML block and prints each movement's slug/name/era/region in one shot (grouped or
+      sortable by region/era), so a future lane-4 session can scan for gaps (e.g. an
+      underrepresented region, an era overlap worth double-checking before adding a new
+      entry) in seconds instead of re-grepping `## N.` headers and skeleton entries by
+      hand. Read-only, no roadmap/YAML mutation; a plain reporting utility alongside
+      `scripts/validate_roadmaps.py`/`scripts/audit_roadmaps.py`.
+
       Fix: when a lane-4 cycle syncs a new curriculum entry into `academyStyles.ts`, queue
       its `kind-robots-academy-style-preview-<slug>` request in `art-prompts.yaml` in the
       *same* cycle (status: pending is fine if the render queue is unhealthy at sync time --
