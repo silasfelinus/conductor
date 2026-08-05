@@ -935,7 +935,9 @@ tasks:
   depends_on: t-030
   note: >
     Kaizen from t-030 (kind_robots PR #1004, merged 2026-07-26). The general
-    multi-item cart checkout (`server/api/store/checkout.post.ts`) sets Stripe
+    multi-item cart checkout (`server/api/stripe/checkout.post.ts` --
+    corrected 2026-08-05 per t-036; this note originally said
+    `server/api/store/checkout.post.ts`, which does not exist) sets Stripe
     session `metadata.kind: 'giftshop_checkout'`, which the webhook's
     `handleProductPurchase` dispatch doesn't match against any branch -- so a
     cart purchase of a `print`/`shirt`/`sticker`/`mug` today succeeds at
@@ -1105,7 +1107,7 @@ tasks:
 - id: t-036
   milestone: m1
   title: "Correct t-031's note — the general cart checkout handler lives at server/api/stripe/checkout.post.ts, not server/api/store/checkout.post.ts"
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
@@ -1122,6 +1124,13 @@ tasks:
     (the file exists and works, just under a different path than
     documented); this is a small doc-accuracy fix so a future reader
     searching server/api/store/ for this handler doesn't come up empty.
+
+    DONE 2026-08-05 (claude-scheduled-20260805T032756Z-ds-t036): corrected
+    t-031's note in place -- the one wrong `server/api/store/checkout.post.ts`
+    reference (t-031's title never contained the wrong path) now reads
+    `server/api/stripe/checkout.post.ts`, with a parenthetical noting the
+    correction and what the note originally said, so the history stays
+    legible. No code change; doc-accuracy only, exactly as scoped.
   claimed_by: claude-scheduled-20260805T032756Z-ds-t036
   claimed_at: '2026-08-05T03:27:57Z'
   updated: '2026-08-05T03:27:57Z'
