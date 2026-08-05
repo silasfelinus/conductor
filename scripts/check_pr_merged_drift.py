@@ -21,16 +21,26 @@ merges, flagging a task that never moved) and a false negative (the real
 implementation PR, never mentioned in the note, merges silently and the
 checker has nothing to say). interface-vision/t-081 hit both at once.
 
-Two-pass design:
-  1. AUTHORITATIVE — search every tracked repo for a merged PR whose TITLE
-     names this exact "<project>/<task-id>" (the convention every close-out
-     PR already follows, e.g. "ai-art-academy/t-010: add role=group..."). A
-     hit here is strong, task-authored evidence and is reported as a
-     high-confidence finding.
-  2. FALLBACK (weak) — only for tasks the authoritative pass didn't confirm:
-     fall back to the old note-quoted-PR-reference heuristic, but label the
-     result explicitly as weak/unconfirmed (it may be the kaizen-filing PR,
-     not the implementation) rather than asserting drift.
+Three-pass design (conductor/t-099 added pass 0):
+  0. FIELD (strongest) — if the task carries a dedicated `implementation_pr`
+     roadmap field (written by close_task.py's `--implementation-pr`, e.g.
+     "silasfelinus/kind_robots#1464"), check that exact PR directly. This is
+     evidence the implementing session itself recorded, not a heuristic --
+     stronger than a title-text search and immune to a close-out PR whose
+     title doesn't follow the "<project>/<task-id>:" convention. A task with
+     this field set skips the title-search pass entirely (it's already the
+     authoritative answer); a failed lookup lands in `unresolved`, same as a
+     failed search.
+  1. AUTHORITATIVE (title search) — for tasks with no `implementation_pr`
+     field, search every tracked repo for a merged PR whose TITLE names this
+     exact "<project>/<task-id>" (the convention every close-out PR already
+     follows, e.g. "ai-art-academy/t-010: add role=group..."). A hit here is
+     strong, task-authored evidence and is reported as a high-confidence
+     finding.
+  2. FALLBACK (weak) — only for tasks neither pass above confirmed: fall back
+     to the old note-quoted-PR-reference heuristic, but label the result
+     explicitly as weak/unconfirmed (it may be the kaizen-filing PR, not the
+     implementation) rather than asserting drift.
 
 Read-only: never edits a roadmap. Paused, retired, and finished projects are
 excluded by default according to project-overrides.yaml; pass
@@ -47,7 +57,8 @@ unauthenticated rate limit than the REST PR-lookup endpoint).
 
 Exit codes:
   0 = verified clean (no high-confidence or weak findings, nothing unresolved)
-  1 = high-confidence drift found (task-id-named PR already merged)
+  1 = high-confidence drift found (implementation_pr field or task-id-named
+      PR already merged)
   2 = could not fully verify (a search or PR lookup call failed) — a clean
       read here would be a false "all good", so this outranks a bare weak
       signal below
@@ -98,6 +109,26 @@ ALL_TRACKED_REPOS = sorted(set(REPO_ALIASES.values()))
 PR_REF_RE = re.compile(
     r"\b(" + "|".join(re.escape(a) for a in REPO_ALIASES) + r")\s+PR\s+#(\d+)\b"
 )
+
+# Matches close_task.py's `--implementation-pr` format, e.g.
+# "silasfelinus/kind_robots#1464". Deliberately not restricted to REPO_ALIASES --
+# the field is free-form owner/repo, unlike the note-reference heuristic above
+# which only recognizes known short aliases.
+IMPLEMENTATION_PR_RE = re.compile(r"^([\w.-]+/[\w.-]+)#(\d+)$")
+
+
+def parse_implementation_pr(value: Any) -> tuple[str, int] | None:
+    """Parse a task's `implementation_pr` field into (repo, number).
+
+    Returns None if the field is absent, blank, or doesn't match the
+    "owner/repo#number" shape close_task.py writes.
+    """
+    if not value:
+        return None
+    match = IMPLEMENTATION_PR_RE.match(str(value).strip())
+    if not match:
+        return None
+    return match.group(1), int(match.group(2))
 
 
 def load_yaml(path: Path) -> dict[str, Any]:
@@ -208,6 +239,7 @@ def scan_in_progress_tasks(
             "task_id": task.get("id"),
             "title": task.get("title"),
             "status": task.get("status"),
+            "implementation_pr": task.get("implementation_pr"),
         })
     return tasks
 
@@ -322,15 +354,18 @@ def check_drift(
     include_inactive: bool = False,
     token: str | None = None,
 ) -> dict[str, list[dict[str, Any]]]:
-    """Run both passes and return {"high": [...], "weak": [...], "unresolved": [...]}.
+    """Run all three passes and return {"high": [...], "weak": [...], "unresolved": [...]}.
 
-    `high` — task-id-named merged PR confirmed (authoritative).
-    `weak` — no authoritative confirmation, but a note-quoted PR is merged
+    `high` — either a task's own `implementation_pr` field (strongest,
+      conductor/t-099) or a task-id-named merged PR (authoritative title
+      search) confirmed merged.
+    `weak` — neither of the above confirmed, but a note-quoted PR is merged
       (may be the kaizen-filing PR, not the implementation — say so, don't
       assert drift).
-    `unresolved` — a search or PR-lookup call itself failed for a task with
-      no other confirmation either way; a clean result must not be reported
-      for it.
+    `unresolved` — a field lookup, search, or PR-lookup call itself failed
+      for a task with no other confirmation either way (including a task
+      whose `implementation_pr` field is present but malformed — see below);
+      a clean result must not be reported for it.
     """
     all_tasks = scan_in_progress_tasks(projects_dir, overrides_path, include_inactive)
     note_candidates = scan(projects_dir, overrides_path, include_inactive)
@@ -338,9 +373,52 @@ def check_drift(
     for candidate in note_candidates:
         note_by_task.setdefault((candidate["project"], candidate["task_id"]), []).append(candidate)
 
+    # Pass 0 (strongest): a task carrying a dedicated `implementation_pr`
+    # field is checked directly against that PR and never falls through to
+    # the title-search pass -- the field is itself stronger, task-authored
+    # evidence than a search heuristic, so a task that has one is either
+    # confirmed or unresolved here, not silently re-evaluated by pass 1.
+    #
+    # Absence and malformation are NOT the same thing (review finding on
+    # PR #1737, conductor/t-099): `parse_implementation_pr` returns None for
+    # both, so testing that alone would send a task with a corrupted field
+    # (e.g. "kind_robots PR #1464" -- missing the owner, wrong separator)
+    # into the same bucket as a task that never had the field at all, and it
+    # would silently fall back to weaker search/note evidence -- exactly the
+    # false "clean" this field was added to prevent. A present-but-malformed
+    # value is therefore routed to `unresolved` directly and never reaches
+    # `search_tasks`, so it cannot be masked by a search or note-reference
+    # hit either.
+    field_candidates = []
+    malformed_field_tasks = []
+    search_tasks = []
+    for task in all_tasks:
+        raw_implementation_pr = task.get("implementation_pr")
+        if not raw_implementation_pr:
+            search_tasks.append(task)
+            continue
+        parsed = parse_implementation_pr(raw_implementation_pr)
+        if parsed is None:
+            malformed_field_tasks.append({
+                **task,
+                "implementation_pr": raw_implementation_pr,
+            })
+            continue
+        repo, number = parsed
+        field_candidates.append({**task, "repo": repo, "pr_number": number})
+
+    field_findings, field_unresolved = check(field_candidates, token)
+    for finding in field_findings:
+        finding["confidence"] = "high"
+        finding["source"] = "implementation-pr-field"
+
+    confirmed_keys = {(f["project"], f["task_id"]) for f in field_findings}
+
+    # Pass 1 (authoritative title search): only for tasks with no usable
+    # implementation_pr field.
     search_candidates = []
     search_failed_tasks = []
-    for task in all_tasks:
+    for task in search_tasks:
         results = gh_search_task_prs(
             ALL_TRACKED_REPOS, task["project"], task["task_id"], token
         )
@@ -354,18 +432,19 @@ def check_drift(
                 "pr_number": result["number"],
             })
 
-    high_findings, high_unresolved = check(search_candidates, token)
-    for finding in high_findings:
+    search_findings, search_unresolved = check(search_candidates, token)
+    for finding in search_findings:
         finding["confidence"] = "high"
         finding["source"] = "task-id-search"
 
-    confirmed_keys = {(f["project"], f["task_id"]) for f in high_findings}
+    high_findings = field_findings + search_findings
+    confirmed_keys |= {(f["project"], f["task_id"]) for f in search_findings}
 
-    # Fallback pass: only for tasks the authoritative pass did not confirm,
-    # AND whose authoritative search actually completed (a task whose search
-    # call itself failed belongs in `unresolved`, not a downgraded "weak"
-    # finding presented as if the authoritative pass came back empty).
-    searched_keys = {(t["project"], t["task_id"]) for t in all_tasks} - {
+    # Pass 2 (fallback, weak): only for title-search tasks neither pass above
+    # confirmed, AND whose title search actually completed (a task whose
+    # search call itself failed belongs in `unresolved`, not a downgraded
+    # "weak" finding presented as if the authoritative pass came back empty).
+    searched_keys = {(t["project"], t["task_id"]) for t in search_tasks} - {
         (t["project"], t["task_id"]) for t in search_failed_tasks
     }
     fallback_candidates = [
@@ -378,7 +457,13 @@ def check_drift(
         finding["confidence"] = "low"
         finding["source"] = "note-reference"
 
-    unresolved = list(search_failed_tasks) + high_unresolved + weak_unresolved
+    unresolved = (
+        malformed_field_tasks
+        + field_unresolved
+        + list(search_failed_tasks)
+        + search_unresolved
+        + weak_unresolved
+    )
     return {"high": high_findings, "weak": weak_findings, "unresolved": unresolved}
 
 
@@ -399,11 +484,17 @@ def render(
             f"re-check the unresolved task(s) via the GitHub connector instead:"
         )
         for candidate in unresolved:
-            ref = (
-                f"{candidate['repo']}#{candidate['pr_number']}"
-                if "repo" in candidate and "pr_number" in candidate
-                else "task-id search"
-            )
+            # Order matters: a candidate that made it to an actual PR lookup
+            # (field-based or search-based) carries repo/pr_number even if
+            # that lookup then failed -- check that first so a *malformed*
+            # implementation_pr (never parsed into repo/pr_number at all)
+            # doesn't get mislabeled the same way further down.
+            if "repo" in candidate and "pr_number" in candidate:
+                ref = f"{candidate['repo']}#{candidate['pr_number']}"
+            elif candidate.get("implementation_pr"):
+                ref = f"malformed implementation_pr field: {candidate['implementation_pr']!r}"
+            else:
+                ref = "task-id search"
             lines.append(f"    {candidate['project']}/{candidate['task_id']} -> {ref}")
         lines.append("")
     if findings:

@@ -6,6 +6,7 @@ the part most likely to silently break (see conductor/t-040, t-091).
 """
 
 import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -165,6 +166,90 @@ def test_missing_task_raises_close_error(demo_repo):
         ct.close("demo", "t-999", "done", "session-b", None, {}, dry_run=False)
     assert excinfo.value.code == 1
     assert "not found" in str(excinfo.value)
+
+
+# --------------------------------------------------------------------------- #
+# --implementation-pr (conductor/t-099)
+# --------------------------------------------------------------------------- #
+
+
+def test_implementation_pr_field_is_applied_via_close(demo_repo):
+    """The generic extra_fields path (what --implementation-pr feeds into)
+    writes the dedicated `implementation_pr` field -- this exercises the
+    set_task_field.py ALLOWED_FIELDS addition, not just the CLI plumbing."""
+    ct.close(
+        "demo",
+        "t-001",
+        "done",
+        "session-b",
+        "close/demo-t-001-session-b",
+        {"implementation_pr": "silasfelinus/kind_robots#1464"},
+        dry_run=False,
+    )
+
+    run(["git", "fetch", "-q", "origin"], cwd=demo_repo)
+    doc = yaml.safe_load(
+        run(
+            ["git", "show", "origin/close/demo-t-001-session-b:projects/demo/roadmap.yaml"],
+            cwd=demo_repo,
+        )
+    )
+    assert doc["tasks"][0]["implementation_pr"] == "silasfelinus/kind_robots#1464"
+
+
+def test_main_rejects_malformed_implementation_pr(demo_repo, monkeypatch, capsys):
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "close_task.py",
+            "demo",
+            "t-001",
+            "done",
+            "--session",
+            "session-b",
+            "--implementation-pr",
+            "not-a-valid-ref",
+        ],
+    )
+    exit_code = ct.main()
+    assert exit_code == 1
+    assert "must look like owner/repo#123" in capsys.readouterr().err
+
+    # Nothing was pushed -- a rejected flag must not leave a partial close-out.
+    run(["git", "fetch", "-q", "origin"], cwd=demo_repo)
+    branches = run(["git", "branch", "-r"], cwd=demo_repo)
+    assert "close/" not in branches
+
+
+def test_main_records_valid_implementation_pr_end_to_end(demo_repo, monkeypatch):
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "close_task.py",
+            "demo",
+            "t-001",
+            "done",
+            "--session",
+            "session-b",
+            "--branch",
+            "close/demo-t-001-session-b",
+            "--implementation-pr",
+            "silasfelinus/kind_robots#1464",
+        ],
+    )
+    exit_code = ct.main()
+    assert exit_code == 0
+
+    run(["git", "fetch", "-q", "origin"], cwd=demo_repo)
+    doc = yaml.safe_load(
+        run(
+            ["git", "show", "origin/close/demo-t-001-session-b:projects/demo/roadmap.yaml"],
+            cwd=demo_repo,
+        )
+    )
+    assert doc["tasks"][0]["implementation_pr"] == "silasfelinus/kind_robots#1464"
 
 
 def test_extra_set_fields_are_applied_alongside_status(demo_repo):

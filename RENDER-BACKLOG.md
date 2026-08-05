@@ -203,3 +203,65 @@ Invalid `prisma.artImage.update()` invocation:
 
 
 Transaction.
+
+## 2026-08-05T08:28:50Z | growing
+queueDepth: PENDING=3102, RUNNING=2, DONE=3677, FAILED=52, CANCELLED=789 (all-time). oldestPending: id=4520, age=295688s (~82.1h), engine=COMFY. windowThroughput (24h): PENDING=2744. recentFailed (last 25): 15/25 = connection-refused to ComfyUI; 3/25 = ComfyUI image job timed out after 1800.0s; 1/25 = complete(4497) failed: HTTP 500 Database operation failed: 
+Invalid `prisma.facetArtImage.deleteMany()` invocation:
+
+
+Tr; 1/25 = complete(4329) failed: HTTP 500 Database operation failed: 
+Invalid `prisma.character.update()` invocation:
+
+
+Transactio; 1/25 = complete(4328) failed: HTTP 500 Database operation failed: 
+Invalid `prisma.artImage.update()` invocation:
+
+
+Transaction; 1/25 = complete(4327) failed: HTTP 500 Database operation failed: 
+Invalid `prisma.artImage.update()` invocation:
+
+
+Transaction; 1/25 = complete(4304) failed: HTTP 500 Database operation failed: 
+Invalid `prisma.character.update()` invocation:
+
+
+Transactio; 1/25 = complete(4270) failed: HTTP 500 Database operation failed: 
+Invalid `prisma.facetArtImage.deleteMany()` invocation:
+
+
+Tr; 1/25 = complete(4265) failed: HTTP 500 Database operation failed: 
+Invalid `prisma.artImage.update()` invocation:
+
+
+Transaction.
+
+## 2026-08-05T08:28:57Z | growing
+queueDepth: PENDING=3102, RUNNING=2, DONE=3677, FAILED=52, CANCELLED=789 (all-time). oldestPending: id=4520, age=295695s (~82.1h), engine=COMFY. windowThroughput (24h): PENDING=2744. recentFailed (last 25): 15/25 = connection-refused to ComfyUI; 3/25 = ComfyUI image job timed out after 1800.0s; 1/25 = complete(4497) failed: HTTP 500 Database operation failed: 
+Invalid `prisma.facetArtImage.deleteMany()` invocation:
+
+
+Tr; 1/25 = complete(4329) failed: HTTP 500 Database operation failed: 
+Invalid `prisma.character.update()` invocation:
+
+
+Transactio; 1/25 = complete(4328) failed: HTTP 500 Database operation failed: 
+Invalid `prisma.artImage.update()` invocation:
+
+
+Transaction; 1/25 = complete(4327) failed: HTTP 500 Database operation failed: 
+Invalid `prisma.artImage.update()` invocation:
+
+
+Transaction; 1/25 = complete(4304) failed: HTTP 500 Database operation failed: 
+Invalid `prisma.character.update()` invocation:
+
+
+Transactio; 1/25 = complete(4270) failed: HTTP 500 Database operation failed: 
+Invalid `prisma.facetArtImage.deleteMany()` invocation:
+
+
+Tr; 1/25 = complete(4265) failed: HTTP 500 Database operation failed: 
+Invalid `prisma.artImage.update()` invocation:
+
+
+Transaction.
