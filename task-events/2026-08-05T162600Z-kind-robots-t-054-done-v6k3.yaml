@@ -1,0 +1,11 @@
+version: 1
+project: kind-robots
+task: t-054
+operation: done
+owner: worker
+session: 2026-08-05T161305Z-kind-robots-t-054-v6k3
+updated: '2026-08-05T16:26:00Z'
+note: >-
+  Merged kind_robots PR #1496 as 7315071aa5292f95ce046712bcc0c531469f17ce. The hourly/manual janitor uses a full-history checkout, deletes only fully merged claude/worker/agent branches, and reports stale unmerged branches without deleting them.
+learning: >-
+  Branch cleanup must use full history for reliable merge-base classification; stale unmerged branches remain review-only so automation cannot erase unique work.
