@@ -6700,3 +6700,22 @@ records:
     task-authored signal over parsing free-text notes whenever a tool needs to associate
     a task with "the PR that actually did this," and treat any weaker/inferred signal
     (like a note reference) as advisory, not proof, in the tool's own output.
+- date: 2026-08-05
+  project: conductor
+  task: t-099
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A dedicated implementation_pr field, written once at close time, is strictly
+    stronger evidence than any post-hoc heuristic (title search or note-quoted PR
+    reference) for reconciling roadmap state against reality -- it's self-reported by
+    the session that actually did the work, immune to title-convention drift, and free
+    to check (one direct PR lookup vs. a search). The one sharp edge worth remembering:
+    a field that is present-but-malformed is not the same case as a field that is
+    absent -- both `parse` to None, but conflating them lets corrupted roadmap data
+    silently fall back to weaker search/note evidence and report a false "clean" instead
+    of surfacing as unresolved. Route "truthy but unparseable" to unresolved explicitly,
+    never through the same branch as "falsy/missing".
