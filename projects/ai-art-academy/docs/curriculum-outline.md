@@ -194,6 +194,25 @@ one work each via their live Wikimedia Commons file pages (Public Domain
 Mark / PD-Art / PD-Australia tags, not Met/AIC CC0 this time, since none of
 the three works is held by a US open-access institution).
 
+Section 43 is the 2026-08-05 v1.23 addition (t-010 cycle, lane 4): Spanish
+Golden Age Painting (`spanish-golden-age`) — a fresh addition with no source
+candidate file in `docs/curriculum-candidates/` (Harlem Renaissance remains
+the one candidate correctly held at ai-art-academy/t-043; researched and
+written this cycle instead). It returns to the Baroque era already taught
+in Section 5 but deliberately at a different pole: where that entry's named
+artists (Caravaggio, Gentileschi, Rembrandt, Vermeer) lean into theatrical
+Italian drama or cozy Dutch domestic light, Spanish Golden Age painting is
+tenebrism held still — sculptural, unornamented, devotional figures against
+a near-black ground, with no overlap in named artists. Three generation-style
+anchors — Diego Velázquez (1599-1660), Francisco de Zurbarán (1598-1664), and
+Bartolomé Esteban Murillo (1617-1682) — were verified this cycle directly
+against the Metropolitan Museum of Art Collection API's `isPublicDomain`
+field (`collectionapi.metmuseum.org`, reachable directly from this session's
+egress, the same direct rights-status-field method used for §28, §35, §36,
+§37, and §41). All three works (1650, ca. 1632-33, 1670s) predate the 1930
+cutoff by a wide margin and do not move the curriculum's most-recent-
+example-work record (still 1930, §24).
+
 Verification method note: direct API/page fetches to museum hosts are blocked by the
 session egress proxy, so verification was done via web search returning the live
 collection URLs (titles + object pages confirmed per movement). Entries marked
@@ -552,6 +571,18 @@ movements:
     artist_slugs: [tom-roberts, arthur-streeton, frederick-mccubbin]
     example_count: 3
     remix_hint: "Repaint this image in the Heidelberg School style: broad, confident plein-air brushwork applied directly from life, a bright high-key palette of blue and gold capturing harsh direct Australian sunlight, a dusty ochre-and-olive bush or rural-labor scene with a hazy heat-shimmer atmosphere, and an unsentimental, matter-of-fact mood. Preserve the source composition and subject."
+  # --- v1.23 addition (2026-08-05, t-010 cycle, lane 4) ---
+  # Belongs chronologically alongside baroque (see `era`); appended here to avoid
+  # renumbering the sections above, per the same convention as every prior addition.
+  # A future seed-sync task inserts it in chronological position in academyStyles.ts
+  # (or this cycle already did it directly — see this section's own note in the
+  # document body).
+  - slug: spanish-golden-age
+    name: Spanish Golden Age Painting
+    era: "c. 1620-1680 (Spain)"
+    artist_slugs: [diego-velazquez, francisco-de-zurbaran, bartolome-esteban-murillo]
+    example_count: 3
+    remix_hint: "Repaint this image in the Spanish Golden Age style: a single strong light source against a near-black or plain neutral ground (tenebrism), a restrained palette of umber, ochre, and black, sculptural clarity of form, and a quiet, solemn, devotional mood with minimal ornament. Preserve the source composition and subject."
 ```
 
 ---
@@ -3095,6 +3126,102 @@ composition and subject."
 
 ---
 
+## 43. Spanish Golden Age Painting (`spanish-golden-age`)
+
+**Era:** c. 1620-1680 (Spain)
+
+**Key ideas.** Spanish Golden Age painting (Siglo de Oro) shares the
+Baroque's chiaroscuro and psychological intensity already taught in
+Section 5, but pulls toward a different pole entirely. Where Italian
+Baroque leans into theatrical motion and Dutch Baroque turns that same
+light toward cozy domestic interiors, Spanish Golden Age painters used
+tenebrism to freeze a single suspended, almost sculptural moment: figures
+and objects modeled with an austere, unblinking clarity against a plain
+dark or neutral ground, with little movement, minimal ornament, and an
+intense devotional or psychological gravity. Favored subjects were saints
+in solitary contemplation, humble monastic scenes, royal portraits stripped
+of overt flattery, and devotional images painted with still-life precision
+— a young Mary sewing rendered with the same careful attention as a loaf of
+bread. Court painter Diego Velázquez pushed this restraint furthest, using
+visible, almost loose brushwork up close that resolves into photographic
+clarity from a distance. Francisco de Zurbarán specialized in solitary,
+sculptural figures — monks, saints, still-lifes — set against near-black
+backgrounds, earning the nickname "the Spanish Caravaggio" for a stillness
+Caravaggio himself never held this long. Bartolomé Esteban Murillo, working
+a generation later, softened the mode's severity with tender, warmly lit
+devotional scenes of the Madonna and Seville's street children. Painted
+mostly for Spanish churches, monasteries, and the royal court during
+Spain's political decline but cultural high point, the movement's sobriety
+and psychological directness later drew Édouard Manet and 19th-century
+Realists back to Madrid to study Velázquez directly. El Greco (1541-1614),
+working a generation earlier in Toledo, is often named alongside this trio
+as the movement's visionary precursor, but his elongated, flame-like
+figures and acid palette belong to a distinct Mannerist strand rather than
+the naturalistic tenebrism this lesson teaches — named here for historical
+context only, per PUBLIC-DOMAIN-POLICY.md §5's default-deny under
+ambiguity, with no work of his rights-verified or listed as an example
+this cycle.
+
+**Recognition cues:**
+- Deep, near-black or plain neutral backgrounds lit by a single strong
+  source (tenebrism), quieter and more static than Italian Baroque's
+  swirling theatrical drama
+- Sculptural, almost frozen clarity of form — figures and still-life
+  objects rendered with the same careful, unblinking attention regardless
+  of subject
+- A restrained, muted palette (umber, ochre, black, occasional deep red or
+  white) rather than bright saturated color
+- Solitary or minimally-peopled compositions — a single saint, monk, or
+  sitter in quiet contemplation rather than crowded narrative scenes
+- Devotional or psychologically direct subject matter: contemplative
+  saints, humble monastic life, unflattering royal portraiture, or a young
+  Madonna at ordinary domestic work
+- Confident, visible brushwork that can look loose up close but resolves
+  into photographic precision at a distance (Velázquez's signature trait)
+
+**Notable artists:**
+- **Diego Velázquez** (1599-1660) — Court painter to Philip IV; this
+  lesson's clearest generation-style anchor for the "loose up close,
+  photographic from a distance" technique that later fascinated Manet and
+  the Impressionists.
+- **Francisco de Zurbarán** (1598-1664) — Painter of solitary monks, saints,
+  and still-lifes with an almost sculptural stillness against near-black
+  grounds; sometimes called "the Spanish Caravaggio."
+- **Bartolomé Esteban Murillo** (1617-1682) — Softened the mode's austerity
+  in the second half of the century with tender, warmly lit devotional
+  scenes and genre paintings of Seville's street children.
+
+El Greco (1541-1614) clears PUBLIC-DOMAIN-POLICY.md §1.3's death-date prong
+easily but was not individually rights-verified this cycle; named in the
+entry's prose above for historical context only, per §5's default-deny
+under ambiguity.
+
+**Example works:**
+- *Juan de Pareja*, Diego Velázquez, 1650 — Metropolitan Museum of Art,
+  accession 1971.86 (object 437869). **VERIFIED** public domain
+  (`isPublicDomain: true`) this cycle directly via the Met Collection API:
+  https://www.metmuseum.org/art/collection/search/437869
+- *The Young Virgin*, Francisco de Zurbarán, ca. 1632-33 — Metropolitan
+  Museum of Art, accession 27.137 (object 437971). **VERIFIED** public
+  domain (`isPublicDomain: true`) this cycle directly via the Met
+  Collection API: https://www.metmuseum.org/art/collection/search/437971
+- *Virgin and Child*, Bartolomé Esteban Murillo, 1670s — Metropolitan
+  Museum of Art, accession 43.13 (object 437175). **VERIFIED** public
+  domain (`isPublicDomain: true`) this cycle directly via the Met
+  Collection API: https://www.metmuseum.org/art/collection/search/437175
+
+Do not add an El Greco example here without first verifying that specific
+work's rights status directly (Wikimedia Commons file page or an
+institution's own collection API), the same standard applied above.
+
+**remix_hint:** "Repaint this image in the Spanish Golden Age style: a
+single strong light source against a near-black or plain neutral ground
+(tenebrism), a restrained palette of umber, ochre, and black, sculptural
+clarity of form, and a quiet, solemn, devotional mood with minimal
+ornament. Preserve the source composition and subject."
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -3737,3 +3864,24 @@ ambiguity, with no work of his listed as an example. Synced into
 kind_robots' `stores/seeds/academyStyles.ts` in the same cycle via PR #1472
 — `exampleWorks`/`failureMode` omitted per the established newly-added-style
 precedent, same as Tonalism and Barbizon School.
+
+**v1.23 addition (2026-08-05) re-check.** Section 43 (Spanish Golden Age
+Painting) clears PUBLIC-DOMAIN-POLICY.md §1.3's both-prongs rule for all
+three generation-style anchors with wide margin: Diego Velázquez (d. 1660),
+Francisco de Zurbarán (d. 1664), and Bartolomé Esteban Murillo (d. 1682) all
+died well over a century before this policy's 1956 cutoff, and their
+verified example works (1650, ca. 1632-33, 1670s) all predate the 1930
+US-publication cutoff by a wide margin — none moves the curriculum's
+most-recent-example-work record (still 1930, §24). This session verified
+all three directly against the Metropolitan Museum of Art Collection API's
+`isPublicDomain` field (`collectionapi.metmuseum.org`, reachable directly
+from this session's egress, the same direct rights-status-field method used
+for §28, §35, §36, §37, and §41): Velázquez's *Juan de Pareja* (object
+437869, accession 1971.86), Zurbarán's *The Young Virgin* (object 437971,
+accession 27.137), and Murillo's *Virgin and Child* (object 437175,
+accession 43.13). El Greco (d. 1614) is named in the entry's prose as an
+important precursor for historical context only, per §5's default-deny
+under ambiguity — he clears §1.3's death-date prong easily but was not
+individually rights-verified this cycle, and no work of his is listed as an
+example. No named artist overlaps with Section 5's Baroque entry
+(Caravaggio, Gentileschi, Rembrandt, Vermeer).

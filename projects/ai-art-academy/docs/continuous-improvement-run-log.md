@@ -11,6 +11,56 @@ Entries are unedited except for de-indentation; nothing was reworded or summariz
 in the move (verified: this file's entry count and content bytes were diffed against
 the removed roadmap note content programmatically before commit).
 
+RAN 2026-08-05T11:34:28Z (conductor scheduled agent run, session
+2026-08-05T113427-ai-art-academy-t-010-lane4): option (d), curriculum depth
+(lane 4), per `continuous_improvement.next_lane: 4`. Checked
+`docs/curriculum-candidates/` first per the established convention: the
+only unresolved candidate is still `harlem-renaissance.md`, correctly held
+at `ai-art-academy/t-043` pending Silas's cultural-framing decision —
+untouched. Checked `curriculum-outline.md`'s 42 existing `## N.` sections
+and `stores/seeds/academyStyles.ts`'s existing slugs for coverage gaps
+before researching: the curriculum had a Baroque entry (§5: Caravaggio,
+Gentileschi, Rembrandt, Vermeer) but no dedicated Spanish Golden Age entry,
+despite it being a visually and historically distinct pole within the same
+era (tenebrist stillness vs. Italian theatrical drama or Dutch domestic
+genre). Researched and wrote a fresh entry: Spanish Golden Age Painting
+(`spanish-golden-age`, curriculum-outline.md §43, v1.23) — Diego Velázquez,
+Francisco de Zurbarán, and Bartolomé Esteban Murillo, no overlap with §5's
+named artists. Verified all three generation-style anchors directly against
+the Metropolitan Museum of Art Collection API's `isPublicDomain` field
+(`collectionapi.metmuseum.org`, reachable directly from this session's
+egress, the same direct rights-status-field method used for §28, §35, §36,
+§37, and §41): Velázquez's *Juan de Pareja* (1650, object 437869, accession
+1971.86), Zurbarán's *The Young Virgin* (ca. 1632-33, object 437971,
+accession 27.137), and Murillo's *Virgin and Child* (1670s, object 437175,
+accession 43.13). All three artists (d. 1660, 1664, 1682) clear
+PUBLIC-DOMAIN-POLICY.md §1.3's death-date prong with wide margin, and all
+three works (1650-1670s) clear the 1930 US-publication-cutoff prong with
+wide margin, without moving the curriculum's most-recent-example-work
+record (still 1930, §24). El Greco (d. 1614), often grouped with this trio
+as a visionary precursor but stylistically a distinct Mannerist strand, is
+named in the entry's prose for historical context only per §5's
+default-deny, since he was not individually rights-verified this cycle.
+Added the full lesson prose (era/key-ideas/recognition-cues/artists/
+example-works/remix_hint), a machine-readable skeleton YAML entry, a header
+changelog paragraph, and a "Public-domain safety check" appendix re-check
+paragraph. Synced directly into kind_robots' `stores/seeds/academyStyles.ts`
+in the same cycle (matching the American Luminism/Heidelberg School
+precedent of same-cycle sync rather than deferring), omitting
+`exampleWorks`/`failureMode` per the established newly-added-style
+precedent. Provisioned kind_robots deps via `provision_kind_robots_deps.sh`;
+local checkout was already at `origin/main` tip, no shallow-clone issue this
+cycle. Verified: `npx eslint stores/seeds/academyStyles.ts` clean, `npx
+prettier --check` clean (after one `--write` pass reformatted only the new
+block — 39 insertions, no reformatting of unrelated lines), full-project
+`npx vue-tsc --noEmit -p tsconfig.json` exit 0 with zero errors. Also
+confirmed the machine-readable skeleton YAML still parses clean (43
+movements, no duplicate slugs) via a direct `yaml.safe_load` check before
+committing. kind_robots PR #1494 (branch `claude/relaxed-lovelace-18etwn`).
+No image generation jobs, production mutation, publishing, spend, secrets,
+or DNS changes occurred. Next preferred lane is front-end polish (lane 1),
+per the 1->2->3->4 rotation. Rearming to `ready`.
+
 RAN 2026-08-05T~10:30Z (session 2026-08-05T102837Z-ai-art-academy-t-010-lane3): option (c), inspiration/preview assets (lane 3), per the lane-2 audit's recommendation (below) and `continuous_improvement.next_lane`. Checked `scripts/recheck_render_queue.py` first: HTTP 503 (`queue/stats` unavailable) — the shared render relay is still unhealthy, consistent with the lane-2 audit's finding. Per that audit's guidance ("prepare the prompt/provenance package without creating a pile of pending ArtJobs" while generation is unhealthy), did not attempt any live generation this cycle. Instead audited style-preview delivery end to end: diffed `academyStyles.ts`'s 42 `previewImageSrc` slugs against live `curl` checks at `https://media.acrocatranch.com/images/academy/styles/<slug>.webp` — 39/42 return 200; three (`american-luminism`, `egyptian-painting`, `heidelberg-school`) return 404. Confirmed none of the three had ever had a `kind-robots-academy-style-preview-*` request queued in `art-prompts.yaml` — the same seed-ahead-of-asset-generation gap the `fauvism`/`tonalism`/`barbizon-school` entries above already document, just not yet caught for these three (added across the 2026-07-30, 2026-07-29, and 2026-08-05 lane-4 cycles, each deferring image generation to a future lane-3 pass that never actually queued the request). Queued all three now in `art-prompts.yaml`, `status: pending`, prompts built from each style's existing `recognitionCues`/`keyIdeas` in `academyStyles.ts`, matching the established "museum-quality example of..." prompt shape — NOT submitted live, per the render-queue-down guidance; a future cycle should re-check queue health (`recheck_render_queue.py`) before running `consume_art_requests.py --live` against these three ids. Also acted on the lane-2 audit's accuracy finding: moved the accumulated lane-1/lane-2 prose out of `roadmap.yaml`'s task `note:` into this run log (this entry and the one immediately below), restored the note to the standing instruction plus a short pointer, and corrected the structured `continuous_improvement` mapping (`last_lane: 3`, `next_lane: 4`, `last_pr`: conductor PR #1742) — it had been stuck at `last_lane: 1`/`next_lane: 2` since the lane-1 cycle despite lane 2 having since run and merged. Verified: `python3 -c "import yaml; yaml.safe_load(open('projects/art-prompts.yaml'))"` parses clean (106 requests, no duplicate ids); `python scripts/validate_roadmaps.py` clean; `python scripts/audit_roadmaps.py` — same 3 pre-existing errors as before this diff (`CONTROL_PRIORITY_DRIFT`, `lora-ingestion` missing from `priority.yaml`), unrelated to this task. Conductor-only PR #1742 (kind_robots untouched); no image generation, publishing, deployment, spend, secrets, or production mutation occurred. Next preferred lane is curriculum depth (lane 4), per the 1->2->3->4 rotation. Rearmed to `ready`.
 
 RAN 2026-08-05T06:13:35Z (session 2026-08-05T061335Z-ai-art-academy-t-010-r7m4): option (b), roadmap accuracy (lane 2), per `continuous_improvement.next_lane: 2`. Audited `t-010`'s structured rotation state against `t-044`'s latest live evidence: ArtJobs 7622/7623 were accepted and their workflows resolved the configured Resource `localPath`, but neither reached ComfyUI because the shared render queue was severely backed up and the relay was reporting connection refusals — not a confirmed remaining LoRA-name defect, so the next verification attempt should wait for queue/relay health rather than repeat resource-path guessing. Confirmed milestones m2 (held open by `t-044`'s unresolved live verification) and m6 (intentionally perpetual through recurring `t-010`) correctly remain `in-progress`. Wrote `projects/ai-art-academy/docs/roadmap-audits/2026-08-05-roadmap-accuracy.md` recording this state plus an accuracy finding: the lane-1 result was still embedded as prose in the roadmap task note rather than moved to this run log, a recurrence of the pre-t-039/pre-t-054 note-bloat failure mode (fixed by the immediately-following lane-3 cycle above). Recommended rotating to lane 3 (inspiration assets), scoped to a small traceable asset or provenance-package-only pass given the unhealthy shared render queue. Merged conductor PR #1732 (squash `af511942`). No kind_robots changes this cycle. Next preferred lane is inspiration assets (lane 3). Rearmed to `ready`.
