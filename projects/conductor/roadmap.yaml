@@ -3175,3 +3175,32 @@ tasks:
     claimed_by: 2026-08-05T063500Z-conductor-t098
     claimed_at: '2026-08-05T06:40:08Z'
     updated: '2026-08-05T06:50:02Z'
+
+  - id: t-099
+    milestone: m2
+    title: >-
+      Have close_task.py record a dedicated implementation_pr field so
+      check_pr_merged_drift.py can key on it instead of a title-text search
+    status: ready
+    owner: null
+    stakes: reversible
+    passes: 0
+    note: >
+      Kaizen from t-098 (PR #1734): check_pr_merged_drift.py's authoritative
+      pass now finds a task's implementing PR by searching merged PRs whose
+      TITLE literally names "<project>/<task-id>" -- effective in practice
+      (every close-out PR observed so far follows that convention), but still
+      a text-search heuristic rather than a field the implementing session
+      itself wrote. Option (a) from t-098's original note: have
+      close_task.py (and/or the `status: review` transition) record the
+      actual merging PR number on a dedicated roadmap field, e.g.
+      `implementation_pr: "silasfelinus/kind_robots#1464"`, populated at
+      close time. check_pr_merged_drift.py's authoritative pass should then
+      key on that field FIRST when present, falling back to the title search
+      only when it's absent (older tasks, or ones closed before this field
+      existed) -- strictly stronger evidence than title-text matching, and
+      immune to a close-out PR whose title doesn't follow the
+      `<project>/<task-id>:` convention. Add a regression test covering both
+      the field-present and field-absent paths.
+    claimed_by: null
+    claimed_at: null
