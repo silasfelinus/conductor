@@ -6618,3 +6618,19 @@ records:
     flag (?create=1, consumed and cleared by the tab it lands on) rather than duplicating the create
     form or loosening the contract. Kept the read-only contract test green with zero changes needed
     to the fenced file itself.
+- date: '2026-08-05'
+  project: ai-art-academy
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A shared-component "clear/reset" function that touches several unrelated global
+    Pinia singletons (deselectBot/deselectCharacter/deselectDream/deselectReward/deselectScenario)
+    is only safe when gated on the same prop that controls whether the UI exposing those fields
+    was ever shown. Unconditional cleanup in a function called automatically on every successful
+    action (not just an explicit user click) silently wipes state the current view never gave the
+    user any way to see or intend to clear. Before implementing a subagent's bug report, independently
+    re-verified the specific store calls and their persistence side effects rather than trusting the
+    report at face value.
