@@ -1951,7 +1951,7 @@ tasks:
   - id: t-066
     milestone: m2
     title: 'Sweep the remaining reactable-card consumers for the earned-karma batch-fetch pattern'
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1966,9 +1966,24 @@ tasks:
       ALLOWED_REF_TYPES (server/api/economy/karma-earned.post.ts), no award-call-site backfill unless
       that object type isn't already tagging refType on its award call sites (check
       server/utils/karma.ts call sites the way t-046's note did for ArtImage/Prompt before assuming).
+
+      CLOSED as a rotation collision (2026-08-05): this session claimed t-066 and independently
+      wired bot/character/scenario/artCollection, but a concurrent session finished and merged a
+      more thorough implementation first -- kind_robots PR #1456 ("t-066: one earned-karma fetch,
+      seven galleries wired"), merged 2026-08-05T00:45:03Z. That PR covers all seven consumers
+      (reward, art images, dream, bot, character, scenario, art collections), extracts the
+      duplicated per-gallery fetch logic into composables/useEarnedKarma.ts, collapses the two
+      hand-maintained ALLOWED_REF_TYPES/ReactionTargetType lists into utils/karmaRefTypes.ts, and
+      adds a mutation-verified contract (utils/scripts/verifyEarnedKarmaWiring.ts) enforcing both
+      "exactly one fetch" and "refTypes match the reaction targets." It also confirms, per this
+      task's own instruction, that all twelve refTypes already earn karma generically via
+      REACTION_RECEIVED's targetField-derived refType -- no award-call-site backfill was needed
+      for any of them. theme-card.vue and chat-view.vue remain unwired because neither has a live
+      gallery consumer (both orphaned components with no route/parent rendering them); this
+      session's own draft work was discarded unpushed to avoid duplicating #1456.
     claimed_by: 2026-08-05T003700Z-interface-vision-t-066-cq9x
     claimed_at: '2026-08-05T00:36:32Z'
-    updated: '2026-08-05T00:36:32Z'
+    updated: '2026-08-05T00:49:38Z'
 
   - id: t-067
     milestone: m3
