@@ -441,6 +441,56 @@ requests:
     sunlight, a hazy heat-shimmer atmosphere, a dusty Australian bush or rural-labor scene --
     a shearing shed, drought-stressed paddock, or swagman -- treated with plain unsentimental
     dignity, a matter-of-fact unforced mood, centered square composition, no text, no watermark'
+- id: kind-robots-academy-style-preview-spanish-golden-age
+  last_art_job_id: 7699
+  source: ai-art-academy-style-preview
+  status: pending
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/academy/styles/spanish-golden-age.webp
+  variant: image
+  size: 256x256
+  label: 'Academy style preview: Spanish Golden Age Painting'
+  note: 'Queued 2026-08-06 (ai-art-academy/t-010 lane 3, conductor scheduled cycle): a different
+    gap class from american-luminism/egyptian-painting/heidelberg-school above -- academyStyles.ts''s
+    spanish-golden-age entry had NO previewImageSrc field at all (not even a path pointing at
+    an undelivered file), one of only two such entries out of 44 styles per
+    verify_academy_style_preview_coverage.py''s scope (that script only checks slugs that already
+    set previewImageSrc, so it could not see this gap). Added previewImageSrc to the kind_robots
+    entry in a companion PR (kind_robots#1523) and submitted this request live -- job 7699 queued
+    successfully (scripts/recheck_render_queue.py showed the relay healthy, not 503, unlike the
+    2026-08-05 lane-3 cycle above) but stayed PENDING through the full poll window with a large
+    all-time backlog (queueDepth PENDING~3000, oldestPending ~108h at submit time) -- a genuine
+    slow queue, not a submission failure. A future cycle should check job 7699''s status directly
+    (GET /api/art/queue/7699) before re-submitting.'
+  prompt: 'A museum-quality example of a Spanish Golden Age (Siglo de Oro) tenebrist painting:
+    a single strong light source against a near-black or plain neutral ground, sculptural unblinking
+    clarity of form, a restrained muted palette of umber, ochre, black, and occasional deep
+    red or white, a solitary or minimally-peopled composition -- a contemplative saint, humble
+    monk, or unflattering court sitter -- confident visible brushwork that resolves into photographic
+    precision at a distance, a quiet solemn devotional mood with minimal ornament, centered
+    square composition, no text, no watermark'
+- id: kind-robots-academy-style-preview-mannerism
+  source: ai-art-academy-style-preview
+  status: pending
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/academy/styles/mannerism.webp
+  variant: image
+  size: 256x256
+  label: 'Academy style preview: Mannerism'
+  note: 'Queued 2026-08-06 (ai-art-academy/t-010 lane 3, conductor scheduled cycle): same new
+    gap class as spanish-golden-age above -- academyStyles.ts''s mannerism entry had no previewImageSrc
+    field at all, the other of the two entries (of 44) verify_academy_style_preview_coverage.py
+    cannot see because it only audits slugs that already set the field. Added previewImageSrc
+    to the kind_robots entry in a companion PR (kind_robots#1523) and queued this request in
+    the same cycle. Not submitted live -- see spanish-golden-age above: the relay queue is
+    healthy but has a large backlog, so a single live submission per cycle was enough to confirm
+    queue health without tying up more of this cycle waiting on a slow poll.'
+  prompt: 'A museum-quality example of an Italian Mannerist painting: an elegant figure with
+    impossibly elongated limbs, neck, and fingers in a twisting off-balance serpentine pose
+    (figura serpentinata), smooth cool porcelain-like skin with a composed faintly aloof expression,
+    a restrained acidic jewel-toned palette of cool pinks, acid greens, and deep blues, shallow
+    ambiguous pictorial space against a plain dark ground, technical virtuosity presented as
+    sophistication rather than error, centered square composition, no text, no watermark'
 - id: "kind-robots-profile-image-95ed965e-msbmggtx"
   last_art_job_id: 4845
   source: "kind-robots-missing-image"

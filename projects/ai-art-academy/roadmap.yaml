@@ -502,11 +502,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-06T10:28:50Z'
+    updated: '2026-08-06T10:40:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
@@ -515,16 +515,15 @@ tasks:
       Completed lane 2 roadmap-accuracy audit and documented the existing ArtJob evidence reuse rule before opening the implementation PR.
 
       Merged conductor PR #1791 for the lane 2 roadmap-accuracy pass. Existing ArtJobs 7622 and 7623 remain the durable LoRA verification evidence; rotate next to lane 3 inspiration assets.
+
+      Lane 3 inspiration-assets cycle (this cycle) closed the gap t-055 explicitly deferred: that task's 2026-08-05 note confirmed `mannerism` had no `previewImageSrc` at all and left it "for a future lane-3 cycle to queue." verify_academy_style_preview_coverage.py itself still reports zero gaps (it only audits slugs that already set the field, so a missing field is invisible to it) -- a manual sweep of all 44 academyStyles.ts entries found `mannerism` plus one more instance of the same gap class, `spanish-golden-age`. Added `previewImageSrc` to both in kind_robots PR #1523, and queued both as art-prompts.yaml requests (`kind-robots-academy-style-preview-spanish-golden-age`/`-mannerism`). Submitted the spanish-golden-age request live: job 7699 queued successfully (relay healthy, unlike the 2026-08-05 lane-3 cycle's 503), but stayed PENDING through the poll window against a large all-time backlog (~3000 pending, oldest ~108h) -- a slow queue, not a failure. Left mannerism un-submitted to avoid a second long poll in one cycle. Rotate next to lane 4 curriculum depth.
     continuous_improvement:
-      last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 2
-      last_run: '2026-08-06T09:41:00Z'
-      last_pr: 'silasfelinus/conductor#1790'
+      last_lane: 3  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 4
+      last_run: '2026-08-06T10:40:00Z'
+      last_pr: 'silasfelinus/conductor#1792'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    implementation_pr: 'silasfelinus/kind_robots#1521'
-    owner: worker
-    claimed_by: 2026-08-06T102839Z-aa-t010-lane3
-    claimed_at: '2026-08-06T10:28:50Z'
+    implementation_pr: 'silasfelinus/kind_robots#1523'
 
   - id: t-015
     milestone: m4
@@ -1783,3 +1782,18 @@ tasks:
       Kaizen from ai-art-academy/t-010 lane 3 (2026-08-06). `t-010`'s `continuous_improvement.last_lane`/`next_lane` counter has now gone stale at least three times in the last two days whenever a lane closes via a lightweight path (a direct docs commit, or the `review`/`rearm` task-events flow) instead of `close_task.py`: `set_task_field.py`'s `ALLOWED_FIELDS` and `set_task_field_text()` only ever touch a task's top-level scalar keys, never a nested mapping like `continuous_improvement`, and `process_task_events.py`'s `rearm`/`ready`/`done` ops never write it either — only `close_task.py --set` (or a hand-edit, as this cycle did) actually advances it. Each staleness has needed a manual `git`-level fix by whichever cycle happened to notice the note prose disagreed with the counter (see root `TALKBACK.md` 2026-08-06 and this project's `docs/continuous-improvement-run-log.md` 2026-08-06 entries for the specific instances).
 
       Fix the underlying tooling gap rather than relying on every future cycle to notice and hand-fix it again: extend `set_task_field.py` (and therefore `close_task.py --set`, which reuses it) to accept a dotted field path (e.g. `--set continuous_improvement.last_lane=3`) that reaches one key inside an existing nested mapping, OR — the lighter alternative, if dotted-path parsing/rendering for a nested YAML mapping proves fiddly given `set_task_field_text`'s block-scalar-aware line editing — add a small dedicated helper (e.g. `scripts/bump_continuous_improvement.py <project> <task-id> --lane N --pr <ref>`) that every `t-010`-style recurring-lane task can call from its own close-out instead of hand-editing. Either way: add regression tests (this repo's existing `tests/test_set_task_field.py`-style coverage, or a new file for the helper) proving the nested field updates correctly and every other field/formatting on the task block is left untouched. Out of scope: migrating every existing lightweight close path to use the new mechanism — this task is just the capability; a follow-up can wire it in per close-out site if still needed once it exists.
+
+  - id: t-060
+    milestone: m6
+    title: 'kind_robots: extend verify_academy_style_preview_coverage.py to flag academyStyles.ts entries missing previewImageSrc entirely'
+    status: ready
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-06T10:40:00Z'
+    note: |-
+      Kaizen from ai-art-academy/t-010 lane 3 (2026-08-06, kind_robots PR #1523). `scripts/verify_academy_style_preview_coverage.py` (added by t-055) only cross-references slugs that already set `previewImageSrc` against live delivery and `art-prompts.yaml` — it has no way to see a slug where the field is absent from the object entirely, since it never enumerates `academyStyles.ts` independently of that field. This exact blind spot let `mannerism` and `spanish-golden-age` sit with no preview-image slot at all (not merely undelivered) until a manual full-file sweep found them by hand; `mannerism`'s gap had already been spotted once before (t-055's note, 2026-08-05) and was left for "a future lane-3 cycle to queue" — the coverage script's own clean report every cycle since gave no signal that a second cycle was needed.
+
+      Fix: have the script separately parse (or import, if refactored into a shared list) every `slug` in `stores/seeds/academyStyles.ts` and diff that full set against the subset with `previewImageSrc` set, reporting the difference as its own category (e.g. "N slug(s) with no previewImageSrc field at all") distinct from the existing delivered/queued/gap categories — so a clean run actually means clean, not just "clean among the slugs that opted in." Add a regression fixture entry with no `previewImageSrc` key to `tests/test_verify_academy_style_preview_coverage.py` (or wherever its tests live) proving the new category is detected.
+    owner: null
+    claimed_by: null
+    claimed_at: null
