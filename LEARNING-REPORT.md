@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-06T14:43:56Z
+Generated: 2026-08-06T22:19:31Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **529**
-- Outcomes: blocked: 13, cancelled: 1, done: 515
+- Closed tasks recorded: **530**
+- Outcomes: blocked: 13, cancelled: 1, done: 516
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -15,7 +15,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 | Project | Closed | Success rate |
 |---|---|---|
-| ai-art-academy | 61 | 98% |
+| ai-art-academy | 62 | 98% |
 | alexa-integration | 2 | 100% |
 | animation-manager | 13 | 100% |
 | animation-studio | 2 | 50% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 514 | 99% |
+| software | 515 | 99% |
 
 ## Failure categories
 
@@ -67,7 +67,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 |---|---|
 | quality | 9 |
 | actionable | 9 |
-| transient | 8 |
+| transient | 9 |
 | scope | 2 |
 
 ## Kaizen targets
@@ -76,10 +76,11 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - kind `content` — 40% success over 15 closed tasks; aim the next kaizen task here
 - failure category `quality` — 9 occurrences; look for the shared cause across its records
 - failure category `actionable` — 9 occurrences; look for the shared cause across its records
-- failure category `transient` — 8 occurrences; look for the shared cause across its records
+- failure category `transient` — 9 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-08-06 `ai-art-academy/t-010` — Lane-2 cycle's real blocker was a genuine review catch (ROADMAP-AUDIT.json/.md generated at different times, disagreeing with each other) -- fixed in one commit by re-running audit_roadmaps.py once against final state. What actually consumed the cycle was a ~2h GitHub Actions infra degradation that hit repo-tracked ci.yml checks directly (Validate queued task-events YAML, Dream-cycle backlog guards, Dependency audit), not just the default CodeQL scan already noted in t-060's lesson -- all failed with the identical "Failed to resolve action download info: Service Unavailable" signature (GitHub's own actions-download CDN). GitHub auto-retried most of them on its own after roughly an hour and they passed; a couple of non-required jobs stayed cancelled/failed and didn't block the merge. Confirming the identical log signature across every failure before classifying it transient (rather than guessing from the red X) avoided burning a pass or touching the PR's actual content.
 - 2026-08-06 `ai-art-academy/t-060` — Clean first-pass extension of verify_academy_style_preview_coverage.py: the fix (an independent full-slug enumeration diffed against the previewImageSrc-scoped set) was exactly the shape the task note prescribed, and the current academyStyles.ts already has 0 slugs in the new gap category -- proved via synthetic fixtures instead of a live regression. Merge took much longer than the diff warranted: the repo's default GitHub code-scanning CodeQL "Analyze (javascript-typescript)" job sat in "Perform CodeQL Analysis" unchanged for 50+ minutes (vs. ~5 min for the identical job on the immediately-prior PR #1803), while every actually repo-tracked CI check in ci.yml passed within a minute. It isn't a repo-tracked workflow file, so it's a default code-scanning setup job, not one AGENTS.md's "confirm the checks themselves" guidance was written to gate on -- confirmed non-blocking by GitHub's own merge endpoint accepting the merge while it was still in_progress. Worth noting for the next session that sees a lone Analyze(*) job stuck this long: it's very likely non-required scanning-infra slowness, not a real signal about this PR's diff.
 - 2026-08-05 `ai-art-academy/t-055` — The task's own claim had gone stale for ~8h with no PR ever opened (found via check_pr_merged_drift.py, unrelated to this task's content) -- a session should treat a claimed-but-un-PR'd task surfaced by that sweep as reclaimable once past CLAIM_TTL_MINUTES rather than assuming it's still in flight. Also: art-prompts.yaml alone is not a reliable coverage signal for delivered assets since fulfilled entries get pruned -- a live delivery check is required to tell "already fine" from "needs a request," which is why verify_academy_style_preview_coverage.py checks live by default.
 - 2026-08-05 `conductor/t-101` — Before implementing a kaizen task, re-verify its premise against current code -- validate_task_events.py already had the exact check this task asked for (since PR #851, 2026-07-19), so the real remaining work was narrower (test coverage) plus a root-cause finding (task-events written by direct push to main never hit the PR-time gate at all) that the original task note didn't anticipate.
@@ -89,7 +90,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-05 `ai-art-academy/t-056` — A kaizen note asking for a field that doesn't exist in the source data (here: "region") is worth implementing as closely as the real schema allows rather than skipping outright -- era-based sort/overlap-detection delivered the same practical benefit (spotting a coverage gap before adding a new curriculum entry) using only fields that actually exist.
 - 2026-08-05 `ai-art-academy/t-043` — Keep curriculum inclusion, reproduction rights, and generation-preset permissions as separate policy questions. Collapsing them into one death-date cutoff can erase historically important artists while still failing to express the actual copyright and commercial-use constraints.
 - 2026-08-05 `conductor/t-099` — Adding a "strongest evidence" field/tier to a multi-pass classifier isn't complete until the code path that decides "does this field apply" also distinguishes absent-and-should-fall-back from present-but-corrupt-and-should-not. A single parse_x() -> Optional[T] helper collapses both into None, which reads fine until a caller uses "is None" as the fallback trigger -- a malformed value then silently gets treated as if the stronger evidence were never there at all, quietly replaced by a weaker heuristic instead of surfacing. Caught by external review before merge (PR #1737) rather than by the implementing session's own test pass, since the tests written alongside the feature covered field-present/field-absent but not field-present-but-malformed -- a reminder to enumerate all three states explicitly whenever a field is optional AND has a shape to validate, not just "present vs. absent."
-- 2026-08-05 `conductor/t-099` — A dedicated implementation_pr field, written once at close time, is strictly stronger evidence than any post-hoc heuristic (title search or note-quoted PR reference) for reconciling roadmap state against reality -- it's self-reported by the session that actually did the work, immune to title-convention drift, and free to check (one direct PR lookup vs. a search). The one sharp edge worth remembering: a field that is present-but-malformed is not the same case as a field that is absent -- both `parse` to None, but conflating them lets corrupted roadmap data silently fall back to weaker search/note evidence and report a false "clean" instead of surfacing as unresolved. Route "truthy but unparseable" to unresolved explicitly, never through the same branch as "falsy/missing".
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-06T14:43:56Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-06T22:19:31Z_
