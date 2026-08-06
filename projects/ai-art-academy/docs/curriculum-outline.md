@@ -213,6 +213,41 @@ egress, the same direct rights-status-field method used for §28, §35, §36,
 cutoff by a wide margin and do not move the curriculum's most-recent-
 example-work record (still 1930, §24).
 
+Section 44 is the 2026-08-05 v1.24 addition (t-010 cycle, lane 4): Mannerism
+(`mannerism`) — a fresh addition with no source candidate file, returning to
+the High Renaissance's Florence and Rome (Section 4) a generation later but
+at the opposite pole from Section 43's Spanish tenebrism: elegant artifice
+and elongation rather than sculptural, unblinking realism. (This header
+paragraph was missing from the changelog until this cycle; see the
+appendix's existing v1.24 re-check paragraph, which already documented the
+verification work in full — this is a documentation-completeness backfill
+only, no content change.)
+
+Section 45 is the 2026-08-06 v1.25 addition (t-010 cycle, lane 4): Ethiopian
+Icon Painting (`ethiopian-icon-painting`) — the curriculum's fifth
+non-Western entry and its first from the African continent, filling a gap
+every prior lane-4 cycle's coverage review had left open. It is also the
+curriculum's first entry sourced entirely from the Walters Art Museum
+rather than the Met or AIC (Met Open Access was HTTP 429 rate-limited this
+session, the same intermittent-throttling pattern noted in §42's cycle;
+Smithsonian's africa.si.edu/si.edu object pages returned HTTP 403 to this
+session's egress and were not usable either), verified via the museum's own
+`art.thewalters.org` object pages rather than a Wikimedia Commons mirror —
+the mirror copies of these same three images carry an older CC BY-SA
+photograph license from before the Walters' own 2018 CC0 rollout, which
+PUBLIC-DOMAIN-POLICY.md §2.3 explicitly excludes, so the museum's current
+first-party page was used instead, per §2.2 tier 3 (terms read once at
+https://thewalters.org/about/policies/rights-reproductions/, which confirms
+unrestricted CC0 use including commercial, and recorded here as the
+terms URL for this institution going forward). Like Byzantine Mosaic (§2),
+Fayum Mummy Portraits (§28), and Ancient Egyptian Painting (§37), this
+entry credits an anonymous tradition rather than a single named artist:
+two of the three verified works carry no attribution at all, and the third
+is catalogued only as "Follower of Fre Seyon" — a follower's hand, not a
+verified work by Fre Seyon himself, so per §5's default-deny the entry does
+not claim Fre Seyon as a rights-verified generation-style anchor, naming him
+in prose only as the tradition's earliest identifiable named master.
+
 Verification method note: direct API/page fetches to museum hosts are blocked by the
 session egress proxy, so verification was done via web search returning the live
 collection URLs (titles + object pages confirmed per movement). Entries marked
@@ -589,6 +624,18 @@ movements:
     artist_slugs: [bronzino, parmigianino, perino-del-vaga]
     example_count: 3
     remix_hint: "Repaint this image as an Italian Mannerist painting: elegant, elongated figures in artificial, twisting poses, cool porcelain-smooth skin, a restrained jewel-toned palette against a plain or ambiguous dark ground, and a composed, faintly aloof emotional temperature rather than Baroque drama. Preserve the source composition and subject."
+  # --- v1.25 addition (2026-08-06, t-010 cycle, lane 4) ---
+  # First entry from the African continent. Belongs chronologically across
+  # the 15th-18th centuries (see `era`); appended here to avoid renumbering
+  # the sections above, per the same convention as every prior addition.
+  # Not yet synced into kind_robots' academyStyles.ts — deferred to a future
+  # cycle, same pattern as most additions since §31.
+  - slug: ethiopian-icon-painting
+    name: Ethiopian Icon Painting
+    era: "c. 1450-1700 (Ethiopia)"
+    artist_slugs: [anonymous-ethiopian-icon-painters]
+    example_count: 3
+    remix_hint: "Repaint this image as an Ethiopian Solomonic-era icon: flat, unmodeled fields of warm red ochre, gold, and deep blue-green bounded by firm black contour outlines, large wide-open frontal eyes gazing directly at the viewer, hierarchical scale with the most sacred figure largest and centered, simplified linear drapery folds, and a plain or minimally patterned background. Preserve the source composition and subject."
 ```
 
 ---
@@ -3322,6 +3369,106 @@ rather than Baroque drama. Preserve the source composition and subject."
 
 ---
 
+## 45. Ethiopian Icon Painting (`ethiopian-icon-painting`)
+
+**Era:** c. 1450-1700 (Solomonic period, Ethiopia)
+
+**Key ideas.** Ethiopian icon painting is a continuous devotional tradition
+of the Ethiopian Orthodox Tewahedo Church, painted in tempera on
+gesso-primed wood panels, most often as small, portable folding diptychs
+and triptychs meant to travel with a wealthy patron or hang in a church.
+The tradition draws on Byzantine and Coptic Egyptian pictorial conventions
+already familiar from Section 2's Byzantine Mosaic — hieratic frontality,
+flat symbolic color, hierarchical scale — but develops its own unmistakable
+visual grammar: wide, direct, unblinking eyes that art historians describe
+as a deliberate "reversal gaze," meant to make the viewer feel watched by
+the sacred figure rather than the reverse, set within a warm, saturated
+palette built from red ochre, gold, and deep blue-green (blue conventionally
+marking the Virgin Mary, gold marking Christ). Panels fold shut to protect
+the painted interior in transit and open to reveal one or more scenes —
+most often the Virgin and Child flanked by archangels, saints on horseback
+(Saint George is the most frequently repeated figure), or narrative scenes
+from the life of Christ arranged in the same register-like compartments
+Section 37's Ancient Egyptian Painting already introduced this curriculum
+to, though here bounded by the physical edges of a folding wood panel
+rather than a continuous wall or scroll. Almost nothing is documented about
+individual painters before the 15th century; the one meaningful exception is
+Fre Seyon, active in the mid-15th century, the earliest Ethiopian icon
+painter identifiable by name and the presumed source of a recognizable
+workshop style that outlived him by generations — this lesson's own
+generation-style anchor is catalogued only as "Follower of Fre Seyon," not
+a verified work by his own hand, so per PUBLIC-DOMAIN-POLICY.md §5 the
+entry credits the anonymous tradition rather than claiming Fre Seyon himself
+as a rights-verified anchor (the same distinction already drawn for
+Pontormo in Section 44 — named for historical context, not exhibited).
+
+**Recognition cues:**
+- Large, wide-open, almond-shaped eyes gazing directly and frontally at the
+  viewer on every major figure — the tradition's single most distinctive
+  and consistently repeated trait
+- Flat, unmodeled fields of color bounded by firm black contour outlines —
+  no cast shadow, no atmospheric blending, close in spirit to Byzantine
+  Mosaic's (§2) flatness but built from painted line rather than tesserae
+- A warm, saturated palette dominated by red ochre, gold, and deep
+  blue-green, with blue conventionally marking the Virgin Mary and gold
+  marking Christ
+- Strict frontal symmetry and hierarchical scale: the most sacred figure
+  (Christ or the Virgin) largest and centered, secondary saints and
+  archangels smaller and arranged around them
+- Compact, portable multi-panel folding formats (diptych or triptych) on
+  wood, sized to close shut and travel — unlike any large-format or
+  wall-scale work elsewhere in this curriculum
+- Mounted saints, especially Saint George spearing a dragon, rendered with
+  simplified, tapering horse legs and decorative harness patterning rather
+  than anatomical naturalism
+
+**Notable artists:** None individually rights-verified. No signed Ethiopian
+icon predating the 18th century survives, and this lesson's example works
+are either unattributed or catalogued as "Follower of [Fre Seyon]" rather
+than by a documented hand — the same treatment already given to Byzantine
+Mosaic's (§2) anonymous mosaicists, Fayum Mummy Portraits' (§28) anonymous
+painters, and Ancient Egyptian Painting's (§37) anonymous artists. Fre
+Seyon (active mid-15th century) is named above for historical context as
+the tradition's earliest identifiable master, but no work confirmed as his
+own hand is exhibited here.
+
+**Example works:**
+- *Triptych Icon with Virgin Mary and Christ Child Flanked by Archangels
+  above Youthful Christ Teaching, Scenes from the Life of Christ and
+  Equestrian Saints*, anonymous, early 16th century (Solomonic) — glue
+  tempera on panel. **VERIFIED**, The Walters Art Museum (Baltimore),
+  accession 36.6; public domain (Creative Commons Zero, museum's own
+  Open Content program, verified directly on the object's first-party
+  page — not a Wikimedia Commons mirror):
+  https://art.thewalters.org/object/36.6/
+- *Triptych with Virgin and Child Flanked by Archangels; Scenes from the
+  Life of Christ; Apostles and Saint George and Saint Mercurius*,
+  anonymous, late 17th-early 18th century (Late Solomonic) — tempera on
+  wood. **VERIFIED**, The Walters Art Museum (Baltimore), accession 36.7;
+  public domain (Creative Commons Zero, verified directly on the object's
+  first-party page):
+  https://art.thewalters.org/object/36.7/
+- *Diptych with Mary and Her Son Flanked by Archangels, Apostles and a
+  Saint*, Follower of Fre Seyon, late 15th century (Solomonic) — glue
+  tempera on panel. **VERIFIED**, The Walters Art Museum (Baltimore),
+  accession 36.12; public domain (Creative Commons Zero, verified directly
+  on the object's first-party page):
+  https://art.thewalters.org/object/36.12/
+
+Do not add a work attributed directly to Fre Seyon (as opposed to a
+follower) without first verifying that specific work's rights status and
+attribution directly, the same standard applied above.
+
+**remix_hint:** "Repaint this image as an Ethiopian Solomonic-era icon:
+flat, unmodeled fields of warm red ochre, gold, and deep blue-green bounded
+by firm black contour outlines, large wide-open frontal eyes gazing
+directly at the viewer, hierarchical scale with the most sacred figure
+largest and centered, simplified linear drapery folds, and a plain or
+minimally patterned background. Preserve the source composition and
+subject."
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -4025,3 +4172,39 @@ museum access should try there before treating this movement as
 permanently excluded. No named artist in Section 44 overlaps with Section
 4's Renaissance entry (Leonardo, Botticelli, Raphael, Dürer) or any other
 prior section.
+
+**v1.25 addition (2026-08-06) re-check.** Section 45 (Ethiopian Icon
+Painting) is an anonymous/tradition-credited entry, so §1.3 prong 1
+(artist died 70+ years ago) is satisfied trivially and by an enormous
+margin — the tradition's makers are either unattributed or, for the one
+named exception (Fre Seyon), documented as active in the mid-15th century,
+roughly 575 years before this policy's 1956 cutoff. Prong 2 (work
+created/published on or before the US 1930 cutoff) is likewise cleared with
+a wide margin by all three example works (early 16th century, late
+15th century, late 17th-early 18th century) — none moves the curriculum's
+most-recent-example-work record (still 1930, §24). The licensing check for
+this entry is what actually took the session's verification time, not the
+date check: The Met Open Access was HTTP 429 rate-limited for the entire
+session (the same intermittent-throttling behavior already noted in §42's
+cycle), and Smithsonian's africa.si.edu and si.edu object pages returned
+HTTP 403 to this session's egress on every attempt, so neither of the
+policy's two most-used tier-1 institutions was reachable this cycle. The
+Walters Art Museum was used instead (a tier-3 "museum open-access terms
+equivalent to PD" institution per §2.2), with its terms read directly at
+https://thewalters.org/about/policies/rights-reproductions/ this cycle
+(confirmed: CC0, unrestricted use including commercial, for images of
+works the museum believes are public domain) — this is the first curriculum
+entry to use the Walters as a source, so this terms-URL record is also this
+institution's first entry into this document's provenance trail. One
+licensing subtlety worth flagging for future cycles: the Wikimedia Commons
+mirror copies of these same three Walters images (uploaded before the
+Walters' 2018 CC0 rollout) are tagged with an older "Creative Commons
+Attribution-Share Alike 3.0" photograph license, which PUBLIC-DOMAIN-POLICY.md
+§2.3 explicitly excludes even though the underlying artwork itself is
+long-since public domain — this session used the Walters' own current
+`art.thewalters.org` object pages instead, which independently confirm CC0
+for the digital image, and recommends any future cycle sourcing from
+Commons cross-check the institution's own current site before relying on
+an older Commons-mirrored license tag, since the two can genuinely
+disagree for the same underlying image. No named artist in Section 45
+overlaps with any other section.
