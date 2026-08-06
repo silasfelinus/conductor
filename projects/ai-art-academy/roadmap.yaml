@@ -1756,17 +1756,17 @@ tasks:
   - id: t-059
     milestone: m6
     title: 'kind_robots: migrate remaining non-manager status-banner classes to .kr-note (follow-up to t-057)'
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    updated: '2026-08-06T05:50:00Z'
+    updated: '2026-08-06T20:27:08Z'
     note: |-
       Follow-up filed from t-057's close-out (2026-08-06, kind_robots PR #1517 merged). t-057 covered the `*manager.vue` slice of the original kaizen sweep (kind_robots PR #1514's own note); this task covers the rest. `grep -rlE "border-(error|warning|success|info)/[0-9]+ bg-(error|warning|success|info)/[0-9]+ text-(error|warning|success|info)" components --include="*.vue"` (run 2026-08-06) found these still-unmigrated files, excluding `components/abandonware/**` (retired, unused) and everything already done in #1514/#1517:
         components/art/add-collection.vue, components/art/art-interact.vue, components/art/art-maker.vue, components/art/generate-button.vue, components/bots/bot-card.vue, components/characters/character-flip-card.vue, components/dreams/daily-dream-generator.vue, components/dreams/dream-brainstorm.vue, components/dreams/dream-sheet-toolbar.vue, components/navigation/maturity-toggle.vue, components/navigation/workspace-narrator.vue, components/pages/conductor-page.vue, components/pages/memory-dungeon.vue, components/resources/resource-gallery.vue, components/rewards/reward-interact.vue, components/scenarios/scenario-interact.vue, components/user/avatar-picker.vue, components/user/password-reset.vue, components/user/user-panel.vue, components/wonderlab/lab-interact.vue, components/wonderlab/reaction-card.vue, components/giftshop/mermaids-pdf-purchase.vue.
       Per t-057's precedent: swap only the color triplet for the matching `.kr-note-{status}` modifier class, do NOT add the `.kr-note` base shape class unless a component's existing shape (padding/text-size/border) already matches `.kr-note`'s own `rounded-2xl p-4 text-sm font-semibold` box model -- check each site individually rather than assuming uniformity. Likely still oversized for one pass (21 files); split by component family (e.g. `art/*`, `user/*`, `dreams/*`) same as t-057 split from the original sweep. Do not run `prettier --write` file-wide on any touched file without first checking `prettier --check` against unmodified `HEAD` -- several files in this app already carry pre-existing formatting drift unrelated to this change (confirmed for the 4 files t-057 touched), and a full reflow balloons an otherwise-small diff into an unrelated whole-file reformat.
-    owner: null
-    claimed_by: null
-    claimed_at: null
+    owner: worker
+    claimed_by: claude-conductor-scheduled-20260806T195700Z-aa-t059
+    claimed_at: '2026-08-06T20:27:08Z'
 
   - id: t-058
     milestone: m6
