@@ -502,11 +502,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-06T07:18:20Z'
+    updated: '2026-08-06T07:24:10Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
@@ -519,6 +519,8 @@ tasks:
       Lane 1 front-end polish cycle (this cycle): the `continuous_improvement` counter had gone stale again (still read `last_lane: 3`/`next_lane: 4` even though the immediately-prior lane-4 Rinpa cycle, kind_robots-adjacent conductor PR #1783, had already closed via the lighter task-events flow — the same recurring nested-mapping-staleness gap `t-058` tracks) — corrected below rather than repeating the already-completed lane 4. Found and fixed a real, scoped accessibility/contrast bug in `art-styler.vue` (shared by Style Lab, Remix Studio, art-manager, image-card, and coloring-page): its style-picker thumbnail grid hardcoded `text-white` over a themed `bg-linear-to-t from-base-300/80` scrim instead of the design system's adaptive `text-base-content`, so in the storybook (light) theme — where `base-300` is ~89% lightness — the label was nearly invisible; it only looked fine in dark mode where `base-300` is ~30% lightness. Fixed to match the identical scrim+caption pattern already used correctly in `academy-style-detail.vue`'s example-works overlay. kind_robots PR #1518. Rotate next to lane 2 roadmap accuracy.
 
       Lane 2 roadmap-accuracy audit completed on the worker branch; opening a focused conductor PR.
+
+      Lane 2 roadmap-accuracy audit merged in conductor PR #1786. It documented roadmap-note regrowth, stale implementation_pr, and claim identity surviving recurring rearm; lane 3 inspiration assets is next.
     continuous_improvement:
       last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
       next_lane: 2
@@ -526,9 +528,6 @@ tasks:
       last_pr: 'silasfelinus/kind_robots#1518'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
     implementation_pr: 'silasfelinus/kind_robots#1502'
-    owner: worker
-    claimed_by: 2026-08-06T071232Z-ai-art-academy-t010-l2-r8p4
-    claimed_at: '2026-08-06T07:12:32Z'
 
   - id: t-015
     milestone: m4
