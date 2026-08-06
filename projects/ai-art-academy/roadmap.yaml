@@ -502,29 +502,23 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-06T13:35:01Z'
+    updated: '2026-08-06T13:45:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
-      Lane 2 roadmap-accuracy cycle (this cycle) corrected the stale `continuous_improvement` counter, migrated four regrown RAN-style paragraphs out of this note into `run_log`, and — as a bonus using this session's full local kind_robots toolchain — implemented the lane-1 audit's previously-documented-but-unapplied aria-controls fix plus a regression contract (kind_robots PR #1528). Rotate next to lane 3 inspiration/preview assets.
-
-      Prepared a prompt-ready four-panel era comparison board brief for the Academy inspiration lane, with a locked subject composition, recognition criteria, rejection criteria, accessible assembly contract, and duplicate-work gate.
-
-      Lane 3 completed in conductor PR #1802: added a prompt-ready four-panel Academy era-comparison board brief with a locked subject composition, recognition and rejection criteria, accessible assembly rules, and a duplicate-work gate. No ArtJobs were queued. Rotate next to lane 4 curriculum depth.
+      Lane 4 curriculum-depth cycle (this cycle) closed the "Lesson seed entries" sync gap instead of adding a 48th movement: synced ethiopian-icon-painting (§45), rinpa-school (§46), and rajput-painting (§47) into kind_robots' `stores/seeds/academyStyles.ts` (kind_robots PR #1529, merged) — curriculum-outline.md and academyStyles.ts are now fully in sync at 47/47. Also migrated the lane-3 cycle's note-only summary into `run_log` (it had never gotten a run_log entry of its own) and corrected the stale `continuous_improvement` counter. Rotate next to lane 1 front-end polish.
     continuous_improvement:
-      last_lane: 2  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 3
-      last_run: '2026-08-06T12:45:00Z'
-      last_pr: 'silasfelinus/conductor#1797'
+      last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 1
+      last_run: '2026-08-06T13:45:00Z'
+      last_pr: 'silasfelinus/kind_robots#1529'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    implementation_pr: 'silasfelinus/kind_robots#1528'
+    implementation_pr: 'silasfelinus/kind_robots#1529'
     owner: worker
-    claimed_by: conductor-scheduled-20260806T133459Z-aa-t010-lane3fix
-    claimed_at: '2026-08-06T13:35:01Z'
 
   - id: t-015
     milestone: m4
