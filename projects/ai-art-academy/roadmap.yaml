@@ -502,25 +502,25 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-06T09:27:53Z'
+    updated: '2026-08-06T09:41:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
-      Lane 4 curriculum-depth cycle (this cycle) promoted Rinpa School from `docs/curriculum-candidates/rinpa-school.md` into `curriculum-outline.md` §46 (v1.26), re-verifying all four cited Met example works live and swapping one out for a confirmed-public-domain substitute after re-check flagged it `isPublicDomain: false`. See run_log for full detail. Rotate next to lane 1 front-end polish.
+      Lane 1 front-end-polish cycle (this cycle) fixed two keyboard-accessibility/consistency gaps in Academy's art-styler surfaces: image-upload.vue's per-thumbnail remove button was hover-only visible with no focus state, and art-styler.vue's two prompt-panel toggles weren't disabled during generation like the textarea next to them. See run_log for full detail. Rotate next to lane 2 roadmap accuracy.
     continuous_improvement:
-      last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 1
-      last_run: '2026-08-06T08:30:02Z'
-      last_pr: 'silasfelinus/conductor#1788'
+      last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 2
+      last_run: '2026-08-06T09:41:00Z'
+      last_pr: 'silasfelinus/conductor#1790'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    implementation_pr: 'silasfelinus/kind_robots#1518'
+    implementation_pr: 'silasfelinus/kind_robots#1521'
     owner: worker
-    claimed_by: conductor-scheduled-20260806T092752Z-lane1
-    claimed_at: '2026-08-06T09:27:53Z'
+    claimed_by: null
+    claimed_at: null
 
   - id: t-015
     milestone: m4
