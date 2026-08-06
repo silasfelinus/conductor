@@ -502,28 +502,22 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-06T04:27:32Z'
+    updated: '2026-08-06T04:36:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
-      Lane 1 front-end polish merged in kind_robots PR #1514: spacing consistency across academy-remix.vue/academy-styles-browser.vue and migrated academy-manager.vue's two hand-written status-banner classes to the `.kr-note`/`.kr-note-error`/`.kr-note-warning` design-system primitives. Rotate next to lane 2 roadmap accuracy.
-
-      Lane 2 roadmap-accuracy pass produced a focused live-task triage audit covering t-044, t-057, milestone state, and the next safe rotation.
-
-      Lane 2 roadmap-accuracy audit merged in conductor PR #1780. It preserves t-044's queued ArtJob evidence, keeps t-057 separate, confirms m2/m6 state, and rotates next to lane 3 inspiration assets.
+      Lane 3 inspiration-assets cycle added a second controlled comparison lesson (`docs/inspiration-sets/four-landscape-temperaments.md`, Hudson River School/Tonalism/Barbizon School/Impressionism on one fixed composition) per the lane-2 audit's guidance to prefer a docs-only deliverable while the render relay stays unhealthy (PENDING=3039, oldest ~102h). Also enqueued the two oldest already-prepared style-preview requests (egyptian-painting job 7697, heidelberg-school job 7698 — both breadcrumbed in art-prompts.yaml, still pending); american-luminism's enqueue hit a transient DB transaction error and is left honestly unconfirmed. Rotate next to lane 4 curriculum depth. See run_log for full detail.
     continuous_improvement:
-      last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 2
-      last_run: '2026-08-06T03:28:44Z'
-      last_pr: 'kind_robots#1514'
+      last_lane: 3  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 4
+      last_run: '2026-08-06T04:36:00Z'
+      last_pr: 'conductor#TBD'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
     implementation_pr: 'silasfelinus/kind_robots#1502'
-    owner: worker
-    claimed_by: claude-agentrun-20260806T042731Z-aa-t010-lane3
     claimed_at: '2026-08-06T04:27:32Z'
 
   - id: t-015
@@ -1750,3 +1744,15 @@ tasks:
     updated: '2026-08-06T03:28:44Z'
     note: |-
       Kaizen from kind_robots PR #1514 (2026-08-06, ai-art-academy/t-010 lane 1). That PR replaced `academy-manager.vue`'s two hand-written `border-{status}/40 bg-{status}/10 text-{status}` status-banner class combinations with the canonical `.kr-note`/`.kr-note-error`/`.kr-note-warning` design-system primitives (`assets/css/tailwind.css`), added specifically to replace this exact drifted pattern. The same hand-written pattern is copy-pasted across roughly 50 other "manager" components app-wide (e.g. `components/art/art-manager.vue`) — a mechanical, high-confidence sweep to migrate them all to `.kr-note` would be a good follow-up. Grep for `border-{status}/40 bg-{status}/10 text-{status}`-shaped class strings (or the `error`/`warning`/`success`/`info` variants) across `components/**/*.vue`, replace each with the matching `.kr-note-*` primitive, verify no visual/behavioral regression (eslint + prettier + vue-tsc clean, spot-check a few components' rendered banners). Likely oversized for one pass — split into a few scoped PRs by component family if the full sweep is too large for the 3-pass iteration budget.
+
+  - id: t-058
+    milestone: m6
+    title: 'conductor tooling: let set_task_field.py/close_task.py reach nested continuous_improvement fields on t-010'
+    status: ready
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-06T04:36:00Z'
+    note: |-
+      Kaizen from ai-art-academy/t-010 lane 3 (2026-08-06). `t-010`'s `continuous_improvement.last_lane`/`next_lane` counter has now gone stale at least three times in the last two days whenever a lane closes via a lightweight path (a direct docs commit, or the `review`/`rearm` task-events flow) instead of `close_task.py`: `set_task_field.py`'s `ALLOWED_FIELDS` and `set_task_field_text()` only ever touch a task's top-level scalar keys, never a nested mapping like `continuous_improvement`, and `process_task_events.py`'s `rearm`/`ready`/`done` ops never write it either — only `close_task.py --set` (or a hand-edit, as this cycle did) actually advances it. Each staleness has needed a manual `git`-level fix by whichever cycle happened to notice the note prose disagreed with the counter (see root `TALKBACK.md` 2026-08-06 and this project's `docs/continuous-improvement-run-log.md` 2026-08-06 entries for the specific instances).
+
+      Fix the underlying tooling gap rather than relying on every future cycle to notice and hand-fix it again: extend `set_task_field.py` (and therefore `close_task.py --set`, which reuses it) to accept a dotted field path (e.g. `--set continuous_improvement.last_lane=3`) that reaches one key inside an existing nested mapping, OR — the lighter alternative, if dotted-path parsing/rendering for a nested YAML mapping proves fiddly given `set_task_field_text`'s block-scalar-aware line editing — add a small dedicated helper (e.g. `scripts/bump_continuous_improvement.py <project> <task-id> --lane N --pr <ref>`) that every `t-010`-style recurring-lane task can call from its own close-out instead of hand-editing. Either way: add regression tests (this repo's existing `tests/test_set_task_field.py`-style coverage, or a new file for the helper) proving the nested field updates correctly and every other field/formatting on the task block is left untouched. Out of scope: migrating every existing lightweight close path to use the new mechanism — this task is just the capability; a follow-up can wire it in per close-out site if still needed once it exists.
