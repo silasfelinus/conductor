@@ -502,20 +502,20 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-06T18:28:35Z'
+    updated: '2026-08-06T19:31:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
-      Lane 2 roadmap-accuracy cycle: migrated regrown note paragraphs into `run_log`, fixed `implementation_pr` staleness, and used `scripts/bump_continuous_improvement.py` (t-058) to correct the counter. See `run_log` for the full cycle summary. Rotate next to lane 3 inspiration/preview assets.
+      Lane 3 inspiration-assets cycle: queued preview requests for the 3 remaining style gaps (ethiopian-icon-painting, rinpa-school, rajput-painting), closing verify_academy_style_preview_coverage.py's real-gap count to 0. See `run_log` for the full cycle summary. PR #1809 is in review; rearm to lane 4 (curriculum depth) is filed as a task-event after merge, per docs/github-connector-worker.md's review-before-merge / rearm-after-merge sequencing (this cycle's own review flagged the prior version of this commit for rearming too early).
     continuous_improvement:
-      last_lane: 2  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 3
-      last_run: '2026-08-06T15:44:00Z'
-      last_pr: 'silasfelinus/conductor#1806'
+      last_lane: 3  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 4
+      last_run: '2026-08-06T18:31:51Z'
+      last_pr: 'silasfelinus/conductor#1809'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
     implementation_pr: 'silasfelinus/kind_robots#1530'
     owner: worker

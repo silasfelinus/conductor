@@ -491,6 +491,76 @@ requests:
     a restrained acidic jewel-toned palette of cool pinks, acid greens, and deep blues, shallow
     ambiguous pictorial space against a plain dark ground, technical virtuosity presented as
     sophistication rather than error, centered square composition, no text, no watermark'
+- id: kind-robots-academy-style-preview-ethiopian-icon-painting
+  source: ai-art-academy-style-preview
+  status: pending
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/academy/styles/ethiopian-icon-painting.webp
+  variant: image
+  size: 256x256
+  label: 'Academy style preview: Ethiopian Icon Painting'
+  note: 'Queued 2026-08-06 (ai-art-academy/t-010 lane 3, conductor scheduled cycle): the same
+    seed-ahead-of-asset gap the fauvism/tonalism/barbizon-school entries above document --
+    academyStyles.ts''s ethiopian-icon-painting entry (landed 2026-08-06 lane 4, curriculum
+    §45) already sets previewImageSrc pointing at this path but no request had ever been
+    queued for it, and the file 404s at media.acrocatranch.com. verify_academy_style_preview_coverage.py
+    flagged this as one of 3 real gaps this cycle. Not submitted live -- recheck_render_queue.py
+    read `growing` with a large backlog (PENDING~3100, oldestPending ~116h) and job 7699
+    (spanish-golden-age, submitted the prior cycle) is still PENDING with no failure, confirming
+    the relay is reachable but genuinely backed up rather than down -- a future cycle should
+    re-check queue health before running consume_art_requests.py --live against this id.'
+  prompt: 'A museum-quality example of an Ethiopian Orthodox Tewahedo icon painting: a devotional
+    tempera panel with large, wide-open, almond-shaped eyes gazing directly and frontally at
+    the viewer, flat unmodeled fields of color bounded by firm black contour outlines with no
+    cast shadow or atmospheric blending, a warm saturated palette of red ochre, gold, and deep
+    blue-green, strict frontal symmetry with the most sacred figure largest and centered,
+    simplified linear drapery folds, a plain or minimally patterned background, centered square
+    composition, no text, no watermark'
+- id: kind-robots-academy-style-preview-rinpa-school
+  source: ai-art-academy-style-preview
+  status: pending
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/academy/styles/rinpa-school.webp
+  variant: image
+  size: 256x256
+  label: 'Academy style preview: Rinpa School'
+  note: 'Queued 2026-08-06 (ai-art-academy/t-010 lane 3, conductor scheduled cycle): same gap
+    class as ethiopian-icon-painting above -- academyStyles.ts''s rinpa-school entry (curriculum
+    §46) already sets previewImageSrc but no request had ever been queued, and the file 404s
+    at media.acrocatranch.com. Not submitted live this cycle -- see ethiopian-icon-painting
+    above for the render-queue health check this note relies on.'
+  prompt: 'A museum-quality example of a Japanese Rinpa-school decorative painting: a broad
+    gold- or silver-leaf ground that removes ordinary landscape depth and unifies the composition
+    as flat decorative surface, an asymmetrical arrangement of flowers, grasses, or water cropped
+    by the edge rather than centered, bold simplified silhouettes paired with a few sharply
+    observed botanical details, pools of wet ink and color blooming into soft-edged forms set
+    beside crisp contour line, repeated natural motifs arranged as visual rhythm, generous
+    deliberate empty space, centered square composition, no text, no watermark'
+- id: kind-robots-academy-style-preview-rajput-painting
+  source: ai-art-academy-style-preview
+  status: pending
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/academy/styles/rajput-painting.webp
+  variant: image
+  size: 256x256
+  label: 'Academy style preview: Rajput Painting'
+  note: 'Queued 2026-08-06 (ai-art-academy/t-010 lane 3, conductor scheduled cycle): same gap
+    class as ethiopian-icon-painting/rinpa-school above -- academyStyles.ts''s rajput-painting
+    entry (curriculum §47) already sets previewImageSrc but no request had ever been queued,
+    and the file 404s at media.acrocatranch.com. Not submitted live this cycle -- see
+    ethiopian-icon-painting above for the render-queue health check this note relies on. This
+    clears all 3 real gaps verify_academy_style_preview_coverage.py found this cycle (0 real
+    gaps remaining; 8 requests now queued awaiting delivery: american-luminism, egyptian-painting,
+    ethiopian-icon-painting, heidelberg-school, mannerism, rajput-painting, rinpa-school,
+    spanish-golden-age).'
+  prompt: 'A museum-quality example of a Rajput court painting from Rajasthan: flat fields of
+    intensely saturated red, yellow ochre, and ultramarine rather than atmospheric shading or
+    naturalistic gradation, a confident continuous outline defining figures and drapery, large
+    almond-shaped eyes rendered in profile or three-quarter view, a devotional or lyrical
+    subject such as Krishna and Radha, architecture and landscape flattened into decorative
+    pattern rather than receding in depth, gold used sparingly for jewelry or thrones only
+    against a flat color ground, a plain or single-color background, centered square composition,
+    no text, no watermark'
 - id: "kind-robots-profile-image-95ed965e-msbmggtx"
   last_art_job_id: 4845
   source: "kind-robots-missing-image"
