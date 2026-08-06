@@ -1,0 +1,102 @@
+name: Daily digest retry watchdog
+
+# The primary digest can be cancelled before its first step when GitHub Actions
+# cannot allocate a runner or download actions. These later checks use only
+# runner-bundled gh/jq tools, so they can re-run the original workflow without
+# depending on checkout/setup actions themselves.
+
+on:
+  schedule:
+    - cron: "0 16 * * *" # First fallback, one hour after the primary digest.
+    - cron: "0 18 * * *" # Second fallback for a longer Actions outage.
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: daily-digest-retry-watchdog
+  cancel-in-progress: false
+
+jobs:
+  retry-digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Re-run a failed or missing daily digest
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          WORKFLOW_FILE: daily-digest.yml
+          MAX_ATTEMPTS: "3"
+        run: |
+          set -euo pipefail
+
+          today="$(date -u +%F)"
+          runs="$(
+            gh api --method GET \
+              "repos/${GITHUB_REPOSITORY}/actions/workflows/${WORKFLOW_FILE}/runs" \
+              -f branch=main \
+              -f per_page=20
+          )"
+
+          # Include both the primary scheduled run and any replacement dispatched by
+          # an earlier watchdog pass. Otherwise the later watchdog sees "no schedule"
+          # again and can dispatch a duplicate email run outside the retry cap.
+          run="$(
+            jq -c --arg today "${today}" '
+              [.workflow_runs[]
+                | select(.event == "schedule" or .event == "workflow_dispatch")
+                | select(.created_at | startswith($today))]
+              | sort_by(.created_at)
+              | last // empty
+            ' <<<"${runs}"
+          )"
+
+          if [[ -z "${run}" ]]; then
+            echo "::warning::No daily-digest run exists for ${today}; dispatching one."
+            gh api --method POST \
+              "repos/${GITHUB_REPOSITORY}/actions/workflows/${WORKFLOW_FILE}/dispatches" \
+              -f ref=main \
+              -F 'inputs[send_email]=true' \
+              --silent
+            exit 0
+          fi
+
+          run_id="$(jq -r '.id' <<<"${run}")"
+          status="$(jq -r '.status' <<<"${run}")"
+          conclusion="$(jq -r '.conclusion // ""' <<<"${run}")"
+          attempt="$(jq -r '.run_attempt // 1' <<<"${run}")"
+          run_url="$(jq -r '.html_url' <<<"${run}")"
+
+          echo "Latest digest: status=${status} conclusion=${conclusion:-pending} attempt=${attempt} ${run_url}"
+
+          if [[ "${status}" != "completed" ]]; then
+            echo "::notice::The digest is still ${status}; leaving it alone."
+            exit 0
+          fi
+
+          if [[ "${conclusion}" == "success" ]]; then
+            echo "::notice::Today's digest already succeeded; no retry needed."
+            exit 0
+          fi
+
+          case "${conclusion}" in
+            action_required|cancelled|failure|startup_failure|stale|timed_out)
+              ;;
+            *)
+              echo "::warning::Digest conclusion '${conclusion}' is not retryable; leaving it for investigation."
+              exit 0
+              ;;
+          esac
+
+          if (( attempt >= MAX_ATTEMPTS )); then
+            echo "::error::Daily digest exhausted ${MAX_ATTEMPTS} attempts: ${run_url}"
+            exit 1
+          fi
+
+          echo "::warning::Re-running daily digest ${run_id} after ${conclusion} (attempt ${attempt}/${MAX_ATTEMPTS})."
+          gh api --method POST \
+            "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}/rerun" \
+            --silent
