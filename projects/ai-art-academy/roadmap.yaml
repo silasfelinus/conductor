@@ -502,7 +502,7 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
@@ -510,18 +510,12 @@ tasks:
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
-      Lane 3 inspiration-assets cycle closed the gap t-055 explicitly deferred: that task's 2026-08-05 note confirmed `mannerism` had no `previewImageSrc` at all and left it "for a future lane-3 cycle to queue." verify_academy_style_preview_coverage.py itself still reports zero gaps (it only audits slugs that already set the field, so a missing field is invisible to it) -- a manual sweep of all 44 academyStyles.ts entries found `mannerism` plus one more instance of the same gap class, `spanish-golden-age`. Added `previewImageSrc` to both in kind_robots PR #1523, and queued both as art-prompts.yaml requests (`kind-robots-academy-style-preview-spanish-golden-age`/`-mannerism`). Submitted the spanish-golden-age request live: job 7699 queued successfully (relay healthy, unlike the 2026-08-05 lane-3 cycle's 503), but stayed PENDING through the poll window against a large all-time backlog (~3000 pending, oldest ~108h) -- a slow queue, not a failure. Left mannerism un-submitted to avoid a second long poll in one cycle. Rotate next to lane 4 curriculum depth.
-
-      Lane 4 curriculum-depth cycle (this cycle) added Section 47, Rajput Painting (`rajput-painting`), to curriculum-outline.md — the Hindu-court counterpart to the imperial Mughal atelier already covered in Section 27, distinguished by flat saturated color fields, continuous bold outline, and devotional/lyrical (rather than dynastic-narrative) subject matter, including a ragamala musical-mode example with no equivalent elsewhere in the curriculum. All three example works (Bikaner, Kishangarh, and Sirohi court paintings, ca. 1680-1735) are anonymous per the Metropolitan Museum of Art's own records, so the death-date prong of PUBLIC-DOMAIN-POLICY.md §1.3 is trivially satisfied; all three were checked live against the Met Collection API this cycle (`isPublicDomain: true`) rather than assumed from a search listing. A fourth candidate with a named artist (Chokha, 1799-1826, well clear of the death-date threshold) was checked the same way and excluded: `isPublicDomain: false`. This is a curriculum-outline.md-only change (conductor side); mirroring the new style into kind_robots' academyStyles.ts front-end seed is separate follow-on work, matching how Sections 43-46 were each landed here first and mirrored later by their own dedicated task. Rotate next to lane 1 front-end polish.
-
-      Lane 1 audited the Academy style gallery disclosure semantics and documented a verified broken aria-controls relationship with an exact repair and regression-test recommendation.
-
-      Merged conductor PR #1796 after Process task events run 31100816332, Security Audit run 31100816397, and Worker PR CI run 31100816403 completed successfully. The lane-1 audit documents the verified Academy style-gallery aria-controls defect and exact repair. Rotate next to lane 2 roadmap accuracy.
+      Lane 2 roadmap-accuracy cycle (this cycle) corrected the stale `continuous_improvement` counter, migrated four regrown RAN-style paragraphs out of this note into `run_log`, and — as a bonus using this session's full local kind_robots toolchain — implemented the lane-1 audit's previously-documented-but-unapplied aria-controls fix plus a regression contract (kind_robots PR #1528). Rotate next to lane 3 inspiration/preview assets.
     continuous_improvement:
-      last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 1
-      last_run: '2026-08-06T11:32:00Z'
-      last_pr: 'silasfelinus/conductor#1793'
+      last_lane: 2  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 3
+      last_run: '2026-08-06T12:45:00Z'
+      last_pr: 'silasfelinus/conductor#TBD'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
     implementation_pr: null
     owner: worker
