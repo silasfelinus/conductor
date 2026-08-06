@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-08-06T14:35:31.547220+00:00",
+  "generated_at": "2026-08-06T15:44:15.628621+00:00",
   "summary": {
     "roadmaps": 45,
     "active_projects": 27,
     "tasks": 885,
-    "ready": 44,
+    "ready": 43,
     "waiting": 47,
     "needs_human": 12,
     "in_progress": 1,
-    "done": 771,
+    "done": 772,
     "errors": 0,
-    "warnings": 8,
+    "warnings": 9,
     "info": 65
   },
   "projects": [
@@ -59,17 +59,17 @@
       "task_count": 60,
       "counts": {
         "claimed": 1,
-        "done": 55,
-        "ready": 3,
+        "done": 56,
+        "ready": 2,
         "waiting": 1
       },
-      "open_count": 5,
+      "open_count": 4,
       "human_attention": 0,
-      "ready": 3,
+      "ready": 2,
       "waiting": 1,
       "claimed": 1,
       "review": 0,
-      "done": 55
+      "done": 56
     },
     {
       "slug": "coloring-book",
@@ -871,6 +871,13 @@
     }
   ],
   "findings": [
+    {
+      "severity": "warning",
+      "code": "CONTINUOUS_IMPROVEMENT_NOTE_DRIFT",
+      "project": "ai-art-academy",
+      "task": "t-010",
+      "message": "Task note mentions a lane rotation but continuous_improvement.last_run predates the task's updated timestamp \u2014 the continuous_improvement block (last_lane/next_lane/last_run/last_pr) may be stale relative to the note."
+    },
     {
       "severity": "warning",
       "code": "ACTIVE_PROJECT_ALL_DONE",
