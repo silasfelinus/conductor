@@ -38,20 +38,24 @@ jobs:
             gh api --method GET \
               "repos/${GITHUB_REPOSITORY}/actions/workflows/${WORKFLOW_FILE}/runs" \
               -f branch=main \
-              -f event=schedule \
               -f per_page=20
           )"
 
+          # Include both the primary scheduled run and any replacement dispatched by
+          # an earlier watchdog pass. Otherwise the later watchdog sees "no schedule"
+          # again and can dispatch a duplicate email run outside the retry cap.
           run="$(
             jq -c --arg today "${today}" '
-              [.workflow_runs[] | select(.created_at | startswith($today))]
+              [.workflow_runs[]
+                | select(.event == "schedule" or .event == "workflow_dispatch")
+                | select(.created_at | startswith($today))]
               | sort_by(.created_at)
               | last // empty
             ' <<<"${runs}"
           )"
 
           if [[ -z "${run}" ]]; then
-            echo "::warning::No scheduled daily-digest run exists for ${today}; dispatching one."
+            echo "::warning::No daily-digest run exists for ${today}; dispatching one."
             gh api --method POST \
               "repos/${GITHUB_REPOSITORY}/actions/workflows/${WORKFLOW_FILE}/dispatches" \
               -f ref=main \
@@ -66,7 +70,7 @@ jobs:
           attempt="$(jq -r '.run_attempt // 1' <<<"${run}")"
           run_url="$(jq -r '.html_url' <<<"${run}")"
 
-          echo "Latest scheduled digest: status=${status} conclusion=${conclusion:-pending} attempt=${attempt} ${run_url}"
+          echo "Latest digest: status=${status} conclusion=${conclusion:-pending} attempt=${attempt} ${run_url}"
 
           if [[ "${status}" != "completed" ]]; then
             echo "::notice::The digest is still ${status}; leaving it alone."
