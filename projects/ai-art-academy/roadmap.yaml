@@ -1771,10 +1771,10 @@ tasks:
   - id: t-058
     milestone: m6
     title: 'conductor tooling: let set_task_field.py/close_task.py reach nested continuous_improvement fields on t-010'
-    status: review
+    status: done
     passes: 0
     stakes: reversible
-    updated: '2026-08-06T12:51:12Z'
+    updated: '2026-08-06T12:59:47Z'
     note: |-
       Kaizen from ai-art-academy/t-010 lane 3 (2026-08-06). `t-010`'s `continuous_improvement.last_lane`/`next_lane` counter has now gone stale at least three times in the last two days whenever a lane closes via a lightweight path (a direct docs commit, or the `review`/`rearm` task-events flow) instead of `close_task.py`: `set_task_field.py`'s `ALLOWED_FIELDS` and `set_task_field_text()` only ever touch a task's top-level scalar keys, never a nested mapping like `continuous_improvement`, and `process_task_events.py`'s `rearm`/`ready`/`done` ops never write it either — only `close_task.py --set` (or a hand-edit, as this cycle did) actually advances it. Each staleness has needed a manual `git`-level fix by whichever cycle happened to notice the note prose disagreed with the counter (see root `TALKBACK.md` 2026-08-06 and this project's `docs/continuous-improvement-run-log.md` 2026-08-06 entries for the specific instances).
 
@@ -1782,6 +1782,7 @@ tasks:
     owner: worker
     claimed_by: conductor-scheduled-20260806T125500Z-aa-t058
     claimed_at: '2026-08-06T12:51:12Z'
+    implementation_pr: 'silasfelinus/conductor#1799'
 
   - id: t-060
     milestone: m6
