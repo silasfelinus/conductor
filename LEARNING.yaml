@@ -6822,3 +6822,26 @@ records:
     once past CLAIM_TTL_MINUTES rather than assuming it''s still in flight. Also: art-prompts.yaml alone is not a reliable
     coverage signal for delivered assets since fulfilled entries get pruned -- a live delivery check is required to tell
     "already fine" from "needs a request," which is why verify_academy_style_preview_coverage.py checks live by default.'
+- date: '2026-08-06'
+  project: ai-art-academy
+  task: t-060
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Clean first-pass extension of verify_academy_style_preview_coverage.py: the fix (an
+    independent full-slug enumeration diffed against the previewImageSrc-scoped set) was
+    exactly the shape the task note prescribed, and the current academyStyles.ts already
+    has 0 slugs in the new gap category -- proved via synthetic fixtures instead of a
+    live regression. Merge took much longer than the diff warranted: the repo's default
+    GitHub code-scanning CodeQL "Analyze (javascript-typescript)" job sat in
+    "Perform CodeQL Analysis" unchanged for 50+ minutes (vs. ~5 min for the identical job
+    on the immediately-prior PR #1803), while every actually repo-tracked CI check in
+    ci.yml passed within a minute. It isn't a repo-tracked workflow file, so it's a
+    default code-scanning setup job, not one AGENTS.md's "confirm the checks themselves"
+    guidance was written to gate on -- confirmed non-blocking by GitHub's own merge
+    endpoint accepting the merge while it was still in_progress. Worth noting for the
+    next session that sees a lone Analyze(*) job stuck this long: it's very likely
+    non-required scanning-infra slowness, not a real signal about this PR's diff.
