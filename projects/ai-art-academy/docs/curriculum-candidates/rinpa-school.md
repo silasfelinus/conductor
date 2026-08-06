@@ -23,11 +23,23 @@ The lesson also gives the Academy a useful example of a tradition transmitted th
 
 ## Generation anchors
 
-- **Ogata Kōrin** (1658–1716), the central namesake figure. The Metropolitan Museum of Art describes *Flowers of Spring and Autumn* as combining highly stylized natural elements with Chinese-style ink training.
-- **Sakai Hōitsu** (1761–1828), leader of the Edo Rinpa revival. The Met identifies him as one of the most important late-Edo Rinpa painters and documents his seasonal, literary compositions.
-- **Suzuki Kiitsu** (1796–1858), Hōitsu's leading pupil, useful for the movement's later crisp, dramatic botanical forms.
+### Ogata Kōrin
 
-All three artists clear the Academy's conservative death-date rule.
+Ogata Kōrin (1658–1716) is the central namesake figure. The Metropolitan Museum of Art describes *Flowers of Spring and Autumn* as combining highly stylized natural elements with Chinese-style ink training.
+
+Rights boundary: Kōrin died in 1716 and clears the Academy's conservative death-date threshold. Display still requires an item-level museum rights statement; generation may use his name only while the current public-domain policy continues to permit dead-artist anchors this old.
+
+### Sakai Hōitsu
+
+Sakai Hōitsu (1761–1828) led the Edo Rinpa revival. The Met identifies him as one of the most important late-Edo Rinpa painters and documents his seasonal, literary compositions.
+
+Rights boundary: Hōitsu died in 1828 and clears the death-date threshold. Verify each displayed object and digital image independently before front-end use.
+
+### Suzuki Kiitsu
+
+Suzuki Kiitsu (1796–1858), Hōitsu's leading pupil, is useful for the movement's later crisp, dramatic botanical forms.
+
+Rights boundary: Kiitsu died in 1858. His works are old enough for movement-level historical study, but displayed examples still require item-level rights verification; do not infer image rights from artist death date alone.
 
 ## Verified example works
 
@@ -47,20 +59,93 @@ All three artists clear the Academy's conservative death-date rule.
    Metropolitan Museum of Art, object 748253. Mounted painting pairing Kiitsu's Mount Fuji with autumn flowers by another Hōitsu pupil; the Met records Kiitsu as Hōitsu's prolific and highly regarded student.  
    https://www.metmuseum.org/art/collection/search/748253
 
-## Remix prompt
+## Public-domain and generation policy
 
-> Repaint this image as a Rinpa-school folding-screen composition: broad gold-leaf ground with no ordinary horizon, an asymmetrical cropped arrangement of seasonal flowers, grasses, trees, or water, bold simplified silhouettes mixed with a few precise botanical details, pooled ink-and-color edges, rhythmic repetition, generous empty space, and an elegant decorative surface rather than realistic depth.
+This candidate is suitable for movement-level curriculum and testing. Promotion must preserve the distinction between artwork copyright, object-record availability, and the rights attached to a museum's digital image.
 
-## Negative guidance
+For display:
 
-Avoid woodblock-print outlines, actor portraits, street scenes, photographic depth, atmospheric landscape recession, fully modeled shadows, dense all-over detail, or generic "Japanese watercolor" shorthand. The result should read as a designed screen or decorative panel, not an Ukiyo-e print or a naturalistic botanical illustration.
+1. Record creator, title, date, collection, object URL, and the institution's explicit image-rights statement.
+2. Prefer downloadable museum images marked Public Domain or CC0.
+3. Treat an old artwork with unclear digital-image terms as metadata-only until rights are confirmed.
+4. Do not hotlink an image merely because the object page is public.
+
+For generation:
+
+- prefer the movement-level prompt below;
+- protect uploaded subject identity and major composition;
+- use Kōrin, Hōitsu, or Kiitsu only as historically eligible anchors under the current policy;
+- exclude modern Rinpa-inspired artists and contemporary brand or illustrator names;
+- avoid turning Japanese identity into costume, calligraphy garnish, or generic "Zen" atmosphere.
+
+## Movement-level remix configuration
+
+```yaml
+slug: rinpa-school
+mode: prompt
+label: Rinpa School
+instruction: >-
+  Repaint the source as a Rinpa-school folding-screen composition: a broad gold-
+  or silver-leaf ground with no ordinary horizon, an asymmetrical cropped arrangement
+  of seasonal flowers, grasses, trees, or water, bold simplified silhouettes mixed
+  with a few precise botanical details, pooled ink-and-color edges, rhythmic repetition,
+  generous empty space, and an elegant decorative surface rather than realistic depth.
+negative_guidance:
+  - woodblock-print outlines
+  - actor portraits or urban street scenes
+  - photographic depth or cast shadows
+  - atmospheric landscape recession
+  - dense all-over detail
+  - generic Japanese watercolor shorthand
+  - invented calligraphy or identity costume
+preserve:
+  - subject identity
+  - major composition
+  - intended emotional register
+```
+
+## Try It — one subject, three surfaces
+
+Use one simple source containing a branch, flower, animal, or household object. Keep its identity and placement fixed while testing three Rinpa surface decisions:
+
+1. Gold ground with broad cropped silhouettes.
+2. Silver ground with pooled ink and larger empty areas.
+3. Plain paper with rhythmic repeated seasonal motifs.
+
+A successful comparison should change decorative structure and spatial logic, not merely recolor the source.
+
+## Common generation failures
+
+### Ukiyo-e drift
+
+Symptoms: heavy black print outlines, flat commercial-print color, cartouches, actors, or street scenes.
+
+Correction: specify folding screen, metallic ground, pooled ink, botanical rhythm, and empty space.
+
+### Generic botanical illustration
+
+Symptoms: centered specimen, white background, evenly described leaves, no asymmetry or decorative rhythm.
+
+Correction: crop the motif, introduce metallic ground, repeat forms selectively, and remove ordinary depth.
+
+### Gold wallpaper
+
+Symptoms: realistic subject pasted over a gold texture with no compositional transformation.
+
+Correction: flatten the forms, rebuild the negative space, and make repetition and cropping carry the composition.
 
 ## Promotion checklist
 
-- [x] Distinct from an existing curriculum movement
-- [x] At least three dead-artist generation anchors
-- [x] At least three institution-hosted example records
-- [x] Recognition cues and remix prompt are concrete enough to test
-- [x] Public-domain-policy death-date threshold is satisfied
-- [ ] Mirror into `docs/curriculum-outline.md`
-- [ ] Add a matching front-end seed entry and preview request in a later scoped cycle
+Before this candidate becomes a front-end Academy style:
+
+- [x] Distinct from an existing curriculum movement.
+- [x] At least three dead-artist generation anchors.
+- [x] At least three institution-hosted example records.
+- [x] Recognition cues and remix prompt are concrete enough to test.
+- [x] Public-domain-policy death-date threshold is satisfied.
+- [ ] Rights verification records artwork and digital-image status for every displayed example.
+- [ ] Representation review confirms the lesson distinguishes Rinpa from generic Japanese visual shorthand.
+- [x] No protected artist name appears in the generation instruction.
+- [ ] The movement-level prompt is tested for Ukiyo-e drift and subject-identity loss.
+- [ ] Mirror the approved lesson into `docs/curriculum-outline.md`.
+- [ ] Add a matching front-end seed entry and preview request in a later scoped cycle.
