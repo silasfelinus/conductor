@@ -502,25 +502,22 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-06T02:27:53Z'
+    updated: '2026-08-06T03:28:44Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
-      Lane 4 curriculum-depth pass complete: added Ethiopian Icon Painting (curriculum-outline.md §45), the curriculum's first entry from the African continent, sourced from the Walters Art Museum (CC0) since the Met was rate-limited and Smithsonian object pages 403'd this session. Not yet synced into kind_robots' academyStyles.ts. Rotate next to lane 1 front-end polish.
+      Lane 1 front-end polish merged in kind_robots PR #1514: spacing consistency across academy-remix.vue/academy-styles-browser.vue and migrated academy-manager.vue's two hand-written status-banner classes to the `.kr-note`/`.kr-note-error`/`.kr-note-warning` design-system primitives. Rotate next to lane 2 roadmap accuracy.
     continuous_improvement:
-      last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 1
-      last_run: '2026-08-06T01:37:00Z'
-      last_pr: 'conductor PR (this cycle)'
+      last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 2
+      last_run: '2026-08-06T03:28:44Z'
+      last_pr: 'kind_robots#1514'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
     implementation_pr: 'silasfelinus/kind_robots#1502'
-    owner: worker
-    claimed_by: agent-20260806T022753Z-aa-t010-lane1
-    claimed_at: '2026-08-06T02:27:53Z'
 
   - id: t-015
     milestone: m4
@@ -1736,3 +1733,13 @@ tasks:
       Added scripts/list_curriculum_coverage.py, a read-only reporter that parses curriculum-outline.md's machine-readable skeleton YAML block and prints each movement's slug/name/era/artist/example coverage in file, era, or slug order, plus an --overlaps flag that flags era-range overlaps worth double-checking before adding a new movement. No `region` field exists in the skeleton (only slug/name/era/artist_slugs/example_count/remix_hint), so region-based grouping mentioned in the original kaizen note wasn't implemented — era-based sorting and overlap detection cover the same "spot a gap before adding a new entry" goal with the fields that actually exist. 10 new pytest cases in tests/test_list_curriculum_coverage.py (synthetic skeleton fixture plus one smoke test against the real file), all passing. Full pytest suite run: 875 passed, 1 skipped, 4 pre-existing failures in tests/test_build_digest_email_v2.py unrelated to this change (a Python 3.12+ f-string-with-backslash syntax construct that this sandbox's Python 3.11 can't parse -- confirmed pre-existing via git log on that file).
     claimed_by: 2026-08-05T134200Z-ai-art-academy-t056-qcm
     claimed_at: '2026-08-05T13:38:18+00:00'
+
+  - id: t-057
+    milestone: m6
+    title: 'kind_robots: migrate remaining hand-written status-banner classes to .kr-note across manager components'
+    status: ready
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-06T03:28:44Z'
+    note: |-
+      Kaizen from kind_robots PR #1514 (2026-08-06, ai-art-academy/t-010 lane 1). That PR replaced `academy-manager.vue`'s two hand-written `border-{status}/40 bg-{status}/10 text-{status}` status-banner class combinations with the canonical `.kr-note`/`.kr-note-error`/`.kr-note-warning` design-system primitives (`assets/css/tailwind.css`), added specifically to replace this exact drifted pattern. The same hand-written pattern is copy-pasted across roughly 50 other "manager" components app-wide (e.g. `components/art/art-manager.vue`) — a mechanical, high-confidence sweep to migrate them all to `.kr-note` would be a good follow-up. Grep for `border-{status}/40 bg-{status}/10 text-{status}`-shaped class strings (or the `error`/`warning`/`success`/`info` variants) across `components/**/*.vue`, replace each with the matching `.kr-note-*` primitive, verify no visual/behavioral regression (eslint + prettier + vue-tsc clean, spot-check a few components' rendered banners). Likely oversized for one pass — split into a few scoped PRs by component family if the full sweep is too large for the 3-pass iteration budget.
