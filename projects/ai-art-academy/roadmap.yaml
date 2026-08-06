@@ -1771,14 +1771,17 @@ tasks:
   - id: t-058
     milestone: m6
     title: 'conductor tooling: let set_task_field.py/close_task.py reach nested continuous_improvement fields on t-010'
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    updated: '2026-08-06T04:36:00Z'
+    updated: '2026-08-06T12:51:12Z'
     note: |-
       Kaizen from ai-art-academy/t-010 lane 3 (2026-08-06). `t-010`'s `continuous_improvement.last_lane`/`next_lane` counter has now gone stale at least three times in the last two days whenever a lane closes via a lightweight path (a direct docs commit, or the `review`/`rearm` task-events flow) instead of `close_task.py`: `set_task_field.py`'s `ALLOWED_FIELDS` and `set_task_field_text()` only ever touch a task's top-level scalar keys, never a nested mapping like `continuous_improvement`, and `process_task_events.py`'s `rearm`/`ready`/`done` ops never write it either — only `close_task.py --set` (or a hand-edit, as this cycle did) actually advances it. Each staleness has needed a manual `git`-level fix by whichever cycle happened to notice the note prose disagreed with the counter (see root `TALKBACK.md` 2026-08-06 and this project's `docs/continuous-improvement-run-log.md` 2026-08-06 entries for the specific instances).
 
       Fix the underlying tooling gap rather than relying on every future cycle to notice and hand-fix it again: extend `set_task_field.py` (and therefore `close_task.py --set`, which reuses it) to accept a dotted field path (e.g. `--set continuous_improvement.last_lane=3`) that reaches one key inside an existing nested mapping, OR — the lighter alternative, if dotted-path parsing/rendering for a nested YAML mapping proves fiddly given `set_task_field_text`'s block-scalar-aware line editing — add a small dedicated helper (e.g. `scripts/bump_continuous_improvement.py <project> <task-id> --lane N --pr <ref>`) that every `t-010`-style recurring-lane task can call from its own close-out instead of hand-editing. Either way: add regression tests (this repo's existing `tests/test_set_task_field.py`-style coverage, or a new file for the helper) proving the nested field updates correctly and every other field/formatting on the task block is left untouched. Out of scope: migrating every existing lightweight close path to use the new mechanism — this task is just the capability; a follow-up can wire it in per close-out site if still needed once it exists.
+    owner: worker
+    claimed_by: conductor-scheduled-20260806T125500Z-aa-t058
+    claimed_at: '2026-08-06T12:51:12Z'
 
   - id: t-060
     milestone: m6
