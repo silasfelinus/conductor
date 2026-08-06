@@ -1785,10 +1785,10 @@ tasks:
   - id: t-060
     milestone: m6
     title: 'kind_robots: extend verify_academy_style_preview_coverage.py to flag academyStyles.ts entries missing previewImageSrc entirely'
-    status: review
+    status: done
     passes: 0
     stakes: reversible
-    updated: '2026-08-06T14:32:12Z'
+    updated: '2026-08-06T14:40:58Z'
     note: |-
       Kaizen from ai-art-academy/t-010 lane 3 (2026-08-06, kind_robots PR #1523). `scripts/verify_academy_style_preview_coverage.py` (added by t-055) only cross-references slugs that already set `previewImageSrc` against live delivery and `art-prompts.yaml` — it has no way to see a slug where the field is absent from the object entirely, since it never enumerates `academyStyles.ts` independently of that field. This exact blind spot let `mannerism` and `spanish-golden-age` sit with no preview-image slot at all (not merely undelivered) until a manual full-file sweep found them by hand; `mannerism`'s gap had already been spotted once before (t-055's note, 2026-08-05) and was left for "a future lane-3 cycle to queue" — the coverage script's own clean report every cycle since gave no signal that a second cycle was needed.
 
