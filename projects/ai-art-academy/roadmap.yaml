@@ -502,17 +502,19 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-06T06:16:20Z'
+    updated: '2026-08-06T06:20:50Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
       Lane 3 inspiration-assets cycle added a second controlled comparison lesson (`docs/inspiration-sets/four-landscape-temperaments.md`, Hudson River School/Tonalism/Barbizon School/Impressionism on one fixed composition) per the lane-2 audit's guidance to prefer a docs-only deliverable while the render relay stays unhealthy (PENDING=3039, oldest ~102h). Also enqueued the two oldest already-prepared style-preview requests (egyptian-painting job 7697, heidelberg-school job 7698 — both breadcrumbed in art-prompts.yaml, still pending); american-luminism's enqueue hit a transient DB transaction error and is left honestly unconfirmed. Rotate next to lane 4 curriculum depth. See run_log for full detail.
 
       Added a sourced Rinpa-school curriculum candidate with recognition cues, verified museum examples, a remix prompt, and explicit separation from Ukiyo-e.
+
+      Lane 4 curriculum-depth cycle merged conductor PR #1783: added a policy-complete Rinpa-school candidate with museum-backed examples, movement-level remix configuration, representation safeguards, and explicit separation from Ukiyo-e. Rotate next to lane 1 front-end polish.
     continuous_improvement:
       last_lane: 3  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
       next_lane: 4
@@ -520,9 +522,6 @@ tasks:
       last_pr: 'conductor#1781'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
     implementation_pr: 'silasfelinus/kind_robots#1502'
-    claimed_at: '2026-08-06T06:11:15Z'
-    owner: worker
-    claimed_by: 2026-08-06T061115Z-ai-art-academy-t010-r4k8
 
   - id: t-015
     milestone: m4
