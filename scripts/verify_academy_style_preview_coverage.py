@@ -14,6 +14,16 @@ image generation to "a future lane 3," and no later cycle reliably caught an unc
 gap except by re-diffing live delivery against every slug from scratch. This script
 gives that diff in one command instead.
 
+Kaizen from ai-art-academy/t-010 lane 3 (2026-08-06, kind_robots PR #1523): the checks
+above only ever look at slugs that already SET previewImageSrc — a slug with no
+previewImageSrc field at all (never opted in) was invisible to every category, so a
+clean run meant "clean among the slugs that opted in," not "clean." This is exactly
+how `mannerism` and `spanish-golden-age` sat with no preview-image slot at all until a
+manual full-file sweep found them by hand. The script now separately enumerates every
+`slug:` in academyStyles.ts (regardless of previewImageSrc) and reports the ones with
+no previewImageSrc field as their own `no_preview_field` category, distinct from
+delivered/queued/gap.
+
 art-prompts.yaml alone is NOT a reliable signal: entries for delivered images are
 pruned once fulfilled (see the file's own header), so most delivered slugs have no
 entry at all — that's expected, not a gap. The live delivery check is what actually
@@ -58,6 +68,17 @@ PREVIEW_RE = re.compile(
     r"^\s*previewImageSrc:\s*'/" + re.escape(PREVIEW_IMAGE_DIR) + r"/([a-z0-9-]+)\.webp',?\s*$",
     re.MULTILINE,
 )
+
+
+def load_all_academy_style_slugs(text: str) -> list[str]:
+    """Return every `slug: '...'` in academyStyles.ts, in file order, regardless
+    of whether that style object sets previewImageSrc. This is the independent
+    enumeration `load_academy_style_slugs` can't provide on its own, since that
+    function only ever sees slugs that already opted into previewImageSrc."""
+    slug_matches = list(SLUG_RE.finditer(text))
+    if not slug_matches:
+        raise ValueError(f"no `slug: '...'` entries found in {ACADEMY_STYLES_PATH}")
+    return [m.group(1) for m in slug_matches]
 
 
 def load_academy_style_slugs(text: str) -> dict[str, str]:
@@ -122,7 +143,10 @@ def check_live(slug: str, timeout: float = 10.0) -> int | None:
 
 
 def build_report(
-    style_slugs: dict[str, str], prompt_slugs: dict[str, dict], offline: bool
+    style_slugs: dict[str, str],
+    prompt_slugs: dict[str, dict],
+    offline: bool,
+    all_slugs: list[str] | None = None,
 ) -> dict:
     delivered = []
     queued = []
@@ -144,6 +168,13 @@ def build_report(
                 row["live_status"] = live_status
             gaps.append(row)
 
+    # Slugs that never set previewImageSrc at all — invisible to every category
+    # above, since those are all keyed off style_slugs (which only contains
+    # slugs that already opted in). `all_slugs` is optional so callers that
+    # only have the previewImageSrc-scoped dict (e.g. older direct callers of
+    # build_report) still get a report, just without this category populated.
+    no_preview_field = sorted(set(all_slugs or []) - set(style_slugs))
+
     return {
         "offline": offline,
         "style_count_with_preview": len(style_slugs),
@@ -151,9 +182,11 @@ def build_report(
         "delivered_count": len(delivered),
         "queued_count": len(queued),
         "gap_count": len(gaps),
+        "no_preview_field_count": len(no_preview_field),
         "delivered": delivered,
         "queued": queued,
         "gaps": gaps,
+        "no_preview_field": no_preview_field,
     }
 
 
@@ -184,13 +217,15 @@ def main() -> int:
         return 1
 
     try:
-        style_slugs = load_academy_style_slugs(ACADEMY_STYLES_PATH.read_text())
+        academy_styles_text = ACADEMY_STYLES_PATH.read_text()
+        style_slugs = load_academy_style_slugs(academy_styles_text)
+        all_slugs = load_all_academy_style_slugs(academy_styles_text)
     except ValueError as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 1
 
     prompt_slugs = load_art_prompts_slugs(ART_PROMPTS_PATH.read_text())
-    report = build_report(style_slugs, prompt_slugs, args.offline)
+    report = build_report(style_slugs, prompt_slugs, args.offline, all_slugs=all_slugs)
 
     if args.offline:
         print(
@@ -200,10 +235,11 @@ def main() -> int:
         )
 
     print(
-        f"{report['style_count_with_preview']} style(s) set previewImageSrc: "
+        f"{len(all_slugs)} style(s) total, {report['style_count_with_preview']} set previewImageSrc: "
         f"{report['delivered_count']} delivered, "
         f"{report['queued_count']} queued (not yet delivered), "
-        f"{report['gap_count']} real gap(s) (neither delivered nor queued).\n"
+        f"{report['gap_count']} real gap(s) (neither delivered nor queued), "
+        f"{report['no_preview_field_count']} with no previewImageSrc field at all.\n"
     )
     if report["gaps"]:
         print("GAPS — no delivered image and no art-prompts.yaml request:")
@@ -212,6 +248,11 @@ def main() -> int:
             print(f"  {row['slug']}{extra}")
     else:
         print("No gaps found.")
+
+    if report["no_preview_field"]:
+        print("\nNO PREVIEWIMAGESRC FIELD — never opted in, invisible to the categories above:")
+        for slug in report["no_preview_field"]:
+            print(f"  {slug}")
 
     if report["queued"]:
         print("\nQueued (already has a request, awaiting delivery):")
@@ -222,7 +263,7 @@ def main() -> int:
         Path(args.json).write_text(json.dumps(report, indent=2) + "\n")
         print(f"\nWrote report to {args.json}")
 
-    if args.strict and report["gap_count"]:
+    if args.strict and (report["gap_count"] or report["no_preview_field_count"]):
         return 1
     return 0
 
