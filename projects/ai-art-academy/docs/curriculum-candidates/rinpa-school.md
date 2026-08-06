@@ -21,7 +21,7 @@ The lesson also gives the Academy a useful example of a tradition transmitted th
 - Seasonal and literary nature motifs rather than urban genre scenes
 - Decorative surface logic that can move between painting, lacquer, ceramics, fans, and textiles
 
-## Generation anchors
+## Artists for historical study
 
 ### Ogata Kōrin
 
@@ -65,17 +65,18 @@ This candidate is suitable for movement-level curriculum and testing. Promotion 
 
 For display:
 
-1. Record creator, title, date, collection, object URL, and the institution's explicit image-rights statement.
-2. Prefer downloadable museum images marked Public Domain or CC0.
-3. Treat an old artwork with unclear digital-image terms as metadata-only until rights are confirmed.
-4. Do not hotlink an image merely because the object page is public.
+1. Perform item-level review for each work and digital image.
+2. Record creator, title, date, collection, object URL, and the institution's explicit image-rights statement.
+3. Prefer downloadable museum images marked Public Domain or CC0.
+4. Treat an old artwork with unclear digital-image terms as metadata-only until rights are confirmed.
+5. Do not hotlink an image merely because the object page is public.
 
 For generation:
 
 - prefer the movement-level prompt below;
 - protect uploaded subject identity and major composition;
 - use Kōrin, Hōitsu, or Kiitsu only as historically eligible anchors under the current policy;
-- exclude modern Rinpa-inspired artists and contemporary brand or illustrator names;
+- do not include protected artist names, modern Rinpa-inspired artists, contemporary brands, or living illustrators;
 - avoid turning Japanese identity into costume, calligraphy garnish, or generic "Zen" atmosphere.
 
 ## Movement-level remix configuration
