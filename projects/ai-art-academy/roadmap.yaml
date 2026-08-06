@@ -1738,12 +1738,15 @@ tasks:
   - id: t-057
     milestone: m6
     title: 'kind_robots: migrate remaining hand-written status-banner classes to .kr-note across manager components'
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    updated: '2026-08-06T03:28:44Z'
+    updated: '2026-08-06T05:32:47Z'
     note: |-
       Kaizen from kind_robots PR #1514 (2026-08-06, ai-art-academy/t-010 lane 1). That PR replaced `academy-manager.vue`'s two hand-written `border-{status}/40 bg-{status}/10 text-{status}` status-banner class combinations with the canonical `.kr-note`/`.kr-note-error`/`.kr-note-warning` design-system primitives (`assets/css/tailwind.css`), added specifically to replace this exact drifted pattern. The same hand-written pattern is copy-pasted across roughly 50 other "manager" components app-wide (e.g. `components/art/art-manager.vue`) — a mechanical, high-confidence sweep to migrate them all to `.kr-note` would be a good follow-up. Grep for `border-{status}/40 bg-{status}/10 text-{status}`-shaped class strings (or the `error`/`warning`/`success`/`info` variants) across `components/**/*.vue`, replace each with the matching `.kr-note-*` primitive, verify no visual/behavioral regression (eslint + prettier + vue-tsc clean, spot-check a few components' rendered banners). Likely oversized for one pass — split into a few scoped PRs by component family if the full sweep is too large for the 3-pass iteration budget.
+    owner: worker
+    claimed_by: claude-agentrun-20260806T053200Z-aa-t057-krnote
+    claimed_at: '2026-08-06T05:32:47Z'
 
   - id: t-058
     milestone: m6
