@@ -663,6 +663,25 @@ movements:
     artist_slugs: [anonymous-ethiopian-icon-painters]
     example_count: 3
     remix_hint: "Repaint this image as an Ethiopian Solomonic-era icon: flat, unmodeled fields of warm red ochre, gold, and deep blue-green bounded by firm black contour outlines, large wide-open frontal eyes gazing directly at the viewer, hierarchical scale with the most sacred figure largest and centered, simplified linear drapery folds, and a plain or minimally patterned background. Preserve the source composition and subject."
+  # Rinpa School (§46) was landed 2026-08-05 but never added to this skeleton
+  # -- found and backfilled during the §47 (Rajput Painting) addition below,
+  # via list_curriculum_coverage.py silently omitting it from its output.
+  - slug: rinpa-school
+    name: Rinpa School
+    era: "early 1600s-mid-1800s (Edo period, Japan)"
+    artist_slugs: [ogata-korin, sakai-hoitsu, suzuki-kiitsu]
+    example_count: 4
+    remix_hint: "Repaint this image as a Rinpa-school folding-screen composition: a broad gold- or silver-leaf ground with no ordinary horizon, an asymmetrical cropped arrangement of seasonal flowers, grasses, or water, bold simplified silhouettes mixed with a few precise botanical details, pooled ink-and-color edges, rhythmic repetition, and generous empty space in place of realistic depth. Preserve the source composition and subject."
+  # First entry for South Asian Hindu-court painting; the Islamic-court
+  # Mughal (§27) and Persian (§25) traditions were already covered. Not yet
+  # synced into kind_robots' academyStyles.ts, same deferred pattern as most
+  # additions since §31.
+  - slug: rajput-painting
+    name: Rajput Painting
+    era: "c. 1600-1850 (Hindu courts of Rajasthan and Central India)"
+    artist_slugs: [anonymous-rajasthani-court-painters]
+    example_count: 3
+    remix_hint: "Repaint this image as a Rajput court painting: flat fields of intensely saturated red, yellow, and blue, a confident continuous outline with large almond-shaped eyes, architecture and landscape flattened into decorative pattern rather than receding in depth, gold used sparingly for jewelry or trim only, and a plain or single-color background. Preserve the source composition and subject."
 ```
 
 ---
@@ -3596,6 +3615,94 @@ and subject."
 
 ---
 
+## 47. Rajput Painting (`rajput-painting`)
+
+**Era:** c. 1600-1850 (Hindu courts of Rajasthan and Central India)
+
+**Key ideas.** Where this curriculum's Mughal Miniature (§27) lesson
+tracks an imperial atelier moving toward naturalistic modeling and
+atmospheric recession, Rajput painting is what the smaller Hindu courts
+of Rajasthan — Mewar, Bikaner, Kishangarh, Bundi, Kota — and related
+Central Indian courts such as Malwa were doing at largely the same time,
+and it stayed closer to flat, intensely saturated color and bold
+graphic outline throughout its history rather than converging on Mughal
+naturalism. Subject matter runs devotional and lyrical rather than
+dynastic-narrative: episodes from Krishna's life (especially his
+courtship of Radha), ragamala series that paint a musical mode as a
+scene and mood rather than notation, court portraiture, and hunting or
+courtly-life scenes. Grounds are built from flat fields of saturated
+red, yellow, and blue rather than Mughal-style atmospheric gradation;
+figures are drawn with a confident continuous outline and large,
+almond-shaped eyes that some workshops (Kishangarh above all, in
+paintings made a few decades after this lesson's own examples) pushed
+toward a dramatic elongation reaching nearly to the ear. Ragamala pages
+carry the additional layer of translating sound and emotion into fixed
+pictorial convention — a specific color palette, landscape, and pose for
+each named musical mode — a project with no real equivalent in this
+curriculum's Persian (§25) or Mughal (§27) lessons.
+
+**Recognition cues:**
+- Flat fields of intensely saturated color (deep red, yellow ochre,
+  ultramarine) rather than Mughal-style atmospheric shading or
+  naturalistic gradation
+- Confident, continuous outline defining figures and drapery, with
+  large almond-shaped eyes rendered in profile or three-quarter view
+- Devotional and lyrical subjects — Krishna and Radha, ragamala
+  musical-mode scenes, court portraits — rather than Mughal dynastic
+  chronicle narrative
+- Architecture and landscape flattened into decorative pattern (tiled
+  pavilions, stylized trees and water) rather than receding in depth
+- Gold used more sparingly than Persian miniature, often limited to
+  jewelry, thrones, or architectural trim against a flat color ground
+- A plain or single-color background field is common, in contrast to
+  Mughal miniature's dense, precisely rendered decorative borders
+
+**Notable artists:** Predominantly anonymous court workshops — individual
+painters are rarely documented by name in surviving 17th- and
+18th-century Rajasthani manuscripts, the same pattern already noted for
+this curriculum's Byzantine Mosaic (§2), Fayum Mummy Portraits (§28), and
+Ancient Egyptian Painting (§37) lessons. The Kishangarh school's most
+celebrated later painter, Nihal Chand (fl. c. 1735-1757, credited with
+the "Bani Thani" portrait type), is named here for historical context
+only — this lesson's Kishangarh example work predates his documented
+activity and no work confirmed as his own hand is exhibited, the same
+named-for-context-only treatment already given to Fre Seyon in Ethiopian
+Icon Painting (§45).
+
+**Example works:**
+- *Mahadevi, the Great Goddess*, anonymous, ca. 1725 — ink, opaque
+  watercolor, and silver on paper, India (Rajasthan, Bikaner).
+  **VERIFIED**, Metropolitan Museum of Art, object 38039;
+  `isPublicDomain: true` per the Met Collection API, checked live this
+  cycle: https://www.metmuseum.org/art/collection/search/38039
+- *A Lady Playing the Tanpura*, anonymous, ca. 1735 — ink, opaque and
+  transparent watercolor, and gold on paper, India (Rajasthan,
+  Kishangarh). **VERIFIED**, Metropolitan Museum of Art, object 38038;
+  `isPublicDomain: true` per the Met Collection API, checked live this
+  cycle: https://www.metmuseum.org/art/collection/search/38038
+- *Vilaval Ragini: Folio from a Ragamala Series (Garland of Musical
+  Modes)*, anonymous, ca. 1680 — ink and opaque watercolor on paper,
+  India (Rajasthan, Sirohi). **VERIFIED**, Metropolitan Museum of Art,
+  object 37854; `isPublicDomain: true` per the Met Collection API,
+  checked live this cycle:
+  https://www.metmuseum.org/art/collection/search/37854
+
+A fourth candidate from the same search, *Chokha — A Court Beauty*
+(Met object 825718, Udaipur, 1805-10), was checked live this cycle and
+returned `isPublicDomain: false` — held back per this document's own
+policy rather than assumed from the artist's death date alone (Chokha,
+1799-1826, would otherwise pass PUBLIC-DOMAIN-POLICY.md §1.3 prong 1
+with room to spare).
+
+**remix_hint:** "Repaint this image as a Rajput court painting: flat
+fields of intensely saturated red, yellow, and blue, a confident
+continuous outline with large almond-shaped eyes, architecture and
+landscape flattened into decorative pattern rather than receding in
+depth, gold used sparingly for jewelry or trim only, and a plain or
+single-color background. Preserve the source composition and subject."
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -4335,3 +4442,30 @@ Commons cross-check the institution's own current site before relying on
 an older Commons-mirrored license tag, since the two can genuinely
 disagree for the same underlying image. No named artist in Section 45
 overlaps with any other section.
+
+**v1.26 addition (2026-08-06) re-check (t-010 cycle, lane 4).** Section 47
+(Rajput Painting) clears the PUBLIC-DOMAIN-POLICY.md §1.3 both-prongs rule
+with wide margin: all three exhibited example works are anonymous (no
+named artist attached in the Met's own records), so prong 1 is satisfied
+trivially the same way it is for Section 45's Ethiopian icons and
+Section 37's ancient Egyptian works. The one named individual in the
+entry, Nihal Chand (fl. c. 1735-1757), is mentioned for historical
+context only per the same §4 rule 2 treatment already given to Fre Seyon
+in Section 45 — no work of his is exhibited, and his documented activity
+postdates this lesson's own Kishangarh example work, so there is no
+attribution overlap to get wrong. Prong 2 (work created/published on or
+before the US 1930 cutoff) is cleared by all three example works (ca.
+1680, ca. 1725, ca. 1735) with a two-century margin; none moves the
+curriculum's most-recent-example-work record (still 1930, §24). All
+three example works were checked live this cycle directly against the
+Metropolitan Museum of Art's Collection API (`isPublicDomain: true` for
+all three, confirmed by fetching each object's own API endpoint rather
+than inferring from a search-result listing), the same tier-1 CC0
+institution already used for Section 46. A fourth candidate from the
+same search — *Chokha — A Court Beauty* (Met object 825718) — was
+checked the same way and returned `isPublicDomain: false` despite its
+named artist (Chokha, 1799-1826) comfortably clearing prong 1; held back
+per policy rather than assumed eligible, and not substituted with a
+Wikimedia Commons mirror since the API result is the more current,
+first-party signal. No named artist in Section 47 overlaps with any
+other section.
