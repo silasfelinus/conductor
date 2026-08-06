@@ -248,6 +248,33 @@ verified work by Fre Seyon himself, so per §5's default-deny the entry does
 not claim Fre Seyon as a rights-verified generation-style anchor, naming him
 in prose only as the tradition's earliest identifiable named master.
 
+Section 46 is the 2026-08-06 v1.26 addition (t-010 cycle, lane 4): Rinpa
+School (`rinpa-school`) — promoted from
+`docs/curriculum-candidates/rinpa-school.md`, which had already done the
+recognition-cue, artist, and prompt-template research (itself written the
+immediately-prior lane-4 cycle, conductor PR #1783). Returns to Japan for
+the first time since Ukiyo-e (§7) but at a deliberately different pole: a
+decorative screen/scroll painting tradition of asymmetrical gold- or
+silver-ground compositions, transmitted across generations by admiration
+and revival (Kōrin, then Hōitsu, then Kiitsu) rather than by a continuous
+workshop lineage, and the lesson prose explicitly distinguishes it from
+Ukiyo-e's flat multi-block print culture so the two Japanese entries do not
+blur together. Four generation-style anchors — Ogata Kōrin (1658-1716),
+Sakai Hōitsu (1761-1828, two works), and Suzuki Kiitsu (1796-1858) — were
+verified this cycle directly against the Metropolitan Museum of Art
+Collection API's `isPublicDomain` field, the same direct rights-status-field
+method used for §28, §35, §36, §37, §41, and §43. The candidate file's own
+fourth citation (object 748253, a Kiitsu/Yamamoto Sodō joint work) returned
+`isPublicDomain: false` on live re-check — swapped for Kiitsu's solely-
+authored *Irises and Moth* (Met object 53424, ca. 1850, `isPublicDomain:
+true`), found via the Collection API's own artist search rather than reused
+from the candidate file, since an object-level rights flag can drift
+independently of a movement-level death-date clearance (the same
+distinction the candidate file's own "Public-domain and generation policy"
+section already warns against conflating). All four works predate the 1930
+cutoff by a wide margin and do not move the curriculum's most-recent-
+example-work record (still 1930, §24).
+
 Verification method note: direct API/page fetches to museum hosts are blocked by the
 session egress proxy, so verification was done via web search returning the live
 collection URLs (titles + object pages confirmed per movement). Entries marked
@@ -3466,6 +3493,106 @@ directly at the viewer, hierarchical scale with the most sacred figure
 largest and centered, simplified linear drapery folds, and a plain or
 minimally patterned background. Preserve the source composition and
 subject."
+
+---
+
+## 46. Rinpa School (`rinpa-school`)
+
+**Era:** early 1600s–mid-1800s (Edo period, Japan)
+
+**Key ideas.** Rinpa is a decorative painting and design tradition built
+around folding screens, hanging scrolls, fans, lacquer, ceramics, and
+textiles — not another Ukiyo-e lesson (§7). Ukiyo-e is a print culture of
+actors, courtesans, travel, and reproducible woodblock color; Rinpa is
+brushed, one-of-a-kind, and organized around the collision of extreme
+flatness with close natural observation. Flowers, grasses, water, and
+seasonal motifs become bold arrangements of silhouette, rhythm, and empty
+space, set against broad grounds of gold or silver leaf, with pools of wet
+ink and color allowed to bloom into soft-edged forms beside crisp contour
+or metallic ground. The tradition is also notable for how it moved through
+time: rather than a single continuous workshop lineage, it passed by
+deliberate revival and admiration across three generations who never
+directly studied under one another — Ogata Kōrin looked back to earlier
+Kyoto decorative masters (Tawaraya Sōtatsu among them); a century later,
+Sakai Hōitsu rediscovered and codified Kōrin's vocabulary in Edo, even
+compiling a facsimile reproduction of Kōrin's work; and Hōitsu's own pupil
+Suzuki Kiitsu carried that revival into a sharper, more graphic
+nineteenth-century form.
+
+**Recognition cues:**
+- Large gold- or silver-leaf grounds that remove ordinary landscape depth
+  and unify the composition as flat decorative surface
+- Asymmetrical compositions with major motifs cropped by the screen edge or
+  scroll format, rather than centered or fully contained
+- Broad, simplified silhouettes paired with a few sharply observed
+  botanical details — flatness and close natural observation held together
+  at once
+- Repeated flowers, leaves, waves, or grasses arranged as visual rhythm
+  rather than naturalistic, evenly-lit space
+- Pools of wet ink and color ("tarashikomi") allowed to bloom into
+  soft-edged forms, often set directly beside crisp contour line or
+  metallic ground
+- Strong, deliberate use of empty space, with subjects floating against an
+  unmodeled field instead of a described setting
+- Seasonal and literary nature motifs rather than urban genre scenes or
+  narrative figures
+
+**Notable artists:** Ogata Kōrin (1658-1716), the movement's central
+namesake figure, whose *Flowers of Spring and Autumn* the Metropolitan
+Museum of Art describes as combining highly stylized natural elements with
+formal Chinese-style ink training. Sakai Hōitsu (1761-1828), who led the
+later Edo Rinpa revival; the Met identifies him as one of the most
+important late-Edo Rinpa painters, working in seasonal, literary
+compositions. Suzuki Kiitsu (1796-1858), Hōitsu's leading pupil, whose
+sharper, more graphic botanical forms mark the tradition's latest phase
+taught here. All three clear PUBLIC-DOMAIN-POLICY.md's death-date
+threshold with wide margin; per §2, artist death date alone does not settle
+an individual displayed work's rights, so every example below carries its
+own institution-confirmed status rather than inheriting one from the
+artist.
+
+**Example works:**
+- *Flowers of Spring and Autumn*, Ogata Kōrin, shortly after 1701 — pair of
+  panels in ink and color on cryptomeria wood. **VERIFIED**, Metropolitan
+  Museum of Art, object 53421; `isPublicDomain: true` per the Met
+  Collection API, re-checked live this cycle:
+  https://www.metmuseum.org/art/collection/search/53421
+- *Activities of the Twelve Months*, Sakai Hōitsu, late 1790s — eleven
+  hanging scrolls (of a set of twelve) in ink and color on silk, using
+  court ritual, seasonal customs, and a full moon across the year.
+  **VERIFIED**, Metropolitan Museum of Art, object 752036;
+  `isPublicDomain: true` per the Met Collection API, re-checked live this
+  cycle: https://www.metmuseum.org/art/collection/search/752036
+- *Cherry and Maple Trees*, Sakai Hōitsu, early 1820s — pair of six-panel
+  folding screens in ink, color, and gold leaf on paper, organized around
+  spring and autumn plants for strong decorative impact. **VERIFIED**,
+  Metropolitan Museum of Art, object 765976; `isPublicDomain: true` per the
+  Met Collection API, re-checked live this cycle:
+  https://www.metmuseum.org/art/collection/search/765976
+- *Irises and Moth*, Suzuki Kiitsu, ca. 1850 — hanging scroll in ink and
+  color on silk, a single spray of irises (a recurring Rinpa motif since
+  Kōrin's own famous *Irises* screens) with a moth worked into the
+  composition. **VERIFIED**, Metropolitan Museum of Art, object 53424;
+  `isPublicDomain: true` per the Met Collection API, checked live this
+  cycle: https://www.metmuseum.org/art/collection/search/53424
+
+The candidate file's own fourth citation (*Mount Fuji and flowering
+plants*, Met object 748253, a joint work by Kiitsu and Yamamoto Sodō) was
+re-checked live this cycle and returned `isPublicDomain: false` (no
+primary image on file, acquired 2019) — held back as metadata-only per
+this document's own §2 guidance ("treat an old artwork with unclear
+digital-image terms as metadata-only until rights are confirmed") and
+replaced above with a solely-Kiitsu-authored, confirmed-public-domain work
+found via the same API's artist search rather than assumed from the
+candidate file.
+
+**remix_hint:** "Repaint this image as a Rinpa-school folding-screen
+composition: a broad gold- or silver-leaf ground with no ordinary horizon,
+an asymmetrical cropped arrangement of seasonal flowers, grasses, or
+water, bold simplified silhouettes mixed with a few precise botanical
+details, pooled ink-and-color edges, rhythmic repetition, and generous
+empty space in place of realistic depth. Preserve the source composition
+and subject."
 
 ---
 

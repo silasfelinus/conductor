@@ -2,7 +2,17 @@
 
 **Proposed slug:** `rinpa-school`  
 **Era:** early 1600s–mid-1800s, Japan  
-**Candidate status:** ready for later promotion into the main curriculum outline
+**Status: PROMOTED 2026-08-06 (ai-art-academy/t-010, lane 4).** Landed in
+`curriculum-outline.md` §46, v1.26. Three of this file's four cited Met
+example works were re-verified live and confirmed `isPublicDomain: true`;
+the fourth (object 748253, a Kiitsu/Yamamoto Sodō joint work) returned
+`isPublicDomain: false` on re-check and was replaced in the promoted
+section with a solely-Kiitsu-authored, confirmed-public-domain substitute
+(*Irises and Moth*, object 53424) found via the same API rather than
+assumed from this file. Kept here as the source research for the promoted
+entry; not yet synced into kind_robots' `stores/seeds/academyStyles.ts`
+(a separate follow-up, same pattern as every prior curriculum-outline.md
+addition).
 
 ## Why this earns a separate lesson
 
@@ -144,9 +154,9 @@ Before this candidate becomes a front-end Academy style:
 - [x] At least three institution-hosted example records.
 - [x] Recognition cues and remix prompt are concrete enough to test.
 - [x] Public-domain-policy death-date threshold is satisfied.
-- [ ] Rights verification records artwork and digital-image status for every displayed example.
+- [x] Rights verification records artwork and digital-image status for every displayed example (all four via the Met Collection API's `isPublicDomain` field, live-checked 2026-08-06).
 - [ ] Representation review confirms the lesson distinguishes Rinpa from generic Japanese visual shorthand.
 - [x] No protected artist name appears in the generation instruction.
 - [ ] The movement-level prompt is tested for Ukiyo-e drift and subject-identity loss.
-- [ ] Mirror the approved lesson into `docs/curriculum-outline.md`.
+- [x] Mirror the approved lesson into `docs/curriculum-outline.md` (§46, v1.26).
 - [ ] Add a matching front-end seed entry and preview request in a later scoped cycle.
