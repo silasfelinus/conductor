@@ -502,7 +502,7 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
@@ -510,27 +510,14 @@ tasks:
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
-      Lane 3 inspiration-assets cycle added a second controlled comparison lesson (`docs/inspiration-sets/four-landscape-temperaments.md`, Hudson River School/Tonalism/Barbizon School/Impressionism on one fixed composition) per the lane-2 audit's guidance to prefer a docs-only deliverable while the render relay stays unhealthy (PENDING=3039, oldest ~102h). Also enqueued the two oldest already-prepared style-preview requests (egyptian-painting job 7697, heidelberg-school job 7698 — both breadcrumbed in art-prompts.yaml, still pending); american-luminism's enqueue hit a transient DB transaction error and is left honestly unconfirmed. Rotate next to lane 4 curriculum depth. See run_log for full detail.
-
-      Added a sourced Rinpa-school curriculum candidate with recognition cues, verified museum examples, a remix prompt, and explicit separation from Ukiyo-e.
-
-      Lane 4 curriculum-depth cycle merged conductor PR #1783: added a policy-complete Rinpa-school candidate with museum-backed examples, movement-level remix configuration, representation safeguards, and explicit separation from Ukiyo-e. Rotate next to lane 1 front-end polish.
-
-      Lane 1 front-end polish cycle (this cycle): the `continuous_improvement` counter had gone stale again (still read `last_lane: 3`/`next_lane: 4` even though the immediately-prior lane-4 Rinpa cycle, kind_robots-adjacent conductor PR #1783, had already closed via the lighter task-events flow — the same recurring nested-mapping-staleness gap `t-058` tracks) — corrected below rather than repeating the already-completed lane 4. Found and fixed a real, scoped accessibility/contrast bug in `art-styler.vue` (shared by Style Lab, Remix Studio, art-manager, image-card, and coloring-page): its style-picker thumbnail grid hardcoded `text-white` over a themed `bg-linear-to-t from-base-300/80` scrim instead of the design system's adaptive `text-base-content`, so in the storybook (light) theme — where `base-300` is ~89% lightness — the label was nearly invisible; it only looked fine in dark mode where `base-300` is ~30% lightness. Fixed to match the identical scrim+caption pattern already used correctly in `academy-style-detail.vue`'s example-works overlay. kind_robots PR #1518. Rotate next to lane 2 roadmap accuracy.
-
-      Lane 2 roadmap-accuracy audit completed on the worker branch; opening a focused conductor PR.
-
-      Lane 2 roadmap-accuracy audit merged in conductor PR #1786. It documented roadmap-note regrowth, stale implementation_pr, and claim identity surviving recurring rearm; lane 3 inspiration assets is next.
+      Lane 3 inspiration-assets cycle (this cycle) added a third controlled comparison lesson (`docs/inspiration-sets/four-gazes-four-traditions.md`, Mannerism/Baroque/Spanish Golden Age/Ethiopian Icon Painting on one fixed half-length-figure composition — the first lesson to feature any of these four movements) since the render relay is still unhealthy (PENDING=3018, oldest ~105h, worse not better than the lane-2 audit's "materially improved" bar). Migrated four RAN-style paragraphs that had regrown here (Rinpa lane-4 close-out PR #1783, roadmap-accuracy lane-2 close-out PR #1786) into `run_log` as backfilled entries, fixing PR #1786's own "note regrowth" finding rather than just repeating it. Corrected the `continuous_improvement` counter to catch up with the already-completed lane-2 cycle. Rotate next to lane 4 curriculum depth. See run_log for full detail.
     continuous_improvement:
-      last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 2
-      last_run: '2026-08-06T06:35:11Z'
-      last_pr: 'silasfelinus/kind_robots#1518'
+      last_lane: 3  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 4
+      last_run: '2026-08-06T07:32:47Z'
+      last_pr: 'silasfelinus/conductor#1787'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    implementation_pr: 'silasfelinus/kind_robots#1502'
-    owner: worker
-    claimed_by: claude-agentrun-20260806T073246Z-aa-t010-lane3
-    claimed_at: '2026-08-06T07:32:47Z'
+    implementation_pr: 'silasfelinus/kind_robots#1518'
 
   - id: t-015
     milestone: m4
