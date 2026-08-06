@@ -67,6 +67,19 @@ def test_load_academy_style_slugs_only_returns_entries_with_preview():
     assert "no-preview-style" not in slugs
 
 
+def test_load_all_academy_style_slugs_includes_slugs_without_preview():
+    slugs = coverage.load_all_academy_style_slugs(SAMPLE_ACADEMY_STYLES_TS)
+    assert slugs == ["no-preview-style", "delivered-style", "queued-style", "gap-style"]
+
+
+def test_load_all_academy_style_slugs_raises_on_no_slugs():
+    try:
+        coverage.load_all_academy_style_slugs("nothing here")
+        assert False, "expected ValueError"
+    except ValueError as exc:
+        assert "no `slug:" in str(exc)
+
+
 def test_load_academy_style_slugs_raises_on_no_slugs():
     try:
         coverage.load_academy_style_slugs("nothing here")
@@ -102,6 +115,32 @@ def test_build_report_offline_classifies_delivered_as_gap_without_live_check():
     assert {row["slug"] for row in report["gaps"]} == {"delivered-style", "gap-style"}
     assert {row["slug"] for row in report["queued"]} == {"queued-style"}
     assert "live_status" not in report["gaps"][0]
+
+
+def test_build_report_without_all_slugs_leaves_no_preview_field_empty():
+    """Callers that don't pass all_slugs (e.g. pre-t-060 call sites) still get a
+    valid report -- the new category is just empty rather than wrong."""
+    style_slugs = coverage.load_academy_style_slugs(SAMPLE_ACADEMY_STYLES_TS)
+    prompt_slugs = coverage.load_art_prompts_slugs(SAMPLE_ART_PROMPTS_YAML)
+    report = coverage.build_report(style_slugs, prompt_slugs, offline=True)
+
+    assert report["no_preview_field_count"] == 0
+    assert report["no_preview_field"] == []
+
+
+def test_build_report_flags_slugs_with_no_preview_field_at_all():
+    """The regression this task exists for: `no-preview-style` never sets
+    previewImageSrc, so it's absent from style_slugs entirely and invisible to
+    delivered/queued/gap -- only the all_slugs diff catches it."""
+    style_slugs = coverage.load_academy_style_slugs(SAMPLE_ACADEMY_STYLES_TS)
+    all_slugs = coverage.load_all_academy_style_slugs(SAMPLE_ACADEMY_STYLES_TS)
+    prompt_slugs = coverage.load_art_prompts_slugs(SAMPLE_ART_PROMPTS_YAML)
+    report = coverage.build_report(style_slugs, prompt_slugs, offline=True, all_slugs=all_slugs)
+
+    assert report["no_preview_field_count"] == 1
+    assert report["no_preview_field"] == ["no-preview-style"]
+    # and it must NOT also show up in gaps -- it's a distinct category
+    assert "no-preview-style" not in {row["slug"] for row in report["gaps"]}
 
 
 def test_build_report_live_check_separates_delivered_from_real_gap(monkeypatch):
@@ -170,6 +209,32 @@ def test_main_strict_exits_1_on_real_gap(tmp_path, monkeypatch):
     academy_styles.write_text(SAMPLE_ACADEMY_STYLES_TS)
     art_prompts = tmp_path / "art-prompts.yaml"
     art_prompts.write_text(SAMPLE_ART_PROMPTS_YAML)
+
+    monkeypatch.setattr(coverage, "ACADEMY_STYLES_PATH", academy_styles)
+    monkeypatch.setattr(coverage, "ART_PROMPTS_PATH", art_prompts)
+    monkeypatch.setattr(
+        "sys.argv", ["verify_academy_style_preview_coverage.py", "--offline", "--strict"]
+    )
+    assert coverage.main() == 1
+
+
+def test_main_strict_exits_1_on_no_preview_field_even_without_other_gaps(tmp_path, monkeypatch):
+    """--strict must also fail on a slug that never set previewImageSrc, not
+    just on the pre-existing delivered/queued/gap categories -- otherwise a
+    clean --strict run could still be masking the exact blind spot t-060 fixed."""
+    only_no_preview_field = """
+export const academyStyles: AcademyStyle[] = [
+  {
+    slug: 'no-preview-style',
+    name: 'No Preview Style',
+    era: 'c. 1000',
+  },
+]
+"""
+    academy_styles = tmp_path / "academyStyles.ts"
+    academy_styles.write_text(only_no_preview_field)
+    art_prompts = tmp_path / "art-prompts.yaml"
+    art_prompts.write_text("requests: []\n")
 
     monkeypatch.setattr(coverage, "ACADEMY_STYLES_PATH", academy_styles)
     monkeypatch.setattr(coverage, "ART_PROMPTS_PATH", art_prompts)
