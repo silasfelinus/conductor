@@ -1793,16 +1793,29 @@ tasks:
   - id: t-061
     milestone: m7
     title: "Audit the Academy mobile-delivery state and choose the smallest durable iOS/Android path"
-    status: claimed
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     note: >
-      No Academy iOS/Android implementation is documented in the current roadmap, and a repo/PR
-      search on 2026-08-07 found no Academy-specific iOS, Android, or Capacitor delivery work.
-      Audit the current Kind Robots app/mobile infrastructure before choosing architecture. Reuse
-      an existing wrapper/PWA/native shell if one exists; otherwise propose the smallest maintainable
-      approach that exposes the full Academy/remix experience without forking business logic.
+      Audit complete -- full findings and reasoning in
+      projects/ai-art-academy/docs/t-061-mobile-delivery-audit.md. Confirmed via direct
+      repo search: kind_robots has ZERO mobile-delivery infrastructure today -- no PWA
+      module/manifest/service-worker, no Capacitor config or android/ios dirs, no
+      Cordova/React Native/Expo/NativeScript deps, no installability meta tags, no
+      mobile-app strategy docs (repo-wide or Academy-specific). The only adjacent
+      precedent is "Conductor App," an already-tracked external Flutter client for the
+      Conductor ops tool specifically -- unrelated to Academy, shares no code.
+      Chosen path: PWA first (add @vite-pwa/nuxt + manifest + icon set + basic service
+      worker to the existing Nuxt app -- zero new codebase, 100% reuse of existing
+      Academy components/stores/routes, installable on both iOS Safari and Android
+      Chrome from one implementation, ships through the normal Vercel deploy). Escalate
+      to a Capacitor wrap of the same build later, only if Silas decides an actual App
+      Store/Play Store *listing* becomes a real requirement -- the PWA manifest/icon
+      work carries forward directly at that point. A native rewrite was ruled out per
+      the task's own "without forking business logic" constraint. Filed t-066 as the
+      PWA foundation task and updated t-062/t-063 (Android/iOS builds) to depend on it
+      alongside this task, since both should build on the PWA baseline rather than
+      starting a separate native pipeline from zero.
     claimed_by: claude-quirky-curie-20260807T182912Z-aaa-t061
     claimed_at: '2026-08-07T18:29:13Z'
     updated: '2026-08-07T18:29:13Z'
@@ -1814,12 +1827,17 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    depends_on: t-061
+    depends_on: [t-061, t-066]
     note: >
-      Implement the Android side of t-061's chosen shared delivery path. The build must expose the
-      real Academy timeline/styles/remix flow, preserve authentication/maturity/accessibility rules,
-      and be testable on an Android device/emulator. Public Play Store submission remains a separate
-      outward-facing human gate.
+      t-061 chose PWA-first (see projects/ai-art-academy/docs/t-061-mobile-delivery-audit.md):
+      a Capacitor native wrap is deferred unless Silas decides an actual Play Store listing
+      is required. Once t-066 (PWA foundation) lands, "the Android build" for this task means
+      verifying the installable PWA on real Android Chrome -- home-screen install, standalone
+      display mode, the real Academy timeline/styles/remix flow, and that
+      authentication/maturity/accessibility rules survive the standalone context. Only wrap
+      with Capacitor for a testable native binary if Silas has by then asked for store
+      distribution; if so, treat the t-061 doc's Capacitor section as the starting point, not
+      a fresh design. Public Play Store submission remains a separate outward-facing human gate.
 
   - id: t-063
     milestone: m7
@@ -1828,11 +1846,15 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    depends_on: t-061
+    depends_on: [t-061, t-066]
     note: >
-      Implement the iOS side of the same shared delivery path, keeping feature parity with Android
-      and web. Produce a testable simulator/device build. App Store publication, certificates, and
-      account/billing actions remain human-gated outward-facing steps.
+      Same PWA-first sequencing as t-062, for iOS: once t-066 lands, verify the installable PWA
+      via Safari's "Add to Home Screen" on a real iOS device -- standalone display, the same
+      Academy flow, and that auth/maturity/accessibility rules hold outside the browser chrome.
+      Keep feature parity with the Android/web path rather than starting an iOS-only track.
+      A Capacitor iOS build is deferred unless Silas asks for an actual App Store listing --
+      certificates, Apple Developer Program enrollment, and account/billing actions remain
+      human-gated outward-facing steps whenever that happens.
 
   - id: t-064
     milestone: m7
@@ -1862,3 +1884,27 @@ tasks:
       FOR SILAS: review the polished Academy on web plus installable/testable iOS and Android builds.
       TO APPROVE: confirm the three surfaces feel finished or leave concrete product/visual notes.
       The Academy remains active until this acceptance and any resulting fixes are complete.
+
+  - id: t-066
+    milestone: m7
+    title: "Add minimal PWA support to kind_robots (installability foundation for t-062/t-063)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-061
+    note: >
+      The chosen first step of t-061's mobile-delivery path (see
+      projects/ai-art-academy/docs/t-061-mobile-delivery-audit.md). kind_robots has no PWA
+      infrastructure today -- confirmed absent: @vite-pwa/nuxt or equivalent module, web
+      manifest, service worker registration, installability meta tags (viewport/theme-color/
+      apple-touch-icon/manifest link), and an icon set sized for install prompts (192x192,
+      512x512 minimum). Add @vite-pwa/nuxt, a manifest (name, short_name, icons,
+      theme_color, display: standalone), and a basic service worker -- cache-first for static
+      assets is enough for this pass; Academy content is API-driven, so don't build a full
+      offline mode yet. This is app-root scoped (installability is site-wide, not
+      Academy-only), with Academy as the driving use case. Verify: manifest resolves at
+      /manifest.webmanifest (or configured path), Lighthouse/browser install-prompt
+      eligibility passes, existing pages render unchanged (additive-only change, easy to
+      revert if the module misconfigures anything). t-062/t-063 depend on this landing before
+      their Android/iOS verification passes can run.
