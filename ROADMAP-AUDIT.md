@@ -1,22 +1,22 @@
 # Roadmap Audit
 
-Generated: `2026-08-07T00:54:03.295472+00:00`
+Generated: `2026-08-07T04:10:20.285120+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **45** roadmaps, **27** active projects, **888** tasks
-- **46 ready**, **47 waiting**, **12 needs-human**, **0 claimed/review**, **773 done**
-- Findings: **0 errors**, **7 warnings**, **65 informational**
+- **45** roadmaps, **27** active projects, **893** tasks
+- **48 ready**, **47 waiting**, **13 needs-human**, **1 claimed/review**, **774 done**
+- Findings: **0 errors**, **9 warnings**, **66 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
-| 1 | `interface-vision` | active | software | 1 | 0 | 0 | 0 | 101 / 102 |
+| 1 | `interface-vision` | active | software | 0 | 0 | 0 | 0 | 102 / 102 |
 | 2 | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
-| 3 | `ai-art-academy` | active | software | 2 | 1 | 0 | 0 | 57 / 60 |
+| 3 | `ai-art-academy` | active | software | 1 | 1 | 0 | 1 | 57 / 60 |
 | 4 | `coloring-book` | active | software | 1 | 9 | 1 | 0 | 26 / 37 |
 | 5 | `humboldt-scoop` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 6 | `humboldt-scoop-cms` | active | software | 0 | 0 | 1 | 0 | 11 / 12 |
@@ -38,7 +38,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 22 | `conductor` | active | software | 1 | 0 | 0 | 0 | 101 / 102 |
 | 23 | `serendipity` | retired | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 24 | `taskmaster` | active | software | 1 | 0 | 0 | 0 | 2 / 3 |
-| 25 | `storybook` | active | software | 1 | 0 | 0 | 0 | 9 / 10 |
+| 25 | `storybook` | active | software | 5 | 0 | 1 | 0 | 9 / 15 |
 | 26 | `davinci` | active | software | 0 | 0 | 0 | 0 | 16 / 16 |
 | 27 | `art-generator-connect` | finished | software | 0 | 0 | 0 | 0 | 22 / 22 |
 | 28 | `mural-design` | active | content | 0 | 3 | 1 | 0 | 3 / 7 |
@@ -66,17 +66,19 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 _None._
 
-### Warning (7)
+### Warning (9)
 
-- **CONTINUOUS_IMPROVEMENT_NOTE_DRIFT** — `ai-art-academy` / `t-010`: Task note mentions a lane rotation but continuous_improvement.last_run predates the task's updated timestamp — the continuous_improvement block (last_lane/next_lane/last_run/last_pr) may be stale relative to the note.
 - **ACTIVE_PROJECT_ALL_DONE** — `davinci`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `davinci`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 - **ACTIVE_PROJECT_ALL_DONE** — `digital-storefront`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `digital-storefront`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
+- **ACTIVE_PROJECT_ALL_DONE** — `interface-vision`: All tasks are done but project override remains active.
+- **ACTIVE_PROJECT_NO_OPEN_TASKS** — `interface-vision`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 - **ACTIVE_PROJECT_ALL_DONE** — `newsfeed`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `newsfeed`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
+- **SOFT_NEEDS_HUMAN** — `storybook` / `t-015`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
 
-### Info (65)
+### Info (66)
 
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-011`: approved_by_human is set on a task that is not human-gated.
@@ -138,6 +140,7 @@ _None._
 - **MISSING_GOAL** — `serendipity`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `sketchy`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `storybook`: Roadmap has no friendly goal/definition of done.
+- **NEEDS_HUMAN_NOTE_FORMAT** — `storybook` / `t-015`: needs-human note does not use the AGENTS.md FOR SILAS action format.
 - **INACTIVE_PROJECT_HAS_READY_TASKS** — `superkate-hairstyle-ai`: Inactive project retains 1 ready task(s); harmless but misleading in generated status.
 - **MISSING_GOAL** — `superkate-hairstyle-ai`: Roadmap has no friendly goal/definition of done.
 - **APPROVAL_WITHOUT_GATE** — `superkate-hairstyle-ai` / `t-011`: approved_by_human is set on a task that is not human-gated.
