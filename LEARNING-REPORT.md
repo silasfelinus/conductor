@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-07T18:31:32Z
+Generated: 2026-08-07T18:42:18Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **535**
-- Outcomes: blocked: 13, cancelled: 1, done: 521
+- Closed tasks recorded: **536**
+- Outcomes: blocked: 13, cancelled: 1, done: 522
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -15,7 +15,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 | Project | Closed | Success rate |
 |---|---|---|
-| ai-art-academy | 62 | 98% |
+| ai-art-academy | 63 | 98% |
 | alexa-integration | 2 | 100% |
 | animation-manager | 13 | 100% |
 | animation-studio | 2 | 50% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 520 | 99% |
+| software | 521 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-07 `ai-art-academy/t-061` — For a "choose the smallest durable path" audit task, a direct filesystem/package.json search for the actual infra (PWA module, Capacitor config, native dirs, install-meta tags) beats guessing from feature docs -- kind_robots had zero mobile-delivery infrastructure despite an unrelated Flutter client (Conductor App) existing as a superficially similar precedent that turned out to share no code or relevance. Sequencing the follow-on tasks (PWA foundation before Android/iOS "builds") let t-062/t-063 stay scoped as PWA verification passes instead of full native pipelines, deferring the real cost (store accounts, code-signing, native build tooling) until Silas actually asks for store distribution.
 - 2026-08-07 `interface-vision/t-107` — When a dead route has no obvious replacement, check whether the same codebase already encodes a canonical answer before guessing -- dashboardConfigs.builder's own defaultTab ('character' -> /characters) was the principled destination for two broken '/builder' nav entries, and git-blaming the referenced UI component (components/abandonware/builder/ builder-manager.vue) confirmed it had been deliberately parked as unreachable (kind_robots
 - 2026-08-07 `interface-vision/t-102` — A static-analysis route inventory (grep the router/content config rather than crawl a live site) is enough to build an accurate numeric shrink-to-zero baseline for a reachability audit, and the process of building it is itself an effective way to surface real dead-route bugs -- two were found here (a stale /scenarios path live in three navigation payloads, fixed; a dead /builder path in two nav sources, filed as t-107 since its correct destination needed product judgment) that a pure documentation pass would have missed.
 - 2026-08-07 `kind-robots/t-055` — Historical audit inventories should preserve their original findings while later path relocations are recorded as durable errata, avoiding noisy rewrites of completed audit notes.
@@ -89,7 +90,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-06 `ai-art-academy/t-060` — Clean first-pass extension of verify_academy_style_preview_coverage.py: the fix (an independent full-slug enumeration diffed against the previewImageSrc-scoped set) was exactly the shape the task note prescribed, and the current academyStyles.ts already has 0 slugs in the new gap category -- proved via synthetic fixtures instead of a live regression. Merge took much longer than the diff warranted: the repo's default GitHub code-scanning CodeQL "Analyze (javascript-typescript)" job sat in "Perform CodeQL Analysis" unchanged for 50+ minutes (vs. ~5 min for the identical job on the immediately-prior PR #1803), while every actually repo-tracked CI check in ci.yml passed within a minute. It isn't a repo-tracked workflow file, so it's a default code-scanning setup job, not one AGENTS.md's "confirm the checks themselves" guidance was written to gate on -- confirmed non-blocking by GitHub's own merge endpoint accepting the merge while it was still in_progress. Worth noting for the next session that sees a lone Analyze(*) job stuck this long: it's very likely non-required scanning-infra slowness, not a real signal about this PR's diff.
 - 2026-08-05 `ai-art-academy/t-055` — The task's own claim had gone stale for ~8h with no PR ever opened (found via check_pr_merged_drift.py, unrelated to this task's content) -- a session should treat a claimed-but-un-PR'd task surfaced by that sweep as reclaimable once past CLAIM_TTL_MINUTES rather than assuming it's still in flight. Also: art-prompts.yaml alone is not a reliable coverage signal for delivered assets since fulfilled entries get pruned -- a live delivery check is required to tell "already fine" from "needs a request," which is why verify_academy_style_preview_coverage.py checks live by default.
 - 2026-08-05 `conductor/t-101` — Before implementing a kaizen task, re-verify its premise against current code -- validate_task_events.py already had the exact check this task asked for (since PR #851, 2026-07-19), so the real remaining work was narrower (test coverage) plus a root-cause finding (task-events written by direct push to main never hit the PR-time gate at all) that the original task note didn't anticipate.
-- 2026-08-05 `kind-robots/t-051` — A shallow kind_robots clone's default commit horizon can be too short to find a file's add/remove history even a few weeks back on a very active repo -- git fetch --unshallow before concluding a path was "never added" or "vanished without a trace" (same trap already documented for branch_janitor.py's merge-base classification).
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-07T18:31:32Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-07T18:42:18Z_
