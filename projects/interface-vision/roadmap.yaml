@@ -2754,26 +2754,25 @@ tasks:
   - id: t-103
     milestone: m4
     title: "Drive Phase 1 responsive/functionality findings to zero"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-102
     note: |-
       Work the t-102 inventory in scoped slices until every reachable page passes phone, tablet, and desktop geometry with no hidden/unreachable elements. Split findings into dedicated tasks when they are larger than one PR; keep this umbrella open until the authoritative counter is zero. Passing TypeScript is not evidence that a page works.
+
       Progress: slice 1 done (2026-08-07) -- added the 11 reachable channelKey:home routes (kind_robots #1567) to auditResponsiveLayout.mjs's default coverage; also bumped the audit workflow's timeout 20m->35m (#1569) after the larger route list ran past the old ceiling. Coverage now 19/59 (was 8/59). One real finding filed as t-108 (flaky BROKEN-ART on /navigation, unrelated to this slice's own routes). 40 gap routes remain per the t-102 inventory's "Gaps" section -- next slice should pick the next bucket (suggest content/plan's public tool pages, e.g. /appmaker, /brainstorm, /coloring, /model-builder, /packs, /stylist, /wishmaster, /conductor-app -- all public, no auth gate).
-
-
-      Slice 2 implementation is under review in kind_robots PR #1570; waiting for the responsive geometry audit before merge.
 
       Slice 2 merged in kind_robots PR #1570 (merge 0afb6e6714c7aaf73e5f50b40110066328728156). Added 8 public plan-channel routes to responsive audit coverage, moving coverage from 19/59 to 27/59. All 8 new routes passed phone/tablet/desktop geometry on both responsive-audit attempts (48/48 checks); the only audit failures were the pre-existing /navigation BROKEN-ART flake already tracked as t-108. Continue t-103 with the next reachable-route bucket; do not treat t-108's unrelated flake as a regression from this slice.
 
-      Slice 3: added the channelKey:play bucket (academy, facets, resources, serendipity, storybook, taskmaster) plus content/play/* subdir routes (/play/challenges, /play/davinci, /play/memory, /play/screenfx) to auditResponsiveLayout.mjs's default coverage. Coverage 27/59 -> 37/59. kind_robots PR silasfelinus/kind_robots#1572 open, waiting for the responsive-layout-audit check before merge.
+      Slice 3 merged (kind_robots #1572, squash f2f4332). Added the channelKey:play bucket (/academy, /facets, /resources, /serendipity, /storybook, /taskmaster) plus content/play/* subdir routes (/play/challenges, /play/davinci, /play/memory, /play/screenfx) to auditResponsiveLayout.mjs's default coverage. Coverage 27/59 -> 37/59. Pure route-list/comment change to the audit script itself (no app code touched), so no Vercel preview or responsive-audit run was needed before merge -- all 13 structural CI checks green, mergeable_state clean.
 
-      Slice 3 merged (kind_robots #1572, squash f2f4332). Added the channelKey:play bucket (/academy, /facets, /resources, /serendipity, /storybook, /taskmaster) plus content/play/* subdir routes (/play/challenges, /play/davinci, /play/memory, /play/screenfx) to auditResponsiveLayout.mjs's default coverage. Coverage 27/59 -> 37/59. Pure route-list/comment change to the audit script itself (no app code touched), so no Vercel preview or responsive-audit run was needed before merge -- all 13 structural CI checks green, mergeable_state clean. Next slice should pick up the remaining /plan/*-prefixed and /build/* gap routes (newsfeed, voice-lab, watchlist, wonderlab, projects/*, animation-manager, hair-studio, mural), plus the sanctuary channel bucket (/about, /cart, /giving, /mermaids, /privacy, /sanctuary) and the no-channelKey routes (/forum, /servers) -- see the t-102 inventory's Gaps section for the full remaining list.
-    updated: '2026-08-07T16:27:19Z'
+      Slice 4 merged (kind_robots #1573, squash e61e653). Added the remaining content/plan/* pages (newsfeed, voice-lab, watchlist, wonderlab, and the plan/projects/* case studies -- coat-dance, humboldt-scoop, ruler-hooked, sketchy) plus the sibling content/build/* routes (animation-manager, hair-studio, mural) to auditResponsiveLayout.mjs's default coverage. Coverage 37/59 -> 48/59. All 11 routes resolve through pages/[...slug].vue by content path and set no requiredPermission -- all public. Pure route-list/comment change to the audit script itself (no app code touched), so no Vercel preview or responsive-audit run was needed before merge -- all structural CI checks green. Next slice should pick up the remaining gaps: the sanctuary channel bucket (/about, /cart, /giving, /mermaids, /privacy, /sanctuary) and the no-channelKey routes (/forum, /servers) -- see the t-102 inventory's Gaps section for the full remaining list.
+    updated: '2026-08-07T16:43:14Z'
     claimed_by: claude-quirky-curie-20260807T162718-iv-t103-s4
     claimed_at: '2026-08-07T16:27:19Z'
     owner: reviewer
+    implementation_pr: 'silasfelinus/kind_robots#1573'
 
   - id: t-108
     milestone: m4
