@@ -6891,3 +6891,22 @@ records:
     forced merge was needed. Treating it as transient and letting a natural next
     commit re-trigger CI, rather than repeatedly polling the same stuck job, resolved
     it faster than waiting would have.
+- date: '2026-08-07'
+  project: conductor
+  task: t-103
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Fixed the third confirmed instance of process_task_events.py's rearm/ready/done
+    path silently freezing a t-010-style recurring task's nested continuous_improvement
+    counter (it only ever wrote top-level status/note fields). Took the schema-field
+    approach the original task note flagged as easier than free-text note parsing:
+    two new optional event fields (continuous_improvement_lane, continuous_improvement_pr)
+    that a closing session sets explicitly, applied atomically alongside the normal
+    status transition via the same pure update function bump_continuous_improvement.py's
+    manual CLI already used. This closes the gap for future task-events-path close-outs
+    but does not retroactively repair any already-stale counter -- a session hitting a
+    drifted counter still needs to notice and hand-correct it once, same as before.

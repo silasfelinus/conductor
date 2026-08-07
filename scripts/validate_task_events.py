@@ -23,6 +23,7 @@ from process_task_events import (  # noqa: E402
     CLOSED_OPERATIONS,
     PROJECT_RE,
     TASK_RE,
+    continuous_improvement_fields,
     require_string,
 )
 
@@ -112,6 +113,11 @@ def validate(path: Path) -> str | None:
                 return f"learning is missing required fields: {', '.join(missing)}"
         else:
             return "learning must be a mapping or a plain string lesson"
+
+    try:
+        continuous_improvement_fields(event)
+    except ValueError as error:
+        return str(error)
 
     return None
 
