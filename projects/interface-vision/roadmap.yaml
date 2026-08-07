@@ -2849,39 +2849,14 @@ tasks:
   - id: t-109
     milestone: m4
     title: "channel-tab-strip crushes to a sliver on phone across the sanctuary channel + /auth/google (7 routes)"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Found by t-103 slice 6's audit run (kind_robots PR #1575, run 31203187021,
-      the full CRUSHED/SPILL list read from the raw job log rather than just the
-      task-note summary). `<nav#channel-tab-strip>`
-      (`.tab-strip flex min-w-0 flex-1 flex-nowrap snap-x snap-mandatory
-      items-...`) crushes to an 18px sliver on phone (390px) on all six sanctuary-
-      channel routes -- /about, /cart, /giving, /mermaids, /privacy, /sanctuary
-      (tab label text "AboutMermaidsGift ShopCartGivingPr") -- plus a 12px sliver
-      on /auth/google, which renders the home channel's tab strip instead
-      ("DashboardRegisterNavigationThemes"). Both are well under
-      auditResponsiveLayout.mjs's MIN_FLEX_WIDTH (32px). Tablet (820px) passes on
-      all seven routes; desktop (1440px) was not reached before the run hit its
-      old 35-minute timeout (since bumped to 60min in the same PR), so
-      unverified there but unlikely to fail given tablet already clears it.
-      /about, /cart, /giving, /mermaids, /privacy, /sanctuary were added to
-      audit coverage in slice 5 (kind_robots #1574) without a verification run
-      (that slice's note claimed "no responsive-audit run was needed" for a
-      pure route-list change) -- this is the counterexample proving that
-      assumption wrong: a route resolving through a shared shell can still fail
-      on chrome the route itself never touches. Likely root cause: the
-      channel-select tab strip doesn't reflow or scroll cleanly at 390px for
-      channels with enough tabs/label length -- worth comparing against a
-      channel whose tab strip passes (e.g. the play channel, all of whose
-      routes passed) to isolate what differs (tab count? label length? snap-x
-      overflow behavior?). Screenshots: kind_robots run 31203187021, artifact
-      responsive-audit-31203187021 (phone shots for each of the 7 routes above).
+    note: 'Fixed by kind_robots PR #1577 (merged): channel-select carried shrink-0, forcing 100% of the header rows shrink deficit onto channel-tab-strip. Changed to min-w-0 shrink so it truncates first. Confirmed via kind_robots responsive-layout-audit run 31212650601: all seven target routes (/about, /cart, /giving, /mermaids, /privacy, /sanctuary, /auth/google) now pass phone (390px); tablet/desktop unaffected. The audit checks overall red exit on this PR was 14 unrelated pre-existing findings (t-108, t-110, t-111, t-112), not this fix.'
     claimed_by: claude-quirky-curie-20260807T194014Z-iv-t109
     claimed_at: '2026-08-07T19:40:15Z'
-    updated: '2026-08-07T19:40:15Z'
+    updated: '2026-08-07T20:28:27Z'
     implementation_pr: 'silasfelinus/kind_robots#1577'
 
   - id: t-110
