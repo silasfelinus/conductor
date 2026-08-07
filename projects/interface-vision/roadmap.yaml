@@ -2754,7 +2754,7 @@ tasks:
   - id: t-103
     milestone: m4
     title: "Drive Phase 1 responsive/functionality findings to zero"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on: t-102
@@ -2766,7 +2766,9 @@ tasks:
       Slice 2 implementation is under review in kind_robots PR #1570; waiting for the responsive geometry audit before merge.
 
       Slice 2 merged in kind_robots PR #1570 (merge 0afb6e6714c7aaf73e5f50b40110066328728156). Added 8 public plan-channel routes to responsive audit coverage, moving coverage from 19/59 to 27/59. All 8 new routes passed phone/tablet/desktop geometry on both responsive-audit attempts (48/48 checks); the only audit failures were the pre-existing /navigation BROKEN-ART flake already tracked as t-108. Continue t-103 with the next reachable-route bucket; do not treat t-108's unrelated flake as a regression from this slice.
-    updated: '2026-08-07T15:27:16Z'
+
+      Slice 3: added the channelKey:play bucket (academy, facets, resources, serendipity, storybook, taskmaster) plus content/play/* subdir routes (/play/challenges, /play/davinci, /play/memory, /play/screenfx) to auditResponsiveLayout.mjs's default coverage. Coverage 27/59 -> 37/59. kind_robots PR silasfelinus/kind_robots#1572 open, waiting for the responsive-layout-audit check before merge.
+    updated: '2026-08-07T15:31:36+00:00'
     claimed_by: claude-quirky-curie-20260807T152715-iv-t103-s3
     claimed_at: '2026-08-07T15:27:16Z'
     owner: worker
