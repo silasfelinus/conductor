@@ -457,3 +457,32 @@ submission attempted. Re-armed to `ready` per the recurring-task rule; the next 
 should re-run `coloring_queue_status.py` first and only attempt `recover-existing-jobs`
 once `RENDER-BACKLOG.md`'s most recent reading shows the relay healthy again (no
 `connection-refused` in `recentFailed`).
+
+## 2026-08-07T09:28Z | Agent run (scheduled conductor sweep, ai-networker) | coloring-book/t-022
+
+`recheck_render_queue.py`'s reading confirmed the relay itself has recovered from the
+connection-refused outage (`recentFailed: none`, 154 DONE in the last 24h window) — a
+real improvement over the 2026-08-05 reading — but the backlog it left behind is still
+severe: `queueDepth.PENDING=3000`, oldest pending job (id 4658) now ~131.1h old. Per
+`coloring_queue_status.py --book monster-recast`'s `recommended_action=recover-existing-jobs`,
+ran `consume_coloring_book_color_art.py --book monster-recast --live --limit 18` against
+all 18 recovery-actionable entries (mr-001, mr-006, mr-008, mr-011-015, mr-017-019,
+mr-021-024, mr-026-028).
+
+Result: 17/18 still genuinely queued/running on ComfyUI (their referenced job ids —
+4880-4886, 7624-7632, 7894 — unchanged since 2026-08-05/06), so `recover_timed_out_job()`
+correctly left each in place with no duplicate submitted. mr-028 (job 7634) hit one
+transient `SSL: UNEXPECTED_EOF_WHILE_READING` on the status poll itself (not a job
+failure) — reference left intact for the next pass rather than treated as a rejection.
+0 queue entries landed or changed state; `color-art-jobs.yaml` diff is empty. Per
+Failure-triage this is **transient** (infra still draining, not a code or content
+defect) — no pass consumed.
+
+Verification: `coloring_queue_status.py --book monster-recast`, `recheck_render_queue.py
+--task coloring-book/t-022` (RENDER-BACKLOG.md), `validate_roadmaps.py` (clean),
+`git status` confirmed no working-tree changes from the live pass itself. Re-armed to
+`ready`. Next cycle: the relay's connection-refused failures are gone, so future
+recovery passes should keep making real progress as the 131h backlog drains — re-run
+`coloring_queue_status.py` first; once these specific job ids (four are 2+ days old:
+4880-4886 from 2026-08-05T00:xx) finally clear the backlog, expect several of the 18 to
+resolve in the same pass rather than needing per-id reruns.
