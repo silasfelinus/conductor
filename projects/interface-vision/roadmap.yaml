@@ -2882,12 +2882,15 @@ tasks:
   - id: t-111
     milestone: m4
     title: "/storybook's hero image (Ami-butterfly's stage) is BROKEN-ART on tablet and desktop"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
       Found by t-103 slice 6's completed 60-minute audit run (kind_robots run 31207144813, 2026-08-07, against merge commit 7841e271d128e15d16d4950d2521255d53fb0697) -- not present in the earlier cancelled run t-110 was filed from, since that run never reached /storybook at tablet/desktop width. `<img alt="Ami-butterfly's stage" src=.../images/dashboard-tabs/scenario/storybook.webp>` reports `naturalWidth === 0` (a completed, failed load, per auditResponsiveLayout.mjs's own BROKEN-ART definition) at 281x341 on tablet (820px) and 529x206 on desktop (1440px). Phone (390px) does not hit this at all -- phone's /storybook failure is t-110's unrelated CRUSHED content div, and the audit never gets far enough into the page at phone width to even reach this image's load state most likely, or it's simply not been observed failing there across the runs so far. Distinct from t-108's /navigation BROKEN-ART pattern (a site-directory grid with 85+ images resolving to shared/duplicate URLs); this is a single dedicated hero image on one page, so the duplicate-URL race hypothesis t-108 is chasing likely does not apply here -- worth checking independently whether storybook.webp exists at the expected path / has a working CDN URL rather than assuming it's the same class of bug. Screenshots: kind_robots run 31207144813, artifact responsive-audit-31207144813 (tablet and desktop shots for /storybook).
+    claimed_by: claude-quirky-curie-20260807T213434Z-iv-t111
+    claimed_at: '2026-08-07T21:34:35Z'
+    updated: '2026-08-07T21:34:35Z'
 
   - id: t-112
     milestone: m4
