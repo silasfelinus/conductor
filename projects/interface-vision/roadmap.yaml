@@ -2754,26 +2754,18 @@ tasks:
   - id: t-103
     milestone: m4
     title: "Drive Phase 1 responsive/functionality findings to zero"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-102
-    note: >
-      Work the t-102 inventory in scoped slices until every reachable page passes phone,
-      tablet, and desktop geometry with no hidden/unreachable elements. Split findings into
-      dedicated tasks when they are larger than one PR; keep this umbrella open until the
-      authoritative counter is zero. Passing TypeScript is not evidence that a page works.
+    note: |-
+      Work the t-102 inventory in scoped slices until every reachable page passes phone, tablet, and desktop geometry with no hidden/unreachable elements. Split findings into dedicated tasks when they are larger than one PR; keep this umbrella open until the authoritative counter is zero. Passing TypeScript is not evidence that a page works.
+      Progress: slice 1 done (2026-08-07) -- added the 11 reachable channelKey:home routes (kind_robots #1567) to auditResponsiveLayout.mjs's default coverage; also bumped the audit workflow's timeout 20m->35m (#1569) after the larger route list ran past the old ceiling. Coverage now 19/59 (was 8/59). One real finding filed as t-108 (flaky BROKEN-ART on /navigation, unrelated to this slice's own routes). 40 gap routes remain per the t-102 inventory's "Gaps" section -- next slice should pick the next bucket (suggest content/plan's public tool pages, e.g. /appmaker, /brainstorm, /coloring, /model-builder, /packs, /stylist, /wishmaster, /conductor-app -- all public, no auth gate).
 
-      Progress: slice 1 done (2026-08-07) -- added the 11 reachable channelKey:home routes
-      (kind_robots #1567) to auditResponsiveLayout.mjs's default coverage; also bumped the
-      audit workflow's timeout 20m->35m (#1569) after the larger route list ran past the old
-      ceiling. Coverage now 19/59 (was 8/59). One real finding filed as t-108 (flaky BROKEN-ART
-      on /navigation, unrelated to this slice's own routes). 40 gap routes remain per the
-      t-102 inventory's "Gaps" section -- next slice should pick the next bucket (suggest
-      content/plan's public tool pages, e.g. /appmaker, /brainstorm, /coloring, /model-builder,
-      /packs, /stylist, /wishmaster, /conductor-app -- all public, no auth gate).
-    updated: '2026-08-07T13:45:42Z'
+
+      Slice 2 implementation is under review in kind_robots PR #1570; waiting for the responsive geometry audit before merge.
+    updated: '2026-08-07T14:22:00Z'
     claimed_by: 2026-08-07T134541-t103-slice2
     claimed_at: '2026-08-07T13:45:42Z'
 
