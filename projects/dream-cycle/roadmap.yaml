@@ -110,11 +110,11 @@ tasks:
   - id: t-006
     milestone: m4
     title: 'Daily Dream maintenance: author proposals and verify the canonical pipeline'
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-07T22:54:00Z'
+    updated: '2026-08-07T23:01:00Z'
     depends_on: t-004
     note: |-
       CURRENT CONTRACT: read PIPELINE.md. Maintain today's deterministic six-asset proposal, fold in Silas notes, inspect pinned retries, verify Facets/art/digest evidence, and replenish useful idea inventory. Never create Daily Dream objects manually. Only delegated non-dream scheduler cards may advance stage by stage in their home projects.
@@ -135,9 +135,8 @@ tasks:
       Merged kind_robots PR #1401 at dd1e80efcb26d9e42a4757d9a47c572b1a2940d4. Home / For You now uses compact Daily Dream object tiles with popup Details, Modify, and Artwork workbenches; whitelisted object fields can be revised directly, and primary, icon, card, or hero artwork can be recreated from prompts or modified through SDXL img2img and Kontext with durable ArtJob attachment. TypeScript, full Contract Tests, Layout, Entity Art Manager, and all other triggered checks completed successfully.
 
       Canonical dream-cycle art requests now become priority-100 ArtJobs at the shared Conductor consumer boundary, with focused regression tests preserving unrelated queue behavior. Kind Robots PR #1586 covers manual Daily Dream art and real human-trainer redo jobs.
-    owner: worker
-    claimed_by: 2026-08-07T224900Z-dream-cycle-t-006-art-priority-a7f3
-    claimed_at: '2026-08-07T22:49:00Z'
+
+      Merged Conductor PR #1872 and Kind Robots PR #1586. Canonical nightly Daily Dream art, manual Daily Dream art, and human Art Trainer redo jobs now enter the ArtJob queue at priority 100. Art Trainer Revise now creates a real NEW_OUTPUT job with prompt-only SDXL or image-guided SDXL/Kontext choices while preserving source lineage and destination metadata.
   - id: t-007
     milestone: m5
     title: Generate dream-cycle project art (icon, card, hero)
