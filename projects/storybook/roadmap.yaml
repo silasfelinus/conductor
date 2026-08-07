@@ -195,7 +195,12 @@ tasks:
   owner: silas
   passes: 0
   stakes: reversible
+  gate_human: true
+  approved_by_human: false
   note: |-
+    FOR SILAS: this is a subjective product-boundary decision, not an agent tooling block.
+    TO APPROVE: decide whether Stage presets become Storybook frames sharing narrative roles, or stay a separate system; record the choice here.
+
     Two role systems now exist. stores/helpers/stageCards.ts holds the older one -- min/max cardinality, badge art, promptDescriptor, and assignCharacter() already resolving real Character records -- with a per-format vocabulary describing a SHOW (host, bailiff, goblin-investor, musical-guest). utils/narrativeRoles.ts is the new one, borrowing that shape with a story vocabulary that holds across premises (protagonist, antagonist, love-interest, mentor, foil, ally, wildcard, ensemble). They were kept separate deliberately: merging before either was integrated would have invented a third thing neither side asked for. A stage preset is arguably a story frame with its cast pre-filled, so convergence is plausible -- but whether the Stage system becomes a Storybook frame or stays its own thing is Silas's call, not an agent's.
 
 - id: t-016

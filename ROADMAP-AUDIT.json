@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-07T10:18:59.335117+00:00",
+  "generated_at": "2026-08-07T10:22:45.257219+00:00",
   "summary": {
     "roadmaps": 45,
     "active_projects": 24,
@@ -8,11 +8,11 @@
     "ready": 52,
     "waiting": 65,
     "needs_human": 13,
-    "in_progress": 1,
-    "done": 776,
+    "in_progress": 0,
+    "done": 777,
     "errors": 0,
-    "warnings": 2,
-    "info": 61
+    "warnings": 0,
+    "info": 60
   },
   "projects": [
     {
@@ -43,18 +43,17 @@
       "autonomous": false,
       "task_count": 65,
       "counts": {
-        "done": 57,
+        "done": 58,
         "ready": 2,
-        "review": 1,
         "waiting": 5
       },
-      "open_count": 8,
+      "open_count": 7,
       "human_attention": 0,
       "ready": 2,
       "waiting": 5,
       "claimed": 0,
-      "review": 1,
-      "done": 57
+      "review": 0,
+      "done": 58
     },
     {
       "slug": "coloring-book",
@@ -881,20 +880,6 @@
   ],
   "findings": [
     {
-      "severity": "warning",
-      "code": "DUPLICATE_YAML_KEY",
-      "project": "ai-art-academy",
-      "task": null,
-      "message": "Duplicate key 'status' at line 508 \u2014 YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one."
-    },
-    {
-      "severity": "warning",
-      "code": "SOFT_NEEDS_HUMAN",
-      "project": "storybook",
-      "task": "t-015",
-      "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
-    },
-    {
       "severity": "info",
       "code": "APPROVAL_WITHOUT_GATE",
       "project": "ai-art-academy",
@@ -1278,13 +1263,6 @@
       "project": "sketchy",
       "task": null,
       "message": "Roadmap has no friendly goal/definition of done."
-    },
-    {
-      "severity": "info",
-      "code": "NEEDS_HUMAN_NOTE_FORMAT",
-      "project": "storybook",
-      "task": "t-015",
-      "message": "needs-human note does not use the AGENTS.md FOR SILAS action format."
     },
     {
       "severity": "info",

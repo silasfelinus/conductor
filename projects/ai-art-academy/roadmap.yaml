@@ -505,19 +505,20 @@ tasks:
     updated: '2026-07-15T23:26:30Z'
 
 
-    status: done
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: review
+    status: done
     recurring: false
     passes: 0
     stakes: reversible
     updated: '2026-08-07T08:27:45Z'
     note: |-
-      Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See run_log for cycle history — do not re-accumulate RAN entries here.
-
-      Lane 3 (inspiration/preview assets) queued live ArtJobs for the 5 style-preview requests that had never been submitted before (american-luminism, mannerism, ethiopian-icon-painting, rinpa-school, rajput-painting), confirming the queue POST is fingerprint-deduped and safe to re-run. All 8 pending style previews now carry a live ArtJob id; render relay remains severely backlogged (~130h oldest-pending) so none completed this cycle. See run_log for full detail. Next preferred lane: 4 (curriculum depth).
+      ENDED 2026-08-07 by Silas direction. This was the Academy autonomous never-idle
+      experiment, not a permanent project mode. Its completed lane history remains in run_log,
+      including the final lane-3 ArtJob submission cycle (#1841), but this task no longer
+      rearms or invents more curriculum/polish work. The Academy now advances only through
+      finite product tasks, especially the web/iOS/Android shipping milestone.
     continuous_improvement:
       last_lane: 3  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
       next_lane: 4
@@ -525,9 +526,9 @@ tasks:
       last_pr: 'silasfelinus/conductor#1841'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
     implementation_pr: 'silasfelinus/kind_robots#1546'
-    owner: worker
-    claimed_by: 2026-08-07T082744-conductor-scheduled-aa-t010-lane3
-    claimed_at: '2026-08-07T08:27:45Z'
+    owner: null
+    claimed_by: null
+    claimed_at: null
     outcome_note: >
       Silas ended the Academy's never-idle experiment on 2026-08-07. The recurring lane had
       become a source of constant low-priority churn while finite product work remained.

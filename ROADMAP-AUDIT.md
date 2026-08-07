@@ -1,21 +1,21 @@
 # Roadmap Audit
 
-Generated: `2026-08-07T10:18:59.335117+00:00`
+Generated: `2026-08-07T10:22:45.257219+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **45** roadmaps, **24** active + **2** continuous projects, **917** tasks
-- **52 ready**, **65 waiting**, **13 needs-human**, **1 claimed/review**, **776 done**
-- Findings: **0 errors**, **2 warnings**, **61 informational**
+- **52 ready**, **65 waiting**, **13 needs-human**, **0 claimed/review**, **777 done**
+- Findings: **0 errors**, **0 warnings**, **60 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `interface-vision` | active | software | 1 | 4 | 0 | 0 | 102 / 107 |
-| 2 | `ai-art-academy` | active | software | 2 | 5 | 0 | 1 | 57 / 65 |
+| 2 | `ai-art-academy` | active | software | 2 | 5 | 0 | 0 | 58 / 65 |
 | 3 | `coloring-book` | active | software | 1 | 9 | 1 | 0 | 26 / 37 |
 | 4 | `humboldt-scoop-cms` | active | software | 0 | 0 | 1 | 0 | 11 / 12 |
 | 5 | `digital-storefront` | active | software | 1 | 5 | 0 | 0 | 33 / 39 |
@@ -66,12 +66,11 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 _None._
 
-### Warning (2)
+### Warning (0)
 
-- **DUPLICATE_YAML_KEY** — `ai-art-academy`: Duplicate key 'status' at line 508 — YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one.
-- **SOFT_NEEDS_HUMAN** — `storybook` / `t-015`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
+_None._
 
-### Info (61)
+### Info (60)
 
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-011`: approved_by_human is set on a task that is not human-gated.
@@ -128,7 +127,6 @@ _None._
 - **INACTIVE_PROJECT_HAS_READY_TASKS** — `serendipity`: Inactive project retains 1 ready task(s); harmless but misleading in generated status.
 - **MISSING_GOAL** — `serendipity`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `sketchy`: Roadmap has no friendly goal/definition of done.
-- **NEEDS_HUMAN_NOTE_FORMAT** — `storybook` / `t-015`: needs-human note does not use the AGENTS.md FOR SILAS action format.
 - **INACTIVE_PROJECT_HAS_READY_TASKS** — `superkate-hairstyle-ai`: Inactive project retains 1 ready task(s); harmless but misleading in generated status.
 - **MISSING_GOAL** — `superkate-hairstyle-ai`: Roadmap has no friendly goal/definition of done.
 - **APPROVAL_WITHOUT_GATE** — `superkate-hairstyle-ai` / `t-011`: approved_by_human is set on a task that is not human-gated.
