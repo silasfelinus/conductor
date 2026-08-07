@@ -502,24 +502,20 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-07T05:27:21Z'
+    updated: '2026-08-07T05:35:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See run_log for cycle history — do not re-accumulate RAN entries here.
 
-      Lane 1 (front-end polish) cycle: fixed art-styler.vue's in-progress generation banner binding to the live selectedStyle ref instead of a snapshot, so reselecting mid-generation showed the wrong style name. Merged kind_robots PR #1546. See run_log for the full cycle summary, including the third recurrence of the continuous_improvement staleness gap (now filed as conductor/t-103). Next preferred lane is roadmap accuracy (lane 2), per the 1->2->3->4 rotation.
-
-      Lane 2 roadmap-accuracy pass refreshed the continuous-improvement checklist: removed stale hard-coded curriculum/history snapshots, pointed rotation history to the live roadmap run_log, and added live-source and terminal-metadata hygiene checks. Implementation branch worker/ai-art-academy-t-010-20260807T051250Z-l2-7f3a.
-
-      Lane 2 roadmap-accuracy cycle merged conductor PR #1833 (squash 547e06552693a5b5ddc47f631a1ce49f0879b404). Refreshed the continuous-improvement checklist to remove stale hard-coded coverage/history, follow the live run_log pointer, and require live-source, rotation-drift, terminal-lifecycle, and blocker-history checks. All exact-head registered checks completed successfully before merge. Next preferred lane: 3 (inspiration and preview assets). Connector rearm cannot advance the nested continuous_improvement mapping; conductor/t-103 already tracks that bookkeeping gap.
+      Lane 3 (inspiration/preview assets) rechecked with fresh evidence and confirmed still blocked: 0 real preview-coverage gaps (47/47 styles have previewImageSrc), but the render relay remains deeply backed up (queueDepth PENDING=3025, oldestPending ~127h) and the three most recently queued jobs (7697/7698/7699) are all still PENDING, untouched since 2026-08-06. Rotated to lane 4 (curriculum depth) instead: added `docs/rinpa-school-lesson.md`, a fourth dedicated eight-beat lesson module (Rinpa School, §46), following the existing Suprematism/Ancient-Egyptian-Painting/Fayum scaffold. Checked `docs/curriculum-candidates/` first — the only unpromoted candidate, Harlem Renaissance, is correctly gated on a human cultural-history reviewer sign-off and was left untouched. See run_log for full detail. Next preferred lane: 1 (front-end polish).
     continuous_improvement:
-      last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 2
-      last_run: '2026-08-07T04:40:20Z'
-      last_pr: 'silasfelinus/conductor#1831'
+      last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 1
+      last_run: '2026-08-07T05:35:00Z'
+      last_pr: 'silasfelinus/conductor#TBD'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
     implementation_pr: 'silasfelinus/kind_robots#1546'
     owner: worker
