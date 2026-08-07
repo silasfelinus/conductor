@@ -1,0 +1,50 @@
+name: One-shot portfolio reconciliation 2026-08-07
+
+on:
+  push:
+    branches:
+      - claude/portfolio-reconcile-20260807
+    paths:
+      - scripts/_portfolio_reconcile_20260807.py
+      - .github/workflows/_portfolio-reconcile-20260807.yml
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/portfolio-reconcile-20260807
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install test dependencies
+        run: python -m pip install pytest pyyaml
+
+      - name: Apply approved portfolio reconciliation
+        run: python scripts/_portfolio_reconcile_20260807.py
+
+      - name: Validate transformed roadmaps and scheduling
+        run: |
+          python scripts/validate_roadmaps.py
+          pytest -q tests/test_next_ready_task.py tests/test_validate_roadmaps.py tests/test_build_status.py
+          python scripts/build_status.py
+          python scripts/audit_roadmaps.py
+
+      - name: Remove one-shot transform
+        run: git rm scripts/_portfolio_reconcile_20260807.py .github/workflows/_portfolio-reconcile-20260807.yml
+
+      - name: Commit transformed portfolio
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'portfolio: reconcile lifecycle, completion gates, and project scope'
+          git push origin HEAD:claude/portfolio-reconcile-20260807
