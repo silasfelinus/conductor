@@ -2694,10 +2694,11 @@ tasks:
   - id: t-101
     milestone: m3
     title: 'Weekly site audit (2026-08-07): reconcile t-001/t-002/t-024 closing notes with current kind_robots'
-    status: review
+    status: done
     owner: reviewer
     stakes: reversible
     note: 'Filed by the weekly site-audit gap scan. t-001/t-002 (done) describe components/storybook/storybook-mockups.vue and a /storybook-mockups route as live; neither is found anywhere in kind_robots. t-024 (done, 2026-08-02) describes components/pages/plan-projects-grid.vue as an in-use component; it has since moved to components/abandonware/conductor/plan-projects-grid.vue. Confirm whether these were intentional removals/relocations and, if so, add a one-line correction addendum to each closing note (same pattern already used for t-018''s deletions) so future audits do not re-flag them. If plan-projects-grid.vue''s move to abandonware was unintentional, investigate further.'
     claimed_by: claude-quirky-curie-20260807T012923Z-iv-t101
     claimed_at: '2026-08-07T01:29:24Z'
-    updated: '2026-08-07T01:29:24Z'
+    updated: '2026-08-07T01:36:50Z'
+    implementation_pr: 'silasfelinus/conductor#1824'
