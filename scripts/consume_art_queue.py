@@ -25,6 +25,7 @@ except ImportError:
     import consume_art_queue_core as _core
 
 _core_entry_to_job = _core.entry_to_job
+DAILY_DREAM_PRIORITY = 100
 
 
 def retry_seed_identity(entry: dict[str, Any]) -> dict[str, str]:
@@ -74,6 +75,8 @@ def entry_to_job(entry: dict[str, Any]):
         normalized["seed"] = stable_retry_seed(normalized)
 
     job = _core_entry_to_job(normalized)
+    if str(normalized.get("source") or "").strip().lower() == "dream-cycle":
+        job["priority"] = DAILY_DREAM_PRIORITY
     if synthetic_seed:
         payload = job.get("payload")
         if isinstance(payload, dict):
@@ -85,6 +88,7 @@ _core.retry_seed_identity = retry_seed_identity
 _core.stable_retry_seed = stable_retry_seed
 _core.uses_specialized_attempt_recovery = uses_specialized_attempt_recovery
 _core.entry_to_job = entry_to_job
+_core.DAILY_DREAM_PRIORITY = DAILY_DREAM_PRIORITY
 sys.modules[__name__] = _core
 
 
