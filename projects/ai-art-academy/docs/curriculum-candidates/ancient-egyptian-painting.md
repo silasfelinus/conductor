@@ -9,9 +9,9 @@ funerary papyri verified directly against the Met Collection API
 (`api.artic.edu`). No named individual artist is used anywhere — see
 "Notable artisans" below for why, matching the treatment already given to
 Byzantine Mosaic (§2) and Fayum Mummy Portraits (§28). Kept here as the
-source research for the promoted entry; not yet synced into kind_robots'
-`stores/seeds/academyStyles.ts` (a separate follow-up, same pattern as
-every prior curriculum-outline.md addition).
+source research for the promoted entry; synced into kind_robots'
+`stores/seeds/academyStyles.ts` (verified 2026-08-07, t-010 lane 2
+roadmap-accuracy pass — the "not yet synced" note above was stale).
 
 ## Why this belongs in the Academy
 

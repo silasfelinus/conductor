@@ -10,9 +10,9 @@ the fourth (object 748253, a Kiitsu/Yamamoto Sodō joint work) returned
 section with a solely-Kiitsu-authored, confirmed-public-domain substitute
 (*Irises and Moth*, object 53424) found via the same API rather than
 assumed from this file. Kept here as the source research for the promoted
-entry; not yet synced into kind_robots' `stores/seeds/academyStyles.ts`
-(a separate follow-up, same pattern as every prior curriculum-outline.md
-addition).
+entry; synced into kind_robots' `stores/seeds/academyStyles.ts` (verified
+2026-08-07, t-010 lane 2 roadmap-accuracy pass — the "not yet synced" note
+above was stale).
 
 ## Why this earns a separate lesson
 

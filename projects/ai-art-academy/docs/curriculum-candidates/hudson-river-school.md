@@ -142,5 +142,5 @@ Ask learners to identify the darkest foreground mass, the brightest distant open
 - [x] Add a prompt-mode row to `docs/style-lora-registry.md` (done 2026-07-26).
 - [x] Add the Try-It / Reflect row to `docs/teaching-notes.md` (done 2026-07-26, row 32).
 - [x] Queue `kind-robots-academy-style-preview-hudson-river-school` in `projects/art-prompts.yaml` (done 2026-07-26).
-- [ ] Mirror the entry into `kind_robots/stores/seeds/academyStyles.ts` in a later cross-repo task (deferred, matching every other promoted movement's pattern).
+- [x] Mirror the entry into `kind_robots/stores/seeds/academyStyles.ts` (verified synced 2026-08-07, t-010 lane 2 roadmap-accuracy pass — this checkbox was stale).
 - [x] Verify *The Oxbow* against an official open-access or Wikimedia source before acquiring an image (done 2026-07-26, live `WebFetch` confirmed Public Domain Mark 1.0).

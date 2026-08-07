@@ -510,14 +510,12 @@ tasks:
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See run_log for cycle history — do not re-accumulate RAN entries here.
 
-      Lane 3 (inspiration/preview assets) rechecked with fresh evidence and confirmed still blocked: 0 real preview-coverage gaps (47/47 styles have previewImageSrc), but the render relay remains deeply backed up (queueDepth PENDING=3025, oldestPending ~127h) and the three most recently queued jobs (7697/7698/7699) are all still PENDING, untouched since 2026-08-06. Rotated to lane 4 (curriculum depth) instead: added `docs/rinpa-school-lesson.md`, a fourth dedicated eight-beat lesson module (Rinpa School, §46), following the existing Suprematism/Ancient-Egyptian-Painting/Fayum scaffold. Checked `docs/curriculum-candidates/` first — the only unpromoted candidate, Harlem Renaissance, is correctly gated on a human cultural-history reviewer sign-off and was left untouched. Merged conductor PR #1834 (squash 313c2b97ce82eed6de603815a1b14618dd420a26), all 22 checks green. See run_log for full detail. Next preferred lane: 1 (front-end polish).
-
-      Lane 1 front-end polish completed via kind_robots PR #1550 (squash 4d92c01bc7fddca5862d2879f4893660bcd56fa9). Fixed the Academy Style Gallery empty-state icon so search, new, and explored states visually match their messages. Exact PR head completed all 13 registered Actions checks successfully and Vercel preview was ready before merge. Next preferred lane: 2 (roadmap accuracy).
+      Lane 2 (roadmap accuracy) found and fixed seven movements' stale "not yet synced" claims across curriculum-outline.md and five curriculum-candidates files — all were already fully synced into kind_robots' academyStyles.ts (47/47 confirmed by exact slug match). See run_log for full detail. Next preferred lane: 3 (inspiration/preview assets).
     continuous_improvement:
-      last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 2
-      last_run: '2026-08-07T06:46:20Z'
-      last_pr: 'silasfelinus/kind_robots#1550'
+      last_lane: 2  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 3
+      last_run: '2026-08-07T07:32:06Z'
+      last_pr: PLACEHOLDER
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
     implementation_pr: 'silasfelinus/kind_robots#1546'
 

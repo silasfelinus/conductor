@@ -8,9 +8,9 @@ created: 2026-07-27
 promoted: 2026-07-27 (t-010, lane 4) — see curriculum-outline.md §35 and its
   "v1.15 addition" re-check paragraph. All three example works verified
   directly via the Met Collection API (`isPublicDomain: true`, matching
-  accession numbers exactly). Not yet synced into kind_robots'
-  `stores/seeds/academyStyles.ts` — deferred to a future cycle, matching
-  every prior movement addition.
+  accession numbers exactly). Synced into kind_robots'
+  `stores/seeds/academyStyles.ts` (verified 2026-08-07, t-010 lane 2
+  roadmap-accuracy pass — the "not yet synced" note above was stale).
 
 ## Why this belongs
 

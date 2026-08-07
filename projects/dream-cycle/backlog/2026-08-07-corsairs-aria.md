@@ -1,0 +1,53 @@
+---
+slug: corsairs-aria
+title: Corsairs' Aria
+type: dream
+status: outline
+priority: normal
+narrator: 'no'
+created: '2026-08-07'
+proposal: true
+proposal_date: '2026-08-07'
+built_pr: null
+---
+
+## Seed Facets
+- **Deterministic seed:** `4394870312103297025` (live catalog)
+- **Dream vibe:** Aquatic Opera · Space Pirates · Imaginary Friend · Cactus Wrangler
+- **Dream location:** Aquatic Opera · Space Pirates · Gothic Horror · Imaginary Friend · Chrono Dust
+- **Character:** Aquatic Opera · Space Pirates · Noir · Imaginary Friend · Cactus Wrangler · Gullible
+- **Reward item:** Aquatic Opera · Space Pirates · Shonen · Chrono Dust
+- **Reward skill:** Aquatic Opera · Space Pirates · Heist Fiction · Cactus Wrangler
+- **Scenario:** Aquatic Opera · Space Pirates · Nordic Noir · Gothic Horror · Noir · Imaginary Friend
+
+## The idea
+Space pirates raid an opera house sunk into a singing nebula, hunting the ghost-friend who can finish the aria that ends fleets.
+
+## Dream vibe (1)
+**The Aria That Sank a Fleet** — Every note bends the tide of stars.
+Art: A coral-glass opera house adrift in a bioluminescent nebula-sea, pirate skiffs circling like sharks in the current.
+
+## Dream location (1)
+- **The Drowned Overture** — known for hosting the last note ever sung. Local rule: no performance is allowed to finish the final aria. Best scene: the ghost-friend hums the missing note back into the hall. Art: a gothic-horror coral opera house half-submerged in glowing nebula tide, lit by drifting chrono-dust chandeliers
+
+## Character (1)
+- **Thess Marrow** — recover her mother's stolen voice from the opera's ghost. Carries a jar of singing cactus spines. Complication: her childhood imaginary friend turns out to be the ship's actual navigator. Look: a noir privateer in a thorn-stitched coat with a coral cutlass at her hip
+
+## Reward item (1)
+- **The Corsair's Encore** (ITEM, RARE) — replays any sound once, perfectly. Best used when a vital clue was only ever spoken aloud. The catch: it steals the next sound you make afterward
+
+## Reward skill (1)
+- **Thorn-Tide Boarding** (SKILL, UNCOMMON) — silent boarding through singing coral fields. Best used when a raid needs total silence. The catch: the coral remembers your footsteps and sings them back later
+
+## Scenario (1, authored last)
+- **The Unfinished Note** — In The Aria That Sank a Fleet, at The Drowned Overture, Thess Marrow chases the last living note of her mother's aria — sung, impossibly, by the imaginary friend who has crewed the ghost ship for twenty years.
+
+## Notes from Silas
+- (leave notes here — agents fold them in before building and never edit this section)
+
+## Build log
+- 2026-08-07 | proposed | deterministic Facet-seeded six-asset bundle
+
+<!-- proposal-data
+{"characters": [{"carries": "a jar of singing cactus spines", "complication": "her childhood imaginary friend turns out to be the ship's actual navigator", "look": "a noir privateer in a thorn-stitched coat with a coral cutlass at her hip", "name": "Thess Marrow", "role_drive": "recover her mother's stolen voice from the opera's ghost"}], "idea": "Space pirates raid an opera house sunk into a singing nebula, hunting the ghost-friend who can finish the aria that ends fleets.", "locations": [{"art_direction": "a gothic-horror coral opera house half-submerged in glowing nebula tide, lit by drifting chrono-dust chandeliers", "best_scene": "the ghost-friend hums the missing note back into the hall", "known_for": "hosting the last note ever sung", "local_rule": "no performance is allowed to finish the final aria", "title": "The Drowned Overture"}], "rewards": [{"best_used_when": "a vital clue was only ever spoken aloud", "catch": "it steals the next sound you make afterward", "grants": "replays any sound once, perfectly", "name": "The Corsair's Encore", "rarity": "RARE", "reward_type": "ITEM"}, {"best_used_when": "a raid needs total silence", "catch": "the coral remembers your footsteps and sings them back later", "grants": "silent boarding through singing coral fields", "name": "Thorn-Tide Boarding", "rarity": "UNCOMMON", "reward_type": "SKILL"}], "scenarios": [{"setup": "In The Aria That Sank a Fleet, at The Drowned Overture, Thess Marrow chases the last living note of her mother's aria — sung, impossibly, by the imaginary friend who has crewed the ghost ship for twenty years.", "title": "The Unfinished Note"}], "seed_facets": {"catalog_source": "live", "date": "2026-08-07", "deterministic_seed": 4394870312103297025, "elements": {"character": [{"canonicalValue": "Aquatic Opera", "id": 1678, "randomWeight": 1.0, "slug": "aquatic-opera", "taxonomy": "GENRE", "title": "Aquatic Opera"}, {"canonicalValue": "Space Pirates", "id": 792, "randomWeight": 1.0, "slug": "space-pirates", "taxonomy": "GENRE", "title": "Space Pirates"}, {"canonicalValue": "Noir", "id": 1881, "randomWeight": 1.5, "slug": "noir", "taxonomy": "GENRE", "title": "Noir"}, {"canonicalValue": "Imaginary Friend", "id": 1376, "randomWeight": 1.0, "slug": "imaginary-friend", "taxonomy": "SPECIES", "title": "Imaginary Friend"}, {"canonicalValue": "Cactus Wrangler", "id": 952, "randomWeight": 1.0, "slug": "cactus-wrangler", "taxonomy": "OCCUPATION", "title": "Cactus Wrangler"}, {"canonicalValue": "gullible", "id": 1073, "randomWeight": 1.0, "slug": "gullible", "taxonomy": "PERSONALITY", "title": "Gullible"}], "location": [{"canonicalValue": "Aquatic Opera", "id": 1678, "randomWeight": 1.0, "slug": "aquatic-opera", "taxonomy": "GENRE", "title": "Aquatic Opera"}, {"canonicalValue": "Space Pirates", "id": 792, "randomWeight": 1.0, "slug": "space-pirates", "taxonomy": "GENRE", "title": "Space Pirates"}, {"canonicalValue": "Gothic Horror", "id": 795, "randomWeight": 1.5, "slug": "gothic-horror", "taxonomy": "GENRE", "title": "Gothic Horror"}, {"canonicalValue": "Imaginary Friend", "id": 1376, "randomWeight": 1.0, "slug": "imaginary-friend", "taxonomy": "SPECIES", "title": "Imaginary Friend"}, {"canonicalValue": "Chrono Dust", "id": 862, "randomWeight": 1.0, "slug": "chrono-dust", "taxonomy": "MATERIAL", "title": "Chrono Dust"}], "reward_item": [{"canonicalValue": "Aquatic Opera", "id": 1678, "randomWeight": 1.0, "slug": "aquatic-opera", "taxonomy": "GENRE", "title": "Aquatic Opera"}, {"canonicalValue": "Space Pirates", "id": 792, "randomWeight": 1.0, "slug": "space-pirates", "taxonomy": "GENRE", "title": "Space Pirates"}, {"canonicalValue": "Shonen", "id": 1873, "randomWeight": 1.5, "slug": "shonen", "taxonomy": "GENRE", "title": "Shonen"}, {"canonicalValue": "Chrono Dust", "id": 862, "randomWeight": 1.0, "slug": "chrono-dust", "taxonomy": "MATERIAL", "title": "Chrono Dust"}], "reward_skill": [{"canonicalValue": "Aquatic Opera", "id": 1678, "randomWeight": 1.0, "slug": "aquatic-opera", "taxonomy": "GENRE", "title": "Aquatic Opera"}, {"canonicalValue": "Space Pirates", "id": 792, "randomWeight": 1.0, "slug": "space-pirates", "taxonomy": "GENRE", "title": "Space Pirates"}, {"canonicalValue": "Heist Fiction", "id": 1895, "randomWeight": 1.5, "slug": "heist-fiction", "taxonomy": "GENRE", "title": "Heist Fiction"}, {"canonicalValue": "Cactus Wrangler", "id": 952, "randomWeight": 1.0, "slug": "cactus-wrangler", "taxonomy": "OCCUPATION", "title": "Cactus Wrangler"}], "scenario": [{"canonicalValue": "Aquatic Opera", "id": 1678, "randomWeight": 1.0, "slug": "aquatic-opera", "taxonomy": "GENRE", "title": "Aquatic Opera"}, {"canonicalValue": "Space Pirates", "id": 792, "randomWeight": 1.0, "slug": "space-pirates", "taxonomy": "GENRE", "title": "Space Pirates"}, {"canonicalValue": "Nordic Noir", "id": 838, "randomWeight": 1.0, "slug": "nordic-noir", "taxonomy": "GENRE", "title": "Nordic Noir"}, {"canonicalValue": "Gothic Horror", "id": 795, "randomWeight": 1.5, "slug": "gothic-horror", "taxonomy": "GENRE", "title": "Gothic Horror"}, {"canonicalValue": "Noir", "id": 1881, "randomWeight": 1.5, "slug": "noir", "taxonomy": "GENRE", "title": "Noir"}, {"canonicalValue": "Imaginary Friend", "id": 1376, "randomWeight": 1.0, "slug": "imaginary-friend", "taxonomy": "SPECIES", "title": "Imaginary Friend"}], "vibe": [{"canonicalValue": "Aquatic Opera", "id": 1678, "randomWeight": 1.0, "slug": "aquatic-opera", "taxonomy": "GENRE", "title": "Aquatic Opera"}, {"canonicalValue": "Space Pirates", "id": 792, "randomWeight": 1.0, "slug": "space-pirates", "taxonomy": "GENRE", "title": "Space Pirates"}, {"canonicalValue": "Imaginary Friend", "id": 1376, "randomWeight": 1.0, "slug": "imaginary-friend", "taxonomy": "SPECIES", "title": "Imaginary Friend"}, {"canonicalValue": "Cactus Wrangler", "id": 952, "randomWeight": 1.0, "slug": "cactus-wrangler", "taxonomy": "OCCUPATION", "title": "Cactus Wrangler"}]}, "extra_genres": {"character": {"canonicalValue": "Noir", "id": 1881, "randomWeight": 1.5, "slug": "noir", "taxonomy": "GENRE", "title": "Noir"}, "location": {"canonicalValue": "Gothic Horror", "id": 795, "randomWeight": 1.5, "slug": "gothic-horror", "taxonomy": "GENRE", "title": "Gothic Horror"}, "reward_item": {"canonicalValue": "Shonen", "id": 1873, "randomWeight": 1.5, "slug": "shonen", "taxonomy": "GENRE", "title": "Shonen"}, "reward_skill": {"canonicalValue": "Heist Fiction", "id": 1895, "randomWeight": 1.5, "slug": "heist-fiction", "taxonomy": "GENRE", "title": "Heist Fiction"}, "scenario": {"canonicalValue": "Nordic Noir", "id": 838, "randomWeight": 1.0, "slug": "nordic-noir", "taxonomy": "GENRE", "title": "Nordic Noir"}}, "shared": {"material": {"canonicalValue": "Chrono Dust", "id": 862, "randomWeight": 1.0, "slug": "chrono-dust", "taxonomy": "MATERIAL", "title": "Chrono Dust"}, "personality": {"canonicalValue": "gullible", "id": 1073, "randomWeight": 1.0, "slug": "gullible", "taxonomy": "PERSONALITY", "title": "Gullible"}}, "umbrella": {"creature": {"canonicalValue": "Imaginary Friend", "id": 1376, "randomWeight": 1.0, "slug": "imaginary-friend", "taxonomy": "SPECIES", "title": "Imaginary Friend"}, "genres": [{"canonicalValue": "Aquatic Opera", "id": 1678, "randomWeight": 1.0, "slug": "aquatic-opera", "taxonomy": "GENRE", "title": "Aquatic Opera"}, {"canonicalValue": "Space Pirates", "id": 792, "randomWeight": 1.0, "slug": "space-pirates", "taxonomy": "GENRE", "title": "Space Pirates"}], "wildcard": {"canonicalValue": "Cactus Wrangler", "id": 952, "randomWeight": 1.0, "slug": "cactus-wrangler", "taxonomy": "OCCUPATION", "title": "Cactus Wrangler"}, "wildcard_role": "occupation"}, "version": 2}, "slug": "corsairs-aria", "title": "Corsairs' Aria", "vibe": {"art_direction": "A coral-glass opera house adrift in a bioluminescent nebula-sea, pirate skiffs circling like sharks in the current.", "line": "Every note bends the tide of stars.", "title": "The Aria That Sank a Fleet"}}
+-->
