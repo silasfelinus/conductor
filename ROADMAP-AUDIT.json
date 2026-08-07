@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-08-07T00:54:03.295472+00:00",
+  "generated_at": "2026-08-07T04:10:20.285120+00:00",
   "summary": {
     "roadmaps": 45,
     "active_projects": 27,
-    "tasks": 888,
-    "ready": 46,
+    "tasks": 893,
+    "ready": 48,
     "waiting": 47,
-    "needs_human": 12,
-    "in_progress": 0,
-    "done": 773,
+    "needs_human": 13,
+    "in_progress": 1,
+    "done": 774,
     "errors": 0,
-    "warnings": 7,
-    "info": 65
+    "warnings": 9,
+    "info": 66
   },
   "projects": [
     {
@@ -22,16 +22,15 @@
       "autonomous": false,
       "task_count": 102,
       "counts": {
-        "done": 101,
-        "ready": 1
+        "done": 102
       },
-      "open_count": 1,
+      "open_count": 0,
       "human_attention": 0,
-      "ready": 1,
+      "ready": 0,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 101
+      "done": 102
     },
     {
       "slug": "challenge-center",
@@ -59,15 +58,16 @@
       "autonomous": true,
       "task_count": 60,
       "counts": {
+        "claimed": 1,
         "done": 57,
-        "ready": 2,
+        "ready": 1,
         "waiting": 1
       },
       "open_count": 3,
       "human_attention": 0,
-      "ready": 2,
+      "ready": 1,
       "waiting": 1,
-      "claimed": 0,
+      "claimed": 1,
       "review": 0,
       "done": 57
     },
@@ -476,14 +476,15 @@
       "override_status": "active",
       "priority_index": 25,
       "autonomous": false,
-      "task_count": 10,
+      "task_count": 15,
       "counts": {
         "done": 9,
-        "ready": 1
+        "needs-human": 1,
+        "ready": 5
       },
-      "open_count": 1,
-      "human_attention": 0,
-      "ready": 1,
+      "open_count": 6,
+      "human_attention": 1,
+      "ready": 5,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
@@ -873,13 +874,6 @@
   "findings": [
     {
       "severity": "warning",
-      "code": "CONTINUOUS_IMPROVEMENT_NOTE_DRIFT",
-      "project": "ai-art-academy",
-      "task": "t-010",
-      "message": "Task note mentions a lane rotation but continuous_improvement.last_run predates the task's updated timestamp \u2014 the continuous_improvement block (last_lane/next_lane/last_run/last_pr) may be stale relative to the note."
-    },
-    {
-      "severity": "warning",
       "code": "ACTIVE_PROJECT_ALL_DONE",
       "project": "davinci",
       "task": null,
@@ -909,6 +903,20 @@
     {
       "severity": "warning",
       "code": "ACTIVE_PROJECT_ALL_DONE",
+      "project": "interface-vision",
+      "task": null,
+      "message": "All tasks are done but project override remains active."
+    },
+    {
+      "severity": "warning",
+      "code": "ACTIVE_PROJECT_NO_OPEN_TASKS",
+      "project": "interface-vision",
+      "task": null,
+      "message": "Active project has no open tasks; mark finished/paused or add an intentional recurring task."
+    },
+    {
+      "severity": "warning",
+      "code": "ACTIVE_PROJECT_ALL_DONE",
       "project": "newsfeed",
       "task": null,
       "message": "All tasks are done but project override remains active."
@@ -919,6 +927,13 @@
       "project": "newsfeed",
       "task": null,
       "message": "Active project has no open tasks; mark finished/paused or add an intentional recurring task."
+    },
+    {
+      "severity": "warning",
+      "code": "SOFT_NEEDS_HUMAN",
+      "project": "storybook",
+      "task": "t-015",
+      "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
     },
     {
       "severity": "info",
@@ -1339,6 +1354,13 @@
       "project": "storybook",
       "task": null,
       "message": "Roadmap has no friendly goal/definition of done."
+    },
+    {
+      "severity": "info",
+      "code": "NEEDS_HUMAN_NOTE_FORMAT",
+      "project": "storybook",
+      "task": "t-015",
+      "message": "needs-human note does not use the AGENTS.md FOR SILAS action format."
     },
     {
       "severity": "info",
