@@ -3322,11 +3322,40 @@ tasks:
   - id: t-103
     milestone: m2
     title: "process_task_events.py's rearm path should bump continuous_improvement, not just status/note"
-    status: claimed
+    status: done
     owner: worker
     stakes: reversible
     passes: 0
     note: >
+      DONE 2026-08-07: took the schema-field approach the original note flagged as
+      the easier alternative. `task-events/*.yaml` now accepts optional
+      `continuous_improvement_lane` (int 1-4) and `continuous_improvement_pr`
+      (`owner/repo#number`) fields; when a closing session sets both together on
+      an event, `process_task_events.py` applies them via
+      `bump_continuous_improvement_text` (the same pure update function
+      `scripts/bump_continuous_improvement.py`'s manual-catch-up CLI already
+      used) alongside the normal status transition, in the same atomic
+      compute-then-write pass as the existing `ops`/`learning` handling — so a
+      malformed pair (only one of the two fields, an out-of-range lane, a
+      badly-formatted PR ref, or a target task with no existing
+      `continuous_improvement` mapping to bump) fails loudly before anything is
+      written, rather than landing a half-applied transition. `validate_task_events.py`
+      gained the same pairing/shape check for PR-time validation, and
+      `task-events/README.md` documents the two new fields. 8 new unit tests in
+      `tests/test_process_task_events.py` cover the happy path (lane advances,
+      `next_lane` wraps correctly, `last_pr`/`last_run` update) and every
+      rejection case (fields split apart, lane out of range, malformed PR ref,
+      missing mapping, fields absent leaves the mapping untouched). Verified:
+      full `pytest tests/` — 916 passed, 1 skipped (4 pre-existing unrelated
+      failures in `test_build_digest_email_v2.py`, a Python-version f-string
+      syntax issue this change doesn't touch); `ruff check` and `flake8` clean
+      on all changed files; `validate_roadmaps.py`/`audit_roadmaps.py` clean.
+      This does not retroactively fix any already-stale counter (t-010's own
+      counter was hand-corrected again this same session, see its own
+      `run_log`) — it only prevents the *next* task-events-path close-out from
+      going stale, for any recurring task that adopts the new event fields.
+      Original spec follows:
+
       Third confirmed instance of the same gap (ai-art-academy/t-058 built
       `bump_continuous_improvement.py` for it, but nothing calls it
       automatically): `process_task_events.py`'s `rearm`/`ready`/`done`
@@ -3342,26 +3371,7 @@ tasks:
       observed instance"), and 2026-08-07 (commit dc9fa58's rearm event for
       PR #1830 left `last_lane: 3`/`next_lane: 4`/`last_pr: #1829` even
       though the note it carried said lane 4 had already run and lane 1 was
-      next — caught and fixed by hand again this cycle). Each instance costs
-      a session extra investigation time to notice the drift between the
-      note prose and the structured counter before it can trust which lane
-      to run.
-      Fix: have `process_task_events.py` detect when a rearm/ready/done event
-      target task carries a `continuous_improvement` mapping and a
-      `note`/event payload that names a completed lane and a merged PR
-      reference (the same signal `bump_continuous_improvement.py --lane
-      N --pr owner/repo#N` already consumes manually), and call the same
-      update logic inline rather than requiring a human-noticed manual
-      catch-up. If reliably parsing "which lane completed" out of free-text
-      event notes is too fragile, an easier alternative: extend the
-      task-events YAML schema with optional `continuous_improvement_lane`/
-      `continuous_improvement_pr` fields that a closing session sets
-      explicitly on the event file, and have the processor apply them via
-      `bump_continuous_improvement.py`'s existing pure update function
-      instead of reimplementing the YAML surgery. Either approach is
-      reversible and scoped to `scripts/process_task_events.py` plus
-      `scripts/bump_continuous_improvement.py` (already has the mapping-edit
-      logic factored out and unit-testable, per its own module docstring).
-    updated: '2026-08-07T06:03:27Z'
+      next — caught and fixed by hand again this cycle).
+    updated: '2026-08-07T06:10:00Z'
     claimed_by: 2026-08-07T06-03-26Z-conductor-t103
     claimed_at: '2026-08-07T06:03:27Z'

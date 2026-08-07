@@ -45,6 +45,19 @@ class TaskEventProcessorTests(unittest.TestCase):
                             "claimed_by": "sess-stale",
                             "claimed_at": "2026-07-01T00:00:00Z",
                         },
+                        {
+                            "id": "t-004",
+                            "title": "Recurring with a lane counter",
+                            "status": "review",
+                            "owner": "worker",
+                            "recurring": True,
+                            "continuous_improvement": {
+                                "last_lane": 2,
+                                "next_lane": 3,
+                                "last_run": "2026-08-01T00:00:00Z",
+                                "last_pr": "silasfelinus/conductor#1",
+                            },
+                        },
                     ],
                 },
                 sort_keys=False,
@@ -265,6 +278,138 @@ class TaskEventProcessorTests(unittest.TestCase):
         self.assertEqual(task["status"], "ready")
         self.assertNotIn("claimed_by", task)
         self.assertNotIn("claimed_at", task)
+
+    def test_rearm_with_continuous_improvement_fields_bumps_counter(self):
+        # conductor/t-103: a rearm event that names the lane just completed and its
+        # merged PR should advance the nested continuous_improvement mapping the
+        # same way scripts/bump_continuous_improvement.py's manual CLI does.
+        event = self.write_event(
+            "rearm-ci.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-004",
+                "operation": "rearm",
+                "continuous_improvement_lane": 4,
+                "continuous_improvement_pr": "silasfelinus/conductor#1834",
+            },
+        )
+
+        MODULE.process(event, dry_run=False)
+
+        task = self.roadmap()["tasks"][3]
+        self.assertEqual(task["status"], "ready")
+        mapping = task["continuous_improvement"]
+        self.assertEqual(mapping["last_lane"], 4)
+        self.assertEqual(mapping["next_lane"], 1)
+        self.assertEqual(mapping["last_pr"], "silasfelinus/conductor#1834")
+        self.assertNotEqual(mapping["last_run"], "2026-08-01T00:00:00Z")
+
+    def test_continuous_improvement_lane_without_pr_is_rejected(self):
+        event = self.write_event(
+            "ci-lane-only.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-004",
+                "operation": "rearm",
+                "continuous_improvement_lane": 4,
+            },
+        )
+
+        with self.assertRaisesRegex(ValueError, "supplied together"):
+            MODULE.process(event, dry_run=False)
+
+        self.assertTrue(event.exists())
+        task = self.roadmap()["tasks"][3]
+        self.assertEqual(task["continuous_improvement"]["last_lane"], 2)
+
+    def test_continuous_improvement_pr_without_lane_is_rejected(self):
+        event = self.write_event(
+            "ci-pr-only.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-004",
+                "operation": "rearm",
+                "continuous_improvement_pr": "silasfelinus/conductor#1834",
+            },
+        )
+
+        with self.assertRaisesRegex(ValueError, "supplied together"):
+            MODULE.process(event, dry_run=False)
+
+        self.assertTrue(event.exists())
+
+    def test_continuous_improvement_lane_out_of_range_is_rejected(self):
+        event = self.write_event(
+            "ci-lane-bad.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-004",
+                "operation": "rearm",
+                "continuous_improvement_lane": 5,
+                "continuous_improvement_pr": "silasfelinus/conductor#1834",
+            },
+        )
+
+        with self.assertRaisesRegex(ValueError, "1-4"):
+            MODULE.process(event, dry_run=False)
+
+        self.assertTrue(event.exists())
+
+    def test_continuous_improvement_pr_bad_format_is_rejected(self):
+        event = self.write_event(
+            "ci-pr-bad.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-004",
+                "operation": "rearm",
+                "continuous_improvement_lane": 4,
+                "continuous_improvement_pr": "not-a-pr-reference",
+            },
+        )
+
+        with self.assertRaisesRegex(ValueError, "owner/repo#number"):
+            MODULE.process(event, dry_run=False)
+
+        self.assertTrue(event.exists())
+
+    def test_continuous_improvement_fields_require_existing_mapping(self):
+        # t-003 has recurring: True but no continuous_improvement mapping -- a task
+        # that has never adopted the convention should fail loudly, not silently
+        # invent a mapping with no history behind it.
+        event = self.write_event(
+            "ci-no-mapping.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-003",
+                "operation": "rearm",
+                "continuous_improvement_lane": 1,
+                "continuous_improvement_pr": "silasfelinus/conductor#1834",
+            },
+        )
+
+        with self.assertRaisesRegex(Exception, "continuous_improvement"):
+            MODULE.process(event, dry_run=False)
+
+        self.assertTrue(event.exists())
+
+    def test_event_without_continuous_improvement_fields_leaves_mapping_untouched(self):
+        event = self.write_event(
+            "rearm-no-ci.yaml",
+            {"version": 1, "project": "demo", "task": "t-004", "operation": "rearm"},
+        )
+
+        MODULE.process(event, dry_run=False)
+
+        task = self.roadmap()["tasks"][3]
+        self.assertEqual(task["status"], "ready")
+        self.assertEqual(task["continuous_improvement"]["last_lane"], 2)
+        self.assertEqual(task["continuous_improvement"]["last_pr"], "silasfelinus/conductor#1")
 
     def test_claim_rejects_non_ready_without_force(self):
         event = self.write_event(

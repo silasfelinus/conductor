@@ -39,9 +39,13 @@ learning:
   outcome: done
   failure_category: null
   lesson: Small event files avoid unsafe whole-roadmap connector rewrites.
+continuous_improvement_lane: 4
+continuous_improvement_pr: silasfelinus/conductor#1834
 ```
 
 `learning` is accepted only for `done` and `blocked`. The processor derives `project`, `task`, and `outcome` from the event and appends no duplicate record for the same project/task/outcome.
+
+`continuous_improvement_lane`/`continuous_improvement_pr` are optional and only meaningful on a task that already carries a `t-010`-style nested `continuous_improvement` mapping (`last_lane`/`next_lane`/`last_run`/`last_pr`). Set both together when a task-event closes out a lane cycle (typically alongside a `rearm` event) and the processor advances the counter (`last_lane`, `next_lane = lane % 4 + 1`, `last_run`, `last_pr`) the same way `scripts/bump_continuous_improvement.py`'s manual CLI does — fixes conductor/t-103, where the counter previously froze on every close-out that went through this lighter path instead of a session hand-editing the roadmap. `continuous_improvement_lane` must be an integer 1-4; `continuous_improvement_pr` must look like `owner/repo#number`. Supplying only one of the pair is rejected as malformed.
 
 Prefer the full mapping above. If `learning` is supplied as a bare string instead (a recurring
 mistake — see conductor/t-097), the processor coerces it into `{kind, stakes, lesson}`, inferring

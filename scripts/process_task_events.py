@@ -24,6 +24,11 @@ except ImportError:
     raise SystemExit(1)
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from bump_continuous_improvement import (  # noqa: E402
+    LANE_COUNT as CI_LANE_COUNT,
+    PR_RE as CI_PR_RE,
+    bump_continuous_improvement_text,
+)
 from roadmap_claims import parse_timestamp  # noqa: E402
 from roadmap_text_patch import apply_task_field_ops  # noqa: E402
 
@@ -79,6 +84,45 @@ def require_string(event: dict[str, Any], key: str, pattern: re.Pattern[str] | N
     if pattern and not pattern.fullmatch(value):
         raise ValueError(f"event field {key!r} contains unsupported characters")
     return value
+
+
+def continuous_improvement_fields(event: dict[str, Any]) -> tuple[int, str] | None:
+    """Return `(lane, pr_ref)` if the event carries both `continuous_improvement_lane`
+    and `continuous_improvement_pr`, or `None` if neither is present.
+
+    Fixes conductor/t-103: `rearm`/`ready`/`done` events previously only ever wrote
+    a task's top-level `status`/`note` fields, never a `t-010`-style nested
+    `continuous_improvement` mapping (`last_lane`/`next_lane`/`last_run`/`last_pr`),
+    so the counter froze at its pre-cycle value on every close-out that went
+    through the task-events path instead of a session hand-editing the roadmap.
+    A closing session now sets these two fields explicitly on the event file and
+    the processor applies them via `bump_continuous_improvement_text` (the same
+    pure update function `scripts/bump_continuous_improvement.py`'s CLI already
+    uses for the manual catch-up path) alongside the normal status transition.
+
+    Both fields must be supplied together -- a lane number with no PR reference
+    (or vice versa) is a malformed event, not a partial update, so this raises
+    rather than silently applying half the pair.
+    """
+    lane = event.get("continuous_improvement_lane")
+    pr_ref = event.get("continuous_improvement_pr")
+    if lane is None and pr_ref is None:
+        return None
+    if lane is None or pr_ref is None:
+        raise ValueError(
+            "continuous_improvement_lane and continuous_improvement_pr must be "
+            "supplied together"
+        )
+    if not isinstance(lane, int) or isinstance(lane, bool) or not 1 <= lane <= CI_LANE_COUNT:
+        raise ValueError(
+            f"continuous_improvement_lane must be an integer 1-{CI_LANE_COUNT}, "
+            f"got {lane!r}"
+        )
+    if not isinstance(pr_ref, str) or not CI_PR_RE.match(pr_ref.strip()):
+        raise ValueError(
+            f"continuous_improvement_pr must look like owner/repo#number, got {pr_ref!r}"
+        )
+    return lane, pr_ref.strip()
 
 
 def find_task(roadmap: dict[str, Any], task_id: str) -> dict[str, Any]:
@@ -388,13 +432,19 @@ def process(path: Path, dry_run: bool) -> str:
         return f"{project}/{task_id}: {collision}"
 
     learning_record = prepare_learning(event, project, task_id, operation, task=task, roadmap=roadmap)
+    ci_fields = continuous_improvement_fields(event)
 
     if not dry_run:
+        new_text = roadmap_text
         if ops:
-            new_text = apply_task_field_ops(roadmap_text, task_id, ops)
+            new_text = apply_task_field_ops(new_text, task_id, ops)
+        if ci_fields is not None:
+            lane, pr_ref = ci_fields
+            run_value = event.get("updated") or "now"
+            new_text = bump_continuous_improvement_text(new_text, task_id, lane, pr_ref, run_value)
+        if new_text != roadmap_text:
             yaml.safe_load(new_text)  # re-parse to confirm the edit produced valid YAML
-            if new_text != roadmap_text:
-                roadmap_path.write_text(new_text, encoding="utf-8")
+            roadmap_path.write_text(new_text, encoding="utf-8")
         if learning_record is not None:
             write_learning_record(learning_record)
         path.unlink()
