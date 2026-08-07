@@ -3318,3 +3318,48 @@ tasks:
       `check_pr_merged_drift.py`/`audit_human_gates.py` already use
       successfully from this environment.
     updated: '2026-08-05T20:45:12Z'
+
+  - id: t-103
+    milestone: m2
+    title: "process_task_events.py's rearm path should bump continuous_improvement, not just status/note"
+    status: ready
+    owner: null
+    stakes: reversible
+    passes: 0
+    note: >
+      Third confirmed instance of the same gap (ai-art-academy/t-058 built
+      `bump_continuous_improvement.py` for it, but nothing calls it
+      automatically): `process_task_events.py`'s `rearm`/`ready`/`done`
+      operations only ever write a task's top-level `status`/`note` fields,
+      never its nested `continuous_improvement` mapping
+      (`last_lane`/`next_lane`/`last_run`/`last_pr`). Every time a
+      `t-010`-style recurring lane task closes out through the lighter
+      task-events path (rather than a session hand-editing the roadmap
+      directly), the counter freezes at its pre-cycle value even though the
+      task's own `note:` correctly records the cycle that just ran and which
+      lane is next. Confirmed recurrences: 2026-08-06 (root TALKBACK.md),
+      2026-08-06 again (see this project's TALKBACK.md same date, "second
+      observed instance"), and 2026-08-07 (commit dc9fa58's rearm event for
+      PR #1830 left `last_lane: 3`/`next_lane: 4`/`last_pr: #1829` even
+      though the note it carried said lane 4 had already run and lane 1 was
+      next — caught and fixed by hand again this cycle). Each instance costs
+      a session extra investigation time to notice the drift between the
+      note prose and the structured counter before it can trust which lane
+      to run.
+      Fix: have `process_task_events.py` detect when a rearm/ready/done event
+      target task carries a `continuous_improvement` mapping and a
+      `note`/event payload that names a completed lane and a merged PR
+      reference (the same signal `bump_continuous_improvement.py --lane
+      N --pr owner/repo#N` already consumes manually), and call the same
+      update logic inline rather than requiring a human-noticed manual
+      catch-up. If reliably parsing "which lane completed" out of free-text
+      event notes is too fragile, an easier alternative: extend the
+      task-events YAML schema with optional `continuous_improvement_lane`/
+      `continuous_improvement_pr` fields that a closing session sets
+      explicitly on the event file, and have the processor apply them via
+      `bump_continuous_improvement.py`'s existing pure update function
+      instead of reimplementing the YAML surgery. Either approach is
+      reversible and scoped to `scripts/process_task_events.py` plus
+      `scripts/bump_continuous_improvement.py` (already has the mapping-edit
+      logic factored out and unit-testable, per its own module docstring).
+    updated: '2026-08-07T04:26:00Z'
