@@ -7,13 +7,16 @@ on:
     paths:
       - scripts/_portfolio_reconcile_20260807.py
       - .github/workflows/_portfolio-reconcile-20260807.yml
+  pull_request:
+    branches:
+      - main
 
 permissions:
   contents: write
 
 jobs:
   reconcile:
-    if: github.actor != 'github-actions[bot]'
+    if: github.actor != 'github-actions[bot]' && (github.event_name == 'push' || github.head_ref == 'claude/portfolio-reconcile-20260807')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
