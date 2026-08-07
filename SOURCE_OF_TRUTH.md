@@ -29,13 +29,15 @@ Human actions in Kind Robots do not mutate the projection table directly. They c
 
 ### Conductor owns
 
-- project lifecycle: active, paused, finished, retired;
+- project lifecycle: `active | continuous | paused | retired | finished`;
 - project coordination priority;
 - roadmap milestones and tasks;
 - task status, dependencies, claims, ownership, notes, and passes;
 - human gates and approval bookkeeping;
 - pitches and pitch status;
 - coordination history and completion provenance.
+
+`continuous` is a Conductor scheduling lifecycle: it means intentionally ongoing fallback work and does not require a distinct Kind Robots database lifecycle enum. The materialized Kind Robots `Project` remains runtime `ACTIVE` while the projection preserves the exact Conductor lifecycle.
 
 ### Kind Robots owns
 

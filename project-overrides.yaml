@@ -1,7 +1,7 @@
 # Human-managed project overrides. Written by the workspace UI.
 # Agents: check this before claiming tasks — skip projects where status != active.
 # Priority controls how often agents pick tasks (high = more attention).
-# status:   active | paused | retired | finished
+# status:   active | continuous | paused | retired | finished
 # priority: low | normal | high | urgent
 # kind:     software | content | proposal | brainstorm (overrides roadmap kind for UI)
 
@@ -57,7 +57,7 @@ overrides:
     priority: normal
 
   - slug: newsfeed
-    status: active
+    status: finished
     priority: high
     kind: software
     # Frontend placement — synced to the kind_robots Project row by
@@ -121,8 +121,8 @@ overrides:
     tabKey: model-builder
 
   - slug: animation-manager
-    status: active
-    priority: high
+    status: continuous
+    priority: low
     kind: software
 
   - slug: animation-studio
@@ -422,8 +422,8 @@ overrides:
     tabKey: music-mentor
 
   - slug: dream-cycle
-    status: active
-    priority: low # idle fallback by design — must never outrank real ready work
+    status: continuous
+    priority: low# idle fallback by design — must never outrank real ready work
     kind: software
 
   - slug: lora-ingestion

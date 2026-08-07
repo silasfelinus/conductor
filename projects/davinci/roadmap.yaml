@@ -1,5 +1,9 @@
 project: davinci
 kind: software
+goal: >
+  Ship a genuinely playable, visually coherent Da Vinci life simulator that has been
+  tested on phone, tablet, and desktop, uses art throughout the run, and has verified
+  art coverage for all 1,024 deterministic endings before the project is called finished.
 notes_from_silas: |
   Da Vinci is a life simulator app/game/webgame: a branching life narrative with pass/fail victory conditions and 1024 achievements/endpoints. It integrates with Kind Robots characters, Dreams, Chat, generated art collections, and the existing milestone system. Focus development on milestone/achievement/ending generation first, so narrative generation has concrete targets. This may later share pieces with Storybook, but do not merge it prematurely.
 
@@ -23,6 +27,15 @@ milestones:
     title: "POLISH — ending reveal, achievement gallery, and Storybook alignment"
     weight: 15
     status: done
+  - id: m5
+    title: "VERIFY — playtest the real experience across devices"
+    weight: 20
+    status: in-progress
+
+  - id: m6
+    title: "ART & POLISH — coherent styling, run art, and all 1,024 ending assets"
+    weight: 30
+    status: not-started
 
 tasks:
   - id: t-001
@@ -421,3 +434,88 @@ tasks:
       the milestoneCandidate "heading toward..." UI treatment beyond the small hint
       line, LifeRunArt generation from artPrompt (the narrator proposes the string;
       nothing consumes it yet), and the shared Storybook narration utility.
+
+  - id: t-017
+    milestone: m5
+    title: "Audit and playtest Da Vinci end-to-end on phone, tablet, and desktop"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      The prior 16/16 task count proved backend/narration capability, not product completion.
+      Use the current preview/production surface and the responsive-layout tooling to play a
+      complete run at phone, tablet, and desktop widths. Record every hidden/unreachable
+      control, broken transition, confusing state, empty/decorative region, and visual defect.
+      Turn concrete findings into scoped follow-up tasks rather than declaring the project done
+      because the old list ran out. This is the new completion-reconciliation entry point.
+
+  - id: t-018
+    milestone: m6
+    title: "Audit actual art coverage for all 1,024 Da Vinci endings"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Verify the seeded LifeEnding/Milestone records against real delivered assets, not path
+      strings or queued prompts. Produce exact counts for ending icons/heroes that exist,
+      resolve to an image, are still queued, or are missing. Also inventory contextual art
+      during the run itself. The expected universe is exactly 1,024 outcome keys.
+
+  - id: t-019
+    milestone: m6
+    title: "Generate, distribute, and verify every missing Da Vinci ending asset"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-018
+    note: >
+      Consume t-018's exact missing list in bounded idempotent batches through the existing
+      ArtJob pipeline. Do not create duplicate jobs for already-rendered or already-queued
+      endings. Close only when all 1,024 endings have the required delivered art and the
+      verifier reports zero gaps.
+
+  - id: t-020
+    milestone: m6
+    title: "Integrate contextual art throughout the playable Da Vinci run"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-017
+    note: >
+      The narrator already proposes artPrompt but the old roadmap explicitly deferred
+      LifeRunArt consumption. Add a coherent in-run art treatment so chapters, transitions,
+      and the final ending do not feel like a text prototype wrapped around a finished API.
+      Reuse shared Kind Robots art/provenance infrastructure; do not invent a parallel store.
+
+  - id: t-021
+    milestone: m6
+    title: "Da Vinci visual style and interaction polish pass"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-017, t-020]
+    note: >
+      Apply the Interface Vision sequence to this product: first make every state work, then
+      make its controls/layout consistent with current kr-* primitives, then make it visually
+      intentional. Verify phone/tablet/desktop with rendered preview geometry and screenshots.
+
+  - id: t-022
+    milestone: m5
+    title: "FOR SILAS: visually accept the finished Da Vinci experience"
+    status: waiting
+    owner: silas
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    approved_by_human: false
+    depends_on: [t-019, t-021]
+    note: >
+      FOR SILAS: after the automated playtest, 1,024-ending art audit/generation, and polish
+      tasks are complete, review a short phone/tablet/desktop screenshot set and play one run.
+      TO APPROVE: confirm the experience now feels finished, or leave concrete visual/gameplay
+      notes. This is the product-completion gate; 16/16 historical tasks was not one.

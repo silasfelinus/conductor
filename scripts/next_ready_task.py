@@ -32,6 +32,7 @@ import yaml
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from roadmap_claims import task_is_claimable  # noqa: E402
 from roadmap_deps import dependency_satisfied  # noqa: E402
+from project_lifecycle import load_project_overrides, ordered_workable_slugs  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -65,24 +66,8 @@ def load_priority_order() -> list[str]:
     return [slug for slug in order if isinstance(slug, str)]
 
 
-def load_active_overrides() -> dict[str, dict[str, Any]]:
-    raw = load_yaml(OVERRIDES_FILE) or {}
-    entries = raw.get("overrides") or []
-    if isinstance(entries, dict):
-        return {
-            slug: cfg
-            for slug, cfg in entries.items()
-            if isinstance(slug, str) and isinstance(cfg, dict) and cfg.get("status") == "active"
-        }
-    if isinstance(entries, list):
-        return {
-            entry["slug"]: entry
-            for entry in entries
-            if isinstance(entry, dict)
-            and isinstance(entry.get("slug"), str)
-            and entry.get("status") == "active"
-        }
-    return {}
+def load_workable_overrides() -> dict[str, dict[str, Any]]:
+    return load_project_overrides(OVERRIDES_FILE)
 
 
 def load_roadmap(slug: str) -> Roadmap | None:
@@ -101,10 +86,7 @@ def task_is_unblocked(task: Task, tasks_by_id: dict[str, Task]) -> bool:
 
 
 def first_ready_task(order: list[str], active: dict[str, dict[str, Any]]) -> dict[str, Any] | None:
-    ordered_slugs = [slug for slug in order if slug in active]
-    unordered_slugs = sorted(slug for slug in active if slug not in set(ordered_slugs))
-
-    for slug in [*ordered_slugs, *unordered_slugs]:
+    for slug in ordered_workable_slugs(order, active):
         roadmap = load_roadmap(slug)
         if not roadmap:
             continue
@@ -133,7 +115,7 @@ def main() -> int:
     parser.add_argument("--json", action="store_true", help="Print machine-readable JSON.")
     args = parser.parse_args()
 
-    result = first_ready_task(load_priority_order(), load_active_overrides())
+    result = first_ready_task(load_priority_order(), load_workable_overrides())
     if args.json:
         print(json.dumps(result or {"task": None}, indent=2, sort_keys=True))
         return 0 if result else 1

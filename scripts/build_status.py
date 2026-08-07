@@ -11,10 +11,16 @@ import yaml
 from datetime import datetime, timezone
 from pathlib import Path
 
+try:
+    from project_lifecycle import PROJECT_LIFECYCLE_STATUSES, lifecycle_status, load_project_overrides
+except ModuleNotFoundError:  # imported as scripts.build_status in pytest
+    from scripts.project_lifecycle import PROJECT_LIFECYCLE_STATUSES, lifecycle_status, load_project_overrides
+
 REPO_ROOT = Path(__file__).parent.parent
 PROJECTS_DIR = REPO_ROOT / "projects"
 PITCHES_DIR = REPO_ROOT / "pitches"
 STATUS_FILE = REPO_ROOT / "STATUS.md"
+OVERRIDES_FILE = REPO_ROOT / "project-overrides.yaml"
 
 STATUS_COLS = ["ready", "waiting", "claimed", "review", "done", "blocked", "needs-human"]
 
@@ -79,7 +85,8 @@ def build_status():
 
     project_rows = []
     global_counts = {s: 0 for s in STATUS_COLS}
-    active_projects = 0
+    overrides = load_project_overrides(OVERRIDES_FILE)
+    lifecycle_counts = {status: 0 for status in PROJECT_LIFECYCLE_STATUSES}
 
     for project_dir in sorted(PROJECTS_DIR.iterdir()):
         if not project_dir.is_dir() or project_dir.name.startswith("_"):
@@ -88,7 +95,8 @@ def build_status():
         if not roadmap:
             continue
 
-        active_projects += 1
+        lifecycle = lifecycle_status(overrides, project_dir.name)
+        lifecycle_counts[lifecycle] += 1
         milestones = roadmap.get("milestones") or []
         tasks = roadmap.get("tasks") or []
         kind = roadmap.get("kind", "software")
@@ -99,7 +107,7 @@ def build_status():
             global_counts[k] += v
 
         project_rows.append(
-            f"| {project_dir.name} | {kind} | {progress}% "
+            f"| {project_dir.name} | {lifecycle} | {kind} | {progress}% "
             f"| {counts['ready']} | {counts['done']} | {counts['blocked']} |"
         )
 
@@ -117,7 +125,11 @@ def build_status():
         "",
         "| Metric | Value |",
         "|---|---|",
-        f"| Active projects | {active_projects} |",
+        f"| Active projects | {lifecycle_counts['active']} |",
+        f"| Continuous projects | {lifecycle_counts['continuous']} |",
+        f"| Paused projects | {lifecycle_counts['paused']} |",
+        f"| Finished projects | {lifecycle_counts['finished']} |",
+        f"| Retired projects | {lifecycle_counts['retired']} |",
         f"| Total tasks | {sum(global_counts.values())} |",
         f"| Ready | {global_counts['ready']} |",
         f"| In progress (claimed/review) | {global_counts['claimed'] + global_counts['review']} |",
@@ -127,8 +139,8 @@ def build_status():
         "",
         "## Projects",
         "",
-        "| Project | Kind | Progress | Ready | Done | Blocked |",
-        "|---|---|---|---|---|---|",
+        "| Project | Lifecycle | Kind | Progress | Ready | Done | Blocked |",
+        "|---|---|---|---|---|---|---|",
         *project_rows,
         "",
         "## Pitches awaiting vote",

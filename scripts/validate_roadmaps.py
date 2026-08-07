@@ -27,6 +27,11 @@ from pathlib import Path
 
 import yaml
 
+try:
+    from project_lifecycle import PROJECT_LIFECYCLE_STATUSES, load_project_overrides
+except ModuleNotFoundError:  # imported as scripts.validate_roadmaps in pytest
+    from scripts.project_lifecycle import PROJECT_LIFECYCLE_STATUSES, load_project_overrides
+
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -38,12 +43,30 @@ def duplicate_task_ids(tasks: list) -> list[str]:
 
 def main() -> int:
     ok = True
+    overrides_path = ROOT / 'project-overrides.yaml'
+    overrides = load_project_overrides(overrides_path) if overrides_path.exists() else {}
+    for slug, cfg in overrides.items():
+        status = str(cfg.get('status', 'active'))
+        if status not in PROJECT_LIFECYCLE_STATUSES:
+            print(f'invalid project lifecycle status for {slug}: {status}', file=sys.stderr)
+            ok = False
     for path in sorted((ROOT / "projects").glob("*/roadmap.yaml")):
         data = yaml.safe_load(path.read_text(encoding="utf-8"))
         if not isinstance(data, dict) or not isinstance(data.get("tasks", []), list):
             print(f"invalid roadmap: {path}", file=sys.stderr)
             ok = False
             continue
+
+        slug = str(data.get('project') or path.parent.name)
+        lifecycle = str(overrides.get(slug, {}).get('status', 'active'))
+        if overrides and lifecycle == 'active':
+            open_tasks = [task for task in data['tasks'] if isinstance(task, dict) and task.get('status') != 'done']
+            if not open_tasks:
+                print(
+                    f'active project has no open tasks: {slug} -- reconcile its goal, add real work, or explicitly finish/pause it',
+                    file=sys.stderr,
+                )
+                ok = False
 
         dupes = duplicate_task_ids(data["tasks"])
         if dupes:

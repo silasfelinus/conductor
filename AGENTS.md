@@ -67,14 +67,21 @@ todo explicitly asks for it. Scope is exactly what the title/description says.
    work on. CONTROL.md holds Silas's current intent and OVERRIDES anything in a roadmap it
    conflicts with. Then read this file, `projects/priority.yaml`, and the relevant
    `projects/*/roadmap.yaml` (skip `_template`).
-3. **Check `project-overrides.yaml`** — skip any project where `status != active`. Paused,
-   retired, and finished projects are off-limits; do not claim tasks for them.
+3. **Check `project-overrides.yaml`** — lifecycle is authoritative. Work finite
+   `status: active` projects first. Only when no active project has claimable ready work may
+   `status: continuous` projects run, in priority order. Paused, retired, and finished projects
+   are off-limits. Continuous is intentionally a fallback tier, not an equal-priority synonym
+   for active.
 4. Honor CONTROL.md's direction and notes, then each project's `notes_from_silas`, over
    default ordering. (STATUS.md is auto-generated and read-only — never edit it.)
-5. Within the chosen project, take the highest-priority task with `status: ready`.
-   If none anywhere, stop — do not invent work. (Exceptions: a proposal-kind project may
-   have a standing instruction to generate N pitches per cycle — follow its roadmap; and
-   `autonomous: true` projects follow the "Autonomous projects — never idle" rule below.)
+5. Within the selected lifecycle tier/project, take the highest-priority task with
+   `status: ready`. If a finite active project's list reaches zero open tasks, do NOT infer
+   completion from N/N. Reconcile its `goal` against the actual product and add missing work
+   or explicitly finish/pause it. A user-facing software project is not `finished` until its
+   live/preview front end has been checked at phone/tablet/desktop widths and Silas has either
+   accepted the visual state or explicitly waived that check in the current session. Proposal
+   projects may keep their documented pitch cadence. Never-idle work belongs to the continuous
+   lifecycle described below, not to an exhausted finite active roadmap.
 6. **Claim it before doing real work**: run
    `python scripts/claim_task.py <project> <task-id> --owner <worker|reviewer> --session <id>`.
    This checks the task's live state on `origin/main` (not your local checkout, which
@@ -268,6 +275,13 @@ start working immediately; raise the scope-confirmation task as a soft needs-hum
 runs in parallel with development. Course correction after Silas responds is cheap and
 expected — the bias is toward making things happen. (Outward-facing/irreversible steps
 remain hard gates as always.)
+
+**Lifecycle clarification (Silas, 2026-08-07):** `continuous` now owns never-idle
+behavior. The historical autonomous rules below apply only when the project's override
+status is `continuous`. `autonomous: true` on a finite `active` roadmap may grant broad
+initiative while real ready tasks exist, but it may not invent endless polish/content work
+after the finite queue empties. AI Art Academy's test-run never-idle loop is explicitly
+ended; Animation Manager and Dream Cycle are the initial continuous programs.
 
 **Autonomous projects — never idle** (Silas, 2026-07-10): a roadmap may declare
 `autonomous: true` (first test run: ai-art-academy). These projects must keep moving

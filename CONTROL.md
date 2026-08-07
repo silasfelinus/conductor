@@ -16,19 +16,12 @@ happened. Don't edit it; edit here.
 reversible until the first clean cycle is done. Nothing publishes, deploys, or spends
 money without my explicit approval (set `approved_by_human: true` on the gated task).
 
-**Priority order this week:** interface-vision → challenge-center → ai-art-academy →
-coloring-book → humboldt-scoop → humboldt-scoop-cms → digital-storefront → packmaker →
-mermaids-of-venice → kind-robots → kindrobots-unraid → global-ui.
-(Mirror changes into projects/priority.yaml. Updated 2026-07-13: both Superkate apps
-are normal-priority and sit below this current priority cluster. ai-art-academy is the
-autonomous initiative test run and should get Worker attention early while it's being
-proven. dream-cycle sits last on purpose: it's the idle fallback, never a competitor for
-real ready work. Updated 2026-07-14 (conductor/t-038): added kindrobots-unraid to this
-band's text — priority.yaml has carried it in this exact slot since the file was
-created, so its absence here was prose drift, not an intended reprioritization. Updated
-2026-08-05 (conductor/t-100): added interface-vision to the front of this band —
-priority.yaml has led with it since 2026-08-01 (Silas named the front end the single
-biggest thing holding back the beta release), so this text simply hadn't caught up.)
+**Priority order this week:** interface-vision → ai-art-academy → coloring-book →
+humboldt-scoop-cms → digital-storefront → mermaids-of-venice → kind-robots →
+kindrobots-unraid.
+
+**Continuous fallback order:** animation-manager, then dream-cycle. Finite `active` work
+always outranks `continuous` programs; dream-cycle remains the final idle fallback.
 
 **Standing rules for all agents:** Respect each project's `kind`. Honor `depends_on` gates.
 Never expand product-types.yaml — pitch it. When unsure, do less and escalate to
@@ -60,10 +53,11 @@ Silas explicitly approves that concrete action too.
   the kind_robots front end (read-only). Conductor roadmap.yaml remains the
   authoritative agent task queue; milestones are the UI/voice progress layer and
   should not replace roadmap tasks.
-- Autonomous project initiative (2026-07-10): roadmaps may declare `autonomous: true`.
-  Those projects keep running without my input under the "never idle" rule in AGENTS.md
-  (style pass / roadmap upgrade / more inspirations / content expansion when nothing is
-  ready). ai-art-academy is the test run. Escalate only actual human gates.
+- Continuous lifecycle (2026-08-07): `continuous` is the explicit never-idle program
+  status. Continuous projects run only after every finite `active` project has no claimable
+  ready work. Initial continuous programs: animation-manager and dream-cycle, with dream-cycle
+  always last. The AI Art Academy autonomous test is concluded; Academy is finite active work
+  and must stop inventing polish/content tasks when its real roadmap queue empties.
 - Briefs are direction, not contracts (Silas, 2026-07-10): projects evolve. When
   Silas's later commits or direction supersede a design-brief detail (e.g. Monster
   Recast's 32-38 page homage pool replacing its original 28-page plan), run with
@@ -209,7 +203,7 @@ Silas; he may rename).
   inventing a parallel permission system.
 - Slug parity: create the matching PROJECT Dream via the sync script, slug `packmaker`.
 
-### ai-art-academy  (software, autonomous: true)
+### ai-art-academy  (software)
 **Direction (2026-07-10, new project):** Teach the history of art — movements, styles,
 and creators — using ONLY public-domain art and dead artists; we don't rip off living
 creators. Users pick a starter image or upload their own and remix it in a learned
