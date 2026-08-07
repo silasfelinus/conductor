@@ -502,27 +502,25 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-07T00:28:37Z'
+    updated: '2026-08-07T00:41:19Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See run_log for cycle history — do not re-accumulate RAN entries here.
 
-      Lane 4 curriculum-depth cycle merged as conductor PR #1818 (Ancient Egyptian Painting lesson module). See run_log for the full cycle summary. Rotated to lane 1 front-end polish.
-
-      Lane 1 front-end polish: fixed a duplicate accessible name on art-styler.vue's style-picker thumbnails (kind_robots PR #1538) — same bug class as the already-fixed academy-styles-browser.vue thumbnails. See run_log for the full cycle summary.
+      Lane 1 front-end polish cycle merged (kind_robots PR #1538): fixed a duplicate accessible name on art-styler.vue's style-picker thumbnails, same bug class already fixed for Academy lesson thumbnails. See run_log for the full cycle summary. Next preferred lane is roadmap accuracy (lane 2).
     continuous_improvement:
-      last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 1
-      last_run: '2026-08-07T00:23:21Z'
-      last_pr: 'silasfelinus/conductor#1818'
+      last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 2
+      last_run: '2026-08-07T00:36:10Z'
+      last_pr: 'silasfelinus/kind_robots#1538'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    implementation_pr: 'silasfelinus/kind_robots#1530'
-    owner: worker
-    claimed_by: 2026-08-07T002836Z-aa-t010-lane1
-    claimed_at: '2026-08-07T00:28:37Z'
+    implementation_pr: 'silasfelinus/kind_robots#1538'
+    owner: null
+    claimed_by: null
+    claimed_at: null
 
   - id: t-015
     milestone: m4
