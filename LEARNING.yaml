@@ -6920,3 +6920,17 @@ records:
   failure_category: null
   lesson: Historical audit inventories should preserve their original findings while later path relocations
     are recorded as durable errata, avoiding noisy rewrites of completed audit notes.
+- date: 2026-08-07
+  project: interface-vision
+  task: t-102
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A static-analysis route inventory (grep the router/content config rather than crawl a live
+    site) is enough to build an accurate numeric shrink-to-zero baseline for a reachability audit, and
+    the process of building it is itself an effective way to surface real dead-route bugs -- two were
+    found here (a stale /scenarios path live in three navigation payloads, fixed; a dead /builder path
+    in two nav sources, filed as t-107 since its correct destination needed product judgment) that a
+    pure documentation pass would have missed.
