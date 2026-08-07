@@ -2774,6 +2774,8 @@ tasks:
       Slice 6 merged in kind_robots PR #1575 as 7841e271d128e15d16d4950d2521255d53fb0697. The responsive audit default list now covers all 64 routes in the t-102 non-admin/nav-linked inventory gap plan. Deployment-triggered responsive run 31203187021 exercised all eight newly added routes on phone and tablet before the old 35-minute job ceiling cancelled it at desktop /register after 149/192 total measurements: seven new routes passed at both widths; /auth/google reproduced the crushed Home channel tab strip on phone. Existing Phase-1 failures were also observed on /navigation, /storybook, /play/challenges, and the sanctuary tab strip. The same PR raised the audit timeout to 60 minutes so a full run can finish. Keep this umbrella ready rather than done: coverage is now complete, but the measured findings still need to be driven to zero and a completed 60-minute audit should establish the next authoritative counter.
 
       Slice 6's full 60-minute audit finally completed (kind_robots run 31207144813, 18:30-19:14Z, against the slice-6 merge commit 7841e271d128e15d16d4950d2521255d53fb0697) -- the authoritative counter this task's own note called for. Result: 192/192 measurements taken (no timeout), 15 route/viewport combination(s) failed (CRUSHED/BROKEN-ART count only -- STARVED-TEXT is deliberately not counted yet, per auditResponsiveLayout.mjs's own comment). All 15 map to already-tracked or newly-filed sub-tasks, none left dangling: phone BROKEN-ART /navigation (t-108, pre-existing flake); phone+tablet+desktop CRUSHED/BROKEN-ART on the sanctuary-channel routes + /auth/google's tab strip (t-109 -- fixed this session, kind_robots PR #1577, channel-select's shrink-0 was forcing 100% of the row's shrink deficit onto the tab strip; now status: review); phone CRUSHED /storybook and /play/challenges content divs (t-110, unchanged); two NEW findings not covered by any existing task, filed this session: tablet+desktop BROKEN-ART on /storybook's 'Ami-butterfly's stage' image (t-111) and desktop CRUSHED on /taskmaster's six scenario-card spans (t-112). Keep this umbrella ready rather than done: coverage is complete and the counter is now precisely enumerated, but t-108/t-110/t-111/t-112 are still open and t-109 hasn't merged yet.
+
+      CORRECTION: t-109 was NOT actually fixed by kind_robots PR #1577 as the paragraph above claims -- that PR merged on a misread audit log; see t-109's own note for the full correction. Follow-up PR #1578 has the real fix, unmerged as of this note.
     updated: '2026-08-07T19:27:56Z'
     claimed_by: claude-quirky-curie-20260807T192755Z-iv-t103-s7
     claimed_at: '2026-08-07T19:27:56Z'
@@ -2854,35 +2856,13 @@ tasks:
     passes: 0
     stakes: reversible
     note: >
-      Found by t-103 slice 6's audit run (kind_robots PR #1575, run 31203187021,
-      the full CRUSHED/SPILL list read from the raw job log rather than just the
-      task-note summary). `<nav#channel-tab-strip>`
-      (`.tab-strip flex min-w-0 flex-1 flex-nowrap snap-x snap-mandatory
-      items-...`) crushes to an 18px sliver on phone (390px) on all six sanctuary-
-      channel routes -- /about, /cart, /giving, /mermaids, /privacy, /sanctuary
-      (tab label text "AboutMermaidsGift ShopCartGivingPr") -- plus a 12px sliver
-      on /auth/google, which renders the home channel's tab strip instead
-      ("DashboardRegisterNavigationThemes"). Both are well under
-      auditResponsiveLayout.mjs's MIN_FLEX_WIDTH (32px). Tablet (820px) passes on
-      all seven routes; desktop (1440px) was not reached before the run hit its
-      old 35-minute timeout (since bumped to 60min in the same PR), so
-      unverified there but unlikely to fail given tablet already clears it.
-      /about, /cart, /giving, /mermaids, /privacy, /sanctuary were added to
-      audit coverage in slice 5 (kind_robots #1574) without a verification run
-      (that slice's note claimed "no responsive-audit run was needed" for a
-      pure route-list change) -- this is the counterexample proving that
-      assumption wrong: a route resolving through a shared shell can still fail
-      on chrome the route itself never touches. Likely root cause: the
-      channel-select tab strip doesn't reflow or scroll cleanly at 390px for
-      channels with enough tabs/label length -- worth comparing against a
-      channel whose tab strip passes (e.g. the play channel, all of whose
-      routes passed) to isolate what differs (tab count? label length? snap-x
-      overflow behavior?). Screenshots: kind_robots run 31203187021, artifact
-      responsive-audit-31203187021 (phone shots for each of the 7 routes above).
+      Found by t-103 slice 6's audit run (kind_robots PR #1575, run 31203187021, the full CRUSHED/SPILL list read from the raw job log rather than just the task-note summary). `<nav#channel-tab-strip>` (`.tab-strip flex min-w-0 flex-1 flex-nowrap snap-x snap-mandatory items-...`) crushes to an 18px sliver on phone (390px) on all six sanctuary- channel routes -- /about, /cart, /giving, /mermaids, /privacy, /sanctuary (tab label text "AboutMermaidsGift ShopCartGivingPr") -- plus a 12px sliver on /auth/google, which renders the home channel's tab strip instead ("DashboardRegisterNavigationThemes"). Both are well under auditResponsiveLayout.mjs's MIN_FLEX_WIDTH (32px). Tablet (820px) passes on all seven routes; desktop (1440px) was not reached before the run hit its old 35-minute timeout (since bumped to 60min in the same PR), so unverified there but unlikely to fail given tablet already clears it. /about, /cart, /giving, /mermaids, /privacy, /sanctuary were added to audit coverage in slice 5 (kind_robots #1574) without a verification run (that slice's note claimed "no responsive-audit run was needed" for a pure route-list change) -- this is the counterexample proving that assumption wrong: a route resolving through a shared shell can still fail on chrome the route itself never touches. Likely root cause: the channel-select tab strip doesn't reflow or scroll cleanly at 390px for channels with enough tabs/label length -- worth comparing against a channel whose tab strip passes (e.g. the play channel, all of whose routes passed) to isolate what differs (tab count? label length? snap-x overflow behavior?). Screenshots: kind_robots run 31203187021, artifact responsive-audit-31203187021 (phone shots for each of the 7 routes above).
+
+      CORRECTION (conductor sweep, 2026-08-07 ~20:30Z): kind_robots PR #1577 (making channel-select shrinkable via `shrink`+`min-w-0`) merged on a misread of its own audit log -- the merge review read the run's pass/fail summary rather than the raw per-route output. The PR's OWN triggered run 31212650601 (against #1577's exact head 5a1893f) directly confirms all seven routes still crushed identically (w=18 sanctuary, w=12 auth/google) -- the fix had zero measured effect. Root cause of why: `.tab-strip` sets overflow-x:auto, and per the flexbox spec an item's AUTOMATIC minimum size (used when min-width is auto) resolves to 0 on an overflowing axis -- so the browser never detected the row as overflowing, and the shrink algorithm #1577 relies on never engaged regardless of how shrinkable channel-select was marked. Follow-up kind_robots PR #1578 adds an EXPLICIT min-width floor to `.tab-strip` (96/112/128px, matching tab-button's own existing floor), which bypasses the automatic-minimum-is-0 rule and lets the browser actually detect the deficit. Posted a correction comment on #1577 for the record. This task stays status: review, implementation_pr updated to #1578 -- watching its own CI-triggered audit (reading the raw log this time, not just the summary) before merging.
     claimed_by: claude-quirky-curie-20260807T194014Z-iv-t109
     claimed_at: '2026-08-07T19:40:15Z'
     updated: '2026-08-07T19:40:15Z'
-    implementation_pr: 'silasfelinus/kind_robots#1577'
+    implementation_pr: 'silasfelinus/kind_robots#1578'
 
   - id: t-110
     milestone: m4
