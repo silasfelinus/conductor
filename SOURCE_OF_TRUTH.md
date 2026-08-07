@@ -37,6 +37,8 @@ Human actions in Kind Robots do not mutate the projection table directly. They c
 - pitches and pitch status;
 - coordination history and completion provenance.
 
+`continuous` is a Conductor scheduling lifecycle: it means intentionally ongoing fallback work and does not require a distinct Kind Robots database lifecycle enum. The materialized Kind Robots `Project` remains runtime `ACTIVE` while the projection preserves the exact Conductor lifecycle.
+
 ### Kind Robots owns
 
 - `Project.title` and user-facing description;
