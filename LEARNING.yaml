@@ -6948,3 +6948,19 @@ records:
     entries, and git-blaming the referenced UI component (components/abandonware/builder/
     builder-manager.vue) confirmed it had been deliberately parked as unreachable (kind_robots
     #1475), ruling out "resurrect the real page" as the intended fix.
+- date: 2026-08-07
+  project: ai-art-academy
+  task: t-061
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: For a "choose the smallest durable path" audit task, a direct filesystem/package.json
+    search for the actual infra (PWA module, Capacitor config, native dirs, install-meta tags)
+    beats guessing from feature docs -- kind_robots had zero mobile-delivery infrastructure
+    despite an unrelated Flutter client (Conductor App) existing as a superficially similar
+    precedent that turned out to share no code or relevance. Sequencing the follow-on tasks
+    (PWA foundation before Android/iOS "builds") let t-062/t-063 stay scoped as PWA verification
+    passes instead of full native pipelines, deferring the real cost (store accounts,
+    code-signing, native build tooling) until Silas actually asks for store distribution.
