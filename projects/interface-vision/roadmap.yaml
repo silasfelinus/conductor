@@ -120,6 +120,17 @@ tasks:
       input, one piece of persistent chrome. Review via Vercel preview deployment at
       phone, tablet and desktop widths. Mockup routes are deleted in t-003.
 
+      CORRECTION 2026-08-07 (interface-vision/t-101, weekly site-audit
+      reconciliation): "intentionally still live" above described the state as of
+      this task's close, not today's. Once Silas picked Storybook (t-002) the mockup
+      page was pared to the one surviving direction (kind_robots PR #1294), then
+      deleted outright once the real reading surface took over its job (kind_robots
+      PR #1297, 2026-08-02: "The mockup page is deleted. t-003 always said to remove
+      it once a direction was picked, and the real surface now does what it was
+      for."). components/storybook/storybook-mockups.vue and the /storybook-mockups
+      route no longer exist anywhere in kind_robots (confirmed via repo-wide code
+      search) — this was intentional, expected cleanup, not drift.
+
   - id: t-002
     milestone: m1
     title: 'Pick the aesthetic direction'
@@ -143,6 +154,15 @@ tasks:
       the theme block's `default: true`, defaultThemeName in stores/themeStore.ts, and
       the `storybook` entry in daisyuiThemes (stores/helpers/themeHelper.ts) — the store
       rejects any name missing from that list. Nothing after this should hardcode a hex.
+
+      CORRECTION 2026-08-07 (interface-vision/t-101, weekly site-audit
+      reconciliation): "the mockup at /storybook-mockups now shows the one direction
+      only" was accurate on 2026-08-02 but is stale now. kind_robots PR #1297
+      (2026-08-02, same day) went further than this note anticipated and deleted the
+      mockup page entirely once the Storymaker reading-mode surface took over its
+      job — nothing in kind_robots references storybook-mockups.vue anymore. The
+      theme decision recorded here (daisyUI `storybook` theme, defaultThemeName,
+      daisyuiThemes allow-list) is unaffected and still holds.
 
   - id: t-003
     milestone: m2
@@ -989,6 +1009,9 @@ tasks:
       Completed the live-code classification of the remaining gallery candidates and documented which shared abstractions are safe versus which product behaviors must remain object-owned.
 
       Merged Conductor PR #1557. The assessment classifies all remaining gallery candidates and rejects unsafe wholesale kr-gallery migrations, while identifying the smaller picker-management primitives that may be safely shared later.
+
+
+      CORRECTION 2026-08-07 (interface-vision/t-101, weekly site-audit reconciliation): the components/pages/plan-projects-grid.vue path above is stale, not the classification. kind_robots PR #1475 (2026-08-05, "Park orphaned components in abandonware") ran a reachability sweep from real entry points (app.vue, pages/, content/*.md) and found plan-projects-grid.vue unreachable, so it moved to components/abandonware/conductor/plan-projects-grid.vue along with 80 other orphaned components -- deliberate archival per Silas's stated policy, not an unintentional loss (the file, its content, and this task's "small content-collection-driven list with a different data source and no view modes" classification are all unchanged, only the directory moved).
     claimed_by: 2026-08-02T181700Z-interface-vision-t-024-r6c1
     claimed_at: '2026-08-02T18:17:00Z'
     updated: '2026-08-02T18:21:00Z'
@@ -2671,7 +2694,7 @@ tasks:
   - id: t-101
     milestone: m3
     title: 'Weekly site audit (2026-08-07): reconcile t-001/t-002/t-024 closing notes with current kind_robots'
-    status: claimed
+    status: review
     owner: reviewer
     stakes: reversible
     note: 'Filed by the weekly site-audit gap scan. t-001/t-002 (done) describe components/storybook/storybook-mockups.vue and a /storybook-mockups route as live; neither is found anywhere in kind_robots. t-024 (done, 2026-08-02) describes components/pages/plan-projects-grid.vue as an in-use component; it has since moved to components/abandonware/conductor/plan-projects-grid.vue. Confirm whether these were intentional removals/relocations and, if so, add a one-line correction addendum to each closing note (same pattern already used for t-018''s deletions) so future audits do not re-flag them. If plan-projects-grid.vue''s move to abandonware was unintentional, investigate further.'
