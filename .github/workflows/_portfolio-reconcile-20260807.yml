@@ -8,6 +8,7 @@ on:
       - scripts/_portfolio_reconcile_20260807.py
       - scripts/_portfolio_reconcile_preflight_20260807.py
       - scripts/_portfolio_reconcile_postfix_20260807.py
+      - scripts/_portfolio_reconcile_finalize_20260807.py
       - .github/workflows/_portfolio-reconcile-20260807.yml
   pull_request:
     branches:
@@ -42,15 +43,31 @@ jobs:
       - name: Normalize generated dual-entrypoint imports
         run: python scripts/_portfolio_reconcile_postfix_20260807.py
 
+      - name: Finalize truthful priority and lifecycle audit semantics
+        run: python scripts/_portfolio_reconcile_finalize_20260807.py
+
       - name: Validate transformed roadmaps and scheduling
         run: |
           python scripts/validate_roadmaps.py
-          pytest -q tests/test_next_ready_task.py tests/test_validate_roadmaps.py tests/test_build_status.py
+          pytest -q tests/test_next_ready_task.py tests/test_validate_roadmaps.py tests/test_build_status.py tests/test_current_project_lifecycle.py
           python scripts/build_status.py
           python scripts/audit_roadmaps.py
+          python - <<'PY'
+          import json
+          report = json.load(open('ROADMAP-AUDIT.json', encoding='utf-8'))
+          print('audit summary:', report['summary'])
+          for item in report['findings']:
+              if item['severity'] in {'error', 'warning'}:
+                  print(item['severity'].upper(), item['code'], item['project'], item.get('task'), '-', item['message'])
+          if report['summary']['errors']:
+              raise SystemExit('roadmap audit still has structural errors')
+          PY
+
+      - name: Drop workflow-file mutation blocked by app permissions
+        run: git checkout origin/main -- .github/workflows/ci.yml
 
       - name: Remove one-shot transform
-        run: git rm scripts/_portfolio_reconcile_20260807.py scripts/_portfolio_reconcile_preflight_20260807.py scripts/_portfolio_reconcile_postfix_20260807.py .github/workflows/_portfolio-reconcile-20260807.yml
+        run: git rm scripts/_portfolio_reconcile_20260807.py scripts/_portfolio_reconcile_preflight_20260807.py scripts/_portfolio_reconcile_postfix_20260807.py scripts/_portfolio_reconcile_finalize_20260807.py .github/workflows/_portfolio-reconcile-20260807.yml
 
       - name: Commit transformed portfolio
         run: |
