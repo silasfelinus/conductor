@@ -655,8 +655,8 @@ movements:
   # First entry from the African continent. Belongs chronologically across
   # the 15th-18th centuries (see `era`); appended here to avoid renumbering
   # the sections above, per the same convention as every prior addition.
-  # Not yet synced into kind_robots' academyStyles.ts — deferred to a future
-  # cycle, same pattern as most additions since §31.
+  # Synced into kind_robots' academyStyles.ts (verified 2026-08-07, t-010
+  # lane 2 roadmap-accuracy pass) — the "not yet synced" note above was stale.
   - slug: ethiopian-icon-painting
     name: Ethiopian Icon Painting
     era: "c. 1450-1700 (Ethiopia)"
@@ -673,9 +673,9 @@ movements:
     example_count: 4
     remix_hint: "Repaint this image as a Rinpa-school folding-screen composition: a broad gold- or silver-leaf ground with no ordinary horizon, an asymmetrical cropped arrangement of seasonal flowers, grasses, or water, bold simplified silhouettes mixed with a few precise botanical details, pooled ink-and-color edges, rhythmic repetition, and generous empty space in place of realistic depth. Preserve the source composition and subject."
   # First entry for South Asian Hindu-court painting; the Islamic-court
-  # Mughal (§27) and Persian (§25) traditions were already covered. Not yet
-  # synced into kind_robots' academyStyles.ts, same deferred pattern as most
-  # additions since §31.
+  # Mughal (§27) and Persian (§25) traditions were already covered. Synced
+  # into kind_robots' academyStyles.ts (verified 2026-08-07, t-010 lane 2
+  # roadmap-accuracy pass) — the "not yet synced" note above was stale.
   - slug: rajput-painting
     name: Rajput Painting
     era: "c. 1600-1850 (Hindu courts of Rajasthan and Central India)"

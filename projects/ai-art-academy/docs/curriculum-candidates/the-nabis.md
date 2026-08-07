@@ -5,9 +5,9 @@ academy-cultural-context: required
 **Status: PROMOTED 2026-07-26** — now curriculum-outline.md §31 (`the-nabis`),
 v1.11. Three institution-verified public-domain example works (Musée d'Orsay,
 National Gallery of Art) satisfy this file's own "definition of done" below.
-Kept here as the source research for the promoted entry; not yet synced into
-kind_robots' `stores/seeds/academyStyles.ts` (a separate follow-up, same
-pattern as every prior curriculum-outline.md addition).
+Kept here as the source research for the promoted entry; synced into
+kind_robots' `stores/seeds/academyStyles.ts` (verified 2026-08-07, t-010
+lane 2 roadmap-accuracy pass — the "not yet synced" note above was stale).
 
 ## Why this belongs in the Academy
 
