@@ -502,15 +502,17 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-07T05:12:50Z'
+    updated: '2026-08-07T05:20:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See run_log for cycle history — do not re-accumulate RAN entries here.
 
       Lane 1 (front-end polish) cycle: fixed art-styler.vue's in-progress generation banner binding to the live selectedStyle ref instead of a snapshot, so reselecting mid-generation showed the wrong style name. Merged kind_robots PR #1546. See run_log for the full cycle summary, including the third recurrence of the continuous_improvement staleness gap (now filed as conductor/t-103). Next preferred lane is roadmap accuracy (lane 2), per the 1->2->3->4 rotation.
+
+      Lane 2 roadmap-accuracy pass refreshed the continuous-improvement checklist: removed stale hard-coded curriculum/history snapshots, pointed rotation history to the live roadmap run_log, and added live-source and terminal-metadata hygiene checks. Implementation branch worker/ai-art-academy-t-010-20260807T051250Z-l2-7f3a.
     continuous_improvement:
       last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
       next_lane: 2
