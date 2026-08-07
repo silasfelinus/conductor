@@ -2754,7 +2754,7 @@ tasks:
   - id: t-103
     milestone: m4
     title: "Drive Phase 1 responsive/functionality findings to zero"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -2767,6 +2767,43 @@ tasks:
     claimed_by: claude-quirky-curie-20260807T121500Z-iv-t103
     claimed_at: '2026-08-07T12:05:32Z'
     updated: '2026-08-07T12:05:32Z'
+
+  - id: t-108
+    milestone: m4
+    title: "/navigation's site-directory cards show BROKEN-ART for a shared missing image, inconsistently"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-103
+    note: >
+      Found running t-103's first audit slice against kind_robots PR #1567: the CI
+      responsive-layout-audit flagged 3 of the 4 site-directory cards on /navigation
+      (components/navigation/navigation-trimmed.vue, rendered via the `:navigation-trimmed`
+      MDC directive) as BROKEN-ART at all three viewports -- "Join Kind Robots" (registration
+      tab), "Navigation Overview" (navigation tab), and "Privacy and Data Philosophy"
+      (sanctuary/privacy tab), all sharing the identical image src
+      `/images/dashboard-tabs/user/profile.webp`. That path comes from
+      stores/helpers/channelContent.ts's imagePath() falling through to
+      `/images/dashboard-tabs/${dashboardKey}/${dashboardTab}.webp` because these channel-tab
+      config files (content/channels/home/{navigation,registration}.md,
+      content/channels/sanctuary/privacy.md) declare `dashboardKey: user` /
+      `dashboardTab: profile` with no explicit `image:` override -- and that file is missing
+      in production. Two open questions worth resolving together: (1) two OTHER tabs sharing
+      the exact same user/profile path (content/channels/home/{account,wallet}.md) did NOT
+      get flagged in the same run -- plugins/navigation-image-fallback.client.ts listens for
+      exactly this failure and swaps in /images/botcafe.webp on error, so the inconsistency
+      is most likely a timing race between that fallback's error-driven reload and the
+      audit's fixed IMAGE_SETTLE_MS wait, not a per-tab difference -- worth confirming with a
+      second run before concluding anything about which tabs are affected. (2) whether the
+      real fix is generating the missing `/images/dashboard-tabs/user/profile.webp` asset
+      (this is exactly the self-healing missing-art case AGENTS.md's project art section
+      describes -- may already be draining via the generation backlog) versus the fallback
+      plugin not reliably completing within the settle window regardless of asset presence
+      (a real component-degradation bug per docs/contracts/responsive-layout-audit.md's
+      BROKEN-ART philosophy, worth fixing even once the asset exists, for any future gap).
+      Screenshots from the flagged run: kind_robots run 31177028472, artifact
+      responsive-audit-31177028472.
 
   - id: t-104
     milestone: m5
