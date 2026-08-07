@@ -502,7 +502,7 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: ready
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
@@ -510,7 +510,7 @@ tasks:
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See run_log for cycle history — do not re-accumulate RAN entries here.
 
-      Lane 2 (roadmap accuracy) found and fixed seven movements' stale "not yet synced" claims across curriculum-outline.md and five curriculum-candidates files — all were already fully synced into kind_robots' academyStyles.ts (47/47 confirmed by exact slug match). See run_log for full detail. Next preferred lane: 3 (inspiration/preview assets).
+      Lane 3 (inspiration/preview assets) queued live ArtJobs for the 5 style-preview requests that had never been submitted before (american-luminism, mannerism, ethiopian-icon-painting, rinpa-school, rajput-painting), confirming the queue POST is fingerprint-deduped and safe to re-run. All 8 pending style previews now carry a live ArtJob id; render relay remains severely backlogged (~130h oldest-pending) so none completed this cycle. See run_log for full detail. Next preferred lane: 4 (curriculum depth).
     continuous_improvement:
       last_lane: 2  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
       next_lane: 3
