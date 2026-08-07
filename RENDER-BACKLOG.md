@@ -312,3 +312,6 @@ queueDepth: PENDING=3046, RUNNING=1, DONE=3198, CANCELLED=816 (all-time). oldest
 
 ## 2026-08-07T05:27:30Z | draining
 queueDepth: PENDING=3025, RUNNING=1, DONE=3219, CANCELLED=816 (all-time). oldestPending: id=4658, age=457203s (~127.0h), engine=COMFY. windowThroughput (24h): PENDING=46, RUNNING=1, DONE=124, CANCELLED=27. recentFailed: none.
+
+## 2026-08-07T08:28:52Z | draining
+queueDepth: PENDING=3002, RUNNING=1, DONE=3242, CANCELLED=816 (all-time). oldestPending: id=4658, age=468084s (~130.0h), engine=COMFY. windowThroughput (24h): PENDING=23, RUNNING=1, DONE=147, CANCELLED=27. recentFailed: none.

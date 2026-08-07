@@ -1,6 +1,6 @@
 # Roadmap Audit
 
-Generated: `2026-08-07T07:37:37.956437+00:00`
+Generated: `2026-08-07T08:31:02.921526+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
@@ -8,7 +8,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 - **45** roadmaps, **27** active projects, **894** tasks
 - **48 ready**, **47 waiting**, **13 needs-human**, **0 claimed/review**, **776 done**
-- Findings: **0 errors**, **9 warnings**, **66 informational**
+- Findings: **0 errors**, **10 warnings**, **66 informational**
 
 ## Project inventory
 
@@ -66,8 +66,9 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 _None._
 
-### Warning (9)
+### Warning (10)
 
+- **CONTINUOUS_IMPROVEMENT_NOTE_DRIFT** — `ai-art-academy` / `t-010`: Task note mentions a lane rotation but continuous_improvement.last_run predates the task's updated timestamp — the continuous_improvement block (last_lane/next_lane/last_run/last_pr) may be stale relative to the note.
 - **ACTIVE_PROJECT_ALL_DONE** — `davinci`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `davinci`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 - **ACTIVE_PROJECT_ALL_DONE** — `digital-storefront`: All tasks are done but project override remains active.
