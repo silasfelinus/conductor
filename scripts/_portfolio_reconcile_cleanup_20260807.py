@@ -1,6 +1,7 @@
 from pathlib import Path
 import re
 
+# Final warning cleanup after the main portfolio transform validated cleanly.
 academy = Path('projects/ai-art-academy/roadmap.yaml')
 text = academy.read_text(encoding='utf-8')
 # Remove the stale trailing status key on t-017 that the duplicate-key audit surfaced.
