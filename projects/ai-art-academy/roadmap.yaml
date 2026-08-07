@@ -502,15 +502,17 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-07T04:07:04Z'
+    updated: '2026-08-07T04:14:04Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See run_log for cycle history — do not re-accumulate RAN entries here.
 
       Lane 4 (curriculum depth) cycle: added `docs/fayum-mummy-portraits-lesson.md`, a dedicated eight-beat lesson module for §28 Fayum Mummy Portraits, deliberately paired with the existing Ancient Egyptian Painting lesson's own reflection prompt pointing here for a same-region/opposite-visual-logic comparison. See run_log for the full cycle summary. Next preferred lane is front-end polish (lane 1), per the 4->1 rotation.
+
+      Merged conductor PR #1830 after exact-head Worker PR CI, Security Audit, Roadmap Audit, and Process task events all completed successfully. Lane 4 added the Fayum Mummy Portraits lesson and repaired stale continuous-improvement bookkeeping. Rotate next to lane 1 front-end polish.
     continuous_improvement:
       last_lane: 3  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
       next_lane: 4
@@ -518,9 +520,6 @@ tasks:
       last_pr: 'silasfelinus/conductor#1829'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
     implementation_pr: 'silasfelinus/conductor#1827'
-    owner: reviewer
-    claimed_by: 2026-08-07T0356Z-aa-t010-lane4
-    claimed_at: '2026-08-07T04:07:04Z'
 
   - id: t-015
     milestone: m4
