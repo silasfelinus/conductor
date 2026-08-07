@@ -2754,7 +2754,7 @@ tasks:
   - id: t-103
     milestone: m4
     title: "Drive Phase 1 responsive/functionality findings to zero"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-102
@@ -2770,10 +2770,11 @@ tasks:
       Slice 4 merged (kind_robots #1573, squash e61e653). Added the remaining content/plan/* pages (newsfeed, voice-lab, watchlist, wonderlab, and the plan/projects/* case studies -- coat-dance, humboldt-scoop, ruler-hooked, sketchy) plus the sibling content/build/* routes (animation-manager, hair-studio, mural) to auditResponsiveLayout.mjs's default coverage. Coverage 37/59 -> 48/59.
 
       Slice 5 merged (kind_robots #1574, squash 456d312). Added the channelKey:sanctuary bucket (/about, /cart, /giving, /mermaids, /privacy, /sanctuary) plus the two no-channelKey routes (/forum, /servers) to auditResponsiveLayout.mjs's default coverage. Coverage 48/59 -> 56/59. All 8 routes resolve through pages/[...slug].vue by content path and set no requiredPermission -- all public. Pure route-list/comment change to the audit script itself (no app code touched), so no Vercel preview or responsive-audit run was needed before merge -- all structural CI checks green. Remaining gap per the t-102 inventory's Gaps section: static pages (/auth/google, /build-bench, /coloring-page, /music-mentor, /play/challenges/leaderboard, /play/video-generator) and dynamic-path representatives (/users/1, /play/challenges/<slug>) -- next slice should pick these up to close the umbrella.
-    updated: '2026-08-07T17:29:03Z'
+
+      Slice 6 merged in kind_robots PR #1575 as 7841e271d128e15d16d4950d2521255d53fb0697. The responsive audit default list now covers all 64 routes in the t-102 non-admin/nav-linked inventory gap plan. Deployment-triggered responsive run 31203187021 exercised all eight newly added routes on phone and tablet before the old 35-minute job ceiling cancelled it at desktop /register after 149/192 total measurements: seven new routes passed at both widths; /auth/google reproduced the crushed Home channel tab strip on phone. Existing Phase-1 failures were also observed on /navigation, /storybook, /play/challenges, and the sanctuary tab strip. The same PR raised the audit timeout to 60 minutes so a full run can finish. Keep this umbrella ready rather than done: coverage is now complete, but the measured findings still need to be driven to zero and a completed 60-minute audit should establish the next authoritative counter.
+    updated: '2026-08-07T18:19:32Z'
     claimed_by: claude-quirky-curie-20260807T172902Z-iv-t103-s6
     claimed_at: '2026-08-07T17:29:03Z'
-    owner: worker
     implementation_pr: 'silasfelinus/kind_robots#1574'
 
   - id: t-108
