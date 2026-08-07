@@ -1,6 +1,6 @@
 project: ai-art-academy
 kind: software
-autonomous: true
+autonomous: false
 goal: >
   Teach people the history of art — movements, styles, and public-domain creators —
   and let them remix a starter image or their own upload in any style they learn
@@ -16,11 +16,11 @@ notes_from_silas: >
   if kontext isn't best due to LoRA availability versus model knowledge, agents may
   recommend another engine (see DESIGN-BRIEF.md: recommendation is Kontext-first,
   prompt-mode for famous dead artists, LoRAs where evaluation shows they win).
-  This is the TEST RUN of the autonomous project initiative: Claude has full reign over
-  this project and art-styler.vue. Art generation via our backend is fully supported and
-  pre-approved. Escalate only actual human gates. Keep the project running even without
-  my input — when there's nothing to do, do a style pass, upgrade the roadmap, or
-  generate more art inspirations (never-idle rule, AGENTS.md).
+  The autonomous never-idle experiment ended 2026-08-07 by Silas direction. The Academy
+  is a finite active project, not a permanent continuous program. Its completion bar now
+  includes a polished accessible web experience plus installable/testable iOS and Android
+  Academy apps. Art generation remains internally authorized, but empty task queues trigger
+  scope reconciliation rather than invented continuous-improvement work.
 milestones:
   - id: m1
     title: Design brief, policy, and model strategy
@@ -43,9 +43,14 @@ milestones:
     weight: 5
     status: done
   - id: m6
-    title: Continuous improvement loop
+    title: "Completed autonomous continuous-improvement experiment"
     weight: 10
+    status: done
+  - id: m7
+    title: "SHIP — polished accessible Academy on web, iOS, and Android"
+    weight: 25
     status: in-progress
+
 tasks:
   - id: t-001
     milestone: m1
@@ -499,11 +504,13 @@ tasks:
     claimed_at: '2026-07-15T23:25:33Z'
     updated: '2026-07-15T23:26:30Z'
 
+
+    status: done
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
     status: review
-    recurring: true
+    recurring: false
     passes: 0
     stakes: reversible
     updated: '2026-08-07T08:27:45Z'
@@ -521,6 +528,12 @@ tasks:
     owner: worker
     claimed_by: 2026-08-07T082744-conductor-scheduled-aa-t010-lane3
     claimed_at: '2026-08-07T08:27:45Z'
+    outcome_note: >
+      Silas ended the Academy's never-idle experiment on 2026-08-07. The recurring lane had
+      become a source of constant low-priority churn while finite product work remained.
+      Existing completed lane history stays intact, but this task no longer rearms. Future
+      Academy work must correspond to a finite roadmap gap, especially mobile delivery and
+      verified front-end quality.
 
   - id: t-015
     milestone: m4
@@ -1775,3 +1788,73 @@ tasks:
     owner: worker
     claimed_by: conductor-scheduled-20260806T-t060
     claimed_at: '2026-08-06T14:32:12Z'
+
+  - id: t-061
+    milestone: m7
+    title: "Audit the Academy mobile-delivery state and choose the smallest durable iOS/Android path"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      No Academy iOS/Android implementation is documented in the current roadmap, and a repo/PR
+      search on 2026-08-07 found no Academy-specific iOS, Android, or Capacitor delivery work.
+      Audit the current Kind Robots app/mobile infrastructure before choosing architecture. Reuse
+      an existing wrapper/PWA/native shell if one exists; otherwise propose the smallest maintainable
+      approach that exposes the full Academy/remix experience without forking business logic.
+
+  - id: t-062
+    milestone: m7
+    title: "Ship an installable/testable Android Academy app build"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-061
+    note: >
+      Implement the Android side of t-061's chosen shared delivery path. The build must expose the
+      real Academy timeline/styles/remix flow, preserve authentication/maturity/accessibility rules,
+      and be testable on an Android device/emulator. Public Play Store submission remains a separate
+      outward-facing human gate.
+
+  - id: t-063
+    milestone: m7
+    title: "Ship an installable/testable iOS Academy app build"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-061
+    note: >
+      Implement the iOS side of the same shared delivery path, keeping feature parity with Android
+      and web. Produce a testable simulator/device build. App Store publication, certificates, and
+      account/billing actions remain human-gated outward-facing steps.
+
+  - id: t-064
+    milestone: m7
+    title: "Accessibility and cross-platform visual QA for Academy web/iOS/Android"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-062, t-063]
+    note: >
+      Verify keyboard/screen-reader semantics where applicable, touch target sizing, reduced motion,
+      image alt/provenance presentation, error/loading states, and the complete lesson/remix flow.
+      Include phone/tablet/desktop web plus representative iOS/Android device sizes. Fix findings;
+      do not close from source inspection alone.
+
+  - id: t-065
+    milestone: m7
+    title: "FOR SILAS: visually accept Academy web, iOS, and Android builds"
+    status: waiting
+    owner: silas
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    approved_by_human: false
+    depends_on: t-064
+    note: >
+      FOR SILAS: review the polished Academy on web plus installable/testable iOS and Android builds.
+      TO APPROVE: confirm the three surfaces feel finished or leave concrete product/visual notes.
+      The Academy remains active until this acceptance and any resulting fixes are complete.

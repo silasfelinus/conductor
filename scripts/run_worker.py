@@ -38,6 +38,12 @@ except ImportError:
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from roadmap_claims import remaining_scope_delegate_open  # noqa: E402
+from project_lifecycle import (  # noqa: E402
+    WORKABLE_PROJECT_STATUSES,
+    lifecycle_status,
+    load_project_overrides,
+    ordered_workable_slugs,
+)
 
 PRIORITY_FILE = Path('projects/priority.yaml')
 OVERRIDES_FILE = Path('project-overrides.yaml')
@@ -63,18 +69,12 @@ def load_priority() -> list[str]:
     return [str(item) for item in order if item]
 
 
-def load_active_overrides() -> dict[str, dict[str, Any]]:
-    data = load_yaml(OVERRIDES_FILE)
-    overrides: dict[str, dict[str, Any]] = {}
-    for entry in data.get('overrides', []):
-        slug = entry.get('slug')
-        if slug:
-            overrides[str(slug)] = entry
-    return overrides
+def load_overrides() -> dict[str, dict[str, Any]]:
+    return load_project_overrides(OVERRIDES_FILE)
 
 
 def load_roadmaps() -> list[dict[str, Any]]:
-    overrides = load_active_overrides()
+    overrides = load_overrides()
     roadmaps: list[dict[str, Any]] = []
 
     for path in sorted(PROJECTS_DIR.glob('*/roadmap.yaml')):
@@ -85,9 +85,11 @@ def load_roadmaps() -> list[dict[str, Any]]:
         slug = roadmap.get('project') or path.parent.name
         override = overrides.get(str(slug), {})
 
-        if override.get('status', 'active') != 'active':
+        lifecycle = lifecycle_status(overrides, str(slug))
+        if lifecycle not in WORKABLE_PROJECT_STATUSES:
             continue
 
+        roadmap['_lifecycle'] = lifecycle
         roadmap['_path'] = str(path)
         roadmap['_project'] = str(slug)
         roadmaps.append(roadmap)
@@ -97,10 +99,9 @@ def load_roadmaps() -> list[dict[str, Any]]:
 
 def find_ready_task(priority_order: list[str], roadmaps: list[dict[str, Any]]) -> dict[str, Any] | None:
     by_project = {roadmap.get('_project'): roadmap for roadmap in roadmaps}
-    ordered = [by_project[slug] for slug in priority_order if slug in by_project]
-    remaining = [roadmap for roadmap in roadmaps if roadmap.get('_project') not in priority_order]
-
-    for roadmap in ordered + remaining:
+    overrides = {str(slug): {'status': roadmap.get('_lifecycle', 'active')} for slug, roadmap in by_project.items()}
+    for slug in ordered_workable_slugs(priority_order, overrides):
+        roadmap = by_project[slug]
         tasks = roadmap.get('tasks', [])
         tasks_by_id = {
             str(task.get('id')): task for task in tasks if isinstance(task, dict) and task.get('id')
@@ -125,7 +126,8 @@ def build_queue_summary() -> dict[str, Any]:
     ready_task = find_ready_task(load_priority(), roadmaps)
 
     return {
-        'active_project_count': len(roadmaps),
+        'active_project_count': sum(1 for roadmap in roadmaps if roadmap.get('_lifecycle') == 'active'),
+        'continuous_project_count': sum(1 for roadmap in roadmaps if roadmap.get('_lifecycle') == 'continuous'),
         'ready_task': ready_task,
         'projects_with_ready_tasks': [
             roadmap.get('_project')

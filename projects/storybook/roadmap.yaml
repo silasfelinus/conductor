@@ -1,23 +1,27 @@
 project: storybook
 kind: software
+goal: >
+  Ship the collaborative Storybook experience as a polished story-first product: guided and
+  limited-visibility play, reusable story state/artifacts, the in-progress casting/setup
+  redesign, and a responsive front end that has been visually accepted on phone/tablet/desktop.
 notes_from_silas: 'Build the collaborative storytelling experience layer on top of the existing Kind Robots models. Support guided adventure and limited-visibility collaboration modes with async-first play, branching choices, custom inputs, rewards, inventory, and reusable story state. Boundaries with Da Vinci (see projects/davinci/docs/storybook-boundary-comparison.md): no shared run/session tables, no columns added to Life* models — shared behavior only through existing Kind Robots models (Bot, Chat, Character, Dream, Scenario, ArtCollection, Milestone) or extracted pure utilities. Respect this when designing the session schema.'
 milestones:
 - id: m1
   title: Session model and boundaries
   weight: 30
-  status: not-started
+  status: done
 - id: m2
   title: Turn engine and branching state
   weight: 30
-  status: not-started
+  status: in-progress
 - id: m3
   title: Player rewards and reusable artifacts
   weight: 20
-  status: not-started
+  status: in-progress
 - id: m4
   title: Prototype UX
   weight: 20
-  status: not-started
+  status: in-progress
 tasks:
 - id: t-001
   milestone: m1
@@ -193,3 +197,19 @@ tasks:
   stakes: reversible
   note: |-
     Two role systems now exist. stores/helpers/stageCards.ts holds the older one -- min/max cardinality, badge art, promptDescriptor, and assignCharacter() already resolving real Character records -- with a per-format vocabulary describing a SHOW (host, bailiff, goblin-investor, musical-guest). utils/narrativeRoles.ts is the new one, borrowing that shape with a story vocabulary that holds across premises (protagonist, antagonist, love-interest, mentor, foil, ally, wildcard, ensemble). They were kept separate deliberately: merging before either was integrated would have invented a third thing neither side asked for. A stage preset is arguably a story frame with its cast pre-filled, so convergence is plausible -- but whether the Stage system becomes a Storybook frame or stays its own thing is Silas's call, not an agent's.
+
+- id: t-016
+  milestone: m4
+  title: "FOR SILAS: visually accept the redesigned Storybook setup and reading experience"
+  status: waiting
+  owner: silas
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  approved_by_human: false
+  depends_on: [t-011, t-012, t-013, t-014]
+  note: >
+    FOR SILAS: once the current casting-board/setup/deep-link redesign tasks are complete, review
+    Storybook at phone/tablet/desktop widths with a real scenario/cast. TO APPROVE: confirm the
+    front end feels like assembling and reading a story rather than nested admin panels, or leave
+    concrete visual/interaction notes. This is separate from t-015's stage-role architecture choice.

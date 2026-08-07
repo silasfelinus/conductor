@@ -29,7 +29,7 @@ Human actions in Kind Robots do not mutate the projection table directly. They c
 
 ### Conductor owns
 
-- project lifecycle: active, paused, finished, retired;
+- project lifecycle: `active | continuous | paused | retired | finished`;
 - project coordination priority;
 - roadmap milestones and tasks;
 - task status, dependencies, claims, ownership, notes, and passes;

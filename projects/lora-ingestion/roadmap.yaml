@@ -1,5 +1,9 @@
 project: lora-ingestion
 kind: infrastructure
+goal: >
+  Keep LoRA/checkpoint files automatically represented as canonical Kind Robots Resource
+  records, browsable/downloadable from the unified library, and prove Resource-localPath
+  selection reaches real generation end-to-end before closing this now-nearly-complete project.
 notes_from_silas: |
   Auto-import LoRAs: drop a file into Lora/import on the home box
   and have it detected, sorted into <Base>/<SFW|NSFW>/, and registered as a
@@ -15,7 +19,7 @@ milestones:
 - id: m2
   title: Watched-folder import agent (drop -> sort -> upsert Resource)
   weight: 30
-  status: in-progress
+  status: done
 - id: m3
   title: Resource schema — Civitai version columns + mutation-select echo
   weight: 10
@@ -56,16 +60,25 @@ tasks:
     sorted NSFW — override to SFW via scan --overrides if wrong.'
 - id: t-003
   milestone: m2
-  title: Verify end-to-end on alexandria with ume_classic_impressionist
+  title: "Reconcile later Resource-backed generation evidence; run one current smoke only if proof is still missing"
   status: ready
   stakes: reversible
-  gate_human: true
+  gate_human: false
   note: |-
     Import half CONFIRMED 2026-07-28: standalone run detected ume as Flux, moved it, and upserted the Resource (created:1). Remaining: (1) run it as the embedded kr-relay thread on the pm2 box (pm2 restart kr-relay after setx CIVITAI_TOKEN), and (2) confirm a krea2/flux2 render selecting that Resource succeeds — closes the path bug end-to-end. Note ume sorted NSFW because Civitai flags the model nsfw; override to SFW if wrong.
 
     SENT BACK by silasfelinus via Kind Robots For You. this should have been fixed. if not, please report back.
   approved_by_human: false
   updated: '2026-08-03 09:15:24.833000+00:00'
+  outcome_note: >
+    The original July 28 gate is stale in scope. Since then Kind Robots made Resource.localPath
+    authoritative for LoRA resolution across image/video engines (including PR #1090), fixed
+    art-styler path handling (#1136), unified the model library/download flow (#1152/#1166),
+    and added retry-time Resource path refresh (#1163/#1164). This task now has one job: inspect
+    later production/ArtJob evidence for a successful Resource-backed LoRA render. If that proof
+    already exists, document it and finish the project. Only queue one fresh smoke render if the
+    existing evidence is genuinely insufficient. No human product decision is required.
+
 - id: t-004
   milestone: m3
   title: Add civitaiModelId/civitaiModelVersionId + fix resourceMutationSelect

@@ -1,5 +1,10 @@
 project: interface-vision
 kind: software
+goal: >
+  Finish the entire user-facing Kind Robots front end in three explicit phases: make
+  every reachable page work on phone/tablet/desktop with no hidden or unreachable UI;
+  make the implementation consistent around shared kr-* primitives and responsive
+  patterns; then make every surface visually polished enough for human beta acceptance.
 
 notes_from_silas: |
   From Silas, 2026-08-01, in his own words:
@@ -90,6 +95,20 @@ milestones:
     title: 'POLISH & SHIP — builder gaps, sweep to zero, beta-ready'
     weight: 25
     status: done
+  - id: m4
+    title: "PHASE 1 — MAKE IT WORK: every reachable surface, every device class"
+    weight: 40
+    status: in-progress
+
+  - id: m5
+    title: "PHASE 2 — MAKE IT CONSISTENT: shared kr-* vocabulary and responsive composition"
+    weight: 30
+    status: not-started
+
+  - id: m6
+    title: "PHASE 3 — MAKE IT PRETTY: deliberate visual polish and human acceptance"
+    weight: 30
+    status: not-started
 
 tasks:
   - id: t-001
@@ -2702,3 +2721,77 @@ tasks:
     claimed_at: '2026-08-07T01:29:24Z'
     updated: '2026-08-07T01:36:50Z'
     implementation_pr: 'silasfelinus/conductor#1824'
+
+  - id: t-102
+    milestone: m4
+    title: "Build the canonical reachable-surface and responsive acceptance inventory"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Enumerate every actually reachable user-facing route/surface from the current app/nav
+      graph and assign phone/tablet/desktop checks to each. Use the Vercel preview responsive
+      audit plus targeted browser verification; capture hidden/unreachable controls, clipped
+      content, nested-scroll fights, duplicate headers, dead routes, and device-only failures.
+      The inventory must be numeric and shrink-to-zero. Admin-only surfaces come last.
+
+  - id: t-103
+    milestone: m4
+    title: "Drive Phase 1 responsive/functionality findings to zero"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-102
+    note: >
+      Work the t-102 inventory in scoped slices until every reachable page passes phone,
+      tablet, and desktop geometry with no hidden/unreachable elements. Split findings into
+      dedicated tasks when they are larger than one PR; keep this umbrella open until the
+      authoritative counter is zero. Passing TypeScript is not evidence that a page works.
+
+  - id: t-104
+    milestone: m5
+    title: "Drive live front-end consistency onto shared kr-* components and composition rules"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-103
+    note: >
+      Inventory live bespoke equivalents of the established kr-* layout, note, gallery,
+      narrative, card, toolbar, pane, and art primitives. Migrate real reachable callers,
+      consolidate duplicate implementations, and delete/park losers only after callers move.
+      Preserve deliberately bespoke surfaces. Add or extend shrink-only ratchets so consistency
+      cannot silently drift backward after this phase closes.
+
+  - id: t-105
+    milestone: m6
+    title: "Polish every reachable Kind Robots surface page-by-page"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-104
+    note: >
+      This is the deliberately subjective third phase that prior work mostly skipped. Apply the
+      chosen Storybook design language where appropriate: clean hierarchy, generous useful art,
+      friendly controls, minimal container nesting, calm spacing, readable narrative/text areas,
+      and intentional empty/loading/error states. Produce reviewable screenshots rather than
+      closing from source inspection alone.
+
+  - id: t-106
+    milestone: m6
+    title: "FOR SILAS: visual beta-readiness acceptance of the complete front end"
+    status: waiting
+    owner: silas
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    approved_by_human: false
+    depends_on: t-105
+    note: >
+      FOR SILAS: review a representative screenshot atlas covering the reachable front end at
+      phone/tablet/desktop widths, plus any surfaces the automated audit marks unusual.
+      TO APPROVE: confirm the site is visually ready for beta or identify pages that need another
+      polish pass. Interface Vision is not finished merely because its previous 102 tasks closed.

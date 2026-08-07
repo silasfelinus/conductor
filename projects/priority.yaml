@@ -1,53 +1,31 @@
 # Which project leads when multiple have ready tasks. Top of list wins.
-# The leading priority band mirrors CONTROL.md's "Priority order this week."
-# Remaining projects retain their relative order; inactive entries are skipped via
-# project-overrides.yaml. Every active project should appear exactly once.
+# Finite active projects always outrank continuous projects. Paused, finished, and
+# retired projects are historical records and do not belong in the selectable queue.
+# Continuous programs are fallback work; dream-cycle stays last by design.
 order:
-  # interface-vision leads: Silas named the front end as the single biggest thing
-  # holding back the beta release (2026-08-01). It outranks feature work until the
-  # layout contract lands and its allow-list is shrinking.
   - interface-vision
-  - challenge-center
   - ai-art-academy
   - coloring-book
-  - humboldt-scoop
   - humboldt-scoop-cms
   - digital-storefront
-  - packmaker
   - mermaids-of-venice
   - kind-robots
   - kindrobots-unraid
-  - global-ui
-  - mona-salai
-  - superkate-services-calculator
-  - superkate-hairstyle-ai
-  - newsfeed
   - model-builder
   - lora-ingestion
-  - animation-manager
-  - animation-studio
-  - ecosystem-map
   - conductor
-  - serendipity
   - taskmaster
   - storybook
   - davinci
-  - art-generator-connect
   - mural-design
   - coat-dance
-  - career-transition
   - alexa-integration
   - conductor-app
   - appmaker
   - media-watchlist
-  - sketchy
-  - pinball-hero
-  - recipe-box
   - brainstorm
   - wishmaster
-  - engagement
   - ruler-hooked
   - music-mentor
-  # dream-cycle stays LAST on purpose: its recurring build task is always ready,
-  # so it fires only when no other active project has ready work (idle fallback).
+  - animation-manager
   - dream-cycle

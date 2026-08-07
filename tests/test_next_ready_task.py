@@ -54,7 +54,7 @@ def test_first_ready_task_honors_priority_order(tmp_path: Path, monkeypatch) -> 
 """,
     )
 
-    result = selector.first_ready_task(selector.load_priority_order(), selector.load_active_overrides())
+    result = selector.first_ready_task(selector.load_priority_order(), selector.load_workable_overrides())
 
     assert result is not None
     assert result["project"] == "beta"
@@ -79,7 +79,7 @@ def test_paused_and_retired_projects_are_skipped(tmp_path: Path, monkeypatch) ->
 """,
         )
 
-    result = selector.first_ready_task(selector.load_priority_order(), selector.load_active_overrides())
+    result = selector.first_ready_task(selector.load_priority_order(), selector.load_workable_overrides())
 
     assert result is not None
     assert result["project"] == "active"
@@ -116,7 +116,7 @@ def test_dependency_chain_must_be_done(tmp_path: Path, monkeypatch) -> None:
 """,
     )
 
-    result = selector.first_ready_task(selector.load_priority_order(), selector.load_active_overrides())
+    result = selector.first_ready_task(selector.load_priority_order(), selector.load_workable_overrides())
 
     assert result is not None
     assert result["project"] == "unblocked"
@@ -156,7 +156,7 @@ def test_gate_human_dependency_requires_approval(tmp_path: Path, monkeypatch) ->
 """,
     )
 
-    result = selector.first_ready_task(selector.load_priority_order(), selector.load_active_overrides())
+    result = selector.first_ready_task(selector.load_priority_order(), selector.load_workable_overrides())
 
     assert result is not None
     assert result["project"] == "fallback"
@@ -183,7 +183,7 @@ def test_gate_human_dependency_allows_approved_done_task(tmp_path: Path, monkeyp
 """,
     )
 
-    result = selector.first_ready_task(selector.load_priority_order(), selector.load_active_overrides())
+    result = selector.first_ready_task(selector.load_priority_order(), selector.load_workable_overrides())
 
     assert result is not None
     assert result["project"] == "gated"
@@ -212,7 +212,7 @@ def test_umbrella_task_skipped_while_delegate_is_open(tmp_path: Path, monkeypatc
 """,
     )
 
-    result = selector.first_ready_task(selector.load_priority_order(), selector.load_active_overrides())
+    result = selector.first_ready_task(selector.load_priority_order(), selector.load_workable_overrides())
 
     assert result is not None
     assert result["task_id"] == "t-058"
@@ -240,7 +240,35 @@ def test_umbrella_task_claimable_again_once_delegate_done(tmp_path: Path, monkey
 """,
     )
 
-    result = selector.first_ready_task(selector.load_priority_order(), selector.load_active_overrides())
+    result = selector.first_ready_task(selector.load_priority_order(), selector.load_workable_overrides())
 
     assert result is not None
     assert result["task_id"] == "t-017"
+
+
+def test_continuous_project_waits_behind_any_active_ready_work(tmp_path: Path, monkeypatch) -> None:
+    projects_dir = configure_repo(tmp_path, monkeypatch)
+    write_yaml(projects_dir / "priority.yaml", "order:\n  - forever\n  - finite\n")
+    write_yaml(
+        tmp_path / "project-overrides.yaml",
+        "overrides:\n  - slug: forever\n    status: continuous\n  - slug: finite\n    status: active\n",
+    )
+    write_project(projects_dir, "forever", "- id: t-001\n  title: Continuous task\n  status: ready\n  stakes: reversible\n")
+    write_project(projects_dir, "finite", "- id: t-001\n  title: Finite task\n  status: ready\n  stakes: reversible\n")
+    result = selector.first_ready_task(selector.load_priority_order(), selector.load_workable_overrides())
+    assert result is not None
+    assert result["project"] == "finite"
+
+
+def test_continuous_project_runs_when_active_queue_is_empty(tmp_path: Path, monkeypatch) -> None:
+    projects_dir = configure_repo(tmp_path, monkeypatch)
+    write_yaml(projects_dir / "priority.yaml", "order:\n  - forever\n  - finite\n")
+    write_yaml(
+        tmp_path / "project-overrides.yaml",
+        "overrides:\n  - slug: forever\n    status: continuous\n  - slug: finite\n    status: active\n",
+    )
+    write_project(projects_dir, "forever", "- id: t-001\n  title: Continuous task\n  status: ready\n  stakes: reversible\n")
+    write_project(projects_dir, "finite", "- id: t-001\n  title: Finite task\n  status: done\n  stakes: reversible\n")
+    result = selector.first_ready_task(selector.load_priority_order(), selector.load_workable_overrides())
+    assert result is not None
+    assert result["project"] == "forever"

@@ -34,6 +34,7 @@ VALID_STATUS = {
     "challenged",
 }
 ACTIVE_STATES = {"active"}
+WORKABLE_STATES = {"active", "continuous"}
 IN_PROGRESS = {"claimed", "review"}
 TERMINAL = {"done"}
 OPEN_STATES = VALID_STATUS - TERMINAL
@@ -153,13 +154,15 @@ def audit() -> dict[str, Any]:
         if isinstance(entry, dict) and entry.get("slug")
     }
     active = {slug for slug, entry in overrides.items() if entry.get("status") in ACTIVE_STATES}
+    continuous = {slug for slug, entry in overrides.items() if entry.get("status") == "continuous"}
+    workable = active | continuous
 
     findings: list[dict[str, Any]] = []
     projects: list[dict[str, Any]] = []
     roadmap_paths = sorted(PROJECTS.glob("*/roadmap.yaml"))
     roadmap_slugs = {path.parent.name for path in roadmap_paths if path.parent.name != "_template"}
 
-    for slug in sorted(active - set(priority)):
+    for slug in sorted(workable - set(priority)):
         findings.append(issue("error", "ACTIVE_MISSING_PRIORITY", slug, "Active project is absent from projects/priority.yaml."))
     for slug in priority:
         if slug not in roadmap_slugs:
@@ -207,8 +210,8 @@ def audit() -> dict[str, Any]:
 
         if slug not in overrides:
             findings.append(issue("warning", "ROADMAP_MISSING_OVERRIDE", slug, "Roadmap has no project-overrides.yaml entry."))
-        if slug not in priority and override_status == "active":
-            findings.append(issue("error", "ACTIVE_ROADMAP_MISSING_PRIORITY", slug, "Active roadmap is not selectable because it is absent from priority.yaml."))
+        if slug not in priority and override_status in WORKABLE_STATES:
+            findings.append(issue("error", "WORKABLE_ROADMAP_MISSING_PRIORITY", slug, "Active/continuous roadmap is not selectable because it is absent from priority.yaml."))
         if data.get("project") and str(data.get("project")) != slug:
             findings.append(issue("warning", "SLUG_MISMATCH", slug, f"roadmap project field is {data.get('project')!r}, not directory slug."))
         if not data.get("goal"):
@@ -307,7 +310,7 @@ def audit() -> dict[str, Any]:
         open_count = sum(counts.get(state, 0) for state in OPEN_STATES)
         if override_status == "active" and tasks and open_count == 0:
             findings.append(issue("warning", "ACTIVE_PROJECT_NO_OPEN_TASKS", slug, "Active project has no open tasks; mark finished/paused or add an intentional recurring task."))
-        if override_status != "active" and counts.get("ready", 0):
+        if override_status not in WORKABLE_STATES and counts.get("ready", 0):
             findings.append(issue("info", "INACTIVE_PROJECT_HAS_READY_TASKS", slug, f"Inactive project retains {counts.get('ready', 0)} ready task(s); harmless but misleading in generated status."))
         if override_status == "active" and counts.get("done", 0) == len(tasks) and tasks:
             findings.append(issue("warning", "ACTIVE_PROJECT_ALL_DONE", slug, "All tasks are done but project override remains active."))
@@ -340,6 +343,7 @@ def audit() -> dict[str, Any]:
         "summary": {
             "roadmaps": len(projects),
             "active_projects": len(active),
+            "continuous_projects": len(continuous),
             "tasks": sum(item["task_count"] for item in projects),
             "ready": sum(item["ready"] for item in projects),
             "waiting": sum(item["waiting"] for item in projects),
@@ -366,7 +370,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         "",
         "## Portfolio snapshot",
         "",
-        f"- **{summary['roadmaps']}** roadmaps, **{summary['active_projects']}** active projects, **{summary['tasks']}** tasks",
+        f"- **{summary['roadmaps']}** roadmaps, **{summary['active_projects']}** active + **{summary['continuous_projects']}** continuous projects, **{summary['tasks']}** tasks",
         f"- **{summary['ready']} ready**, **{summary['waiting']} waiting**, **{summary['needs_human']} needs-human**, **{summary['in_progress']} claimed/review**, **{summary['done']} done**",
         f"- Findings: **{summary['errors']} errors**, **{summary['warnings']} warnings**, **{summary['info']} informational**",
         "",
