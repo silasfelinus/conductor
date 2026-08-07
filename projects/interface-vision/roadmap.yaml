@@ -2900,12 +2900,15 @@ tasks:
   - id: t-112
     milestone: m4
     title: "/taskmaster's scenario-card grid crushes six option spans on desktop"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
       Found by t-103 slice 6's completed 60-minute audit run (kind_robots run 31207144813, 2026-08-07, against merge commit 7841e271d128e15d16d4950d2521255d53fb0697) -- the first run to reach /taskmaster at desktop width (1440px). Six `<span class="flex min-w-0 flex-1 flex-col justify-center gap-1.5 p-3">` elements crush to w=24px, each carrying a truncated scenario-option label ("AnywhereLet Taskmaster choose a se...", "The Regrowth Yardsno one repairs w...", "The Hollow Reliquaryno one splices...", "Mercado de la Fortunano dish may b...", "The Sporeline Reclamation Yardneve...", "The Sunken Cantatano pilgrim may h..."), well under MIN_FLEX_WIDTH (32px). Phone and tablet both pass cleanly for /taskmaster in the same run -- this is desktop-only, the opposite direction from most of this session's findings (t-109/t-110 are phone-only), suggesting a different mechanism: likely a grid/flex sibling that grows disproportionately at wide viewports (e.g. an image or fixed-width column) rather than the narrow-viewport shrink-deficit pattern documented in t-109. Screenshots: kind_robots run 31207144813, artifact responsive-audit-31207144813 (desktop shot for /taskmaster).
+    claimed_by: claude-quirky-curie-20260807T224315Z-iv-t112
+    claimed_at: '2026-08-07T22:43:17Z'
+    updated: '2026-08-07T22:43:17Z'
 
   - id: t-104
     milestone: m5
