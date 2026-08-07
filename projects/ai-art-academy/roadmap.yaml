@@ -1283,22 +1283,28 @@ tasks:
     updated: '2026-08-07T02:35:00Z'
     note: |-
       Live-verification history moved to run_log (2026-08-07, ai-art-academy/t-010 lane 2
-      roadmap accuracy) so this note stays short — see run_log for every prior attempt and
-      exact repro steps. Current state: the 2026-08-05 relay incident (ComfyUI
-      connection-refused, near-zero throughput) has cleared — the queue is draining with
-      real throughput again (103 jobs done in the last 24h) — but the two specific ArtJobs
-      left over from that attempt (7622, 7623) are still frozen `PENDING`, unchanged since
-      creation, not yet reached by the drain. Not yet enough to confirm or refute the fix.
-      `gate_human: true` / `soft_gate: true` unchanged — this remains a tooling/infra
+      roadmap accuracy) so this note stays short -- see run_log for every prior attempt and
+      exact repro steps.
+
+      REGRESSION (conductor sweep, 2026-08-07 ~22:47Z): recheck_render_queue.py flipped from
+      draining (154 done/24h at 09:33Z) to growing -- PENDING 3000->2908 all-time but
+      throughput collapsed to 8 new arrivals / 0 completions in the last 24h, and the one
+      tracked completion attempt (job 4659) failed with a NEW signature, a database error
+      (`HTTP 500 Database operation failed: Invalid prisma.user.findFirst() invocation`),
+      not the prior ComfyUI connection-refused pattern. This looks like a different fault --
+      possibly the already-tracked kindrobots-unraid/t-012 ProxySQL capacity issue surfacing
+      on the relay's own DB calls -- rather than a recurrence of the 2026-08-05 incident.
+      7622/7623 (the two frozen verification jobs from that incident) not re-checked this
+      pass; not yet enough to confirm or refute the t-044 fix either way.
+      gate_human: true / soft_gate: true unchanged -- this remains a tooling/infra
       verification gap, not a new gate on the content itself.
 
-      FOR SILAS: unchanged from the prior note — if 7622/7623 (or a fresh pair, once the
-      relay is confirmed fully drained) come back clean with no `value_not_in_list` error,
-      that confirms the fix and unblocks t-045 via resolve_deps.py. If you'd rather resolve
-      it directly, the private Tailscale-side ComfyUI/Resource path capture
-      (docs/t-044-comfy-lora-path-diagnostics.md) remains the definitive fallback. TO
-      APPROVE: once verified either way, set `status: done` (or leave `ready` with a fresh
-      run_log entry if still inconclusive).
+      FOR SILAS: the render relay just went from recovering to stalled again, this time
+      apparently on a database error rather than ComfyUI connectivity. Worth a look at
+      whatever the relay's DB client is doing (Prisma findFirst on User) alongside the
+      already-known ProxySQL pooling work (kindrobots-unraid/t-012) -- they may be the same
+      root cause. TO APPROVE: once verified either way, set status: done (or leave ready
+      with a fresh run_log entry if still inconclusive).
     run_log: projects/ai-art-academy/docs/t-044-lora-loading-run-log.md
     claimed_at: null
     claimed_by: null
