@@ -6910,3 +6910,13 @@ records:
     manual CLI already used. This closes the gap for future task-events-path close-outs
     but does not retroactively repair any already-stale counter -- a session hitting a
     drifted counter still needs to notice and hand-correct it once, same as before.
+- date: 2026-08-07
+  project: kind-robots
+  task: t-055
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Historical audit inventories should preserve their original findings while later path relocations
+    are recorded as durable errata, avoiding noisy rewrites of completed audit notes.
