@@ -6934,3 +6934,17 @@ records:
     found here (a stale /scenarios path live in three navigation payloads, fixed; a dead /builder path
     in two nav sources, filed as t-107 since its correct destination needed product judgment) that a
     pure documentation pass would have missed.
+- date: 2026-08-07
+  project: interface-vision
+  task: t-107
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: When a dead route has no obvious replacement, check whether the same codebase already
+    encodes a canonical answer before guessing -- dashboardConfigs.builder's own defaultTab
+    ('character' -> /characters) was the principled destination for two broken '/builder' nav
+    entries, and git-blaming the referenced UI component (components/abandonware/builder/
+    builder-manager.vue) confirmed it had been deliberately parked as unreachable (kind_robots
+    #1475), ruling out "resurrect the real page" as the intended fix.
