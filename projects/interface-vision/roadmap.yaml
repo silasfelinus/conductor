@@ -2843,6 +2843,67 @@ tasks:
     claimed_at: '2026-08-07T14:35:17Z'
     updated: '2026-08-07T14:35:17Z'
 
+  - id: t-109
+    milestone: m4
+    title: "channel-tab-strip crushes to a sliver on phone across the sanctuary channel + /auth/google (7 routes)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found by t-103 slice 6's audit run (kind_robots PR #1575, run 31203187021,
+      the full CRUSHED/SPILL list read from the raw job log rather than just the
+      task-note summary). `<nav#channel-tab-strip>`
+      (`.tab-strip flex min-w-0 flex-1 flex-nowrap snap-x snap-mandatory
+      items-...`) crushes to an 18px sliver on phone (390px) on all six sanctuary-
+      channel routes -- /about, /cart, /giving, /mermaids, /privacy, /sanctuary
+      (tab label text "AboutMermaidsGift ShopCartGivingPr") -- plus a 12px sliver
+      on /auth/google, which renders the home channel's tab strip instead
+      ("DashboardRegisterNavigationThemes"). Both are well under
+      auditResponsiveLayout.mjs's MIN_FLEX_WIDTH (32px). Tablet (820px) passes on
+      all seven routes; desktop (1440px) was not reached before the run hit its
+      old 35-minute timeout (since bumped to 60min in the same PR), so
+      unverified there but unlikely to fail given tablet already clears it.
+      /about, /cart, /giving, /mermaids, /privacy, /sanctuary were added to
+      audit coverage in slice 5 (kind_robots #1574) without a verification run
+      (that slice's note claimed "no responsive-audit run was needed" for a
+      pure route-list change) -- this is the counterexample proving that
+      assumption wrong: a route resolving through a shared shell can still fail
+      on chrome the route itself never touches. Likely root cause: the
+      channel-select tab strip doesn't reflow or scroll cleanly at 390px for
+      channels with enough tabs/label length -- worth comparing against a
+      channel whose tab strip passes (e.g. the play channel, all of whose
+      routes passed) to isolate what differs (tab count? label length? snap-x
+      overflow behavior?). Screenshots: kind_robots run 31203187021, artifact
+      responsive-audit-31203187021 (phone shots for each of the 7 routes above).
+
+  - id: t-110
+    milestone: m4
+    title: "Content div crushes to a sliver on phone on /storybook and /play/challenges"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found by t-103 slice 6's audit run (kind_robots PR #1575, run 31203187021),
+      same raw-log source as t-109 but a distinct element/pattern, not the
+      channel-tab-strip -- filed separately rather than folded into t-109.
+      `<div class="min-w-0 flex-1">` crushes to a 10px sliver on phone (390px)
+      on /storybook (text "Build a world, then step inside it") and to a 20px
+      sliver on /play/challenges (text "Select your matchup The Arena Ever"),
+      both well under MIN_FLEX_WIDTH (32px). Both routes pass at tablet (820px);
+      desktop unverified (run cancelled before reaching either route at that
+      width -- see t-109's note for the same caveat). Both were added to audit
+      coverage in slice 3 (kind_robots #1572) without a verification run, same
+      pattern as t-109's routes. Shared `.min-w-0.flex-1` class combination on
+      both suggests a common cause (a sibling element not shrinking, forcing
+      this flexible one to its floor) but the two pages are unrelated features
+      (storybook's channel hero vs. the challenge-center arena selector) --
+      worth checking whether they share a layout ancestor component before
+      assuming one fix covers both. Screenshots: kind_robots run 31203187021,
+      artifact responsive-audit-31203187021 (phone shots for /storybook and
+      /play/challenges).
+
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
