@@ -6964,3 +6964,18 @@ records:
     (PWA foundation before Android/iOS "builds") let t-062/t-063 stay scoped as PWA verification
     passes instead of full native pipelines, deferring the real cost (store accounts,
     code-signing, native build tooling) until Silas actually asks for store distribution.
+- date: 2026-08-07
+  project: interface-vision
+  task: t-109
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: The responsive-layout-audit "audit" check reports one pass/fail for the whole
+    site, not per-diff -- a fix can be fully correct (all its target routes verified
+    passing in the raw job log) while the check still shows red because of unrelated,
+    already-tracked pre-existing findings elsewhere in the site (here t-108/t-110/t-111/
+    t-112). mergeable_state stayed "unstable" (not "blocked"), confirming this check
+    isn't required for merge -- read the actual per-route log lines the target routes
+    care about rather than trusting the job's overall conclusion or exit code alone.
