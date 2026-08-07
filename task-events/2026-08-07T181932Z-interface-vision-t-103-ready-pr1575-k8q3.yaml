@@ -1,0 +1,8 @@
+version: 1
+project: interface-vision
+task: t-103
+operation: ready
+session: claude-quirky-curie-20260807T172902Z-iv-t103-s6
+updated: '2026-08-07T18:19:32Z'
+note: >-
+  Slice 6 merged in kind_robots PR #1575 as 7841e271d128e15d16d4950d2521255d53fb0697. The responsive audit default list now covers all 64 routes in the t-102 non-admin/nav-linked inventory gap plan. Deployment-triggered responsive run 31203187021 exercised all eight newly added routes on phone and tablet before the old 35-minute job ceiling cancelled it at desktop /register after 149/192 total measurements: seven new routes passed at both widths; /auth/google reproduced the crushed Home channel tab strip on phone. Existing Phase-1 failures were also observed on /navigation, /storybook, /play/challenges, and the sanctuary tab strip. The same PR raised the audit timeout to 60 minutes so a full run can finish. Keep this umbrella ready rather than done: coverage is now complete, but the measured findings still need to be driven to zero and a completed 60-minute audit should establish the next authoritative counter.
