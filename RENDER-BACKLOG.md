@@ -321,3 +321,10 @@ queueDepth: PENDING=3006, DONE=3244, CANCELLED=816 (all-time). oldestPending: id
 
 ## 2026-08-07T09:33:10Z | coloring-book/t-022 | draining
 queueDepth: PENDING=3000, RUNNING=1, DONE=3249, CANCELLED=816 (all-time). oldestPending: id=4658, age=471943s (~131.1h), engine=COMFY. windowThroughput (24h): PENDING=21, RUNNING=1, DONE=154, CANCELLED=27. recentFailed: none.
+
+## 2026-08-07T22:47:48Z | growing
+queueDepth: PENDING=2908, DONE=3342, FAILED=1, CANCELLED=816 (all-time). oldestPending: id=4741, age=515791s (~143.3h), engine=COMFY. windowThroughput (24h): PENDING=8. recentFailed (last 1): 1/1 = complete(4659) failed: HTTP 500 Database operation failed: 
+Invalid `prisma.user.findFirst()` invocation:
+
+
+Database err.
