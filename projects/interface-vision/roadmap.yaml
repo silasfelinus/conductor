@@ -2725,24 +2725,36 @@ tasks:
   - id: t-102
     milestone: m4
     title: "Build the canonical reachable-surface and responsive acceptance inventory"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     note: >
-      Enumerate every actually reachable user-facing route/surface from the current app/nav
-      graph and assign phone/tablet/desktop checks to each. Use the Vercel preview responsive
-      audit plus targeted browser verification; capture hidden/unreachable controls, clipped
-      content, nested-scroll fights, duplicate headers, dead routes, and device-only failures.
-      The inventory must be numeric and shrink-to-zero. Admin-only surfaces come last.
+      Delivered as projects/interface-vision/docs/t-102-reachable-surface-inventory.md: a
+      static-analysis inventory of every reachable kind_robots URL surface (content-driven
+      and static-page routed), cross-referenced against the responsive-audit script's current
+      default --routes coverage. Numeric baseline for t-103: 85 total reachable surfaces (70
+      content-rendered incl. 2 dead/shadowed, 15 static-page concrete, 2 dynamic patterns),
+      10 admin-only, 16 orphaned/unlinked, and only 7 currently covered by the audit's default
+      route list -- leaving 51 non-admin, nav-linked routes with zero responsive-audit
+      coverage today. That 51 is the shrink-to-zero counter t-103 works against. Also found
+      and fixed (kind_robots #1559) a stale /scenarios entry in the audit's own default route
+      list -- it matched no real route (the Scenario object's real route is /stories, per
+      coreObjectRoutes.ts's own "NOT /scenarios" comment) -- plus the identical stale path in
+      three live Dream-narrator navigation payloads in narratorHelper.ts, a real user-facing
+      nav bug found incidentally while building the inventory. A second, unrelated dead route
+      (/builder, referenced by dashboardHelper.ts's footer tab and narratorHelper.ts's own
+      'builder' nav action) was left unfixed -- its correct destination isn't obvious -- and
+      filed separately as t-107.
     claimed_by: claude-quirky-curie-20260807T103201Z-iv-t102
     claimed_at: '2026-08-07T10:32:02Z'
     updated: '2026-08-07T10:32:02Z'
+    implementation_pr: 'silasfelinus/kind_robots#1559'
 
   - id: t-103
     milestone: m4
     title: "Drive Phase 1 responsive/functionality findings to zero"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -2798,3 +2810,24 @@ tasks:
       phone/tablet/desktop widths, plus any surfaces the automated audit marks unusual.
       TO APPROVE: confirm the site is visually ready for beta or identify pages that need another
       polish pass. Interface Vision is not finished merely because its previous 102 tasks closed.
+
+  - id: t-107
+    milestone: m4
+    title: "Fix the dead /builder route referenced by two live nav sources"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found while building the t-102 reachable-surface inventory. stores/helpers/
+      dashboardHelper.ts's footer dashboard has a 'builder' tab (label "Forge") with
+      route: '/builder', and stores/helpers/narratorHelper.ts's narratorNavigationTree
+      has a 'builder' nav action with the identical path: '/builder' -- neither matches
+      any content file or pages/**/*.vue file anywhere in kind_robots. Not fixed alongside
+      t-102's other stale-route find (/scenarios -> /stories, kind_robots #1559) because
+      the correct destination isn't obvious: the Builder dashboard itself is a multi-tab
+      hub (dream/character/bot/reward/scenario/art) whose individual tabs already route to
+      their own entity pages (/dreams, /characters, /bots, /rewards, /stories, /art) rather
+      than to a single top-level page. Investigate whether a top-level /builder landing page
+      should exist (and if so what it shows), or whether both nav entries should instead
+      route to one of the existing entity pages or a dashboard-selection UI.
