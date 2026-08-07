@@ -178,9 +178,17 @@ tasks:
   status: ready
   passes: 0
   stakes: reversible
-  updated: '2026-08-05T22:37:31Z'
+  updated: '2026-08-07T09:35:00Z'
   depends_on: t-021
   note: |-
+    CURRENT STATE (2026-08-07, scheduled agent recheck): the render-relay connection-refused
+    outage is over (recheck_render_queue.py: recentFailed=none, 154 DONE in last 24h) but the
+    backlog it left is still severe (queueDepth.PENDING=3000, oldest pending ~131.1h). Ran the
+    18-entry recover-existing-jobs pass live; all 18 referenced ComfyUI jobs are still genuinely
+    queued/running (one transient SSL error on a status poll, not a job failure) -- 0 landed, no
+    duplicates submitted, queue file unchanged. Transient infra, no pass consumed. See run_log
+    2026-08-07T09:28Z entry for full detail and per-id job ages.
+
     CURRENT COLOR-FIRST DIRECTION (2026-07-17): use the canonical color-art-jobs.yaml
     queue. A Worker generation/submission/review pass handles up to 18 Monster Recast
     color proposals at one stage. Do not generate new BW variants until the
