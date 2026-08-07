@@ -2912,3 +2912,34 @@ tasks:
     claimed_at: '2026-08-07T11:30:39Z'
     updated: '2026-08-07T11:56:50Z'
     implementation_pr: 'silasfelinus/kind_robots#1563'
+
+  - id: t-109
+    milestone: m4
+    title: "channel-tab-strip crushes to a sliver on phone on some content pages (/privacy, /sanctuary, /auth/google)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found by t-103 slice 6's audit run (kind_robots PR #1575, run 31203187021).
+      `<nav#channel-tab-strip>` (`.tab-strip flex min-w-0 flex-1 flex-nowrap
+      snap-x snap-mandatory items-...`) crushes to an 18px sliver on phone (390px)
+      on /privacy and /sanctuary (label text "AboutMermaidsGift ShopCartGivingPr"),
+      and to a 12px sliver on /auth/google (label text
+      "DashboardRegisterNavigationThemes") -- both well under
+      auditResponsiveLayout.mjs's MIN_FLEX_WIDTH (32px). Tablet (820px) passes on
+      all three routes; desktop (1440px) was not reached before the run hit its
+      timeout, so unverified there but unlikely given tablet already clears it.
+      /privacy and /sanctuary were added to audit coverage in slice 5
+      (kind_robots #1574) without a verification run (the slice's note claimed
+      "no responsive-audit run was needed" for a pure route-list change) -- this
+      is the counterexample proving that assumption wrong: a route resolving
+      through a shared shell can still fail on content the route itself never
+      touches. Likely root cause: this shell's channel-select tab strip has a
+      fixed/large set of tabs that doesn't reflow or scroll cleanly at 390px
+      when combined with whatever chrome these particular routes stack above it
+      -- compare against the tab-strip's snap-scroll behavior on routes that
+      pass. Screenshots: kind_robots run 31203187021, artifact
+      responsive-audit-31203187021 (phone shots for /privacy, /sanctuary,
+      /auth/google).
+
