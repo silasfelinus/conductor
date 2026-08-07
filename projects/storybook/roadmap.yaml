@@ -148,3 +148,48 @@ tasks:
   claimed_at: '2026-07-28T08:14:47Z'
   claimed_by: claude-conductor-burst-20260728T0810Z-story-t010
   owner: reviewer
+- id: t-011
+  milestone: m4
+  title: Arrange the casting board by role instead of a uniform grid
+  status: ready
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: |-
+    components/narrative/narrative-role-assigner.vue is a card board as of kind_robots 2026-08-06 (character art at 2:3 through kr-art-plate, the assigned part worn as a badge, parts offered as pressable chips), but the cards sit in a uniform auto-fill grid so POSITION CARRIES NO MEANING. Silas: "I'm imagining a layout that lets the user feel like they are selecting cards and creating a playboard that turns into a story." A real playboard arranges BY role -- protagonist given prominence, antagonist set opposite, ensemble ranked behind -- rather than in reading order. This is a layout design question rather than a mechanical one and wants Silas's eye on the arrangement before it is built. The cast is capped at five, which bounds the problem usefully.
+- id: t-012
+  milestone: m4
+  title: Drag a character card onto a role slot
+  status: ready
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: |-
+    Casting is currently a chip press -- fast, accessible, keyboard-friendly, and not very playful. Dragging a card onto a role slot is the interaction that would actually feel like a playboard. Depends on t-011, since slots only exist once the board has an arrangement. Two constraints: keep the chip path as the accessible fallback rather than replacing it, and support touch properly -- a drag that only works with a mouse is worse than the chips it replaced.
+- id: t-013
+  milestone: m4
+  title: Bring the other three Storybook setup steps up to the board
+  status: ready
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: |-
+    The casting board sits inside a four-step wizard whose other steps -- premise, world/flavor, review -- still read as a form, so the "assembling a story" feeling exists on exactly one screen. The world-and-flavor step already uses card-based ingredient pickers and is closest; premise and review are plain. The open design question is whether the whole wizard becomes one board or the steps stay distinct while sharing the card language.
+- id: t-014
+  milestone: m4
+  title: Add "Start a story with this" links on the object surfaces
+  status: ready
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: |-
+    Storybook now seeds its setup draft from ?scenario= / ?character= / ?facet= / ?reward= / ?location= (kind_robots 2026-08-06) -- seeding on top of the restored draft so a link never destroys a story in progress, and clearing the query so a reload cannot re-add an ingredient the author removed. NOTHING LINKS TO IT YET: the consuming half shipped without the entry points, so the feature is currently unreachable by a user. Silas: "what we should do is have links to these elements that start the process to tell a storybook story with that element as part of it" -- explicitly INSTEAD of giving Facets and Rewards conversations of their own, since both are tools that feed other interactions rather than things you talk to. Facets and Rewards are the priority; each now has exactly one detail pane to host the affordance.
+- id: t-015
+  milestone: m4
+  title: Decide whether stage roles and narrative roles converge
+  status: needs-human
+  owner: silas
+  passes: 0
+  stakes: reversible
+  note: |-
+    Two role systems now exist. stores/helpers/stageCards.ts holds the older one -- min/max cardinality, badge art, promptDescriptor, and assignCharacter() already resolving real Character records -- with a per-format vocabulary describing a SHOW (host, bailiff, goblin-investor, musical-guest). utils/narrativeRoles.ts is the new one, borrowing that shape with a story vocabulary that holds across premises (protagonist, antagonist, love-interest, mentor, foil, ally, wildcard, ensemble). They were kept separate deliberately: merging before either was integrated would have invented a third thing neither side asked for. A stage preset is arguably a story frame with its cast pre-filled, so convergence is plausible -- but whether the Stage system becomes a Storybook frame or stays its own thing is Silas's call, not an agent's.
