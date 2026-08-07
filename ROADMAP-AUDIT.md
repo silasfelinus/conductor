@@ -1,20 +1,20 @@
 # Roadmap Audit
 
-Generated: `2026-08-07T00:41:19.410195+00:00`
+Generated: `2026-08-07T00:54:03.295472+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **45** roadmaps, **27** active projects, **885** tasks
-- **43 ready**, **47 waiting**, **12 needs-human**, **0 claimed/review**, **773 done**
-- Findings: **0 errors**, **9 warnings**, **65 informational**
+- **45** roadmaps, **27** active projects, **888** tasks
+- **46 ready**, **47 waiting**, **12 needs-human**, **0 claimed/review**, **773 done**
+- Findings: **0 errors**, **7 warnings**, **65 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
-| 1 | `interface-vision` | active | software | 0 | 0 | 0 | 0 | 101 / 101 |
+| 1 | `interface-vision` | active | software | 1 | 0 | 0 | 0 | 101 / 102 |
 | 2 | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
 | 3 | `ai-art-academy` | active | software | 2 | 1 | 0 | 0 | 57 / 60 |
 | 4 | `coloring-book` | active | software | 1 | 9 | 1 | 0 | 26 / 37 |
@@ -23,7 +23,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 7 | `digital-storefront` | active | software | 0 | 0 | 0 | 0 | 33 / 33 |
 | 8 | `packmaker` | finished | software | 0 | 0 | 0 | 0 | 10 / 10 |
 | 9 | `mermaids-of-venice` | active | content | 8 | 0 | 1 | 0 | 4 / 13 |
-| 10 | `kind-robots` | active | software | 1 | 0 | 0 | 0 | 53 / 54 |
+| 10 | `kind-robots` | active | software | 2 | 0 | 0 | 0 | 53 / 55 |
 | 11 | `kindrobots-unraid` | active | software | 1 | 7 | 0 | 0 | 4 / 12 |
 | 12 | `global-ui` | finished | software | 0 | 0 | 0 | 0 | 25 / 25 |
 | 13 | `mona-salai` | paused | software | 2 | 10 | 0 | 0 | 1 / 13 |
@@ -54,7 +54,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 38 | `brainstorm` | active | proposal | 1 | 0 | 0 | 0 | 0 / 1 |
 | 39 | `wishmaster` | active | software | 1 | 0 | 0 | 0 | 2 / 3 |
 | 40 | `engagement` | finished | software | 0 | 0 | 0 | 0 | 3 / 3 |
-| 41 | `ruler-hooked` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
+| 41 | `ruler-hooked` | active | software | 2 | 0 | 0 | 0 | 11 / 13 |
 | 42 | `music-mentor` | active | software | 1 | 0 | 0 | 0 | 8 / 9 |
 | 43 | `dream-cycle` | active | software | 2 | 0 | 0 | 0 | 20 / 22 |
 | — | `approval-portal` | retired | software | 0 | 0 | 0 | 0 | 3 / 5 |
@@ -66,15 +66,13 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 _None._
 
-### Warning (9)
+### Warning (7)
 
 - **CONTINUOUS_IMPROVEMENT_NOTE_DRIFT** — `ai-art-academy` / `t-010`: Task note mentions a lane rotation but continuous_improvement.last_run predates the task's updated timestamp — the continuous_improvement block (last_lane/next_lane/last_run/last_pr) may be stale relative to the note.
 - **ACTIVE_PROJECT_ALL_DONE** — `davinci`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `davinci`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 - **ACTIVE_PROJECT_ALL_DONE** — `digital-storefront`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `digital-storefront`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
-- **ACTIVE_PROJECT_ALL_DONE** — `interface-vision`: All tasks are done but project override remains active.
-- **ACTIVE_PROJECT_NO_OPEN_TASKS** — `interface-vision`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 - **ACTIVE_PROJECT_ALL_DONE** — `newsfeed`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `newsfeed`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 
