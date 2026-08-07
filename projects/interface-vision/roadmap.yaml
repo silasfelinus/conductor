@@ -2754,8 +2754,8 @@ tasks:
   - id: t-103
     milestone: m4
     title: "Drive Phase 1 responsive/functionality findings to zero"
-    status: review
-    owner: worker
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
     depends_on: t-102
@@ -2764,46 +2764,59 @@ tasks:
       tablet, and desktop geometry with no hidden/unreachable elements. Split findings into
       dedicated tasks when they are larger than one PR; keep this umbrella open until the
       authoritative counter is zero. Passing TypeScript is not evidence that a page works.
-    claimed_by: claude-quirky-curie-20260807T121500Z-iv-t103
-    claimed_at: '2026-08-07T12:05:32Z'
-    updated: '2026-08-07T12:05:32Z'
+
+      Progress: slice 1 done (2026-08-07) -- added the 11 reachable channelKey:home routes
+      (kind_robots #1567) to auditResponsiveLayout.mjs's default coverage; also bumped the
+      audit workflow's timeout 20m->35m (#1569) after the larger route list ran past the old
+      ceiling. Coverage now 19/59 (was 8/59). One real finding filed as t-108 (flaky BROKEN-ART
+      on /navigation, unrelated to this slice's own routes). 40 gap routes remain per the
+      t-102 inventory's "Gaps" section -- next slice should pick the next bucket (suggest
+      content/plan's public tool pages, e.g. /appmaker, /brainstorm, /coloring, /model-builder,
+      /packs, /stylist, /wishmaster, /conductor-app -- all public, no auth gate).
+    updated: '2026-08-07T13:20:00Z'
 
   - id: t-108
     milestone: m4
-    title: "/navigation's site-directory cards show BROKEN-ART for a shared missing image, inconsistently"
+    title: "/navigation's site-directory (~85 icons/page) flakes BROKEN-ART on a different image set each run"
     status: ready
     owner: null
     passes: 0
     stakes: reversible
     depends_on: t-103
     note: >
-      Found running t-103's first audit slice against kind_robots PR #1567: the CI
-      responsive-layout-audit flagged 3 of the 4 site-directory cards on /navigation
-      (components/navigation/navigation-trimmed.vue, rendered via the `:navigation-trimmed`
-      MDC directive) as BROKEN-ART at all three viewports -- "Join Kind Robots" (registration
-      tab), "Navigation Overview" (navigation tab), and "Privacy and Data Philosophy"
-      (sanctuary/privacy tab), all sharing the identical image src
-      `/images/dashboard-tabs/user/profile.webp`. That path comes from
-      stores/helpers/channelContent.ts's imagePath() falling through to
-      `/images/dashboard-tabs/${dashboardKey}/${dashboardTab}.webp` because these channel-tab
-      config files (content/channels/home/{navigation,registration}.md,
-      content/channels/sanctuary/privacy.md) declare `dashboardKey: user` /
-      `dashboardTab: profile` with no explicit `image:` override -- and that file is missing
-      in production. Two open questions worth resolving together: (1) two OTHER tabs sharing
-      the exact same user/profile path (content/channels/home/{account,wallet}.md) did NOT
-      get flagged in the same run -- plugins/navigation-image-fallback.client.ts listens for
-      exactly this failure and swaps in /images/botcafe.webp on error, so the inconsistency
-      is most likely a timing race between that fallback's error-driven reload and the
-      audit's fixed IMAGE_SETTLE_MS wait, not a per-tab difference -- worth confirming with a
-      second run before concluding anything about which tabs are affected. (2) whether the
-      real fix is generating the missing `/images/dashboard-tabs/user/profile.webp` asset
-      (this is exactly the self-healing missing-art case AGENTS.md's project art section
-      describes -- may already be draining via the generation backlog) versus the fallback
-      plugin not reliably completing within the settle window regardless of asset presence
-      (a real component-degradation bug per docs/contracts/responsive-layout-audit.md's
-      BROKEN-ART philosophy, worth fixing even once the asset exists, for any future gap).
-      Screenshots from the flagged run: kind_robots run 31177028472, artifact
-      responsive-audit-31177028472.
+      UPDATED after a second data point -- read this paragraph first, the rest below is the
+      original (now partly superseded) hypothesis. kind_robots PR #1567's own cancelled audit
+      run flagged 3 specific cards ("Join Kind Robots", "Navigation Overview", "Privacy and
+      Data Philosophy", all /images/dashboard-tabs/user/profile.webp). The very next full run
+      (kind_robots PR #1569, run 31180459280, ~45min later, fresh Vercel preview) flagged
+      /navigation again but with a COMPLETELY DIFFERENT set of broken images -- "Resource
+      Gallery", "Storybook", "Music Mentor", "About Kind Robots", "Giving & Support" (5 at
+      tablet, only "Storybook"+"Music Mentor" still broken at desktop) -- and phone had ZERO
+      defects that run, where phone had been clean before too. None of the original 3 repeated.
+      This rules out "one specific missing asset" as the root cause: it is a **different**
+      subset of the page's images each run, shrinking as the run progresses through viewports
+      (more images warm/cached by the time desktop runs). /navigation renders ~85 small icons
+      at once (one per reachable site surface, see t-102's inventory) -- the likeliest
+      explanation is a genuine load-timing race across that many concurrent image requests
+      against `IMAGE_SETTLE_MS` (20s fixed wait), not a per-image or per-tab content bug.
+      Confirm with 1-2 more runs before investigating further, then look at whether
+      `IMAGE_SETTLE_MS` needs to scale with image count on directory-style pages, or whether
+      navigation-image-fallback.client.ts's error-driven reload just needs longer to complete
+      under this much concurrent load. Original hypothesis (kept for context, now the weaker
+      explanation): (1) two OTHER tabs sharing the exact same user/profile path
+      (content/channels/home/{account,wallet}.md) did NOT get flagged in the first run --
+      plugins/navigation-image-fallback.client.ts listens for exactly this failure and swaps
+      in /images/botcafe.webp on error, so the inconsistency was suspected to be a timing race
+      between that fallback's error-driven reload and the audit's fixed IMAGE_SETTLE_MS wait --
+      the second run's totally different broken set makes a per-tab explanation unlikely now.
+      Whichever explanation wins, docs/contracts/responsive-layout-audit.md's BROKEN-ART
+      philosophy still applies: a page that degrades properly (placeholder while art loads or
+      is absent) should trip nothing, so a real fix here is either giving the settle wait more
+      budget on image-dense pages or making the fallback swap land faster/more reliably --
+      not chasing individual asset paths that turn out to be a different set each run.
+      Screenshots: kind_robots run 31177028472 (artifact responsive-audit-31177028472, first/
+      cancelled run) and run 31180459280 (artifact responsive-audit-31180459280, second/
+      completed run -- this is the more informative one, since it actually finished).
 
   - id: t-104
     milestone: m5
