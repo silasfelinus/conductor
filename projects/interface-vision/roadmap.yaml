@@ -2754,7 +2754,7 @@ tasks:
   - id: t-103
     milestone: m4
     title: "Drive Phase 1 responsive/functionality findings to zero"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-102
@@ -2772,11 +2772,13 @@ tasks:
       Slice 5 merged (kind_robots #1574, squash 456d312). Added the channelKey:sanctuary bucket (/about, /cart, /giving, /mermaids, /privacy, /sanctuary) plus the two no-channelKey routes (/forum, /servers) to auditResponsiveLayout.mjs's default coverage. Coverage 48/59 -> 56/59. All 8 routes resolve through pages/[...slug].vue by content path and set no requiredPermission -- all public. Pure route-list/comment change to the audit script itself (no app code touched), so no Vercel preview or responsive-audit run was needed before merge -- all structural CI checks green. Remaining gap per the t-102 inventory's Gaps section: static pages (/auth/google, /build-bench, /coloring-page, /music-mentor, /play/challenges/leaderboard, /play/video-generator) and dynamic-path representatives (/users/1, /play/challenges/<slug>) -- next slice should pick these up to close the umbrella.
 
       Slice 6 merged in kind_robots PR #1575 as 7841e271d128e15d16d4950d2521255d53fb0697. The responsive audit default list now covers all 64 routes in the t-102 non-admin/nav-linked inventory gap plan. Deployment-triggered responsive run 31203187021 exercised all eight newly added routes on phone and tablet before the old 35-minute job ceiling cancelled it at desktop /register after 149/192 total measurements: seven new routes passed at both widths; /auth/google reproduced the crushed Home channel tab strip on phone. Existing Phase-1 failures were also observed on /navigation, /storybook, /play/challenges, and the sanctuary tab strip. The same PR raised the audit timeout to 60 minutes so a full run can finish. Keep this umbrella ready rather than done: coverage is now complete, but the measured findings still need to be driven to zero and a completed 60-minute audit should establish the next authoritative counter.
+
+      Slice 6's full 60-minute audit finally completed (kind_robots run 31207144813, 18:30-19:14Z, against the slice-6 merge commit 7841e271d128e15d16d4950d2521255d53fb0697) -- the authoritative counter this task's own note called for. Result: 192/192 measurements taken (no timeout), 15 route/viewport combination(s) failed (CRUSHED/BROKEN-ART count only -- STARVED-TEXT is deliberately not counted yet, per auditResponsiveLayout.mjs's own comment). All 15 map to already-tracked or newly-filed sub-tasks, none left dangling: phone BROKEN-ART /navigation (t-108, pre-existing flake); phone+tablet+desktop CRUSHED/BROKEN-ART on the sanctuary-channel routes + /auth/google's tab strip (t-109 -- fixed this session, kind_robots PR #1577, channel-select's shrink-0 was forcing 100% of the row's shrink deficit onto the tab strip; now status: review); phone CRUSHED /storybook and /play/challenges content divs (t-110, unchanged); two NEW findings not covered by any existing task, filed this session: tablet+desktop BROKEN-ART on /storybook's 'Ami-butterfly's stage' image (t-111) and desktop CRUSHED on /taskmaster's six scenario-card spans (t-112). Keep this umbrella ready rather than done: coverage is complete and the counter is now precisely enumerated, but t-108/t-110/t-111/t-112 are still open and t-109 hasn't merged yet.
     updated: '2026-08-07T19:27:56Z'
     claimed_by: claude-quirky-curie-20260807T192755Z-iv-t103-s7
     claimed_at: '2026-08-07T19:27:56Z'
     implementation_pr: 'silasfelinus/kind_robots#1574'
-    owner: reviewer
+    owner: worker
 
   - id: t-108
     milestone: m4
@@ -2847,8 +2849,8 @@ tasks:
   - id: t-109
     milestone: m4
     title: "channel-tab-strip crushes to a sliver on phone across the sanctuary channel + /auth/google (7 routes)"
-    status: claimed
-    owner: reviewer
+    status: review
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -2880,6 +2882,7 @@ tasks:
     claimed_by: claude-quirky-curie-20260807T194014Z-iv-t109
     claimed_at: '2026-08-07T19:40:15Z'
     updated: '2026-08-07T19:40:15Z'
+    implementation_pr: 'silasfelinus/kind_robots#1577'
 
   - id: t-110
     milestone: m4
@@ -2889,24 +2892,29 @@ tasks:
     passes: 0
     stakes: reversible
     note: >
-      Found by t-103 slice 6's audit run (kind_robots PR #1575, run 31203187021),
-      same raw-log source as t-109 but a distinct element/pattern, not the
-      channel-tab-strip -- filed separately rather than folded into t-109.
-      `<div class="min-w-0 flex-1">` crushes to a 10px sliver on phone (390px)
-      on /storybook (text "Build a world, then step inside it") and to a 20px
-      sliver on /play/challenges (text "Select your matchup The Arena Ever"),
-      both well under MIN_FLEX_WIDTH (32px). Both routes pass at tablet (820px);
-      desktop unverified (run cancelled before reaching either route at that
-      width -- see t-109's note for the same caveat). Both were added to audit
-      coverage in slice 3 (kind_robots #1572) without a verification run, same
-      pattern as t-109's routes. Shared `.min-w-0.flex-1` class combination on
-      both suggests a common cause (a sibling element not shrinking, forcing
-      this flexible one to its floor) but the two pages are unrelated features
-      (storybook's channel hero vs. the challenge-center arena selector) --
-      worth checking whether they share a layout ancestor component before
-      assuming one fix covers both. Screenshots: kind_robots run 31203187021,
-      artifact responsive-audit-31203187021 (phone shots for /storybook and
-      /play/challenges).
+      Found by t-103 slice 6's audit run (kind_robots PR #1575, run 31203187021), same raw-log source as t-109 but a distinct element/pattern, not the channel-tab-strip -- filed separately rather than folded into t-109. `<div class="min-w-0 flex-1">` crushes to a 10px sliver on phone (390px) on /storybook (text "Build a world, then step inside it") and to a 20px sliver on /play/challenges (text "Select your matchup The Arena Ever"), both well under MIN_FLEX_WIDTH (32px). Both routes pass at tablet (820px); desktop unverified (run cancelled before reaching either route at that width -- see t-109's note for the same caveat). Both were added to audit coverage in slice 3 (kind_robots #1572) without a verification run, same pattern as t-109's routes. Shared `.min-w-0.flex-1` class combination on both suggests a common cause (a sibling element not shrinking, forcing this flexible one to its floor) but the two pages are unrelated features (storybook's channel hero vs. the challenge-center arena selector) -- worth checking whether they share a layout ancestor component before assuming one fix covers both. Screenshots: kind_robots run 31203187021, artifact responsive-audit-31203187021 (phone shots for /storybook and /play/challenges).
+
+      UPDATE (conductor sweep, 2026-08-07 ~19:40Z): t-103 slice 6's full 60-minute run (kind_robots run 31207144813) reached both routes at all three widths this time. /play/challenges: phone CRUSHED (this task, unchanged), tablet PASS, desktop PASS -- the phone-only crush holds. /storybook: phone CRUSHED (this task, unchanged), but tablet AND desktop both now fail too, with a completely different defect (BROKEN-ART on the 'Ami-butterfly's stage' image, not a crushed div) -- filed separately as t-111 rather than folded in here. Storybook failing at every width while play/challenges only fails at phone, with two unrelated defect types, is evidence AGAINST the shared-layout-ancestor hypothesis above -- treat these as two independent bugs rather than hunting for one common cause.
+
+  - id: t-111
+    milestone: m4
+    title: "/storybook's hero image (Ami-butterfly's stage) is BROKEN-ART on tablet and desktop"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found by t-103 slice 6's completed 60-minute audit run (kind_robots run 31207144813, 2026-08-07, against merge commit 7841e271d128e15d16d4950d2521255d53fb0697) -- not present in the earlier cancelled run t-110 was filed from, since that run never reached /storybook at tablet/desktop width. `<img alt="Ami-butterfly's stage" src=.../images/dashboard-tabs/scenario/storybook.webp>` reports `naturalWidth === 0` (a completed, failed load, per auditResponsiveLayout.mjs's own BROKEN-ART definition) at 281x341 on tablet (820px) and 529x206 on desktop (1440px). Phone (390px) does not hit this at all -- phone's /storybook failure is t-110's unrelated CRUSHED content div, and the audit never gets far enough into the page at phone width to even reach this image's load state most likely, or it's simply not been observed failing there across the runs so far. Distinct from t-108's /navigation BROKEN-ART pattern (a site-directory grid with 85+ images resolving to shared/duplicate URLs); this is a single dedicated hero image on one page, so the duplicate-URL race hypothesis t-108 is chasing likely does not apply here -- worth checking independently whether storybook.webp exists at the expected path / has a working CDN URL rather than assuming it's the same class of bug. Screenshots: kind_robots run 31207144813, artifact responsive-audit-31207144813 (tablet and desktop shots for /storybook).
+
+  - id: t-112
+    milestone: m4
+    title: "/taskmaster's scenario-card grid crushes six option spans on desktop"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found by t-103 slice 6's completed 60-minute audit run (kind_robots run 31207144813, 2026-08-07, against merge commit 7841e271d128e15d16d4950d2521255d53fb0697) -- the first run to reach /taskmaster at desktop width (1440px). Six `<span class="flex min-w-0 flex-1 flex-col justify-center gap-1.5 p-3">` elements crush to w=24px, each carrying a truncated scenario-option label ("AnywhereLet Taskmaster choose a se...", "The Regrowth Yardsno one repairs w...", "The Hollow Reliquaryno one splices...", "Mercado de la Fortunano dish may b...", "The Sporeline Reclamation Yardneve...", "The Sunken Cantatano pilgrim may h..."), well under MIN_FLEX_WIDTH (32px). Phone and tablet both pass cleanly for /taskmaster in the same run -- this is desktop-only, the opposite direction from most of this session's findings (t-109/t-110 are phone-only), suggesting a different mechanism: likely a grid/flex sibling that grows disproportionately at wide viewports (e.g. an image or fixed-width column) rather than the narrow-viewport shrink-deficit pattern documented in t-109. Screenshots: kind_robots run 31207144813, artifact responsive-audit-31207144813 (desktop shot for /taskmaster).
 
   - id: t-104
     milestone: m5
