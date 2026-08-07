@@ -23,83 +23,57 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 Live rotation state lives on the roadmap task itself: `projects/ai-art-academy/roadmap.yaml`
 t-010's `continuous_improvement:` field (`last_lane`/`next_lane`/`last_run`/`last_pr`) is
-authoritative and kept current every cycle (t-039, 2026-07-26) — read that field instead of
-parsing prose here. Full historical narrative for every past cycle (per-file findings,
-verification detail, blocker timelines, back to 2026-07-19) is preserved unedited in
-`continuous-improvement-lane-rotation-history.md`, moved out 2026-07-27 (t-010, lane 2) once
-this section grew to ~1,290 lines — append fresh cycle history there, not here.
+authoritative and should be kept current every cycle (t-039, 2026-07-26). Read that field
+instead of inferring rotation from prose. Historical cycle detail lives at the task's
+`run_log:` path, currently `projects/ai-art-academy/docs/continuous-improvement-run-log.md`.
+Use the roadmap pointer rather than hard-coding a second history filename here.
 
-This explicit state is the handoff between recurring cycles. Update it in the same PR as each `t-010` improvement so the next Worker does not infer rotation from a long roadmap note.
+The explicit state is the handoff between recurring cycles. Update it in the same closeout
+as each `t-010` improvement whenever the available tooling supports nested-field updates;
+if a connector-only `rearm` cannot update the nested mapping, make the next lane explicit
+in the event note and treat the mismatch as bookkeeping debt rather than silently guessing.
 
-## Current curriculum coverage
+## Lane 2 — roadmap accuracy
 
-The Academy currently has 35 movement entries in `curriculum-outline.md` —
-Arts and Crafts Movement (§35) was promoted this cycle (2026-07-27, lane 4)
-from `docs/curriculum-candidates/arts-and-crafts-movement.md`, a 6th
-candidate file that appeared after the previous cycle's "all 5 resolved"
-accounting. All three example works (Morris's *Daisy* and *Wild Tulip*,
-Morris & Co.'s *Five pink flowers with foliated tendrils*) were VERIFIED
-directly against the Met Collection API (`isPublicDomain: true`) this cycle.
-Not yet synced into `academyStyles.ts` (see "Lesson seed entries" row below)
-— deferred to a future kind_robots PR, matching how every prior movement
-addition landed. This cycle also backfilled a missing run_log entry and
-corrected stale `continuous_improvement` metadata left by the immediately
-prior lane-3 harbor-lesson cycle (PR #1257) — see run_log for detail.
+Roadmap-accuracy cycles should repair live coordination or documentation drift, not produce
+another historical status essay. Prefer checks that derive their answer from current files:
 
-Pre-Raphaelite Brotherhood (§34) was added 2026-07-27 (lane 4):
-no source candidate file existed for it (all 5 files in
-`docs/curriculum-candidates/` were already resolved — 4 promoted, 1 correctly
-held at ai-art-academy/t-043), so this was fresh research rather than a
-promotion. All three example works (Millais's *Ophelia*, Hunt's *The
-Awakening Conscience*, Rossetti's *Beata Beatrix*) were VERIFIED directly
-against their live Wikimedia Commons file pages this cycle. Not yet synced
-into `academyStyles.ts` (see "Lesson seed entries" row below) — deferred to
-a future kind_robots PR, matching how every prior movement addition landed.
+- Run `python scripts/validate_roadmaps.py` and `python scripts/audit_roadmaps.py` when a
+  local checkout is available. In connector-only sessions, inspect the same live roadmap,
+  priority, override, task-event, PR, and Actions state directly.
+- Compare curriculum coverage from `docs/curriculum-outline.md` with the current
+  `stores/seeds/academyStyles.ts` seed when the Kind Robots checkout/connector is available.
+  Do not copy a movement count into this checklist as long-lived truth. The most recent
+  verified lane-2 pass (2026-08-07) found 47 curriculum sections and 47 seed entries; future
+  cycles must recompute rather than trusting that number.
+- Run the project-specific reporting/coverage helpers where relevant, especially
+  `scripts/list_curriculum_coverage.py` and
+  `scripts/verify_academy_style_preview_coverage.py`, instead of maintaining a manual
+  table of every movement and preview here.
+- Confirm t-010's `note`, `continuous_improvement`, and `run_log` agree about the last and
+  next lane. The task-event rearm path has historically updated status/note without the
+  nested rotation mapping, so this is an explicit check until conductor/t-103 closes the
+  gap.
+- Scan terminal tasks for stale *operational* lifecycle metadata (`retry_context`,
+  `soft_gate`, `claimed_by`, `claimed_at`). A completed task may preserve failure history
+  in its `note` or TALKBACK, but fields whose meaning is "what the next retry/blocked
+  session should do" should not remain live after the task is done. Preserve history before
+  removing any such field; do not erase prior critique.
+- Keep active blockers short and current. Move accumulated attempt history into a task
+  `run_log:` when one exists, as t-044 does, rather than stacking old incident prose in the
+  roadmap note.
 
-Precisionism (§33) was promoted from
-`docs/curriculum-candidates/precisionism.md` this cycle (2026-07-27,
-scheduled agent run, lane 4 — lane 3/inspiration-assets re-confirmed blocked
-via `scripts/recheck_render_queue.py`, PENDING=144/oldestPending~61h/still
-`growing`, before falling back). Precisionism's source candidate named four
-figures (Demuth, Sheeler, Crawford, O'Keeffe) but only Demuth (d. 1935)
-clears PUBLIC-DOMAIN-POLICY.md's 1956 death-date cutoff — the other three
-died after 1956 and are excluded from the generation target and from
-exhibited example works, named only as historical-context prose (same
-treatment as Picasso/Braque in Cubism and Thomas Hart Benton in American
-Regionalism). Verified all three of Demuth's example works (*My Egypt* 1927,
-*I Saw the Figure 5 in Gold* 1928, *Incense of a New Church* 1921) directly
-via live Wikimedia Commons file pages. Did every axis together in one cycle:
-skeleton YAML entry, section 33 prose (key ideas, recognition cues, artist
-note, 3 verified example works, remix_hint), a remix-quality paragraph in
-"Lesson-only vs remixable", a `v1.13 addition re-check` public-domain
-paragraph, a `style-lora-registry.md` row, `teaching-notes.md` row 33, and
-`kind-robots-academy-style-preview-precisionism` in `art-prompts.yaml`.
-Marked `docs/curriculum-candidates/precisionism.md` itself `PROMOTED`.
+### Current live anchors
 
-**Update (2026-07-27T10:20:00Z lane-4 cycle).** Per this section's own
-instruction below, checked `docs/curriculum-candidates/` before adding a 34th
-movement: all 5 files are already resolved (ashcan-school, hudson-river-school,
-precisionism, the-nabis promoted; harlem-renaissance correctly held at its own
-gate, ai-art-academy/t-043). Closed the "Lesson seed entries" gap instead: The
-Nabis, Hudson River School, and Precisionism are now synced into kind_robots'
-`stores/seeds/academyStyles.ts` (kind_robots PR #1045) — all 33 curriculum-outline.md
-movements are now represented in the front-end seed. `exampleWorks`/
-`previewImageSrc` remain deferred on all three (and on every other
-not-yet-imaged movement), matching every prior sync.
+Use these as navigation, not as copied status:
 
-Before adding a 36th movement, finish the known coverage gaps below
-unless a newly discovered issue is more urgent — every remaining gap is
-blocked solely on home-relay/media-server reachability, not on research or
-write access to this repo.
-
-| Area | Current state | Next verifiable action |
-|---|---|---|
-| Lesson seed entries | UPDATE (2026-07-28 lane 4): all 36 of 36 movements in curriculum-outline.md are now synced to `academyStyles.ts` — Pre-Raphaelite Brotherhood (§34), Arts and Crafts Movement (§35), and Italian Futurism (§36) landed via kind_robots PR #1076 (squash `a3f907f`), each with `previewImageSrc` set and spot-verified HTTP 200 at the production media host. GAP FOUND (2026-07-28 lane 3): a later same-day lane-4 cycle added a 37th `academyStyles.ts` entry, `fauvism`, with no matching `curriculum-outline.md` section at all — the first time sync ran in reverse (front-end ahead of the source-of-truth doc). See `ai-art-academy/t-050` (ready) for the fix | Land t-050: add curriculum-outline.md §38 for Fauvism, correcting its stale 2026-07-16 "deliberately not added" note. Also `egyptian-painting` (curriculum §37) is written up but not yet synced to academyStyles.ts — the normal, expected direction of deferred sync, not a defect |
-| Example works | 25 movements complete, including Persian Miniature Painting (3 works, all **VERIFIED** by direct `WebFetch` of their Wikimedia Commons file pages — 2026-07-20 egress to commons.wikimedia.org worked, unlike the earlier `artic.edu` 402s), Song Dynasty Landscape Painting (3 works, all **VERIFIED** the same way, 2026-07-21), and Mughal Miniature Painting (3 works, all **VERIFIED** the same way, 2026-07-21). Fayum Mummy Portraits (3 works, **VERIFIED** against the Met Collection API's `isPublicDomain` field, 2026-07-22), Vienna Secession (3 works, **VERIFIED** via the Wikimedia Commons API, 2026-07-24), Joseon Dynasty Korean Genre Painting (3 works, **VERIFIED** via direct Wikimedia Commons file pages, 2026-07-25), The Nabis (3 works, **VERIFIED** via direct Wikimedia Commons file pages, 2026-07-26), Hudson River School (3 works, all **VERIFIED** via direct Wikimedia Commons file pages — 2 already verified in the source candidate, the third, *The Oxbow*, live-verified this cycle, 2026-07-26), and Precisionism (3 works, all **VERIFIED** via direct Wikimedia Commons file pages, 2026-07-27) are all written up but not yet in `examples.manifest.json`. Ashcan School's 4 VERIFIED works are written up in curriculum-outline.md §23 but not yet in `examples.manifest.json` (confirmed absent: no `exampleWorks` field on the `ashcan-school` entry in `stores/seeds/academyStyles.ts` as of 2026-07-19). American Regionalism's 4 works are written up in curriculum-outline.md §24 (sourced, but marked "unverified this cycle" — `WebFetch` to museum hosts returned HTTP 402 through the session egress proxy) | Blocked on media-server write access — same blocker as t-033 (confirmed 2026-07-19: `examples.manifest.json` lives on `media.acrocatranch.com`, not in the kind_robots git repo; this session has `KR_API_TOKEN` but no `KR_RELAY_TOKEN`/`KR_RELAY_USER_ID` and found no in-repo upload path, so it cannot write the manifest or upload images from here). Research/sourcing is already done (curriculum-outline.md §23-33); only the write step remains, plus a direct-fetch spot-check of §24's four URLs when museum/Commons egress is open. Resume once a session with media-server/relay write access is available — do not re-attempt from a sandbox without it |
-| Starter library | 21 starter images and provenance manifest complete — coverage intentionally movement-agnostic (2026-07-18: confirmed no movement-specific starters exist for any of the 8 movements added after v1, and an abstract Suprematist work would fail the library's own selection criteria; see starter-image-library.md) | Keep source-picker integration aligned with the manifest; no new starter entries needed |
-| Style previews | UPDATE (2026-07-29 lane 3): all 40 curriculum movements now have a confirmed-live preview at `https://media.acrocatranch.com/images/academy/styles/<slug>.webp` (HTTP 200) with `previewImageSrc` wired in `academyStyles.ts` — `fauvism` (§38) was confirmed live 2026-07-29; `tonalism` (§39) and `barbizon-school` (§40) were re-verified live this cycle (direct `curl -I`, both `HTTP/2 200`, `previewImageSrc` already wired in the kind_robots checkout). No open gap | Re-queue a preview for any future new movement (lane 4) promptly so this gap doesn't reopen; re-verify delivery the same way (direct HTTP check + grep the kind_robots checkout) rather than trusting the request's `status: done` alone |
-| Remix configs | Registry exists; A/B generation blocked | Resume only after the relay, database, and approved generation path are available |
-| Teaching scaffold | Written in `docs/teaching-notes.md`, covering all 36 movements — rows 34 (Pre-Raphaelite Brotherhood), 35 (Arts and Crafts Movement), and 36 (Italian Futurism) are all present; wired into `academy-style-detail.vue`'s Try It / Reflect sections (t-023, done — verified 2026-07-18 via `grep -n "Try it\|Reflect" components/academy/academy-style-detail.vue` on kind_robots main) | No gap — table is current through row 36 |
+- `t-010` — recurring continuous-improvement task and rotation state.
+- `t-044` — current Kontext LoRA live-verification task; soft-gated and independently
+  tracked with `docs/t-044-lora-loading-run-log.md`.
+- `t-045` — LoRA A/B rerun, dependency-gated on t-044.
+- `docs/curriculum-candidates/` — candidate/promotion state; inspect each file rather than
+  relying on a cached count in this checklist.
+- `docs/continuous-improvement-run-log.md` — append-only cycle provenance.
 
 ## Blocker discipline
 
