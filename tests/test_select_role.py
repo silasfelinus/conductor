@@ -541,6 +541,62 @@ def test_find_failing_scheduled_workflows_returns_empty_without_a_token():
     assert flagged == []
 
 
+def test_find_failing_scheduled_workflows_applies_per_workflow_threshold_override():
+    # conductor/t-104: daily-digest.yml gets a lower bar than the flat
+    # default since it only runs ~once/day -- 2 misses in a row should flag
+    # it even though the flat default (3) would not yet.
+    routes = {
+        "/actions/workflows/daily-digest.yml/runs": {
+            "workflow_runs": [
+                {"status": "completed", "conclusion": "failure"},
+                {"status": "completed", "conclusion": "failure"},
+                {"status": "completed", "conclusion": "success"},
+            ]
+        },
+        "/actions/workflows/hourly-conductor.yml/runs": {
+            "workflow_runs": [
+                {"status": "completed", "conclusion": "failure"},
+                {"status": "completed", "conclusion": "failure"},
+                {"status": "completed", "conclusion": "success"},
+            ]
+        },
+    }
+    with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
+        flagged = select_role.find_failing_scheduled_workflows(
+            "silasfelinus/conductor",
+            "fake-token",
+            workflow_files=("daily-digest.yml", "hourly-conductor.yml"),
+            fail_threshold=3,
+            fail_thresholds={"daily-digest.yml": 2},
+        )
+
+    assert {f["workflow"] for f in flagged} == {"daily-digest.yml"}
+    assert flagged[0]["fail_threshold"] == 2
+    assert flagged[0]["consecutive_failures"] == 2
+
+
+def test_default_watched_workflows_excludes_noisy_or_ambiguous_workflows():
+    # These are deliberately left out (see DEFAULT_WATCHED_WORKFLOWS's own
+    # comment) -- guard against silently re-adding them without the same
+    # care that excluded them.
+    assert "auto-art-generate.yml" not in select_role.DEFAULT_WATCHED_WORKFLOWS
+    assert "security-audit.yml" not in select_role.DEFAULT_WATCHED_WORKFLOWS
+    assert "roadmap-audit.yml" not in select_role.DEFAULT_WATCHED_WORKFLOWS
+    assert "daily-digest-retry.yml" not in select_role.DEFAULT_WATCHED_WORKFLOWS
+    # And the ones added deliberately are actually present.
+    for name in (
+        "process-task-events.yml",
+        "hourly-conductor.yml",
+        "branch-janitor.yml",
+        "ci-janitor.yml",
+        "process-color-art-events.yml",
+        "daily-digest.yml",
+        "monster-recast-art-jobs.yml",
+    ):
+        assert name in select_role.DEFAULT_WATCHED_WORKFLOWS
+    assert select_role.DEFAULT_WORKFLOW_FAIL_THRESHOLDS == {"daily-digest.yml": 2}
+
+
 def test_workflow_runs_api_returns_empty_on_unexpected_shape():
     with mock.patch.object(select_role, "_gh_request", return_value=None):
         assert select_role.workflow_runs_api("silasfelinus/conductor", "process-task-events.yml", "tok") == []

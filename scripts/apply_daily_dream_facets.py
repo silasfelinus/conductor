@@ -148,12 +148,17 @@ def apply_file(path: Path, token: str, *, dry_run: bool = False, force: bool = F
         return False, "not a built Facet-seeded proposal"
     existing = built.get("facet_assignments")
     seed_version = proposal["seed_facets"].get("version")
+    already_partial = (
+        isinstance(existing, dict)
+        and existing.get("seed_version") == seed_version
+        and existing.get("status") == "partial"
+    )
     if not force and isinstance(existing, dict) and existing.get("seed_version") == seed_version and existing.get("status") == "complete":
-        return False, "already complete"
+        return False, "already complete", False
 
     targets = _record_targets(proposal, built)
     if len(targets) != 6:  # world + location + character + two rewards + scenario
-        return False, f"waiting for complete records ({len(targets)}/6 Facet targets)"
+        return False, f"waiting for complete records ({len(targets)}/6 Facet targets)", False
 
     applied: list[dict[str, Any]] = []
     errors: list[str] = []
@@ -186,7 +191,7 @@ def apply_file(path: Path, token: str, *, dry_run: bool = False, force: bool = F
     updated = BUILT_RE.sub(replacement, text, count=1)
     if not dry_run:
         path.write_text(updated, encoding="utf-8")
-    return True, built["facet_assignments"]["status"]
+    return True, built["facet_assignments"]["status"], already_partial
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -201,15 +206,37 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     files = [Path(value) for value in args.file] if args.file else sorted(BACKLOG.glob("*.md"))
     changed = 0
-    partial = 0
+    partial_new = 0
+    partial_persisting = 0
     for path in files:
-        did_change, status = apply_file(path, token, dry_run=args.dry_run, force=args.force)
+        did_change, status, was_already_partial = apply_file(path, token, dry_run=args.dry_run, force=args.force)
         if did_change:
             changed += 1
-            partial += status != "complete"
-            print(f"{path.name}: {status}")
-    print(f"Facet assignment: {changed} proposal(s) processed, {partial} partial.")
-    return 1 if partial else 0
+            if status != "complete":
+                if was_already_partial:
+                    partial_persisting += 1
+                    print(f"{path.name}: {status} (still unresolved from a prior run -- not re-failing this run's exit code)")
+                else:
+                    partial_new += 1
+                    print(f"{path.name}: {status}")
+            else:
+                print(f"{path.name}: {status}")
+    print(
+        f"Facet assignment: {changed} proposal(s) processed, "
+        f"{partial_new} newly partial, {partial_persisting} still partial from a prior run."
+    )
+    # Only a FRESH partial fails the hourly sweep -- that is a real, actionable
+    # signal worth surfacing the day it happens. A proposal that was already
+    # partial in an earlier run (same seed_version, unresolved) will keep
+    # getting retried here every run since there is no short-circuit for
+    # "partial" the way there is for "complete", but re-failing on it forever
+    # once it has already been reported once is exactly the workflow-medic
+    # "one broken thing drowns every other signal" failure mode -- see
+    # conductor/t-104's 2026-08-08 hourly-conductor incident (every run failed
+    # for 2+ days on a single stuck proposal, a missing FacetAlias row for
+    # "culinary-fantasy", while genuinely new proposals kept succeeding
+    # underneath the red status the whole time).
+    return 1 if partial_new else 0
 
 
 if __name__ == "__main__":

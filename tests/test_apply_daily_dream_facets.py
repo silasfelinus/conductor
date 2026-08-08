@@ -17,8 +17,8 @@ def test_sidecar_applies_world_and_five_dependent_records(tmp_path, monkeypatch)
     def fake_put(endpoint, payload, token, dry_run=False):
         calls.append((endpoint, payload)); return {"success": True, "data": []}
     monkeypatch.setattr(assign, "_put", fake_put)
-    changed, status = assign.apply_file(path, "token")
-    assert changed is True and status == "complete"
+    changed, status, was_already_partial = assign.apply_file(path, "token")
+    assert changed is True and status == "complete" and was_already_partial is False
     assert [endpoint for endpoint, _ in calls] == ["/api/dreams/1/facets", "/api/dreams/3/facets", "/api/characters/4/facets", "/api/rewards/5/facets", "/api/rewards/6/facets", "/api/scenarios/7/facets"]
     assert all(not payload["facetIds"] for _, payload in calls)
     assert [payload["facetKeys"] for _, payload in calls] == [
@@ -33,8 +33,45 @@ def test_sidecar_applies_world_and_five_dependent_records(tmp_path, monkeypatch)
 def test_sidecar_is_idempotent_after_complete_assignment(tmp_path, monkeypatch):
     path = tmp_path / "bundle.md"; write_bundle(path)
     monkeypatch.setattr(assign, "_put", lambda *args, **kwargs: {"success": True, "data": []})
-    assert assign.apply_file(path, "token") == (True, "complete")
-    assert assign.apply_file(path, "token") == (False, "already complete")
+    assert assign.apply_file(path, "token") == (True, "complete", False)
+    assert assign.apply_file(path, "token") == (False, "already complete", False)
+
+
+def test_main_fails_only_on_a_freshly_partial_proposal(tmp_path, monkeypatch):
+    # A proposal that was ALREADY partial before this run (same seed_version,
+    # unresolved) must not re-fail the exit code every run forever -- see
+    # conductor/t-104's 2026-08-08 hourly-conductor incident, where exactly
+    # this pattern kept the scheduled workflow red for 2+ days on one stuck
+    # proposal while genuinely new proposals kept succeeding underneath it.
+    # main() short-circuits to 0 immediately when KR_API_TOKEN is absent (a
+    # deliberate non-blocking-degradation path, unrelated to what this test
+    # is checking) -- set one so the real partial_new/partial_persisting
+    # logic under test actually runs, matching a real CI environment that
+    # HAS the secret configured.
+    monkeypatch.setenv("KR_API_TOKEN", "fake-token")
+    stale_partial = tmp_path / "stale.md"
+    fresh = tmp_path / "fresh.md"
+
+    def fake_apply_file(path, token, dry_run=False, force=False):
+        if path == stale_partial:
+            return True, "partial", True  # already partial before this run
+        return True, "complete", False
+
+    monkeypatch.setattr(assign, "apply_file", fake_apply_file)
+    exit_code = assign.main(["--file", str(stale_partial), "--file", str(fresh)])
+    assert exit_code == 0
+
+
+def test_main_fails_on_a_newly_partial_proposal(tmp_path, monkeypatch):
+    monkeypatch.setenv("KR_API_TOKEN", "fake-token")
+    newly_broken = tmp_path / "newly-broken.md"
+
+    def fake_apply_file(path, token, dry_run=False, force=False):
+        return True, "partial", False  # first time this proposal has gone partial
+
+    monkeypatch.setattr(assign, "apply_file", fake_apply_file)
+    exit_code = assign.main(["--file", str(newly_broken)])
+    assert exit_code == 1
 
 
 def test_stale_recipe_id_expands_to_live_canonical_facet_keys():
