@@ -74,19 +74,26 @@ def _positive_int(value: Any) -> int | None:
 
 
 def _enrich_daily_dream_job(entry: dict[str, Any], job: dict[str, Any]) -> None:
-    """Preserve canonical Daily Dream provenance and atomic attachment target.
+    """Preserve canonical Daily Dream destination, provenance, and attach target.
 
-    ``build_dream_records.py`` writes the entity type/id/field on each request.
-    Keeping those fields inside the durable ArtJob means Kind Robots can attach
-    the completed ArtImage in the same transaction that marks the job DONE.
-    The stable request id is also the queue idempotency key, so a local timeout
-    cannot manufacture a duplicate render on retry.
+    ``build_dream_records.py`` writes the stable destination plus entity
+    type/id/field on each request. Keeping those fields inside the durable
+    ArtJob means:
+      * the relay and Kind Robots file resolver can honor the declared path,
+      * Kind Robots can attach the completed ArtImage in the same transaction
+        that marks the job DONE, and
+      * the stable request id can suppress duplicate enqueues after a timeout.
     """
     payload = job.get("payload")
     if not isinstance(payload, dict):
         return
 
     request_id = str(entry.get("id") or "").strip()
+    target_repo = str(entry.get("target_repo") or "").strip()
+    image_path = str(entry.get("image_path") or "").strip()
+    source_url = str(entry.get("source_url") or "").strip()
+    page_url = str(entry.get("page_url") or "").strip()
+    label = str(entry.get("label") or "").strip()
     entity_type = str(entry.get("entity_type") or "").strip().lower()
     entity_id = _positive_int(entry.get("entity_id"))
     entity_field = str(entry.get("entity_field") or "imagePath").strip() or "imagePath"
@@ -97,14 +104,22 @@ def _enrich_daily_dream_job(entry: dict[str, Any], job: dict[str, Any]) -> None:
         job["idempotencyKey"] = request_id
 
     payload["collection"] = "dream-cycle"
+    if target_repo:
+        payload["targetRepo"] = target_repo
+    if image_path:
+        payload["imagePath"] = image_path
+    if source_url:
+        payload["sourceUrl"] = source_url
+    if page_url:
+        payload["pageUrl"] = page_url
     payload["conductorRequest"] = {
         "id": request_id or None,
         "source": "dream-cycle",
-        "label": str(entry.get("label") or "").strip() or None,
-        "targetRepo": str(entry.get("target_repo") or "").strip() or None,
-        "imagePath": str(entry.get("image_path") or "").strip() or None,
-        "sourceUrl": str(entry.get("source_url") or "").strip() or None,
-        "pageUrl": str(entry.get("page_url") or "").strip() or None,
+        "label": label or None,
+        "targetRepo": target_repo or None,
+        "imagePath": image_path or None,
+        "sourceUrl": source_url or None,
+        "pageUrl": page_url or None,
     }
 
     if entity_type in DAILY_DREAM_ENTITY_TYPES and entity_id:
