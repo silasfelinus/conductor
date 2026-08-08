@@ -3499,8 +3499,8 @@ tasks:
   - id: t-105
     milestone: m2
     title: Audit other dream-cycle backlog-style idempotent sidecars for the same already-failed-forever retry pattern
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     stakes: reversible
     passes: 0
     note: >
@@ -3521,4 +3521,6 @@ tasks:
       are the obvious first candidates -- check `grep -rl "dream-cycle/backlog" scripts/` for the
       full list. Apply the same `partial_new`/`partial_persisting`-style split (or equivalent)
       wherever the gap is real; document explicitly where it's already handled or not applicable.
-    updated: '2026-08-08T09:05:00Z'
+    updated: '2026-08-08T16:28:38Z'
+    claimed_by: 2026-08-08T162700Z-cd-t105
+    claimed_at: '2026-08-08T16:28:38Z'
