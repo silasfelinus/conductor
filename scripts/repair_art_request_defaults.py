@@ -13,14 +13,29 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 ART_PROMPTS_FILE = ROOT / "projects" / "art-prompts.yaml"
 
+# Mirrors kind_robots' DEFAULT_ASSET_ART_STYLE. It must stay style-only.
+#
+# This constant used to carry the casting clause too — "cast characters
+# naturally across many species...; include robots only when the subject or
+# scene explicitly calls for them" — as a copy of the TypeScript original. When
+# that TS constant was split on 2026-08-08 so the casting half became opt-in,
+# this duplicate was missed, and it went on stamping the old block into
+# art-prompts.yaml for another twelve hours. ArtJob 8086 was still being minted
+# with the full clause at 21:06, long after the "fix" had merged.
+#
+# Krea 2 renders that clause rather than reading it: a conditional instruction
+# is just a dense noun phrase to a diffusion model, so inanimate subjects came
+# back as crowds of people. The casting direction is now applied only by
+# producers that know their subject contains people.
+#
+# Every art bug that day was two copies of one value disagreeing. If this
+# string needs to change, change it in kind_robots first and mirror it here in
+# the same commit.
 DEFAULT_ASSET_ART_DIRECTION = (
     "detailed mature western animation with multidimensional worldbuilding, "
     "expressive anatomy and faces, confident ink-like linework, dimensional "
     "shapes, rich controlled color, cinematic lighting, tactile environments, "
-    "and clear readable silhouettes; cast characters naturally across many "
-    "species, ages, body sizes, body shapes, gender presentations, and levels "
-    "of conventional attractiveness; include robots only when the subject or "
-    "scene explicitly calls for them"
+    "and clear readable silhouettes"
 )
 
 VAGUE_ART_DIRECTION = re.compile(

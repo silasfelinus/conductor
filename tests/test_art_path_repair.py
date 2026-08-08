@@ -78,3 +78,26 @@ def test_failed_job_selection_is_scoped_to_kind_robots_legacy_payloads():
     assert len(repair.repair_reasons(legacy)) == 2
     assert repair.repair_reasons(canonical) == []
     assert repair.repair_reasons(conductor) == []
+
+
+def test_default_art_direction_carries_no_casting_clause():
+    """A duplicated constant is what kept the 2026-08-08 art bug alive.
+
+    kind_robots split its DEFAULT_ASSET_ART_DIRECTION that morning so the
+    casting half became opt-in. This Python mirror was missed and went on
+    stamping the full block into art-prompts.yaml for another twelve hours —
+    ArtJob 8086 was still being minted with it at 21:06.
+
+    Krea 2 renders "cast characters naturally across many species...; include
+    robots only when the subject or scene explicitly calls for them" rather than
+    reading it: a conditional is just a dense noun phrase to a diffusion model,
+    which is how a ladle became a crowd of fifteen people.
+    """
+    repair = load_script("repair_art_request_defaults")
+    direction = repair.DEFAULT_ASSET_ART_DIRECTION
+
+    assert "cast characters" not in direction
+    assert "conventional attractiveness" not in direction
+    assert "only when" not in direction, "no conditional may reach a diffusion model"
+    # ...while still carrying the style direction it exists to supply.
+    assert "clear readable silhouettes" in direction
