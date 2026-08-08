@@ -3499,8 +3499,8 @@ tasks:
   - id: t-105
     milestone: m2
     title: Audit other dream-cycle backlog-style idempotent sidecars for the same already-failed-forever retry pattern
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     stakes: reversible
     passes: 0
     note: >
@@ -3521,31 +3521,6 @@ tasks:
       are the obvious first candidates -- check `grep -rl "dream-cycle/backlog" scripts/` for the
       full list. Apply the same `partial_new`/`partial_persisting`-style split (or equivalent)
       wherever the gap is real; document explicitly where it's already handled or not applicable.
-    updated: '2026-08-08T09:05:00Z'
-  - id: t-106
-    milestone: m2
-    title: Investigate why CodeQL javascript-typescript analyzer specifically stalls on conductor PRs
-    status: ready
-    owner: null
-    stakes: reversible
-    passes: 0
-    note: >
-      Kaizen from a 2026-08-08 session (see root TALKBACK.md "pattern" entry, same date):
-      GitHub's default-setup CodeQL javascript-typescript analyzer stalled in_progress for
-      20-35+ minutes on every conductor PR pushed that session (4 occurrences across PRs #1906
-      and #1907), while the other 3 analyzers (python/c-cpp/actions) and all other checks
-      consistently completed within 1-2 minutes each time. Cancel+retrigger (the only lever
-      available for this GitHub-managed default-setup workflow -- rerun_workflow_run/
-      workflow_dispatch don't apply to it) did not fix the pattern; it recurred identically on
-      every retry that session. A kind_robots PR in the same session had no such issue.
-
-      Isolating one language specifically (vs. uniform slowness across all 4, which is the
-      already-documented "platform congestion" pattern from an earlier incident) suggests
-      something about this repo's own JS/TS surface rather than pure infra congestion. Check
-      whether a custom .github/codeql/codeql-config.yml exists and whether tuning its
-      paths-ignore/query suite for the JS/TS language would help; check file count and whether
-      any recently-added JS/TS surface (this repo is primarily Python) is large enough to matter;
-      if nothing repo-side explains it, document that as a GitHub-side platform issue for future
-      sessions to expect and budget 1-2 retrigger cycles for rather than re-diagnosing from
-      scratch each time.
-    updated: '2026-08-08T15:59:00Z'
+    updated: '2026-08-08T16:28:38Z'
+    claimed_by: 2026-08-08T162700Z-cd-t105
+    claimed_at: '2026-08-08T16:28:38Z'
