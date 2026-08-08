@@ -2794,7 +2794,7 @@ tasks:
   - id: t-108
     milestone: m4
     title: "/navigation's site-directory (~85 icons/page) flakes BROKEN-ART on a different image set each run"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#1598'
@@ -2807,9 +2807,10 @@ tasks:
 
 
       Reviewer rejected kind_robots PR #1598 at exact head 65d43829bfd89604d446861acb8be8e4a5be0348. The native Image() probe bypasses the original loading="lazy" behavior and can eagerly start first-load requests for the whole ~85-icon navigation directory, increasing distinct-URL burst pressure while only serializing duplicates. Remove the new explanatory inline-comment block to match kind_robots/AGENTS.md. Preserve visibility-driven lazy loading in the retry, then require the corrected exact head's responsive-layout-audit raw /navigation BROKEN-ART lines before merge; structural CI alone is insufficient for this third attempted fix.
-    claimed_by: claude-quirky-curie-20260808T014000Z-iv-t108
-    claimed_at: '2026-08-08T01:38:46Z'
-    updated: '2026-08-08T04:21:20Z'
+    claimed_by: claude-quirky-curie-20260808T0426Z-iv-t108
+    claimed_at: '2026-08-08T04:30:52Z'
+    updated: '2026-08-08T04:30:52Z'
+    owner: worker
 
   - id: t-109
     milestone: m4
