@@ -562,6 +562,10 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
     # (e.g. a world and a location both named "The Comet Market") would collide
     # (409). Pass an explicit slug per dream, de-duplicated within this build.
     used_slugs: set[str] = set()
+    # Art request IDs and paths have the same collision risk. Keep the world on
+    # the canonical slug, then suffix a colliding child with its semantic kind
+    # (Lantern Post world + LOCATION becomes lantern-post-location).
+    used_art_slugs: set[str] = set()
 
     def uniq_slug(base: str) -> str:
         s = slugify(base) or "dream"
@@ -571,17 +575,49 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         used_slugs.add(out)
         return out
 
-    def queue_art(element_slug: str, label: str, art_prompt: str,
+    def uniq_art_slug(base: str, kind: str) -> str:
+        s = slugify(base) or "element"
+        out = s
+        if out in used_art_slugs:
+            suffix = slugify(kind) or "element"
+            out = f"{s}-{suffix}"
+            n = 2
+            while out in used_art_slugs:
+                out = f"{s}-{suffix}-{n}"
+                n += 1
+        used_art_slugs.add(out)
+        return out
+
+    def queue_art(element_slug: str, element_kind: str, label: str, art_prompt: str,
                   target_endpoint: str, target_id: Optional[int]) -> None:
         # Art attaches to the created entity's own imagePath (a Dream for the
         # world/locations, or the real Character/Bot/Reward/Scenario row) — not
-        # to a shadow dream's PitchSheet. target_id is the row to PATCH once the
-        # rendered image is live (see attach_art).
-        req_id, image_path, yaml_text = art_request_entry(slug, element_slug, label, art_prompt)
+        # to a shadow dream's PitchSheet. The durable request carries the target
+        # entity metadata so Kind Robots can attach the ArtImage atomically when
+        # the ArtJob completes; attach_art remains a legacy/static-path fallback.
+        resolved_art_slug = uniq_art_slug(element_slug, element_kind)
+        req_id, image_path, yaml_text = art_request_entry(
+            slug, resolved_art_slug, label, art_prompt
+        )
+        entity_type = {
+            "/api/dreams": "dream",
+            "/api/characters": "character",
+            "/api/bots": "bot",
+            "/api/rewards": "reward",
+            "/api/scenarios": "scenario",
+        }.get(target_endpoint)
+        if entity_type and target_id is not None:
+            yaml_text += (
+                f"  entity_type: {entity_type}\n"
+                f"  entity_id: {int(target_id)}\n"
+                f"  entity_field: imagePath\n"
+            )
         art_entries.append(yaml_text)
         built["art"].append({"request_id": req_id, "image_path": image_path,
                              "public_path": "/" + image_path.removeprefix("public/"),
-                             "attached": False, "element": element_slug,
+                             "attached": False, "element": resolved_art_slug,
+                             "entity_type": entity_type, "entity_id": target_id,
+                             "entity_field": "imagePath",
                              "target_endpoint": target_endpoint, "target_id": target_id})
 
     def card_dream(dream_type: str, dtitle: str, description: str, flavor: str,
@@ -654,7 +690,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
     )
     if world:
         built["records"]["world"] = {"model": "Dream", "id": world.get("id"), "title": title}
-        queue_art(slug, title,
+        queue_art(slug, "world", title,
                   f"establishing key art for the world of {title}: {proposal.get('idea', '')} "
                   f"{vibe_line}, portrait key-art composition, {HOUSE_PROMPT_TAIL}",
                   "/api/dreams", world.get("id"))
@@ -691,7 +727,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                 kr_call("POST", "/api/dream-relations",
                         {"fromDreamId": world_id, "toDreamId": loc_id, "relationType": "CONTAINS"},
                         dry_run, results, f"relation: {title} -> {loc.get('title')} (CONTAINS)")
-        queue_art(el, loc.get("title", "Location"),
+        queue_art(el, "location", loc.get("title", "Location"),
                   f"{loc.get('art_direction', '')}, {vibe_line}, "
                   f"portrait key-art composition, {HOUSE_PROMPT_TAIL}",
                   "/api/dreams", dream.get("id") if dream else None)
@@ -720,7 +756,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         if rec:
             built["records"]["characters"].append(
                 {"model": "Character", "id": rec.get("id"), "name": ch.get("name")})
-        queue_art(el, ch.get("name", "Character"),
+        queue_art(el, "character", ch.get("name", "Character"),
                   f"character portrait of {ch.get('name', '')}: {ch.get('look', '')}, "
                   f"in the world of {title} ({vibe_line}), {HOUSE_PROMPT_TAIL}",
                   "/api/characters", rec.get("id") if rec else None)
@@ -755,7 +791,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
             built["records"]["rewards"].append(
                 {"model": "Reward", "id": rec.get("id"), "name": rw.get("name"),
                  "reward_type": rtype})
-        queue_art(el, rw.get("name", "Reward"),
+        queue_art(el, "reward", rw.get("name", "Reward"),
                   f"iconic treasure-card illustration of {rw.get('name', '')} ({rtype}): "
                   f"{rw.get('grants', '')}, atmospheric background, world of {title} "
                   f"({vibe_line}), {HOUSE_PROMPT_TAIL}",
@@ -790,7 +826,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         if rec:
             built["records"]["scenarios"].append(
                 {"model": "Scenario", "id": rec.get("id"), "title": sc.get("title")})
-        queue_art(el, sc.get("title", "Scenario"),
+        queue_art(el, "scenario", sc.get("title", "Scenario"),
                   f"establishing scene art for {sc.get('title', '')}: {sc.get('setup', '')}, "
                   f"world of {title} ({vibe_line}), {HOUSE_PROMPT_TAIL}",
                   "/api/scenarios", rec.get("id") if rec else None)
