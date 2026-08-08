@@ -2754,10 +2754,11 @@ tasks:
   - id: t-103
     milestone: m4
     title: "Drive Phase 1 responsive/functionality findings to zero"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-102
+    remaining_scope_task: t-108
     note: |-
       Work the t-102 inventory in scoped slices until every reachable page passes phone, tablet, and desktop geometry with no hidden/unreachable elements. Split findings into dedicated tasks when they are larger than one PR; keep this umbrella open until the authoritative counter is zero. Passing TypeScript is not evidence that a page works.
 
@@ -2782,6 +2783,8 @@ tasks:
       t-110 and t-112 now also done: kind_robots PR #1585 merged (2026-08-08T00:42:41Z, head d65bea2). Remaining open sub-finding: t-108 (/navigation BROKEN-ART, still waiting/unclaimed -- the duplicate-image-URL investigation). Keep this umbrella ready rather than done until t-108 closes and a fresh audit run confirms zero findings remain.
 
       Found a coordination deadlock in Phase 1 closeout: t-103 explicitly remains open until t-108 closes, while t-108 is waiting on depends_on: t-103. The scoped Conductor fix is to make t-108 the umbrella's remaining_scope_task and remove the inverse dependency so the final measured finding can become claimable without falsely completing t-103.
+
+      Deadlock fix applied (conductor sweep, 2026-08-08): set remaining_scope_task: t-108 on this task (per AGENTS.md's umbrella-sweep convention -- claim_task.py/next_ready_task.py now treat this umbrella as not-yet-claimable directly while t-108 exists and isn't done, so no session picks up t-103 itself) and dropped t-108's depends_on: t-103 (status waiting -> ready), since t-108 was never actually blocked on any t-103 deliverable -- it just needed to stop being claimable as an independent umbrella slice while t-103 was the one tracking it. Status back to ready (not review/done) until t-108 closes and a fresh full audit confirms zero findings remain.
     updated: '2026-08-08T01:19:00Z'
     claimed_by: 2026-08-08T011340Z-interface-vision-t103-b7k4
     claimed_at: '2026-08-08T01:13:40Z'
@@ -2791,11 +2794,10 @@ tasks:
   - id: t-108
     milestone: m4
     title: "/navigation's site-directory (~85 icons/page) flakes BROKEN-ART on a different image set each run"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
-    depends_on: t-103
     note: >
       UPDATED with a 3rd/4th data point (conductor sweep, 2026-08-07 ~14:35Z) -- read this
       paragraph first. Two more scheduled `responsive-layout-audit` runs against `main` since
@@ -2850,6 +2852,13 @@ tasks:
       Screenshots: kind_robots run 31177028472 (artifact responsive-audit-31177028472, first/
       cancelled run) and run 31180459280 (artifact responsive-audit-31180459280, second/
       completed run -- this is the more informative one, since it actually finished).
+
+      DEADLOCK FIX (conductor sweep, 2026-08-08): dropped this task's depends_on: t-103 --
+      it was never actually blocked on a t-103 deliverable, just circularly waiting on the
+      same umbrella that was in turn waiting on this task to close. t-103 now carries
+      remaining_scope_task: t-108 instead (the correct umbrella-sweep mechanism per
+      AGENTS.md), so it stops being independently claimable while this is the umbrella's
+      one open item. Status ready -- unblocked, claimable now.
     claimed_by: 2026-08-07T143516-t108-sweep
     claimed_at: '2026-08-07T14:35:17Z'
     updated: '2026-08-07T14:35:17Z'
