@@ -2809,14 +2809,17 @@ tasks:
   - id: t-113
     milestone: m4
     title: "/taskmaster's desktop scenario-option spans crush again -- regression of t-112"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: |-
       Found via kind_robots PR #1598's own responsive-layout-audit run (31239732003, 2026-08-08 ~05:25Z, head 9edf120). Desktop /taskmaster failed with 6 CRUSHED <span class="flex min-w-0 flex-1 flex-col justify-center gap-1.5 p-3"> elements carrying scenario-option labels ("The Regrowth Yards", "The Hollow Reliquary", "Mercado de la Fortuna", "The Sporeline Reclamation Yard", "The Sunken Cantata", "Body Horror"), same symptom as t-112 (also flagged 19 STARVED-TEXT elements on the same spans). Phone and tablet were not reported as failing in this run.
       This is a REGRESSION: t-112 covered the identical symptom on the identical page, and was closed done after kind_robots PR #1585 (merged 2026-08-08T00:42:41Z, dropped `xl:grid-cols-3`) was "VERIFIED FIXED" by a conductor sweep note. Something between that merge and this run (05:25Z) reintroduced the crush -- either the original fix was insufficient/only masked the issue at the audit's then-current viewport set, or a later change to /taskmaster or its layout reintroduced the disproportionate sibling growth t-112's own note hypothesized (a grid/flex sibling growing disproportionately at wide viewports).
       NEXT STEP: don't assume t-112's old fix (dropping xl:grid-cols-3) is still in place -- check kind_robots main's current taskmaster page/component for what actually changed since PR #1585, then re-diagnose with a fresh desktop-width inspection before shipping a second attempt. Read the actual audit run's raw log (run 31239732003, "Audit responsive layout" step) rather than trusting a pass/fail summary, per this project's established pattern for this exact failure class (t-108's own history of two disproven "fixed" claims in a row).
-    owner: null
+    owner: worker
+    claimed_by: 2026-08-08T061721Z-interface-vision-t113-k9r4
+    claimed_at: '2026-08-08T06:17:21Z'
+    updated: '2026-08-08T06:17:21Z'
 
   - id: t-109
     milestone: m4
