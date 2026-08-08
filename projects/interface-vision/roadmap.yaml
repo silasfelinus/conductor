@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2970,9 +2970,11 @@ tasks:
       workspace-sheet.vue: two sub-shapes considered and both rejected. The hero portrait block shows the image at natural height (`h-auto`, no fixed aspect box) whenever an image is present, only falling back to a fixed aspect box for the placeholder state -- every kr-art-plate shape (card/hero/square/wide/plate/compact) is fixed-aspect always, so this is a genuine behavioral difference (a primitive gap), not a mechanical swap. The completed-cards list has custom remove/clear affordances positioned differently per image/no-image branch, an image-priority resolution chain, and toggleable per-field detail panels -- porting it onto kr-entity-card-body would be a non-mechanical rewrite with real regression risk, not a safe port.
       project-placement-manager.vue: an admin ops tool (stat tiles + controls + a four-column updated/unchanged/missing/failed result grid), entirely text/badge, no imagery, no entity/card shape at all. Nothing among kr-entity-card-body/kr-gallery/kr-art-plate/kr-chat-window/kr-manager fits a text-only stat+list admin report.
       No files touched, no verify/lint/typecheck run needed since nothing changed. t-104 remains multi-slice and open: the concrete remaining item is still daily-digest-object-gallery's sibling primitive gaps noted in slices 4/5 (now resolved) plus, newly identified this slice, a possible future `kr-stat-tile` primitive (navigation-health.vue + project-placement-manager.vue both hand-roll the identical `.stat rounded-2xl border border-base-300 bg-base-100 shadow-sm` tile) if a future slice wants to build that infrastructure -- not attempted here per the guardrail against building new primitive infra speculatively. The next slice should re-run the `grep -rl "border border-base-300 bg-base-100 shadow-sm"` inventory fresh (new bespoke surfaces may have shipped since) rather than re-assessing these six, which are now settled.
+
+      Slice 7 builds the `kr-stat-tile` primitive slice 6 flagged: two live callers (navigation-health.vue, project-placement-manager.vue) already hand-roll the identical `.stat rounded-2xl border border-base-300 bg-base-100 shadow-sm` markup, clearing the guardrail against speculative infra since the pattern is already duplicated rather than hypothetical. Added components/ui/kr-stat-tile.vue (title/value/desc/tone props, tone maps to a `text-${tone}` class on stat-value, matching every color variant both callers used: primary/secondary/error/warning/success/none) and migrated all 8 tiles across the two callers onto it, preserving every conditional tone and dynamic desc string exactly (e.g. navigation-health's Legacy adapters/Broken artwork tiles keep their live error/warning/success branching via the `tone`/`desc` props). Verified: eslint clean, vue-tsc --noEmit clean, prettier clean on the new component and on every line actually changed (pre-existing prettier drift already present in both callers before this slice, unrelated to this change and outside CI's gate -- CI only runs `lint:js`, not `lint:prettier`, confirmed by reading .github/workflows/*.yml -- left untouched rather than bundling an unrelated reformat into this diff), lint ratchet unchanged (392/27), layout-contract/gallery-adoption/card-action-contract/narrative-kit contracts all pass unchanged. `npm ci` needed a from-scratch install this session (no node_modules on disk); Cypress's binary postinstall download failed on a corrupted-download proxy error unrelated to this change, worked around with `CYPRESS_INSTALL_BINARY=0` since this slice touches no Cypress-covered surface.
     claimed_by: 20260808T222711Z-iv-t104-s7-conductor
     claimed_at: '2026-08-08T22:27:11Z'
-    implementation_pr: 'silasfelinus/kind_robots#1617'
+    implementation_pr: 'silasfelinus/kind_robots#1623'
     updated: '2026-08-08T22:27:11Z'
     owner: worker
 
