@@ -178,9 +178,19 @@ tasks:
   status: ready
   passes: 0
   stakes: reversible
-  updated: '2026-08-08T21:32:11Z'
+  updated: '2026-08-08T23:31:00Z'
   depends_on: t-021
   note: |-
+    CURRENT STATE (2026-08-08T23:29Z, scheduled conductor sweep): relay reads `draining`,
+    an improvement over the last cycle's throughput (PENDING=2876, DONE=3579 all-time;
+    24h window PENDING=62/DONE=143, recentFailed=none -- no DB-error or ComfyUI-400
+    recurrence this pass). Same 18-id `recovery_batch` as every prior cycle (mr-001,
+    mr-006, mr-008, mr-011-015, mr-017-019, mr-021-024, mr-026-028) -- ran the live
+    recovery pass again via `consume_coloring_book_color_art.py --live --ids ...`; all
+    18 still report their referenced ComfyUI job as queued/running, 0 landed, 0
+    duplicates submitted, queue file unchanged. No new diagnostic signal this cycle
+    beyond the improved throughput reading; no code-level bug found. No pass consumed.
+
     CURRENT STATE (2026-08-08T21:28Z, scheduled conductor sweep): relay reads `draining`
     (PENDING=2869, DONE=3564 all-time; 24h window PENDING=42/DONE=142). Same 18-id
     `recovery_batch` as 2026-08-07 (mr-001, mr-006, mr-008, mr-011-015, mr-017-019,

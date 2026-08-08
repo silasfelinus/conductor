@@ -365,3 +365,6 @@ queueDepth: PENDING=2899, RUNNING=1, DONE=3512, CANCELLED=819 (all-time). oldest
 
 ## 2026-08-08T21:31:13Z | coloring-book/t-022 | draining
 queueDepth: PENDING=2868, RUNNING=1, DONE=3565, FAILED=1, CANCELLED=819 (all-time). oldestPending: id=4796, age=597471s (~166.0h), engine=COMFY. windowThroughput (24h): PENDING=42, DONE=142, FAILED=1, CANCELLED=2. recentFailed (last 1): 1/1 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'1': .
+
+## 2026-08-08T23:28:55Z | draining
+queueDepth: PENDING=2876, RUNNING=1, DONE=3579, CANCELLED=820 (all-time). oldestPending: id=4808, age=604506s (~167.9h), engine=COMFY. windowThroughput (24h): PENDING=62, RUNNING=1, DONE=143, CANCELLED=3. recentFailed: none.
