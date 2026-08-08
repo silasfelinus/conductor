@@ -1192,7 +1192,7 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-037
-  remaining_scope_task: t-003
+  remaining_scope_task: t-004
   note: >
     Close t-037's storefront-owned gaps -- see STOREFRONT-REALITY-AUDIT-2026-08-08.md's "Real gaps
     remaining" section for full detail. Original concrete scope: (1) seed a real KR-logo Product/POD
@@ -1236,6 +1236,12 @@ tasks:
     split into t-003 as this task's remaining_scope_task per AGENTS.md's umbrella-sweep convention.
     Keeping this task at review rather than done until t-003 closes; a task-events "done" transition
     should NOT fire for this id until then.
+
+    Reconciled (conductor sweep, 2026-08-08): t-003 reached status: done, but t-003 itself closed
+    only items 1/3/4 and split its own remaining item 2 (DLC live catalog + contentAccess.ts wiring
+    -- the same item 2 this task's original scope listed) into t-004, still open. t-038's
+    remaining_scope_task pointer is updated from t-003 to t-004 so this umbrella does not
+    prematurely auto-close to done while its real remaining scope (t-004) is still in progress.
   claimed_by: 2026-08-08T0716-ds-t038-w4x2
   claimed_at: '2026-08-08T07:28:19Z'
   updated: '2026-08-08T08:52:00Z'
