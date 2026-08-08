@@ -1293,7 +1293,7 @@ tasks:
 - id: t-003
   milestone: m6
   title: "Seed the KR-logo/DLC catalog and resolve the storefront's two pricing/POD-entry-point splits"
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -1333,9 +1333,81 @@ tasks:
     an admin write path) -- reversible (Product.active can flip false, Pack->Product linkage can be
     removed), not destructive, but real state, so verify carefully and describe exactly what was
     seeded/wired in the PR body.
+
+    Slice 1 (conductor sweep, 2026-08-08): closed items 1, 3, and 4. Item 1: no Product/POD SKU
+    shape was invented -- PrintJob.artImageId is a required non-nullable FK and checkPrintEligibility
+    is fundamentally ArtImage-shaped, so a schema-free non-art SKU isn't possible without a migration
+    (out of scope). Instead seeded a real ArtImage row (scripts/seed_kr_logo_art_image.ts, idempotent,
+    upsert-by-fileName) pointing at the existing public/icon-512x512.png logo asset, storefrontFeatured:
+    true, checkpointResourceId: null (checkPrintEligibility's base-model branch, unconditionally
+    eligible) -- this makes the logo genuinely purchasable today via the already-working general-cart
+    path (storefront-featured -> giftshop-interact's Featured prints -> cart -> checkout.post.ts ->
+    webhook -> PrintJob), no new route/component needed. Wired into scripts/vercel-build.mjs's
+    production-deploy maintenance step (alongside seed_achievements.ts/seed_contenders.ts) so it
+    reconciles on every deploy rather than needing a manual --write run -- could not run --write
+    against a real DB from this sandbox (no prod access here, same limitation t-011's seed_products.ts
+    had). Item 3: confirmed pod-checkout.post.ts is genuinely orphaned (its only caller, print-swag.vue,
+    lives under nuxt.config.ts's abandonware/**/*.vue auto-import ignore, so it can never resolve as a
+    component) -- documented it as formally retired in a header comment rather than deleting it, in
+    favor of the general-cart path item 1 now uses too. Item 4: documented cartItems.ts's header
+    explaining its intentional coexistence with per-instance Product rows (generic per-type catalog
+    vs. per-(printType, artImageId) instances the webhook's GIFTSHOP_TYPE_TO_PRODUCT_TYPE map/
+    handleGiftshopCartPurchase creates lazily at fulfillment) -- not a duplicate catalog, a real design
+    split, now explained instead of silently left ambiguous. kind_robots PR: silasfelinus/kind_robots#1614.
+    Verified: eslint (0 new problems, ratchet unchanged at 392/27), vue-tsc --noEmit clean, prettier
+    clean, seed script dry-run validates.
+
+    Item 2 (DLC live catalog + wiring contentAccess.ts's packId check into the Dream/Facet/Character/
+    Reward routes) is genuinely larger/judgment-heavy -- confirmed via investigation that Pack/packId
+    are already schema-complete (kind-robots/t-037) and the webhook's Grant-creation side already works,
+    but the actual route wiring touches FOUR different, currently-inconsistent ad hoc access-check
+    implementations (dreams/facets/characters/rewards each do it differently), one of which
+    (characters/[id].get.ts) has a pre-existing, unrelated access-control gap (no check at all) that
+    touching this code would surface and need to scope separately. Split into t-004 as this task's
+    remaining scope per AGENTS.md's umbrella-sweep convention.
   claimed_by: claude-quirky-curie-20260808T1435Z-ds-t003
   claimed_at: '2026-08-08T14:30:23Z'
+  implementation_pr: 'silasfelinus/kind_robots#1614'
   updated: '2026-08-08T14:30:23Z'
+
+- id: t-004
+  milestone: m6
+  title: "Give DLC a live catalog and wire contentAccess.ts's packId check into the actual content routes"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-037
+  note: >
+    Split from t-003 (slice 1, conductor sweep 2026-08-08, item 2) -- too large/judgment-heavy for that
+    slice. Scope:
+
+    1. An admin route/script that turns a Packmaker Pack into a Product with metadata.packId, matching
+    the existing server/api/admin/wonderlab/**/*.post.ts convention (requireAdminApiUser + readBody +
+    errorHandler). The webhook side already works correctly -- server/api/stripe/webhook.post.ts's
+    handleProductPurchase creates the Grant (subjectType: PACK) when product.type === 'DLC' and
+    metadata.packId is present; it just has nothing to sell yet, since no DLC Product row exists
+    anywhere.
+
+    2. Wire server/utils/contentAccess.ts's canView() (already implements the full formula: isPublic
+    OR own OR admin OR subjectType Grant OR packId Grant) into the actual Dream/Facet/Character/Reward
+    read routes -- currently called nowhere. The Pack/packId schema side is already complete
+    (kind-robots/t-037: Dream/Facet/Character/Reward all have a nullable packId FK + index).
+
+    This touches FOUR different, currently-inconsistent ad hoc access-check implementations, not one:
+    dreams (assertDreamAccess, sync ad hoc isOwner||isAdmin||isPublic, plus a separate list-route
+    Prisma `where`-filter version with no per-row check to hook into), facets (a fourth pattern,
+    isOwner||isAdmin||(isPublic && !isMature)), rewards (fetchRewardById, a third independent pattern,
+    not yet read in detail), and characters (characters/[id].get.ts has NO access check at all today --
+    returns any row unconditionally regardless of isPublic/isMature/ownership; wiring packId support
+    here means fixing this pre-existing, unrelated gap as a side effect, not just adding one condition
+    -- flag/scope that fix explicitly in the PR rather than silently bundling it in). Decide per-entity
+    whether to unify these into one shared helper or extend each in place; document the choice.
+
+    Not gate_human -- this is code-only server-side logic, reversible, no live behavior change until a
+    real DLC Product is seeded and a Pack is actually granted. Seeding an actual DLC Product row against
+    a real Pack (verifying the full purchase-to-content-unlock loop end-to-end) needs a live Packmaker
+    Pack to test against; check packmaker's own roadmap for one before inventing test data.
 
 - id: t-042
   milestone: m6
