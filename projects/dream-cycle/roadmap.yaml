@@ -110,11 +110,11 @@ tasks:
   - id: t-006
     milestone: m4
     title: 'Daily Dream maintenance: author proposals and verify the canonical pipeline'
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-08T19:45:00Z'
+    updated: '2026-08-08T19:34:37+00:00'
     depends_on: t-004
     note: |-
       CURRENT CONTRACT: read PIPELINE.md. Maintain today's deterministic six-asset proposal, fold in Silas notes, inspect pinned retries, verify Facets/art/digest evidence, and replenish useful idea inventory. Never create Daily Dream objects manually. Only delegated non-dream scheduler cards may advance stage by stage in their home projects.
@@ -143,9 +143,8 @@ tasks:
       Permanent Daily Dream art completion hardening merged. Kind Robots PR #1590 (a55158f81ecefff0529bc5e4c6c4b8613d7ce60e) makes Dream a first-class transactional entityArt target and files Dream entity art under dreams. Conductor PR #1875 (5ee420f937875d876f30aca0a284ab2e1238646c) preserves declared destination/provenance and entity target metadata on priority-100 dream-cycle ArtJobs, uses request IDs as idempotency keys, and makes same-title art request/path identities collision-safe. Daily Dream Contract, Worker PR CI, Security Audit, task-event processing, Kind Robots TypeScript, Entity Art Manager, Contract Tests, Layout, and all other triggered Kind Robots checks passed. Durable art jobs must carry both their filesystem destination and their entity attachment target through the queue; entity row slug uniqueness is not enough to guarantee art request/path uniqueness, so the producer now disambiguates those identities separately before enqueue.
 
       Root-caused the 2026-08-08 digest's 0/6 previous-bundle art: canonical dream-cycle ArtJobs shared priority 100 with manual Daily Dream and Art Trainer redo work, while Kind Robots claims priority DESC then ID ASC and only applies model affinity within the winning priority tier. Prepared a focused Conductor change reserving priority 200 for canonical/nightly dream-cycle art while preserving unrelated queue behavior. Also verified the digest constructs Kind Robots URLs correctly; Brevo rewrites hrefs to its sendibt2 click-tracking domain after payload generation.
-    owner: worker
-    claimed_by: 2026-08-08T192500Z-dream-cycle-t006-digest-art-g7m4
-    claimed_at: '2026-08-08T19:25:00Z'
+
+      Merged silasfelinus/conductor#1915 after all final-head checks completed successfully. Canonical/nightly dream-cycle ArtJobs now use reserved priority 200 above the shared priority-100 interactive/trainer tier; the daily digest runs 30 minutes after the hourly builder and retry watchdog offsets remain aligned. Verified the digest itself emits kind-robots.vercel.app links; received sendibt2 hrefs are Brevo click-tracking rewrites rather than a Conductor URL-generation defect. This event intentionally omits updated so the processor stamps current time, correcting an earlier review event that accidentally carried a future timestamp.
   - id: t-007
     milestone: m5
     title: Generate dream-cycle project art (icon, card, hero)

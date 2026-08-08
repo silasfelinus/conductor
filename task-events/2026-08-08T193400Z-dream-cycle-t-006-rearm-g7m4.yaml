@@ -1,8 +1,0 @@
-version: 1
-project: dream-cycle
-task: t-006
-operation: rearm
-owner: worker
-session: 2026-08-08T192500Z-dream-cycle-t006-digest-art-g7m4
-note: >-
-  Merged silasfelinus/conductor#1915 after all final-head checks completed successfully. Canonical/nightly dream-cycle ArtJobs now use reserved priority 200 above the shared priority-100 interactive/trainer tier; the daily digest runs 30 minutes after the hourly builder and retry watchdog offsets remain aligned. Verified the digest itself emits kind-robots.vercel.app links; received sendibt2 hrefs are Brevo click-tracking rewrites rather than a Conductor URL-generation defect. This event intentionally omits updated so the processor stamps current time, correcting an earlier review event that accidentally carried a future timestamp.
