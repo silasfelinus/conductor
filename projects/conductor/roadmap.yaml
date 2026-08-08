@@ -3293,8 +3293,8 @@ tasks:
   - id: t-102
     milestone: m2
     title: "Surface a repeatedly-failing scheduled workflow instead of relying on a manual sweep to notice"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     stakes: reversible
     passes: 0
     note: >
@@ -3317,7 +3317,9 @@ tasks:
       404/403-from-sandbox caveat) -- reuse whatever transport
       `check_pr_merged_drift.py`/`audit_human_gates.py` already use
       successfully from this environment.
-    updated: '2026-08-05T20:45:12Z'
+    updated: '2026-08-08T05:29:46Z'
+    claimed_by: 2026-08-08T052900Z-conductor-t102
+    claimed_at: '2026-08-08T05:29:46Z'
 
   - id: t-103
     milestone: m2
