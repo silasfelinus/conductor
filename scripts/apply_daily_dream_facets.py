@@ -140,12 +140,12 @@ def _record_targets(proposal: dict[str, Any], built: dict[str, Any]) -> list[dic
     return targets
 
 
-def apply_file(path: Path, token: str, *, dry_run: bool = False, force: bool = False) -> tuple[bool, str]:
+def apply_file(path: Path, token: str, *, dry_run: bool = False, force: bool = False) -> tuple[bool, str, bool]:
     text = path.read_text(encoding="utf-8")
     proposal = _json_comment(PROPOSAL_RE, text)
     built = _json_comment(BUILT_RE, text)
     if not proposal or not built or not isinstance(proposal.get("seed_facets"), dict):
-        return False, "not a built Facet-seeded proposal"
+        return False, "not a built Facet-seeded proposal", False
     existing = built.get("facet_assignments")
     seed_version = proposal["seed_facets"].get("version")
     already_partial = (
