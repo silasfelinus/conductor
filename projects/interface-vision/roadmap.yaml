@@ -2935,8 +2935,8 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2946,6 +2946,9 @@ tasks:
       consolidate duplicate implementations, and delete/park losers only after callers move.
       Preserve deliberately bespoke surfaces. Add or extend shrink-only ratchets so consistency
       cannot silently drift backward after this phase closes.
+    claimed_by: claude-quirky-curie-20260808T112719Z-iv-t104
+    claimed_at: '2026-08-08T11:27:19Z'
+    updated: '2026-08-08T11:27:19Z'
 
   - id: t-105
     milestone: m6
