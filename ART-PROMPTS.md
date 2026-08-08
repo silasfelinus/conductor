@@ -1,5 +1,28 @@
 # Prompt Library for ChatGPT Image Generation
 
+> **Krea 2 does not read these prompts the way ChatGPT does.** Most Kind Robots
+> art now renders through Krea 2 (a distilled diffusion transformer running at
+> cfg 1). It has no instruction-following layer and its negative prompt is inert
+> at cfg 1, so every constraint has to survive as concrete nouns in the positive
+> prompt. Two rules follow, and both were learned the hard way on 2026-08-08:
+>
+> 1. **Never write a conditional.** "Include robots only when the scene calls for
+>    them" and "cast characters across many species, ages, body sizes…" are
+>    instructions. Krea 2 reads them as subject matter and paints them. That
+>    clause, appended to every prompt, turned twenty-four Reward images into
+>    crowds of strangers — `item-tidefortune-ladle` came back as fifteen people
+>    and no ladle. Decide whether the frame has people, then say so once, plainly:
+>    either the diverse-cast clause **or** "an unpeopled frame — the subject
+>    stands alone with no bystanders, onlookers, or crowd". Never both.
+> 2. **Lead with the physical subject.** Material, shape, scale, framing, and
+>    light, before any statement of what the thing means or does. An abstract
+>    subject clause loses to a concrete style tail every time.
+>
+> The daily-dream pipeline enforces both automatically in
+> `scripts/dream_art_prompts.py`. Hand-written prompts in this file should follow
+> the same shape. The inclusive-casting direction below still applies — but only
+> to images that actually contain people.
+
 Act as an OpenAI image-generation art director working from a Conductor image queue for Kind Robots.
 
 Kind Robots represents a consortium of projects aimed at multi-genre, cross-dimensional experiences. Treat the art direction as inclusive by default: when a scene includes people, characters, teams, crowds, families, players, operators, or companions, represent a diverse array of figures across genders, races, ages, body sizes, body shapes, presentation styles, and species. Mix humans, robots, animal-like beings, fantasy creatures, and other original nonhuman companions when it fits the asset. Do this naturally and respectfully, without tokenism or flattening anyone into a stereotype.

@@ -34,6 +34,32 @@ Author exactly:
 
 Daily Dream proposals have no narrator.
 
+## Writing the visual fields (`look`, `art_direction`)
+
+Every `look` and `art_direction` you write is fed to **Krea 2** more or less
+verbatim by `scripts/dream_art_prompts.py`. Krea 2 is a distilled diffusion
+transformer, not an instruction-follower. It paints the concrete nouns it is
+given and ignores conditionals, so these fields have to carry actual appearance:
+
+- **Describe what is visible, not what the thing does.** Material, shape, scale,
+  colour, wear, how light hits it. "A dented tin ladle the length of a forearm,
+  bowl worn to mirror-bright, handle wrapped in salt-stiffened cord" is usable.
+  "It surfaces the hidden fortune buried in a person or object" is not — that is
+  the `grants` field's job.
+- **A reward's `look` is an object or a visible effect, never a person.** For a
+  SKILL, describe the signature the technique leaves in the air while it is
+  being used.
+- **Assume nothing carries over.** The builder supplies framing, lighting, house
+  style, and the cast/no-cast decision; you supply the subject.
+
+This is not a style preference. On 2026-08-08 twenty-four Rewards rendered as
+crowds of strangers because their only visual input was a sentence about what
+they did, and the house prompt tail — which then carried an unconditional
+"cast characters naturally across many species, ages, body sizes..." clause —
+was the most concrete thing in the prompt. `item-tidefortune-ladle` was a
+picture of fifteen people and no ladle. `look` is a required field now for
+exactly this reason.
+
 ## Variety guardrails
 
 Avoid repeating recent genre combinations, species families, occupations, palettes, location types, or character archetypes. Do not default to another enchanted lighthouse, mystical bell tower, magical archive, cozy market, lantern-lit workshop, or vaguely whimsical tower with renamed nouns.

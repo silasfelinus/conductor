@@ -37,6 +37,15 @@ import urllib.request
 from pathlib import Path
 from typing import Any, Optional
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from dream_art_prompts import (  # noqa: E402
+    character_prompt,
+    location_prompt,
+    reward_prompt,
+    scenario_prompt,
+    world_prompt,
+)
+
 try:
     from zoneinfo import ZoneInfo
     _TZ = ZoneInfo("America/Los_Angeles")
@@ -63,10 +72,14 @@ CARD_SIZE = "512x768"  # pitch-card portrait, matches the site's card asset stan
 NOTES_PLACEHOLDER = "(leave notes here"
 VALID_RARITIES = {"COMMON", "UNCOMMON", "RARE", "EPIC", "LEGENDARY"}
 
-HOUSE_PROMPT_TAIL = (
-    "cohesive Kind Robots visual style, cinematic light with intent, "
-    "no readable text, no logos, no watermark"
-)
+# Retired 2026-08-08. This tail ended every dream prompt with the literal phrase
+# "cohesive Kind Robots visual style", which the Kind Robots enqueue path
+# rewrote into a house block containing an unconditional "cast characters
+# naturally across many species, ages, body sizes..." instruction. Krea 2 reads
+# that as subject matter, not as guidance, so inanimate subjects rendered as
+# crowds of people (item-tidefortune-ladle, skill-nanite-seasoning, and 22 more).
+# Prompts are now built per element kind in scripts/dream_art_prompts.py, which
+# writes the style out explicitly and only asks for a cast when there is one.
 
 
 # ── HTTP (house pattern: consume_art_queue.http_json) ───────────────────────
@@ -678,9 +691,11 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
     #    (specs/SLUG-POLICY.md rule 4).
     world_slug = slugify(slug)
     used_slugs.add(world_slug)
+    world_art = world_prompt(title, proposal.get("idea", ""), vibe_line,
+                             vibe.get("art_direction", ""))
     world = card_dream(
         "PITCH", title, proposal.get("idea", ""), vibe_line,
-        f"establishing key art for {title}: {vibe_line}, {HOUSE_PROMPT_TAIL}",
+        world_art,
         "kind-icon:moon", slug,
         {"title": title, "hook": vibe.get("title", ""), "pitch": proposal.get("idea", ""),
          **trio([("Promise", vibe_line),
@@ -690,10 +705,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
     )
     if world:
         built["records"]["world"] = {"model": "Dream", "id": world.get("id"), "title": title}
-        queue_art(slug, "world", title,
-                  f"establishing key art for the world of {title}: {proposal.get('idea', '')} "
-                  f"{vibe_line}, portrait key-art composition, {HOUSE_PROMPT_TAIL}",
-                  "/api/dreams", world.get("id"))
+        queue_art(slug, "world", title, world_art, "/api/dreams", world.get("id"))
     world_id = world.get("id") if world else None
 
     # 2. The authored vibe describes the world. Reusable genre/style/theme data
@@ -709,9 +721,12 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         desc = (f"Known for {loc.get('known_for', '')} "
                 f"Local rule: {loc.get('local_rule', '')} "
                 f"Best scene: {loc.get('best_scene', '')}").strip()
+        loc_art = location_prompt(
+            loc.get("title", "Location"), loc.get("art_direction", ""),
+            loc.get("known_for", ""), loc.get("best_scene", ""), title, vibe_line)
         dream = card_dream(
             "LOCATION", loc.get("title", "Location"), desc, loc.get("local_rule", ""),
-            loc.get("art_direction", ""), "kind-icon:map-pin", el,
+            loc_art, "kind-icon:map-pin", el,
             {"title": loc.get("title", ""), "subtitle": "Location",
              "hook": loc.get("art_direction", ""),
              **trio([("Known For", loc.get("known_for", "")),
@@ -727,9 +742,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                 kr_call("POST", "/api/dream-relations",
                         {"fromDreamId": world_id, "toDreamId": loc_id, "relationType": "CONTAINS"},
                         dry_run, results, f"relation: {title} -> {loc.get('title')} (CONTAINS)")
-        queue_art(el, "location", loc.get("title", "Location"),
-                  f"{loc.get('art_direction', '')}, {vibe_line}, "
-                  f"portrait key-art composition, {HOUSE_PROMPT_TAIL}",
+        queue_art(el, "location", loc.get("title", "Location"), loc_art,
                   "/api/dreams", dream.get("id") if dream else None)
 
     # 4. Characters (real Character rows linked to the world Dream — no
@@ -738,12 +751,15 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
     link_ids = [world_id] if world_id else []
     for ch in proposal.get("characters", []):
         el = slugify(ch.get("name", "character"))
+        ch_art = character_prompt(
+            ch.get("name", "Character"), ch.get("look", ""), ch.get("role_drive", ""),
+            ch.get("carries", ""), title, vibe_line)
         character_body = {
             "name": ch.get("name", "Character"), "designer": DESIGNER, "isPublic": True,
             "drive": ch.get("role_drive", ""),
             "quirks": ch.get("complication", ""),
             "backstory": f"Carries {ch.get('carries', '')}. {ch.get('complication', '')}".strip(),
-            "artPrompt": ch.get("look", ""),
+            "artPrompt": ch_art,
             "genre": vibe.get("title", ""),
             "dreamIds": link_ids,
         }
@@ -756,9 +772,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         if rec:
             built["records"]["characters"].append(
                 {"model": "Character", "id": rec.get("id"), "name": ch.get("name")})
-        queue_art(el, "character", ch.get("name", "Character"),
-                  f"character portrait of {ch.get('name', '')}: {ch.get('look', '')}, "
-                  f"in the world of {title} ({vibe_line}), {HOUSE_PROMPT_TAIL}",
+        queue_art(el, "character", ch.get("name", "Character"), ch_art,
                   "/api/characters", rec.get("id") if rec else None)
 
     # 5. Rewards (one SKILL and one ITEM; art attaches to each real Reward)
@@ -770,6 +784,9 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         if rarity not in VALID_RARITIES:
             rarity = "COMMON"
         link_ids = [world_id] if world_id else []
+        rw_art = reward_prompt(
+            rw.get("name", "Reward"), rtype, rw.get("look", ""), rw.get("grants", ""),
+            rarity, title, vibe_line)
         reward_body = {
             "name": rw.get("name", "Reward"), "isPublic": True,
             "description": rw.get("grants", ""),
@@ -778,7 +795,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
             "icon": "kind-icon:gift",
             "rarity": rarity,
             "rewardType": rtype if rtype in ("SKILL", "ITEM") else "ITEM",
-            "artPrompt": f"{rw.get('name', '')}: {rw.get('grants', '')}",
+            "artPrompt": rw_art,
             "dreamIds": link_ids,
         }
         rec = kr_call(
@@ -791,10 +808,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
             built["records"]["rewards"].append(
                 {"model": "Reward", "id": rec.get("id"), "name": rw.get("name"),
                  "reward_type": rtype})
-        queue_art(el, "reward", rw.get("name", "Reward"),
-                  f"iconic treasure-card illustration of {rw.get('name', '')} ({rtype}): "
-                  f"{rw.get('grants', '')}, atmospheric background, world of {title} "
-                  f"({vibe_line}), {HOUSE_PROMPT_TAIL}",
+        queue_art(el, "reward", rw.get("name", "Reward"), rw_art,
                   "/api/rewards", rec.get("id") if rec else None)
 
     # 6. Scenario (one real Scenario linked to the world and location)
@@ -827,8 +841,8 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
             built["records"]["scenarios"].append(
                 {"model": "Scenario", "id": rec.get("id"), "title": sc.get("title")})
         queue_art(el, "scenario", sc.get("title", "Scenario"),
-                  f"establishing scene art for {sc.get('title', '')}: {sc.get('setup', '')}, "
-                  f"world of {title} ({vibe_line}), {HOUSE_PROMPT_TAIL}",
+                  scenario_prompt(sc.get("title", "Scenario"), setup, loc_titles,
+                                  title, vibe_line),
                   "/api/scenarios", rec.get("id") if rec else None)
 
     return built, results, art_entries
