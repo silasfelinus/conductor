@@ -1148,16 +1148,38 @@ tasks:
 - id: t-037
   milestone: m6
   title: "Audit the live storefront against the agreed catalog and real implementation state"
-  status: claimed
+  status: done
   owner: worker
-  passes: 0
+  passes: 1
   stakes: reversible
   note: >
-    Compare the actual /sanctuary giftshop/storefront with the agreed catalog: Mermaids PDF,
-    KR-logo POD item, monthly supporter subscription, mana top-ups, direct Against Malaria giving,
-    DLC unlocks, and coloring-book products where those are owned by their separate project.
-    Distinguish built-and-visible, built-but-unreachable, placeholder/demo, delegated, and missing.
-    Check current routes/components and production/test configuration rather than trusting old done notes.
+    DONE (conductor sweep, 2026-08-08). Full read-only code audit of kind_robots @ main (bbb1dd8)
+    against the v1 catalog, written up in
+    projects/digital-storefront/STOREFRONT-REALITY-AUDIT-2026-08-08.md (supersedes STORE-AUDIT.md
+    2026-07-15 and PRODUCT-GAP-AUDIT.md 2026-06-30 as current source of truth).
+    Findings by classification: BUILT-AND-VISIBLE — Mermaids PDF (full checkout->webhook->
+    Entitlement->gated-download chain, file confirmed on disk), monthly subscription (checkout,
+    webhook activation/lifecycle, real cancel-subscription.post.ts, no longer a stub), mana top-ups
+    (checkout, idempotent webhook credit via applyMana()), Against Malaria giving page (real link
+    to againstmalaria.com/amibot + working $1 add-on), general-cart POD via featured art
+    (giftshop-interact.vue's storefrontFeatured rail -> real PrintJob). BUILT-BUT-UNREACHABLE —
+    DLC fulfillment mechanism (webhook creates Grant correctly) but zero DLC Product ever seeded
+    and no admin path to create one; dedicated pod-checkout.post.ts POD flow is real but its only
+    UI (print-swag.vue) was moved to components/abandonware/ (excluded from Nuxt auto-import,
+    formally retired) so nothing live points at it. MISSING — no KR-logo Product/SKU exists
+    anywhere (podCatalog.ts variant IDs are literal placeholder strings). DELEGATED — coloring-book
+    confirmed fully separate (zero storefront references), boundary is real. Cross-cutting: every
+    user-initiated Stripe/store route now requires auth (closes the 2026-07-15 no-auth-guard gap);
+    webhook is idempotent (Order.stripeSessionId unique) and re-checks POD eligibility again at
+    fulfillment time via a shared createPrintJobIfEligible() helper (confirms t-032/t-035); but the
+    general cart (checkout.post.ts) still prices off the old stores/seeds/cartItems.ts array while
+    product-checkout.post.ts/pod-checkout.post.ts price off the real Product table -- two parallel
+    pricing sources coexist. t-040's scope confirmed precisely: no real POD vendor (Printful) call
+    exists anywhere, printfulOrderId is never set. Full gap list (feeds t-038 directly) is in the
+    audit file's "Real gaps remaining" section. Not verifiable from a code-only audit: whether the
+    webhook actually processes live Stripe events in production, or whether STRIPE_WEBHOOK_SECRET/
+    STRIPE_SECRET_KEY/STRIPE_PRICE_ID are correctly configured in the deployed environment -- that
+    is t-039's scope, unchanged.
   claimed_by: claude-quirky-curie-20260808T022848Z-ds-t037
   claimed_at: '2026-08-08T02:28:51Z'
   updated: '2026-08-08T02:28:51Z'
@@ -1165,20 +1187,33 @@ tasks:
 - id: t-038
   milestone: m6
   title: "Implement every missing storefront-owned catalog item found by the reality audit"
-  status: waiting
+  status: ready
   owner: null
   passes: 0
   stakes: reversible
   depends_on: t-037
   note: >
-    Close t-037's storefront-owned gaps. Do not duplicate products whose production is explicitly
-    owned by coloring-book/packmaker/Mermaids; integrate their finished outputs instead. Remove demo
-    products/placeholders once a real listing replaces them.
+    Close t-037's storefront-owned gaps -- see STOREFRONT-REALITY-AUDIT-2026-08-08.md's "Real gaps
+    remaining" section for full detail. Concrete scope: (1) seed a real KR-logo Product/POD SKU
+    (currently MISSING entirely -- no artImageId, no catalog row); (2) give DLC a live catalog --
+    an admin route/script that turns a Packmaker Pack into a Product with metadata.packId (the
+    webhook fulfillment side already works correctly, it just has nothing to sell), plus wire
+    contentAccess.ts's packId check into the actual Dream/Facet/Character/Reward content routes
+    (explicitly not done yet per that file's own comment); (3) decide whether to restore a live
+    entry point for the orphaned pod-checkout.post.ts flow (e.g. an art-detail "Print this" action)
+    or formally retire it in favor of the general-cart featured-art POD path that already works;
+    (4) decide whether stores/seeds/cartItems.ts should be retired in favor of the real Product
+    table now that two pricing sources coexist; (5) replace/remove giftshop-interact.vue's two
+    hardcoded demo showcase items (guessed artImageId 1/2) now that the real storefrontFeatured
+    rail supersedes them; (6) optionally harden giftshop-manager.vue's tab-switch to explicitly
+    handle activeTab === 'mermaids' in-place (currently masked, not confirmed to cause a live bug).
+    Do not duplicate products whose production is explicitly owned by coloring-book/packmaker/
+    Mermaids; integrate their finished outputs instead.
 
 - id: t-039
   milestone: m6
   title: "Run and repair the Stripe checkout/webhook/fulfillment matrix end-to-end"
-  status: waiting
+  status: ready
   owner: null
   passes: 0
   stakes: reversible
@@ -1188,6 +1223,9 @@ tasks:
     mana top-up, POD PrintJob creation, DLC Entitlement+Grant, and the general cart. Verify auth,
     idempotency, success/cancel returns, webhook fulfillment, and customer-visible post-purchase
     state. Fix code gaps found. Live keys/real charges remain a separate human gate.
+    t-037's audit confirmed all of this is correct by code inspection but explicitly could not
+    verify runtime behavior (live webhook delivery, env var configuration in production, real
+    Stripe-retry idempotency) -- that gap is exactly this task's scope.
 
 - id: t-040
   milestone: m6
@@ -1205,6 +1243,9 @@ tasks:
     finish all reversible integration/test plumbing, but account creation, credentials, paid orders,
     and public listings require Silas. The KR-logo item should become genuinely orderable, not merely
     capable of creating a database PrintJob.
+    t-037's audit confirmed this precisely: PrintJob.printfulOrderId is never set anywhere,
+    podCatalog.ts's vendor variant IDs are still literal placeholder strings, and
+    PrintJobStatus never advances past PENDING/FAILED. No vendor integration work has started.
 
 - id: t-041
   milestone: m6
