@@ -173,13 +173,20 @@ def dream_cycle_prompt(image_path: str) -> Optional[str]:
     dream_slug, element = match.group("dream"), match.group("element")
 
     for proposal in _proposals():
-        if slugify(proposal.get("slug") or "") != dream_slug:
+        # The image folder is built from the proposal's RAW slug
+        # (art_request_entry uses `slug` verbatim), while the world Dream row
+        # gets `slugify(slug)` — which drops a leading article per
+        # specs/SLUG-POLICY.md. Comparing only the slugified form silently
+        # missed every dream whose slug starts with "the-"
+        # (the-filing-echidna -> filing-echidna).
+        raw_slug = str(proposal.get("slug") or "")
+        if dream_slug not in {raw_slug, slugify(raw_slug)}:
             continue
         title = proposal.get("title", "")
         vibe = proposal.get("vibe") or {}
         line = vibe.get("line", "")
 
-        if element == dream_slug:
+        if element in {dream_slug, raw_slug, slugify(raw_slug)}:
             return world_prompt(title, proposal.get("idea", ""), line,
                                 vibe.get("art_direction", ""))
         for loc in proposal.get("locations") or []:
