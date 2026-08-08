@@ -3293,7 +3293,7 @@ tasks:
   - id: t-102
     milestone: m2
     title: "Surface a repeatedly-failing scheduled workflow instead of relying on a manual sweep to notice"
-    status: review
+    status: done
     owner: worker
     stakes: reversible
     passes: 0
@@ -3370,7 +3370,14 @@ tasks:
       files. `python scripts/select_role.py --dry-run` runs end-to-end in
       this sandbox and degrades the new check the same way the pre-existing
       ones do (`github_api_unreachable: true`, one more failed-URL count).
-    updated: '2026-08-08T05:29:46Z'
+
+      DONE (conductor sweep, 2026-08-08): merged in conductor PR #1883
+      (squash 04fc71d) -- all 22 CI checks (pytest suite, roadmap/task-event
+      YAML validation, Python lint/syntax, TS build, CodeQL x4, GitGuardian,
+      dependency audit, safe smoke matrix) green before merge. No
+      cross-repo `implementation_pr` since this is a conductor-native
+      change (the code being tracked lives in this repo, not kind_robots).
+    updated: '2026-08-08T05:45:34Z'
     claimed_by: 2026-08-08T052900Z-conductor-t102
     claimed_at: '2026-08-08T05:29:46Z'
 
@@ -3430,3 +3437,38 @@ tasks:
     updated: '2026-08-07T06:10:00Z'
     claimed_by: 2026-08-07T06-03-26Z-conductor-t103
     claimed_at: '2026-08-07T06:03:27Z'
+
+  - id: t-104
+    milestone: m2
+    title: "Consider widening workflow-medic's --watched-workflows / per-workflow thresholds"
+    status: ready
+    owner: null
+    stakes: reversible
+    passes: 0
+    note: >
+      Kaizen from conductor/t-102 (2026-08-08, PR #1883): `select_role.py`'s
+      new `workflow-medic` role only watches `process-task-events.yml` by
+      default (the one scheduled workflow that's actually caused a silent-
+      failure incident so far). This repo has several other `schedule:`-
+      triggered workflows that share the same "failure only shows up in the
+      Actions tab" blind spot -- `branch-janitor.yml`, `daily-digest.yml` /
+      `daily-digest-retry.yml`, `security-audit.yml`,
+      `process-color-art-events.yml`, `auto-art-generate.yml`,
+      `hourly-conductor.yml`, `roadmap-audit.yml`,
+      `monster-recast-art-jobs.yml`, `ci-janitor.yml`.
+
+      Once `workflow-medic` has run for real from a few live GitHub Actions
+      jobs (this sandbox's direct-API 403 means it's only been exercised via
+      mocked unit tests so far -- see t-102's note), decide: (a) whether to
+      widen the default `--watched-workflows` list to cover some/all of the
+      above, weighing the real risk each one's silent failure poses against
+      noisy false positives from workflows that are expected to fail
+      occasionally (e.g. transient upstream API flakiness in
+      `auto-art-generate.yml`), and (b) whether a single
+      `--workflow-fail-threshold` for every watched workflow is right, or
+      whether some (especially ones with a tighter cron cadence, like
+      `hourly-conductor.yml`) warrant a lower/higher per-workflow threshold
+      than others. Not a blind "watch everything" expansion -- pick
+      deliberately, the same way `process-task-events.yml` was picked because
+      it had already caused a real incident.
+    updated: '2026-08-08T05:50:00Z'
