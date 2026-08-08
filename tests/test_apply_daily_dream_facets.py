@@ -74,6 +74,21 @@ def test_main_fails_on_a_newly_partial_proposal(tmp_path, monkeypatch):
     assert exit_code == 1
 
 
+def test_non_facet_seeded_proposal_returns_a_three_tuple(tmp_path):
+    # Regression test: apply_file's first early-return branch (a proposal with
+    # no seed_facets at all -- every pre-Facet-seeding backlog entry, e.g. the
+    # 2026-07-14..07-21 files) used to return a 2-tuple while every other
+    # branch returns 3, so main()'s `did_change, status, was_already_partial =
+    # apply_file(...)` raised ValueError: not enough values to unpack on the
+    # very first legacy file in the sorted backlog glob. This broke every
+    # hourly-conductor.yml run from 2026-08-08T09:38Z onward (conductor/t-104's
+    # own fix commit introduced it while fixing a different failure streak).
+    path = tmp_path / "legacy.md"
+    path.write_text("---\nproposal: true\n---\n\nno structured data here\n", encoding="utf-8")
+    result = assign.apply_file(path, "token")
+    assert result == (False, "not a built Facet-seeded proposal", False)
+
+
 def test_stale_recipe_id_expands_to_live_canonical_facet_keys():
     selection = assign._facet_selection([
         {
