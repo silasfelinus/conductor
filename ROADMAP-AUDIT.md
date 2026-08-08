@@ -1,30 +1,30 @@
 # Roadmap Audit
 
-Generated: `2026-08-07T20:38:10.219019+00:00`
+Generated: `2026-08-08T22:34:46.683634+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **45** roadmaps, **24** active + **2** continuous projects, **924** tasks
-- **55 ready**, **65 waiting**, **13 needs-human**, **1 claimed/review**, **780 done**
+- **45** roadmaps, **24** active + **2** continuous projects, **931** tasks
+- **41 ready**, **59 waiting**, **24 needs-human**, **3 claimed/review**, **794 done**
 - Findings: **0 errors**, **0 warnings**, **60 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
-| 1 | `interface-vision` | active | software | 4 | 4 | 0 | 1 | 104 / 113 |
-| 2 | `ai-art-academy` | active | software | 2 | 5 | 0 | 0 | 59 / 66 |
+| 1 | `interface-vision` | active | software | 0 | 2 | 0 | 1 | 112 / 115 |
+| 2 | `ai-art-academy` | active | software | 1 | 3 | 2 | 0 | 60 / 66 |
 | 3 | `coloring-book` | active | software | 1 | 9 | 1 | 0 | 26 / 37 |
 | 4 | `humboldt-scoop-cms` | active | software | 0 | 0 | 1 | 0 | 11 / 12 |
-| 5 | `digital-storefront` | active | software | 1 | 5 | 0 | 0 | 33 / 39 |
-| 6 | `mermaids-of-venice` | active | content | 8 | 0 | 1 | 0 | 4 / 13 |
+| 5 | `digital-storefront` | active | software | 0 | 3 | 1 | 2 | 35 / 41 |
+| 6 | `mermaids-of-venice` | active | content | 1 | 0 | 8 | 0 | 4 / 13 |
 | 7 | `kind-robots` | active | software | 1 | 0 | 0 | 0 | 54 / 55 |
 | 8 | `kindrobots-unraid` | active | software | 1 | 7 | 0 | 0 | 4 / 12 |
 | 9 | `model-builder` | active | software | 2 | 0 | 0 | 0 | 37 / 39 |
 | 10 | `lora-ingestion` | active | infrastructure | 1 | 0 | 0 | 0 | 5 / 6 |
-| 11 | `conductor` | active | software | 1 | 0 | 0 | 0 | 102 / 103 |
+| 11 | `conductor` | active | software | 0 | 0 | 1 | 0 | 105 / 106 |
 | 12 | `taskmaster` | active | software | 1 | 0 | 0 | 0 | 2 / 3 |
 | 13 | `storybook` | active | software | 5 | 1 | 1 | 0 | 9 / 16 |
 | 14 | `davinci` | active | software | 2 | 4 | 0 | 0 | 16 / 22 |
