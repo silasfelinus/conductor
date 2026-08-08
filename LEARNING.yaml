@@ -6964,3 +6964,30 @@ records:
     (PWA foundation before Android/iOS "builds") let t-062/t-063 stay scoped as PWA verification
     passes instead of full native pipelines, deferring the real cost (store accounts,
     code-signing, native build tooling) until Silas actually asks for store distribution.
+- date: 2026-08-08
+  project: interface-vision
+  task: t-110
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: kind_robots PR #1585 (batched t-110+t-112) was returned once by the reviewer for a
+    repo-convention defect, not a functional one -- three large explanatory template comments
+    added around the fix, violating kind_robots/AGENTS.md's "avoid inline and template
+    comments, let naming carry the meaning" rule. Worth checking that convention before
+    writing comment blocks to justify a non-obvious CSS fix in kind_robots; put the reasoning
+    in the PR description/roadmap note instead, where it already belongs per this repo's own
+    template.
+- date: 2026-08-08
+  project: interface-vision
+  task: t-112
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Batching independent-but-related small layout fixes into one PR (t-110+t-112, same
+    audit run, same flexbox root cause pattern) avoided contending with the responsive-audit
+    workflow's one-run-at-a-time serialization -- worth defaulting to when a slice's several
+    small findings would otherwise each wait behind the same queue.

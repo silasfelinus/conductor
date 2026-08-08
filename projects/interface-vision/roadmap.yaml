@@ -2778,7 +2778,9 @@ tasks:
       CORRECTION: t-109 was NOT actually fixed by kind_robots PR #1577 as the paragraph above claims -- that PR merged on a misread audit log; see t-109's own note for the full correction. Follow-up PR #1578 has the real fix, unmerged as of this note.
 
       t-109 now genuinely done: kind_robots PR #1578 merged and verified via its own audit run (31216469239) read route-by-route -- all seven target routes pass at all three viewports. See t-109's own note for the full corrected story.
-    updated: '2026-08-07T19:27:56Z'
+
+      t-110 and t-112 now also done: kind_robots PR #1585 merged (2026-08-08T00:42:41Z, head d65bea2). Remaining open sub-finding: t-108 (/navigation BROKEN-ART, still waiting/unclaimed -- the duplicate-image-URL investigation). Keep this umbrella ready rather than done until t-108 closes and a fresh audit run confirms zero findings remain.
+    updated: '2026-08-08T00:45:00Z'
     claimed_by: claude-quirky-curie-20260807T192755Z-iv-t103-s7
     claimed_at: '2026-08-07T19:27:56Z'
     implementation_pr: 'silasfelinus/kind_robots#1574'
@@ -2870,7 +2872,7 @@ tasks:
   - id: t-110
     milestone: m4
     title: "Content div crushes to a sliver on phone on /storybook and /play/challenges"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -2878,7 +2880,8 @@ tasks:
       Found by t-103 slice 6's audit run (kind_robots PR #1575, run 31203187021), same raw-log source as t-109 but a distinct element/pattern, not the channel-tab-strip -- filed separately rather than folded into t-109. `<div class="min-w-0 flex-1">` crushes to a 10px sliver on phone (390px) on /storybook (text "Build a world, then step inside it") and to a 20px sliver on /play/challenges (text "Select your matchup The Arena Ever"), both well under MIN_FLEX_WIDTH (32px). Both routes pass at tablet (820px); desktop unverified (run cancelled before reaching either route at that width -- see t-109's note for the same caveat). Both were added to audit coverage in slice 3 (kind_robots #1572) without a verification run, same pattern as t-109's routes. Shared `.min-w-0.flex-1` class combination on both suggests a common cause (a sibling element not shrinking, forcing this flexible one to its floor) but the two pages are unrelated features (storybook's channel hero vs. the challenge-center arena selector) -- worth checking whether they share a layout ancestor component before assuming one fix covers both. Screenshots: kind_robots run 31203187021, artifact responsive-audit-31203187021 (phone shots for /storybook and /play/challenges).
 
       UPDATE (conductor sweep, 2026-08-07 ~19:40Z): t-103 slice 6's full 60-minute run (kind_robots run 31207144813) reached both routes at all three widths this time. /play/challenges: phone CRUSHED (this task, unchanged), tablet PASS, desktop PASS -- the phone-only crush holds. /storybook: phone CRUSHED (this task, unchanged), but tablet AND desktop both now fail too, with a completely different defect (BROKEN-ART on the 'Ami-butterfly's stage' image, not a crushed div) -- filed separately as t-111 rather than folded in here. Storybook failing at every width while play/challenges only fails at phone, with two unrelated defect types, is evidence AGAINST the shared-layout-ancestor hypothesis above -- treat these as two independent bugs rather than hunting for one common cause.
-    implementation_pr: 'silasfelinus/kind_robots#1585'
+
+      VERIFIED FIXED (conductor sweep, 2026-08-08 ~00:45Z): kind_robots PR #1585 merged at 2026-08-08T00:42:41Z (head d65bea2, merged by the reviewer session). The reviewer's own review found a repo-convention defect first (three added template-comment blocks violating kind_robots/AGENTS.md's "avoid inline and template comments" rule) and asked for them removed before merging; a follow-up commit (d65bea2) stripped the comments while keeping the `basis-full sm:basis-auto` class changes unchanged, confirmed clean on eslint/vue-tsc. Closing done.
     claimed_by: claude-quirky-curie-20260807T223026Z-iv-t110
     claimed_at: '2026-08-07T22:30:27Z'
     updated: '2026-08-07T22:30:27Z'
@@ -2901,12 +2904,14 @@ tasks:
   - id: t-112
     milestone: m4
     title: "/taskmaster's scenario-card grid crushes six option spans on desktop"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     note: >
       Found by t-103 slice 6's completed 60-minute audit run (kind_robots run 31207144813, 2026-08-07, against merge commit 7841e271d128e15d16d4950d2521255d53fb0697) -- the first run to reach /taskmaster at desktop width (1440px). Six `<span class="flex min-w-0 flex-1 flex-col justify-center gap-1.5 p-3">` elements crush to w=24px, each carrying a truncated scenario-option label ("AnywhereLet Taskmaster choose a se...", "The Regrowth Yardsno one repairs w...", "The Hollow Reliquaryno one splices...", "Mercado de la Fortunano dish may b...", "The Sporeline Reclamation Yardneve...", "The Sunken Cantatano pilgrim may h..."), well under MIN_FLEX_WIDTH (32px). Phone and tablet both pass cleanly for /taskmaster in the same run -- this is desktop-only, the opposite direction from most of this session's findings (t-109/t-110 are phone-only), suggesting a different mechanism: likely a grid/flex sibling that grows disproportionately at wide viewports (e.g. an image or fixed-width column) rather than the narrow-viewport shrink-deficit pattern documented in t-109. Screenshots: kind_robots run 31207144813, artifact responsive-audit-31207144813 (desktop shot for /taskmaster).
+
+      VERIFIED FIXED (conductor sweep, 2026-08-08 ~00:45Z): kind_robots PR #1585 merged at 2026-08-08T00:42:41Z (head d65bea2). Fix (dropped `xl:grid-cols-3`) landed alongside t-110's fix in the same PR; see t-110's note for the reviewer's comment-removal request that preceded the merge. Closing done.
     claimed_by: claude-quirky-curie-20260807T224315Z-iv-t112
     claimed_at: '2026-08-07T22:43:17Z'
     updated: '2026-08-07T22:43:17Z'
