@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2974,11 +2974,11 @@ tasks:
       Slice 7 builds the `kr-stat-tile` primitive slice 6 flagged: two live callers (navigation-health.vue, project-placement-manager.vue) already hand-roll the identical `.stat rounded-2xl border border-base-300 bg-base-100 shadow-sm` markup, clearing the guardrail against speculative infra since the pattern is already duplicated rather than hypothetical. Added components/ui/kr-stat-tile.vue (title/value/desc/tone props, tone maps to a `text-${tone}` class on stat-value, matching every color variant both callers used: primary/secondary/error/warning/success/none) and migrated all 8 tiles across the two callers onto it, preserving every conditional tone and dynamic desc string exactly (e.g. navigation-health's Legacy adapters/Broken artwork tiles keep their live error/warning/success branching via the `tone`/`desc` props). Verified: eslint clean, vue-tsc --noEmit clean, prettier clean on the new component and on every line actually changed (pre-existing prettier drift already present in both callers before this slice, unrelated to this change and outside CI's gate -- CI only runs `lint:js`, not `lint:prettier`, confirmed by reading .github/workflows/*.yml -- left untouched rather than bundling an unrelated reformat into this diff), lint ratchet unchanged (392/27), layout-contract/gallery-adoption/card-action-contract/narrative-kit contracts all pass unchanged. `npm ci` needed a from-scratch install this session (no node_modules on disk); Cypress's binary postinstall download failed on a corrupted-download proxy error unrelated to this change, worked around with `CYPRESS_INSTALL_BINARY=0` since this slice touches no Cypress-covered surface.
 
       Slice 7 merged as silasfelinus/kind_robots#1623 (squash 39135d8). First push failed CI: the WonderLab preview-coverage-no-regression gate flagged the new kr-stat-tile.vue as newly missing fixture coverage (required props title/value). Fixed by adding a real fixture (not a skip reason -- it is a small presentational component with no store reads) to utils/wonderlab/previewFixturesCoverageClosure.ts, verified locally with `npx tsx utils/scripts/auditWonderLabPreviews.ts --strict` (exit 0) before repushing. Second run green on all 13 checks including the previously-failing gate; Vercel preview deployed READY. Status back to ready -- t-104 remains multi-slice; the next slice should re-run the bespoke-card grep inventory fresh per slice 6's note.
-    claimed_by: null
-    claimed_at: null
+    claimed_by: 2026-08-08T231416Z-interface-vision-t104-r4x8
+    claimed_at: '2026-08-08T23:14:16Z'
     implementation_pr: 'silasfelinus/kind_robots#1623'
-    updated: '2026-08-08T22:43:00Z'
-    owner: null
+    updated: '2026-08-08T23:14:16Z'
+    owner: worker
 
   - id: t-105
     milestone: m6
