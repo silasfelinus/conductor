@@ -2758,7 +2758,7 @@ tasks:
     passes: 0
     stakes: reversible
     depends_on: t-102
-    remaining_scope_task: t-108
+    remaining_scope_task: t-113
     note: |-
       Work the t-102 inventory in scoped slices until every reachable page passes phone, tablet, and desktop geometry with no hidden/unreachable elements. Split findings into dedicated tasks when they are larger than one PR; keep this umbrella open until the authoritative counter is zero. Passing TypeScript is not evidence that a page works.
 
@@ -2785,7 +2785,9 @@ tasks:
       Found a coordination deadlock in Phase 1 closeout: t-103 explicitly remains open until t-108 closes, while t-108 is waiting on depends_on: t-103. The scoped Conductor fix is to make t-108 the umbrella's remaining_scope_task and remove the inverse dependency so the final measured finding can become claimable without falsely completing t-103.
 
       Deadlock fix applied (conductor sweep, 2026-08-08): set remaining_scope_task: t-108 on this task (per AGENTS.md's umbrella-sweep convention -- claim_task.py/next_ready_task.py now treat this umbrella as not-yet-claimable directly while t-108 exists and isn't done, so no session picks up t-103 itself) and dropped t-108's depends_on: t-103 (status waiting -> ready), since t-108 was never actually blocked on any t-103 deliverable -- it just needed to stop being claimable as an independent umbrella slice while t-103 was the one tracking it. Status back to ready (not review/done) until t-108 closes and a fresh full audit confirms zero findings remain.
-    updated: '2026-08-08T01:19:00Z'
+
+      t-108 now genuinely done (conductor sweep, 2026-08-08 ~05:40Z): kind_robots PR #1598 merged, verified via its own audit run 31239732003 read raw -- /navigation clean at all 3 viewports. That same run surfaced one NEW finding, unrelated to t-108: desktop /taskmaster CRUSHED, a regression of the already-closed t-112. Filed as t-113 and pointed this umbrella's remaining_scope_task at it (t-108 -> t-113) so t-103 stays non-independently-claimable until that regression is fixed and a fresh full audit confirms zero findings. Coverage remains complete (all 64 routes); only this one regression stands between the counter and zero.
+    updated: '2026-08-08T05:40:00Z'
     claimed_by: 2026-08-08T011340Z-interface-vision-t103-b7k4
     claimed_at: '2026-08-08T01:13:40Z'
     implementation_pr: 'silasfelinus/kind_robots#1574'
@@ -2803,6 +2805,18 @@ tasks:
     claimed_at: '2026-08-08T04:30:52Z'
     updated: '2026-08-08T05:37:06Z'
     owner: worker
+
+  - id: t-113
+    milestone: m4
+    title: "/taskmaster's desktop scenario-option spans crush again -- regression of t-112"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: |-
+      Found via kind_robots PR #1598's own responsive-layout-audit run (31239732003, 2026-08-08 ~05:25Z, head 9edf120). Desktop /taskmaster failed with 6 CRUSHED <span class="flex min-w-0 flex-1 flex-col justify-center gap-1.5 p-3"> elements carrying scenario-option labels ("The Regrowth Yards", "The Hollow Reliquary", "Mercado de la Fortuna", "The Sporeline Reclamation Yard", "The Sunken Cantata", "Body Horror"), same symptom as t-112 (also flagged 19 STARVED-TEXT elements on the same spans). Phone and tablet were not reported as failing in this run.
+      This is a REGRESSION: t-112 covered the identical symptom on the identical page, and was closed done after kind_robots PR #1585 (merged 2026-08-08T00:42:41Z, dropped `xl:grid-cols-3`) was "VERIFIED FIXED" by a conductor sweep note. Something between that merge and this run (05:25Z) reintroduced the crush -- either the original fix was insufficient/only masked the issue at the audit's then-current viewport set, or a later change to /taskmaster or its layout reintroduced the disproportionate sibling growth t-112's own note hypothesized (a grid/flex sibling growing disproportionately at wide viewports).
+      NEXT STEP: don't assume t-112's old fix (dropping xl:grid-cols-3) is still in place -- check kind_robots main's current taskmaster page/component for what actually changed since PR #1585, then re-diagnose with a fresh desktop-width inspection before shipping a second attempt. Read the actual audit run's raw log (run 31239732003, "Audit responsive layout" step) rather than trusting a pass/fail summary, per this project's established pattern for this exact failure class (t-108's own history of two disproven "fixed" claims in a row).
+    owner: null
 
   - id: t-109
     milestone: m4
