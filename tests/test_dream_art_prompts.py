@@ -85,15 +85,28 @@ def test_character_prompt_is_the_one_reward_free_case_that_wants_a_single_figure
     assert dap.CAST_DIRECTION not in prompt
 
 
-def test_scenario_and_world_prompts_do_ask_for_a_diverse_cast():
+def test_only_scenario_prompt_injects_cast_direction():
     scenario = dap.scenario_prompt(
         "The Second Verse", "a congregation hums back from below",
         "The Sunken Cantata", "Choir of the Drowned Kingdom", "Sea-gods sing.")
     world = dap.world_prompt(
         "Choir of the Drowned Kingdom", "A submerged kingdom sings.",
         "Sea-gods sing.", "a submerged amphitheater of coral columns")
+    location = dap.location_prompt(
+        "The Sunken Cantata", "a submerged amphitheater of coral columns",
+        "drowned acoustics", "a hymn unravels a listener",
+        "Choir of the Drowned Kingdom", "Sea-gods sing.")
     assert dap.CAST_DIRECTION in scenario
-    assert dap.CAST_DIRECTION in world
+    assert dap.CAST_DIRECTION not in world
+    assert dap.CAST_DIRECTION not in location
+
+
+def test_world_prompt_keeps_the_setting_as_subject():
+    prompt = dap.world_prompt(
+        "Choir of the Drowned Kingdom", "A submerged kingdom sings.",
+        "Sea-gods sing.", "a submerged amphitheater of coral columns")
+    assert "the setting is the subject" in prompt
+    assert "any figures present are incidental" in prompt
 
 
 def test_location_prompt_keeps_figures_incidental_to_the_architecture():
@@ -103,6 +116,7 @@ def test_location_prompt_keeps_figures_incidental_to_the_architecture():
         "Choir of the Drowned Kingdom", "Sea-gods sing.")
     assert "the environment is the subject" in prompt
     assert "figures present are small and incidental" in prompt
+    assert dap.CAST_DIRECTION not in prompt
 
 
 def test_no_builder_emits_the_phrase_that_triggered_the_house_substitution():

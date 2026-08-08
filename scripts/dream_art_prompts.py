@@ -30,9 +30,10 @@ The rules encoded below follow from that:
   leads; what it does comes second, as a visible consequence.
 - **Never emit "Kind Robots visual style".** Write the style out explicitly so
   no downstream regex can substitute something subject-inappropriate.
-- **Casting direction is opt-in.** `CAST_DIRECTION` is appended only for
-  subjects that genuinely contain people (characters, scenarios, crowd scenes).
-  Objects and empty landscapes get `UNPEOPLED` instead.
+- **Casting direction is opt-in.** `CAST_DIRECTION` is appended only for scenes
+  whose authored action genuinely requires a cast. Single-character portraits
+  encode singular framing directly; worlds and locations keep any figures
+  optional/incidental instead of injecting crowd vocabulary.
 - **Exclusions are stated positively where possible.** Krea 2 runs at cfg 1,
   which makes the ComfyUI negative prompt inert (see
   `server/api/comfy/krea2/utils/workflow.ts`). Every constraint has to survive
@@ -121,8 +122,8 @@ def world_prompt(title: str, idea: str, vibe_line: str, vibe_art: str = "") -> s
         CARD_FRAMING,
         "wide establishing view with a strong foreground anchor, "
         "clear middle ground, and deep atmospheric background",
+        "the setting is the subject; any figures present are incidental to the place",
         "cinematic directional light, layered depth",
-        CAST_DIRECTION,
         STYLE,
         NO_TEXT,
     )
@@ -141,7 +142,6 @@ def location_prompt(title: str, art_direction: str, known_for: str,
         "figures present are small and incidental, included only for scale",
         "cinematic directional light raking across the structures, "
         "deep atmospheric perspective",
-        CAST_DIRECTION,
         STYLE,
         NO_TEXT,
     )
