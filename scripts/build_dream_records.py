@@ -393,10 +393,26 @@ def record_built(path: Path, built: dict, dry_run: bool) -> None:
     print(f"  marked {path.name} built (+built-data)")
 
 
+def _existing_attempt(path: Path) -> dict[str, Any] | None:
+    """Read this proposal's current build-attempt-data block, if any."""
+    if not path.exists():
+        return None
+    return _data_block(path.read_text(encoding="utf-8"), "build-attempt-data")
+
+
 def record_build_failure(path: Path, failure: dict[str, Any], dry_run: bool) -> None:
-    """Persist a retry marker without pretending that any object was created."""
+    """Persist a retry marker without pretending that any object was created.
+
+    Carries an `attempt_count` forward across consecutive retries of the same
+    pinned proposal so a later reader (human or agent) can see how long it has
+    been stuck, distinct from a first-time failure. Resets to 1 whenever the
+    proposal wasn't already pinned at `status: retry` going into this attempt.
+    """
     if dry_run:
         return
+    existing = _existing_attempt(path)
+    prior_count = existing.get("attempt_count") if isinstance(existing, dict) else None
+    failure = {**failure, "attempt_count": int(prior_count) + 1 if isinstance(prior_count, int) else 1}
     text = path.read_text(encoding="utf-8")
     block = f"<!-- build-attempt-data\n{json.dumps(failure, ensure_ascii=False)}\n-->"
     text, count = re.subn(
@@ -409,6 +425,41 @@ def record_build_failure(path: Path, failure: dict[str, Any], dry_run: bool) -> 
     if not count:
         text = text.rstrip() + "\n\n" + block + "\n"
     path.write_text(text, encoding="utf-8")
+
+
+def _fail_and_pin(path: Path, message: str, dry_run: bool, *, already_pinned: bool,
+                   failure_extra: dict[str, Any] | None = None,
+                   outcome_extra: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Persist a retry marker and report the outcome the hourly sweep consumes.
+
+    Kaizen from conductor/t-102/t-104 (2026-08-08): a scheduled sidecar that
+    re-derives pass/fail from a persisted item's status, with no distinction
+    between a freshly-broken item and one that was already known-broken in a
+    prior run, silently poisons every future run's exit code forever. This
+    repo's build_dream_records.eligible_proposal() intentionally keeps a
+    failed proposal "at the head of the line" until it succeeds -- exactly the
+    already-failed-forever shape, since every consecutive hourly sweep would
+    otherwise re-report `status: failed` for the identical, already-alerted
+    problem. Report `status: failed` only the first time this proposal fails
+    (fresh signal, worth an hourly-conductor.yml failure); once it's already
+    pinned at `status: retry` entering this attempt, report `retry-persisting`
+    instead so the exit code and the conductor summary stop re-alerting on a
+    known, unresolved issue every single hour -- the ledger's `attempt_count`
+    still tracks how long it has been stuck for whoever eventually looks.
+    """
+    failure = {
+        "status": "retry",
+        "attempted_at": datetime.datetime.now(_TZ).isoformat(),
+        "message": message,
+        **(failure_extra or {}),
+    }
+    record_build_failure(path, failure, dry_run)
+    print(message, file=sys.stderr)
+    status = "retry-persisting" if already_pinned else "failed"
+    if already_pinned:
+        print(f"{path.name}: still unresolved from a prior run -- not re-failing "
+              "this run's exit code", file=sys.stderr)
+    return _outcome(status, message, proposal=path.name, retry=True, **(outcome_extra or {}))
 
 
 def update_built_data(path: Path, built: dict) -> None:
@@ -900,30 +951,24 @@ def run_build(date_override: Optional[str], dry_run: bool) -> dict[str, Any]:
     if path is None:
         print(f"Nothing to build: {reason}")
         return _outcome("idle", reason)
+    # Captured once, before this attempt can mutate it: eligible_proposal() keeps a
+    # failed proposal pinned at the head of the line until it succeeds, so on every
+    # sweep after the first this is the SAME already-failing proposal coming back
+    # around. Distinguishing that from a genuinely fresh failure is what keeps a
+    # single stuck proposal from re-failing the hourly sweep's exit code forever
+    # (see _fail_and_pin's docstring).
+    existing_attempt = _existing_attempt(path)
+    already_pinned = isinstance(existing_attempt, dict) and existing_attempt.get("status") == "retry"
     if not KR_API_TOKEN and not dry_run:
         message = "KR_API_TOKEN not set — daily objects cannot be created."
-        failure = {
-            "status": "retry",
-            "attempted_at": datetime.datetime.now(_TZ).isoformat(),
-            "message": message,
-        }
-        record_build_failure(path, failure, dry_run)
-        print(message, file=sys.stderr)
-        return _outcome("failed", message, proposal=path.name, retry=True)
+        return _fail_and_pin(path, message, dry_run, already_pinned=already_pinned)
     text = path.read_text(encoding="utf-8")
     fm = _frontmatter(text)
     proposal = _data_block(text, "proposal-data")
     contract_errors = _canonical_proposal_errors(proposal)
     if contract_errors:
         message = f"{path.name}: invalid canonical proposal — " + "; ".join(contract_errors)
-        failure = {
-            "status": "retry",
-            "attempted_at": datetime.datetime.now(_TZ).isoformat(),
-            "message": message,
-        }
-        record_build_failure(path, failure, dry_run)
-        print(message, file=sys.stderr)
-        return _outcome("failed", message, proposal=path.name, retry=True)
+        return _fail_and_pin(path, message, dry_run, already_pinned=already_pinned)
     slug = str(fm.get("slug") or slugify(proposal.get("title", "dream")))
     pdate = str(fm.get("proposal_date") or fm.get("created") or "")
     print(f"Building {path.name} (slug={slug}, proposal_date={pdate})"
@@ -933,14 +978,7 @@ def run_build(date_override: Optional[str], dry_run: bool) -> dict[str, Any]:
         built, results, art_entries = build_records(proposal, slug, pdate, dry_run)
     except Exception as error:  # noqa: BLE001 - persist the retry before surfacing it
         message = f"{slug}: object creation crashed before the bundle could be recorded: {error}"
-        failure = {
-            "status": "retry",
-            "attempted_at": datetime.datetime.now(_TZ).isoformat(),
-            "message": message,
-        }
-        record_build_failure(path, failure, dry_run)
-        print(message, file=sys.stderr)
-        return _outcome("failed", message, proposal=path.name, retry=True)
+        return _fail_and_pin(path, message, dry_run, already_pinned=already_pinned)
     failures = [r for r in results if not r["ok"]]
     if not dry_run and failures:
         # Atomic build: never mark a partially-built proposal `built`. Roll back any
@@ -957,29 +995,22 @@ def run_build(date_override: Optional[str], dry_run: bool) -> dict[str, Any]:
             f"{slug}: {len(failures)}/{len(results)} API calls failed "
             f"(HTTP {', '.join(map(str, statuses))}); rolled back {n_deleted} rows."
         )
-        failure = {
-            "status": "retry",
-            "attempted_at": datetime.datetime.now(_TZ).isoformat(),
-            "message": message,
-            "failed_calls": [
-                {
-                    "endpoint": row.get("endpoint"),
-                    "status": row.get("status"),
-                    "label": row.get("label"),
-                    "message": row.get("message"),
-                }
-                for row in failures
-            ],
-            "rolled_back": n_deleted,
-        }
-        record_build_failure(path, failure, dry_run)
-        return _outcome(
-            "failed",
-            message,
-            proposal=path.name,
-            retry=True,
-            failed_calls=len(failures),
-            rolled_back=n_deleted,
+        return _fail_and_pin(
+            path, message, dry_run,
+            already_pinned=already_pinned,
+            failure_extra={
+                "failed_calls": [
+                    {
+                        "endpoint": row.get("endpoint"),
+                        "status": row.get("status"),
+                        "label": row.get("label"),
+                        "message": row.get("message"),
+                    }
+                    for row in failures
+                ],
+                "rolled_back": n_deleted,
+            },
+            outcome_extra={"failed_calls": len(failures), "rolled_back": n_deleted},
         )
 
     append_art_requests(art_entries, dry_run)
