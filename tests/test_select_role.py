@@ -51,12 +51,13 @@ AUDIT_NEVER_RUN = {"overdue": True, "last_report": None, "days_since": None}
 def _patched(
     remote_worker_branches=(),
     reviewable_claude_prs=(),
+    failing_scheduled_workflows=(),
     red_stale_prs=(),
     stranded_branches=(),
     audit_status=None,
     queue_summary=None,
 ):
-    """One combined patch context covering all six signals, each defaulted
+    """One combined patch context covering all seven signals, each defaulted
     to "nothing found"/"not overdue" and overridden per-test — keeps each
     test asserting only the signal(s) it's actually about."""
     return (
@@ -66,6 +67,9 @@ def _patched(
         ),
         mock.patch.object(
             select_role, "find_reviewable_claude_prs", return_value=list(reviewable_claude_prs)
+        ),
+        mock.patch.object(
+            select_role, "find_failing_scheduled_workflows", return_value=list(failing_scheduled_workflows)
         ),
         mock.patch.object(select_role, "find_red_stale_prs", return_value=list(red_stale_prs)),
         mock.patch.object(select_role, "find_stranded_branches", return_value=list(stranded_branches)),
@@ -98,6 +102,7 @@ def test_default_repos_include_kind_robots():
 def test_reviewer_outranks_everything():
     with _apply(_patched(
         remote_worker_branches=[{"branch": "worker/x-t-001"}],
+        failing_scheduled_workflows=[{"repo": "silasfelinus/conductor", "workflow": "process-task-events.yml"}],
         red_stale_prs=[{"repo": "silasfelinus/conductor", "number": 1}],
         stranded_branches=[{"repo": "silasfelinus/kind_robots", "branch": "claude/some-stale"}],
         audit_status=AUDIT_OVERDUE,
@@ -110,6 +115,7 @@ def test_reviewer_outranks_everything():
     # Other signals still surfaced even though they didn't win the role, so a
     # session that clears the reviewer queue doesn't have to re-scan from
     # scratch for what's next.
+    assert result["failing_scheduled_workflow_count"] == 1
     assert result["red_stale_pr_count"] == 1
     assert result["stranded_branch_count"] == 1
     assert result["site_audit_overdue"] is True
@@ -140,6 +146,25 @@ def test_reviewer_reason_mentions_both_signals_when_both_present():
     assert result["role"] == "reviewer"
     assert "open worker/* branch" in result["reason"]
     assert "green non-worker/* PR" in result["reason"]
+
+
+def test_workflow_medic_outranks_pr_medic_branch_medic_audit_and_worker():
+    with _apply(_patched(
+        failing_scheduled_workflows=[
+            {"repo": "silasfelinus/conductor", "workflow": "process-task-events.yml", "consecutive_failures": 4}
+        ],
+        red_stale_prs=[{"repo": "silasfelinus/kind_robots", "number": 42, "ci_state": "failure"}],
+        stranded_branches=[{"repo": "silasfelinus/conductor", "branch": "claude/some-stale"}],
+        audit_status=AUDIT_OVERDUE,
+        queue_summary=SOME_READY_TASK,
+    )):
+        result = select_role.select_role()
+
+    assert result["role"] == "workflow-medic"
+    assert "process-task-events.yml" in result["reason"]
+    # Other signals still surfaced even though they didn't win the role.
+    assert result["red_stale_pr_count"] == 1
+    assert result["stranded_branch_count"] == 1
 
 
 def test_pr_medic_outranks_branch_medic_audit_and_worker():
@@ -212,6 +237,8 @@ def test_remote_refresh_failure_does_not_crash_selection():
     ), mock.patch.object(
         select_role, "find_reviewable_claude_prs", return_value=[]
     ), mock.patch.object(
+        select_role, "find_failing_scheduled_workflows", return_value=[]
+    ), mock.patch.object(
         select_role, "find_red_stale_prs", return_value=[]
     ), mock.patch.object(
         select_role, "find_stranded_branches", return_value=[]
@@ -232,6 +259,8 @@ def test_select_role_checks_both_default_repos():
         select_role.run_reviewer, "remote_worker_branches", return_value=[]
     ), mock.patch.object(
         select_role, "find_reviewable_claude_prs", return_value=[]
+    ), mock.patch.object(
+        select_role, "find_failing_scheduled_workflows", return_value=[]
     ), mock.patch.object(
         select_role, "find_red_stale_prs", return_value=[]
     ) as find_red, mock.patch.object(
@@ -410,6 +439,111 @@ def test_find_red_stale_prs_aggregates_across_repos():
 
     assert {f["repo"] for f in flagged} == {"silasfelinus/conductor", "silasfelinus/kind_robots"}
     assert len(flagged) == 2
+
+
+# --- find_failing_scheduled_workflows: a scheduled workflow failing run after run --
+
+
+def test_consecutive_failing_runs_counts_from_newest_until_a_success():
+    runs = [
+        {"status": "completed", "conclusion": "failure"},
+        {"status": "completed", "conclusion": "failure"},
+        {"status": "completed", "conclusion": "failure"},
+        {"status": "completed", "conclusion": "success"},  # streak stops here
+        {"status": "completed", "conclusion": "failure"},
+    ]
+    assert select_role.consecutive_failing_runs(runs) == 3
+
+
+def test_consecutive_failing_runs_skips_in_progress_runs_without_breaking_streak():
+    runs = [
+        {"status": "in_progress", "conclusion": None},
+        {"status": "completed", "conclusion": "failure"},
+        {"status": "queued", "conclusion": None},
+        {"status": "completed", "conclusion": "failure"},
+    ]
+    assert select_role.consecutive_failing_runs(runs) == 2
+
+
+def test_consecutive_failing_runs_zero_when_latest_completed_run_succeeded():
+    runs = [{"status": "completed", "conclusion": "success"}]
+    assert select_role.consecutive_failing_runs(runs) == 0
+
+
+def test_consecutive_failing_runs_empty_list():
+    assert select_role.consecutive_failing_runs([]) == 0
+
+
+def test_find_failing_scheduled_workflows_flags_at_or_above_threshold():
+    routes = {
+        "/actions/workflows/process-task-events.yml/runs": {
+            "workflow_runs": [
+                {"status": "completed", "conclusion": "failure", "html_url": "https://x/run/3"},
+                {"status": "completed", "conclusion": "failure"},
+                {"status": "completed", "conclusion": "failure"},
+                {"status": "completed", "conclusion": "success"},
+            ]
+        },
+    }
+    with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
+        flagged = select_role.find_failing_scheduled_workflows(
+            "silasfelinus/conductor", "fake-token", fail_threshold=3
+        )
+
+    assert len(flagged) == 1
+    assert flagged[0]["workflow"] == "process-task-events.yml"
+    assert flagged[0]["consecutive_failures"] == 3
+    assert flagged[0]["last_run_url"] == "https://x/run/3"
+
+
+def test_find_failing_scheduled_workflows_ignores_streak_below_threshold():
+    routes = {
+        "/actions/workflows/process-task-events.yml/runs": {
+            "workflow_runs": [
+                {"status": "completed", "conclusion": "failure"},
+                {"status": "completed", "conclusion": "success"},
+            ]
+        },
+    }
+    with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
+        flagged = select_role.find_failing_scheduled_workflows(
+            "silasfelinus/conductor", "fake-token", fail_threshold=3
+        )
+
+    assert flagged == []
+
+
+def test_find_failing_scheduled_workflows_checks_every_watched_workflow():
+    routes = {
+        "/actions/workflows/process-task-events.yml/runs": {
+            "workflow_runs": [{"status": "completed", "conclusion": "failure"}] * 3
+        },
+        "/actions/workflows/other.yml/runs": {
+            "workflow_runs": [{"status": "completed", "conclusion": "success"}]
+        },
+    }
+    with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
+        flagged = select_role.find_failing_scheduled_workflows(
+            "silasfelinus/conductor",
+            "fake-token",
+            workflow_files=("process-task-events.yml", "other.yml"),
+            fail_threshold=3,
+        )
+
+    assert {f["workflow"] for f in flagged} == {"process-task-events.yml"}
+
+
+def test_find_failing_scheduled_workflows_returns_empty_without_a_token():
+    with mock.patch.object(select_role, "workflow_runs_api") as workflow_runs_api:
+        flagged = select_role.find_failing_scheduled_workflows("silasfelinus/conductor", "")
+
+    workflow_runs_api.assert_not_called()
+    assert flagged == []
+
+
+def test_workflow_runs_api_returns_empty_on_unexpected_shape():
+    with mock.patch.object(select_role, "_gh_request", return_value=None):
+        assert select_role.workflow_runs_api("silasfelinus/conductor", "process-task-events.yml", "tok") == []
 
 
 # --- find_reviewable_claude_prs: green, open, non-worker/* PRs (conductor/t-083) --
