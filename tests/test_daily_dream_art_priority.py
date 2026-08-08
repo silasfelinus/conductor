@@ -1,6 +1,9 @@
 import scripts.consume_art_queue as consumer
 
 
+SHARED_INTERACTIVE_PRIORITY = 100
+
+
 def daily_dream_entry(**overrides):
     entry = {
         "id": "dream-cycle-moonlit-greenhouse-world",
@@ -20,15 +23,16 @@ def daily_dream_entry(**overrides):
     return entry
 
 
-def test_daily_dream_art_jobs_get_top_priority():
+def test_daily_dream_art_jobs_get_reserved_priority_above_interactive_work():
     job = consumer.entry_to_job(daily_dream_entry())
-    assert job["priority"] == 100
+    assert job["priority"] == 200
     assert job["priority"] == consumer.DAILY_DREAM_PRIORITY
+    assert job["priority"] > SHARED_INTERACTIVE_PRIORITY
 
 
 def test_daily_dream_source_matching_is_tolerant():
     job = consumer.entry_to_job(daily_dream_entry(source=" Dream-Cycle "))
-    assert job["priority"] == 100
+    assert job["priority"] == 200
 
 
 def test_daily_dream_jobs_preserve_target_and_request_provenance():
@@ -65,7 +69,7 @@ def test_daily_dream_without_valid_target_still_keeps_priority_and_provenance():
     job = consumer.entry_to_job(
         daily_dream_entry(entity_type="dream", entity_id=None)
     )
-    assert job["priority"] == 100
+    assert job["priority"] == 200
     assert "entityArt" not in job["payload"]
     assert job["payload"]["conductorRequest"]["id"] == job["idempotencyKey"]
 
