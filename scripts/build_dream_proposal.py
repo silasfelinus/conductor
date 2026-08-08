@@ -30,7 +30,11 @@ FALLBACK_FACETS = {
 FIELDS = {
  "location": ("title", "known_for", "local_rule", "best_scene", "art_direction"),
  "character": ("name", "role_drive", "carries", "complication", "look"),
- "reward": ("name", "reward_type", "rarity", "grants", "best_used_when", "catch"),
+ # `look` is required as of 2026-08-08. Without it a Reward's only visual input
+ # was what it *does* ("surfaces the hidden fortune buried in a person"), which
+ # gives Krea 2 nothing to draw and lets the style tail take over the subject —
+ # that is how item-tidefortune-ladle rendered as a crowd of people.
+ "reward": ("name", "reward_type", "rarity", "grants", "best_used_when", "catch", "look"),
  "scenario": ("title", "setup"),
 }
 
@@ -128,7 +132,14 @@ def build_brief(day: str | None = None, catalog=None) -> dict[str, Any]:
       "instructions": ["Create one coherent bundle under the vibe, not unrelated mini-pitches.",
         "Return exactly one location, one character, one ITEM, one SKILL, and one scenario; no narrator.",
         "Use the Facets as creative constraints and persist seed_facets unchanged.",
-        "Author scenario last and name the vibe, location, and character in its setup."],
+        "Author scenario last and name the vibe, location, and character in its setup.",
+        "Every `look` and `art_direction` field feeds Krea 2 directly. Write what is "
+        "physically visible — material, shape, scale, colour, wear, how light hits it — "
+        "not what the thing does. 'A dented tin ladle the length of a forearm, its bowl "
+        "worn to mirror-bright, handle wrapped in salt-stiffened cord' is usable; "
+        "'it surfaces hidden fortune' is not.",
+        "A reward's `look` must describe an object or a visible effect, never a person. "
+        "For a SKILL, describe the visible signature of the technique in use."],
       "required_counts": {"vibe": 1, "locations": 1, "characters": 1, "reward_item": 1, "reward_skill": 1, "scenarios": 1}}
 
 
@@ -222,7 +233,7 @@ def render_markdown(p: dict[str, Any], day: str) -> str:
     lines=["---",f"slug: {p['slug']}",f"title: {p['title']}","type: dream","status: outline","priority: normal","narrator: 'no'",f"created: '{day}'","proposal: true",f"proposal_date: '{day}'","built_pr: null","---","","## Seed Facets",
       f"- **Deterministic seed:** `{s.get('deterministic_seed')}` ({s.get('catalog_source','unknown')} catalog)",
       *[f"- **{label}:** {_titles(e[key])}" for label,key in (("Dream vibe","vibe"),("Dream location","location"),("Character","character"),("Reward item","reward_item"),("Reward skill","reward_skill"),("Scenario","scenario"))],
-      "","## The idea",p["idea"],"","## Dream vibe (1)",f"**{p['vibe']['title']}** — {p['vibe']['line']}",f"Art: {p['vibe']['art_direction']}","","## Dream location (1)",f"- **{loc['title']}** — known for {loc['known_for']}. Local rule: {loc['local_rule']}. Best scene: {loc['best_scene']}. Art: {loc['art_direction']}","","## Character (1)",f"- **{ch['name']}** — {ch['role_drive']}. Carries {ch['carries']}. Complication: {ch['complication']}. Look: {ch['look']}","","## Reward item (1)",f"- **{item['name']}** (ITEM, {item['rarity']}) — {item['grants']}. Best used when {item['best_used_when']}. The catch: {item['catch']}","","## Reward skill (1)",f"- **{skill['name']}** (SKILL, {skill['rarity']}) — {skill['grants']}. Best used when {skill['best_used_when']}. The catch: {skill['catch']}","","## Scenario (1, authored last)",f"- **{sc['title']}** — {sc['setup']}","","## Notes from Silas","- (leave notes here — agents fold them in before building and never edit this section)","","## Build log",f"- {day} | proposed | deterministic Facet-seeded six-asset bundle","","<!-- proposal-data",json.dumps(p,ensure_ascii=False,sort_keys=True),"-->",""]
+      "","## The idea",p["idea"],"","## Dream vibe (1)",f"**{p['vibe']['title']}** — {p['vibe']['line']}",f"Art: {p['vibe']['art_direction']}","","## Dream location (1)",f"- **{loc['title']}** — known for {loc['known_for']}. Local rule: {loc['local_rule']}. Best scene: {loc['best_scene']}. Art: {loc['art_direction']}","","## Character (1)",f"- **{ch['name']}** — {ch['role_drive']}. Carries {ch['carries']}. Complication: {ch['complication']}. Look: {ch['look']}","","## Reward item (1)",f"- **{item['name']}** (ITEM, {item['rarity']}) — {item['grants']}. Best used when {item['best_used_when']}. The catch: {item['catch']}. Look: {item['look']}","","## Reward skill (1)",f"- **{skill['name']}** (SKILL, {skill['rarity']}) — {skill['grants']}. Best used when {skill['best_used_when']}. The catch: {skill['catch']}. Look: {skill['look']}","","## Scenario (1, authored last)",f"- **{sc['title']}** — {sc['setup']}","","## Notes from Silas","- (leave notes here — agents fold them in before building and never edit this section)","","## Build log",f"- {day} | proposed | deterministic Facet-seeded six-asset bundle","","<!-- proposal-data",json.dumps(p,ensure_ascii=False,sort_keys=True),"-->",""]
     return "\n".join(lines)
 
 
@@ -275,7 +286,7 @@ def main(argv=None) -> int:
 
 def _sample() -> dict[str,Any]:
     catalog={k:_fallback(k) for k in FALLBACK_FACETS}
-    return {"title":"Prism Appeal","slug":"prism-appeal","idea":"A courthouse refracts testimony into living color.","vibe":{"title":"The Kindly Cross-Examination","line":"Every answer changes the room that asked it.","art_direction":"A luminous impossible courthouse."},"locations":[{"title":"The Refracted Court","known_for":"colored testimony","local_rule":"no statement repeats a hue","best_scene":"a disputed memory changes the room","art_direction":"prismatic courtroom"}],"characters":[{"name":"Mara Venn","role_drive":"protect an engineered witness","carries":"a cracked spectrum lens","complication":"it contains her deleted testimony","look":"mantis-shrimp advocate in a midnight suit"}],"rewards":[{"name":"Verdict Lens","reward_type":"ITEM","rarity":"RARE","grants":"reveals omissions","best_used_when":"a story is too neat","catch":"it reveals yours"},{"name":"Chromatic Recall","reward_type":"SKILL","rarity":"UNCOMMON","grants":"reconstructs memory from color","best_used_when":"records were altered","catch":"emotion returns"}],"scenarios":[{"title":"The Color of Perjury","setup":"In The Kindly Cross-Examination at The Refracted Court, Mara Venn defends a witness whose testimony turned the chamber black."}],"seed_facets":facet_seed_plan("2026-07-31",catalog)}
+    return {"title":"Prism Appeal","slug":"prism-appeal","idea":"A courthouse refracts testimony into living color.","vibe":{"title":"The Kindly Cross-Examination","line":"Every answer changes the room that asked it.","art_direction":"A luminous impossible courthouse."},"locations":[{"title":"The Refracted Court","known_for":"colored testimony","local_rule":"no statement repeats a hue","best_scene":"a disputed memory changes the room","art_direction":"prismatic courtroom"}],"characters":[{"name":"Mara Venn","role_drive":"protect an engineered witness","carries":"a cracked spectrum lens","complication":"it contains her deleted testimony","look":"mantis-shrimp advocate in a midnight suit"}],"rewards":[{"name":"Verdict Lens","reward_type":"ITEM","rarity":"RARE","grants":"reveals omissions","best_used_when":"a story is too neat","catch":"it reveals yours","look":"a palm-sized brass loupe with a cracked prismatic lens, verdigris in the knurling"},{"name":"Chromatic Recall","reward_type":"SKILL","rarity":"UNCOMMON","grants":"reconstructs memory from color","best_used_when":"records were altered","catch":"emotion returns","look":"ribbons of banded colour unspooling out of empty air above a bare table"}],"scenarios":[{"title":"The Color of Perjury","setup":"In The Kindly Cross-Examination at The Refracted Court, Mara Venn defends a witness whose testimony turned the chamber black."}],"seed_facets":facet_seed_plan("2026-07-31",catalog)}
 SAMPLE_PROPOSAL=_sample()
 
 if __name__ == "__main__": raise SystemExit(main())
