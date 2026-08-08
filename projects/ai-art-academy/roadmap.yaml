@@ -1829,7 +1829,7 @@ tasks:
   - id: t-062
     milestone: m7
     title: "Ship an installable/testable Android Academy app build"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -1848,7 +1848,7 @@ tasks:
   - id: t-063
     milestone: m7
     title: "Ship an installable/testable iOS Academy app build"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -1894,7 +1894,7 @@ tasks:
   - id: t-066
     milestone: m7
     title: "Add minimal PWA support to kind_robots (installability foundation for t-062/t-063)"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1914,6 +1914,22 @@ tasks:
       eligibility passes, existing pages render unchanged (additive-only change, easy to
       revert if the module misconfigures anything). t-062/t-063 depend on this landing before
       their Android/iOS verification passes can run.
+
+      DONE (conductor sweep, 2026-08-08 ~00:55Z): kind_robots PR #1588 merged (squash
+      199e28b, all 15 structural CI checks green). Added @vite-pwa/nuxt with a manifest
+      (name/short_name/icons/theme_color #b4653a/background_color #f7f1e3/display:standalone),
+      cache-first workbox precaching for built static assets, and explicit viewport/
+      theme-color/apple-touch-icon meta tags in app.head (the module's Nuxt integration
+      only injects the manifest link + SW registration via its own client plugin/nitro
+      route, not via useHead -- an SSR app needs the meta tags set manually or they never
+      render). Generated 192x192/512x512 icons via sharp from the existing
+      android-icon-192x192.png source (no larger source existed) plus apple-touch-icon.png
+      from the existing apple-icon-180x180.png. Verified `npm run build` produces a valid
+      .output/public/manifest.webmanifest and sw.js+workbox runtime; the sandbox's own build
+      hit a pre-existing JWT_SECRET-missing prerender failure unrelated to this change
+      (confirmed by rebuilding with dummy secrets, which succeeded). t-062/t-063 can now
+      proceed.
     claimed_by: claude-quirky-curie-20260808T002700Z-aa-t066
     claimed_at: '2026-08-08T00:32:58Z'
     updated: '2026-08-08T00:32:58Z'
+    implementation_pr: 'silasfelinus/kind_robots#1588'
