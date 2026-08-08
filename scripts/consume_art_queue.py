@@ -26,6 +26,7 @@ except ImportError:
 
 _core_entry_to_job = _core.entry_to_job
 DAILY_DREAM_PRIORITY = 100
+DAILY_DREAM_ENTITY_TYPES = {"dream", "character", "reward", "scenario", "bot"}
 
 
 def retry_seed_identity(entry: dict[str, Any]) -> dict[str, str]:
@@ -60,6 +61,62 @@ def uses_specialized_attempt_recovery(entry: dict[str, Any]) -> bool:
     )
 
 
+def _is_daily_dream(entry: dict[str, Any]) -> bool:
+    return str(entry.get("source") or "").strip().lower() == "dream-cycle"
+
+
+def _positive_int(value: Any) -> int | None:
+    try:
+        parsed = int(value)
+    except (TypeError, ValueError):
+        return None
+    return parsed if parsed > 0 else None
+
+
+def _enrich_daily_dream_job(entry: dict[str, Any], job: dict[str, Any]) -> None:
+    """Preserve canonical Daily Dream provenance and atomic attachment target.
+
+    ``build_dream_records.py`` writes the entity type/id/field on each request.
+    Keeping those fields inside the durable ArtJob means Kind Robots can attach
+    the completed ArtImage in the same transaction that marks the job DONE.
+    The stable request id is also the queue idempotency key, so a local timeout
+    cannot manufacture a duplicate render on retry.
+    """
+    payload = job.get("payload")
+    if not isinstance(payload, dict):
+        return
+
+    request_id = str(entry.get("id") or "").strip()
+    entity_type = str(entry.get("entity_type") or "").strip().lower()
+    entity_id = _positive_int(entry.get("entity_id"))
+    entity_field = str(entry.get("entity_field") or "imagePath").strip() or "imagePath"
+
+    job["priority"] = DAILY_DREAM_PRIORITY
+    job["projectSlug"] = "dream-cycle"
+    if request_id:
+        job["idempotencyKey"] = request_id
+
+    payload["collection"] = "dream-cycle"
+    payload["conductorRequest"] = {
+        "id": request_id or None,
+        "source": "dream-cycle",
+        "label": str(entry.get("label") or "").strip() or None,
+        "targetRepo": str(entry.get("target_repo") or "").strip() or None,
+        "imagePath": str(entry.get("image_path") or "").strip() or None,
+        "sourceUrl": str(entry.get("source_url") or "").strip() or None,
+        "pageUrl": str(entry.get("page_url") or "").strip() or None,
+    }
+
+    if entity_type in DAILY_DREAM_ENTITY_TYPES and entity_id:
+        payload["entityArt"] = {
+            "entityType": entity_type,
+            "entityId": entity_id,
+            "field": entity_field,
+            "preserveOriginal": True,
+            "mode": "recreate",
+        }
+
+
 def entry_to_job(entry: dict[str, Any]):
     normalized = dict(entry)
     engine = _core.normalize_engine(normalized.get("engine"))
@@ -75,8 +132,8 @@ def entry_to_job(entry: dict[str, Any]):
         normalized["seed"] = stable_retry_seed(normalized)
 
     job = _core_entry_to_job(normalized)
-    if str(normalized.get("source") or "").strip().lower() == "dream-cycle":
-        job["priority"] = DAILY_DREAM_PRIORITY
+    if _is_daily_dream(normalized):
+        _enrich_daily_dream_job(normalized, job)
     if synthetic_seed:
         payload = job.get("payload")
         if isinstance(payload, dict):
@@ -89,6 +146,7 @@ _core.stable_retry_seed = stable_retry_seed
 _core.uses_specialized_attempt_recovery = uses_specialized_attempt_recovery
 _core.entry_to_job = entry_to_job
 _core.DAILY_DREAM_PRIORITY = DAILY_DREAM_PRIORITY
+_core.DAILY_DREAM_ENTITY_TYPES = DAILY_DREAM_ENTITY_TYPES
 sys.modules[__name__] = _core
 
 
