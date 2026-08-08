@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2959,11 +2959,12 @@ tasks:
       t-104 remains multi-slice: resource-card.vue is no longer a candidate (see above); daily-digest-object-gallery.vue's row-shape primitive gap is the one concrete remaining item, otherwise the next slice should re-inventory for any other un-converged bespoke cards (feed-card.vue was found via `grep -rl "border border-base-300 bg-base-100 shadow-sm"`, which may still turn up other candidates: narrative-art-status.vue, channel-select.vue, navigation-health.vue, workspace-header.vue, workspace-sheet.vue, project-placement-manager.vue -- not yet individually assessed).
 
       Slice 5 adds a compact fixed-height mode to kr-art-plate and migrates Daily Dream bundle artwork onto the shared plate, preserving its horizontal carousel/card layout while removing the bespoke img/error/fallback path.
+
+      Slice 5 merged as silasfelinus/kind_robots#1618 (squash 7614592a). Added an opt-in compact fixed-height mode to kr-art-plate and migrated daily-digest-object-gallery.vue off its bespoke image/fallback path while preserving its horizontal carousel, desktop grid, role badge, no-art label, and open-details behavior. Review caught and fixed a missing shrink-0 before merge so the old 64px banner height remains stable inside the flex-column card. All 15 exact-head PR workflows completed successfully, including TypeScript 31274133751, Contract Tests 31274133759, Layout Contract 31274133749, Narrative Primitives 31274133742, and Entity Art Manager 31274133770. Keep t-104 ready for another bounded consistency slice rather than closing the multi-slice umbrella.
     claimed_by: 2026-08-08T191124Z-iv-t104-s5-r8q2
     claimed_at: '2026-08-08T19:11:24Z'
     implementation_pr: 'silasfelinus/kind_robots#1617'
-    updated: '2026-08-08T19:19:00Z'
-    owner: worker
+    updated: '2026-08-08T19:23:00Z'
 
   - id: t-105
     milestone: m6
