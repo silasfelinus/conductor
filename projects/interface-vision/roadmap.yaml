@@ -2754,7 +2754,7 @@ tasks:
   - id: t-103
     milestone: m4
     title: "Drive Phase 1 responsive/functionality findings to zero"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on: t-102
@@ -2780,7 +2780,9 @@ tasks:
       t-109 now genuinely done: kind_robots PR #1578 merged and verified via its own audit run (31216469239) read route-by-route -- all seven target routes pass at all three viewports. See t-109's own note for the full corrected story.
 
       t-110 and t-112 now also done: kind_robots PR #1585 merged (2026-08-08T00:42:41Z, head d65bea2). Remaining open sub-finding: t-108 (/navigation BROKEN-ART, still waiting/unclaimed -- the duplicate-image-URL investigation). Keep this umbrella ready rather than done until t-108 closes and a fresh audit run confirms zero findings remain.
-    updated: '2026-08-08T01:13:40Z'
+
+      Found a coordination deadlock in Phase 1 closeout: t-103 explicitly remains open until t-108 closes, while t-108 is waiting on depends_on: t-103. The scoped Conductor fix is to make t-108 the umbrella's remaining_scope_task and remove the inverse dependency so the final measured finding can become claimable without falsely completing t-103.
+    updated: '2026-08-08T01:19:00Z'
     claimed_by: 2026-08-08T011340Z-interface-vision-t103-b7k4
     claimed_at: '2026-08-08T01:13:40Z'
     implementation_pr: 'silasfelinus/kind_robots#1574'
