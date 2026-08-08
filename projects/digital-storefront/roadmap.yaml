@@ -1416,44 +1416,127 @@ tasks:
 - id: t-004
   milestone: m6
   title: "Give DLC a live catalog and wire contentAccess.ts's packId check into the actual content routes"
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-037
+  implementation_pr: silasfelinus/kind_robots#1630
   note: >
     Split from t-003 (slice 1, conductor sweep 2026-08-08, item 2) -- too large/judgment-heavy for that
-    slice. Scope:
+    slice.
 
-    1. An admin route/script that turns a Packmaker Pack into a Product with metadata.packId, matching
-    the existing server/api/admin/wonderlab/**/*.post.ts convention (requireAdminApiUser + readBody +
-    errorHandler). The webhook side already works correctly -- server/api/stripe/webhook.post.ts's
-    handleProductPurchase creates the Grant (subjectType: PACK) when product.type === 'DLC' and
-    metadata.packId is present; it just has nothing to sell yet, since no DLC Product row exists
-    anywhere.
+    Dispatched a read-only investigation subagent before writing any code. It confirmed the four
+    ad-hoc access-check implementations (dreams, facets, rewards, characters) and, critically, that
+    characters/[id].get.ts AND rewards/[id].get.ts / rewards/index.get.ts / rewards/random.get.ts all
+    have NO access check whatsoever today -- not a fourth variant pattern, an outright absence. It also
+    found characters/index.get.ts's list branch runs prisma.character.findMany() with no `where` at
+    all, leaking every user's private/inactive characters into the app-wide character-picker store.
 
-    2. Wire server/utils/contentAccess.ts's canView() (already implements the full formula: isPublic
-    OR own OR admin OR subjectType Grant OR packId Grant) into the actual Dream/Facet/Character/Reward
-    read routes -- currently called nowhere. The Pack/packId schema side is already complete
-    (kind-robots/t-037: Dream/Facet/Character/Reward all have a nullable packId FK + index).
+    Shipped as kind_robots PR #1630 (all verification green: eslint 0 problems, prettier clean,
+    vue-tsc --noEmit clean, lint ratchet 392/27 unchanged; no live DB in this sandbox so not
+    integration-tested):
 
-    This touches FOUR different, currently-inconsistent ad hoc access-check implementations, not one:
-    dreams (assertDreamAccess, sync ad hoc isOwner||isAdmin||isPublic, plus a separate list-route
-    Prisma `where`-filter version with no per-row check to hook into), facets (a fourth pattern,
-    isOwner||isAdmin||(isPublic && !isMature)), rewards (fetchRewardById, a third independent pattern,
-    not yet read in detail), and characters (characters/[id].get.ts has NO access check at all today --
-    returns any row unconditionally regardless of isPublic/isMature/ownership; wiring packId support
-    here means fixing this pre-existing, unrelated gap as a side effect, not just adding one condition
-    -- flag/scope that fix explicitly in the PR rather than silently bundling it in). Decide per-entity
-    whether to unify these into one shared helper or extend each in place; document the choice.
+    1. New admin route server/api/admin/packs/[id]/product.post.ts -- turns a Packmaker Pack into a
+    purchasable DLC Product (requireAdminApiUser + readBody, matches the wonderlab convention).
+    Idempotent upsert by Product.slug, sets metadata: JSON.stringify({ packId }) and type: 'DLC' --
+    exactly what the webhook's existing handleProductPurchase already parses to create a PACK Grant.
 
-    Not gate_human -- this is code-only server-side logic, reversible, no live behavior change until a
-    real DLC Product is seeded and a Pack is actually granted. Seeding an actual DLC Product row against
-    a real Pack (verifying the full purchase-to-content-unlock loop end-to-end) needs a live Packmaker
-    Pack to test against; check packmaker's own roadmap for one before inventing test data.
+    2. Wired contentAccess.ts's existsActiveGrant (canView's packId branch) into the three routes where
+    it was a genuinely additive, behavior-preserving extension of an existing check:
+    dreams/[id].get.ts, dreams/[id]/facets.get.ts (both via assertDreamAccess), and facets/[id].get.ts
+    (its local isOwner||isAdmin||(isPublic&&!isMature) boolean, isMature gate preserved unconditionally).
+    Every existing caller's outcome is unchanged; only a new Grant-based fallback is added.
+
+    Deliberately NOT bundled into this task, split into two follow-ons instead of silently expanding
+    scope or leaving a security gap unflagged:
+
+    - t-005 (new, hard needs-human/security): the pre-existing characters/[id].get.ts,
+    characters/index.get.ts, rewards/[id].get.ts, rewards/index.get.ts, rewards/random.get.ts "no
+    access check at all" gap. Fixing it is this app's FIRST access check on those routes -- a real
+    behavior change for any current caller relying on the open read (e.g. characters/index.get.ts's
+    bulk loader feeding the app-wide character-picker store), not an additive extension like the
+    Dream/Facet routes above. Whether any admin/moderation/packmaker-generator flow currently depends
+    on that open read is a product call only Silas can make before this is safe to fix.
+
+    - t-006 (new, ready/software): Dream/Facet LIST routes (dreams/index.get.ts, facets/index.get.ts,
+    facets/catalog.get.ts's loadFacetCatalogEntries) filter via a set-based Prisma `where`-clause with
+    no per-row hook to extend -- needs a Grant-subjectId prefetch step, real design work, not a
+    mechanical canView call. Reversible, no security gap (these routes already correctly exclude
+    non-public/non-owned rows; they just aren't Pack-Grant-aware yet), safe for normal Worker pickup.
+
+    Seeding an actual DLC Product row against a real Pack (verifying the full purchase-to-unlock loop
+    end-to-end) still needs a live Packmaker Pack to test against and production DB access neither this
+    nor prior sandboxes had -- unchanged from the original task note.
   claimed_by: 2026-08-08T233500Z-ds-t004-dm1dsz
   claimed_at: '2026-08-08T23:32:45Z'
-  updated: '2026-08-08T23:32:45Z'
+  updated: '2026-08-08T23:59:00Z'
+
+- id: t-005
+  milestone: m6
+  title: "SECURITY: Character and Reward read routes have no access check at all -- decide whether to close before wiring packId Grants"
+  status: needs-human
+  owner: null
+  passes: 0
+  stakes: irreversible
+  gate_human: true
+  soft_gate: false
+  approved_by_human: false
+  updated: '2026-08-08T23:59:00Z'
+  note: >
+    FOR SILAS: split off digital-storefront/t-004 (conductor sweep 2026-08-08) after a read-only
+    investigation of kind_robots' server/api/ confirmed a real, pre-existing security gap unrelated to
+    the DLC/packId work t-004 was scoped for.
+
+    What was found: server/api/characters/[id].get.ts and server/api/characters/index.get.ts (when
+    called with no id, it runs prisma.character.findMany() with NO where clause at all) return every
+    Character row -- including other users' private, unpublished ones -- to any caller, authenticated
+    or not. server/api/rewards/[id].get.ts, rewards/index.get.ts, and rewards/random.get.ts have the
+    same gap for Reward rows. None of these routes call any auth/visibility check today; it is not a
+    fourth variant access pattern, it is an outright absence.
+
+    Why this needs your call rather than an agent just fixing it: characters/index.get.ts's unfiltered
+    list feeds stores/characterStore.ts's app-wide character-picker (used by the packmaker generator
+    and any character-select UI), and startEditingCharacter/selectCharacter fall back to that in-memory
+    list before ever hitting [id].get.ts. Fixing [id].get.ts alone without also fixing the list route
+    would be inconsistent (list still leaks the row; direct fetch would then 403/404 on reload). Fixing
+    both closes the gap but is a genuine behavior change for any current caller that happens to rely on
+    the open read -- no admin/moderation tool doing so was found in-repo, but that is an absence of
+    evidence, not a guarantee, and it is exactly the kind of live-data-exposure call this repo's own
+    hard-gate rule ("Security flags requiring acknowledgement") reserves for you.
+
+    TO APPROVE: read this note, then either (a) confirm no live flow depends on the open read and set
+    approved_by_human: true / status: ready so a Worker can add the isOwner||isAdmin||isPublic check
+    (and packId Grant fallback, completing the packId wiring t-004 started) to all five routes together,
+    or (b) flag a flow that does depend on it so the fix can special-case it, or (c) say this is
+    lower-priority than it looks and downgrade stakes/gate as you see fit. What unblocks: closing this
+    unblocks completing the Dream/Facet/Character/Reward packId-Grant wiring t-004 began, and removes a
+    live private-data-exposure gap independent of DLC/Pack work entirely.
+
+- id: t-043
+  milestone: m6
+  title: "Wire contentAccess.ts's packId Grant into the Dream and Facet LIST routes"
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-004
+  updated: '2026-08-08T23:59:00Z'
+  note: >
+    Split off digital-storefront/t-004 (conductor sweep 2026-08-08) -- t-004 wired the packId Grant
+    fallback into the Dream and Facet SINGLE-ITEM read routes (dreams/[id].get.ts,
+    dreams/[id]/facets.get.ts, facets/[id].get.ts, kind_robots PR #1630) but explicitly left the LIST
+    routes for a follow-on, since they are structurally different: dreams/index.get.ts and
+    facets/index.get.ts build a set-based Prisma `where` clause (isPublic/own/admin baked into
+    `andFilters`), and facets/catalog.get.ts's loadFacetCatalogEntries (server/utils/facetCatalog.ts)
+    is a third, independent implementation of the same pattern. None of the three have a per-row check
+    to swap a canView() call into -- adding Pack-Grant awareness means prefetching the caller's active
+    PACK Grant subjectIds first, then OR-ing `packId IN (...)` into the existing `where`.
+
+    This is NOT a security gap like t-005 -- these list routes already correctly exclude
+    non-public/non-owned rows for every existing caller; they simply don't yet let a PACK-Grant holder
+    see Pack-gated Dreams/Facets in list/catalog views the way the single-item routes now do. Reversible,
+    ordinary software work, safe for normal Worker pickup once picked up.
 
 - id: t-042
   milestone: m6
