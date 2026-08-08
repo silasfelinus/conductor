@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -2963,20 +2963,33 @@ tasks:
       Full CI green (all 21 checks incl. the long Contract Tests job); SSR-fetched the
       merged /icons route post-merge as a smoke check (no error page, correct title).
 
-      Remaining candidates identified but deferred this slice: components/user/chat-gallery.vue
-      -> kr-chat-window (needs a date-divider slot kr-chat-window doesn't have yet -- a real
-      primitive gap, not a mechanical swap); components/resources/resource-card.vue and
-      components/servers/server-card.vue -> kr-entity-card-body (resource-card.vue was mid-flight
-      in a concurrent session's PR #1607 this slice -- deliberately left untouched to avoid a
-      collision; server-card.vue is a same-shape follow-on once a precedent lands);
-      components/dreams/daily-digest-object-gallery.vue -> kr-gallery (needs a new carousel/
-      horizontal-scroll density kr-gallery doesn't support yet, two-step work). Status back to
-      ready rather than review/done -- this is one slice of a larger inventory-and-migrate task,
-      same multi-slice shape as t-103.
+      Slice 2 opened (kind_robots PR #1612, not yet merged). Closed the primitive gap slice 1
+      identified: kr-chat-window's NarrativeTurn gained optional dateLabel/timestamp fields
+      (both additive, every existing caller omits them and sees no change), then
+      components/user/chat-gallery.vue's hand-rolled message-list/bubble markup was migrated
+      onto kr-chat-window -- outgoing (this user's own) messages map to 'user' turns, everything
+      else ('narrator') covers bots/characters/dreams/other people. Removed the messageScroll
+      ref and manual scrollToBottom() calls; kr-chat-window already follows the conversation on
+      its own. Verified: eslint/vue-tsc/prettier clean, verifyLayoutContract.ts and
+      verifyNarrativeKit.ts both hold, lint ratchet holds (392/27 unchanged). Structural CI
+      green at write time; left status: review rather than ready/done -- /messages is in the
+      responsive-layout-audit's default route list and AGENTS.md's own standing rule says wait
+      for that audit before merging a layout change, but the audit workflow serializes globally
+      (concurrency group responsive-layout-audit-database, one run at a time, up to 60min each)
+      and PR #1611 (an unrelated concurrent session's kr-card-back work) already had the slot
+      running at PR #1612's open time. Next session: check PR #1612's audit result directly --
+      merge + note if /messages measures clean, or document what the audit shows and iterate.
+
+      Remaining candidates identified but deferred this slice: components/resources/resource-card.vue
+      and components/servers/server-card.vue -> kr-entity-card-body (an independent concurrent
+      PR, #1611, is actively reworking resource-card's card-back/flip behavior right now --
+      touching it here would collide); components/dreams/daily-digest-object-gallery.vue ->
+      kr-gallery (needs a new carousel/horizontal-scroll density kr-gallery doesn't support yet,
+      two-step work).
     claimed_by: claude-quirky-curie-20260808T122735Z-iv-t104-s2
-    claimed_at: '2026-08-08T12:34:40Z'
-    implementation_pr: 'silasfelinus/kind_robots#1610'
-    updated: '2026-08-08T12:34:40Z'
+    claimed_at: '2026-08-08T12:27:35Z'
+    implementation_pr: 'silasfelinus/kind_robots#1612'
+    updated: '2026-08-08T12:41:00Z'
 
   - id: t-105
     milestone: m6
