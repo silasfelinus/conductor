@@ -7,8 +7,8 @@ name: Daily digest retry watchdog
 
 on:
   schedule:
-    - cron: "0 16 * * *" # First fallback, one hour after the primary digest.
-    - cron: "0 18 * * *" # Second fallback for a longer Actions outage.
+    - cron: "30 16 * * *" # First fallback, one hour after the primary digest.
+    - cron: "30 18 * * *" # Second fallback for a longer Actions outage.
   workflow_dispatch:
 
 permissions:

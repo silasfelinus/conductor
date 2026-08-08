@@ -25,7 +25,7 @@ except ImportError:
     import consume_art_queue_core as _core
 
 _core_entry_to_job = _core.entry_to_job
-DAILY_DREAM_PRIORITY = 100
+DAILY_DREAM_PRIORITY = 200
 DAILY_DREAM_ENTITY_TYPES = {"dream", "character", "reward", "scenario", "bot"}
 
 
