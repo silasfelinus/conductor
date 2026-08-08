@@ -430,6 +430,22 @@ def fetch_comfy_object_info(force=False):
     return info
 
 
+# What the last call to align_workflow_asset_names actually did. Read only by
+# run_comfy, to stamp the outcome onto a submission failure.
+#
+# "Returns [] when object_info can't be fetched" and "returns [] because every
+# name resolved" are the same value, and the difference is the whole diagnosis.
+# ArtJob 7905 failed three times on `ckpt_name:
+# 'SDXL/dreamshaperXL_v21TurboDPMSDE.safetensors' not in (list of length 58)` —
+# a file that is on disk, and a name this resolver would have fixed by slash or
+# basename. From the queue it was impossible to tell whether the relay was
+# running a build without the resolver or running it with /object_info
+# unreachable, and the only place that distinction existed was a `⚠️` line in
+# the relay's stdout on a machine nobody was watching. Now it rides along with
+# the error.
+_last_resolution = {"state": "not-run", "remaps": 0}
+
+
 def align_workflow_asset_names(workflow):
     """Resolve every checkpoint/LoRA/unet/vae/clip name in `workflow` against
     the live ComfyUI lists before submission, rewriting each to the exact
@@ -440,6 +456,7 @@ def align_workflow_asset_names(workflow):
     can't be fetched (resolution skipped, submit as-is)."""
     object_info = fetch_comfy_object_info()
     if object_info is None:
+        _last_resolution.update(state="skipped-no-object-info", remaps=0)
         return []
 
     remaps, unresolved = resolve_workflow_asset_names(workflow, object_info)
@@ -451,6 +468,7 @@ def align_workflow_asset_names(workflow):
     for class_type, input_name, old, new in remaps:
         log(f"🔧 {class_type}.{input_name}: {old!r} -> {new!r}")
 
+    _last_resolution.update(state="ran", remaps=len(remaps))
     return unresolved
 
 
@@ -494,9 +512,16 @@ def run_comfy(payload):
         ) from error
 
     if status != 200 or not response or not response.get("prompt_id"):
+        # Stamp the resolver's state onto the rejection. A `value_not_in_list`
+        # here with "asset-name resolution ran" means the catalog and ComfyUI
+        # genuinely disagree beyond slash/case/basename; the same rejection with
+        # "skipped" means the relay never got to look, and the fix is the box,
+        # not the name.
         raise RuntimeError(
             f"ComfyUI /prompt returned HTTP {status} at {COMFY_URL}: "
-            f"{response and response.get('node_errors')}"
+            f"{response and response.get('node_errors')} "
+            f"[asset-name resolution: {_last_resolution['state']}, "
+            f"{_last_resolution['remaps']} remap(s)]"
         )
 
     prompt_id = response["prompt_id"]
