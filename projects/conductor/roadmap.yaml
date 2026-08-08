@@ -3499,28 +3499,68 @@ tasks:
   - id: t-105
     milestone: m2
     title: Audit other dream-cycle backlog-style idempotent sidecars for the same already-failed-forever retry pattern
-    status: claimed
+    status: done
     owner: worker
     stakes: reversible
     passes: 0
     note: >
-      Kaizen from conductor/t-104 (2026-08-08, PR #1891): the `hourly-conductor.yml`
-      2+ day silent-failure incident that PR fixed had a specific, generalizable shape --
-      `scripts/apply_daily_dream_facets.py` re-scanned every item in
-      `projects/dream-cycle/backlog/*.md` on every run and only short-circuited on
-      `status: complete`, never on `status: partial`, so a single permanently-broken item
-      (missing Facet catalog data) silently poisoned every future run's exit code forever,
-      even while that run's own new work kept succeeding underneath the red status.
+      Audit complete. Real, generalizable gap found and fixed in scripts/build_dream_records.py
+      (kind_robots not involved -- conductor-repo-only sidecar). eligible_proposal() keeps a
+      failed daily-dream proposal pinned at the head of the build queue until it succeeds --
+      the same already-failed-forever shape as t-102/t-104's hourly-conductor.yml incident: a
+      scheduled sidecar re-deriving pass/fail from a persisted item's status with no
+      distinction between a fresh failure and one already known-broken from a prior run.
+      Fixed: run_build() now checks once per attempt whether the eligible proposal was already
+      pinned at build-attempt-data status:retry entering this run. A fresh failure still
+      reports status:failed (worth alerting). A repeat of an already-known failure now reports
+      status:retry-persisting instead, so main()'s exit code and hourly-conductor.yml's
+      downstream verify step stop re-failing on the same known issue every hour.
+      record_build_failure() also gained an attempt_count carried across consecutive pins.
+      4 new regression tests in tests/test_build_dream_records.py. conductor PR #1908, all 22
+      checks green, merged squash a0070be.
 
-      Audit this repo's other `projects/dream-cycle/backlog/`-adjacent or similarly-shaped
-      idempotent sidecar scripts (anything that re-globs a directory of persisted items each
-      run and derives a pass/fail exit code from their aggregate state) for the same
-      already-failed-forever gap: does it distinguish a freshly-broken item from one that was
-      already known-broken in a prior run? `scripts/enrich_daily_dream_digest.py`,
-      `scripts/build_dream_records.py`, and anything else touching `projects/dream-cycle/backlog/`
-      are the obvious first candidates -- check `grep -rl "dream-cycle/backlog" scripts/` for the
-      full list. Apply the same `partial_new`/`partial_persisting`-style split (or equivalent)
-      wherever the gap is real; document explicitly where it's already handled or not applicable.
-    updated: '2026-08-08T16:28:38Z'
+      Other candidates checked per task scope, all not applicable (documented in PR #1908
+      body): apply_daily_dream_facets.py already carries the equivalent fix from t-104 (the
+      originating patch this generalizes from). enrich_daily_dream_digest.py,
+      check_dream_outlines.py, check_daily_dream_pipeline.py, build_dream_proposal.py,
+      build_digest.py, retire_shadow_dreams.py, repair_dream_art.py, and
+      dream_slug_image_cleanup.py do not derive a pass/fail exit code from a persisted item's
+      cross-run retry status -- they're either unconditional-0 reporters, one-shot manual
+      operator tools, or CI lint/contract checks whose exit code correctly reflects only the
+      current run's snapshot.
+    updated: '2026-08-08T16:42:36Z'
     claimed_by: 2026-08-08T162700Z-cd-t105
     claimed_at: '2026-08-08T16:28:38Z'
+    implementation_pr: 'silasfelinus/conductor#1908'
+
+  - id: t-106
+    milestone: m2
+    title: "Diagnose the recurring isolated CodeQL javascript-typescript analyzer stall on conductor PRs"
+    status: ready
+    owner: null
+    stakes: reversible
+    passes: 0
+    note: >
+      Observed repeatedly the same day (2026-08-08) across multiple independent sessions'
+      conductor PRs: the `Analyze (javascript-typescript)` CodeQL check runs noticeably slower
+      than the other 3 language analyzers (actions/python/c-cpp) on the identical commit, and
+      on at least one PR (#1907, per its own TALKBACK-documented account) genuinely stalled at
+      `in_progress` for 60+ minutes across two separate cancel+retrigger cycles before finally
+      completing -- vs. every other check (including this repo's own Python test suite)
+      finishing in under a minute. On this task's own PRs (#1908, #1909) it did NOT stall
+      outright, just ran ~4-5x slower than its sibling analyzers (completing in 1-5 minutes
+      vs. seconds), which is at least consistent with the same underlying congestion rather
+      than a one-off.
+
+      Investigate whether this is (a) genuinely platform-side GitHub Actions CodeQL queue
+      congestion unrelated to this repo (in which case document the expected variance and a
+      standard retrigger playbook rather than treating it as a signal about the diff), or (b)
+      something about this repo's own CodeQL config/JS-TS surface specifically slow to analyze
+      (e.g. a large generated/vendored file the default config doesn't exclude, an expensive
+      query pack, or excessive included paths) that a `.github/codeql/codeql-config.yml`
+      path-filter or query-pack change could fix. Check whether other repos' CodeQL runs on
+      the same day show the same slowdown pattern (would support (a)) before assuming (b).
+      If (b), scope and ship the config fix. If (a), document it in AGENTS.md's PR-review
+      section next to the existing "don't merge on a still-in_progress state" guidance so
+      future sessions don't burn cancel/retrigger cycles chasing a non-issue.
+    updated: '2026-08-08T16:47:00Z'
