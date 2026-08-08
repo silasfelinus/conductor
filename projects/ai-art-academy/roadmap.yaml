@@ -1305,6 +1305,18 @@ tasks:
       already-known ProxySQL pooling work (kindrobots-unraid/t-012) -- they may be the same
       root cause. TO APPROVE: once verified either way, set status: done (or leave ready
       with a fresh run_log entry if still inconclusive).
+
+      RECHECK (conductor sweep, 2026-08-08T03:37Z, logged in RENDER-BACKLOG.md): still
+      growing. 24h window now shows some throughput again (DONE=10, vs 0 at the last
+      check) but 3 of the last 4 completion attempts failed with the ORIGINAL t-044
+      signature -- `ComfyUI /prompt returned HTTP 400` (lora_name not-in-list) -- not the
+      database error from the immediately-prior recheck. Both failure modes are now live
+      in the same window. This doesn't change the blocker: per run_log, the fix requires
+      one private ComfyUI /object_info capture from a Tailscale-connected machine (not
+      reachable from this sandbox) to reconcile against Kind Robots' Resource localPath
+      values using the already-built `scripts/compare_comfy_lora_paths.py` comparator.
+      Not attempting a blind fix this session -- didn't want to guess a 5th naming
+      convention against the same wall four earlier attempts already hit.
     run_log: projects/ai-art-academy/docs/t-044-lora-loading-run-log.md
     claimed_at: null
     claimed_by: null
