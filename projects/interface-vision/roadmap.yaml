@@ -2798,8 +2798,41 @@ tasks:
     owner: worker
     passes: 0
     stakes: reversible
-    implementation_pr: 'silasfelinus/kind_robots#1592'
+    implementation_pr: 'silasfelinus/kind_robots#1598'
     note: >
+      RECONCILIATION (conductor sweep, 2026-08-08): kind_robots PR #1592 was merged directly
+      by Silas (2026-08-08T02:12:49Z) -- confirmed via GitHub MCP (check_pr_merged_drift.py's
+      flag on this task was real drift, not a sandbox-verification gap). Read the merge
+      commit's own post-merge responsive-layout-audit run (31234573743, head d8d7b857, the
+      exact merge commit) job log directly, not just its pass/fail summary: /navigation still
+      BROKEN-ART on phone (6 images: Join Kind Robots, Navigation Overview, Resource Gallery,
+      About Kind Robots, Giving & Support, Privacy and Data Philosophy) and desktop (3 images:
+      Join Kind Robots, Navigation Overview, Privacy and Data Philosophy) -- same shared-URL
+      images as every prior run. #1592's Cache-Control fix did NOT resolve the flake.
+
+      ROOT CAUSE OF WHY #1592 DIDN'T HELP: caching the /images/* redirect response only lets a
+      SECOND visit reuse a FIRST visit's cache entry. It does nothing when N <img> tags with
+      the identical src all fire their first-ever GET for that path in the same tick on the
+      very first page load -- which is exactly what /navigation does (dashboard-tabs/user/
+      profile.webp and dashboard-tabs/giftshop/community.webp are each rendered by several
+      site-directory cards on one page load, every one of them a first-time fetch in a fresh
+      audit browser context). The prior duplicate-URL hypothesis was correct; the shipped
+      mitigation just addressed the wrong half of the race (repeat-visit caching, not
+      simultaneous-first-visit request staggering).
+
+      NEW FIX (kind_robots PR #1598, unmerged, watching its own audit): composables/
+      useDedupedArtwork.ts -- a module-scoped in-flight map keyed by URL. The first occurrence
+      of a URL preloads it directly; every later occurrence for the same URL awaits that first
+      preload's settlement (success or failure) before pointing its own <img> at the URL, so it
+      always lands on a now-warm cache entry instead of racing the origin. Wired into
+      /navigation via a small NavigationArtwork wrapper component (Vue composables must be
+      called at a component's setup top level, not per v-for iteration). Complementary to
+      #1592, not a replacement -- #1592 makes the response cacheable at all; #1598 makes sure
+      duplicate requests are staggered so the cache actually gets a chance to be warm.
+      eslint/vue-tsc/prettier clean. Left status: review -- this is t-108's 3rd fix attempt
+      (2 prior ones shipped and were disproven by a fresh audit read each time); do not close
+      this task until #1598's own deployment-triggered audit run is read RAW (not just pass/
+      fail) and shows /navigation's BROKEN-ART count actually drop.
       UPDATED with a 3rd/4th data point (conductor sweep, 2026-08-07 ~14:35Z) -- read this
       paragraph first. Two more scheduled `responsive-layout-audit` runs against `main` since
       the "second data point" paragraph below: run 31180459280 (12:57Z, the same one already
@@ -2888,7 +2921,7 @@ tasks:
       raw per-route log, not just a pass/fail summary).
     claimed_by: claude-quirky-curie-20260808T014000Z-iv-t108
     claimed_at: '2026-08-08T01:38:46Z'
-    updated: '2026-08-08T01:38:46Z'
+    updated: '2026-08-08T03:35:00Z'
 
   - id: t-109
     milestone: m4
