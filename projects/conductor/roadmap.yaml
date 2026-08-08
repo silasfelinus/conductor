@@ -3536,10 +3536,12 @@ tasks:
   - id: t-106
     milestone: m2
     title: "Diagnose the recurring isolated CodeQL javascript-typescript analyzer stall on conductor PRs"
-    status: review
-    owner: worker
+    status: needs-human
+    gate_human: false
+    soft_gate: true
+    owner: null
     stakes: reversible
-    passes: 0
+    passes: 1
     note: >
       Observed repeatedly the same day (2026-08-08) across multiple independent sessions'
       conductor PRs: the `Analyze (javascript-typescript)` CodeQL check runs noticeably slower
@@ -3563,6 +3565,46 @@ tasks:
       If (b), scope and ship the config fix. If (a), document it in AGENTS.md's PR-review
       section next to the existing "don't merge on a still-in_progress state" guidance so
       future sessions don't burn cancel/retrigger cycles chasing a non-issue.
-    updated: '2026-08-08T17:32:42Z'
-    claimed_by: 2026-08-08T172900Z-cd-t106
-    claimed_at: '2026-08-08T17:32:42Z'
+
+      RESOLVED to (b), with a partial fix shipped and the remainder needing human/admin access
+      (conductor sweep, 2026-08-08T17:4x). Confirmed via the Actions API job/step breakdown on
+      several runs (e.g. commits 816c1c5, e1e3a284): the `Perform CodeQL Analysis` **step**
+      itself -- not queueing, not `Initialize CodeQL` -- consistently takes 7-9 minutes for
+      javascript-typescript vs. 30-70 seconds for actions/python/c-cpp on the identical commit.
+      Job start times track together across languages, ruling out queue congestion (a).
+
+      Root cause: `projects/superkate-services-calculator/hairpress/` (649MB, 11,792 tracked
+      files) and `projects/humboldt-scoop/scoops/` (86MB, 4,072 tracked files) are full vendored
+      WordPress core installs (wp-admin, wp-includes, bundled PHPMailer, etc.), kept only as
+      static reference copies per each project's own roadmap notes -- both projects are
+      `finished` in project-overrides.yaml. Between them they hold the repo's largest
+      *unminified* JS bundles (e.g. wp-includes/js/dist/block-editor.js at 2.8MB, editor.js at
+      2.5MB, components.js at 3.9MB). Pushing this task's PR also surfaced GitHub's own
+      Dependabot count for the default branch -- 110 vulnerabilities, 15 critical -- almost
+      certainly dominated by this same stale vendored WP core, a further signal it isn't being
+      treated as live analyzable code by anyone.
+
+      FOR SILAS: shipped the lowest-risk fix available from a plain PR -- marked both trees
+      `linguist-vendored` in `.gitattributes` (conductor PR #1912, merged b3e6db4). Verified
+      empirically on that PR's own CI: no measurable improvement (`Perform CodeQL Analysis`
+      still took 6:55 for javascript-typescript). This repo's CodeQL runs via GitHub's
+      **default setup** (`dynamic/github-code-scanning/codeql`), which has no in-repo
+      paths-ignore mechanism -- that requires either (A) switching Settings > Code security >
+      Code scanning from Default to Advanced setup (add `.github/workflows/codeql.yml` +
+      `.github/codeql/codeql-config.yml` with `paths-ignore` for both vendored trees, after
+      first disabling default setup so the two don't conflict), or (B) the default-setup
+      path-filter option in that same Settings page if your GitHub plan exposes it -- both need
+      repo-admin Settings access this session's GitHub tooling has no call for. Simpler
+      alternative worth considering instead of a settings change: since both trees are
+      unmodified upstream WordPress core (not project-authored content) for two already-finished
+      projects, deleting `wp-admin/` and `wp-includes/` from both (keeping `wp-content/themes`
+      if any actual Superkate/Humboldt-Scoop customization lives there) would fix the CodeQL
+      time AND the 110 Dependabot alerts in one pass -- did not do this here since bulk-deleting
+      another project's "kept for reference" assets is a bigger call than this diagnostic task's
+      scope. TO APPROVE: pick (A), (B), or the deletion option (or say no fix is needed and the
+      slower JS-TS check is an accepted cost) -- whichever you pick, set status: done with a note
+      saying which, or ready if you want an agent to execute a specific one of these next.
+    updated: '2026-08-08T17:45:00Z'
+    claimed_by: null
+    claimed_at: null
+    implementation_pr: 'silasfelinus/conductor#1912'
