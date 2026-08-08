@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
@@ -670,10 +670,9 @@ tasks:
       REVIEWED 2026-08-01T11:28Z (conductor Agent run, session reviewer-conductor-quirky-curie-78vtpp-20260801T112704Z): reviewed kind_robots PR #1243 (branch claude/relaxed-lovelace-0quf0x, opened by an earlier iteration of this session claiming t-029 as reviewer). Confirmed the diff matches the PR description exactly: added `setStatusForRun(runId, tone, message)` to `stores/modelBuilderStore.ts` (only writes the store-wide status banner if `state.run?.id === runId`, mirroring `autoBuildRun`'s existing same-run gate) and replaced all 9 bare post-await `setStatus(...)` calls across `generateItemAsset`, `pollAsyncArtJob`, `generateItemAssetAsync`, and `commitItem` with it -- closing a real gap where a slow render/commit finishing after the user navigated to a different run (via resetRun/resetAll/openRun, all of which deliberately leave the abandoned run resumable rather than cancelled) could pop a misleading success/error toast in the wrong run's banner. Verification claims checked against the PR body: eslint/prettier clean modulo pre-existing drift, `vue-tsc --noEmit` exit 0, all 9 pre-existing `verifyModelBuilder*.ts` regression guards + selftests still pass. All 12 CI checks green (TypeScript, Contract verifiers, facet-catalog, facet-alias-smoke, Storybook/Narrative/Taskmaster contracts, verify, GitGuardian), no review comments beyond this session's own review-claim marker. Merged squash `4f7a6ee7`. Step (1) (dashboard-tab + tutorial .webp art) remains the sole outstanding original deliverable, still blocked on the external art-generation relay. Kaizen: the PR's own suggestion (add `verifyModelBuilderRunWritableGuard.ts` asserting `assertRunWritable` is called in all four write routes, from PR #1239) is a re-list of t-029's own 2026-08-01T08:29Z kaizen already noted above -- not a new task; deferred as already-tracked rather than re-filed. Rearmed to `ready` per the recurring-task rule; claim fields cleared below.
 
       Fixed a concrete run-history retry regression in kind_robots: the History panel now closes only after the requested run is actually active, instead of dismissing itself after a failed openRun fetch. Branch worker/model-builder-t029-history-open-k9r4 is one commit ahead of current main with one Vue file changed (+2/-1).
-    updated: '2026-08-08T20:31:00Z'
-    owner: worker
-    claimed_by: 2026-08-08T202645Z-model-builder-t029-k9r4
-    claimed_at: '2026-08-08T20:26:45Z'
+
+      RAN 2026-08-08 (session 2026-08-08T202645Z-model-builder-t029-k9r4): fixed a concrete Run History retry regression in kind_robots PR #1620. `model-builder-run-history.vue` previously awaited `store.openRun(run.id)` and unconditionally closed the history panel, even though `openRun()` leaves the active run unchanged on a failed fetch. The panel now closes only when the requested run actually became active, preserving the immediate retry path after transient failures. Exact implementation head b6121efbe60dc151e30c9456c0bf025fbe1b3088 passed all 13 visible PR workflows, including TypeScript Type Check #31277304135 and Contract Tests #31277304175, before squash merge 64acb593d92a6440d2b243135fc7635f4b559369. The original dashboard/tutorial art deliverable remains outstanding, so rearm this recurring polish task to ready.
+    updated: '2026-08-08T20:41:30Z'
 
   - id: t-030
     milestone: m6
