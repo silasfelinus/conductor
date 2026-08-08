@@ -82,8 +82,8 @@ tasks:
 - id: t-004
   milestone: m2
   title: Write general impressions of the manuscript
-  status: ready
-  updated: '2026-08-04 05:06:46.066000+00:00'
+  status: needs-human
+  updated: '2026-08-08T07:00:00Z'
   passes: 0
   stakes: reversible
   depends_on: t-003
@@ -94,11 +94,13 @@ tasks:
 
 
     SENT BACK by silasfelinus via Kind Robots For You. fair, thank you.
+
+    RECONCILIATION (conductor sweep, 2026-08-08): this task sat at status: ready since your 2026-08-04 reply above (a reply-received transition apparently puts a needs-human task back to ready rather than closing it) instead of surfacing as awaiting your sign-off. Moved back to needs-human so it's visible again. Your reply above reads as a direct "yes" to this task's own "if it's fair" question, but AGENTS.md reserves approved_by_human: true for you alone, so no agent has set it. TO APPROVE: if "fair, thank you" was your approval, set approved_by_human: true and status: done — otherwise say what's still needed.
 - id: t-005
   milestone: m2
   title: Write editorial notes on the manuscript
-  status: ready
-  updated: '2026-08-04 05:08:31.357000+00:00'
+  status: needs-human
+  updated: '2026-08-08T07:00:00Z'
   passes: 0
   stakes: reversible
   depends_on: t-003
@@ -109,11 +111,13 @@ tasks:
 
 
     SENT BACK by silasfelinus via Kind Robots For You. thank you for the work and notification. approved_by_human
+
+    RECONCILIATION (conductor sweep, 2026-08-08): moved back to needs-human from ready (same reply-received bookkeeping gap as t-004/t-006/t-007/t-008/t-010, see those tasks and root TALKBACK.md 2026-08-08). Your reply above cuts off mid-word right at "approved_by_human" -- reads like the start of "approved_by_human: true" (this task's own TO APPROVE phrase) that got truncated before it posted. No agent has set the field itself; that stays yours alone. TO APPROVE: if you were confirming approval, set approved_by_human: true and status: done — otherwise let us know what got cut off.
 - id: t-006
   milestone: m2
   title: Write cultural-awareness notes (gaze and privilege gaps)
-  status: ready
-  updated: '2026-08-04 05:09:15.491000+00:00'
+  status: needs-human
+  updated: '2026-08-08T07:00:00Z'
   passes: 0
   stakes: reversible
   depends_on: t-003
@@ -124,11 +128,13 @@ tasks:
 
 
     SENT BACK by silasfelinus via Kind Robots For You. great notes, these are going to be EXTREMELY helpful. approved_by_human
+
+    RECONCILIATION (conductor sweep, 2026-08-08): moved back to needs-human from ready — same reply-received bookkeeping gap as t-004/t-005/t-007/t-008/t-010 (root TALKBACK.md 2026-08-08). Same mid-word cutoff as t-005, right at "approved_by_human" — reads like it was truncated before completing this task's own TO APPROVE phrase. No agent has set the field; that stays yours alone. TO APPROVE: if that was your approval, set approved_by_human: true and status: done — otherwise let us know what got cut off.
 - id: t-007
   milestone: m2
   title: "Write VERY-IMPORTANT.md \u2014 actual typos and grammar errors"
-  status: ready
-  updated: '2026-08-04 05:07:11.588000+00:00'
+  status: needs-human
+  updated: '2026-08-08T07:00:00Z'
   passes: 0
   stakes: reversible
   depends_on: t-003
@@ -139,11 +145,13 @@ tasks:
 
 
     SENT BACK by silasfelinus via Kind Robots For You. thank you for the report.  very helpful. done
+
+    RECONCILIATION (conductor sweep, 2026-08-08): moved back to needs-human from ready -- same reply-received bookkeeping gap as t-004/t-005/t-006/t-008/t-010 (root TALKBACK.md 2026-08-08). Deliberately NOT treating this one as closed: this task's TO APPROVE condition is "fix in your own hand ... when the list is worked through," which is about the ~140 items actually getting fixed in your manuscript, not about acknowledging the report. Your reply thanks us for the report but does not say the fixes are done. Left approved_by_human: false. TO APPROVE: once you have worked through the list (or decided you do not need to), set approved_by_human: true and status: done.
 - id: t-010
   milestone: m2
   title: Guest reader reviews (Silas's quirky request)
-  status: ready
-  updated: '2026-08-04 04:59:19.768000+00:00'
+  status: needs-human
+  updated: '2026-08-08T07:00:00Z'
   passes: 0
   stakes: reversible
   depends_on: t-003
@@ -154,11 +162,13 @@ tasks:
 
 
     SENT BACK by silasfelinus via Kind Robots For You. glad that it's done and I've read them, excellent. please note that I have updated the current draft, and I have put in a request to have more edits done, each day that I complete a draft I want one of the characters or bots in kind robots to write a new review in their voice. This will help me both nail down the voices of our characters, and get more (unusual and different) insight and perspectives into my story. I will need some sort of notification to know that the edit was written.
+
+    RECONCILIATION (conductor sweep, 2026-08-08): moved back to needs-human from ready — same reply-received bookkeeping gap as t-004/t-005/t-006/t-007/t-008 (root TALKBACK.md 2026-08-08). Your new daily-review request in the reply above was already turned into its own task (t-013, recurring, shipped and running since 2026-08-04 — see editorial/character-reviews/). This task's own deliverable (the three guest reviews) reads as satisfied by "I've read them, excellent," with no changes requested. TO APPROVE: if the guest reviews themselves need nothing further, set approved_by_human: true and status: done.
 - id: t-008
   milestone: m3
   title: "Revision dialogue prep \u2014 keep docs/revision-questions.md current"
-  status: ready
-  updated: '2026-08-04 04:59:57.115000+00:00'
+  status: needs-human
+  updated: '2026-08-08T07:00:00Z'
   passes: 0
   stakes: reversible
   gate_human: true
@@ -168,6 +178,8 @@ tasks:
 
 
     SENT BACK by silasfelinus via Kind Robots For You. read and thank you for the feedback, this can close.
+
+    RECONCILIATION (conductor sweep, 2026-08-08): moved back to needs-human from ready -- same reply-received bookkeeping gap as t-004/t-005/t-006/t-007/t-010 (root TALKBACK.md 2026-08-08). "this can close" is about as unambiguous a signal as this batch gets. No agent has set approved_by_human itself; that stays yours alone. TO APPROVE: set approved_by_human: true and status: done to make it official.
 - id: t-009
   milestone: m4
   title: Plan the mermaidsofvenice.com full site (PARKED)
