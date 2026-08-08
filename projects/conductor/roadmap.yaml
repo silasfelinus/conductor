@@ -3532,3 +3532,35 @@ tasks:
     claimed_by: 2026-08-08T162700Z-cd-t105
     claimed_at: '2026-08-08T16:28:38Z'
     implementation_pr: 'silasfelinus/conductor#1908'
+
+  - id: t-106
+    milestone: m2
+    title: "Diagnose the recurring isolated CodeQL javascript-typescript analyzer stall on conductor PRs"
+    status: ready
+    owner: null
+    stakes: reversible
+    passes: 0
+    note: >
+      Observed repeatedly the same day (2026-08-08) across multiple independent sessions'
+      conductor PRs: the `Analyze (javascript-typescript)` CodeQL check runs noticeably slower
+      than the other 3 language analyzers (actions/python/c-cpp) on the identical commit, and
+      on at least one PR (#1907, per its own TALKBACK-documented account) genuinely stalled at
+      `in_progress` for 60+ minutes across two separate cancel+retrigger cycles before finally
+      completing -- vs. every other check (including this repo's own Python test suite)
+      finishing in under a minute. On this task's own PRs (#1908, #1909) it did NOT stall
+      outright, just ran ~4-5x slower than its sibling analyzers (completing in 1-5 minutes
+      vs. seconds), which is at least consistent with the same underlying congestion rather
+      than a one-off.
+
+      Investigate whether this is (a) genuinely platform-side GitHub Actions CodeQL queue
+      congestion unrelated to this repo (in which case document the expected variance and a
+      standard retrigger playbook rather than treating it as a signal about the diff), or (b)
+      something about this repo's own CodeQL config/JS-TS surface specifically slow to analyze
+      (e.g. a large generated/vendored file the default config doesn't exclude, an expensive
+      query pack, or excessive included paths) that a `.github/codeql/codeql-config.yml`
+      path-filter or query-pack change could fix. Check whether other repos' CodeQL runs on
+      the same day show the same slowdown pattern (would support (a)) before assuming (b).
+      If (b), scope and ship the config fix. If (a), document it in AGENTS.md's PR-review
+      section next to the existing "don't merge on a still-in_progress state" guidance so
+      future sessions don't burn cancel/retrigger cycles chasing a non-issue.
+    updated: '2026-08-08T16:47:00Z'
