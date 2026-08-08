@@ -1,7 +1,0 @@
-version: 1
-project: interface-vision
-task: t-108
-operation: ready
-updated: '2026-08-08T04:21:20Z'
-note: >-
-  Reviewer rejected kind_robots PR #1598 at exact head 65d43829bfd89604d446861acb8be8e4a5be0348. The native Image() probe bypasses the original loading="lazy" behavior and can eagerly start first-load requests for the whole ~85-icon navigation directory, increasing distinct-URL burst pressure while only serializing duplicates. Remove the new explanatory inline-comment block to match kind_robots/AGENTS.md. Preserve visibility-driven lazy loading in the retry, then require the corrected exact head's responsive-layout-audit raw /navigation BROKEN-ART lines before merge; structural CI alone is insufficient for this third attempted fix.
