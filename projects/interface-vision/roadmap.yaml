@@ -2794,10 +2794,11 @@ tasks:
   - id: t-108
     milestone: m4
     title: "/navigation's site-directory (~85 icons/page) flakes BROKEN-ART on a different image set each run"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
+    implementation_pr: 'silasfelinus/kind_robots#1592'
     note: >
       UPDATED with a 3rd/4th data point (conductor sweep, 2026-08-07 ~14:35Z) -- read this
       paragraph first. Two more scheduled `responsive-layout-audit` runs against `main` since
@@ -2859,6 +2860,32 @@ tasks:
       remaining_scope_task: t-108 instead (the correct umbrella-sweep mechanism per
       AGENTS.md), so it stops being independently claimable while this is the umbrella's
       one open item. Status ready -- unblocked, claimable now.
+
+      IMPLEMENTATION (conductor sweep, 2026-08-08, kind_robots PR #1592): read-only repo
+      investigation independently confirmed and sharpened the duplicate-URL hypothesis --
+      the /navigation site-directory renders each entry as a plain native <img> (components/
+      navigation/navigation-trimmed.vue), no NuxtImg/IPX, no custom cache/dedup layer.
+      stores/helpers/channelContent.ts's imagePath() / stores/helpers/dashboardHelper.ts's
+      getDashboardTabImagePath() both resolve to `/images/dashboard-tabs/${dashboardKey}/
+      ${dashboardTab}.webp`; a repo-wide grep of content/channels/**/*.md confirms real,
+      widespread collisions feeding this exact page (user/profile shared by 5 files,
+      giftshop/community by 2, conductor/conductor by 3), matching every recorded
+      BROKEN-ART hit. vercel.json's /images/:path* rule 307-redirects to the self-hosted
+      media origin, which already caches the final response for 1 hour (docs/self-hosted-
+      media.md) -- but the Vercel-side redirect itself carried no Cache-Control, so per HTTP
+      semantics a 307 with no explicit freshness directive isn't browser-cached, meaning
+      every duplicate <img> re-resolves the redirect (and re-issues an origin request)
+      instead of reusing one, concentrating repeat identical-path requests in a short window
+      at page load. Shipped the smallest safe mitigation from inside this repo: an explicit
+      `Cache-Control: public, max-age=3600` header for /images/:path* (kind_robots PR #1592),
+      purely additive Vercel config, no app code touched. This is a plausible mitigation, not
+      a proven fix -- the actual media origin (Nginx/Traefik on an external Unraid box) is
+      outside this repo and couldn't be inspected to confirm or rule out real origin-side
+      concurrency behavior. Left status: review rather than done -- close this out only after
+      a fresh responsive-layout-audit run (post-merge against main, or the PR's own deployment
+      if a preview audit fires) shows /navigation's BROKEN-ART rate actually drop, matching
+      this task's own audit-based verification pattern (see t-109's precedent of verifying via
+      raw per-route log, not just a pass/fail summary).
     claimed_by: claude-quirky-curie-20260808T014000Z-iv-t108
     claimed_at: '2026-08-08T01:38:46Z'
     updated: '2026-08-08T01:38:46Z'
