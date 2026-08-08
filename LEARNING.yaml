@@ -7109,3 +7109,21 @@ records:
     A brand-new rule with real pre-existing violations should grandfather them explicitly and let
     only new violations fail CI going forward -- exactly the same contract every other rule in the
     file already has.
+- date: 2026-08-08
+  project: digital-storefront
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A task note that frames N ad-hoc implementations as N variants of the same pattern can be
+    wrong about that -- two of the four (Character, Reward) turned out to have no check at all,
+    not a fourth variant. Dispatching a read-only investigation to re-verify the note's own
+    framing before implementing caught this: "wire an existing check" and "add this route's
+    first-ever check" are different risk categories (additive/behavior-preserving vs. a real
+    behavior change for any caller relying on the open read), and conflating them would have
+    either shipped an unreviewed security fix or silently dropped a real gap from the record.
+    Split the genuinely mechanical pieces from the ones needing a human product decision rather
+    than picking one bucket for the whole task.
