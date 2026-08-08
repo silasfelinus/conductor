@@ -43,6 +43,12 @@ def test_main_fails_only_on_a_freshly_partial_proposal(tmp_path, monkeypatch):
     # conductor/t-104's 2026-08-08 hourly-conductor incident, where exactly
     # this pattern kept the scheduled workflow red for 2+ days on one stuck
     # proposal while genuinely new proposals kept succeeding underneath it.
+    # main() short-circuits to 0 immediately when KR_API_TOKEN is absent (a
+    # deliberate non-blocking-degradation path, unrelated to what this test
+    # is checking) -- set one so the real partial_new/partial_persisting
+    # logic under test actually runs, matching a real CI environment that
+    # HAS the secret configured.
+    monkeypatch.setenv("KR_API_TOKEN", "fake-token")
     stale_partial = tmp_path / "stale.md"
     fresh = tmp_path / "fresh.md"
 
@@ -57,6 +63,7 @@ def test_main_fails_only_on_a_freshly_partial_proposal(tmp_path, monkeypatch):
 
 
 def test_main_fails_on_a_newly_partial_proposal(tmp_path, monkeypatch):
+    monkeypatch.setenv("KR_API_TOKEN", "fake-token")
     newly_broken = tmp_path / "newly-broken.md"
 
     def fake_apply_file(path, token, dry_run=False, force=False):
