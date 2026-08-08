@@ -1187,15 +1187,16 @@ tasks:
 - id: t-038
   milestone: m6
   title: "Implement every missing storefront-owned catalog item found by the reality audit"
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-037
+  remaining_scope_task: t-003
   note: >
     Close t-037's storefront-owned gaps -- see STOREFRONT-REALITY-AUDIT-2026-08-08.md's "Real gaps
-    remaining" section for full detail. Concrete scope: (1) seed a real KR-logo Product/POD SKU
-    (currently MISSING entirely -- no artImageId, no catalog row); (2) give DLC a live catalog --
+    remaining" section for full detail. Original concrete scope: (1) seed a real KR-logo Product/POD
+    SKU (currently MISSING entirely -- no artImageId, no catalog row); (2) give DLC a live catalog --
     an admin route/script that turns a Packmaker Pack into a Product with metadata.packId (the
     webhook fulfillment side already works correctly, it just has nothing to sell), plus wire
     contentAccess.ts's packId check into the actual Dream/Facet/Character/Reward content routes
@@ -1209,6 +1210,27 @@ tasks:
     handle activeTab === 'mermaids' in-place (currently masked, not confirmed to cause a live bug).
     Do not duplicate products whose production is explicitly owned by coloring-book/packmaker/
     Mermaids; integrate their finished outputs instead.
+
+    Slice 1 (conductor sweep, 2026-08-08): closed items 5 and 6, the two self-contained UI fixes
+    that needed no DB seeding or vendor/design decisions. giftshop-interact.vue's "Butterfly Print"
+    demo card (guessed artImageId: 1, never a real ArtImage) is dropped -- the real Featured prints
+    grid above it already covers that exact use case with genuine storefrontFeatured-backed art.
+    Its "Jellybean Token Pack" sibling is kept (no other UI purchases boost tokens) but now sources
+    label/price/description straight from stores/seeds/cartItems.ts's real 'tokens' entry --
+    checkout.post.ts's own trusted pricing source -- instead of a second hand-maintained guess, using
+    artImageId: 0 for the needsArt: false item per giving-page.vue's existing donation-add convention.
+    giftshop-manager.vue's activeTab now explicitly redirects to /mermaids when navStore's persisted
+    dashboard tab is 'mermaids' but the component mounts on /sanctuary directly (a stale-tab-selection
+    case that previously fell through to the catch-all "misplaced tab" warning instead of reaching
+    real content) -- the fix sends the visitor to the same destination the tab's own route config
+    already points at. kind_robots PR: <filled in below after opening>. Verified: eslint (0 new
+    problems, ratchet unchanged at 392/27), vue-tsc --noEmit clean, prettier clean.
+
+    Items 1-4 (KR-logo Product/POD SKU, DLC live catalog + admin route + contentAccess wiring, and
+    the two pricing/POD-entry-point retirement decisions) are genuinely larger and judgment-heavy --
+    split into t-003 as this task's remaining_scope_task per AGENTS.md's umbrella-sweep convention.
+    Keeping this task at review rather than done until t-003 closes; a task-events "done" transition
+    should NOT fire for this id until then.
   claimed_by: 2026-08-08T0716-ds-t038-w4x2
   claimed_at: '2026-08-08T07:28:19Z'
   updated: '2026-08-08T07:28:19Z'
@@ -1262,6 +1284,50 @@ tasks:
     Apply Interface Vision rules specifically to the storefront: one clear hierarchy, useful product
     imagery, no nested-dashboard squeeze, clean cart/checkout states, and phone/tablet/desktop layouts
     with no hidden or unreachable controls. Verify through the deployed preview, not source alone.
+
+- id: t-003
+  milestone: m6
+  title: "Seed the KR-logo/DLC catalog and resolve the storefront's two pricing/POD-entry-point splits"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-037
+  note: >
+    Split from t-038 (slice 1, conductor sweep 2026-08-08) -- the items too large/judgment-heavy for
+    a single-session slice. See STOREFRONT-REALITY-AUDIT-2026-08-08.md's "Real gaps remaining" section
+    for the originating detail. Scope:
+
+    1. Seed a real KR-logo Product/POD SKU (currently MISSING -- no artImageId, no catalog row).
+    Needs either a real ArtImage row for the KR logo image (check whether one already exists before
+    generating a new one; project art generation is pre-approved per AGENTS.md's "Generated image
+    approval rule") or a non-art-dependent SKU shape if the POD/checkPrintEligibility path can't
+    reasonably apply to a fixed logo asset -- decide which and document why in the PR.
+
+    2. Give DLC a live catalog: an admin route/script that turns a Packmaker Pack into a Product with
+    metadata.packId (webhook fulfillment already handles this correctly -- server/api/stripe/webhook.post.ts's
+    handleProductPurchase creates the Grant; it just has nothing to sell yet), plus wire
+    server/utils/contentAccess.ts's packId check into the actual Dream/Facet/Character/Reward content
+    routes (its own header comment explicitly says this isn't done yet).
+
+    3. Decide whether to restore a live entry point for the orphaned server/api/store/pod-checkout.post.ts
+    flow (e.g. an art-detail/gallery "Print this" action pointing at a live, non-abandonware component)
+    or formally retire it in favor of the general-cart featured-art POD path
+    (giftshop-interact.vue's addFeaturedPrint -> shopping-cart.vue -> checkout.post.ts) that already works
+    end-to-end today. If retiring, say so in a code comment near pod-checkout.post.ts so a future reader
+    doesn't assume it's live.
+
+    4. Decide whether stores/seeds/cartItems.ts should be retired in favor of the real Product table now
+    that two parallel pricing sources coexist (checkout.post.ts prices off the hardcoded array;
+    product-checkout.post.ts/pod-checkout.post.ts price off Product rows) -- or whether the split is
+    intentional (e.g. cartItems.ts covers generic non-Product-backed items like the flat-rate donation/
+    tokens/POD swag that don't need a DB row) and should stay, just documented as such.
+
+    Do not duplicate products whose production is explicitly owned by coloring-book/packmaker/Mermaids;
+    integrate their finished outputs instead. Items 1-2 touch the database (a Product/Pack seed +
+    an admin write path) -- reversible (Product.active can flip false, Pack->Product linkage can be
+    removed), not destructive, but real state, so verify carefully and describe exactly what was
+    seeded/wired in the PR body.
 
 - id: t-042
   milestone: m6
