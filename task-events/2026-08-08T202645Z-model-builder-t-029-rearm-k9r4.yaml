@@ -1,0 +1,10 @@
+version: 1
+project: model-builder
+task: t-029
+operation: rearm
+owner: worker
+session: 2026-08-08T202645Z-model-builder-t029-k9r4
+updated: '2026-08-08T20:41:30Z'
+implementation_pr: silasfelinus/kind_robots#1620
+note: >-
+  RAN 2026-08-08 (session 2026-08-08T202645Z-model-builder-t029-k9r4): fixed a concrete Run History retry regression in kind_robots PR #1620. `model-builder-run-history.vue` previously awaited `store.openRun(run.id)` and unconditionally closed the history panel, even though `openRun()` leaves the active run unchanged on a failed fetch. The panel now closes only when the requested run actually became active, preserving the immediate retry path after transient failures. Exact implementation head b6121efbe60dc151e30c9456c0bf025fbe1b3088 passed all 13 visible PR workflows, including TypeScript Type Check #31277304135 and Contract Tests #31277304175, before squash merge 64acb593d92a6440d2b243135fc7635f4b559369. The original dashboard/tutorial art deliverable remains outstanding, so rearm this recurring polish task to ready.
