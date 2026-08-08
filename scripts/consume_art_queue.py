@@ -26,6 +26,7 @@ except ImportError:
 
 _core_entry_to_job = _core.entry_to_job
 DAILY_DREAM_PRIORITY = 100
+DAILY_DREAM_ENTITY_TYPES = {"dream", "character", "reward", "scenario", "bot"}
 
 
 def retry_seed_identity(entry: dict[str, Any]) -> dict[str, str]:
@@ -60,6 +61,77 @@ def uses_specialized_attempt_recovery(entry: dict[str, Any]) -> bool:
     )
 
 
+def _is_daily_dream(entry: dict[str, Any]) -> bool:
+    return str(entry.get("source") or "").strip().lower() == "dream-cycle"
+
+
+def _positive_int(value: Any) -> int | None:
+    try:
+        parsed = int(value)
+    except (TypeError, ValueError):
+        return None
+    return parsed if parsed > 0 else None
+
+
+def _enrich_daily_dream_job(entry: dict[str, Any], job: dict[str, Any]) -> None:
+    """Preserve canonical Daily Dream destination, provenance, and attach target.
+
+    ``build_dream_records.py`` writes the stable destination plus entity
+    type/id/field on each request. Keeping those fields inside the durable
+    ArtJob means:
+      * the relay and Kind Robots file resolver can honor the declared path,
+      * Kind Robots can attach the completed ArtImage in the same transaction
+        that marks the job DONE, and
+      * the stable request id can suppress duplicate enqueues after a timeout.
+    """
+    payload = job.get("payload")
+    if not isinstance(payload, dict):
+        return
+
+    request_id = str(entry.get("id") or "").strip()
+    target_repo = str(entry.get("target_repo") or "").strip()
+    image_path = str(entry.get("image_path") or "").strip()
+    source_url = str(entry.get("source_url") or "").strip()
+    page_url = str(entry.get("page_url") or "").strip()
+    label = str(entry.get("label") or "").strip()
+    entity_type = str(entry.get("entity_type") or "").strip().lower()
+    entity_id = _positive_int(entry.get("entity_id"))
+    entity_field = str(entry.get("entity_field") or "imagePath").strip() or "imagePath"
+
+    job["priority"] = DAILY_DREAM_PRIORITY
+    job["projectSlug"] = "dream-cycle"
+    if request_id:
+        job["idempotencyKey"] = request_id
+
+    payload["collection"] = "dream-cycle"
+    if target_repo:
+        payload["targetRepo"] = target_repo
+    if image_path:
+        payload["imagePath"] = image_path
+    if source_url:
+        payload["sourceUrl"] = source_url
+    if page_url:
+        payload["pageUrl"] = page_url
+    payload["conductorRequest"] = {
+        "id": request_id or None,
+        "source": "dream-cycle",
+        "label": label or None,
+        "targetRepo": target_repo or None,
+        "imagePath": image_path or None,
+        "sourceUrl": source_url or None,
+        "pageUrl": page_url or None,
+    }
+
+    if entity_type in DAILY_DREAM_ENTITY_TYPES and entity_id:
+        payload["entityArt"] = {
+            "entityType": entity_type,
+            "entityId": entity_id,
+            "field": entity_field,
+            "preserveOriginal": True,
+            "mode": "recreate",
+        }
+
+
 def entry_to_job(entry: dict[str, Any]):
     normalized = dict(entry)
     engine = _core.normalize_engine(normalized.get("engine"))
@@ -75,8 +147,8 @@ def entry_to_job(entry: dict[str, Any]):
         normalized["seed"] = stable_retry_seed(normalized)
 
     job = _core_entry_to_job(normalized)
-    if str(normalized.get("source") or "").strip().lower() == "dream-cycle":
-        job["priority"] = DAILY_DREAM_PRIORITY
+    if _is_daily_dream(normalized):
+        _enrich_daily_dream_job(normalized, job)
     if synthetic_seed:
         payload = job.get("payload")
         if isinstance(payload, dict):
@@ -89,6 +161,7 @@ _core.stable_retry_seed = stable_retry_seed
 _core.uses_specialized_attempt_recovery = uses_specialized_attempt_recovery
 _core.entry_to_job = entry_to_job
 _core.DAILY_DREAM_PRIORITY = DAILY_DREAM_PRIORITY
+_core.DAILY_DREAM_ENTITY_TYPES = DAILY_DREAM_ENTITY_TYPES
 sys.modules[__name__] = _core
 
 
