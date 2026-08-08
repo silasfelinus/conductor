@@ -44,7 +44,7 @@ tasks:
 - id: t-002
   milestone: m1
   title: Personal note for the landing page (Silas writes it)
-  status: review
+  status: needs-human
   passes: 0
   stakes: reversible
   gate_human: true
@@ -57,10 +57,12 @@ tasks:
     SENT BACK by silasfelinus via Kind Robots For You. I haven't written this yet, but just lorem ipsum it for now.
 
     IMPLEMENTED (conductor sweep, 2026-08-08): per the "just lorem ipsum it for now" direction, replaced the italic "coming soon" placeholder text in mermaids-page.vue's "A Note From Silas" section with lorem ipsum filler paragraph text (kind_robots PR #1596). Dashed-border styling and header unchanged -- still clearly a placeholder, not the real note. eslint/vue-tsc clean. Left status: review, gate_human/approved_by_human unchanged -- this fills the interim placeholder only; the real note and its approval remain Silas's alone to give.
-  updated: '2026-08-08T02:41:00Z'
-  owner: worker
+
+    FOR SILAS: kind_robots PR #1596 is fully reviewed and ready as the interim lorem-ipsum placeholder you requested. Exact head 8b3118ab1cbeab55d4f4cadc25fc83c0416eaa41 has all 13 registered PR workflows completed successfully, Vercel preview is READY, and there are no unresolved review threads. The task remains gate_human: true / approved_by_human: false because it changes reader-facing copy on the Mermaids landing page. TO APPROVE: explicitly clear this interim placeholder for merge in a session; the real personal note remains yours to write and approve separately.
+  updated: '2026-08-08T03:19:00Z'
   claimed_by: claude-quirky-curie-20260808T023000Z-mov-t002
   claimed_at: '2026-08-08T02:39:37Z'
+  soft_gate: false
 - id: t-003
   milestone: m2
   title: 'Manuscript intake: Silas drops the PDF into manuscript/'
