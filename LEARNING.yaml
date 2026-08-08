@@ -7007,3 +7007,21 @@ records:
     audit run, same flexbox root cause pattern) avoided contending with the responsive-audit
     workflow's one-run-at-a-time serialization -- worth defaulting to when a slice's several
     small findings would otherwise each wait behind the same queue.
+- date: 2026-08-08
+  project: digital-storefront
+  task: t-037
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A stack of roadmap tasks marked done (t-011..t-036) turned out to be almost entirely
+    accurate against the real code when independently re-audited -- Mermaids PDF, subscriptions,
+    mana top-ups, and the giving page were all genuinely BUILT-AND-VISIBLE end-to-end, and the
+    prior tasks' own notes correctly predicted exactly where the remaining gaps would be (no
+    KR-logo SKU, no live DLC catalog, no POD vendor integration). Dispatching a single read-only
+    investigation subagent with a precise per-catalog-item checklist and an explicit 5-way
+    classification (built-and-visible / built-but-unreachable / placeholder / delegated /
+    missing) produced a citation-backed audit in one pass instead of several rounds of spot
+    checks -- worth reusing this shape (structured checklist + forced classification + cite
+    file:line) for any 're-verify a large already-done surface against reality' task."
