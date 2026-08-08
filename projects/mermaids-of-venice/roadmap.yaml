@@ -44,17 +44,20 @@ tasks:
 - id: t-002
   milestone: m1
   title: Personal note for the landing page (Silas writes it)
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   gate_human: true
   approved_by_human: false
+  implementation_pr: silasfelinus/kind_robots#1596
   note: |-
     FOR SILAS: The landing page ships with a marked placeholder where your personal note goes (components/pages/mermaids-page.vue, look for "PERSONAL NOTE PLACEHOLDER"). Only you can write this one. TO APPROVE: Send the note text in any session (or edit the component directly), then set approved_by_human: true and status: done. Nothing else is blocked on this — the page works with the placeholder meanwhile.
 
 
     SENT BACK by silasfelinus via Kind Robots For You. I haven't written this yet, but just lorem ipsum it for now.
-  updated: '2026-08-08T02:39:37Z'
+
+    IMPLEMENTED (conductor sweep, 2026-08-08): per the "just lorem ipsum it for now" direction, replaced the italic "coming soon" placeholder text in mermaids-page.vue's "A Note From Silas" section with lorem ipsum filler paragraph text (kind_robots PR #1596). Dashed-border styling and header unchanged -- still clearly a placeholder, not the real note. eslint/vue-tsc clean. Left status: review, gate_human/approved_by_human unchanged -- this fills the interim placeholder only; the real note and its approval remain Silas's alone to give.
+  updated: '2026-08-08T02:41:00Z'
   owner: worker
   claimed_by: claude-quirky-curie-20260808T023000Z-mov-t002
   claimed_at: '2026-08-08T02:39:37Z'
