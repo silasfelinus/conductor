@@ -275,9 +275,10 @@ def enqueue_render(item: dict[str, Any]) -> Optional[int]:
         "isPublic": item["is_public"],
         "isMature": item["is_mature"],
         "designer": "dream-cycle",
-        # Ahead of the facet-catalog backlog: this is corrective work on art
-        # that is live and wrong on the site right now.
-        "priority": 10,
+        # No explicit priority: /api/art/enqueue defaults corrective and
+        # interactive work to 100, above bulk creation. This used to hardcode
+        # 10, which after that change would have *demoted* a repair below the
+        # endpoint's own default.
         "entityArt": {
             "entityType": ENTITY_TYPE[item["kind"]],
             "entityId": item["id"],
