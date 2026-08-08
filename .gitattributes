@@ -14,3 +14,15 @@ workspace.html merge=ours
 *.zip binary
 *.7z binary
 *.rar binary
+
+# Full vendored WordPress core installs kept only as static reference copies
+# (see projects/superkate-services-calculator/roadmap.yaml notes_from_silas and
+# projects/humboldt-scoop/roadmap.yaml) -- not analyzed/edited as project code.
+# Mark linguist-vendored so GitHub's language stats and (where honored)
+# code-scanning tooling treat these as vendored third-party code rather than
+# repo source. conductor/t-106: these two trees are the largest concentration
+# of JS in the repo (multiple unminified multi-MB bundles like
+# wp-includes/js/dist/block-editor.js) and are the prime suspect for the
+# repo's slow `Analyze (javascript-typescript)` CodeQL job.
+projects/superkate-services-calculator/hairpress/** linguist-vendored
+projects/humboldt-scoop/scoops/** linguist-vendored
