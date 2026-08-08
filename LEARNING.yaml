@@ -6965,6 +6965,22 @@ records:
     passes instead of full native pipelines, deferring the real cost (store accounts,
     code-signing, native build tooling) until Silas actually asks for store distribution.
 - date: 2026-08-08
+  project: ai-art-academy
+  task: t-066
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "@vite-pwa/nuxt's Nuxt module does NOT inject installability meta tags (viewport/
+    theme-color/apple-touch-icon) or the manifest <link> via useHead for an SSR app -- only
+    a client-side SW-registration plugin and a nitro route for the manifest file itself.
+    For any SSR (non-`nuxt generate`) app, those meta/link tags must be added explicitly
+    in nuxt.config's app.head or they silently never render, even though the manifest file
+    and service worker both build correctly. Worth checking directly against the built
+    output (grep .output/public or curl the live site) rather than trusting the module's
+    'zero-config' framing for SSR specifically."
+- date: 2026-08-08
   project: interface-vision
   task: t-110
   kind: software
