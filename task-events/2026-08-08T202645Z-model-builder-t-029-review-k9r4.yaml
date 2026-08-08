@@ -1,0 +1,9 @@
+version: 1
+project: model-builder
+task: t-029
+operation: review
+owner: worker
+session: 2026-08-08T202645Z-model-builder-t029-k9r4
+updated: '2026-08-08T20:31:00Z'
+note: >-
+  Fixed a concrete run-history retry regression in kind_robots: the History panel now closes only after the requested run is actually active, instead of dismissing itself after a failed openRun fetch. Branch worker/model-builder-t029-history-open-k9r4 is one commit ahead of current main with one Vue file changed (+2/-1).
