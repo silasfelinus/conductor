@@ -1416,7 +1416,7 @@ tasks:
 - id: t-004
   milestone: m6
   title: "Give DLC a live catalog and wire contentAccess.ts's packId check into the actual content routes"
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -1468,6 +1468,8 @@ tasks:
     Seeding an actual DLC Product row against a real Pack (verifying the full purchase-to-unlock loop
     end-to-end) still needs a live Packmaker Pack to test against and production DB access neither this
     nor prior sandboxes had -- unchanged from the original task note.
+
+    kind_robots PR #1630 merged (squash 0a69a96).
   claimed_by: 2026-08-08T233500Z-ds-t004-dm1dsz
   claimed_at: '2026-08-08T23:32:45Z'
   updated: '2026-08-08T23:59:00Z'
@@ -1516,7 +1518,7 @@ tasks:
 - id: t-043
   milestone: m6
   title: "Wire contentAccess.ts's packId Grant into the Dream and Facet LIST routes"
-  status: waiting
+  status: ready
   owner: null
   passes: 0
   stakes: reversible
