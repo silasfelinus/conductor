@@ -334,14 +334,21 @@ def main(argv=None) -> int:
             print(f"  new: {item['prompt'][:160]}...")
         if not args.apply:
             continue
-        if patch_prompt(item):
-            patched += 1
-        if args.skip_render:
-            continue
-        job_id = enqueue_render(item)
-        if job_id:
+        # Enqueue BEFORE patching. `needs_repair` decides from the stored
+        # artPrompt, so patching first and then failing to enqueue (one transient
+        # SSL drop did exactly this to character/2800) leaves a row that still
+        # shows the old crowd but no longer looks like a candidate — invisible to
+        # every future run. Enqueue-first means a failure here is retryable.
+        if not args.skip_render:
+            job_id = enqueue_render(item)
+            if not job_id:
+                print("  skipping prompt update so this row stays retryable",
+                      file=sys.stderr)
+                continue
             queued += 1
             print(f"  queued ArtJob {job_id} (previous image preserved)")
+        if patch_prompt(item):
+            patched += 1
 
     if not args.apply:
         print(f"\nDry run. Re-run with --apply to update {len(work)} prompt(s)"
