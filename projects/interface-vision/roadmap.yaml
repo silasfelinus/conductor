@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2950,11 +2950,12 @@ tasks:
       Slice 2 fixed and merged (kind_robots PR #1612, squash c763a872). Exact-head follow-up on 8479d4c9 fixed the equal-length thread-switch scroll regression: kr-chat-window now watches both turn-array identity and turn count (plus streaming text), so switching between two conversations with the same message count still scrolls the newly selected thread to its latest message. Regression coverage added to verifyNarrativeKit.ts for that watcher contract. All 18 checks green including the Responsive Layout Audit (`audit`, success). Migrated chat-gallery.vue's thread view onto kr-chat-window (outgoing messages -> 'user' turns, everything else -> 'narrator'), added optional dateLabel/timestamp fields to kr-chat-window's NarrativeTurn (purely additive, every existing caller omits both). Reconciled by a later session after the reviewing session's own close-out appears to have stalled (last REVIEWING marker posted 2026-08-08T15:17:15Z, well past the 20-minute review-claim TTL, with the PR still open and unmerged and no further activity) -- verified mergeable_state clean and all checks still green before merging directly. Status back to ready rather than done -- this is one slice of a larger inventory-and-migrate task; two candidates remain deferred: components/resources/resource-card.vue + components/servers/server-card.vue -> kr-entity-card-body (the concurrent resource-card.vue rework, kind_robots PR #1611/#1613, has since merged, so this is no longer blocked -- available for the next slice to pick up directly); components/dreams/daily-digest-object-gallery.vue -> kr-gallery (needs a new carousel/horizontal-scroll density kr-gallery doesn't support yet, two-step work).
 
       Slice 3 migrates the reachable Server card presentation onto kr-entity-card-body while preserving existing server selection, edit, health-test, and use actions. A focused card-action contract ratchet now keeps the six migrated core/server cards on the shared body.
+
+      Slice 3 merged as silasfelinus/kind_robots#1616 (squash 5a56162e). server-card now uses kr-entity-card-body and verifyCardActionContract ratchets the six migrated core/server cards onto the shared body. All 13 exact-head PR workflows completed successfully, including TypeScript, Contract Tests, Layout Contract, and the card-action contract step. t-104 remains multi-slice: resource-card and daily-digest-object-gallery remain separate candidates.
     claimed_by: 2026-08-08T181352Z-interface-vision-t104-a11b
     claimed_at: '2026-08-08T18:13:52Z'
     implementation_pr: 'silasfelinus/kind_robots#1612'
-    updated: '2026-08-08T18:20:57Z'
-    owner: worker
+    updated: '2026-08-08T18:25:14Z'
 
   - id: t-105
     milestone: m6
