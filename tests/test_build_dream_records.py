@@ -366,6 +366,71 @@ def test_unexpected_builder_exception_is_recorded_for_retry(env, monkeypatch):
     assert outcome["status"] == "failed"
     assert "socket vanished" in outcome["message"]
     assert '"status": "retry"' in path.read_text(encoding="utf-8")
+def test_missing_token_failure_pins_attempt_count_at_one(env, monkeypatch):
+    backlog, _ = env
+    path = write_proposal_file(backlog)
+    monkeypatch.setattr(bdr, "KR_API_TOKEN", "")
+
+    bdr.run_build("2020-01-01", dry_run=False)
+
+    attempt = bdr._data_block(path.read_text(encoding="utf-8"), "build-attempt-data")
+    assert attempt["attempt_count"] == 1
+
+
+def test_persisting_retry_does_not_re_fail_the_sweep_exit_code(env, monkeypatch):
+    """Kaizen from conductor/t-102/t-104 (2026-08-08): eligible_proposal() keeps a
+    failed proposal pinned at the head of the line until it succeeds, so the exact
+    same already-alerted failure would otherwise re-report `status: failed` (and
+    fail hourly-conductor.yml's exit code) every single sweep forever. Only the
+    FRESH failure should read as `failed`; once the proposal is already pinned at
+    `status: retry` entering this attempt, a repeat of the same failure must report
+    a distinct, non-`failed` status so the exit code stops re-alerting on a known,
+    unresolved issue -- see t-105's audit of this repo's other backlog sidecars for
+    the sibling fix in apply_daily_dream_facets.py this generalizes from.
+    """
+    backlog, _ = env
+    path = write_proposal_file(backlog)
+    monkeypatch.setattr(bdr, "KR_API_TOKEN", "")
+
+    first = bdr.run_build("2020-01-01", dry_run=False)
+    assert first["status"] == "failed"
+
+    second = bdr.run_build("2020-01-01", dry_run=False)
+    third = bdr.run_build("2020-01-01", dry_run=False)
+
+    assert second["status"] == "retry-persisting"
+    assert third["status"] == "retry-persisting"
+    assert second["status"] != "failed"
+
+    attempt = bdr._data_block(path.read_text(encoding="utf-8"), "build-attempt-data")
+    assert attempt["attempt_count"] == 3
+
+
+def test_persisting_retry_survives_a_different_failure_reason(env, monkeypatch):
+    """The already-pinned check keys on `status: retry` in the ledger, not on the
+    failure reason matching exactly -- a proposal stuck failing for reason A that
+    then starts failing for reason B is still a known, already-alerted proposal,
+    not a fresh incident."""
+    backlog, _ = env
+    path = write_proposal_file(backlog)
+    bdr.record_build_failure(
+        path,
+        {"status": "retry", "attempted_at": "2026-08-02T10:00:00-07:00", "message": "DB down"},
+        dry_run=False,
+    )
+    monkeypatch.setattr(
+        bdr, "build_records",
+        lambda *a, **k: (_ for _ in ()).throw(RuntimeError("a completely different failure")),
+    )
+
+    outcome = bdr.run_build("2020-01-01", dry_run=False)
+
+    assert outcome["status"] == "retry-persisting"
+    attempt = bdr._data_block(path.read_text(encoding="utf-8"), "build-attempt-data")
+    assert attempt["attempt_count"] == 2
+    assert "a completely different failure" in attempt["message"]
+
+
 def test_legacy_multi_asset_proposal_is_not_eligible(env):
     backlog, _ = env
     path = write_proposal_file(backlog)
