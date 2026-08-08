@@ -1243,7 +1243,7 @@ tasks:
 - id: t-039
   milestone: m6
   title: "Run and repair the Stripe checkout/webhook/fulfillment matrix end-to-end"
-  status: claimed
+  status: needs-human
   owner: worker
   passes: 0
   stakes: reversible
@@ -1256,8 +1256,42 @@ tasks:
     t-037's audit confirmed all of this is correct by code inspection but explicitly could not
     verify runtime behavior (live webhook delivery, env var configuration in production, real
     Stripe-retry idempotency) -- that gap is exactly this task's scope.
+
+
+    CURRENT STATE (2026-08-08, kind_robots PR #1615): confirmed this sandbox cannot achieve
+    literal "run it end-to-end" -- no STRIPE_SECRET_KEY/STRIPE_WEBHOOK_SECRET is configured
+    anywhere (no .env.example, no CI workflow sets them as secrets) and no database is reachable
+    (schema is mysql, none running here). The repo's only live-mode Cypress harness
+    (.github/workflows/cypress.yml) targets production and is currently manual-dispatch-only.
+    This is the identical credential/DB gap t-037's own audit hit and explicitly deferred here --
+    an actionable/infra block, not a quality gap, so no pass consumed.
+
+    Shipped what was actually achievable offline: (1) a real bug fix -- subscribe.post.ts's bare
+    `process.env.STRIPE_PRICE_ID!` non-null assertion let an unconfigured price fall through to a
+    raw Stripe API error instead of the app's structured 500 every other Stripe route returns;
+    replaced with an explicit guard matching getStripeClient()'s pattern. (2) topup.post.ts,
+    subscribe.post.ts, and cancel-subscription.post.ts had zero test coverage of any kind before
+    this PR -- added Cypress auth-rejection coverage for all three, plus topup's tier-validation
+    and cancel-subscription's no-active-subscription guard (both reject before ever calling
+    Stripe, so safe to exercise live against production without credentials). Verified:
+    eslint/prettier/vue-tsc clean, lint ratchet unchanged (392/27).
+
+    FOR SILAS: this task cannot fully close without live/test-mode Stripe credentials
+    (STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET) and a reachable database supplied to a session --
+    those are needed to actually create a Checkout Session, deliver a signed webhook, and assert
+    DB-persisted fulfillment state (Entitlement/Grant/PrintJob/mana rows). Soft gate: other
+    digital-storefront and conductor work can continue in parallel; this doesn't block anything
+    downstream. TO UNBLOCK: either provide test-mode keys + a reachable DB URL to a future
+    session, or run the actual purchase-to-fulfillment matrix manually against a staging
+    environment and report back what broke. Kaizen suggestion (PR #1615): add an offline
+    Stripe-webhook fixture test (sign a constructed checkout.session.completed event locally via
+    stripe.webhooks.generateTestHeaderString against a mocked Prisma client) to close the
+    webhook-routing coverage gap without needing live credentials -- worth a dedicated follow-up
+    task since it's a real, achievable next slice.
   claimed_by: claude-quirky-curie-20260808T153013Z-df-t039
   claimed_at: '2026-08-08T15:30:14Z'
+  implementation_pr: silasfelinus/kind_robots#1615
+  soft_gate: true
   updated: '2026-08-08T15:30:14Z'
 
 - id: t-040
