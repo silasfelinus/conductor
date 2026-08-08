@@ -3441,36 +3441,57 @@ tasks:
   - id: t-104
     milestone: m2
     title: "Consider widening workflow-medic's --watched-workflows / per-workflow thresholds"
-    status: claimed
+    status: review
     owner: reviewer
     stakes: reversible
     passes: 0
     note: >
-      Kaizen from conductor/t-102 (2026-08-08, PR #1883): `select_role.py`'s
-      new `workflow-medic` role only watches `process-task-events.yml` by
-      default (the one scheduled workflow that's actually caused a silent-
-      failure incident so far). This repo has several other `schedule:`-
-      triggered workflows that share the same "failure only shows up in the
-      Actions tab" blind spot -- `branch-janitor.yml`, `daily-digest.yml` /
-      `daily-digest-retry.yml`, `security-audit.yml`,
-      `process-color-art-events.yml`, `auto-art-generate.yml`,
-      `hourly-conductor.yml`, `roadmap-audit.yml`,
-      `monster-recast-art-jobs.yml`, `ci-janitor.yml`.
+      DONE (conductor sweep, 2026-08-08). While gathering real live-run
+      history for this decision, workflow-medic's first genuine incident
+      surfaced immediately: `hourly-conductor.yml` had failed EVERY run for
+      2+ days (30+ in a row). Root cause: `scripts/apply_daily_dream_facets.py`
+      re-scans every backlog proposal on each run and previously had no
+      short-circuit for an already-`partial` proposal the way it does for
+      `complete` -- so once `2026-08-04-lucky-ladle.md` went partial (a
+      missing `FacetAlias` DB row for the live "culinary-fantasy" Facet, a
+      404 on lookup despite the Facet itself existing), every subsequent
+      hourly run re-attempted it, re-hit the same 404, and exited 1, even
+      though that run's own genuinely-new proposal succeeded underneath the
+      red status the whole time.
 
-      Once `workflow-medic` has run for real from a few live GitHub Actions
-      jobs (this sandbox's direct-API 403 means it's only been exercised via
-      mocked unit tests so far -- see t-102's note), decide: (a) whether to
-      widen the default `--watched-workflows` list to cover some/all of the
-      above, weighing the real risk each one's silent failure poses against
-      noisy false positives from workflows that are expected to fail
-      occasionally (e.g. transient upstream API flakiness in
-      `auto-art-generate.yml`), and (b) whether a single
-      `--workflow-fail-threshold` for every watched workflow is right, or
-      whether some (especially ones with a tighter cron cadence, like
-      `hourly-conductor.yml`) warrant a lower/higher per-workflow threshold
-      than others. Not a blind "watch everything" expansion -- pick
-      deliberately, the same way `process-task-events.yml` was picked because
-      it had already caused a real incident.
-    updated: '2026-08-08T08:32:22Z'
+      Fixed both halves: (1) repaired the missing alias live via the
+      existing admin Facet PATCH endpoint (a slug-rename-and-back forces the
+      canonical `FacetAlias` upsert path) -- confirmed
+      `apply_daily_dream_facets.py --file .../2026-08-04-lucky-ladle.md` now
+      returns `complete`, and the very next scheduled run (08:41 UTC)
+      confirmed green after 30+ straight failures; (2) fixed the script
+      itself so a proposal already-partial-from-a-prior-run no longer fails
+      the exit code every single run forever -- only a FRESHLY-partial
+      proposal fails the run now (`partial_new` vs `partial_persisting`,
+      with tests).
+
+      Then did the actual t-104 decision with real data instead of only
+      mocked history: widened `select_role.py`'s `DEFAULT_WATCHED_WORKFLOWS`
+      to add `hourly-conductor.yml`, `branch-janitor.yml`, `ci-janitor.yml`,
+      `process-color-art-events.yml`, `daily-digest.yml`, and
+      `monster-recast-art-jobs.yml` (all routine/pipeline jobs expected to
+      succeed almost always, so a real streak is a strong signal). Deliberately
+      did NOT add `auto-art-generate.yml` (its non-success streak is
+      dominated by benign `cancelled` self-supersession, not `failure` --
+      would page constantly on noise), `security-audit.yml` /
+      `roadmap-audit.yml` (both pull_request-driven; a "failure" there can
+      mean a real finding was correctly caught, not that the workflow itself
+      broke), or `daily-digest-retry.yml` (too new, no noise baseline yet).
+      Added per-workflow threshold overrides (`--workflow-fail-thresholds`,
+      `DEFAULT_WORKFLOW_FAIL_THRESHOLDS`) since a single flat number was
+      wrong for `daily-digest.yml`'s once-daily cadence (lowered to 2 --
+      waiting for the flat default of 3 would mean 3 real digest-less days
+      before anyone notices); every other newly-watched workflow keeps the
+      existing flat default of 3 since they all run hourly-or-more-often.
+      55 select_role tests + 10 apply_daily_dream_facets tests pass; full
+      suite 956 passed (4 pre-existing unrelated `test_build_digest_email_v2.py`
+      failures, documented f-string/Python-version issue). `validate_roadmaps.py`
+      clean.
+    updated: '2026-08-08T08:55:00Z'
     claimed_by: claude-quirky-curie-20260808T0828Z-c-t104
     claimed_at: '2026-08-08T08:32:22Z'

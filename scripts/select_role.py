@@ -37,12 +37,16 @@ rather than duplicates:
                     has sat untouched for --pr-grace-minutes — a real reviewable
                     PR isn't only ever opened from a worker/* branch (conductor/t-083)
   - workflow-medic — find_failing_scheduled_workflows()'s check, across
-                    --watched-workflows (default: process-task-events.yml, the
-                    task queue's own cron-driven roadmap processor), for
-                    --workflow-fail-threshold or more consecutive completed
-                    runs with a non-success conclusion — a scheduled workflow
-                    failing loudly on every run but with nothing surfacing
-                    that beyond the raw Actions log (conductor/t-102)
+                    --watched-workflows (default: seven scheduled workflows
+                    picked deliberately, not "watch everything" — see
+                    DEFAULT_WATCHED_WORKFLOWS's comment for which ones and
+                    why, and which were left out on purpose), for
+                    --workflow-fail-threshold (or a --workflow-fail-thresholds
+                    per-workflow override, e.g. daily-digest.yml's lower bar)
+                    or more consecutive completed runs with a non-success
+                    conclusion — a scheduled workflow failing loudly on every
+                    run but with nothing surfacing that beyond the raw
+                    Actions log (conductor/t-102, widened in t-104)
   - pr-medic      — open PRs, across every repo in --repos, whose CI is red
                     AND stale (no push in --pr-stale-hours despite failing) —
                     an error nobody is actively fixing, as opposed to a PR
@@ -172,11 +176,59 @@ DEFAULT_PREFIXES = branch_janitor.DEFAULT_PREFIXES
 # (task-events/*.yaml -> roadmap.yaml); a session's own AGENTS.md-driven work
 # depends on it having actually run, but a scheduled workflow's failure
 # otherwise only shows up in the Actions tab (conductor/t-102). Extensible to
-# other scheduled workflows via --watched-workflows; only this one is watched
-# by default since it's the one that's actually caused a silent-failure
-# incident so far (the 2026-08-05 ai-art-academy/t-010 stuck-rearm).
-DEFAULT_WATCHED_WORKFLOWS = ('process-task-events.yml',)
+# other scheduled workflows via --watched-workflows; only this one was watched
+# by default at first, since it was the one that had actually caused a
+# silent-failure incident so far (the 2026-08-05 ai-art-academy/t-010
+# stuck-rearm).
+#
+# conductor/t-104 (2026-08-08) widened this deliberately after workflow-medic
+# caught its first live incident for real: hourly-conductor.yml had failed
+# EVERY run for 2+ days (a single stuck dream-cycle proposal whose Facet
+# catalog was missing an alias row, so `apply_daily_dream_facets.py` retried
+# and re-failed it forever -- see that script's `partial_new` vs
+# `partial_persisting` split, added the same day, which stops a single
+# already-reported stuck proposal from re-failing every run once it's known).
+# That confirmed the class of risk this role exists for, so t-104 added the
+# other `schedule:`-triggered workflows whose failure mode is unambiguous
+# (routine hygiene/pipeline jobs that are expected to succeed almost always):
+# branch-janitor.yml, ci-janitor.yml, process-color-art-events.yml,
+# daily-digest.yml (lower threshold -- see DEFAULT_WORKFLOW_FAIL_THRESHOLDS,
+# it only runs once/day so 3 misses in a row is 3 real digest-less days), and
+# monster-recast-art-jobs.yml (has a real multi-day failure-streak history,
+# not just theoretical risk).
+#
+# Deliberately NOT added:
+#   - auto-art-generate.yml: its non-success streak is dominated by
+#     `cancelled` (rapid push/schedule triggers superseding in-flight runs),
+#     not `failure` -- consecutive_failing_runs() treats any non-success as
+#     part of the streak, so this would page constantly on benign concurrency
+#     noise, not real breakage.
+#   - security-audit.yml / roadmap-audit.yml: both are pull_request-event
+#     driven, and a "failure" conclusion there can legitimately mean a real
+#     finding was caught (working as intended) rather than the workflow
+#     itself being broken. They need a smarter alert that reads *why* a run
+#     failed, not a naive consecutive-non-success counter.
+#   - daily-digest-retry.yml: too new (a handful of runs total as of
+#     2026-08-08) to have an established noise baseline yet -- revisit once
+#     it accumulates real history.
+DEFAULT_WATCHED_WORKFLOWS = (
+    'process-task-events.yml',
+    'hourly-conductor.yml',
+    'branch-janitor.yml',
+    'ci-janitor.yml',
+    'process-color-art-events.yml',
+    'daily-digest.yml',
+    'monster-recast-art-jobs.yml',
+)
 DEFAULT_WORKFLOW_FAIL_THRESHOLD = 3
+# Per-workflow overrides for the rare case a flat threshold is wrong for that
+# workflow's own cadence. daily-digest.yml only runs ~once/day, so waiting for
+# 3 consecutive misses (the global default) means 3 real digest-less days
+# before anyone notices; every other watched workflow runs hourly-or-more
+# often, where the global default's noise/latency trade-off already holds.
+DEFAULT_WORKFLOW_FAIL_THRESHOLDS: dict[str, int] = {
+    'daily-digest.yml': 2,
+}
 
 # projects/global-ui/SITE-AUDIT-AGENT.md's weekly report drop -- this repo's
 # own local checkout, no API needed, same as branch_janitor.py's local checks.
@@ -315,22 +367,29 @@ def find_failing_scheduled_workflows(
     *,
     workflow_files: tuple[str, ...] = DEFAULT_WATCHED_WORKFLOWS,
     fail_threshold: int = DEFAULT_WORKFLOW_FAIL_THRESHOLD,
+    fail_thresholds: dict[str, int] | None = None,
 ) -> list[dict]:
-    """Watched workflows in `repo` with >= `fail_threshold` consecutive
-    completed runs that didn't succeed -- a scheduled job that's been quietly
-    failing on every tick, as opposed to one isolated blip (conductor/t-102).
+    """Watched workflows in `repo` with >= threshold consecutive completed
+    runs that didn't succeed -- a scheduled job that's been quietly failing on
+    every tick, as opposed to one isolated blip (conductor/t-102). Each
+    workflow uses its own entry in `fail_thresholds` if present, else the
+    flat `fail_threshold` (conductor/t-104 -- cadence varies enough between
+    watched workflows, e.g. hourly vs. once-daily, that one flat number is
+    not always right).
     """
     if not token:
         return []
 
+    fail_thresholds = fail_thresholds or {}
     flagged: list[dict] = []
     for workflow_file in workflow_files:
         runs = workflow_runs_api(repo, workflow_file, token)
         if not runs:
             continue
 
+        threshold = fail_thresholds.get(workflow_file, fail_threshold)
         streak = consecutive_failing_runs(runs)
-        if streak < fail_threshold:
+        if streak < threshold:
             continue
 
         latest = runs[0]
@@ -338,6 +397,7 @@ def find_failing_scheduled_workflows(
             'repo': repo,
             'workflow': workflow_file,
             'consecutive_failures': streak,
+            'fail_threshold': threshold,
             'last_run_conclusion': latest.get('conclusion'),
             'last_run_status': latest.get('status'),
             'last_run_url': latest.get('html_url'),
@@ -571,6 +631,7 @@ def select_role(
     pr_grace_minutes: float = DEFAULT_PR_GRACE_MINUTES,
     watched_workflows: tuple[str, ...] = DEFAULT_WATCHED_WORKFLOWS,
     workflow_fail_threshold: int = DEFAULT_WORKFLOW_FAIL_THRESHOLD,
+    workflow_fail_thresholds: dict[str, int] | None = None,
 ) -> dict[str, object]:
     repos = list(repos) if repos else list(DEFAULT_REPOS)
     _reset_github_reachability_tracking()
@@ -583,7 +644,11 @@ def select_role(
     review_branches = run_reviewer.remote_worker_branches()
     reviewable_prs = find_reviewable_claude_prs(LOCAL_REPO, github_token, grace_minutes=pr_grace_minutes)
     failing_workflows = find_failing_scheduled_workflows(
-        LOCAL_REPO, github_token, workflow_files=watched_workflows, fail_threshold=workflow_fail_threshold
+        LOCAL_REPO,
+        github_token,
+        workflow_files=watched_workflows,
+        fail_threshold=workflow_fail_threshold,
+        fail_thresholds=workflow_fail_thresholds if workflow_fail_thresholds is not None else DEFAULT_WORKFLOW_FAIL_THRESHOLDS,
     )
     red_prs = find_red_stale_prs(repos, github_token, stale_hours=pr_stale_hours)
     stranded = find_stranded_branches(repos, github_token, stale_hours=branch_stale_hours)
@@ -601,8 +666,16 @@ def select_role(
         reason = ' and '.join(parts) + ' awaiting review'
     elif failing_workflows:
         role = 'workflow-medic'
-        names = ', '.join(sorted({f["workflow"] for f in failing_workflows}))
-        reason = f'{len(failing_workflows)} scheduled workflow(s) failing {workflow_fail_threshold}+ runs in a row ({names})'
+        # Per-workflow thresholds (conductor/t-104) mean the flagging bar isn't
+        # always the same number, so describe each flagged workflow with its
+        # own threshold rather than implying one flat number for all of them.
+        names = ', '.join(
+            sorted(
+                f'{f["workflow"]} ({f["consecutive_failures"]}/{f.get("fail_threshold", workflow_fail_threshold)}+)'
+                for f in failing_workflows
+            )
+        )
+        reason = f'{len(failing_workflows)} scheduled workflow(s) failing enough runs in a row: {names}'
     elif red_prs:
         role = 'pr-medic'
         by_repo = ', '.join(sorted({pr['repo'] for pr in red_prs}))
@@ -678,10 +751,28 @@ def main() -> None:
         help='comma-separated workflow filenames (in LOCAL_REPO) to check for a failing streak',
     )
     parser.add_argument('--workflow-fail-threshold', type=int, default=DEFAULT_WORKFLOW_FAIL_THRESHOLD)
+    parser.add_argument(
+        '--workflow-fail-thresholds',
+        default=','.join(f'{name}:{count}' for name, count in DEFAULT_WORKFLOW_FAIL_THRESHOLDS.items()),
+        help=(
+            "comma-separated per-workflow overrides as 'filename:count' -- a watched "
+            "workflow not listed here uses --workflow-fail-threshold instead"
+        ),
+    )
     args = parser.parse_args()
 
     print('[select-role] model API calls are disabled by design', file=sys.stderr)
     print('[select-role] this only recommends a role; the session decides what to do with it', file=sys.stderr)
+
+    workflow_fail_thresholds: dict[str, int] = {}
+    for entry in args.workflow_fail_thresholds.split(','):
+        entry = entry.strip()
+        if not entry:
+            continue
+        name, _, count = entry.partition(':')
+        name = name.strip()
+        if name and count.strip().lstrip('-').isdigit():
+            workflow_fail_thresholds[name] = int(count.strip())
 
     result = select_role(
         repos=[r.strip() for r in args.repos.split(',') if r.strip()],
@@ -692,6 +783,7 @@ def main() -> None:
         pr_grace_minutes=args.pr_grace_minutes,
         watched_workflows=tuple(w.strip() for w in args.watched_workflows.split(',') if w.strip()),
         workflow_fail_threshold=args.workflow_fail_threshold,
+        workflow_fail_thresholds=workflow_fail_thresholds,
     )
     print(json.dumps(result, indent=2))
 
