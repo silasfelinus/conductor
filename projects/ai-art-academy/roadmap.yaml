@@ -1841,7 +1841,9 @@ tasks:
   - id: t-062
     milestone: m7
     title: "Ship an installable/testable Android Academy app build"
-    status: claimed
+    status: needs-human
+    gate_human: true
+    soft_gate: true
     owner: worker
     passes: 0
     stakes: reversible
@@ -1856,14 +1858,41 @@ tasks:
       with Capacitor for a testable native binary if Silas has by then asked for store
       distribution; if so, treat the t-061 doc's Capacitor section as the starting point, not
       a fresh design. Public Play Store submission remains a separate outward-facing human gate.
+
+      Found and fixed a real blocker this pass (conductor sweep, 2026-08-08): t-066 shipped
+      @vite-pwa/nuxt's config, and /manifest.webmanifest has resolved correctly on production
+      ever since, but the module never auto-injects the <link rel="manifest"> tag into pages --
+      that only happens via the module's own renderless VitePwaManifest component, which t-066
+      never mounted anywhere. Confirmed via SSR-fetching the live production homepage through
+      the Vercel MCP connector: zero occurrences of "manifest" anywhere in <head>. Without that
+      link, no browser -- Android or iOS -- was ever going to satisfy install criteria or fire
+      beforeinstallprompt, regardless of what any future device test tried. Fixed by mounting
+      <VitePwaManifest /> once at the root of app.vue (kind_robots PR #1621, merged 2b2de95).
+      Re-verified post-merge: SSR-fetched the merged PR's own deployment and confirmed
+      <link rel="manifest" href="/manifest.webmanifest"> is now present in server-rendered
+      <head>. Eslint/vue-tsc/prettier clean, lint ratchet unchanged (392/27), layout-contract
+      and component-reachability both pass unchanged, all 13 CI checks + Vercel deploy green.
+
+      FOR SILAS: the installability blocker is fixed and live on production. What's still
+      needed is the thing this task was actually asking for -- open kindrobots.org (or the
+      Academy route) on a real Android phone in Chrome, confirm the "Add to Home Screen"/
+      install prompt appears, install it, and confirm it launches standalone and the Academy
+      timeline/styles/remix flow, auth, and maturity gating all work in that standalone
+      context. No sandboxed agent session can drive a real device, so this is a genuine human
+      gate, not a retry-able agent task. TO APPROVE: once verified on a real device, set
+      status: done (or leave needs-human with a note if it still doesn't install/launch
+      correctly, in which case this reopens as a real bug, not a verification gap).
     claimed_by: 2026-08-08T204125Z-aaa-t062-pwa
     claimed_at: '2026-08-08T20:41:27Z'
     updated: '2026-08-08T20:41:27Z'
+    approved_by_human: false
 
   - id: t-063
     milestone: m7
     title: "Ship an installable/testable iOS Academy app build"
-    status: claimed
+    status: needs-human
+    gate_human: true
+    soft_gate: true
     owner: worker
     passes: 0
     stakes: reversible
@@ -1876,9 +1905,26 @@ tasks:
       A Capacitor iOS build is deferred unless Silas asks for an actual App Store listing --
       certificates, Apple Developer Program enrollment, and account/billing actions remain
       human-gated outward-facing steps whenever that happens.
+
+      Same shared blocker as t-062, same fix (conductor sweep, 2026-08-08): t-066's
+      @vite-pwa/nuxt config never mounted the module's own VitePwaManifest component, so
+      <link rel="manifest"> was never injected into any page -- confirmed via SSR-fetching
+      live production and finding zero occurrences of "manifest" in <head>, despite
+      /manifest.webmanifest resolving fine on its own. Fixed in kind_robots PR #1621 (merged
+      2b2de95, same PR as t-062 -- one root cause, one fix, both tasks). Re-verified
+      post-merge that <link rel="manifest" href="/manifest.webmanifest"> is now present in
+      server-rendered <head>.
+
+      FOR SILAS: same situation as t-062 -- the installability blocker is fixed and live,
+      but this task's actual ask (verify "Add to Home Screen" on a real iOS device in
+      Safari, confirm standalone launch, and that the Academy flow/auth/maturity gating
+      work outside browser chrome) needs a physical iOS device no sandboxed agent session
+      has. TO APPROVE: once verified on a real device, set status: done (or leave
+      needs-human with a note if it doesn't install/launch correctly).
     claimed_by: 2026-08-08T204125Z-aaa-t063-pwa
     claimed_at: '2026-08-08T20:49:12Z'
     updated: '2026-08-08T20:49:12Z'
+    approved_by_human: false
 
   - id: t-064
     milestone: m7
