@@ -26,13 +26,19 @@ def _item(**overrides):
     return item
 
 
-def test_needs_repair_requires_existing_art_and_old_prompt():
-    assert repair.needs_repair({"imagePath": "/images/old.webp", "artPrompt": "legacy"})
-    assert not repair.needs_repair({"imagePath": None, "artPrompt": "legacy"})
-    assert not repair.needs_repair({
-        "imagePath": "/images/new.webp",
-        "artPrompt": f"subject, {repair.STYLE}",
-    })
+def test_needs_repair_requires_existing_art_and_prompt_drift():
+    assert repair.needs_repair(
+        {"imagePath": "/images/old.webp", "artPrompt": "legacy"},
+        "new prompt",
+    )
+    assert not repair.needs_repair(
+        {"imagePath": None, "artPrompt": "legacy"},
+        "new prompt",
+    )
+    assert not repair.needs_repair(
+        {"imagePath": "/images/new.webp", "artPrompt": "new prompt"},
+        "new prompt",
+    )
 
 
 def test_rewards_are_matched_by_name_when_built_order_differs():

@@ -66,9 +66,20 @@ UNPEOPLED = (
     "no onlookers, and no crowd"
 )
 
-NO_TEXT = "no readable text, no lettering, no logos, no watermark, no signature"
+# One short clause, not a list. Krea 2 is Qwen-Image lineage — the strongest
+# open text renderer there is — and at cfg 1 the ComfyUI negative prompt is
+# inert, so every word here lands in POSITIVE conditioning. Naming "text,
+# lettering, logos, watermark, signature" five times told a text specialist to
+# think about text five times. Say it once, and rely mainly on not describing
+# anything that would carry writing.
+NO_TEXT = "unmarked surfaces, free of text"
 
-CARD_FRAMING = "2:3 portrait card composition"
+# Deliberately does NOT say "card". Asking Krea 2 for a "2:3 portrait card
+# composition" — alongside "treasure card illustration" — got exactly what was
+# asked for: a full trading card with a title bar, a type line, and a rules box
+# of invented text (2026-08-08, rewards 2688/2616/2551). To a person "card
+# illustration" means the art printed on a card; to the model it means a card.
+CARD_FRAMING = "vertical 2:3 portrait composition"
 
 MAX_PROMPT_CHARS = 1400
 
@@ -194,7 +205,7 @@ def reward_prompt(name: str, reward_type: str, look: str, grants: str,
             "tight centered composition on the effect, at most one pair of hands "
             "entering frame at the edge to work it, no full figure, no faces, "
             "no onlookers",
-            f"{rarity}-tier ability card illustration" if rarity else "ability card illustration",
+            f"rendered with the weight given a {rarity} ability" if rarity else "",
             "glowing volumetric light emanating from the effect itself, "
             "dark uncluttered surroundings",
             STYLE,
@@ -211,7 +222,7 @@ def reward_prompt(name: str, reward_type: str, look: str, grants: str,
         "on a bare surface or floating against a plain dark ground, close enough "
         "to read its material and wear",
         UNPEOPLED,
-        f"{rarity}-tier treasure card illustration" if rarity else "treasure card illustration",
+        f"rendered with the reverence given a {rarity} artifact" if rarity else "",
         "focused directional light picking out material, edge, and texture",
         STYLE,
         NO_TEXT,

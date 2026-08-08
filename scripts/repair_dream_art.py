@@ -57,7 +57,6 @@ from typing import Any, Optional
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from dream_art_prompts import (  # noqa: E402
-    STYLE,
     character_prompt,
     location_prompt,
     reward_prompt,
@@ -212,17 +211,23 @@ def fetch_record(kind: str, record_id: int) -> Optional[dict[str, Any]]:
     return data if isinstance(data, dict) else None
 
 
-def needs_repair(record: dict[str, Any]) -> bool:
-    """True when this row's art predates the new builder.
+def needs_repair(record: dict[str, Any], rebuilt: str) -> bool:
+    """True when this row's stored prompt is not what the builder writes today.
 
-    Every prompt the new builder writes contains the house STYLE string verbatim.
-    Anything with an image whose stored prompt lacks it was generated under the
-    old regime and is a repair candidate. Rows with no art yet are skipped —
-    their pending job already carries a rebuilt prompt.
+    Earlier versions sniffed for a marker string (the house STYLE) to decide
+    "was this made by the new builder". That answers the wrong question and went
+    stale the moment the builder changed again: after the card-vocabulary fix,
+    every row still carried STYLE and so looked current while its art was a
+    trading card covered in invented text.
+
+    Comparing the stored prompt to a freshly built one is exact and needs no
+    maintenance — any future change to `dream_art_prompts` automatically makes
+    the rows it affects repairable. Rows with no art yet are skipped; their
+    pending job is refreshed in place instead of being re-queued.
     """
     if not record.get("imagePath"):
         return False
-    return STYLE not in (record.get("artPrompt") or "")
+    return (record.get("artPrompt") or "").strip() != rebuilt.strip()
 
 
 def plan(kinds: tuple[str, ...], only: Optional[str]) -> list[dict[str, Any]]:
@@ -239,7 +244,7 @@ def plan(kinds: tuple[str, ...], only: Optional[str]) -> list[dict[str, Any]]:
                 print(f"  ! {element['kind']} {element['id']} "
                       f"({element['label']}) not found live; skipping", file=sys.stderr)
                 continue
-            if not needs_repair(record):
+            if not needs_repair(record, element['prompt']):
                 continue
             work.append({**element, "source": source,
                          "old_prompt": record.get("artPrompt") or "",
