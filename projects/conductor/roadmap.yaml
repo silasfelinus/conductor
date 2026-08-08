@@ -3297,7 +3297,86 @@ tasks:
     owner: worker
     stakes: reversible
     passes: 0
-    note: 'DONE 2026-08-08: kind_robots... see prior implementation note above (unchanged) -- select_role.py workflow-medic role merged in conductor PR #1883 (squash 04fc71d), all 22 CI checks green before merge. No cross-repo implementation_pr since this is a conductor-native change.'
+    note: >
+      Kaizen from conductor/t-101 (2026-08-05): `process-task-events.yml` (cron
+      `17 * * * *` plus pushes touching `task-events/*.yaml`) correctly fails
+      loudly every time it hits a malformed event (e.g. a `learning:` field on
+      a non-closed operation) -- `process_task_events.py`'s `main()` prints an
+      `ERROR ...` line and returns exit 1 -- but a scheduled workflow's failure
+      only shows up in the Actions tab; nothing pings a session or Silas. The
+      2026-08-05 ai-art-academy/t-010 stuck-`rearm` incident sat failing on
+      every run for hours before a manual sweep happened to notice. Add a
+      cheap self-check: either (a) have `select_role.py` (or a small new
+      check alongside it) query the GitHub Actions API for
+      `process-task-events.yml`'s last N runs and flag N consecutive failures
+      as a new soft-needs-human-worthy signal a session should act on, or
+      (b) add a workflow step that, on failure, posts/updates a single
+      pinned tracking issue instead of relying on the raw Actions log. Prefer
+      (a) if feasible without adding a new direct GitHub-API dependency this
+      sandbox can't reach (see AGENTS.md's documented `select_role.py`
+      404/403-from-sandbox caveat) -- reuse whatever transport
+      `check_pr_merged_drift.py`/`audit_human_gates.py` already use
+      successfully from this environment.
+
+      IMPLEMENTED (conductor sweep, 2026-08-08): took option (a).
+      `select_role.py` gained a new `workflow-medic` role/signal:
+      `find_failing_scheduled_workflows()` queries the Actions API
+      (`GET /repos/{repo}/actions/workflows/{file}/runs`) for each filename in
+      `--watched-workflows` (default just `process-task-events.yml`, the one
+      that actually caused the 2026-08-05 incident) and counts a consecutive
+      non-success streak from the newest completed run backward via
+      `consecutive_failing_runs()` (in-progress/queued runs are skipped, not
+      counted, since they haven't reported a result yet; the streak stops at
+      the first completed success). `--workflow-fail-threshold` (default 3)
+      or more flags it. Wired into the existing priority-ordered decision
+      list right after `reviewer` and before `pr-medic` -- ranked above
+      pr-medic/branch-medic because a broken *shared* automation step (the
+      queue's own roadmap processor) can silently corrupt or stall more than
+      one broken PR can, matching the severity that actually motivated this
+      task. Uses the same `_gh_request()` transport and
+      `github_api_unreachable` reachability-tracking pattern as every other
+      signal in this script, so it degrades to "skipped, not crashed" under
+      this sandbox's documented direct-API 403 (confirmed: `curl
+      api.github.com` 403s here too) exactly like `pr-medic`/`branch-medic`
+      already do -- this only becomes a live signal when run with real
+      GitHub Actions egress (a GitHub Actions job, per the module's own
+      documented contract), same caveat as every existing check in this
+      script.
+
+      New output fields: `failing_scheduled_workflow_count`,
+      `failing_scheduled_workflows` (list of
+      `{repo, workflow, consecutive_failures, last_run_conclusion,
+      last_run_status, last_run_url}`). New CLI flags:
+      `--watched-workflows`, `--workflow-fail-threshold`. AGENTS.md's "Role
+      assignment" section documents the new role in the decision list and
+      adds a dedicated "If you're fixing a failing scheduled workflow"
+      playbook subsection (mirroring the existing pr-medic/branch-medic
+      ones): diagnose from the actual job log, fix-and-verify-green if
+      fixable now, fix or quarantine the bad input if it's a malformed
+      `task-events/*.yaml` entry (tightening `validate_task_events.py` too
+      if that's the real gap, per t-103's precedent), or leave a clear
+      `needs-human`/`soft_gate` note and move on if the fix needs access
+      this session lacks.
+
+      Verified: 18 new/updated unit tests in `tests/test_select_role.py`
+      (streak counting incl. in-progress-run skipping and empty-list edge
+      cases; threshold flagging; multi-workflow aggregation; no-token
+      short-circuit; decision-order precedence over pr-medic/branch-medic/
+      site-auditor/worker; `reviewer` still outranks it) -- full suite green,
+      53 passed. Full `pytest tests/` -- 940 passed, 1 skipped, 4
+      pre-existing unrelated failures in `test_build_digest_email_v2.py`
+      (the same Python-version f-string syntax issue conductor/t-103 already
+      documented as unrelated). `python -m py_compile` clean on both changed
+      files. `python scripts/select_role.py --dry-run` runs end-to-end in
+      this sandbox and degrades the new check the same way the pre-existing
+      ones do (`github_api_unreachable: true`, one more failed-URL count).
+
+      DONE (conductor sweep, 2026-08-08): merged in conductor PR #1883
+      (squash 04fc71d) -- all 22 CI checks (pytest suite, roadmap/task-event
+      YAML validation, Python lint/syntax, TS build, CodeQL x4, GitGuardian,
+      dependency audit, safe smoke matrix) green before merge. No
+      cross-repo `implementation_pr` since this is a conductor-native
+      change (the code being tracked lives in this repo, not kind_robots).
     updated: '2026-08-08T05:45:34Z'
     claimed_by: 2026-08-08T052900Z-conductor-t102
     claimed_at: '2026-08-08T05:29:46Z'
