@@ -349,3 +349,10 @@ Invalid `prisma.user.findFirst()` invocation:
 
 
 Database err.
+
+## 2026-08-08T08:57:58Z | growing
+queueDepth: PENDING=2918, RUNNING=1, DONE=3470, FAILED=4, CANCELLED=816 (all-time). oldestPending: id=4790, age=552290s (~153.4h), engine=COMFY. windowThroughput (24h): PENDING=87, RUNNING=1, DONE=52, FAILED=3. recentFailed (last 4): 3/4 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'1': ; 1/4 = complete(4659) failed: HTTP 500 Database operation failed: 
+Invalid `prisma.user.findFirst()` invocation:
+
+
+Database err.

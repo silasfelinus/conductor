@@ -3441,7 +3441,7 @@ tasks:
   - id: t-104
     milestone: m2
     title: "Consider widening workflow-medic's --watched-workflows / per-workflow thresholds"
-    status: review
+    status: done
     owner: reviewer
     stakes: reversible
     passes: 0
@@ -3492,6 +3492,33 @@ tasks:
       suite 956 passed (4 pre-existing unrelated `test_build_digest_email_v2.py`
       failures, documented f-string/Python-version issue). `validate_roadmaps.py`
       clean.
-    updated: '2026-08-08T08:55:00Z'
+    updated: '2026-08-08T09:00:52Z'
     claimed_by: claude-quirky-curie-20260808T0828Z-c-t104
     claimed_at: '2026-08-08T08:32:22Z'
+    implementation_pr: 'silasfelinus/conductor#1891'
+  - id: t-105
+    milestone: m2
+    title: Audit other dream-cycle backlog-style idempotent sidecars for the same already-failed-forever retry pattern
+    status: ready
+    owner: null
+    stakes: reversible
+    passes: 0
+    note: >
+      Kaizen from conductor/t-104 (2026-08-08, PR #1891): the `hourly-conductor.yml`
+      2+ day silent-failure incident that PR fixed had a specific, generalizable shape --
+      `scripts/apply_daily_dream_facets.py` re-scanned every item in
+      `projects/dream-cycle/backlog/*.md` on every run and only short-circuited on
+      `status: complete`, never on `status: partial`, so a single permanently-broken item
+      (missing Facet catalog data) silently poisoned every future run's exit code forever,
+      even while that run's own new work kept succeeding underneath the red status.
+
+      Audit this repo's other `projects/dream-cycle/backlog/`-adjacent or similarly-shaped
+      idempotent sidecar scripts (anything that re-globs a directory of persisted items each
+      run and derives a pass/fail exit code from their aggregate state) for the same
+      already-failed-forever gap: does it distinguish a freshly-broken item from one that was
+      already known-broken in a prior run? `scripts/enrich_daily_dream_digest.py`,
+      `scripts/build_dream_records.py`, and anything else touching `projects/dream-cycle/backlog/`
+      are the obvious first candidates -- check `grep -rl "dream-cycle/backlog" scripts/` for the
+      full list. Apply the same `partial_new`/`partial_persisting`-style split (or equivalent)
+      wherever the gap is real; document explicitly where it's already handled or not applicable.
+    updated: '2026-08-08T09:05:00Z'

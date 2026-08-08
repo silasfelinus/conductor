@@ -7042,3 +7042,19 @@ records:
     regression (t-112's /taskmaster crush) in the same run -- worth remembering that a full-suite
     audit failing overall does not mean the specific route under test is still broken; read the
     specific route's lines before concluding either way."
+- date: 2026-08-08
+  project: conductor
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    workflow-medic's own watch list only had one entry (process-task-events.yml) because
+    it had never been exercised against real live-run history -- pulling that history for
+    the "should we widen it" decision immediately surfaced a genuine 2+ day silent failure
+    streak on hourly-conductor.yml (a script retrying an already-known-partial item forever
+    instead of short-circuiting on it). Always pull real data before making a "should we
+    expand monitoring" decision; mocked-test coverage alone can hide the exact class of
+    incident the monitoring exists to catch.
