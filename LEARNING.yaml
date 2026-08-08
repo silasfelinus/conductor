@@ -7109,3 +7109,34 @@ records:
     A brand-new rule with real pre-existing violations should grandfather them explicitly and let
     only new violations fail CI going forward -- exactly the same contract every other rule in the
     file already has.
+- date: 2026-08-08
+  project: ai-art-academy
+  task: t-062
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: needs-human
+  failure_category: actionable
+  lesson: >
+    A "ready" task that reads as "verify X on a real device" can still hide a genuine,
+    fixable code bug behind the device-verification framing -- don't skip straight to
+    soft needs-human on the "no hardware in this sandbox" premise without first checking
+    whether the thing being verified is even correctly wired. Here, @vite-pwa/nuxt's
+    manifest link is injected only by an explicit <VitePwaManifest/> component mount that
+    t-066 never added, so the site was never actually installable on ANY device -- a real,
+    sandbox-fixable bug (confirmed via SSR-fetch, fixed, and re-verified post-merge), not
+    a pure verification gap. Only after fixing that did the remaining gap become a genuine
+    hardware-access limit. Check the artifact before assuming the blocker is access, not code.
+- date: 2026-08-08
+  project: ai-art-academy
+  task: t-063
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: needs-human
+  failure_category: actionable
+  lesson: >
+    Same root cause and same fix as t-062 (one PR, kind_robots #1621) -- when two roadmap
+    tasks share an underlying technical precondition, fixing it once and updating both
+    tasks' notes is cheaper and more honest than re-deriving or re-describing the same
+    diagnosis twice.

@@ -1890,7 +1890,9 @@ tasks:
   - id: t-063
     milestone: m7
     title: "Ship an installable/testable iOS Academy app build"
-    status: claimed
+    status: needs-human
+    gate_human: true
+    soft_gate: true
     owner: worker
     passes: 0
     stakes: reversible
@@ -1903,9 +1905,26 @@ tasks:
       A Capacitor iOS build is deferred unless Silas asks for an actual App Store listing --
       certificates, Apple Developer Program enrollment, and account/billing actions remain
       human-gated outward-facing steps whenever that happens.
+
+      Same shared blocker as t-062, same fix (conductor sweep, 2026-08-08): t-066's
+      @vite-pwa/nuxt config never mounted the module's own VitePwaManifest component, so
+      <link rel="manifest"> was never injected into any page -- confirmed via SSR-fetching
+      live production and finding zero occurrences of "manifest" in <head>, despite
+      /manifest.webmanifest resolving fine on its own. Fixed in kind_robots PR #1621 (merged
+      2b2de95, same PR as t-062 -- one root cause, one fix, both tasks). Re-verified
+      post-merge that <link rel="manifest" href="/manifest.webmanifest"> is now present in
+      server-rendered <head>.
+
+      FOR SILAS: same situation as t-062 -- the installability blocker is fixed and live,
+      but this task's actual ask (verify "Add to Home Screen" on a real iOS device in
+      Safari, confirm standalone launch, and that the Academy flow/auth/maturity gating
+      work outside browser chrome) needs a physical iOS device no sandboxed agent session
+      has. TO APPROVE: once verified on a real device, set status: done (or leave
+      needs-human with a note if it doesn't install/launch correctly).
     claimed_by: 2026-08-08T204125Z-aaa-t063-pwa
     claimed_at: '2026-08-08T20:49:12Z'
     updated: '2026-08-08T20:49:12Z'
+    approved_by_human: false
 
   - id: t-064
     milestone: m7
