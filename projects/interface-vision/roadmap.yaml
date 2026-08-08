@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2952,10 +2952,11 @@ tasks:
       Slice 3 migrates the reachable Server card presentation onto kr-entity-card-body while preserving existing server selection, edit, health-test, and use actions. A focused card-action contract ratchet now keeps the six migrated core/server cards on the shared body.
 
       Slice 3 merged as silasfelinus/kind_robots#1616 (squash 5a56162e). server-card now uses kr-entity-card-body and verifyCardActionContract ratchets the six migrated core/server cards onto the shared body. All 13 exact-head PR workflows completed successfully, including TypeScript, Contract Tests, Layout Contract, and the card-action contract step. t-104 remains multi-slice: resource-card and daily-digest-object-gallery remain separate candidates.
-    claimed_by: 2026-08-08T181352Z-interface-vision-t104-a11b
-    claimed_at: '2026-08-08T18:13:52Z'
+    claimed_by: 2026-08-08T183755Z-iv-t104-slice4-fc9k
+    claimed_at: '2026-08-08T18:37:56Z'
     implementation_pr: 'silasfelinus/kind_robots#1612'
-    updated: '2026-08-08T18:25:14Z'
+    updated: '2026-08-08T18:37:56Z'
+    owner: worker
 
   - id: t-105
     milestone: m6
