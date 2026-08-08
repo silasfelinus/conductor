@@ -130,15 +130,44 @@ def test_filler_steps_default_is_lower_than_project_lane():
 
 
 def test_apply_default_steps_fills_only_unset():
+    """The filler default applies to engines with no native step count.
+
+    Entries that name no engine default to krea2 (DEFAULT_ENGINE), a distilled
+    8-step model — stamping the 20-step filler budget on those is what
+    over-cooked the daily-dream cards on 2026-08-08. They are left unset so
+    entry_to_job resolves the engine's own cadence.
+    """
     entries = [
-        {"image_path": "a.webp"},
-        {"image_path": "b.webp", "steps": 40},
-        {"image_path": "c.webp", "steps": 0},
+        {"image_path": "a.webp", "engine": "flux"},
+        {"image_path": "b.webp", "engine": "flux", "steps": 40},
+        {"image_path": "c.webp", "engine": "flux", "steps": 0},
     ]
     cr.apply_default_steps(entries, 20)
     assert entries[0]["steps"] == 20
     assert entries[1]["steps"] == 40
     assert entries[2]["steps"] == 20
+
+
+def test_apply_default_steps_leaves_distilled_engines_on_their_native_cadence():
+    entries = [
+        {"image_path": "a.webp"},                      # no engine -> krea2
+        {"image_path": "b.webp", "engine": "krea2"},
+        {"image_path": "c.webp", "engine": "sdxl"},    # aliased to krea2
+        {"image_path": "d.webp", "engine": "krea2", "steps": 12},
+    ]
+    cr.apply_default_steps(entries, 20)
+    assert "steps" not in entries[0]
+    assert "steps" not in entries[1]
+    assert "steps" not in entries[2], "engine aliases resolve before the guard"
+    assert entries[3]["steps"] == 12, "an explicit per-entry override still wins"
+
+
+def test_distilled_engines_get_cfg_one_not_the_generic_default():
+    """Krea 2 Turbo is trained at cfg 1; entry_to_job used a flat cfg 7 for every
+    engine while resolving steps per-engine (2026-08-08)."""
+    assert cr.consumer.engine_default_cfg("krea2") == 1
+    assert cr.consumer.engine_default_cfg("flux2-klein") == 1
+    assert cr.consumer.engine_default_cfg("sdxl") == cr.consumer.DEFAULT_CFG
 
 
 def test_filler_steps_reach_the_flux_workflow():

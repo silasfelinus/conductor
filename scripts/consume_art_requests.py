@@ -150,10 +150,20 @@ def apply_default_steps(entries, steps):
     step count to this lane (missing-image / ad-hoc / voice) and leaves the
     project-art lane on its own 30-step default. Mutates in place; not persisted
     -- mark_done does surgical line edits, never a full YAML re-dump.
+
+    Engines with a native step count are left alone. Krea 2 Turbo is a distilled
+    8-step model; stamping the filler default (20) on it pushes it out of
+    distribution and over-cooks the image. Before this guard, every daily-dream
+    request through this lane ran at 20 steps / cfg 7 instead of 8 / 1
+    (2026-08-08, ArtJobs 7953/7954/7961/7966).
     """
     for entry in entries:
-        if not entry.get("steps"):
-            entry["steps"] = steps
+        if entry.get("steps"):
+            continue
+        engine = consumer.normalize_engine(entry.get("engine"))
+        if engine in consumer.ENGINE_DEFAULT_STEPS:
+            continue
+        entry["steps"] = steps
     return entries
 
 

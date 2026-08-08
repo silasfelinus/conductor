@@ -148,3 +148,27 @@ def test_item_prompt_does_not_double_the_article_on_a_the_name():
     prompt = dap.reward_prompt(**{**LADLE, "name": "The Corsair's Encore"})
     assert prompt.startswith("The Corsair's Encore, one object alone in frame")
     assert "a single The" not in prompt
+
+
+@pytest.mark.parametrize("prompt_fn,args", [
+    (lambda: dap.reward_prompt(**LADLE), None),
+    (lambda: dap.reward_prompt(**SEASONING), None),
+    (lambda: dap.character_prompt("A", "b", "c", "d", "W", "v"), None),
+    (lambda: dap.location_prompt("A", "b", "c", "d", "W", "v"), None),
+    (lambda: dap.scenario_prompt("A", "b", "c", "W", "v"), None),
+    (lambda: dap.world_prompt("W", "i", "v", "a"), None),
+], ids=["item", "skill", "character", "location", "scenario", "world"])
+def test_no_builder_asks_for_a_card(prompt_fn, args):
+    """"treasure card illustration" / "2:3 portrait card composition" made Krea 2
+    render a literal trading card — title bar, type line, and a rules box full of
+    invented text (rewards 2688/2616/2551, 2026-08-08)."""
+    prompt = prompt_fn().lower()
+    assert "card" not in prompt
+
+
+def test_text_exclusion_is_one_short_clause_not_a_noun_list():
+    """At cfg 1 the negative prompt is inert, so these words land in positive
+    conditioning on a text-specialist model. Name text once, not five times."""
+    for banned in ("lettering", "logos", "watermark", "signature"):
+        assert banned not in dap.NO_TEXT
+    assert dap.NO_TEXT.lower().count("text") == 1

@@ -175,6 +175,23 @@ ENGINE_DEFAULT_STEPS = {
     "flux2-klein": FLUX2_KLEIN_STEPS,
 }
 
+# Per-engine guidance. Distilled models are TRAINED at cfg 1 and go out of
+# distribution above it: Krea 2 Turbo at DEFAULT_CFG (7) burns contrast, crushes
+# colour, and multiplies subjects — the pattern behind the over-cooked,
+# face-spammed daily-dream cards on 2026-08-08 (ArtJobs 7953/7954/7961/7966 all
+# ran at cfg 7 / 20 steps against krea2's designed 8 / 1). `entry_to_job` used a
+# flat DEFAULT_CFG for every engine while resolving steps per-engine, so the
+# mismatch only showed up in the rendered image.
+ENGINE_DEFAULT_CFG = {
+    "krea2": KREA2_CFG,
+    "flux2-klein": FLUX2_KLEIN_CFG,
+}
+
+
+def engine_default_cfg(engine):
+    """Guidance for `engine`, falling back to the generic SD-style default."""
+    return ENGINE_DEFAULT_CFG.get(engine, DEFAULT_CFG)
+
 
 def normalize_engine(engine):
     name = str(engine or DEFAULT_ENGINE).strip().lower()
@@ -533,7 +550,7 @@ def entry_to_job(entry):
         "width": width,
         "height": height,
         "steps": steps,
-        "cfg": entry.get("cfg", DEFAULT_CFG),
+        "cfg": entry.get("cfg", engine_default_cfg(engine)),
         # the relay's local fast path files its copy under the project's
         # collection folder; untargeted art falls back to the model-family
         # folder (the engine name), not the frontend name ("comfy")
