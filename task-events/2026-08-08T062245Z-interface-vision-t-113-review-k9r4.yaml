@@ -1,9 +1,0 @@
-version: 1
-project: interface-vision
-task: t-113
-operation: review
-owner: worker
-session: 2026-08-08T061721Z-interface-vision-t113-k9r4
-updated: '2026-08-08T06:22:45Z'
-note: >-
-  Re-diagnosed the desktop Taskmaster regression: the prior t-112 fix removed the three-column xl layout, but the shared ingredient picker still switches to two columns at viewport md even inside Taskmaster's narrow recipe panel. Changed the shared grid to auto-fit 20rem minimum columns so column count follows available container width instead of viewport width. Implementation head: silasfelinus/kind_robots@1a9b1c1dfced7eca34173abf3d52bcf35a820bc4.
