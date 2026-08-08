@@ -39,6 +39,10 @@ def test_daily_dream_jobs_preserve_target_and_request_provenance():
     assert job["projectSlug"] == "dream-cycle"
     assert job["idempotencyKey"] == entry["id"]
     assert payload["collection"] == "dream-cycle"
+    assert payload["targetRepo"] == entry["target_repo"]
+    assert payload["imagePath"] == entry["image_path"]
+    assert payload["sourceUrl"] == entry["source_url"]
+    assert payload["pageUrl"] == entry["page_url"]
     assert payload["entityArt"] == {
         "entityType": "dream",
         "entityId": 4242,
@@ -79,3 +83,5 @@ def test_unrelated_art_keeps_existing_priority_behavior():
     assert "idempotencyKey" not in job
     assert "conductorRequest" not in job["payload"]
     assert "entityArt" not in job["payload"]
+    assert "targetRepo" not in job["payload"]
+    assert "imagePath" not in job["payload"]
