@@ -359,3 +359,6 @@ Database err.
 
 ## 2026-08-08T11:30:12Z | growing
 queueDepth: PENDING=2905, RUNNING=1, DONE=3488, CANCELLED=819 (all-time). oldestPending: id=4790, age=561424s (~156.0h), engine=COMFY. windowThroughput (24h): PENDING=73, RUNNING=1, DONE=70, CANCELLED=2. recentFailed: none.
+
+## 2026-08-08T14:29:53Z | draining
+queueDepth: PENDING=2899, RUNNING=1, DONE=3512, CANCELLED=819 (all-time). oldestPending: id=4790, age=572204s (~158.9h), engine=COMFY. windowThroughput (24h): PENDING=67, RUNNING=1, DONE=94, CANCELLED=2. recentFailed: none.
