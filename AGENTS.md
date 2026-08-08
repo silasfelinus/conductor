@@ -586,11 +586,19 @@ repo's control — but the SESSION's behavior no longer has to depend on it.
 **Every session, regardless of what a trigger happened to name it, decides its own
 role from live state on arrival:**
 
-1. Run `python scripts/select_role.py` (composes five existing, no-model-call state
+1. Run `python scripts/select_role.py` (composes six existing, no-model-call state
    checks into one recommendation, in priority order). It returns one of:
    - **`role: reviewer`** — at least one `worker/*` branch is open and not yet merged
      into `main`. Reviewing an existing PR is higher-leverage than starting new work,
      so this wins even if anything else below also applies.
+   - **`role: workflow-medic`** — no branch to review, but a watched scheduled
+     workflow (default: `process-task-events.yml`, the task-events cron processor) has
+     `--workflow-fail-threshold` (default 3) or more consecutive completed runs that
+     didn't succeed. A scheduled workflow's failure otherwise only shows up in the
+     Actions tab — nothing else pings a session (conductor/t-102: the 2026-08-05
+     ai-art-academy/t-010 stuck-`rearm` incident sat failing on every run for hours
+     before a manual sweep noticed). See "If you're fixing a failing scheduled
+     workflow" below.
    - **`role: pr-medic`** — no branch to review, but an open PR (`run_reviewer.py`'s
      scope) has red CI that's gone stale (no push in `--pr-stale-hours`, default 3h)
      — a real error nobody is actively iterating on, not a PR mid-fix. See "If you're
@@ -613,10 +621,10 @@ role from live state on arrival:**
      own rule).
 2. Follow the matching section below. A session isn't locked to one role for its
    whole run: if you finish reviewing everything open, re-run `select_role.py` — it
-   may now recommend `pr-medic`, `branch-medic`, `site-auditor`, or `worker` — and
-   keep going in the same session rather than stopping. This is what "agents
-   disperse and work as needed" means in practice: the role is a live recommendation
-   you re-check, not a label stamped on you before you started.
+   may now recommend `workflow-medic`, `pr-medic`, `branch-medic`, `site-auditor`, or
+   `worker` — and keep going in the same session rather than stopping. This is what
+   "agents disperse and work as needed" means in practice: the role is a live
+   recommendation you re-check, not a label stamped on you before you started.
 3. If a human explicitly asked for one role in this session (e.g. "review PR #123"),
    honor that directly — `select_role.py` is for the *unprompted, trigger-fired* case,
    not a override of an explicit instruction.
@@ -626,11 +634,15 @@ role from live state on arrival:**
    repo. Conductor's own checks use fast local git (via `branch_janitor.py`, no API
    calls); kind_robots has no guaranteed local checkout in every session/job that
    runs this script, so it's checked via the GitHub API instead (same information,
-   different transport — see the script's own docstring). If a session has access to
-   still other repos beyond these two, check those via the session's own GitHub MCP
-   tools (`list_pull_requests` + `pull_request_read`'s `get_check_runs`/`get_status`
-   method; `list_branches`) before concluding there's nothing to fix/triage —
-   `select_role.py`'s default two-repo scope isn't the ceiling, just the floor.
+   different transport — see the script's own docstring). `workflow-medic`'s check
+   is conductor-only (`--watched-workflows`, comma-separated filenames) since the
+   scheduled workflows it currently watches are conductor-repo concepts (roadmap/
+   task-events processing) — extend `--watched-workflows` if a kind_robots cron job
+   ever needs the same coverage. If a session has access to still other repos beyond
+   these two, check those via the session's own GitHub MCP tools (`list_pull_requests`
+   + `pull_request_read`'s `get_check_runs`/`get_status` method; `list_branches`;
+   `actions_list`'s `list_workflow_runs` method) before concluding there's nothing to
+   fix/triage — `select_role.py`'s default scope isn't the ceiling, just the floor.
 
 This doesn't require the platform to merge its Worker/Reviewer triggers into one —
 it just means a session mislabeled by a stale trigger schedule self-corrects instead
@@ -752,6 +764,37 @@ in the PR. Recurring tasks don't count toward milestone progress.
 - **On a `challenged` task:** read the Worker's TALKBACK entry carefully. If the Worker's
   case has merit, adjust your decision and append a response. If not, escalate to
   `needs-human` for Silas to arbitrate — never re-reject a challenge silently.
+
+### If you're fixing a failing scheduled workflow
+
+`select_role.py` recommended `workflow-medic`: a watched scheduled workflow
+(default `process-task-events.yml`) has failed `--workflow-fail-threshold` (default
+3) or more completed runs in a row, with nothing else having noticed.
+
+- Read the most recent failing run's job logs directly (`get_job_logs` with
+  `failed_only`, generous `tail_lines` — the default truncates before the real
+  error on some jobs, a documented recurring gap). Diagnose the actual cause, not
+  just "it's red": a malformed `task-events/*.yaml` entry, a real code regression in
+  the workflow's own script, transient infra, or a downstream dependency (API rate
+  limit, a repo it reads from being unreachable).
+- **Fixable now:** push the fix (a corrected/quarantined malformed input, a script
+  bug fix, a workflow-file correction) and re-run the workflow (`actions_run_trigger`
+  if it supports `workflow_dispatch`, or wait for its next scheduled tick) to confirm
+  it actually goes green — don't close this out on a plausible-looking diff alone,
+  same discipline as every other fix-then-verify role here.
+- **Malformed input from elsewhere** (e.g. a `task-events/*.yaml` entry another
+  session queued incorrectly): fix or quarantine the bad entry rather than patching
+  around it in the processor, unless the processor's own validation gap is the real
+  root cause (in which case fix both — tighten validation so the next bad entry fails
+  at PR time via `validate_task_events.py`, per conductor/t-103's precedent).
+- **Not fixable from this session** (needs credentials/access this sandbox lacks, or
+  a decision only Silas can make): leave a clear note on the affected roadmap task
+  (or open one if none exists yet) at `status: needs-human` with `soft_gate: true` if
+  other work can still proceed in parallel, and move on to the next role/task rather
+  than stalling the whole session on it.
+- This check only watches conductor-repo scheduled workflows by default (see the
+  scope note above) — it does not replace reading `TALKBACK.md`/`RENDER-BACKLOG.md`
+  for kind_robots-side incidents surfaced other ways.
 
 ### If you're fixing PR errors
 

@@ -29,13 +29,20 @@ this system's own architecture (kind_robots work is tracked as a conductor
 roadmap task that names a kind_robots PR, not as its own independent
 Worker/Reviewer cycle) — see AGENTS.md's "Cross-repo tasks" section.
 
-Six roles, each backed by an existing piece of tooling this script composes
+Seven roles, each backed by an existing piece of tooling this script composes
 rather than duplicates:
   - reviewer      — run_reviewer.py's open-worker/*-branch check (conductor only),
                     plus find_reviewable_claude_prs()'s check for any other open
                     conductor PR (e.g. claude/*) whose CI is fully green and that
                     has sat untouched for --pr-grace-minutes — a real reviewable
                     PR isn't only ever opened from a worker/* branch (conductor/t-083)
+  - workflow-medic — find_failing_scheduled_workflows()'s check, across
+                    --watched-workflows (default: process-task-events.yml, the
+                    task queue's own cron-driven roadmap processor), for
+                    --workflow-fail-threshold or more consecutive completed
+                    runs with a non-success conclusion — a scheduled workflow
+                    failing loudly on every run but with nothing surfacing
+                    that beyond the raw Actions log (conductor/t-102)
   - pr-medic      — open PRs, across every repo in --repos, whose CI is red
                     AND stale (no push in --pr-stale-hours despite failing) —
                     an error nobody is actively fixing, as opposed to a PR
@@ -59,17 +66,22 @@ rather than duplicates:
   - idle          — none of the above; dream-cycle fallback applies
 
 Decision order (first match wins) — reviewing fresh work stays highest
-leverage (keeps the pipeline flowing); fixing a broken PR recovers value
-already in flight before archaeology on stale branches; the audit is time-
-boxed (must happen roughly weekly regardless of other queue state) so it
-outranks fresh ready-task pickup once overdue, but never preempts anything
-already broken or reviewable; idle falls through last:
+leverage (keeps the pipeline flowing); a silently-failing scheduled workflow
+recovers shared automation everything else depends on (conductor/t-102: the
+2026-08-05 ai-art-academy/t-010 stuck-rearm incident sat failing on every
+`process-task-events.yml` run for hours before a manual sweep noticed) before
+a single broken PR, which in turn recovers value already in flight before
+archaeology on stale branches; the audit is time-boxed (must happen roughly
+weekly regardless of other queue state) so it outranks fresh ready-task
+pickup once overdue, but never preempts anything already broken or
+reviewable; idle falls through last:
   1. candidate_worker_branch_count > 0        -> reviewer
-  2. red_stale_pr_count > 0                   -> pr-medic
-  3. stranded_branch_count > 0                -> branch-medic
-  4. site_audit_overdue                       -> site-auditor
-  5. ready_task exists                        -> worker
-  6. none of the above                        -> idle
+  2. failing_scheduled_workflow_count > 0     -> workflow-medic
+  3. red_stale_pr_count > 0                   -> pr-medic
+  4. stranded_branch_count > 0                -> branch-medic
+  5. site_audit_overdue                       -> site-auditor
+  6. ready_task exists                        -> worker
+  7. none of the above                        -> idle
 
 This intentionally does not call OpenAI, Claude, or any other model API — same
 contract as the scripts it composes. Real role-appropriate work still happens
@@ -98,8 +110,9 @@ Usage:
 
 Env:
   KR_API_TOKEN  optional; forwarded to run_worker.py's queue summary
-  GITHUB_TOKEN  optional; enables the pr-medic/cross-repo branch-medic checks
-                (skipped, not crashed, if absent or unreachable)
+  GITHUB_TOKEN  optional; enables the workflow-medic/pr-medic/cross-repo
+                branch-medic checks (skipped, not crashed, if absent or
+                unreachable)
 """
 
 from __future__ import annotations
@@ -154,6 +167,16 @@ DEFAULT_PR_STALE_HOURS = 3.0
 DEFAULT_PR_GRACE_MINUTES = 5.0
 DEFAULT_BRANCH_STALE_HOURS = branch_janitor.DEFAULT_STALE_HOURS
 DEFAULT_PREFIXES = branch_janitor.DEFAULT_PREFIXES
+
+# process-task-events.yml is the task queue's own cron-driven processor
+# (task-events/*.yaml -> roadmap.yaml); a session's own AGENTS.md-driven work
+# depends on it having actually run, but a scheduled workflow's failure
+# otherwise only shows up in the Actions tab (conductor/t-102). Extensible to
+# other scheduled workflows via --watched-workflows; only this one is watched
+# by default since it's the one that's actually caused a silent-failure
+# incident so far (the 2026-08-05 ai-art-academy/t-010 stuck-rearm).
+DEFAULT_WATCHED_WORKFLOWS = ('process-task-events.yml',)
+DEFAULT_WORKFLOW_FAIL_THRESHOLD = 3
 
 # projects/global-ui/SITE-AUDIT-AGENT.md's weekly report drop -- this repo's
 # own local checkout, no API needed, same as branch_janitor.py's local checks.
@@ -249,6 +272,77 @@ def find_red_stale_prs(
     flagged: list[dict] = []
     for repo in repos:
         flagged.extend(find_red_stale_prs_in_repo(repo, token, stale_hours=stale_hours, now=now))
+    return flagged
+
+
+# --- workflow-medic: a scheduled workflow failing run after run, unnoticed --
+
+
+def workflow_runs_api(repo: str, workflow_file: str, token: str, *, per_page: int = 10) -> list[dict]:
+    """Most recent runs of `workflow_file` (e.g. 'process-task-events.yml'),
+    newest first -- the same order the Actions API itself returns them in."""
+    encoded = urllib.parse.quote(workflow_file, safe='')
+    data = _gh_request(
+        f'{GITHUB_API}/repos/{repo}/actions/workflows/{encoded}/runs?per_page={per_page}',
+        token,
+    )
+    if not isinstance(data, dict):
+        return []
+    runs = data.get('workflow_runs')
+    return runs if isinstance(runs, list) else []
+
+
+def consecutive_failing_runs(runs: list[dict]) -> int:
+    """Count a non-success streak from the most recent run backward. Only
+    `status: completed` runs carry a real `conclusion` -- a run still queued
+    or in_progress hasn't reported a result yet, so it's skipped rather than
+    breaking or extending the streak. Stops at the first completed run whose
+    conclusion is 'success' (a scheduled workflow that's recovered stops
+    counting as failing, even if an older run in the same page failed)."""
+    count = 0
+    for run in runs:
+        if run.get('status') != 'completed':
+            continue
+        if run.get('conclusion') == 'success':
+            break
+        count += 1
+    return count
+
+
+def find_failing_scheduled_workflows(
+    repo: str,
+    token: str,
+    *,
+    workflow_files: tuple[str, ...] = DEFAULT_WATCHED_WORKFLOWS,
+    fail_threshold: int = DEFAULT_WORKFLOW_FAIL_THRESHOLD,
+) -> list[dict]:
+    """Watched workflows in `repo` with >= `fail_threshold` consecutive
+    completed runs that didn't succeed -- a scheduled job that's been quietly
+    failing on every tick, as opposed to one isolated blip (conductor/t-102).
+    """
+    if not token:
+        return []
+
+    flagged: list[dict] = []
+    for workflow_file in workflow_files:
+        runs = workflow_runs_api(repo, workflow_file, token)
+        if not runs:
+            continue
+
+        streak = consecutive_failing_runs(runs)
+        if streak < fail_threshold:
+            continue
+
+        latest = runs[0]
+        flagged.append({
+            'repo': repo,
+            'workflow': workflow_file,
+            'consecutive_failures': streak,
+            'last_run_conclusion': latest.get('conclusion'),
+            'last_run_status': latest.get('status'),
+            'last_run_url': latest.get('html_url'),
+        })
+
     return flagged
 
 
@@ -475,6 +569,8 @@ def select_role(
     branch_stale_hours: float = DEFAULT_BRANCH_STALE_HOURS,
     audit_stale_days: float = DEFAULT_AUDIT_STALE_DAYS,
     pr_grace_minutes: float = DEFAULT_PR_GRACE_MINUTES,
+    watched_workflows: tuple[str, ...] = DEFAULT_WATCHED_WORKFLOWS,
+    workflow_fail_threshold: int = DEFAULT_WORKFLOW_FAIL_THRESHOLD,
 ) -> dict[str, object]:
     repos = list(repos) if repos else list(DEFAULT_REPOS)
     _reset_github_reachability_tracking()
@@ -486,6 +582,9 @@ def select_role(
 
     review_branches = run_reviewer.remote_worker_branches()
     reviewable_prs = find_reviewable_claude_prs(LOCAL_REPO, github_token, grace_minutes=pr_grace_minutes)
+    failing_workflows = find_failing_scheduled_workflows(
+        LOCAL_REPO, github_token, workflow_files=watched_workflows, fail_threshold=workflow_fail_threshold
+    )
     red_prs = find_red_stale_prs(repos, github_token, stale_hours=pr_stale_hours)
     stranded = find_stranded_branches(repos, github_token, stale_hours=branch_stale_hours)
     audit = site_audit_status(stale_days=audit_stale_days)
@@ -500,6 +599,10 @@ def select_role(
         if reviewable_prs:
             parts.append(f'{len(reviewable_prs)} green non-worker/* PR(s)')
         reason = ' and '.join(parts) + ' awaiting review'
+    elif failing_workflows:
+        role = 'workflow-medic'
+        names = ', '.join(sorted({f["workflow"] for f in failing_workflows}))
+        reason = f'{len(failing_workflows)} scheduled workflow(s) failing {workflow_fail_threshold}+ runs in a row ({names})'
     elif red_prs:
         role = 'pr-medic'
         by_repo = ', '.join(sorted({pr['repo'] for pr in red_prs}))
@@ -538,6 +641,8 @@ def select_role(
         'candidate_worker_branches': review_branches,
         'candidate_reviewable_pr_count': len(reviewable_prs),
         'candidate_reviewable_prs': reviewable_prs,
+        'failing_scheduled_workflow_count': len(failing_workflows),
+        'failing_scheduled_workflows': failing_workflows,
         'red_stale_pr_count': len(red_prs),
         'red_stale_prs': red_prs,
         'stranded_branch_count': len(stranded),
@@ -567,6 +672,12 @@ def main() -> None:
     parser.add_argument('--branch-stale-hours', type=float, default=DEFAULT_BRANCH_STALE_HOURS)
     parser.add_argument('--audit-stale-days', type=float, default=DEFAULT_AUDIT_STALE_DAYS)
     parser.add_argument('--pr-grace-minutes', type=float, default=DEFAULT_PR_GRACE_MINUTES)
+    parser.add_argument(
+        '--watched-workflows',
+        default=','.join(DEFAULT_WATCHED_WORKFLOWS),
+        help='comma-separated workflow filenames (in LOCAL_REPO) to check for a failing streak',
+    )
+    parser.add_argument('--workflow-fail-threshold', type=int, default=DEFAULT_WORKFLOW_FAIL_THRESHOLD)
     args = parser.parse_args()
 
     print('[select-role] model API calls are disabled by design', file=sys.stderr)
@@ -579,6 +690,8 @@ def main() -> None:
         branch_stale_hours=args.branch_stale_hours,
         audit_stale_days=args.audit_stale_days,
         pr_grace_minutes=args.pr_grace_minutes,
+        watched_workflows=tuple(w.strip() for w in args.watched_workflows.split(',') if w.strip()),
+        workflow_fail_threshold=args.workflow_fail_threshold,
     )
     print(json.dumps(result, indent=2))
 
