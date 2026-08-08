@@ -486,3 +486,44 @@ recovery passes should keep making real progress as the 131h backlog drains — 
 `coloring_queue_status.py` first; once these specific job ids (four are 2+ days old:
 4880-4886 from 2026-08-05T00:xx) finally clear the backlog, expect several of the 18 to
 resolve in the same pass rather than needing per-id reruns.
+
+## 2026-08-08T21:27Z | Agent run (scheduled conductor sweep) | coloring-book/t-022
+
+Claimed via `claim_task.py` (session `2026-08-08T212700Z-cb-t022-r7q3`).
+`recheck_render_queue.py --task coloring-book/t-022`: `draining` (PENDING=2869,
+DONE=3564 all-time; windowThroughput 24h PENDING=42/DONE=142/FAILED=1; one
+`recentFailed` — a ComfyUI HTTP 400 on an unrelated job, not one of ours). oldestPending
+now id=4795, age ~165.9h (up from ~131.1h on 2026-08-07, ~158.9h earlier today at
+14:29Z) — the *specific* oldest-pending job keeps aging even while the queue nets
+`draining`, i.e. total depth is shrinking but not from the front. `coloring_queue_status.py
+--book monster-recast` still reports the identical 18-id `recovery_batch` as 2026-08-07's
+run (mr-001, mr-006, mr-008, mr-011-015, mr-017-019, mr-021-024, mr-026-028; job ids
+4880-4886/7624-7632/7894 unchanged). Ran `consume_coloring_book_color_art.py --live
+--book monster-recast --ids <those 18>`: all 18 still not landed, 0 marked done, 0
+duplicates submitted, `color-art-jobs.yaml` diff empty.
+
+New diagnostic this cycle: queried `GET /api/art/queue/<id>` directly (with
+`KR_API_TOKEN`) for five of these stuck ids plus 7622/7623 (the two frozen verification
+jobs from the original 2026-08-05 incident, still not re-checked live until now). All
+seven report `status: PENDING`, `claimedAt: null`, `claimedBy: null`, `attempts: 0` —
+i.e. never picked up by the render worker at all, not hung mid-render. Spot-checked two
+adjacent-generation ids from the same window (7895, 7900, created 2026-08-07) — same
+shape, still unclaimed. By contrast, ids created a day later (7910, 7920, created
+2026-08-08T00:34Z) already show `status: DONE`, `claimedBy: "Silas-PC"`, `attempts: 1`.
+So the render worker is not draining strictly FIFO by creation time; it is reaching some
+newer entries while these older monster-recast ones sit unclaimed. This reframes the
+"still queued/running" language in prior run-log entries and the consumer script's own
+log line — these are not ComfyUI jobs stuck mid-execution, they are backlog entries the
+local worker (a single machine, `Silas-PC`, run manually/on-and-off per prior sessions'
+notes) simply hasn't reached yet. Nothing in this session's read-only checks points to a
+code-level hang; this looks like ordinary single-box backlog depth, not a new defect.
+No pass consumed (transient/infra, not content or code). No code or roadmap-scope change
+proposed from this finding — flagging the FIFO-order observation for whoever next
+touches the relay/worker side, since a non-FIFO drain order means "oldest pending" age
+alone is not a reliable proxy for "how soon will X clear," but not escalating it as an
+actionable bug without more evidence than one session's spot-check.
+
+Verification: `coloring_queue_status.py --book monster-recast`, `recheck_render_queue.py
+--task coloring-book/t-022` (RENDER-BACKLOG.md), direct `GET /api/art/queue/<id>` spot
+checks (read-only, no mutation), `validate_roadmaps.py` (clean), `git status` confirmed
+no working-tree changes from the live consumer pass. Re-armed to `ready`; released claim.
