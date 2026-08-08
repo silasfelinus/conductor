@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-08T10:37:46Z
+Generated: 2026-08-08T10:59:35Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **544**
-- Outcomes: blocked: 13, cancelled: 1, done: 530
+- Closed tasks recorded: **545**
+- Outcomes: blocked: 13, cancelled: 1, done: 531
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 78 | 100% |
+| interface-vision | 79 | 100% |
 | kind-robots | 43 | 98% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 529 | 99% |
+| software | 530 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-08 `interface-vision/t-114` — When a ratchet-baseline check's --update refuses to seed a brand-new rule (grownRatchetBuckets treats a bucket absent from the prior baseline as zero, so any pre-existing count reads as growth), that refusal is deliberate design, not a bootstrap bug -- see ratchetBaseline.ts's own doc comment. The correct move is to hand-seed the baseline JSON with the rule's current findings (generated via --report, not transcribed by hand) rather than to "fix" the shared ratchet helper. A brand-new rule with real pre-existing violations should grandfather them explicitly and let only new violations fail CI going forward -- exactly the same contract every other rule in the file already has.
+
 - 2026-08-08 `interface-vision/t-103` — This umbrella took 6 slices plus 5 regression-chase sub-tasks (t-108 through t-113) to reach a genuinely zero-finding raw audit -- each "fixed" claim needed the PR's own deployment-triggered audit read RAW (not the pass/fail summary) before trusting it, and two of the five sub-tasks had a first fix attempt that looked plausible but was later disproven by a fresh raw read. The pattern that finally closed it: re-diagnose from current main instead of assuming a prior fix's approach still applies, and treat "audit conclusion: success" as necessary but not sufficient -- always grep the specific route/viewport lines.
 
 - 2026-08-08 `interface-vision/t-113` — A prior fix attempt (t-112, PR #1585) removed a viewport-based breakpoint but left the shared ingredient-picker grid keyed to viewport width rather than container width -- it passed the audit at the time because the audit's viewport set didn't hit the exact narrow-host case, then regressed for real once /taskmaster placed the picker inside a narrower panel. Switching to a container-aware auto-fit grid (minmax with a min card width) is the general fix for "shared component crushes inside one specific narrow host" -- prefer it over another viewport-breakpoint patch when a regression repeats on the same component in a new host context.
@@ -92,7 +94,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-08 `interface-vision/t-110` — kind_robots PR #1585 (batched t-110+t-112) was returned once by the reviewer for a repo-convention defect, not a functional one -- three large explanatory template comments added around the fix, violating kind_robots/AGENTS.md's 'avoid inline and template comments, let naming carry the meaning' rule. Worth checking that convention before writing comment blocks to justify a non-obvious CSS fix in kind_robots; put the reasoning in the PR description/roadmap note instead, where it already belongs per this repo's own template.
 - 2026-08-08 `ai-art-academy/t-066` — @vite-pwa/nuxt's Nuxt module does NOT inject installability meta tags (viewport/ theme-color/apple-touch-icon) or the manifest <link> via useHead for an SSR app -- only a client-side SW-registration plugin and a nitro route for the manifest file itself. For any SSR (non-`nuxt generate`) app, those meta/link tags must be added explicitly in nuxt.config's app.head or they silently never render, even though the manifest file and service worker both build correctly. Worth checking directly against the built output (grep .output/public or curl the live site) rather than trusting the module's 'zero-config' framing for SSR specifically.
 - 2026-08-07 `ai-art-academy/t-061` — For a "choose the smallest durable path" audit task, a direct filesystem/package.json search for the actual infra (PWA module, Capacitor config, native dirs, install-meta tags) beats guessing from feature docs -- kind_robots had zero mobile-delivery infrastructure despite an unrelated Flutter client (Conductor App) existing as a superficially similar precedent that turned out to share no code or relevance. Sequencing the follow-on tasks (PWA foundation before Android/iOS "builds") let t-062/t-063 stay scoped as PWA verification passes instead of full native pipelines, deferring the real cost (store accounts, code-signing, native build tooling) until Silas actually asks for store distribution.
-- 2026-08-07 `interface-vision/t-107` — When a dead route has no obvious replacement, check whether the same codebase already encodes a canonical answer before guessing -- dashboardConfigs.builder's own defaultTab ('character' -> /characters) was the principled destination for two broken '/builder' nav entries, and git-blaming the referenced UI component (components/abandonware/builder/ builder-manager.vue) confirmed it had been deliberately parked as unreachable (kind_robots
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-08T10:37:46Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-08T10:59:35Z_
