@@ -1223,8 +1223,13 @@ tasks:
     dashboard tab is 'mermaids' but the component mounts on /sanctuary directly (a stale-tab-selection
     case that previously fell through to the catch-all "misplaced tab" warning instead of reaching
     real content) -- the fix sends the visitor to the same destination the tab's own route config
-    already points at. kind_robots PR: <filled in below after opening>. Verified: eslint (0 new
-    problems, ratchet unchanged at 392/27), vue-tsc --noEmit clean, prettier clean.
+    already points at. kind_robots PR: silasfelinus/kind_robots#1603 (merged 2026-08-08T08:52Z, squash
+    111bfee). Verified: eslint (0 new problems, ratchet unchanged at 392/27), vue-tsc --noEmit clean,
+    prettier clean. Post-merge, the PR's own deployment-triggered responsive-layout-audit run
+    (31246882294) was read RAW rather than trusted on pass/fail alone: /sanctuary (giftshop) and
+    /mermaids both passed cleanly at phone, tablet, and desktop -- zero regressions from this change.
+    The run's one reported failure (desktop /taskmaster CRUSHED) is the pre-existing, already-tracked
+    interface-vision/t-113 regression, unrelated to this diff and fixed separately in kind_robots PR #1600.
 
     Items 1-4 (KR-logo Product/POD SKU, DLC live catalog + admin route + contentAccess wiring, and
     the two pricing/POD-entry-point retirement decisions) are genuinely larger and judgment-heavy --
@@ -1233,7 +1238,7 @@ tasks:
     should NOT fire for this id until then.
   claimed_by: 2026-08-08T0716-ds-t038-w4x2
   claimed_at: '2026-08-08T07:28:19Z'
-  updated: '2026-08-08T07:28:19Z'
+  updated: '2026-08-08T08:52:00Z'
 
 - id: t-039
   milestone: m6
