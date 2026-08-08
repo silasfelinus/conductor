@@ -7092,3 +7092,20 @@ records:
     from current main instead of assuming a prior fix's approach still applies, and treat
     "audit conclusion: success" as necessary but not sufficient -- always grep the specific
     route/viewport lines.
+- date: 2026-08-08
+  project: interface-vision
+  task: t-114
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    When a ratchet-baseline check's --update refuses to seed a brand-new rule (grownRatchetBuckets
+    treats a bucket absent from the prior baseline as zero, so any pre-existing count reads as
+    growth), that refusal is deliberate design, not a bootstrap bug -- see ratchetBaseline.ts's own
+    doc comment. The correct move is to hand-seed the baseline JSON with the rule's current findings
+    (generated via --report, not transcribed by hand) rather than to "fix" the shared ratchet helper.
+    A brand-new rule with real pre-existing violations should grandfather them explicitly and let
+    only new violations fail CI going forward -- exactly the same contract every other rule in the
+    file already has.

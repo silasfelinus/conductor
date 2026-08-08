@@ -2830,7 +2830,7 @@ tasks:
   - id: t-114
     milestone: m4
     title: "Add a self-test flagging viewport-breakpoint multi-column grids inside narrow pane/sidebar hosts"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -2859,9 +2859,12 @@ tasks:
       pattern. Verified: npm run test:layout-contract, eslint, vue-tsc --noEmit, prettier
       --check, and the sibling mixed-pane-primitive fixture all clean. kind_robots PR:
       silasfelinus/kind_robots#1608 (open, awaiting CI).
+
+      DONE (conductor sweep, 2026-08-08 ~10:50Z): kind_robots PR #1608 merged (squash
+      bc073ce), all 14 checks green including layout-contract itself. Closing done.
     claimed_by: claude-20260808T103710Z-iv-t114
     claimed_at: '2026-08-08T10:37:17Z'
-    updated: '2026-08-08T10:52:00Z'
+    updated: '2026-08-08T10:53:00Z'
     implementation_pr: 'silasfelinus/kind_robots#1608'
 
   - id: t-109
