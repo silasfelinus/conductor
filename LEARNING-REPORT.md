@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-08T09:09:33Z
+Generated: 2026-08-08T10:36:38Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **542**
-- Outcomes: blocked: 13, cancelled: 1, done: 528
+- Closed tasks recorded: **544**
+- Outcomes: blocked: 13, cancelled: 1, done: 530
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 76 | 100% |
+| interface-vision | 78 | 100% |
 | kind-robots | 43 | 98% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 527 | 99% |
+| software | 529 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,10 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-08 `interface-vision/t-103` — This umbrella took 6 slices plus 5 regression-chase sub-tasks (t-108 through t-113) to reach a genuinely zero-finding raw audit -- each "fixed" claim needed the PR's own deployment-triggered audit read RAW (not the pass/fail summary) before trusting it, and two of the five sub-tasks had a first fix attempt that looked plausible but was later disproven by a fresh raw read. The pattern that finally closed it: re-diagnose from current main instead of assuming a prior fix's approach still applies, and treat "audit conclusion: success" as necessary but not sufficient -- always grep the specific route/viewport lines.
+
+- 2026-08-08 `interface-vision/t-113` — A prior fix attempt (t-112, PR #1585) removed a viewport-based breakpoint but left the shared ingredient-picker grid keyed to viewport width rather than container width -- it passed the audit at the time because the audit's viewport set didn't hit the exact narrow-host case, then regressed for real once /taskmaster placed the picker inside a narrower panel. Switching to a container-aware auto-fit grid (minmax with a min card width) is the general fix for "shared component crushes inside one specific narrow host" -- prefer it over another viewport-breakpoint patch when a regression repeats on the same component in a new host context.
+
 - 2026-08-08 `conductor/t-104` — workflow-medic's own watch list only had one entry (process-task-events.yml) because it had never been exercised against real live-run history -- pulling that history for the "should we widen it" decision immediately surfaced a genuine 2+ day silent failure streak on hourly-conductor.yml (a script retrying an already-known-partial item forever instead of short-circuiting on it). Always pull real data before making a "should we expand monitoring" decision; mocked-test coverage alone can hide the exact class of incident the monitoring exists to catch.
 
 - 2026-08-08 `interface-vision/t-108` — 4th fix attempt for the same bug finally worked: swapping an eager Image() probe for an IntersectionObserver-gated request restored native lazy-loading behavior AND kept the dedup benefit -- the 3rd attempt's Reviewer rejection (eager probe defeats loading="lazy", increases burst pressure) was correct and specific enough to fix in one retry without re-guessing. Reading the PR's own deployment-triggered audit RAW (not pass/fail) was again the only way to confirm the fix actually worked, and it also surfaced a genuinely unrelated regression (t-112's /taskmaster crush) in the same run -- worth remembering that a full-suite audit failing overall does not mean the specific route under test is still broken; read the specific route's lines before concluding either way.
@@ -89,8 +93,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-08 `ai-art-academy/t-066` — @vite-pwa/nuxt's Nuxt module does NOT inject installability meta tags (viewport/ theme-color/apple-touch-icon) or the manifest <link> via useHead for an SSR app -- only a client-side SW-registration plugin and a nitro route for the manifest file itself. For any SSR (non-`nuxt generate`) app, those meta/link tags must be added explicitly in nuxt.config's app.head or they silently never render, even though the manifest file and service worker both build correctly. Worth checking directly against the built output (grep .output/public or curl the live site) rather than trusting the module's 'zero-config' framing for SSR specifically.
 - 2026-08-07 `ai-art-academy/t-061` — For a "choose the smallest durable path" audit task, a direct filesystem/package.json search for the actual infra (PWA module, Capacitor config, native dirs, install-meta tags) beats guessing from feature docs -- kind_robots had zero mobile-delivery infrastructure despite an unrelated Flutter client (Conductor App) existing as a superficially similar precedent that turned out to share no code or relevance. Sequencing the follow-on tasks (PWA foundation before Android/iOS "builds") let t-062/t-063 stay scoped as PWA verification passes instead of full native pipelines, deferring the real cost (store accounts, code-signing, native build tooling) until Silas actually asks for store distribution.
 - 2026-08-07 `interface-vision/t-107` — When a dead route has no obvious replacement, check whether the same codebase already encodes a canonical answer before guessing -- dashboardConfigs.builder's own defaultTab ('character' -> /characters) was the principled destination for two broken '/builder' nav entries, and git-blaming the referenced UI component (components/abandonware/builder/ builder-manager.vue) confirmed it had been deliberately parked as unreachable (kind_robots
-- 2026-08-07 `interface-vision/t-102` — A static-analysis route inventory (grep the router/content config rather than crawl a live site) is enough to build an accurate numeric shrink-to-zero baseline for a reachability audit, and the process of building it is itself an effective way to surface real dead-route bugs -- two were found here (a stale /scenarios path live in three navigation payloads, fixed; a dead /builder path in two nav sources, filed as t-107 since its correct destination needed product judgment) that a pure documentation pass would have missed.
-- 2026-08-07 `kind-robots/t-055` — Historical audit inventories should preserve their original findings while later path relocations are recorded as durable errata, avoiding noisy rewrites of completed audit notes.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-08T09:09:33Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-08T10:36:38Z_
