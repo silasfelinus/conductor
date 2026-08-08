@@ -194,3 +194,21 @@ def test_upload_backed_image_input_is_never_touched():
     assert remaps == []
     assert unresolved == []
     assert workflow["10"]["inputs"]["image"] == "job-2774-source.png"
+
+
+def test_resolution_state_distinguishes_skipped_from_ran(monkeypatch):
+    # ArtJob 7905 failed three times on a checkpoint that was present on disk and
+    # whose name this resolver could have fixed, and the queue could not say
+    # whether the relay had skipped resolution or attempted it and disagreed.
+    # These two runs must not look the same afterwards.
+    monkeypatch.setattr(relay, "fetch_comfy_object_info", lambda force=False: None)
+    relay.align_workflow_asset_names({"61": lora_node("whatever/x.safetensors")})
+    assert relay._last_resolution["state"] == "skipped-no-object-info"
+
+    info = object_info(loras=["Flux/manuscript_illustration_kontext.safetensors"])
+    monkeypatch.setattr(relay, "fetch_comfy_object_info", lambda force=False: info)
+    relay.align_workflow_asset_names(
+        {"61": lora_node("FLUX/manuscript_illustration_kontext.safetensors")}
+    )
+    assert relay._last_resolution["state"] == "ran"
+    assert relay._last_resolution["remaps"] == 1
