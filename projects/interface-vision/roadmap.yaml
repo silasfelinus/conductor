@@ -2935,48 +2935,21 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: claimed
-    owner: worker
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
-    note: >
-      Inventory live bespoke equivalents of the established kr-* layout, note, gallery,
-      narrative, card, toolbar, pane, and art primitives. Migrate real reachable callers,
-      consolidate duplicate implementations, and delete/park losers only after callers move.
-      Preserve deliberately bespoke surfaces. Add or extend shrink-only ratchets so consistency
-      cannot silently drift backward after this phase closes.
+    note: |-
+      Inventory live bespoke equivalents of the established kr-* layout, note, gallery, narrative, card, toolbar, pane, and art primitives. Migrate real reachable callers, consolidate duplicate implementations, and delete/park losers only after callers move. Preserve deliberately bespoke surfaces. Add or extend shrink-only ratchets so consistency cannot silently drift backward after this phase closes.
+      Slice 1 merged (kind_robots PR #1610, squash a081bc4). Inventoried the 8 live kr-* components (kr-page-backdrop, kr-choice-list, kr-narrator-stage, kr-chat-window, kr-art-plate, kr-manager, kr-entity-card-body, kr-gallery) plus the non-kr-named members of the same kit (reactable-card, workspace-header, the CSS-layer primitives in tailwind.css) and their live adoption counts. Migrated icon-card.vue (/icons, the Smart Icon gallery's card) off its hand-rolled bordered tile onto kr-entity-card-body's existing icon variant -- the same row already live for every other object's Icons gallery mode (bot/character/dream/reward/scenario-card). Added a new opt-in #icon-actions named slot to kr-entity-card-body for icon-card's two per-object buttons, deliberately not the shared default slot (would have surfaced Scenario's inspirations panel etc. into every existing icon-variant caller's row). Verified: eslint/vue-tsc/prettier clean, verifyLayoutContract.ts holds, gallery adoption + component-canonical-runtime contracts pass unchanged, lint ratchet holds. Full CI green (all 21 checks incl. the long Contract Tests job); SSR-fetched the merged /icons route post-merge as a smoke check (no error page, correct title).
+      Remaining candidates identified but deferred this slice: components/user/chat-gallery.vue -> kr-chat-window (needs a date-divider slot kr-chat-window doesn't have yet -- a real primitive gap, not a mechanical swap); components/resources/resource-card.vue and components/servers/server-card.vue -> kr-entity-card-body (resource-card.vue was mid-flight in a concurrent session's PR #1607 this slice -- deliberately left untouched to avoid a collision; server-card.vue is a same-shape follow-on once a precedent lands); components/dreams/daily-digest-object-gallery.vue -> kr-gallery (needs a new carousel/ horizontal-scroll density kr-gallery doesn't support yet, two-step work). Status back to ready rather than review/done -- this is one slice of a larger inventory-and-migrate task, same multi-slice shape as t-103.
 
-      Slice 1 merged (kind_robots PR #1610, squash a081bc4). Inventoried the 8 live kr-*
-      components (kr-page-backdrop, kr-choice-list, kr-narrator-stage, kr-chat-window,
-      kr-art-plate, kr-manager, kr-entity-card-body, kr-gallery) plus the non-kr-named
-      members of the same kit (reactable-card, workspace-header, the CSS-layer primitives
-      in tailwind.css) and their live adoption counts. Migrated icon-card.vue (/icons, the
-      Smart Icon gallery's card) off its hand-rolled bordered tile onto
-      kr-entity-card-body's existing icon variant -- the same row already live for every
-      other object's Icons gallery mode (bot/character/dream/reward/scenario-card). Added a
-      new opt-in #icon-actions named slot to kr-entity-card-body for icon-card's two
-      per-object buttons, deliberately not the shared default slot (would have surfaced
-      Scenario's inspirations panel etc. into every existing icon-variant caller's row).
-      Verified: eslint/vue-tsc/prettier clean, verifyLayoutContract.ts holds, gallery
-      adoption + component-canonical-runtime contracts pass unchanged, lint ratchet holds.
-      Full CI green (all 21 checks incl. the long Contract Tests job); SSR-fetched the
-      merged /icons route post-merge as a smoke check (no error page, correct title).
 
-      Remaining candidates identified but deferred this slice: components/user/chat-gallery.vue
-      -> kr-chat-window (needs a date-divider slot kr-chat-window doesn't have yet -- a real
-      primitive gap, not a mechanical swap); components/resources/resource-card.vue and
-      components/servers/server-card.vue -> kr-entity-card-body (resource-card.vue was mid-flight
-      in a concurrent session's PR #1607 this slice -- deliberately left untouched to avoid a
-      collision; server-card.vue is a same-shape follow-on once a precedent lands);
-      components/dreams/daily-digest-object-gallery.vue -> kr-gallery (needs a new carousel/
-      horizontal-scroll density kr-gallery doesn't support yet, two-step work). Status back to
-      ready rather than review/done -- this is one slice of a larger inventory-and-migrate task,
-      same multi-slice shape as t-103.
+      REVIEW REJECTED slice 2 (kind_robots #1612, exact head e9c8b132ae3fcdecaf0c38851861063de990657c; session 2026-08-08T061309-0700-pr1612-rv-x7q4). Quality failure: chat-gallery removed its explicit scrollToBottom() on every openThread() and delegated to kr-chat-window autoScroll, but kr-chat-window only watches turns.length and streamingText. Switching between two different conversations with the same message count can therefore retain the previous thread's scroll position instead of opening at the newest message. Fix by giving the shared primitive a thread/conversation identity or equivalent explicit scroll trigger, add focused equal-length thread-switch coverage, remove the newly-added explanatory inline/template comments per kind_robots/AGENTS.md, then rerun exact-head TypeScript/contracts and the /messages responsive audit before merge. This task-event path cannot increment passes or write structured retry_context; this note preserves the required retry context until connector event schema supports those fields.
     claimed_by: claude-quirky-curie-20260808T122735Z-iv-t104-s2
     claimed_at: '2026-08-08T12:34:40Z'
     implementation_pr: 'silasfelinus/kind_robots#1610'
-    updated: '2026-08-08T12:34:40Z'
+    updated: '2026-08-08T13:18:00Z'
 
   - id: t-105
     milestone: m6

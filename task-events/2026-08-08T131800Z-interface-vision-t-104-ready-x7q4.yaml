@@ -1,7 +1,0 @@
-version: 1
-project: interface-vision
-task: t-104
-operation: ready
-updated: '2026-08-08T13:18:00Z'
-note: >-
-  REVIEW REJECTED slice 2 (kind_robots #1612, exact head e9c8b132ae3fcdecaf0c38851861063de990657c; session 2026-08-08T061309-0700-pr1612-rv-x7q4). Quality failure: chat-gallery removed its explicit scrollToBottom() on every openThread() and delegated to kr-chat-window autoScroll, but kr-chat-window only watches turns.length and streamingText. Switching between two different conversations with the same message count can therefore retain the previous thread's scroll position instead of opening at the newest message. Fix by giving the shared primitive a thread/conversation identity or equivalent explicit scroll trigger, add focused equal-length thread-switch coverage, remove the newly-added explanatory inline/template comments per kind_robots/AGENTS.md, then rerun exact-head TypeScript/contracts and the /messages responsive audit before merge. This task-event path cannot increment passes or write structured retry_context; this note preserves the required retry context until connector event schema supports those fields.
