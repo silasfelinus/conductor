@@ -7058,3 +7058,37 @@ records:
     instead of short-circuiting on it). Always pull real data before making a "should we
     expand monitoring" decision; mocked-test coverage alone can hide the exact class of
     incident the monitoring exists to catch.
+- date: 2026-08-08
+  project: interface-vision
+  task: t-113
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A prior fix attempt (t-112, PR #1585) removed a viewport-based breakpoint but left the
+    shared ingredient-picker grid keyed to viewport width rather than container width -- it
+    passed the audit at the time because the audit's viewport set didn't hit the exact
+    narrow-host case, then regressed for real once /taskmaster placed the picker inside a
+    narrower panel. Switching to a container-aware auto-fit grid (minmax with a min card
+    width) is the general fix for "shared component crushes inside one specific narrow
+    host" -- prefer it over another viewport-breakpoint patch when a regression repeats on
+    the same component in a new host context.
+- date: 2026-08-08
+  project: interface-vision
+  task: t-103
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    This umbrella took 6 slices plus 5 regression-chase sub-tasks (t-108 through t-113) to
+    reach a genuinely zero-finding raw audit -- each "fixed" claim needed the PR's own
+    deployment-triggered audit read RAW (not the pass/fail summary) before trusting it,
+    and two of the five sub-tasks had a first fix attempt that looked plausible but was
+    later disproven by a fresh raw read. The pattern that finally closed it: re-diagnose
+    from current main instead of assuming a prior fix's approach still applies, and treat
+    "audit conclusion: success" as necessary but not sufficient -- always grep the specific
+    route/viewport lines.

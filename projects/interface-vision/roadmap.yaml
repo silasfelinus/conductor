@@ -98,7 +98,7 @@ milestones:
   - id: m4
     title: "PHASE 1 — MAKE IT WORK: every reachable surface, every device class"
     weight: 40
-    status: in-progress
+    status: complete
 
   - id: m5
     title: "PHASE 2 — MAKE IT CONSISTENT: shared kr-* vocabulary and responsive composition"
@@ -2754,11 +2754,10 @@ tasks:
   - id: t-103
     milestone: m4
     title: "Drive Phase 1 responsive/functionality findings to zero"
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-102
-    remaining_scope_task: t-113
     note: |-
       Work the t-102 inventory in scoped slices until every reachable page passes phone, tablet, and desktop geometry with no hidden/unreachable elements. Split findings into dedicated tasks when they are larger than one PR; keep this umbrella open until the authoritative counter is zero. Passing TypeScript is not evidence that a page works.
 
@@ -2787,7 +2786,9 @@ tasks:
       Deadlock fix applied (conductor sweep, 2026-08-08): set remaining_scope_task: t-108 on this task (per AGENTS.md's umbrella-sweep convention -- claim_task.py/next_ready_task.py now treat this umbrella as not-yet-claimable directly while t-108 exists and isn't done, so no session picks up t-103 itself) and dropped t-108's depends_on: t-103 (status waiting -> ready), since t-108 was never actually blocked on any t-103 deliverable -- it just needed to stop being claimable as an independent umbrella slice while t-103 was the one tracking it. Status back to ready (not review/done) until t-108 closes and a fresh full audit confirms zero findings remain.
 
       t-108 now genuinely done (conductor sweep, 2026-08-08 ~05:40Z): kind_robots PR #1598 merged, verified via its own audit run 31239732003 read raw -- /navigation clean at all 3 viewports. That same run surfaced one NEW finding, unrelated to t-108: desktop /taskmaster CRUSHED, a regression of the already-closed t-112. Filed as t-113 and pointed this umbrella's remaining_scope_task at it (t-108 -> t-113) so t-103 stays non-independently-claimable until that regression is fixed and a fresh full audit confirms zero findings. Coverage remains complete (all 64 routes); only this one regression stands between the counter and zero.
-    updated: '2026-08-08T05:40:00Z'
+
+      CLOSED (conductor sweep, 2026-08-08 ~10:30Z): t-113 fixed and merged (kind_robots PR #1600, squash 709a206). Its own deployment-triggered responsive-layout-audit (run 31250744208, all 64 routes x 3 viewports) read RAW: "✅ Responsive layout audit clean across all routes and viewports." -- the authoritative counter this umbrella has tracked since slice 6 is now genuinely zero. Closing t-103 done.
+    updated: '2026-08-08T10:30:00Z'
     claimed_by: 2026-08-08T011340Z-interface-vision-t103-b7k4
     claimed_at: '2026-08-08T01:13:40Z'
     implementation_pr: 'silasfelinus/kind_robots#1574'
@@ -2809,7 +2810,7 @@ tasks:
   - id: t-113
     milestone: m4
     title: "/taskmaster's desktop scenario-option spans crush again -- regression of t-112"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -2818,10 +2819,35 @@ tasks:
       NEXT STEP: don't assume t-112's old fix (dropping xl:grid-cols-3) is still in place -- check kind_robots main's current taskmaster page/component for what actually changed since PR #1585, then re-diagnose with a fresh desktop-width inspection before shipping a second attempt. Read the actual audit run's raw log (run 31239732003, "Audit responsive layout" step) rather than trusting a pass/fail summary, per this project's established pattern for this exact failure class (t-108's own history of two disproven "fixed" claims in a row).
 
       Re-diagnosed the desktop Taskmaster regression: the prior t-112 fix removed the three-column xl layout, but the shared ingredient picker still switches to two columns at viewport md even inside Taskmaster's narrow recipe panel. Changed the shared grid to auto-fit 20rem minimum columns so column count follows available container width instead of viewport width. Implementation head: silasfelinus/kind_robots@1a9b1c1dfced7eca34173abf3d52bcf35a820bc4.
+
+      VERIFIED FIXED (conductor sweep, 2026-08-08 ~10:30Z): kind_robots PR #1600 merged (squash 709a206). Its own deployment-triggered responsive-layout-audit (run 31250744208) read RAW, not just pass/fail: /taskmaster shows a plain ✅ at phone, tablet, AND desktop. The run's final line reads "✅ Responsive layout audit clean across all routes and viewports." -- zero findings anywhere in the full 64-route inventory. Closing done.
     owner: worker
     claimed_by: 2026-08-08T061721Z-interface-vision-t113-k9r4
     claimed_at: '2026-08-08T06:17:21Z'
-    updated: '2026-08-08T06:22:45Z'
+    updated: '2026-08-08T10:30:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#1600'
+
+  - id: t-114
+    milestone: m4
+    title: "Add a self-test flagging viewport-breakpoint multi-column grids inside narrow pane/sidebar hosts"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from kind_robots PR #1600 (interface-vision/t-113 close-out, 2026-08-08): the
+      t-112/t-113 regression pair happened because a shared component used a
+      viewport-width breakpoint (`md:grid-cols-2`) that looked fine in isolation but
+      crushed once the component was placed inside a narrower host panel (Taskmaster's
+      recipe column) -- twice, since the first fix (dropping `xl:grid-cols-3`) only
+      addressed the symptom at the audit's then-current viewport set and regressed later.
+      Add a lint/contract check (or extend an existing one, e.g. layout-contract) that
+      flags Tailwind grid/flex classes using viewport-based column-count breakpoints
+      (`sm:`/`md:`/`lg:`/`xl:grid-cols-*`) on components also referenced from a known
+      narrow-panel host (Taskmaster's ingredient picker, or similar nested-dashboard
+      contexts), so this class of regression is caught by fast structural CI before the
+      expensive full-suite responsive-layout-audit run. Prefer suggesting the
+      container-aware `auto-fit`/`minmax()` pattern t-113 landed as the fix.
 
   - id: t-109
     milestone: m4
@@ -2891,7 +2917,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
