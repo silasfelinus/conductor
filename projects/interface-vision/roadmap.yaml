@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: claimed
+    status: ready
     owner: worker
     passes: 0
     stakes: reversible
@@ -2946,9 +2946,37 @@ tasks:
       consolidate duplicate implementations, and delete/park losers only after callers move.
       Preserve deliberately bespoke surfaces. Add or extend shrink-only ratchets so consistency
       cannot silently drift backward after this phase closes.
+
+      Slice 1 merged (kind_robots PR #1610, squash a081bc4). Inventoried the 8 live kr-*
+      components (kr-page-backdrop, kr-choice-list, kr-narrator-stage, kr-chat-window,
+      kr-art-plate, kr-manager, kr-entity-card-body, kr-gallery) plus the non-kr-named
+      members of the same kit (reactable-card, workspace-header, the CSS-layer primitives
+      in tailwind.css) and their live adoption counts. Migrated icon-card.vue (/icons, the
+      Smart Icon gallery's card) off its hand-rolled bordered tile onto
+      kr-entity-card-body's existing icon variant -- the same row already live for every
+      other object's Icons gallery mode (bot/character/dream/reward/scenario-card). Added a
+      new opt-in #icon-actions named slot to kr-entity-card-body for icon-card's two
+      per-object buttons, deliberately not the shared default slot (would have surfaced
+      Scenario's inspirations panel etc. into every existing icon-variant caller's row).
+      Verified: eslint/vue-tsc/prettier clean, verifyLayoutContract.ts holds, gallery
+      adoption + component-canonical-runtime contracts pass unchanged, lint ratchet holds.
+      Full CI green (all 21 checks incl. the long Contract Tests job); SSR-fetched the
+      merged /icons route post-merge as a smoke check (no error page, correct title).
+
+      Remaining candidates identified but deferred this slice: components/user/chat-gallery.vue
+      -> kr-chat-window (needs a date-divider slot kr-chat-window doesn't have yet -- a real
+      primitive gap, not a mechanical swap); components/resources/resource-card.vue and
+      components/servers/server-card.vue -> kr-entity-card-body (resource-card.vue was mid-flight
+      in a concurrent session's PR #1607 this slice -- deliberately left untouched to avoid a
+      collision; server-card.vue is a same-shape follow-on once a precedent lands);
+      components/dreams/daily-digest-object-gallery.vue -> kr-gallery (needs a new carousel/
+      horizontal-scroll density kr-gallery doesn't support yet, two-step work). Status back to
+      ready rather than review/done -- this is one slice of a larger inventory-and-migrate task,
+      same multi-slice shape as t-103.
     claimed_by: claude-quirky-curie-20260808T112719Z-iv-t104
     claimed_at: '2026-08-08T11:27:19Z'
-    updated: '2026-08-08T11:27:19Z'
+    implementation_pr: 'silasfelinus/kind_robots#1610'
+    updated: '2026-08-08T11:45:49Z'
 
   - id: t-105
     milestone: m6
