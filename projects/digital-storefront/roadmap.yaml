@@ -1293,8 +1293,8 @@ tasks:
 - id: t-003
   milestone: m6
   title: "Seed the KR-logo/DLC catalog and resolve the storefront's two pricing/POD-entry-point splits"
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-037
@@ -1333,6 +1333,9 @@ tasks:
     an admin write path) -- reversible (Product.active can flip false, Pack->Product linkage can be
     removed), not destructive, but real state, so verify carefully and describe exactly what was
     seeded/wired in the PR body.
+  claimed_by: claude-quirky-curie-20260808T1435Z-ds-t003
+  claimed_at: '2026-08-08T14:30:23Z'
+  updated: '2026-08-08T14:30:23Z'
 
 - id: t-042
   milestone: m6
