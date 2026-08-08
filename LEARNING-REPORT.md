@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-08T00:33:30Z
+Generated: 2026-08-08T01:04:54Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **536**
-- Outcomes: blocked: 13, cancelled: 1, done: 522
+- Closed tasks recorded: **539**
+- Outcomes: blocked: 13, cancelled: 1, done: 525
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -15,7 +15,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 | Project | Closed | Success rate |
 |---|---|---|
-| ai-art-academy | 63 | 98% |
+| ai-art-academy | 64 | 98% |
 | alexa-integration | 2 | 100% |
 | animation-manager | 13 | 100% |
 | animation-studio | 2 | 50% |
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 73 | 100% |
+| interface-vision | 75 | 100% |
 | kind-robots | 43 | 98% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 521 | 99% |
+| software | 524 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,9 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-08 `interface-vision/t-112` — Batching independent-but-related small layout fixes into one PR (t-110+t-112, same audit run, same flexbox root cause pattern) avoided contending with the responsive-audit workflow's one-run-at-a-time serialization -- worth defaulting to when a slice's several small findings would otherwise each wait behind the same queue.
+- 2026-08-08 `interface-vision/t-110` — kind_robots PR #1585 (batched t-110+t-112) was returned once by the reviewer for a repo-convention defect, not a functional one -- three large explanatory template comments added around the fix, violating kind_robots/AGENTS.md's 'avoid inline and template comments, let naming carry the meaning' rule. Worth checking that convention before writing comment blocks to justify a non-obvious CSS fix in kind_robots; put the reasoning in the PR description/roadmap note instead, where it already belongs per this repo's own template.
+- 2026-08-08 `ai-art-academy/t-066` — @vite-pwa/nuxt's Nuxt module does NOT inject installability meta tags (viewport/ theme-color/apple-touch-icon) or the manifest <link> via useHead for an SSR app -- only a client-side SW-registration plugin and a nitro route for the manifest file itself. For any SSR (non-`nuxt generate`) app, those meta/link tags must be added explicitly in nuxt.config's app.head or they silently never render, even though the manifest file and service worker both build correctly. Worth checking directly against the built output (grep .output/public or curl the live site) rather than trusting the module's 'zero-config' framing for SSR specifically.
 - 2026-08-07 `ai-art-academy/t-061` — For a "choose the smallest durable path" audit task, a direct filesystem/package.json search for the actual infra (PWA module, Capacitor config, native dirs, install-meta tags) beats guessing from feature docs -- kind_robots had zero mobile-delivery infrastructure despite an unrelated Flutter client (Conductor App) existing as a superficially similar precedent that turned out to share no code or relevance. Sequencing the follow-on tasks (PWA foundation before Android/iOS "builds") let t-062/t-063 stay scoped as PWA verification passes instead of full native pipelines, deferring the real cost (store accounts, code-signing, native build tooling) until Silas actually asks for store distribution.
 - 2026-08-07 `interface-vision/t-107` — When a dead route has no obvious replacement, check whether the same codebase already encodes a canonical answer before guessing -- dashboardConfigs.builder's own defaultTab ('character' -> /characters) was the principled destination for two broken '/builder' nav entries, and git-blaming the referenced UI component (components/abandonware/builder/ builder-manager.vue) confirmed it had been deliberately parked as unreachable (kind_robots
 - 2026-08-07 `interface-vision/t-102` — A static-analysis route inventory (grep the router/content config rather than crawl a live site) is enough to build an accurate numeric shrink-to-zero baseline for a reachability audit, and the process of building it is itself an effective way to surface real dead-route bugs -- two were found here (a stale /scenarios path live in three navigation payloads, fixed; a dead /builder path in two nav sources, filed as t-107 since its correct destination needed product judgment) that a pure documentation pass would have missed.
@@ -87,9 +90,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-07 `conductor/t-103` — Fixed the third confirmed instance of process_task_events.py's rearm/ready/done path silently freezing a t-010-style recurring task's nested continuous_improvement counter (it only ever wrote top-level status/note fields). Took the schema-field approach the original task note flagged as easier than free-text note parsing: two new optional event fields (continuous_improvement_lane, continuous_improvement_pr) that a closing session sets explicitly, applied atomically alongside the normal status transition via the same pure update function bump_continuous_improvement.py's manual CLI already used. This closes the gap for future task-events-path close-outs but does not retroactively repair any already-stale counter -- a session hitting a drifted counter still needs to notice and hand-correct it once, same as before.
 - 2026-08-07 `interface-vision/t-101` — Clean first-pass close of a site-audit correction task: both flagged path drifts (storybook-mockups.vue deleted, plan-projects-grid.vue moved to abandonware) traced cleanly to specific kind_robots PRs (#1294/#1297, #1475) confirming both were intentional, expected changes rather than regressions -- no code fix needed anywhere, just closing-note addenda. Separately: PR #1824's one required repo-tracked check (Validate queued task-events YAML) sat stuck queued (runner_id 0) for several minutes while every sibling job in the same workflow run completed normally -- confirmed via githubstatus.com as the same GitHub-acknowledged Actions incident already logged three times this week (2026-08-06), this time manifesting as delayed runner pickup rather than a failed action-download step. A second push (bundling a TALKBACK entry) got a fresh CI run that completed cleanly in under a minute, so no extended wait or forced merge was needed. Treating it as transient and letting a natural next commit re-trigger CI, rather than repeatedly polling the same stuck job, resolved it faster than waiting would have.
 - 2026-08-06 `ai-art-academy/t-010` — Lane-2 cycle's real blocker was a genuine review catch (ROADMAP-AUDIT.json/.md generated at different times, disagreeing with each other) -- fixed in one commit by re-running audit_roadmaps.py once against final state. What actually consumed the cycle was a ~2h GitHub Actions infra degradation that hit repo-tracked ci.yml checks directly (Validate queued task-events YAML, Dream-cycle backlog guards, Dependency audit), not just the default CodeQL scan already noted in t-060's lesson -- all failed with the identical "Failed to resolve action download info: Service Unavailable" signature (GitHub's own actions-download CDN). GitHub auto-retried most of them on its own after roughly an hour and they passed; a couple of non-required jobs stayed cancelled/failed and didn't block the merge. Confirming the identical log signature across every failure before classifying it transient (rather than guessing from the red X) avoided burning a pass or touching the PR's actual content.
-- 2026-08-06 `ai-art-academy/t-060` — Clean first-pass extension of verify_academy_style_preview_coverage.py: the fix (an independent full-slug enumeration diffed against the previewImageSrc-scoped set) was exactly the shape the task note prescribed, and the current academyStyles.ts already has 0 slugs in the new gap category -- proved via synthetic fixtures instead of a live regression. Merge took much longer than the diff warranted: the repo's default GitHub code-scanning CodeQL "Analyze (javascript-typescript)" job sat in "Perform CodeQL Analysis" unchanged for 50+ minutes (vs. ~5 min for the identical job on the immediately-prior PR #1803), while every actually repo-tracked CI check in ci.yml passed within a minute. It isn't a repo-tracked workflow file, so it's a default code-scanning setup job, not one AGENTS.md's "confirm the checks themselves" guidance was written to gate on -- confirmed non-blocking by GitHub's own merge endpoint accepting the merge while it was still in_progress. Worth noting for the next session that sees a lone Analyze(*) job stuck this long: it's very likely non-required scanning-infra slowness, not a real signal about this PR's diff.
-- 2026-08-05 `ai-art-academy/t-055` — The task's own claim had gone stale for ~8h with no PR ever opened (found via check_pr_merged_drift.py, unrelated to this task's content) -- a session should treat a claimed-but-un-PR'd task surfaced by that sweep as reclaimable once past CLAIM_TTL_MINUTES rather than assuming it's still in flight. Also: art-prompts.yaml alone is not a reliable coverage signal for delivered assets since fulfilled entries get pruned -- a live delivery check is required to tell "already fine" from "needs a request," which is why verify_academy_style_preview_coverage.py checks live by default.
-- 2026-08-05 `conductor/t-101` — Before implementing a kaizen task, re-verify its premise against current code -- validate_task_events.py already had the exact check this task asked for (since PR #851, 2026-07-19), so the real remaining work was narrower (test coverage) plus a root-cause finding (task-events written by direct push to main never hit the PR-time gate at all) that the original task note didn't anticipate.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-08T00:33:30Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-08T01:04:54Z_
