@@ -410,3 +410,29 @@ decided this fix (27, not 2000). Its scope is the mechanical rules only: steps a
 cfg against the engine ceilings. The prompt-text rules live in kind_robots and are
 deliberately not reimplemented there, so a clean run means "nothing will die on its
 sampler settings", not "everything will render".
+
+## 2026-08-09T07:06:10Z | conductor/t-109 | draining
+queueDepth: PENDING=2816, RUNNING=1, DONE=3635, FAILED=1, CANCELLED=828 (all-time). oldestPending: id=4845, age=554508s (~154.0h), engine=COMFY. windowThroughput (24h): PENDING=45, DONE=96, FAILED=1, CANCELLED=8. recentFailed (last 1): 1/1 = connection-refused to ComfyUI.
+
+### 2026-08-09 | conductor/t-109 | confirmed: the fix renders
+
+Closing the loop on the entry above, because "requeued" is not the same as "works".
+
+**ArtJob 4843 — one of the eight that died at claim this morning — is `DONE`,
+`artImageId: 17052`, one attempt, no error.** Same row, same prompt, same graph;
+the only difference is `steps: 20 → 12` and `cfg: 7 → 1`, applied by the claim
+path instead of being grounds for killing it. 4844 went RUNNING right behind it.
+
+The repair is recorded on each payload, so any of these is self-explaining later:
+
+    samplerRepair: {repairedAt: 2026-08-09T06:54:03Z, engine: krea2, repairs: [
+      payload.steps 20→12, payload.cfg 7→1, workflow.7.inputs.steps 20→12]}
+
+One row was lost in the gap: **7633 was claimed at 06:48:00Z and killed by the old
+code**, ~3 minutes before the production build finished at 06:50:49Z. Requeued with
+the rest and repaired. Nothing else was in flight during that window.
+
+`engine-step-mismatch` no longer appears anywhere in `recentFailed`. The one
+remaining FAILED row is ArtJob 8116, a *different* failure — connection refused to
+a hardcoded A1111 backend that nothing on the relay is serving. That is
+conductor/t-110, not this.
