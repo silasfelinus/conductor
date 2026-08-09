@@ -7251,3 +7251,19 @@ records:
   lesson: When a roadmap task's original implementation gap is already present on current main and later
     human evidence confirms the feature works, reconcile and close the stale task instead of spawning
     a duplicate patch or repeatedly returning it to the human.
+- date: '2026-08-09'
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Slice 26 of the kr-container consistency migration: four components (add-bot,
+    add-character, add-reward, add-scenario) sharing an identical root class string
+    were an exact byte-for-byte match for kr-container-wide's own @apply, found via a
+    plain grep for the mx-auto/w-full/max-w-7xl triple across the repo rather than a
+    codemod. Landed clean on the first pass, zero deviation from the established
+    verification method (eslint, vue-tsc, layout-contract, git-stash-diffed
+    prettier baseline check).
