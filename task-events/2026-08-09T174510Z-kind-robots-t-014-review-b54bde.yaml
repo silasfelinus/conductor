@@ -1,0 +1,9 @@
+version: 1
+project: kind-robots
+task: t-014
+operation: review
+owner: worker
+session: 20260809T174130Z-auto-b54bde
+updated: '2026-08-09T17:45:10Z'
+note: >-
+  Verified current Kind Robots main already contains the complete video ArtJob path: LTX/WAN enqueue payloads carry media: video plus video metadata, save-generated accepts and persists mp4/webm/mov/mkv fileType values, and videoStore polls the ArtJob then resolves the finished ArtImage into a playable clip source. Existing merged PR #1184 also verified the live video presets endpoint and /play/video-generator route. The task's canonical Silas notes state that the generator is working and that any remaining resolution belongs on the agent side, so the original relay-gap spec is stale rather than an outstanding implementation defect.
