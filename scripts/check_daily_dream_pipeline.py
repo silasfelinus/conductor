@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """Validate the single-writer Daily Dream pipeline contract.
 
-This is intentionally repository-local and network-free so it can run in CI and in
-an agent health check. It guards architecture, not production credentials.
+This repository-local check guards architecture without production credentials. The
+morning daily-digest workflow owns the only executable creation sequence; Hourly
+Conductor is health/reporting only.
 """
 
 from __future__ import annotations
 
-import ast
 import sys
 from pathlib import Path
 
@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 HOURLY = Path(".github/workflows/hourly-conductor.yml")
 DIGEST = Path(".github/workflows/daily-digest.yml")
 SUMMARY = Path("scripts/build_conductor_summary.py")
+REPORT_ONLY = Path("scripts/build_conductor_summary_report_only.py")
 PIPELINE = Path("projects/dream-cycle/PIPELINE.md")
 CREATION_SPEC = Path("projects/dream-cycle/specs/CREATION-SPEC.md")
 DREAM_SPEC = Path("projects/dream-cycle/specs/dream.md")
@@ -28,12 +29,15 @@ API_SURFACE = Path("projects/dream-cycle/docs/api-surface.md")
 OUTLINE_CHECKER = Path("scripts/check_dream_outlines.py")
 ROADMAP = Path("projects/dream-cycle/roadmap.yaml")
 BUILDER = Path("scripts/build_dream_records.py")
+AUTHOR = Path("scripts/author_dream_proposal.py")
+SUBMIT = Path("scripts/submit_daily_dream_art.py")
 CLAUDE = Path("CLAUDE.md")
 
 REQUIRED_FILES = (
     HOURLY,
     DIGEST,
     SUMMARY,
+    REPORT_ONLY,
     PIPELINE,
     CREATION_SPEC,
     DREAM_SPEC,
@@ -46,6 +50,8 @@ REQUIRED_FILES = (
     OUTLINE_CHECKER,
     ROADMAP,
     BUILDER,
+    AUTHOR,
+    SUBMIT,
     CLAUDE,
 )
 
@@ -67,48 +73,14 @@ def _in_order(text: str, needles: tuple[str, ...]) -> bool:
     return True
 
 
-def _without_yaml_comments(text: str) -> str:
-    """Workflow YAML with `#` comment lines dropped.
-
-    The forbidden-capability scan below is a substring search, so a comment
-    EXPLAINING that a capability is deliberately absent used to trip it — the
-    daily-digest step that authors the dream documents "no KR_API_TOKEN, and
-    here is why", and that sentence read as the capability itself. Same class of
-    false positive as a test failing on its own explanation. Only full-line
-    comments are stripped: a `#` inside a quoted run-step string is not a
-    comment and dropping it could hide a real capability.
-    """
-    return "\n".join(
-        line for line in text.splitlines() if not line.lstrip().startswith("#")
-    )
-
-
-def _builder_call_count(source: str) -> int:
-    """Count executable build_dream_records.ensure_records() calls, not prose."""
-    tree = ast.parse(source)
-    count = 0
-    for node in ast.walk(tree):
-        if not isinstance(node, ast.Call):
-            continue
-        func = node.func
-        if (
-            isinstance(func, ast.Attribute)
-            and func.attr == "ensure_records"
-            and isinstance(func.value, ast.Name)
-            and func.value.id == "build_dream_records"
-        ):
-            count += 1
-    return count
-
-
 def check_pipeline(root: Path = ROOT) -> list[str]:
-    """Return human-readable contract violations, or an empty list when healthy."""
     errors: list[str] = []
     content = {path: _read(root, path, errors) for path in REQUIRED_FILES}
 
     hourly = content[HOURLY]
     digest = content[DIGEST]
     summary = content[SUMMARY]
+    report_only = content[REPORT_ONLY]
     pipeline = content[PIPELINE]
     creation_spec = content[CREATION_SPEC]
     dream_spec = content[DREAM_SPEC]
@@ -121,100 +93,71 @@ def check_pipeline(root: Path = ROOT) -> list[str]:
     outline_checker = content[OUTLINE_CHECKER]
     roadmap = content[ROADMAP]
     builder = content[BUILDER]
+    submit = content[SUBMIT]
     claude = content[CLAUDE]
 
-    try:
-        builder_calls = _builder_call_count(summary)
-    except SyntaxError as error:
-        errors.append(f"could not parse build_conductor_summary.py: {error}")
-    else:
-        if builder_calls != 1:
-            errors.append(
-                "build_conductor_summary.py must call "
-                "build_dream_records.ensure_records() exactly once"
-            )
-
-    if hourly.count("python scripts/build_conductor_summary.py") != 1:
-        errors.append(
-            "Hourly Conductor must invoke build_conductor_summary.py exactly once"
-        )
-
-    hourly_sequence = (
-        "python scripts/build_conductor_summary.py",
-        "python scripts/apply_daily_dream_facets.py",
-        "git add CONDUCTOR-REPORT.md projects/dream-cycle/backlog/ projects/art-prompts.yaml",
-        "Verify daily-dream creation result",
-    )
-    if not _in_order(hourly, hourly_sequence):
-        errors.append(
-            "Hourly Conductor must build, attach Facets, commit evidence, then verify"
-        )
-
-    for forbidden in (
-        "KR_API_TOKEN",
-        "build_dream_records",
-        "apply_daily_dream_facets",
-    ):
-        if forbidden in _without_yaml_comments(digest):
-            errors.append(
-                f"Daily Digest must be read-only; found forbidden capability {forbidden!r}"
-            )
+    if hourly.count("python scripts/build_conductor_summary_report_only.py") != 1:
+        errors.append("Hourly Conductor must invoke the report-only summary entrypoint exactly once")
+    for forbidden in ("build_dream_records.py", "apply_daily_dream_facets.py", "submit_daily_dream_art.py"):
+        if forbidden in hourly:
+            errors.append(f"Hourly Conductor must not perform Daily Dream creation work: {forbidden}")
+    if "summary.build_dream_records.ensure_records = report_only_daily_dream" not in report_only:
+        errors.append("report-only summary entrypoint must neutralize the legacy ensure_records side effect")
 
     digest_sequence = (
+        "python scripts/author_dream_proposal.py",
+        "python scripts/build_dream_records.py",
+        "python scripts/apply_daily_dream_facets.py",
+        "python scripts/submit_daily_dream_art.py",
+        "Commit Daily Dream cycle evidence",
         "python scripts/build_digest.py",
         "python scripts/enrich_daily_dream_digest.py",
+        "python scripts/annotate_daily_dream_art_queue.py",
         "python scripts/validate_digest.py",
         "python scripts/build_digest_email_v2.py",
+        "Email via Brevo",
     )
     if not _in_order(digest, digest_sequence):
         errors.append(
-            "Daily Digest must build, enrich, validate, and render in that order"
+            "Daily Digest must author, build, attach Facets, submit ArtJobs, persist evidence, then render/send"
         )
+    if digest.count("python scripts/author_dream_proposal.py") != 1:
+        errors.append("Daily Digest must author exactly once, at the start of the cycle")
+    if digest.count("python scripts/build_dream_records.py") != 1:
+        errors.append("Daily Digest must invoke the sole object writer exactly once")
+    if "KR_API_TOKEN" not in digest:
+        errors.append("Daily Digest now owns object creation and must receive KR_API_TOKEN")
 
     for workflow in sorted((root / ".github/workflows").glob("*.yml")):
-        if workflow.name == "daily-dream-contract.yml":
+        if workflow.name in {"daily-dream-contract.yml", "daily-digest.yml"}:
             continue
         text = workflow.read_text(encoding="utf-8")
-        if "build_dream_records.py" in text or "ensure_records(" in text:
+        if "build_dream_records.py" in text or "submit_daily_dream_art.py" in text:
             errors.append(
-                f"workflow {workflow.name} directly invokes the object builder; "
-                "only Hourly Conductor may reach it through build_conductor_summary.py"
-            )
-
-    allowed_callers = {
-        "build_conductor_summary.py",
-        "build_dream_records.py",
-        "check_daily_dream_pipeline.py",
-    }
-    for script in sorted((root / "scripts").glob("*.py")):
-        if script.name in allowed_callers:
-            continue
-        text = script.read_text(encoding="utf-8")
-        if "build_dream_records.ensure_records(" in text or "build_dream_records.run_build(" in text:
-            errors.append(
-                f"script {script.name} is a second daily-dream object-builder caller"
+                f"workflow {workflow.name} invokes Daily Dream creation/submission; only daily-digest.yml may"
             )
 
     if "sole object writer" not in pipeline.casefold():
         errors.append("PIPELINE.md must identify the sole object writer")
-    if "digest workflow receives no `kr_api_token`" not in pipeline.casefold():
-        errors.append("PIPELINE.md must state that digest reporting is read-only")
+    if "author → build → facets → submit artjobs → commit → digest" not in pipeline.casefold():
+        errors.append("PIPELINE.md must state the ordered morning cycle")
     if "scripts/build_dream_records.py" not in creation_spec:
         errors.append("CREATION-SPEC.md must name the canonical builder")
     if "sole object writer" not in dream_spec.casefold():
         errors.append("specs/dream.md must name the sole object writer")
     if "only files eligible to create daily-dream database objects" not in backlog_readme:
         errors.append("backlog README must distinguish proposals from idea inventory")
+    if "source: dream-cycle" not in submit:
+        errors.append("Daily Dream ArtJob submitter must be scoped to source: dream-cycle")
+    if "last_art_job_id" not in submit:
+        errors.append("Daily Dream ArtJob submitter must persist durable ArtJob ids")
 
     retired_phrases = (
         "parallel daily-dream fast lane",
         "fuller idle-loop path",
         "## The 8 stages",
     )
-    for path, text in (
-        (CREATION_SPEC, creation_spec),
-        (DREAM_SPEC, dream_spec),
-    ):
+    for path, text in ((CREATION_SPEC, creation_spec), (DREAM_SPEC, dream_spec)):
         lowered = text.casefold()
         for phrase in retired_phrases:
             if phrase.casefold() in lowered:
@@ -229,9 +172,7 @@ def check_pipeline(root: Path = ROOT) -> list[str]:
         "POST /api/sheets",
     ):
         if endpoint in dream_spec or endpoint in creation_spec:
-            errors.append(
-                f"active dream specs must not authorize direct object writes: {endpoint}"
-            )
+            errors.append(f"active dream specs must not authorize direct object writes: {endpoint}")
 
     project_checks = (
         ("DESIGN-BRIEF.md", design_brief, ("exactly six assets", "sole daily dream object writer")),
@@ -265,6 +206,7 @@ def check_pipeline(root: Path = ROOT) -> list[str]:
         errors.append("object builder must enforce the exact six-asset input contract")
     if "page_url = kr_base_url" not in builder.casefold():
         errors.append("object builder must not emit the removed /daily-dream page URL")
+
     t020_start = roadmap.find("  - id: t-020")
     t020_end = roadmap.find("  - id: t-021", t020_start)
     if t020_start < 0 or "status: done" not in roadmap[t020_start:t020_end]:
@@ -275,7 +217,13 @@ def check_pipeline(root: Path = ROOT) -> list[str]:
     if "advance it exactly one stage" in t006 or "stage 3" in t006:
         errors.append("roadmap t-006 still contains executable retired stage instructions")
 
+    # The underlying summary module still contains its historical builder call for
+    # compatibility; only the report-only entrypoint is executable from Hourly.
+    if "build_dream_records.ensure_records" not in summary:
+        errors.append("summary compatibility contract unexpectedly changed; update report-only wrapper/check together")
+
     return errors
+
 
 def main() -> int:
     errors = check_pipeline()
@@ -286,8 +234,8 @@ def main() -> int:
         return 1
 
     print(
-        "Daily Dream pipeline healthy: one proposal path, one object writer, "
-        "read-only digest reporting."
+        "Daily Dream pipeline healthy: one ordered morning cycle, one object writer, "
+        "and an hourly report-only sweep."
     )
     return 0
 
