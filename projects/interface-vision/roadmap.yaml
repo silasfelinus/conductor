@@ -2935,15 +2935,15 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-103
     note: 'Slice 8 merged as silasfelinus/kind_robots#1626 (squash 82097692). Converged the About page card stack (7 cards) plus the Community & Sponsors section onto the established kr-panel primitive, replacing the repeated hand-rolled `rounded-2xl border border-base-300 bg-base-100 ... shadow-sm` surface. Community & Sponsors keeps its primary-tinted border override (`border-primary/25` on top of kr-panel). Also removed stale template comments while touching the file per current AGENTS.md conventions. Content, icons, links, layout, spacing, and hover elevation unchanged -- mechanical consistency slice, not a redesign. All 14 checks green, mergeable_state clean. t-104 remains multi-slice and open: the next slice should re-run the bespoke-card grep inventory fresh (`rounded-2xl border border-base-300 bg-base-100` / `.stat rounded-2xl border ...` patterns) since about-page.vue was found via manual read, not the grep -- other pages may still carry the same hand-rolled surface.'
-    claimed_by: 2026-08-08T231416Z-interface-vision-t104-r4x8
-    claimed_at: '2026-08-08T23:14:16Z'
+    claimed_by: claude-quirky-curie-20260809-iv-t104
+    claimed_at: '2026-08-09T00:27:26Z'
     implementation_pr: 'silasfelinus/kind_robots#1626'
-    updated: '2026-08-08T23:27:21Z'
+    updated: '2026-08-09T00:27:26Z'
     owner: worker
 
   - id: t-105
