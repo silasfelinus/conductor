@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2947,10 +2947,12 @@ tasks:
       Slice 11 merged as silasfelinus/kind_robots#1634 (squash cb77216a89bd7471263585228d308abdbe54b160). narrative-art-status.vue now uses kr-panel p-0 for the exact shared raised-surface treatment while preserving its previous zero-padding geometry. All 14 exact-head PR workflows completed successfully, including TypeScript 31290080477, Contract Tests 31290080510, Layout Contract 31290080459, Narrative Art Persistence 31290080458, Narrative Art Milestone 31290080541, Narrative Accessibility 31290080495, and Narrative Primitives 31290080482. t-104 remains open for further consistency slices.
 
       Slice 12 migrates 4 more zero-padding exact-match kr-panel surfaces to kr-panel p-0: navigation-health.vue (header + per-channel card), workspace-sheet.vue (outer sheet wrapper + builder-preview card), project-placement-manager.vue (header), and resource-card.vue (card root). All four had no p-* class on the element itself (padding lives on inner children), so kr-panel p-0 preserves exact geometry -- zero visual delta. Deliberately skipped kr-stat-tile.vue's identical class string: it also carries DaisyUI's stat class, whose component-layer CSS supplies the tile's internal padding, and Tailwind's utilities layer always wins over components regardless of source order -- appending kr-panel's p-0 would zero out that padding, a real regression not a zero-delta rename. Verified: eslint 0 problems, vue-tsc --noEmit clean, lint ratchet unchanged (392/27), layout contract holds. Prettier --check flagged pre-existing unrelated formatting debt in 3 of the 4 files (not touched, per the documented --write pitfall from slice 10); confirmed my exact changed lines match Prettier's expected output byte-for-byte via a dry-run diff. kind_robots PR: silasfelinus/kind_robots#1635.
+
+      Slice 13 migrates the last remaining exact-match rounded-2xl/border-base-300/bg-base-100/shadow-sm surfaces that aren't translucent (bg-base-100/NN + backdrop-blur headers, a different design pattern, out of scope) or hover-only shadow: character-flip-card.vue's chat "thinking" bubble (kr-panel p-3), workspace-sheet.vue's builder card (kr-panel p-4) and empty-state card (kr-panel border-dashed text-center, already at kr-panel's default p-6), and resource-gallery.vue's header (kr-panel px-3 py-2). All zero visual delta -- each preserves its original padding/border-style as a utility override. Searched the broader border-base-300+bg-base-100 corpus (~110 files) for more candidates: remaining matches either use bg-base-100/90 or /95 with backdrop-blur (frosted sticky headers -- converting would lose the translucency, a real regression) or a non-shadow-sm shadow value (shadow-md/xl/2xl/inner, several with hover-only shadow) which would need case-by-case verification that the utility-over-component override still renders correctly rather than assuming it does. Reformatted the three edited tags to single-line per Prettier once their class strings got short enough to fit (pre-existing unrelated formatting debt elsewhere in workspace-sheet.vue and character-flip-card.vue left untouched, confirmed present on origin/main before this change). Verified: eslint 0 new problems (one pre-existing, unrelated no-unused-vars error in character-flip-card.vue confirmed present on main), vue-tsc --noEmit clean, lint ratchet unchanged (392/27), layout contract holds. kind_robots PR: silasfelinus/kind_robots#1640.
     claimed_by: claude-quirky-curie-20260809T042750Z-iv-t104-s13
     claimed_at: '2026-08-09T04:28:01Z'
-    implementation_pr: 'silasfelinus/kind_robots#1635'
-    updated: '2026-08-09T04:28:01Z'
+    implementation_pr: 'silasfelinus/kind_robots#1640'
+    updated: '2026-08-09T04:38:08Z'
     owner: worker
 
   - id: t-105
