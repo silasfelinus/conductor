@@ -2131,3 +2131,22 @@ tasks:
     claimed_at: ''
     updated: '2026-08-09T20:57:17Z'
     implementation_pr: 'silasfelinus/kind_robots#1678'
+
+  - id: t-057
+    milestone: m3
+    title: "Add a contract test asserting Project-create queues exactly one AGENT scaffold Todo, Conductor sync does not"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-056 (kind_robots#1678, reviewed 2026-08-09): the ordinary authenticated
+      POST /api/projects path now creates exactly one HIGH/AGENT Todo per Project (via
+      prisma $transaction, with an idempotent direct-MariaDB-fallback equivalent), while
+      Conductor's separate /api/conductor/sync projection path does not call this route at
+      all and so never queues one. That behavioral split has no dedicated test coverage --
+      only source-shape guard assertions in utils/scripts/verifyDatabasePoolDefaults.ts
+      cover the fallback path's code shape, not the actual Todo-creation behavior on either
+      path. Add a focused contract/integration test (or extend an existing one) asserting:
+      (1) a Project created via POST /api/projects queues exactly one OPEN/HIGH/AGENT Todo
+      linked to it, and (2) a Project created/reconciled via /api/conductor/sync does not.
