@@ -67,6 +67,22 @@ def _in_order(text: str, needles: tuple[str, ...]) -> bool:
     return True
 
 
+def _without_yaml_comments(text: str) -> str:
+    """Workflow YAML with `#` comment lines dropped.
+
+    The forbidden-capability scan below is a substring search, so a comment
+    EXPLAINING that a capability is deliberately absent used to trip it — the
+    daily-digest step that authors the dream documents "no KR_API_TOKEN, and
+    here is why", and that sentence read as the capability itself. Same class of
+    false positive as a test failing on its own explanation. Only full-line
+    comments are stripped: a `#` inside a quoted run-step string is not a
+    comment and dropping it could hide a real capability.
+    """
+    return "\n".join(
+        line for line in text.splitlines() if not line.lstrip().startswith("#")
+    )
+
+
 def _builder_call_count(source: str) -> int:
     """Count executable build_dream_records.ensure_records() calls, not prose."""
     tree = ast.parse(source)
@@ -139,7 +155,7 @@ def check_pipeline(root: Path = ROOT) -> list[str]:
         "build_dream_records",
         "apply_daily_dream_facets",
     ):
-        if forbidden in digest:
+        if forbidden in _without_yaml_comments(digest):
             errors.append(
                 f"Daily Digest must be read-only; found forbidden capability {forbidden!r}"
             )

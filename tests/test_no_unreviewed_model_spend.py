@@ -33,6 +33,19 @@ ALLOWED = {
         "Haiku 4.5 status summary, max_tokens=400, one call per run "
         "(~$0.01/day). Falls back to rule-based output when the key is absent."
     ),
+    "daily-digest.yml": (
+        "Daily dream authoring (scripts/author_dream_proposal.py). Sonnet 5, "
+        "max_tokens=4000, hard cap of MAX_ATTEMPTS=2 calls per run, once a day, "
+        "and it exits before the first call on any day a proposal already "
+        "exists — so the steady state is 1 call/day and the ceiling is 2. "
+        "Answering this module's three questions: (1) no human judgement is "
+        "displaced, the proposal was already model-authored, just by whichever "
+        "agent session happened to notice it missing; (2) bounded by "
+        "MAX_ATTEMPTS, not by a queue drain; (3) yes, scheduled — which is the "
+        "point, per Silas 2026-08-09: \"I'm not sure why the next dreams aren't "
+        "written the turn the digest is sent ... that's very high on automated "
+        "tasks.\""
+    ),
 }
 
 

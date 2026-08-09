@@ -67,7 +67,28 @@ The daily digest is read-only with respect to kind_robots content. Its workflow:
 4. renders the email payload,
 5. optionally sends it.
 
+6. authors the day's next proposal if one does not exist yet, and commits it.
+
 The digest workflow receives no `KR_API_TOKEN` and never imports or calls the object builder or Facet writer. A missing, retrying, built, rendered, or attached asset must be reported honestly from committed evidence.
+
+Step 6 is the only thing the digest writes, it writes it to THIS repo, and it does
+not weaken the read-only rule above. `scripts/author_dream_proposal.py` produces a
+proposal markdown file — it creates no kind_robots object, attaches no Facet, and
+needs no token (the Facet catalog read is a public unauthenticated GET). The single
+object writer is still `build_dream_records.py`, still reached only through Hourly
+Conductor.
+
+It exists because authoring used to live only in CLAUDE.md's session-startup
+checklist, so a proposal appeared when a session happened to run and happened to
+notice one was missing — and on a quiet day there was no dream at all (Silas,
+2026-08-09: *"I'm not sure why the next dreams aren't written the turn the digest is
+sent, or a step later if there isn't enough process."*). It runs after the email so
+a failure cannot cost the digest, is `continue-on-error` for the same reason, and is
+idempotent: on a day a session already authored one it prints "already exists" and
+exits 0. The session checklist remains as a backstop for the days it fails.
+
+Because this job now pushes a commit to `main`, it shares Hourly Conductor's
+`conductor-main-writers` concurrency group rather than racing it.
 
 ## Legacy staged builds
 

@@ -55,16 +55,44 @@ def test_repository_has_one_daily_dream_object_writer():
 
 
 def test_digest_cannot_gain_object_writing_credentials(tmp_path):
+    """A real granted capability, not a mention of one.
+
+    This fixture used to append "# KR_API_TOKEN" — a comment, chosen to keep the
+    file valid YAML. That passed for the wrong reason once the digest workflow
+    grew a comment explaining why it deliberately has no such token: the guard
+    flagged the explanation. The capability is what matters, so grant one.
+    """
     root = _copy_contract(tmp_path)
     digest = root / pipeline.DIGEST
     digest.write_text(
-        digest.read_text(encoding="utf-8") + "\n# KR_API_TOKEN\n",
+        digest.read_text(encoding="utf-8")
+        + "\n        env:\n          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}\n",
         encoding="utf-8",
     )
 
     errors = pipeline.check_pipeline(root)
 
     assert any("Daily Digest must be read-only" in error for error in errors)
+
+
+def test_documenting_an_absent_capability_is_not_granting_it(tmp_path):
+    """A comment grants nothing, so it must not read as a violation.
+
+    The digest workflow says, in prose, that it deliberately receives no
+    KR_API_TOKEN and why. That sentence is the opposite of the thing being
+    guarded against, and a substring search cannot tell them apart.
+    """
+    root = _copy_contract(tmp_path)
+    digest = root / pipeline.DIGEST
+    digest.write_text(
+        digest.read_text(encoding="utf-8")
+        + "\n      # No KR_API_TOKEN here: the digest stays read-only.\n",
+        encoding="utf-8",
+    )
+
+    errors = pipeline.check_pipeline(root)
+
+    assert not any("Daily Digest must be read-only" in error for error in errors)
 
 
 def test_second_builder_caller_is_rejected(tmp_path):
