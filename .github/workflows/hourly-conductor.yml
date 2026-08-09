@@ -3,14 +3,19 @@ name: Hourly Conductor
 # Runs every hour. Checks both repos (conductor + kind_robots) via GitHub API,
 # scans local roadmaps for blockers, fetches open todos, and uses Claude to
 # produce a brief actionable summary written to CONDUCTOR-REPORT.md.
+#
+# Daily Dream creation deliberately does NOT happen here anymore. The morning
+# daily-digest workflow owns one ordered cycle: author -> build -> Facets ->
+# submit ArtJobs -> commit -> digest. Keeping the hourly assessment read-only
+# prevents midnight/hourly runs from building a proposal before that sequence.
 
 on:
   schedule:
-    - cron: "0 * * * *"   # every hour on the hour
+    - cron: "0 * * * *"
   workflow_dispatch:
     inputs:
       dry_run:
-        description: "Print report to log only — do not commit"
+        description: "Print report to log only; do not commit"
         required: false
         default: "false"
         type: string
@@ -41,25 +46,11 @@ jobs:
         run: |
           FLAG=""
           if [ "${{ inputs.dry_run }}" = "true" ]; then FLAG="--dry-run"; fi
-          python scripts/build_conductor_summary.py $FLAG
+          python scripts/build_conductor_summary_report_only.py $FLAG
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
-          DAILY_DREAM_BUILD_STATUS: /tmp/daily-dream-build-status.json
-
-      - name: Attach daily-dream Facets
-        id: daily_dream_facets
-        continue-on-error: true
-        run: |
-          if [ "${{ inputs.dry_run }}" = "true" ]; then
-            python scripts/apply_daily_dream_facets.py --dry-run
-          else
-            python scripts/apply_daily_dream_facets.py
-          fi
-        env:
-          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
-          KR_BASE_URL: https://kind-robots.vercel.app
 
       - name: Upload report artifact
         if: always()
@@ -69,15 +60,12 @@ jobs:
           path: CONDUCTOR-REPORT.md
           if-no-files-found: ignore
 
-      - name: Commit conductor report + daily proposal
+      - name: Commit conductor report
         if: ${{ inputs.dry_run != 'true' }}
         run: |
           git config user.name "conductor-bot"
           git config user.email "conductor-bot@users.noreply.github.com"
-          # build_conductor_summary.py builds the eligible proposal into
-          # kind_robots records, queues six art requests, records the completed
-          # bundle (or a pinned retry), and the Facet sidecar updates built-data.
-          git add CONDUCTOR-REPORT.md projects/dream-cycle/backlog/ projects/art-prompts.yaml
+          git add CONDUCTOR-REPORT.md
           if git diff --staged --quiet; then
             echo "No changes to commit"
             exit 0
@@ -97,23 +85,3 @@ jobs:
 
           echo "::error::Unable to push conductor report after 3 attempts."
           exit 1
-
-      - name: Verify daily-dream creation result
-        if: ${{ always() && inputs.dry_run != 'true' }}
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-
-          path = Path("/tmp/daily-dream-build-status.json")
-          if not path.exists():
-              raise SystemExit("Daily-dream builder produced no status record.")
-          result = json.loads(path.read_text(encoding="utf-8"))
-          print(json.dumps(result, indent=2))
-          if result.get("status") == "failed":
-              raise SystemExit(result.get("message") or "Daily-dream object creation failed.")
-          PY
-          if [ "${{ steps.daily_dream_facets.outcome }}" != "success" ]; then
-            echo "::error::Daily-dream Facet attachment failed after the bundle ledger was committed."
-            exit 1
-          fi
