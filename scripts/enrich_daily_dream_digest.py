@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
 """Replace the legacy digest's fuzzy daily-dream selection with creation truth.
 
-The legacy collector labels the newest built proposal "yesterday" forever. This
-post-processor keeps every unrelated digest field, selects today's proposal by Pacific
-calendar date, and selects the prior output from actual completed creations. It creates
-one readable asset row per six-part bundle element and probes known public image paths
-so freshly generated art can appear even before a later metadata attachment pass flips
-``attached`` to true.
+The morning cycle has three different generations in flight and they must not be
+presented as interchangeable:
+
+* today's freshly authored proposal is the steering input for the NEXT build;
+* the most recently completed bundle is what was JUST built this cycle and should
+  be shown compactly without reserving empty image boxes;
+* the completed bundle before that is the art-rich output, because its renders have
+  had a full cycle to finish.
+
+This post-processor keeps unrelated digest fields untouched, derives those three
+roles from proposal/built-data timestamps, and probes public art only for the older
+art-rich output.
 """
 
 from __future__ import annotations
@@ -95,7 +101,7 @@ def _public_url(public_path: str) -> str:
 
 
 def _url_exists(url: str, timeout: int = 5) -> bool:
-    request = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "conductor-digest/2"})
+    request = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "conductor-digest/3"})
     try:
         with urllib.request.urlopen(request, timeout=timeout) as response:
             return 200 <= response.status < 400
@@ -213,7 +219,7 @@ def proposal_payload(proposal: dict[str, Any], *, probe_images: bool = True) -> 
     }
     if built:
         payload["built_at"] = built.get("built_at")
-        payload["page"] = built.get("page") or "https://kind-robots.vercel.app/daily-dream"
+        payload["page"] = built.get("page") or PUBLIC_BASE
         payload["facet_assignments"] = built.get("facet_assignments")
     return payload
 
@@ -232,6 +238,33 @@ def _built_date(proposal: dict[str, Any]) -> date | None:
         return None
 
 
+def _completed_sort_key(proposal: dict[str, Any]) -> tuple[str, str]:
+    return (
+        str((proposal.get("built") or {}).get("built_at") or ""),
+        str(proposal.get("proposal_date") or ""),
+    )
+
+
+def _completed_payload(
+    proposal: dict[str, Any], *, display_mode: str, probe_images: bool
+) -> dict[str, Any]:
+    payload = proposal_payload(proposal, probe_images=probe_images)
+    built_on = _built_date(proposal)
+    built_label = built_on.isoformat() if built_on else "an unknown date"
+    payload["display_mode"] = display_mode
+    if display_mode == "art-rich":
+        payload["calendar_label"] = (
+            f"Previous completed bundle; built {built_label} "
+            f"from the {proposal['proposal_date']} proposal"
+        )
+    else:
+        payload["calendar_label"] = (
+            f"Just built {built_label} from the {proposal['proposal_date']} proposal. "
+            "Its art belongs to the next digest cycle."
+        )
+    return payload
+
+
 def enrich_digest(
     digest: dict[str, Any],
     proposals: list[dict[str, Any]],
@@ -244,41 +277,53 @@ def enrich_digest(
     today_key = today.isoformat()
     yesterday_key = (today - timedelta(days=1)).isoformat()
 
-    current = by_date.get(today_key)
-    output["tomorrow_proposal"] = proposal_payload(current, probe_images=probe_images) if current else None
-
-    # "Previous output" is a creation-order concept, not a calendar-day promise.
-    # Exclude today's proposal when it has already built so the two lead sections
-    # never repeat the same bundle.
-    completed = [
-        proposal for proposal in proposals
-        if proposal.get("built") and proposal is not current
-    ]
-    completed.sort(
-        key=lambda proposal: (
-            str((proposal.get("built") or {}).get("built_at") or ""),
-            str(proposal.get("proposal_date") or ""),
-        )
+    # Today's freshly authored proposal is steering input for the NEXT build. Keep
+    # it in the JSON for diagnostics, but it is deliberately not a showcase section
+    # in the email. Empty art boxes for an unbuilt proposal taught the wrong story.
+    next_proposal = by_date.get(today_key)
+    output["next_dream_proposal"] = (
+        proposal_payload(next_proposal, probe_images=False) if next_proposal else None
     )
-    if completed:
-        chosen = completed[-1]
-        output["yesterday_output"] = proposal_payload(chosen, probe_images=probe_images)
-        built_on = _built_date(chosen)
-        built_label = built_on.isoformat() if built_on else "an unknown date"
-        output["yesterday_output"]["calendar_label"] = (
-            f"Most recent completed bundle before today's proposal; built {built_label} "
-            f"from the {chosen['proposal_date']} proposal"
-        )
+
+    completed = [proposal for proposal in proposals if proposal.get("built")]
+    completed.sort(key=_completed_sort_key)
+
+    current = completed[-1] if completed else None
+    previous = completed[-2] if len(completed) >= 2 else None
+
+    # The newest completed bundle was just built this cycle. Do not spend network
+    # probes or reserve visual space for its art: the six ArtJobs were only just
+    # submitted. The older completed bundle is the art-rich section and gets the
+    # public-path probes because its renders have had a full cycle to settle.
+    output["current_dream_output"] = (
+        _completed_payload(current, display_mode="just-built", probe_images=False)
+        if current else None
+    )
+    output["previous_dream_output"] = (
+        _completed_payload(previous, display_mode="art-rich", probe_images=probe_images)
+        if previous else None
+    )
+
+    # Remove the old two-state aliases. They conflated an unbuilt proposal with a
+    # built output and made the email look perpetually one day behind.
+    output.pop("tomorrow_proposal", None)
+    output.pop("yesterday_output", None)
+
+    if previous:
         output["daily_dream_output_status"] = "ready"
+    elif current:
+        output["daily_dream_output_status"] = (
+            "The first current bundle exists, but there is no earlier completed bundle for the art-rich section yet."
+        )
     else:
-        output["yesterday_output"] = None
         output["daily_dream_output_status"] = "No completed Daily Dream bundle exists yet."
 
-    # The digest reports exactly two Daily Dream generations: today's current
-    # proposal/build and the immediately preceding completed bundle. Keep the
-    # legacy collection key empty so older builds cannot reappear downstream.
     output["recent_dream_outputs"] = []
-    output["daily_dream_calendar"] = {"today": today_key, "yesterday": yesterday_key, "timezone": "America/Los_Angeles"}
+    output["daily_dream_calendar"] = {
+        "today": today_key,
+        "yesterday": yesterday_key,
+        "timezone": "America/Los_Angeles",
+    }
     return output
 
 
@@ -287,7 +332,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("input", help="Legacy digest JSON")
     parser.add_argument("--output", help="Output path; stdout when omitted")
     parser.add_argument("--date", help="Pacific calendar date override (YYYY-MM-DD)")
-    parser.add_argument("--no-probe", action="store_true", help="Do not HEAD-check queued image paths")
+    parser.add_argument("--no-probe", action="store_true", help="Do not HEAD-check prior output image paths")
     args = parser.parse_args(argv)
     digest = json.loads(Path(args.input).read_text(encoding="utf-8"))
     current_date = date.fromisoformat(args.date) if args.date else datetime.now(PACIFIC).date()
