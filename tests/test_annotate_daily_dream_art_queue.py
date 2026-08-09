@@ -1,5 +1,4 @@
 import json
-from pathlib import Path
 
 import scripts.annotate_daily_dream_art_queue as annotate
 
@@ -63,25 +62,33 @@ def test_unbuilt_proposal_stays_awaiting_build():
     assert result["art_status"] == "awaiting build"
 
 
-def test_cli_rewrites_digest_in_place(tmp_path):
+def test_cli_rewrites_current_and_previous_outputs_in_place(tmp_path):
     queue = tmp_path / "art-prompts.yaml"
     queue.write_text(
         "requests:\n"
-        "- id: dream-cycle-vinehorn-world\n"
+        "- id: dream-cycle-current-world\n"
         "  status: pending\n"
-        "  prompt: vines\n"
-        "  image_path: world.webp\n",
+        "  last_art_job_id: 8123\n"
+        "  prompt: current\n"
+        "  image_path: current.webp\n"
+        "- id: dream-cycle-previous-world\n"
+        "  status: pending\n"
+        "  prompt: previous\n"
+        "  image_path: previous.webp\n",
         encoding="utf-8",
     )
     digest = tmp_path / "digest.json"
     digest.write_text(
         json.dumps(
             {
-                "tomorrow_proposal": {
-                    "assets": [asset(request_id="", status="awaiting build")]
+                "current_dream_output": {
+                    "assets": [asset(request_id="dream-cycle-current-world")]
                 },
-                "yesterday_output": {
-                    "assets": [asset(request_id="dream-cycle-vinehorn-world")]
+                "previous_dream_output": {
+                    "assets": [asset(request_id="dream-cycle-previous-world")]
+                },
+                "next_dream_proposal": {
+                    "assets": [asset(request_id="", status="awaiting build")]
                 },
             }
         ),
@@ -90,5 +97,9 @@ def test_cli_rewrites_digest_in_place(tmp_path):
 
     assert annotate.main([str(digest), "--queue", str(queue)]) == 0
     result = json.loads(digest.read_text(encoding="utf-8"))
-    assert result["tomorrow_proposal"]["assets"][0]["art_status"] == "awaiting build"
-    assert result["yesterday_output"]["assets"][0]["art_status"] == "awaiting ArtJob"
+    current = result["current_dream_output"]["assets"][0]
+    previous = result["previous_dream_output"]["assets"][0]
+    assert current["art_status"] == "queued"
+    assert current["art_job_id"] == 8123
+    assert previous["art_status"] == "awaiting ArtJob"
+    assert result["next_dream_proposal"]["assets"][0]["art_status"] == "awaiting build"
