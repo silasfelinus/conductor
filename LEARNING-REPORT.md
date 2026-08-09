@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-09T20:46:53Z
+Generated: 2026-08-09T21:01:41Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **554**
-- Outcomes: blocked: 13, cancelled: 1, done: 540
+- Closed tasks recorded: **555**
+- Outcomes: blocked: 13, cancelled: 1, done: 541
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -36,7 +36,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
 | interface-vision | 82 | 100% |
-| kind-robots | 44 | 98% |
+| kind-robots | 45 | 98% |
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 539 | 99% |
+| software | 540 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-09 `kind-robots/t-056` — A source-shape "guard test" (utils/scripts/verifyDatabasePoolDefaults.ts asserting a literal code string still appears in a route file) can break on an otherwise correct, intentional refactor -- the fix is usually to relocate the new behavior so the guarded shape survives unchanged, not to weaken the guard. Also: don't trust a PR body's "How I verified" section at face value -- independently re-running eslint/vue-tsc/the specific failing script on the actual current head caught a real TS2339 the Worker's own note had claimed was code/CI verified.
+
 - 2026-08-09 `interface-vision/t-104` — Slice 26 of the kr-container consistency migration: four components (add-bot, add-character, add-reward, add-scenario) sharing an identical root class string were an exact byte-for-byte match for kr-container-wide's own @apply, found via a plain grep for the mx-auto/w-full/max-w-7xl triple across the repo rather than a codemod. Landed clean on the first pass, zero deviation from the established verification method (eslint, vue-tsc, layout-contract, git-stash-diffed prettier baseline check).
 
 - 2026-08-09 `kind-robots/t-014` — When a roadmap task's original implementation gap is already present on current main and later human evidence confirms the feature works, reconcile and close the stale task instead of spawning a duplicate patch or repeatedly returning it to the human.
@@ -96,8 +98,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-09 `kindrobots-unraid/t-006` — For self-hosted Node 24 services on Unraid, mounting one trusted .env and loading it with --env-file-if-exists avoids duplicating secrets while still allowing DockerMan environment variables to override deployment-specific keys. Excluding .env from the Docker build exposed a Prisma build dependency: prisma.config.ts requires DATABASE_URL even for generate, so image builds need a non-secret dead build-only URL rather than access to production credentials. Local Docker image tags can still be represented by a saved DockerMan template, keeping runtime settings editable in the Unraid WebGUI while registry publication remains optional.
 - 2026-08-08 `digital-storefront/t-004` — A task note that frames N ad-hoc implementations as N variants of the same pattern can be wrong about that -- two of the four (Character, Reward) turned out to have no check at all, not a fourth variant. Dispatching a read-only investigation to re-verify the note's own framing before implementing caught this: "wire an existing check" and "add this route's first-ever check" are different risk categories (additive/behavior-preserving vs. a real behavior change for any caller relying on the open read), and conflating them would have either shipped an unreviewed security fix or silently dropped a real gap from the record. Split the genuinely mechanical pieces from the ones needing a human product decision rather than picking one bucket for the whole task.
 
-- 2026-08-08 `interface-vision/t-114` — When a ratchet-baseline check's --update refuses to seed a brand-new rule (grownRatchetBuckets treats a bucket absent from the prior baseline as zero, so any pre-existing count reads as growth), that refusal is deliberate design, not a bootstrap bug -- see ratchetBaseline.ts's own doc comment. The correct move is to hand-seed the baseline JSON with the rule's current findings (generated via --report, not transcribed by hand) rather than to "fix" the shared ratchet helper. A brand-new rule with real pre-existing violations should grandfather them explicitly and let only new violations fail CI going forward -- exactly the same contract every other rule in the file already has.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-09T20:46:53Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-09T21:01:41Z_
