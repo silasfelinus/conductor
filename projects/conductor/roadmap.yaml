@@ -3662,11 +3662,11 @@ tasks:
   - id: t-109
     milestone: m2
     title: "Art queue: 8 renders failed at claim on a pre-gate krea2 step count; clamp instead of failing, and stop producers writing out-of-band settings"
-    status: review
+    status: done
     owner: reviewer
     claimed_by: claude-art-queue-render-failures-20260809T0600Z
     claimed_at: '2026-08-09T06:00:00Z'
-    updated: '2026-08-09T06:00:00Z'
+    updated: '2026-08-09T06:57:11Z'
     stakes: reversible
     passes: 0
     note: >
@@ -3705,3 +3705,42 @@ tasks:
       RESUBMIT. The 8 FAILED jobs are requeued via /api/art/queue/reenqueue-failed once
       PR #1645 is on production, not before: requeuing against the old code sends them
       straight back into the same failure.
+    implementation_pr: 'silasfelinus/kind_robots#1645'
+
+  - id: t-110
+    milestone: m2
+    title: "Resource-preview renders are hardcoded to the A1111 engine, which the home relay refuses on every attempt"
+    status: ready
+    owner: null
+    stakes: reversible
+    passes: 0
+    note: >
+      Spotted while clearing the 2026-08-09 art-queue failures (conductor/t-109) — unrelated
+      to that fix, filed rather than folded in.
+
+      ArtJob 8116 (projectSlug resource-previews, created 2026-08-09T02:54Z) failed three
+      times with `<urlopen error [WinError 10061] No connection could be made because the
+      target machine actively refused it>`. Requeued as part of t-109's resubmit; it burned
+      three fresh attempts and failed identically within two minutes. That is the whole
+      lifecycle of this job type right now — enqueue, three refusals, FAILED.
+
+      Cause: kind_robots' server/api/resources/[id]/generate-preview.post.ts hardcodes
+      `engine: 'A1111'` on the ArtJob it creates, and the home relay's Automatic1111
+      backend is not accepting connections. Conductor itself stopped producing A1111 jobs
+      some time ago — consume_art_queue_core.py's ENGINE_ALIASES migrates "a1111", "sd",
+      "sdxl" and "stable-diffusion" all to krea2, and COMFY_WORKFLOW_ENGINES is Comfy-only
+      — so this endpoint is the last producer still asking for an engine nothing serves.
+
+      Two candidate fixes, and the choice is Silas's because it is about what the render box
+      actually runs, not about the code: (a) start/repair the A1111 backend on the relay
+      host, if resource previews are meant to keep using it (it takes a checkpoint + LoRA by
+      name, which is why it was A1111 in the first place — see the `resources` block in that
+      payload); or (b) migrate the endpoint to a COMFY workflow that loads the same
+      checkpoint/LoRA, matching every other producer. (b) is the direction everything else
+      has gone; (a) is cheaper if the box is simply off.
+
+      Whoever picks this up: check whether any resource-preview job has succeeded recently
+      before assuming the backend is permanently down — a refused connection can also just
+      be the box being asleep. `python scripts/scan_art_queue_sampler.py --status FAILED`
+      will not surface this one (it is a connection error, not a sampler-settings breach);
+      read `recentFailed` from GET /api/art/queue/stats instead.
