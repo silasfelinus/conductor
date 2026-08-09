@@ -3088,10 +3088,10 @@ tasks:
   - id: t-116
     milestone: m5
     title: "Fix kr_panel_codemod.py's nested-<template> scoping bug and re-run a corrected sweep"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    owner: null
+    owner: worker
     note: >
       Kaizen from t-104 slice 19 (silasfelinus/kind_robots#1660). kr_panel_codemod.py finds
       the end of an SFC's scannable template region via `re.search(r"</template>", text)` --
@@ -3107,5 +3107,6 @@ tasks:
       codemod's dry-run across the corrected file list, and hand off any newly-surfaced
       candidates to t-104 as further slices -- same small-batch, individually-verified
       discipline as every prior slice, not a single giant sweep.
-    claimed_by: null
-    claimed_at: null
+    claimed_by: 20260809T122915-iv-t116
+    claimed_at: '2026-08-09T12:29:16Z'
+    updated: '2026-08-09T12:29:16Z'
