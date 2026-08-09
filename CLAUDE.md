@@ -23,16 +23,25 @@ At the start of every session, before responding to any task, run a conductor sw
    Treat exit 1 from either command as a reconciliation prompt, not permission to bypass a genuine gate. Both
    commands intentionally exclude paused, retired, and finished projects unless `--include-inactive` is supplied.
 6. Check `TALKBACK.md` tail for any unresolved escalations or security flags
-7. Run `python scripts/build_dream_proposal.py --check --fetch`. If today's
-   daily-dream proposal is missing, YOU author it — you are the creative generator
-   (the script selects and validates the live Facets but does not write the idea):
-   run `--brief` for the deterministic seed plan, then create exactly one dream
-   vibe, one dream location, one Character, one ITEM Reward, one SKILL Reward,
-   and one Scenario, with no narrator. Preserve the brief's `seed_facets`
-   unchanged; the vibe is the umbrella, every dependent asset must follow its
-   assigned Facets, and the Scenario is authored last and explicitly names the
-   vibe, location, and Character. Write it with `--from-json` and commit it with
-   the session's log commits.
+7. Run `python scripts/build_dream_proposal.py --check --fetch`. **This is now a
+   backstop, not the primary path.** `daily-digest.yml` authors the day's proposal
+   automatically in the step after the email goes out
+   (`scripts/author_dream_proposal.py`), so on a normal day `--check` passes and
+   there is nothing to do (Silas, 2026-08-09: *"I'm not sure why the next dreams
+   aren't written the turn the digest is sent, or a step later if there isn't
+   enough process. As progress goes, that's very high on automated tasks."*).
+
+   If a proposal IS missing — the digest run failed, the model hiccuped, or it is
+   a date the cron never covered — author it yourself, exactly as before: run
+   `--brief` for the deterministic seed plan, then create exactly one dream vibe,
+   one dream location, one Character, one ITEM Reward, one SKILL Reward, and one
+   Scenario, with no narrator. Preserve the brief's `seed_facets` unchanged; the
+   vibe is the umbrella, every dependent asset must follow its assigned Facets,
+   and the Scenario is authored last and explicitly names the vibe, location, and
+   Character. Write it with `--from-json` and commit it with the session's log
+   commits. A missing proposal two days running means the automated step is
+   broken — check the `daily-digest` run's "Author tomorrow's daily dream" step
+   rather than just papering over it by hand each session.
 
 Then report:
 - **Branch** and whether the working tree is clean

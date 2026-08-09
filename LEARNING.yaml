@@ -7181,3 +7181,26 @@ records:
     a recovery (reenqueue-failed normalized paths/prompts/LoRAs but not the sampler);
     and fixing a per-engine DEFAULT without also bounding the explicit OVERRIDE leaves
     the door open at exactly the width of the original bug.
+- date: '2026-08-09'
+  project: conductor
+  task: t-110
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A default is a decision, and an unnamed one never gets reviewed.
+    /api/art/enqueue resolved an omitted engine with `String(value || 'a1111')` —
+    one word, no constant, no test — long after the relay stopped serving A1111,
+    so "just enqueue this" meant "enqueue something that cannot render". The
+    same shape hid a second bug next to it: buildDefaultComfyWorkflow passed a
+    literal -1 seed into the KSampler where every sibling builder resolved a
+    random one, pinning that lane to one image per Comfy install, and
+    patchComfyWorkflow repeated the -1 immediately afterward so fixing only the
+    builder would have been invisible. Both were invisible for the same reason —
+    the value was inline, unnamed, and untested, so nothing ever asked whether
+    it was still right. When a fallback decides behaviour for every caller that
+    stays silent, give it a named constant and a test that states the intent;
+    "krea2 is the default" and "an unspecified seed is random" are claims a test
+    can hold, `|| 'a1111'` is not.
