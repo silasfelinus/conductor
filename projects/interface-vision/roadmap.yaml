@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2943,7 +2943,9 @@ tasks:
       Slice 20 merged as silasfelinus/kind_robots#1665 (squash b119bfe). Applied kr_panel_codemod.py --apply against the corrected 47-occurrence pool t-116's nested-<template> scoping fix surfaced. 47 zero-visual-delta substitutions across 21 files, matching the codemod's own dry-run summary exactly (git diff --stat: 21 files, 47/102 +/-). Reformatted the 14 files whose line-length change broke prettier (confirmed via git-stash diff against baseline; 3 already-broken files left untouched, same discipline as prior slices). Verified: eslint clean (only pre-existing unrelated errors remain), test:lint-ratchet unchanged (392/27), vue-tsc --noEmit clean, test:layout-contract holds (0 new violations), prettier --check clean. All 16 PR checks green including Vercel deployment, TypeScript, Contract verifiers, layout-contract, and all Storybook/Taskmaster/Narrative contracts, mergeable_state clean. The exact-match codemod pool is once again fully exhausted (6 remaining skips are confirmed genuine DaisyUI-layer conflicts per slice 18). t-104 remains open for further consistency slices (broaden matching or move to a different component family); return it to ready and clear the completed slice claim.
 
       Coordination cleanup before slice 21: slice 20 is merged and the task is already ready, but its completed claim fields remained populated. Clear the stale owner/claim metadata so the next session-aware claim can reserve t-104 normally.
-    updated: '2026-08-09T14:19:45Z'
+
+      Slice 21 implementation prepared on fresh Kind Robots main: replace build-bench.vue's exact mx-auto w-full max-w-6xl wrapper with the declaration-equivalent kr-container primitive while preserving flex/gap/padding utilities. One file, no behavior or visual delta intended.
+    updated: '2026-08-09T14:21:30Z'
     claimed_by: 20260809T141233Z-0d9201
     claimed_at: '2026-08-09T14:19:45Z'
     implementation_pr: 'silasfelinus/kind_robots#1665'
