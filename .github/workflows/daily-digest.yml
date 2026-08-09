@@ -14,9 +14,18 @@ on:
         default: false
         type: boolean
 
+# This job now pushes one commit to main (the authored dream proposal), so it
+# joins the same serialization group Hourly Conductor uses. Two workflows racing
+# a push to main is the failure this group exists to prevent.
+concurrency:
+  group: conductor-main-writers
+  cancel-in-progress: false
+
 jobs:
   digest:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     env:
       SHOULD_SEND_EMAIL: ${{ github.event_name == 'schedule' || inputs.send_email == true }}
     steps:
@@ -64,3 +73,48 @@ jobs:
           DIGEST_TO_NAME: ${{ secrets.DIGEST_TO_NAME || vars.DIGEST_TO_NAME }}
           DIGEST_FROM: ${{ secrets.DIGEST_FROM || vars.DIGEST_FROM }}
           DIGEST_FROM_NAME: ${{ secrets.DIGEST_FROM_NAME || vars.DIGEST_FROM_NAME }}
+
+      # Silas, 2026-08-09: "I'm not sure why the next dreams aren't written the
+      # turn the digest is sent, or a step later if there isn't enough process."
+      #
+      # They weren't, because authoring lived only in CLAUDE.md's session-startup
+      # checklist: a proposal appeared when a session happened to run and happened
+      # to notice one was missing, and on a quiet day there was simply no dream.
+      # This is that step. It runs AFTER the email so a failure here can never
+      # cost Silas the digest, and it is idempotent — on a day a session already
+      # authored one it prints "already exists" and exits 0.
+      #
+      # `continue-on-error` on purpose: the digest job's real product is the
+      # email, already sent by this point. A model hiccup should show up as a
+      # missing dream (which the next session's sweep reports) rather than as a
+      # red daily-digest run that trains everyone to ignore it.
+      - name: Author tomorrow's daily dream
+        id: author_dream
+        continue-on-error: true
+        run: python scripts/author_dream_proposal.py
+        env:
+          # No KR_API_TOKEN, deliberately. The digest stays read-only with
+          # respect to kind_robots content (PIPELINE.md §4, enforced by
+          # check_daily_dream_pipeline.py) — it authors a proposal FILE in this
+          # repo and never touches kind_robots objects or Facets. The Facet
+          # catalog read is a public unauthenticated GET, so no token is needed
+          # and adding one would hand this job a capability it must not have.
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          KR_BASE_URL: https://kind-robots.vercel.app
+
+      - name: Commit the authored dream
+        if: ${{ steps.author_dream.outcome == 'success' }}
+        run: |
+          if git diff --quiet -- projects/dream-cycle/backlog; then
+            echo "No new proposal to commit."
+            exit 0
+          fi
+          git config user.name "kind-robots-bot"
+          git config user.email "noreply@kindrobots.app"
+          git add projects/dream-cycle/backlog
+          git commit -m "daily dream: author $(date -u +%Y-%m-%d) proposal [skip ci]"
+          # Rebase rather than force: hourly-conductor and task-event processing
+          # write to main on their own schedule and one of them may have landed
+          # while the model was thinking.
+          git pull --rebase origin main
+          git push origin HEAD:main

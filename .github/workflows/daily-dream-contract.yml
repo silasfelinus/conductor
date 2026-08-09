@@ -14,6 +14,7 @@ on:
       - "scripts/build_digest_email.py"
       - "scripts/build_digest_email_v2.py"
       - "scripts/build_conductor_summary.py"
+      - "scripts/author_dream_proposal.py"
       - "scripts/build_dream_proposal.py"
       - "scripts/build_dream_records.py"
       - "scripts/check_daily_dream_pipeline.py"
@@ -21,6 +22,7 @@ on:
       - "tests/test_apply_daily_dream_facets.py"
       - "tests/test_build_digest.py"
       - "tests/test_build_digest_email_v2.py"
+      - "tests/test_author_dream_proposal.py"
       - "tests/test_build_dream_proposal.py"
       - "tests/test_build_dream_records.py"
       - "tests/test_build_conductor_summary_daily_dream.py"
@@ -50,6 +52,7 @@ jobs:
             scripts/build_digest_email.py \
             scripts/build_digest_email_v2.py \
             scripts/build_conductor_summary.py \
+            scripts/author_dream_proposal.py \
             scripts/build_dream_proposal.py \
             scripts/build_dream_records.py \
             scripts/check_daily_dream_pipeline.py \
@@ -76,6 +79,7 @@ jobs:
             tests/test_apply_daily_dream_facets.py \
             tests/test_build_digest.py \
             tests/test_build_digest_email_v2.py \
+            tests/test_author_dream_proposal.py \
             tests/test_build_dream_proposal.py \
             tests/test_build_dream_records.py \
             tests/test_build_conductor_summary_daily_dream.py \
