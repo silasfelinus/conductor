@@ -527,3 +527,51 @@ Verification: `coloring_queue_status.py --book monster-recast`, `recheck_render_
 --task coloring-book/t-022` (RENDER-BACKLOG.md), direct `GET /api/art/queue/<id>` spot
 checks (read-only, no mutation), `validate_roadmaps.py` (clean), `git status` confirmed
 no working-tree changes from the live consumer pass. Re-armed to `ready`; released claim.
+
+## 2026-08-09T08:30Z | Agent run (scheduled conductor sweep) | coloring-book/t-022
+
+Claimed via `claim_task.py` (session `2026-08-09T083500Z-cb-t022-pillow`).
+`coloring_queue_status.py --book monster-recast` still reported the same identical 18-id
+`recovery_batch` as every prior cycle back to 2026-08-05 (mr-001, mr-006, mr-008,
+mr-011-015, mr-017-019, mr-021-024, mr-026-028), `recommended_action=recover-existing-jobs`.
+Ran `consume_coloring_book_color_art.py --live --book monster-recast --ids <those 18>`
+as usual — but this sandbox had no Pillow installed, so all 17 entries whose renders had
+actually finished failed at `save_result()`'s WebP encode with `RuntimeError: Pillow is
+required for WebP output.` The script's own defensive except-block (added after this exact
+failure mode caused a real duplicate-submission incident earlier in this task's history —
+see the 2026-07-29ish entry above) correctly treated this as "unknown outcome, don't touch
+the job reference" and reported `RECOVERY UNVERIFIED` for all 17 rather than dropping or
+duplicating anything. mr-001 (job 7894) genuinely was still queued/running, unaffected.
+
+Installed Pillow (`pip install --user Pillow`, no requirements.txt in this repo to add it
+to — scripts print a manual-install hint for missing deps like PyYAML rather than
+self-provisioning, same pattern here) and re-ran the identical 17-id pass. All 17 recovered
+cleanly this time: **17/17 succeeded, 17 queue entries marked done.** These were not stuck
+mid-render at all — the ComfyUI jobs (4880-4886, 7624-7632) had actually finished days ago
+(some as early as 2026-08-05) and every prior cycle's "still not landed" reading for these
+specific ids was this same missing-Pillow failure being silently absorbed by the
+unverified-error guard, cycle after cycle, without a session noticing the specific error
+text underneath "no pass consumed." `coloring_queue_status.py --book monster-recast` now
+reports monster-recast statuses `{done: 24, approved: 3, pending: 9}` (was effectively
+`{done: 7, ...}` going into this cycle) — real production progress, not a diagnostic
+no-op. The one remaining recovery-actionable entry (mr-001, job 7894) is still genuinely
+queued/running; left untouched, no duplicate submitted.
+
+This is not a new code bug to fix: the except-block's conservative "leave the reference
+intact on any unexpected error" behavior is correct and deliberate (it's what prevented
+this exact Pillow gap from causing duplicate submissions the first time it was hit, per
+the run-log entry above). The actual fix here was purely environmental (`pip install
+Pillow` in-session) — flagging for whoever next hits `RECOVERY UNVERIFIED ... Pillow is
+required` on a fresh sandbox: it means the renders likely already landed and just need
+Pillow installed before re-running the same recovery pass, not a genuine render-relay
+stall.
+
+Committed `color-art-jobs.yaml`'s 17 updated entries plus the 17 new `.webp` files under
+`projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/` via conductor
+PR (all 17 renders await human review in the ArtJob trainer panel per the project's
+`content`-adjacent art-approval flow — no roadmap `approved_by_human` gate applies to
+individual proposal renders). Verification: `coloring_queue_status.py --book
+monster-recast` before/after, `validate_roadmaps.py` (clean), `git diff --stat` reviewed
+before committing (17 modified queue entries + 17 new binary files, nothing else touched).
+Re-armed to `ready`; released claim — one recovery-actionable entry (mr-001) remains for
+the next cycle, plus 8 fresh `next_batch` entries not yet actionable this pass.

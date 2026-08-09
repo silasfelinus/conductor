@@ -175,87 +175,30 @@ tasks:
 - id: t-022
   milestone: m4
   title: Monster Recast book 1 production pass — 36 final color/BW pairs
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
-  updated: '2026-08-09T08:34:41Z'
+  updated: '2026-08-09T08:35:32Z'
   depends_on: t-021
   note: |-
-    CURRENT STATE (2026-08-08T23:29Z, scheduled conductor sweep): relay reads `draining`,
-    an improvement over the last cycle's throughput (PENDING=2876, DONE=3579 all-time;
-    24h window PENDING=62/DONE=143, recentFailed=none -- no DB-error or ComfyUI-400
-    recurrence this pass). Same 18-id `recovery_batch` as every prior cycle (mr-001,
-    mr-006, mr-008, mr-011-015, mr-017-019, mr-021-024, mr-026-028) -- ran the live
-    recovery pass again via `consume_coloring_book_color_art.py --live --ids ...`; all
-    18 still report their referenced ComfyUI job as queued/running, 0 landed, 0
-    duplicates submitted, queue file unchanged. No new diagnostic signal this cycle
-    beyond the improved throughput reading; no code-level bug found. No pass consumed.
-
-    CURRENT STATE (2026-08-08T21:28Z, scheduled conductor sweep): relay reads `draining`
-    (PENDING=2869, DONE=3564 all-time; 24h window PENDING=42/DONE=142). Same 18-id
-    `recovery_batch` as 2026-08-07 (mr-001, mr-006, mr-008, mr-011-015, mr-017-019,
-    mr-021-024, mr-026-028) -- ran the live recovery pass again, all 18 still not landed,
-    0 duplicates submitted. New this cycle: direct `GET /api/art/queue/<id>` checks (incl.
-    the two frozen 7622/7623 verification jobs) show `claimedAt: null, attempts: 0` on
-    every stuck id -- never picked up by the render worker at all, not hung mid-render.
-    The worker is not draining strictly FIFO by age (newer ids from 2026-08-08 already
-    show `claimedBy: "Silas-PC", status: DONE`), so "oldest pending age" alone doesn't
-    predict when these clear. No code-level bug found; looks like ordinary single-box
-    backlog depth. Full detail in run_log 2026-08-08T21:27Z entry. No pass consumed.
-
-    CURRENT STATE (2026-08-07, scheduled agent recheck): the render-relay connection-refused
-    outage is over (recheck_render_queue.py: recentFailed=none, 154 DONE in last 24h) but the
-    backlog it left is still severe (queueDepth.PENDING=3000, oldest pending ~131.1h). Ran the
-    18-entry recover-existing-jobs pass live; all 18 referenced ComfyUI jobs are still genuinely
-    queued/running (one transient SSL error on a status poll, not a job failure) -- 0 landed, no
-    duplicates submitted, queue file unchanged. Transient infra, no pass consumed. See run_log
-    2026-08-07T09:28Z entry for full detail and per-id job ages.
-
-    CURRENT COLOR-FIRST DIRECTION (2026-07-17): use the canonical color-art-jobs.yaml
-    queue. A Worker generation/submission/review pass handles up to 18 Monster Recast
-    color proposals at one stage. Do not generate new BW variants until the
-    corresponding color composition is accepted; then derive a faithful BW counterpart
-    in an 18-image pass.
-
-    CURRENT STATE (2026-07-29): 18 Monster Recast slots (mr-001, mr-005 through
-    mr-021) are blocked on a real, unresolved GitHub Actions secret gap -- the repo's
-    `ANTHROPIC_API_KEY` secret appears unset, so `scripts/semantic_art_quality.py`'s
-    production semantic gate rejects every live candidate regardless of retries (see
-    the 2026-07-28 security-flag entry in `projects/coloring-book/TALKBACK.md`, still
-    unacknowledged by Silas). This is a credential/infra gate, not a code defect: do
-    not spend retry passes resubmitting fresh ArtJobs for these 18 slots. Their prior
-    job references (ids 2776-2793) are preserved in `color-art-jobs.yaml` and are
-    recoverable via `consume_coloring_book_color_art.py`'s `recover_timed_out_job()`
-    path once the secret is fixed -- run `coloring_queue_status.py --book
-    monster-recast` first each cycle to confirm current `recommended_action` before
-    doing anything live.
-
-    Full RAN/incident history (queue-bug fixes, diagnostic-tooling additions, prior
-    infra-gate investigations) lives in `projects/coloring-book/t-022-run-log.md` --
-    append new RAN entries there, not to this note.
-
-    Fixes the Coloring Book Studio credential preflight so a restored ANTHROPIC_API_KEY is checked from the current workflow environment instead of being blocked forever by stale queue errors. Adds regression coverage for restored-key recovery.
-
-    Merged PR #1476 fixing the stale credential preflight. Silas restored ANTHROPIC_API_KEY and one non-forced recovery event is queued for the preserved ArtJobs. mr-009/mr-016 already completed from it (2026-08-01); the event was blocking on those 2 completed ids for every subsequent hourly run until this cycle's fix (see run_log 2026-08-01 entry) made `consume_coloring_book_studio_request.py` skip already-resolved ids instead of failing the whole batch. Event now carries the remaining 16 ids (mr-001, mr-005-008, mr-010-015, mr-017-021) and should clear on its own via the hourly workflow. Do not create a duplicate recovery event while that file remains present; the next cycle should inspect the queue/event result first.
-
-    Merged PR #1485 after all Worker CI, Security Audit, Roadmap Audit, task-event processing, and coloring approved preflight checks passed. The recovery event now skips already-resolved ids and carries the remaining 16 Monster Recast proposals; inspect the existing event result before creating any new batch.
-
-    CURRENT STATE (2026-08-01): the credential wall is gone -- the 04:14Z hourly run recovered/re-judged all 16 remaining ids, promoting 3 (mr-007, mr-010, mr-020) and genuinely semantic-rejecting the other 13 on real quality grounds. Fixed a real bug where `record_semantic_rejection()` never cleared the stale "job N: ANTHROPIC_API_KEY ..." breadcrumb once a recovered image got a real verdict, which would have kept `referenced_job_id()` pointing every future pass at the same dead job and re-judging the identical rejected image forever instead of trying a fresh render. Also cleared the now-stale breadcrumb directly on the 13 affected entries. `coloring_queue_status.py --book monster-recast` now reports `recommended_action=submit-next-batch` (18 actionable). See run_log for full detail.
-
-    CURRENT STATE (2026-08-05, reconciled a 4-day-stale abandoned claim -- no PR was ever opened
-    against the prior 2026-08-01T09:27Z claim): `coloring_queue_status.py` reports
-    `recommended_action=recover-existing-jobs` (17 recovery-actionable), but every render_gate_error
-    on those entries is a ComfyUI job timeout -- the same production render-relay outage tracked in
-    root `RENDER-BACKLOG.md` (oldestPending ~96.2h and growing, 25/25 recent failures
-    connection-refused), already escalated to Silas repeatedly and blocking `ai-art-academy/t-044`
-    too. Transient infra failure, not attempted live this cycle -- see run_log 2026-08-05T22:37Z
-    entry for full detail. Next cycle: re-check `RENDER-BACKLOG.md`'s latest reading before
-    attempting `recover-existing-jobs`; only run it once the relay is healthy again.
+    CURRENT STATE (2026-08-09T08:32Z, scheduled conductor sweep): recovered 17 of the
+    18 stuck monster-recast color proposals. Root cause of every prior "still not landed"
+    cycle for these specific ids: this sandbox had no Pillow installed, so the recovery
+    path's save_result() failed on the WebP encode and the script's own defensive
+    except-block (correctly) reported RECOVERY UNVERIFIED and left the job reference
+    intact rather than risk a duplicate submission -- the ComfyUI renders had actually
+    finished days ago. Installed Pillow in-session and re-ran the same 18-id pass: 17/17
+    succeeded. monster-recast now reports {done: 24, approved: 3, pending: 9} (was
+    effectively 7 done going into this cycle). mr-001 (job 7894) is still genuinely
+    queued/running -- left untouched. Full detail in run_log 2026-08-09T08:30Z entry.
+    No code change needed; the except-block's conservative behavior did its job. Next
+    cycle: pip install Pillow before running a recovery pass if this sandbox doesn't
+    carry it already, then re-check mr-001 and the 8 fresh next_batch entries.
   run_log: projects/coloring-book/t-022-run-log.md
   recurring: true
-  owner: worker
-  claimed_by: 2026-08-09T083500Z-cb-t022-pillow
-  claimed_at: '2026-08-09T08:34:41Z'
+  owner: null
+  claimed_by: null
+  claimed_at: null
 - id: t-025
   milestone: m6
   title: Package and register Monster Recast book 1
