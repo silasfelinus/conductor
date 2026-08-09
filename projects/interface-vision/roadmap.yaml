@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2953,11 +2953,12 @@ tasks:
       Slice 17 candidate identified in components/pages/storybook-library-page.vue: the recent-story article still uses an exact rounded-2xl border border-base-300 bg-base-100 panel with only layout/padding utilities, so it is a kr-panel-flat candidate and independently confirms the exact-match exhaustion inventory is incomplete. Implementation did not start because the connected GitHub create_branch mutation was blocked by the connector safety layer, and this runtime has no local kind_robots checkout, gh executable, GitHub credential, or KR_API_TOKEN fallback. Released the umbrella claim cleanly rather than leaving it stranded; retry this candidate when target-repo branch creation is available.
 
       Slice 17 replaces the recent-story article in components/pages/storybook-library-page.vue with kr-panel-flat, preserving its flex/min-width/padding utilities and the existing deliberate dashed empty state.
+
+      Slice 17 merged as silasfelinus/kind_robots#1650 (squash f1de9c32d5eaffd36f5daf2953b931b2fb869a78; exact implementation head 3809594050ea883ed9d791d6d4090f4eb0b7dc35). Replaced the recent-story article in components/pages/storybook-library-page.vue with kr-panel-flat while preserving flex/min-width/padding and the deliberate dashed empty state. All 13 exact-head workflows completed successfully, including TypeScript 31305513631, Contract Tests 31305513620 (Contract verifiers job 93225138622), Layout Contract 31305513650, MDC Scroll Ownership 31305513656, Storybook Session Library 31305513603, Storybook Branch State 31305513660, and Storybook Studio 31305513679. t-104 remains open for further consistency slices.
     claimed_by: 20260809T091147Z-auto-tbs8
     claimed_at: '2026-08-09T09:11:47Z'
     implementation_pr: 'silasfelinus/kind_robots#1648'
-    updated: '2026-08-09T09:15:10Z'
-    owner: worker
+    updated: '2026-08-09T09:19:31Z'
 
   - id: t-105
     milestone: m6
