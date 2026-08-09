@@ -7127,3 +7127,18 @@ records:
     either shipped an unreviewed security fix or silently dropped a real gap from the record.
     Split the genuinely mechanical pieces from the ones needing a human product decision rather
     than picking one bucket for the whole task.
+- date: '2026-08-09'
+  project: kindrobots-unraid
+  task: t-006
+  kind: null
+  stakes: null
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'For self-hosted Node 24 services on Unraid, mounting one trusted .env and loading it with --env-file-if-exists
+    avoids duplicating secrets while still allowing DockerMan environment variables to override deployment-specific
+    keys. Excluding .env from the Docker build exposed a Prisma build dependency: prisma.config.ts requires
+    DATABASE_URL even for generate, so image builds need a non-secret dead build-only URL rather than
+    access to production credentials. Local Docker image tags can still be represented by a saved DockerMan
+    template, keeping runtime settings editable in the Unraid WebGUI while registry publication remains
+    optional.'

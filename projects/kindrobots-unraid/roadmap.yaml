@@ -147,7 +147,7 @@ tasks:
   - id: t-006
     milestone: m3
     title: Package persistent Kind Robots Nitro/API deployment for Unraid
-    status: review
+    status: done
     passes: 0
     stakes: high
     note: |-
@@ -157,8 +157,9 @@ tasks:
       Silas explicitly redirected this task in-session on 2026-08-08: Kind Robots is moving from Vercel to a full self-hosted Unraid production deployment at kindrobots.org. Package the complete Nuxt/Nitro app for Unraid, keep configuration editable through the Unraid Docker UI, load the repo .env instead of duplicating the full environment list, mount /mnt/user/pc/kindrobots/images for persistent media, and document the DNS plus Google OAuth cutover as human-gated follow-up steps. The old Vercel-frontend/local-API topology is superseded.
 
       Implementation is ready for review across companion branches in silasfelinus/kind_robots and silasfelinus/kindrobots-unraid. The app container now builds on Node 24 without baking .env into the image, reads the host .env at runtime, persists the requested media directory, and keeps deployment overrides compatible with DockerMan. The catalog adds the Kind Robots user template and migration/cutover runbook. DNS, reverse-proxy publication, and Google OAuth account changes remain human actions and were not performed.
-    updated: '2026-08-09T03:08:00Z'
-    owner: worker
+
+      Completed and merged the full self-hosted Kind Robots packaging. silasfelinus/kind_robots#1637 merged as 63478f728c9ccfdf76ada097c7bf1283d26d493d after all 12 PR workflows completed successfully. silasfelinus/kindrobots-unraid#6 merged as 635bddc9f344b1b4ed3dbbcbb4eb51a1e292da3b after the Unraid catalog validator passed. The runtime now keeps .env out of the image, loads the existing host file at container startup, allows DockerMan variables to override deployment-specific values, persists /mnt/user/pc/kindrobots/images, and ships a DockerMan template/runbook. Actual Unraid installation, reverse-proxy publication, Google OAuth account changes, and DNS cutover remain human-gated deployment steps and were not performed.
+    updated: '2026-08-09T03:22:00Z'
     claimed_by: 2026-08-09T025100Z-kindrobots-unraid-t-006-s56a
     claimed_at: '2026-08-09T02:51:00Z'
 
