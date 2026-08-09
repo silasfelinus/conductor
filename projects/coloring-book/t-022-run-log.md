@@ -626,3 +626,48 @@ changed in `color-art-jobs.yaml`, 1 new binary file, nothing else touched).
 Re-armed to `ready`; released claim. All 8 job references are now recovery-actionable
 for whoever picks up t-022 next — no fresh submission needed until those clear or a new
 `next_batch` opens up.
+
+## 2026-08-09T11:40Z | Agent run (scheduled conductor sweep) | coloring-book/t-022 -- rotation collision
+
+While opening the close-out PR for the 2026-08-09T10:31Z cycle above, merging
+`origin/main` into the PR branch produced a real content conflict in
+`color-art-jobs.yaml` across all 8 of the same entries this cycle had just submitted
+(mr-029 through mr-035, mr-group-001): another session had independently run the exact
+same "submit fresh batch" pass for the same 8 pending entries, timestamped
+2026-08-09T08:46Z-09:56Z (ArtJob ids 8117-8125), but its merge only landed on `main`
+after this session's own submission (10:31Z-11:25Z, ArtJob ids 8130-8132, 8134, 8136,
+8138, 8140-8141) had already completed. Neither session could have detected the other:
+`claim_task.py`'s claim covers the roadmap task, not the underlying render-queue file,
+and both sessions' `coloring_queue_status.py` reads at their respective start times
+correctly showed the 8 entries as fresh/unsubmitted (each session's submission was the
+first one *it* could see).
+
+Resolved per AGENTS.md's rotation-collision playbook: fetched `origin/main`, merged
+(not force-pushed), and for each of the 8 conflicting entries kept `origin/main`'s
+already-merged canonical `render_gate_error`/`render_gate_job_id` (job ids 8117-8125)
+over this session's own later, now-redundant submission (job ids 8130-8141). No data
+was lost from the file's perspective -- `queue_integrity_safe` held true before and
+after -- but this session's own 8 ArtJob submissions are now orphaned duplicates on the
+render-service side (wasted render capacity, 8 extra ComfyUI jobs that will never be
+recovered into the queue). `coloring_queue_status.py` after resolution: 7 of the 8
+entries have a real recoverable job reference; `mr-029`'s render_gate_error from the
+other session's run is an enqueue-time HTTP 500 (Prisma transaction timeout, no job id
+issued), so it isn't recoverable and needs a fresh retry, not a recovery pass.
+
+Root cause is structural, not a mistake by either session: nothing currently prevents
+two concurrent sessions from both reading the same "next_batch actionable" queue state
+and both submitting. `claim_task.py`'s roadmap-level claim doesn't cover sub-task
+granularity like "which specific queue entries has a claim-holder already acted on
+this cycle." Filing this as a kaizen note rather than a new task: a future fix could
+have `consume_coloring_book_color_art.py --live` (no `--ids`) re-check
+`coloring_queue_status.py` for `render_gate_error` immediately before each individual
+`enqueue()` call (not just once at the start of the whole batch), which would have
+caught the other session's fresher writes if they'd landed on `main` before this
+session's own per-entry submission -- though it would not have caught this specific
+ordering (the other session's writes landed on `main` *after* this session's
+submissions completed, not before).
+
+Verification after resolution: `validate_roadmaps.py` (clean), `coloring_queue_status.py
+--book monster-recast` (`queue_integrity_safe: true`, 0 duplicate job/entry ids in the
+file), `git diff origin/main --stat` reviewed to confirm the merge only touched the
+intended files.

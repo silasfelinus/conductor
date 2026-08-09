@@ -178,19 +178,26 @@ tasks:
   status: ready
   passes: 0
   stakes: reversible
-  updated: '2026-08-09T11:27:28Z'
+  updated: '2026-08-09T11:38:26Z'
   depends_on: t-021
   note: |-
-    CURRENT STATE (2026-08-09T11:26Z, scheduled conductor sweep): recovered mr-001
-    (job 7894, genuinely finished) then submitted a fresh batch for the 8 remaining
-    never-submitted entries (mr-029 through mr-035, mr-group-001 -- ArtJob ids
-    8130-8132, 8134, 8136, 8138, 8140-8141). None landed within this session's wait
-    window; the local render worker ("Silas-PC") had not picked them up yet -- ordinary
-    single-box backlog depth, not a defect. All 8 job references correctly recorded for
-    recovery. monster-recast now reports {done: 25, approved: 3, pending: 8} (was
-    {done: 24, approved: 3, pending: 9} going into this cycle). Full detail in run_log
-    2026-08-09T10:31Z entry. Next cycle: run a recovery pass against the 8 recorded job
-    ids before submitting anything fresh (recommended_action=recover-existing-jobs).
+    CURRENT STATE (2026-08-09T11:40Z, scheduled conductor sweep): recovered mr-001
+    (job 7894, genuinely finished, ArtImage 17068). Then hit a rotation collision: this
+    session independently submitted a fresh batch for the 8 remaining never-submitted
+    entries (ArtJob ids 8130-8132, 8134, 8136, 8138, 8140-8141) at the same time another
+    session was doing the identical thing for the same 8 entries (ArtJob ids 8117-8125,
+    recorded 08:46-09:56Z but only merged to main after this session's own submission
+    completed). Resolved the merge conflict in color-art-jobs.yaml by keeping the
+    already-merged-to-main canonical job references (8117-8125) per AGENTS.md's rotation-
+    collision guidance; this session's own 8130-8141 submissions are now orphaned
+    duplicates on the render side (wasted render capacity, not a data-integrity problem --
+    queue_integrity_safe stayed true throughout, no duplicate ids landed in the file).
+    7 of the 8 pending entries now carry a real recoverable job reference (8117-8125,
+    one gap); mr-029 failed at enqueue time with an HTTP 500 Prisma transaction-timeout
+    error (no job id), so it needs a fresh submission attempt, not recovery. monster-recast
+    now reports {done: 25, approved: 3, pending: 8}. Full detail in run_log 2026-08-09T10:31Z
+    entry. Next cycle: run a recovery pass against the 7 recorded job ids
+    (recommended_action=recover-existing-jobs), and retry mr-029's enqueue separately.
   run_log: projects/coloring-book/t-022-run-log.md
   recurring: true
   owner: null
