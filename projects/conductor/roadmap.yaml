@@ -3658,3 +3658,50 @@ tasks:
       "could not verify" bucket alongside genuine API-lookup failures. This is read-only
       roadmap-file analysis (no network call needed for this part), so it should be reliable
       even in sandboxes where the title-search API calls 403.
+
+  - id: t-109
+    milestone: m2
+    title: "Art queue: 8 renders failed at claim on a pre-gate krea2 step count; clamp instead of failing, and stop producers writing out-of-band settings"
+    status: review
+    owner: reviewer
+    claimed_by: claude-art-queue-render-failures-20260809T0600Z
+    claimed_at: '2026-08-09T06:00:00Z'
+    updated: '2026-08-09T06:00:00Z'
+    stakes: reversible
+    passes: 0
+    note: >
+      Silas asked (2026-08-09) to look into the latest art-queue render failures, fix them,
+      resubmit, and prevent a repeat -- with the standing caveat that the backlog contains
+      prompts authored before earlier fixes landed. It did, and that was the whole story.
+
+      DIAGNOSIS. GET /api/art/queue/stats showed 9 recent failures. Eight were identical:
+      "ArtJob validation failed before claim: [engine-step-mismatch] krea2 runs at roughly
+      12 steps or fewer; got 20." ArtJobs 4843/4844/4845/4858/4859/4860/4867/4877, all
+      enqueued 2026-08-02..04 -- before kind_robots' prompt contract shipped on 2026-08-08.
+      Their cfg was already correct at 1 and their prompt text passes every other rule; the
+      only defect was a step count. The 9th (8116, A1111, resource-previews) was a refused
+      ComfyUI connection -- a relay outage, unrelated. A full scan of all 2815 PENDING rows
+      found 27 more with the identical single defect (7633, 7635, 7636, 7697-7701,
+      7895-7902, 7955-7965) and no other contract violation anywhere in the backlog. Blast
+      radius: 35 jobs, bounded and known -- which is what made a clamp the right fix rather
+      than a mass re-enqueue.
+
+      FIX (kind_robots PR #1645). New server/utils/artJobSamplerRepair.ts. Enqueue still
+      rejects an out-of-band job outright, so producers writing new work fail loudly; claim
+      now clamps steps/cfg to DISTILLED_ENGINE_LIMITS before asserting, so pre-gate rows
+      self-heal as the backlog drains; reenqueue-failed clamps too (it normalized paths,
+      prompts and LoRAs but not the sampler, so requeuing one of the eight would have sent
+      it straight back to fail again). Prompt-text violations -- conditionals, format nouns,
+      text-exclusion piles -- still hard-fail, because those need a human to re-author.
+
+      FIX (conductor PR, this branch). entry_to_job resolved per-engine DEFAULTS but let an
+      explicit `steps:`/`cfg:` on an entry override untouched, which is how 20 got in.
+      ENGINE_MAX_STEPS/ENGINE_MAX_CFG now hold a caller-supplied value to the same ceilings
+      the server enforces. Flux's payload cfg metadata also corrected to 1, matching the
+      graph it always actually ran. New scripts/scan_art_queue_sampler.py answers the
+      question recheck_render_queue.py cannot -- not "what just broke" but "how much more of
+      this is coming" -- which is the number that decided the fix.
+
+      RESUBMIT. The 8 FAILED jobs are requeued via /api/art/queue/reenqueue-failed once
+      PR #1645 is on production, not before: requeuing against the old code sends them
+      straight back into the same failure.

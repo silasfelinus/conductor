@@ -371,3 +371,42 @@ queueDepth: PENDING=2876, RUNNING=1, DONE=3579, CANCELLED=820 (all-time). oldest
 
 ## 2026-08-09T03:30:24Z | ai-art-academy/t-044 | draining
 queueDepth: PENDING=2848, RUNNING=1, DONE=3611, FAILED=1, CANCELLED=820 (all-time). oldestPending: id=4838, age=618927s (~171.9h), engine=COMFY. windowThroughput (24h): PENDING=64, DONE=97, FAILED=1. recentFailed (last 1): 1/1 = connection-refused to ComfyUI.
+
+## 2026-08-09T06:35:22Z | conductor/t-109 | draining
+queueDepth: PENDING=2813, RUNNING=1, DONE=3631, FAILED=9, CANCELLED=827 (all-time). oldestPending: id=4887, age=363905s (~101.1h), engine=COMFY. windowThroughput (24h): PENDING=46, DONE=96, FAILED=1, CANCELLED=7. recentFailed (last 9): 8/9 = ArtJob validation failed before claim: Art prompt rejected by the prompt contract (1 violation):
+  [engine-step-mismatch; 1/9 = connection-refused to ComfyUI.
+
+### 2026-08-09 | conductor/t-109 | the eight `engine-step-mismatch` failures, diagnosed
+
+The `recentFailed` line above ("8/9 = ArtJob validation failed before claim ...
+[engine-step-mismatch") is not a new incident, and it is not a relay problem. Full
+finding, so no later session re-derives it:
+
+- **What.** ArtJobs 4843, 4844, 4845, 4858, 4859, 4860, 4867, 4877 — enqueued
+  2026-08-02..04, failed at claim 2026-08-09T04:13Z as the relay reached them.
+  Error, all eight identical: `krea2 runs at roughly 12 steps or fewer; got 20`.
+  Their cfg was already correct at 1 and their prompt text passes every other
+  contract rule. Only the step count was stale.
+- **Why.** kind_robots' prompt contract shipped 2026-08-08 and is re-applied at
+  claim time to catch pre-gate backlog rows. These rows are exactly that: written
+  before the fix, rejected after it. This is the "prompts made before a fixed
+  problem" case, not a regression.
+- **How much more.** A scan of all 2815 PENDING rows found **27** more with the
+  same single defect — 7633, 7635, 7636, 7697-7701, 7895-7902, 7955-7965 — and no
+  other contract violation anywhere in the backlog. Bounded, not systemic.
+- **The 9th failure** (8116, A1111, resource-previews) is a refused ComfyUI
+  connection: relay down at that moment, unrelated, requeue-and-forget.
+
+Fixed by kind_robots PR #1645 (claim clamps out-of-band sampler settings to the
+engine ceiling instead of failing the row; enqueue still rejects outright) and the
+companion Conductor PR (`entry_to_job` holds an explicit `steps:`/`cfg:` to the same
+ceilings). The 27 pending rows self-heal as they drain; the 8 failed ones were
+requeued after #1645 reached production.
+
+**Use `python scripts/scan_art_queue_sampler.py` for this class of question.**
+`recheck_render_queue.py` reports the last N failures — what just broke. The scanner
+pages the whole queue and answers how much more is coming, which is the number that
+decided this fix (27, not 2000). Its scope is the mechanical rules only: steps and
+cfg against the engine ceilings. The prompt-text rules live in kind_robots and are
+deliberately not reimplemented there, so a clean run means "nothing will die on its
+sampler settings", not "everything will render".

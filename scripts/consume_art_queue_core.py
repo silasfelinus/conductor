@@ -184,13 +184,59 @@ ENGINE_DEFAULT_STEPS = {
 # mismatch only showed up in the rendered image.
 ENGINE_DEFAULT_CFG = {
     "krea2": KREA2_CFG,
+    # Flux runs the sampler at cfg 1 and steers with the FluxGuidance node
+    # instead (see the graph builder below, node 52). The payload's top-level
+    # cfg is metadata, but leaving it at DEFAULT_CFG (7) described a job that
+    # was never going to run that way — and kind_robots' contract reads it as a
+    # fallback when a graph has no KSampler.
+    "flux": 1,
     "flux2-klein": FLUX2_KLEIN_CFG,
+}
+
+# The ceilings kind_robots enforces in server/utils/artPromptContract.ts
+# (DISTILLED_ENGINE_LIMITS). Keep these two tables in agreement: a job that
+# exceeds them is rejected with HTTP 422 at enqueue, and — for anything already
+# sitting in PENDING when the ceiling shipped — clamped at claim.
+#
+# Resolving per-engine DEFAULTS was never enough on its own. `entry_to_job`
+# already did that, and 35 krea2 jobs still reached the queue at 20 steps,
+# because an explicit `steps:` on the entry overrode the default and nothing
+# downstream questioned it. Eight of them died at claim on 2026-08-09 and 27
+# more were queued behind them. A caller-supplied number gets clamped too.
+ENGINE_MAX_STEPS = {
+    "krea2": 12,
+    "flux2-klein": 8,
+    "flux": 40,
+}
+ENGINE_MAX_CFG = {
+    "krea2": 1,
+    "flux2-klein": 1,
+    "flux": 1,
 }
 
 
 def engine_default_cfg(engine):
     """Guidance for `engine`, falling back to the generic SD-style default."""
     return ENGINE_DEFAULT_CFG.get(engine, DEFAULT_CFG)
+
+
+def clamp_engine_steps(engine, steps):
+    """Hold an explicit step budget to what `engine` is distilled for."""
+    ceiling = ENGINE_MAX_STEPS.get(engine)
+    if ceiling is None or steps is None:
+        return steps
+    return min(steps, ceiling)
+
+
+def clamp_engine_cfg(engine, cfg):
+    """Hold an explicit guidance value to what `engine` is distilled for."""
+    ceiling = ENGINE_MAX_CFG.get(engine)
+    if ceiling is None or cfg is None:
+        return cfg
+    try:
+        return min(cfg, ceiling) if float(cfg) > ceiling else cfg
+    except (TypeError, ValueError):
+        return cfg
 
 
 def normalize_engine(engine):
@@ -544,13 +590,20 @@ def entry_to_job(entry):
     else:
         steps = int(entry.get("steps") or DEFAULT_STEPS)
 
+    # Per-engine defaults only help an entry that stayed silent. An entry that
+    # names its own budget goes through the same ceiling the server enforces,
+    # so a stale `steps: 20` in a queue file cannot become a job that dies at
+    # claim hours later.
+    steps = clamp_engine_steps(engine, steps)
+    cfg = clamp_engine_cfg(engine, entry.get("cfg", engine_default_cfg(engine)))
+
     payload = {
         "promptString": prompt,
         "negativePrompt": negative,
         "width": width,
         "height": height,
         "steps": steps,
-        "cfg": entry.get("cfg", engine_default_cfg(engine)),
+        "cfg": cfg,
         # the relay's local fast path files its copy under the project's
         # collection folder; untargeted art falls back to the model-family
         # folder (the engine name), not the frontend name ("comfy")
