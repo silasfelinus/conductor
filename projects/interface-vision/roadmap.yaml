@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2959,7 +2959,10 @@ tasks:
       Slice 18: with the exact-match codemod pool fully re-confirmed empty (0 automatable substitutions), took on 10 of the 16 remaining DaisyUI-component-root skips by hand -- the manual-per-file-review pool the codemod's own SAFE_EXTRA_RE policy comment (added in slice 15) deliberately deferred rather than folding into the general allowlist. Verified each co-occurring class (menu, label, dropdown-content incl. all .dropdown-{start,center,end,left,right,top,bottom} position variants, form-control, plus the local channel-submenu/butterfly-card marker classes) against the actual compiled Tailwind output (npx @tailwindcss/cli): none declare background-color/border-color/border-radius, so none can conflict with kr-panel-flat's own components-layer declarations. form-control turned out to have zero generated rules at all in daisyUI 5.7.9 (dropped between v4->v5) -- completely inert. Migrated 10 occurrences across 8 files: art-maker.vue (3x label toggle rows), channel-select.vue (2x: menu + channel-submenu flyout), notification-bell.vue, workspace-header.vue, storybook-library-page.vue, add-scenario.vue, butterfly-demo.vue, watchlist-browse.vue. Left the remaining 6 (kr-stat-tile.vue's stat, chat-gallery.vue's btn x2, challenges/[slug].vue's collapse x2) excluded -- confirmed via the same compiled-CSS check that .btn and .collapse both declare real conflicting background-color/border-radius/border-width, and .stat:not(:last-child) declares a real border-inline-end divider, so those stay genuine manual-review-blocked cases, unchanged from slice 12/15's judgment. Verified: eslint clean, vue-tsc --noEmit clean, test:lint-ratchet unchanged (392/27), test:layout-contract holds (0 new violations), prettier --check clean (only reformatted add-scenario.vue, the one file broken by this change's own line-length reduction, confirmed via git-stash diff against baseline).
 
       Slice 18 merged as silasfelinus/kind_robots#1652 (squash 88022117d5ca40fbc204933e61da758292aebf33; exact implementation head 0d528c0cba4e7a71a0b5c77e25f7504559d33aff). All 16 checks completed successfully (Vercel Preview, TypeScript, Contract verifiers, layout-contract, contract, verify x2, GitGuardian, and all Storybook/Taskmaster/Narrative/Facet contracts), `mergeable_state: clean`. The manual-review pool now stands at 6 genuine remaining occurrences (kr-stat-tile.vue, chat-gallery.vue x2, challenges/[slug].vue x2) -- all confirmed real DaisyUI-layer conflicts, not candidates for a future slice without a design change. t-104 remains open for further consistency slices elsewhere in the codebase; return it to ready and clear the completed slice claim.
-    updated: '2026-08-09T09:47:00Z'
+    updated: '2026-08-09T10:14:46Z'
+    owner: worker
+    claimed_by: 20260809T101446Z-ixhl
+    claimed_at: '2026-08-09T10:14:46Z'
 
   - id: t-105
     milestone: m6
