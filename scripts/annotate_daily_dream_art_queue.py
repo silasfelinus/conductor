@@ -3,12 +3,12 @@
 
 ``enrich_daily_dream_digest.py`` knows whether the object builder emitted an art
 request, but the durable request first lands in Conductor's ``art-prompts.yaml``
-staging ledger.  Only later does the media consumer submit it as a Kind Robots
-ArtJob.  Calling both states "queued" hid a whole scheduling boundary and made a
-staged request look as though the renderer was already working on it.
+staging ledger. Only later does that request become a Kind Robots ArtJob. Calling
+both states "queued" hid a scheduling boundary and made a staged request look as
+though the renderer was already working on it.
 
 This read-only post-processor joins digest assets to the staging ledger by stable
-request id.  It never calls Kind Robots and never changes the art queue.
+request id. It never calls Kind Robots and never changes the art queue.
 """
 
 from __future__ import annotations
@@ -44,7 +44,6 @@ def annotate_asset(
 ) -> dict[str, Any]:
     annotated = dict(asset)
 
-    # A reachable/attached image is stronger evidence than any stale queue row.
     if annotated.get("image_url") or annotated.get("art_status") == "ready":
         return annotated
 
@@ -100,7 +99,7 @@ def annotate_digest(
     digest: dict[str, Any], request_states: dict[str, dict[str, Any]]
 ) -> dict[str, Any]:
     output = dict(digest)
-    for key in ("tomorrow_proposal", "yesterday_output"):
+    for key in ("current_dream_output", "previous_dream_output"):
         output[key] = annotate_proposal(output.get(key), request_states)
 
     recent = output.get("recent_dream_outputs")
@@ -129,7 +128,10 @@ def main(argv: list[str] | None = None) -> int:
 
     statuses = Counter(
         str(asset.get("art_status") or "unknown")
-        for section in (annotated.get("tomorrow_proposal"), annotated.get("yesterday_output"))
+        for section in (
+            annotated.get("previous_dream_output"),
+            annotated.get("current_dream_output"),
+        )
         if isinstance(section, dict)
         for asset in section.get("assets", [])
         if isinstance(asset, dict)
