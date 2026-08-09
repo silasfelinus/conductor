@@ -13516,3 +13516,87 @@ the same shape of problem. There, the claim-time failure string was too generic 
 ceiling, and the actual value, which is why this took one probe instead of a day. Detailed
 failure text paid for itself; the gap this time was one layer up, in what the system was
 allowed to do about a failure it had already diagnosed perfectly.
+
+## 2026-08-09 | Agent run (scheduled conductor sweep) | conductor + interface-vision | response
+
+type: response
+
+**Subject:** interface-vision/t-115 (codemod-vs-hand-slice decision) — decided, implemented, verified, merged.
+
+**Detail:**
+- Sweep: `AGENTS.md` read in full. `select_role.py` recommended `worker` (interface-vision/t-104)
+  but its own GitHub-API check 403'd in-sandbox (documented limitation). Checked open PRs via GitHub
+  MCP tools directly instead: kind_robots PR #1642 (Dreams edit-in-place consistency) was open with
+  a fresh `REVIEWING:` marker from another active session (posted ~3 min prior, well inside the
+  20-minute TTL) — skipped it per the review-claim protocol rather than duplicating that review.
+  `check_pr_merged_drift.py` clean, `audit_human_gates.py` 18 gates/0 stale signals, no open Todos.
+- **Worker (t-115):** claimed via `claim_task.py`. t-115 was a kaizen decision task from t-104 slice
+  14: hand-slicing kr-panel-flat/kr-panel-muted (initially estimated ~129/~114 candidate files) vs.
+  writing a scoped codemod. Investigated first rather than assuming: re-ran the exact-match grep with
+  the actual padding requirement enforced and found `kr-panel`'s pool is genuinely exhausted and
+  `kr-panel-muted`'s is **empty** (every remaining `bg-base-200` candidate uses padding other than
+  `p-6`, so slice 14's ~114-file estimate was an unfiltered substring grep, not byte-exact matches).
+  Only `kr-panel-flat` had real candidates.
+- Wrote `utils/scripts/codemods/kr_panel_codemod.py` and iterated on it against three real bugs found
+  during dry-run/verification rather than shipping the first version:
+  1. **Line-ending corruption**: the first apply used Python's default text-mode I/O, which silently
+     normalized every CRLF file's line endings to LF on write, making every line of touched CRLF
+     files (`art-test.vue`, `character-sheet.vue`, `add-bot.vue`, ...) show as changed instead of just
+     the substituted ones (2706 changed lines in one file for what should have been ~7 substitutions).
+     Fixed with `newline=''` on both read and write. Caught by reviewing `git diff --stat` before
+     committing, not by trusting the tool's own summary.
+  2. **DaisyUI components-layer conflict**: the naive version would have re-broken exactly what
+     t-104 slice 12 hand-excluded. `kr-panel*` classes live in `tailwind.css`'s `@layer components`
+     — the same layer DaisyUI's own component classes (`.stat`, `.collapse`, `.menu`, ...) occupy.
+     Bare Tailwind utility tokens are in the *utilities* layer and always beat components regardless
+     of source order, but two components-layer classes on the same element have no such guarantee —
+     which side wins depends on stylesheet source order, not HTML class order. The codemod now
+     requires every other token on a matched element to be a plain Tailwind utility or a known-safe
+     no-bg/border `kr-*` primitive; anything else (a bare DaisyUI component-root class) is skipped
+     for manual review. This correctly re-excluded `kr-stat-tile.vue` and caught `collapse`/
+     `dropdown-content`/`menu`/`btn` co-occurrences across 20 files (26 occurrences) automatically,
+     reproducing a judgment call by rule instead of relying on a human noticing it again.
+  3. **Scope creep from a blanket `prettier --write`**: running prettier on every touched file also
+     "fixed" 45 files' pre-existing, unrelated formatting drift, inflating the diff with noise outside
+     the task. Fixed by diffing `prettier --check` pass/fail before vs. after the substitution and
+     only reformatting the 24 files whose formatting broke because of *this change's own* line-length
+     reduction, leaving the 45 pre-existing-broken files exactly as the codemod produced them.
+  4. Also excluded `components/dreams/dream-gallery.vue` on its own merits (not a codemod bug): kind_robots
+     PR #1642 was open and actively under review by another session, touching that same file, when this
+     PR was authored — left untouched to avoid colliding with in-flight review.
+- Result: 236 exact-match `kr-panel-flat` occurrences migrated across 97 files. Verified: `eslint`
+  clean (`verifyLintRatchet.ts` unchanged, 392/27), `vue-tsc --noEmit` clean, `verifyLayoutContract.ts`
+  holds (0 new violations), `prettier --check` clean on every file actually altered.
+- Opened kind_robots PR #1646, manually triggered `responsive-layout-audit.yml` via `workflow_dispatch`
+  against the PR's own Vercel preview for extra confirmation beyond structural CI — it was cancelled
+  twice by the workflow's own documented cross-repo concurrency serialization (shared DB-backed browser
+  crawl, newer deployments preempt older queued/running ones), not by a failure. Given the substitution
+  is provably CSS-identical by construction (same `@apply` declarations, just consolidated into one
+  class) and touches no spacing/sizing/grid utility at all, proceeded without it rather than blocking
+  indefinitely on a best-effort post-deploy gate that is explicitly documented as "the guaranteed signal
+  is the hourly schedule" when the deployment_status path doesn't land. All 19 structural checks green,
+  `mergeable_state: clean`. Merged.
+- Recorded the decision, the pool-size correction, and what was excluded/why directly in t-115's roadmap
+  note (conductor PR #1948), then closed t-115 to `done` via `close_task.py` (conductor PR #1950,
+  `implementation_pr: silasfelinus/kind_robots#1646`). Did not also edit t-104's note — t-115 was the
+  task this PR was scoped and tracked against, and t-104 remains the umbrella for further slices
+  (dream-gallery.vue's occurrences, the 26 DaisyUI-co-occurrence occurrences, and the pool this codemod
+  didn't reach) with its own provenance intact from slice 14.
+- State reconciliation: re-fetched `origin/main` for both repos after all merges, reset local
+  checkouts to match, deleted local+confirmed remote auto-deletion of both session branches (kind_robots
+  `claude/relaxed-lovelace-1pmx2y`, conductor `claude/quirky-curie-1pmx2y` and its
+  `close/interface-vision-t-115-...` follow-up) — no branch left behind. Re-ran
+  `check_pr_merged_drift.py` (clean) and `audit_human_gates.py` (18 gates, unchanged) after.
+
+**What was good:** treating the task's own "if (b), scope strictly to byte-for-byte exact matches"
+instruction as a real constraint to engineer against, not a suggestion — the DaisyUI components-layer
+finding would have been a genuine, silent visual regression across 20 files if the first naive version
+had shipped unreviewed. Also reviewing `git diff --stat` before every commit rather than trusting the
+codemod's own summary output, which is what caught the line-ending bug before it reached a PR.
+
+**Suggested action:** none new. The codemod is committed to kind_robots
+(`utils/scripts/codemods/kr_panel_codemod.py`) for a future slice to reuse against the excluded/
+leftover cases once judged safe by hand, same as slices 8-14 established for the smaller kr-panel pool.
+
+---
+_Generated by [Claude Code](https://claude.ai/code)_
