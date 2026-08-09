@@ -2935,19 +2935,16 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
-    note: |-
-      Slice 23 merged as silasfelinus/kind_robots#1669 (squash fd134da). Two more declaration-equivalent kr-container substitutions: components/user/user-manager-directory.vue (Admin User Directory, /user-admin) and components/projects/project-placement-manager.vue (Project Placement, /project-placement) -- both confirmed reachable via Nuxt Content MDC (content/user-admin.md, content/project-placement.md). mx-auto/w-full/max-w-6xl replaced with kr-container, all other utilities (flex, flex-col, gap-4, p-4[, sm:p-6]) preserved. Verified: eslint clean, prettier pre-existing warning on project-placement-manager.vue confirmed present on baseline (not introduced), test:layout-contract holds (0 new violations), vue-tsc --noEmit clean. All 15 PR checks green, mergeable_state clean. Return this non-recurring consistency umbrella to ready for the next bounded slice; clear the completed slice claim.
-
-      Slice 24: migrate the live /coloring-page root from hand-rolled mx-auto w-full plus max-w-4xl onto kr-container max-w-4xl. kr-container owns the same centering and full-width declarations; max-w-4xl remains as the deliberate narrow override. Branch diff is one file, one class substitution.
-    updated: '2026-08-09T16:31:00Z'
-    claimed_by: 20260809T161929Z-auto-d3d47c
-    claimed_at: '2026-08-09T16:19:29Z'
-    implementation_pr: 'silasfelinus/kind_robots#1669'
-    owner: worker
+    note: 'Slice 24 merged as silasfelinus/kind_robots#1670 (squash 2881544): migrated /coloring-page root from hand-rolled mx-auto w-full plus max-w-4xl onto kr-container max-w-4xl (kr-container owns the same centering/full-width declarations; max-w-4xl kept as the deliberate narrow override). One file, one class substitution. All 14 PR checks green, mergeable_state clean. Return this non-recurring consistency umbrella to ready for the next bounded slice; clear the completed slice claim.'
+    updated: '2026-08-09T16:35:09Z'
+    claimed_by: null
+    claimed_at: null
+    implementation_pr: 'silasfelinus/kind_robots#1670'
+    owner: null
 
   - id: t-105
     milestone: m6
