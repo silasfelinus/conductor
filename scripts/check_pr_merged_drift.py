@@ -55,10 +55,18 @@ Requires: GITHUB_TOKEN env var (recommended; avoids rate limits, required for
 private repos, and the search API in particular has a much tighter
 unauthenticated rate limit than the REST PR-lookup endpoint).
 
+conductor/t-108 adds a fourth, network-free pass: a claimed/review task whose
+`remaining_scope_task` field points (directly or through a chain, same
+roadmap only) to a task at `status: done` is flagged as `remaining_scope_resolved`
+— likely ready to close — even when the network passes above can't confirm
+anything (or 403 entirely). It's reported alongside, not instead of, whatever
+those passes found.
+
 Exit codes:
-  0 = verified clean (no high-confidence or weak findings, nothing unresolved)
+  0 = verified clean (no high-confidence, remaining-scope, or weak findings,
+      nothing unresolved)
   1 = high-confidence drift found (implementation_pr field or task-id-named
-      PR already merged)
+      PR already merged, or a remaining_scope_task chain resolved to done)
   2 = could not fully verify (a search or PR lookup call failed) — a clean
       read here would be a false "all good", so this outranks a bare weak
       signal below
@@ -156,6 +164,60 @@ def load_project_statuses(path: Path) -> dict[str, str]:
     return statuses
 
 
+def load_roadmap_tasks_by_id(
+    project_slug: str, projects_dir: Path = PROJECTS
+) -> dict[str, dict[str, Any]]:
+    """Return every task in a project's roadmap.yaml keyed by task id."""
+    roadmap_path = projects_dir / project_slug / "roadmap.yaml"
+    if not roadmap_path.exists():
+        return {}
+    data = load_yaml(roadmap_path)
+    tasks: dict[str, dict[str, Any]] = {}
+    for task in data.get("tasks", []) or []:
+        task_id = task.get("id")
+        if task_id:
+            tasks[task_id] = task
+    return tasks
+
+
+def resolve_remaining_scope_chain(
+    project_slug: str,
+    start_task_id: str,
+    projects_dir: Path = PROJECTS,
+) -> dict[str, Any] | None:
+    """Follow a task's `remaining_scope_task` pointer chain (same-roadmap
+    only, per conductor/t-108) to its terminal task and return the chain
+    walked plus that terminal task's status.
+
+    Read-only, roadmap-file-only analysis — no network call, so it stays
+    reliable even in sandboxes where the GitHub search/lookup calls 403.
+    Returns None if `start_task_id`'s task has no `remaining_scope_task`
+    field at all (nothing to resolve). Guards against a pointer cycle by
+    tracking visited ids; a cycle is reported rather than followed forever.
+    """
+    tasks_by_id = load_roadmap_tasks_by_id(project_slug, projects_dir)
+    start_task = tasks_by_id.get(start_task_id)
+    if not start_task or not start_task.get("remaining_scope_task"):
+        return None
+
+    chain: list[str] = []
+    visited: set[str] = {start_task_id}
+    current_id = start_task.get("remaining_scope_task")
+    while current_id:
+        if current_id in visited:
+            return {"chain": chain + [current_id], "terminal_status": None, "cycle": True}
+        visited.add(current_id)
+        chain.append(current_id)
+        next_task = tasks_by_id.get(current_id)
+        if next_task is None:
+            return {"chain": chain, "terminal_status": None, "missing": current_id}
+        next_pointer = next_task.get("remaining_scope_task")
+        if not next_pointer:
+            return {"chain": chain, "terminal_status": next_task.get("status")}
+        current_id = next_pointer
+    return {"chain": chain, "terminal_status": None}
+
+
 def find_pr_refs(text: str) -> list[tuple[str, int]]:
     """Return deduped (owner/repo, pr_number) pairs referenced in text."""
     seen: list[tuple[str, int]] = []
@@ -240,6 +302,7 @@ def scan_in_progress_tasks(
             "title": task.get("title"),
             "status": task.get("status"),
             "implementation_pr": task.get("implementation_pr"),
+            "remaining_scope_task": task.get("remaining_scope_task"),
         })
     return tasks
 
@@ -354,7 +417,8 @@ def check_drift(
     include_inactive: bool = False,
     token: str | None = None,
 ) -> dict[str, list[dict[str, Any]]]:
-    """Run all three passes and return {"high": [...], "weak": [...], "unresolved": [...]}.
+    """Run all passes and return {"high": [...], "weak": [...], "unresolved": [...],
+    "remaining_scope_resolved": [...]}.
 
     `high` — either a task's own `implementation_pr` field (strongest,
       conductor/t-099) or a task-id-named merged PR (authoritative title
@@ -366,12 +430,28 @@ def check_drift(
       for a task with no other confirmation either way (including a task
       whose `implementation_pr` field is present but malformed — see below);
       a clean result must not be reported for it.
+    `remaining_scope_resolved` — an in-progress task whose `remaining_scope_task`
+      pointer chain (conductor/t-108) resolves to a task at `status: done`.
+      This is read-only roadmap-file analysis, independent of every network
+      pass above, so it stays reliable even when those 403 in a sandbox.
+      Reported alongside whatever the network passes found for the same
+      task, not instead of it.
     """
     all_tasks = scan_in_progress_tasks(projects_dir, overrides_path, include_inactive)
     note_candidates = scan(projects_dir, overrides_path, include_inactive)
     note_by_task = {}
     for candidate in note_candidates:
         note_by_task.setdefault((candidate["project"], candidate["task_id"]), []).append(candidate)
+
+    remaining_scope_resolved = []
+    for task in all_tasks:
+        if not task.get("remaining_scope_task"):
+            continue
+        resolution = resolve_remaining_scope_chain(
+            task["project"], task["task_id"], projects_dir
+        )
+        if resolution and resolution.get("terminal_status") == "done":
+            remaining_scope_resolved.append({**task, **resolution})
 
     # Pass 0 (strongest): a task carrying a dedicated `implementation_pr`
     # field is checked directly against that PR and never falls through to
@@ -464,7 +544,12 @@ def check_drift(
         + search_unresolved
         + weak_unresolved
     )
-    return {"high": high_findings, "weak": weak_findings, "unresolved": unresolved}
+    return {
+        "high": high_findings,
+        "weak": weak_findings,
+        "unresolved": unresolved,
+        "remaining_scope_resolved": remaining_scope_resolved,
+    }
 
 
 def render(
@@ -472,9 +557,24 @@ def render(
     unresolved: list[dict[str, Any]],
     total: int,
     weak: list[dict[str, Any]] | None = None,
+    remaining_scope_resolved: list[dict[str, Any]] | None = None,
 ) -> str:
     weak = weak or []
+    remaining_scope_resolved = remaining_scope_resolved or []
     lines = []
+    if remaining_scope_resolved:
+        lines.append(
+            f"{len(remaining_scope_resolved)} task(s) at claimed/review point to a "
+            "remaining_scope_task that has already reached status: done -- likely ready "
+            "to close (roadmap-file evidence only, no network call, conductor/t-108):\n"
+        )
+        for finding in remaining_scope_resolved:
+            chain = " -> ".join(finding["chain"])
+            lines.append(
+                f"  {finding['project']}/{finding['task_id']} (status: {finding['status']}) "
+                f"-- remaining_scope_task chain {chain} reached done"
+            )
+        lines.append("")
     if unresolved:
         lines.append(
             f"⚠  {len(unresolved)}/{total} candidate(s) could NOT be verified (API lookup failed — "
@@ -523,12 +623,12 @@ def render(
                 f"merged {finding['pr_merged_at']}"
             )
         lines.append("")
-    if not findings and not weak and not unresolved:
+    if not findings and not weak and not unresolved and not remaining_scope_resolved:
         lines.append(
             f"No drift found — all {total} active-project claimed/review task(s) "
             "verified clean (no task-id-named or note-quoted merged PR found)."
         )
-    elif not findings and not weak and unresolved and len(unresolved) < total:
+    elif not findings and not weak and not remaining_scope_resolved and unresolved and len(unresolved) < total:
         lines.append(
             f"No drift found among the {total - len(unresolved)} task(s) successfully verified."
         )
@@ -553,18 +653,22 @@ def main() -> None:
 
     result = check_drift(include_inactive=args.include_inactive, token=token)
     high, weak, unresolved = result["high"], result["weak"], result["unresolved"]
+    remaining_scope_resolved = result["remaining_scope_resolved"]
     total = len(scan_in_progress_tasks(include_inactive=args.include_inactive))
 
     if args.json:
         print(json.dumps(result, indent=2))
     else:
-        print(render(high, unresolved, total, weak=weak))
+        print(render(high, unresolved, total, weak=weak, remaining_scope_resolved=remaining_scope_resolved))
 
     # Exit codes: 0 = verified clean, 1 = high-confidence drift found,
     # 2 = could not fully verify, 3 = only weak/unconfirmed signals found.
+    # remaining_scope_resolved (conductor/t-108) is roadmap-file evidence a
+    # task is likely ready to close, actionable the same as a high-confidence
+    # network finding, so it shares exit code 1 rather than a new tier.
     # Distinguishing these prevents an unverified or merely-weak run from
     # reading as either "clean" or "confirmed drift".
-    if high:
+    if high or remaining_scope_resolved:
         sys.exit(1)
     if unresolved:
         sys.exit(2)
