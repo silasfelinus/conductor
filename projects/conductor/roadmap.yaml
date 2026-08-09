@@ -3608,3 +3608,28 @@ tasks:
     claimed_by: null
     claimed_at: null
     implementation_pr: 'silasfelinus/conductor#1912'
+
+  - id: t-107
+    milestone: m6
+    title: "Validate stakes/kind enum values on roadmap tasks, not just presence"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-104-slice-12/render-queue-recheck close-out (2026-08-09, conductor#1936):
+      `kindrobots-unraid/t-006` carried `stakes: high` -- not a valid stakes value (should be
+      `reversible|outward-facing|irreversible`; looks like `priority: high` bled into the wrong
+      field) -- undetected until the task closed and `process_task_events.prepare_learning`'s
+      bare-string-learning coercion (conductor/t-097) defaulted the invalid value to `None` in
+      the committed `LEARNING.yaml`, red-flagging `test_committed_ledger_schema_conformance` for
+      every subsequent PR. `audit_roadmaps.py`'s `OPEN_TASK_MISSING_STAKES` check only flags a
+      *missing* `stakes` field, never an invalid *value* -- same gap likely applies to a
+      project-level `kind:` outside `software|content|proposal` (kindrobots-unraid's own `kind:
+      infrastructure`, valid for the UI per project-overrides.yaml's kind-override comment but
+      not one of the three learning-ledger kinds). Add a roadmap-audit finding (or a
+      `validate_roadmaps.py` hard error, whichever fits the existing severity model) for any
+      task `stakes` value outside the three valid enum values, so this class of bug surfaces at
+      PR time on the roadmap edit itself rather than silently corrupting the learning ledger
+      weeks later. process_task_events.py's own fallback (software/reversible, fixed in #1936)
+      is a good safety net but shouldn't be the only line of defense.
