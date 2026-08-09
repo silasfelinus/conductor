@@ -1,9 +1,0 @@
-version: 1
-project: kindrobots-unraid
-task: t-006
-operation: review
-owner: worker
-session: 2026-08-09T025100Z-kindrobots-unraid-t-006-s56a
-updated: '2026-08-09T03:08:00Z'
-note: >-
-  Implementation is ready for review across companion branches in silasfelinus/kind_robots and silasfelinus/kindrobots-unraid. The app container now builds on Node 24 without baking .env into the image, reads the host .env at runtime, persists the requested media directory, and keeps deployment overrides compatible with DockerMan. The catalog adds the Kind Robots user template and migration/cutover runbook. DNS, reverse-proxy publication, and Google OAuth account changes remain human actions and were not performed.
