@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2943,11 +2943,12 @@ tasks:
       Slice 10 merged as silasfelinus/kind_robots#1633 (squash 0ffa9670). Migrated 3 exact-match hand-rolled panel surfaces onto kr-panel: giftshop-interact.vues two panels, component-review-feed.vues review card, daily-digest-object-dialog.vues overview row card -- each a byte-for-byte match of kr-panels rounded-2xl/border-base-300/bg-base-100/shadow-sm treatment, only p-4 padding differing from the p-6 default, preserved as a utility override (kr-panel p-4), same pattern as slices 8-9. Zero visual delta. All 17 checks green, mergeable_state clean. t-104 remains multi-slice and open: scanned all ~64 remaining candidates from slice 9s inventory -- most need either a bg-base-100 opacity match (e.g. /90, /95, not exact), extra layout classes intermixed with the surface treatment, or no p-* class at all (kr-panels p-6 would add padding not currently there). Next slice should evaluate whether those categories are still safely convertible (e.g. kr-panel p-0 for the no-padding cases) or need a broader kr-panel variant, or pivot to a scripted codemod given how few pure zero-delta matches remain unclaimed.
 
       Slice 11 migrates narrative-art-status.vue from a hand-rolled exact kr-panel surface to kr-panel p-0, preserving its zero-padding geometry and existing layout/status behavior.
+
+      Slice 11 merged as silasfelinus/kind_robots#1634 (squash cb77216a89bd7471263585228d308abdbe54b160). narrative-art-status.vue now uses kr-panel p-0 for the exact shared raised-surface treatment while preserving its previous zero-padding geometry. All 14 exact-head PR workflows completed successfully, including TypeScript 31290080477, Contract Tests 31290080510, Layout Contract 31290080459, Narrative Art Persistence 31290080458, Narrative Art Milestone 31290080541, Narrative Accessibility 31290080495, and Narrative Primitives 31290080482. t-104 remains open for further consistency slices.
     claimed_by: 2026-08-09T021300Z-cycle-e8c2
     claimed_at: '2026-08-09T02:13:00Z'
     implementation_pr: 'silasfelinus/kind_robots#1633'
-    updated: '2026-08-09T02:18:00Z'
-    owner: worker
+    updated: '2026-08-09T02:24:00Z'
 
   - id: t-105
     milestone: m6
