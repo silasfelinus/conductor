@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2943,11 +2943,12 @@ tasks:
       Slice 23 merged as silasfelinus/kind_robots#1669 (squash fd134da). Two more declaration-equivalent kr-container substitutions: components/user/user-manager-directory.vue (Admin User Directory, /user-admin) and components/projects/project-placement-manager.vue (Project Placement, /project-placement) -- both confirmed reachable via Nuxt Content MDC (content/user-admin.md, content/project-placement.md). mx-auto/w-full/max-w-6xl replaced with kr-container, all other utilities (flex, flex-col, gap-4, p-4[, sm:p-6]) preserved. Verified: eslint clean, prettier pre-existing warning on project-placement-manager.vue confirmed present on baseline (not introduced), test:layout-contract holds (0 new violations), vue-tsc --noEmit clean. All 15 PR checks green, mergeable_state clean. Return this non-recurring consistency umbrella to ready for the next bounded slice; clear the completed slice claim.
 
       Slice 24: migrate the live /coloring-page root from hand-rolled mx-auto w-full plus max-w-4xl onto kr-container max-w-4xl. kr-container owns the same centering and full-width declarations; max-w-4xl remains as the deliberate narrow override. Branch diff is one file, one class substitution.
-    updated: '2026-08-09T16:31:00Z'
+
+      Slice 24 merged as silasfelinus/kind_robots#1670 at 288154447e93cea4118f58e616353a636da16338 from exact head 703993082281b45c4d5bb43a5347fc25722bde25. /coloring-page now expresses its existing mx-auto/w-full container contract through kr-container while preserving the max-w-4xl override. Exact diff: pages/coloring-page.vue +1/-1. All 13 exact-head PR workflows completed successfully: Contract Tests 31323978226, TypeScript 31323978297, Taskmaster 31323978295, Storybook Session Library 31323978245, Layout 31323978225, MDC Scroll Ownership 31323978233, Narrative Art Persistence 31323978279, Storybook Branch State 31323978288, Narrative Art Milestone 31323978244, Storybook Studio 31323978255, Facet Catalog 31323978262, Narrative Primitives 31323978318, API Client Follow-ups 31323978323. Return this non-recurring consistency umbrella to ready for the next bounded slice and clear this session's ownership.
+    updated: '2026-08-09T16:35:50Z'
     claimed_by: 20260809T161929Z-auto-d3d47c
     claimed_at: '2026-08-09T16:19:29Z'
     implementation_pr: 'silasfelinus/kind_robots#1669'
-    owner: worker
 
   - id: t-105
     milestone: m6
