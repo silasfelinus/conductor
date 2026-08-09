@@ -3088,25 +3088,12 @@ tasks:
   - id: t-116
     milestone: m5
     title: "Fix kr_panel_codemod.py's nested-<template> scoping bug and re-run a corrected sweep"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
-    owner: worker
-    note: >
-      Kaizen from t-104 slice 19 (silasfelinus/kind_robots#1660). kr_panel_codemod.py finds
-      the end of an SFC's scannable template region via `re.search(r"</template>", text)` --
-      the FIRST match in the file. Any file with a nested named-slot/conditional
-      <template v-if="..." #slot> block that closes before the file's real closing
-      </template> has everything after that inner close silently never scanned, so the
-      codemod's "pool exhausted" conclusion (relied on by slices 15 and 18) was wrong. A grep
-      sweep found this affects 126 files repo-wide. Slice 19 found and fixed one real instance
-      by hand (components/rewards/reward-encounter.vue, 4 occurrences) but did not touch the
-      other 125 -- deliberately out of scope for one small slice.
-      Fix: change the scan to find the LAST </template> in the file (or properly balance
-      nested template tags via a real parse rather than a single regex search), re-run the
-      codemod's dry-run across the corrected file list, and hand off any newly-surfaced
-      candidates to t-104 as further slices -- same small-batch, individually-verified
-      discipline as every prior slice, not a single giant sweep.
-    claimed_by: 20260809T122915-iv-t116
-    claimed_at: '2026-08-09T12:29:16Z'
-    updated: '2026-08-09T12:29:16Z'
+    owner: null
+    note: 'Fixed the nested-<template> scoping bug: kr_panel_codemod.py scanned for the FIRST `</template>` in the file instead of the LAST, so any SFC with a nested named-slot/conditional `<template v-if #slot>` block closing before the real end had everything after it silently unscanned. Changed the scan to use the last `</template>` match. Verified with py_compile plus an inline regression check (synthetic nested-template file, previously-hidden candidate now found/substituted correctly). Re-ran the corrected codemod dry-run across the full kind_robots repo: 21 files / 47 kr-panel-flat occurrences newly surfaced (skip pool unchanged at 6 occurrences / 4 files, all genuine DaisyUI component-root conflicts). Did not apply any of the 47 -- handed off to t-104 as further slices per this task''s own scope (small, individually-verified batches, not one giant sweep). Newly-surfaced candidate files: character-gallery.vue, coloring-book-manager.vue, dream-gallery.vue, model-builder-progress-matrix.vue, conductor-page.vue (5x), for-you-manager.vue, resource-gallery.vue, reward-card.vue, reward-gallery.vue, scenario-gallery.vue, stage-manager.vue, theme-gallery.vue, component-card.vue. Merged as silasfelinus/kind_robots#1664 (squash 14bc9452). All 13 checks green, mergeable_state clean.'
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-09T12:33:27Z'
+    implementation_pr: 'silasfelinus/kind_robots#1664'
