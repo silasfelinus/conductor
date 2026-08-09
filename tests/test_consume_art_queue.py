@@ -191,6 +191,10 @@ def test_resolve_seed_clamps_out_of_range_and_random_values():
 
 
 def test_entry_to_job_honors_per_entry_quality_overrides():
+    # "comfy" aliases to krea2, so steps/cfg are held to what that engine is
+    # distilled for (12 / 1). This case used to assert steps 45 / cfg 5 passed
+    # through verbatim — the server rejects both, which is how 35 jobs ended up
+    # queued at 20 steps and failing at claim. Every other knob is untouched.
     job = consumer.entry_to_job(
         {
             "project": "alpha",
@@ -198,16 +202,16 @@ def test_entry_to_job_honors_per_entry_quality_overrides():
             "size": "1280x720",
             "prompt": "a hero shot",
             "engine": "comfy",
-            "steps": 45,
-            "cfg": 5,
+            "steps": 10,
+            "cfg": 1,
             "sampler": "DPM++ 2M Karras",
             "seed": 12345,
             "negative_prompt": "text, blur",
         }
     )
     assert job["engine"] == "COMFY"
-    assert job["payload"]["steps"] == 45
-    assert job["payload"]["cfg"] == 5
+    assert job["payload"]["steps"] == 10
+    assert job["payload"]["cfg"] == 1
     assert job["payload"]["sampler"] == "DPM++ 2M Karras"
     assert job["payload"]["seed"] == 12345
     assert job["payload"]["negativePrompt"] == "text, blur"
@@ -412,3 +416,60 @@ batch:
     out = capsys.readouterr().out
     assert "would queue projects/images/alpha-icon.webp" in out
     assert "DRY RUN" in out
+
+
+def test_explicit_steps_are_clamped_to_the_engine_ceiling():
+    """A stale `steps: 20` in a queue entry must not reach the server.
+
+    kind_robots rejects krea2 above 12 steps (artPromptContract.ts). Resolving
+    per-engine DEFAULTS was not enough on its own: an explicit `steps:` used to
+    override the default untouched, and 35 krea2 jobs reached the queue at 20
+    steps that way — 8 died at claim on 2026-08-09, 27 more were queued behind
+    them. Clamp the caller's number too, in the payload AND in the graph the
+    sampler actually executes.
+    """
+    job = consumer.entry_to_job(
+        {
+            "project": "coat-dance",
+            "prompt": "a coat dancing",
+            "engine": "krea2",
+            "steps": 20,
+            "cfg": 7,
+        }
+    )
+    ceiling = consumer.ENGINE_MAX_STEPS["krea2"]
+    assert job["payload"]["steps"] == ceiling
+    assert job["payload"]["cfg"] == consumer.ENGINE_MAX_CFG["krea2"]
+    sampler = next(
+        node
+        for node in job["payload"]["workflow"].values()
+        if node.get("class_type") == "KSampler"
+    )
+    assert sampler["inputs"]["steps"] == ceiling
+
+
+def test_explicit_steps_below_the_ceiling_are_respected():
+    """The clamp is a ceiling, not a rewrite — a deliberate low budget stands."""
+    job = consumer.entry_to_job(
+        {
+            "project": "coat-dance",
+            "prompt": "a coat dancing",
+            "engine": "krea2",
+            "steps": 6,
+        }
+    )
+    assert job["payload"]["steps"] == 6
+
+
+def test_flux_cfg_metadata_matches_the_graph():
+    """Flux steers with FluxGuidance and samples at cfg 1.
+
+    The payload's top-level cfg used to read DEFAULT_CFG (7), describing a job
+    that was never going to run that way — and kind_robots' contract falls back
+    to that field when a graph has no KSampler.
+    """
+    job = consumer.entry_to_job(
+        {"project": "coat-dance", "prompt": "a coat dancing", "engine": "flux"}
+    )
+    assert job["payload"]["cfg"] == 1
+    assert job["payload"]["workflow"]["52"]["inputs"]["cfg"] == 1
