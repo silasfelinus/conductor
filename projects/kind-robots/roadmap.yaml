@@ -2122,8 +2122,8 @@ tasks:
   - id: t-056
     milestone: m3
     title: "Build the Dream -> conductor project-creation Todo flow"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -2144,3 +2144,6 @@ tasks:
       mechanism `scripts/fetch_todos.py`/`complete_todo.py` already consume) so a Worker session
       picks it up and scaffolds the new project roadmap. Respect BOUNDARY.md: this is app-owned
       logic consuming the existing Dream data, not a shared-backend change.
+    claimed_by: 2026-08-09T203005Z-kind-robots-t056-k4n8
+    claimed_at: '2026-08-09T20:30:05Z'
+    updated: '2026-08-09T20:30:05Z'
