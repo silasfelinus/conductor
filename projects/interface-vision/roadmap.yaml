@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2945,10 +2945,12 @@ tasks:
       Slice 11 migrates narrative-art-status.vue from a hand-rolled exact kr-panel surface to kr-panel p-0, preserving its zero-padding geometry and existing layout/status behavior.
 
       Slice 11 merged as silasfelinus/kind_robots#1634 (squash cb77216a89bd7471263585228d308abdbe54b160). narrative-art-status.vue now uses kr-panel p-0 for the exact shared raised-surface treatment while preserving its previous zero-padding geometry. All 14 exact-head PR workflows completed successfully, including TypeScript 31290080477, Contract Tests 31290080510, Layout Contract 31290080459, Narrative Art Persistence 31290080458, Narrative Art Milestone 31290080541, Narrative Accessibility 31290080495, and Narrative Primitives 31290080482. t-104 remains open for further consistency slices.
+
+      Slice 12 migrates 4 more zero-padding exact-match kr-panel surfaces to kr-panel p-0: navigation-health.vue (header + per-channel card), workspace-sheet.vue (outer sheet wrapper + builder-preview card), project-placement-manager.vue (header), and resource-card.vue (card root). All four had no p-* class on the element itself (padding lives on inner children), so kr-panel p-0 preserves exact geometry -- zero visual delta. Deliberately skipped kr-stat-tile.vue's identical class string: it also carries DaisyUI's stat class, whose component-layer CSS supplies the tile's internal padding, and Tailwind's utilities layer always wins over components regardless of source order -- appending kr-panel's p-0 would zero out that padding, a real regression not a zero-delta rename. Verified: eslint 0 problems, vue-tsc --noEmit clean, lint ratchet unchanged (392/27), layout contract holds. Prettier --check flagged pre-existing unrelated formatting debt in 3 of the 4 files (not touched, per the documented --write pitfall from slice 10); confirmed my exact changed lines match Prettier's expected output byte-for-byte via a dry-run diff. kind_robots PR: silasfelinus/kind_robots#1635.
     claimed_by: claude-quirky-curie-20260809T0233Z-iv-t104-s12
     claimed_at: '2026-08-09T02:32:16Z'
     implementation_pr: 'silasfelinus/kind_robots#1633'
-    updated: '2026-08-09T02:32:16Z'
+    updated: '2026-08-09T02:40:37Z'
     owner: worker
 
   - id: t-105
