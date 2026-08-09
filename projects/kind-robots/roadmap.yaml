@@ -2122,16 +2122,31 @@ tasks:
   - id: t-056
     milestone: m3
     title: "Build the Dream -> conductor project-creation Todo flow"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: |-
-      State reconciliation (conductor scheduled sweep, 2026-08-09): every prior kind-robots task reached `done`, leaving this active project with zero open tasks -- caught by `test_current_project_lifecycle.py`'s hard CI check (validate_roadmaps.py), which started failing for every subsequent PR repo-wide. Milestones m3 ("Slug parity + project creation surfaces") and m4 ("Sharing & access control") are still `not-started` with no tasks filed against them, so this isn't a completed project -- it's an unreconciled backlog gap.
-      This task's scope comes directly from this roadmap's own `notes_from_silas`: "Slug parity: Dream.slug is the universal key linking conductor projects to kind_robots Dreams... this project handles the Dream -> conductor notification flow (creating a Todo when a new PROJECT Dream is added so the Worker can scaffold the matching roadmap.yaml)." That flow does not exist yet. Build it: when a new Dream with `kind: PROJECT` (or the current equivalent field/enum -- verify against the live Dream schema first) is created with no matching `projects/<slug>/roadmap.yaml` in conductor, create a Todo (via the same Todo mechanism `scripts/fetch_todos.py`/`complete_todo.py` already consume) so a Worker session picks it up and scaffolds the new project roadmap. Respect BOUNDARY.md: this is app-owned logic consuming the existing Dream data, not a shared-backend change.
+    note: 'Reviewed and merged as silasfelinus/kind_robots#1678 (squash 475e9d9cadba9f3892e9712fff52a52af9770ddd). Ordinary authenticated POST /api/projects now atomically creates a HIGH/AGENT Todo (via prisma $transaction) instructing the Worker to scaffold projects/<slug>/roadmap.yaml; the direct-MariaDB stale-connection fallback path (upsertProjectDirect) gained an idempotent inline Todo insert so it cannot silently drop the Conductor handoff. Conductor projection-created Projects are unaffected (separate /api/conductor/sync path). Review found two real issues on the first-pushed head that the Worker session fixed before this review needed to reject: (1) a TS2339 compile error (project.id access on a return type that had lost its index signature through object-spread inference) and (2) a failing Contract verifiers source-shape guard test (utils/scripts/verifyDatabasePoolDefaults.ts asserts the literal fallback-path code shape return upsertProjectDirect(data, conductorSlug) still appears in server/api/projects/index.post.ts) -- the Worker corrected both by moving the Todo-scaffold side effect inside upsertProjectDirect itself rather than changing the outer function shape, preserving the guard test intent while adding the new behavior. Verified independently before merge: eslint clean, vue-tsc --noEmit clean, and directly ran npx tsx utils/scripts/verifyDatabasePoolDefaults.ts (passes). All 14 exact-head PR checks green, mergeable_state clean.'
+    claimed_by: ''
+    claimed_at: ''
+    updated: '2026-08-09T20:57:17Z'
+    implementation_pr: 'silasfelinus/kind_robots#1678'
 
-
-      Implemented the first-class Project creation hook: ordinary POST /api/projects now creates a HIGH AGENT Todo for the Worker to scaffold the matching Conductor roadmap, while Conductor projection-created Projects remain on the separate /api/conductor/sync path. The normal database path creates Project + Todo atomically; the existing direct-MariaDB fallback now has an idempotent direct Todo fallback as well.
-    claimed_by: 2026-08-09T203005Z-kind-robots-t056-k4n8
-    claimed_at: '2026-08-09T20:30:05Z'
-    updated: '2026-08-09T20:41:30Z'
+  - id: t-057
+    milestone: m3
+    title: "Add a contract test asserting Project-create queues exactly one AGENT scaffold Todo, Conductor sync does not"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-056 (kind_robots#1678, reviewed 2026-08-09): the ordinary authenticated
+      POST /api/projects path now creates exactly one HIGH/AGENT Todo per Project (via
+      prisma $transaction, with an idempotent direct-MariaDB-fallback equivalent), while
+      Conductor's separate /api/conductor/sync projection path does not call this route at
+      all and so never queues one. That behavioral split has no dedicated test coverage --
+      only source-shape guard assertions in utils/scripts/verifyDatabasePoolDefaults.ts
+      cover the fallback path's code shape, not the actual Todo-creation behavior on either
+      path. Add a focused contract/integration test (or extend an existing one) asserting:
+      (1) a Project created via POST /api/projects queues exactly one OPEN/HIGH/AGENT Todo
+      linked to it, and (2) a Project created/reconciled via /api/conductor/sync does not.
