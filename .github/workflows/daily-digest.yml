@@ -41,6 +41,7 @@ jobs:
         run: |
           python scripts/build_digest.py --since "24 hours ago" > digest-base.json
           python scripts/enrich_daily_dream_digest.py digest-base.json --output digest.json
+          python scripts/annotate_daily_dream_art_queue.py digest.json
           cat digest.json
       - name: Validate digest JSON
         run: python scripts/validate_digest.py digest.json
