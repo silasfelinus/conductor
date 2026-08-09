@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-09T03:58:09Z
+Generated: 2026-08-09T04:07:37Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **547**
-- Outcomes: blocked: 13, cancelled: 1, done: 533
+- Closed tasks recorded: **548**
+- Outcomes: blocked: 13, cancelled: 1, done: 534
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | conductor | 68 | 100% |
 | conductor-app | 2 | 100% |
 | davinci | 2 | 100% |
-| digital-storefront | 27 | 100% |
+| digital-storefront | 28 | 100% |
 | dream-cycle | 19 | 100% |
 | ecosystem-map | 5 | 100% |
 | global-ui | 13 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 532 | 99% |
+| software | 533 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-09 `digital-storefront/t-038` — An umbrella task's remaining_scope_task pointer chain (t-038 -> t-003 -> t-004) can sit at status: review for days after its last referenced task actually reaches done, because nothing automatically re-checks the pointer once it stops changing. check_pr_merged_drift.py's title-search pass surfaced it only as "unverifiable" (no close-out PR titled after t-038 exists, since it was never meant to close via its own PR); the real signal was checking the remaining_scope_task's own status directly. A session picking up drift-check output should follow remaining_scope_task chains to their live end, not stop at "search found nothing."
+
 - 2026-08-09 `kindrobots-unraid/t-006` — For self-hosted Node 24 services on Unraid, mounting one trusted .env and loading it with --env-file-if-exists avoids duplicating secrets while still allowing DockerMan environment variables to override deployment-specific keys. Excluding .env from the Docker build exposed a Prisma build dependency: prisma.config.ts requires DATABASE_URL even for generate, so image builds need a non-secret dead build-only URL rather than access to production credentials. Local Docker image tags can still be represented by a saved DockerMan template, keeping runtime settings editable in the Unraid WebGUI while registry publication remains optional.
 - 2026-08-08 `digital-storefront/t-004` — A task note that frames N ad-hoc implementations as N variants of the same pattern can be wrong about that -- two of the four (Character, Reward) turned out to have no check at all, not a fourth variant. Dispatching a read-only investigation to re-verify the note's own framing before implementing caught this: "wire an existing check" and "add this route's first-ever check" are different risk categories (additive/behavior-preserving vs. a real behavior change for any caller relying on the open read), and conflating them would have either shipped an unreviewed security fix or silently dropped a real gap from the record. Split the genuinely mechanical pieces from the ones needing a human product decision rather than picking one bucket for the whole task.
 
@@ -94,7 +96,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-08 `interface-vision/t-108` — 4th fix attempt for the same bug finally worked: swapping an eager Image() probe for an IntersectionObserver-gated request restored native lazy-loading behavior AND kept the dedup benefit -- the 3rd attempt's Reviewer rejection (eager probe defeats loading="lazy", increases burst pressure) was correct and specific enough to fix in one retry without re-guessing. Reading the PR's own deployment-triggered audit RAW (not pass/fail) was again the only way to confirm the fix actually worked, and it also surfaced a genuinely unrelated regression (t-112's /taskmaster crush) in the same run -- worth remembering that a full-suite audit failing overall does not mean the specific route under test is still broken; read the specific route's lines before concluding either way.
 - 2026-08-08 `digital-storefront/t-037` — A stack of roadmap tasks marked done (t-011..t-036) turned out to be almost entirely accurate against the real code when independently re-audited -- Mermaids PDF, subscriptions, mana top-ups, and the giving page were all genuinely BUILT-AND-VISIBLE end-to-end, and the prior tasks' own notes correctly predicted exactly where the remaining gaps would be (no KR-logo SKU, no live DLC catalog, no POD vendor integration). Dispatching a single read-only investigation subagent with a precise per-catalog-item checklist and an explicit 5-way classification (built-and-visible / built-but-unreachable / placeholder / delegated / missing) produced a citation-backed audit in one pass instead of several rounds of spot checks -- worth reusing this shape (structured checklist + forced classification + cite file:line) for any 're-verify a large already-done surface against reality' task.
 - 2026-08-08 `interface-vision/t-112` — Batching independent-but-related small layout fixes into one PR (t-110+t-112, same audit run, same flexbox root cause pattern) avoided contending with the responsive-audit workflow's one-run-at-a-time serialization -- worth defaulting to when a slice's several small findings would otherwise each wait behind the same queue.
-- 2026-08-08 `interface-vision/t-110` — kind_robots PR #1585 (batched t-110+t-112) was returned once by the reviewer for a repo-convention defect, not a functional one -- three large explanatory template comments added around the fix, violating kind_robots/AGENTS.md's 'avoid inline and template comments, let naming carry the meaning' rule. Worth checking that convention before writing comment blocks to justify a non-obvious CSS fix in kind_robots; put the reasoning in the PR description/roadmap note instead, where it already belongs per this repo's own template.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-09T03:58:09Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-09T04:07:37Z_
