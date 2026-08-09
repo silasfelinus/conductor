@@ -18,6 +18,7 @@ on:
     paths:
       - ".github/workflows/auto-art-generate.yml"
       - "projects/art-prompts.yaml"
+      - "scripts/consume_art_requests_to_media.py"
       - "scripts/repair_art_request_defaults.py"
       - "scripts/repair_failed_kindrobots_artjobs.py"
   schedule:
@@ -101,7 +102,7 @@ jobs:
           DIGEST_FROM: ${{ secrets.DIGEST_FROM || vars.DIGEST_FROM }}
           DIGEST_FROM_NAME: ${{ secrets.DIGEST_FROM_NAME || vars.DIGEST_FROM_NAME }}
         run: |
-          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          RUN_URL="${{ github.server_url }}/${{ github.repository}/actions/runs/${{ github.run_id }}"
           if [ "${{ steps.boxhealth.outputs.alert }}" = "down" ]; then
             SUBJECT="⚠️ Render box DOWN — art generation paused"
             BODY="The self-hosted ComfyUI/media render box ($KR_MEDIA_ORIGIN) is unreachable from CI. Art generation is paused; the pending queue is preserved and drains automatically once the box is back. Run: $RUN_URL"
@@ -126,21 +127,10 @@ jobs:
           LIMIT="${{ github.event.inputs.limit }}"
           python scripts/queue_missing_project_art.py --limit "${LIMIT:-500}"
 
-      - name: Submit + wait + verify project-art results
-        id: consume
-        if: ${{ steps.boxhealth.outputs.up == 'true' }}
-        continue-on-error: true
-        working-directory: conductor
-        env:
-          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
-          KR_MEDIA_ORIGIN: https://media.acrocatranch.com
-        run: |
-          LIMIT="${{ github.event.inputs.limit }}"
-          LIMIT_FLAG=""
-          if [ -n "$LIMIT" ]; then LIMIT_FLAG="--limit $LIMIT"; fi
-          python scripts/consume_art_queue_to_media.py --live $LIMIT_FLAG \
-            --timeout ${{ github.event.inputs.timeout || '300' }}
-
+      # Time-sensitive request lanes go first. Daily Dream requests are already
+      # priority 200 once they become ArtJobs; the media wrapper mirrors that
+      # priority before submission so they cannot starve behind the broad repair
+      # and project-art backlogs on the way into Kind Robots.
       - name: Submit + wait + verify art requests
         id: consume_requests
         if: ${{ steps.boxhealth.outputs.up == 'true' }}
@@ -154,6 +144,21 @@ jobs:
           LIMIT_FLAG=""
           if [ -n "$LIMIT" ]; then LIMIT_FLAG="--limit $LIMIT"; fi
           python scripts/consume_art_requests_to_media.py --live $LIMIT_FLAG \
+            --timeout ${{ github.event.inputs.timeout || '300' }}
+
+      - name: Submit + wait + verify project-art results
+        id: consume
+        if: ${{ steps.boxhealth.outputs.up == 'true' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_MEDIA_ORIGIN: https://media.acrocatranch.com
+        run: |
+          LIMIT="${{ github.event.inputs.limit }}"
+          LIMIT_FLAG=""
+          if [ -n "$LIMIT" ]; then LIMIT_FLAG="--limit $LIMIT"; fi
+          python scripts/consume_art_queue_to_media.py --live $LIMIT_FLAG \
             --timeout ${{ github.event.inputs.timeout || '300' }}
 
       - name: Route downloaded conductor and fallback images
