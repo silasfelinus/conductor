@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2949,10 +2949,11 @@ tasks:
       Slice 16: replace the still-live byte-exact hand-rolled kr-panel-flat surface in components/facets/facet-manager.vue with the shared primitive. This is a zero-visual-delta consistency fix and also proves the prior exact-match exhaustion claim missed at least one live candidate.
 
       Slice 16 merged as silasfelinus/kind_robots#1649 (squash 7366b1de3b175881c0ab89d3a9d84d69e6edc0c1; exact implementation head 1c9df73d31b017c7ac776118cc0e7293ac1a30a7). Replaced the remaining byte-exact hand-rolled Facet Library create panel in components/facets/facet-manager.vue with kr-panel-flat, preserving behavior and visual declarations. All 14 exact-head pull-request workflows completed successfully, including TypeScript 31303307706, Contract Tests 31303307772, Layout Contract 31303307736, MDC Scroll Ownership 31303307789, Facet Catalog 31303307728, API Client Follow-ups 31303307731, Entity Art Manager, Narrative contracts, Taskmaster, and all three Storybook contracts. t-104 remains open for further consistency slices, so return it to ready and clear the completed slice claim.
-    claimed_by: 2026-08-09T081344Z-interface-vision-t104-a3f9
-    claimed_at: '2026-08-09T08:13:44Z'
+    claimed_by: 2026-08-09T082727Z-iv-t104-review-f6de
+    claimed_at: '2026-08-09T08:28:00Z'
     implementation_pr: 'silasfelinus/kind_robots#1648'
-    updated: '2026-08-09T08:27:27Z'
+    updated: '2026-08-09T08:28:00Z'
+    owner: worker
 
   - id: t-105
     milestone: m6
