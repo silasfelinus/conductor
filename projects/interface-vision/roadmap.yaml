@@ -2935,15 +2935,15 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-103
     note: 'Slice 10 merged as silasfelinus/kind_robots#1633 (squash 0ffa9670). Migrated 3 exact-match hand-rolled panel surfaces onto kr-panel: giftshop-interact.vues two panels, component-review-feed.vues review card, daily-digest-object-dialog.vues overview row card -- each a byte-for-byte match of kr-panels rounded-2xl/border-base-300/bg-base-100/shadow-sm treatment, only p-4 padding differing from the p-6 default, preserved as a utility override (kr-panel p-4), same pattern as slices 8-9. Zero visual delta. All 17 checks green, mergeable_state clean. t-104 remains multi-slice and open: scanned all ~64 remaining candidates from slice 9s inventory -- most need either a bg-base-100 opacity match (e.g. /90, /95, not exact), extra layout classes intermixed with the surface treatment, or no p-* class at all (kr-panels p-6 would add padding not currently there). Next slice should evaluate whether those categories are still safely convertible (e.g. kr-panel p-0 for the no-padding cases) or need a broader kr-panel variant, or pivot to a scripted codemod given how few pure zero-delta matches remain unclaimed.'
-    claimed_by: claude-quirky-curie-20260809T012902Z-iv-t104-s10
-    claimed_at: '2026-08-09T01:29:03Z'
+    claimed_by: 2026-08-09T021300Z-cycle-e8c2
+    claimed_at: '2026-08-09T02:13:00Z'
     implementation_pr: 'silasfelinus/kind_robots#1633'
-    updated: '2026-08-09T01:46:21Z'
+    updated: '2026-08-09T02:13:00Z'
     owner: worker
 
   - id: t-105
