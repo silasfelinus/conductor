@@ -3710,7 +3710,7 @@ tasks:
   - id: t-110
     milestone: m2
     title: "Resource-preview renders are hardcoded to the A1111 engine, which the home relay refuses on every attempt"
-    status: ready
+    status: done
     owner: null
     stakes: reversible
     passes: 0
@@ -3744,3 +3744,5 @@ tasks:
       be the box being asleep. `python scripts/scan_art_queue_sampler.py --status FAILED`
       will not surface this one (it is a connection error, not a sampler-settings breach);
       read `recentFailed` from GET /api/art/queue/stats instead.
+    updated: '2026-08-09T09:46:07Z'
+    implementation_pr: 'silasfelinus/kind_robots#1651'
