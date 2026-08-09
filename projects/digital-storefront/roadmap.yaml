@@ -1553,12 +1553,12 @@ tasks:
 - id: t-043
   milestone: m6
   title: "Wire contentAccess.ts's packId Grant into the Dream and Facet LIST routes"
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-004
-  updated: '2026-08-08T23:59:00Z'
+  updated: '2026-08-09T06:12:57Z'
   note: >
     Split off digital-storefront/t-004 (conductor sweep 2026-08-08) -- t-004 wired the packId Grant
     fallback into the Dream and Facet SINGLE-ITEM read routes (dreams/[id].get.ts,
@@ -1574,6 +1574,8 @@ tasks:
     non-public/non-owned rows for every existing caller; they simply don't yet let a PACK-Grant holder
     see Pack-gated Dreams/Facets in list/catalog views the way the single-item routes now do. Reversible,
     ordinary software work, safe for normal Worker pickup once picked up.
+  claimed_by: 2026-08-09T061257Z-ds-t043-r7m4
+  claimed_at: '2026-08-09T06:12:57Z'
 
 - id: t-042
   milestone: m6
