@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2947,9 +2947,10 @@ tasks:
       Slice 24 merged as silasfelinus/kind_robots#1670 at 288154447e93cea4118f58e616353a636da16338 from exact head 703993082281b45c4d5bb43a5347fc25722bde25. /coloring-page now expresses its existing mx-auto/w-full container contract through kr-container while preserving the max-w-4xl override. Exact diff: pages/coloring-page.vue +1/-1. All 13 exact-head PR workflows completed successfully: Contract Tests 31323978226, TypeScript 31323978297, Taskmaster 31323978295, Storybook Session Library 31323978245, Layout 31323978225, MDC Scroll Ownership 31323978233, Narrative Art Persistence 31323978279, Storybook Branch State 31323978288, Narrative Art Milestone 31323978244, Storybook Studio 31323978255, Facet Catalog 31323978262, Narrative Primitives 31323978318, API Client Follow-ups 31323978323. Return this non-recurring consistency umbrella to ready for the next bounded slice and clear this session's ownership.
 
       Slice 25: AppMaker root replaces hand-rolled mx-auto max-w-6xl with kr-container while retaining kr-unbound. kr-unbound already owns w-full; kr-container owns mx-auto w-full max-w-6xl, so this is declaration-equivalent. Exact Kind Robots branch diff is components/pages/appmaker-page.vue +1/-1.
-    updated: '2026-08-09T18:15:05Z'
+
+      Slice 25 merged as silasfelinus/kind_robots#1671 at 5e30e700c9af26c1d8c51c535e9a7d1a324e087b from exact head 67cf7deb95a9bae018a04cee809bbd779d91305d. AppMaker now expresses its existing root centering/max-width contract through kr-container while retaining kr-unbound; exact diff components/pages/appmaker-page.vue +1/-1. All 13 exact-head PR workflows completed successfully: Storybook Studio Contract 31328954348, Storybook Session Library Contract 31328954326, Narrative Art Persistence Contract 31328954327, Storybook Branch State Contract 31328954322, Narrative Primitives Contract 31328954308, Taskmaster Checkpoint Engine Contract 31328954309, API Client Follow-ups Contract 31328954313, MDC Scroll Ownership 31328954339, Layout Contract 31328954323, TypeScript Type Check 31328954342, Narrative Art Milestone Contract 31328954312, Facet Catalog Contract 31328954302, Contract Tests 31328954335. Return this non-recurring consistency umbrella to ready for the next bounded slice and clear this session's ownership.
+    updated: '2026-08-09T18:27:42Z'
     implementation_pr: 'silasfelinus/kind_robots#1669'
-    owner: worker
     claimed_by: 20260809T181505Z-e58332
     claimed_at: '2026-08-09T18:15:05Z'
 
