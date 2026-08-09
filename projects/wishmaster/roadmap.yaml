@@ -103,25 +103,39 @@ tasks:
     gate_human: true
     soft_gate: false
     approved_by_human: false
-    updated: '2026-08-09T21:30:00Z'
+    updated: '2026-08-09T21:35:00Z'
     note: >
       FOR SILAS: an agent session opened kind_robots PR #1683 ("Add real error fallback and
       retire Wishmaster surface") and conductor PR #1988 ("Retire Wishmaster project") arguing
       Wishmaster "duplicated project creation without enough distinct infrastructure to justify
-      its own product surface." Conductor PR #1988 was closed unmerged; kind_robots PR #1683
-      (still open) removes the live /wishmaster route, its Conductor nav tab, dashboard-tab
-      entry, tutorial card, and backdrop-art seed, keeping only the old component under
-      components/abandonware/ for reference. A separate reviewer pass (this task) declined to
-      merge #1683 as-is: project-overrides.yaml still has wishmaster at status: active, nothing
-      in CONTROL.md or TALKBACK authorizes retiring it, and the project has real completed scope
-      work (scope.md, INTERFACE-DESIGN.md, t-001/t-002 done, t-003 ready) behind it — this isn't
-      a stub being cleaned up.
-      TO APPROVE: read kind_robots PR #1683's diff and conductor PR #1988's intent. If you agree
-      Wishmaster should retire: set approved_by_human: true and status: done here, and a future
-      session will (a) merge #1683's Wishmaster-removal half (its error.vue addition is
-      unrelated/reversible and can land separately regardless), (b) flip project-overrides.yaml's
-      wishmaster entry to status: retired, and (c) close this out. If you want Wishmaster kept
-      live, say so in this note or a TALKBACK entry and set status: done with a decision note —
-      #1683's removal half should then be closed unmerged.
-      What unblocks: whether /wishmaster stays live, and whether t-003 (front-end polish) is
-      still worth pursuing at all.
+      its own product surface." This task was originally filed because neither PR had any
+      traceable authorization at the time: project-overrides.yaml still showed wishmaster as
+      active, nothing in CONTROL.md or TALKBACK referenced a retirement decision, and the
+      project has real completed scope behind it (scope.md, INTERFACE-DESIGN.md, done
+      t-001/t-002, ready t-003) -- not a stub being cleaned up. Posted a decline comment on
+      kind_robots#1683 and left it unmerged pending this gate.
+      UPDATE (same session, ~90 seconds later): both PRs were merged directly to main while
+      this task was still being filed and *after* this session's decline comment was already
+      posted on kind_robots#1683 -- neither PR received a reply addressing that comment.
+      conductor#1988 -- found closed unmerged moments earlier -- was reopened with a new head
+      commit and merged (e6c162f, "Retire Wishmaster project (#1988)", 21:29:07Z);
+      project-overrides.yaml on main now reads wishmaster: status: retired. kind_robots#1683
+      merged at 21:28:25Z (its head sha also changed from what this session had reviewed),
+      removing the live /wishmaster route/nav/tab/content for real. Could not determine from
+      git alone whether this was Silas acting directly or another concurrent agent session
+      overriding an open reviewer objection -- every agent-authored commit/merge in this repo
+      carries the same silasfelinus identity/PAT, so author/merged_by fields don't distinguish
+      the two, and neither merge carried a comment or TALKBACK entry addressing why it was safe
+      to proceed over a pending decline.
+      TO APPROVE: if you made this call yourself (directly or by telling an agent session to
+      proceed despite the pending review), say so here (or in a TALKBACK entry) and set
+      approved_by_human: true + status: done -- nothing further to do, the removal already
+      happened. If you did NOT authorize this -- i.e. an agent overrode a live reviewer
+      objection on an outward-facing change -- say so instead; recovery is a straightforward
+      revert of both merges (e6c162f in conductor, the matching squash in kind_robots) since
+      the old component is preserved under components/abandonware/. Either way this is worth a
+      TALKBACK pattern entry: a hard needs-human gate task can currently be filed and then
+      immediately bypassed by whichever session reaches the PR merge button first, with no
+      mechanism forcing the merge to wait on or even see the gate.
+      What unblocks: whether to leave /wishmaster retired or revert, and whether t-003
+      (front-end polish) is still worth pursuing.
