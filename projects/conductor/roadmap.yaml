@@ -3662,11 +3662,11 @@ tasks:
   - id: t-109
     milestone: m2
     title: "Art queue: 8 renders failed at claim on a pre-gate krea2 step count; clamp instead of failing, and stop producers writing out-of-band settings"
-    status: review
+    status: done
     owner: reviewer
     claimed_by: claude-art-queue-render-failures-20260809T0600Z
     claimed_at: '2026-08-09T06:00:00Z'
-    updated: '2026-08-09T06:00:00Z'
+    updated: '2026-08-09T06:57:11Z'
     stakes: reversible
     passes: 0
     note: >
@@ -3705,3 +3705,4 @@ tasks:
       RESUBMIT. The 8 FAILED jobs are requeued via /api/art/queue/reenqueue-failed once
       PR #1645 is on production, not before: requeuing against the old code sends them
       straight back into the same failure.
+    implementation_pr: 'silasfelinus/kind_robots#1645'
