@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2947,11 +2947,12 @@ tasks:
       Slice 15 merged as silasfelinus/kind_robots#1648 (squash abfda269). The exact-match kr-panel/kr-panel-muted/kr-panel-flat candidate pools were fully exhausted after slice 14 -- a dry run found 0 automatable substitutions and 26 skips flagged "unsafe extra tokens, needs manual review" across 20 files. Rather than assume the codemod's SAFE_EXTRA_RE allowlist was already complete, checked each skip against the actual compiled Tailwind output (npx @tailwindcss/cli). Of the 26, 10 occurrences across 9 files were false positives -- tokens the allowlist didn't recognize yet but that verifiably declare zero background-color/border-color/border-radius of their own: bare group/transition (Tailwind's own marker/property-only utilities), aspect-square (aspect-ratio only), focus-visible/motion-safe (variant prefixes, same non-effect as the already-allowlisted hover/focus), and kr-toolbar (pure @apply layout, no bg/border). Extended SAFE_EXTRA_RE with these (documented inline with the verification method), re-ran the codemod, and applied the resulting 10 occurrences across academy-timeline.vue, image-upload.vue, facet-gallery.vue, facet-interact.vue, model-builder-run-history.vue, model-builder-source-picker.vue (x2), workspace-sheet.vue, feed-card.vue, and user-dashboard.vue. The remaining 16 skips across 11 files are genuine DaisyUI component-root classes (stat, menu, dropdown-content, btn, label, collapse, form-control) or a one-off local scoped class (butterfly-card) -- left excluded per policy: even where this slice's own check found some of those DaisyUI classes (.menu, .label) currently declare no conflicting background/border either, a future daisyUI version could add one silently, so they stay manual-review candidates. Verified: eslint clean, lint ratchet unchanged (392/27), vue-tsc --noEmit clean, layout contract holds (0 new violations), prettier --check clean (only reformatted the 2 files whose formatting broke from this change's own line-length reduction, confirmed via git-stash diff against the 4 already-broken files). t-104 remains open for further consistency slices (the 16 DaisyUI-conflict occurrences and butterfly-card); return it to ready and clear the completed slice claim.
 
       Slice 16: replace the still-live byte-exact hand-rolled kr-panel-flat surface in components/facets/facet-manager.vue with the shared primitive. This is a zero-visual-delta consistency fix and also proves the prior exact-match exhaustion claim missed at least one live candidate.
+
+      Slice 16 merged as silasfelinus/kind_robots#1649 (squash 7366b1de3b175881c0ab89d3a9d84d69e6edc0c1; exact implementation head 1c9df73d31b017c7ac776118cc0e7293ac1a30a7). Replaced the remaining byte-exact hand-rolled Facet Library create panel in components/facets/facet-manager.vue with kr-panel-flat, preserving behavior and visual declarations. All 14 exact-head pull-request workflows completed successfully, including TypeScript 31303307706, Contract Tests 31303307772, Layout Contract 31303307736, MDC Scroll Ownership 31303307789, Facet Catalog 31303307728, API Client Follow-ups 31303307731, Entity Art Manager, Narrative contracts, Taskmaster, and all three Storybook contracts. t-104 remains open for further consistency slices, so return it to ready and clear the completed slice claim.
     claimed_by: 2026-08-09T081344Z-interface-vision-t104-a3f9
     claimed_at: '2026-08-09T08:13:44Z'
     implementation_pr: 'silasfelinus/kind_robots#1648'
-    updated: '2026-08-09T08:20:00Z'
-    owner: worker
+    updated: '2026-08-09T08:27:27Z'
 
   - id: t-105
     milestone: m6
