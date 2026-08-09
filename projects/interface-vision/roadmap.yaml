@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2945,10 +2945,10 @@ tasks:
       Slice 31 merged as silasfelinus/kind_robots#1694 (squash 773790d0626e10faf16c81d05528d21d311daf4f) from exact head b78537f28723dd921ce5cc413bd0425ef9a65e7b. components/user/login-persister.vue, components/user/forum-thread.vue, components/giftshop/mana-wallet.vue, and components/giftshop/subscription-manager.vue root elements now use kr-container (max-w-sm/max-w-4xl/max-w-3xl/max-w-5xl respectively) instead of hand-rolled mx-auto w-full max-w-*; no geometry or behavior change. Reachable via <LoginPersister /> in login-page.vue, content/forum.md, and giftshop-manager.vue (wallet-page.vue / giving-page.vue). Skipped as out of scope this slice: messenger.vue (root mixes kr-panes grid primitive with arbitrary h-[70vh], not a clean container substitution), project-front-page.vue and achievement-art.vue (matching class on a nested element, not the component root), achievement-popup.vue (nested modal-content div mixing border/bg/shadow with the geometry utilities), components/abandonware/wonderlab/lab-gallery.vue (previously confirmed unreferenced). All 16 PR checks green (TypeScript, Contract verifiers, facet-catalog, layout-contract, verify x2, contract, Storybook fictional state/session library/studio, Shared narrative UI, Narrative art persistence/milestone, Taskmaster checkpoint contract, GitGuardian, Vercel Preview), mergeable_state clean. Verified before merge: eslint clean on changed files (two pre-existing issues on subscription-manager.vue/forum-thread.vue/login-persister.vue confirmed via git stash diff against baseline main), vue-tsc --noEmit clean, test:layout-contract holds (0 new violations), prettier clean. Return this non-recurring consistency umbrella to ready for the next bounded slice.
 
       Slice 32 attempted (session 20260809T224500Z-sched-conductor-t104-s32) but found no clean byte-exact kr-container candidate left after slice 31. Re-ran the `mx-auto`+`w-full`+`max-w-*` root-element grep: only messenger.vue and lab-gallery.vue remain, both already excluded (see slice 31 note). Widened the search to `mx-auto`+`max-w-*` roots lacking `w-full` and found 15: most are unreferenced `components/abandonware/**` (chat-view.vue, add-theme.vue, add-icon.vue), mix extra visual classes with the geometry utilities the same way achievement-popup.vue/animation-tester.vue did (out of scope, not a pure container root), or use `flex ... flex-col items-center justify-center` centering (checkout-success.vue, checkout-cancel.vue) where adding kr-container's `w-full` would be a new, unverified pattern shape rather than a byte-exact substitution. The `pages/admin/wonderlab-review-*.vue` group and privacy-page.vue/giving-page.vue combine `mx-auto max-w-*` with `kr-surface`/`kr-unbound` -- one of the layout contract's three required page-root primitives (flex/height/overflow semantics `kr-container` does not provide) -- so swapping in `kr-container` there would drop required structure, not just dedupe a hand-rolled pattern; not a target for this slice's substitution rule. shopping-cart.vue (`mx-auto max-w-5xl space-y-6 p-4 sm:p-6` on a bare `<section>`) is the one plausible near-miss -- block-level, no competing primitive, but missing `w-full` is a pattern shape this task's slices have never substituted before (all prior slices matched `mx-auto w-full max-w-*` byte-for-byte). Rather than unilaterally decide "block elements already fill available width so adding w-full is a no-op" is safe without the same case-by-case verification prior slices applied, leaving this pool documented for the next slice to pick up with a considered decision (same shape as the t-104 slice 14 kaizen's kr-panel pool -- decide (a) hand-verify shopping-cart.vue's specific mount context, or (b) treat "mx-auto + max-w-* on a bare block element, no w-full" as a second verified-safe substitution shape and scope it explicitly). No changes made; releasing the claim.
-    updated: '2026-08-09T22:52:00Z'
+    updated: '2026-08-09T23:27:16Z'
     implementation_pr: 'silasfelinus/kind_robots#1694'
-    claimed_by: null
-    claimed_at: null
+    claimed_by: 20260809T232715-sched-conductor-t104-s33
+    claimed_at: '2026-08-09T23:27:16Z'
     owner: reviewer
 
   - id: t-105
