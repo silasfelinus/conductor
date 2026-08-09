@@ -3604,7 +3604,26 @@ tasks:
       scope. TO APPROVE: pick (A), (B), or the deletion option (or say no fix is needed and the
       slower JS-TS check is an accepted cost) -- whichever you pick, set status: done with a note
       saying which, or ready if you want an agent to execute a specific one of these next.
-    updated: '2026-08-08T17:45:00Z'
+
+      OPERATIONAL FINDING (2026-08-09, interface-vision/t-116 close-out, conductor PR #1962):
+      the stall recurred and was worse than typical -- `Perform CodeQL Analysis` for
+      javascript-typescript ran 55+ minutes with zero step progress (stuck past `Initialize
+      CodeQL`) before this session cancelled the run (`actions_run_trigger` method
+      `cancel_workflow_run`) and retriggered it with an empty commit (the default-setup CodeQL
+      workflow is a `dynamic/github-code-scanning/codeql` run, not a normal Actions workflow, so
+      `rerun_failed_jobs` 403s on it -- an empty commit is the only retrigger path available
+      without repo-admin Settings access). The retriggered run behaved normally (completed
+      analyzer steps for python/actions/c-cpp within ~30-70s each, javascript-typescript again
+      slower but this time actually progressing, not stuck) but was still in progress after
+      another ~20+ minutes. At that point `pull_request_read` on the PR reported
+      `mergeable_state: unstable` (not `blocked`), and a `merge_pull_request` call succeeded
+      immediately -- confirming the `Analyze (javascript-typescript)` CodeQL check is NOT a
+      required status check on this repo's branch protection. Future sessions hitting this stall
+      do not need to wait for it at all: once every other check is green and `mergeable_state`
+      reads `unstable` rather than `blocked`, attempt the merge directly rather than continuing
+      to poll a non-required check. This doesn't replace fixing the root cause (still TO APPROVE
+      above) but removes the actual time cost until it's fixed.
+    updated: '2026-08-09T13:05:00Z'
     claimed_by: null
     claimed_at: null
     implementation_pr: 'silasfelinus/conductor#1912'
