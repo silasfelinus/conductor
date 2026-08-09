@@ -1,19 +1,21 @@
 from pathlib import Path
 
-import scripts.consume_art_requests_to_media as media_consumer
+import scripts.art_request_staging_priority as staging
 
 
 ROOT = Path(__file__).resolve().parents[1]
+DAILY_DREAM_PRIORITY = 200
 
 
 def test_daily_dream_staging_uses_reserved_priority():
-    assert media_consumer.submission_priority({"source": "dream-cycle"}) == (
-        media_consumer.consumer.DAILY_DREAM_PRIORITY
-    )
-    assert media_consumer.submission_priority({"source": "dream-cycle"}) > 100
+    assert staging.submission_priority(
+        {"source": "dream-cycle"},
+        daily_dream_priority=DAILY_DREAM_PRIORITY,
+    ) == DAILY_DREAM_PRIORITY
+    assert DAILY_DREAM_PRIORITY > 100
 
 
-def test_daily_dream_requests_jump_ahead_of_older_generic_staging(monkeypatch):
+def test_daily_dream_requests_jump_ahead_of_older_generic_staging():
     older_generic = {"id": "old-repair", "source": "kind-robots-missing-image"}
     older_explicit = {"id": "operator-urgent", "source": "manual", "priority": 50}
     dream_one = {"id": "dream-a", "source": "dream-cycle"}
@@ -21,9 +23,10 @@ def test_daily_dream_requests_jump_ahead_of_older_generic_staging(monkeypatch):
     newest_generic = {"id": "new-repair", "source": "kind-robots-missing-image"}
     entries = [older_generic, older_explicit, dream_one, dream_two, newest_generic]
 
-    monkeypatch.setattr(media_consumer, "original_load_requests", lambda: entries)
-
-    ordered = media_consumer.prioritized_load_requests()
+    ordered = staging.prioritize_requests(
+        entries,
+        daily_dream_priority=DAILY_DREAM_PRIORITY,
+    )
     assert [entry["id"] for entry in ordered] == [
         "dream-a",
         "dream-b",
@@ -33,18 +36,17 @@ def test_daily_dream_requests_jump_ahead_of_older_generic_staging(monkeypatch):
     ]
 
 
-def test_staging_order_is_fifo_inside_equal_priority(monkeypatch):
+def test_staging_order_is_fifo_inside_equal_priority():
     entries = [
         {"id": "first", "priority": 20},
         {"id": "second", "priority": 20},
         {"id": "third", "priority": 20},
     ]
-    monkeypatch.setattr(media_consumer, "original_load_requests", lambda: entries)
-    assert [entry["id"] for entry in media_consumer.prioritized_load_requests()] == [
-        "first",
-        "second",
-        "third",
-    ]
+    ordered = staging.prioritize_requests(
+        entries,
+        daily_dream_priority=DAILY_DREAM_PRIORITY,
+    )
+    assert [entry["id"] for entry in ordered] == ["first", "second", "third"]
 
 
 def test_auto_art_runs_request_lane_before_project_art_lane():
