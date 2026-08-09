@@ -102,7 +102,7 @@ jobs:
           DIGEST_FROM: ${{ secrets.DIGEST_FROM || vars.DIGEST_FROM }}
           DIGEST_FROM_NAME: ${{ secrets.DIGEST_FROM_NAME || vars.DIGEST_FROM_NAME }}
         run: |
-          RUN_URL="${{ github.server_url }}/${{ github.repository}/actions/runs/${{ github.run_id }}"
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           if [ "${{ steps.boxhealth.outputs.alert }}" = "down" ]; then
             SUBJECT="⚠️ Render box DOWN — art generation paused"
             BODY="The self-hosted ComfyUI/media render box ($KR_MEDIA_ORIGIN) is unreachable from CI. Art generation is paused; the pending queue is preserved and drains automatically once the box is back. Run: $RUN_URL"
