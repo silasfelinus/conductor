@@ -92,3 +92,36 @@ tasks:
       PROGRESS 2026-07-27 (conductor burst-mode rotation, claude-conductor-burst-20260727T020619Z-wm-t003): step (2) done -- added a 'wishmaster' section to tutorialChannels.conductor.sections in kind_robots/stores/helpers/tutorialCards.ts (image resolves via tutorialImage('conductor', 'wishmaster')). kind_robots PR #1031, awaiting CI. Checked the rest of the surface while in there: /wishmaster (wishmaster-page.vue) is already a real interactive page -- lists active/total/inactive Dream(dreamType: WISH) counts, a new-wish form wired to dreamStore.createDream, and a recent-wishes list -- not a placeholder scaffold, so step (4) is further along than the note implied; deeper evolution (Composition-backed wish -> costed plan -> assembled output per INTERFACE-DESIGN.md) stays needs-human gated since the Composition model itself doesn't exist yet (INTERFACE-DESIGN.md section 0/9) and scope.md/INTERFACE-DESIGN.md are both explicitly "not an implementation authorization." Step (1) art: the dashboard-tab image was already auto-queued in art-prompts.yaml (kind-robots-wishmaster-image-35c97a38); the tutorial image will auto-queue on the next intake pass now that step (2)'s reference exists -- same render-backend backlog affecting ai-art-academy/t-004 and newsfeed/t-022 applies here too, so no fresh check needed until that backlog signal changes. Step (3) (liveUrl backfill) remains an admin Placements-button action. Releasing the claim; kept at status: ready since steps (1)/(3)/(4) remain open, same convention as other projects' recurring "Polish and upgrade" tasks.
     claimed_by: null
     claimed_at: null
+
+  - id: t-004
+    milestone: m2
+    title: "Decide whether to retire Wishmaster as a live project surface"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    soft_gate: false
+    approved_by_human: false
+    updated: '2026-08-09T21:30:00Z'
+    note: >
+      FOR SILAS: an agent session opened kind_robots PR #1683 ("Add real error fallback and
+      retire Wishmaster surface") and conductor PR #1988 ("Retire Wishmaster project") arguing
+      Wishmaster "duplicated project creation without enough distinct infrastructure to justify
+      its own product surface." Conductor PR #1988 was closed unmerged; kind_robots PR #1683
+      (still open) removes the live /wishmaster route, its Conductor nav tab, dashboard-tab
+      entry, tutorial card, and backdrop-art seed, keeping only the old component under
+      components/abandonware/ for reference. A separate reviewer pass (this task) declined to
+      merge #1683 as-is: project-overrides.yaml still has wishmaster at status: active, nothing
+      in CONTROL.md or TALKBACK authorizes retiring it, and the project has real completed scope
+      work (scope.md, INTERFACE-DESIGN.md, t-001/t-002 done, t-003 ready) behind it — this isn't
+      a stub being cleaned up.
+      TO APPROVE: read kind_robots PR #1683's diff and conductor PR #1988's intent. If you agree
+      Wishmaster should retire: set approved_by_human: true and status: done here, and a future
+      session will (a) merge #1683's Wishmaster-removal half (its error.vue addition is
+      unrelated/reversible and can land separately regardless), (b) flip project-overrides.yaml's
+      wishmaster entry to status: retired, and (c) close this out. If you want Wishmaster kept
+      live, say so in this note or a TALKBACK entry and set status: done with a decision note —
+      #1683's removal half should then be closed unmerged.
+      What unblocks: whether /wishmaster stays live, and whether t-003 (front-end polish) is
+      still worth pursuing at all.
