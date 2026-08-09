@@ -7159,3 +7159,25 @@ records:
     the remaining_scope_task's own status directly. A session picking up drift-check output
     should follow remaining_scope_task chains to their live end, not stop at "search found
     nothing."
+- date: '2026-08-09'
+  project: conductor
+  task: t-109
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    When a hard gate will also be applied retroactively to an existing backlog, decide
+    per-rule whether a pre-existing row should FAIL or be REPAIRED. kind_robots' prompt
+    contract (2026-08-08) re-applies at claim time so pre-gate rows cannot render with
+    stale settings — correct — but its only verdict was FAILED, so eight ArtJobs died on
+    nothing but "krea2 runs at roughly 12 steps or fewer; got 20" with 27 more queued to
+    die the same way. A step count above the engine's ceiling has one objectively correct
+    repair and no authorial intent to preserve; rejecting it is not the conservative
+    choice, just a different failure. Rules needing judgment (a conditional a diffusion
+    model cannot evaluate, a format noun) must still fail. Two corollaries: a recovery
+    endpoint that repairs everything EXCEPT the thing that killed the job is a loop, not
+    a recovery (reenqueue-failed normalized paths/prompts/LoRAs but not the sampler);
+    and fixing a per-engine DEFAULT without also bounding the explicit OVERRIDE leaves
+    the door open at exactly the width of the original bug.
