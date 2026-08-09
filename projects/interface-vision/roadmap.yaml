@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2945,11 +2945,12 @@ tasks:
       Coordination cleanup before slice 21: slice 20 is merged and the task is already ready, but its completed claim fields remained populated. Clear the stale owner/claim metadata so the next session-aware claim can reserve t-104 normally.
 
       Slice 21 implementation prepared on fresh Kind Robots main: replace build-bench.vue's exact mx-auto w-full max-w-6xl wrapper with the declaration-equivalent kr-container primitive while preserving flex/gap/padding utilities. One file, no behavior or visual delta intended.
-    updated: '2026-08-09T14:21:30Z'
+
+      Slice 21 merged as silasfelinus/kind_robots#1666 (squash 1bc5add96e45db73bd3f43f1e7c0beb078de9407). Exact implementation head 44b0f687350374dc9522881f2d38e429e8da2e4a completed all 14 observed PR workflows successfully, including TypeScript, Contract Tests, Layout Contract, MDC Scroll Ownership, Facet Catalog, API Client Follow-ups, Narrative contracts, Taskmaster, and all three Storybook contracts. The one-file Build Bench wrapper now uses declaration-equivalent kr-container while preserving flex/gap/padding. Return this non-recurring consistency umbrella to ready for the next bounded slice and clear the completed slice claim.
+    updated: '2026-08-09T14:28:00Z'
     claimed_by: 20260809T141233Z-0d9201
     claimed_at: '2026-08-09T14:19:45Z'
     implementation_pr: 'silasfelinus/kind_robots#1665'
-    owner: worker
 
   - id: t-105
     milestone: m6
