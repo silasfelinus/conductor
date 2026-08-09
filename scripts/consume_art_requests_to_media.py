@@ -15,7 +15,12 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 import consume_art_queue as consumer  # noqa: E402
-from art_request_staging_priority import prioritize_requests  # noqa: E402
+from art_request_staging_priority import (  # noqa: E402
+    is_daily_dream_request,
+    positive_job_id,
+    prioritize_requests,
+    should_consume_after_submission,
+)
 from media_direct_consumer import (  # noqa: E402
     KIND_ROBOTS_REPO,
     _is_kindrobots_media_target,
@@ -39,8 +44,19 @@ def already_satisfied(entry):
 
 
 def prioritized_load_requests():
+    entries = []
+    for entry in original_load_requests():
+        # Daily Digest already submitted Daily Dream jobs should not be POSTed
+        # again by the broad six-hour consumer. The relay owns them in flight.
+        # Once their media path is live, include them again so requests.main()
+        # marks the staging rows done during its satisfied pass.
+        satisfied = False
+        if is_daily_dream_request(entry) and positive_job_id(entry.get("last_art_job_id")):
+            satisfied = already_satisfied(entry)
+        if should_consume_after_submission(entry, already_satisfied=satisfied):
+            entries.append(entry)
     return prioritize_requests(
-        original_load_requests(),
+        entries,
         daily_dream_priority=consumer.DAILY_DREAM_PRIORITY,
     )
 
