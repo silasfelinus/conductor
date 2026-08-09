@@ -110,6 +110,7 @@ def check_pipeline(root: Path = ROOT) -> list[str]:
         "python scripts/apply_daily_dream_facets.py",
         "python scripts/submit_daily_dream_art.py",
         "Commit Daily Dream cycle evidence",
+        "Verify Daily Dream cycle",
         "python scripts/build_digest.py",
         "python scripts/enrich_daily_dream_digest.py",
         "python scripts/annotate_daily_dream_art_queue.py",
@@ -119,7 +120,7 @@ def check_pipeline(root: Path = ROOT) -> list[str]:
     )
     if not _in_order(digest, digest_sequence):
         errors.append(
-            "Daily Digest must author, build, attach Facets, submit ArtJobs, persist evidence, then render/send"
+            "Daily Digest must author, build, attach Facets, submit ArtJobs, persist evidence, verify, then render/send"
         )
     if digest.count("python scripts/author_dream_proposal.py") != 1:
         errors.append("Daily Digest must author exactly once, at the start of the cycle")
@@ -127,6 +128,23 @@ def check_pipeline(root: Path = ROOT) -> list[str]:
         errors.append("Daily Digest must invoke the sole object writer exactly once")
     if "KR_API_TOKEN" not in digest:
         errors.append("Daily Digest now owns object creation and must receive KR_API_TOKEN")
+
+    # Build, Facet, and ArtJob steps may leave useful local evidence even when
+    # their final status is failure. The workflow must commit that evidence before
+    # it converts those outcomes into a failed cycle, or production rows/jobs can
+    # become detached from the canonical ledger.
+    evidence_guards = (
+        "id: daily_dream_build\n        continue-on-error: true",
+        "id: daily_dream_facets\n        if: ${{ steps.daily_dream_build.outcome == 'success' }}\n        continue-on-error: true",
+        "id: daily_dream_art\n        if: ${{ steps.daily_dream_build.outcome == 'success' }}\n        continue-on-error: true",
+        "- name: Commit Daily Dream cycle evidence\n        if: ${{ always() }}",
+        'steps.daily_dream_build.outcome',
+        'steps.daily_dream_facets.outcome',
+        'steps.daily_dream_art.outcome',
+    )
+    for guard in evidence_guards:
+        if guard not in digest:
+            errors.append(f"Daily Digest is missing durable failure-evidence guard: {guard!r}")
 
     for workflow in sorted((root / ".github/workflows").glob("*.yml")):
         if workflow.name in {"daily-dream-contract.yml", "daily-digest.yml"}:
