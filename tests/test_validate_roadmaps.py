@@ -102,6 +102,44 @@ def test_continuous_project_may_have_only_recurring_done_history(_isolate_root, 
     assert validate_roadmaps.main() == 0
 
 
+def test_invalid_stakes_value_fails(_isolate_root, capsys):
+    write_roadmap(
+        _isolate_root,
+        "demo",
+        "project: demo\ntasks:\n- id: t-001\n  status: ready\n  stakes: high\n",
+    )
+
+    assert validate_roadmaps.main() == 1
+    err = capsys.readouterr().err
+    assert "invalid stakes value(s)" in err
+    assert "t-001='high'" in err
+
+
+def test_valid_stakes_values_pass(_isolate_root, capsys):
+    write_roadmap(
+        _isolate_root,
+        "demo",
+        "project: demo\ntasks:\n"
+        "- id: t-001\n  status: ready\n  stakes: reversible\n"
+        "- id: t-002\n  status: ready\n  stakes: outward-facing\n"
+        "- id: t-003\n  status: done\n  stakes: irreversible\n"
+        "- id: t-004\n  status: ready\n",
+    )
+
+    assert validate_roadmaps.main() == 0
+    assert "Roadmaps valid" in capsys.readouterr().out
+
+
+def test_invalid_stakes_values_function_directly():
+    tasks = [
+        {"id": "t-001", "stakes": "reversible"},
+        {"id": "t-002", "stakes": "high"},
+        {"id": "t-003", "stakes": "needs-human"},
+        {"id": "t-004"},
+    ]
+    assert validate_roadmaps.invalid_stakes_values(tasks) == ["t-002='high'", "t-003='needs-human'"]
+
+
 def test_unknown_project_lifecycle_fails(_isolate_root, capsys):
     (_isolate_root / "project-overrides.yaml").write_text(
         "overrides:\n  - slug: demo\n    status: immortal\n", encoding="utf-8"

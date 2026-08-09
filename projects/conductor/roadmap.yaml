@@ -68,7 +68,7 @@ tasks:
     owner: worker
     updated: '2026-07-01T00:00:00Z'
     passes: 0
-    stakes: needs-human
+    stakes: irreversible
     gate_human: true
     approved_by_human: true
     note: >
@@ -99,7 +99,7 @@ tasks:
     owner: worker
     updated: '2026-07-02T17:22:00-07:00'
     passes: 0
-    stakes: needs-human
+    stakes: irreversible
     gate_human: true
     depends_on:
       - t-004
@@ -3631,7 +3631,7 @@ tasks:
   - id: t-107
     milestone: m6
     title: "Validate stakes/kind enum values on roadmap tasks, not just presence"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -3642,7 +3642,7 @@ tasks:
       Claiming the roadmap enum-validation task after higher-priority ready work was either human/infra gated, production-token blocked, or a verified progress-gated no-op.
     claimed_by: 20260809T171537Z-auto-ruggri
     claimed_at: '2026-08-09T17:15:37Z'
-    updated: '2026-08-09T17:15:37Z'
+    updated: '2026-08-09T17:34:30Z'
 
   - id: t-108
     milestone: m2

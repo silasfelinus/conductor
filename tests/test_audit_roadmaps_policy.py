@@ -53,6 +53,20 @@ def test_no_duplicate_keys_is_clean(tmp_path):
     result = findings_for(tmp_path, '  - id: t-001\n    milestone: m1\n    title: Clean task\n    status: ready\n    stakes: reversible\n    note: Some note text.\n')
     assert 'DUPLICATE_YAML_KEY' not in codes(result)
 
+def test_invalid_stakes_value_is_flagged(tmp_path):
+    result = findings_for(tmp_path, '  - id: t-001\n    milestone: m1\n    title: Priority bled into stakes\n    status: ready\n    stakes: high\n    note: Ordinary internal task.\n')
+    assert 'INVALID_STAKES_VALUE' in codes(result)
+
+def test_valid_stakes_values_are_clean(tmp_path):
+    for index, value in enumerate(('reversible', 'outward-facing', 'irreversible')):
+        result = findings_for(tmp_path / str(index), f'  - id: t-001\n    milestone: m1\n    title: Valid stakes\n    status: ready\n    stakes: {value}\n    note: Ordinary internal task.\n')
+        assert 'INVALID_STAKES_VALUE' not in codes(result)
+
+def test_missing_stakes_is_not_an_invalid_value(tmp_path):
+    result = findings_for(tmp_path, '  - id: t-001\n    milestone: m1\n    title: No stakes yet\n    status: ready\n    note: Ordinary internal task.\n')
+    assert 'INVALID_STAKES_VALUE' not in codes(result)
+    assert 'OPEN_TASK_MISSING_STAKES' in codes(result)
+
 def test_continuous_improvement_note_drift_is_flagged(tmp_path):
     result = findings_for(
         tmp_path,

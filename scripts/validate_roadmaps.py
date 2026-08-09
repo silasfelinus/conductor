@@ -17,6 +17,16 @@ t-061/t-062 -- see interface-vision/t-062's note and this repo's TALKBACK.md tha
 date. audit_roadmaps.py already detects this (DUPLICATE_TASK_ID) but only reports
 it advisorily; it never fails CI, so the second collision landed anyway.
 
+The same promote-from-advisory-to-hard treatment applies to an invalid `stakes:`
+enum value (conductor/t-107): `kindrobots-unraid/t-006` carried `stakes: high` --
+not one of `reversible|outward-facing|irreversible` (looks like `priority: high`
+bled into the wrong field) -- and went undetected until the task closed and
+`process_task_events.prepare_learning`'s fallback silently coerced it to `None` in
+the committed `LEARNING.yaml`, redding `test_committed_ledger_schema_conformance`
+for every subsequent PR. audit_roadmaps.py's INVALID_STAKES_VALUE finding catches
+this too, but only advisorily; failing CI here catches it at PR time on the
+roadmap edit itself, before it ever reaches the learning-ledger fallback.
+
 Usage: python scripts/validate_roadmaps.py
 """
 from __future__ import annotations
@@ -34,11 +44,27 @@ except ModuleNotFoundError:  # imported as scripts.validate_roadmaps in pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 
+# Kept in sync by hand with audit_roadmaps.py's VALID_STAKES and
+# backfill_learning.py's VALID_STAKES / process_task_events.py's inline check --
+# the three enum values AGENTS.md/CLAUDE.md define for a task's `stakes:` field.
+VALID_STAKES = {"reversible", "outward-facing", "irreversible"}
+
 
 def duplicate_task_ids(tasks: list) -> list[str]:
     ids = [str(task.get("id")) for task in tasks if isinstance(task, dict) and task.get("id")]
     counts = collections.Counter(ids)
     return sorted(task_id for task_id, count in counts.items() if count > 1)
+
+
+def invalid_stakes_values(tasks: list) -> list[str]:
+    bad = []
+    for task in tasks:
+        if not isinstance(task, dict):
+            continue
+        stakes = task.get("stakes")
+        if stakes is not None and str(stakes) not in VALID_STAKES:
+            bad.append(f"{task.get('id')}={stakes!r}")
+    return sorted(bad)
 
 
 def main() -> int:
@@ -73,6 +99,16 @@ def main() -> int:
             print(
                 f"duplicate task id(s) in {path}: {', '.join(dupes)} "
                 "-- each task id must be unique within a project's roadmap",
+                file=sys.stderr,
+            )
+            ok = False
+
+        bad_stakes = invalid_stakes_values(data["tasks"])
+        if bad_stakes:
+            print(
+                f"invalid stakes value(s) in {path}: {', '.join(bad_stakes)} "
+                "-- stakes must be one of reversible|outward-facing|irreversible "
+                "(check for a status/priority value in the wrong field)",
                 file=sys.stderr,
             )
             ok = False

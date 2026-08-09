@@ -33,6 +33,11 @@ VALID_STATUS = {
     "done",
     "challenged",
 }
+# The three enum values AGENTS.md/CLAUDE.md define for a task's `stakes:` field
+# (PR handoff template, hard-gate list, status lifecycle). Anything else is almost
+# always a different field's value (status, priority) that bled into `stakes` --
+# see conductor/t-107.
+VALID_STAKES = {"reversible", "outward-facing", "irreversible"}
 ACTIVE_STATES = {"active"}
 WORKABLE_STATES = {"active", "continuous"}
 IN_PROGRESS = {"claimed", "review"}
@@ -235,6 +240,18 @@ def audit() -> dict[str, Any]:
                 findings.append(issue("error", "MISSING_TASK_ID", slug, "Task has no id."))
             if status not in VALID_STATUS:
                 findings.append(issue("error", "INVALID_STATUS", slug, f"Unknown task status {status!r}.", task_id))
+            raw_stakes = task.get("stakes")
+            if raw_stakes is not None and str(raw_stakes) not in VALID_STAKES:
+                findings.append(
+                    issue(
+                        "error",
+                        "INVALID_STAKES_VALUE",
+                        slug,
+                        f"stakes value {raw_stakes!r} is not one of {sorted(VALID_STAKES)} -- "
+                        "check for a status/priority value that landed in the wrong field.",
+                        task_id,
+                    )
+                )
             if isinstance(raw_deps, str) and "," in raw_deps:
                 findings.append(issue("error", "MALFORMED_DEPENDENCY_LIST", slug, f"depends_on is a comma-separated string: {raw_deps!r}; use a YAML list.", task_id))
             for dep in deps:
