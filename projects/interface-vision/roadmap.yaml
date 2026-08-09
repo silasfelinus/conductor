@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2943,11 +2943,11 @@ tasks:
       Slice 13 merged as silasfelinus/kind_robots#1640 (merge e4df0a8f09b74832bf2142f55668d8e7a2e65d76; exact implementation head fc0a4b5a67ee74d143bfd3e8aeee53869802a498). Migrated the remaining exact-match non-translucent shadow-sm panel surfaces in character-flip-card.vue, workspace-sheet.vue, and resource-gallery.vue onto kr-panel while preserving existing padding and border-style utilities. All 14 exact-head pull-request workflows completed successfully, including TypeScript 31294992779, Contract Tests 31294992795, Layout Contract 31294992735, MDC Scroll Ownership 31294992734, Facet Catalog 31294992762, API Client Follow-ups 31294992745, Narrative contracts, Taskmaster, and all three Storybook contracts; Vercel preview status was Ready. t-104 remains open for further consistency slices, so return it to ready and clear the completed slice claim.
 
       Slice 14 merged as silasfelinus/kind_robots#1641 (squash 07d402a). With the exact kr-panel (bg-base-100 + shadow-sm) candidate pool now exhausted (only kr-stat-tile.vue remains, deliberately excluded per slice 12's DaisyUI stat-class conflict), this slice extended the same zero-visual-delta migration to two sibling variants already defined in tailwind.css but never adopted: kr-panel-flat (rounded-2xl/border-base-300/bg-base-100, no shadow) and kr-panel-muted (rounded-2xl/border-base-300/bg-base-200, p-6 default). Migrated 4 files/8 occurrences: add-model.vue (mature-content toggle row), bot-chat.vue (3x kr-panel-flat sections, 2x kr-panel-muted cards), bot-gallery.vue (bot description card), user-manager.vue (loading state) -- all zero visual delta, same padding-override pattern as slices 8-13. Verified: eslint 0 problems, vue-tsc --noEmit clean, lint ratchet unchanged (392/27), layout contract holds, prettier --check clean. This branch was worker/* (no Vercel preview per AGENTS.md's documented branch-prefix policy), so verification relied on full local checks plus post-merge production spot-check rather than a PR-preview audit run. IMPORTANT DISCOVERY: a grep sweep this slice found the kr-panel-muted/kr-panel-flat candidate pools are far larger than the original kr-panel pool ever was -- ~114 files with an exact kr-panel-muted match and ~129 files with an exact kr-panel-flat match, vs. the ~64-candidate kr-panel pool slices 8-13 worked through. Filed t-115 as a kaizen follow-up to decide whether to keep hand-slicing through this much larger pool or pivot to a scripted codemod. t-104 remains open for further consistency slices; return it to ready and clear the completed slice claim.
-    claimed_by: null
-    claimed_at: null
+    claimed_by: 2026-08-09T072641Z-t104-slice15
+    claimed_at: '2026-08-09T07:27:38Z'
     implementation_pr: 'silasfelinus/kind_robots#1641'
-    updated: '2026-08-09T05:52:30Z'
-    owner: null
+    updated: '2026-08-09T07:27:38Z'
+    owner: worker
 
   - id: t-105
     milestone: m6
