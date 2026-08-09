@@ -36,13 +36,6 @@ except ModuleNotFoundError:  # imported as scripts.validate_roadmaps in pytest
 ROOT = Path(__file__).resolve().parents[1]
 VALID_TASK_STAKES = {"reversible", "outward-facing", "irreversible"}
 VALID_PROJECT_KINDS = {"software", "content", "proposal", "brainstorm", "infrastructure"}
-# Pre-existing open roadmap debt discovered when this validator first became strict.
-# Keep these exact project/task/value triples narrow so no new invalid enum can land.
-# Remove each exemption when that roadmap row is normalized.
-LEGACY_ACTIONABLE_STAKES = {
-    ("humboldt-scoop-cms", "t-010", "sensitive"),
-    ("kindrobots-unraid", "t-011", "high"),
-}
 
 
 def duplicate_task_ids(tasks: list) -> list[str]:
@@ -101,8 +94,6 @@ def main() -> int:
                 continue
             stakes = task.get("stakes")
             task_id = str(task.get("id") or "<missing>")
-            if (slug, task_id, stakes) in LEGACY_ACTIONABLE_STAKES:
-                continue
             if stakes not in VALID_TASK_STAKES:
                 print(
                     f"invalid task stakes in {path} for {task_id}: {stakes!r} -- expected one of {', '.join(sorted(VALID_TASK_STAKES))}",
