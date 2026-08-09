@@ -43,6 +43,8 @@ def write_roadmap(root, slug, tasks):
             lines.append(f"    note: \"{task['note']}\"")
         if task.get("implementation_pr"):
             lines.append(f"    implementation_pr: \"{task['implementation_pr']}\"")
+        if task.get("remaining_scope_task"):
+            lines.append(f"    remaining_scope_task: \"{task['remaining_scope_task']}\"")
     (project_dir / "roadmap.yaml").write_text(
         "\n".join(lines) + "\n", encoding="utf-8"
     )
@@ -542,7 +544,12 @@ def test_check_drift_clean_when_no_evidence_either_way(tmp_path):
     with patch("urllib.request.urlopen", return_value=FakeResponse(empty_search_body)):
         result = dr.check_drift(tmp_path / "projects", token=None)
 
-    assert result == {"high": [], "weak": [], "unresolved": []}
+    assert result == {
+        "high": [],
+        "weak": [],
+        "unresolved": [],
+        "remaining_scope_resolved": [],
+    }
 
 
 # --------------------------------------------------------------------------- #
@@ -736,3 +743,219 @@ def test_render_does_not_mislabel_absent_field_task_as_malformed(tmp_path):
     output = dr.render([], unresolved, total=1)
     assert "malformed implementation_pr field" not in output
     assert "task-id search" in output
+
+
+# --------------------------------------------------------------------------- #
+# resolve_remaining_scope_chain / remaining_scope_resolved (conductor/t-108)
+# --------------------------------------------------------------------------- #
+
+
+def test_resolve_remaining_scope_chain_returns_none_with_no_pointer(tmp_path):
+    write_roadmap(
+        tmp_path,
+        "digital-storefront",
+        [{"id": "t-038", "status": "review", "title": "umbrella"}],
+    )
+    assert (
+        dr.resolve_remaining_scope_chain(
+            "digital-storefront", "t-038", tmp_path / "projects"
+        )
+        is None
+    )
+
+
+def test_resolve_remaining_scope_chain_follows_single_hop_to_done(tmp_path):
+    write_roadmap(
+        tmp_path,
+        "digital-storefront",
+        [
+            {
+                "id": "t-038",
+                "status": "review",
+                "title": "umbrella",
+                "remaining_scope_task": "t-004",
+            },
+            {"id": "t-004", "status": "done", "title": "the real remaining scope"},
+        ],
+    )
+    result = dr.resolve_remaining_scope_chain(
+        "digital-storefront", "t-038", tmp_path / "projects"
+    )
+    assert result == {"chain": ["t-004"], "terminal_status": "done"}
+
+
+def test_resolve_remaining_scope_chain_follows_multi_hop_chain(tmp_path):
+    write_roadmap(
+        tmp_path,
+        "digital-storefront",
+        [
+            {
+                "id": "t-038",
+                "status": "review",
+                "title": "umbrella",
+                "remaining_scope_task": "t-004",
+            },
+            {
+                "id": "t-004",
+                "status": "review",
+                "title": "sub-umbrella",
+                "remaining_scope_task": "t-009",
+            },
+            {"id": "t-009", "status": "done", "title": "actual remaining scope"},
+        ],
+    )
+    result = dr.resolve_remaining_scope_chain(
+        "digital-storefront", "t-038", tmp_path / "projects"
+    )
+    assert result == {"chain": ["t-004", "t-009"], "terminal_status": "done"}
+
+
+def test_resolve_remaining_scope_chain_reports_terminal_not_done(tmp_path):
+    write_roadmap(
+        tmp_path,
+        "digital-storefront",
+        [
+            {
+                "id": "t-038",
+                "status": "review",
+                "title": "umbrella",
+                "remaining_scope_task": "t-004",
+            },
+            {"id": "t-004", "status": "claimed", "title": "still in progress"},
+        ],
+    )
+    result = dr.resolve_remaining_scope_chain(
+        "digital-storefront", "t-038", tmp_path / "projects"
+    )
+    assert result == {"chain": ["t-004"], "terminal_status": "claimed"}
+
+
+def test_resolve_remaining_scope_chain_reports_missing_pointer(tmp_path):
+    write_roadmap(
+        tmp_path,
+        "digital-storefront",
+        [
+            {
+                "id": "t-038",
+                "status": "review",
+                "title": "umbrella",
+                "remaining_scope_task": "t-999",
+            }
+        ],
+    )
+    result = dr.resolve_remaining_scope_chain(
+        "digital-storefront", "t-038", tmp_path / "projects"
+    )
+    assert result == {"chain": ["t-999"], "terminal_status": None, "missing": "t-999"}
+
+
+def test_resolve_remaining_scope_chain_reports_cycle(tmp_path):
+    write_roadmap(
+        tmp_path,
+        "digital-storefront",
+        [
+            {
+                "id": "t-038",
+                "status": "review",
+                "title": "umbrella",
+                "remaining_scope_task": "t-004",
+            },
+            {
+                "id": "t-004",
+                "status": "review",
+                "title": "loops back",
+                "remaining_scope_task": "t-038",
+            },
+        ],
+    )
+    result = dr.resolve_remaining_scope_chain(
+        "digital-storefront", "t-038", tmp_path / "projects"
+    )
+    assert result["cycle"] is True
+
+
+def test_check_drift_flags_remaining_scope_resolved_without_network(tmp_path):
+    # The umbrella task itself has no implementation_pr and no note-quoted PR
+    # reference at all -- the title-search API call still runs (and, per this
+    # fake, comes back empty), but remaining_scope_resolved must still surface
+    # this task as likely-ready-to-close from roadmap data alone.
+    write_roadmap(
+        tmp_path,
+        "digital-storefront",
+        [
+            {
+                "id": "t-038",
+                "status": "review",
+                "title": "umbrella",
+                "remaining_scope_task": "t-004",
+            },
+            {"id": "t-004", "status": "done", "title": "the real remaining scope"},
+        ],
+    )
+    empty_search_body = json.dumps({"items": []}).encode()
+
+    with patch("urllib.request.urlopen", return_value=FakeResponse(empty_search_body)):
+        result = dr.check_drift(tmp_path / "projects", token=None)
+
+    assert result["high"] == []
+    assert result["weak"] == []
+    assert result["unresolved"] == []
+    assert len(result["remaining_scope_resolved"]) == 1
+    resolved = result["remaining_scope_resolved"][0]
+    assert resolved["project"] == "digital-storefront"
+    assert resolved["task_id"] == "t-038"
+    assert resolved["chain"] == ["t-004"]
+    assert resolved["terminal_status"] == "done"
+
+
+def test_check_drift_omits_remaining_scope_not_yet_done(tmp_path):
+    write_roadmap(
+        tmp_path,
+        "digital-storefront",
+        [
+            {
+                "id": "t-038",
+                "status": "review",
+                "title": "umbrella",
+                "remaining_scope_task": "t-004",
+            },
+            {"id": "t-004", "status": "claimed", "title": "still in progress"},
+        ],
+    )
+    empty_search_body = json.dumps({"items": []}).encode()
+
+    with patch("urllib.request.urlopen", return_value=FakeResponse(empty_search_body)):
+        result = dr.check_drift(tmp_path / "projects", token=None)
+
+    assert result["remaining_scope_resolved"] == []
+
+
+def test_render_flags_remaining_scope_resolved():
+    resolved = [
+        {
+            "project": "digital-storefront",
+            "task_id": "t-038",
+            "status": "review",
+            "chain": ["t-004"],
+            "terminal_status": "done",
+        }
+    ]
+    output = dr.render([], [], total=1, remaining_scope_resolved=resolved)
+    assert "No drift found" not in output
+    assert "likely ready to close" in output
+    assert "digital-storefront/t-038" in output
+    assert "t-004" in output
+
+
+def test_render_clean_requires_no_remaining_scope_resolved():
+    resolved = [
+        {
+            "project": "digital-storefront",
+            "task_id": "t-038",
+            "status": "review",
+            "chain": ["t-004"],
+            "terminal_status": "done",
+        }
+    ]
+    output = dr.render([], [], total=1, weak=[], remaining_scope_resolved=resolved)
+    assert "No drift found" not in output
