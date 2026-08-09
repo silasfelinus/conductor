@@ -2935,15 +2935,15 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
-    note: 'Slice 8 merged as silasfelinus/kind_robots#1626 (squash 82097692). Converged the About page card stack (7 cards) plus the Community & Sponsors section onto the established kr-panel primitive, replacing the repeated hand-rolled `rounded-2xl border border-base-300 bg-base-100 ... shadow-sm` surface. Community & Sponsors keeps its primary-tinted border override (`border-primary/25` on top of kr-panel). Also removed stale template comments while touching the file per current AGENTS.md conventions. Content, icons, links, layout, spacing, and hover elevation unchanged -- mechanical consistency slice, not a redesign. All 14 checks green, mergeable_state clean. t-104 remains multi-slice and open: the next slice should re-run the bespoke-card grep inventory fresh (`rounded-2xl border border-base-300 bg-base-100` / `.stat rounded-2xl border ...` patterns) since about-page.vue was found via manual read, not the grep -- other pages may still carry the same hand-rolled surface.'
+    note: 'Slice 9 merged as silasfelinus/kind_robots#1632 (squash 082952e). Converged giving-page.vue (3 cards: Why AMF?, Prefer It On Your Receipt?, monthly-support section) and mermaids-page.vue (2 cards: the book card, the AI-disclosure card) onto the established kr-panel primitive, replacing the repeated hand-rolled `rounded-2xl border border-base-300 bg-base-100 ... shadow-sm` surface. Non-p-6 padding preserved as a utility override on top of kr-panel (e.g. `kr-panel p-5`), same pattern as slice 8''s border-primary/25 override. Content, icons, links, layout, spacing, and hover elevation unchanged -- mechanical consistency slice, not a redesign. All 16 checks green, mergeable_state clean. t-104 remains multi-slice and open: a fresh grep inventory this slice found ~116 non-abandonware files still carrying the hand-rolled pattern (many with differing padding/hover/backdrop modifiers that are not pure kr-panel matches) -- the next slice should prioritize exact shadow-sm matches first (zero visual delta), and a scripted codemod pass may be worth building if manual one-file-at-a-time slices are still going after a few more rounds.'
     claimed_by: claude-quirky-curie-20260809-iv-t104
     claimed_at: '2026-08-09T00:27:26Z'
-    implementation_pr: 'silasfelinus/kind_robots#1626'
-    updated: '2026-08-09T00:27:26Z'
+    implementation_pr: 'silasfelinus/kind_robots#1632'
+    updated: '2026-08-09T00:35:53Z'
     owner: worker
 
   - id: t-105
