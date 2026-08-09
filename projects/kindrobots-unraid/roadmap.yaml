@@ -147,7 +147,7 @@ tasks:
   - id: t-006
     milestone: m3
     title: Package persistent Kind Robots Nitro/API deployment for Unraid
-    status: ready
+    status: claimed
     passes: 0
     stakes: high
     note: |-
@@ -155,7 +155,10 @@ tasks:
 
 
       Silas explicitly redirected this task in-session on 2026-08-08: Kind Robots is moving from Vercel to a full self-hosted Unraid production deployment at kindrobots.org. Package the complete Nuxt/Nitro app for Unraid, keep configuration editable through the Unraid Docker UI, load the repo .env instead of duplicating the full environment list, mount /mnt/user/pc/kindrobots/images for persistent media, and document the DNS plus Google OAuth cutover as human-gated follow-up steps. The old Vercel-frontend/local-API topology is superseded.
-    updated: '2026-08-09T02:50:00Z'
+    updated: '2026-08-09T02:51:00Z'
+    owner: worker
+    claimed_by: 2026-08-09T025100Z-kindrobots-unraid-t-006-s56a
+    claimed_at: '2026-08-09T02:51:00Z'
 
   - id: t-007
     milestone: m3
