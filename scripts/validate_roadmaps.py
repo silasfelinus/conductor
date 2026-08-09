@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
 validate_roadmaps.py — confirm every projects/*/roadmap.yaml still parses as a
-mapping with a `tasks` list, and that no project's tasks reuse an `id`. Used by
-the process-task-events workflow after a surgical text edit, and by the pytest
-suite (tests/test_validate_roadmaps.py) that runs on every PR via
-.github/workflows/ci.yml, so this fails CI immediately rather than silently
-landing. Safe to run standalone.
+mapping with a `tasks` list, that no project's tasks reuse an `id`, and that
+task stakes / effective project kinds use supported enum values. Used by the
+process-task-events workflow after a surgical text edit, and by the pytest suite
+(tests/test_validate_roadmaps.py) that runs on every PR via .github/workflows/ci.yml,
+so this fails CI immediately rather than silently landing. Safe to run standalone.
 
 A duplicate task id lets tooling that keys on id (claim_task.py, set_task_field.py,
 close_task.py -- see scripts/set_task_field.py's find_task_block, which matches the
@@ -33,6 +33,8 @@ except ModuleNotFoundError:  # imported as scripts.validate_roadmaps in pytest
     from scripts.project_lifecycle import PROJECT_LIFECYCLE_STATUSES, load_project_overrides
 
 ROOT = Path(__file__).resolve().parents[1]
+VALID_TASK_STAKES = {"reversible", "outward-facing", "irreversible"}
+VALID_PROJECT_KINDS = {"software", "content", "proposal", "brainstorm"}
 
 
 def duplicate_task_ids(tasks: list) -> list[str]:
@@ -43,12 +45,12 @@ def duplicate_task_ids(tasks: list) -> list[str]:
 
 def main() -> int:
     ok = True
-    overrides_path = ROOT / 'project-overrides.yaml'
+    overrides_path = ROOT / "project-overrides.yaml"
     overrides = load_project_overrides(overrides_path) if overrides_path.exists() else {}
     for slug, cfg in overrides.items():
-        status = str(cfg.get('status', 'active'))
+        status = str(cfg.get("status", "active"))
         if status not in PROJECT_LIFECYCLE_STATUSES:
-            print(f'invalid project lifecycle status for {slug}: {status}', file=sys.stderr)
+            print(f"invalid project lifecycle status for {slug}: {status}", file=sys.stderr)
             ok = False
     for path in sorted((ROOT / "projects").glob("*/roadmap.yaml")):
         data = yaml.safe_load(path.read_text(encoding="utf-8"))
@@ -57,16 +59,25 @@ def main() -> int:
             ok = False
             continue
 
-        slug = str(data.get('project') or path.parent.name)
-        lifecycle = str(overrides.get(slug, {}).get('status', 'active'))
-        if overrides and lifecycle == 'active':
-            open_tasks = [task for task in data['tasks'] if isinstance(task, dict) and task.get('status') != 'done']
+        slug = str(data.get("project") or path.parent.name)
+        override = overrides.get(slug, {})
+        lifecycle = str(override.get("status", "active"))
+        if overrides and lifecycle == "active":
+            open_tasks = [task for task in data["tasks"] if isinstance(task, dict) and task.get("status") != "done"]
             if not open_tasks:
                 print(
-                    f'active project has no open tasks: {slug} -- reconcile its goal, add real work, or explicitly finish/pause it',
+                    f"active project has no open tasks: {slug} -- reconcile its goal, add real work, or explicitly finish/pause it",
                     file=sys.stderr,
                 )
                 ok = False
+
+        raw_kind = override.get("kind") or data.get("kind")
+        if raw_kind is not None and str(raw_kind) not in VALID_PROJECT_KINDS:
+            print(
+                f"invalid project kind for {slug}: {raw_kind!r} -- expected one of {', '.join(sorted(VALID_PROJECT_KINDS))}",
+                file=sys.stderr,
+            )
+            ok = False
 
         dupes = duplicate_task_ids(data["tasks"])
         if dupes:
@@ -76,6 +87,18 @@ def main() -> int:
                 file=sys.stderr,
             )
             ok = False
+
+        for task in data["tasks"]:
+            if not isinstance(task, dict) or "stakes" not in task:
+                continue
+            stakes = task.get("stakes")
+            if stakes not in VALID_TASK_STAKES:
+                task_id = str(task.get("id") or "<missing>")
+                print(
+                    f"invalid task stakes in {path} for {task_id}: {stakes!r} -- expected one of {', '.join(sorted(VALID_TASK_STAKES))}",
+                    file=sys.stderr,
+                )
+                ok = False
 
     if not ok:
         return 1
