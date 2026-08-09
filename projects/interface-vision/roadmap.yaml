@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2943,10 +2943,10 @@ tasks:
       Slice 30 merged as silasfelinus/kind_robots#1684 (squash 7ec6874e5f3030f146cbc01858f6f14b371b2a59) from exact head e416faa1851edf9c90bb677e6d25db4e89aa29d5. components/user/password-reset.vue root now uses kr-container max-w-md flex flex-col gap-5 p-6 instead of hand-rolled mx-auto flex w-full max-w-md flex-col gap-5 p-6; no geometry or behavior change. All 13 exact-head PR workflows completed successfully: TypeScript #31336053633, Contract Tests #31336053669, Storybook Session Library #31336053660, Storybook Studio #31336053689, MDC Scroll Ownership #31336053676, Layout Contract #31336053675, Taskmaster #31336053690, Storybook Branch State #31336053704, Narrative Primitives #31336053672, Narrative Art Milestone #31336053649, Facet Catalog #31336053671, API Client Follow-ups #31336053653, Narrative Art Persistence #31336053670. Return the non-recurring consistency umbrella to ready for the next bounded slice.
 
       Slice 31 merged as silasfelinus/kind_robots#1694 (squash 773790d0626e10faf16c81d05528d21d311daf4f) from exact head b78537f28723dd921ce5cc413bd0425ef9a65e7b. components/user/login-persister.vue, components/user/forum-thread.vue, components/giftshop/mana-wallet.vue, and components/giftshop/subscription-manager.vue root elements now use kr-container (max-w-sm/max-w-4xl/max-w-3xl/max-w-5xl respectively) instead of hand-rolled mx-auto w-full max-w-*; no geometry or behavior change. Reachable via <LoginPersister /> in login-page.vue, content/forum.md, and giftshop-manager.vue (wallet-page.vue / giving-page.vue). Skipped as out of scope this slice: messenger.vue (root mixes kr-panes grid primitive with arbitrary h-[70vh], not a clean container substitution), project-front-page.vue and achievement-art.vue (matching class on a nested element, not the component root), achievement-popup.vue (nested modal-content div mixing border/bg/shadow with the geometry utilities), components/abandonware/wonderlab/lab-gallery.vue (previously confirmed unreferenced). All 16 PR checks green (TypeScript, Contract verifiers, facet-catalog, layout-contract, verify x2, contract, Storybook fictional state/session library/studio, Shared narrative UI, Narrative art persistence/milestone, Taskmaster checkpoint contract, GitGuardian, Vercel Preview), mergeable_state clean. Verified before merge: eslint clean on changed files (two pre-existing issues on subscription-manager.vue/forum-thread.vue/login-persister.vue confirmed via git stash diff against baseline main), vue-tsc --noEmit clean, test:layout-contract holds (0 new violations), prettier clean. Return this non-recurring consistency umbrella to ready for the next bounded slice.
-    updated: '2026-08-09T22:40:00Z'
+    updated: '2026-08-09T22:49:07Z'
     implementation_pr: 'silasfelinus/kind_robots#1694'
-    claimed_by: null
-    claimed_at: null
+    claimed_by: 20260809T224500Z-sched-conductor-t104-s32
+    claimed_at: '2026-08-09T22:49:07Z'
     owner: reviewer
 
   - id: t-105
