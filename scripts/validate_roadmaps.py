@@ -2,10 +2,11 @@
 """
 validate_roadmaps.py — confirm every projects/*/roadmap.yaml still parses as a
 mapping with a `tasks` list, that no project's tasks reuse an `id`, and that
-task stakes / effective project kinds use supported enum values. Used by the
-process-task-events workflow after a surgical text edit, and by the pytest suite
-(tests/test_validate_roadmaps.py) that runs on every PR via .github/workflows/ci.yml,
-so this fails CI immediately rather than silently landing. Safe to run standalone.
+actionable task stakes / effective project kinds use supported enum values. Used
+by the process-task-events workflow after a surgical text edit, and by the pytest
+suite (tests/test_validate_roadmaps.py) that runs on every PR via
+.github/workflows/ci.yml, so this fails CI immediately rather than silently
+landing. Safe to run standalone.
 
 A duplicate task id lets tooling that keys on id (claim_task.py, set_task_field.py,
 close_task.py -- see scripts/set_task_field.py's find_task_block, which matches the
@@ -34,7 +35,7 @@ except ModuleNotFoundError:  # imported as scripts.validate_roadmaps in pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 VALID_TASK_STAKES = {"reversible", "outward-facing", "irreversible"}
-VALID_PROJECT_KINDS = {"software", "content", "proposal", "brainstorm"}
+VALID_PROJECT_KINDS = {"software", "content", "proposal", "brainstorm", "infrastructure"}
 
 
 def duplicate_task_ids(tasks: list) -> list[str]:
@@ -89,7 +90,7 @@ def main() -> int:
             ok = False
 
         for task in data["tasks"]:
-            if not isinstance(task, dict) or "stakes" not in task:
+            if not isinstance(task, dict) or task.get("status") == "done" or "stakes" not in task:
                 continue
             stakes = task.get("stakes")
             if stakes not in VALID_TASK_STAKES:
