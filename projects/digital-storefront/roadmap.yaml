@@ -1515,6 +1515,28 @@ tasks:
     unblocks completing the Dream/Facet/Character/Reward packId-Grant wiring t-004 began, and removes a
     live private-data-exposure gap independent of DLC/Pack work entirely.
 
+    UPDATE (same conductor sweep, after merging t-004): found a stranded kind_robots branch,
+    worker/digital-storefront-t-004-20260808-a83f (10 commits, last pushed 2026-08-08T08:38:19-07:00,
+    tip 5c20bcb), from the same session whose stale roadmap claim on this task was reclaimed to do the
+    t-004 work above. It went silent -- no PR, no TALKBACK entry -- but its commits already implement
+    almost exactly what this task asks Silas to decide on: canView() wired into
+    characters/[id].get.ts, characters/index.get.ts, rewards/[id].get.ts, and rewards/index.get.ts
+    (same isOwner/isAdmin/isPublic-then-Grant shape as this session's own Dream/Facet fix, correct
+    auth?403:404 semantics), PLUS a new contentAccess.ts export `viewablePackIds(userId)` that prefetches
+    a user's active PACK Grant subjectIds for exactly the list-route filtering t-043 is scoped for --
+    it also rewrote dreams/index.get.ts and facets/index.get.ts's list `where` clauses using it.
+    Spot-read the diffs: well-structured, consistent with this repo's existing patterns, no obvious
+    correctness issues. NOT rescued/merged in this session for two reasons: (1) it's ~9 hours stale
+    against current main (its merge-base predates several since-merged PRs, including this session's
+    own t-004 changes to the same Dream/Facet files -- would need real conflict resolution, not a clean
+    apply) and (2) most importantly, merging it would make exactly the access-policy decision this task
+    exists to get from Silas, unilaterally, on his behalf, which defeats the point of the hard gate
+    regardless of code quality. Recorded here so approving this task doesn't mean starting from
+    scratch: once Silas answers (a)/(b)/(c) above, whoever picks this up should treat that branch as a
+    reference implementation to rebase, not a blind merge, and should also fold t-043's list-route
+    scope into the same pass since this branch already solved both together. Branch left in place
+    (real, substantial, reviewable work, not scratch) rather than deleted.
+
 - id: t-043
   milestone: m6
   title: "Wire contentAccess.ts's packId Grant into the Dream and Facet LIST routes"
