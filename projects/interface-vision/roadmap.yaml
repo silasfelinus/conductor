@@ -2935,14 +2935,14 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on: t-103
-    note: 'Slice 9 merged as silasfelinus/kind_robots#1632 (squash 082952e). Converged giving-page.vue (3 cards: Why AMF?, Prefer It On Your Receipt?, monthly-support section) and mermaids-page.vue (2 cards: the book card, the AI-disclosure card) onto the established kr-panel primitive, replacing the repeated hand-rolled `rounded-2xl border border-base-300 bg-base-100 ... shadow-sm` surface. Non-p-6 padding preserved as a utility override on top of kr-panel (e.g. `kr-panel p-5`), same pattern as slice 8''s border-primary/25 override. Content, icons, links, layout, spacing, and hover elevation unchanged -- mechanical consistency slice, not a redesign. All 16 checks green, mergeable_state clean. t-104 remains multi-slice and open: a fresh grep inventory this slice found ~116 non-abandonware files still carrying the hand-rolled pattern (many with differing padding/hover/backdrop modifiers that are not pure kr-panel matches) -- the next slice should prioritize exact shadow-sm matches first (zero visual delta), and a scripted codemod pass may be worth building if manual one-file-at-a-time slices are still going after a few more rounds.'
+    note: 'Slice 10 opened (kind_robots PR #1633, not yet merged). Scanned all ~64 remaining candidate files (grep for rounded-2xl + border-base-300 + bg-base-100 + shadow-sm, excluding files already on kr-panel and the abandonware/ tree) for exact zero-visual-delta matches per slice 9''s recommendation. Found 5 with only a padding override differing from kr-panel''s p-6 default; migrated 3 (giftshop-interact.vue''s two panels, component-review-feed.vue''s review card, daily-digest-object-dialog.vue''s overview row card) onto `kr-panel p-4`, same override pattern as slices 8-9. Skipped add-theme.vue (abandonware/ tree, out of scope) and daily-digest-object-dialog.vue''s line 520 pre-existing unrelated eslint error (vue/no-mutating-props, confirmed present before this change too, not touched). Verified: eslint clean on all 3 edited files (pre-existing error untouched), vue-tsc --noEmit clean, verifyLayoutContract.ts holds, verifyLintRatchet.ts holds (392/27 unchanged). Deliberately did NOT run `prettier --write` on the 2 files that already carried pre-existing formatting debt (component-review-feed.vue, daily-digest-object-dialog.vue) -- doing so reformats the entire file into an unrelated diff; made the class-string edit by hand instead, preserving the file''s existing (imperfect) formatting. Most of the remaining ~59 candidate files need either a bg-base-100 opacity match (e.g. /90, /95 -- not exact), extra layout classes intermixed with the surface treatment, or no p-* class at all (kr-panel''s p-6 would add padding that is not currently there) -- next slice should look at whether those categories are still safely convertible (e.g. `kr-panel p-0` for the no-padding cases) or need a broader kr-panel variant.'
     claimed_by: claude-quirky-curie-20260809T012902Z-iv-t104-s10
     claimed_at: '2026-08-09T01:29:03Z'
-    implementation_pr: 'silasfelinus/kind_robots#1632'
+    implementation_pr: 'silasfelinus/kind_robots#1633'
     updated: '2026-08-09T01:29:03Z'
     owner: worker
 
