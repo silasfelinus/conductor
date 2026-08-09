@@ -7267,3 +7267,19 @@ records:
     codemod. Landed clean on the first pass, zero deviation from the established
     verification method (eslint, vue-tsc, layout-contract, git-stash-diffed
     prettier baseline check).
+- date: '2026-08-09'
+  project: kind-robots
+  task: t-056
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A source-shape "guard test" (utils/scripts/verifyDatabasePoolDefaults.ts asserting
+    a literal code string still appears in a route file) can break on an otherwise
+    correct, intentional refactor -- the fix is usually to relocate the new behavior
+    so the guarded shape survives unchanged, not to weaken the guard. Also: don't trust
+    a PR body's "How I verified" section at face value -- independently re-running
+    eslint/vue-tsc/the specific failing script on the actual current head caught a real
+    TS2339 the Worker's own note had claimed was code/CI verified.
