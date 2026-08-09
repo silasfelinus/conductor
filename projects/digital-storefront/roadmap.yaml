@@ -1316,24 +1316,41 @@ tasks:
 - id: t-040
   milestone: m6
   title: "Resolve the first real POD fulfillment path rather than stopping at a pending PrintJob"
-  status: review
+  status: needs-human
   owner: worker
   passes: 0
   stakes: outward-facing
   gate_human: true
   approved_by_human: false
   depends_on: [t-037, t-038]
-  note: >
-    The existing roadmap deliberately stopped before vendor submission because no POD account/API
-    credentials were available. Determine whether the chosen provider account now exists. Agents may
-    finish all reversible integration/test plumbing, but account creation, credentials, paid orders,
-    and public listings require Silas. The KR-logo item should become genuinely orderable, not merely
-    capable of creating a database PrintJob.
-    t-037's audit confirmed this precisely: PrintJob.printfulOrderId is never set anywhere,
-    podCatalog.ts's vendor variant IDs are still literal placeholder strings, and
-    PrintJobStatus never advances past PENDING/FAILED. No vendor integration work has started.
-  claimed_by: 20260809T113243Z-ds-t040
-  claimed_at: '2026-08-09T11:32:44Z'
+  note: |-
+    FOR SILAS: the reversible, credential-free half of this task is built and merged --
+    server/utils/podVendorClient.ts in kind_robots (merged as silasfelinus/kind_robots#1658,
+    squash d9daaed).
+    What it contains: a Printful Sync-Order client (submitPodOrder) that is structurally
+    incapable of a live network call right now -- it throws before ever reaching fetch() if
+    either PRINTFUL_API_KEY is unset (always true today) or the podCatalog.ts variant id is
+    still a PLACEHOLDER_* string. It also exports the Printful-status -> PrintJobStatus mapping
+    as pure, tested logic (npm run test:pod-vendor-client-selftest), and documents the two env
+    vars a real account needs: PRINTFUL_API_KEY, PRINTFUL_STORE_ID (no .env.example in that repo
+    to add them to). Deliberately NOT touched: the Stripe webhook's PrintJob-creation path (too
+    sensitive to wire blind), an inbound Printful webhook receiver, and KR-logo Product seeding --
+    all flagged as follow-on scope in the PR body.
+    TO APPROVE: this task's remaining bar -- "the KR-logo item should become genuinely
+    orderable" -- needs a real Printful account and API key, which only you can create
+    (digital-storefront/t-015 already picked Printful as the vendor). Once you have the key: set
+    PRINTFUL_API_KEY (and PRINTFUL_STORE_ID) in the kind_robots deployment env, then a future
+    session can replace podCatalog.ts's placeholder variant ids with real Printful catalog ids,
+    wire submitPodOrder() into the webhook's PrintJob creation, and do a real (even sandbox-mode)
+    order submission to confirm the end-to-end path. Set approved_by_human: true and status: done
+    here once that live path is confirmed working, or leave a note if you want to scope it
+    differently (e.g. a different first SKU than the KR-logo sticker).
+    What unblocks when he does: this is the actual vendor-submission milestone for the storefront
+    -- nothing else in digital-storefront depends_on t-040 directly yet, but t-041 (responsive
+    polish) and the broader "storefront is genuinely live" goal both assume real fulfillment
+    exists.
+  claimed_by: null
+  claimed_at: null
   implementation_pr: silasfelinus/kind_robots#1658
   updated: '2026-08-09T11:32:44Z'
 
