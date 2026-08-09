@@ -1316,7 +1316,7 @@ tasks:
 - id: t-040
   milestone: m6
   title: "Resolve the first real POD fulfillment path rather than stopping at a pending PrintJob"
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: outward-facing
@@ -1334,6 +1334,7 @@ tasks:
     PrintJobStatus never advances past PENDING/FAILED. No vendor integration work has started.
   claimed_by: 20260809T113243Z-ds-t040
   claimed_at: '2026-08-09T11:32:44Z'
+  implementation_pr: silasfelinus/kind_robots#1658
   updated: '2026-08-09T11:32:44Z'
 
 - id: t-041
