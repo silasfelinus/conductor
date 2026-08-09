@@ -2935,21 +2935,16 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
-    note: |-
-      Slice 27 merged as silasfelinus/kind_robots#1673 (squash f7767c485f3fe90c80f39e4f288ac832a9e20a7a) from exact head 257912acf06d957a420aee4e9bcdd9d652cbe123. Wallet now uses kr-container max-w-3xl with kr-unbound instead of hand-rolled mx-auto w-full max-w-3xl. All 13 exact-head workflows completed successfully. Return this non-recurring consistency umbrella to ready for the next bounded slice.
-
-      Slice 28: components/navigation/navigation-health.vue root <section> replaces hand-rolled mx-auto flex w-full max-w-7xl flex-col gap-4 p-4 sm:p-6 with kr-container-wide flex flex-col gap-4 p-4 sm:p-6 -- declaration-equivalent (.kr-container-wide @apply mx-auto w-full max-w-7xl). Reachable via the /navigation-health MDC route (content/navigation-health.md).
-
-      Slice 28 merged as silasfelinus/kind_robots#1674 (squash 4193e149a21f3b5e70fa07997513de92b176532c) from exact head 0b9104a00afe964e6f868c6267fa2f0d226c53b2. All 15 exact-head PR checks green (TypeScript, Contract verifiers, facet-catalog, layout-contract, verify x2, Storybook fictional state/session library/studio, Shared narrative UI, Narrative art persistence/milestone, Taskmaster checkpoint contract, GitGuardian), mergeable_state clean. Verified before merge: eslint clean, vue-tsc --noEmit clean, test:layout-contract holds (0 new violations), prettier warning confirmed pre-existing on baseline via git stash diff. Return this non-recurring consistency umbrella to ready for the next bounded slice.
-    updated: '2026-08-09T20:28:50Z'
-    implementation_pr: 'silasfelinus/kind_robots#1674'
-    claimed_by: 20260809T202703Z-interface-vision-t104-s29-sched
-    claimed_at: '2026-08-09T20:28:50Z'
-    owner: worker
+    note: 'Slice 29 merged as silasfelinus/kind_robots#1677 (squash 86fc91a8a6d7a9695084445fb80232f3db4fc933) from exact head 6c75b8fb042f47ce75961cff21c0a0576a765d6d. components/user/friends-panel.vue, components/user/account-settings.vue, and components/ruler-hooked/ruler-hooked-game.vue root elements now use kr-container max-w-3xl flex flex-col instead of hand-rolled mx-auto flex w-full max-w-3xl flex-col (same pattern as slice 27 Wallet). Reachable via content/friends.md, content/account.md MDC routes and the ruler-hooked scaffold #interactive slot. All 14 exact-head PR checks green (TypeScript, Contract verifiers, facet-catalog, layout-contract, verify x2, Storybook fictional state/session library/studio, Shared narrative UI, Narrative art persistence/milestone, Taskmaster checkpoint contract, GitGuardian), mergeable_state clean. Verified before merge: eslint clean, vue-tsc --noEmit clean, test:layout-contract holds (0 new violations), prettier warning confirmed pre-existing on baseline via git stash diff. Return this non-recurring consistency umbrella to ready for the next bounded slice.'
+    updated: '2026-08-09T20:36:49Z'
+    implementation_pr: 'silasfelinus/kind_robots#1677'
+    claimed_by: ''
+    claimed_at: ''
+    owner: ''
 
   - id: t-105
     milestone: m6
