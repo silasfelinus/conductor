@@ -14,6 +14,7 @@ CONTRACT_PATHS = (
     pipeline.HOURLY,
     pipeline.DIGEST,
     pipeline.SUMMARY,
+    pipeline.REPORT_ONLY,
     pipeline.PIPELINE,
     pipeline.CREATION_SPEC,
     pipeline.DREAM_SPEC,
@@ -26,6 +27,8 @@ CONTRACT_PATHS = (
     pipeline.OUTLINE_CHECKER,
     pipeline.ROADMAP,
     pipeline.BUILDER,
+    pipeline.AUTHOR,
+    pipeline.SUBMIT,
     pipeline.CLAUDE,
 )
 
@@ -50,62 +53,77 @@ def _copy_contract(tmp_path: Path) -> Path:
     return tmp_path
 
 
-def test_repository_has_one_daily_dream_object_writer():
+def test_repository_has_one_ordered_daily_dream_writer():
     assert pipeline.check_pipeline(ROOT) == []
 
 
-def test_digest_cannot_gain_object_writing_credentials(tmp_path):
-    """A real granted capability, not a mention of one.
+def test_digest_must_keep_object_writing_credentials(tmp_path):
+    root = _copy_contract(tmp_path)
+    digest = root / pipeline.DIGEST
+    digest.write_text(
+        digest.read_text(encoding="utf-8").replace("KR_API_TOKEN", "REMOVED_TOKEN"),
+        encoding="utf-8",
+    )
 
-    This fixture used to append "# KR_API_TOKEN" — a comment, chosen to keep the
-    file valid YAML. That passed for the wrong reason once the digest workflow
-    grew a comment explaining why it deliberately has no such token: the guard
-    flagged the explanation. The capability is what matters, so grant one.
-    """
+    errors = pipeline.check_pipeline(root)
+
+    assert any("must receive KR_API_TOKEN" in error for error in errors)
+
+
+def test_digest_cannot_author_twice(tmp_path):
     root = _copy_contract(tmp_path)
     digest = root / pipeline.DIGEST
     digest.write_text(
         digest.read_text(encoding="utf-8")
-        + "\n        env:\n          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}\n",
+        + "\n      - name: Wrong second author\n        run: python scripts/author_dream_proposal.py\n",
         encoding="utf-8",
     )
 
     errors = pipeline.check_pipeline(root)
 
-    assert any("Daily Digest must be read-only" in error for error in errors)
+    assert any("author exactly once" in error for error in errors)
 
 
-def test_documenting_an_absent_capability_is_not_granting_it(tmp_path):
-    """A comment grants nothing, so it must not read as a violation.
+def test_hourly_cannot_regain_builder_side_effect(tmp_path):
+    root = _copy_contract(tmp_path)
+    hourly = root / pipeline.HOURLY
+    hourly.write_text(
+        hourly.read_text(encoding="utf-8")
+        + "\n      - name: Wrong builder\n        run: python scripts/build_dream_records.py\n",
+        encoding="utf-8",
+    )
 
-    The digest workflow says, in prose, that it deliberately receives no
-    KR_API_TOKEN and why. That sentence is the opposite of the thing being
-    guarded against, and a substring search cannot tell them apart.
-    """
+    errors = pipeline.check_pipeline(root)
+
+    assert any("Hourly Conductor must not perform Daily Dream creation work" in error for error in errors)
+
+
+def test_second_workflow_builder_caller_is_rejected(tmp_path):
+    root = _copy_contract(tmp_path)
+    rogue = root / ".github/workflows/rogue-dream.yml"
+    rogue.write_text(
+        "name: rogue\non: workflow_dispatch\njobs:\n  rogue:\n    runs-on: ubuntu-latest\n    steps:\n"
+        "      - run: python scripts/build_dream_records.py\n",
+        encoding="utf-8",
+    )
+
+    errors = pipeline.check_pipeline(root)
+
+    assert any("only daily-digest.yml may" in error for error in errors)
+
+
+def test_digest_order_cannot_submit_art_before_build(tmp_path):
     root = _copy_contract(tmp_path)
     digest = root / pipeline.DIGEST
-    digest.write_text(
-        digest.read_text(encoding="utf-8")
-        + "\n      # No KR_API_TOKEN here: the digest stays read-only.\n",
-        encoding="utf-8",
-    )
+    text = digest.read_text(encoding="utf-8")
+    build = "python scripts/build_dream_records.py"
+    submit = "python scripts/submit_daily_dream_art.py"
+    text = text.replace(build, "__BUILD__").replace(submit, build).replace("__BUILD__", submit)
+    digest.write_text(text, encoding="utf-8")
 
     errors = pipeline.check_pipeline(root)
 
-    assert not any("Daily Digest must be read-only" in error for error in errors)
-
-
-def test_second_builder_caller_is_rejected(tmp_path):
-    root = _copy_contract(tmp_path)
-    (root / "scripts/alternate_daily_dream.py").write_text(
-        "import build_dream_records\n"
-        "build_dream_records.ensure_records()\n",
-        encoding="utf-8",
-    )
-
-    errors = pipeline.check_pipeline(root)
-
-    assert any("second daily-dream object-builder caller" in error for error in errors)
+    assert any("author, build, attach Facets, submit ArtJobs" in error for error in errors)
 
 
 def test_direct_rest_playbook_is_rejected(tmp_path):
@@ -120,10 +138,15 @@ def test_direct_rest_playbook_is_rejected(tmp_path):
     errors = pipeline.check_pipeline(root)
 
     assert any("must not authorize direct object writes" in error for error in errors)
+
+
 def test_stale_project_brief_is_rejected(tmp_path):
     root = _copy_contract(tmp_path)
     brief = root / pipeline.DESIGN_BRIEF
-    brief.write_text(brief.read_text(encoding="utf-8") + "\nThe 8-stage manual path returns.\n", encoding="utf-8")
+    brief.write_text(
+        brief.read_text(encoding="utf-8") + "\nThe 8-stage manual path returns.\n",
+        encoding="utf-8",
+    )
     assert any("DESIGN-BRIEF.md" in error for error in pipeline.check_pipeline(root))
 
 
