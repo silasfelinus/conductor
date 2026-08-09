@@ -36,7 +36,7 @@ books:
     art_image_id: 17068
     render_seed: 1433835981
     render_engine: krea2
-    completed_at: '2026-08-09T10:31:28Z'
+    completed_at: '2026-08-09T11:44:32Z'
     prompt_fingerprint: 6c9ef428441859573fbef1c8014f2c01fbd049af1c9160bc29d045e74a590377
   - slot: 2
     id: mr-002
@@ -426,11 +426,8 @@ books:
     seed: 840029
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-029-madame-close-shave.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-029
-    render_gate_error: "enqueue failed: HTTP 500 Database operation failed: \nInvalid `prisma.$queryRaw()` invocation:\n\
-      \n\nTransaction API error: A query cannot be executed on an expired transaction. The timeout for this transaction\
-      \ was 10000 ms, however 13414 ms passed since the start of the transaction. Consider increasing the interactive\
-      \ transaction timeout or doing less work in the transaction."
-    render_gate_error_at: '2026-08-09T08:46:01Z'
+    render_gate_error: job 8143 timed out after 600s (still queued/running)
+    render_gate_error_at: '2026-08-09T11:44:15Z'
   - slot: 30
     id: mr-030
     slug: honeyed-hook

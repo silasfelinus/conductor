@@ -671,3 +671,42 @@ Verification after resolution: `validate_roadmaps.py` (clean), `coloring_queue_s
 --book monster-recast` (`queue_integrity_safe: true`, 0 duplicate job/entry ids in the
 file), `git diff origin/main --stat` reviewed to confirm the merge only touched the
 intended files.
+
+## 2026-08-09T11:50Z | Agent run (scheduled conductor sweep) | coloring-book/t-022 -- second conflict, root cause found
+
+While pushing the merge-resolved close-out from the entry above, `origin/main` had
+already moved again (`0d7047ef "art: advance mechanically validated coloring-book
+batch [skip ci]"`, authored by `conductor-bot`). This is `.github/workflows/monster-
+recast-art-jobs.yml` -- a daily 11:00 UTC cron (plus a push trigger on
+`color-art-jobs.yaml`/consumer-script changes) that runs the exact same
+`consume_coloring_book_color_art.py --live` pass this task's manual sessions have been
+running by hand. Its 11:44Z run recovered the same `mr-001` (same ArtImage 17068, just
+a later `completed_at` timestamp) and submitted its own fresh job for `mr-029` (job
+8143) after the earlier HTTP 500 enqueue failure. This is the actual root cause of both
+of this cycle's merge conflicts, not a second concurrent human/agent session as the
+prior entry speculated -- the workflow's cron window (11:00 UTC) directly overlapped
+this session's manual run (10:31-11:25 UTC).
+
+Resolved the second conflict (a single-field timestamp diff on `mr-001.completed_at`)
+by keeping origin/main's value. `queue_integrity_safe` held true. `monster-recast` now:
+`{done: 25, approved: 3, pending: 8}`, all 8 pending entries carry a real recoverable
+job reference including `mr-029`'s new one.
+
+**Root cause identified, corrected guidance for future cycles**: `t-022`'s actual
+queue-submission/recovery work is already automated. A manual scheduled-conductor-sweep
+session running `consume_coloring_book_color_art.py --live` by hand duplicates this
+workflow's own daily pass and, when the timing overlaps (as it did this cycle), causes
+exactly the kind of duplicate-ArtJob collision recorded in the 11:40Z entry above. Future
+sessions picking up `t-022` should check `monster-recast-art-jobs.yml`'s recent runs
+(GitHub Actions tab, or `git log --grep='mechanically validated'`) BEFORE running the
+consumer script manually -- if the workflow already ran recently (daily cron, or any
+push to `main` touching `color-art-jobs.yaml`/the consumer scripts, which every prior
+manual close-out commit itself triggers), a manual pass is redundant at best and a
+collision risk at worst. This significantly changes what a "cycle" of this recurring
+task should actually do: check queue state and the workflow's own recent activity
+first, and only run the consumer script by hand if the workflow log shows it hasn't
+run recently or its last run left an actionable gap the cron won't reach until
+tomorrow.
+
+Verification: `validate_roadmaps.py` (clean), `coloring_queue_status.py --book
+monster-recast` (`queue_integrity_safe: true`), `git diff origin/main --stat`.
