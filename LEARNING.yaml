@@ -7142,3 +7142,20 @@ records:
     access to production credentials. Local Docker image tags can still be represented by a saved DockerMan
     template, keeping runtime settings editable in the Unraid WebGUI while registry publication remains
     optional.'
+- date: '2026-08-09'
+  project: digital-storefront
+  task: t-038
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    An umbrella task's remaining_scope_task pointer chain (t-038 -> t-003 -> t-004) can sit
+    at status: review for days after its last referenced task actually reaches done, because
+    nothing automatically re-checks the pointer once it stops changing. check_pr_merged_drift.py's
+    title-search pass surfaced it only as "unverifiable" (no close-out PR titled after t-038
+    exists, since it was never meant to close via its own PR); the real signal was checking
+    the remaining_scope_task's own status directly. A session picking up drift-check output
+    should follow remaining_scope_task chains to their live end, not stop at "search found
+    nothing."
