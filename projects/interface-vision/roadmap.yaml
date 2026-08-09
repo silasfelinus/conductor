@@ -3003,4 +3003,29 @@ tasks:
     claimed_by: claude-quirky-curie-20260807T113500Z-iv-t107
     claimed_at: '2026-08-07T11:30:39Z'
     updated: '2026-08-07T11:56:50Z'
+
+  - id: t-115
+    milestone: m5
+    title: "Decide how to close the much-larger kr-panel-muted/kr-panel-flat consistency gap found by t-104 slice 14"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-104 slice 14 (silasfelinus/kind_robots#1641). A grep sweep for exact
+      hand-rolled matches of the two kr-panel variants defined in tailwind.css but never
+      adopted -- kr-panel-flat (rounded-2xl border border-base-300 bg-base-100, no shadow)
+      and kr-panel-muted (rounded-2xl border border-base-300 bg-base-200, p-6 default) --
+      found roughly 129 and 114 files respectively with an exact match, versus the ~64
+      candidates the original kr-panel (bg-base-100 + shadow-sm) pool ever had across
+      slices 8-13. Slice 14 hand-migrated a small first batch (4 files/8 occurrences) using
+      the same individually-verified pattern as prior slices, but that pace does not scale
+      to a pool this size. Decide and record: (a) keep hand-slicing in small verified
+      batches like slice 14, accepting it will take many more slices, or (b) write a
+      scripted codemod (grep + sed/AST transform) that applies the exact-match substitution
+      mechanically across the whole pool in one pass, followed by the same eslint/vue-tsc/
+      layout-contract/lint-ratchet/prettier verification this task has used throughout. If
+      (b), scope the codemod strictly to the byte-for-byte exact-match cases already proven
+      safe -- do not expand into opacity variants, extra intermixed layout classes, or
+      no-padding cases without the same case-by-case visual-delta reasoning slices 10-14
+      applied by hand.
     implementation_pr: 'silasfelinus/kind_robots#1563'
