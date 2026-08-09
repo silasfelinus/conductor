@@ -149,7 +149,10 @@ tasks:
     title: Package persistent Kind Robots Nitro/API deployment for Unraid
     status: done
     passes: 0
-    stakes: high
+    stakes: reversible # was the invalid value "high" (conflated with priority) -- fixed
+    # 2026-08-09 alongside the LEARNING.yaml schema-conformance fix this caused; the note's
+    # own text confirms the actual DNS/OAuth/reverse-proxy irreversible steps were explicitly
+    # NOT performed, so the completed packaging work is reversible.
     note: |-
       Design the long-term topology where Vercel serves frontend traffic and a stable Nitro/API service near MariaDB owns the controlled database pool.
 

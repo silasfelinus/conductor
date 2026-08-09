@@ -218,6 +218,43 @@ class TaskEventProcessorTests(unittest.TestCase):
         self.assertEqual(record["kind"], "software")
         self.assertEqual(record["stakes"], "reversible")
 
+    def test_bare_string_learning_with_invalid_kind_stakes_falls_back(self):
+        # kindrobots-unraid/t-006 (2026-08-09): a project-level roadmap `kind` outside
+        # the three learning-ledger kinds (e.g. "infrastructure") and a task `stakes`
+        # outside the three valid values (e.g. "high", conflated with `priority: high`)
+        # both used to fall through to `None`, which passes prepare_learning's own
+        # required-fields check but violates
+        # test_backfill_learning.test_committed_ledger_schema_conformance's "kind/stakes
+        # are always a valid enum value" invariant -- redding the Python test suite on
+        # `main`. Mirror backfill_learning.py's own precedent
+        # (test_invalid_kind_stakes_fall_back): default to "software"/"reversible"
+        # instead of null.
+        roadmap = self.roadmap()
+        roadmap["kind"] = "infrastructure"
+        roadmap["tasks"][0]["status"] = "review"
+        roadmap["tasks"][0]["stakes"] = "high"
+        (self.root / "projects" / "demo" / "roadmap.yaml").write_text(
+            yaml.safe_dump(roadmap, sort_keys=False), encoding="utf-8"
+        )
+        event = self.write_event(
+            "string-learning-invalid.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "done",
+                "learning": "Package for Unraid without baking secrets into the image.",
+            },
+        )
+
+        result = MODULE.process(event, dry_run=False)
+
+        self.assertEqual(result, "demo/t-001: done")
+        ledger = yaml.safe_load((self.root / "LEARNING.yaml").read_text(encoding="utf-8"))
+        record = ledger["records"][0]
+        self.assertEqual(record["kind"], "software")
+        self.assertEqual(record["stakes"], "reversible")
+
     def test_blank_string_learning_is_rejected(self):
         roadmap = self.roadmap()
         roadmap["tasks"][0]["status"] = "review"
