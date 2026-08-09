@@ -19,11 +19,13 @@ def daily_minutes(cron: str) -> int:
     return int(hour) * 60 + int(minute)
 
 
-def test_daily_digest_runs_after_same_hour_builder():
-    hourly = cron_schedules(HOURLY)
+def test_daily_digest_has_one_morning_cycle_and_hourly_is_report_only():
+    hourly_text = HOURLY.read_text(encoding="utf-8")
     digest = cron_schedules(DIGEST)
 
-    assert "0 * * * *" in hourly
+    assert "0 * * * *" in cron_schedules(HOURLY)
+    assert "build_conductor_summary_report_only.py" in hourly_text
+    assert "build_dream_records.py" not in hourly_text
     assert len(digest) == 1
 
     minute, hour, *_ = digest[0].split()

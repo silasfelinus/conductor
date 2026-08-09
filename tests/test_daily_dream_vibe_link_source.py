@@ -26,13 +26,29 @@ def test_temporary_hourly_push_trigger_cannot_run_from_pr_branches():
         assert "    branches:\n      - main\n" in push_block
 
 
-def test_facet_failure_cannot_discard_a_completed_bundle_ledger():
-    workflow = Path(".github/workflows/hourly-conductor.yml").read_text(
+def test_build_facet_or_art_failure_cannot_discard_cycle_evidence():
+    workflow = Path(".github/workflows/daily-digest.yml").read_text(
         encoding="utf-8"
     )
 
-    assert "id: daily_dream_facets\n        continue-on-error: true" in workflow
-    assert 'steps.daily_dream_facets.outcome' in workflow
-    assert workflow.index("Commit conductor report + daily proposal") < workflow.index(
-        "Verify daily-dream creation result"
+    assert "id: daily_dream_build\n        continue-on-error: true" in workflow
+    assert (
+        "id: daily_dream_facets\n"
+        "        if: ${{ steps.daily_dream_build.outcome == 'success' }}\n"
+        "        continue-on-error: true"
+    ) in workflow
+    assert (
+        "id: daily_dream_art\n"
+        "        if: ${{ steps.daily_dream_build.outcome == 'success' }}\n"
+        "        continue-on-error: true"
+    ) in workflow
+    assert (
+        "- name: Commit Daily Dream cycle evidence\n"
+        "        if: ${{ always() }}"
+    ) in workflow
+    assert workflow.index("Commit Daily Dream cycle evidence") < workflow.index(
+        "Verify Daily Dream cycle"
+    )
+    assert workflow.index("Verify Daily Dream cycle") < workflow.index(
+        "Build digest JSON"
     )

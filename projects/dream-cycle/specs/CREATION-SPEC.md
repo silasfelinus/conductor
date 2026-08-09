@@ -12,12 +12,14 @@ dream-cycle sits last in `projects/priority.yaml`, so its recurring task is sele
 
 `type: dream` is not a staged REST build anymore. Daily-dream objects follow one path only:
 
-1. An agent authors one committed six-asset proposal with `scripts/build_dream_proposal.py`.
-2. The proposal remains editable for its Pacific steering day.
-3. Hourly Conductor invokes `scripts/build_dream_records.py` once through `build_conductor_summary.py`.
-4. The builder creates the whole bundle transactionally, writes `built-data`, and queues six unique art requests.
-5. The Facet sidecar and art attachment passes enrich that same recorded bundle.
-6. The daily digest reads and reports committed state. It never creates objects.
+1. The morning Daily Digest cycle ensures today's six-asset proposal exists.
+2. Today's proposal remains steering input for the next build.
+3. The same workflow invokes `scripts/build_dream_records.py` once for the now-eligible prior proposal.
+4. The builder creates the whole bundle transactionally, writes `built-data`, and stages six unique art requests.
+5. `scripts/apply_daily_dream_facets.py` enriches that same recorded bundle.
+6. `scripts/submit_daily_dream_art.py` converts the staged dream-cycle requests into durable Kind Robots ArtJobs and records their IDs without waiting for renders.
+7. The workflow commits that evidence, then renders the digest.
+8. Hourly Conductor remains report-only and never advances Daily Dream creation.
 
 The full contract and ownership boundaries are in `../PIPELINE.md`.
 
@@ -28,11 +30,11 @@ The full contract and ownership boundaries are in `../PIPELINE.md`.
 During an idle cycle, dream-cycle/t-006 may:
 
 - scan proposal and idea files for new Notes from Silas,
-- author today's missing proposal from `build_dream_proposal.py --brief`,
+- inspect today's proposal and replenish idea inventory,
 - adapt a legacy idea outline into the canonical six-asset proposal shape,
 - inspect the builder's durable success/retry status,
-- verify Facet and art completion,
-- replenish the idea runway.
+- verify Facet, ArtJob, and art completion,
+- repair pipeline drift without manually creating dream objects.
 
 It must not advance a dream through direct object-creation stages.
 
@@ -40,7 +42,7 @@ It must not advance a dream through direct object-creation stages.
 
 ### Daily proposals
 
-Exactly one proposal may exist per Pacific date. Proposal files are selected by the scheduled builder only after their steering day. Their meaningful states are:
+Exactly one proposal may exist per Pacific date. Proposal files are selected by the scheduled morning builder only after their steering day. Their meaningful states are:
 
 - `outline` or `approved`: waiting for the canonical builder,
 - `parked` or `vetoed`: never selected,
@@ -65,13 +67,22 @@ Types whose output belongs to a home project, such as `coloring-book`, may still
 
 The one-building invariant applies to these delegated multi-stage types, not to daily-dream database writes.
 
+## Digest presentation contract
+
+The email intentionally shows two completed generations, not the new steering proposal:
+
+1. the older completed bundle with art, because its renders have had a full cycle to finish;
+2. the bundle just built that morning in a compact text/Facet layout with no reserved image boxes.
+
+The art submitted for the just-built bundle is expected to graduate into the art-rich section on the next cycle.
+
 ## Playbook requirement
 
 A delegated type is buildable only when `specs/<type>.md` exists. An idea with no playbook waits without blocking other work. `specs/dream.md` documents the canonical proposal pipeline rather than a second implementation.
 
 ## Reversibility and evidence
 
-Daily-dream rows are traceable through the builder's `designer`, source metadata, and `built-data` ledger. Every successful bundle records its actual model IDs before enrichment. Every failure records a retry marker and leaves no claimed success. Art request IDs are stable and unique.
+Daily-dream rows are traceable through the builder's `designer`, source metadata, and `built-data` ledger. Every successful bundle records its actual model IDs before enrichment. Every failure records a retry marker and leaves no claimed success. Art request IDs are stable and unique, and submitted ArtJob IDs are recorded durably before the digest is built.
 
 For delegated file-based creations, retain equivalent source, prompt, and provenance metadata in the home project.
 
@@ -85,4 +96,4 @@ Publishing, POD accounts, store listings, spend, billing, production deploys, se
 
 ## Health guard
 
-`python scripts/check_daily_dream_pipeline.py` verifies the single-writer boundary and runs in Daily Dream Contract CI. Any reintroduction of a parallel direct-REST dream playbook is a contract failure.
+`python scripts/check_daily_dream_pipeline.py` verifies the single-writer boundary and ordered morning sequence in Daily Dream Contract CI. Any reintroduction of a parallel direct-REST dream playbook is a contract failure.

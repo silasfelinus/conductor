@@ -1,38 +1,43 @@
 # Daily Dream pipeline
 
-This is the canonical end-to-end contract for the daily dream. There is one object-creation path.
+This is the canonical end-to-end contract for the Daily Dream. There is one object-creation path and one ordered morning cycle.
 
 ## The path
 
 ```text
-agent-authored draft
+Daily Digest morning cycle
     ↓
-committed six-asset proposal in projects/dream-cycle/backlog/
-    ↓ after one Pacific steering day
-Hourly Conductor
+author today's six-asset steering proposal
     ↓
-scripts/build_conductor_summary.py
-    ↓ exactly once
+build the now-eligible prior proposal
+    ↓
 scripts/build_dream_records.py
     ↓
-kind_robots rows + built-data ledger + six unique art requests
+kind_robots rows + built-data ledger + six stable art requests
     ↓
 scripts/apply_daily_dream_facets.py
     ↓
-art rendering / attachment passes
+scripts/submit_daily_dream_art.py
     ↓
-daily digest reads committed proposal, built-data, Facets, and art state
+six durable Kind Robots ArtJobs with recorded IDs
+    ↓
+commit proposal/build/ArtJob evidence
+    ↓
+build and send the digest
+    ↓
+older completed bundle WITH art
+then the just-built bundle WITHOUT empty art space
 ```
 
-## 1. Draft and steering
+In shorthand, the workflow contract is:
 
-A sweeping agent checks whether the current Pacific date has a proposal with:
+**author → build → Facets → submit ArtJobs → commit → digest**
 
-```bash
-python scripts/build_dream_proposal.py --check --fetch
-```
+There is no second authoring step after the email.
 
-When one is missing, the agent reads `--brief`, authors one coherent JSON bundle, and writes it with `--from-json`. The proposal contract is exactly six assets:
+## 1. Author today's next proposal
+
+At the start of the scheduled morning cycle, `scripts/author_dream_proposal.py` ensures that the current Pacific date has one canonical six-asset proposal:
 
 - one dream vibe
 - one dream location
@@ -41,60 +46,62 @@ When one is missing, the agent reads `--brief`, authors one coherent JSON bundle
 - one SKILL Reward
 - one Scenario, authored from the completed preceding elements
 
-The committed proposal is the human steering surface. It creates no database objects. Silas may add notes, park it, or veto it during its proposal day.
+The proposal is steering input for the **next** build. It creates no database objects and is not shown as a third Daily Dream showcase in that morning's email.
 
-## 2. Object creation
+Silas may still add notes, park, or veto a proposal during its steering day. The authoring command is idempotent, so an already-authored proposal is left alone.
 
-`scripts/build_dream_records.py` is the **sole object writer** for daily-dream objects.
+## 2. Build the prior eligible proposal
 
-The Hourly Conductor calls `build_dream_records.ensure_records()` once through `scripts/build_conductor_summary.py`. The builder selects one eligible proposal, creates the complete bundle transactionally, records every resulting ID in `built-data`, queues exactly six unique art requests, and pins a retry marker when a write fails. Partial attempts are rolled back rather than continued by hand.
+`scripts/build_dream_records.py` is the **sole object writer** for Daily Dream objects.
 
-No agent manually reproduces the builder's REST calls. No playbook creates Characters, Rewards, Scenarios, relations, or PitchSheets stage by stage. A proposal moves from unbuilt to built through this builder only.
+After authoring today's proposal, `daily-digest.yml` invokes the builder exactly once. The builder selects the oldest pinned retry when one exists; otherwise it selects the newest valid proposal whose Pacific proposal date is earlier than today.
 
-Immediately afterward, the hourly workflow runs `scripts/apply_daily_dream_facets.py`. Facet attachment is a sidecar to the same completed bundle, not a second creator.
+The builder creates the complete six-object bundle transactionally, records every resulting ID in `built-data`, writes exactly six stable art requests to `projects/art-prompts.yaml`, and rolls back partial creation when an API write fails. No agent manually reproduces its REST calls.
 
-## 3. Art completion
+Immediately afterward, `scripts/apply_daily_dream_facets.py` attaches the proposal's persisted Facets to the completed records.
 
-The builder owns the six request definitions and their stable IDs. The shared art pipeline renders them, and later attachment passes update each real model when its public asset exists. Repeated hourly runs are idempotent: they attach or report existing work, not create another bundle.
+## 3. Submit art before the email
 
-## 4. Digest reporting
+The six builder-created art requests are a Conductor staging ledger, not yet Kind Robots ArtJobs.
 
-The daily digest is read-only with respect to kind_robots content. Its workflow:
+`scripts/submit_daily_dream_art.py` closes that boundary before the digest is built. It processes only `source: dream-cycle` requests, submits each to the Kind Robots ArtJob queue, and immediately records `last_art_job_id` back on the durable request row. It does **not** wait for renders to finish.
 
-1. builds repository-backed digest JSON,
-2. enriches the daily-dream cards with committed metadata and art state,
-3. validates the payload,
-4. renders the email payload,
-5. optionally sends it.
+Daily Dream ArtJobs use the reserved priority tier and stable request IDs. The normal relay/art pipeline renders them after submission and writes Kind Robots media targets directly when complete.
 
-6. authors the day's next proposal if one does not exist yet, and commits it.
+## 4. Commit evidence, then render the digest
 
-The digest workflow receives no `KR_API_TOKEN` and never imports or calls the object builder or Facet writer. A missing, retrying, built, rendered, or attached asset must be reported honestly from committed evidence.
+The workflow commits the newly authored proposal, built-data changes, Facet evidence, staged request changes, and recorded ArtJob IDs before constructing the email. The digest therefore reports durable state rather than optimistic in-process state.
 
-Step 6 is the only thing the digest writes, it writes it to THIS repo, and it does
-not weaken the read-only rule above. `scripts/author_dream_proposal.py` produces a
-proposal markdown file — it creates no kind_robots object, attaches no Facet, and
-needs no token (the Facet catalog read is a public unauthenticated GET). The single
-object writer is still `build_dream_records.py`, still reached only through Hourly
-Conductor.
+The email has two Daily Dream showcase sections in this order:
 
-It exists because authoring used to live only in CLAUDE.md's session-startup
-checklist, so a proposal appeared when a session happened to run and happened to
-notice one was missing — and on a quiet day there was no dream at all (Silas,
-2026-08-09: *"I'm not sure why the next dreams aren't written the turn the digest is
-sent, or a step later if there isn't enough process."*). It runs after the email so
-a failure cannot cost the digest, is `continue-on-error` for the same reason, and is
-idempotent: on a day a session already authored one it prints "already exists" and
-exits 0. The session checklist remains as a backstop for the days it fails.
+1. **Previous completed output**: the completed bundle before the one built this morning. This is the art-rich section because its renders have had a full cycle to finish. Missing art is reported honestly when necessary.
+2. **Just built this cycle**: the bundle built moments ago. It shows the six records, summaries, and seed Facets in a compact layout with **no reserved image boxes**. Its newly submitted art belongs to the next cycle's art-rich section.
 
-Because this job now pushes a commit to `main`, it shares Hourly Conductor's
-`conductor-main-writers` concurrency group rather than racing it.
+Today's newly authored steering proposal is retained in digest JSON for diagnostics but is not rendered as another near-identical card grid.
+
+## 5. Hourly Conductor is report-only
+
+Hourly Conductor no longer creates Daily Dream objects, attaches Daily Dream Facets, or submits Daily Dream art. Its workflow calls `scripts/build_conductor_summary_report_only.py`, which preserves the existing health-report implementation while neutralizing its historical `ensure_records()` side effect.
+
+This prevents midnight and other hourly runs from building a proposal before the ordered morning sequence.
+
+## Failure and retry behavior
+
+The Daily Digest retry watchdog may rerun the same workflow after a failed or missing run. Every creation boundary is designed to be retry-safe:
+
+- authoring is idempotent by proposal date;
+- the builder pins failed proposals and adopts exact matching partial identities where appropriate;
+- art request IDs are stable;
+- Daily Dream ArtJobs use stable idempotency keys;
+- recorded `last_art_job_id` values prevent the digest from claiming a request is queued before a real ArtJob exists.
+
+A failed morning cycle should be retried as a cycle, rather than letting Hourly Conductor quietly advance only one piece of it.
 
 ## Legacy staged builds
 
-The former eight-stage `type: dream` playbook was retired on 2026-08-02. It was a second object writer and had already left Lantern Post partially created. Legacy non-proposal dream outlines remain useful as idea inventory, but they are never resumed with direct API calls. To use one, an agent adapts its concept into the next canonical six-asset proposal.
+The former eight-stage `type: dream` playbook was retired on 2026-08-02. It was a second object writer and had already left partial creations. Legacy non-proposal outlines remain useful as idea inventory, but they are never resumed with direct API calls. To reuse one, adapt its concept into a canonical six-asset proposal.
 
-Existing rows from a partial legacy build are retained as historical production content unless a separately scoped cleanup explicitly reconciles them. They must not be silently completed or duplicated.
+Existing rows from historical partial builds are retained unless a separately scoped cleanup explicitly reconciles them.
 
 ## Continuous health check
 
@@ -106,7 +113,9 @@ python scripts/check_daily_dream_pipeline.py
 
 CI enforces that:
 
-- Hourly Conductor reaches the builder through one canonical call,
-- Daily Digest has no object-writing capability,
-- the active dream specs identify `build_dream_records.py` as the sole writer,
+- Daily Digest authors exactly once at the start;
+- only Daily Digest invokes the Daily Dream object writer and ArtJob submitter;
+- authoring, build, Facets, ArtJob submission, evidence commit, and digest rendering occur in that order;
+- Hourly Conductor uses the report-only entrypoint;
+- active dream specs still identify `build_dream_records.py` as the sole object writer;
 - retired direct-REST stage instructions do not return.

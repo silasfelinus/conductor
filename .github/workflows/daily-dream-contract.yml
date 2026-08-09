@@ -9,16 +9,23 @@ on:
       - "projects/dream-cycle/PIPELINE.md"
       - "projects/dream-cycle/specs/**"
       - "projects/dream-cycle/backlog/**"
+      - "scripts/annotate_daily_dream_art_queue.py"
       - "scripts/apply_daily_dream_facets.py"
+      - "scripts/art_request_staging_priority.py"
       - "scripts/build_digest.py"
       - "scripts/build_digest_email.py"
       - "scripts/build_digest_email_v2.py"
       - "scripts/build_conductor_summary.py"
+      - "scripts/build_conductor_summary_report_only.py"
       - "scripts/author_dream_proposal.py"
       - "scripts/build_dream_proposal.py"
       - "scripts/build_dream_records.py"
       - "scripts/check_daily_dream_pipeline.py"
+      - "scripts/consume_art_requests_to_media.py"
       - "scripts/enrich_daily_dream_digest.py"
+      - "scripts/submit_daily_dream_art.py"
+      - "scripts/validate_digest.py"
+      - "tests/test_annotate_daily_dream_art_queue.py"
       - "tests/test_apply_daily_dream_facets.py"
       - "tests/test_build_digest.py"
       - "tests/test_build_digest_email_v2.py"
@@ -26,9 +33,13 @@ on:
       - "tests/test_build_dream_proposal.py"
       - "tests/test_build_dream_records.py"
       - "tests/test_build_conductor_summary_daily_dream.py"
+      - "tests/test_daily_digest_schedule.py"
+      - "tests/test_daily_dream_art_staging_priority.py"
       - "tests/test_daily_dream_bundle_art_queue.py"
       - "tests/test_daily_dream_pipeline_contract.py"
+      - "tests/test_daily_dream_vibe_link_source.py"
       - "tests/test_enrich_daily_dream_digest.py"
+      - "tests/test_submit_daily_dream_art.py"
   workflow_dispatch:
 
 permissions:
@@ -47,16 +58,22 @@ jobs:
       - name: Compile daily-dream scripts
         run: |
           python -m py_compile \
+            scripts/annotate_daily_dream_art_queue.py \
             scripts/apply_daily_dream_facets.py \
+            scripts/art_request_staging_priority.py \
             scripts/build_digest.py \
             scripts/build_digest_email.py \
             scripts/build_digest_email_v2.py \
             scripts/build_conductor_summary.py \
+            scripts/build_conductor_summary_report_only.py \
             scripts/author_dream_proposal.py \
             scripts/build_dream_proposal.py \
             scripts/build_dream_records.py \
             scripts/check_daily_dream_pipeline.py \
-            scripts/enrich_daily_dream_digest.py
+            scripts/consume_art_requests_to_media.py \
+            scripts/enrich_daily_dream_digest.py \
+            scripts/submit_daily_dream_art.py \
+            scripts/validate_digest.py
       - name: Validate workflow YAML
         run: |
           python - <<'PY'
@@ -76,6 +93,7 @@ jobs:
       - name: Run daily-dream contract tests
         run: |
           python -m pytest -q \
+            tests/test_annotate_daily_dream_art_queue.py \
             tests/test_apply_daily_dream_facets.py \
             tests/test_build_digest.py \
             tests/test_build_digest_email_v2.py \
@@ -83,6 +101,10 @@ jobs:
             tests/test_build_dream_proposal.py \
             tests/test_build_dream_records.py \
             tests/test_build_conductor_summary_daily_dream.py \
+            tests/test_daily_digest_schedule.py \
+            tests/test_daily_dream_art_staging_priority.py \
             tests/test_daily_dream_bundle_art_queue.py \
             tests/test_daily_dream_pipeline_contract.py \
-            tests/test_enrich_daily_dream_digest.py
+            tests/test_daily_dream_vibe_link_source.py \
+            tests/test_enrich_daily_dream_digest.py \
+            tests/test_submit_daily_dream_art.py

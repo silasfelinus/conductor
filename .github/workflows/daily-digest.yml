@@ -1,11 +1,21 @@
 name: daily-digest
 
-# Emails Silas a daily summary across all projects + pitches awaiting his vote.
-# Run via this cron OR from a managed assistant session pointed at scripts/build_digest.py.
+# One ordered Daily Dream cycle, then the email:
+#   1. author today's steering proposal
+#   2. build the now-eligible prior proposal into six live records
+#   3. attach its Facets
+#   4. submit every staged Daily Dream request into the real ArtJob queue
+#   5. commit the durable proposal/build/ArtJob evidence, even on a partial failure
+#   6. verify the cycle succeeded
+#   7. render and send the digest
+#
+# The email itself shows the older completed bundle with art first, followed by
+# the bundle just built in a compact no-image layout. Today's newly authored
+# proposal is intentionally not a third showcase section.
 
 on:
   schedule:
-    - cron: "30 15 * * *"  # 30m after the 15:00 UTC hourly builder; ≈8:30am Pacific in DST.
+    - cron: "30 15 * * *"  # ≈8:30am Pacific in DST.
   workflow_dispatch:
     inputs:
       send_email:
@@ -14,9 +24,6 @@ on:
         default: false
         type: boolean
 
-# This job now pushes one commit to main (the authored dream proposal), so it
-# joins the same serialization group Hourly Conductor uses. Two workflows racing
-# a push to main is the failure this group exists to prevent.
 concurrency:
   group: conductor-main-writers
   cancel-in-progress: false
@@ -28,6 +35,7 @@ jobs:
       contents: write
     env:
       SHOULD_SEND_EMAIL: ${{ github.event_name == 'schedule' || inputs.send_email == true }}
+      KR_BASE_URL: https://kind-robots.vercel.app
     steps:
       - uses: actions/checkout@v4
         with:
@@ -37,15 +45,90 @@ jobs:
           python-version: "3.12"
       - run: pip install pyyaml Pillow
 
+      - name: Author today's next Daily Dream proposal
+        run: python scripts/author_dream_proposal.py
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      # These three steps can produce durable evidence even when the final exit
+      # code is non-zero: a build retry marker, a partial Facet ledger, or some
+      # successfully submitted ArtJob IDs. Keep going long enough to commit that
+      # evidence, then fail the cycle before constructing/sending the digest.
+      - name: Build the eligible Daily Dream proposal
+        id: daily_dream_build
+        continue-on-error: true
+        run: python scripts/build_dream_records.py
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+
+      - name: Attach Daily Dream Facets
+        id: daily_dream_facets
+        if: ${{ steps.daily_dream_build.outcome == 'success' }}
+        continue-on-error: true
+        run: python scripts/apply_daily_dream_facets.py
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+
+      - name: Submit Daily Dream ArtJobs
+        id: daily_dream_art
+        if: ${{ steps.daily_dream_build.outcome == 'success' }}
+        continue-on-error: true
+        run: python scripts/submit_daily_dream_art.py
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_MEDIA_ORIGIN: https://media.acrocatranch.com
+
+      - name: Commit Daily Dream cycle evidence
+        if: ${{ always() }}
+        run: |
+          git config user.name "kind-robots-bot"
+          git config user.email "noreply@kindrobots.app"
+          git add projects/dream-cycle/backlog/ projects/art-prompts.yaml
+          if git diff --staged --quiet; then
+            echo "Daily Dream cycle produced no repository changes."
+            exit 0
+          fi
+          git commit -m "daily dream: build and submit $(date -u +%Y-%m-%d) cycle [skip ci]"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if git rebase origin/main && git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "Daily Dream evidence push attempt ${attempt}/3 lost a race; retrying."
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 2))
+          done
+          echo "::error::Unable to persist Daily Dream cycle evidence after 3 attempts."
+          exit 1
+
+      - name: Verify Daily Dream cycle
+        run: |
+          if [ "${{ steps.daily_dream_build.outcome }}" != "success" ]; then
+            echo "::error::Daily Dream object build failed; durable retry evidence was committed."
+            exit 1
+          fi
+          if [ "${{ steps.daily_dream_facets.outcome }}" != "success" ]; then
+            echo "::error::Daily Dream Facet attachment failed; durable bundle evidence was committed."
+            exit 1
+          fi
+          if [ "${{ steps.daily_dream_art.outcome }}" != "success" ]; then
+            echo "::error::Daily Dream ArtJob submission was partial or failed; submitted IDs were committed."
+            exit 1
+          fi
+
       - name: Build digest JSON
         run: |
           python scripts/build_digest.py --since "24 hours ago" > digest-base.json
           python scripts/enrich_daily_dream_digest.py digest-base.json --output digest.json
+          python scripts/annotate_daily_dream_art_queue.py digest.json
           cat digest.json
+
       - name: Validate digest JSON
         run: python scripts/validate_digest.py digest.json
+
       - name: Build Brevo payload preview
         run: python scripts/build_digest_email_v2.py digest.json digest-email.json
+
       - name: Upload digest artifacts
         if: always()
         uses: actions/upload-artifact@v4
@@ -56,6 +139,7 @@ jobs:
             digest.json
             digest-email.json
           if-no-files-found: warn
+
       - name: Check digest configuration
         run: python scripts/check_digest_config.py
         env:
@@ -64,6 +148,7 @@ jobs:
           DIGEST_TO_NAME: ${{ secrets.DIGEST_TO_NAME || vars.DIGEST_TO_NAME }}
           DIGEST_FROM: ${{ secrets.DIGEST_FROM || vars.DIGEST_FROM }}
           DIGEST_FROM_NAME: ${{ secrets.DIGEST_FROM_NAME || vars.DIGEST_FROM_NAME }}
+
       - name: Email via Brevo
         if: ${{ env.SHOULD_SEND_EMAIL == 'true' }}
         run: python scripts/send_digest_brevo.py digest-email.json
@@ -73,48 +158,3 @@ jobs:
           DIGEST_TO_NAME: ${{ secrets.DIGEST_TO_NAME || vars.DIGEST_TO_NAME }}
           DIGEST_FROM: ${{ secrets.DIGEST_FROM || vars.DIGEST_FROM }}
           DIGEST_FROM_NAME: ${{ secrets.DIGEST_FROM_NAME || vars.DIGEST_FROM_NAME }}
-
-      # Silas, 2026-08-09: "I'm not sure why the next dreams aren't written the
-      # turn the digest is sent, or a step later if there isn't enough process."
-      #
-      # They weren't, because authoring lived only in CLAUDE.md's session-startup
-      # checklist: a proposal appeared when a session happened to run and happened
-      # to notice one was missing, and on a quiet day there was simply no dream.
-      # This is that step. It runs AFTER the email so a failure here can never
-      # cost Silas the digest, and it is idempotent — on a day a session already
-      # authored one it prints "already exists" and exits 0.
-      #
-      # `continue-on-error` on purpose: the digest job's real product is the
-      # email, already sent by this point. A model hiccup should show up as a
-      # missing dream (which the next session's sweep reports) rather than as a
-      # red daily-digest run that trains everyone to ignore it.
-      - name: Author tomorrow's daily dream
-        id: author_dream
-        continue-on-error: true
-        run: python scripts/author_dream_proposal.py
-        env:
-          # No KR_API_TOKEN, deliberately. The digest stays read-only with
-          # respect to kind_robots content (PIPELINE.md §4, enforced by
-          # check_daily_dream_pipeline.py) — it authors a proposal FILE in this
-          # repo and never touches kind_robots objects or Facets. The Facet
-          # catalog read is a public unauthenticated GET, so no token is needed
-          # and adding one would hand this job a capability it must not have.
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          KR_BASE_URL: https://kind-robots.vercel.app
-
-      - name: Commit the authored dream
-        if: ${{ steps.author_dream.outcome == 'success' }}
-        run: |
-          if git diff --quiet -- projects/dream-cycle/backlog; then
-            echo "No new proposal to commit."
-            exit 0
-          fi
-          git config user.name "kind-robots-bot"
-          git config user.email "noreply@kindrobots.app"
-          git add projects/dream-cycle/backlog
-          git commit -m "daily dream: author $(date -u +%Y-%m-%d) proposal [skip ci]"
-          # Rebase rather than force: hourly-conductor and task-event processing
-          # write to main on their own schedule and one of them may have landed
-          # while the model was thinking.
-          git pull --rebase origin main
-          git push origin HEAD:main

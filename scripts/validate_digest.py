@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the JSON shape produced by scripts/build_digest.py."""
+"""Validate the JSON shape produced by scripts/build_digest.py + Daily Dream enrichment."""
 import json
 import sys
 from pathlib import Path
@@ -22,8 +22,11 @@ def main() -> int:
         "new_creations",
     }
     list_keys = required_keys - {"date"}
-    # tomorrow_proposal / yesterday_output are an object or null (no proposal yet).
-    proposal_keys = {"tomorrow_proposal", "yesterday_output"}
+    proposal_keys = {
+        "next_dream_proposal",
+        "current_dream_output",
+        "previous_dream_output",
+    }
     required_project_keys = {
         "name",
         "kind",
@@ -46,7 +49,10 @@ def main() -> int:
         return 1
 
     for key in proposal_keys:
-        if key in digest and not (digest[key] is None or isinstance(digest[key], dict)):
+        if key not in digest:
+            print(f"digest.json is missing Daily Dream role key: {key}", file=sys.stderr)
+            return 1
+        if not (digest[key] is None or isinstance(digest[key], dict)):
             print(f"digest.json {key} must be an object or null", file=sys.stderr)
             return 1
 
