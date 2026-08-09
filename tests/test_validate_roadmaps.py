@@ -18,7 +18,7 @@ def write_roadmap(root: Path, project: str, text: str) -> None:
 
 
 def test_valid_roadmaps_exit_zero(_isolate_root, capsys):
-    write_roadmap(_isolate_root, "demo", "project: demo\ntasks:\n- id: t-001\n  status: ready\n")
+    write_roadmap(_isolate_root, "demo", "project: demo\nkind: software\ntasks:\n- id: t-001\n  status: ready\n  stakes: reversible\n")
 
     assert validate_roadmaps.main() == 0
     assert "Roadmaps valid" in capsys.readouterr().out
@@ -109,3 +109,58 @@ def test_unknown_project_lifecycle_fails(_isolate_root, capsys):
     write_roadmap(_isolate_root, "demo", "project: demo\ntasks:\n- id: t-001\n  status: ready\n")
     assert validate_roadmaps.main() == 1
     assert "invalid project lifecycle status" in capsys.readouterr().err
+
+
+def test_invalid_task_stakes_fails_even_for_done_task(_isolate_root, capsys):
+    write_roadmap(
+        _isolate_root,
+        "demo",
+        "project: demo\nkind: software\ntasks:\n- id: t-001\n  status: done\n  stakes: high\n",
+    )
+
+    assert validate_roadmaps.main() == 1
+    err = capsys.readouterr().err
+    assert "invalid task stakes" in err
+    assert "t-001" in err
+    assert "'high'" in err
+
+
+def test_supported_task_stakes_are_valid(_isolate_root, capsys):
+    write_roadmap(
+        _isolate_root,
+        "demo",
+        "project: demo\nkind: software\ntasks:\n"
+        "- id: t-001\n  status: ready\n  stakes: reversible\n"
+        "- id: t-002\n  status: ready\n  stakes: outward-facing\n"
+        "- id: t-003\n  status: ready\n  stakes: irreversible\n",
+    )
+
+    assert validate_roadmaps.main() == 0
+    assert "Roadmaps valid" in capsys.readouterr().out
+
+
+def test_invalid_effective_project_kind_fails(_isolate_root, capsys):
+    write_roadmap(
+        _isolate_root,
+        "demo",
+        "project: demo\nkind: infrastructure\ntasks:\n- id: t-001\n  status: ready\n  stakes: reversible\n",
+    )
+
+    assert validate_roadmaps.main() == 1
+    err = capsys.readouterr().err
+    assert "invalid project kind" in err
+    assert "infrastructure" in err
+
+
+def test_override_kind_is_authoritative(_isolate_root, capsys):
+    (_isolate_root / "project-overrides.yaml").write_text(
+        "overrides:\n  - slug: demo\n    status: active\n    kind: software\n", encoding="utf-8"
+    )
+    write_roadmap(
+        _isolate_root,
+        "demo",
+        "project: demo\nkind: infrastructure\ntasks:\n- id: t-001\n  status: ready\n  stakes: reversible\n",
+    )
+
+    assert validate_roadmaps.main() == 0
+    assert "Roadmaps valid" in capsys.readouterr().out
