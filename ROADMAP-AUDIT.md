@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-08-09T17:42:45.602592+00:00`
+Generated: `2026-08-09T17:54:31.135570+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **45** roadmaps, **24** active + **2** continuous projects, **939** tasks
-- **43 ready**, **57 waiting**, **26 needs-human**, **0 claimed/review**, **803 done**
+- **45** roadmaps, **24** active + **2** continuous projects, **940** tasks
+- **43 ready**, **57 waiting**, **26 needs-human**, **0 claimed/review**, **804 done**
 - Findings: **0 errors**, **0 warnings**, **60 informational**
 
 ## Project inventory
@@ -20,7 +20,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 4 | `humboldt-scoop-cms` | active | software | 0 | 0 | 1 | 0 | 11 / 12 |
 | 5 | `digital-storefront` | active | software | 0 | 2 | 3 | 0 | 38 / 43 |
 | 6 | `mermaids-of-venice` | active | content | 1 | 0 | 8 | 0 | 4 / 13 |
-| 7 | `kind-robots` | active | software | 1 | 0 | 0 | 0 | 54 / 55 |
+| 7 | `kind-robots` | active | software | 1 | 0 | 0 | 0 | 55 / 56 |
 | 8 | `kindrobots-unraid` | active | software | 1 | 6 | 0 | 0 | 5 / 12 |
 | 9 | `model-builder` | active | software | 2 | 0 | 0 | 0 | 37 / 39 |
 | 10 | `lora-ingestion` | active | infrastructure | 1 | 0 | 0 | 0 | 5 / 6 |
