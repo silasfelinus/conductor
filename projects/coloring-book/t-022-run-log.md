@@ -575,3 +575,54 @@ monster-recast` before/after, `validate_roadmaps.py` (clean), `git diff --stat` 
 before committing (17 modified queue entries + 17 new binary files, nothing else touched).
 Re-armed to `ready`; released claim — one recovery-actionable entry (mr-001) remains for
 the next cycle, plus 8 fresh `next_batch` entries not yet actionable this pass.
+
+## 2026-08-09T10:31Z | Agent run (scheduled conductor sweep) | coloring-book/t-022
+
+Claimed via `claim_task.py` (session `20260809T103058Z-cb-t022`). `coloring_queue_status.py
+--book monster-recast` reported one recovery-actionable entry (mr-001, job 7894) and 8
+fresh `next_batch` entries not yet actionable. This sandbox had no Pillow installed again
+(fresh sandbox, no persistence across sessions); installed it (`pip install --user
+Pillow`) before touching anything render-related.
+
+Ran `consume_coloring_book_color_art.py --live --book monster-recast --ids mr-001`: job
+7894 had genuinely completed — recovered cleanly, 1/1 succeeded, landed
+`mr-001-perfect-woman.webp` (ArtImage 17068). `coloring_queue_status.py` then reported
+`recommended_action=submit-next-batch` with all 8 remaining pending entries actionable
+(mr-029 through mr-035, mr-group-001) and no render_gate_error on any of them yet, so
+these were genuinely never-submitted, not stuck recoveries.
+
+Ran `consume_coloring_book_color_art.py --live --book monster-recast` (no `--ids`, full
+next-batch submission) to queue fresh ArtJobs for all 8. This took ~55 minutes wall-clock
+because `wait_for_job`'s default 600s per-job timeout is real: the local render worker
+("Silas-PC", run manually/on-and-off per this task's own prior run-log entries) had not
+picked any of them up within the wait window. All 8 were queued successfully (ArtJob ids
+8130-8132, 8134, 8136, 8138, 8140-8141) and every one's `render_gate_error`/
+`render_gate_job_id` was correctly recorded by the script's own except-block before
+moving to the next entry — 0/8 landed this pass, but 0 duplicates and 0 lost references.
+Three of the eight failed with a transient `SSL: UNEXPECTED_EOF_WHILE_READING` on the
+status poll rather than a clean timeout; treated identically by the except-block (job
+reference preserved, no special handling needed).
+
+Re-ran a short recovery pass (`--ids <the 8>`, `--timeout 30`) near the end of the cycle
+in case the render worker had caught up during the ~55-minute wait: 6 of 8 still
+genuinely `queued/running`, one hit the same transient SSL error again (mr-034, job
+8138), none landed. This confirms ordinary single-box backlog depth, the same shape
+`t-022`'s 2026-08-08 run-log entries already documented for this render worker — not a
+new defect, nothing to fix in code.
+
+`coloring_queue_status.py --book monster-recast` now reports `{done: 25, approved: 3,
+pending: 8}`, `recommended_action=recover-existing-jobs`, all 8 pending entries carrying
+valid job references for a future recovery pass. No `fresh_submission_blocked` entries,
+no duplicate job ids, no duplicate entry ids — queue integrity intact.
+
+Committed `color-art-jobs.yaml`'s 9 updated entries (1 done + 8 render_gate_error refs)
+plus the 1 new `mr-001-perfect-woman.webp` file via conductor PR (awaiting human review
+in the ArtJob trainer panel, same content-adjacent art-approval flow as every prior
+cycle — no roadmap `approved_by_human` gate applies to individual proposal renders).
+Verification: `coloring_queue_status.py --book monster-recast` before/after,
+`validate_roadmaps.py` (clean), `git diff --stat` reviewed before committing (1 file
+changed in `color-art-jobs.yaml`, 1 new binary file, nothing else touched).
+
+Re-armed to `ready`; released claim. All 8 job references are now recovery-actionable
+for whoever picks up t-022 next — no fresh submission needed until those clear or a new
+`next_batch` opens up.
