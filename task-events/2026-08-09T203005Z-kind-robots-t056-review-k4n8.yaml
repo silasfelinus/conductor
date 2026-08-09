@@ -1,9 +1,0 @@
-version: 1
-project: kind-robots
-task: t-056
-operation: review
-owner: worker
-session: 2026-08-09T203005Z-kind-robots-t056-k4n8
-updated: '2026-08-09T20:41:30Z'
-note: >-
-  Implemented the first-class Project creation hook: ordinary POST /api/projects now creates a HIGH AGENT Todo for the Worker to scaffold the matching Conductor roadmap, while Conductor projection-created Projects remain on the separate /api/conductor/sync path. The normal database path creates Project + Todo atomically; the existing direct-MariaDB fallback now has an idempotent direct Todo fallback as well.
