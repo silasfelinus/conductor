@@ -2935,25 +2935,19 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
     note: |-
-      Slice 10 merged as silasfelinus/kind_robots#1633 (squash 0ffa9670). Migrated 3 exact-match hand-rolled panel surfaces onto kr-panel: giftshop-interact.vues two panels, component-review-feed.vues review card, daily-digest-object-dialog.vues overview row card -- each a byte-for-byte match of kr-panels rounded-2xl/border-base-300/bg-base-100/shadow-sm treatment, only p-4 padding differing from the p-6 default, preserved as a utility override (kr-panel p-4), same pattern as slices 8-9. Zero visual delta. All 17 checks green, mergeable_state clean. t-104 remains multi-slice and open: scanned all ~64 remaining candidates from slice 9s inventory -- most need either a bg-base-100 opacity match (e.g. /90, /95, not exact), extra layout classes intermixed with the surface treatment, or no p-* class at all (kr-panels p-6 would add padding not currently there). Next slice should evaluate whether those categories are still safely convertible (e.g. kr-panel p-0 for the no-padding cases) or need a broader kr-panel variant, or pivot to a scripted codemod given how few pure zero-delta matches remain unclaimed.
-
-      Slice 11 migrates narrative-art-status.vue from a hand-rolled exact kr-panel surface to kr-panel p-0, preserving its zero-padding geometry and existing layout/status behavior.
-
-      Slice 11 merged as silasfelinus/kind_robots#1634 (squash cb77216a89bd7471263585228d308abdbe54b160). narrative-art-status.vue now uses kr-panel p-0 for the exact shared raised-surface treatment while preserving its previous zero-padding geometry. All 14 exact-head PR workflows completed successfully, including TypeScript 31290080477, Contract Tests 31290080510, Layout Contract 31290080459, Narrative Art Persistence 31290080458, Narrative Art Milestone 31290080541, Narrative Accessibility 31290080495, and Narrative Primitives 31290080482. t-104 remains open for further consistency slices.
-
-      Slice 12 migrates 4 more zero-padding exact-match kr-panel surfaces to kr-panel p-0: navigation-health.vue (header + per-channel card), workspace-sheet.vue (outer sheet wrapper + builder-preview card), project-placement-manager.vue (header), and resource-card.vue (card root). All four had no p-* class on the element itself (padding lives on inner children), so kr-panel p-0 preserves exact geometry -- zero visual delta. Deliberately skipped kr-stat-tile.vue's identical class string: it also carries DaisyUI's stat class, whose component-layer CSS supplies the tile's internal padding, and Tailwind's utilities layer always wins over components regardless of source order -- appending kr-panel's p-0 would zero out that padding, a real regression not a zero-delta rename. Verified: eslint 0 problems, vue-tsc --noEmit clean, lint ratchet unchanged (392/27), layout contract holds. Prettier --check flagged pre-existing unrelated formatting debt in 3 of the 4 files (not touched, per the documented --write pitfall from slice 10); confirmed my exact changed lines match Prettier's expected output byte-for-byte via a dry-run diff. kind_robots PR: silasfelinus/kind_robots#1635.
-
       Slice 13 merged as silasfelinus/kind_robots#1640 (merge e4df0a8f09b74832bf2142f55668d8e7a2e65d76; exact implementation head fc0a4b5a67ee74d143bfd3e8aeee53869802a498). Migrated the remaining exact-match non-translucent shadow-sm panel surfaces in character-flip-card.vue, workspace-sheet.vue, and resource-gallery.vue onto kr-panel while preserving existing padding and border-style utilities. All 14 exact-head pull-request workflows completed successfully, including TypeScript 31294992779, Contract Tests 31294992795, Layout Contract 31294992735, MDC Scroll Ownership 31294992734, Facet Catalog 31294992762, API Client Follow-ups 31294992745, Narrative contracts, Taskmaster, and all three Storybook contracts; Vercel preview status was Ready. t-104 remains open for further consistency slices, so return it to ready and clear the completed slice claim.
-    claimed_by: claude-quirky-curie-20260809T052729Z-iv-t104-s14
-    claimed_at: '2026-08-09T05:27:30Z'
-    implementation_pr: 'silasfelinus/kind_robots#1635'
-    updated: '2026-08-09T05:27:30Z'
-    owner: worker
+
+      Slice 14 merged as silasfelinus/kind_robots#1641 (squash 07d402a). With the exact kr-panel (bg-base-100 + shadow-sm) candidate pool now exhausted (only kr-stat-tile.vue remains, deliberately excluded per slice 12's DaisyUI stat-class conflict), this slice extended the same zero-visual-delta migration to two sibling variants already defined in tailwind.css but never adopted: kr-panel-flat (rounded-2xl/border-base-300/bg-base-100, no shadow) and kr-panel-muted (rounded-2xl/border-base-300/bg-base-200, p-6 default). Migrated 4 files/8 occurrences: add-model.vue (mature-content toggle row), bot-chat.vue (3x kr-panel-flat sections, 2x kr-panel-muted cards), bot-gallery.vue (bot description card), user-manager.vue (loading state) -- all zero visual delta, same padding-override pattern as slices 8-13. Verified: eslint 0 problems, vue-tsc --noEmit clean, lint ratchet unchanged (392/27), layout contract holds, prettier --check clean. This branch was worker/* (no Vercel preview per AGENTS.md's documented branch-prefix policy), so verification relied on full local checks plus post-merge production spot-check rather than a PR-preview audit run. IMPORTANT DISCOVERY: a grep sweep this slice found the kr-panel-muted/kr-panel-flat candidate pools are far larger than the original kr-panel pool ever was -- ~114 files with an exact kr-panel-muted match and ~129 files with an exact kr-panel-flat match, vs. the ~64-candidate kr-panel pool slices 8-13 worked through. Filed t-115 as a kaizen follow-up to decide whether to keep hand-slicing through this much larger pool or pivot to a scripted codemod. t-104 remains open for further consistency slices; return it to ready and clear the completed slice claim.
+    claimed_by: null
+    claimed_at: null
+    implementation_pr: 'silasfelinus/kind_robots#1641'
+    updated: '2026-08-09T05:52:30Z'
+    owner: null
 
   - id: t-105
     milestone: m6
@@ -3009,4 +3003,29 @@ tasks:
     claimed_by: claude-quirky-curie-20260807T113500Z-iv-t107
     claimed_at: '2026-08-07T11:30:39Z'
     updated: '2026-08-07T11:56:50Z'
+
+  - id: t-115
+    milestone: m5
+    title: "Decide how to close the much-larger kr-panel-muted/kr-panel-flat consistency gap found by t-104 slice 14"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-104 slice 14 (silasfelinus/kind_robots#1641). A grep sweep for exact
+      hand-rolled matches of the two kr-panel variants defined in tailwind.css but never
+      adopted -- kr-panel-flat (rounded-2xl border border-base-300 bg-base-100, no shadow)
+      and kr-panel-muted (rounded-2xl border border-base-300 bg-base-200, p-6 default) --
+      found roughly 129 and 114 files respectively with an exact match, versus the ~64
+      candidates the original kr-panel (bg-base-100 + shadow-sm) pool ever had across
+      slices 8-13. Slice 14 hand-migrated a small first batch (4 files/8 occurrences) using
+      the same individually-verified pattern as prior slices, but that pace does not scale
+      to a pool this size. Decide and record: (a) keep hand-slicing in small verified
+      batches like slice 14, accepting it will take many more slices, or (b) write a
+      scripted codemod (grep + sed/AST transform) that applies the exact-match substitution
+      mechanically across the whole pool in one pass, followed by the same eslint/vue-tsc/
+      layout-contract/lint-ratchet/prettier verification this task has used throughout. If
+      (b), scope the codemod strictly to the byte-for-byte exact-match cases already proven
+      safe -- do not expand into opacity variants, extra intermixed layout classes, or
+      no-padding cases without the same case-by-case visual-delta reasoning slices 10-14
+      applied by hand.
     implementation_pr: 'silasfelinus/kind_robots#1563'
