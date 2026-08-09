@@ -3631,7 +3631,7 @@ tasks:
   - id: t-107
     milestone: m6
     title: "Validate stakes/kind enum values on roadmap tasks, not just presence"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -3640,9 +3640,11 @@ tasks:
 
 
       Claiming the roadmap enum-validation task after higher-priority ready work was either human/infra gated, production-token blocked, or a verified progress-gated no-op.
+
+      Implementation complete on worker/conductor-t-107-ruggri: validate_roadmaps.py now rejects invalid task stakes and invalid effective project kinds, with regression coverage including the historical stakes: high failure shape and override-kind precedence.
     claimed_by: 20260809T171537Z-auto-ruggri
     claimed_at: '2026-08-09T17:15:37Z'
-    updated: '2026-08-09T17:15:37Z'
+    updated: '2026-08-09T17:29:00Z'
 
   - id: t-108
     milestone: m2
