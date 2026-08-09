@@ -24,59 +24,116 @@ def load_module():
     return module
 
 
-def assets():
-    return [
-        {"key": key, "label": key, "title": key.title(), "summary": "summary", "facets": ["GENRE: One"],
-         "image_url": f"https://example.com/{key}.webp" if key != "scenario" else "", "art_status": "ready" if key != "scenario" else "queued"}
-        for key in ("vibe", "location", "character", "reward_item", "reward_skill", "scenario")
-    ]
+def assets(*, submitted: bool = False):
+    rows = []
+    for index, key in enumerate(
+        ("vibe", "location", "character", "reward_item", "reward_skill", "scenario"),
+        start=1,
+    ):
+        row = {
+            "key": key,
+            "label": key,
+            "title": key.title(),
+            "summary": "summary",
+            "facets": ["GENRE: One"],
+            "image_url": f"https://example.com/{key}.webp" if key != "scenario" else "",
+            "art_status": "ready" if key != "scenario" else "queued",
+            "request_id": f"dream-{key}",
+        }
+        if submitted:
+            row["art_job_id"] = 8100 + index
+        rows.append(row)
+    return rows
 
 
-def test_email_renders_all_six_assets_with_large_images_and_pending_card():
+def test_art_rich_section_renders_images_and_pending_art_slot():
     module = load_module()
-    html = module.proposal_section("Tomorrow", {"title": "Bundle", "idea": "Idea", "assets": assets()})
+    html = module.proposal_section(
+        "ignored",
+        {
+            "title": "Previous",
+            "idea": "Idea",
+            "display_mode": "art-rich",
+            "assets": assets(),
+        },
+    )
+    assert "Previous completed output" in html
     assert html.count("Seed Facets") == 6
     assert "height:190px" in html
     assert "Art queued" in html
-    for key in ("Vibe", "Location", "Character", "Reward_Item", "Reward_Skill", "Scenario"):
-        assert key in html
 
 
-def test_payload_uses_v2_section_without_tiny_90px_strip():
+def test_just_built_section_has_no_image_boxes_at_all():
     module = load_module()
-    payload = module.build_payload({"tomorrow_proposal": {"title": "Bundle", "idea": "Idea", "assets": assets()}})
-    assert "height:90px" not in payload["htmlContent"]
-    assert payload["htmlContent"].count("Seed Facets") == 6
+    html = module.proposal_section(
+        "ignored",
+        {
+            "title": "Just Built",
+            "idea": "Idea",
+            "display_mode": "just-built",
+            "assets": assets(submitted=True),
+        },
+    )
+    assert "Just built this cycle" in html
+    assert html.count("Seed Facets") == 6
+    assert "height:190px" not in html
+    assert "Art queued" not in html
+    assert "6/6 ArtJobs submitted" in html
+    assert "No image space is reserved here" in html
 
 
-def test_payload_renders_additional_recent_bundles_without_duplication():
+def test_payload_orders_previous_art_before_just_built_and_hides_next_proposal():
     module = load_module()
     digest = {
-        "tomorrow_proposal": {"slug": "today", "title": "Today", "idea": "Idea", "assets": assets()},
-        "yesterday_output": {"slug": "main-yesterday", "title": "Main", "idea": "Idea", "assets": assets()},
+        "previous_dream_output": {
+            "slug": "previous",
+            "title": "Previous With Art",
+            "idea": "Older output.",
+            "display_mode": "art-rich",
+            "assets": assets(),
+        },
+        "current_dream_output": {
+            "slug": "current",
+            "title": "Current Just Built",
+            "idea": "Fresh output.",
+            "display_mode": "just-built",
+            "assets": assets(submitted=True),
+        },
+        "next_dream_proposal": {
+            "slug": "next",
+            "title": "Do Not Show Me",
+            "idea": "Steering only.",
+            "assets": assets(),
+        },
+    }
+    payload = module.build_payload(digest)
+    html = payload["htmlContent"]
+    assert html.index("Previous With Art") < html.index("Current Just Built")
+    assert "Do Not Show Me" not in html
+    assert "height:90px" not in html
+
+
+def test_payload_does_not_render_older_recent_history():
+    module = load_module()
+    digest = {
+        "previous_dream_output": {
+            "slug": "previous",
+            "title": "Previous",
+            "idea": "Idea",
+            "display_mode": "art-rich",
+            "assets": assets(),
+        },
+        "current_dream_output": {
+            "slug": "current",
+            "title": "Current",
+            "idea": "Idea",
+            "display_mode": "just-built",
+            "assets": assets(submitted=True),
+        },
         "recent_dream_outputs": [
-            {"slug": "main-yesterday", "title": "Main", "idea": "Idea", "assets": assets()},
-            {"slug": "another-yesterday", "title": "Another Build", "idea": "Idea", "assets": assets()},
+            {"slug": "old", "title": "Too Old", "idea": "Old", "assets": assets()}
         ],
     }
     payload = module.build_payload(digest)
-    assert "Earlier completed bundles" in payload["htmlContent"]
-    assert "Another Build" in payload["htmlContent"]
-
-
-def test_payload_labels_previous_output_without_calendar_claim():
-    module = load_module()
-    payload = module.build_payload({
-        "projects": [],
-        "date": "2026-08-02",
-        "pitches_awaiting_vote": [],
-        "all_needs_attention": [],
-        "yesterday_output": {
-            "slug": "previous",
-            "title": "Previous",
-            "idea": "Built earlier.",
-            "assets": assets(),
-        },
-    })
-    assert "Previous completed output" in payload["htmlContent"]
-    assert "Yesterday's output" not in payload["htmlContent"]
+    assert "Too Old" not in payload["htmlContent"]
+    assert "Earlier completed bundles" not in payload["htmlContent"]
