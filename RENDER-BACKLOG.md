@@ -368,3 +368,6 @@ queueDepth: PENDING=2868, RUNNING=1, DONE=3565, FAILED=1, CANCELLED=819 (all-tim
 
 ## 2026-08-08T23:28:55Z | draining
 queueDepth: PENDING=2876, RUNNING=1, DONE=3579, CANCELLED=820 (all-time). oldestPending: id=4808, age=604506s (~167.9h), engine=COMFY. windowThroughput (24h): PENDING=62, RUNNING=1, DONE=143, CANCELLED=3. recentFailed: none.
+
+## 2026-08-09T03:30:24Z | ai-art-academy/t-044 | draining
+queueDepth: PENDING=2848, RUNNING=1, DONE=3611, FAILED=1, CANCELLED=820 (all-time). oldestPending: id=4838, age=618927s (~171.9h), engine=COMFY. windowThroughput (24h): PENDING=64, DONE=97, FAILED=1. recentFailed (last 1): 1/1 = connection-refused to ComfyUI.

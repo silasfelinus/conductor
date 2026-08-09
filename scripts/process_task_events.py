@@ -298,19 +298,32 @@ def prepare_learning(
         # and each time silently red-flagged the shared "process" check for
         # every unrelated PR until a session stumbled onto it. Coerce it into
         # the required mapping instead of hard-failing the whole run, inferring
-        # kind/stakes from the task's own roadmap entry when possible. This
-        # loses schema precision (kind/stakes may end up null) but preserves
-        # the lesson text and keeps the processor unblocked -- strictly-shaped
-        # events are unaffected.
+        # kind/stakes from the task's own roadmap entry when possible.
+        #
+        # kindrobots-unraid/t-006 (2026-08-09) surfaced the gap in the original
+        # version of this coercion: an invalid roadmap `kind` (`infrastructure`,
+        # not one of the three learning-ledger kinds) and an invalid task
+        # `stakes` (`high`, not one of the three valid stakes) both fell through
+        # to `None`, which is schema-valid to *write* (the required-fields check
+        # below only checks key presence) but violates
+        # `test_committed_ledger_schema_conformance`'s stricter "kind/stakes are
+        # always one of the enum values" invariant, redding the Python test
+        # suite on `main` for every subsequent PR. `backfill_learning.py`
+        # already solved this exact problem for its own (roadmap-scan) path --
+        # see its `test_invalid_kind_stakes_fall_back` -- by defaulting an
+        # invalid kind to "software" and invalid stakes to "reversible" rather
+        # than nulling them out. Mirror that convention here so both learning-
+        # ledger writers agree on the same fallback and neither can produce a
+        # schema-violating record again.
         lesson = learning.strip()
         if not lesson:
             raise ValueError("learning must be a non-empty string when supplied as a string")
         kind = roadmap.get("kind") if isinstance(roadmap, dict) else None
         if kind not in {"software", "content", "proposal"}:
-            kind = None
+            kind = "software"
         stakes = task.get("stakes") if isinstance(task, dict) else None
         if stakes not in {"reversible", "outward-facing", "irreversible"}:
-            stakes = None
+            stakes = "reversible"
         learning = {"kind": kind, "stakes": stakes, "lesson": lesson}
 
     if not isinstance(learning, dict):
