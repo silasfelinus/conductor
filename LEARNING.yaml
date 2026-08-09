@@ -7224,3 +7224,19 @@ records:
     previously-invisible candidates across 21 files in one pass -- a reminder that a
     static-analysis/codemod tool's exhaustion claim needs to be re-derived from its
     actual scan boundary, not taken at face value from its summary output.
+- date: 2026-08-09
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Slice 20 of the kr-panel-flat consistency migration: applying t-116's corrected
+    codemod scan to its own newly-surfaced 47-occurrence pool landed clean on the
+    first pass with zero deviation from the established slice 8-19 method (exact-match
+    substitution, git-stash-diffed prettier reformatting, compiled-CSS verification
+    for skips). No new lesson beyond t-116's own record -- filed mainly so the
+    outcome ledger reflects that the corrected pool is real, landable work, not just
+    a diagnosis.
