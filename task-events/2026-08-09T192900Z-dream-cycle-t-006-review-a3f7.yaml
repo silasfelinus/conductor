@@ -1,0 +1,8 @@
+version: 1
+project: dream-cycle
+task: t-006
+operation: review
+owner: worker
+session: 2026-08-09T191800Z-dream-cycle-t006-art-staging-a3f7
+note: >-
+  Root cause confirmed: built Daily Dream art requests were staged at the tail of projects/art-prompts.yaml and the auto-art workflow drained generic project art first, so priority 200 never applied because the requests had not become ArtJobs. Prepared a focused fix that prioritizes dream-cycle at the staging boundary, runs request art before project art, and makes the digest distinguish awaiting ArtJob from a submitted queue job.
