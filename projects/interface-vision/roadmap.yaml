@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2963,10 +2963,10 @@ tasks:
       Slice 19: found the "codemod pool exhausted" conclusion from slices 15/18 was itself wrong -- kr_panel_codemod.py's template-region scan uses `re.search(r"</template>", text)`, the FIRST match, so any file with a nested named-slot/conditional `<template>` block (e.g. `<template v-if="..." #footer>`) closing before the file's real closing tag has everything after that inner close silently never scanned. Confirmed this affects 126 files repo-wide. Found one such file with real candidates: components/rewards/reward-encounter.vue has a nested `<template v-if="canShowCustomFollowup" #footer>` (closes well before the real end) hiding 4 identical exact-match `rounded-2xl border border-base-300 bg-base-100 ... shadow-md` occurrences after it. Migrated all 4 to kr-panel-flat, preserving shrink-0/p-4/shadow-md. Verified zero-visual-delta against the actual compiled Tailwind output (kr-panel-flat's border-radius/border-style/border-width/border-color/background-color declarations sum to exactly the four substituted utilities' combined declarations; shrink-0/p-4/shadow-md are disjoint properties). Filed t-116 (kaizen) to fix the codemod's template-scoping bug and re-run a corrected sweep across the other 125 files -- likely several more slices' worth of legitimate candidates, deliberately not attempted in this one small slice.
 
       Slice 19 merged as silasfelinus/kind_robots#1660. Verified: eslint clean, vue-tsc --noEmit clean, prettier --check clean (reformatted only reward-encounter.vue, broken by this change's own line-length reduction), test:layout-contract holds (0 new violations). t-104 remains open for further consistency slices (6 known DaisyUI-conflict occurrences, plus whatever t-116's corrected sweep surfaces); return it to ready and clear the completed slice claim.
-    updated: '2026-08-09T11:46:57Z'
-    owner: null
-    claimed_by: null
-    claimed_at: null
+    updated: '2026-08-09T13:29:01Z'
+    owner: worker
+    claimed_by: 20260809T-conductor-sweep-t104-s20
+    claimed_at: '2026-08-09T13:29:01Z'
     implementation_pr: 'silasfelinus/kind_robots#1660'
 
   - id: t-105
