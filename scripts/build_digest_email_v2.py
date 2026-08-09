@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Build the daily digest email with full six-asset dream cards.
+"""Build the Daily Dream digest with two deliberately different output sections.
 
-This wraps the established digest email so project/activity sections remain untouched,
-while replacing the tiny image strip with readable, per-asset cards. Every asset is
-shown: generated art appears large, and unfinished art gets an explicit queue state.
-Seed Facets are printed on the same card that they shaped.
+The older completed bundle is art-rich because its six renders have had a full cycle
+to finish. The bundle built this morning is text/facet-forward and never reserves
+blank image rectangles for art that was only just submitted. Today's freshly authored
+proposal is steering input for tomorrow and is not shown as a third near-duplicate.
 """
 
 from __future__ import annotations
@@ -40,7 +40,7 @@ def _facet_chips(values: list[str]) -> str:
     )
 
 
-def asset_card(asset: dict[str, Any]) -> str:
+def asset_card(asset: dict[str, Any], *, show_art: bool) -> str:
     key = str(asset.get("key") or "vibe")
     accent, paper, icon = TYPE_THEME.get(key, TYPE_THEME["vibe"])
     title = esc(asset.get("title"))
@@ -48,26 +48,33 @@ def asset_card(asset: dict[str, Any]) -> str:
     summary = esc(asset.get("summary"))
     image_url = str(asset.get("image_url") or "")
     status = str(asset.get("art_status") or "not queued")
-    if image_url:
-        visual = (
-            f'<img src="{esc(image_url)}" alt="{title}" width="300" height="190" '
-            f'style="display:block;width:100%;height:190px;object-fit:cover;border-radius:9px;'
-            f'border:1px solid {accent}44;margin:0 0 10px">'
-        )
-    else:
-        visual = (
-            f'<div style="height:188px;border-radius:9px;border:1px dashed {accent};'
-            f'background:#ffffffaa;display:table;width:100%;margin-bottom:10px">'
-            f'<div style="display:table-cell;vertical-align:middle;text-align:center;color:{accent};'
-            f'font-size:13px;padding:12px">🖼️ Art {esc(status)}</div></div>'
-        )
+
+    visual = ""
+    if show_art:
+        if image_url:
+            visual = (
+                f'<img src="{esc(image_url)}" alt="{title}" width="300" height="190" '
+                f'style="display:block;width:100%;height:190px;object-fit:cover;border-radius:9px;'
+                f'border:1px solid {accent}44;margin:0 0 10px">'
+            )
+        else:
+            visual = (
+                f'<div style="height:188px;border-radius:9px;border:1px dashed {accent};'
+                f'background:#ffffffaa;display:table;width:100%;margin-bottom:10px">'
+                f'<div style="display:table-cell;vertical-align:middle;text-align:center;color:{accent};'
+                f'font-size:13px;padding:12px">🖼️ Art {esc(status)}</div></div>'
+            )
+
     facets = asset.get("facets") if isinstance(asset.get("facets"), list) else []
-    request = (
-        f'<div style="font-size:9px;color:#777;margin-top:7px">Queue: {esc(asset.get("request_id"))}</div>'
-        if asset.get("request_id") else ""
-    )
+    request = ""
+    if show_art and asset.get("request_id"):
+        job_id = asset.get("art_job_id")
+        queue_text = f"ArtJob {job_id}" if job_id else str(asset.get("request_id"))
+        request = f'<div style="font-size:9px;color:#777;margin-top:7px">Queue: {esc(queue_text)}</div>'
+
+    min_height = "410px" if show_art else "220px"
     return (
-        f'<div style="width:300px;min-height:410px;border:1px solid {accent};border-radius:12px;'
+        f'<div style="width:300px;min-height:{min_height};border:1px solid {accent};border-radius:12px;'
         f'background:{paper};padding:12px;font-family:Arial,sans-serif;box-sizing:border-box">'
         f'{visual}'
         f'<div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:{accent};font-weight:700">'
@@ -82,47 +89,52 @@ def asset_card(asset: dict[str, Any]) -> str:
     )
 
 
-def asset_grid(assets: list[dict[str, Any]]) -> str:
+def asset_grid(assets: list[dict[str, Any]], *, show_art: bool) -> str:
     rows: list[str] = []
     for index in range(0, len(assets), 2):
         pair = assets[index:index + 2]
         cells = "".join(
-            f'<td width="50%" valign="top" style="padding:6px">{asset_card(asset)}</td>'
+            f'<td width="50%" valign="top" style="padding:6px">{asset_card(asset, show_art=show_art)}</td>'
             for asset in pair
         )
         if len(pair) == 1:
             cells += '<td width="50%" style="padding:6px"></td>'
         rows.append(f"<tr>{cells}</tr>")
-    return '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:660px">' + "".join(rows) + "</table>"
+    return (
+        '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" '
+        'style="max-width:660px">' + "".join(rows) + "</table>"
+    )
 
 
-def proposal_section(heading: str, proposal: dict[str, Any] | None, cta: bool = False,
-                     images: list[dict[str, Any]] | None = None, page_link: str = "") -> str:
-    del images
+def proposal_section(
+    _heading: str,
+    proposal: dict[str, Any] | None,
+    cta: bool = False,
+    images: list[dict[str, Any]] | None = None,
+    page_link: str = "",
+) -> str:
+    del cta, images
     if not proposal:
-        wording = "No completed built output is available yet." if "Previous" in heading else "No proposal is available yet."
-        return f'<h2 style="margin-bottom:2px">{esc(heading)}</h2><p style="color:#777"><i>{wording}</i></p>'
+        return ""
+
+    mode = str(proposal.get("display_mode") or "art-rich")
+    show_art = mode == "art-rich"
+    heading = "🖼️ Previous completed output" if show_art else "✨ Just built this cycle"
     title = esc(proposal.get("title"))
     idea = esc(proposal.get("idea"))
     assets = proposal.get("assets") if isinstance(proposal.get("assets"), list) else []
+
+    target_page = proposal.get("page") or page_link
     buttons = ""
-    if cta and proposal.get("edit_link"):
-        buttons += legacy._button(proposal["edit_link"], "💬 Comment / edit the bundle")
-    target_page = page_link or proposal.get("page")
     if target_page:
-        buttons += legacy._button(target_page, "🌙 View the Daily Dream page", color="#1d4ed8")
-    buttons = f"<p>{buttons}</p>" if buttons else ""
+        buttons = f'<p>{legacy._button(target_page, "🌙 View the Daily Dream page", color="#1d4ed8")}</p>'
+
     calendar_label = str(proposal.get("calendar_label") or "")
     calendar_line = (
         f'<p style="color:#475569;font-size:12px;margin:3px 0 8px">{esc(calendar_label)}</p>'
         if calendar_label else ""
     )
-    ready = sum(asset.get("art_status") == "ready" for asset in assets)
-    art_line = (
-        f'<p style="color:#334155;background:#f8fafc;border-left:4px solid #64748b;'
-        f'padding:8px 12px;border-radius:0 6px 6px 0;font-size:13px">'
-        f'🖼️ {ready}/{len(assets)} asset images ready; every asset is represented below.</p>'
-    ) if assets else ""
+
     assignment = proposal.get("facet_assignments")
     facet_line = ""
     if isinstance(assignment, dict):
@@ -131,46 +143,54 @@ def proposal_section(heading: str, proposal: dict[str, Any] | None, cta: bool = 
             f'padding:8px 12px;border-radius:0 6px 6px 0;font-size:13px">'
             f'🧩 Record Facets: {esc(assignment.get("status", "unknown"))}</p>'
         )
+
+    if show_art:
+        ready = sum(asset.get("art_status") == "ready" for asset in assets)
+        art_line = (
+            f'<p style="color:#334155;background:#f8fafc;border-left:4px solid #64748b;'
+            f'padding:8px 12px;border-radius:0 6px 6px 0;font-size:13px">'
+            f'🖼️ {ready}/{len(assets)} asset images ready; this is the art-bearing output from the prior cycle.</p>'
+        ) if assets else ""
+    else:
+        submitted = sum(bool(asset.get("art_job_id")) for asset in assets)
+        art_line = (
+            f'<p style="color:#334155;background:#f8fafc;border-left:4px solid #64748b;'
+            f'padding:8px 12px;border-radius:0 6px 6px 0;font-size:13px">'
+            f'🎨 {submitted}/{len(assets)} ArtJobs submitted. No image space is reserved here; '
+            f'these renders belong in the next cycle’s art-rich section.</p>'
+        ) if assets else ""
+
     return (
-        f'<h2 style="margin-bottom:2px">{esc(heading)}</h2>'
+        f'<h2 style="margin-bottom:2px">{heading}</h2>'
         f'<p style="font-size:1.15em;color:#2e1065;margin:2px 0"><strong>{title}</strong></p>'
         f'<p style="color:#444;line-height:1.5;margin-top:4px;max-width:660px">{idea}</p>'
-        f'{calendar_line}{art_line}{facet_line}{buttons}{asset_grid(assets)}'
+        f'{calendar_line}{art_line}{facet_line}{buttons}'
+        f'{asset_grid(assets, show_art=show_art)}'
     )
 
 
 def build_payload(digest: dict[str, Any]) -> dict[str, Any]:
-    # The legacy payload builder reads its globals at call time, so replacing this
-    # one function upgrades both tomorrow and yesterday without copying the rest.
+    # Reuse the legacy project/activity shell, but feed its two Daily Dream slots
+    # the new roles in the order Silas expects: older art-rich output first, then
+    # the bundle just built this cycle. proposal_section ignores the legacy labels
+    # and renders from display_mode instead.
     legacy.proposal_section = proposal_section
-    payload = legacy.build_payload(digest)
+    legacy_digest = dict(digest)
+    legacy_digest["tomorrow_proposal"] = digest.get("previous_dream_output")
+    legacy_digest["yesterday_output"] = digest.get("current_dream_output")
+    payload = legacy.build_payload(legacy_digest)
 
-    shown_slugs = {
-        str((digest.get("tomorrow_proposal") or {}).get("slug") or ""),
-        str((digest.get("yesterday_output") or {}).get("slug") or ""),
-    }
-    additional = [
-        proposal for proposal in digest.get("recent_dream_outputs", [])
-        if isinstance(proposal, dict) and str(proposal.get("slug") or "") not in shown_slugs
-    ]
-    if additional:
-        recent_html = (
-            '<h2 style="margin-bottom:2px">📅 Earlier completed bundles</h2>'
-            + "".join(proposal_section("Built bundle", proposal) for proposal in additional)
-        )
-        divider = '<hr style="margin:22px 0;border:none;border-top:2px solid #eee">'
-        if divider in payload["htmlContent"]:
-            payload["htmlContent"] = payload["htmlContent"].replace(
-                divider, recent_html + divider, 1
-            )
-        else:
-            payload["htmlContent"] += recent_html
-
+    # Old history is intentionally suppressed. The digest is a two-beat handoff,
+    # not an archive dump.
     status = str(digest.get("daily_dream_output_status") or "")
-    if status and not digest.get("yesterday_output"):
-        marker = '<h2 style="margin-bottom:2px">🖼️ Previous completed output</h2>'
-        note = f'<p style="color:#92400e;background:#fffbeb;padding:8px 12px;border-left:4px solid #f59e0b">{esc(status)}</p>'
-        payload["htmlContent"] = payload["htmlContent"].replace(marker, marker + note, 1)
+    if status and not digest.get("previous_dream_output"):
+        marker = '<h2 style="margin-bottom:2px">✨ Just built this cycle</h2>'
+        note = (
+            f'<p style="color:#92400e;background:#fffbeb;padding:8px 12px;'
+            f'border-left:4px solid #f59e0b">{esc(status)}</p>'
+        )
+        if marker in payload["htmlContent"]:
+            payload["htmlContent"] = payload["htmlContent"].replace(marker, note + marker, 1)
     return payload
 
 
@@ -179,7 +199,10 @@ def main(argv: list[str] | None = None) -> int:
     input_path = Path(args[0] if args else "digest.json")
     output_path = Path(args[1] if len(args) > 1 else "digest-email.json")
     digest = json.loads(input_path.read_text(encoding="utf-8"))
-    output_path.write_text(json.dumps(build_payload(digest), indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    output_path.write_text(
+        json.dumps(build_payload(digest), indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
     print(f"Built {output_path}.")
     return 0
 
