@@ -7204,3 +7204,23 @@ records:
     stays silent, give it a named constant and a test that states the intent;
     "krea2 is the default" and "an unspecified seed is random" are claims a test
     can hold, `|| 'a1111'` is not.
+- date: 2026-08-09
+  project: interface-vision
+  task: t-116
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A codemod's own "pool exhausted" conclusion is only as good as its scan boundary.
+    kr_panel_codemod.py used re.search for the FIRST </template> in a file to find the
+    template region's end, but an SFC can nest a named-slot/conditional
+    <template v-if #slot> block that closes with its own </template> well before the
+    real end -- silently truncating the scan and hiding every real candidate after it.
+    Two prior slices (15, 18) trusted "0 automatable substitutions" as proof the pool
+    was empty when it was actually an artifact of the scan bug. Fix: scan for the LAST
+    </template> in the file, not the first. Re-running the corrected scan surfaced 47
+    previously-invisible candidates across 21 files in one pass -- a reminder that a
+    static-analysis/codemod tool's exhaustion claim needs to be re-derived from its
+    actual scan boundary, not taken at face value from its summary output.
