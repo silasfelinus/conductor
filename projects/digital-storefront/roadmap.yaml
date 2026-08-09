@@ -1553,18 +1553,19 @@ tasks:
 - id: t-043
   milestone: m6
   title: "Wire contentAccess.ts's packId Grant into the Dream and Facet LIST routes"
-  status: review
-  owner: worker
+  status: done
   passes: 0
   stakes: reversible
   depends_on: t-004
-  updated: '2026-08-09T06:21:50Z'
+  updated: '2026-08-09T06:28:50Z'
   note: |-
     Split off digital-storefront/t-004 (conductor sweep 2026-08-08) -- t-004 wired the packId Grant fallback into the Dream and Facet SINGLE-ITEM read routes (dreams/[id].get.ts, dreams/[id]/facets.get.ts, facets/[id].get.ts, kind_robots PR #1630) but explicitly left the LIST routes for a follow-on, since they are structurally different: dreams/index.get.ts and facets/index.get.ts build a set-based Prisma `where` clause (isPublic/own/admin baked into `andFilters`), and facets/catalog.get.ts's loadFacetCatalogEntries (server/utils/facetCatalog.ts) is a third, independent implementation of the same pattern. None of the three have a per-row check to swap a canView() call into -- adding Pack-Grant awareness means prefetching the caller's active PACK Grant subjectIds first, then OR-ing `packId IN (...)` into the existing `where`.
     This is NOT a security gap like t-005 -- these list routes already correctly exclude non-public/non-owned rows for every existing caller; they simply don't yet let a PACK-Grant holder see Pack-gated Dreams/Facets in list/catalog views the way the single-item routes now do. Reversible, ordinary software work, safe for normal Worker pickup once picked up.
 
 
     Salvaged only the reversible Dream/Facet list-route Pack Grant visibility slice from the stranded t-004 branch onto fresh Kind Robots main; Character/Reward access-policy changes remain behind digital-storefront/t-005's hard human gate.
+
+    DONE: Kind Robots #1643 merged as d9f955b52d2d0b4553e05b92a96d57730dd364de. Added active/unexpired VIEW-or-better PACK Grant ID prefetch and made Dream list, Facet list, and Facet catalog visibility include packId matches without changing anonymous, owner, admin, mine, inactive, or maturity filters. Exact PR head 25d1f39c248b42a6f4e374b72d88ecdc8b103bbc passed all 13 observed PR workflows, including TypeScript #31298673219, Contract Tests #31298673175, and Facet Catalog Contract #31298673167. Character/Reward access-policy changes remain untouched behind hard-gated digital-storefront/t-005.
   claimed_by: 2026-08-09T061257Z-ds-t043-r7m4
   claimed_at: '2026-08-09T06:12:57Z'
 
