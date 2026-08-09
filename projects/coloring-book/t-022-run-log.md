@@ -710,3 +710,29 @@ tomorrow.
 
 Verification: `validate_roadmaps.py` (clean), `coloring_queue_status.py --book
 monster-recast` (`queue_integrity_safe: true`), `git diff origin/main --stat`.
+
+## 2026-08-09T16:16Z | Agent run (scheduled conductor sweep) | coloring-book/t-022 -- checked prior guidance first, safe no-op
+
+Followed this task's own IMPORTANT-FOR-NEXT-CYCLE guidance from the 11:50Z entry above:
+checked `coloring_queue_status.py` before touching anything rather than running the
+consumer script blind. No automated `monster-recast-art-jobs.yml` run since 11:44Z
+(next daily cron 2026-08-10T11:00Z), and `recommended_action: recover-existing-jobs`
+with `recovery_safe: true`, `queue_integrity_safe: true` -- a recovery attempt (not a
+fresh submission) was safe to run.
+
+Ran `consume_coloring_book_color_art.py --live --book monster-recast --ids
+mr-029,mr-030,mr-031,mr-032,mr-033,mr-034,mr-035,mr-group-001` -- explicitly scoped via
+`--ids` to exactly the 8 `recovery_batch` entries (not a plain `--limit` pass), so no
+risk of touching unrelated pending entries. Result: 8/8 jobs still queued/running on
+the ComfyUI backend (job ids 8143/8117/8118/8119/8120/8121/8124/8125) -- none had
+finished rendering yet. 0 queue entries changed, no duplicate submissions made,
+`git diff` clean after the run. `monster-recast` unchanged at
+`{done: 25, approved: 3, pending: 8}`.
+
+This is exactly the kind of check the prior entry recommended: confirming there was
+real recoverable work before running `--live`, then accepting a genuine no-op when the
+jobs simply hadn't finished rendering yet, rather than forcing a resubmission. Released
+the claim and returned the task to `ready` for a later cycle (or tomorrow's cron) to
+retry once these jobs land.
+
+Verification: `git status`/`git diff --stat` (clean, confirming no unintended writes).
