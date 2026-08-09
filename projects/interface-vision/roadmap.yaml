@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2957,10 +2957,11 @@ tasks:
       Slice 27 implementation ready: wallet-page.vue replaces hand-rolled mx-auto w-full max-w-3xl with declaration-equivalent kr-container max-w-3xl while retaining kr-unbound and all other classes.
 
       Slice 27 merged as silasfelinus/kind_robots#1673 (squash f7767c485f3fe90c80f39e4f288ac832a9e20a7a) from exact head 257912acf06d957a420aee4e9bcdd9d652cbe123. Wallet now uses kr-container max-w-3xl with kr-unbound instead of hand-rolled mx-auto w-full max-w-3xl. All 13 exact-head workflows completed successfully: Contract Tests 31331245929, TypeScript 31331245941, Storybook Branch State 31331245926, Storybook Session Library 31331245981, Storybook Studio 31331245937, Narrative Art Persistence 31331245965, Narrative Art Milestone 31331245985, Narrative Primitives 31331245957, API Client Follow-ups 31331245984, Layout Contract 31331246002, MDC Scroll Ownership 31331245968, Facet Catalog 31331245943, Taskmaster Checkpoint Engine 31331245945. Return this non-recurring consistency umbrella to ready for the next bounded slice.
-    updated: '2026-08-09T19:21:00Z'
+    updated: '2026-08-09T19:26:46Z'
     implementation_pr: 'silasfelinus/kind_robots#1669'
-    claimed_by: 2026-08-09T191330Z-interface-vision-t104-s27-q7m4
-    claimed_at: '2026-08-09T19:13:30Z'
+    claimed_by: 20260809T192646Z-interface-vision-t104-s28-sched
+    claimed_at: '2026-08-09T19:26:46Z'
+    owner: worker
 
   - id: t-105
     milestone: m6
