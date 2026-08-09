@@ -330,15 +330,9 @@ overrides:
     kind: software
 
   - slug: wishmaster
-    status: active
-    priority: normal
+    status: retired # retired 2026-08-09 by Silas — duplicated project creation without distinct supporting infrastructure; preserve roadmap/research as history only
+    priority: low
     kind: software
-    # Frontend placement — synced to the kind_robots Project row by
-    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
-    # for 'wishmaster' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
-    liveUrl: /wishmaster
-    channelKey: plan
-    tabKey: wishmaster
 
   - slug: challenge-center
     status: finished # 20/20 tasks done — flipped 2026-07-17 with Silas's in-session approval
