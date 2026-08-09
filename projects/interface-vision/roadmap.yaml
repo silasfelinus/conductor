@@ -3007,7 +3007,7 @@ tasks:
   - id: t-115
     milestone: m5
     title: "Decide how to close the much-larger kr-panel-muted/kr-panel-flat consistency gap found by t-104 slice 14"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     note: >
@@ -3028,7 +3028,38 @@ tasks:
       safe -- do not expand into opacity variants, extra intermixed layout classes, or
       no-padding cases without the same case-by-case visual-delta reasoning slices 10-14
       applied by hand.
-    implementation_pr: 'silasfelinus/kind_robots#1563'
+
+
+      DECISION (2026-08-09): (b), codemod, scoped exactly as this note required. Opened as
+      silasfelinus/kind_robots#1646 -- utils/scripts/codemods/kr_panel_codemod.py. It fires
+      only on a static class="..." attribute containing an exact, contiguous, space-separated
+      token run for kr-panel/kr-panel-muted/kr-panel-flat (longest-first), and additionally
+      requires every OTHER token on the element to be a plain Tailwind utility or a no-bg/
+      border kr-* layout primitive -- any bare DaisyUI component-root class (stat, card, btn,
+      collapse, menu, dropdown-content, ...) co-occurring skips that occurrence for manual
+      review instead of substituting it. This matters because kr-panel* classes live in
+      tailwind.css's @layer components block, the same layer DaisyUI's own component classes
+      occupy -- Tailwind utilities always beat components regardless of source order, but two
+      components-layer classes on the same element do not have that guarantee, which is
+      exactly why slice 12 hand-excluded kr-stat-tile.vue (DaisyUI .stat conflict). The
+      codemod's allowlist reproduces that judgment call mechanically.
+
+
+      Re-running the exact-match grep found kr-panel and kr-panel-muted's pools are actually
+      EMPTY right now (kr-panel's was exhausted by slice 13; every remaining bg-base-200
+      candidate uses padding other than p-6, so none are byte-exact kr-panel-muted matches --
+      slice 14's ~114-file estimate was a loose substring grep, not filtered by exact padding).
+      Only kr-panel-flat had real candidates: 236 occurrences across 97 files migrated in
+      #1646. Excluded from this batch: components/dreams/dream-gallery.vue (PR #1642 was open
+      and under active review, touching this file, when #1646 was authored -- avoided
+      colliding with it); 26 occurrences across 20 files with a co-occurring DaisyUI class,
+      left for manual per-file judgment same as kr-stat-tile.vue; and 45 files with
+      pre-existing prettier drift unrelated to this change, left untouched rather than
+      folded into this diff. Verified: eslint clean (lint ratchet unchanged, 392/27),
+      vue-tsc --noEmit clean, layout-contract holds, prettier --check clean on every file
+      actually altered. The codemod script is committed to kind_robots for future slices to
+      reuse against the excluded/leftover cases once judged safe by hand.
+    implementation_pr: 'silasfelinus/kind_robots#1646'
     owner: worker
     claimed_by: 2026-08-09T062922Z-t115-scan
     claimed_at: '2026-08-09T06:29:23Z'
