@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-09T13:29:29Z
+Generated: 2026-08-09T13:45:40Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **551**
-- Outcomes: blocked: 13, cancelled: 1, done: 537
+- Closed tasks recorded: **552**
+- Outcomes: blocked: 13, cancelled: 1, done: 538
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 80 | 100% |
+| interface-vision | 81 | 100% |
 | kind-robots | 43 | 98% |
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 536 | 99% |
+| software | 537 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-09 `interface-vision/t-104` — Slice 20 of the kr-panel-flat consistency migration: applying t-116's corrected codemod scan to its own newly-surfaced 47-occurrence pool landed clean on the first pass with zero deviation from the established slice 8-19 method (exact-match substitution, git-stash-diffed prettier reformatting, compiled-CSS verification for skips). No new lesson beyond t-116's own record -- filed mainly so the outcome ledger reflects that the corrected pool is real, landable work, not just a diagnosis.
+
 - 2026-08-09 `interface-vision/t-116` — A codemod's own "pool exhausted" conclusion is only as good as its scan boundary. kr_panel_codemod.py used re.search for the FIRST </template> in a file to find the template region's end, but an SFC can nest a named-slot/conditional <template v-if #slot> block that closes with its own </template> well before the real end -- silently truncating the scan and hiding every real candidate after it. Two prior slices (15, 18) trusted "0 automatable substitutions" as proof the pool was empty when it was actually an artifact of the scan bug. Fix: scan for the LAST </template> in the file, not the first. Re-running the corrected scan surfaced 47 previously-invisible candidates across 21 files in one pass -- a reminder that a static-analysis/codemod tool's exhaustion claim needs to be re-derived from its actual scan boundary, not taken at face value from its summary output.
 
 - 2026-08-09 `conductor/t-110` — A default is a decision, and an unnamed one never gets reviewed. /api/art/enqueue resolved an omitted engine with `String(value || 'a1111')` — one word, no constant, no test — long after the relay stopped serving A1111, so "just enqueue this" meant "enqueue something that cannot render". The same shape hid a second bug next to it: buildDefaultComfyWorkflow passed a literal -1 seed into the KSampler where every sibling builder resolved a random one, pinning that lane to one image per Comfy install, and patchComfyWorkflow repeated the -1 immediately afterward so fixing only the builder would have been invisible. Both were invisible for the same reason — the value was inline, unnamed, and untested, so nothing ever asked whether it was still right. When a fallback decides behaviour for every caller that stays silent, give it a named constant and a test that states the intent; "krea2 is the default" and "an unspecified seed is random" are claims a test can hold, `|| 'a1111'` is not.
@@ -97,8 +99,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-08 `interface-vision/t-113` — A prior fix attempt (t-112, PR #1585) removed a viewport-based breakpoint but left the shared ingredient-picker grid keyed to viewport width rather than container width -- it passed the audit at the time because the audit's viewport set didn't hit the exact narrow-host case, then regressed for real once /taskmaster placed the picker inside a narrower panel. Switching to a container-aware auto-fit grid (minmax with a min card width) is the general fix for "shared component crushes inside one specific narrow host" -- prefer it over another viewport-breakpoint patch when a regression repeats on the same component in a new host context.
 
-- 2026-08-08 `conductor/t-104` — workflow-medic's own watch list only had one entry (process-task-events.yml) because it had never been exercised against real live-run history -- pulling that history for the "should we widen it" decision immediately surfaced a genuine 2+ day silent failure streak on hourly-conductor.yml (a script retrying an already-known-partial item forever instead of short-circuiting on it). Always pull real data before making a "should we expand monitoring" decision; mocked-test coverage alone can hide the exact class of incident the monitoring exists to catch.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-09T13:29:29Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-09T13:45:40Z_
