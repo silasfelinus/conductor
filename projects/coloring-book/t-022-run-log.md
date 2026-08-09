@@ -575,3 +575,138 @@ monster-recast` before/after, `validate_roadmaps.py` (clean), `git diff --stat` 
 before committing (17 modified queue entries + 17 new binary files, nothing else touched).
 Re-armed to `ready`; released claim — one recovery-actionable entry (mr-001) remains for
 the next cycle, plus 8 fresh `next_batch` entries not yet actionable this pass.
+
+## 2026-08-09T10:31Z | Agent run (scheduled conductor sweep) | coloring-book/t-022
+
+Claimed via `claim_task.py` (session `20260809T103058Z-cb-t022`). `coloring_queue_status.py
+--book monster-recast` reported one recovery-actionable entry (mr-001, job 7894) and 8
+fresh `next_batch` entries not yet actionable. This sandbox had no Pillow installed again
+(fresh sandbox, no persistence across sessions); installed it (`pip install --user
+Pillow`) before touching anything render-related.
+
+Ran `consume_coloring_book_color_art.py --live --book monster-recast --ids mr-001`: job
+7894 had genuinely completed — recovered cleanly, 1/1 succeeded, landed
+`mr-001-perfect-woman.webp` (ArtImage 17068). `coloring_queue_status.py` then reported
+`recommended_action=submit-next-batch` with all 8 remaining pending entries actionable
+(mr-029 through mr-035, mr-group-001) and no render_gate_error on any of them yet, so
+these were genuinely never-submitted, not stuck recoveries.
+
+Ran `consume_coloring_book_color_art.py --live --book monster-recast` (no `--ids`, full
+next-batch submission) to queue fresh ArtJobs for all 8. This took ~55 minutes wall-clock
+because `wait_for_job`'s default 600s per-job timeout is real: the local render worker
+("Silas-PC", run manually/on-and-off per this task's own prior run-log entries) had not
+picked any of them up within the wait window. All 8 were queued successfully (ArtJob ids
+8130-8132, 8134, 8136, 8138, 8140-8141) and every one's `render_gate_error`/
+`render_gate_job_id` was correctly recorded by the script's own except-block before
+moving to the next entry — 0/8 landed this pass, but 0 duplicates and 0 lost references.
+Three of the eight failed with a transient `SSL: UNEXPECTED_EOF_WHILE_READING` on the
+status poll rather than a clean timeout; treated identically by the except-block (job
+reference preserved, no special handling needed).
+
+Re-ran a short recovery pass (`--ids <the 8>`, `--timeout 30`) near the end of the cycle
+in case the render worker had caught up during the ~55-minute wait: 6 of 8 still
+genuinely `queued/running`, one hit the same transient SSL error again (mr-034, job
+8138), none landed. This confirms ordinary single-box backlog depth, the same shape
+`t-022`'s 2026-08-08 run-log entries already documented for this render worker — not a
+new defect, nothing to fix in code.
+
+`coloring_queue_status.py --book monster-recast` now reports `{done: 25, approved: 3,
+pending: 8}`, `recommended_action=recover-existing-jobs`, all 8 pending entries carrying
+valid job references for a future recovery pass. No `fresh_submission_blocked` entries,
+no duplicate job ids, no duplicate entry ids — queue integrity intact.
+
+Committed `color-art-jobs.yaml`'s 9 updated entries (1 done + 8 render_gate_error refs)
+plus the 1 new `mr-001-perfect-woman.webp` file via conductor PR (awaiting human review
+in the ArtJob trainer panel, same content-adjacent art-approval flow as every prior
+cycle — no roadmap `approved_by_human` gate applies to individual proposal renders).
+Verification: `coloring_queue_status.py --book monster-recast` before/after,
+`validate_roadmaps.py` (clean), `git diff --stat` reviewed before committing (1 file
+changed in `color-art-jobs.yaml`, 1 new binary file, nothing else touched).
+
+Re-armed to `ready`; released claim. All 8 job references are now recovery-actionable
+for whoever picks up t-022 next — no fresh submission needed until those clear or a new
+`next_batch` opens up.
+
+## 2026-08-09T11:40Z | Agent run (scheduled conductor sweep) | coloring-book/t-022 -- rotation collision
+
+While opening the close-out PR for the 2026-08-09T10:31Z cycle above, merging
+`origin/main` into the PR branch produced a real content conflict in
+`color-art-jobs.yaml` across all 8 of the same entries this cycle had just submitted
+(mr-029 through mr-035, mr-group-001): another session had independently run the exact
+same "submit fresh batch" pass for the same 8 pending entries, timestamped
+2026-08-09T08:46Z-09:56Z (ArtJob ids 8117-8125), but its merge only landed on `main`
+after this session's own submission (10:31Z-11:25Z, ArtJob ids 8130-8132, 8134, 8136,
+8138, 8140-8141) had already completed. Neither session could have detected the other:
+`claim_task.py`'s claim covers the roadmap task, not the underlying render-queue file,
+and both sessions' `coloring_queue_status.py` reads at their respective start times
+correctly showed the 8 entries as fresh/unsubmitted (each session's submission was the
+first one *it* could see).
+
+Resolved per AGENTS.md's rotation-collision playbook: fetched `origin/main`, merged
+(not force-pushed), and for each of the 8 conflicting entries kept `origin/main`'s
+already-merged canonical `render_gate_error`/`render_gate_job_id` (job ids 8117-8125)
+over this session's own later, now-redundant submission (job ids 8130-8141). No data
+was lost from the file's perspective -- `queue_integrity_safe` held true before and
+after -- but this session's own 8 ArtJob submissions are now orphaned duplicates on the
+render-service side (wasted render capacity, 8 extra ComfyUI jobs that will never be
+recovered into the queue). `coloring_queue_status.py` after resolution: 7 of the 8
+entries have a real recoverable job reference; `mr-029`'s render_gate_error from the
+other session's run is an enqueue-time HTTP 500 (Prisma transaction timeout, no job id
+issued), so it isn't recoverable and needs a fresh retry, not a recovery pass.
+
+Root cause is structural, not a mistake by either session: nothing currently prevents
+two concurrent sessions from both reading the same "next_batch actionable" queue state
+and both submitting. `claim_task.py`'s roadmap-level claim doesn't cover sub-task
+granularity like "which specific queue entries has a claim-holder already acted on
+this cycle." Filing this as a kaizen note rather than a new task: a future fix could
+have `consume_coloring_book_color_art.py --live` (no `--ids`) re-check
+`coloring_queue_status.py` for `render_gate_error` immediately before each individual
+`enqueue()` call (not just once at the start of the whole batch), which would have
+caught the other session's fresher writes if they'd landed on `main` before this
+session's own per-entry submission -- though it would not have caught this specific
+ordering (the other session's writes landed on `main` *after* this session's
+submissions completed, not before).
+
+Verification after resolution: `validate_roadmaps.py` (clean), `coloring_queue_status.py
+--book monster-recast` (`queue_integrity_safe: true`, 0 duplicate job/entry ids in the
+file), `git diff origin/main --stat` reviewed to confirm the merge only touched the
+intended files.
+
+## 2026-08-09T11:50Z | Agent run (scheduled conductor sweep) | coloring-book/t-022 -- second conflict, root cause found
+
+While pushing the merge-resolved close-out from the entry above, `origin/main` had
+already moved again (`0d7047ef "art: advance mechanically validated coloring-book
+batch [skip ci]"`, authored by `conductor-bot`). This is `.github/workflows/monster-
+recast-art-jobs.yml` -- a daily 11:00 UTC cron (plus a push trigger on
+`color-art-jobs.yaml`/consumer-script changes) that runs the exact same
+`consume_coloring_book_color_art.py --live` pass this task's manual sessions have been
+running by hand. Its 11:44Z run recovered the same `mr-001` (same ArtImage 17068, just
+a later `completed_at` timestamp) and submitted its own fresh job for `mr-029` (job
+8143) after the earlier HTTP 500 enqueue failure. This is the actual root cause of both
+of this cycle's merge conflicts, not a second concurrent human/agent session as the
+prior entry speculated -- the workflow's cron window (11:00 UTC) directly overlapped
+this session's manual run (10:31-11:25 UTC).
+
+Resolved the second conflict (a single-field timestamp diff on `mr-001.completed_at`)
+by keeping origin/main's value. `queue_integrity_safe` held true. `monster-recast` now:
+`{done: 25, approved: 3, pending: 8}`, all 8 pending entries carry a real recoverable
+job reference including `mr-029`'s new one.
+
+**Root cause identified, corrected guidance for future cycles**: `t-022`'s actual
+queue-submission/recovery work is already automated. A manual scheduled-conductor-sweep
+session running `consume_coloring_book_color_art.py --live` by hand duplicates this
+workflow's own daily pass and, when the timing overlaps (as it did this cycle), causes
+exactly the kind of duplicate-ArtJob collision recorded in the 11:40Z entry above. Future
+sessions picking up `t-022` should check `monster-recast-art-jobs.yml`'s recent runs
+(GitHub Actions tab, or `git log --grep='mechanically validated'`) BEFORE running the
+consumer script manually -- if the workflow already ran recently (daily cron, or any
+push to `main` touching `color-art-jobs.yaml`/the consumer scripts, which every prior
+manual close-out commit itself triggers), a manual pass is redundant at best and a
+collision risk at worst. This significantly changes what a "cycle" of this recurring
+task should actually do: check queue state and the workflow's own recent activity
+first, and only run the consumer script by hand if the workflow log shows it hasn't
+run recently or its last run left an actionable gap the cron won't reach until
+tomorrow.
+
+Verification: `validate_roadmaps.py` (clean), `coloring_queue_status.py --book
+monster-recast` (`queue_integrity_safe: true`), `git diff origin/main --stat`.
