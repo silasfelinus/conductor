@@ -49,6 +49,25 @@ def test_staging_order_is_fifo_inside_equal_priority():
     assert [entry["id"] for entry in ordered] == ["first", "second", "third"]
 
 
+def test_submitted_daily_dream_waits_for_relay_instead_of_reposting():
+    entry = {
+        "source": "dream-cycle",
+        "last_art_job_id": 8123,
+    }
+    assert staging.should_consume_after_submission(entry, already_satisfied=False) is False
+    assert staging.should_consume_after_submission(entry, already_satisfied=True) is True
+
+
+def test_unsubmitted_daily_dream_and_generic_requests_still_consume():
+    assert staging.should_consume_after_submission(
+        {"source": "dream-cycle"}, already_satisfied=False
+    ) is True
+    assert staging.should_consume_after_submission(
+        {"source": "kind-robots-missing-image", "last_art_job_id": 99},
+        already_satisfied=False,
+    ) is True
+
+
 def test_auto_art_runs_request_lane_before_project_art_lane():
     workflow = (ROOT / ".github" / "workflows" / "auto-art-generate.yml").read_text(
         encoding="utf-8"
