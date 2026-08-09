@@ -1,0 +1,7 @@
+version: 1
+project: interface-vision
+task: t-104
+operation: ready
+updated: '2026-08-09T14:19:00Z'
+note: >-
+  Coordination cleanup before slice 21: slice 20 is merged and the task is already ready, but its completed claim fields remained populated. Clear the stale owner/claim metadata so the next session-aware claim can reserve t-104 normally.
