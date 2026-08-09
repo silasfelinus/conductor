@@ -175,31 +175,12 @@ tasks:
 - id: t-022
   milestone: m4
   title: Monster Recast book 1 production pass — 36 final color/BW pairs
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
-  updated: '2026-08-09T14:29:38Z'
+  updated: '2026-08-09T14:31:02Z'
   depends_on: t-021
-  note: |-
-    CURRENT STATE (2026-08-09T11:50Z, scheduled conductor sweep): recovered mr-001
-    (job 7894) and ran a fresh-batch submission for the 8 remaining entries -- but while
-    this was in flight, discovered the automated `.github/workflows/monster-recast-art-
-    jobs.yml` cron (daily 11:00 UTC, plus a push trigger on color-art-jobs.yaml/consumer-
-    script changes) independently ran the identical pass at the same time (conductor-bot
-    commit 0d7047ef, 11:44Z), producing the same recovery and its own fresh submission for
-    mr-029. Two merge conflicts resulted; both resolved in favor of the automated workflow's
-    already-merged canonical state per AGENTS.md's rotation-collision playbook (fetch,
-    merge, favor origin/main, no force-push). Net: this session's own 8 ArtJob submissions
-    (8130-8141) are now orphaned duplicates on the render side -- wasted capacity, not a
-    data-integrity problem (queue_integrity_safe stayed true throughout).
-    monster-recast now reports {done: 25, approved: 3, pending: 8}, all 8 pending entries
-    carrying a real recoverable job reference, recommended_action=recover-existing-jobs.
-    IMPORTANT FOR NEXT CYCLE: t-022's recovery/submission work is already covered by an
-    automated daily workflow (monster-recast-art-jobs.yml) -- before running
-    consume_coloring_book_color_art.py --live manually, check that workflow's recent runs
-    (Actions tab or git log --grep='mechanically validated') first. Running the identical
-    pass manually on top of a live automated run is what caused this session's collision.
-    Full detail in run_log 2026-08-09T10:31Z and 11:40Z entries.
+  note: 'RAN 2026-08-09T16:16Z (scheduled conductor sweep): checked coloring_queue_status.py first per the prior cycle''s IMPORTANT-FOR-NEXT-CYCLE warning (this session''s own note) before touching anything -- recommended_action=recover-existing-jobs, recovery_safe=true, queue_integrity_safe=true, all 8 pending entries (mr-029..mr-035, mr-group-001) carrying real job references from the 08:56-11:44Z submissions. Ran consume_coloring_book_color_art.py --live --book monster-recast --ids <the exact 8 recovery_batch ids> (scoped via --ids, not a plain --limit pass, so no risk of also touching unrelated pending entries). Result: 8/8 jobs still queued/running on the ComfyUI backend (job 8143/8117/8118/8119/8120/8121/8124/8125) -- none finished yet, 0 queue entries changed, no duplicate submissions made, git diff clean. Safe no-op; monster-recast still {done: 25, approved: 3, pending: 8}. No automated workflow run since 11:44Z (next daily cron 2026-08-10T11:00Z). Releasing claim, returning to ready for a later cycle to retry recovery once these jobs finish rendering.'
   run_log: projects/coloring-book/t-022-run-log.md
   recurring: true
   owner: worker
