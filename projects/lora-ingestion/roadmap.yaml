@@ -61,7 +61,7 @@ tasks:
 - id: t-003
   milestone: m2
   title: "Reconcile later Resource-backed generation evidence; run one current smoke only if proof is still missing"
-  status: ready
+  status: claimed
   stakes: reversible
   gate_human: false
   note: |-
@@ -69,7 +69,7 @@ tasks:
 
     SENT BACK by silasfelinus via Kind Robots For You. this should have been fixed. if not, please report back.
   approved_by_human: false
-  updated: '2026-08-03 09:15:24.833000+00:00'
+  updated: '2026-08-10T09:30:57Z'
   outcome_note: >
     The original July 28 gate is stale in scope. Since then Kind Robots made Resource.localPath
     authoritative for LoRA resolution across image/video engines (including PR #1090), fixed
@@ -78,6 +78,9 @@ tasks:
     later production/ArtJob evidence for a successful Resource-backed LoRA render. If that proof
     already exists, document it and finish the project. Only queue one fresh smoke render if the
     existing evidence is genuinely insufficient. No human product decision is required.
+  owner: worker
+  claimed_by: 20260810T093057Z-lora-t003-a50cb6
+  claimed_at: '2026-08-10T09:30:57Z'
 
 - id: t-004
   milestone: m3
