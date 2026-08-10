@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: ready
+    status: needs-human
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2955,11 +2955,13 @@ tasks:
       Slice 36 (session 20260810T021240Z-interface-vision-t104-s36-k3f7) claimed the task at 2026-08-10T00:32:04Z but never pushed a PR or a note before the claim's 90-minute TTL expired -- picked up as an abandoned/crashed claim by slice 37 (roadmap_claims.py's documented self-expiry path, not a rotation collision).
 
       Slice 37 (session 20260810T032713Z-interface-vision-t104-s37-sched) re-verified slice 35's conclusion rather than re-running its full sweep from scratch: confirmed no .vue template files changed in any of the three kind_robots commits merged since slice 34/35 (#1700 achievement-records guest-safety fix, #1701 Project-create Todo parity contract test, #1702 Model Builder theme field -- all server/script-only, zero template diffs), then re-ran the kr-container (mx-auto+w-full+max-w-*) token-set grep fresh to catch anything slice 35 might have missed rather than trusting its count unverified: 10 raw hits, all previously-excluded shapes or non-root matches -- error.vue (new since slice 34, but its mx-auto/w-full/max-w-5xl classes sit on a nested `<section>`, not the component's `<main>` root -- same "nested element" exclusion as project-front-page.vue/achievement-art.vue since slice 31), components/user/messenger.vue and components/abandonware/wonderlab/lab-gallery.vue (still previously-excluded), components/user/registration-page.vue and components/abandonware/pages/registration-form.vue (both match on a nested `<form>`, not the component root), components/conductor/project-front-page.vue's two hits (both nested, per slice 31), components/achievements/achievement-popup.vue (still the previously-excluded nested modal-content), components/pages/for-you-manager.vue (`max-w-[1800px]` is an arbitrary-value class, not one of the standard `max-w-*` scale this substitution rule targets, and it's a root already carrying `mx-auto` alone without `w-full` co-occurring with a plain max-w-* token in the way prior slices matched), pages/admin/achievement-art.vue (still mixes the required kr-scroll primitive, per slice 31's exclusion). Zero new byte-exact root-level candidates. No changes made; releasing the claim. The pool remains genuinely exhausted under this task's byte-exact rule -- the only documented path to further progress is Silas or a future session explicitly authorizing a non-byte-exact pass on the kr-note family slice 35 scoped out.
-    updated: '2026-08-10T03:45:00Z'
+
+      Byte-exact consistency pool is exhausted after slices 32-37. The remaining documented kr-note candidates are intentionally non-byte-exact and would add visible font-weight/text-size changes; slice 37 explicitly says further progress requires Silas or a future session explicitly authorizing that visual-delta pass. Marking needs-human rather than manufacturing another no-op slice. No code or production data changed.
+    updated: '2026-08-10T05:13:30Z'
     implementation_pr: 'silasfelinus/kind_robots#1699'
     claimed_by: null
     claimed_at: null
-    owner: null
+    soft_gate: false
 
   - id: t-105
     milestone: m6
