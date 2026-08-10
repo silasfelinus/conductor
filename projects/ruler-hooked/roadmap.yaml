@@ -391,7 +391,10 @@ tasks:
   - id: t-013
     milestone: m1
     title: 'Weekly site audit (2026-08-07): correct t-012''s stale file paths'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     stakes: reversible
     note: 'Filed by the weekly site-audit gap scan. t-012 (done, 2026-07-21) asserts components/ruler-hooked/ruler-hooked-page.vue is "structurally present and wired" -- the file actually lives at components/conductor/ruler-hooked-page.vue (Nuxt''s flat auto-import means the app still works, but the documented path is wrong). The same task cites components/navigation/swipe-deck.vue and components/butterfly/single-slider.vue as reuse patterns and stores/compositionStore.ts as a reuse idiom for local-storage persistence; none of the three exist under those names (swipe-deck.vue was never built, single-slider.vue now lives at components/abandonware/butterfly/single-slider.vue, and compositionStore.ts never existed -- rulerHookedStore.ts ships its own local-storage handling directly). Add a one-line correction addendum to t-012''s note recording the actual current paths so a future contributor does not try to import nonexistent reuse targets.'
+    claimed_by: 20260810T083500Z-sched-ruler-t013
+    claimed_at: '2026-08-10T08:34:48Z'
+    updated: '2026-08-10T08:34:48Z'
