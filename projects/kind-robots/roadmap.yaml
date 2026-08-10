@@ -2268,24 +2268,15 @@ tasks:
   - id: t-063
     milestone: m3
     title: "CI guard: fail when a new Project-creating call site has no PROJECT-CREATION.md surface entry"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-059 (docs(kind-robots): document AppMaker + Model Builder
-      Project-creation surfaces, silasfelinus/conductor#2006). t-058's audit found 4
-      undocumented `.project.create(` call sites that had accumulated silently over
-      time; the only way this was caught was a manual `grep -rn "\.project\.create("
-      server/ scripts/` run during an unrelated docs task. Add a CI check (a small
-      Python or Node script, wired into an existing workflow or a new lightweight one)
-      that greps kind_robots for `.project.create(` call sites and fails if any file
-      path isn't referenced somewhere in `projects/kind-robots/PROJECT-CREATION.md`
-      (a simple allowlist file listing known/exempt paths, updated alongside doc
-      changes, is fine if a smarter parity check is too fragile). Keep the check
-      forgiving about false positives -- flag for manual review rather than hard-fail
-      on ambiguous matches (e.g. a helper function whose name merely contains
-      "project.create").
+    note: |-
+      Kaizen from t-059 (docs(kind-robots): document AppMaker + Model Builder Project-creation surfaces, silasfelinus/conductor#2006). t-058's audit found 4 undocumented `.project.create(` call sites that had accumulated silently over time; the only way this was caught was a manual `grep -rn "\.project\.create(" server/ scripts/` run during an unrelated docs task. Add a CI check (a small Python or Node script, wired into an existing workflow or a new lightweight one) that greps kind_robots for `.project.create(` call sites and fails if any file path isn't referenced somewhere in `projects/kind-robots/PROJECT-CREATION.md` (a simple allowlist file listing known/exempt paths, updated alongside doc changes, is fine if a smarter parity check is too fragile). Keep the check forgiving about false positives -- flag for manual review rather than hard-fail on ambiguous matches (e.g. a helper function whose name merely contains "project.create").
+
+
+      Implemented the Project-creation surface drift guard in Kind Robots: a local manifest mirrors the five documented direct create call sites, a comment/string-aware scanner catches additions/removals without false-positive prose matches, and a lightweight Actions workflow runs it on relevant source changes.
     claimed_by: 20260810T061722Z-auto-e939f1
     claimed_at: '2026-08-10T06:17:22Z'
-    updated: '2026-08-10T06:17:22Z'
+    updated: '2026-08-10T06:22:00Z'
