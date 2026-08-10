@@ -2264,3 +2264,25 @@ tasks:
       this task's `approved_by_human: true` and `status: ready`. What unblocks: the four
       Grant routes, then the two route migrations, then the share UI, as sequential
       follow-up tasks once approved (pitch's own "Suggested first task" has the order).
+
+  - id: t-063
+    milestone: m3
+    title: "CI guard: fail when a new Project-creating call site has no PROJECT-CREATION.md surface entry"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-059 (docs(kind-robots): document AppMaker + Model Builder
+      Project-creation surfaces, silasfelinus/conductor#2006). t-058's audit found 4
+      undocumented `.project.create(` call sites that had accumulated silently over
+      time; the only way this was caught was a manual `grep -rn "\.project\.create("
+      server/ scripts/` run during an unrelated docs task. Add a CI check (a small
+      Python or Node script, wired into an existing workflow or a new lightweight one)
+      that greps kind_robots for `.project.create(` call sites and fails if any file
+      path isn't referenced somewhere in `projects/kind-robots/PROJECT-CREATION.md`
+      (a simple allowlist file listing known/exempt paths, updated alongside doc
+      changes, is fine if a smarter parity check is too fragile). Keep the check
+      forgiving about false positives -- flag for manual review rather than hard-fail
+      on ambiguous matches (e.g. a helper function whose name merely contains
+      "project.create").
