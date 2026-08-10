@@ -167,19 +167,43 @@ tasks:
   - id: t-007
     milestone: m1
     title: Build the pitch composer and responsive candidate workbench
-    status: review
+    status: ready
     depends_on:
       - t-004
       - t-005
       - t-006
     owner: worker
-    updated: '2026-08-10T10:52:00Z'
-    passes: 0
+    updated: '2026-08-10T11:00:00Z'
+    passes: 1
     stakes: reversible
+    retry_context: >
+      pass 1 failed (quality): kind_robots PR #1714 (worker/brainstorm-t-007-a7d4) has two
+      real, distinct CI failures on components/brainstorm/brainstorm-candidate-card.vue --
+      not transient, both reproduced from the uploaded diagnostics.
+      (1) TypeScript (exit 2): lines 130 and 140 (the toggleKeep/toggleReject `@click`
+      bindings) -- `error TS2769: No overload matches this call` on `emit('reset')`/
+      `emit('keep')` and `emit('reject')`/`emit('reset')`, with the reported expected type
+      collapsing to the *last* `defineEmits<{...}>()` member (`'branch'`) instead of the
+      matching one. This is TypeScript's known limitation resolving many-member shorthand
+      `defineEmits<{ eventA: []; eventB: []; ... }>()` overloads inside a plain function body
+      referenced (not inlined) from a template `@click` -- worth trying a single discriminated
+      call signature (e.g. `(e: 'keep' | 'reject' | 'reset' | 'delete' | 'regenerate' | 'branch') => void`
+      plus separate overloads only for `edit`/`feedback`'s payload) instead of one property per
+      event, or inlining the emit call directly in the template handler.
+      (2) Contract verifiers (`audit:wonderlab-previews --strict`, exit 1): the new
+      brainstorm-candidate-card.vue is "newly missing preview-fixture coverage since the
+      baseline" (missing fixture prop `candidate`) -- add a preview fixture for `candidate`
+      (and any other required props) or an explicit skip reason per the WonderLab preview
+      audit's existing allow-list convention; the allow-list only shrinks, so this can't be
+      left uncovered.
+      All 13 other checks on the PR are green. Branch/PR left open for the retry -- fix on
+      the same branch, don't open a new PR. See PR #1714 review comment for the same detail.
     note: |-
       Front-end centerpiece: pitch textarea, sensible result-count control, optional compact constraints/examples, generate action, and responsive candidate cards. Candidate cards must support keep, reject/delete, edit, regenerate-this-slot, duplicate/branch and "more like this" affordances without turning the page into a chat transcript. Design for keyboard and touch. Loading/error/empty states are first-class.
 
       Built the first playable Brainstorm workbench on Kind Robots branch worker/brainstorm-t-007-a7d4. The dedicated manager now provides a premise composer, explicit result count, optional constraints/examples, fresh-batch history, structured loading/error/empty states, and a container-responsive candidate workspace. Candidate cards emit keep/reject/reset/delete, inline edit, feedback, regenerate-this, and branch/more-like-this actions; the manager orchestrates the Brainstorm store so components contain no API or localStorage calls. Added a Brainstorm Workbench Contract workflow enforcing store ownership and intrinsic grid layout.
+
+      REJECTED 2026-08-10T11:00:00Z (pass 1, quality): see retry_context above -- real TypeScript and Contract-verifier failures on PR #1714, not a transient CI blip. PR left open for the fix.
     claimed_by: 2026-08-10T104400Z-brainstorm-t-007-a7d4
     claimed_at: '2026-08-10T10:44:00Z'
 
