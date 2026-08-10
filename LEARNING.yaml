@@ -7421,3 +7421,16 @@ records:
     batch identity and candidate lineage in the client contract now gives later history, persistence,
     art, and object-context work stable seams without forcing provider or Dream semantics into Brainstorm
     state.
+- date: '2026-08-10'
+  project: brainstorm
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'The current text stack has multiple useful abstractions but no single provider layer covers
+    every Kind Robots text server: generic textServer assumes OpenAI-style requests while Suggest explicitly
+    handles Anthropic/Ollama/compatible servers. Brainstorm therefore resolves the canonical Server row
+    first, then uses the provider-specific caller while keeping one validated candidate envelope. Never
+    forward first-party provider credentials to arbitrary compatible URLs.'

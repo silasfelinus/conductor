@@ -148,25 +148,26 @@ tasks:
   - id: t-006
     milestone: m1
     title: Implement provider-agnostic structured text generation endpoint
-    status: review
+    status: done
     depends_on:
       - t-003
       - t-005
-    owner: worker
-    updated: '2026-08-10T10:32:00Z'
+    updated: '2026-08-10T10:41:00Z'
     passes: 0
     stakes: reversible
     note: |-
       Use the current Kind Robots default/active text-server/provider abstraction rather than an old hard-coded OpenAI path. Accept a pitch, requested count and optional constraints. Request structured candidate output, validate/sanitize it, reject malformed provider wrappers safely, and return the standard `{ success, ... }` API shape via errorHandler. Prompt explicitly for semantic diversity and non-duplicate ideas. Apply normal auth/mana behavior if current text generation requires it. Add focused endpoint/parser tests.
 
       Implemented the provider-aware Brainstorm generation contract on Kind Robots branch worker/brainstorm-t-006-f6a9. Added POST /api/brainstorm/generate with canonical Server-row resolution, access/transport guards, mana gating, exact-count structured validation, duplicate rejection, and errorHandler responses. Official OpenAI uses native Responses JSON schema; Anthropic, Ollama, and OpenAI-compatible servers share the current provider caller and are normalized through one JSON candidate parser with no prose-line fallback. Added modern creative-quality prompting including the anti-benchmark rule and 'do not confuse safe with bland', plus regression tests and a dedicated generation-contract workflow. Hardened shared provider derivation so compatible/local servers need not fake an OpenAI key and first-party OpenAI credentials are never forwarded to arbitrary compatible URLs.
+
+      Merged Kind Robots PR #1713. Brainstorm now has POST /api/brainstorm/generate with canonical Server-row resolution, provider-aware structured generation, exact-count/duplicate validation, modern creative-quality prompting, mana charging only after usable output, and backend/server trust guards. Official OpenAI uses native Responses JSON schema; Anthropic, Ollama, and compatible servers normalize through the shared provider caller. The dedicated generation contract, TypeScript, Layout, API client, and full repository contract suites passed.
     claimed_by: 2026-08-10T101700Z-brainstorm-t-006-f6a9
     claimed_at: '2026-08-10T10:17:00Z'
 
   - id: t-007
     milestone: m1
     title: Build the pitch composer and responsive candidate workbench
-    status: waiting
+    status: ready
     depends_on:
       - t-004
       - t-005
@@ -247,7 +248,7 @@ tasks:
   - id: t-012
     milestone: m3
     title: Define reusable source-object context adapter
-    status: waiting
+    status: ready
     depends_on:
       - t-005
       - t-006
