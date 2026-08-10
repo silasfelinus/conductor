@@ -2157,7 +2157,7 @@ tasks:
   - id: t-058
     milestone: m3
     title: Audit m3 (slug parity + project creation surfaces) and m4 (sharing/access control) for remaining gaps
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -2168,7 +2168,7 @@ tasks:
 
 
       Retry (session 20260810T054500Z-kind-robots-t058-retry-sched): kept the same audit findings (docs/t-058-m3-m4-gap-audit.md, evidence unchanged) but corrected the disposition per the review comment. Filed t-059 (docs-only: document all live creation surfaces in PROJECT-CREATION.md) and t-060 (front-end-only: slug field + 409 UX on the New Project form) as directly-actionable `ready` tasks -- neither touches a shared backend contract. Everything that touches shared backend/API code now goes through a pitch first, per BOUNDARY.md and SHARING-SPEC.md:138's own "illustrative, not committed" label: t-061 (`needs-human`, soft) points at `pitches/2026-08-10-kind-robots-slug-integrity.md` (conductorSlug immutability + consolidating the three independent slug-collision implementations); t-062 (`needs-human`, soft) points at `pitches/2026-08-10-kind-robots-grant-sharing-api.md` (the Grant CRUD API SHARING-SPEC.md left illustrative, plus wiring canView()/existsActiveGrant() into the projects/resources view routes and a minimal share UI -- bundled as one pitch since the former t-063/t-064/t-065 split only makes sense once the API exists, and asking Silas to approve four fragments of one capability separately would be worse, not better, process discipline). Milestone status flipped `not-started` -> `in-progress` for both m3/m4 (same as the first attempt -- the review's rejection was about the follow-up task disposition, not this part, and it never actually landed on main since PR #2002 was closed unmerged). This time following the actual review -> merge -> done lifecycle: PR open, status: review now, close_task.py to done only after merge.
-    updated: '2026-08-10T05:15:00Z'
+    updated: '2026-08-10T04:36:48Z'
     owner: worker
 
   - id: t-059
