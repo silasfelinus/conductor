@@ -342,3 +342,490 @@ Restore the loop. Restore the strange little brain. Restore the human ability to
 edit, redirect, and weaponize a good idea against a blank page.
 
 Then make the old generations look embarrassing.
+
+---
+
+## Current architecture audit — 2026-08-10
+
+task: t-003
+session: 2026-08-10T091100Z-brainstorm-t-003-c4a1
+
+The current repository has enough surviving infrastructure to rebuild Brainstorm cleanly
+without reviving the Pitch model or creating a private AI stack. The most important finding is
+that the current system already contains each major infrastructure primitive Brainstorm needs,
+but they are split across the Dream workaround, generic Suggest service, server store, content
+router, and Prompt/object-context utilities.
+
+The implementation should compose those primitives behind a Brainstorm-owned store and API
+contract rather than making Dreams continue to impersonate the product.
+
+### Route and presentation map
+
+#### `content/brainstorm.md`
+
+Current canonical public content document for `/brainstorm`.
+
+Useful current presentation metadata should survive the restoration:
+
+- `channelKey: plan`
+- `tabKey: brainstorm`
+- `dashboardKey: brainstorm`
+- current Brainstorm title/subtitle/persona copy;
+- Stage 3 mobile/tablet/desktop backdrop routes.
+
+The remaining migration scar is structural:
+
+- `cards: dreamCards`
+- body mounts `:dream-manager`
+
+**Decision for t-004:** keep the current page metadata/backdrops and replace the Dream-specific
+mount with the new dedicated Brainstorm manager. Brainstorm does not need a gallery card source
+for the first restoration slice, so `cards: dreamCards` should be removed unless the current
+content-host contract proves it is required for unrelated chrome.
+
+#### `content/channels/plan/brainstorm.md`
+
+This tab document is already aligned with the intended product. It routes to `/brainstorm` and
+describes the correct loop: turn a pitch into useful creative riffs, keep promising ideas, and
+save reusable seeds. Treat this as presentation truth, not the Dream-specific dashboard text.
+
+#### `stores/helpers/dashboardHelper.ts`
+
+The `brainstorm` dashboard is partly correct but its primary tab still says `Dream Brainstorm`
+and routes to `/dreams`. Its narrative also says survivors become Dream seeds.
+
+**Decision for t-004:** primary Brainstorm tab routes to `/brainstorm` and uses general
+Brainstorm language. The existing Prompts tab may remain as an adjacent handoff/browser.
+
+#### `utils/projectPlacements.ts`
+
+Already maps conductor slug `brainstorm` to:
+
+- channel `plan`
+- tab `brainstorm`
+- route `/brainstorm`
+
+No placement change is needed.
+
+#### `/plan/brainstorm` alias
+
+There is no current `content/plan/brainstorm.md` and no repository reference to the literal
+`/plan/brainstorm` route. The catch-all `pages/[...slug].vue` already implements a same-origin,
+SSR-aware `redirect:` frontmatter contract and re-applies it during client navigation.
+
+**Decision for t-004:** add a tiny content redirect document at `content/plan/brainstorm.md`
+with `redirect: /brainstorm`, rather than duplicating the Brainstorm implementation. Direct
+load and client navigation then share the existing redirect machinery.
+
+### Current generation path
+
+#### `server/api/botcafe/brainstorm.ts`
+
+The surviving endpoint is more modern than the old UI around it:
+
+- uses the OpenAI Responses API;
+- requests strict JSON-schema output;
+- requires exactly the requested number of `{ title, pitch }` ideas;
+- normalizes/validates returned idea objects;
+- uses `manaGate()` and `estimateTextCostUsd()`;
+- returns the site's `{ success, message, data, mana }` shape.
+
+Those are useful implementation donors.
+
+However, it is not the right canonical endpoint for the revived general product because it:
+
+- is hard-coded to `OPENAI_API_KEY` and direct OpenAI fetches;
+- defaults to `OPENAI_TEXT_MODEL` / `gpt-4o-mini` instead of the user's active text server;
+- explicitly asks for **Dream** brainstorm ideas;
+- accepts old provider knobs and compatibility aliases;
+- includes canned positive examples (`Haunted Fitness Tracker`, `Reverse Life Insurance`,
+  `Misfortune Cookies`) that would anchor the revived creative voice to exactly the kind of
+  old-output baseline the project is meant to beat.
+
+**Decision for t-006:** use the endpoint's strict structured-output shape and mana accounting as
+organ donors, but replace/refactor it behind a dedicated Brainstorm generation contract. Do not
+make the revived workbench depend on `/api/botcafe/brainstorm` as a Dream-specific public
+contract.
+
+### Current provider abstraction
+
+#### `server/utils/suggest/suggestProviders.ts`
+
+This is the best current provider-selection donor. It already derives and calls:
+
+- Anthropic;
+- OpenAI;
+- OpenAI-compatible custom servers;
+- Ollama.
+
+It resolves a model from the selected server and knows the different provider endpoints. Its
+current return type is plain text, so it is not by itself sufficient for Brainstorm's strict
+candidate contract.
+
+#### `server/api/suggest.post.ts`
+
+This route shows the modern server-side pattern Brainstorm should follow:
+
+- derive provider/model from the supplied server snapshot;
+- use `manaGate()` with the selected server id;
+- estimate generation cost from the same completion budget;
+- resolve private object context server-side when required;
+- call provider through shared utility code;
+- return success/data/mana consistently.
+
+**Decision for t-006:** either extract/generalize the provider-call utility so Brainstorm can
+request structured candidate data per provider, or add a Brainstorm-specific provider layer
+that uses the same provider/server derivation. Avoid a second, unrelated provider registry.
+
+For OpenAI, native strict JSON schema is already proven in the current Brainstorm endpoint. For
+providers without equivalent native schema guarantees, normalize and validate a minimal
+`{ ideas: [...] }` envelope server-side. Parsing tolerance belongs at this provider boundary,
+not in Vue components or the Pinia store.
+
+### Active text-server selection
+
+#### `stores/serverStore.ts`
+
+The store already defines text-compatible servers and exposes `activeTextServer` with this
+fallback order:
+
+1. explicit active text server id;
+2. user's preferred text server;
+3. default text server;
+4. official text server;
+5. first available text server.
+
+It supports OpenAI, Anthropic, Ollama, Custom, and text/chat-category servers. The store also
+owns its browser persistence, matching Kind Robots' component/store boundary.
+
+**Decision for t-005/t-006:** Brainstorm uses `activeTextServer` by default and passes only the
+safe server snapshot fields required by the generation endpoint. Do not restore the old visible
+server-management panel. An advanced server choice can be considered later if it provides
+actual creative value.
+
+### Authentication and mana
+
+#### `server/utils/manaGate.ts`
+
+`manaGate()` calls `requireApiUser()`. Therefore current paid/free generation semantics require
+an authenticated API user. It also correctly supports free generation for admin/server-key,
+FAMILY role, user-owned resources, and public non-official servers, while charging normal
+hosted generation atomically through the mana ledger.
+
+**Decision:** do not punch a Brainstorm-specific hole through the economy/auth boundary.
+Anonymous visitors may eventually use an ephemeral composer or inspect sample/local state, but
+model generation must obey the current authenticated mana contract unless a separate product
+policy explicitly changes it.
+
+The store/UI must surface 401/402 and provider failures as normal Brainstorm states rather than
+silently failing or inventing fake candidates.
+
+### Current Dream workaround and semantic collisions
+
+#### `stores/helpers/dreamHelper.ts`
+
+`DreamType.BRAINSTORM` is not a clean Brainstorm-session model. The migration compatibility map
+folds legacy `RANDOMLIST` and `TITLE` values into `BRAINSTORM`, and the helper still includes
+pipe-delimited `buildBrainstormPrompt`, `buildTitleStormPrompt`, `extractExamples`, and
+normalization utilities from that era.
+
+This is legacy Dream taxonomy, not evidence that a general creative-ideation session belongs in
+a Dream row.
+
+#### `stores/dreamStore.ts`
+
+The store still carries migrated Pitch-era Brainstorm state in localStorage:
+
+- `numberOfRequests`;
+- `temperature`;
+- `maxTokens`;
+- `exampleString`;
+- `apiResponse`;
+- legacy Pitch storage hydration.
+
+`fetchBrainstormDreams()` builds a delimiter-era Dream prompt, calls
+`/api/botcafe/brainstorm`, then normalizes the structured endpoint result back into a string.
+This throws away structure only for the component to reconstruct it later.
+
+#### `components/dreams/dream-brainstorm.vue`
+
+This is a useful UX donor, not the canonical product. It contains candidate cards, acceptance,
+rejection feedback, examples, resubmission, source-Dream selection, and current `kr-panes`
+layout. But it is Dream-specific and currently:
+
+- parses returned text with regex/delimiters into candidates;
+- exposes max tokens and temperature;
+- couples generation to `dreamStore`;
+- saves lists as `DreamType.BRAINSTORM`;
+- saves accepted candidates directly as Dreams;
+- offers Dream-specific source/update actions.
+
+**Decision:** preserve its good interaction ideas and responsive primitives. Do not make the
+general `/brainstorm` surface a wrapper around this component. Later, Dream Brainstorm should
+become a source-object entry point/consumer of the general Brainstorm workbench.
+
+### Brainstorm store boundary
+
+There is no current `useBrainstormStore` / `brainstormStore` in the repository.
+
+**Decision for t-005:** create `stores/brainstormStore.ts` as the owner of:
+
+- current premise/request;
+- result count;
+- user-facing constraints/examples;
+- source-object reference metadata;
+- generation/loading/error state;
+- candidate collection and stable application-owned ids;
+- keep/reject/edit state;
+- single-candidate regeneration/branch requests;
+- session-local revision history;
+- browser persistence for ephemeral work, if retained.
+
+Components may bind to/refine store state, but they do not call `/api/brainstorm/*` or
+`localStorage` directly.
+
+Do not move Dream gallery/query state, Prompt gallery state, or server management into the
+Brainstorm store.
+
+### Persistence model audit
+
+No audited current model is a clean substitute for the deleted Pitch root.
+
+#### `Prompt`
+
+The Prisma model describes a Prompt as an art or text prompt to an AI that generates new media.
+`promptStore` provides mature CRUD, ownership/visibility behavior, creation-source provenance,
+and browser caching.
+
+**Use it for:** an explicit handoff such as “save this selected candidate as a Prompt” or later
+art-prompt workflows.
+
+**Do not use it for:** a Brainstorm session with premise, multiple candidates, rejection state,
+revision lineage, and branch relationships. Encoding that graph into Prompt rows would overload
+a model with different semantics.
+
+#### `PitchSheet`
+
+`PitchSheet` still exists, but it is a presentation/story pitch-sheet model tied to Dream or
+Project with hook/highlight/detail/layout fields. It is unrelated to the deleted general
+Brainstorm Pitch semantics.
+
+**Decision:** do not commandeer `PitchSheet` for Brainstorm persistence.
+
+#### `Dream`
+
+Dream remains a valid **handoff/source** object and future Brainstorm adapter, but the
+`DreamType.BRAINSTORM` compatibility taxonomy should not become the new session root.
+
+#### Conductor pitches
+
+Conductor pitch files remain coordination proposals and are out of bounds for ordinary user
+Brainstorm persistence.
+
+**Recommendation handed to t-010:** unless another genuinely generic draft/session model is
+found during persistence implementation, prefer a small additive `BrainstormSession` /
+`BrainstormCandidate` schema over semantic overloading. t-010 owns the final migration/design
+decision; the text-first restoration does not need to block on it.
+
+### Prompt handoff
+
+`stores/promptStore.ts` remains a good explicit destination for selected candidate text. It
+already tracks `CreationSource` including `HUMAN`, `AI`, and `HYBRID` and owns Prompt CRUD.
+
+The Brainstorm store should not mutate Prompt state automatically during generation. Handoff is
+an explicit user action after curation, so AI output stays draft material until the human
+chooses what it becomes.
+
+### Source-object context
+
+`server/utils/suggest/artModelContext.ts` already demonstrates a strong reusable security and
+serialization pattern:
+
+- normalize a typed `entityRef`;
+- resolve by id/slug server-side;
+- enforce `isPublic || userId === viewer.userId` unless admin;
+- expose only selected scalar fields;
+- compact long strings;
+- support Project, Bot, Character, Dream, Scenario, Reward, and Facet.
+
+**Decision for t-012:** generalize/reuse this pattern rather than letting the browser dump raw
+model objects into prompts. Character and Dream adapters can select Brainstorm-relevant fields
+while retaining the same ownership boundary.
+
+### Privacy and maturity
+
+The current core models consistently expose owner/public/mature semantics, and Dream helpers
+filter visibility using ownership, `isPublic`, `isActive`, and the user's mature-content
+setting.
+
+For the first text-only Brainstorm slice:
+
+- ephemeral unsaved sessions are private application/browser state;
+- generation input is sent only to the selected text provider required to satisfy the request;
+- no Brainstorm output becomes public merely because it was generated;
+- explicit handoffs inherit the destination model's current privacy/maturity contract.
+
+For durable Brainstorm sessions, t-010 should default saved user sessions private unless there
+is a clear product reason to publish them. Do not inherit the old Dream component's
+`isPublic ?? true` behavior for a new session model.
+
+### Responsive/layout primitives
+
+`kr-panes`, `kr-pane`, `kr-pane-scroll`, and `kr-panel-flat` are current shared interface
+primitives used across the site, including the Dream Brainstorm component. They are suitable
+for desktop/tablet workbench structure, while mobile should collapse to a single-column
+candidate stream rather than preserve a three-pane desktop layout at all costs.
+
+The good donor from `components/dreams/dream-brainstorm.vue` is the interaction density and
+current primitive vocabulary, not its Dream-specific left/right sidebars.
+
+### Tutorial/help drift
+
+`tutorialCards.ts` still teaches `Dream Brainstorm` inside the Dreams tutorial: start with an
+idea, generate riffs, accept them, save Dream seeds.
+
+This is another presentation remnant to update after the general workbench exists. It should
+not block t-004, but later polish should teach the canonical Brainstorm product and treat Dream
+brainstorming as one use case/source context rather than the definition.
+
+## Recommended implementation sequence from the audit
+
+### t-004 — route restoration
+
+Exact likely Kind Robots files:
+
+- `content/brainstorm.md`
+  - preserve page/persona/backdrop metadata;
+  - remove Dream gallery substitution;
+  - mount dedicated `:brainstorm-manager`.
+- `components/brainstorm/brainstorm-manager.vue`
+  - create a current shell/workbench surface, not a checkout of June code;
+  - no direct API/localStorage calls.
+- `stores/helpers/dashboardHelper.ts`
+  - primary Brainstorm tab -> `/brainstorm`;
+  - remove Dream-only naming/narrative.
+- `content/plan/brainstorm.md`
+  - add redirect-only alias to `/brainstorm` using existing content redirect contract.
+
+Do not touch schema or restore Pitch.
+
+### t-005 — application contract/store
+
+Create a dedicated `stores/brainstormStore.ts` plus shared Brainstorm types/helpers if they
+become large enough to justify extraction.
+
+Suggested minimal client types:
+
+```ts
+type BrainstormCandidateStatus = 'pending' | 'kept' | 'rejected'
+
+type BrainstormCandidate = {
+  id: string
+  title: string
+  text: string
+  status: BrainstormCandidateStatus
+  feedback: string
+  edited: boolean
+  parentId?: string | null
+}
+
+type BrainstormGenerateRequest = {
+  premise: string
+  count: number
+  constraints?: string
+  examples?: string[]
+  mode?: string
+  source?: BrainstormSourceRef | null
+  replaceCandidateId?: string | null
+  feedback?: string
+}
+```
+
+The store owns candidate identity and should preserve previous text when regenerating one slot.
+Provider-specific controls do not belong in this public request shape.
+
+### t-006 — generation endpoint/provider contract
+
+Prefer a dedicated route such as `POST /api/brainstorm/generate`.
+
+The endpoint should:
+
+1. read/validate the Brainstorm request;
+2. resolve selected text server/provider using the existing server/suggest conventions;
+3. call `manaGate()` before generation;
+4. build Brainstorm's current creative-quality system/user prompts;
+5. request structured candidates where the provider supports it natively;
+6. normalize all providers into the same validated candidate envelope;
+7. reject malformed/short/duplicate batches rather than shipping parser debris to the client;
+8. commit mana only after usable provider output;
+9. return `{ success, message, data: { candidates }, mana }`.
+
+Do not seed the model with the current canned Brainstorm fallback examples. User-provided
+examples may be passed as context because they describe the user's target, not a product-wide
+creative ceiling.
+
+A useful server-side candidate transport is intentionally small:
+
+```ts
+type BrainstormGeneratedCandidate = {
+  title?: string
+  text: string
+}
+
+type BrainstormGenerateResponse = {
+  candidates: BrainstormGeneratedCandidate[]
+}
+```
+
+Stable UI ids are application/store concerns and need not be trusted from the model.
+
+### t-007 — workbench
+
+Use the June manager and current Dream Brainstorm as UX donors:
+
+- compact premise composer;
+- visible result count;
+- optional constraints/examples disclosure;
+- candidate cards as visual center;
+- Keep / Reject / Edit / Regenerate-this / More-like-this;
+- rejection feedback only when useful;
+- batch actions secondary to per-candidate control;
+- no chat transcript;
+- no provider cockpit;
+- no Dream source browser until the general loop is excellent.
+
+Phone: single-column curation stream.
+Tablet: composer + candidate workspace without sidebars fighting for width.
+Desktop: workbench can use pane structure, but candidate area remains dominant.
+
+## T-003 answers
+
+1. **Provider/auth/mana:** reuse serverStore + Suggest provider derivation/calls + `manaGate`;
+   add Brainstorm-specific structured normalization.
+2. **Old endpoint:** useful donor, not the revived canonical contract. It is OpenAI-only and
+   Dream-specific.
+3. **Persistence:** old Pitch is gone; Prompt, PitchSheet, Dream, and Conductor pitch semantics
+   do not cleanly fit a Brainstorm session. t-010 may need an additive dedicated session model.
+4. **PromptStore:** explicit selected-candidate/prompt handoff only, not session storage.
+5. **Routes:** `/brainstorm` remains canonical content page; use the existing safe frontmatter
+   redirect machinery for `/plan/brainstorm`.
+6. **Dream overlap:** `DreamType.BRAINSTORM` is legacy taxonomy; Dream Brainstorm becomes a
+   future source adapter/consumer, not the general product.
+7. **Privacy/maturity:** unsaved work private; generation obeys authenticated mana/provider
+   rules; saved sessions should default private and explicit handoffs inherit destination rules.
+8. **Layout:** reuse current `kr-*` pane/panel primitives, but preserve candidate dominance and
+   collapse cleanly by breakpoint.
+
+## Audit verdict
+
+No architectural blocker requires human input before restoration begins.
+
+The old product was lost because a domain migration took its UI with it. The current site now
+has cleaner routing, provider selection, economy controls, structured OpenAI output, object
+visibility helpers, and better responsive primitives than Brainstorm had when it disappeared.
+
+That means revival does not require nostalgia-driven rollback. It requires one small new owner
+for Brainstorm state, one clean provider-aware generation contract, and a workbench that treats
+the model as a prolific creative accomplice whose suggestions remain subject to human taste.
+
+The infrastructure has caught up with the idea. The output now has to do the same.
