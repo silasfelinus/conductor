@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
@@ -678,7 +678,9 @@ tasks:
       Scoped Model Builder hardening branch rejects client PATCH attempts to mutate commit-owned targetType/targetId metadata in both single-item and batch item routes; normal store callers do not send these fields.
 
       RAN 2026-08-10 (session 20260810T131806Z-auto-35ed50): found and fixed a server-side commit-provenance integrity gap. Model Builder's generic single-item and batch PATCH routes accepted targetType/targetId even though those fields are written by the commit executor and drive idempotent replay/history. Added a shared patch-policy guard that rejects client attempts to mutate those server-managed fields; normal store callers do not send them. kind_robots PR #1719 exact head 66df74054399ffd5bf2c3959bd0c4e644fe5b3f9 passed all 13 observed PR workflows, including TypeScript Type Check #31393328448 and Contract Tests #31393328437 (full verifier job green), then squash-merged as f406345809f5561e266b4339ec8384437664fce2. Original dashboard/tutorial generated-art deliverable remains outstanding, so rearm this recurring polish task.
-    updated: '2026-08-10T13:44:52Z'
+
+      Required-CI hardening slice: the existing approved-asset and item-patch stage guards were callable from package.json but not enforced by the required Contract Tests job. The already-required run-writable guard entry point now executes both sibling guard contracts too; implementation branch worker/model-builder-t-029-20260810-a6c3.
+    updated: '2026-08-10T13:51:30Z'
     owner: worker
     claimed_by: 20260810T134452Z-modelbuilder-t029-a6c3
     claimed_at: '2026-08-10T13:44:52Z'

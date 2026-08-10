@@ -1,9 +1,0 @@
-version: 1
-project: model-builder
-task: t-029
-operation: review
-owner: worker
-session: 20260810T134452Z-modelbuilder-t029-a6c3
-updated: '2026-08-10T13:51:30Z'
-note: >-
-  Required-CI hardening slice: the existing approved-asset and item-patch stage guards were callable from package.json but not enforced by the required Contract Tests job. The already-required run-writable guard entry point now executes both sibling guard contracts too; implementation branch worker/model-builder-t-029-20260810-a6c3.
