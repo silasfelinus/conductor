@@ -1,0 +1,8 @@
+version: 1
+project: kind-robots
+task: t-058
+operation: ready
+session: 20260810T033102Z-kind-robots-t058-audit-sched
+updated: '2026-08-10T04:22:30Z'
+note: >-
+  Reviewer rejected conductor PR #2002 on exact head 11af085bc1ded89a0eec964944188b47afbe3d5a for a quality/scope defect. The audit evidence is useful, but the proposed follow-up disposition violates current CONTROL.md, BOUNDARY.md, and SHARING-SPEC.md: backend/API work must go through the approved pitch/human-gate path, and SHARING-SPEC explicitly labels the Grant routes illustrative rather than committed contracts. The PR also changed t-058 directly from claimed to done before merge. Retry by preserving the verified findings, revising backend follow-ups into pitch/gated work, keeping legitimate front-end follow-up scope separate, and restoring review -> merge -> done lifecycle. Blocking review comment is on PR #2002.
