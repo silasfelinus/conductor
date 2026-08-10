@@ -2157,28 +2157,14 @@ tasks:
   - id: t-058
     milestone: m3
     title: Audit m3 (slug parity + project creation surfaces) and m4 (sharing/access control) for remaining gaps
-    status: claimed
-    owner: worker
+    status: ready
     passes: 0
     stakes: reversible
-    note: >
-      Closing t-057 leaves kind-robots at 57/57 done with milestones m3 (Slug parity +
-      project creation surfaces, weight 40) and m4 (Sharing & access control -- private-but-
-      shared content, project grants, weight 30) both still status: not-started and zero
-      tracked tasks -- caught by tests/test_current_project_lifecycle.py's "active project has
-      no open tasks" gate (AGENTS.md: do not infer completion from N/N; reconcile goal against
-      the actual product). t-056/t-057 already verified the Dream/Project -> Conductor Todo
-      scaffold path and its slug-parity Todo-creation contract; conductor-project-gallery-page.vue
-      and conductor-page.vue are the confirmed live project-creation surfaces, both routing
-      through the same POST /api/projects path. What's NOT yet verified: whether m3's "project
-      creation surfaces" scope is otherwise complete (slug collision handling, conductorSlug
-      immutability once set, any other creation entry point), and m4's access-control scope has
-      no concrete requirements captured anywhere in this roadmap at all -- read BOUNDARY.md and
-      any Silas notes for what "private-but-shared content, project grants" was meant to cover,
-      then either (a) find it's already covered elsewhere and close/retitle these milestones, or
-      (b) file concrete, scoped follow-up ready tasks for the real gaps found. This is a
-      read-and-report audit task, not a blind implementation task -- do not guess at access-
-      control requirements without grounding them in an actual documented need.
+    note: |-
+      Closing t-057 leaves kind-robots at 57/57 done with milestones m3 (Slug parity + project creation surfaces, weight 40) and m4 (Sharing & access control -- private-but- shared content, project grants, weight 30) both still status: not-started and zero tracked tasks -- caught by tests/test_current_project_lifecycle.py's "active project has no open tasks" gate (AGENTS.md: do not infer completion from N/N; reconcile goal against the actual product). t-056/t-057 already verified the Dream/Project -> Conductor Todo scaffold path and its slug-parity Todo-creation contract; conductor-project-gallery-page.vue and conductor-page.vue are the confirmed live project-creation surfaces, both routing through the same POST /api/projects path. What's NOT yet verified: whether m3's "project creation surfaces" scope is otherwise complete (slug collision handling, conductorSlug immutability once set, any other creation entry point), and m4's access-control scope has no concrete requirements captured anywhere in this roadmap at all -- read BOUNDARY.md and any Silas notes for what "private-but-shared content, project grants" was meant to cover, then either (a) find it's already covered elsewhere and close/retitle these milestones, or (b) file concrete, scoped follow-up ready tasks for the real gaps found. This is a read-and-report audit task, not a blind implementation task -- do not guess at access- control requirements without grounding them in an actual documented need.
+
+
+      Reviewer rejected conductor PR #2002 on exact head 11af085bc1ded89a0eec964944188b47afbe3d5a for a quality/scope defect. The audit evidence is useful, but the proposed follow-up disposition violates current CONTROL.md, BOUNDARY.md, and SHARING-SPEC.md: backend/API work must go through the approved pitch/human-gate path, and SHARING-SPEC explicitly labels the Grant routes illustrative rather than committed contracts. The PR also changed t-058 directly from claimed to done before merge. Retry by preserving the verified findings, revising backend follow-ups into pitch/gated work, keeping legitimate front-end follow-up scope separate, and restoring review -> merge -> done lifecycle. Blocking review comment is on PR #2002.
     claimed_by: 20260810T033102Z-kind-robots-t058-audit-sched
     claimed_at: '2026-08-10T03:31:02Z'
-    updated: '2026-08-10T03:31:02Z'
+    updated: '2026-08-10T04:22:30Z'
