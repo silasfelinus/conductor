@@ -2135,8 +2135,8 @@ tasks:
   - id: t-057
     milestone: m3
     title: "Add a contract test asserting Project-create queues exactly one AGENT scaffold Todo, Conductor sync does not"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -2150,3 +2150,6 @@ tasks:
       path. Add a focused contract/integration test (or extend an existing one) asserting:
       (1) a Project created via POST /api/projects queues exactly one OPEN/HIGH/AGENT Todo
       linked to it, and (2) a Project created/reconciled via /api/conductor/sync does not.
+    claimed_by: 20260810T013454Z-kindrobots-t057
+    claimed_at: '2026-08-10T01:34:58Z'
+    updated: '2026-08-10T01:34:58Z'
