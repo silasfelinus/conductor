@@ -230,16 +230,18 @@ tasks:
   - id: t-009
     milestone: m2
     title: Implement per-candidate revision history and non-destructive branching
-    status: ready
+    status: claimed
     depends_on: t-007
-    owner: null
-    updated: '2026-08-10T08:05:00Z'
+    owner: worker
+    updated: '2026-08-10T11:56:00Z'
     passes: 0
     stakes: reversible
-    note: >-
-      Regenerating or branching a candidate must not silently destroy its previous text. Add
-      lightweight revision lineage so a user can inspect or restore earlier variants during
-      the active session. Reordering and editing should not lose candidate identity.
+    note: |-
+      Regenerating or branching a candidate must not silently destroy its previous text. Add lightweight revision lineage so a user can inspect or restore earlier variants during the active session. Reordering and editing should not lose candidate identity.
+
+      Claiming the next Brainstorm workbench slice after t-008: make candidate revision history inspectable/restorable and preserve non-destructive branch lineage without changing durable persistence semantics.
+    claimed_by: 2026-08-10T115600Z-brainstorm-t-009-e4b9
+    claimed_at: '2026-08-10T11:56:00Z'
 
   - id: t-010
     milestone: m2
