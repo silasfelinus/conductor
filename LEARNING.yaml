@@ -7303,3 +7303,23 @@ records:
     silently fails on the escaping, not the content. Verified the new assertions
     actually catch a regression (not vacuously true) by manually breaking each of the
     three invariants and confirming the test failed, before wiring it into CI.
+- date: 2026-08-10
+  project: kind-robots
+  task: t-058
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: quality
+  lesson: >
+    An audit task's own findings can be correct while its proposed follow-up
+    disposition is wrong: this project's BOUNDARY.md routes any shared-backend/API
+    change through pitches/ first, and SHARING-SPEC.md explicitly labels its own
+    documented Grant API surface "illustrative -- routes, not committed contracts" --
+    filing that as a direct `ready` implementation task (first attempt, PR #2002)
+    is a scope/process violation even though the underlying evidence was sound.
+    Retry preserved the audit doc unchanged and only revised the disposition: kept
+    genuinely local/front-end/docs-only findings as `ready` tasks, and wrote a pitch
+    file per backend-touching finding, bundling closely-coupled backend follow-ups
+    (Grant API + its two route migrations + the UI that depends on it) into one
+    pitch rather than four separate approval asks for one capability.
