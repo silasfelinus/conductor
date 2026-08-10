@@ -11,9 +11,13 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import json
+import os
 import re
 import subprocess
 import sys
+import urllib.error
+import urllib.request
 from pathlib import Path
 from typing import Any
 
@@ -123,6 +127,82 @@ def continuous_improvement_fields(event: dict[str, Any]) -> tuple[int, str] | No
             f"continuous_improvement_pr must look like owner/repo#number, got {pr_ref!r}"
         )
     return lane, pr_ref.strip()
+
+
+# conductor/t-112: a `done` event's note can *claim* a PR merged without the
+# merge having actually happened yet (brainstorm/t-010, 2026-08-10 -- a
+# scheduled task-events run applied `done` six minutes before kind_robots#1718
+# actually merged, because nothing checked GitHub). `verify_pr` is the
+# reliable, structured way for an event writer to say "don't apply this until
+# GitHub confirms owner/repo#N is merged"; the note-text scan below is a
+# best-effort safety net for the shorthand `kind_robots#1718` / `conductor#42`
+# cross-reference form, not a substitute for it -- prose like "PR #1718" with
+# no repo prefix is deliberately NOT matched, since guessing the repo from
+# free text risks false positives on unrelated numbers.
+VERIFY_PR_RE = re.compile(r"^[\w.-]+/[\w.-]+#\d+$")
+NOTE_PR_REF_RE = re.compile(r"\b(conductor|kind[_-]robots)#(\d+)\b", re.IGNORECASE)
+REPO_ALIASES = {
+    "conductor": "silasfelinus/conductor",
+    "kind_robots": "silasfelinus/kind_robots",
+}
+
+
+def extract_pr_references(event: dict[str, Any]) -> list[tuple[str, int]]:
+    """Return the `[(owner/repo, number), ...]` PR references a `done` event wants
+    verified before it's allowed to close a task, deduplicated in the order found.
+
+    Pure and network-free -- reads only the event's own fields -- so it's safe to
+    call from the PR-time validator as well as the processor. Raises ValueError on
+    a malformed `verify_pr` field (validation, not a network concern).
+    """
+    refs: list[tuple[str, int]] = []
+
+    structured = event.get("verify_pr")
+    if structured is not None:
+        if not isinstance(structured, str) or not VERIFY_PR_RE.match(structured.strip()):
+            raise ValueError(f"verify_pr must look like owner/repo#number, got {structured!r}")
+        owner_repo, number = structured.strip().rsplit("#", 1)
+        refs.append((owner_repo, int(number)))
+
+    note = event.get("note")
+    if isinstance(note, str):
+        for alias, number in NOTE_PR_REF_RE.findall(note):
+            repo = REPO_ALIASES[alias.lower().replace("-", "_")]
+            ref = (repo, int(number))
+            if ref not in refs:
+                refs.append(ref)
+
+    return refs
+
+
+def check_pr_merged(repo: str, number: int) -> bool:
+    """Return True if `repo`'s PR `number` is merged, False if it exists but isn't.
+
+    Raises on any network/API failure (missing token, rate limit, unreachable
+    host, non-200 response) -- callers must NOT treat "couldn't check" as either
+    outcome; leaving the event queued for a later run is the safe default. A
+    thin wrapper around one GET call so tests can monkeypatch it directly
+    instead of mocking urllib.
+    """
+    url = f"https://api.github.com/repos/{repo}/pulls/{number}"
+    headers = {
+        "Accept": "application/vnd.github+json",
+        "User-Agent": "conductor-process-task-events",
+    }
+    token = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    request = urllib.request.Request(url, headers=headers)
+    try:
+        with urllib.request.urlopen(request, timeout=15) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+    except (urllib.error.URLError, TimeoutError) as error:
+        raise RuntimeError(f"could not reach GitHub API for {repo}#{number}: {error}") from error
+    except json.JSONDecodeError as error:
+        raise RuntimeError(f"malformed GitHub API response for {repo}#{number}: {error}") from error
+    if not isinstance(payload, dict) or "merged" not in payload:
+        raise RuntimeError(f"unexpected GitHub API response for {repo}#{number}: {payload!r}")
+    return bool(payload["merged"])
 
 
 def find_task(roadmap: dict[str, Any], task_id: str) -> dict[str, Any]:
@@ -429,11 +509,49 @@ def process(path: Path, dry_run: bool) -> str:
             path.unlink()
         return f"{project}/{task_id}: STALE skip ({operation}) -- {reason}"
 
+    # conductor/t-112: a `done` event can name a PR it claims is merged when
+    # GitHub doesn't yet agree (brainstorm/t-010, 2026-08-10 -- applied 6 minutes
+    # before the actual merge). Verify every referenced PR *before* computing any
+    # transition; an unmerged reference redirects this event to `needs-human`
+    # instead of `done` rather than closing the task on an unconfirmed claim. A
+    # verification failure (network/API error -- "don't know") raises and leaves
+    # the event queued for a later run, same as any other unresolvable event --
+    # it must never be treated as either "merged" or "not merged".
+    effective_operation = operation
+    effective_event = event
+    if operation == "done":
+        unmerged = [
+            f"{repo}#{number}"
+            for repo, number in extract_pr_references(event)
+            if not check_pr_merged(repo, number)
+        ]
+        if unmerged:
+            mismatch = (
+                "AUTO-PARKED by process_task_events.py (conductor/t-112): this event's "
+                "operation was 'done' and named " + ", ".join(unmerged) + " as merged, "
+                "but the GitHub API reports it is not merged yet. Re-queue a fresh "
+                "'done' event once the PR actually merges."
+            )
+            original_note = event.get("note")
+            note = (
+                f"{original_note.strip()}\n\n{mismatch}"
+                if isinstance(original_note, str) and original_note.strip()
+                else mismatch
+            )
+            # `learning` describes an outcome that hasn't actually landed yet, so it
+            # doesn't travel with the parked event; `compute_transition_ops` would
+            # also reject a `needs-human` operation carrying an unrelated `learning`
+            # payload as accompanying anything but done/blocked.
+            effective_event = {key: value for key, value in event.items() if key != "learning"}
+            effective_event["note"] = note
+            effective_event["soft_gate"] = True
+            effective_operation = "needs-human"
+
     # Compute everything (transition + learning validation) before writing anything,
     # so an invalid learning payload can't leave a half-applied, now-unrepeatable
     # transition behind with its event file stranded (atomicity requirement).
     try:
-        ops = compute_transition_ops(task, event, operation)
+        ops = compute_transition_ops(task, effective_event, effective_operation)
     except TaskEventCollision as collision:
         # A claim (or session-tagged transition) that lost a race to another
         # session. Consume it with NO roadmap mutation -- the winning session's
@@ -444,8 +562,10 @@ def process(path: Path, dry_run: bool) -> str:
             path.unlink()
         return f"{project}/{task_id}: {collision}"
 
-    learning_record = prepare_learning(event, project, task_id, operation, task=task, roadmap=roadmap)
-    ci_fields = continuous_improvement_fields(event)
+    learning_record = prepare_learning(
+        effective_event, project, task_id, effective_operation, task=task, roadmap=roadmap
+    )
+    ci_fields = continuous_improvement_fields(effective_event)
 
     if not dry_run:
         new_text = roadmap_text
@@ -453,7 +573,7 @@ def process(path: Path, dry_run: bool) -> str:
             new_text = apply_task_field_ops(new_text, task_id, ops)
         if ci_fields is not None:
             lane, pr_ref = ci_fields
-            run_value = event.get("updated") or "now"
+            run_value = effective_event.get("updated") or "now"
             new_text = bump_continuous_improvement_text(new_text, task_id, lane, pr_ref, run_value)
         if new_text != roadmap_text:
             yaml.safe_load(new_text)  # re-parse to confirm the edit produced valid YAML
@@ -462,7 +582,9 @@ def process(path: Path, dry_run: bool) -> str:
             write_learning_record(learning_record)
         path.unlink()
 
-    return f"{project}/{task_id}: {operation}"
+    if effective_operation != operation:
+        return f"{project}/{task_id}: {effective_operation} (parked from {operation}: unmerged PR)"
+    return f"{project}/{task_id}: {effective_operation}"
 
 
 def run_resolver(dry_run: bool) -> None:

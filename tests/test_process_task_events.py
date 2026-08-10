@@ -942,6 +942,165 @@ class TaskEventProcessorTests(unittest.TestCase):
         task = self.roadmap()["tasks"][0]
         self.assertEqual(task["status"], "done")
 
+    # --- conductor/t-112: don't apply `done` on an unconfirmed PR merge --------
+
+    def test_extract_pr_references_reads_structured_field(self):
+        event = {"verify_pr": "silasfelinus/kind_robots#1718"}
+        self.assertEqual(
+            MODULE.extract_pr_references(event), [("silasfelinus/kind_robots", 1718)]
+        )
+
+    def test_extract_pr_references_reads_note_shorthand(self):
+        event = {"note": "Merged via kind_robots#1718, closes the loop."}
+        self.assertEqual(
+            MODULE.extract_pr_references(event), [("silasfelinus/kind_robots", 1718)]
+        )
+
+    def test_extract_pr_references_does_not_match_bare_pr_prose(self):
+        # "PR #1718" with no repo prefix is deliberately not matched -- guessing
+        # which repo from free text risks false positives on unrelated numbers.
+        event = {"note": "Merged Kind Robots PR #1718 and confirmed production."}
+        self.assertEqual(MODULE.extract_pr_references(event), [])
+
+    def test_extract_pr_references_dedupes_structured_and_note(self):
+        event = {
+            "verify_pr": "silasfelinus/kind_robots#1718",
+            "note": "See kind_robots#1718 for detail.",
+        }
+        self.assertEqual(
+            MODULE.extract_pr_references(event), [("silasfelinus/kind_robots", 1718)]
+        )
+
+    def test_extract_pr_references_rejects_malformed_verify_pr(self):
+        with self.assertRaisesRegex(ValueError, "owner/repo#number"):
+            MODULE.extract_pr_references({"verify_pr": "not-a-pr-reference"})
+
+    def test_done_with_unmerged_verify_pr_is_parked_needs_human(self):
+        roadmap = self.roadmap()
+        roadmap["tasks"][0]["status"] = "review"
+        (self.root / "projects" / "demo" / "roadmap.yaml").write_text(
+            yaml.safe_dump(roadmap, sort_keys=False), encoding="utf-8"
+        )
+        event = self.write_event(
+            "done-unmerged.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "done",
+                "verify_pr": "silasfelinus/kind_robots#1718",
+                "note": "Merged Kind Robots PR #1718 and confirmed production.",
+                "learning": {
+                    "kind": "software",
+                    "stakes": "reversible",
+                    "lesson": "Should never be recorded -- the merge hadn't happened.",
+                },
+            },
+        )
+
+        original = MODULE.check_pr_merged
+        MODULE.check_pr_merged = lambda repo, number: False
+        try:
+            result = MODULE.process(event, dry_run=False)
+        finally:
+            MODULE.check_pr_merged = original
+
+        self.assertIn("parked from done", result)
+        self.assertFalse(event.exists())
+        task = self.roadmap()["tasks"][0]
+        self.assertEqual(task["status"], "needs-human")
+        self.assertTrue(task["soft_gate"])
+        self.assertIn("AUTO-PARKED", task["note"])
+        self.assertIn("silasfelinus/kind_robots#1718", task["note"])
+        ledger = yaml.safe_load((self.root / "LEARNING.yaml").read_text(encoding="utf-8"))
+        self.assertEqual(ledger["records"], [])
+
+    def test_done_with_merged_verify_pr_applies_normally(self):
+        roadmap = self.roadmap()
+        roadmap["tasks"][0]["status"] = "review"
+        (self.root / "projects" / "demo" / "roadmap.yaml").write_text(
+            yaml.safe_dump(roadmap, sort_keys=False), encoding="utf-8"
+        )
+        event = self.write_event(
+            "done-merged.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "done",
+                "verify_pr": "silasfelinus/kind_robots#1718",
+                "note": "Merged Kind Robots PR #1718 and confirmed production.",
+            },
+        )
+
+        original = MODULE.check_pr_merged
+        MODULE.check_pr_merged = lambda repo, number: True
+        try:
+            result = MODULE.process(event, dry_run=False)
+        finally:
+            MODULE.check_pr_merged = original
+
+        self.assertEqual(result, "demo/t-001: done")
+        self.assertFalse(event.exists())
+        self.assertEqual(self.roadmap()["tasks"][0]["status"], "done")
+
+    def test_done_without_pr_reference_never_calls_check_pr_merged(self):
+        roadmap = self.roadmap()
+        roadmap["tasks"][0]["status"] = "review"
+        (self.root / "projects" / "demo" / "roadmap.yaml").write_text(
+            yaml.safe_dump(roadmap, sort_keys=False), encoding="utf-8"
+        )
+        event = self.write_event(
+            "done-no-pr.yaml",
+            {"version": 1, "project": "demo", "task": "t-001", "operation": "done"},
+        )
+
+        def explode(repo, number):
+            raise AssertionError("check_pr_merged must not be called with no PR reference")
+
+        original = MODULE.check_pr_merged
+        MODULE.check_pr_merged = explode
+        try:
+            result = MODULE.process(event, dry_run=False)
+        finally:
+            MODULE.check_pr_merged = original
+
+        self.assertEqual(result, "demo/t-001: done")
+
+    def test_done_verify_pr_network_failure_leaves_event_queued(self):
+        # Unverifiable must never be treated as either merged or unmerged -- raise
+        # and leave the event queued for diagnosis/retry, same as any other
+        # unresolvable event.
+        roadmap = self.roadmap()
+        roadmap["tasks"][0]["status"] = "review"
+        (self.root / "projects" / "demo" / "roadmap.yaml").write_text(
+            yaml.safe_dump(roadmap, sort_keys=False), encoding="utf-8"
+        )
+        event = self.write_event(
+            "done-network-error.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "done",
+                "verify_pr": "silasfelinus/kind_robots#1718",
+            },
+        )
+
+        def explode(repo, number):
+            raise RuntimeError("could not reach GitHub API")
+
+        original = MODULE.check_pr_merged
+        MODULE.check_pr_merged = explode
+        try:
+            with self.assertRaisesRegex(RuntimeError, "could not reach"):
+                MODULE.process(event, dry_run=False)
+        finally:
+            MODULE.check_pr_merged = original
+
+        self.assertTrue(event.exists())
+        self.assertEqual(self.roadmap()["tasks"][0]["status"], "review")
+
     def test_main_applies_valid_events_even_when_an_earlier_one_fails(self):
         # "bad-claim" sorts before "good-claim" alphabetically, reproducing the
         # queue-head-of-line-blocking bug: a single unresolvable event must not
