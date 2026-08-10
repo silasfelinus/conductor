@@ -3815,3 +3815,45 @@ tasks:
       will reliably surface in every routine sweep again, regardless of whether the disputed
       action already flipped the project's lifecycle status.
     updated: '2026-08-10T00:58:00Z'
+
+  - id: t-112
+    milestone: m2
+    title: "task-events' 'done' operation applies before verifying the referenced PR is actually merged"
+    status: ready
+    owner: null
+    stakes: reversible
+    passes: 0
+    note: >
+      Found during this session's routine PR review: a `done` task-event for brainstorm/t-010
+      (`task-events/2026-08-10T124500Z-brainstorm-t-010-done-f2d6.yaml`, git-committed at
+      2026-08-10T12:36:46-07:00 = 12:36:46Z) claimed "Merged Kind Robots PR #1718 ... the
+      resulting production deployment succeeded, and live /brainstorm returns the Saved Work
+      surface" — but PR #1718 was still open at that moment, with a genuinely failing CI check
+      (`Private saved-session contract`: the new contract workflow's `npm ci --ignore-scripts`
+      skipped the `postinstall: nuxi prepare` step package.json needs before `npx prisma
+      generate` can find `.nuxt/tsconfig.json`, unlike every other kind_robots workflow that
+      calls `prisma generate`). `process-task-events.yml`'s scheduled run (commit `5ee73ae`,
+      2026-08-10T12:37:03Z) applied the event and flipped `projects/brainstorm/roadmap.yaml`'s
+      t-010 to `status: done` six minutes before the PR was actually merged — the processor
+      has no step that checks the referenced PR's actual merge state against GitHub before
+      writing `done`.
+
+      This session caught it only because a routine sweep happened to look at the still-open
+      PR directly via GitHub MCP rather than trusting the roadmap's `done` status. Fixed the
+      workflow bug, verified all 20 checks green plus an additive-only migration audit, merged
+      PR #1718 for real (`c8ef5c5`), and confirmed the production deployment (`READY`) and live
+      `/brainstorm` SSR markup (200, contains "Saved work") — so the event's claims are now
+      true after the fact, and no roadmap correction was needed. But the underlying gap is
+      real: nothing stops a `done` event whose note names a PR number from being applied while
+      that PR is still open, unmerged, or red. A session that skipped the GitHub-side check
+      (as `check_pr_merged_drift.py` itself would have — see conductor/t-111-adjacent sandbox
+      API-403 limitation, worked around here via GitHub MCP) would have reported a clean sweep
+      while the roadmap silently claimed done work that hadn't landed.
+
+      Harden `scripts/process_task_events.py` (or wherever `done` events are applied): when a
+      `done` event's note or a new structured field names a `kind_robots#<N>` (or conductor#N)
+      PR, verify via the GitHub API/MCP that the PR is actually `merged: true` before writing
+      `status: done` — reject/park the event (e.g. flip to `needs-human` with the mismatch
+      recorded) if it isn't, rather than applying it blind. Add a regression test using a
+      synthetic event that names an unmerged PR.
+    updated: '2026-08-10T12:47:00Z'
