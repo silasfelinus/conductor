@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-10T05:50:07Z
+Generated: 2026-08-10T05:55:38Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **557**
-- Outcomes: blocked: 13, cancelled: 1, done: 543
+- Closed tasks recorded: **559**
+- Outcomes: blocked: 13, cancelled: 1, done: 545
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -36,7 +36,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
 | interface-vision | 82 | 100% |
-| kind-robots | 47 | 98% |
+| kind-robots | 49 | 98% |
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 542 | 99% |
+| software | 544 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,10 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-10 `kind-robots/t-060` — Live-sanitizing a slug field on every keystroke (lowercase + collapse + trim) breaks manual typing of hyphenated slugs: a hyphen is trailing (and therefore gets trimmed) the instant it's typed, before the next character lands, so "my-project" becomes impossible to type by hand. Split it into a light per-keystroke filter (lowercase, drop disallowed chars only) plus a full slugify() on blur/submit instead. Also: attaching `.statusCode` to a thrown Error in a Pinia store action is a safe additive way to let one caller branch on HTTP status (409 vs. other) without touching the route/API contract or breaking other callers that only read `.message`.
+
+- 2026-08-10 `kind-robots/t-059` — A "document every live surface" task benefits from an exhaustive code-level grep (grep -rn "\.project\.create(" server/ scripts/) rather than trusting the audit note's own count -- t-058's note said "at least three" then "all five" for what turned out to be 4 distinct route files, and the grep also surfaced that Surface 1's description (sync_projects.py -> per-project POST /api/projects) and Surfaces 2/3's "auto-Todo not yet implemented" pitch notes were themselves stale against current code (scripts/sync_kind_robots_projection.py -> POST /api/conductor/sync bulk upsert; createProjectWithScaffoldTodo() already files the Todo). Fixing those in the same docs-only pass kept the doc actually accurate instead of technically-task-complete-but-still-wrong.
+
 - 2026-08-10 `kind-robots/t-058` — An audit task's own findings can be correct while its proposed follow-up disposition is wrong: this project's BOUNDARY.md routes any shared-backend/API change through pitches/ first, and SHARING-SPEC.md explicitly labels its own documented Grant API surface "illustrative -- routes, not committed contracts" -- filing that as a direct `ready` implementation task (first attempt, PR #2002) is a scope/process violation even though the underlying evidence was sound. Retry preserved the audit doc unchanged and only revised the disposition: kept genuinely local/front-end/docs-only findings as `ready` tasks, and wrote a pitch file per backend-touching finding, bundling closely-coupled backend follow-ups (Grant API + its two route migrations + the UI that depends on it) into one pitch rather than four separate approval asks for one capability.
 
 - 2026-08-10 `kind-robots/t-057` — contract-tests.yml is explicitly DB-free ("No database or Nuxt build is needed"), so a "behavioral" contract test for a database-writing code path has to be a source-inspection test (assert.match against readFileSync'd source), not a live integration test -- matching the existing verify*.ts convention rather than reaching for a real Prisma/DB fixture that this CI job structurally cannot run. Also: when SQL identifiers are backtick-quoted inside a template literal, they appear on disk as an escaped \` pair, not a bare backtick -- normalize (.replaceAll('\\`', '`')) before regex-matching raw SQL source, or the match silently fails on the escaping, not the content. Verified the new assertions actually catch a regression (not vacuously true) by manually breaking each of the three invariants and confirming the test failed, before wiring it into CI.
@@ -95,10 +99,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-09 `conductor/t-110` — A default is a decision, and an unnamed one never gets reviewed. /api/art/enqueue resolved an omitted engine with `String(value || 'a1111')` — one word, no constant, no test — long after the relay stopped serving A1111, so "just enqueue this" meant "enqueue something that cannot render". The same shape hid a second bug next to it: buildDefaultComfyWorkflow passed a literal -1 seed into the KSampler where every sibling builder resolved a random one, pinning that lane to one image per Comfy install, and patchComfyWorkflow repeated the -1 immediately afterward so fixing only the builder would have been invisible. Both were invisible for the same reason — the value was inline, unnamed, and untested, so nothing ever asked whether it was still right. When a fallback decides behaviour for every caller that stays silent, give it a named constant and a test that states the intent; "krea2 is the default" and "an unspecified seed is random" are claims a test can hold, `|| 'a1111'` is not.
 
-- 2026-08-09 `conductor/t-109` — When a hard gate will also be applied retroactively to an existing backlog, decide per-rule whether a pre-existing row should FAIL or be REPAIRED. kind_robots' prompt contract (2026-08-08) re-applies at claim time so pre-gate rows cannot render with stale settings — correct — but its only verdict was FAILED, so eight ArtJobs died on nothing but "krea2 runs at roughly 12 steps or fewer; got 20" with 27 more queued to die the same way. A step count above the engine's ceiling has one objectively correct repair and no authorial intent to preserve; rejecting it is not the conservative choice, just a different failure. Rules needing judgment (a conditional a diffusion model cannot evaluate, a format noun) must still fail. Two corollaries: a recovery endpoint that repairs everything EXCEPT the thing that killed the job is a loop, not a recovery (reenqueue-failed normalized paths/prompts/LoRAs but not the sampler); and fixing a per-engine DEFAULT without also bounding the explicit OVERRIDE leaves the door open at exactly the width of the original bug.
-
-- 2026-08-09 `digital-storefront/t-038` — An umbrella task's remaining_scope_task pointer chain (t-038 -> t-003 -> t-004) can sit at status: review for days after its last referenced task actually reaches done, because nothing automatically re-checks the pointer once it stops changing. check_pr_merged_drift.py's title-search pass surfaced it only as "unverifiable" (no close-out PR titled after t-038 exists, since it was never meant to close via its own PR); the real signal was checking the remaining_scope_task's own status directly. A session picking up drift-check output should follow remaining_scope_task chains to their live end, not stop at "search found nothing."
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-10T05:50:07Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-10T05:55:38Z_
