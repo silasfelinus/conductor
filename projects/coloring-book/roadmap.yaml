@@ -643,15 +643,16 @@ tasks:
 - id: t-038
   milestone: m4
   title: Bake `pip install --user Pillow` into a coloring-book provisioning step so recovery cycles stop rediscovering the sandbox gap
-  status: review
-  owner: worker
+  status: done
   passes: 0
   stakes: reversible
-  updated: '2026-08-10T12:22:15Z'
+  updated: '2026-08-10T12:29:15Z'
   note: |-
     Kaizen from t-022 (conductor PR #2027, 2026-08-10). `consume_coloring_book_color_art.py`'s WebP output needs Pillow, and this sandbox's fresh containers never have it preinstalled -- every recovery-pass cycle that hits a real recovery_batch entry re-derives the same "Pillow is required for WebP output" failure and re-installs it by hand (logged at least 3 times now: 2026-07-27 through 2026-08-10, always resolved correctly by the existing except-block guard with 0 lost job references, but it's pure repeated waste). Add a small provisioning step -- either extend `scripts/provision_kind_robots_deps.sh` with a `pip install --user Pillow`, or add a coloring-book-specific one-liner doc note referencing it -- so a future cycle installs it proactively (e.g. as the first step of any `consume_coloring_book_color_art.py --live` invocation) instead of hitting the failure first. Small, reversible, no live-service impact.
 
 
     Added idempotent Pillow provisioning to scripts/provision_kind_robots_deps.sh so coloring-book WebP recovery runs stop rediscovering the same missing dependency.
+
+    Merged silasfelinus/conductor#2031 as c08a349b6b4ce61a80f1a4e5c59a7463e65af222. scripts/provision_kind_robots_deps.sh now checks for PIL and installs Pillow idempotently with python -m pip install --user Pillow before coloring-book WebP recovery work. Exact PR head passed Process task events #31387694213, Security Audit #31387694254, and Worker PR CI #31387694230.
   claimed_by: 20260810T121715Z-coloring-t038-7c4e
   claimed_at: '2026-08-10T12:17:15Z'
