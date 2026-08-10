@@ -249,20 +249,20 @@ tasks:
   - id: t-010
     milestone: m2
     title: Choose and implement durable Brainstorm persistence semantics
-    status: ready
+    status: claimed
     depends_on:
       - t-003
       - t-009
-    owner: null
-    updated: '2026-08-10T08:05:00Z'
+    owner: worker
+    updated: '2026-08-10T12:17:00Z'
     passes: 0
     stakes: reversible
-    note: >-
-      Audit existing Pitch/Prompt and related schema before adding a migration. Reuse only if
-      semantics genuinely fit; do not overload Conductor projection/pitches. Logged-in users
-      should be able to save named Brainstorm sessions/candidates and reopen them. Anonymous
-      sessions may remain ephemeral/local for v1. Any schema change must be additive and
-      data-preserving with API routes, store actions and tests.
+    note: |-
+      Audit existing Pitch/Prompt and related schema before adding a migration. Reuse only if semantics genuinely fit; do not overload Conductor projection/pitches. Logged-in users should be able to save named Brainstorm sessions/candidates and reopen them. Anonymous sessions may remain ephemeral/local for v1. Any schema change must be additive and data-preserving with API routes, store actions and tests.
+
+      Auditing current Kind Robots persistence models before choosing Brainstorm durable storage. Reuse an existing model only if its semantics genuinely match named private creative sessions and candidate lineage; otherwise use an additive data-preserving Brainstorm-specific schema with authenticated API/store ownership.
+    claimed_by: 2026-08-10T121700Z-brainstorm-t-010-f2d6
+    claimed_at: '2026-08-10T12:17:00Z'
 
   - id: t-011
     milestone: m2
