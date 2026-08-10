@@ -1,0 +1,14 @@
+version: 1
+project: conductor
+task: t-113
+operation: done
+session: 20260810T071354-0700-auto-725e75
+updated: '2026-08-10T14:33:20Z'
+verify_pr: silasfelinus/conductor#2036
+note: >-
+  Merged silasfelinus/conductor#2036 as f9e46b7955e8cb3a51add02c24c3cc01bb691746 after exact-head Worker PR CI, Security Audit, and Process task events workflows all completed successfully. GitHub 404 responses for verify_pr now get a distinct missing-or-invisible-reference diagnostic instead of being mislabeled as generic reachability failures.
+learning:
+  kind: software
+  stakes: reversible
+  lesson: >-
+    HTTPError subclasses URLError, so handle 404 before the generic network-failure branch when a task needs to distinguish a missing or inaccessible GitHub reference from an unverifiable transient failure.
