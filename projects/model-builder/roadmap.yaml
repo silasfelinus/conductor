@@ -608,26 +608,52 @@ tasks:
   - id: t-031
     milestone: m6
     title: "Live smoke test of the t-025 async ArtJob queue path on /model-builder"
-    status: claimed
+    status: needs-human
     owner: worker
     passes: 0
     stakes: reversible
     note: >
-      Kaizen from t-025 (kind_robots PR #539, 2026-07-19). t-025 added
-      artStore.enqueueCurrentArt/getArtJobStatus/finalizeQueuedArtImage and
-      modelBuilderStore.generateItemAssetAsync + a per-item poll loop, verified only via
-      vue-tsc/eslint (no reachable DATABASE_URL/render backend in the sandbox — the
-      ComfyUI/Alexandria relay behind the ArtJob queue was failing every hourly run all day
-      per coloring-book/t-022's notes). Once that backend is confirmed healthy again, do a
-      live /model-builder run: queue GENERATE_ASSETS on 2-3 build items concurrently via the
-      new async button, confirm each shows independent queued -> rendering -> done state
-      (not sharing/clobbering artStore's global queueState), confirm the resulting
-      artImageId/imagePath land correctly per item, and confirm the existing synchronous
-      "Generate candidate" button still works unchanged. Record findings; file any fix as a
-      new task.
+      FOR SILAS: t-031 (live smoke test of the t-025 async ArtJob queue path) could not be
+      completed as a true live UI-driven test this session -- two independent blockers, not
+      one this session can retry past.
+
+      What was done: read generateItemAssetAsync/pollAsyncArtJob/enqueueCurrentArt/
+      getArtJobStatus/finalizeQueuedArtImage end-to-end in stores/modelBuilderStore.ts and
+      stores/artStore.ts. Confirmed the design the task worried about (multiple items
+      clobbering a shared queue state) does not exist: queueState and artJobId are fields on
+      each BuildItem object, not store-level singletons -- pollAsyncArtJob's own while-loop
+      guard (`while (item.artJobId === jobId)`) plus extensive existing doc comments already
+      walk through the exact concurrent-cancel/regenerate-during-approval races the task asks
+      to confirm, and the code handles them (e.g. a stale poll for a re-queued/dropped item
+      stops itself; a job that resolves after its stage was already approved is discarded
+      rather than silently overwriting the approved image). generatingItemId (the synchronous
+      path's singleton) is explicitly NOT reused here per its own comment. This reads as
+      correct by inspection, consistent with t-025's design intent.
+
+      Why a real live test didn't happen:
+      1. This sandbox's browser (Chromium via the agent proxy) fails on every HTTPS host,
+         not just this one -- documented in AGENTS.md's "visual verification" section. There
+         is no way for this session to open /model-builder, log in, and click the async
+         generate button on 2-3 items the way the task literally specifies.
+      2. Independent of (1): the render backend's single COMFY worker currently has 1248
+         PENDING jobs (oldest ~141h old, 24h throughput ~50 done) -- recheck_render_queue.py,
+         2026-08-10 ~22:30Z. Even a script-level API smoke test (enqueue via KR_API_TOKEN,
+         bypassing the UI) would queue behind that backlog and have no realistic chance of
+         reaching DONE within any session's runtime, so it would only confirm "enqueue
+         returns a jobId," not the queued->rendering->done transition or the finalized
+         artImageId/imagePath the task actually wants verified.
+
+      TO APPROVE: this needs a human (or a session with real browser access) to actually
+      click through /model-builder's async button on a couple of build items and watch the
+      result -- there's no further code-only step this repo's current sandbox can take.
+      Recommend either you run it yourself next time you're in the app, or note here if/when
+      Silas Code Web or another environment with working Chromium picks this repo up. Setting
+      `status: needs-human` / `soft_gate: true` so other ready work isn't blocked behind it in
+      the meantime -- this doesn't gate anything else in the project.
     claimed_by: 20260810T2226Z-mb031-sweep
     claimed_at: '2026-08-10T22:28:59Z'
-    updated: '2026-08-10T22:28:59Z'
+    updated: '2026-08-10T22:32:56Z'
+    soft_gate: true
 
   - id: t-032
     milestone: m6
