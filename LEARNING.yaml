@@ -7373,16 +7373,3 @@ records:
   lesson: 'When moving grandfathered UI out of an allow-listed component, do not transfer the exception
     to the new file. Satisfy both ratchets: keep interact components thin and make newly extracted working
     surfaces container-responsive.'
-- date: '2026-08-10'
-  project: taskmaster
-  task: t-003
-  kind: software
-  stakes: reversible
-  passes: 0
-  outcome: done
-  failure_category: null
-  lesson: 'A roadmap note assuming distribute_images.py delivers kind_robots dashboard-tab/tutorial
-    art was stale: that script explicitly retains any kind_robots-targeted file in projects/process/
-    rather than copying it, because public/images/** is git-ignored there and real delivery needs
-    the relay direct-write or entity-linked completion path. Before closing a "confirm distribution"
-    step, verify the actual delivery mechanism a job was queued with, not just that the render finished.'
