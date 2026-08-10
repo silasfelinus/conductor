@@ -17,6 +17,10 @@
 #      127.0.0.1:3306 one).
 # npmjs.org's registry IS reachable through the proxy, so `npm ci` itself works.
 #
+# Coloring-book recovery also emits WebP files through Pillow. Fresh sandboxes do
+# not reliably include it, which made recovery runs repeatedly fail once before
+# installing the same dependency by hand. Provision it here once, idempotently.
+#
 # Mirrors scripts/provision_node24.sh: idempotent, no root, no version manager,
 # no persistent host state (reruns cheaply in each fresh container).
 #
@@ -27,6 +31,7 @@
 # Env overrides:
 #   KIND_ROBOTS_ROOT   path to the kind_robots checkout (default: sibling of this repo)
 #   DATABASE_URL       Prisma connection string (default: a dummy local mysql URL)
+#   PYTHON_BIN         Python executable used to verify/install Pillow (default: python3, then python)
 #   FORCE_REINSTALL=1  reinstall node_modules even if it already looks complete
 
 set -euo pipefail
@@ -49,7 +54,24 @@ source "${SCRIPT_DIR}/provision_node24.sh" >/dev/null
 # 2. Prisma needs a well-formed DATABASE_URL (no live DB required).
 export DATABASE_URL="${DATABASE_URL:-mysql://user:pass@127.0.0.1:3306/kindrobots}"
 
-# 3. Install dependencies (skipping only the Cypress binary download).
+# 3. Coloring-book recovery writes WebP output through Pillow. Install only when
+#    the active Python cannot import PIL, so repeated provisioning stays cheap.
+PYTHON_BIN="${PYTHON_BIN:-python3}"
+if ! command -v "${PYTHON_BIN}" >/dev/null 2>&1; then
+  PYTHON_BIN="python"
+fi
+if ! command -v "${PYTHON_BIN}" >/dev/null 2>&1; then
+  echo "kr-deps: neither python3 nor python is available; cannot provision Pillow" >&2
+  return 1 2>/dev/null || exit 1
+fi
+if ! "${PYTHON_BIN}" -c 'from PIL import Image' >/dev/null 2>&1; then
+  echo "kr-deps: installing Pillow for coloring-book WebP recovery" >&2
+  "${PYTHON_BIN}" -m pip install --user Pillow
+else
+  echo "kr-deps: Pillow already available" >&2
+fi
+
+# 4. Install dependencies (skipping only the Cypress binary download).
 if [ -z "${FORCE_REINSTALL:-}" ] && [ -d "${KIND_ROBOTS_ROOT}/node_modules" ] \
    && [ -d "${KIND_ROBOTS_ROOT}/prisma/generated/prisma" ] \
    && [ -d "${KIND_ROBOTS_ROOT}/.nuxt" ]; then
