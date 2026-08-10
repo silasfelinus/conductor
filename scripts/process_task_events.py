@@ -370,7 +370,7 @@ def prepare_learning(
 
     Pure/read-only: raises on invalid payloads but never writes, so callers can
     validate learning data BEFORE mutating the roadmap -- a bad learning payload
-    must not leave an already-applied, now-unrepeatable transition behind with its
+    must not leave an already-applied, now-unrepeatable transition stuck with its
     event file undeleted (see process()'s ordering)."""
     learning = event.get("learning")
     if learning is None:
