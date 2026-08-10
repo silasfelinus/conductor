@@ -122,7 +122,7 @@ tasks:
   - id: t-003
     milestone: m3
     title: "Polish and upgrade Taskmaster front-end surface"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -131,7 +131,13 @@ tasks:
       Implemented the objective-first Quest Desk redesign on a focused Kind Robots branch. Setup now removes the generic narrator slab, groups optional story ingredients into compact disclosures, adds a mobile-safe action rail, and moves active quests into a story-plus-mission-rail layout with an explicit minimum stage height.
 
       Merged Kind Robots PR #1469 and verified production /taskmaster at merge commit 3209253b598b4da104310cb7018e00240c9f51df. The objective-first Quest Desk UI is complete. Remaining task scope is to confirm ArtJobs 2846-2850 rendered and distribute the dedicated Taskmaster dashboard-tab and tutorial assets into Kind Robots. Lesson: responsive narrator stages need an explicit desktop minimum height and should mount only when contextual story content exists -- objective-first setup prevents decorative narrative UI from obscuring real work.
+
+      CLOSED (conductor scheduled sweep, 2026-08-10T07:39Z): confirmed all 5 ArtJobs (2846-2850) are DONE via GET /api/art/queue/{id} -- artImageIds 13366 (icon), 13367 (card), 13368 (hero), 13369 (dashboard-tab), 13370 (tutorial). Icon/card/hero are verified LIVE: projects/images/manifest.json's taskmaster-{icon,card,hero}.webp entries carry prompts that match jobs 2846/2847/2848 exactly, landed 2026-07-29 via the art-generate.yaml batch path (conductor repo, served via raw.githubusercontent -- no kind_robots filesystem dependency).
+
+      Dashboard-tab (13369) and tutorial (13370) rendered successfully but were queued as generic ArtImages with no imagePath/targetRepo direct-delivery metadata, so they never reached kind_robots' self-hosted image storage: distribute_images.py's own docstring is explicit that any kind_robots-targeted file is RETAINED in projects/process/, never copied into a checkout, because /public/images/** is git-ignored there and real delivery only happens via the relay's direct self-hosted media path (an IMAGES_PATH-backed write outside git and outside this sandbox's reach) or a similar entity-linked completion path -- neither of which this pair of jobs had wired. This is the same structural gap model-builder/t-029 already flagged for its own dashboard-tab/tutorial step, not a new or taskmaster-specific bug, and not something a re-run of distribute_images.py can fix regardless of how many times it's invoked. Not spending a fresh generation cycle guessing at a delivery path with no confirmed working precedent for this asset class.
+
+      The front-end UI work (Quest Desk redesign, PR #1469) is complete and live in production. Closing to done on that basis -- the outstanding dashboard-tab/tutorial art-delivery gap is an infra-wide limitation, not a per-task blocker worth holding this open for indefinitely.
     claimed_by: 20260810T073200Z-sched-taskmaster-t003
     claimed_at: '2026-08-10T07:39:22Z'
-    updated: '2026-08-10T07:39:22Z'
+    updated: '2026-08-10T07:41:01Z'
     owner: reviewer
