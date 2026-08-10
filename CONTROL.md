@@ -344,7 +344,25 @@ of pretending every part should be printed.
 - Keep the first cycle focused on architecture and constraints before sourcing or CAD work.
 - No purchasing, publishing, or safety-critical electrical recommendations without human review.
 
-### brainstorm  (proposal)
-**Direction:** Generate a few strong, specific, buildable pitches each cycle for me to vote
-on. Favor projects that reuse existing systems, can ship in slices, and have a clear human
-benefit. Avoid vague "AI but for X" sludge.
+### brainstorm  (software)
+**Direction (rewritten 2026-08-10 from Silas's session direction):** Restore Brainstorm as
+a first-class Kind Robots creative ideation tool at `/brainstorm`, with `/plan/brainstorm`
+resolving to the same product. The essential interaction is pitch → ask for X ideas → curate
+individual results → edit/keep/reject/regenerate/branch → save/reuse. Text quality comes first;
+object-aware variations and optional Krea2-backed art generation follow once the ideation loop
+is genuinely useful.
+**Notes:**
+- Recover the historical interaction, persona, useful data flow, and product identity. Do NOT
+  use the old LLM generations as a quality standard. Silas hated those outputs; they are the
+  floor to beat, not examples to imitate.
+- Historical prompts/system text/output may be preserved as archaeological evidence and
+  negative fixtures, but never as positive few-shot examples or a reason to preserve obsolete
+  prompting. Reevaluate prompting against current model/provider capabilities.
+- Judge creative quality on relevance, semantic diversity, specificity, surprise, constraint
+  following, editability, and actual comic/creative premise. Random weird nouns, noun-swapped
+  paraphrases, corporate-list sludge, and repetitive LLM templates are failures.
+- The product supports practical ideation and playful absurd/dark-comedy improv. Do not sand
+  allowed material into a generic cheerful-assistant voice.
+- The internal Conductor pitch generator is no longer this project's definition. If retained,
+  it becomes an explicit downstream consumer of the user-facing Brainstorm engine and never
+  silently turns normal Brainstorm sessions into Conductor coordination data.
