@@ -541,8 +541,8 @@ tasks:
   - id: t-023
     milestone: m5
     title: "Add an exit control for an in-progress Da Vinci life run"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -555,6 +555,9 @@ tasks:
       low-key "Abandon this life and start over" action to the playing view that clears the
       stored run id and resets to phase 'start', reusing playAgain()'s reset logic, gated
       behind a lightweight confirm since it discards real progress.
+    claimed_by: 20260810T233500Z-davinci-t023-x7qk
+    claimed_at: '2026-08-10T23:33:07Z'
+    updated: '2026-08-10T23:33:07Z'
 
   - id: t-024
     milestone: m5
