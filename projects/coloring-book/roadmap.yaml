@@ -175,17 +175,17 @@ tasks:
 - id: t-022
   milestone: m4
   title: Monster Recast book 1 production pass — 36 final color/BW pairs
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  updated: '2026-08-09T16:29:47Z'
+  updated: '2026-08-10T02:32:22Z'
   depends_on: t-021
   note: 'Recovery pass (conductor scheduled sweep, 2026-08-09T16:27Z): checked all 8 recovery_actionable monster-recast entries (mr-029..mr-035, mr-group-001; ArtJob ids 8117-8125). All 8 still queued/running on ComfyUI -- no duplicate submissions made, 0/8 recovered this pass. queue_integrity_safe held throughout. Re-arming to ready for the next cycle to recheck.'
   run_log: projects/coloring-book/t-022-run-log.md
   recurring: true
-  owner: null
-  claimed_by: null
-  claimed_at: null
+  owner: worker
+  claimed_by: 20260810T022900Z-cb-t022-pillow-recovery
+  claimed_at: '2026-08-10T02:32:22Z'
 - id: t-025
   milestone: m6
   title: Package and register Monster Recast book 1
