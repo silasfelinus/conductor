@@ -3763,3 +3763,55 @@ tasks:
       read `recentFailed` from GET /api/art/queue/stats instead.
     updated: '2026-08-09T09:46:07Z'
     implementation_pr: 'silasfelinus/kind_robots#1651'
+
+  - id: t-111
+    milestone: m2
+    title: "audit_human_gates.py's active-only default can hide an unresolved hard gate the moment the disputed action it gates already happened"
+    status: needs-human
+    owner: null
+    stakes: reversible
+    passes: 0
+    gate_human: false
+    soft_gate: true
+    note: >
+      FOR SILAS: found while doing routine state reconciliation this session, immediately
+      after wishmaster/t-004 (the still-open hard gate over whether Wishmaster's retirement
+      was authorized — see that task's own note for the full incident). `scripts/audit_human_gates.py`
+      intentionally skips paused/retired/finished projects by default (per
+      `project-overrides.yaml`), which is correct and was the deliberate fix for the
+      opposite bug (career-transition/t-003 and pinball-hero/t-002 resurfacing weeks-stale
+      gates from projects Silas had already tabled — see CLAUDE.md's session-startup notes,
+      2026-07-25).
+
+      But `project-overrides.yaml`'s `wishmaster` entry flipped to `status: retired` in the
+      SAME merge race that t-004 is disputing, so the routine session-start sweep
+      (`audit_human_gates.py` with no flags, exactly what CLAUDE.md's checklist runs) no
+      longer surfaces t-004 at all — confirmed directly: default run shows 19 gates and
+      omits wishmaster/t-004; `--include-inactive` shows it. Unlike the career-transition/
+      pinball-hero case, this gate is not stale busywork from an abandoned project — it is
+      the literal open question of whether the project's own retirement was authorized, and
+      it is now invisible to the exact tool built to surface unresolved hard gates. A future
+      session running the standard sweep will report a clean bill of health while this sits
+      unresolved indefinitely.
+
+      Confirmed both career-transition/t-003 and pinball-hero/t-002 (the cases the current
+      filter exists to suppress) also carry `gate_human: true`, so a blanket "never filter
+      hard gates" rule would just reintroduce that bug — the two cases need to be told apart,
+      not resolved by picking one blanket rule.
+
+      TO APPROVE (i.e. decide the fix's shape, since this is a judgment call about report
+      semantics, not a code bug with one right answer): candidates include (a) tracking a
+      real `status_changed` date on each `project-overrides.yaml` entry and only suppressing
+      gates whose own `updated` predates that change by some margin (so a gate created around
+      the same time as the status flip — like t-104 — still surfaces, but genuinely old
+      stale gates from long-tabled projects stay suppressed); (b) a distinct always-shown
+      "gates orphaned by a concurrent lifecycle change" section, computed as: hard gate,
+      unresolved, in a non-active project, whose `updated` is within N days of the override's
+      status line; (c) something else Silas prefers. Whichever direction, add a regression
+      test using synthetic wishmaster-shaped and career-transition-shaped fixtures so both
+      cases stay correctly classified going forward.
+
+      What unblocks: once resolved, wishmaster/t-004 (and any future gate shaped like it)
+      will reliably surface in every routine sweep again, regardless of whether the disputed
+      action already flipped the project's lifecycle status.
+    updated: '2026-08-10T00:58:00Z'
