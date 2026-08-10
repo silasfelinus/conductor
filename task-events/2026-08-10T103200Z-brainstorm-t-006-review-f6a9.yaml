@@ -1,0 +1,18 @@
+version: 1
+project: brainstorm
+task: t-006
+operation: review
+owner: worker
+session: 2026-08-10T101700Z-brainstorm-t-006-f6a9
+updated: '2026-08-10T10:32:00Z'
+note: >-
+  Implemented the provider-aware Brainstorm generation contract on Kind Robots branch
+  worker/brainstorm-t-006-f6a9. Added POST /api/brainstorm/generate with canonical Server-row
+  resolution, access/transport guards, mana gating, exact-count structured validation, duplicate
+  rejection, and errorHandler responses. Official OpenAI uses native Responses JSON schema;
+  Anthropic, Ollama, and OpenAI-compatible servers share the current provider caller and are
+  normalized through one JSON candidate parser with no prose-line fallback. Added modern
+  creative-quality prompting including the anti-benchmark rule and 'do not confuse safe with
+  bland', plus regression tests and a dedicated generation-contract workflow. Hardened shared
+  provider derivation so compatible/local servers need not fake an OpenAI key and first-party
+  OpenAI credentials are never forwarded to arbitrary compatible URLs.
