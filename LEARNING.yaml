@@ -7480,3 +7480,14 @@ records:
   lesson: Creative lineage needs immutable snapshots of the exact parent revision; a live parentId alone
     can rewrite history after later edits. Restoring old creative work should append history rather than
     erase newer revisions.
+- date: '2026-08-10'
+  project: brainstorm
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A creative workspace deserves its own persistence semantics when existing models encode different
+    domains; keep local draft continuity automatic, make durable account saves explicit/private, and validate
+    a full candidate/revision/branch snapshot round-trip before trusting the schema.

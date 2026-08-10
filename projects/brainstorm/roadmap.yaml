@@ -249,12 +249,11 @@ tasks:
   - id: t-010
     milestone: m2
     title: Choose and implement durable Brainstorm persistence semantics
-    status: review
+    status: done
     depends_on:
       - t-003
       - t-009
-    owner: worker
-    updated: '2026-08-10T12:31:00Z'
+    updated: '2026-08-10T12:45:00Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -263,13 +262,15 @@ tasks:
       Auditing current Kind Robots persistence models before choosing Brainstorm durable storage. Reuse an existing model only if its semantics genuinely match named private creative sessions and candidate lineage; otherwise use an additive data-preserving Brainstorm-specific schema with authenticated API/store ownership.
 
       Implemented durable private Brainstorm persistence on Kind Robots worker/brainstorm-t-010-f2d6. Added additive BrainstormSession/BrainstormCandidate schema + migration, owner-scoped authenticated list/create/open/update APIs, typed snapshot normalization and round-trip reconstruction, store-owned explicit save/update/reopen actions while keeping browser drafts local, and minimal Saved Work controls. Added dedicated persistence/Prisma contract coverage. Migration audit is additive-only: CREATE TABLE/indexes plus a foreign key between the two new tables; no existing data/table/column rewrite or drop.
+
+      Merged Kind Robots PR #1718 after every attached workflow passed, including the dedicated Prisma validation/generation and Brainstorm persistence round-trip contract. Added additive BrainstormSession/BrainstormCandidate persistence, authenticated owner-scoped list/create/open/update APIs, explicit Pinia save/update/reopen behavior while preserving local unsaved drafts, and minimal private Saved Work controls. Migration was audited as additive-only: two CREATE TABLE statements, indexes, and one foreign-key ADD CONSTRAINT between the two new tables; no existing data/table/column rewrite or drop. The worker branch is deleted, the resulting production deployment succeeded, and live /brainstorm returns the Saved Work surface.
     claimed_by: 2026-08-10T121700Z-brainstorm-t-010-f2d6
     claimed_at: '2026-08-10T12:17:00Z'
 
   - id: t-011
     milestone: m2
     title: Add saved/history browser and export/copy handoff
-    status: waiting
+    status: ready
     depends_on: t-010
     owner: null
     updated: '2026-08-10T08:05:00Z'
