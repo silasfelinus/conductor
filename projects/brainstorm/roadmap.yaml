@@ -148,12 +148,12 @@ tasks:
   - id: t-006
     milestone: m1
     title: Implement provider-agnostic structured text generation endpoint
-    status: ready
+    status: claimed
     depends_on:
       - t-003
       - t-005
-    owner: null
-    updated: '2026-08-10T08:05:00Z'
+    owner: worker
+    updated: '2026-08-10T10:17:00Z'
     passes: 0
     stakes: reversible
     note: >-
@@ -163,6 +163,8 @@ tasks:
       wrappers safely, and return the standard `{ success, ... }` API shape via errorHandler.
       Prompt explicitly for semantic diversity and non-duplicate ideas. Apply normal auth/mana
       behavior if current text generation requires it. Add focused endpoint/parser tests.
+    claimed_by: 2026-08-10T101700Z-brainstorm-t-006-f6a9
+    claimed_at: '2026-08-10T10:17:00Z'
 
   - id: t-007
     milestone: m1
