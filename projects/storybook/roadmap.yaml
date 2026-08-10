@@ -155,15 +155,16 @@ tasks:
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
-  status: review
-  owner: worker
+  status: done
   passes: 0
   stakes: reversible
   note: |-
     components/narrative/narrative-role-assigner.vue is a card board as of kind_robots 2026-08-06 (character art at 2:3 through kr-art-plate, the assigned part worn as a badge, parts offered as pressable chips), but the cards sit in a uniform auto-fill grid so POSITION CARRIES NO MEANING. Silas: "I'm imagining a layout that lets the user feel like they are selecting cards and creating a playboard that turns into a story." A real playboard arranges BY role -- protagonist given prominence, antagonist set opposite, ensemble ranked behind -- rather than in reading order. This is a layout design question rather than a mechanical one and wants Silas's eye on the arrangement before it is built. The cast is capped at five, which bounds the problem usefully.
+
+    Reviewed and merged silasfelinus/kind_robots#1727 as 5beb132da03f516d8e673e73b6ad0332c03d3db1. The casting board now arranges protagonist/antagonist leads opposite each other, supporting roles in a middle tier, and ensemble/unassigned cast in a receded back tier while retaining pressable role chips as the accessible fallback. Exact-head TypeScript, Contract Tests, Layout Contract, Narrative Accessibility Acceptance, and attached Storybook/Narrative workflows completed successfully.
   claimed_by: 20260810T192800Z-storybook-t011-9f3a
   claimed_at: '2026-08-10T19:29:41Z'
-  updated: '2026-08-10T19:29:41Z'
+  updated: '2026-08-10T20:15:20Z'
 - id: t-012
   milestone: m4
   title: Drag a character card onto a role slot
