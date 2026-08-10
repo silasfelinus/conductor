@@ -259,7 +259,18 @@ tasks:
     kind_robots vue-tsc + eslint + prettier green; live curl proof through POST /api/alexa; and a
     headless-browser proof (0 to 20 to 0 butterflies, no console errors). Design at
     docs/animation-control-bridge.md. Reversible visual toggles only: no writes, publishing, spend,
-    or roadmap edits, and no physical Echo binding (that stays behind the t-010 human gate).'
+    or roadmap edits, and no physical Echo binding (that stays behind the t-010 human gate).
+
+    CORRECTION (t-019, 2026-08-10): the file/route names above are stale. The page component
+    is now `components/pages/serendipity-page.vue` at the `/serendipity` route --
+    `components/pages/serendipity-voice-page.vue` and `/serendipity-voice` no longer exist.
+    `stores/serendipityVoiceStore.ts` is unaffected and still current. This is the same rename
+    project-overrides.yaml already documents: the unrelated story-weaving product that used to
+    own `/serendipity` was permanently renamed to Taskmaster the same day (kind_robots commit
+    5509ac4), freeing the route for this project''s voice-led surface to reclaim (kind_robots
+    commit 36a86bf, "refactor: make Serendipity the canonical voice route"). No functional
+    change, no re-verification needed -- this task''s original build and its verification
+    evidence stand; only the file/route names in the note text were out of date.'
 - id: t-014
   milestone: m4
   title: Per-person personalization (Alexa voice profile -> Kind Robots user)
@@ -390,8 +401,9 @@ tasks:
 - id: t-019
   milestone: m4
   title: "Correct t-012's note — components/pages/serendipity-voice-page.vue was renamed to serendipity-page.vue"
-  status: claimed
+  status: done
   owner: worker
+  updated: '2026-08-10T07:45:00Z'
   passes: 0
   stakes: reversible
   note: >

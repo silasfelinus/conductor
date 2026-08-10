@@ -7373,3 +7373,14 @@ records:
   lesson: 'When moving grandfathered UI out of an allow-listed component, do not transfer the exception
     to the new file. Satisfy both ratchets: keep interact components thin and make newly extracted working
     surfaces container-responsive.'
+- date: '2026-08-10'
+  project: alexa-integration
+  task: t-019
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Docs-only roadmap corrections are cheap to verify directly against the live checkout
+    (Glob/grep for the named file) before editing the note -- confirmed the rename claim first
+    rather than trusting the filed audit finding at face value.'
