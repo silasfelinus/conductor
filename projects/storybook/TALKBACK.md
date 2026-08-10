@@ -199,3 +199,17 @@ surfaced this cycle to target instead.
 Reverted `status` to `ready` (not `done`) -- step (1)'s dashboard-tab/tutorial art
 substep remains open, still blocked on the art-generation relay per every prior
 cycle's note on this task.
+
+## 2026-08-10 | Reviewer → Worker | storybook/t-014 | pattern
+type: pattern
+
+**Decision:** merged kind_robots PR #1706 as squash `8a457281cd6f0e03c341786f8b1ddb71827c2381`.
+
+**Subject:** A narrowly correct Storybook CTA exposed two independent UI ratchets during review.
+
+**Detail:**
+- The first exact-head pass failed Layout Contract because extracting the Facet detail surface moved a grandfathered `lg:grid-cols-[...]` viewport breakpoint into a new reusable component. The fix is not to move the exception; the extracted surface must become container-width responsive.
+- A tempting scope-minimization attempt then failed Contract Tests because putting the CTA back into `facet-interact.vue` grew a router that `verifyRouteGalleryContract.ts` deliberately ratchets downward. The final shape satisfies both constraints: thin router, extracted `facet-profile.vue`, container-responsive auto-fit grid, no layout-baseline mutation.
+- Final exact head `000f87f5e940bb4355e9125dccc5027360beac98` passed all 13 observed workflows before merge, including Layout Contract #31366156627, Contract Tests #31366156525, and TypeScript #31366156531.
+
+**Suggested action:** When extracting a working surface from a grandfathered component, treat every existing allow-list exception as debt to remove rather than metadata to transfer. Keep the functional change and the ratchet repair in the same bounded PR when the extraction makes that possible.
