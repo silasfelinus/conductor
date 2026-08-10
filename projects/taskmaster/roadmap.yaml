@@ -122,7 +122,7 @@ tasks:
   - id: t-003
     milestone: m3
     title: "Polish and upgrade Taskmaster front-end surface"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     note: |-
@@ -139,7 +139,9 @@ tasks:
       The front-end UI work (Quest Desk redesign, PR #1469) is complete and live in production. NOT closing to done, correcting course from an earlier draft of this note: model-builder/t-029 hits the identical dashboard-tab/tutorial delivery gap and deliberately stays `ready` rather than `done` for it, and this repo's own lifecycle validator (test_current_project_lifecycle.py) confirmed why -- closing taskmaster's last open task would leave an `active` project with zero open work while its stated goal (dedicated art for the Taskmaster surface) is still 3/5 delivered. Re-armed to ready, matching the model-builder precedent, until the dashboard-tab/tutorial delivery mechanism exists (see the kaizen suggestion on conductor PR #2010: a generic entity-linked-style delivery path for project dashboard-tab/tutorial art).
 
       Post-merge cleanup for conductor PR #2010: keep t-003 ready because dashboard-tab/tutorial delivery remains unresolved, and clear the stale owner left by the PR branch.
+
+      Implemented a shared Conductor ArtJob destination-preservation fix so ordinary targeted dashboard/tutorial and missing-image requests retain targetRepo/imagePath delivery metadata through enqueue, with focused regression coverage.
     claimed_by: 20260810T122043-0700-taskmaster-t003-4c9e
     claimed_at: '2026-08-10T19:20:43Z'
-    updated: '2026-08-10T19:20:43Z'
+    updated: '2026-08-10T19:34:00Z'
     owner: worker
