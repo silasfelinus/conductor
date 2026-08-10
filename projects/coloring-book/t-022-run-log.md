@@ -736,3 +736,63 @@ the claim and returned the task to `ready` for a later cycle (or tomorrow's cron
 retry once these jobs land.
 
 Verification: `git status`/`git diff --stat` (clean, confirming no unintended writes).
+
+## 2026-08-10T02:29Z | Agent run (scheduled conductor sweep) | coloring-book/t-022 -- recovered all 8 stuck Monster Recast jobs, color stage complete
+
+Checked `coloring_queue_status.py --book monster-recast` before touching anything, per
+the 2026-08-09T11:50Z entry's standing guidance. No automated `monster-recast-art-jobs.yml`
+run since 2026-08-09T11:44Z (next daily cron 2026-08-10T11:00Z), `recommended_action:
+recover-existing-jobs`, `recovery_safe: true`, `queue_integrity_safe: true` -- same 8
+`recovery_batch` entries (mr-029 through mr-035, mr-group-001; job ids
+8143/8117/8118/8119/8120/8121/8124/8125) every recheck since 2026-08-09T16:16Z has found
+still queued/running, so a recovery attempt (not a fresh submission) was safe to run.
+
+First attempt (`--timeout 60`, to poll quickly rather than wait a full 600s per job) hit
+a genuine sandbox gap on 6 of 8: `RECOVERY UNVERIFIED ... Pillow is required for WebP
+output` -- this sandbox had no Pillow installed. This is the same recurring gap prior
+cycles (2026-07-27 through 2026-07-29, see entries above and ai-art-academy's
+continuous-improvement-run-log.md) have hit and fixed with `pip install --user Pillow`;
+confirmed the except-block guard fixed in an earlier cycle correctly preserved all 6 job
+references this time (`job N reference left intact for a future pass, no duplicate
+submitted`) rather than losing them the way the original 2026-07-xx bug did -- 0 lost
+references, 0 duplicate submissions from this first attempt.
+
+Installed Pillow (`pip install --user Pillow`) and re-ran the identical recovery pass
+(same 8 ids, `--timeout 90`): all 8 had in fact already finished rendering server-side
+and recovered cleanly with no duplicate submissions -- ArtImage ids 17171 (mr-029),
+17137 (mr-030), 17138 (mr-031), 17139 (mr-032), 17140 (mr-033), 17141 (mr-034), 17143
+(mr-035), 17144 (mr-group-001). Verified all 8 landed `.webp` files: `file` confirms
+valid VP8-encoded WebP, `PIL.Image.open` confirms 1024x1536 RGB for each. Visually
+inspected `mr-group-001-monster-matinee.webp` (a three-figure group scene, the highest
+compositional risk of the batch) -- a clean, on-brief render matching its prompt
+(ventriloquist-dummy mother, animatronic-robot usher, human boy, movie-theater-lobby
+staging), no collage/text artifacts, distinct designs per prior guardrails.
+
+`coloring_queue_status.py --book monster-recast` after: `{done: 33, approved: 3,
+pending: 0}`, `recommended_action: complete`, `queue_integrity_safe: true`, 0 duplicate
+job/entry ids. **Monster Recast's color-proposal stage (stage 2 of the production loop)
+is now fully drained -- all 36 slots have landed a color render**, awaiting human review
+in the ArtJob trainer panel per the project's standing review flow (stage 3/4, not an
+agent action). `coloring_proposal_status.py --check` confirms: `accepted color/BW 3/3`
+(unchanged -- review/acceptance is Silas's call), `color jobs pending/done/approved
+0/33/3`.
+
+Did not start a fresh Hollywood Recast batch this cycle: all 36 of its color-proposal
+entries are still genuinely un-submitted (never touched), which is exactly the shape the
+daily `monster-recast-art-jobs.yml` cron (book-order-then-slot, next run
+2026-08-10T11:00Z, ~9 hours out) will pick up on its own once Monster Recast's queue
+shows no more actionable entries -- starting an 18-item manual submission by hand risks
+the same submit/submit collision the 2026-08-09T11:40Z and 11:50Z entries both hit and
+root-caused to this exact cron. Leaving it for the cron matches the corrected guidance
+those entries left for future cycles.
+
+Verification: `validate_roadmaps.py` clean; `coloring_queue_status.py --book
+monster-recast` (`queue_integrity_safe: true`, 0 duplicates) before and after;
+`git diff --stat` reviewed before committing (1 file changed in `color-art-jobs.yaml`
+plus 8 new binary `.webp` files, nothing else touched).
+
+Re-arming to `ready` after this PR merges; releasing the claim. Next cycle's actionable
+work is either (a) the Hollywood Recast cron submission landing on its own and later
+needing a recovery pass the same shape as this one, or (b) Silas reviewing the now-33
+rendered Monster Recast color proposals in the ArtJob trainer panel and accepting/
+revising toward the 36 needed for stage 4 (BW derivation).
