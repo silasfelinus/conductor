@@ -182,12 +182,15 @@ tasks:
 - id: t-014
   milestone: m4
   title: Add "Start a story with this" links on the object surfaces
-  status: ready
+  status: claimed
   owner: worker
   passes: 0
   stakes: reversible
   note: |-
     Storybook now seeds its setup draft from ?scenario= / ?character= / ?facet= / ?reward= / ?location= (kind_robots 2026-08-06) -- seeding on top of the restored draft so a link never destroys a story in progress, and clearing the query so a reload cannot re-add an ingredient the author removed. NOTHING LINKS TO IT YET: the consuming half shipped without the entry points, so the feature is currently unreachable by a user. Silas: "what we should do is have links to these elements that start the process to tell a storybook story with that element as part of it" -- explicitly INSTEAD of giving Facets and Rewards conversations of their own, since both are tools that feed other interactions rather than things you talk to. Facets and Rewards are the priority; each now has exactly one detail pane to host the affordance.
+  claimed_by: 20260810T063100Z-story-t014
+  claimed_at: '2026-08-10T06:44:48Z'
+  updated: '2026-08-10T06:44:48Z'
 - id: t-015
   milestone: m4
   title: Decide whether stage roles and narrative roles converge
