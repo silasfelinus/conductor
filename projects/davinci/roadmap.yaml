@@ -541,23 +541,18 @@ tasks:
   - id: t-023
     milestone: m5
     title: "Add an exit control for an in-progress Da Vinci life run"
-    status: review
-    owner: worker
+    status: done
+    owner: null
     passes: 0
     stakes: reversible
     note: >
-      Kaizen from t-017's playtest audit (kind_robots components/conductor/davinci-page.vue).
-      Once phase === 'playing', the only way out is finishing the run (reach the resolve
-      screen, click "Live another life" -> playAgain()) -- there is no visible control to
-      abandon an in-progress run and start a different one before
-      MIN_CHAPTERS_BEFORE_ENDING (3 chapters). The only actual exit is manually clearing the
-      davinci-active-life-run-id localStorage key, which is never exposed in the UI. Add a
-      low-key "Abandon this life and start over" action to the playing view that clears the
-      stored run id and resets to phase 'start', reusing playAgain()'s reset logic, gated
-      behind a lightweight confirm since it discards real progress.
+      Kaizen from t-017's playtest audit (kind_robots components/conductor/davinci-page.vue). Once phase === 'playing', the only way out is finishing the run (reach the resolve screen, click "Live another life" -> playAgain()) -- there is no visible control to abandon an in-progress run and start a different one before MIN_CHAPTERS_BEFORE_ENDING (3 chapters). The only actual exit is manually clearing the davinci-active-life-run-id localStorage key, which is never exposed in the UI. Add a low-key "Abandon this life and start over" action to the playing view that clears the stored run id and resets to phase 'start', reusing playAgain()'s reset logic, gated behind a lightweight confirm since it discards real progress.
+
+      Done (kind_robots PR #1732, merged f423f50): added a low-key "Abandon this life" button to the phase === 'playing' header row in components/conductor/davinci-page.vue. abandonRun() gates behind window.confirm (matches the existing confirm pattern used elsewhere, e.g. art-gallery.vue), then delegates to playAgain()'s existing reset logic rather than duplicating it. Verified via vue-tsc --noEmit, eslint, and prettier --check (all clean) -- no browser available in this sandbox (documented Chromium-through-proxy limitation).
     claimed_by: 20260810T233500Z-davinci-t023-x7qk
     claimed_at: '2026-08-10T23:33:07Z'
-    updated: '2026-08-10T23:33:07Z'
+    updated: '2026-08-10T23:45:47Z'
+    implementation_pr: 'silasfelinus/kind_robots#1732'
 
   - id: t-024
     milestone: m5

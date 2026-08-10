@@ -7589,3 +7589,16 @@ records:
   lesson: 'Pair server-side stale-write protection with matching client affordance guards when a conflicting
     action is known: the server preserves correctness, while the UI prevents users from entering the race
     in the first place.'
+- date: '2026-08-10'
+  project: davinci
+  task: t-023
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A long-running interactive flow (life run, quest, playthrough) needs a UI-level exit affordance
+    from day one, not just a resolve-screen reset -- this one shipped with only a manually-cleared
+    localStorage key as the real "abandon" path for weeks before the gap was caught. Reusing the
+    existing reset function (playAgain) behind a window.confirm kept the fix to ~20 lines with no
+    new state.'
