@@ -73,6 +73,52 @@ def _positive_int(value: Any) -> int | None:
     return parsed if parsed > 0 else None
 
 
+def _enrich_generic_destination(entry: dict[str, Any], job: dict[str, Any]) -> None:
+    """Keep an explicit Conductor destination on ordinary durable ArtJobs.
+
+    Missing-image, dashboard-tab, tutorial, and other generic queue entries already
+    carry ``target_repo``/``image_path``. The core renderer historically dropped
+    those fields while converting the YAML entry to an ArtJob, so the relay could
+    render an ArtImage but had no final media destination to deliver it to.
+    """
+    payload = job.get("payload")
+    if not isinstance(payload, dict):
+        return
+
+    request_id = str(entry.get("id") or "").strip()
+    target_repo = str(entry.get("target_repo") or "").strip()
+    image_path = str(entry.get("image_path") or "").strip()
+    source_url = str(entry.get("source_url") or "").strip()
+    page_url = str(entry.get("page_url") or "").strip()
+    label = str(entry.get("label") or "").strip()
+
+    if not target_repo:
+        return
+
+    if request_id:
+        job["idempotencyKey"] = request_id
+    project_slug = str(entry.get("project_slug") or "").strip()
+    if project_slug and not job.get("projectSlug"):
+        job["projectSlug"] = project_slug
+
+    payload["targetRepo"] = target_repo
+    if image_path:
+        payload["imagePath"] = image_path
+    if source_url:
+        payload["sourceUrl"] = source_url
+    if page_url:
+        payload["pageUrl"] = page_url
+    payload["conductorRequest"] = {
+        "id": request_id or None,
+        "source": str(entry.get("source") or "").strip() or None,
+        "label": label or None,
+        "targetRepo": target_repo,
+        "imagePath": image_path or None,
+        "sourceUrl": source_url or None,
+        "pageUrl": page_url or None,
+    }
+
+
 def _enrich_daily_dream_job(entry: dict[str, Any], job: dict[str, Any]) -> None:
     """Preserve canonical Daily Dream destination, provenance, and attach target.
 
@@ -149,6 +195,8 @@ def entry_to_job(entry: dict[str, Any]):
     job = _core_entry_to_job(normalized)
     if _is_daily_dream(normalized):
         _enrich_daily_dream_job(normalized, job)
+    else:
+        _enrich_generic_destination(normalized, job)
     if synthetic_seed:
         payload = job.get("payload")
         if isinstance(payload, dict):
