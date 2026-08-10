@@ -1,14 +1,14 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-10T06:45:18Z
+Generated: 2026-08-10T07:39:53Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **559**
-- Outcomes: blocked: 13, cancelled: 1, done: 545
-- Success rate: **97%**
+- Closed tasks recorded: **560**
+- Outcomes: blocked: 13, cancelled: 1, done: 546
+- Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
 ## By project
@@ -49,6 +49,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | ruler-hooked | 4 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
+| storybook | 1 | 100% |
 | storymaker | 1 | 100% |
 | superkate-hairstyle-ai | 18 | 100% |
 | superkate-services-calculator | 12 | 100% |
@@ -59,7 +60,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 544 | 99% |
+| software | 545 | 99% |
 
 ## Failure categories
 
@@ -80,6 +81,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-10 `storybook/t-014` — When moving grandfathered UI out of an allow-listed component, do not transfer the exception to the new file. Satisfy both ratchets: keep interact components thin and make newly extracted working surfaces container-responsive.
 - 2026-08-10 `kind-robots/t-060` — Live-sanitizing a slug field on every keystroke (lowercase + collapse + trim) breaks manual typing of hyphenated slugs: a hyphen is trailing (and therefore gets trimmed) the instant it's typed, before the next character lands, so "my-project" becomes impossible to type by hand. Split it into a light per-keystroke filter (lowercase, drop disallowed chars only) plus a full slugify() on blur/submit instead. Also: attaching `.statusCode` to a thrown Error in a Pinia store action is a safe additive way to let one caller branch on HTTP status (409 vs. other) without touching the route/API contract or breaking other callers that only read `.message`.
 
 - 2026-08-10 `kind-robots/t-059` — A "document every live surface" task benefits from an exhaustive code-level grep (grep -rn "\.project\.create(" server/ scripts/) rather than trusting the audit note's own count -- t-058's note said "at least three" then "all five" for what turned out to be 4 distinct route files, and the grep also surfaced that Surface 1's description (sync_projects.py -> per-project POST /api/projects) and Surfaces 2/3's "auto-Todo not yet implemented" pitch notes were themselves stale against current code (scripts/sync_kind_robots_projection.py -> POST /api/conductor/sync bulk upsert; createProjectWithScaffoldTodo() already files the Todo). Fixing those in the same docs-only pass kept the doc actually accurate instead of technically-task-complete-but-still-wrong.
@@ -97,8 +99,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-09 `interface-vision/t-116` — A codemod's own "pool exhausted" conclusion is only as good as its scan boundary. kr_panel_codemod.py used re.search for the FIRST </template> in a file to find the template region's end, but an SFC can nest a named-slot/conditional <template v-if #slot> block that closes with its own </template> well before the real end -- silently truncating the scan and hiding every real candidate after it. Two prior slices (15, 18) trusted "0 automatable substitutions" as proof the pool was empty when it was actually an artifact of the scan bug. Fix: scan for the LAST </template> in the file, not the first. Re-running the corrected scan surfaced 47 previously-invisible candidates across 21 files in one pass -- a reminder that a static-analysis/codemod tool's exhaustion claim needs to be re-derived from its actual scan boundary, not taken at face value from its summary output.
 
-- 2026-08-09 `conductor/t-110` — A default is a decision, and an unnamed one never gets reviewed. /api/art/enqueue resolved an omitted engine with `String(value || 'a1111')` — one word, no constant, no test — long after the relay stopped serving A1111, so "just enqueue this" meant "enqueue something that cannot render". The same shape hid a second bug next to it: buildDefaultComfyWorkflow passed a literal -1 seed into the KSampler where every sibling builder resolved a random one, pinning that lane to one image per Comfy install, and patchComfyWorkflow repeated the -1 immediately afterward so fixing only the builder would have been invisible. Both were invisible for the same reason — the value was inline, unnamed, and untested, so nothing ever asked whether it was still right. When a fallback decides behaviour for every caller that stays silent, give it a named constant and a test that states the intent; "krea2 is the default" and "an unspecified seed is random" are claims a test can hold, `|| 'a1111'` is not.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-10T06:45:18Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-10T07:39:53Z_
