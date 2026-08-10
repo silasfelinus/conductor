@@ -175,17 +175,17 @@ tasks:
 - id: t-022
   milestone: m4
   title: Monster Recast book 1 production pass — 36 final color/BW pairs
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  updated: '2026-08-10T02:32:22Z'
+  updated: '2026-08-10T11:33:28Z'
   depends_on: t-021
   note: 'Recovery pass (conductor scheduled sweep, 2026-08-10T02:29Z): recovered all 8 recovery_actionable monster-recast entries (mr-029..mr-035, mr-group-001; ArtJob ids 8117-8125) after installing Pillow (missing in this sandbox -- the first attempt hit "Pillow is required for WebP output" on 6/8 but the existing except-block guard correctly preserved all job references, 0 lost, 0 duplicates). Re-ran after install: 8/8 landed cleanly, 0 duplicate submissions. Monster Recast color-proposal stage now fully drained: {done: 33, approved: 3, pending: 0}, recommended_action=complete, queue_integrity_safe held throughout. Did not start a fresh Hollywood Recast batch -- leaving that to the daily monster-recast-art-jobs.yml cron (next run 2026-08-10T11:00Z) per the corrected guidance from the 2026-08-09T11:40Z/11:50Z collision entries. See run_log for full detail. Re-arming to ready for the next cycle.'
   run_log: projects/coloring-book/t-022-run-log.md
   recurring: true
-  owner: null
-  claimed_by: null
-  claimed_at: null
+  owner: worker
+  claimed_by: 20260810T113327Z-coloring-t022-hwr-recovery
+  claimed_at: '2026-08-10T11:33:28Z'
 - id: t-025
   milestone: m6
   title: Package and register Monster Recast book 1
