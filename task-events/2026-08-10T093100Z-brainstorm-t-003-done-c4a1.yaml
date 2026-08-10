@@ -1,0 +1,19 @@
+version: 1
+project: brainstorm
+task: t-003
+operation: done
+owner: worker
+session: 2026-08-10T091100Z-brainstorm-t-003-c4a1
+updated: '2026-08-10T09:31:00Z'
+note: >-
+  Merged PR #2020 with the current architecture audit in RECOVERY-MAP.md and PR #2021 with
+  IMPLEMENTATION-CONTRACT.md. Brainstorm now has an evidence-backed current implementation
+  path: canonical route plus alias, dedicated Pinia store, provider-aware structured endpoint
+  using current server/mana infrastructure, candidate-first workbench, and explicit boundaries
+  against Dream/Pitch/Prompt/Conductor semantic overloading.
+learning: >-
+  The June Dream workaround preserved useful UI ideas but discarded structure twice: the
+  endpoint returns structured candidates, dreamStore normalizes them to prose, and the Vue
+  component reparses prose into candidates. Restoring Brainstorm should keep structured
+  candidate data end-to-end and reuse the current active text-server/provider and mana
+  plumbing instead of inheriting that compatibility loop.
