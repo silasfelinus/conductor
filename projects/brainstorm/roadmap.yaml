@@ -80,19 +80,15 @@ tasks:
   - id: t-002
     milestone: m0
     title: Reconstruct the last coherent historical Brainstorm product
-    status: claimed
+    status: review
     owner: worker
-    updated: '2026-08-10T08:49:00Z'
+    updated: '2026-08-10T09:02:00Z'
     passes: 0
     stakes: reversible
-    note: >-
-      Inspect the 2023-2024 Brainstorm commit sequence, including old page/view, selector,
-      add-pitch, Pitch/PitchType store/model code, API route, image/persona, and save/edit
-      behavior. Identify the last coherent working snapshot and the later commit/route change
-      that replaced the public Brainstorm surface. Write `projects/brainstorm/RECOVERY-MAP.md`
-      with: historical file -> current equivalent, reusable vs obsolete code, old data model
-      assumptions, provider/API assumptions, and the smallest safe restoration slice. Do not
-      restore code blindly; current Nuxt 4/Pinia/server conventions win.
+    note: |-
+      Inspect the 2023-2024 Brainstorm commit sequence, including old page/view, selector, add-pitch, Pitch/PitchType store/model code, API route, image/persona, and save/edit behavior. Identify the last coherent working snapshot and the later commit/route change that replaced the public Brainstorm surface. Write `projects/brainstorm/RECOVERY-MAP.md` with: historical file -> current equivalent, reusable vs obsolete code, old data model assumptions, provider/API assumptions, and the smallest safe restoration slice. Do not restore code blindly; current Nuxt 4/Pinia/server conventions win.
+
+      Reconstructed the Brainstorm lineage and documented the recovery map. The last coherent public standalone product survived through June 9, 2026; the exact regression occurred in the June 15 Pitch-to-Dream migration, which deleted the Brainstorm manager and changed content/brainstorm.md from :brainstorm-manager/pitchCards to :dream-manager/dreamCards. RECOVERY-MAP.md separates interaction behavior worth restoring from the deleted Pitch schema, obsolete provider/parser assumptions, and historical LLM output that remains an anti-benchmark.
     claimed_by: 2026-08-10T084900Z-brainstorm-t-002-b7f2
     claimed_at: '2026-08-10T08:49:00Z'
 
