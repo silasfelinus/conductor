@@ -225,10 +225,13 @@ tasks:
 - id: t-017
   milestone: m4
   title: Add a contract for Storybook object-entry links
-  status: ready
+  status: claimed
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-014
   note: >-
     Reviewer kaizen from kind_robots PR #1706: CI caught the layout and router-shape regressions during review, but no focused contract directly asserted the user-facing Storybook handoff itself. Add a small source-level contract that verifies the Facet and Reward detail surfaces expose Storybook CTAs carrying their object slug through ?facet= and ?reward=, and that Storybook still consumes those seed parameters without requiring a particular button markup. Keep it narrow enough that UI restyling does not create false failures.
+  claimed_by: 20260810T143624-conductor-agent-run
+  claimed_at: '2026-08-10T14:36:25Z'
+  updated: '2026-08-10T14:36:25Z'
