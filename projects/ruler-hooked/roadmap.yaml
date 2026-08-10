@@ -209,6 +209,14 @@ tasks:
       ruler-hooked-stage.vue (composited landscape regions), ruler-hooked-health.vue,
       and ruler-hooked-slots.vue (multiple save slots). No kind_robots code
       change needed this cycle — purely a verification + bookkeeping close-out.
+
+      CORRECTION (ruler-hooked/t-013, 2026-08-10): the file named above,
+      components/ruler-hooked/ruler-hooked-page.vue, does not exist in
+      silasfelinus/kind_robots. The component actually lives at
+      components/conductor/ruler-hooked-page.vue. Nuxt's flat auto-import
+      means the app still works regardless, but a future contributor
+      searching by the documented path would not find it. Documentation-only;
+      no code changed.
     updated: '2026-07-21T12:26:00Z'
 
   - id: t-008
@@ -385,13 +393,23 @@ tasks:
       When PR #811 merges, set t-012 to done and re-run
       scripts/resolve_deps.py to unblock t-007 (all its other deps — t-004,
       t-005, t-006 — are already done).
+
+      CORRECTION (ruler-hooked/t-013, 2026-08-10): the original plan above
+      cited three reuse targets that never existed under those names in
+      silasfelinus/kind_robots — components/navigation/swipe-deck.vue was
+      never built, components/butterfly/single-slider.vue now lives at
+      components/abandonware/butterfly/single-slider.vue, and
+      stores/compositionStore.ts never existed (rulerHookedStore.ts ships its
+      own localStorage handling directly, per the DELIVERED section above).
+      Recorded here so a future contributor does not try to import
+      nonexistent files. Documentation-only; no code changed.
     claimed_by: claude-conductor-burst-20260721T1130Z
     claimed_at: '2026-07-21T11:18:51Z'
     updated: '2026-07-21T11:23:33Z'
   - id: t-013
     milestone: m1
     title: 'Weekly site audit (2026-08-07): correct t-012''s stale file paths'
-    status: claimed
+    status: review
     owner: worker
     stakes: reversible
     note: 'Filed by the weekly site-audit gap scan. t-012 (done, 2026-07-21) asserts components/ruler-hooked/ruler-hooked-page.vue is "structurally present and wired" -- the file actually lives at components/conductor/ruler-hooked-page.vue (Nuxt''s flat auto-import means the app still works, but the documented path is wrong). The same task cites components/navigation/swipe-deck.vue and components/butterfly/single-slider.vue as reuse patterns and stores/compositionStore.ts as a reuse idiom for local-storage persistence; none of the three exist under those names (swipe-deck.vue was never built, single-slider.vue now lives at components/abandonware/butterfly/single-slider.vue, and compositionStore.ts never existed -- rulerHookedStore.ts ships its own local-storage handling directly). Add a one-line correction addendum to t-012''s note recording the actual current paths so a future contributor does not try to import nonexistent reuse targets.'
