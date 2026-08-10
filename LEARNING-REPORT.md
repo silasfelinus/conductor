@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-10T10:34:52Z
+Generated: 2026-08-10T11:33:58Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **566**
-- Outcomes: blocked: 13, cancelled: 1, done: 552
+- Closed tasks recorded: **567**
+- Outcomes: blocked: 13, cancelled: 1, done: 553
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -22,7 +22,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | appmaker | 6 | 100% |
 | approval-portal | 2 | 0% |
 | art-generator-connect | 3 | 100% |
-| brainstorm | 5 | 100% |
+| brainstorm | 6 | 100% |
 | challenge-center | 16 | 100% |
 | coat-dance | 8 | 0% |
 | coloring-book | 25 | 100% |
@@ -61,13 +61,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 551 | 99% |
+| software | 552 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
-| quality | 11 |
+| quality | 12 |
 | actionable | 9 |
 | transient | 9 |
 | scope | 2 |
@@ -76,12 +76,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - project `coat-dance` — 0% success over 8 closed tasks; aim the next kaizen task here
 - kind `content` — 40% success over 15 closed tasks; aim the next kaizen task here
-- failure category `quality` — 11 occurrences; look for the shared cause across its records
+- failure category `quality` — 12 occurrences; look for the shared cause across its records
 - failure category `actionable` — 9 occurrences; look for the shared cause across its records
 - failure category `transient` — 9 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-08-10 `brainstorm/t-007` — After a rejected UI retry, review the current head and current check runs rather than treating an earlier red diagnostic as permanent; require the concrete regression fixture and completed green checks before merge.
 - 2026-08-10 `model-builder/t-029` — autoBuildItem()'s FIELDS_AND_PROMPTS branch drafted artPrompt unconditionally instead of only when empty, unlike its own PITCH branch -- the ~33rd cycle of this recurring read-through task, still finding new instances of "review/intent gate enforced in one branch but not its sibling." Worth checking sibling branches of any stage-gating conditional whenever one gets a fix, not just the branch that was reported.
 - 2026-08-10 `brainstorm/t-006` — The current text stack has multiple useful abstractions but no single provider layer covers every Kind Robots text server: generic textServer assumes OpenAI-style requests while Suggest explicitly handles Anthropic/Ollama/compatible servers. Brainstorm therefore resolves the canonical Server row first, then uses the provider-specific caller while keeping one validated candidate envelope. Never forward first-party provider credentials to arbitrary compatible URLs.
 - 2026-08-10 `brainstorm/t-005` — Treat a generated batch as durable creative working state, not one disposable response. Keeping batch identity and candidate lineage in the client contract now gives later history, persistence, art, and object-context work stable seams without forcing provider or Dream semantics into Brainstorm state.
@@ -93,8 +94,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-10 `kind-robots/t-059` — A "document every live surface" task benefits from an exhaustive code-level grep (grep -rn "\.project\.create(" server/ scripts/) rather than trusting the audit note's own count -- t-058's note said "at least three" then "all five" for what turned out to be 4 distinct route files, and the grep also surfaced that Surface 1's description (sync_projects.py -> per-project POST /api/projects) and Surfaces 2/3's "auto-Todo not yet implemented" pitch notes were themselves stale against current code (scripts/sync_kind_robots_projection.py -> POST /api/conductor/sync bulk upsert; createProjectWithScaffoldTodo() already files the Todo). Fixing those in the same docs-only pass kept the doc actually accurate instead of technically-task-complete-but-still-wrong.
 
-- 2026-08-10 `kind-robots/t-058` — An audit task's own findings can be correct while its proposed follow-up disposition is wrong: this project's BOUNDARY.md routes any shared-backend/API change through pitches/ first, and SHARING-SPEC.md explicitly labels its own documented Grant API surface "illustrative -- routes, not committed contracts" -- filing that as a direct `ready` implementation task (first attempt, PR #2002) is a scope/process violation even though the underlying evidence was sound. Retry preserved the audit doc unchanged and only revised the disposition: kept genuinely local/front-end/docs-only findings as `ready` tasks, and wrote a pitch file per backend-touching finding, bundling closely-coupled backend follow-ups (Grant API + its two route migrations + the UI that depends on it) into one pitch rather than four separate approval asks for one capability.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-10T10:34:52Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-10T11:33:58Z_
