@@ -7502,3 +7502,14 @@ records:
   lesson: 'A task-events done event naming a merged PR is a claim, not a fact -- verify merge state via
     the GitHub API (or a shorthand repo#N note scan as a fallback) before writing status: done, and park
     to needs-human on mismatch instead of applying blind.'
+- date: '2026-08-10'
+  project: conductor
+  task: t-113
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: HTTPError subclasses URLError, so handle 404 before the generic network-failure branch when
+    a task needs to distinguish a missing or inaccessible GitHub reference from an unverifiable transient
+    failure.
