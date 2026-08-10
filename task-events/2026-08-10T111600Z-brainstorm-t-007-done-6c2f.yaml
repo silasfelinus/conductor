@@ -1,0 +1,14 @@
+version: 1
+project: brainstorm
+task: t-007
+operation: done
+updated: '2026-08-10T11:16:00Z'
+note: >-
+  Merged Kind Robots PR #1714 as 07a42d057988f4ff06b1d00e2006a801067cfa71 after the retry head completed all attached checks successfully. The missing WonderLab preview fixture was added, the prior TypeScript failure no longer reproduces on the current PR head, and the playable Brainstorm composer/candidate workbench is now on Kind Robots main.
+learning:
+  kind: software
+  stakes: reversible
+  passes: 1
+  failure_category: quality
+  lesson: >-
+    After a rejected UI retry, review the current head and current check runs rather than treating an earlier red diagnostic as permanent; require the concrete regression fixture and completed green checks before merge.
