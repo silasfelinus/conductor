@@ -7283,3 +7283,23 @@ records:
     a PR body's "How I verified" section at face value -- independently re-running
     eslint/vue-tsc/the specific failing script on the actual current head caught a real
     TS2339 the Worker's own note had claimed was code/CI verified.
+- date: '2026-08-10'
+  project: kind-robots
+  task: t-057
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    contract-tests.yml is explicitly DB-free ("No database or Nuxt build is needed"),
+    so a "behavioral" contract test for a database-writing code path has to be a
+    source-inspection test (assert.match against readFileSync'd source), not a live
+    integration test -- matching the existing verify*.ts convention rather than
+    reaching for a real Prisma/DB fixture that this CI job structurally cannot run.
+    Also: when SQL identifiers are backtick-quoted inside a template literal, they
+    appear on disk as an escaped \` pair, not a bare backtick -- normalize
+    (.replaceAll('\\`', '`')) before regex-matching raw SQL source, or the match
+    silently fails on the escaping, not the content. Verified the new assertions
+    actually catch a regression (not vacuously true) by manually breaking each of the
+    three invariants and confirming the test failed, before wiring it into CI.
