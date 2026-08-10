@@ -439,3 +439,6 @@ conductor/t-110, not this.
 
 ## 2026-08-10T01:31:16Z | draining
 queueDepth: PENDING=2367, RUNNING=1, DONE=3771, FAILED=3, CANCELLED=1204 (all-time). oldestPending: id=4893, age=432059s (~120.0h), engine=COMFY. windowThroughput (24h): DONE=64, FAILED=1, CANCELLED=1. recentFailed (last 3): 2/3 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'61':; 1/3 = connection-refused to ComfyUI.
+
+## 2026-08-10T09:29:17Z | ai-art-academy/t-044 | draining
+queueDepth: PENDING=1574, RUNNING=1, DONE=3828, FAILED=3, CANCELLED=1948 (all-time). oldestPending: id=4893, age=460740s (~128.0h), engine=COMFY. windowThroughput (24h): DONE=67, CANCELLED=1. recentFailed (last 3): 2/3 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'61':; 1/3 = connection-refused to ComfyUI.
