@@ -131,19 +131,16 @@ tasks:
   - id: t-005
     milestone: m1
     title: Build the modern Brainstorm store and typed generation contract
-    status: claimed
+    status: review
     depends_on: t-003
     owner: worker
-    updated: '2026-08-10T09:50:00Z'
+    updated: '2026-08-10T10:05:00Z'
     passes: 0
     stakes: reversible
-    note: >-
-      Create/modernize the Pinia store so components never call APIs or localStorage directly.
-      Define typed session, request, candidate, generation-state and error contracts. A batch
-      has independent candidate IDs and preserves prior candidate text when one slot is
-      regenerated. The store must support result count, constraints/examples, keep/reject,
-      inline edits, replacement generation and future object/art metadata without one giant
-      untyped blob.
+    note: |-
+      Create/modernize the Pinia store so components never call APIs or localStorage directly. Define typed session, request, candidate, generation-state and error contracts. A batch has independent candidate IDs and preserves prior candidate text when one slot is regenerated. The store must support result count, constraints/examples, keep/reject, inline edits, replacement generation and future object/art metadata without one giant untyped blob.
+
+      Built the modern Brainstorm state contract on Kind Robots branch worker/brainstorm-t-005-e5c7. Added shared typed request/response/session/candidate/batch/error contracts plus a dedicated Pinia store that owns premise, result count, constraints/examples, source refs, batch history, stable candidate IDs, keep/reject/edit state, local session persistence, slot regeneration, branching, revision history, active text-server snapshots, and the future /api/brainstorm/generate call. Added a Brainstorm Store Contract workflow that rejects old Dream/Pitch ownership, legacy botcafe endpoint reuse, provider knobs in creative state, and Promise-valued store state. No schema or endpoint implementation is included in this task.
     claimed_by: 2026-08-10T095000Z-brainstorm-t-005-e5c7
     claimed_at: '2026-08-10T09:50:00Z'
 
