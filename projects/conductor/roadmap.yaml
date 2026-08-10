@@ -3819,8 +3819,8 @@ tasks:
   - id: t-112
     milestone: m2
     title: "task-events' 'done' operation applies before verifying the referenced PR is actually merged"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     stakes: reversible
     passes: 0
     note: >
@@ -3856,4 +3856,6 @@ tasks:
       `status: done` — reject/park the event (e.g. flip to `needs-human` with the mismatch
       recorded) if it isn't, rather than applying it blind. Add a regression test using a
       synthetic event that names an unmerged PR.
-    updated: '2026-08-10T12:47:00Z'
+    updated: '2026-08-10T13:46:37Z'
+    claimed_by: 20260810T134636Z-conductor-t112-y2f1
+    claimed_at: '2026-08-10T13:46:37Z'
