@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
@@ -672,10 +672,12 @@ tasks:
       Fixed a concrete run-history retry regression in kind_robots: the History panel now closes only after the requested run is actually active, instead of dismissing itself after a failed openRun fetch. Branch worker/model-builder-t029-history-open-k9r4 is one commit ahead of current main with one Vue file changed (+2/-1).
 
       RAN 2026-08-08 (session 2026-08-08T202645Z-model-builder-t029-k9r4): fixed a concrete Run History retry regression in kind_robots PR #1620. `model-builder-run-history.vue` previously awaited `store.openRun(run.id)` and unconditionally closed the history panel, even though `openRun()` leaves the active run unchanged on a failed fetch. The panel now closes only when the requested run actually became active, preserving the immediate retry path after transient failures. Exact implementation head b6121efbe60dc151e30c9456c0bf025fbe1b3088 passed all 13 visible PR workflows, including TypeScript Type Check #31277304135 and Contract Tests #31277304175, before squash merge 64acb593d92a6440d2b243135fc7635f4b559369. The original dashboard/tutorial art deliverable remains outstanding, so rearm this recurring polish task to ready.
-    updated: '2026-08-10T09:32:01Z'
-    owner: worker
-    claimed_by: 20260810T-sched-conductor-mb-t029
-    claimed_at: '2026-08-10T09:32:01Z'
+
+      RAN 2026-08-10T09:32Z (conductor scheduled agent run, session 20260810T-sched-conductor-mb-t029): step (4) follow-on -- dispatched a general-purpose subagent to read the full store, both catalog helpers, all `components/model-builder/*.vue` files, every `server/api/model-builder/**` route, and all 12 existing `verifyModelBuilder*.ts` regression guards, against the complete exclusion list of every bug class fixed by the ~33 prior cycles of this task (spot-confirmed still fixed, not exhaustively re-verified). Found a real, previously-unfixed gap: `autoBuildItem()`'s own doc comment promises "draft what's empty" and the PITCH branch honors it (`if (!item.pitch.trim())` before drafting), but the FIELDS_AND_PROMPTS branch's `artPrompt` draft fired unconditionally whenever art was wanted, ignoring any content already in `item.promptDraft`. Reachable through normal use: a user hand-types a custom prompt into the item panel's "Generation prompt" textarea (persisted via `updatePrompt`), doesn't yet approve that stage, then clicks "Auto" (or a batch/run-level auto-build) expecting the rest to finish automatically -- and their prompt is silently discarded for a fresh, unreviewed AI draft, which `generateItemAsset` then renders art from instead of what they wrote. Fixed by gating the `artPrompt` draft behind `!item.promptDraft.trim()`, mirroring the PITCH branch exactly; `fieldsDraft` deliberately left unguarded since it's always pre-filled with a non-empty `defaultFieldsTemplate` skeleton, so an emptiness check there couldn't distinguish "still the skeleton" from "user-edited." Extended `utils/scripts/verifyModelBuilderAutoBuildDraftGate.ts` + its `.test.ts` with a new textual-shape check for this gate. Verified: `npx tsx utils/scripts/verifyModelBuilderAutoBuildDraftGate.ts`/`.test.ts` pass; all other 11 `verifyModelBuilder*.ts` guards unchanged and pass; `npx eslint`/`npx prettier --check` on all 3 changed files show only the same pre-existing `no-empty` errors/drift in `modelBuilderStore.ts` (confirmed via `git stash`), the edited region itself untouched by drift; full-project `npx vue-tsc --noEmit -p tsconfig.json` exit 0. kind_robots PR #1711 (branch `worker/model-builder-t029-autobuild-artprompt-overwrite`): all 13 CI checks green, `mergeable_state: clean` -- merged squash `a4da530e`. Step (1) (dashboard-tab + tutorial .webp art) remains the sole outstanding original deliverable, still blocked on the external art-generation relay in this sandbox. Kaizen suggestion (deferred, not fixed this cycle): `prepareItemUpdate()` in `server/api/model-builder/runs/index.ts` applies `body.targetType`/`body.targetId` unconditionally with no stage/ownership gate, unlike `pitch`/`fieldsDraft`/`promptDraft`/`artImageId` (all gated via `assertContentStageEditable`) -- currently unreachable via the store and low-impact, but worth a guard for defense-in-depth if a future feature starts sending those fields. Rearming to `ready` per the recurring-task rule; claim fields cleared below.
+    updated: '2026-08-10T10:03:00Z'
+    owner: null
+    claimed_by: null
+    claimed_at: null
 
   - id: t-030
     milestone: m6

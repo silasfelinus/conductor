@@ -7409,3 +7409,16 @@ records:
   lesson: Shared MDC-mounted workbench components cannot choose column counts from viewport breakpoints.
     Brainstorm must remain container-responsive because it can live inside different navigation shells
     and panes; use intrinsic auto-fit/minmax or current kr layout primitives instead.
+- date: '2026-08-10'
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'autoBuildItem()''s FIELDS_AND_PROMPTS branch drafted artPrompt unconditionally
+    instead of only when empty, unlike its own PITCH branch -- the ~33rd cycle of this
+    recurring read-through task, still finding new instances of "review/intent gate
+    enforced in one branch but not its sibling." Worth checking sibling branches of any
+    stage-gating conditional whenever one gets a fix, not just the branch that was reported.'
