@@ -7491,3 +7491,14 @@ records:
   lesson: A creative workspace deserves its own persistence semantics when existing models encode different
     domains; keep local draft continuity automatic, make durable account saves explicit/private, and validate
     a full candidate/revision/branch snapshot round-trip before trusting the schema.
+- date: '2026-08-10'
+  project: conductor
+  task: t-112
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A task-events done event naming a merged PR is a claim, not a fact -- verify merge state via
+    the GitHub API (or a shorthand repo#N note scan as a fallback) before writing status: done, and park
+    to needs-human on mismatch instead of applying blind.'
