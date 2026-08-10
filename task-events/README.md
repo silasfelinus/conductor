@@ -41,6 +41,7 @@ learning:
   lesson: Small event files avoid unsafe whole-roadmap connector rewrites.
 continuous_improvement_lane: 4
 continuous_improvement_pr: silasfelinus/conductor#1834
+verify_pr: silasfelinus/kind_robots#1718
 ```
 
 `learning` is accepted only for `done` and `blocked`. The processor derives `project`, `task`, and `outcome` from the event and appends no duplicate record for the same project/task/outcome.
@@ -53,6 +54,23 @@ mistake — see conductor/t-097), the processor coerces it into `{kind, stakes, 
 either is a recognized value, and using the string itself as `lesson`. This keeps the processor
 from hard-failing on the shape, at the cost of `kind`/`stakes` landing `null` in `LEARNING.yaml`
 when they can't be inferred — write the full mapping when you know the answer.
+
+### `verify_pr` — don't close a task on an unconfirmed merge
+
+A `done` event's `note` claiming "merged PR #N" is not itself proof — conductor/t-112
+(2026-08-10) found a scheduled run apply `done` to brainstorm/t-010 six minutes before
+kind_robots#1718 actually merged, because nothing checked GitHub. Set `verify_pr:
+owner/repo#number` (shape identical to `continuous_improvement_pr`) on a `done` event
+whose task closure depends on a PR having merged, and the processor confirms `merged:
+true` via the GitHub API *before* writing `status: done`. As a best-effort net for
+events that predate this field, the processor also scans `note` for the shorthand
+`kind_robots#1718` / `conductor#42` cross-reference form (not "PR #1718" prose with no
+repo prefix — that's too ambiguous to guess a repo from safely). If any referenced PR
+isn't merged yet, the event is redirected to `needs-human` / `soft_gate: true` with an
+`AUTO-PARKED` note explaining the mismatch, instead of closing the task — re-queue a
+fresh `done` event once the PR actually merges. If GitHub can't be reached at all, the
+processor raises and leaves the event queued for the next run rather than guessing
+either way.
 
 ## Atomic claim protocol
 

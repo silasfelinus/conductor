@@ -24,6 +24,7 @@ from process_task_events import (  # noqa: E402
     PROJECT_RE,
     TASK_RE,
     continuous_improvement_fields,
+    extract_pr_references,
     require_string,
 )
 
@@ -116,6 +117,14 @@ def validate(path: Path) -> str | None:
 
     try:
         continuous_improvement_fields(event)
+    except ValueError as error:
+        return str(error)
+
+    # conductor/t-112: catch a malformed `verify_pr` at PR time, the same way
+    # `continuous_improvement_pr` already is above -- shape only (owner/repo#number),
+    # never the live GitHub merge check itself (this validator is offline-only).
+    try:
+        extract_pr_references(event)
     except ValueError as error:
         return str(error)
 

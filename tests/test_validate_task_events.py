@@ -244,6 +244,33 @@ class ValidateTaskEventsTests(unittest.TestCase):
         error = MODULE.validate(event)
         self.assertIn("note must be a non-empty string", error)
 
+    def test_verify_pr_well_formed_is_accepted(self):
+        event = self.write_event(
+            "verify-pr-ok.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "done",
+                "verify_pr": "silasfelinus/kind_robots#1718",
+            },
+        )
+        self.assertIsNone(MODULE.validate(event))
+
+    def test_verify_pr_bad_format_is_rejected(self):
+        event = self.write_event(
+            "verify-pr-bad.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "done",
+                "verify_pr": "not-a-pr-reference",
+            },
+        )
+        error = MODULE.validate(event)
+        self.assertIn("owner/repo#number", error)
+
     def test_one_bad_file_does_not_hide_a_second_bad_file(self):
         self.write_raw("aaa-bad.yaml", "note: fixed: it\n")
         self.write_event(
