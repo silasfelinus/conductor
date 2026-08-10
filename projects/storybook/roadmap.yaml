@@ -165,6 +165,7 @@ tasks:
   claimed_by: 20260810T192800Z-storybook-t011-9f3a
   claimed_at: '2026-08-10T19:29:41Z'
   updated: '2026-08-10T20:15:20Z'
+  implementation_pr: 'silasfelinus/kind_robots#1727'
 - id: t-012
   milestone: m4
   title: Drag a character card onto a role slot
@@ -172,8 +173,10 @@ tasks:
   owner: worker
   passes: 0
   stakes: reversible
+  depends_on: t-011
   note: |-
     Casting is currently a chip press -- fast, accessible, keyboard-friendly, and not very playful. Dragging a card onto a role slot is the interaction that would actually feel like a playboard. Depends on t-011, since slots only exist once the board has an arrangement. Two constraints: keep the chip path as the accessible fallback rather than replacing it, and support touch properly -- a drag that only works with a mouse is worse than the chips it replaced.
+    t-011 (kind_robots PR #1727, merged 2026-08-10) landed the lead/support/back tier grouping this task's drop slots should target -- protagonist/antagonist in the lead row, everyone else in support/back. Now formally unblocked (depends_on was prose-only before; encoded here since t-011 is done).
 - id: t-013
   milestone: m4
   title: Bring the other three Storybook setup steps up to the board
@@ -254,3 +257,19 @@ tasks:
   claimed_by: 20260810T182152Z-91159b
   claimed_at: '2026-08-10T18:21:52Z'
   updated: '2026-08-10T18:36:40Z'
+- id: t-019
+  milestone: m4
+  title: Add a contract asserting the casting board's role tiers group members correctly
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: |-
+    Kaizen from t-011 (kind_robots PR #1727): narrative-role-assigner.vue now groups cast members
+    into three tiers purely from their assigned role -- protagonist/antagonist into the lead row,
+    love-interest/mentor/foil/ally/wildcard into support, ensemble and unassigned into back -- but
+    nothing asserts that grouping in CI. eslint/vue-tsc/verifyNarrativeRoles.ts all pass without
+    ever checking tier placement, so a future edit could silently move a role to the wrong tier (or
+    drop the branching entirely, collapsing back to one flat grid) and nothing would fail. Add a
+    source-level contract (same narrow style as verifyStorybookObjectEntryLinks.mjs -- assert the
+    grouping logic, not button markup or CSS classes) that feeds a synthetic member of each role
+    through the component's tier-selection logic and checks it lands in the expected row.

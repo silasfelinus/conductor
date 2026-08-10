@@ -7545,3 +7545,16 @@ records:
   failure_category: null
   lesson: Layout-first Storybook work stays safer when role meaning changes only presentation and leaves
     the controlled role-map interaction contract intact.
+- date: '2026-08-10'
+  project: storybook
+  task: t-011
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A strict WonderLab preview-audit CI check treats every new component with required props
+    as a regression until it gets a fixture or skip reason -- even one extracted purely to avoid
+    tripling markup in the same PR that adds it. Budget for that check whenever a component split
+    introduces a new required-prop component; caught mid-PR via the subscribed PR-activity webhook
+    rather than a manual poll, which is the faster signal path for a session's own open PR.
