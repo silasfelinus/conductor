@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
@@ -672,7 +672,10 @@ tasks:
       Fixed a concrete run-history retry regression in kind_robots: the History panel now closes only after the requested run is actually active, instead of dismissing itself after a failed openRun fetch. Branch worker/model-builder-t029-history-open-k9r4 is one commit ahead of current main with one Vue file changed (+2/-1).
 
       RAN 2026-08-08 (session 2026-08-08T202645Z-model-builder-t029-k9r4): fixed a concrete Run History retry regression in kind_robots PR #1620. `model-builder-run-history.vue` previously awaited `store.openRun(run.id)` and unconditionally closed the history panel, even though `openRun()` leaves the active run unchanged on a failed fetch. The panel now closes only when the requested run actually became active, preserving the immediate retry path after transient failures. Exact implementation head b6121efbe60dc151e30c9456c0bf025fbe1b3088 passed all 13 visible PR workflows, including TypeScript Type Check #31277304135 and Contract Tests #31277304175, before squash merge 64acb593d92a6440d2b243135fc7635f4b559369. The original dashboard/tutorial art deliverable remains outstanding, so rearm this recurring polish task to ready.
-    updated: '2026-08-08T20:41:30Z'
+    updated: '2026-08-10T09:32:01Z'
+    owner: worker
+    claimed_by: 20260810T-sched-conductor-mb-t029
+    claimed_at: '2026-08-10T09:32:01Z'
 
   - id: t-030
     milestone: m6
