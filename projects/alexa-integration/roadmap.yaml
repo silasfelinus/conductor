@@ -390,27 +390,14 @@ tasks:
 - id: t-019
   milestone: m4
   title: "Correct t-012's note — components/pages/serendipity-voice-page.vue was renamed to serendipity-page.vue"
-  status: claimed
-  owner: worker
+  status: ready
   passes: 0
   stakes: reversible
-  note: >
-    Filed 2026-08-02 (weekly site audit, global-ui/SITE-AUDIT-AGENT.md).
-    t-012 (2026-07-06, done) describes shipping
-    `components/pages/serendipity-voice-page.vue` at the `/serendipity-voice`
-    route. Confirmed via Glob against the current kind_robots checkout: that
-    exact file no longer exists. `stores/serendipityVoiceStore.ts` is still
-    present, but the page component is now `components/pages/serendipity-page.vue`.
-    This matches project-overrides.yaml's `serendipity` retirement note: the
-    story-weaving product that used to own the `/serendipity` route and name
-    was permanently renamed to Taskmaster, freeing `/serendipity` for this
-    project's voice-led surface (previously at `/serendipity-voice`), reclaimed
-    the same day (kind_robots commit 36a86bf, "refactor: make Serendipity the
-    canonical voice route"). The rename is real and already correctly reflected
-    in project-overrides.yaml; only t-012's older note text is stale. Update
-    t-012's note (or add a short addendum, per the t-027/dream-cycle
-    correction-task convention) to name the current file and route so this
-    project's history doesn't silently point future readers at a deleted file.
+  note: |-
+    Filed 2026-08-02 (weekly site audit, global-ui/SITE-AUDIT-AGENT.md). t-012 (2026-07-06, done) describes shipping `components/pages/serendipity-voice-page.vue` at the `/serendipity-voice` route. Confirmed via Glob against the current kind_robots checkout: that exact file no longer exists. `stores/serendipityVoiceStore.ts` is still present, but the page component is now `components/pages/serendipity-page.vue`. This matches project-overrides.yaml's `serendipity` retirement note: the story-weaving product that used to own the `/serendipity` route and name was permanently renamed to Taskmaster, freeing `/serendipity` for this project's voice-led surface (previously at `/serendipity-voice`), reclaimed the same day (kind_robots commit 36a86bf, "refactor: make Serendipity the canonical voice route"). The rename is real and already correctly reflected in project-overrides.yaml; only t-012's older note text is stale. Update t-012's note (or add a short addendum, per the t-027/dream-cycle correction-task convention) to name the current file and route so this project's history doesn't silently point future readers at a deleted file.
+
+
+    Reviewer rejected PR #2011 on process quality only: the verified roadmap correction is sound, but the PR skipped the required review checkpoint by changing t-019 directly from claimed to done. Retry by preserving the correction, setting status review before the implementation PR, and closing done only after merge.
   claimed_by: 20260810T074500Z-sched-alexa-t019
   claimed_at: '2026-08-10T07:43:48Z'
-  updated: '2026-08-10T07:43:48Z'
+  updated: '2026-08-10T07:48:18Z'
