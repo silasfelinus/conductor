@@ -1,8 +1,0 @@
-version: 1
-project: model-builder
-task: t-029
-operation: rearm
-session: 20260810T131806Z-auto-35ed50
-updated: '2026-08-10T13:38:19Z'
-note: >-
-  RAN 2026-08-10 (session 20260810T131806Z-auto-35ed50): found and fixed a server-side commit-provenance integrity gap. Model Builder's generic single-item and batch PATCH routes accepted targetType/targetId even though those fields are written by the commit executor and drive idempotent replay/history. Added a shared patch-policy guard that rejects client attempts to mutate those server-managed fields; normal store callers do not send them. kind_robots PR #1719 exact head 66df74054399ffd5bf2c3959bd0c4e644fe5b3f9 passed all 13 observed PR workflows, including TypeScript Type Check #31393328448 and Contract Tests #31393328437 (full verifier job green), then squash-merged as f406345809f5561e266b4339ec8384437664fce2. Original dashboard/tutorial generated-art deliverable remains outstanding, so rearm this recurring polish task.
