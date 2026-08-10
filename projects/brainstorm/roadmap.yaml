@@ -148,21 +148,18 @@ tasks:
   - id: t-006
     milestone: m1
     title: Implement provider-agnostic structured text generation endpoint
-    status: claimed
+    status: review
     depends_on:
       - t-003
       - t-005
     owner: worker
-    updated: '2026-08-10T10:17:00Z'
+    updated: '2026-08-10T10:32:00Z'
     passes: 0
     stakes: reversible
-    note: >-
-      Use the current Kind Robots default/active text-server/provider abstraction rather than
-      an old hard-coded OpenAI path. Accept a pitch, requested count and optional constraints.
-      Request structured candidate output, validate/sanitize it, reject malformed provider
-      wrappers safely, and return the standard `{ success, ... }` API shape via errorHandler.
-      Prompt explicitly for semantic diversity and non-duplicate ideas. Apply normal auth/mana
-      behavior if current text generation requires it. Add focused endpoint/parser tests.
+    note: |-
+      Use the current Kind Robots default/active text-server/provider abstraction rather than an old hard-coded OpenAI path. Accept a pitch, requested count and optional constraints. Request structured candidate output, validate/sanitize it, reject malformed provider wrappers safely, and return the standard `{ success, ... }` API shape via errorHandler. Prompt explicitly for semantic diversity and non-duplicate ideas. Apply normal auth/mana behavior if current text generation requires it. Add focused endpoint/parser tests.
+
+      Implemented the provider-aware Brainstorm generation contract on Kind Robots branch worker/brainstorm-t-006-f6a9. Added POST /api/brainstorm/generate with canonical Server-row resolution, access/transport guards, mana gating, exact-count structured validation, duplicate rejection, and errorHandler responses. Official OpenAI uses native Responses JSON schema; Anthropic, Ollama, and OpenAI-compatible servers share the current provider caller and are normalized through one JSON candidate parser with no prose-line fallback. Added modern creative-quality prompting including the anti-benchmark rule and 'do not confuse safe with bland', plus regression tests and a dedicated generation-contract workflow. Hardened shared provider derivation so compatible/local servers need not fake an OpenAI key and first-party OpenAI credentials are never forwarded to arbitrary compatible URLs.
     claimed_by: 2026-08-10T101700Z-brainstorm-t-006-f6a9
     claimed_at: '2026-08-10T10:17:00Z'
 
