@@ -230,10 +230,9 @@ tasks:
   - id: t-009
     milestone: m2
     title: Implement per-candidate revision history and non-destructive branching
-    status: review
+    status: done
     depends_on: t-007
-    owner: worker
-    updated: '2026-08-10T12:07:00Z'
+    updated: '2026-08-10T12:14:00Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -242,13 +241,15 @@ tasks:
       Claiming the next Brainstorm workbench slice after t-008: make candidate revision history inspectable/restorable and preserve non-destructive branch lineage without changing durable persistence semantics.
 
       Implemented inspectable/restorable per-candidate revision history and exact branch-origin lineage on Kind Robots worker/brainstorm-t-009-e4b9. Restores append a new restored revision instead of deleting later work; branches snapshot the exact parent revision used. Candidate UI exposes collapsible history and branch lineage, and WonderLab carries a deterministic multi-version branch specimen. Diff is Brainstorm-only and ready for PR/CI review.
+
+      Merged Kind Robots PR #1717 as 56eb1c539f920d06250235118f0ff280fd63c2f2 after every attached workflow completed successfully. Brainstorm candidate cards now expose restorable revision history; restoring an older version appends a new restored revision instead of truncating later work. Branches snapshot the exact parent revision used, so later parent edits or deletion cannot rewrite branch provenance. WonderLab includes deterministic multi-version branch coverage. No durable database persistence or generation behavior changed.
     claimed_by: 2026-08-10T115600Z-brainstorm-t-009-e4b9
     claimed_at: '2026-08-10T11:56:00Z'
 
   - id: t-010
     milestone: m2
     title: Choose and implement durable Brainstorm persistence semantics
-    status: waiting
+    status: ready
     depends_on:
       - t-003
       - t-009

@@ -7469,3 +7469,14 @@ records:
   lesson: Creative response weighting is clearer as exact human-readable counts plus Auto/wildcard slots
     than percentage model knobs; enforce the requested mix in structured output and validation, not only
     prompt prose.
+- date: '2026-08-10'
+  project: brainstorm
+  task: t-009
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Creative lineage needs immutable snapshots of the exact parent revision; a live parentId alone
+    can rewrite history after later edits. Restoring old creative work should append history rather than
+    erase newer revisions.
