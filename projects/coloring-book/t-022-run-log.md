@@ -850,3 +850,48 @@ Re-arming to `ready` after this PR merges; releasing the claim. Next cycle's act
 work: (a) hwr-014's job 8190 finishing and needing one more recovery poll, (b) the daily
 cron continuing Hollywood Recast slots 19-36 on its own, or (c) Silas reviewing the 33
 rendered Monster Recast color proposals in the ArtJob trainer panel.
+
+## 2026-08-10T16:30Z | Agent run (scheduled conductor sweep) | coloring-book/t-022 -- recovered last 3 in-flight Hollywood Recast jobs, submitted final slot
+
+Checked `coloring_queue_status.py` for both books before touching anything. Monster
+Recast unchanged since the last cycle (`{done: 33, approved: 3, pending: 0}`,
+`recommended_action: complete` -- still awaiting Silas's review in the ArtJob trainer
+panel, not agent-actionable). Hollywood Recast had progressed via the daily cron since
+the 11:33Z entry: `{done: 32, pending: 4}`, 3 `recovery_candidate` entries left in
+flight by that cycle (hwr-014 job 8190 SSL hiccup, hwr-019/hwr-020 jobs 8191/8192 both
+600s timeouts) plus 1 fresh entry (hwr-036, the book's final slot) with no error yet.
+
+Recovery pass on the 3 stuck ids (`consume_coloring_book_color_art.py --live --book
+hollywood-recast --timeout 90 --ids hwr-014,hwr-019,hwr-020`): first attempt hit the
+same recurring per-sandbox "Pillow is required for WebP output" gap every prior cycle
+has hit (this container has no Pillow pre-installed) -- the existing except-block guard
+correctly preserved all 3 job references, 0 lost, 0 duplicates. Installed Pillow
+(`pip install --user Pillow`) and re-ran the identical pass: all 3 had already finished
+rendering server-side and recovered cleanly, 0 duplicate submissions -- ArtImage ids
+17266 (hwr-014), 17267 (hwr-019), 17268 (hwr-020).
+
+`coloring_queue_status.py --book hollywood-recast` after: `{done: 35, pending: 1}`,
+only `hwr-036` (the final slot) left, `recommended_action: submit-next-batch`.
+
+Submitted hwr-036 (`--ids hwr-036`, `--timeout 90`): queued as ArtJob 8214, still
+rendering after 90s -- left in flight (no duplicate submitted) rather than treated as a
+failure. Polled again with `--timeout 180`: still queued/running server-side after a
+total of ~270s elapsed; left for the next cycle's recovery pass rather than a third
+poll burning more of this session's budget. 0 duplicate submissions, job reference
+preserved.
+
+`coloring_queue_status.py --book hollywood-recast` final: `{done: 35, pending: 1}`,
+`recovery_actionable_count: 1` (hwr-036's job 8214), `queue_integrity_safe: true`, 0
+duplicate job/entry ids.
+
+Verification: `validate_roadmaps.py` clean; `coloring_queue_status.py --book
+monster-recast` and `--book hollywood-recast` (`queue_integrity_safe: true`, 0
+duplicates) before and after; `git diff --stat` reviewed before committing (1 text file
+-- `color-art-jobs.yaml` queue state -- plus 3 new binary `.webp` files, nothing else
+touched).
+
+Re-arming to `ready` after this PR merges; releasing the claim. Next cycle's actionable
+work: (a) hwr-036's job 8214 finishing and needing one more recovery poll -- once that
+lands, **Hollywood Recast's color-proposal stage will be fully drained (36/36)**, same
+as Monster Recast already is, or (b) Silas reviewing the 33 rendered Monster Recast
+color proposals (and soon 36 Hollywood Recast ones) in the ArtJob trainer panel.
