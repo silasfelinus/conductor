@@ -238,21 +238,14 @@ tasks:
 - id: t-018
   milestone: m4
   title: Give Scenario, Character, and Location surfaces the same "Start a story with this" entry point Facet and Reward have
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
-  note: >-
-    Kaizen from t-017 (kind_robots PR #1721): storybook-page.vue's seedFromQuery() already reads
-    ?scenario=, ?location=, and ?character= (in addition to ?facet=/?reward=) and seeds the setup
-    draft's scenarioSlug/locationSlug/castSlugs accordingly, but only the Facet and Reward detail
-    surfaces (facet-profile.vue, reward-encounter.vue) actually have a CTA that navigates there --
-    a quick grep of components/characters/character-manager.vue and components/scenarios/scenario-manager.vue
-    found no outgoing "Start a story with this" link, only unrelated matches. Add the equivalent CTA
-    to the Scenario and Character (and Location, if it has an analogous detail surface) working views,
-    mirroring startStoryWithFacet/startStoryWithReward exactly (navigateTo /storybook with the right
-    query key, no assumptions about button markup), then extend
-    utils/scripts/verifyStorybookObjectEntryLinks.mjs to cover the new handlers the same narrow way.
+  note: |-
+    Kaizen from t-017 (kind_robots PR #1721): storybook-page.vue's seedFromQuery() already reads ?scenario=, ?location=, and ?character= (in addition to ?facet=/?reward=) and seeds the setup draft's scenarioSlug/locationSlug/castSlugs accordingly, but only the Facet and Reward detail surfaces (facet-profile.vue, reward-encounter.vue) actually have a CTA that navigates there -- a quick grep of components/characters/character-manager.vue and components/scenarios/scenario-manager.vue found no outgoing "Start a story with this" link, only unrelated matches. Add the equivalent CTA to the Scenario and Character (and Location, if it has an analogous detail surface) working views, mirroring startStoryWithFacet/startStoryWithReward exactly (navigateTo /storybook with the right query key, no assumptions about button markup), then extend utils/scripts/verifyStorybookObjectEntryLinks.mjs to cover the new handlers the same narrow way.
+
+    Implemented Storybook entry CTAs for selected Character and Scenario working surfaces and extended the object-entry contract; no analogous standalone Location manager surface was found.
   owner: worker
   claimed_by: 20260810T182152Z-91159b
   claimed_at: '2026-08-10T18:21:52Z'
-  updated: '2026-08-10T18:21:52Z'
+  updated: '2026-08-10T18:29:30Z'
