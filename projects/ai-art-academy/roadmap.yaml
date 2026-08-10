@@ -1280,7 +1280,7 @@ tasks:
     soft_gate: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-07T02:35:00Z'
+    updated: '2026-08-10T01:32:16Z'
     note: |-
       Live-verification history moved to run_log (2026-08-07, ai-art-academy/t-010 lane 2
       roadmap accuracy) so this note stays short -- see run_log for every prior attempt and
@@ -1317,6 +1317,8 @@ tasks:
       values using the already-built `scripts/compare_comfy_lora_paths.py` comparator.
       Not attempting a blind fix this session -- didn't want to guess a 5th naming
       convention against the same wall four earlier attempts already hit.
+
+      RECHECK (conductor sweep, 2026-08-10T01:31Z, logged in RENDER-BACKLOG.md): back to draining -- PENDING 2908->2367 all-time, 24h window DONE=64/FAILED=1/CANCELLED=1 (healthy throughput, no repeat of the 2026-08-07 stall or the 2026-08-08 DB-error signature). recentFailed (last 3): 2/3 are the original, still-unresolved t-044 signature (ComfyUI /prompt HTTP 400, lora_name not-in-list); 1/3 is an unrelated transient connection-refused. Blocker unchanged from the prior recheck -- still needs one private ComfyUI /object_info capture from a Tailscale-connected machine this sandbox can't reach, to reconcile against Resource localPath via scripts/compare_comfy_lora_paths.py. Not attempting a 5th blind naming-convention guess. gate_human: true / soft_gate: true unchanged.
     run_log: projects/ai-art-academy/docs/t-044-lora-loading-run-log.md
     claimed_at: null
     claimed_by: null
