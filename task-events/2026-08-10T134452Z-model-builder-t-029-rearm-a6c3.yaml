@@ -1,9 +1,0 @@
-version: 1
-project: model-builder
-task: t-029
-operation: rearm
-owner: worker
-session: 20260810T134452Z-modelbuilder-t029-a6c3
-updated: '2026-08-10T14:00:40Z'
-note: >-
-  PROGRESS 2026-08-10 (20260810T134452Z-modelbuilder-t029-a6c3): merged kind_robots PR #1720 as fa2059d214e81d90b3905cbcd63037fa866af7d3. Two existing Model Builder regression guards (approved-asset overwrite protection and item-PATCH stage review protection) had package scripts but were not enforced by the required Contract Tests workflow. The already-required run-writable guard entry point now executes both sibling contracts against their canonical source files, making those invariants merge-blocking without a risky large workflow-file rewrite. Exact PR head 506d9642cb4261db99c42433a769b0fd419e24bc passed all 12 observed workflows, including Contract Tests #31395370404 and TypeScript #31395370790. No runtime, database, or production-data behavior changed; original generated-art substep remains outstanding for a later token/art-capable cycle.
