@@ -3832,8 +3832,8 @@ tasks:
   - id: t-113
     milestone: m2
     title: "Give check_pr_merged a distinct 'PR doesn't exist' case instead of folding it into 'not merged'"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     stakes: reversible
     passes: 0
     note: >
@@ -3851,3 +3851,6 @@ tasks:
       for it (monkeypatch check_pr_merged or urllib to simulate a 404). Small,
       reversible, test-only-adjacent change confined to scripts/process_task_events.py
       and its tests.
+    claimed_by: 20260810T071354-0700-auto-725e75
+    claimed_at: '2026-08-10T14:13:54Z'
+    updated: '2026-08-10T14:13:54Z'
