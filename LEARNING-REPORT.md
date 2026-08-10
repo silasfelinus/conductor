@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-10T09:52:27Z
+Generated: 2026-08-10T10:29:56Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **563**
-- Outcomes: blocked: 13, cancelled: 1, done: 549
+- Closed tasks recorded: **566**
+- Outcomes: blocked: 13, cancelled: 1, done: 552
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -22,7 +22,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | appmaker | 6 | 100% |
 | approval-portal | 2 | 0% |
 | art-generator-connect | 3 | 100% |
-| brainstorm | 3 | 100% |
+| brainstorm | 5 | 100% |
 | challenge-center | 16 | 100% |
 | coat-dance | 8 | 0% |
 | coloring-book | 25 | 100% |
@@ -41,7 +41,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 48 | 100% |
+| model-builder | 49 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -61,7 +61,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 548 | 99% |
+| software | 551 | 99% |
 
 ## Failure categories
 
@@ -82,6 +82,9 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-10 `model-builder/t-029` — autoBuildItem()'s FIELDS_AND_PROMPTS branch drafted artPrompt unconditionally instead of only when empty, unlike its own PITCH branch -- the ~33rd cycle of this recurring read-through task, still finding new instances of "review/intent gate enforced in one branch but not its sibling." Worth checking sibling branches of any stage-gating conditional whenever one gets a fix, not just the branch that was reported.
+- 2026-08-10 `brainstorm/t-006` — The current text stack has multiple useful abstractions but no single provider layer covers every Kind Robots text server: generic textServer assumes OpenAI-style requests while Suggest explicitly handles Anthropic/Ollama/compatible servers. Brainstorm therefore resolves the canonical Server row first, then uses the provider-specific caller while keeping one validated candidate envelope. Never forward first-party provider credentials to arbitrary compatible URLs.
+- 2026-08-10 `brainstorm/t-005` — Treat a generated batch as durable creative working state, not one disposable response. Keeping batch identity and candidate lineage in the client contract now gives later history, persistence, art, and object-context work stable seams without forcing provider or Dream semantics into Brainstorm state.
 - 2026-08-10 `brainstorm/t-004` — Shared MDC-mounted workbench components cannot choose column counts from viewport breakpoints. Brainstorm must remain container-responsive because it can live inside different navigation shells and panes; use intrinsic auto-fit/minmax or current kr layout primitives instead.
 - 2026-08-10 `brainstorm/t-003` — The June Dream workaround preserved useful UI ideas but discarded structure twice: the endpoint returns structured candidates, dreamStore normalizes them to prose, and the Vue component reparses prose into candidates. Restoring Brainstorm should keep structured candidate data end-to-end and reuse the current active text-server/provider and mana plumbing instead of inheriting that compatibility loop.
 - 2026-08-10 `brainstorm/t-002` — Legacy product restoration should trace the latest coherent live behavior and the migration that removed it before resurrecting old code. Brainstorm survived into June 2026 and was lost specifically because the Pitch domain was removed into Dream; its UX can be revived without reversing that data-model migration.
@@ -92,12 +95,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-10 `kind-robots/t-058` — An audit task's own findings can be correct while its proposed follow-up disposition is wrong: this project's BOUNDARY.md routes any shared-backend/API change through pitches/ first, and SHARING-SPEC.md explicitly labels its own documented Grant API surface "illustrative -- routes, not committed contracts" -- filing that as a direct `ready` implementation task (first attempt, PR #2002) is a scope/process violation even though the underlying evidence was sound. Retry preserved the audit doc unchanged and only revised the disposition: kept genuinely local/front-end/docs-only findings as `ready` tasks, and wrote a pitch file per backend-touching finding, bundling closely-coupled backend follow-ups (Grant API + its two route migrations + the UI that depends on it) into one pitch rather than four separate approval asks for one capability.
 
-- 2026-08-10 `kind-robots/t-057` — contract-tests.yml is explicitly DB-free ("No database or Nuxt build is needed"), so a "behavioral" contract test for a database-writing code path has to be a source-inspection test (assert.match against readFileSync'd source), not a live integration test -- matching the existing verify*.ts convention rather than reaching for a real Prisma/DB fixture that this CI job structurally cannot run. Also: when SQL identifiers are backtick-quoted inside a template literal, they appear on disk as an escaped \` pair, not a bare backtick -- normalize (.replaceAll('\\`', '`')) before regex-matching raw SQL source, or the match silently fails on the escaping, not the content. Verified the new assertions actually catch a regression (not vacuously true) by manually breaking each of the three invariants and confirming the test failed, before wiring it into CI.
-
-- 2026-08-09 `kind-robots/t-056` — A source-shape "guard test" (utils/scripts/verifyDatabasePoolDefaults.ts asserting a literal code string still appears in a route file) can break on an otherwise correct, intentional refactor -- the fix is usually to relocate the new behavior so the guarded shape survives unchanged, not to weaken the guard. Also: don't trust a PR body's "How I verified" section at face value -- independently re-running eslint/vue-tsc/the specific failing script on the actual current head caught a real TS2339 the Worker's own note had claimed was code/CI verified.
-
-- 2026-08-09 `interface-vision/t-104` — Slice 26 of the kr-container consistency migration: four components (add-bot, add-character, add-reward, add-scenario) sharing an identical root class string were an exact byte-for-byte match for kr-container-wide's own @apply, found via a plain grep for the mx-auto/w-full/max-w-7xl triple across the repo rather than a codemod. Landed clean on the first pass, zero deviation from the established verification method (eslint, vue-tsc, layout-contract, git-stash-diffed prettier baseline check).
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-10T09:52:27Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-10T10:29:56Z_
