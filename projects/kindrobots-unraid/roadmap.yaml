@@ -88,8 +88,9 @@ tasks:
   - id: t-012
     milestone: m2
     title: Observe ProxySQL production pooling and record steady-state thresholds
-    status: claimed
-    updated: '2026-08-10T09:21:16Z'
+    status: needs-human
+    soft_gate: true
+    updated: '2026-08-10T11:47:00Z'
     passes: 0
     stakes: reversible
     depends_on: t-003
@@ -98,6 +99,15 @@ tasks:
 
 
       SENT BACK by silasfelinus via Kind Robots For You. You haven't given me information on this thread to do the work so I do not know how to get it.
+
+      Reconciliation (conductor scheduled sweep, 2026-08-10T11:47Z): claim from session
+      2026-08-10T092116Z-kindrobots-unraid-t012-q6n4 had gone stale (claimed 09:21Z, past
+      the 90-minute CLAIM_TTL_MINUTES with no further progress -- the claiming session
+      ended after the "SENT BACK" note above without releasing it). No agent sandbox can
+      do this work regardless of TTL: the ProxySQL admin interface genuinely requires
+      local docker exec access. Corrected status from stale `claimed` to `needs-human`
+      (soft) to reflect that reality accurately -- this was already effectively a soft
+      gate per this note's own first paragraph, just not reflected in `status`.
     approved_by_human: false
     owner: worker
     claimed_by: 2026-08-10T092116Z-kindrobots-unraid-t012-q6n4
