@@ -1,96 +1,454 @@
 project: brainstorm
-kind: proposal
-notes_from_silas: >
-  Generate ideas for me to vote on. I want to log in and see things like: 5 STL
-  project ideas, 5 comic pitches under the genre guidelines I gave, lists of
-  potential revenue streams, and ways to improve AI_Networker. QUALITY OVER
-  QUANTITY — a few strong, specific, buildable pitches beat a pile of vague ones.
-  Respect my genre and direction guidance in CONTROL.md. Tie product ideas to our
-  approved product types where relevant. Most importantly, do not pitch work that
-  already exists as a project, roadmap task, shipped feature, archived pitch, or
-  obvious extension of an active project. Existing work belongs in that project's
-  roadmap or kaizen queue, not back in the pitch inbox wearing a fake moustache.
-pitch_policy:
-  max_new_pitches_per_cycle: 3
-  max_open_awaiting_pitches: 6
-  dedup: true
-  dedup_sources:
-    - pitches/*.md regardless of status
-    - projects/*/roadmap.yaml project goals, waypoints, tasks, and notes
-    - STATUS.md active project inventory
-    - known kind_robots routes, stores, APIs, and shipped dashboard features
-  existing_work_action: >
-    If an idea overlaps an existing project or shipped feature, do not create a new
-    pitch. Either skip it, or add a clearly scoped task/kaizen to the existing
-    project when the idea contains a genuinely new increment.
-  required_pitch_sections:
-    - The idea
-    - Why it's worth doing
-    - Rough effort
-    - Suggested first task
-    - Existing-work check
-  categories:
-    - new-products
-    - content-series
-    - revenue-streams
-    - ai-networker-upgrades
-    - cross-project
+kind: software
+goal: >-
+  Restore Brainstorm as a first-class Kind Robots creative ideation tool at /brainstorm:
+  pitch -> generate diverse candidates -> keep/edit/reject/regenerate -> save and reuse,
+  with object-aware prompt variation and optional Krea2-backed art generation after the
+  text experience is excellent.
+notes_from_silas: >-
+  Brainstorm is one of the earliest and most personally meaningful LLM services on Kind
+  Robots. It predates most of the current site and should recover its playful, useful soul:
+  riddles, absurd fictional facts, terrible ice-cream flavors, dark-comedy improv, creative
+  lists, practical idea generation, and variations for Kind Robots objects. The historical
+  page let people enter a pitch, ask for X responses, keep/edit selected results, save them,
+  or request replacements. Restore that contract before expanding it. Text comes first.
+  Later, support art-prompt brainstorming and optional art generation using the normal
+  durable ArtJob pipeline with current Krea2 defaults. Canonical route is /brainstorm;
+  /plan/brainstorm should resolve to the same product. Do not turn this back into a Dream
+  gallery. Do not let the internal Conductor proposal generator redefine the public product.
+
+references:
+  design_brief: projects/brainstorm/DESIGN-BRIEF.md
+  historical_kind_robots_commits:
+    - 19b37e01e6a517590d5916d8b54ae9012c2b6bf1
+    - 0041e10c533d6e3c225502a3b6908e1480fcc7f3
+    - 7ba1a2061ea7cfd16e7ab42e8e6e60974754feb1
+    - d8cc25b894a165a221e231ce3affc8916c6998cb
+    - d50f86b37b56d074be2a41140d3cbf198fa53928
+    - 4434253d236fd46f0ec84d675e22b9a154c9204c
+    - ef0779cef95ef0f25d91dbd431099fd96ff2c2e2
+    - e6f39edefd1a9d8671d87bf6285432f43152e29b
+    - 4318321403f55ca1135478f7e7de687920bd2e6d
+    - 508ed6c52306bbc4c31e9f044a89ab5041dcf6bd
+
 milestones:
-  - id: m1
-    title: Idea engine running and producing votable pitches
-    weight: 0
+  - id: m0
+    title: Product archaeology and recovery map
+    weight: 10
     status: in-progress
+  - id: m1
+    title: Restored canonical Brainstorm text loop
+    weight: 25
+    status: planned
+  - id: m2
+    title: Candidate curation, history, and persistence
+    weight: 20
+    status: planned
+  - id: m3
+    title: Kind Robots object-aware brainstorming
+    weight: 15
+    status: planned
+  - id: m4
+    title: Art prompt ideation and optional Krea2 generation
+    weight: 15
+    status: planned
+  - id: m5
+    title: Brainstorm identity, integrations, and polish
+    weight: 10
+    status: planned
+  - id: m6
+    title: Preview verification and release readiness
+    weight: 5
+    status: planned
+
 tasks:
   - id: t-001
-    milestone: m1
-    title: Generate this cycle's pitches
+    milestone: m0
+    title: Retire the legacy Conductor pitch-cycle definition from this project
+    status: done
+    owner: null
+    updated: '2026-08-10T08:05:00Z'
+    passes: 1
+    stakes: reversible
+    note: >-
+      Historical Brainstorm roadmap task was a recurring proposal generator for Silas. That
+      capability was useful but semantically displaced the user-facing Brainstorm product.
+      The 2026-08-10 revival pass replaced `kind: proposal` with this finite software
+      roadmap. Any future Conductor proposal-generation loop should consume Brainstorm as a
+      tool or live under Conductor coordination rather than defining `/brainstorm` itself.
+
+  - id: t-002
+    milestone: m0
+    title: Reconstruct the last coherent historical Brainstorm product
     status: ready
     owner: null
-    updated: '2026-07-28T09:09:13Z'
+    updated: '2026-08-10T08:05:00Z'
     passes: 0
     stakes: reversible
-    recurring: true
-    note: >
-      2026-07-28 cycle (conductor burst rotation, claude-conductor-burst-20260728T0909Z-bs-t001):
-      queue was at 3/6 awaiting-silas before this cycle, leaving room for up to 3 new. Wrote 2
-      new pitches (kept to 2, not the full 3, on quality grounds — a third candidate around
-      Silas's "5 comic pitches under the genre guidelines" note was dropped because no genre
-      guidance actually exists in CONTROL.md's brainstorm section to write against; see the
-      dedup/gap note below rather than fabricating genres). (1)
-      pitches/2026-07-28-kind-robots-figurine-stl-line.md (new-products/cross-project) —
-      connects two already-designed-but-never-run halves: digital-storefront's pre-approved
-      `stl-3d` product type (unused by any current catalog item) and model-builder/t-012's
-      spec'd Hunyuan3D-to-STL pipeline (designed, never executed for a real Reward). (2)
-      pitches/2026-07-28-kind-robots-branch-janitor.md (ai-networker-upgrades) — ports
-      conductor's proven scripts/branch_janitor.py + workflow to kind_robots, which has no
-      equivalent; grounded in two independent 2026-07-28 TALKBACK entries that each hit the
-      identical missing capability this week. Checked both against pitches/*.md (all statuses),
-      every projects/*/roadmap.yaml goal/task, STATUS.md's active inventory, and the relevant
-      kind_robots-side folders (scripts/, .github/workflows/) before writing either — no
-      overlap found with existing pitches, shipped features, or roadmap tasks.
+    note: >-
+      Inspect the 2023-2024 Brainstorm commit sequence, including old page/view, selector,
+      add-pitch, Pitch/PitchType store/model code, API route, image/persona, and save/edit
+      behavior. Identify the last coherent working snapshot and the later commit/route change
+      that replaced the public Brainstorm surface. Write `projects/brainstorm/RECOVERY-MAP.md`
+      with: historical file -> current equivalent, reusable vs obsolete code, old data model
+      assumptions, provider/API assumptions, and the smallest safe restoration slice. Do not
+      restore code blindly; current Nuxt 4/Pinia/server conventions win.
 
-      GAP NOTED (not fixed this cycle, scope creep to fix inline): brainstorm/roadmap.yaml's
-      own notes_from_silas references "genre and direction guidance in CONTROL.md" for comic
-      pitches, but CONTROL.md's `### brainstorm` section currently has no genre guidance at
-      all (checked the full file). This is the same class of prose-drift CONTROL.md itself
-      warns about elsewhere (see the kindrobots-unraid priority.yaml precedent, 2026-07-14) —
-      either the guidance was never written down, or it lives somewhere this pass didn't find.
-      Left as `needs-human` bait for Silas rather than guessing at genres and shipping
-      possibly-misaligned comic pitches; flagging here so a future cycle doesn't rediscover
-      this cold.
+  - id: t-003
+    milestone: m0
+    title: Audit current Brainstorm route, presentation, stores, models, and API overlap
+    status: ready
+    owner: null
+    updated: '2026-08-10T08:05:00Z'
+    passes: 0
+    stakes: reversible
+    note: >-
+      Map current `/brainstorm`, `/plan/brainstorm`, content frontmatter, dashboard config,
+      workspace route stitching, Dream manager reuse, project placement, tutorials/nav,
+      existing `Pitch`, Prompt, Project, Dream, Character, Scenario, Reward and Bot models,
+      plus current text-generation provider/server abstractions. Flag semantic collisions:
+      Conductor pitches are coordination proposals and must not become user Brainstorm data.
+      Record recommended reusable primitives and exact files in RECOVERY-MAP.md.
 
-      2026-07-12 hygiene run: reviewed the six lingering awaiting-silas pitches.
-      Archived the Kind Robots coloring pack and Conductor agent-health dashboard as
-      duplicates, and superseded the AI session-credits subscription because the
-      subscription, Stripe, and mana surfaces already exist in kind_robots. Three
-      distinct product pitches remain for human review: pet-business guide,
-      Patchwork Worlds RPG zine, and Narrative Prompt Deck. Before every future
-      cycle, count awaiting pitches and stop when the queue is at the cap. Then scan
-      every pitch file regardless of status, every project roadmap goal/waypoint/task,
-      STATUS.md, and relevant kind_robots routes/stores/components. A title rewrite
-      does not make existing work new. Each new pitch must include an
-      `## Existing-work check` section naming the closest projects/features inspected
-      and explaining why the proposal is still distinct. If the useful part belongs
-      inside an existing project, add a task or kaizen there instead of creating a
-      pitch. Open one PR with all truly new pitches, return this recurring task to
-      ready, and never set it to done.
+  - id: t-004
+    milestone: m1
+    title: Restore one canonical Brainstorm route and remove the Dream-gallery substitution
+    status: waiting
+    depends_on:
+      - t-002
+      - t-003
+    owner: null
+    updated: '2026-08-10T08:05:00Z'
+    passes: 0
+    stakes: reversible
+    note: >-
+      Make `/brainstorm` render the Brainstorm product instead of `:dream-manager` and stop
+      routing the Brainstorm dashboard tab to `/dreams`. `/plan/brainstorm` must resolve to
+      the same implementation via the site's existing route/alias pattern, not duplicate it.
+      Keep presentation metadata in Kind Robots. Preserve direct-load and refresh behavior.
+
+  - id: t-005
+    milestone: m1
+    title: Build the modern Brainstorm store and typed generation contract
+    status: waiting
+    depends_on: t-003
+    owner: null
+    updated: '2026-08-10T08:05:00Z'
+    passes: 0
+    stakes: reversible
+    note: >-
+      Create/modernize the Pinia store so components never call APIs or localStorage directly.
+      Define typed session, request, candidate, generation-state and error contracts. A batch
+      has independent candidate IDs and preserves prior candidate text when one slot is
+      regenerated. The store must support result count, constraints/examples, keep/reject,
+      inline edits, replacement generation and future object/art metadata without one giant
+      untyped blob.
+
+  - id: t-006
+    milestone: m1
+    title: Implement provider-agnostic structured text generation endpoint
+    status: waiting
+    depends_on:
+      - t-003
+      - t-005
+    owner: null
+    updated: '2026-08-10T08:05:00Z'
+    passes: 0
+    stakes: reversible
+    note: >-
+      Use the current Kind Robots default/active text-server/provider abstraction rather than
+      an old hard-coded OpenAI path. Accept a pitch, requested count and optional constraints.
+      Request structured candidate output, validate/sanitize it, reject malformed provider
+      wrappers safely, and return the standard `{ success, ... }` API shape via errorHandler.
+      Prompt explicitly for semantic diversity and non-duplicate ideas. Apply normal auth/mana
+      behavior if current text generation requires it. Add focused endpoint/parser tests.
+
+  - id: t-007
+    milestone: m1
+    title: Build the pitch composer and responsive candidate workbench
+    status: waiting
+    depends_on:
+      - t-004
+      - t-005
+      - t-006
+    owner: null
+    updated: '2026-08-10T08:05:00Z'
+    passes: 0
+    stakes: reversible
+    note: >-
+      Front-end centerpiece: pitch textarea, sensible result-count control, optional compact
+      constraints/examples, generate action, and responsive candidate cards. Candidate cards
+      must support keep, reject/delete, edit, regenerate-this-slot, duplicate/branch and
+      "more like this" affordances without turning the page into a chat transcript. Design
+      for keyboard and touch. Loading/error/empty states are first-class.
+
+  - id: t-008
+    milestone: m1
+    title: Add useful creative controls without model-knob clutter
+    status: waiting
+    depends_on: t-007
+    owner: null
+    updated: '2026-08-10T08:05:00Z'
+    passes: 0
+    stakes: reversible
+    note: >-
+      Add user-language controls for variation rather than provider parameters: e.g. stranger,
+      more practical, darker/funnier where allowed, shorter, different genre/angle, invert,
+      and fresh batch. These should translate into prompt intent in the store/API contract.
+      Keep advanced controls collapsible and defaults obvious. Include sample starters that
+      demonstrate both utility and playful absurdity without hard-coding output.
+
+  - id: t-009
+    milestone: m2
+    title: Implement per-candidate revision history and non-destructive branching
+    status: waiting
+    depends_on: t-007
+    owner: null
+    updated: '2026-08-10T08:05:00Z'
+    passes: 0
+    stakes: reversible
+    note: >-
+      Regenerating or branching a candidate must not silently destroy its previous text. Add
+      lightweight revision lineage so a user can inspect or restore earlier variants during
+      the active session. Reordering and editing should not lose candidate identity.
+
+  - id: t-010
+    milestone: m2
+    title: Choose and implement durable Brainstorm persistence semantics
+    status: waiting
+    depends_on:
+      - t-003
+      - t-009
+    owner: null
+    updated: '2026-08-10T08:05:00Z'
+    passes: 0
+    stakes: reversible
+    note: >-
+      Audit existing Pitch/Prompt and related schema before adding a migration. Reuse only if
+      semantics genuinely fit; do not overload Conductor projection/pitches. Logged-in users
+      should be able to save named Brainstorm sessions/candidates and reopen them. Anonymous
+      sessions may remain ephemeral/local for v1. Any schema change must be additive and
+      data-preserving with API routes, store actions and tests.
+
+  - id: t-011
+    milestone: m2
+    title: Add saved/history browser and export/copy handoff
+    status: waiting
+    depends_on: t-010
+    owner: null
+    updated: '2026-08-10T08:05:00Z'
+    passes: 0
+    stakes: reversible
+    note: >-
+      Provide a compact saved/history surface that does not steal the candidate workspace.
+      Users can reopen sessions, copy one or many selected ideas, and export selected text in
+      a useful format. Avoid premature social publishing; saved Brainstorms remain drafts.
+
+  - id: t-012
+    milestone: m3
+    title: Define reusable source-object context adapter
+    status: waiting
+    depends_on:
+      - t-005
+      - t-006
+    owner: null
+    updated: '2026-08-10T08:05:00Z'
+    passes: 0
+    stakes: reversible
+    note: >-
+      Create an explicit, inspectable adapter contract for brainstorming from Kind Robots
+      entities. The user sees the selected source object and can remove it. Start with
+      Character and Dream and design the contract so Scenario, Reward, Bot, Project and Prompt
+      can follow without bespoke endpoints. Limit context to relevant canonical fields and
+      avoid leaking private data across ownership/visibility boundaries.
+
+  - id: t-013
+    milestone: m3
+    title: Ship Character-aware brainstorming and art-prompt variations
+    status: waiting
+    depends_on: t-012
+    owner: null
+    updated: '2026-08-10T08:05:00Z'
+    passes: 0
+    stakes: reversible
+    note: >-
+      Let a user choose/deep-link a Character and request ideas that preserve canonical
+      traits: situations, dialogue hooks, visual concepts, portrait/action compositions and
+      batches such as "20 art prompts for this Character under these constraints." Output is
+      text only in this task. Provide a reusable deep-link/query-state contract for other
+      surfaces to launch Brainstorm with source + intent prefilled.
+
+  - id: t-014
+    milestone: m3
+    title: Ship Dream-aware brainstorming and expand adapter coverage
+    status: waiting
+    depends_on: t-012
+    owner: null
+    updated: '2026-08-10T08:05:00Z'
+    passes: 0
+    stakes: reversible
+    note: >-
+      Support Dream-derived titles, locations, sensory details, encounters, threats, rewards,
+      characters and visual concepts without collapsing the Brainstorm page back into the
+      Dream gallery. Add at least one additional lightweight entity adapter if the contract
+      proves clean, and document the recipe for the rest.
+
+  - id: t-015
+    milestone: m4
+    title: Add dedicated art-prompt brainstorm mode
+    status: waiting
+    depends_on:
+      - t-008
+      - t-013
+    owner: null
+    updated: '2026-08-10T08:05:00Z'
+    passes: 0
+    stakes: reversible
+    note: >-
+      Text-only art ideation: generate varied image prompts with composition, subject, action,
+      environment and visual-direction diversity. It should work freeform or from an entity.
+      Do not enqueue images merely because the user requested 20 prompt ideas. Candidate cards
+      gain an explicit optional "Generate art" action only after this text mode is solid.
+
+  - id: t-016
+    milestone: m4
+    title: Generate art from selected candidates through durable ArtJobs
+    status: waiting
+    depends_on: t-015
+    owner: null
+    updated: '2026-08-10T08:05:00Z'
+    passes: 0
+    stakes: reversible
+    note: >-
+      Wire explicit selected-candidate generation to the normal `POST /api/art/enqueue`
+      pipeline. Default Brainstorm-originated generation to current Krea2 settings/build unless
+      the user deliberately chooses another supported option. Preserve Brainstorm session,
+      candidate, prompt, source entity, build/model metadata, ArtJob ID and resulting ArtImage
+      relationship. Batch renders require an explicit user action and clear cost/count preview.
+      Generated internal art is pre-authorized; no external publication.
+
+  - id: t-017
+    milestone: m4
+    title: Add candidate art results and retry-safe delivery states
+    status: waiting
+    depends_on: t-016
+    owner: null
+    updated: '2026-08-10T08:05:00Z'
+    passes: 0
+    stakes: reversible
+    note: >-
+      Show queued/processing/delivered/failed art state on the originating candidate without
+      browser polling becoming the source of truth. Reuse ArtJob IDs after transient failures,
+      avoid duplicate enqueues, and verify final delivered URLs before marking image work done.
+      Allow generated art to be attached/saved through existing entity-art semantics where
+      appropriate rather than inventing Brainstorm-specific image storage.
+
+  - id: t-018
+    milestone: m5
+    title: Recover and modernize the Brainstorm bot/persona from repository evidence
+    status: waiting
+    depends_on: t-002
+    owner: null
+    updated: '2026-08-10T08:05:00Z'
+    passes: 0
+    stakes: reversible
+    note: >-
+      Audit historical seed data, avatar assets (`brain1.webp` and successors), Bot records,
+      copy and endpoint prompts for the original Brainstorm persona. Preserve recognizable
+      character where compatible with current bot/narrator architecture. Functional generation
+      must not hard-depend on a single bot ID. Add persona flavor after the workbench works.
+
+  - id: t-019
+    milestone: m5
+    title: Integrate Brainstorm entry points across compatible Kind Robots surfaces
+    status: waiting
+    depends_on:
+      - t-012
+      - t-015
+    owner: null
+    updated: '2026-08-10T08:05:00Z'
+    passes: 0
+    stakes: reversible
+    note: >-
+      Add focused "Brainstorm variations" handoffs from the highest-value existing surfaces
+      rather than mini-brainstorm implementations: Character/Dream first, then evaluate Prompt,
+      Reward, Scenario, Project and art surfaces. Deep links should carry source entity + intent
+      only and land in the canonical workbench. Do not clutter every card with a new button.
+
+  - id: t-020
+    milestone: m5
+    title: Reconnect Conductor proposal ideation as an explicit downstream consumer
+    status: waiting
+    depends_on:
+      - t-010
+      - t-019
+    owner: null
+    updated: '2026-08-10T08:05:00Z'
+    passes: 0
+    stakes: reversible
+    note: >-
+      Preserve the genuinely useful part of the old Conductor brainstorm project: generating
+      candidate project/product ideas under dedup and quality constraints. Implement it as an
+      explicit downstream workflow that may use Brainstorm generation but only promotes vetted
+      ideas into canonical Conductor `pitches/*.md`. A normal user Brainstorm can never mutate
+      roadmaps, lifecycle or coordination pitches implicitly.
+
+  - id: t-021
+    milestone: m5
+    title: Add Brainstorm-specific tests, telemetry-free quality fixtures, and duplicate checks
+    status: waiting
+    depends_on:
+      - t-006
+      - t-009
+      - t-012
+    owner: null
+    updated: '2026-08-10T08:05:00Z'
+    passes: 0
+    stakes: reversible
+    note: >-
+      Build deterministic fixtures around parser validation, requested result counts, duplicate
+      suppression, candidate state transitions, regeneration lineage, object-context privacy,
+      route behavior and save/reopen flows. Do not add analytics as a shortcut. Include prompt
+      fixtures covering practical lists and playful absurdity so future refactors do not sand
+      Brainstorm into generic corporate prose.
+
+  - id: t-022
+    milestone: m6
+    title: Run accessibility, responsive, failure-state, and preview verification pass
+    status: waiting
+    depends_on:
+      - t-007
+      - t-011
+      - t-014
+      - t-017
+      - t-018
+      - t-021
+    owner: null
+    updated: '2026-08-10T08:05:00Z'
+    passes: 0
+    stakes: reversible
+    note: >-
+      Verify PR preview at phone, tablet and desktop widths plus direct load/refresh. Exercise
+      empty, loading, provider failure, malformed response, auth transition, saved-session,
+      regeneration, object-context and ArtJob states. Check keyboard focus/actions, touch target
+      sizes, long candidate text, 1-result and max-result batches, and slow generation. Run
+      typecheck and relevant tests. Fix findings rather than only documenting them.
+
+  - id: t-023
+    milestone: m6
+    title: Silas playtest and finite-project exit reconciliation
+    status: waiting
+    depends_on: t-022
+    owner: null
+    updated: '2026-08-10T08:05:00Z'
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    note: >-
+      FOR SILAS: Play with the restored Brainstorm at the preview/live route after t-022 and
+      confirm that the pitch -> many ideas -> keep/edit/regenerate/save loop feels like the
+      Brainstorm you cared about, not merely a technically functional generator. Try both a
+      practical prompt and something absurd/dark-comedy. TO APPROVE: if the product has regained
+      the right utility and personality, set `approved_by_human: true` and `status: done`; if not,
+      leave concrete notes and return the project to active refinement. This gate controls only
+      declaring the finite revival project finished, not routine reversible development.
