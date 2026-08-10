@@ -112,12 +112,12 @@ tasks:
   - id: t-004
     milestone: m1
     title: Restore one canonical Brainstorm route and remove the Dream-gallery substitution
-    status: ready
+    status: claimed
     depends_on:
       - t-002
       - t-003
-    owner: null
-    updated: '2026-08-10T08:05:00Z'
+    owner: worker
+    updated: '2026-08-10T09:33:00Z'
     passes: 0
     stakes: reversible
     note: >-
@@ -125,6 +125,8 @@ tasks:
       routing the Brainstorm dashboard tab to `/dreams`. `/plan/brainstorm` must resolve to
       the same implementation via the site's existing route/alias pattern, not duplicate it.
       Keep presentation metadata in Kind Robots. Preserve direct-load and refresh behavior.
+    claimed_by: 2026-08-10T093300Z-brainstorm-t-004-d8e3
+    claimed_at: '2026-08-10T09:33:00Z'
 
   - id: t-005
     milestone: m1
