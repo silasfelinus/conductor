@@ -1,0 +1,18 @@
+version: 1
+project: brainstorm
+task: t-010
+operation: done
+owner: worker
+session: 2026-08-10T121700Z-brainstorm-t-010-f2d6
+updated: '2026-08-10T12:45:00Z'
+note: >-
+  Merged Kind Robots PR #1718 after every attached workflow passed, including the dedicated Prisma validation/generation and Brainstorm persistence round-trip contract. Added additive BrainstormSession/BrainstormCandidate persistence, authenticated owner-scoped list/create/open/update APIs, explicit Pinia save/update/reopen behavior while preserving local unsaved drafts, and minimal private Saved Work controls. Migration was audited as additive-only: two CREATE TABLE statements, indexes, and one foreign-key ADD CONSTRAINT between the two new tables; no existing data/table/column rewrite or drop. The worker branch is deleted, the resulting production deployment succeeded, and live /brainstorm returns the Saved Work surface.
+learning:
+  date: '2026-08-10'
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A creative workspace deserves its own persistence semantics when existing models encode different domains; keep local draft continuity automatic, make durable account saves explicit/private, and validate a full candidate/revision/branch snapshot round-trip before trusting the schema.
