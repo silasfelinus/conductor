@@ -1,0 +1,9 @@
+version: 1
+project: brainstorm
+task: t-010
+operation: review
+owner: worker
+session: 2026-08-10T121700Z-brainstorm-t-010-f2d6
+updated: '2026-08-10T12:31:00Z'
+note: >-
+  Implemented durable private Brainstorm persistence on Kind Robots worker/brainstorm-t-010-f2d6. Added additive BrainstormSession/BrainstormCandidate schema + migration, owner-scoped authenticated list/create/open/update APIs, typed snapshot normalization and round-trip reconstruction, store-owned explicit save/update/reopen actions while keeping browser drafts local, and minimal Saved Work controls. Added dedicated persistence/Prisma contract coverage. Migration audit is additive-only: CREATE TABLE/indexes plus a foreign key between the two new tables; no existing data/table/column rewrite or drop.
