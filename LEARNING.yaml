@@ -7578,3 +7578,14 @@ records:
     full-object overwrite across a slow awaited write. Worth checking any route that reads
     a record early and writes a computed blob back late for the same shape -- re-read
     immediately before the final write rather than trusting the request-start snapshot.
+- date: '2026-08-10'
+  project: model-builder
+  task: t-040
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Pair server-side stale-write protection with matching client affordance guards when a conflicting
+    action is known: the server preserves correctness, while the UI prevents users from entering the race
+    in the first place.'

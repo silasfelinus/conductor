@@ -904,14 +904,15 @@ tasks:
   - id: t-040
     milestone: m6
     title: "Disable a stage's Edit button while its item's commit is in flight (client-side belt-and-suspenders)"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
-    owner: worker
     note: |-
       Kaizen from t-029 (kind_robots PR #1729, 2026-08-10): commit.post.ts's final stageStatuses write now re-reads the current DB value immediately before merging in COMMIT, so a stage reopened mid-commit (PATCH /items/:id) can no longer be silently clobbered back to 'approved' -- but the race window itself is still open on the client: model-builder-item-panel.vue's isCommitting only disables the Commit button, not the Edit buttons on the item's other already-approved stages. Add the same isCommitting (or a commit-in-flight-for-this-item) guard to those Edit buttons so reopening a stage mid-commit is prevented at the source instead of only being made safe to lose server-side.
 
       Added commit-in-flight guards to all approved-stage Edit buttons so a user cannot reopen PITCH, FIELDS_AND_PROMPTS, or GENERATE_ASSETS while that item is committing.
+
+      Merged silasfelinus/kind_robots#1730 as 011dc10ef8b15b012ae469ec062ea4dea44a7607. All three approved-stage Edit buttons now disable while commitItem() is in flight for the same item, preventing PITCH, FIELDS_AND_PROMPTS, or GENERATE_ASSETS from being reopened mid-commit.
     claimed_by: 20260810T221406Z-modelbuilder-t040-srqbk
     claimed_at: '2026-08-10T22:14:06Z'
-    updated: '2026-08-10T22:17:08Z'
+    updated: '2026-08-10T22:23:49Z'
