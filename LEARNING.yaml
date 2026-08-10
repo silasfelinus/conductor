@@ -7513,3 +7513,15 @@ records:
   lesson: HTTPError subclasses URLError, so handle 404 before the generic network-failure branch when
     a task needs to distinguish a missing or inaccessible GitHub reference from an unverifiable transient
     failure.
+- date: '2026-08-10'
+  project: storybook
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A source-level contract can verify a cross-component behavioral handoff (click handler
+    navigates with the right query key; the receiving page still reads that key) without asserting
+    any markup, by checking substrings on each side of the seam independently rather than the whole
+    line/attribute they sit inside.'
