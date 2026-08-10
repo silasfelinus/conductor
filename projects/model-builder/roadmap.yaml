@@ -608,8 +608,8 @@ tasks:
   - id: t-031
     milestone: m6
     title: "Live smoke test of the t-025 async ArtJob queue path on /model-builder"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -625,6 +625,9 @@ tasks:
       artImageId/imagePath land correctly per item, and confirm the existing synchronous
       "Generate candidate" button still works unchanged. Record findings; file any fix as a
       new task.
+    claimed_by: 20260810T2226Z-mb031-sweep
+    claimed_at: '2026-08-10T22:28:59Z'
+    updated: '2026-08-10T22:28:59Z'
 
   - id: t-032
     milestone: m6
