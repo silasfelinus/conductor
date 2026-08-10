@@ -2268,8 +2268,7 @@ tasks:
   - id: t-063
     milestone: m3
     title: "CI guard: fail when a new Project-creating call site has no PROJECT-CREATION.md surface entry"
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -2277,6 +2276,8 @@ tasks:
 
 
       Implemented the Project-creation surface drift guard in Kind Robots: a local manifest mirrors the five documented direct create call sites, a comment/string-aware scanner catches additions/removals without false-positive prose matches, and a lightweight Actions workflow runs it on relevant source changes.
+
+      Merged kind_robots PR #1705 as f99326d396994e6c923d12d30544362c1a85117e. Added a TypeScript-parser-backed direct Project.create surface detector, a five-call-site manifest mirroring PROJECT-CREATION.md, and a focused Actions guard. The first CI pass caught a real nested-template false negative in the hand-written lexer; the final parser-based head c4f95c37164bf89e86e5b7643db47bcf712a395d passed all 13 exact-head workflows before merge.
     claimed_by: 20260810T061722Z-auto-e939f1
     claimed_at: '2026-08-10T06:17:22Z'
-    updated: '2026-08-10T06:22:00Z'
+    updated: '2026-08-10T06:31:30Z'
