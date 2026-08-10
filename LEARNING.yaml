@@ -7558,3 +7558,23 @@ records:
     tripling markup in the same PR that adds it. Budget for that check whenever a component split
     introduces a new required-prop component; caught mid-PR via the subscribed PR-activity webhook
     rather than a manual poll, which is the faster signal path for a session's own open PR.
+- date: '2026-08-10'
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    items/[id]/commit.post.ts fetched the build item once at the top of the request and
+    built the final stageStatuses write from that request-start snapshot, even though the
+    write in between (promoteAsset/updateText/createRecord+linkSourceToTarget, the last
+    inside a multi-step prisma.$transaction) can be slow -- and nothing blocks the client
+    from reopening another already-approved stage (a fast PATCH /items/:id) while the
+    commit POST is in flight, so the stale-snapshot final write could silently clobber
+    that concurrent edit back to 'approved'. A distinct bug class from the ~30 prior
+    client-side store races this recurring task has found: a server-side stale-snapshot
+    full-object overwrite across a slow awaited write. Worth checking any route that reads
+    a record early and writes a computed blob back late for the same shape -- re-read
+    immediately before the final write rather than trusting the request-start snapshot.
