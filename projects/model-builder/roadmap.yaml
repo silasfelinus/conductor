@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
@@ -688,7 +688,10 @@ tasks:
       Merged kind_robots#1722 as ff1a405bb920332551967871861e480489ef7955. Required Contract Tests now enforce the previously dormant cancelled-run async completion guard through the run-writable required entry point; all 13 exact-head workflows completed successfully.
 
       Reviewer cycle merged kind_robots PR #1723 as c139ac9754ba40bc8e904dc7d0361f8770b003e1 after all 15 exact-head workflows completed successfully. The fix preserves the active BuildRun object when reopening the already-active run so in-flight async ArtJob polling state is not orphaned. Recurring polish task rearmed for future cycles.
-    updated: '2026-08-10T16:18:00Z'
+    updated: '2026-08-10T17:12:49Z'
+    owner: worker
+    claimed_by: 20260810T171249Z-6f29f1
+    claimed_at: '2026-08-10T17:12:49Z'
 
   - id: t-030
     milestone: m6
