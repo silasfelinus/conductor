@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-10T04:37:09Z
+Generated: 2026-08-10T04:39:49Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **556**
-- Outcomes: blocked: 13, cancelled: 1, done: 542
+- Closed tasks recorded: **557**
+- Outcomes: blocked: 13, cancelled: 1, done: 543
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -36,7 +36,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
 | interface-vision | 82 | 100% |
-| kind-robots | 46 | 98% |
+| kind-robots | 47 | 98% |
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
@@ -59,13 +59,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 541 | 99% |
+| software | 542 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
-| quality | 10 |
+| quality | 11 |
 | actionable | 9 |
 | transient | 9 |
 | scope | 2 |
@@ -74,11 +74,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - project `coat-dance` — 0% success over 8 closed tasks; aim the next kaizen task here
 - kind `content` — 40% success over 15 closed tasks; aim the next kaizen task here
-- failure category `quality` — 10 occurrences; look for the shared cause across its records
+- failure category `quality` — 11 occurrences; look for the shared cause across its records
 - failure category `actionable` — 9 occurrences; look for the shared cause across its records
 - failure category `transient` — 9 occurrences; look for the shared cause across its records
 
 ## Recent lessons
+
+- 2026-08-10 `kind-robots/t-058` — An audit task's own findings can be correct while its proposed follow-up disposition is wrong: this project's BOUNDARY.md routes any shared-backend/API change through pitches/ first, and SHARING-SPEC.md explicitly labels its own documented Grant API surface "illustrative -- routes, not committed contracts" -- filing that as a direct `ready` implementation task (first attempt, PR #2002) is a scope/process violation even though the underlying evidence was sound. Retry preserved the audit doc unchanged and only revised the disposition: kept genuinely local/front-end/docs-only findings as `ready` tasks, and wrote a pitch file per backend-touching finding, bundling closely-coupled backend follow-ups (Grant API + its two route migrations + the UI that depends on it) into one pitch rather than four separate approval asks for one capability.
 
 - 2026-08-10 `kind-robots/t-057` — contract-tests.yml is explicitly DB-free ("No database or Nuxt build is needed"), so a "behavioral" contract test for a database-writing code path has to be a source-inspection test (assert.match against readFileSync'd source), not a live integration test -- matching the existing verify*.ts convention rather than reaching for a real Prisma/DB fixture that this CI job structurally cannot run. Also: when SQL identifiers are backtick-quoted inside a template literal, they appear on disk as an escaped \` pair, not a bare backtick -- normalize (.replaceAll('\\`', '`')) before regex-matching raw SQL source, or the match silently fails on the escaping, not the content. Verified the new assertions actually catch a regression (not vacuously true) by manually breaking each of the three invariants and confirming the test failed, before wiring it into CI.
 
@@ -97,7 +99,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-09 `digital-storefront/t-038` — An umbrella task's remaining_scope_task pointer chain (t-038 -> t-003 -> t-004) can sit at status: review for days after its last referenced task actually reaches done, because nothing automatically re-checks the pointer once it stops changing. check_pr_merged_drift.py's title-search pass surfaced it only as "unverifiable" (no close-out PR titled after t-038 exists, since it was never meant to close via its own PR); the real signal was checking the remaining_scope_task's own status directly. A session picking up drift-check output should follow remaining_scope_task chains to their live end, not stop at "search found nothing."
 
-- 2026-08-09 `kindrobots-unraid/t-006` — For self-hosted Node 24 services on Unraid, mounting one trusted .env and loading it with --env-file-if-exists avoids duplicating secrets while still allowing DockerMan environment variables to override deployment-specific keys. Excluding .env from the Docker build exposed a Prisma build dependency: prisma.config.ts requires DATABASE_URL even for generate, so image builds need a non-secret dead build-only URL rather than access to production credentials. Local Docker image tags can still be represented by a saved DockerMan template, keeping runtime settings editable in the Unraid WebGUI while registry publication remains optional.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-10T04:37:09Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-10T04:39:49Z_
