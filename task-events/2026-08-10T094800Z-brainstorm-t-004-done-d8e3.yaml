@@ -1,0 +1,18 @@
+version: 1
+project: brainstorm
+task: t-004
+operation: done
+owner: worker
+session: 2026-08-10T093300Z-brainstorm-t-004-d8e3
+updated: '2026-08-10T09:48:00Z'
+note: >-
+  Merged Kind Robots PR #1709. /brainstorm now mounts a dedicated Brainstorm manager instead
+  of the Dream manager, /plan/brainstorm redirects to the canonical route, and the Brainstorm
+  dashboard tab routes home instead of /dreams. The first layout attempt tripped the Interface
+  Vision viewport-grid ratchet; the corrected component uses auto-fit/minmax and wrapping flex,
+  and the replacement head passed TypeScript, Layout Contract, Contract Tests, and all other
+  PR workflows.
+learning: >-
+  Shared MDC-mounted workbench components cannot choose column counts from viewport breakpoints.
+  Brainstorm must remain container-responsive because it can live inside different navigation
+  shells and panes; use intrinsic auto-fit/minmax or current kr layout primitives instead.
