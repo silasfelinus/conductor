@@ -182,15 +182,16 @@ tasks:
 - id: t-014
   milestone: m4
   title: Add "Start a story with this" links on the object surfaces
-  status: claimed
-  owner: worker
+  status: done
   passes: 0
   stakes: reversible
   note: |-
     Storybook now seeds its setup draft from ?scenario= / ?character= / ?facet= / ?reward= / ?location= (kind_robots 2026-08-06) -- seeding on top of the restored draft so a link never destroys a story in progress, and clearing the query so a reload cannot re-add an ingredient the author removed. NOTHING LINKS TO IT YET: the consuming half shipped without the entry points, so the feature is currently unreachable by a user. Silas: "what we should do is have links to these elements that start the process to tell a storybook story with that element as part of it" -- explicitly INSTEAD of giving Facets and Rewards conversations of their own, since both are tools that feed other interactions rather than things you talk to. Facets and Rewards are the priority; each now has exactly one detail pane to host the affordance.
+
+    Reviewed and merged kind_robots PR #1706 as squash 8a457281cd6f0e03c341786f8b1ddb71827c2381. The Facet and Reward detail surfaces now link into Storybook with their object slug. Review repaired two contract failures on the existing branch: kept facet-interact as a thin router by extracting facet-profile, and made the extracted profile grid container-width responsive without carrying forward the temporary layout-baseline mutation. Exact head 000f87f5e940bb4355e9125dccc5027360beac98 passed all 13 observed workflows, including Layout Contract #31366156627, Contract Tests #31366156525, and TypeScript #31366156531.
   claimed_by: 20260810T063100Z-story-t014
   claimed_at: '2026-08-10T06:44:48Z'
-  updated: '2026-08-10T06:44:48Z'
+  updated: '2026-08-10T07:34:46Z'
 - id: t-015
   milestone: m4
   title: Decide whether stage roles and narrative roles converge

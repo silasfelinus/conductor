@@ -7362,3 +7362,14 @@ records:
     safe additive way to let one caller branch on HTTP status (409 vs. other)
     without touching the route/API contract or breaking other callers that
     only read `.message`.
+- date: '2026-08-10'
+  project: storybook
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'When moving grandfathered UI out of an allow-listed component, do not transfer the exception
+    to the new file. Satisfy both ratchets: keep interact components thin and make newly extracted working
+    surfaces container-responsive.'
