@@ -196,6 +196,13 @@ def check_pr_merged(repo: str, number: int) -> bool:
     try:
         with urllib.request.urlopen(request, timeout=15) as response:
             payload = json.loads(response.read().decode("utf-8"))
+    except urllib.error.HTTPError as error:
+        if error.code == 404:
+            raise RuntimeError(
+                f"verify_pr references {repo}#{number}, but GitHub returned 404; "
+                "the PR or repository does not exist or is not visible to this token"
+            ) from error
+        raise RuntimeError(f"could not reach GitHub API for {repo}#{number}: {error}") from error
     except (urllib.error.URLError, TimeoutError) as error:
         raise RuntimeError(f"could not reach GitHub API for {repo}#{number}: {error}") from error
     except json.JSONDecodeError as error:
