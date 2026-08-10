@@ -904,10 +904,10 @@ tasks:
   - id: t-040
     milestone: m6
     title: "Disable a stage's Edit button while its item's commit is in flight (client-side belt-and-suspenders)"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    owner: null
+    owner: worker
     note: >-
       Kaizen from t-029 (kind_robots PR #1729, 2026-08-10): commit.post.ts's final
       stageStatuses write now re-reads the current DB value immediately before
@@ -919,6 +919,6 @@ tasks:
       commit-in-flight-for-this-item) guard to those Edit buttons so reopening a
       stage mid-commit is prevented at the source instead of only being made safe
       to lose server-side.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-10T21:55:00Z'
+    claimed_by: 20260810T221406Z-modelbuilder-t040-srqbk
+    claimed_at: '2026-08-10T22:14:06Z'
+    updated: '2026-08-10T22:14:06Z'
