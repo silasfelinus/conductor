@@ -41,12 +41,12 @@ milestones:
   - id: m3
     title: "Slug parity + project creation surfaces"
     weight: 40
-    status: not-started
+    status: in-progress
 
   - id: m4
     title: "Sharing & access control (private-but-shared content, project grants)"
     weight: 30
-    status: not-started
+    status: in-progress
 
   - id: m5
     title: "WonderLab mural coloring tool"
@@ -2157,28 +2157,170 @@ tasks:
   - id: t-058
     milestone: m3
     title: Audit m3 (slug parity + project creation surfaces) and m4 (sharing/access control) for remaining gaps
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Closing t-057 leaves kind-robots at 57/57 done with milestones m3 (Slug parity +
-      project creation surfaces, weight 40) and m4 (Sharing & access control -- private-but-
-      shared content, project grants, weight 30) both still status: not-started and zero
-      tracked tasks -- caught by tests/test_current_project_lifecycle.py's "active project has
-      no open tasks" gate (AGENTS.md: do not infer completion from N/N; reconcile goal against
-      the actual product). t-056/t-057 already verified the Dream/Project -> Conductor Todo
-      scaffold path and its slug-parity Todo-creation contract; conductor-project-gallery-page.vue
-      and conductor-page.vue are the confirmed live project-creation surfaces, both routing
-      through the same POST /api/projects path. What's NOT yet verified: whether m3's "project
-      creation surfaces" scope is otherwise complete (slug collision handling, conductorSlug
-      immutability once set, any other creation entry point), and m4's access-control scope has
-      no concrete requirements captured anywhere in this roadmap at all -- read BOUNDARY.md and
-      any Silas notes for what "private-but-shared content, project grants" was meant to cover,
-      then either (a) find it's already covered elsewhere and close/retitle these milestones, or
-      (b) file concrete, scoped follow-up ready tasks for the real gaps found. This is a
-      read-and-report audit task, not a blind implementation task -- do not guess at access-
-      control requirements without grounding them in an actual documented need.
     claimed_by: 20260810T033102Z-kind-robots-t058-audit-sched
     claimed_at: '2026-08-10T03:31:02Z'
-    updated: '2026-08-10T03:31:02Z'
+    updated: '2026-08-10T03:45:00Z'
+    note: >
+      Audit complete -- full findings in docs/t-058-m3-m4-gap-audit.md. Framing
+      correction first: both milestones have many `done` tasks already tagged to them
+      (m3: t-003-t-007, t-011-t-021, t-024, t-025, t-046, t-048, t-056, t-057; m4: t-008,
+      t-029, t-037, t-044, t-045, t-047, t-049, t-050) -- the milestone-level
+      `status: not-started` field was simply never updated as those closed, not a
+      literal description of zero progress. Flipped both to `status: in-progress` to
+      match reality.
+
+      m3 is NOT fully covered: (1) `conductorSlug` is documented as "the stable key"
+      (PROJECT-CREATION.md:15) but is mutable via the general owner-facing PATCH route
+      with no immutability guard, unlike conductor sync's own set-once pattern; (2) the
+      only general "new project" UI form (conductor-project-gallery-page.vue) has no
+      slug field at all, contradicting PROJECT-CREATION.md's Surface 2 spec and its
+      "return 409 and prompt for a different slug. DECIDED." line; (3) at least three
+      undocumented live Project-creation code paths exist beyond the two "confirmed"
+      ones -- AppMaker's two routes (each with its own independently-maintained
+      slug-collision check/regex), conductor sync, and model-builder's commit route
+      (creates slugless orphan Projects entirely outside parity). Filed as t-059/t-060/t-061.
+
+      m4 is NOT covered, despite real infrastructure already landed: the Grant model
+      and canView()/existsActiveGrant() helper exist (t-044/t-050) and SHARING-SPEC.md
+      is an approved design doc, but there is zero API to create/list/revoke a Grant
+      anywhere in the app, zero UI, and critically the two use cases m4's own title
+      names -- project grants, private-but-shared content -- have zero route
+      integration; only the later PACK/DLC use case is wired. SHARING-SPEC.md's own
+      named motivating routes (projects/[id].get.ts, resources/[id].get.ts) are
+      unchanged. Filed as t-062 (Grant CRUD API), t-063 (migrate project view route),
+      t-064 (migrate resource view route), t-065 (minimal share/shared-with-me UI).
+
+      Neither milestone closed/retitled -- both have real, narrowly-scoped remaining
+      work traceable to this project's own prior design docs (PROJECT-CREATION.md,
+      SHARING-SPEC.md), not invented requirements.
+
+  - id: t-059
+    milestone: m3
+    title: Make Project.conductorSlug immutable once set
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found by t-058's audit (docs/t-058-m3-m4-gap-audit.md, Gap 1). conductorSlug is
+      documented as "the stable key" (PROJECT-CREATION.md:15) but server/api/projects/
+      [id].patch.ts puts it in the general mutation allowlist (projectMutationFields,
+      index.ts:44) with no immutability guard -- any project owner can silently rewrite
+      it, breaking the conductor <-> kind_robots join. server/api/conductor/sync.post.ts:84
+      already has the correct pattern (`conductorSlug: existing.conductorSlug ??
+      project.slug`, set-once) -- copy that shape into the general PATCH route: reject or
+      silently ignore an attempt to change a non-null conductorSlug rather than applying it.
+
+  - id: t-060
+    milestone: m3
+    title: Add an editable slug field and slug-specific 409 UX to the New Project form
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found by t-058's audit (docs/t-058-m3-m4-gap-audit.md, Gap 2).
+      PROJECT-CREATION.md's Surface 2 spec (lines 60, 76) requires the create-project UI
+      to derive a slug from the title, show it, and let the user override it before
+      submit, and line 150 records Silas's decision: "return 409 and prompt for a
+      different slug. DECIDED." components/pages/conductor-project-gallery-page.vue's
+      createForm has no slug field at all -- add one (auto-derived from title, live-
+      updated, user-editable), and replace the current generic "Record already exists."
+      409 message with a slug-specific prompt so the user can actually fix the collision
+      instead of getting stuck.
+
+  - id: t-061
+    milestone: m3
+    title: Document and de-duplicate the full set of live Project-creation surfaces
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found by t-058's audit (docs/t-058-m3-m4-gap-audit.md, Gap 3). Beyond the two
+      surfaces PROJECT-CREATION.md documents (POST /api/projects via
+      conductor-project-gallery-page.vue / conductor-page.vue), at least three more live
+      code paths create Project rows: AppMaker's scaffold-request.post.ts and
+      github/create-app.post.ts (each with its own independently-maintained slug-
+      collision pre-check and SLUG_RE regex -- appmaker-page.vue:169's own comment flags
+      the manual-sync burden), server/api/conductor/sync.post.ts, and
+      server/api/model-builder/items/[id]/commit.post.ts's createRecord 'Project' case
+      (creates slugless, parity-exempt orphan Projects with isPublic:false/isActive:false,
+      entirely undocumented). Update PROJECT-CREATION.md to name all of these, and extract
+      a single shared slug-normalize/collision-check helper instead of three independent
+      implementations (index.ts's Prisma-unique-constraint approach and AppMaker's two
+      hand-rolled pre-checks). Lower priority sub-decision: whether model-builder's
+      slugless orphan Projects are an intentional "draft idea" state that should stay
+      exempt from slug parity, or should get one too -- resolve and document either way.
+
+  - id: t-062
+    milestone: m4
+    title: Implement the Grant CRUD API per SHARING-SPEC.md
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found by t-058's audit (docs/t-058-m3-m4-gap-audit.md, m4 Gap 1). The Grant Prisma
+      model (schema.prisma:894-911, GrantSubject{PROJECT,RESOURCE,PACK},
+      GrantLevel{VIEW,ADMIN}) and server/utils/contentAccess.ts's canView()/
+      existsActiveGrant() helpers already exist (t-044/t-050), but there is no API route
+      to create, list, or revoke a Grant anywhere -- `find server -iname "*grant*"`
+      returns nothing. Implement SHARING-SPEC.md's illustrative surface (lines 140-150):
+      POST /api/grants (owner/admin-only create), DELETE /api/grants/:id (owner/admin-only
+      revoke), GET /api/grants?subjectType=&subjectId= (owner/admin list for a subject),
+      GET /api/grants/mine (self-scoped list of grants held by the current user). This is
+      the prerequisite for t-063/t-064/t-065 -- without it the Grant model has no way to
+      ever be populated.
+
+  - id: t-063
+    milestone: m4
+    title: Migrate server/api/projects/[id].get.ts onto canView()/existsActiveGrant()
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-062
+    note: >
+      Found by t-058's audit (docs/t-058-m3-m4-gap-audit.md, m4 Gap 2). This is
+      SHARING-SPEC.md's own named motivating "before" example for project sharing, still
+      unmigrated: server/api/projects/[id].get.ts:36-38 gates solely on
+      isActive/isPublic/isMature + admin/owner, with no existsActiveGrant('PROJECT', ...)
+      or canView() check, so even once t-062 lands a Grant on a Project it still wouldn't
+      let the grantee view it. Wire it in, matching the formula contentAccess.ts already
+      implements (isPublic OR owner OR admin OR active Grant).
+
+  - id: t-064
+    milestone: m4
+    title: Migrate server/api/resources/[id].get.ts (and .patch.ts) onto canView()/existsActiveGrant()
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-062
+    note: >
+      Found by t-058's audit (docs/t-058-m3-m4-gap-audit.md, m4 Gap 2). SHARING-SPEC.md's
+      other named motivating route. resources/[id].get.ts and [id].patch.ts currently only
+      import effectiveShowMature, not canView -- add an existsActiveGrant('RESOURCE', ...)
+      / canView() check matching t-063's shape so a Resource can actually be shared via a
+      Grant once t-062's API exists to create one.
+
+  - id: t-065
+    milestone: m4
+    title: Add a minimal share / shared-with-me UI
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-062
+    note: >
+      Found by t-058's audit (docs/t-058-m3-m4-gap-audit.md, m4 Gap 3). No Grant-related
+      UI or store code exists anywhere (`grep -rli grant components/ stores/` finds
+      nothing but unrelated prose). Add a minimal "Share this project/resource" action
+      (calls t-062's POST /api/grants) and a "Shared with me" list surface (calls
+      GET /api/grants/mine) -- without this the Grant model has no end-user-reachable way
+      to ever be populated, even after t-062/t-063/t-064 land.
