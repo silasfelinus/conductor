@@ -41,12 +41,12 @@ milestones:
   - id: m3
     title: "Slug parity + project creation surfaces"
     weight: 40
-    status: not-started
+    status: in-progress
 
   - id: m4
     title: "Sharing & access control (private-but-shared content, project grants)"
     weight: 30
-    status: not-started
+    status: in-progress
 
   - id: m5
     title: "WonderLab mural coloring tool"
@@ -2157,7 +2157,7 @@ tasks:
   - id: t-058
     milestone: m3
     title: Audit m3 (slug parity + project creation surfaces) and m4 (sharing/access control) for remaining gaps
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     note: |-
@@ -2165,7 +2165,94 @@ tasks:
 
 
       Reviewer rejected conductor PR #2002 on exact head 11af085bc1ded89a0eec964944188b47afbe3d5a for a quality/scope defect. The audit evidence is useful, but the proposed follow-up disposition violates current CONTROL.md, BOUNDARY.md, and SHARING-SPEC.md: backend/API work must go through the approved pitch/human-gate path, and SHARING-SPEC explicitly labels the Grant routes illustrative rather than committed contracts. The PR also changed t-058 directly from claimed to done before merge. Retry by preserving the verified findings, revising backend follow-ups into pitch/gated work, keeping legitimate front-end follow-up scope separate, and restoring review -> merge -> done lifecycle. Blocking review comment is on PR #2002.
-    claimed_by: 20260810T054500Z-kind-robots-t058-retry-sched
-    claimed_at: '2026-08-10T04:30:52Z'
-    updated: '2026-08-10T04:30:52Z'
+
+
+      Retry (session 20260810T054500Z-kind-robots-t058-retry-sched): kept the same audit findings (docs/t-058-m3-m4-gap-audit.md, evidence unchanged) but corrected the disposition per the review comment. Filed t-059 (docs-only: document all live creation surfaces in PROJECT-CREATION.md) and t-060 (front-end-only: slug field + 409 UX on the New Project form) as directly-actionable `ready` tasks -- neither touches a shared backend contract. Everything that touches shared backend/API code now goes through a pitch first, per BOUNDARY.md and SHARING-SPEC.md:138's own "illustrative, not committed" label: t-061 (`needs-human`, soft) points at `pitches/2026-08-10-kind-robots-slug-integrity.md` (conductorSlug immutability + consolidating the three independent slug-collision implementations); t-062 (`needs-human`, soft) points at `pitches/2026-08-10-kind-robots-grant-sharing-api.md` (the Grant CRUD API SHARING-SPEC.md left illustrative, plus wiring canView()/existsActiveGrant() into the projects/resources view routes and a minimal share UI -- bundled as one pitch since the former t-063/t-064/t-065 split only makes sense once the API exists, and asking Silas to approve four fragments of one capability separately would be worse, not better, process discipline). Milestone status flipped `not-started` -> `in-progress` for both m3/m4 (same as the first attempt -- the review's rejection was about the follow-up task disposition, not this part, and it never actually landed on main since PR #2002 was closed unmerged). This time following the actual review -> merge -> done lifecycle: PR open, status: review now, close_task.py to done only after merge.
+    updated: '2026-08-10T05:15:00Z'
     owner: worker
+
+  - id: t-059
+    milestone: m3
+    title: Document every live Project-creation surface in PROJECT-CREATION.md
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found by t-058's audit (docs/t-058-m3-m4-gap-audit.md, m3 Gap 3). Beyond the two
+      surfaces PROJECT-CREATION.md documents (POST /api/projects via
+      conductor-project-gallery-page.vue / conductor-page.vue), at least three more live
+      code paths create Project rows and are entirely undocumented: AppMaker's
+      scaffold-request.post.ts and github/create-app.post.ts (each with its own
+      independently-maintained slug-collision pre-check/SLUG_RE -- appmaker-page.vue:169's
+      own comment flags the manual-sync burden), server/api/conductor/sync.post.ts, and
+      server/api/model-builder/items/[id]/commit.post.ts's createRecord 'Project' case
+      (creates slugless, parity-exempt orphan Projects with isPublic:false/isActive:false).
+      Docs-only: add all five to PROJECT-CREATION.md's surface list. Do not change any
+      route code here -- the slug-collision-helper consolidation and the model-builder
+      slugless-orphan question are backend changes and belong to the pitch at
+      pitches/2026-08-10-kind-robots-slug-integrity.md (t-061), not this task.
+
+  - id: t-060
+    milestone: m3
+    title: Add an editable slug field and slug-specific 409 UX to the New Project form
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found by t-058's audit (docs/t-058-m3-m4-gap-audit.md, m3 Gap 2).
+      PROJECT-CREATION.md's Surface 2 spec (lines 60, 76) requires the create-project UI
+      to derive a slug from the title, show it, and let the user override it before
+      submit, and line 150 records Silas's decision: "return 409 and prompt for a
+      different slug. DECIDED." components/pages/conductor-project-gallery-page.vue's
+      createForm has no slug field at all -- add one (auto-derived from title, live-
+      updated, user-editable), and replace the current generic "Record already exists."
+      409 message with a slug-specific prompt so the user can actually fix the collision
+      instead of getting stuck. Front-end-only: calls the existing POST /api/projects
+      route unchanged, no shared backend contract change.
+
+  - id: t-061
+    milestone: m3
+    title: "PITCH GATE: conductorSlug immutability + consolidated slug-collision helper"
+    status: needs-human
+    soft_gate: true
+    gate_human: true
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      FOR SILAS: Pitch written at pitches/2026-08-10-kind-robots-slug-integrity.md.
+      It proposes two backend fixes found by t-058's audit: (1) make Project.conductorSlug
+      immutable once set (server/api/projects/[id].patch.ts currently allows any owner to
+      silently rewrite it, unlike conductor/sync.post.ts's own correct set-once pattern);
+      (2) replace three independently-maintained slug-collision implementations
+      (index.ts, and AppMaker's two routes) with one shared helper.
+      TO APPROVE: read the pitch, set its `status:` to `approved` or `rejected`, and set
+      this task's `approved_by_human: true` and `status: ready` (or leave a note with
+      changes wanted). What unblocks: the immutability guard + regression test, and the
+      shared-helper refactor, as separate follow-up tasks once approved.
+
+  - id: t-062
+    milestone: m4
+    title: "PITCH GATE: Grant CRUD API + canView() route integration + minimal share UI"
+    status: needs-human
+    soft_gate: true
+    gate_human: true
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      FOR SILAS: Pitch written at pitches/2026-08-10-kind-robots-grant-sharing-api.md.
+      SHARING-SPEC.md's Grant model and canView()/existsActiveGrant() helpers already
+      exist (t-044/t-050) but SHARING-SPEC.md:138 explicitly labels the API surface
+      "illustrative -- routes, not committed contracts", and there is currently zero way
+      for anyone to create a Grant or for the projects/resources view routes to check one.
+      The pitch proposes: POST/DELETE/GET /api/grants* (SHARING-SPEC.md:140-150's own
+      illustrative shape), migrating projects/[id].get.ts and resources/[id].get.ts/.patch.ts
+      onto canView(), and a minimal share/shared-with-me UI. No schema change -- the model
+      is already migration-approved.
+      TO APPROVE: read the pitch, set its `status:` to `approved` or `rejected`, and set
+      this task's `approved_by_human: true` and `status: ready`. What unblocks: the four
+      Grant routes, then the two route migrations, then the share UI, as sequential
+      follow-up tasks once approved (pitch's own "Suggested first task" has the order).
