@@ -81,6 +81,50 @@ Useful modes include:
 The output contract should explicitly push semantic diversity. Ten candidates that differ
 only cosmetically count as a failed batch.
 
+## Creative quality bar: the old output is an anti-benchmark
+
+The historical Brainstorm **interaction** is worth recovering. Its historical LLM output is
+not. Silas consistently disliked the generated responses from the old service, and that
+experience helped establish a central Kind Robots principle: these tools should expand human
+creativity rather than replace it with generic machine-made filler.
+
+Treat old Brainstorm prompts, system instructions, examples, and saved generations as
+archaeological evidence of what early models could and could not do. They may be useful as
+**negative fixtures** or an anti-benchmark, but they are never positive few-shot examples,
+style targets, acceptance criteria, or a reason to preserve obsolete prompting techniques.
+The standard is explicitly: **use modern model capabilities to do substantially better.**
+
+A strong Brainstorm batch should:
+
+- contain genuinely different ideas, not noun-swapped paraphrases;
+- respond to the actual premise and constraints rather than free-associate around keywords;
+- include non-obvious angles that a human can develop, combine, reject, or mutate;
+- vary conceptual strategy, not merely wording, tone, or adjectives;
+- preserve useful specificity without over-finishing every idea into polished marketing copy;
+- understand comic premise and escalation when asked for humor instead of equating creativity
+  with random weird nouns;
+- allow dark, absurd, strange, serious, practical, or restrained material when the request
+  calls for it rather than sanding everything into cheerful assistant voice;
+- avoid stock LLM habits: generic inspiration, symmetrical list filler, repetitive templates,
+  fake profundity, safe corporate names, and explanations that consume more space than ideas;
+- make at least some candidates surprising enough that the user would not have written them
+  immediately, while still feeling connected to the request.
+
+Quality should be judged at the **batch** level as well as candidate-by-candidate. A batch of
+ten can contain a couple of misses; it fails if the majority are interchangeable, obvious,
+or require the human to supply the creativity the tool was supposed to provoke.
+
+Prompt engineering must be reevaluated for current providers instead of inherited from the
+2023-2024 implementation. Provider/model comparison is encouraged when it materially changes
+creative quality. Structured output is a transport contract, not a license to force every
+idea into the same rhetorical mold.
+
+For regression work, preserve a small suite of representative requests across practical,
+absurd, comic, dark-comedy, constrained, object-aware, and art-prompt use. Historical output
+may sit beside new output in those fixtures specifically as the floor we expect to clear.
+Do not hard-code "correct" creative answers; evaluate diversity, relevance, constraint
+following, specificity, surprise, editability, and obvious repetition.
+
 ## Restoration target
 
 Do not blindly resurrect old Vue code. Use historical Brainstorm code as behavioral evidence
@@ -97,7 +141,8 @@ Historical anchors to inspect before implementation:
 
 The first implementation task should identify the last coherent old product snapshot and
 write a short recovery map: historical files, current equivalents, reusable pieces, dead
-assumptions, and the commit where the public surface was replaced or redirected.
+assumptions, and the commit where the public surface was replaced or redirected. The recovery
+map must explicitly separate useful UX/data-flow evidence from obsolete prompt/model behavior.
 
 ## V1: text first
 
@@ -157,6 +202,8 @@ Brainstorm should use the site's existing abstractions rather than invent its ow
 
 The server prompt should request structured output, validate it, and be resilient to providers
 returning wrappers or malformed items. Parsing should not depend on brittle prose splitting.
+Structured output must preserve room for creative variation rather than imposing boilerplate
+content inside every candidate.
 
 ## Object-aware brainstorming
 
@@ -206,6 +253,7 @@ Bot records and how it relates to the current narrator/chat architecture.
 A revived Brainstorm persona may provide flavor and default system guidance, but the service
 must not depend on one hard-coded provider or one bot record being present. The functional
 contract is the brainstorm loop; the brain-in-a-jar host is the delightful layer on top.
+Historical persona is evidence worth preserving; historical generation quality is not.
 
 ## Relationship to Conductor's proposal generator
 
@@ -265,8 +313,12 @@ Brainstorm is not done when `/brainstorm` stops showing Dreams. It is done when 
 are true:
 
 - historical product behavior is documented and the accidental replacement point is known;
+- historical prompts/output are classified as anti-benchmark material rather than restored as
+  a creative-quality target;
 - `/brainstorm` and `/plan/brainstorm` land on one canonical Brainstorm experience;
 - a user can submit a pitch, choose a result count, and receive validated diverse candidates;
+- representative modern outputs materially clear the historical quality floor for relevance,
+  diversity, specificity, surprise, constraint following, and editability;
 - each candidate can be independently kept, edited, rejected, regenerated, and branched;
 - selected candidates can be saved/reopened for logged-in users;
 - object-aware brainstorming works for at least Character and Dream, with a reusable adapter
