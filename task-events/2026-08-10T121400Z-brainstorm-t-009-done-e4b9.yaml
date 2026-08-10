@@ -1,0 +1,18 @@
+version: 1
+project: brainstorm
+task: t-009
+operation: done
+owner: worker
+session: 2026-08-10T115600Z-brainstorm-t-009-e4b9
+updated: '2026-08-10T12:14:00Z'
+note: >-
+  Merged Kind Robots PR #1717 as 56eb1c539f920d06250235118f0ff280fd63c2f2 after every attached workflow completed successfully. Brainstorm candidate cards now expose restorable revision history; restoring an older version appends a new restored revision instead of truncating later work. Branches snapshot the exact parent revision used, so later parent edits or deletion cannot rewrite branch provenance. WonderLab includes deterministic multi-version branch coverage. No durable database persistence or generation behavior changed.
+learning:
+  date: '2026-08-10'
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Creative lineage needs immutable snapshots of the exact parent revision; a live parentId alone can rewrite history after later edits. Restoring old creative work should append history rather than erase newer revisions.
