@@ -1,0 +1,9 @@
+version: 1
+project: storybook
+task: t-014
+operation: done
+updated: '2026-08-10T07:34:46Z'
+note: >-
+  Reviewed and merged kind_robots PR #1706 as squash 8a457281cd6f0e03c341786f8b1ddb71827c2381. The Facet and Reward detail surfaces now link into Storybook with their object slug. Review repaired two contract failures on the existing branch: kept facet-interact as a thin router by extracting facet-profile, and made the extracted profile grid container-width responsive without carrying forward the temporary layout-baseline mutation. Exact head 000f87f5e940bb4355e9125dccc5027360beac98 passed all 13 observed workflows, including Layout Contract #31366156627, Contract Tests #31366156525, and TypeScript #31366156531.
+learning: >-
+  When moving grandfathered UI out of an allow-listed component, do not transfer the exception to the new file. Satisfy both ratchets: keep interact components thin and make newly extracted working surfaces container-responsive.
