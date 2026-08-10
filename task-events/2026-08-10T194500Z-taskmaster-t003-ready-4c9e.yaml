@@ -1,8 +1,0 @@
-version: 1
-project: taskmaster
-task: t-003
-operation: ready
-session: 20260810T122043-0700-taskmaster-t003-4c9e
-updated: '2026-08-10T19:45:00Z'
-note: >-
-  Merged Conductor PR #2047 as 0daf956edf3d74f3d5ec648fed73f6cb1a31cae4. Generic targeted art requests now preserve targetRepo/imagePath/sourceUrl/pageUrl plus request identity into durable ArtJobs, closing the structural delivery-metadata gap that affected Taskmaster dashboard/tutorial art. Exact-head Worker PR CI #31424354799, Security Audit #31424354684, and Process task events #31424354839 all completed successfully. Historical Taskmaster ArtImages 13369/13370 were already rendered without destination metadata; KR_API_TOKEN is absent in this runtime, so no production requeue/redelivery was attempted. Keep ready until those two assets are delivered and their final media URLs are verified.
