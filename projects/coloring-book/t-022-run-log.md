@@ -796,3 +796,57 @@ work is either (a) the Hollywood Recast cron submission landing on its own and l
 needing a recovery pass the same shape as this one, or (b) Silas reviewing the now-33
 rendered Monster Recast color proposals in the ArtJob trainer panel and accepting/
 revising toward the 36 needed for stage 4 (BW derivation).
+
+## 2026-08-10T11:33Z | Agent run (scheduled conductor sweep) | coloring-book/t-022 -- recovered 6 stuck Hollywood Recast jobs, fixed 1 blocked prompt
+
+Checked `coloring_queue_status.py` for both books before touching anything, per standing
+guidance. Monster Recast unchanged since the last cycle (`{done: 33, approved: 3,
+pending: 0}`, `recommended_action: complete` -- awaiting Silas's review in the ArtJob
+trainer panel, not agent-actionable). Hollywood Recast had progressed since the last
+entry (the daily `monster-recast-art-jobs.yml` cron had run in the interim, book-order-
+then-slot): `{done: 11, pending: 25}`, 6 `recovery_batch` entries (hwr-011/012/013/015/
+017/018, job ids 8183-8189) stuck on 600s ComfyUI timeouts, plus 1 `fresh_submission_blocked`
+entry (hwr-014) rejected by the art-prompt contract with `[format-vocabulary]`: "poster"
+asks for a physical format (frame/title bar/invented text), not a scene description.
+
+Recovery pass on the 6 stuck ids (`consume_coloring_book_color_art.py --live --book
+hollywood-recast --timeout 90 --ids hwr-011,hwr-012,hwr-013,hwr-015,hwr-017,hwr-018`):
+first attempt hit the same recurring per-sandbox "Pillow is required for WebP output"
+gap prior cycles have hit (this container has no Pillow pre-installed) -- the existing
+except-block guard correctly preserved all 6 job references, 0 lost, 0 duplicates.
+Installed Pillow (`pip install --user Pillow`) and re-ran the identical pass: all 6 had
+already finished rendering server-side and recovered cleanly, 0 duplicate submissions --
+ArtImage ids 17202 (hwr-011), 17203 (hwr-012), 17204 (hwr-013), 17205 (hwr-015), 17208
+(hwr-017), 17209 (hwr-018).
+
+Fixed hwr-014's blocked prompt: its text opened with "Night highway action poster
+featuring a fat, glamorous biker heroine..." -- matched the contract's bare `poster`
+pattern (not followed by "composition/framing/layout/crop", which is the only exempted
+phrasing). Reworded to "Night highway action scene featuring..." -- minimal edit,
+preserves the subject, framing, and every other detail verbatim, matches this set's
+existing house style (`hwr-013`'s "Low western street portrait of..." uses the same
+noun-for-poster substitution pattern). Verified against the live contract by resubmitting
+rather than only a local grep: `consume_coloring_book_color_art.py --live --book
+hollywood-recast --ids hwr-014` -- the reworded prompt was accepted (ArtJob 8190 queued,
+no 422 this time). The wait-for-completion poll then hit a transient
+`SSL: UNEXPECTED_EOF_WHILE_READING` mid-request (network hiccup, not a contract or code
+issue) with 0 duplicate submission per the same job-id-preservation guard. A follow-up
+pass found job 8190 still queued/running server-side and correctly left it alone rather
+than resubmitting -- landed render deferred to a later cycle/the daily cron's own
+recovery sweep.
+
+`coloring_queue_status.py --book hollywood-recast` after: `{done: 17, pending: 19}`,
+`recovery_actionable_count: 1` (hwr-014's job 8190, still rendering),
+`fresh_submission_blocked_count: 0` (the prompt fix cleared it), `queue_integrity_safe:
+true`, 0 duplicate job/entry ids.
+
+Verification: `validate_roadmaps.py` clean; `coloring_queue_status.py --book
+monster-recast` and `--book hollywood-recast` (`queue_integrity_safe: true`, 0
+duplicates) before and after; `git diff --stat` reviewed before committing (2 text files
+-- `color-art-jobs.yaml` queue state, `hollywood-recast/proposals.yaml` prompt fix --
+plus 6 new binary `.webp` files, nothing else touched).
+
+Re-arming to `ready` after this PR merges; releasing the claim. Next cycle's actionable
+work: (a) hwr-014's job 8190 finishing and needing one more recovery poll, (b) the daily
+cron continuing Hollywood Recast slots 19-36 on its own, or (c) Silas reviewing the 33
+rendered Monster Recast color proposals in the ArtJob trainer panel.
