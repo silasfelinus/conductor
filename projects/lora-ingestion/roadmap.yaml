@@ -61,15 +61,17 @@ tasks:
 - id: t-003
   milestone: m2
   title: "Reconcile later Resource-backed generation evidence; run one current smoke only if proof is still missing"
-  status: claimed
+  status: review
   stakes: reversible
   gate_human: false
   note: |-
     Import half CONFIRMED 2026-07-28: standalone run detected ume as Flux, moved it, and upserted the Resource (created:1). Remaining: (1) run it as the embedded kr-relay thread on the pm2 box (pm2 restart kr-relay after setx CIVITAI_TOKEN), and (2) confirm a krea2/flux2 render selecting that Resource succeeds — closes the path bug end-to-end. Note ume sorted NSFW because Civitai flags the model nsfw; override to SFW if wrong.
 
     SENT BACK by silasfelinus via Kind Robots For You. this should have been fixed. if not, please report back.
+
+    Reconciled repository evidence in projects/lora-ingestion/docs/t-003-resource-backed-generation-evidence.md. Application-side Resource.localPath resolution is strongly supported by merged Kind Robots fixes, but no durable job-specific DONE + ArtImage evidence was found for a Resource-backed smoke. KR_API_TOKEN is absent in this run, so no production smoke was queued.
   approved_by_human: false
-  updated: '2026-08-10T09:30:57Z'
+  updated: '2026-08-10T09:34:57Z'
   outcome_note: >
     The original July 28 gate is stale in scope. Since then Kind Robots made Resource.localPath
     authoritative for LoRA resolution across image/video engines (including PR #1090), fixed
