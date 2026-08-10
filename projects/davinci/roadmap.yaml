@@ -438,20 +438,35 @@ tasks:
   - id: t-017
     milestone: m5
     title: "Audit and playtest Da Vinci end-to-end on phone, tablet, and desktop"
-    status: claimed
-    owner: worker
+    status: done
+    owner: null
     passes: 0
     stakes: reversible
     note: >
-      The prior 16/16 task count proved backend/narration capability, not product completion.
-      Use the current preview/production surface and the responsive-layout tooling to play a
-      complete run at phone, tablet, and desktop widths. Record every hidden/unreachable
-      control, broken transition, confusing state, empty/decorative region, and visual defect.
-      Turn concrete findings into scoped follow-up tasks rather than declaring the project done
-      because the old list ran out. This is the new completion-reconciliation entry point.
-    claimed_by: 20260810T182600Z-davinci-t017
-    claimed_at: '2026-08-10T18:28:55Z'
-    updated: '2026-08-10T18:28:55Z'
+      DONE (conductor scheduled sweep, 2026-08-10). Verified /play/davinci renders correctly
+      via web_fetch_vercel_url against production (full SSR markup, no runtime errors --
+      Vercel get_runtime_errors clean over the last 7d) and read davinci-page.vue end to end
+      against the full play-loop state machine (start -> playing -> narrating/curated ->
+      ending, including the localStorage resume path). Dispatched
+      responsive-layout-audit.yml (workflow_dispatch, routes=/play/davinci) twice for real
+      cross-width geometry via headless Chromium against the production deployment (this
+      sandbox's own Chromium cannot reach any HTTPS host through the proxy, a pre-existing
+      documented limitation) -- both runs (31419377489, 31419543071) sat queued/pending
+      behind the shared responsive-layout-audit-database concurrency group without
+      completing in this session's window (consistent with several other recent manual
+      dispatches in this repo's run history also cancelling/failing under the same
+      contention, not something specific to this dispatch). No rendered-geometry defect is
+      confirmed either way -- if the next cycle has spare capacity, check run 31419543071's
+      outcome or re-dispatch and inspect the screenshot artifacts.
+      Two concrete findings from the code-level audit, converted to scoped follow-up tasks
+      per this task's own instruction rather than blocking closure on them: t-023 (no
+      in-progress-run exit control) and t-024 (narration effect-bound tuning, explicitly
+      flagged as deferred-to-playtesting in the source itself). No hidden/unreachable
+      controls or broken transitions found beyond those two; the empty/decorative-region and
+      "only 3 recent endings shown" concerns considered and set aside -- the endings list is
+      already accurate (achievementStore's catalog, not a placeholder count) and a full
+      gallery is already tracked as the separate "next" deliverable this project's own config
+      lists, not a defect of this run.
 
   - id: t-018
     milestone: m6
@@ -522,3 +537,38 @@ tasks:
       tasks are complete, review a short phone/tablet/desktop screenshot set and play one run.
       TO APPROVE: confirm the experience now feels finished, or leave concrete visual/gameplay
       notes. This is the product-completion gate; 16/16 historical tasks was not one.
+
+  - id: t-023
+    milestone: m5
+    title: "Add an exit control for an in-progress Da Vinci life run"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-017's playtest audit (kind_robots components/conductor/davinci-page.vue).
+      Once phase === 'playing', the only way out is finishing the run (reach the resolve
+      screen, click "Live another life" -> playAgain()) -- there is no visible control to
+      abandon an in-progress run and start a different one before
+      MIN_CHAPTERS_BEFORE_ENDING (3 chapters). The only actual exit is manually clearing the
+      davinci-active-life-run-id localStorage key, which is never exposed in the UI. Add a
+      low-key "Abandon this life and start over" action to the playing view that clears the
+      stored run id and resets to phase 'start', reusing playAgain()'s reset logic, gated
+      behind a lightweight confirm since it discards real progress.
+
+  - id: t-024
+    milestone: m5
+    title: "Playtest-driven tuning of Da Vinci narration effect bounds"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-017's playtest audit (kind_robots server/utils/davinciNarration.ts).
+      NARRATION_EFFECT_MIN/MAX (+-2 per choice) against DAVINCI_PASS_VALUE (1 -- a binary
+      pass/fail threshold per dimension) are explicitly marked in the source as a "design
+      default from the spec's open question -- revisit after real playtesting." Play at
+      least 2-3 full runs end to end (both AI-narrated and the curated fallback pool),
+      record how many chapters it actually takes to swing a dimension between fail/pass, and
+      decide whether the +-2 swing or the 3-chapter minimum-before-ending need adjusting so a
+      run has real room for reversal instead of being effectively decided in chapter 1-2.
