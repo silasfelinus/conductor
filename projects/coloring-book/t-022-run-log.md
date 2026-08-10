@@ -895,3 +895,35 @@ work: (a) hwr-036's job 8214 finishing and needing one more recovery poll -- onc
 lands, **Hollywood Recast's color-proposal stage will be fully drained (36/36)**, same
 as Monster Recast already is, or (b) Silas reviewing the 33 rendered Monster Recast
 color proposals (and soon 36 Hollywood Recast ones) in the ArtJob trainer panel.
+
+## 2026-08-10T17:28Z | Agent run (scheduled conductor sweep) | coloring-book/t-022 -- recovered last in-flight Hollywood Recast job, book fully drained
+
+Checked `coloring_queue_status.py` for both books before touching anything. Monster
+Recast unchanged since the last cycle (`{done: 33, approved: 3, pending: 0}`,
+`recommended_action: complete` -- still awaiting Silas's review, not agent-actionable).
+Hollywood Recast had 1 entry left (`hwr-036`, `render_gate_error: "job 8214 timed out
+after 90s (still queued/running)"`, `recovery_actionable: true`) from the 16:30Z cycle.
+
+Recovery pass (`consume_coloring_book_color_art.py --live --book hollywood-recast --ids
+hwr-036`): recovered completed ArtJob 8214 cleanly, no duplicate submitted -- landed to
+`sets/hollywood-recast/generated/color-proposals-v1/hwr-036-the-recast-marquee.webp`
+(ArtImage 17301), queue entry marked done.
+
+`coloring_queue_status.py --book hollywood-recast` after: `{done: 36, pending: 0}`,
+`recommended_action: complete`, `queue_integrity_safe: true`, 0 duplicate job/entry ids.
+Hollywood Recast's color-proposal stage is now fully drained, same status as Monster
+Recast. Checked the Kind Robots book (`--book kind-robots`) for completeness: `{pending:
+36}`, `recommended_action: submit-next-batch` -- but its roadmap task (t-024) is
+`status: waiting` on t-023, so it is out of this task's scope and was left untouched.
+
+Verification: `validate_roadmaps.py` clean; `coloring_queue_status.py --book
+monster-recast` and `--book hollywood-recast` (`queue_integrity_safe: true`, 0
+duplicates) before and after; `git diff --stat` reviewed before committing (1 text file
+-- `color-art-jobs.yaml` queue state -- plus 1 new binary `.webp` file, nothing else
+touched).
+
+Re-arming to `ready` after this PR merges; releasing the claim. Next actionable step for
+either book is Silas reviewing the rendered color proposals (33 Monster Recast, 36
+Hollywood Recast) in the ArtJob trainer panel -- no further agent-side rendering work
+remains for t-022's current scope until that review unlocks the next stage (BW pairs,
+or t-023/t-025/t-026 packaging).
