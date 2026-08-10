@@ -575,12 +575,15 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
-    note: 'PROGRESS 2026-08-10 (conductor scheduled agent run): step (4) follow-on -- dispatched an Explore subagent to read the full Model Builder surface against the exclusion list of every bug class fixed by prior cycles. Found a real, previously-unfixed gap in items/[id]/commit.post.ts: the route fetched the build item once at the top of the request and built the final stageStatuses write from that request-start snapshot, even though the write in between (promoteAsset/updateText/createRecord+linkSourceToTarget, the last inside a multi-step prisma.$transaction) can be slow. Nothing blocks a user from reopening another already-approved stage (a fast PATCH /items/:id) while the commit POST is in flight, so the stale-snapshot final write could silently clobber that concurrent edit back to approved. Fixed by re-fetching stageStatuses immediately before the final write and merging only the COMMIT key into that fresh value. Added utils/scripts/verifyModelBuilderCommitStaleSnapshotGuard.ts (+ .test.ts) regression guard, wired into package.json/contract-tests.yml. Verified: new guard self-test + guard pass; all 9 pre-existing verifyModelBuilder*.ts guards + selftests still pass (no regression); eslint/prettier clean; full-project vue-tsc --noEmit exit 0. kind_robots PR #1729: all 17 checks green, merged squash bd852bd. Steps (1) and (3) remain genuinely blocked/done as documented in prior entries. Rearmed to ready.'
-    updated: '2026-08-10T23:14:27Z'
+    note: |-
+      PROGRESS 2026-08-10 (conductor scheduled agent run): step (4) follow-on -- dispatched an Explore subagent to read the full Model Builder surface against the exclusion list of every bug class fixed by prior cycles. Found a real, previously-unfixed gap in items/[id]/commit.post.ts: the route fetched the build item once at the top of the request and built the final stageStatuses write from that request-start snapshot, even though the write in between (promoteAsset/updateText/createRecord+linkSourceToTarget, the last inside a multi-step prisma.$transaction) can be slow. Nothing blocks a user from reopening another already-approved stage (a fast PATCH /items/:id) while the commit POST is in flight, so the stale-snapshot final write could silently clobber that concurrent edit back to approved. Fixed by re-fetching stageStatuses immediately before the final write and merging only the COMMIT key into that fresh value. Added utils/scripts/verifyModelBuilderCommitStaleSnapshotGuard.ts (+ .test.ts) regression guard, wired into package.json/contract-tests.yml. Verified: new guard self-test + guard pass; all 9 pre-existing verifyModelBuilder*.ts guards + selftests still pass (no regression); eslint/prettier clean; full-project vue-tsc --noEmit exit 0. kind_robots PR #1729: all 17 checks green, merged squash bd852bd. Steps (1) and (3) remain genuinely blocked/done as documented in prior entries. Rearmed to ready.
+
+      Fixes kind_robots#1725 by scoping optimistic background-save error banners to the run that originated the PATCH.
+    updated: '2026-08-10T23:22:30Z'
     owner: worker
     claimed_by: 20260810T231427Z-auto-85181d
     claimed_at: '2026-08-10T23:14:27Z'
