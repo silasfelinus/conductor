@@ -7323,3 +7323,42 @@ records:
     file per backend-touching finding, bundling closely-coupled backend follow-ups
     (Grant API + its two route migrations + the UI that depends on it) into one
     pitch rather than four separate approval asks for one capability.
+- date: 2026-08-10
+  project: kind-robots
+  task: t-059
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A "document every live surface" task benefits from an exhaustive code-level
+    grep (grep -rn "\.project\.create(" server/ scripts/) rather than trusting
+    the audit note's own count -- t-058's note said "at least three" then "all
+    five" for what turned out to be 4 distinct route files, and the grep also
+    surfaced that Surface 1's description (sync_projects.py -> per-project POST
+    /api/projects) and Surfaces 2/3's "auto-Todo not yet implemented" pitch
+    notes were themselves stale against current code
+    (scripts/sync_kind_robots_projection.py -> POST /api/conductor/sync bulk
+    upsert; createProjectWithScaffoldTodo() already files the Todo). Fixing
+    those in the same docs-only pass kept the doc actually accurate instead of
+    technically-task-complete-but-still-wrong.
+- date: 2026-08-10
+  project: kind-robots
+  task: t-060
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Live-sanitizing a slug field on every keystroke (lowercase + collapse +
+    trim) breaks manual typing of hyphenated slugs: a hyphen is trailing
+    (and therefore gets trimmed) the instant it's typed, before the next
+    character lands, so "my-project" becomes impossible to type by hand.
+    Split it into a light per-keystroke filter (lowercase, drop disallowed
+    chars only) plus a full slugify() on blur/submit instead. Also:
+    attaching `.statusCode` to a thrown Error in a Pinia store action is a
+    safe additive way to let one caller branch on HTTP status (409 vs. other)
+    without touching the route/API contract or breaking other callers that
+    only read `.message`.
