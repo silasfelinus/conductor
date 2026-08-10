@@ -131,31 +131,29 @@ tasks:
   - id: t-005
     milestone: m1
     title: Build the modern Brainstorm store and typed generation contract
-    status: claimed
+    status: done
     depends_on: t-003
-    owner: worker
-    updated: '2026-08-10T09:50:00Z'
+    updated: '2026-08-10T10:15:00Z'
     passes: 0
     stakes: reversible
-    note: >-
-      Create/modernize the Pinia store so components never call APIs or localStorage directly.
-      Define typed session, request, candidate, generation-state and error contracts. A batch
-      has independent candidate IDs and preserves prior candidate text when one slot is
-      regenerated. The store must support result count, constraints/examples, keep/reject,
-      inline edits, replacement generation and future object/art metadata without one giant
-      untyped blob.
+    note: |-
+      Create/modernize the Pinia store so components never call APIs or localStorage directly. Define typed session, request, candidate, generation-state and error contracts. A batch has independent candidate IDs and preserves prior candidate text when one slot is regenerated. The store must support result count, constraints/examples, keep/reject, inline edits, replacement generation and future object/art metadata without one giant untyped blob.
+
+      Built the modern Brainstorm state contract on Kind Robots branch worker/brainstorm-t-005-e5c7. Added shared typed request/response/session/candidate/batch/error contracts plus a dedicated Pinia store that owns premise, result count, constraints/examples, source refs, batch history, stable candidate IDs, keep/reject/edit state, local session persistence, slot regeneration, branching, revision history, active text-server snapshots, and the future /api/brainstorm/generate call. Added a Brainstorm Store Contract workflow that rejects old Dream/Pitch ownership, legacy botcafe endpoint reuse, provider knobs in creative state, and Promise-valued store state. No schema or endpoint implementation is included in this task.
+
+      Merged Kind Robots PR #1712. Brainstorm now has shared typed session/batch/candidate/request/ response/error contracts and a dedicated Pinia store owning premise, constraints/examples, stable candidate IDs, fresh-batch history, keep/reject/edit state, revision-preserving slot regeneration, explicit branching, source/art metadata slots, active text-server snapshots, typed failures, and ephemeral local persistence. A dedicated Brainstorm Store Contract plus TypeScript and the full repository contract suite passed before merge.
     claimed_by: 2026-08-10T095000Z-brainstorm-t-005-e5c7
     claimed_at: '2026-08-10T09:50:00Z'
 
   - id: t-006
     milestone: m1
     title: Implement provider-agnostic structured text generation endpoint
-    status: waiting
+    status: claimed
     depends_on:
       - t-003
       - t-005
-    owner: null
-    updated: '2026-08-10T08:05:00Z'
+    owner: worker
+    updated: '2026-08-10T10:17:00Z'
     passes: 0
     stakes: reversible
     note: >-
@@ -165,6 +163,8 @@ tasks:
       wrappers safely, and return the standard `{ success, ... }` API shape via errorHandler.
       Prompt explicitly for semantic diversity and non-duplicate ideas. Apply normal auth/mana
       behavior if current text generation requires it. Add focused endpoint/parser tests.
+    claimed_by: 2026-08-10T101700Z-brainstorm-t-006-f6a9
+    claimed_at: '2026-08-10T10:17:00Z'
 
   - id: t-007
     milestone: m1
