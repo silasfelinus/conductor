@@ -643,11 +643,11 @@ tasks:
 - id: t-038
   milestone: m4
   title: Bake `pip install --user Pillow` into a coloring-book provisioning step so recovery cycles stop rediscovering the sandbox gap
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-08-10T11:45:00Z'
+  updated: '2026-08-10T12:17:15Z'
   note: >
     Kaizen from t-022 (conductor PR #2027, 2026-08-10). `consume_coloring_book_color_art.py`'s
     WebP output needs Pillow, and this sandbox's fresh containers never have it
@@ -661,5 +661,5 @@ tasks:
     installs it proactively (e.g. as the first step of any `consume_coloring_book_color_art.py
     --live` invocation) instead of hitting the failure first. Small, reversible,
     no live-service impact.
-  claimed_by: null
-  claimed_at: null
+  claimed_by: 20260810T121715Z-coloring-t038-7c4e
+  claimed_at: '2026-08-10T12:17:15Z'
