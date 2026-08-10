@@ -167,13 +167,12 @@ tasks:
   - id: t-007
     milestone: m1
     title: Build the pitch composer and responsive candidate workbench
-    status: ready
+    status: done
     depends_on:
       - t-004
       - t-005
       - t-006
-    owner: worker
-    updated: '2026-08-10T11:00:00Z'
+    updated: '2026-08-10T11:16:00Z'
     passes: 1
     stakes: reversible
     retry_context: >
@@ -204,13 +203,15 @@ tasks:
       Built the first playable Brainstorm workbench on Kind Robots branch worker/brainstorm-t-007-a7d4. The dedicated manager now provides a premise composer, explicit result count, optional constraints/examples, fresh-batch history, structured loading/error/empty states, and a container-responsive candidate workspace. Candidate cards emit keep/reject/reset/delete, inline edit, feedback, regenerate-this, and branch/more-like-this actions; the manager orchestrates the Brainstorm store so components contain no API or localStorage calls. Added a Brainstorm Workbench Contract workflow enforcing store ownership and intrinsic grid layout.
 
       REJECTED 2026-08-10T11:00:00Z (pass 1, quality): see retry_context above -- real TypeScript and Contract-verifier failures on PR #1714, not a transient CI blip. PR left open for the fix.
+
+      Merged Kind Robots PR #1714 as 07a42d057988f4ff06b1d00e2006a801067cfa71 after the retry head completed all attached checks successfully. The missing WonderLab preview fixture was added, the prior TypeScript failure no longer reproduces on the current PR head, and the playable Brainstorm composer/candidate workbench is now on Kind Robots main.
     claimed_by: 2026-08-10T104400Z-brainstorm-t-007-a7d4
     claimed_at: '2026-08-10T10:44:00Z'
 
   - id: t-008
     milestone: m1
     title: Add useful creative controls without model-knob clutter
-    status: waiting
+    status: ready
     depends_on: t-007
     owner: null
     updated: '2026-08-10T08:05:00Z'
@@ -226,7 +227,7 @@ tasks:
   - id: t-009
     milestone: m2
     title: Implement per-candidate revision history and non-destructive branching
-    status: waiting
+    status: ready
     depends_on: t-007
     owner: null
     updated: '2026-08-10T08:05:00Z'

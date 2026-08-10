@@ -7447,3 +7447,14 @@ records:
     recurring read-through task, still finding new instances of "review/intent gate
     enforced in one branch but not its sibling." Worth checking sibling branches of any
     stage-gating conditional whenever one gets a fix, not just the branch that was reported.'
+- date: '2026-08-10'
+  project: brainstorm
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: quality
+  lesson: After a rejected UI retry, review the current head and current check runs rather than treating
+    an earlier red diagnostic as permanent; require the concrete regression fixture and completed green
+    checks before merge.
