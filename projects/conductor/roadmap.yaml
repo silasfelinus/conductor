@@ -3828,3 +3828,26 @@ tasks:
     claimed_by: 20260810T134636Z-conductor-t112-y2f1
     claimed_at: '2026-08-10T13:46:37Z'
     implementation_pr: 'silasfelinus/conductor#2033'
+
+  - id: t-113
+    milestone: m2
+    title: "Give check_pr_merged a distinct 'PR doesn't exist' case instead of folding it into 'not merged'"
+    status: ready
+    owner: null
+    stakes: reversible
+    passes: 0
+    note: >
+      Kaizen from t-112 (conductor#2033, 2026-08-10). check_pr_merged() in
+      scripts/process_task_events.py currently has no test coverage of what a real
+      GitHub 404 (nonexistent PR number, typo'd repo, or a private repo this
+      session's token can't see) looks like -- it would raise via the "unexpected
+      GitHub API response" branch today, which is safe (leaves the event queued
+      rather than misapplying), but the resulting error message doesn't distinguish
+      "I couldn't tell" from "that PR straight-up doesn't exist," which would help a
+      human debugging a stuck event move faster. Add a case that inspects the 404
+      response specifically and raises a clearly distinct error (e.g. "verify_pr
+      references silasfelinus/kind_robots#99999, which does not exist") instead of
+      the generic "unexpected GitHub API response" message, plus a regression test
+      for it (monkeypatch check_pr_merged or urllib to simulate a 404). Small,
+      reversible, test-only-adjacent change confined to scripts/process_task_events.py
+      and its tests.
