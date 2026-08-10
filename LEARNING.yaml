@@ -7373,3 +7373,15 @@ records:
   lesson: 'When moving grandfathered UI out of an allow-listed component, do not transfer the exception
     to the new file. Satisfy both ratchets: keep interact components thin and make newly extracted working
     surfaces container-responsive.'
+- date: '2026-08-10'
+  project: brainstorm
+  task: t-002
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Legacy product restoration should trace the latest coherent live behavior and the migration
+    that removed it before resurrecting old code. Brainstorm survived into June 2026 and was lost specifically
+    because the Pitch domain was removed into Dream; its UX can be revived without reversing that data-model
+    migration.
