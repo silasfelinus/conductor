@@ -96,22 +96,23 @@ tasks:
   - id: t-003
     milestone: m0
     title: Audit current Brainstorm route, presentation, stores, models, and API overlap
-    status: review
-    owner: worker
-    updated: '2026-08-10T09:25:00Z'
+    status: done
+    updated: '2026-08-10T09:31:00Z'
     passes: 0
     stakes: reversible
     note: |-
       Map current `/brainstorm`, `/plan/brainstorm`, content frontmatter, dashboard config, workspace route stitching, Dream manager reuse, project placement, tutorials/nav, existing `Pitch`, Prompt, Project, Dream, Character, Scenario, Reward and Bot models, plus current text-generation provider/server abstractions. Flag semantic collisions: Conductor pitches are coordination proposals and must not become user Brainstorm data. Record recommended reusable primitives and exact files in RECOVERY-MAP.md.
 
       Completed the current Kind Robots architecture audit and appended it to projects/brainstorm/RECOVERY-MAP.md. The audit maps current route/presentation files, active text-server selection, provider abstraction, mana/auth behavior, the surviving OpenAI-only Brainstorm endpoint, DreamType.BRAINSTORM legacy semantics, Prompt/PitchSheet persistence boundaries, source-object visibility helpers, and responsive primitives. It defines an implementation path for t-004 through t-007: dedicated Brainstorm route/store, provider-aware structured generation endpoint, and candidate-first workbench without resurrecting Pitch or Dream-specific storage semantics.
+
+      Merged PR #2020 with the current architecture audit in RECOVERY-MAP.md and PR #2021 with IMPLEMENTATION-CONTRACT.md. Brainstorm now has an evidence-backed current implementation path: canonical route plus alias, dedicated Pinia store, provider-aware structured endpoint using current server/mana infrastructure, candidate-first workbench, and explicit boundaries against Dream/Pitch/Prompt/Conductor semantic overloading.
     claimed_by: 2026-08-10T091100Z-brainstorm-t-003-c4a1
     claimed_at: '2026-08-10T09:11:00Z'
 
   - id: t-004
     milestone: m1
     title: Restore one canonical Brainstorm route and remove the Dream-gallery substitution
-    status: waiting
+    status: ready
     depends_on:
       - t-002
       - t-003
@@ -128,7 +129,7 @@ tasks:
   - id: t-005
     milestone: m1
     title: Build the modern Brainstorm store and typed generation contract
-    status: waiting
+    status: ready
     depends_on: t-003
     owner: null
     updated: '2026-08-10T08:05:00Z'
