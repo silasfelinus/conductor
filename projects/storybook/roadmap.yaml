@@ -222,3 +222,13 @@ tasks:
     Storybook at phone/tablet/desktop widths with a real scenario/cast. TO APPROVE: confirm the
     front end feels like assembling and reading a story rather than nested admin panels, or leave
     concrete visual/interaction notes. This is separate from t-015's stage-role architecture choice.
+- id: t-017
+  milestone: m4
+  title: Add a contract for Storybook object-entry links
+  status: ready
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-014
+  note: >-
+    Reviewer kaizen from kind_robots PR #1706: CI caught the layout and router-shape regressions during review, but no focused contract directly asserted the user-facing Storybook handoff itself. Add a small source-level contract that verifies the Facet and Reward detail surfaces expose Storybook CTAs carrying their object slug through ?facet= and ?reward=, and that Storybook still consumes those seed parameters without requiring a particular button markup. Keep it narrow enough that UI restyling does not create false failures.
