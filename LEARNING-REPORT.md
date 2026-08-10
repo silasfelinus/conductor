@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-10T01:44:37Z
+Generated: 2026-08-10T01:50:25Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **555**
-- Outcomes: blocked: 13, cancelled: 1, done: 541
+- Closed tasks recorded: **556**
+- Outcomes: blocked: 13, cancelled: 1, done: 542
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -36,7 +36,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
 | interface-vision | 82 | 100% |
-| kind-robots | 45 | 98% |
+| kind-robots | 46 | 98% |
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 540 | 99% |
+| software | 541 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-10 `kind-robots/t-057` — contract-tests.yml is explicitly DB-free ("No database or Nuxt build is needed"), so a "behavioral" contract test for a database-writing code path has to be a source-inspection test (assert.match against readFileSync'd source), not a live integration test -- matching the existing verify*.ts convention rather than reaching for a real Prisma/DB fixture that this CI job structurally cannot run. Also: when SQL identifiers are backtick-quoted inside a template literal, they appear on disk as an escaped \` pair, not a bare backtick -- normalize (.replaceAll('\\`', '`')) before regex-matching raw SQL source, or the match silently fails on the escaping, not the content. Verified the new assertions actually catch a regression (not vacuously true) by manually breaking each of the three invariants and confirming the test failed, before wiring it into CI.
+
 - 2026-08-09 `kind-robots/t-056` — A source-shape "guard test" (utils/scripts/verifyDatabasePoolDefaults.ts asserting a literal code string still appears in a route file) can break on an otherwise correct, intentional refactor -- the fix is usually to relocate the new behavior so the guarded shape survives unchanged, not to weaken the guard. Also: don't trust a PR body's "How I verified" section at face value -- independently re-running eslint/vue-tsc/the specific failing script on the actual current head caught a real TS2339 the Worker's own note had claimed was code/CI verified.
 
 - 2026-08-09 `interface-vision/t-104` — Slice 26 of the kr-container consistency migration: four components (add-bot, add-character, add-reward, add-scenario) sharing an identical root class string were an exact byte-for-byte match for kr-container-wide's own @apply, found via a plain grep for the mx-auto/w-full/max-w-7xl triple across the repo rather than a codemod. Landed clean on the first pass, zero deviation from the established verification method (eslint, vue-tsc, layout-contract, git-stash-diffed prettier baseline check).
@@ -96,8 +98,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-09 `digital-storefront/t-038` — An umbrella task's remaining_scope_task pointer chain (t-038 -> t-003 -> t-004) can sit at status: review for days after its last referenced task actually reaches done, because nothing automatically re-checks the pointer once it stops changing. check_pr_merged_drift.py's title-search pass surfaced it only as "unverifiable" (no close-out PR titled after t-038 exists, since it was never meant to close via its own PR); the real signal was checking the remaining_scope_task's own status directly. A session picking up drift-check output should follow remaining_scope_task chains to their live end, not stop at "search found nothing."
 
 - 2026-08-09 `kindrobots-unraid/t-006` — For self-hosted Node 24 services on Unraid, mounting one trusted .env and loading it with --env-file-if-exists avoids duplicating secrets while still allowing DockerMan environment variables to override deployment-specific keys. Excluding .env from the Docker build exposed a Prisma build dependency: prisma.config.ts requires DATABASE_URL even for generate, so image builds need a non-secret dead build-only URL rather than access to production credentials. Local Docker image tags can still be represented by a saved DockerMan template, keeping runtime settings editable in the Unraid WebGUI while registry publication remains optional.
-- 2026-08-08 `digital-storefront/t-004` — A task note that frames N ad-hoc implementations as N variants of the same pattern can be wrong about that -- two of the four (Character, Reward) turned out to have no check at all, not a fourth variant. Dispatching a read-only investigation to re-verify the note's own framing before implementing caught this: "wire an existing check" and "add this route's first-ever check" are different risk categories (additive/behavior-preserving vs. a real behavior change for any caller relying on the open read), and conflating them would have either shipped an unreviewed security fix or silently dropped a real gap from the record. Split the genuinely mechanical pieces from the ones needing a human product decision rather than picking one bucket for the whole task.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-10T01:44:37Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-10T01:50:25Z_
