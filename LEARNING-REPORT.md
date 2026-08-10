@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-10T08:49:45Z
+Generated: 2026-08-10T09:32:39Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **560**
-- Outcomes: blocked: 13, cancelled: 1, done: 546
+- Closed tasks recorded: **562**
+- Outcomes: blocked: 13, cancelled: 1, done: 548
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -22,6 +22,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | appmaker | 6 | 100% |
 | approval-portal | 2 | 0% |
 | art-generator-connect | 3 | 100% |
+| brainstorm | 2 | 100% |
 | challenge-center | 16 | 100% |
 | coat-dance | 8 | 0% |
 | coloring-book | 25 | 100% |
@@ -60,7 +61,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 545 | 99% |
+| software | 547 | 99% |
 
 ## Failure categories
 
@@ -81,6 +82,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-10 `brainstorm/t-003` — The June Dream workaround preserved useful UI ideas but discarded structure twice: the endpoint returns structured candidates, dreamStore normalizes them to prose, and the Vue component reparses prose into candidates. Restoring Brainstorm should keep structured candidate data end-to-end and reuse the current active text-server/provider and mana plumbing instead of inheriting that compatibility loop.
+- 2026-08-10 `brainstorm/t-002` — Legacy product restoration should trace the latest coherent live behavior and the migration that removed it before resurrecting old code. Brainstorm survived into June 2026 and was lost specifically because the Pitch domain was removed into Dream; its UX can be revived without reversing that data-model migration.
 - 2026-08-10 `storybook/t-014` — When moving grandfathered UI out of an allow-listed component, do not transfer the exception to the new file. Satisfy both ratchets: keep interact components thin and make newly extracted working surfaces container-responsive.
 - 2026-08-10 `kind-robots/t-060` — Live-sanitizing a slug field on every keystroke (lowercase + collapse + trim) breaks manual typing of hyphenated slugs: a hyphen is trailing (and therefore gets trimmed) the instant it's typed, before the next character lands, so "my-project" becomes impossible to type by hand. Split it into a light per-keystroke filter (lowercase, drop disallowed chars only) plus a full slugify() on blur/submit instead. Also: attaching `.statusCode` to a thrown Error in a Pinia store action is a safe additive way to let one caller branch on HTTP status (409 vs. other) without touching the route/API contract or breaking other callers that only read `.message`.
 
@@ -95,10 +98,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-09 `interface-vision/t-104` — Slice 26 of the kr-container consistency migration: four components (add-bot, add-character, add-reward, add-scenario) sharing an identical root class string were an exact byte-for-byte match for kr-container-wide's own @apply, found via a plain grep for the mx-auto/w-full/max-w-7xl triple across the repo rather than a codemod. Landed clean on the first pass, zero deviation from the established verification method (eslint, vue-tsc, layout-contract, git-stash-diffed prettier baseline check).
 
 - 2026-08-09 `kind-robots/t-014` — When a roadmap task's original implementation gap is already present on current main and later human evidence confirms the feature works, reconcile and close the stale task instead of spawning a duplicate patch or repeatedly returning it to the human.
-- 2026-08-09 `interface-vision/t-104` — Slice 20 of the kr-panel-flat consistency migration: applying t-116's corrected codemod scan to its own newly-surfaced 47-occurrence pool landed clean on the first pass with zero deviation from the established slice 8-19 method (exact-match substitution, git-stash-diffed prettier reformatting, compiled-CSS verification for skips). No new lesson beyond t-116's own record -- filed mainly so the outcome ledger reflects that the corrected pool is real, landable work, not just a diagnosis.
-
-- 2026-08-09 `interface-vision/t-116` — A codemod's own "pool exhausted" conclusion is only as good as its scan boundary. kr_panel_codemod.py used re.search for the FIRST </template> in a file to find the template region's end, but an SFC can nest a named-slot/conditional <template v-if #slot> block that closes with its own </template> well before the real end -- silently truncating the scan and hiding every real candidate after it. Two prior slices (15, 18) trusted "0 automatable substitutions" as proof the pool was empty when it was actually an artifact of the scan bug. Fix: scan for the LAST </template> in the file, not the first. Re-running the corrected scan surfaced 47 previously-invisible candidates across 21 files in one pass -- a reminder that a static-analysis/codemod tool's exhaustion claim needs to be re-derived from its actual scan boundary, not taken at face value from its summary output.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-10T08:49:45Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-10T09:32:39Z_
