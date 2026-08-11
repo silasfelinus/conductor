@@ -457,3 +457,6 @@ queueDepth: PENDING=826, RUNNING=1, DONE=4055, FAILED=3, CANCELLED=2554 (all-tim
 
 ## 2026-08-11T20:29:19Z | draining
 queueDepth: PENDING=765, RUNNING=1, DONE=4077, FAILED=3, CANCELLED=2593 (all-time). oldestPending: id=4893, age=586742s (~163.0h), engine=COMFY. windowThroughput (24h): DONE=42, CANCELLED=1. recentFailed (last 3): 2/3 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'61':; 1/3 = connection-refused to ComfyUI.
+
+## 2026-08-11T23:29:01Z | draining
+queueDepth: PENDING=681, RUNNING=1, DONE=4098, FAILED=3, CANCELLED=2656 (all-time). oldestPending: id=4893, age=597524s (~166.0h), engine=COMFY. windowThroughput (24h): DONE=42, CANCELLED=1. recentFailed (last 3): 2/3 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'61':; 1/3 = connection-refused to ComfyUI.
