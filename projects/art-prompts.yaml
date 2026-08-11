@@ -1060,6 +1060,25 @@ requests:
   negative_prompt: 'text, watermark, signature, logo, caption, letters, words, blurry, low
     quality, lowres, jpeg artifacts, deformed, disfigured, extra limbs, bad anatomy, bad hands,
     cropped, out of frame, collage, frame, border, ugly, grainy'
+# storybook/t-010's own outstanding substep: dashboard-tabs/scenario/storybook.webp
+# already resolves 200 (fine); tutorials/scenario/storybook.webp still 404s (confirmed
+# again 2026-08-11) with no prior request on file -- this is that request.
+- id: storybook-tutorial-scenario-storybook
+  last_art_job_id: 8248
+  source: storybook-t-010-tutorial
+  status: pending
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/tutorials/scenario/storybook.webp
+  variant: image
+  size: 1024x768
+  label: 'Storybook tutorial card'
+  prompt: 'A warm narrator figure weaving glowing story-threads together on a loom, with
+    small illustrated figures, a tiny settlement, and a glinting reward token strung along
+    the threads, warm inviting lighting, clear approachable illustration suited to a
+    tutorial card, no text, no collage.'
+  negative_prompt: 'text, watermark, signature, logo, caption, letters, words, blurry, low
+    quality, lowres, jpeg artifacts, deformed, disfigured, extra limbs, bad anatomy, bad hands,
+    cropped, out of frame, collage, frame, border, ugly, grainy'
 
 inspirations:
 - project: ruler-hooked
