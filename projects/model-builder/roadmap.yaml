@@ -575,13 +575,13 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    note: 'Reconciliation (conductor scheduled sweep): task was left at status: claimed with duplicate/conflicting claimed_by and claimed_at fields (a concurrent-session collision -- one claim at 21:27:54Z by 20260811T212749Z-conductor-sweep-81edaf, a second at 23:12:45Z by 20260811T231245Z-auto-c4a91f) even though the note already described the prior slice as DONE and rearmed, and its implementation_pr (silasfelinus/kind_robots#1789, the cross-field/cross-item draft-clobber fix) was already merged. Deduped the claim fields and rearmed to ready per this recurring task convention -- then immediately re-claimed in the same session (claim_task.py, 23:29:47Z by 20260811T232900Z-conductor-sweep-b71ac) for the next polish slice, in progress: canApproveAssets never checks for a GENERATE_ASSETS status of stale, so reopening an approved FIELDS_AND_PROMPTS stage after generating a candidate (markDownstreamStale flips the stage stale but never clears artImageId/imagePath) leaves "Keep this asset" clickable against the leftover pre-edit image. Fix in progress; will update this note on close-out.'
-    updated: '2026-08-11T23:29:47Z'
-    implementation_pr: 'silasfelinus/kind_robots#1789'
+    note: '"DONE (conductor scheduled agent sweep): canApproveAssets never checked for a GENERATE_ASSETS status of ''stale'', so reopening an approved FIELDS_AND_PROMPTS/PITCH stage after generating a candidate (markDownstreamStale flips the stage stale but never clears artImageId/imagePath) left Keep this asset clickable against the leftover pre-edit image -- a user could edit the prompt, skip regenerating, and commit a candidate that silently mismatched its own text fields. Repro: approve GENERATE_ASSETS with a red-dragon candidate, edit FIELDS_AND_PROMPTS to a blue-whale prompt, re-approve fields without regenerating, click Keep this asset -- the committed records artImageId durably mismatches its own text fields. Fixed by requiring status !== stale in canApproveAssets before approval. Added utils/scripts/verifyModelBuilderStaleAssetApprovalGuard.ts (+ selftest) as a sibling regression guard, wired into package.json/contract-tests.yml. Found via an Explore subagent given an explicit exclusion list of every bug class already fixed this cycle and a directive to read the actual guard files rather than trust a summary. kind_robots PR #1791, merged. Rearmed to ready per recurring-task convention."'
+    updated: '2026-08-11T23:51:47Z'
+    implementation_pr: 'silasfelinus/kind_robots#1791'
     owner: worker
     claimed_by: 20260811T232900Z-conductor-sweep-b71ac
     claimed_at: '2026-08-11T23:29:47Z'
