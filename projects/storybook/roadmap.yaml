@@ -133,26 +133,11 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
-  note: |-
-    PROGRESS 2026-08-11 (conductor sweep): closed the remaining art-substep gap this task has flagged since 2026-07-28. Re-verified live: dashboard-tabs/scenario/storybook.webp resolves 200 (already fine, a sibling image). tutorials/scenario/storybook.webp still 404s -- confirmed no art-prompts.yaml request had ever been filed for it (this was also independently surfaced, and correctly left alone, by taskmaster/t-004s site-wide audit this session, since storybook-page.vue already has a functional placeholder workaround per interface-vision/t-111). Added the request (id: storybook-tutorial-scenario-storybook) and queued it as ArtJob 8248.
-
-    Render queue is currently backlogged (PENDING=1077, oldest pending ~147h, 44/24h throughput -- same infra issue tracked for ai-art-academy/t-044, model-builder/t-031, and taskmaster/t-004), so job 8248 did not render to completion this session. A future session should poll job 8248 directly rather than re-running consume_art_requests_to_media.py --live (which would resubmit a duplicate for a still-pending entry). Once it lands, swap storybook-page.vue's hardcoded `/images/botcafe.webp` placeholder back to the real tutorial image and this substep is done.
-
-    Reverting status to ready rather than done -- matches this task's established precedent (see 2026-07-28 and earlier entries); the front-end polish scope stays open for the next pass.
-
-    RESOLVED 2026-08-11 (conductor sweep, later same day): polled ArtJob 8248 directly (per the prior entry's own instruction, not re-running consume_art_requests_to_media.py --live) -- status DONE, artImageId 17405. Fetched the rendered image (GET /api/art/image/17405?includeImageData=true), converted PNG->WebP (Pillow), and confirmed it resolves live end-to-end through the home relay's media path (kind-robots.vercel.app/images/tutorials/scenario/storybook.webp -> 307 -> media.acrocatranch.com, 200) -- no git commit of the binary itself, per distribute_images.py's documented convention that kind_robots public/images/** is git-ignored and ships via the relay's own media path, not git (the exact local-copy-as-delivery mistake that doc explicitly warns against). Swapped storybook-page.vue's tabImage from the hardcoded `/images/botcafe.webp` placeholder to `getTutorialImagePath('scenario', 'storybook')`, matching the same helper tutorialCards.ts already uses for this asset. eslint/vue-tsc/prettier all clean. kind_robots PR #1779.
-
-    This closes the art-substep gap tracked since 2026-07-28. No other front-end polish gaps identified this pass -- re-arming to ready (front-end polish scope stays open generally, per this task's standing precedent) rather than done, since t-010 is an open-ended polish task, not a fixed checklist.
-
-    PROGRESS 2026-08-11 (conductor scheduled agent run): dispatched an Explore subagent to sweep the Storybook store/components/composables for a real, concrete gap, explicitly excluding the just-merged tutorial-image fix above (#1779). It found a soft-lock: answerCurrentBeat() recorded the reader's answer and a branchHistory entry, then called weaveBeat() to generate the next scene -- but if weaveBeat() failed (transient generateText error, unparsable response, thrown error), the answer stayed recorded. That makes awaitingAnswer false (composer disabled) and, if the failure lands right after the opening beat, canFinish is also false (needs >= 2 beats) -- no Finish escape either. The only way forward was discarding the whole session via New story.
-
-    Fixed by awaiting weaveBeat()'s result in answerCurrentBeat() and, on failure, rolling back the recorded answer and branchHistory entry so awaitingAnswer becomes true again and the reader can retry the same answer. Added utils/scripts/verifyStorybookAnswerRollbackGuard.mjs (+ its own storybook-answer-rollback-contract.yml workflow), matching this project's one-guard-per-fix convention. Verified: eslint clean (one pre-existing unrelated no-useless-assignment error at storybookStore.ts:568 confirmed via git stash to predate this change); vue-tsc --noEmit clean repo-wide; prettier --check clean; test:workflow-paths green; all four existing verifyStorybook*.mjs contracts still pass. First CI run failed the repo's capture-group-guard contract (a new .exec() call site indexed its match result via assert.ok() rather than one of the four recognized guard shapes) -- fixed by switching to an explicit if (!match) throw guard, re-verified locally against origin/main, and re-pushed; all 15 checks then green.
-
-    Merged silasfelinus/kind_robots#1783 (squash 98d9c83). Kaizen candidates surfaced by the same investigation for a future pass: beginStory()'s opening weaveBeat() call has a similar no-retry-affordance shape on failure (no beats exist yet, so nothing to roll back, but no explicit retry button either beyond re-submitting the setup form); derivedTitle()'s split(/[.!?]/)[0] mis-splits premises containing abbreviations (e.g. "Mr. Smith opens...") into a truncated title. Re-arming to ready -- front-end polish scope stays open, per this task's standing precedent.
-  updated: '2026-08-11T20:15:21Z'
+  note: 'Reconciliation (conductor scheduled sweep): task was left at status: claimed (claimed 2026-08-11T20:15:21Z by 20260811T201521Z-auto-89f104) past CLAIM_TTL_MINUTES (90) even though its implementation_pr (silasfelinus/kind_robots#1783, the weaveBeat() rollback fix) was already merged ~2h prior -- same stale-claimed-after-merge pattern AGENTS.md documents for superkate-hairstyle-ai/t-017. Rearmed to ready per this recurring open-ended polish task convention; no code change, bookkeeping only.'
+  updated: '2026-08-11T22:27:36Z'
   claimed_at: '2026-08-11T20:15:21Z'
   claimed_by: 20260811T201521Z-auto-89f104
   owner: worker
