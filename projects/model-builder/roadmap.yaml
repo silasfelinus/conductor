@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
@@ -617,11 +617,11 @@ tasks:
       Scoped accessibility pass (conductor scheduled sweep): dispatched an Explore subagent to read the full Model Builder surface against the exclusion list of every bug class fixed by prior same-day cycles (above) and against the existing verifyModelBuilder*.ts guards (all server-side race/gate invariants, none touching accessible-name/loading-state text). Found a real, previously-unfixed gap in components/model-builder/model-builder-item-panel.vue: five per-stage action buttons -- Draft with AI (pitch), Draft (fields), Draft (prompt), Generate/Regenerate candidate, and Execute commit -- lose their accessible name entirely while busy, because their only content during that state is an unlabeled loading-spinner span with no title/aria-label fallback (unlike the sibling Auto button in the same file, which already carries a static title for exactly this reason). Added a static title to each of the five buttons, mirroring the Auto-button pattern; no behavior/logic change.
 
       Merged silasfelinus/kind_robots#1759 (squash f35d0c60c2b90cca96a4def04f101c818a63d9ff). Verified: eslint clean on the changed file, vue-tsc --noEmit clean (exit 0), test:layout-contract holds (0 new violations). Noted pre-existing prettier formatting drift in this file (unrelated to the fix, confirmed present before this change via git stash) as a flag for a future dedicated pass rather than folding it into this diff. All 16 PR checks green. Recurring polish task rearmed for a future bounded pass.
-    updated: '2026-08-11T09:45:00Z'
+    updated: '2026-08-11T11:32:46Z'
     implementation_pr: 'silasfelinus/kind_robots#1759'
     owner: worker
-    claimed_by: claude-quirky-curie-20260811T092828Z-mb-t029
-    claimed_at: '2026-08-11T09:28:28Z'
+    claimed_by: 20260811T113246Z-modelbuilder-t029-b4c7e2
+    claimed_at: '2026-08-11T11:32:46Z'
 
   - id: t-030
     milestone: m6
