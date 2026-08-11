@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
@@ -621,11 +621,10 @@ tasks:
       Scoped Model Builder recipe-selector interaction fix: quantity inputs inside selectable output labels now stop click propagation without cancelling their native number-input behavior.
 
       Merged silasfelinus/kind_robots#1768 as f53a1d0dd0c1cb985443f282e4b242b62db27d18. Model Builder quantity controls now stop clicks from bubbling to the wrapping output label without cancelling the number input's native mouse behavior. Exact head 7b31d2ad27101044415b645fb2ab5e4a79816f7c completed all 14 attached workflows successfully, including TypeScript Type Check #31487447482 and Contract Tests #31487447438. Recurring polish task rearmed for a future bounded pass.
-    updated: '2026-08-11T14:37:34Z'
+
+      Reviewed and merged silasfelinus/kind_robots#1777 at exact head f8f6fb46ad4ffb312d5086303f0359bad5c261ff. The scoped accessibility fix gives the async ArtJob queue button an explicit dynamic accessible name; all 14 attached exact-head workflows completed successfully, including TypeScript Type Check #31503356507 and Contract Tests #31503356431. Recurring polish lane rearmed for a future bounded pass.
+    updated: '2026-08-11T16:17:00Z'
     implementation_pr: 'silasfelinus/kind_robots#1759'
-    owner: reviewer
-    claimed_by: 20260811T143733Z-sched-conductor-mb-t029
-    claimed_at: '2026-08-11T14:37:34Z'
 
   - id: t-030
     milestone: m6
