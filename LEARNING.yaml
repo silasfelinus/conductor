@@ -7727,3 +7727,17 @@ records:
     `if (!match) return`, default-destructure, or `match!`) -- assert-based narrowing
     isn't one of them, so a plain `if (!match) throw` is the safe default for any new
     `.exec()`/`.match()` call site in this repo, not just assert.ok.
+- date: '2026-08-11'
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A stranded worker/* branch (aria-pressed accessibility fix on the recipe-chip
+    selector) had no PR -- the review-claim protocol worked cleanly end to end: posted a
+    REVIEWING marker, waited out all 15 exact-head checks, merged kind_robots #1784. Worth
+    reinforcing: rescuing a stranded branch this way is cheaper than re-deriving the same
+    fix from scratch, and posting the marker first avoided any risk of a concurrent session
+    reviewing the same PR.'
