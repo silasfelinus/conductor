@@ -1,0 +1,9 @@
+version: 1
+project: interface-vision
+task: t-104
+operation: ready
+owner: null
+session: 2026-08-11T095000Z-interface-vision-t104-memory-qc2-b4e9
+updated: '2026-08-11T10:17:00Z'
+note: >-
+  Second Memory Dungeon quality slice merged as silasfelinus/kind_robots#1763 at 0a236580333e72e3dc44f91636484db79daf92a3. It removed the surviving 260px upper card-size ceiling so the measured layout can make cards as large as the available board permits, restored persistence of the custom dungeon Best score through memoryDungeonHighScore, submitted the accumulated dungeon score through the existing achievement match-record/leaderboard path at floor completion and game over, preserved the memory-master threshold, and made stale fixed-life death copy difficulty-agnostic. Exact-head e1f3d5a049a2416ecde7fc6f1d95513cece810eb completed all 14 observed PR workflows successfully, including TypeScript 31480602608, Contract Tests 31480602533, Layout Contract 31480602548, and MDC Scroll Ownership 31480602498. Production deployment dpl_HtcsaKNanwxBGDJFsRf5Pee74AQs reached READY with aliasError null; /api/version returned HTTP 200 and buildId 0a236580333e72e3dc44f91636484db79daf92a3, confirming the production alias serves the merge. Error/fatal runtime logs for that deployment contained only unrelated SmartIcon /api/icons and root-route Prisma P2039 pool-pressure errors, with no Memory Dungeon route or stack. The worker branch was deleted after merge. Return the umbrella to ready for the next bounded interface slice; the repo's rendered responsive audit remains post-deploy by design.
