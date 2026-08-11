@@ -7602,3 +7602,16 @@ records:
     localStorage key as the real "abandon" path for weeks before the gap was caught. Reusing the
     existing reset function (playAgain) behind a window.confirm kept the fix to ~20 lines with no
     new state.'
+- date: '2026-08-11'
+  project: storybook
+  task: t-019
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'When a task spec says a contract should "feed a synthetic value through the component''s
+    logic," check whether that logic lives only inline in a Vue SFC''s <script setup> -- if so,
+    extract it into a small pure exported function first so the contract genuinely executes the
+    logic (and a future edit that re-inlines it fails loudly) rather than falling back to a
+    source-string-match style that only proves the keyword is present nearby.'
