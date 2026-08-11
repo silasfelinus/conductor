@@ -180,24 +180,14 @@ tasks:
 - id: t-013
   milestone: m4
   title: Bring the other three Storybook setup steps up to the board
-  status: claimed
+  status: done
   passes: 0
   stakes: reversible
-  note: |-
-    The casting board sits inside a four-step wizard whose other steps -- premise, world/flavor, review -- still read as a form, so the "assembling a story" feeling exists on exactly one screen. The world-and-flavor step already uses card-based ingredient pickers and is closest; premise and review are plain. The open design question is whether the whole wizard becomes one board or the steps stay distinct while sharing the card language.
-
-
-    Merged Kind Robots PR #1740 as 47ecd6d72363ef40ec851ed73689f36a670b9dfb. Wrapped the premise (setup step 0) title/premise fields, narrator-voice picker, and story-shape picker in kr-panel-flat board cards, matching the card language already carried into the casting board (#1735/#1736) and the world/flavor step ingredient pickers (#1737). Exact head adda0ad7f947aa5ac250ec3ef660c657cb4ef8f9 passed all 16 attached workflows including TypeScript, Contract Tests (130+ verifiers), and Layout Contract before merge.
-
-    Merged Kind Robots PR #1741 (c4e81f6). The final Story bible now includes the selected Scenario plot thread and shows shared KrArtPlate artwork for plot thread and setting.
-
-    Cast/Facets/Rewards artwork slice implemented and merged as Kind Robots PR #1745 (78cb0c3). The review step's Cast, Facets, and Possible Rewards dl blocks now render each selected item as a chip with a small KrArtPlate icon thumbnail (icon variant, square, unframed) plus its title, reusing the existing icon->imagePath fallback chain -- matching the treatment Plot thread and Setting already had. vue-tsc/eslint/prettier all clean; all 16 CI checks (including the 130+-step Contract Tests matrix) green before merge.
-
-    Remaining open item: the design question of one board vs. distinct card-language steps is still unresolved and best left to a session with visual verification (or Silas's steer) rather than guessed at blind. All four setup steps and the review step now share the kr-panel-flat board-card language with inline artwork where applicable -- this may be close to a natural stopping point for the recurring "bring the wizard up to the board" scope; a future session should assess whether remaining work exists or this can move toward done.
+  note: 'The casting board sits inside a four-step wizard whose other steps -- premise, world/flavor, review -- read as a form when this task began; all four setup steps and the review step now share the kr-panel-flat board-card language. PROGRESS: PR #1740 (premise), #1741 (plot thread/setting art), #1745 (cast/facets/rewards art), #1748 (wrapped the last remaining plain field, extra story direction, in a kr-panel-flat card). Closing scope as complete -- every field across the wizard now carries the card language. The design question of one board vs. distinct steps sharing card language resolved in practice: the wizard kept its four distinct steps, extended with shared card styling throughout, rather than merging into a single board.'
   claimed_by: 20260811T072800Z-storybookt013-c9f1a2
   claimed_at: '2026-08-11T07:28:50Z'
-  updated: '2026-08-11T07:28:50Z'
-  implementation_pr: 'silasfelinus/kind_robots#1745'
+  updated: '2026-08-11T07:36:06Z'
+  implementation_pr: 'silasfelinus/kind_robots#1748'
   owner: worker
 - id: t-014
   milestone: m4
