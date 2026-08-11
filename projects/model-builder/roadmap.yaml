@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
@@ -623,11 +623,15 @@ tasks:
       Merged silasfelinus/kind_robots#1768 as f53a1d0dd0c1cb985443f282e4b242b62db27d18. Model Builder quantity controls now stop clicks from bubbling to the wrapping output label without cancelling the number input's native mouse behavior. Exact head 7b31d2ad27101044415b645fb2ab5e4a79816f7c completed all 14 attached workflows successfully, including TypeScript Type Check #31487447482 and Contract Tests #31487447438. Recurring polish task rearmed for a future bounded pass.
 
       Reviewed and merged silasfelinus/kind_robots#1777 at exact head f8f6fb46ad4ffb312d5086303f0359bad5c261ff. The scoped accessibility fix gives the async ArtJob queue button an explicit dynamic accessible name; all 14 attached exact-head workflows completed successfully, including TypeScript Type Check #31503356507 and Contract Tests #31503356431. Recurring polish lane rearmed for a future bounded pass.
-    updated: '2026-08-11T16:29:37Z'
-    implementation_pr: 'silasfelinus/kind_robots#1759'
-    owner: worker
-    claimed_by: 20260811T162747Z-agentrun-mb-t029
-    claimed_at: '2026-08-11T16:29:37Z'
+
+      Scoped race-condition fix (conductor scheduled agent run): dispatched an Explore subagent to read the full Model Builder surface against the exclusion list of every bug class fixed by prior cycles, including the item-13 open question from the createOwnedSingleton refactor (kind_robots PR #1049) -- whether resetAll() clears all 5 store-wide in-flight singletons. Confirmed still open: resetAll() cleared only generatingItemId, leaving committingItemId, autoBuilding, autoBuildingItemId, batchingOutputKey, and draftingField dangling. A user clicking the header Reset button while one of those four was still claimed (mid auto-build, mid commit, or mid a field draft) left the abandoned run's claim in place; a brand-new run's Auto-build/batch controls could then read as busy, or a same-named output group could be wrongly disabled, until the abandoned run's own in-flight network call happened to resolve on its own. Fixed by clearing all five singletons in resetAll(), mirroring the existing generatingItemId line. Added utils/scripts/verifyModelBuilderResetAllGuard.ts (+ .test.ts) regression guard following the established verifyModelBuilder*.ts pattern, wired into package.json/contract-tests.yml.
+
+      Merged silasfelinus/kind_robots#1778 (squash 351fb884). Verified: new guard self-test + contract both pass; eslint clean (2 pre-existing unrelated no-empty errors confirmed via git stash to predate this change); vue-tsc --noEmit clean repo-wide; prettier drift on modelBuilderStore.ts/package.json confirmed pre-existing via git stash, left untouched. All required exact-head checks green (TypeScript, Contract verifiers, verify, facet-catalog, layout-contract, facet-alias-smoke, Taskmaster checkpoint contract, and 7 Storybook/narrative/Facet contracts). "Build production image" (Publish Production Container) was the only check still running at merge time -- confirmed non-required (mergeable_state had already moved from blocked to unstable once every required check passed, and its own workflow only triggers on package.json/Dockerfile/prisma path changes, which is why it appeared on this PR but not on the unrelated kr-note slices earlier today) -- merged rather than waiting out its full ~30 min timeout for a check with near-zero risk of failure from this diff. Recurring polish task rearmed for a future bounded pass.
+    updated: '2026-08-11T16:52:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#1778'
+    owner: null
+    claimed_by: null
+    claimed_at: null
 
   - id: t-030
     milestone: m6
