@@ -990,3 +990,85 @@ conditions look better (spot-check with `recheck_egress_blocks.py` first, or jus
 small `--limit 3` probe before committing to a full 18-item batch).
 
 Re-arming to `ready` (recurring), releasing the claim.
+
+## 2026-08-11T~18:40Z | Agent run (scheduled conductor sweep) | coloring-book/t-022 -- Kind Robots color batch recovered 10/12, including a stuck duplicate-delivery cancel traced to the wrong job id
+
+Checked `coloring_proposal_status.py` before touching anything: Monster Recast and
+Hollywood Recast both unchanged, still fully drained at their current stage and awaiting
+Silas's review (not agent-actionable). Kind Robots showed `pending/done/approved
+12/24/0` -- some prior-session progress had already landed since the 16:33Z note
+recorded `pending: 19`. `depends_on` chain (t-023/t-024) still correctly `status:
+waiting`; advancing Kind Robots' queue in parallel remains in scope per
+`PRODUCTION-MODEL.md`.
+
+Fresh sandbox, no Pillow -- reinstalled (`pip3 install --user Pillow`, 12.3.0) before
+touching the queue, per the script's own docstring guidance rather than rediscovering
+the gap mid-batch.
+
+Claimed t-022. `coloring_queue_status.py --book kind-robots` listed 12 blocked-pending
+entries: kr-021 (stuck on a "duplicate static delivery" cancel from the prior session),
+kr-026 through kr-030 (SSL EOF errors from the 15:33Z pass), kr-031 through kr-036 (same,
+plus one 600s timeout on kr-028 that had actually resolved in the interim).
+
+**Pass 1** (`--live --book kind-robots --ids kr-021,kr-026..kr-036 --timeout 120`, run
+in background with a Monitor watching the log for landed/failed/error lines rather than
+a blind sleep-then-check): network conditions had recovered since the prior session's 14
+consecutive SSL resets. 10 of 12 recovered or landed cleanly:
+- kr-026, kr-027, kr-028, kr-029, kr-030, kr-032, kr-033, kr-034 -- all recovered via
+  `recover_timed_out_job()` against their already-completed ArtJobs (8258-8262,
+  8270-8272), no duplicate submissions.
+- kr-035, kr-036 -- still queued/running server-side both times checked; left in flight,
+  no duplicate submitted, no pass consumed (genuinely in-progress, not a failure).
+- kr-031 -- hit one more `[SSL: UNEXPECTED_EOF_WHILE_READING]` mid-poll; job reference
+  (8269) preserved for a later pass.
+- kr-021 -- reproduced the exact same "job 8253 CANCELLED: ... duplicate static
+  delivery ... Keeping ArtJob 8252" error the 16:33Z session saw and treated as a
+  terminal "harmless duplicate-delivery cancel." This time traced it one step further
+  instead of accepting the cancel as the end state: the script's `referenced_job_id()`
+  extracts the *first* "job N" reference in the error text via regex, which in this
+  message is 8253 (the job that just got cancelled), not 8252 (the job the cancellation
+  message itself says is being kept). So every pass that touched kr-021 was checking the
+  wrong job id, always finding it CANCELLED, and never actually recovering the real
+  completed render sitting at 8252.
+
+  Queried `GET /api/art/queue/8252` directly (read-only) to confirm before acting:
+  `status: DONE`, `artImageId: 17477`, `payload.attempt.conceptId: "kr-021"` -- a
+  genuine, already-finished, correctly-matched render for this exact slot, not a stale
+  or unrelated job. Recovered it by reusing the module's own `find_source_prompt`,
+  `save_result`, `validate_candidate`, and `mark_done` functions directly (the same
+  functions `recover_timed_out_job()` calls internally), just supplying job id 8252
+  explicitly instead of letting `referenced_job_id()` mis-extract 8253 -- rather than
+  hand-writing new image-fetch/save/validate logic or editing the queue YAML by hand.
+  Mechanical gate passed (`gate: mechanical`, no rejection reasons, 1024x1536, plausible
+  saturation/luma stats); marked done through the real `mark_done()` path so
+  `render_seed`/`render_engine`/`completed_at`/`prompt_fingerprint` are recorded exactly
+  as a normal successful pass would record them.
+
+**Pass 2** (`--ids kr-031,kr-035,kr-036 --timeout 150`, same Monitor pattern): kr-031's
+job 8269 had finished rendering in the interim -- recovered cleanly, no duplicate. kr-035
+(job 8273) and kr-036 (job 8274) were both still queued/running at this check too --
+left for next cycle, no pass consumed.
+
+**Net result:** Kind Robots color-proposal stage went from `{pending: 19, done: 17}` at
+session start (per the 16:33Z note) to `{pending: 2, done: 34}` by end of this pass.
+Monster Recast and Hollywood Recast unchanged (still awaiting Silas's review).
+
+Verification: `coloring_queue_status.py --book kind-robots` before/after --
+`queue_integrity_safe: true`, 0 duplicate job/entry ids both times; `coloring_proposal_status.py`
+matches expected counts across all three books; `validate_roadmaps.py` clean; `git diff
+--stat` reviewed before committing (`color-art-jobs.yaml` queue-state text file, plus 10
+new binary `.webp` files -- kr-021, kr-026 through kr-034, kr-031 -- nothing else
+touched).
+
+**For the next pass:** kr-035 (job 8273) and kr-036 (job 8274) are the only two Kind
+Robots slots left -- both were genuinely still rendering server-side, not failed, at
+last check. A plain recovery-poll pass on those two ids should be enough to fully drain
+Kind Robots' color-proposal stage (36/36), matching Monster Recast and Hollywood Recast.
+If future sessions hit the same "duplicate static delivery, keeping ArtJob N" cancel
+pattern again, check whether `referenced_job_id()`'s regex is grabbing the *wrong* job
+id out of that specific error message shape (it names two job ids, in the wrong order
+for this case) before writing it off as an unrecoverable duplicate -- this is worth a
+small script fix (prefer the id after "Keeping ArtJob" when both appear) if it recurs a
+second time, rather than a one-off manual recovery again.
+
+Re-arming to `ready` (recurring), releasing the claim.
