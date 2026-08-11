@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
@@ -585,7 +585,9 @@ tasks:
       Fixes kind_robots#1725 by scoping optimistic background-save error banners to the run that originated the PATCH.
 
       Merged kind_robots PR #1731 (c66a604d) fixing #1725: pushItem and batchPushItems now capture the originating Model Builder run and route failed background-save banners through setStatusForRun, preventing a late failure from appearing on a different run after navigation. Exact head 7e1143e had all 13 attached workflows complete successfully, including TypeScript and Contract Tests. Recurring polish task rearmed for a future bounded pass.
-    updated: '2026-08-11T00:13:31Z'
+
+      Scoped accessibility pass: the Model Builder global async feedback banner has no live-region semantics, so screen-reader users are not notified when generation, drafting, commit, or persistence feedback appears. Implementing a small reversible fix in model-builder-manager.vue.
+    updated: '2026-08-11T00:18:30Z'
     implementation_pr: 'silasfelinus/kind_robots#1729'
     owner: worker
     claimed_by: 20260811T001331Z-aaa-3aafd9
