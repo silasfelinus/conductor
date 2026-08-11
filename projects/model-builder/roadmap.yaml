@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
@@ -607,11 +607,10 @@ tasks:
       Merged silasfelinus/kind_robots#1744 as 52e6d329c25428181fa9fc36dc2a0df0130b27a6. Source-picker Gallery/Grid/List icon buttons now expose accessible names and pressed state, and source-type controls expose their selected state. Exact head 21a03a11a864c98a289d2b8a40e6eaa39edb6bd7 completed all 14 attached workflows successfully, including TypeScript Type Check #31464667906 and Contract Tests #31464667882.
 
       Scoped run-start interaction race fix on worker/model-builder-t-029-20260811-b7279e: freeze recipe/output controls and Model Builder navigation while the durable startRun request is in flight so a late successful response cannot override a newer user choice made during that request.
-    updated: '2026-08-11T07:20:41Z'
+
+      Merged silasfelinus/kind_robots#1746 as bc4f452caea40bdf6d4c8d7911aed0b83b9e8e7b. Model Builder now freezes source/recipe/output mutation plus breadcrumb, History, and Reset navigation while the durable run-start request is in flight, preventing a late successful startRun response from overriding a newer user interaction. Exact head 2654b2643e1749d56e9eda2280ba4c7d71e94324 completed all 14 attached workflows successfully, including TypeScript Type Check #31468739403 and Contract Tests #31468739336.
+    updated: '2026-08-11T07:26:34Z'
     implementation_pr: 'silasfelinus/kind_robots#1729'
-    owner: worker
-    claimed_by: 20260811T071701Z-modelbuilder-b7279e
-    claimed_at: '2026-08-11T07:17:01Z'
 
   - id: t-030
     milestone: m6
