@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
@@ -611,11 +611,10 @@ tasks:
       Merged silasfelinus/kind_robots#1746 as bc4f452caea40bdf6d4c8d7911aed0b83b9e8e7b. Model Builder now freezes source/recipe/output mutation plus breadcrumb, History, and Reset navigation while the durable run-start request is in flight, preventing a late successful startRun response from overriding a newer user interaction. Exact head 2654b2643e1749d56e9eda2280ba4c7d71e94324 completed all 14 attached workflows successfully, including TypeScript Type Check #31468739403 and Contract Tests #31468739336.
 
       Scoped Kind Robots fix on worker/model-builder-t-029-20260811-210093: hold the Model Builder setup surface in an accessible restoring state until resumeRun finishes, preventing a late durable-run resume from replacing new user setup choices made during initial mount.
-    updated: '2026-08-11T08:19:00Z'
+
+      Merged silasfelinus/kind_robots#1749 as 8566db20927c73d0464cad41e0d6737cb4822123. Model Builder now holds its setup surface and navigation in an accessible restoring state until resumeRun settles, preventing a late initial durable-run resume from replacing fresh source/recipe choices made during mount. Exact head a21c6df34295e145c503f99a2d9007ab230501f1 completed all 14 attached workflows successfully, including TypeScript Type Check #31472469909 and Contract Tests #31472469927.
+    updated: '2026-08-11T08:26:00Z'
     implementation_pr: 'silasfelinus/kind_robots#1729'
-    owner: worker
-    claimed_by: 20260811T081338Z-modelbuilder-t029-210093
-    claimed_at: '2026-08-11T08:13:38Z'
 
   - id: t-030
     milestone: m6
