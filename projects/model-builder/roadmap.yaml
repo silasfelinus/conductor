@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
@@ -601,8 +601,11 @@ tasks:
       Scoped Model Builder source-picker persistence fix: remove direct component localStorage access and use the shared galleryPreferenceStore instead.
 
       Merged silasfelinus/kind_robots#1743 as c8254aac94602db0bfe5c9f79b0dfa83047b429e. Model Builder source-picker view mode now persists through the shared galleryPreferenceStore instead of direct component localStorage. Exact head fba552e37eb41265fbea2674c6d3d0d85882479c completed all 14 attached workflows successfully, including TypeScript Type Check #31461863794 and Contract Tests #31461863786.
-    updated: '2026-08-11T05:33:54Z'
+    updated: '2026-08-11T06:17:04Z'
     implementation_pr: 'silasfelinus/kind_robots#1729'
+    owner: worker
+    claimed_by: 20260811T061704Z-modelbuilder-t029-c3e540
+    claimed_at: '2026-08-11T06:17:04Z'
 
   - id: t-030
     milestone: m6
