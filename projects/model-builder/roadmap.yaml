@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
@@ -597,7 +597,9 @@ tasks:
       Bounded accessibility fix: associate batch field labels with their select/input controls and give repeated Apply buttons field-specific accessible names.
 
       Merged kind_robots PR #1738 as a5870d86e40fdb0568b5407054e5e60ac0af3301. Batch editor shared-field selects/inputs now have explicit visible-label associations, and repeated Apply buttons expose field/group context. Exact head ac8fd103d3a92d74a8ea4b80bef749d0d80f9a4b completed all 14 attached workflows successfully, including TypeScript #31455113589 and Contract Tests #31455113607. Recurring polish task rearmed for a future bounded pass.
-    updated: '2026-08-11T05:23:04Z'
+
+      Scoped Model Builder source-picker persistence fix: remove direct component localStorage access and use the shared galleryPreferenceStore instead.
+    updated: '2026-08-11T05:27:04Z'
     implementation_pr: 'silasfelinus/kind_robots#1729'
     owner: worker
     claimed_by: 20260811T052304Z-review1742-a581e5
