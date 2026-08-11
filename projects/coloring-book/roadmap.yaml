@@ -175,10 +175,10 @@ tasks:
 - id: t-022
   milestone: m4
   title: Monster Recast book 1 production pass — 36 final color/BW pairs
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  updated: '2026-08-11T18:40:00Z'
+  updated: '2026-08-11T19:26:34Z'
   depends_on: t-021
   note: 'Recovery pass (conductor scheduled sweep, 2026-08-10T17:28Z): recovered the last in-flight Hollywood Recast job (hwr-036, ArtJob 8214) left by the 16:30Z cycle -- landed cleanly, no duplicate submitted. Hollywood Recast is now {done: 36, pending: 0}, recommended_action=complete -- its color-proposal stage is fully drained, same as Monster Recast. Monster Recast unchanged ({done: 33, approved: 3, pending: 0}, recommended_action=complete). Both books are now agent-complete for this stage and awaiting Silas''s review in the ArtJob trainer panel; the Kind Robots book (t-024) remains status: waiting, out of this task''s scope. See run_log for full detail. Re-arming to ready (recurring) with nothing actionable until Silas reviews or a future stage opens up.
 
@@ -189,9 +189,9 @@ tasks:
     PROGRESS (conductor scheduled sweep, 2026-08-11T~18:40Z): Monster Recast/Hollywood Recast unchanged, still awaiting Silas''s review (not agent-actionable). Network conditions had recovered since the prior pass''s SSL resets, so ran two live recovery passes against Kind Robots'' remaining 12 pending entries (kr-021, kr-026 through kr-036; Pillow reinstalled fresh in this sandbox session). Pass 1: 10/12 succeeded outright via recover_timed_out_job -- kr-026, kr-027, kr-028, kr-029, kr-030, kr-032, kr-033, kr-034 landed cleanly (no duplicates); kr-035/kr-036 were still queued/running server-side, left in flight; kr-031 hit one more SSL EOF, job reference preserved. kr-021 reproduced the same "duplicate static delivery, keeping ArtJob 8252" cancel seen last pass, but this time traced it further rather than treating the cancel alone as resolution: referenced_job_id() was extracting 8253 (the just-cancelled job named first in the error text) instead of the actually-completed 8252 also named in the same message. Queried ArtJob 8252 directly -- status DONE, artImageId 17477, payload.attempt.conceptId == "kr-021" (confirmed it is truly this slot''s render, not a different concept) -- and recovered it through the same fetch/save/validate/mark_done path the script''s own recover_timed_out_job() uses, just targeting 8252 explicitly. Mechanical gate passed; marked done. Pass 2 (--ids kr-031,kr-035,kr-036): kr-031''s job 8269 had finished in the interim, recovered cleanly; kr-035 (job 8273) and kr-036 (job 8274) were still queued/running both times checked, left for next cycle -- genuinely in-flight renders, not failures, no pass consumed. Net result: kind-robots color-proposal stage now {done: 34, pending: 2} (up from {pending: 19, done: 17} at session start). Verification: coloring_queue_status.py --book kind-robots (queue_integrity_safe: true, 0 duplicate job/entry ids, both before and after); coloring_proposal_status.py matches expected counts for all three books; validate_roadmaps.py clean; git diff --stat reviewed before committing (1 text file -- color-art-jobs.yaml queue state -- plus 10 new binary .webp files, nothing else touched). Full detail in run_log. Re-arming to ready (recurring), releasing the claim. Next cycle''s actionable work: recovery-poll kr-035 (job 8273) and kr-036 (job 8274) once they finish server-side -- that would fully drain Kind Robots'' color-proposal stage (36/36), matching Monster Recast and Hollywood Recast, with all three books then awaiting Silas''s review.'
   run_log: projects/coloring-book/t-022-run-log.md
   recurring: true
-  owner: null
-  claimed_by: null
-  claimed_at: null
+  owner: worker
+  claimed_by: 20260811T192634Z-coloring-book-t022-0cd75b
+  claimed_at: '2026-08-11T19:26:34Z'
 - id: t-025
   milestone: m6
   title: Package and register Monster Recast book 1
