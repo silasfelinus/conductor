@@ -186,7 +186,7 @@ tasks:
 - id: t-013
   milestone: m4
   title: Bring the other three Storybook setup steps up to the board
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   note: |-
@@ -198,10 +198,11 @@ tasks:
     Next bounded slice: the Review step (final setup step) already uses kr-panel-flat cards for its dl summary blocks, so it is closer than premise was, but has not had artwork/ingredient-card treatment (e.g. cast/location thumbnails) applied the way NarrativeIngredientCard does elsewhere. The open design question above -- one board vs. distinct card-language steps -- is still unresolved and best left to a session with visual verification rather than guessed at blind.
 
     Review-step slice implemented on worker/storybook-t-013-20260811-231336: the final Story bible now includes the selected Scenario plot thread and gives plot/setting cards inline artwork using the shared KrArtPlate.
+
+    Merged Kind Robots PR #1741 as c4e81f6f5a0e97d2a7225265b69866c8d762d1a1 after all 14 attached exact-head workflows completed successfully. The final Story bible now includes the selected Scenario plot thread and shows shared KrArtPlate artwork for plot thread and setting. Returning this non-recurring task to ready because cast, Facet, and Reward review summaries remain text-forward and the final visual acceptance gate still needs a later bounded pass.
   claimed_by: 20260811T041634Z-storybook-t013-231336
   claimed_at: '2026-08-11T04:16:34Z'
-  updated: '2026-08-11T04:19:30Z'
-  owner: worker
+  updated: '2026-08-11T04:25:45Z'
   implementation_pr: 'silasfelinus/kind_robots#1740'
 - id: t-014
   milestone: m4
