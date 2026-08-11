@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-11T05:39:03Z
+Generated: 2026-08-11T05:46:04Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **582**
-- Outcomes: blocked: 13, cancelled: 1, done: 568
+- Closed tasks recorded: **583**
+- Outcomes: blocked: 13, cancelled: 1, done: 569
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -24,7 +24,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | art-generator-connect | 3 | 100% |
 | brainstorm | 9 | 100% |
 | challenge-center | 16 | 100% |
-| coat-dance | 8 | 0% |
+| coat-dance | 9 | 11% |
 | coloring-book | 25 | 100% |
 | conductor | 72 | 100% |
 | conductor-app | 2 | 100% |
@@ -60,7 +60,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 | Kind | Closed | Success rate |
 |---|---|---|
-| content | 15 | 40% |
+| content | 16 | 44% |
 | software | 567 | 99% |
 
 ## Failure categories
@@ -74,14 +74,15 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Kaizen targets
 
-- project `coat-dance` — 0% success over 8 closed tasks; aim the next kaizen task here
-- kind `content` — 40% success over 15 closed tasks; aim the next kaizen task here
+- project `coat-dance` — 11% success over 9 closed tasks; aim the next kaizen task here
+- kind `content` — 44% success over 16 closed tasks; aim the next kaizen task here
 - failure category `quality` — 12 occurrences; look for the shared cause across its records
 - failure category `actionable` — 9 occurrences; look for the shared cause across its records
 - failure category `transient` — 9 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-08-11 `coat-dance/t-002` — A content-kind task that already reached needs-human can come back with the human's reply embedded in the note itself (via Kind Robots For You) rather than a roadmap-field edit -- check the tail of the note for an unprocessed human reply before assuming a status: ready/needs-human mismatch is drift. Here Silas had already approved the tool picks and asked a direct follow-up question; the task just needed the follow-up answered and its own pre-written "set status: ready on t-003 yourself" instruction carried out, not a new research pass.
 - 2026-08-11 `taskmaster/t-003` — A "delivery verification" check that only tests ArtJob/DB completion status or a git-ignored local checkout can never catch a wrong-but-present file at the destination -- it has to HEAD+fetch the actual public media origin (media.acrocatranch.com for kind_robots) and, ideally, spot-check content against intent. This task sat blocked for two weeks on a real infra gap (no confirmed delivery precedent), but once conductor PR #2047 fixed destination-preservation and KR_API_TOKEN happened to be present, the missing piece was a live check against the true delivery target, not another generation attempt -- and that same live check surfaced an unrelated pre-existing wrong asset that every completion-status-only check had missed for two weeks.
 - 2026-08-11 `storybook/t-012` — Keep drag gestures additive to an already-accessible control path: native mouse drag can live on the card artwork while a dedicated touch handle uses Pointer Events, avoiding both mouse-only drag and accidental drags from the role buttons.
 - 2026-08-11 `storybook/t-019` — When a task spec says a contract should "feed a synthetic value through the component's logic," check whether that logic lives only inline in a Vue SFC's <script setup> -- if so, extract it into a small pure exported function first so the contract genuinely executes the logic (and a future edit that re-inlines it fails loudly) rather than falling back to a source-string-match style that only proves the keyword is present nearby.
@@ -92,7 +93,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-10 `storybook/t-011` — A strict WonderLab preview-audit CI check treats every new component with required props as a regression until it gets a fixture or skip reason -- even one extracted purely to avoid tripling markup in the same PR that adds it. Budget for that check whenever a component split introduces a new required-prop component; caught mid-PR via the subscribed PR-activity webhook rather than a manual poll, which is the faster signal path for a session's own open PR.
 - 2026-08-10 `storybook/t-011` — Layout-first Storybook work stays safer when role meaning changes only presentation and leaves the controlled role-map interaction contract intact.
 - 2026-08-10 `storybook/t-018` — When Storybook already consumes a deep-link seed key, add entry CTAs at the existing selected-object working surface and extend the narrow navigation contract instead of inventing a parallel detail route.
-- 2026-08-10 `storybook/t-017` — A source-level contract can verify a cross-component behavioral handoff (click handler navigates with the right query key; the receiving page still reads that key) without asserting any markup, by checking substrings on each side of the seam independently rather than the whole line/attribute they sit inside.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-11T05:39:03Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-11T05:46:04Z_
