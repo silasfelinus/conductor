@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
@@ -609,7 +609,9 @@ tasks:
       Scoped run-start interaction race fix on worker/model-builder-t-029-20260811-b7279e: freeze recipe/output controls and Model Builder navigation while the durable startRun request is in flight so a late successful response cannot override a newer user choice made during that request.
 
       Merged silasfelinus/kind_robots#1746 as bc4f452caea40bdf6d4c8d7911aed0b83b9e8e7b. Model Builder now freezes source/recipe/output mutation plus breadcrumb, History, and Reset navigation while the durable run-start request is in flight, preventing a late successful startRun response from overriding a newer user interaction. Exact head 2654b2643e1749d56e9eda2280ba4c7d71e94324 completed all 14 attached workflows successfully, including TypeScript Type Check #31468739403 and Contract Tests #31468739336.
-    updated: '2026-08-11T08:13:38Z'
+
+      Scoped Kind Robots fix on worker/model-builder-t-029-20260811-210093: hold the Model Builder setup surface in an accessible restoring state until resumeRun finishes, preventing a late durable-run resume from replacing new user setup choices made during initial mount.
+    updated: '2026-08-11T08:19:00Z'
     implementation_pr: 'silasfelinus/kind_robots#1729'
     owner: worker
     claimed_by: 20260811T081338Z-modelbuilder-t029-210093
