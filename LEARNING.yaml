@@ -7671,3 +7671,21 @@ records:
     ten-line diff closed it, and the task''s own note had already flagged this as a likely
     stopping point. Checking cheaply (grep the shared picker components for kr-panel-flat,
     read the one remaining section) before claiming avoided a fifth guessed-scope PR.'
+- date: '2026-08-11'
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Slice 43 of the general-layout-pass kr-note conversion: a genuinely fresh repo-wide
+    grep for the exact hand-rolled rounded-2xl border border-{status}/40 bg-{status}/10
+    p-4 text-{status} shape (rather than continuing from slice 42's leftover candidate
+    list) found the pool down to exactly two remaining live candidates
+    (giftshop-manager.vue, wonderlab-review-rollout.vue), both converted clean. Explicitly
+    re-verifying with a fresh sweep rather than assuming a stale list is exhaustive (or
+    empty) is worth the cost each time the candidate pool is this close to zero -- a
+    session that only trusts the last note's leftovers risks stopping early or re-checking
+    already-excluded files.
