@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-11T21:28:44Z
+Generated: 2026-08-11T22:08:19Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **588**
-- Outcomes: blocked: 13, cancelled: 1, done: 574
+- Closed tasks recorded: **590**
+- Outcomes: blocked: 13, cancelled: 1, done: 576
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -29,7 +29,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | conductor | 72 | 100% |
 | conductor-app | 2 | 100% |
 | davinci | 3 | 100% |
-| digital-storefront | 28 | 100% |
+| digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
 | ecosystem-map | 5 | 100% |
 | global-ui | 13 | 100% |
@@ -41,7 +41,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 53 | 100% |
+| model-builder | 54 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -61,7 +61,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 572 | 99% |
+| software | 574 | 99% |
 
 ## Failure categories
 
@@ -82,6 +82,10 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-11 `digital-storefront/t-005` — Routine state reconciliation (checking a PR referenced by a hard-gated needs-human task, not because anything prompted it) found Silas had already merged kind_robots #1668 himself -- decisive objective evidence per docs/state-reconciliation.md that he'd answered the gate's own multiple-choice question. But the merge only covered 4 of the 5 originally-flagged routes; a fifth (rewards/random.get.ts) still had the identical unfiltered-access gap. Closing a human gate on "the human acted" evidence still needs a scope check against the gate's own original list -- a partial fix that matches the merged precedent exactly is safe to finish without going back for a second decision, since the policy call was already made, but silently marking the whole task done on the merge alone would have left a real gap open while reporting it closed.
+
+- 2026-08-11 `model-builder/t-029` — An Explore subagent given an explicit list of every bug class already fixed this same day (two singleton-clearing fixes plus an aria-pressed fix) and told to read the actual store/component code rather than trust a summary found a genuinely different bug shape: three textareas bound to local component refs that only pushed to the store on @change (blur), so the store's own "don't clobber a newer edit" guard in draftText() -- which only compares against the store's value -- couldn't see text the user was still mid-typing. The fix (disable the textarea while its own field is drafting) mirrors a gate already present one UI element over (the "Draft with AI" button), which is often a good signal that an adjacent, un-gated control was simply missed rather than intentionally left open.
+
 - 2026-08-11 `model-builder/t-029` — A stranded worker/* branch (aria-pressed accessibility fix on the recipe-chip selector) had no PR -- the review-claim protocol worked cleanly end to end: posted a REVIEWING marker, waited out all 15 exact-head checks, merged kind_robots #1784. Worth reinforcing: rescuing a stranded branch this way is cheaper than re-deriving the same fix from scratch, and posting the marker first avoided any risk of a concurrent session reviewing the same PR.
 - 2026-08-11 `storybook/t-010` — An Explore subagent reading the Storybook store/composables/components directly (not just filenames) found a real soft-lock: answerCurrentBeat() recorded the reader's answer before weaveBeat() generated the next scene, so a failed generation call left the answer committed with no way to retry (awaitingAnswer requires no answer yet, canFinish requires >= 2 beats -- both false right after a failed opening-beat answer). Fixed by awaiting weaveBeat()'s result and rolling the answer/branchHistory entry back on failure. Also worth recording: the repo's capture-group-guard CI check flagged the new guard script's own `match.exec()` result being indexed after an `assert.ok(match, ...)` check rather than one of its four recognized guard shapes (optional chaining, `if (!match) return`, default-destructure, or `match!`) -- assert-based narrowing isn't one of them, so a plain `if (!match) throw` is the safe default for any new `.exec()`/`.match()` call site in this repo, not just assert.ok.
 
@@ -93,8 +97,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-11 `coat-dance/t-002` — A content-kind task that already reached needs-human can come back with the human's reply embedded in the note itself (via Kind Robots For You) rather than a roadmap-field edit -- check the tail of the note for an unprocessed human reply before assuming a status: ready/needs-human mismatch is drift. Here Silas had already approved the tool picks and asked a direct follow-up question; the task just needed the follow-up answered and its own pre-written "set status: ready on t-003 yourself" instruction carried out, not a new research pass.
 - 2026-08-11 `taskmaster/t-003` — A "delivery verification" check that only tests ArtJob/DB completion status or a git-ignored local checkout can never catch a wrong-but-present file at the destination -- it has to HEAD+fetch the actual public media origin (media.acrocatranch.com for kind_robots) and, ideally, spot-check content against intent. This task sat blocked for two weeks on a real infra gap (no confirmed delivery precedent), but once conductor PR #2047 fixed destination-preservation and KR_API_TOKEN happened to be present, the missing piece was a live check against the true delivery target, not another generation attempt -- and that same live check surfaced an unrelated pre-existing wrong asset that every completion-status-only check had missed for two weeks.
 - 2026-08-11 `storybook/t-012` — Keep drag gestures additive to an already-accessible control path: native mouse drag can live on the card artwork while a dedicated touch handle uses Pointer Events, avoiding both mouse-only drag and accidental drags from the role buttons.
-- 2026-08-11 `storybook/t-019` — When a task spec says a contract should "feed a synthetic value through the component's logic," check whether that logic lives only inline in a Vue SFC's <script setup> -- if so, extract it into a small pure exported function first so the contract genuinely executes the logic (and a future edit that re-inlines it fails loudly) rather than falling back to a source-string-match style that only proves the keyword is present nearby.
-- 2026-08-10 `davinci/t-023` — A long-running interactive flow (life run, quest, playthrough) needs a UI-level exit affordance from day one, not just a resolve-screen reset -- this one shipped with only a manually-cleared localStorage key as the real "abandon" path for weeks before the gap was caught. Reusing the existing reset function (playAgain) behind a window.confirm kept the fix to ~20 lines with no new state.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-11T21:28:44Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-11T22:08:19Z_
