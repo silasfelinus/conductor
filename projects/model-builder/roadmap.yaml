@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
@@ -591,11 +591,10 @@ tasks:
       Merged silasfelinus/kind_robots#1733 (fa650188): Model Builder's global async feedback banner now exposes successful updates as a status region and errors as an alert, with atomic announcements for assistive technology. Exact head dc44f5c completed all 14 attached GitHub Actions workflows successfully, including TypeScript and Contract Tests.
 
       Scoped accessibility fix on Kind Robots branch worker/model-builder-t-029-20260811-6aa62e: disabled breadcrumb steps now use native button disabled semantics, and the responsive History/Reset header controls retain explicit accessible names when their visible labels hide on small screens. Diff is one component, four additive attributes.
-    updated: '2026-08-11T00:34:55Z'
+
+      Merged silasfelinus/kind_robots#1734 as a85d7a4460f27c0df172798e42245505176b37e5. Disabled Model Builder breadcrumb steps now expose native disabled semantics, and responsive History/Reset controls retain explicit accessible names; History also exposes its pressed state. Exact head 54b8640169990cd3098c0d9b04c5e4da41a497c0 completed all 14 attached workflows successfully, including TypeScript and Contract Tests. Recurring polish task rearmed for a future bounded pass.
+    updated: '2026-08-11T00:39:10Z'
     implementation_pr: 'silasfelinus/kind_robots#1729'
-    owner: worker
-    claimed_by: 20260811T002620Z-6aa62e
-    claimed_at: '2026-08-11T00:33:17Z'
 
   - id: t-030
     milestone: m6
