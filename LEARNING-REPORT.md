@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-11T13:52:26Z
+Generated: 2026-08-11T14:30:47Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **584**
-- Outcomes: blocked: 13, cancelled: 1, done: 570
+- Closed tasks recorded: **585**
+- Outcomes: blocked: 13, cancelled: 1, done: 571
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -36,7 +36,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 82 | 100% |
+| interface-vision | 83 | 100% |
 | kind-robots | 49 | 98% |
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
@@ -61,7 +61,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 568 | 99% |
+| software | 569 | 99% |
 
 ## Failure categories
 
@@ -82,6 +82,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-11 `interface-vision/t-104` — Slice 43 of the general-layout-pass kr-note conversion: a genuinely fresh repo-wide grep for the exact hand-rolled rounded-2xl border border-{status}/40 bg-{status}/10 p-4 text-{status} shape (rather than continuing from slice 42's leftover candidate list) found the pool down to exactly two remaining live candidates (giftshop-manager.vue, wonderlab-review-rollout.vue), both converted clean. Explicitly re-verifying with a fresh sweep rather than assuming a stale list is exhaustive (or empty) is worth the cost each time the candidate pool is this close to zero -- a session that only trusts the last note's leftovers risks stopping early or re-checking already-excluded files.
+
 - 2026-08-11 `storybook/t-013` — A bounded-slice task that keeps re-arming to ready across several same-day cycles (three prior PRs: #1740, #1741, #1745) is not necessarily still open -- read the component directly against the task's own stated scope before assuming there is always another slice. Here the wizard's remaining plain field (one textarea) was the entire gap; a ten-line diff closed it, and the task's own note had already flagged this as a likely stopping point. Checking cheaply (grep the shared picker components for kr-panel-flat, read the one remaining section) before claiming avoided a fifth guessed-scope PR.
 - 2026-08-11 `coat-dance/t-002` — A content-kind task that already reached needs-human can come back with the human's reply embedded in the note itself (via Kind Robots For You) rather than a roadmap-field edit -- check the tail of the note for an unprocessed human reply before assuming a status: ready/needs-human mismatch is drift. Here Silas had already approved the tool picks and asked a direct follow-up question; the task just needed the follow-up answered and its own pre-written "set status: ready on t-003 yourself" instruction carried out, not a new research pass.
 - 2026-08-11 `taskmaster/t-003` — A "delivery verification" check that only tests ArtJob/DB completion status or a git-ignored local checkout can never catch a wrong-but-present file at the destination -- it has to HEAD+fetch the actual public media origin (media.acrocatranch.com for kind_robots) and, ideally, spot-check content against intent. This task sat blocked for two weeks on a real infra gap (no confirmed delivery precedent), but once conductor PR #2047 fixed destination-preservation and KR_API_TOKEN happened to be present, the missing piece was a live check against the true delivery target, not another generation attempt -- and that same live check surfaced an unrelated pre-existing wrong asset that every completion-status-only check had missed for two weeks.
@@ -92,7 +94,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-10 `model-builder/t-029` — items/[id]/commit.post.ts fetched the build item once at the top of the request and built the final stageStatuses write from that request-start snapshot, even though the write in between (promoteAsset/updateText/createRecord+linkSourceToTarget, the last inside a multi-step prisma.$transaction) can be slow -- and nothing blocks the client from reopening another already-approved stage (a fast PATCH /items/:id) while the commit POST is in flight, so the stale-snapshot final write could silently clobber that concurrent edit back to 'approved'. A distinct bug class from the ~30 prior client-side store races this recurring task has found: a server-side stale-snapshot full-object overwrite across a slow awaited write. Worth checking any route that reads a record early and writes a computed blob back late for the same shape -- re-read immediately before the final write rather than trusting the request-start snapshot.
 
 - 2026-08-10 `storybook/t-011` — A strict WonderLab preview-audit CI check treats every new component with required props as a regression until it gets a fixture or skip reason -- even one extracted purely to avoid tripling markup in the same PR that adds it. Budget for that check whenever a component split introduces a new required-prop component; caught mid-PR via the subscribed PR-activity webhook rather than a manual poll, which is the faster signal path for a session's own open PR.
-- 2026-08-10 `storybook/t-011` — Layout-first Storybook work stays safer when role meaning changes only presentation and leaves the controlled role-map interaction contract intact.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-11T13:52:26Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-11T14:30:47Z_
