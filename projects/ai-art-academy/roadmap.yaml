@@ -1280,7 +1280,7 @@ tasks:
     soft_gate: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-10T01:32:16Z'
+    updated: '2026-08-11T14:37:00Z'
     note: |-
       Live-verification history moved to run_log (2026-08-07, ai-art-academy/t-010 lane 2
       roadmap accuracy) so this note stays short -- see run_log for every prior attempt and
@@ -1321,6 +1321,8 @@ tasks:
       RECHECK (conductor sweep, 2026-08-10T01:31Z, logged in RENDER-BACKLOG.md): back to draining -- PENDING 2908->2367 all-time, 24h window DONE=64/FAILED=1/CANCELLED=1 (healthy throughput, no repeat of the 2026-08-07 stall or the 2026-08-08 DB-error signature). recentFailed (last 3): 2/3 are the original, still-unresolved t-044 signature (ComfyUI /prompt HTTP 400, lora_name not-in-list); 1/3 is an unrelated transient connection-refused. Blocker unchanged from the prior recheck -- still needs one private ComfyUI /object_info capture from a Tailscale-connected machine this sandbox can't reach, to reconcile against Resource localPath via scripts/compare_comfy_lora_paths.py. Not attempting a 5th blind naming-convention guess. gate_human: true / soft_gate: true unchanged.
 
       RECHECK (conductor sweep, 2026-08-10T~10:00Z, logged in RENDER-BACKLOG.md): still draining -- PENDING 2367->1574 all-time, 24h window DONE=67/CANCELLED=1 (no FAILED in this window's throughput count, healthy). recentFailed (last 3): 2/3 still the original t-044 signature (ComfyUI /prompt HTTP 400, lora_name not-in-list); 1/3 connection-refused. Blocker unchanged -- still needs the private ComfyUI /object_info capture from a Tailscale-connected machine this sandbox can't reach. Not attempting a 6th blind naming-convention guess. gate_human: true / soft_gate: true unchanged.
+
+      RECHECK (conductor sweep, 2026-08-11T14:37Z): still draining -- PENDING 1574->845 all-time (a large drop, healthy), 24h window DONE=43/FAILED=3/CANCELLED=2531. oldestPending job 4893 has aged to ~157h, well past prior checks' oldest-pending ages -- worth noting but not itself new information about the t-044 blocker (a single old straggler, not a queue-wide stall; throughput this window is healthy). recentFailed (last 3): still 2/3 the original t-044 signature (ComfyUI /prompt HTTP 400, lora_name not-in-list), 1/3 connection-refused. Blocker unchanged -- still needs the private ComfyUI /object_info capture from a Tailscale-connected machine this sandbox can't reach, to reconcile against Resource localPath via scripts/compare_comfy_lora_paths.py. Not attempting a 7th blind naming-convention guess. gate_human: true / soft_gate: true unchanged.
     run_log: projects/ai-art-academy/docs/t-044-lora-loading-run-log.md
     claimed_at: null
     claimed_by: null
