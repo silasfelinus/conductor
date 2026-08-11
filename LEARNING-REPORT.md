@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-11T20:09:20Z
+Generated: 2026-08-11T20:41:54Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **587**
-- Outcomes: blocked: 13, cancelled: 1, done: 573
+- Closed tasks recorded: **588**
+- Outcomes: blocked: 13, cancelled: 1, done: 574
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -41,7 +41,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 52 | 100% |
+| model-builder | 53 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -61,7 +61,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 571 | 99% |
+| software | 572 | 99% |
 
 ## Failure categories
 
@@ -82,6 +82,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-11 `model-builder/t-029` — A stranded worker/* branch (aria-pressed accessibility fix on the recipe-chip selector) had no PR -- the review-claim protocol worked cleanly end to end: posted a REVIEWING marker, waited out all 15 exact-head checks, merged kind_robots #1784. Worth reinforcing: rescuing a stranded branch this way is cheaper than re-deriving the same fix from scratch, and posting the marker first avoided any risk of a concurrent session reviewing the same PR.
 - 2026-08-11 `storybook/t-010` — An Explore subagent reading the Storybook store/composables/components directly (not just filenames) found a real soft-lock: answerCurrentBeat() recorded the reader's answer before weaveBeat() generated the next scene, so a failed generation call left the answer committed with no way to retry (awaitingAnswer requires no answer yet, canFinish requires >= 2 beats -- both false right after a failed opening-beat answer). Fixed by awaiting weaveBeat()'s result and rolling the answer/branchHistory entry back on failure. Also worth recording: the repo's capture-group-guard CI check flagged the new guard script's own `match.exec()` result being indexed after an `assert.ok(match, ...)` check rather than one of its four recognized guard shapes (optional chaining, `if (!match) return`, default-destructure, or `match!`) -- assert-based narrowing isn't one of them, so a plain `if (!match) throw` is the safe default for any new `.exec()`/`.match()` call site in this repo, not just assert.ok.
 
 - 2026-08-11 `model-builder/t-029` — An Explore subagent re-scanning the full component/store surface against an explicit exclusion list of every bug class prior cycles already fixed (rather than a fresh, unscoped read) found resetRun() leaking the exact store-wide in-flight-singleton bug resetAll() was fixed for (PR #1778) through a second, more commonly-clicked path ("New run", cancelRun()) the existing guard didn't cover. When a fix closes one entry point to a shared-state bug, checking for sibling entry points to the same state (not just new bug classes) is worth a dedicated pass -- the guard here was scoped to the function name, not the underlying invariant, so it silently missed the twin.
@@ -94,7 +95,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-11 `storybook/t-012` — Keep drag gestures additive to an already-accessible control path: native mouse drag can live on the card artwork while a dedicated touch handle uses Pointer Events, avoiding both mouse-only drag and accidental drags from the role buttons.
 - 2026-08-11 `storybook/t-019` — When a task spec says a contract should "feed a synthetic value through the component's logic," check whether that logic lives only inline in a Vue SFC's <script setup> -- if so, extract it into a small pure exported function first so the contract genuinely executes the logic (and a future edit that re-inlines it fails loudly) rather than falling back to a source-string-match style that only proves the keyword is present nearby.
 - 2026-08-10 `davinci/t-023` — A long-running interactive flow (life run, quest, playthrough) needs a UI-level exit affordance from day one, not just a resolve-screen reset -- this one shipped with only a manually-cleared localStorage key as the real "abandon" path for weeks before the gap was caught. Reusing the existing reset function (playAgain) behind a window.confirm kept the fix to ~20 lines with no new state.
-- 2026-08-10 `model-builder/t-040` — Pair server-side stale-write protection with matching client affordance guards when a conflicting action is known: the server preserves correctness, while the UI prevents users from entering the race in the first place.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-11T20:09:20Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-11T20:41:54Z_
