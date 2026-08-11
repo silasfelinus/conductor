@@ -122,7 +122,7 @@ tasks:
   - id: t-003
     milestone: m3
     title: "Polish and upgrade Taskmaster front-end surface"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: |-
@@ -143,6 +143,7 @@ tasks:
       Implemented a shared Conductor ArtJob destination-preservation fix so ordinary targeted dashboard/tutorial and missing-image requests retain targetRepo/imagePath delivery metadata through enqueue, with focused regression coverage.
 
       Merged Conductor PR #2047 as 0daf956edf3d74f3d5ec648fed73f6cb1a31cae4. Generic targeted art requests now preserve targetRepo/imagePath/sourceUrl/pageUrl plus request identity into durable ArtJobs, closing the structural delivery-metadata gap that affected Taskmaster dashboard/tutorial art. Exact-head Worker PR CI #31424354799, Security Audit #31424354684, and Process task events #31424354839 all completed successfully. Historical Taskmaster ArtImages 13369/13370 were already rendered without destination metadata; KR_API_TOKEN is absent in this runtime, so no production requeue/redelivery was attempted. Keep ready until those two assets are delivered and their final media URLs are verified.
-    claimed_by: 20260810T122043-0700-taskmaster-t003-4c9e
-    claimed_at: '2026-08-10T19:20:43Z'
-    updated: '2026-08-10T19:45:00Z'
+    claimed_by: 20260811T013500Z-taskmaster-t003-sweep
+    claimed_at: '2026-08-11T01:35:05Z'
+    updated: '2026-08-11T01:35:05Z'
+    owner: worker
