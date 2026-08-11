@@ -575,18 +575,19 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    note: 'PROGRESS 2026-08-11 (conductor scheduled agent sweep, this claim): the Pitch, Fields, and Generation-prompt textareas in model-builder-item-panel.vue bind to local component refs and only push to the store on @change (blur), so draftText()''s own "don''t clobber a newer edit" guard (which only compares against the store''s value) can''t see text the user is still mid-typing. Repro: click "Draft with AI" next to Pitch, then type before the ~60s /api/suggest call resolves -- the typed text is silently overwritten the instant the draft lands, no warning beyond the unrelated success toast. Fixed by disabling each textarea while its own field is drafting (mirroring the isDrafting(field) gate already used on the adjacent Draft buttons). Added utils/scripts/verifyModelBuilderDraftTextareaGuard.ts (+ self-test) as a sibling regression guard. kind_robots PR #1787 opened, CI in progress.
+    note: 'DONE 2026-08-11 (conductor scheduled agent sweep): the Pitch, Fields, and Generation-prompt textareas in model-builder-item-panel.vue bind to local component refs and only push to the store on @change (blur), so draftText()''s own "don''t clobber a newer edit" guard (which only compares against the store''s value) can''t see text the user is still mid-typing. Repro: click "Draft with AI" next to Pitch, then type before the ~60s /api/suggest call resolves -- the typed text is silently overwritten the instant the draft lands, no warning beyond the unrelated success toast. Fixed by disabling each textarea while its own field is drafting (mirroring the isDrafting(field) gate already used on the adjacent Draft buttons). Added utils/scripts/verifyModelBuilderDraftTextareaGuard.ts (+ self-test) as a sibling regression guard, wired into package.json/contract-tests.yml. kind_robots PR #1787 (squash ed49516) -- bundled with an unrelated digital-storefront/t-005 fix on this session''s single designated branch. Merged, all 21 checks green. Rearmed to ready per recurring-task convention.
 
 
       RESCUED + REVIEWED 2026-08-11 (conductor scheduled agent sweep, prior cycle): a stranded worker/model-builder-t-029-20260811-93af branch (three-line aria-pressed accessibility fix on the recipe-chip selector, exposing selected state to assistive tech) had no PR. Opened a review-claim marker, waited for all 15 exact-head checks to go green (Contract verifiers/TypeScript/verify/layout-contract/facet-catalog/Storybook+Narrative-art contracts), then merged. kind_robots PR #1784 (squash 404ef74). Reversible, scoped, no behavior/API/store/schema change. Rearmed to ready per recurring-task convention.'
-    updated: '2026-08-11T21:52:00Z'
+    updated: '2026-08-11T21:55:00Z'
     implementation_pr: 'silasfelinus/kind_robots#1787'
-    owner: worker
-    claimed_by: 20260811T212749Z-conductor-sweep-81edaf
+    owner: null
+    claimed_by: null
+    claimed_at: null
     claimed_at: '2026-08-11T21:27:54Z'
     claimed_by: 20260811T212749Z-conductor-sweep-81edaf
     claimed_at: '2026-08-11T21:27:54Z'

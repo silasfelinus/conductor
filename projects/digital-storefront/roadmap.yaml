@@ -1511,16 +1511,17 @@ tasks:
 - id: t-005
   milestone: m6
   title: "SECURITY: Character and Reward read routes have no access check at all -- decide whether to close before wiring packId Grants"
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: irreversible
   gate_human: true
   soft_gate: false
   approved_by_human: true
-  updated: '2026-08-11T21:52:00Z'
-  claimed_by: 20260811T212749Z-conductor-sweep-81edaf
-  claimed_at: '2026-08-11T21:52:00Z'
+  updated: '2026-08-11T21:55:00Z'
+  implementation_pr: 'silasfelinus/kind_robots#1787'
+  claimed_by: null
+  claimed_at: null
   note: >
     FOR SILAS: split off digital-storefront/t-004 (conductor sweep 2026-08-08) after a read-only
     investigation of kind_robots' server/api/ confirmed a real, pre-existing security gap unrelated to
@@ -1587,9 +1588,11 @@ tasks:
     Since the access-policy decision is already made (evidenced by the merge), finishing this one route
     with the exact same isActive/isPublic/own/admin/Pack-Grant where clause rewards/index.get.ts already
     uses is ordinary reversible software work, not a new security decision. Fixed in kind_robots PR #1787
-    (bundled with an unrelated model-builder/t-029 fix on the same session branch), CI in progress.
-    status -> review pending that PR's merge; will flip to done with implementation_pr recording both
-    #1668 and #1787 once green and merged.
+    (bundled with an unrelated model-builder/t-029 fix on the same session branch).
+
+    DONE 2026-08-11: PR #1787 merged (squash ed49516), all 21 checks green. All five originally-flagged
+    Character/Reward read routes (characters/[id], characters/index, rewards/[id], rewards/index via
+    #1668; rewards/random via #1787) now gate on canView()/viewablePackIds(). Gap fully closed.
 
 - id: t-043
   milestone: m6
