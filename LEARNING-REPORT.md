@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-11T17:48:07Z
+Generated: 2026-08-11T18:00:19Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **585**
-- Outcomes: blocked: 13, cancelled: 1, done: 571
+- Closed tasks recorded: **586**
+- Outcomes: blocked: 13, cancelled: 1, done: 572
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -41,7 +41,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 51 | 100% |
+| model-builder | 52 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -61,7 +61,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 569 | 99% |
+| software | 570 | 99% |
 
 ## Failure categories
 
@@ -82,6 +82,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-11 `model-builder/t-029` — An Explore subagent re-scanning the full component/store surface against an explicit exclusion list of every bug class prior cycles already fixed (rather than a fresh, unscoped read) found resetRun() leaking the exact store-wide in-flight-singleton bug resetAll() was fixed for (PR #1778) through a second, more commonly-clicked path ("New run", cancelRun()) the existing guard didn't cover. When a fix closes one entry point to a shared-state bug, checking for sibling entry points to the same state (not just new bug classes) is worth a dedicated pass -- the guard here was scoped to the function name, not the underlying invariant, so it silently missed the twin.
+
 - 2026-08-11 `interface-vision/t-104` — Slice 43 of the general-layout-pass kr-note conversion: a genuinely fresh repo-wide grep for the exact hand-rolled rounded-2xl border border-{status}/40 bg-{status}/10 p-4 text-{status} shape (rather than continuing from slice 42's leftover candidate list) found the pool down to exactly two remaining live candidates (giftshop-manager.vue, wonderlab-review-rollout.vue), both converted clean. Explicitly re-verifying with a fresh sweep rather than assuming a stale list is exhaustive (or empty) is worth the cost each time the candidate pool is this close to zero -- a session that only trusts the last note's leftovers risks stopping early or re-checking already-excluded files.
 
 - 2026-08-11 `storybook/t-013` — A bounded-slice task that keeps re-arming to ready across several same-day cycles (three prior PRs: #1740, #1741, #1745) is not necessarily still open -- read the component directly against the task's own stated scope before assuming there is always another slice. Here the wizard's remaining plain field (one textarea) was the entire gap; a ten-line diff closed it, and the task's own note had already flagged this as a likely stopping point. Checking cheaply (grep the shared picker components for kr-panel-flat, read the one remaining section) before claiming avoided a fifth guessed-scope PR.
@@ -93,7 +95,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-10 `model-builder/t-040` — Pair server-side stale-write protection with matching client affordance guards when a conflicting action is known: the server preserves correctness, while the UI prevents users from entering the race in the first place.
 - 2026-08-10 `model-builder/t-029` — items/[id]/commit.post.ts fetched the build item once at the top of the request and built the final stageStatuses write from that request-start snapshot, even though the write in between (promoteAsset/updateText/createRecord+linkSourceToTarget, the last inside a multi-step prisma.$transaction) can be slow -- and nothing blocks the client from reopening another already-approved stage (a fast PATCH /items/:id) while the commit POST is in flight, so the stale-snapshot final write could silently clobber that concurrent edit back to 'approved'. A distinct bug class from the ~30 prior client-side store races this recurring task has found: a server-side stale-snapshot full-object overwrite across a slow awaited write. Worth checking any route that reads a record early and writes a computed blob back late for the same shape -- re-read immediately before the final write rather than trusting the request-start snapshot.
 
-- 2026-08-10 `storybook/t-011` — A strict WonderLab preview-audit CI check treats every new component with required props as a regression until it gets a fixture or skip reason -- even one extracted purely to avoid tripling markup in the same PR that adds it. Budget for that check whenever a component split introduces a new required-prop component; caught mid-PR via the subscribed PR-activity webhook rather than a manual poll, which is the faster signal path for a session's own open PR.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-11T17:48:07Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-11T18:00:19Z_
