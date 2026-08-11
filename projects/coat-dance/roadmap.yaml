@@ -98,7 +98,7 @@ tasks:
   - id: t-002
     milestone: m1
     title: "Research video beat transcription and shot-slicing tools"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on:
@@ -109,8 +109,22 @@ tasks:
 
 
       SENT BACK by silasfelinus via Kind Robots For You. I approve the default suggestions, and just need info on how to proceed. if I need to download tools, tell me where to put them.
-    claimed_by: 20260811T052700Z-conductor-sweep-t002-9f21b3
-    claimed_at: '2026-08-11T05:28:31Z'
+
+      RESOLVED 2026-08-11: added a "5. Installation -- where to put these tools" section to
+      RESEARCH-t002-beat-transcription-tools.md answering the direct question -- ffmpeg is a
+      system package (brew/apt, install wherever the pipeline shell runs), the Python packages
+      (librosa, madmom, mediapipe, opencv-python, scenedetect) go in a dedicated virtualenv kept
+      separate from any ComfyUI env (mediapipe/madmom pin numpy/protobuf versions that can
+      conflict), and none of it needs a GPU except optionally mediapipe/optical-flow (both run
+      fine on CPU for one 5:32 clip) -- simplest to put it on whatever machine will run t-006's
+      ComfyUI pipeline so the beat map feeds straight in. Per Silas's own approval above and this
+      task's own "set status: ready on t-003 yourself" instruction, t-003 is now unblocked to
+      ready. Closing t-002 done -- deliverable (tool survey + install answer) complete and
+      approved; nothing further needed from Silas on this task specifically. BRIEF.md's Q3 (tool
+      inventory actually confirmed present in the real render environment) remains open and is
+      t-003/t-006's concern, not this task's.
+    claimed_by: null
+    claimed_at: null
     updated: '2026-08-11T05:28:31Z'
     approved_by_human: false
     owner: worker
@@ -118,7 +132,7 @@ tasks:
   - id: t-003
     milestone: m1
     title: "Create source-video beat map template"
-    status: blocked
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
