@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   note: |-
@@ -142,10 +142,14 @@ tasks:
     Render queue is currently backlogged (PENDING=1077, oldest pending ~147h, 44/24h throughput -- same infra issue tracked for ai-art-academy/t-044, model-builder/t-031, and taskmaster/t-004), so job 8248 did not render to completion this session. A future session should poll job 8248 directly rather than re-running consume_art_requests_to_media.py --live (which would resubmit a duplicate for a still-pending entry). Once it lands, swap storybook-page.vue's hardcoded `/images/botcafe.webp` placeholder back to the real tutorial image and this substep is done.
 
     Reverting status to ready rather than done -- matches this task's established precedent (see 2026-07-28 and earlier entries); the front-end polish scope stays open for the next pass.
-  updated: '2026-08-11T16:52:52Z'
-  claimed_at: '2026-08-11T16:52:52Z'
-  claimed_by: sched-conductor-sb-t010-20260811T165251Z
-  owner: worker
+
+    RESOLVED 2026-08-11 (conductor sweep, later same day): polled ArtJob 8248 directly (per the prior entry's own instruction, not re-running consume_art_requests_to_media.py --live) -- status DONE, artImageId 17405. Fetched the rendered image (GET /api/art/image/17405?includeImageData=true), converted PNG->WebP (Pillow), and confirmed it resolves live end-to-end through the home relay's media path (kind-robots.vercel.app/images/tutorials/scenario/storybook.webp -> 307 -> media.acrocatranch.com, 200) -- no git commit of the binary itself, per distribute_images.py's documented convention that kind_robots public/images/** is git-ignored and ships via the relay's own media path, not git (the exact local-copy-as-delivery mistake that doc explicitly warns against). Swapped storybook-page.vue's tabImage from the hardcoded `/images/botcafe.webp` placeholder to `getTutorialImagePath('scenario', 'storybook')`, matching the same helper tutorialCards.ts already uses for this asset. eslint/vue-tsc/prettier all clean. kind_robots PR #1779.
+
+    This closes the art-substep gap tracked since 2026-07-28. No other front-end polish gaps identified this pass -- re-arming to ready (front-end polish scope stays open generally, per this task's standing precedent) rather than done, since t-010 is an open-ended polish task, not a fixed checklist.
+  updated: '2026-08-11T16:53:30Z'
+  claimed_at: null
+  claimed_by: null
+  owner: null
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
