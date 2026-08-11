@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
@@ -613,8 +613,11 @@ tasks:
       Scoped Kind Robots fix on worker/model-builder-t-029-20260811-210093: hold the Model Builder setup surface in an accessible restoring state until resumeRun finishes, preventing a late durable-run resume from replacing new user setup choices made during initial mount.
 
       Merged silasfelinus/kind_robots#1749 as 8566db20927c73d0464cad41e0d6737cb4822123. Model Builder now holds its setup surface and navigation in an accessible restoring state until resumeRun settles, preventing a late initial durable-run resume from replacing fresh source/recipe choices made during mount. Exact head a21c6df34295e145c503f99a2d9007ab230501f1 completed all 14 attached workflows successfully, including TypeScript Type Check #31472469909 and Contract Tests #31472469927.
-    updated: '2026-08-11T08:26:00Z'
+    updated: '2026-08-11T09:28:28Z'
     implementation_pr: 'silasfelinus/kind_robots#1729'
+    owner: worker
+    claimed_by: claude-quirky-curie-20260811T092828Z-mb-t029
+    claimed_at: '2026-08-11T09:28:28Z'
 
   - id: t-030
     milestone: m6
