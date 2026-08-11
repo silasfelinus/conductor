@@ -182,30 +182,19 @@ tasks:
   - id: t-004
     milestone: m3
     title: "Audit other dashboard-tab/tutorial image paths for silently-wrong assets"
-    status: claimed
+    status: needs-human
     passes: 0
     stakes: reversible
     note: |-
-      Kaizen from t-003 (2026-08-11). t-003's dashboard-tab image
-      (public/images/dashboard-tabs/scenario/taskmaster.webp) had a completely unrelated,
-      garbled image sitting at that exact path since 2026-07-28 -- not a render failure,
-      not a missing file, just the wrong content silently serving as if correct. It was
-      only caught because a live HEAD+fetch check against media.acrocatranch.com happened
-      to run at all; every prior session's "is this delivered" check looked at ArtJob/DB
-      status or the git-ignored local kind_robots checkout, neither of which would ever
-      surface a wrong-but-present file.
+      FOR SILAS: taskmaster/t-004 audited every dashboard-tab and tutorial image path in kind_robots (140 unique paths across dashboardHelper.ts and tutorialCards.ts) by HEAD-checking each against the live media origin. Findings and the queued fix live in projects/art-prompts.yaml (source: taskmaster-t-004-tutorial-audit) and conductor PR (this branch commit e786f45).
 
-      Scope: enumerate every dashboard-tab and tutorial image path referenced by
-      dashboardHelper.ts / tutorialCards.ts (kind_robots), HEAD+fetch each one against the
-      self-hosted media origin, and visually spot-check a sample for content that doesn't
-      match its section (garbled text, wrong subject, obvious mismatch) rather than just
-      checking HTTP 200. Any confirmed-wrong asset gets a targeted regeneration request the
-      same way t-003 did (projects/art-prompts.yaml requests: + consume_art_requests_to_media.py).
-      This is a site-wide asset-correctness gap, not taskmaster-specific -- if it's worth
-      tracking under a home project, this repo's global-ui/interface-vision is probably a
-      better fit than taskmaster; use judgment on where to file the actual sweep if this
-      note's project placement doesn't fit by the time it's picked up.
+      What it contains: all dashboard-tab images are healthy (200). 15 tutorial-card images 404d -- 1 (scenario/storybook.webp) is already worked around in kind_robots storybook-page.vue per interface-vision/t-111, so nothing to do there. The other 14 (Animation Manager, Dream Brainstorm, Community Broadcasts, Mana Purse, Model Builder, AppMaker, Conductor App, Packmaker, WonderLab, Screen FX, Da Vinci, Media Watchlist, Ruler Hooked, Voice Lab) were genuinely missing with no prior tracking. Added targeted regeneration requests and queued all 14 as ArtJobs (ids 8234-8247).
+
+      Soft gate reason: the render queue is backlogged (PENDING=1077, oldest pending ~147h, 44/24h throughput) -- the same infra issue already tracked for ai-art-academy/t-044 and model-builder/t-031. None of the 14 jobs rendered to completion this session; this is a genuine capacity wait, not something this session can push through.
+
+      TO APPROVE: no decision needed from you -- this is process, not content. When the render backlog drains (or someone pushes these 14 specific job ids), a future session should poll job ids 8234-8247 directly (GET /api/art/queue/{id}) rather than re-running consume_art_requests_to_media.py, which would resubmit duplicates for any still-pending entry. Once all 14 land and are verified 200, close t-004 to done. What unblocks: nothing downstream depends on this task; it can sit soft-gated until the backlog clears.
     owner: worker
     claimed_by: conductor-sweep-2026-08-11-t004
     claimed_at: '2026-08-11T04:29:01Z'
-    updated: '2026-08-11T04:29:01Z'
+    updated: '2026-08-11T04:47:39Z'
+    soft_gate: true
