@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2959,10 +2959,11 @@ tasks:
       Byte-exact consistency pool is exhausted after slices 32-37. The remaining documented kr-note candidates are intentionally non-byte-exact and would add visible font-weight/text-size changes; slice 37 explicitly says further progress requires Silas or a future session explicitly authorizing that visual-delta pass. Marking needs-human rather than manufacturing another no-op slice. No code or production data changed.
 
       Silas explicitly authorized the next non-byte-exact quality/layout pass in-session on 2026-08-11: fix the Memory Dungeon follow-up bug, do another quality check, and use remaining scope for a general layout pass. This clears the specific t-104 pause recorded after slice 37; proceed with a bounded, visually intentional pass rather than another byte-exact-only sweep.
-    updated: '2026-08-11T09:17:00Z'
+    updated: '2026-08-11T09:20:00Z'
     implementation_pr: 'silasfelinus/kind_robots#1699'
-    claimed_by: null
-    claimed_at: null
+    claimed_by: 2026-08-11T091700Z-interface-vision-t104-memdungeon-qc-a7f3
+    claimed_at: '2026-08-11T09:20:00Z'
+    owner: worker
 
   - id: t-105
     milestone: m6
