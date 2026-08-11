@@ -7626,3 +7626,19 @@ records:
   lesson: 'Keep drag gestures additive to an already-accessible control path: native mouse drag can live
     on the card artwork while a dedicated touch handle uses Pointer Events, avoiding both mouse-only drag
     and accidental drags from the role buttons.'
+- date: '2026-08-11'
+  project: taskmaster
+  task: t-003
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A "delivery verification" check that only tests ArtJob/DB completion status or a git-ignored
+    local checkout can never catch a wrong-but-present file at the destination -- it has to HEAD+fetch
+    the actual public media origin (media.acrocatranch.com for kind_robots) and, ideally, spot-check
+    content against intent. This task sat blocked for two weeks on a real infra gap (no confirmed
+    delivery precedent), but once conductor PR #2047 fixed destination-preservation and KR_API_TOKEN
+    happened to be present, the missing piece was a live check against the true delivery target, not
+    another generation attempt -- and that same live check surfaced an unrelated pre-existing wrong
+    asset that every completion-status-only check had missed for two weeks.'

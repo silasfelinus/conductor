@@ -122,10 +122,41 @@ tasks:
   - id: t-003
     milestone: m3
     title: "Polish and upgrade Taskmaster front-end surface"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: |-
+      RESOLVED (conductor scheduled sweep, 2026-08-11T01:55Z): the dashboard-tab/tutorial delivery gap
+      this task has tracked since 2026-07-29 is closed. KR_API_TOKEN was present in this runtime (unlike
+      the immediately prior session), and conductor PR #2047's destination-preservation fix is confirmed
+      working end-to-end: submitted two fresh targeted requests via projects/art-prompts.yaml requests:
+      (target_repo: silasfelinus/kind_robots, image_path public/images/dashboard-tabs/scenario/taskmaster.webp
+      and public/images/tutorials/scenario/taskmaster.webp) through consume_art_requests_to_media.py's
+      queue/enqueue path. Both ArtJobs (8232, 8233) rendered via the home relay (claimedBy: Silas-PC) and
+      were written directly to self-hosted media -- verified live with HEAD + content fetch against
+      https://media.acrocatranch.com/images/dashboard-tabs/scenario/taskmaster.webp and
+      .../tutorials/scenario/taskmaster.webp (both HTTP 200, correct dimensions, content matches the
+      submitted prompts). Both requests marked status: done in art-prompts.yaml.
+
+      IMPORTANT SIDE FINDING: the dashboard-tab path already had a *different*, unrelated, garbled image
+      sitting at it since 2026-07-28 (last-modified date on the old file) -- not a Taskmaster asset at all,
+      a broken mockup-style render with illegible UI text ("Tabkcmaster", "Server Connections", ...). Every
+      prior session's diagnosis checked ArtJob/DB completion status or the local (git-ignored, always-empty)
+      kind_robots checkout, never a live HEAD check against the actual media origin -- so this pre-existing
+      wrong file was never noticed. The already_satisfied() existence-only check in
+      consume_art_requests_to_media.py would have treated it as "done" and skipped regeneration entirely;
+      had to bypass it with a one-off forced-submission script (deleted after use, not committed) to get the
+      correct image rendered and delivered over the wrong one. Filed t-004 to audit other dashboard-tab/
+      tutorial paths for the same silent-wrong-asset class, since finding one this way strongly suggests
+      there are more.
+
+      All 5 originally-scoped assets (icon, card, hero, dashboard-tab, tutorial) are now delivered and live,
+      and the Quest Desk UI redesign (kind_robots PR #1469) has been in production since 2026-07-29. Full
+      milestone m3 scope is met. Not doing a fresh phone/tablet/desktop visual pass in this same sweep --
+      the UI itself hasn't changed this session, only site-wide static assets referenced by existing,
+      already-shipped-and-verified components.
+
+      --- prior history ---
       Kaizen from t-003 (kind_robots PR #1160, conductor PR #1443, 2026-07-29). Queued taskmaster's dedicated icon/card/hero + dashboard-tab/tutorial art via consume_art_queue.py --live --no-wait (ArtJobs 2846-2850) and pointed dashboardHelper.ts/tutorialCards.ts at the new paths. Step (4) liveUrl/channelKey/tabKey confirmed already correct via sync_projects.py (UNCHANGED). Remaining: confirm jobs 2846-2850 rendered and run distribute_images.py (or confirm the distribute-images workflow already placed them) before closing to done.
 
       Implemented the objective-first Quest Desk redesign on a focused Kind Robots branch. Setup now removes the generic narrator slab, groups optional story ingredients into compact disclosures, adds a mobile-safe action rail, and moves active quests into a story-plus-mission-rail layout with an explicit minimum stage height.
@@ -145,5 +176,35 @@ tasks:
       Merged Conductor PR #2047 as 0daf956edf3d74f3d5ec648fed73f6cb1a31cae4. Generic targeted art requests now preserve targetRepo/imagePath/sourceUrl/pageUrl plus request identity into durable ArtJobs, closing the structural delivery-metadata gap that affected Taskmaster dashboard/tutorial art. Exact-head Worker PR CI #31424354799, Security Audit #31424354684, and Process task events #31424354839 all completed successfully. Historical Taskmaster ArtImages 13369/13370 were already rendered without destination metadata; KR_API_TOKEN is absent in this runtime, so no production requeue/redelivery was attempted. Keep ready until those two assets are delivered and their final media URLs are verified.
     claimed_by: 20260811T013500Z-taskmaster-t003-sweep
     claimed_at: '2026-08-11T01:35:05Z'
-    updated: '2026-08-11T01:35:05Z'
+    updated: '2026-08-11T01:55:00Z'
     owner: worker
+
+  - id: t-004
+    milestone: m3
+    title: "Audit other dashboard-tab/tutorial image paths for silently-wrong assets"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: |-
+      Kaizen from t-003 (2026-08-11). t-003's dashboard-tab image
+      (public/images/dashboard-tabs/scenario/taskmaster.webp) had a completely unrelated,
+      garbled image sitting at that exact path since 2026-07-28 -- not a render failure,
+      not a missing file, just the wrong content silently serving as if correct. It was
+      only caught because a live HEAD+fetch check against media.acrocatranch.com happened
+      to run at all; every prior session's "is this delivered" check looked at ArtJob/DB
+      status or the git-ignored local kind_robots checkout, neither of which would ever
+      surface a wrong-but-present file.
+
+      Scope: enumerate every dashboard-tab and tutorial image path referenced by
+      dashboardHelper.ts / tutorialCards.ts (kind_robots), HEAD+fetch each one against the
+      self-hosted media origin, and visually spot-check a sample for content that doesn't
+      match its section (garbled text, wrong subject, obvious mismatch) rather than just
+      checking HTTP 200. Any confirmed-wrong asset gets a targeted regeneration request the
+      same way t-003 did (projects/art-prompts.yaml requests: + consume_art_requests_to_media.py).
+      This is a site-wide asset-correctness gap, not taskmaster-specific -- if it's worth
+      tracking under a home project, this repo's global-ui/interface-vision is probably a
+      better fit than taskmaster; use judgment on where to file the actual sweep if this
+      note's project placement doesn't fit by the time it's picked up.
+    owner: null
+    claimed_by: null
+    claimed_at: null
