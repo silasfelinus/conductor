@@ -1511,14 +1511,17 @@ tasks:
 - id: t-005
   milestone: m6
   title: "SECURITY: Character and Reward read routes have no access check at all -- decide whether to close before wiring packId Grants"
-  status: needs-human
-  owner: null
+  status: done
+  owner: worker
   passes: 0
   stakes: irreversible
   gate_human: true
   soft_gate: false
-  approved_by_human: false
-  updated: '2026-08-08T23:59:00Z'
+  approved_by_human: true
+  updated: '2026-08-11T21:55:00Z'
+  implementation_pr: 'silasfelinus/kind_robots#1787'
+  claimed_by: null
+  claimed_at: null
   note: >
     FOR SILAS: split off digital-storefront/t-004 (conductor sweep 2026-08-08) after a read-only
     investigation of kind_robots' server/api/ confirmed a real, pre-existing security gap unrelated to
@@ -1570,6 +1573,26 @@ tasks:
     reference implementation to rebase, not a blind merge, and should also fold t-043's list-route
     scope into the same pass since this branch already solved both together. Branch left in place
     (real, substantial, reviewable work, not scratch) rather than deleted.
+
+
+    RECONCILED 2026-08-11 (conductor scheduled agent sweep, state reconciliation): Silas answered
+    option (a) himself -- kind_robots PR #1668 ("security: gate Character and Reward reads by
+    visibility", canView()/viewablePackIds() wired into characters/[id].get.ts, characters/index.get.ts,
+    rewards/[id].get.ts, rewards/index.get.ts) was merged_by silasfelinus directly at 2026-08-11T21:06:24Z.
+    Per docs/state-reconciliation.md's closing-human-gates-safely list, "Silas directly merged the gated
+    implementation PR" is objective evidence the requested outcome happened -- approved_by_human: true.
+
+    Residual gap found on reconciliation: PR #1668 covered 4 of the 5 originally-flagged routes.
+    server/api/rewards/random.get.ts was not touched and still ran prisma.reward.count()/findFirst()
+    with no where clause at all -- the identical unfiltered-access gap, just on the random-pick route.
+    Since the access-policy decision is already made (evidenced by the merge), finishing this one route
+    with the exact same isActive/isPublic/own/admin/Pack-Grant where clause rewards/index.get.ts already
+    uses is ordinary reversible software work, not a new security decision. Fixed in kind_robots PR #1787
+    (bundled with an unrelated model-builder/t-029 fix on the same session branch).
+
+    DONE 2026-08-11: PR #1787 merged (squash ed49516), all 21 checks green. All five originally-flagged
+    Character/Reward read routes (characters/[id], characters/index, rewards/[id], rewards/index via
+    #1668; rewards/random via #1787) now gate on canView()/viewablePackIds(). Gap fully closed.
 
 - id: t-043
   milestone: m6

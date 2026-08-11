@@ -7741,3 +7741,41 @@ records:
     reinforcing: rescuing a stranded branch this way is cheaper than re-deriving the same
     fix from scratch, and posting the marker first avoided any risk of a concurrent session
     reviewing the same PR.'
+- date: '2026-08-11'
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    An Explore subagent given an explicit list of every bug class already fixed this same
+    day (two singleton-clearing fixes plus an aria-pressed fix) and told to read the actual
+    store/component code rather than trust a summary found a genuinely different bug shape:
+    three textareas bound to local component refs that only pushed to the store on @change
+    (blur), so the store's own "don't clobber a newer edit" guard in draftText() -- which
+    only compares against the store's value -- couldn't see text the user was still
+    mid-typing. The fix (disable the textarea while its own field is drafting) mirrors a
+    gate already present one UI element over (the "Draft with AI" button), which is often
+    a good signal that an adjacent, un-gated control was simply missed rather than
+    intentionally left open.
+- date: '2026-08-11'
+  project: digital-storefront
+  task: t-005
+  kind: software
+  stakes: irreversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Routine state reconciliation (checking a PR referenced by a hard-gated needs-human task,
+    not because anything prompted it) found Silas had already merged kind_robots #1668
+    himself -- decisive objective evidence per docs/state-reconciliation.md that he'd
+    answered the gate's own multiple-choice question. But the merge only covered 4 of the 5
+    originally-flagged routes; a fifth (rewards/random.get.ts) still had the identical
+    unfiltered-access gap. Closing a human gate on "the human acted" evidence still needs a
+    scope check against the gate's own original list -- a partial fix that matches the
+    merged precedent exactly is safe to finish without going back for a second decision,
+    since the policy call was already made, but silently marking the whole task done on the
+    merge alone would have left a real gap open while reporting it closed.
