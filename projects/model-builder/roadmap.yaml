@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
@@ -593,7 +593,9 @@ tasks:
       Scoped accessibility fix on Kind Robots branch worker/model-builder-t-029-20260811-6aa62e: disabled breadcrumb steps now use native button disabled semantics, and the responsive History/Reset header controls retain explicit accessible names when their visible labels hide on small screens. Diff is one component, four additive attributes.
 
       Merged silasfelinus/kind_robots#1734 as a85d7a4460f27c0df172798e42245505176b37e5. Disabled Model Builder breadcrumb steps now expose native disabled semantics, and responsive History/Reset controls retain explicit accessible names; History also exposes its pressed state. Exact head 54b8640169990cd3098c0d9b04c5e4da41a497c0 completed all 14 attached workflows successfully, including TypeScript and Contract Tests. Recurring polish task rearmed for a future bounded pass.
-    updated: '2026-08-11T03:13:23Z'
+
+      Bounded accessibility fix: associate batch field labels with their select/input controls and give repeated Apply buttons field-specific accessible names.
+    updated: '2026-08-11T03:16:00Z'
     implementation_pr: 'silasfelinus/kind_robots#1729'
     owner: worker
     claimed_by: 20260811T031323Z-auto-9ed9cf
