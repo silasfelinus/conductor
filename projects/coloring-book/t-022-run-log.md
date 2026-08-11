@@ -927,3 +927,66 @@ either book is Silas reviewing the rendered color proposals (33 Monster Recast, 
 Hollywood Recast) in the ArtJob trainer panel -- no further agent-side rendering work
 remains for t-022's current scope until that review unlocks the next stage (BW pairs,
 or t-023/t-025/t-026 packaging).
+
+## 2026-08-11T15:33Z | Agent run (scheduled conductor sweep) | coloring-book/t-022 -- Kind Robots color batch mostly blocked by transient SSL resets; found and fixed missing Pillow dependency
+
+Checked `coloring_proposal_status.py` before touching anything: Monster Recast and
+Hollywood Recast both fully drained at their current stage (`{done: 33, approved: 3}` /
+`{done: 36}`, both `next: review rendered color proposal` -- Silas's stage, not
+agent-actionable). Kind Robots showed `pending/done/approved 19/17/0` -- 17 already
+landed by an earlier session, 19 still pending. `depends_on` chain (t-023 waits on
+t-022, t-024 waits on t-023) is still correctly `status: waiting`; per
+`PRODUCTION-MODEL.md`'s explicit allowance ("All three books may have complete prompts
+and queued color jobs while Monster Recast remains the first book to finish"), advancing
+the Kind Robots queue in parallel is in scope even though its own task (t-024) isn't
+picked up yet.
+
+Claimed t-022, ran `consume_coloring_book_color_art.py --book kind-robots --live`
+(dry run first to confirm the 18-item batch looked right).
+
+**Pass 1** (piped through `| tail -150` with a 590s shell `timeout` wrapper -- mistake,
+noted below): killed by the timeout before any output reached the pipe (tail buffers
+until EOF), so the only visible evidence was the queue file itself: `kr-020` recorded a
+transient SSL EOF error mid-poll (job 8251). Lesson: never pipe a long-running live job
+through `tail` without `--line-buffered`-equivalent handling, and don't wrap it in a
+shell `timeout` shorter than the batch could reasonably take -- both together destroy
+diagnostic output for no benefit, since the harness's own backgrounding already handles
+long-running commands.
+
+**Pass 2** (retried directly to a log file, no pipe/timeout wrapper): surfaced a real,
+previously-invisible environment gap -- `kr-018`/`kr-019` recovery failed with "Pillow is
+required for WebP output" (this sandbox's Python had no PIL/Pillow installed). Installed
+it (`pip3 install Pillow`, now 12.3.0) mid-session; both job references (8249/8250) were
+left intact for a future recovery pass rather than resubmitted, so no duplicate spend.
+`kr-020` (job 8251) still queued/running, left for next cycle. `kr-021` resolved cleanly
+as a duplicate-delivery cancel (ArtJob 8252 already covers it) -- the only net-positive
+resolution this pass. `kr-022` through `kr-035` (14 jobs) then hit the identical
+`[SSL: UNEXPECTED_EOF_WHILE_READING]` error one after another while polling job status,
+plus one `job 8260 timed out after 600s` on kr-028. Final tally: **1/18 succeeded, 0 new
+queue entries marked done.**
+
+Ran `recheck_egress_blocks.py kind-robots.vercel.app --task coloring-book/t-022` mid-run:
+plain reachability is fine (`HTTP 200`), logged to `EGRESS-BLOCKERS.md`. So this isn't a
+host block -- it looks like the job-status polling connection specifically (likely
+longer-lived or higher-frequency than a single GET) hit repeated mid-request resets in
+this sandbox session. Given 14 consecutive identical failures, a third live retry in the
+same session would very likely reproduce the same result rather than being a cheap
+retry, so not attempting one -- re-arming to `ready` for a future session/network
+condition instead, per the transient-failure triage rule (no pass consumed).
+
+Verification: `validate_roadmaps.py` clean; `coloring_proposal_status.py` before/after
+matches expected state (`kind-robots: pending 19, done 17` -- unchanged net, since the
+only resolved item was a duplicate-cancel, not a new completion); `git diff --stat`
+reviewed before each commit (queue-state YAML only, no generated binaries this pass
+since nothing new actually rendered). Committed incrementally (3 commits) as the stop
+hook required rather than batching into one, since the live job kept writing to the same
+queue file across a ~50-minute run.
+
+**For the next pass:** Pillow is now installed in this sandbox (may not persist to a
+fresh session/container -- check first). `kr-018`/`kr-019` are prime recovery-pass
+candidates (`--ids` targeting jobs 8249/8250 specifically) once Pillow is confirmed
+present. The remaining ~14 kr- slots need a plain resubmit/poll pass once network
+conditions look better (spot-check with `recheck_egress_blocks.py` first, or just try a
+small `--limit 3` probe before committing to a full 18-item batch).
+
+Re-arming to `ready` (recurring), releasing the claim.
