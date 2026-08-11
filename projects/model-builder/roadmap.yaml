@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
@@ -637,11 +637,10 @@ tasks:
       Merged silasfelinus/kind_robots#1781 as c08029b51050a1c2193e2cbb89c0ab2eb6a8924a. resetRun() now clears all six store-wide in-flight singletons, mirroring resetAll(). Exact head 509dba69d5a07aa557ca06728a7cc6c3dbd732e4 completed all 15 attached workflows successfully, including TypeScript and Contract verifiers. Recurring polish task rearmed for a future bounded pass.
 
       Scoped accessibility fix in Kind Robots: stage-status cells now expose their existing aria-label through an explicit image role so assistive technology can reliably announce stage name and status.
-    updated: '2026-08-11T18:29:00Z'
+
+      Merged Kind Robots PR #1782 as 44932626aca70ae6d7ccc31ee97380241b8fe6a0 after all 14 exact-head workflows on 2cf9b9985f15bd11a5d2e610dcc83ab929b21d3b completed successfully, including TypeScript #31523132694 and Contract Tests #31523132719. Added an explicit semantic role to Model Builder stage-status badges so their existing aria-labels are reliably exposed to assistive technology.
+    updated: '2026-08-11T18:37:15Z'
     implementation_pr: 'silasfelinus/kind_robots#1781'
-    owner: worker
-    claimed_by: 20260811T182433Z-model-builder-t029-a91f
-    claimed_at: '2026-08-11T18:24:33Z'
 
   - id: t-030
     milestone: m6
