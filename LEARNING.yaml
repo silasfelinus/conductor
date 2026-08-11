@@ -7706,3 +7706,24 @@ records:
     point to a shared-state bug, checking for sibling entry points to the same state
     (not just new bug classes) is worth a dedicated pass -- the guard here was scoped to
     the function name, not the underlying invariant, so it silently missed the twin.
+- date: '2026-08-11'
+  project: storybook
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    An Explore subagent reading the Storybook store/composables/components directly (not
+    just filenames) found a real soft-lock: answerCurrentBeat() recorded the reader's
+    answer before weaveBeat() generated the next scene, so a failed generation call left
+    the answer committed with no way to retry (awaitingAnswer requires no answer yet,
+    canFinish requires >= 2 beats -- both false right after a failed opening-beat answer).
+    Fixed by awaiting weaveBeat()'s result and rolling the answer/branchHistory entry back
+    on failure. Also worth recording: the repo's capture-group-guard CI check flagged the
+    new guard script's own `match.exec()` result being indexed after an `assert.ok(match,
+    ...)` check rather than one of its four recognized guard shapes (optional chaining,
+    `if (!match) return`, default-destructure, or `match!`) -- assert-based narrowing
+    isn't one of them, so a plain `if (!match) throw` is the safe default for any new
+    `.exec()`/`.match()` call site in this repo, not just assert.ok.
