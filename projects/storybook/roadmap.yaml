@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   note: |-
@@ -148,10 +148,10 @@ tasks:
     kind_robots PR #1060 merged as a6ba6a912b8cb2bdb1f4db8f1772fcb0cc96fe89 and Conductor PR #1255 merged as eedd4a2b22a51fcfb952651c59dc2ab2c58b6913. Scenario initialization failures are now surfaced on the Storybook page. Rearmed because the recurring polish task still retains its separately blocked tutorial-art substep.
     PROGRESS 2026-07-28 (~08:00-08:20 UTC, conductor burst-mode rotation, claude-conductor-burst-20260728T0810Z-story-t010): step (4) is now genuinely DONE, not by this task's own doing -- Silas committed a full dedicated Storybook studio directly to kind_robots main this session (PR #1084, squash b00fa19: reusable narrative-ingredient-multi-picker.vue, an independent storybookStore.ts with its own persisted sessions/story bible/narrator, a progressive premise/cast/world/review setup flow, and its own CI contract check utils/scripts/verifyStorybookStudio.mjs). This supersedes the "reuse the Stories engine" scope every prior PROGRESS entry on this task assumed -- Storybook is no longer a thin wrapper around scenarioStore. Reviewed the new studio for a follow-on polish gap (same posture as every prior cycle on this task) and found one: the header's "New story" button called store.resetSession() on a single click with no confirmation, discarding the current session -- including a finished tale -- whose only backup is localStorage, which the reset itself clears. Fixed by applying this repo's existing arm-on-first-click/confirm-on-second pattern (already used by kind_robots art-interact.vue's delete button, per its no-window.confirm convention) instead of inventing a new one. Verified: eslint clean; prettier --check drift on the file confirmed pre-existing via git-stash (unrelated to this diff, consistent with the prettier-version-mismatch noted elsewhere in this rotation); full-project npm run test (vue-tsc --noEmit) exit 0; node utils/scripts/verifyStorybookStudio.mjs (the new studio's own CI contract check) still passes. kind_robots PR #1089 (branch claude/dazzling-ptolemy-m33fmb) -- open, CI running. Remaining open scope on this task, now narrower: step (1)'s dashboard-tab + tutorial .webp art, still blocked on the art-generation relay (spot-checked relay-status this session: one agent listed with a fresh lastSeenAt, but per every prior cycle's finding a listed agent alone doesn't prove it's claiming jobs, and no storybook art-prompts.yaml request exists to test against -- not re-litigated further this cycle to stay in scope). Set status: review; will flip to ready (not done, art substep still open) once CI is green and the PR merges, matching this task's established precedent.
     PROGRESS 2026-07-28 (~09:00 UTC, conductor Reviewer sweep, claude-conductor-agentrun-20260728-storybook): kind_robots PR #1089 (arm-confirm New story button) reviewed -- all 7 checks green, diff matches the note's description exactly (arms on first click, fires on second, mirrors art-interact.vue's existing pattern, no window.confirm), scoped to one file. Merged squash 6d5e7a9. Conductor PR #1298 merged squash 64e7dfc. Reverting status to ready rather than done -- step (1)'s dashboard-tab/tutorial art remains the sole outstanding substep, same precedent as the 2026-07-27 and 2026-07-22 entries above.
-  updated: '2026-07-28T09:00:00Z'
-  claimed_at: '2026-07-28T08:14:47Z'
-  claimed_by: claude-conductor-burst-20260728T0810Z-story-t010
-  owner: reviewer
+  updated: '2026-08-11T04:58:17Z'
+  claimed_at: '2026-08-11T04:58:17Z'
+  claimed_by: conductor-sweep-2026-08-11-t010
+  owner: worker
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
