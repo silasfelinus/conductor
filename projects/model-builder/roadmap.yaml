@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
@@ -599,11 +599,10 @@ tasks:
       Merged kind_robots PR #1738 as a5870d86e40fdb0568b5407054e5e60ac0af3301. Batch editor shared-field selects/inputs now have explicit visible-label associations, and repeated Apply buttons expose field/group context. Exact head ac8fd103d3a92d74a8ea4b80bef749d0d80f9a4b completed all 14 attached workflows successfully, including TypeScript #31455113589 and Contract Tests #31455113607. Recurring polish task rearmed for a future bounded pass.
 
       Scoped Model Builder source-picker persistence fix: remove direct component localStorage access and use the shared galleryPreferenceStore instead.
-    updated: '2026-08-11T05:27:04Z'
+
+      Merged silasfelinus/kind_robots#1743 as c8254aac94602db0bfe5c9f79b0dfa83047b429e. Model Builder source-picker view mode now persists through the shared galleryPreferenceStore instead of direct component localStorage. Exact head fba552e37eb41265fbea2674c6d3d0d85882479c completed all 14 attached workflows successfully, including TypeScript Type Check #31461863794 and Contract Tests #31461863786.
+    updated: '2026-08-11T05:33:54Z'
     implementation_pr: 'silasfelinus/kind_robots#1729'
-    owner: worker
-    claimed_by: 20260811T052304Z-review1742-a581e5
-    claimed_at: '2026-08-11T05:23:04Z'
 
   - id: t-030
     milestone: m6
