@@ -843,6 +843,223 @@ requests:
   negative_prompt: 'text, watermark, signature, logo, caption, letters, words, blurry, low
     quality, lowres, jpeg artifacts, deformed, disfigured, extra limbs, bad anatomy, bad hands,
     cropped, out of frame, collage, frame, border, ugly, grainy'
+# taskmaster/t-004 site-wide dashboard-tab/tutorial asset audit (2026-08-11): every
+# dashboard-tab image referenced by dashboardHelper.ts resolved 200 against the
+# self-hosted media origin. These 14 tutorial-card images (tutorialCards.ts) all
+# 404'd -- confirmed missing, not garbled/wrong-content. scenario/storybook.webp
+# also 404s but is already worked around directly in storybook-page.vue per
+# interface-vision/t-111, so it is not repeated here.
+- id: asset-audit-t004-tutorial-games-animation-manager
+  last_art_job_id: 8234
+  source: taskmaster-t-004-tutorial-audit
+  status: pending
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/tutorials/games/animation-manager.webp
+  variant: image
+  size: 1024x768
+  label: 'Animation Manager tutorial card'
+  prompt: 'A cozy museum gallery corridor lined with glowing animated screen-effect frames on
+    the walls, a small helpful robot curator holding a clipboard comparing two glowing effect
+    samples, warm inviting lighting, clear approachable illustration suited to a tutorial card,
+    no text, no collage.'
+  negative_prompt: 'text, watermark, signature, logo, caption, letters, words, blurry, low
+    quality, lowres, jpeg artifacts, deformed, disfigured, extra limbs, bad anatomy, bad hands,
+    cropped, out of frame, collage, frame, border, ugly, grainy'
+- id: asset-audit-t004-tutorial-dream-brainstorm
+  last_art_job_id: 8235
+  source: taskmaster-t-004-tutorial-audit
+  status: pending
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/tutorials/dream/brainstorm.webp
+  variant: image
+  size: 1024x768
+  label: 'Dream Brainstorm tutorial card'
+  prompt: 'A cozy dreamer''s desk scattered with glowing idea sparks and branching
+    thought-bubble seedlings sprouting from an open notebook, warm inviting lighting, clear
+    approachable illustration suited to a tutorial card, no text, no collage.'
+  negative_prompt: 'text, watermark, signature, logo, caption, letters, words, blurry, low
+    quality, lowres, jpeg artifacts, deformed, disfigured, extra limbs, bad anatomy, bad hands,
+    cropped, out of frame, collage, frame, border, ugly, grainy'
+- id: asset-audit-t004-tutorial-sanctuary-community
+  last_art_job_id: 8236
+  source: taskmaster-t-004-tutorial-audit
+  status: pending
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/tutorials/sanctuary/community.webp
+  variant: image
+  size: 1024x768
+  label: 'Community Broadcasts tutorial card'
+  prompt: 'A friendly robot at a small radio-tower desk broadcasting warm signal waves outward
+    to a circle of diverse listening companions, warm inviting lighting, clear approachable
+    illustration suited to a tutorial card, no text, no collage.'
+  negative_prompt: 'text, watermark, signature, logo, caption, letters, words, blurry, low
+    quality, lowres, jpeg artifacts, deformed, disfigured, extra limbs, bad anatomy, bad hands,
+    cropped, out of frame, collage, frame, border, ugly, grainy'
+- id: asset-audit-t004-tutorial-sanctuary-wallet
+  last_art_job_id: 8237
+  source: taskmaster-t-004-tutorial-audit
+  status: pending
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/tutorials/sanctuary/wallet.webp
+  variant: image
+  size: 1024x768
+  label: 'Mana Purse tutorial card'
+  prompt: 'A glowing enchanted coin purse spilling soft luminous mana motes onto an open palm,
+    warm inviting lighting, clear approachable illustration suited to a tutorial card, no text,
+    no collage.'
+  negative_prompt: 'text, watermark, signature, logo, caption, letters, words, blurry, low
+    quality, lowres, jpeg artifacts, deformed, disfigured, extra limbs, bad anatomy, bad hands,
+    cropped, out of frame, collage, frame, border, ugly, grainy'
+- id: asset-audit-t004-tutorial-builder-model-builder
+  last_art_job_id: 8238
+  source: taskmaster-t-004-tutorial-audit
+  status: pending
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/tutorials/builder/model-builder.webp
+  variant: image
+  size: 1024x768
+  label: 'Model Builder tutorial card'
+  prompt: 'A friendly robot at a workshop bench assembling a glowing blueprint schematic into a
+    small stamped-out toy record card, gears and drafting tools nearby, warm inviting lighting,
+    clear approachable illustration suited to a tutorial card, no text, no collage.'
+  negative_prompt: 'text, watermark, signature, logo, caption, letters, words, blurry, low
+    quality, lowres, jpeg artifacts, deformed, disfigured, extra limbs, bad anatomy, bad hands,
+    cropped, out of frame, collage, frame, border, ugly, grainy'
+- id: asset-audit-t004-tutorial-conductor-appmaker
+  last_art_job_id: 8239
+  source: taskmaster-t-004-tutorial-audit
+  status: pending
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/tutorials/conductor/appmaker.webp
+  variant: image
+  size: 1024x768
+  label: 'AppMaker tutorial card'
+  prompt: 'A small robot at a factory workbench assembling a glowing folder-shaped app icon
+    from a scattering of blueprint pieces and a single handwritten idea card, warm inviting
+    lighting, clear approachable illustration suited to a tutorial card, no text, no collage.'
+  negative_prompt: 'text, watermark, signature, logo, caption, letters, words, blurry, low
+    quality, lowres, jpeg artifacts, deformed, disfigured, extra limbs, bad anatomy, bad hands,
+    cropped, out of frame, collage, frame, border, ugly, grainy'
+- id: asset-audit-t004-tutorial-conductor-conductor-app
+  last_art_job_id: 8240
+  source: taskmaster-t-004-tutorial-audit
+  status: pending
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/tutorials/conductor/conductor-app.webp
+  variant: image
+  size: 1024x768
+  label: 'Conductor App tutorial card'
+  prompt: 'A friendly robot holding a glowing smartphone showing a simplified control-room
+    dashboard, steering a small fleet of tiny helper robots in the background, warm inviting
+    lighting, clear approachable illustration suited to a tutorial card, no text, no collage.'
+  negative_prompt: 'text, watermark, signature, logo, caption, letters, words, blurry, low
+    quality, lowres, jpeg artifacts, deformed, disfigured, extra limbs, bad anatomy, bad hands,
+    cropped, out of frame, collage, frame, border, ugly, grainy'
+- id: asset-audit-t004-tutorial-packs-packs
+  last_art_job_id: 8241
+  source: taskmaster-t-004-tutorial-audit
+  status: pending
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/tutorials/packs/packs.webp
+  variant: image
+  size: 1024x768
+  label: 'Packmaker tutorial card'
+  prompt: 'A cheerful robot wrapping a glowing gift-box bundle stuffed with tiny character
+    figures, art scrolls, and treasure tokens, ready to hand off, warm inviting lighting,
+    clear approachable illustration suited to a tutorial card, no text, no collage.'
+  negative_prompt: 'text, watermark, signature, logo, caption, letters, words, blurry, low
+    quality, lowres, jpeg artifacts, deformed, disfigured, extra limbs, bad anatomy, bad hands,
+    cropped, out of frame, collage, frame, border, ugly, grainy'
+- id: asset-audit-t004-tutorial-wonder-wonderlab
+  last_art_job_id: 8242
+  source: taskmaster-t-004-tutorial-audit
+  status: pending
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/tutorials/wonder/wonderlab.webp
+  variant: image
+  size: 1024x768
+  label: 'WonderLab tutorial card'
+  prompt: 'A playful cluttered workshop sandbox of half-finished glowing gadgets, a
+    card-matching table, and curious tinkering robots poking at experiments, warm inviting
+    lighting, clear approachable illustration suited to a tutorial card, no text, no collage.'
+  negative_prompt: 'text, watermark, signature, logo, caption, letters, words, blurry, low
+    quality, lowres, jpeg artifacts, deformed, disfigured, extra limbs, bad anatomy, bad hands,
+    cropped, out of frame, collage, frame, border, ugly, grainy'
+- id: asset-audit-t004-tutorial-wonder-screenfx
+  last_art_job_id: 8243
+  source: taskmaster-t-004-tutorial-audit
+  status: pending
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/tutorials/wonder/screenfx.webp
+  variant: image
+  size: 1024x768
+  label: 'Screen FX tutorial card'
+  prompt: 'A dreamy screen awash in cascading digital rain, drifting fireflies, and softly
+    glowing butterflies layered as ambient light effects, warm inviting lighting, clear
+    approachable illustration suited to a tutorial card, no text, no collage.'
+  negative_prompt: 'text, watermark, signature, logo, caption, letters, words, blurry, low
+    quality, lowres, jpeg artifacts, deformed, disfigured, extra limbs, bad anatomy, bad hands,
+    cropped, out of frame, collage, frame, border, ugly, grainy'
+- id: asset-audit-t004-tutorial-wonder-davinci
+  last_art_job_id: 8244
+  source: taskmaster-t-004-tutorial-audit
+  status: pending
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/tutorials/wonder/davinci.webp
+  variant: image
+  size: 1024x768
+  label: 'Da Vinci Life Sim tutorial card'
+  prompt: 'A renaissance-inspired figure at an easel surrounded by branching glowing pathway
+    sketches representing a life of choices and achievements, warm inviting lighting, clear
+    approachable illustration suited to a tutorial card, no text, no collage.'
+  negative_prompt: 'text, watermark, signature, logo, caption, letters, words, blurry, low
+    quality, lowres, jpeg artifacts, deformed, disfigured, extra limbs, bad anatomy, bad hands,
+    cropped, out of frame, collage, frame, border, ugly, grainy'
+- id: asset-audit-t004-tutorial-wonder-watchlist
+  last_art_job_id: 8245
+  source: taskmaster-t-004-tutorial-audit
+  status: pending
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/tutorials/wonder/watchlist.webp
+  variant: image
+  size: 1024x768
+  label: 'Media Watchlist tutorial card'
+  prompt: 'A cozy living room screen showing a simple three-column queue of glowing film reels
+    and show icons moving from queued to watched, warm inviting lighting, clear approachable
+    illustration suited to a tutorial card, no text, no collage.'
+  negative_prompt: 'text, watermark, signature, logo, caption, letters, words, blurry, low
+    quality, lowres, jpeg artifacts, deformed, disfigured, extra limbs, bad anatomy, bad hands,
+    cropped, out of frame, collage, frame, border, ugly, grainy'
+- id: asset-audit-t004-tutorial-wonder-ruler-hooked
+  last_art_job_id: 8246
+  source: taskmaster-t-004-tutorial-audit
+  status: pending
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/tutorials/wonder/ruler-hooked.webp
+  variant: image
+  size: 1024x768
+  label: 'Ruler Hooked tutorial card'
+  prompt: 'A small seaside ruler in a modest crown casting a fishing line off a castle dock
+    into glowing tidal waters, a tiny kingdom skyline behind them, warm inviting lighting,
+    clear approachable illustration suited to a tutorial card, no text, no collage.'
+  negative_prompt: 'text, watermark, signature, logo, caption, letters, words, blurry, low
+    quality, lowres, jpeg artifacts, deformed, disfigured, extra limbs, bad anatomy, bad hands,
+    cropped, out of frame, collage, frame, border, ugly, grainy'
+- id: asset-audit-t004-tutorial-wonder-voice-lab
+  last_art_job_id: 8247
+  source: taskmaster-t-004-tutorial-audit
+  status: pending
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/tutorials/wonder/voice-lab.webp
+  variant: image
+  size: 1024x768
+  label: 'Voice Lab tutorial card'
+  prompt: 'A friendly robot with a glowing speaker-shaped head listening attentively beside a
+    small home relay device radiating soft sound waves, warm inviting lighting, clear
+    approachable illustration suited to a tutorial card, no text, no collage.'
+  negative_prompt: 'text, watermark, signature, logo, caption, letters, words, blurry, low
+    quality, lowres, jpeg artifacts, deformed, disfigured, extra limbs, bad anatomy, bad hands,
+    cropped, out of frame, collage, frame, border, ugly, grainy'
 
 inspirations:
 - project: ruler-hooked
