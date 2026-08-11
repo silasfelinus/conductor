@@ -7689,3 +7689,20 @@ records:
     empty) is worth the cost each time the candidate pool is this close to zero -- a
     session that only trusts the last note's leftovers risks stopping early or re-checking
     already-excluded files.
+- date: '2026-08-11'
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    An Explore subagent re-scanning the full component/store surface against an explicit
+    exclusion list of every bug class prior cycles already fixed (rather than a fresh,
+    unscoped read) found resetRun() leaking the exact store-wide in-flight-singleton bug
+    resetAll() was fixed for (PR #1778) through a second, more commonly-clicked path
+    ("New run", cancelRun()) the existing guard didn't cover. When a fix closes one entry
+    point to a shared-state bug, checking for sibling entry points to the same state
+    (not just new bug classes) is worth a dedicated pass -- the guard here was scoped to
+    the function name, not the underlying invariant, so it silently missed the twin.
