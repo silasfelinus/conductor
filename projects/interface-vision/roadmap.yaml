@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2969,10 +2969,11 @@ tasks:
       Second Memory Dungeon quality slice is ready for CI on worker/interface-vision-t-104-memory-qc2-b4e9. The pass removes the surviving 260px board-size ceiling so cards can consume genuinely large screens, fixes the stale three-lives death copy now that difficulty lives vary, restores the existing memoryDungeonHighScore localStorage contract to the custom dungeon scoring layer, and submits accumulated dungeon scores to the existing achievement match-record/leaderboard path at floor completion and game over. One intended file changed, components/pages/memory-dungeon.vue.
 
       Second Memory Dungeon quality slice merged as silasfelinus/kind_robots#1763 at 0a236580333e72e3dc44f91636484db79daf92a3. It removed the surviving 260px upper card-size ceiling so the measured layout can make cards as large as the available board permits, restored persistence of the custom dungeon Best score through memoryDungeonHighScore, submitted the accumulated dungeon score through the existing achievement match-record/leaderboard path at floor completion and game over, preserved the memory-master threshold, and made stale fixed-life death copy difficulty-agnostic. Exact-head e1f3d5a049a2416ecde7fc6f1d95513cece810eb completed all 14 observed PR workflows successfully, including TypeScript 31480602608, Contract Tests 31480602533, Layout Contract 31480602548, and MDC Scroll Ownership 31480602498. Production deployment dpl_HtcsaKNanwxBGDJFsRf5Pee74AQs reached READY with aliasError null; /api/version returned HTTP 200 and buildId 0a236580333e72e3dc44f91636484db79daf92a3, confirming the production alias serves the merge. Error/fatal runtime logs for that deployment contained only unrelated SmartIcon /api/icons and root-route Prisma P2039 pool-pressure errors, with no Memory Dungeon route or stack. The worker branch was deleted after merge. Return the umbrella to ready for the next bounded interface slice; the repo's rendered responsive audit remains post-deploy by design.
-    updated: '2026-08-11T10:17:00Z'
+    updated: '2026-08-11T10:27:29Z'
     implementation_pr: 'silasfelinus/kind_robots#1699'
-    claimed_by: 2026-08-11T095000Z-interface-vision-t104-memory-qc2-b4e9
-    claimed_at: '2026-08-11T09:50:00Z'
+    claimed_by: 20260811T102700Z-interface-vision-t104-s39-sched
+    claimed_at: '2026-08-11T10:27:29Z'
+    owner: worker
 
   - id: t-105
     milestone: m6
