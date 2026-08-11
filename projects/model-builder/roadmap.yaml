@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
@@ -635,7 +635,9 @@ tasks:
       Scoped race-condition fix (conductor scheduled agent run): dispatched an Explore subagent to read the full Model Builder surface against the exclusion list of every bug class fixed by prior cycles. Found resetRun() -- reachable from ordinary UI clicks ("New run" in the progress matrix and run history, plus cancelRun()) without going through resetAll() -- leaked the exact same store-wide in-flight-singleton bug the t-029 resetAll() kaizen fixed (PR #1778), through a second path the existing guard didn't cover: it cleared none of generatingItemId/committingItemId/autoBuilding/autoBuildingItemId/batchingOutputKey/draftingField. Concrete trigger: start a batch action on Run A's output group "rewards", reset to Run B before it finishes, Run B's same-named batch controls read as busy until Run A's abandoned call resolves on its own. Fixed by mirroring resetAll()'s clears in resetRun(). Added utils/scripts/verifyModelBuilderResetRunGuard.ts (+ .test.ts) sibling regression guard, wired into package.json/contract-tests.yml. Verified: new guard self-test + guard pass; all pre-existing verifyModelBuilder*.ts guards + selftests still pass; eslint clean (2 pre-existing unrelated no-empty errors confirmed via git stash to predate this change); prettier drift on modelBuilderStore.ts/package.json confirmed pre-existing via git stash, left untouched; vue-tsc --noEmit clean repo-wide; test:workflow-paths green. kind_robots PR #1781 opened from worker/model-builder-t-029-20260811-explore.
 
       Merged silasfelinus/kind_robots#1781 as c08029b51050a1c2193e2cbb89c0ab2eb6a8924a. resetRun() now clears all six store-wide in-flight singletons, mirroring resetAll(). Exact head 509dba69d5a07aa557ca06728a7cc6c3dbd732e4 completed all 15 attached workflows successfully, including TypeScript and Contract verifiers. Recurring polish task rearmed for a future bounded pass.
-    updated: '2026-08-11T18:24:33Z'
+
+      Scoped accessibility fix in Kind Robots: stage-status cells now expose their existing aria-label through an explicit image role so assistive technology can reliably announce stage name and status.
+    updated: '2026-08-11T18:29:00Z'
     implementation_pr: 'silasfelinus/kind_robots#1781'
     owner: worker
     claimed_by: 20260811T182433Z-model-builder-t029-a91f
