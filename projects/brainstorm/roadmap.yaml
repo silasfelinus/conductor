@@ -270,7 +270,7 @@ tasks:
   - id: t-011
     milestone: m2
     title: Add saved/history browser and export/copy handoff
-    status: claimed
+    status: review
     depends_on: t-010
     owner: worker
     updated: '2026-08-11T08:31:52Z'
@@ -280,6 +280,20 @@ tasks:
       Provide a compact saved/history surface that does not steal the candidate workspace.
       Users can reopen sessions, copy one or many selected ideas, and export selected text in
       a useful format. Avoid premature social publishing; saved Brainstorms remain drafts.
+
+      Implemented on worker/brainstorm-t011-20260811: replaced the bare "Reopen" <select>
+      in brainstorm-manager.vue with a compact scrollable card list (name, premise excerpt,
+      candidate count, updated time), each opening its session in one click. Added a
+      session-wide "Kept ideas" panel (all kept candidates across every batch, not just the
+      active one, via a new allKeptCandidates store computed) with per-idea checkboxes
+      defaulted to selected, plus "Copy selected" (clipboard) and "Export .md" (client-side
+      Blob download) actions -- no new server endpoints, built entirely on existing
+      brainstormStore data. Updated verifyBrainstormWorkbench.mjs's testid assertions to
+      match the new list markup in place of the removed <select>. vue-tsc, eslint, prettier
+      (scoped to the new lines -- the file already carried pre-existing whole-file prettier
+      drift from an unrelated prettier-version bump; left untouched rather than blowing up
+      the diff), verifyBrainstormWorkbench.mjs, and verifyBrainstormStoreContract.mjs all
+      pass. kind_robots PR opening next.
     claimed_by: sweep-20260811-brainstorm-t011
     claimed_at: '2026-08-11T08:31:52Z'
 
