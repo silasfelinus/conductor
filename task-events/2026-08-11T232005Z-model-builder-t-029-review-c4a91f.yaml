@@ -1,9 +1,0 @@
-version: 1
-project: model-builder
-task: t-029
-operation: review
-owner: reviewer
-session: 20260811T231245Z-auto-c4a91f
-updated: '2026-08-11T23:20:05Z'
-note: >-
-  Found a real async-finalization UI race in Model Builder: pollAsyncArtJob clears queueState/artJobId before finalizeQueuedArtImage completes, so a regenerate could briefly re-enable Keep this asset against the old candidate while GENERATE_ASSETS was still in-progress. The store already discarded the replacement if the old image was approved during this gap, preventing silent overwrite but wasting the completed render. Fix keeps approval disabled while GENERATE_ASSETS is in-progress and extends the existing approved-asset regression contract to cover the UI half of the race.
