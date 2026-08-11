@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-11T19:32:14Z
+Generated: 2026-08-11T20:09:20Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **586**
-- Outcomes: blocked: 13, cancelled: 1, done: 572
+- Closed tasks recorded: **587**
+- Outcomes: blocked: 13, cancelled: 1, done: 573
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -50,7 +50,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | ruler-hooked | 4 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
-| storybook | 8 | 100% |
+| storybook | 9 | 100% |
 | storymaker | 1 | 100% |
 | superkate-hairstyle-ai | 18 | 100% |
 | superkate-services-calculator | 12 | 100% |
@@ -61,7 +61,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 570 | 99% |
+| software | 571 | 99% |
 
 ## Failure categories
 
@@ -82,6 +82,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-11 `storybook/t-010` — An Explore subagent reading the Storybook store/composables/components directly (not just filenames) found a real soft-lock: answerCurrentBeat() recorded the reader's answer before weaveBeat() generated the next scene, so a failed generation call left the answer committed with no way to retry (awaitingAnswer requires no answer yet, canFinish requires >= 2 beats -- both false right after a failed opening-beat answer). Fixed by awaiting weaveBeat()'s result and rolling the answer/branchHistory entry back on failure. Also worth recording: the repo's capture-group-guard CI check flagged the new guard script's own `match.exec()` result being indexed after an `assert.ok(match, ...)` check rather than one of its four recognized guard shapes (optional chaining, `if (!match) return`, default-destructure, or `match!`) -- assert-based narrowing isn't one of them, so a plain `if (!match) throw` is the safe default for any new `.exec()`/`.match()` call site in this repo, not just assert.ok.
+
 - 2026-08-11 `model-builder/t-029` — An Explore subagent re-scanning the full component/store surface against an explicit exclusion list of every bug class prior cycles already fixed (rather than a fresh, unscoped read) found resetRun() leaking the exact store-wide in-flight-singleton bug resetAll() was fixed for (PR #1778) through a second, more commonly-clicked path ("New run", cancelRun()) the existing guard didn't cover. When a fix closes one entry point to a shared-state bug, checking for sibling entry points to the same state (not just new bug classes) is worth a dedicated pass -- the guard here was scoped to the function name, not the underlying invariant, so it silently missed the twin.
 
 - 2026-08-11 `interface-vision/t-104` — Slice 43 of the general-layout-pass kr-note conversion: a genuinely fresh repo-wide grep for the exact hand-rolled rounded-2xl border border-{status}/40 bg-{status}/10 p-4 text-{status} shape (rather than continuing from slice 42's leftover candidate list) found the pool down to exactly two remaining live candidates (giftshop-manager.vue, wonderlab-review-rollout.vue), both converted clean. Explicitly re-verifying with a fresh sweep rather than assuming a stale list is exhaustive (or empty) is worth the cost each time the candidate pool is this close to zero -- a session that only trusts the last note's leftovers risks stopping early or re-checking already-excluded files.
@@ -93,8 +95,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-11 `storybook/t-019` — When a task spec says a contract should "feed a synthetic value through the component's logic," check whether that logic lives only inline in a Vue SFC's <script setup> -- if so, extract it into a small pure exported function first so the contract genuinely executes the logic (and a future edit that re-inlines it fails loudly) rather than falling back to a source-string-match style that only proves the keyword is present nearby.
 - 2026-08-10 `davinci/t-023` — A long-running interactive flow (life run, quest, playthrough) needs a UI-level exit affordance from day one, not just a resolve-screen reset -- this one shipped with only a manually-cleared localStorage key as the real "abandon" path for weeks before the gap was caught. Reusing the existing reset function (playAgain) behind a window.confirm kept the fix to ~20 lines with no new state.
 - 2026-08-10 `model-builder/t-040` — Pair server-side stale-write protection with matching client affordance guards when a conflicting action is known: the server preserves correctness, while the UI prevents users from entering the race in the first place.
-- 2026-08-10 `model-builder/t-029` — items/[id]/commit.post.ts fetched the build item once at the top of the request and built the final stageStatuses write from that request-start snapshot, even though the write in between (promoteAsset/updateText/createRecord+linkSourceToTarget, the last inside a multi-step prisma.$transaction) can be slow -- and nothing blocks the client from reopening another already-approved stage (a fast PATCH /items/:id) while the commit POST is in flight, so the stale-snapshot final write could silently clobber that concurrent edit back to 'approved'. A distinct bug class from the ~30 prior client-side store races this recurring task has found: a server-side stale-snapshot full-object overwrite across a slow awaited write. Worth checking any route that reads a record early and writes a computed blob back late for the same shape -- re-read immediately before the final write rather than trusting the request-start snapshot.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-11T19:32:14Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-11T20:09:20Z_
