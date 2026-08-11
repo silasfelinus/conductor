@@ -1347,7 +1347,7 @@ books:
     image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-021-the-kind-conductor.webp
     render_gate_error: 'job 8253 CANCELLED: Cancelled before claim: duplicate static delivery for silasfelinus/conductor:projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-021-the-kind-conductor.webp.
       Keeping ArtJob 8252.'
-    render_gate_error_at: '2026-08-11T16:44:56Z'
+    render_gate_error_at: '2026-08-11T17:18:57Z'
   - slot: 22
     id: kr-022
     slug: mermaid-maintenance
@@ -1394,13 +1394,16 @@ books:
     id: kr-025
     slug: art-studio-swarm
     title: Art Studio Swarm
-    status: pending
+    status: done
     seed: 860025
     source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-025
     image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-025-art-studio-swarm.webp
-    render_gate_error: 'job 8257: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of
-      protocol (_ssl.c:1016)>'
-    render_gate_error_at: '2026-08-11T15:53:19Z'
+    rendered_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-025-art-studio-swarm.webp
+    art_image_id: 17487
+    render_seed: 627500564
+    render_engine: krea2
+    completed_at: '2026-08-11T17:29:23Z'
+    prompt_fingerprint: 5c8ff0cbae26a993434e4d559079018ce6d8168c843238dfa9073c738f6fe4fd
   - slot: 26
     id: kr-026
     slug: goat-farm-fix-it
@@ -1518,3 +1521,5 @@ books:
     seed: 860036
     source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-036
     image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-036-constellation-of-care.webp
+    render_gate_error: job 8274 timed out after 600s (still queued/running)
+    render_gate_error_at: '2026-08-11T17:29:22Z'
