@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
@@ -629,11 +629,10 @@ tasks:
       Merged silasfelinus/kind_robots#1778 (squash 351fb884). Verified: new guard self-test + contract both pass; eslint clean (2 pre-existing unrelated no-empty errors confirmed via git stash to predate this change); vue-tsc --noEmit clean repo-wide; prettier drift on modelBuilderStore.ts/package.json confirmed pre-existing via git stash, left untouched. All required exact-head checks green (TypeScript, Contract verifiers, verify, facet-catalog, layout-contract, facet-alias-smoke, Taskmaster checkpoint contract, and 7 Storybook/narrative/Facet contracts). "Build production image" (Publish Production Container) was the only check still running at merge time -- confirmed non-required (mergeable_state had already moved from blocked to unstable once every required check passed, and its own workflow only triggers on package.json/Dockerfile/prisma path changes, which is why it appeared on this PR but not on the unrelated kr-note slices earlier today) -- merged rather than waiting out its full ~30 min timeout for a check with near-zero risk of failure from this diff. Recurring polish task rearmed for a future bounded pass.
 
       Scoped Model Builder run-history accessibility fix: repeated Open and armed Confirm cancellation actions now identify the specific run to assistive technology.
-    updated: '2026-08-11T17:15:00Z'
+
+      Reviewed and merged silasfelinus/kind_robots#1780 as 8ff69a14d1f9207a184780f01b8373e893100f50. Model Builder run-history Open and armed cancellation controls now expose run-specific accessible names. Exact head 21e50901bfbf6046f97fc543dd22ad5415c6b336 completed all 14 attached workflows successfully, including TypeScript Type Check #31516603016 and Contract Tests #31516602906. Recurring polish task rearmed for a future bounded pass.
+    updated: '2026-08-11T17:22:45Z'
     implementation_pr: 'silasfelinus/kind_robots#1778'
-    owner: worker
-    claimed_by: 20260811T171212Z-model-builder-t029-8f3c
-    claimed_at: '2026-08-11T17:12:12Z'
 
   - id: t-030
     milestone: m6
