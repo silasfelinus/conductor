@@ -95,6 +95,42 @@ table:
    actual shot changes (cutaways, alternate angles) rather than treating
    the continuous single-take source.
 
+## 5. Installation — where to put these tools
+
+Silas approved the picks above and asked directly where to install them.
+Answer: on whichever machine actually runs the beat-detection scripts (the
+"target render environment" from `BRIEF.md`'s open Q3) — not in this
+conductor sandbox, which deliberately has none of this stack and never
+runs production tooling.
+
+- **ffmpeg** is a system binary, not a Python package: `brew install ffmpeg`
+  (macOS), `apt install ffmpeg` (Linux, including the kindrobots-unraid
+  box if that ends up being the render machine), or an official static
+  build for Windows. Install it wherever the shell that runs the pipeline
+  scripts lives.
+- **Python packages** (`librosa`, `madmom`, `mediapipe`, `opencv-python`,
+  `scenedetect`) go in a dedicated virtualenv for this project, kept
+  separate from any ComfyUI Python environment:
+  ```
+  python3 -m venv coat-dance-env
+  source coat-dance-env/bin/activate
+  pip install librosa madmom mediapipe opencv-python scenedetect
+  ```
+  Isolating the env matters here specifically because `mediapipe`/`madmom`
+  pin `numpy`/`protobuf` versions that can conflict with ComfyUI's own
+  dependency set — installing straight into a shared ComfyUI env risks
+  breaking it.
+- **Which machine:** beat detection itself is CPU-bound (`librosa`,
+  `madmom`, `scenedetect` don't touch the GPU; `mediapipe` and optical
+  flow can use one but run fine on CPU for a single 5:32 clip), so it
+  doesn't need to live on the GPU/render box specifically — any machine
+  convenient for running scripts works. It's still simplest to put it on
+  the same machine that will run t-006's ComfyUI pipeline, so beat-map
+  output feeds straight in without moving files across machines.
+- **Where in this repo:** nothing to create yet — once t-006 stands up the
+  actual pipeline, installation/setup notes belong in
+  `projects/coat-dance/pipeline/` per `BRIEF.md`'s suggested folder layout.
+
 ## Open items / not resolved by this task
 
 - No tool here was run against the actual file (sandbox has neither
