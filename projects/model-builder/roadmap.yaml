@@ -580,11 +580,11 @@ tasks:
     passes: 0
     stakes: reversible
     note: 'DONE 2026-08-11 (conductor scheduled agent sweep): draftingField is a single store-wide slot (createOwnedSingleton) -- only one draft can be in flight at a time, for any item/field in the run. Each Draft button/textarea in model-builder-item-panel.vue was gated only on isDrafting(thisField), so clicking Draft on a sibling field (or a different item) while a first draft was still pending silently stole the shared slot: the first fields isDrafting() flipped false, its textarea/button re-enabled, and the eventual response could clobber whatever the user had typed -- the same class of bug PR #1787 fixed for the plain type-before-blur case, reopened via a different trigger. Repro: click Draft with AI next to Pitch, then before it resolves click Draft next to Fields, then type in the now-re-enabled Pitch textarea -- the typed text is silently lost when the original Pitch draft lands. Fixed by adding isAnyDraftInFlight (store.draftingField !== null) and gating every Draft button, all three textareas, and isManualActionInFlight (also blocks Auto) on it instead of the narrower per-field check. Updated verifyModelBuilderDraftTextareaGuard.ts (+ selftest) to match the new shape (the old isDrafting(field)-only assertion no longer matched); added utils/scripts/verifyModelBuilderDraftCrossFieldGuard.ts (+ selftest) as a sibling guard for the buttons/isManualActionInFlight, wired into package.json/contract-tests.yml. kind_robots PR #1789, merged. Found via an Explore subagent given an explicit exclusion list of every bug class already fixed this cycle (resetAll/resetRun singleton clears, aria-pressed, draft-textarea-before-blur) and a directive to read the actual guard files rather than trust a summary. Rearmed to ready per recurring-task convention.'
-    updated: '2026-08-11T23:12:45Z'
+    updated: '2026-08-11T23:29:47Z'
     implementation_pr: 'silasfelinus/kind_robots#1789'
     owner: worker
-    claimed_by: 20260811T231245Z-auto-c4a91f
-    claimed_at: '2026-08-11T23:12:45Z'
+    claimed_by: 20260811T232900Z-conductor-sweep-b71ac
+    claimed_at: '2026-08-11T23:29:47Z'
     claimed_at: '2026-08-11T21:27:54Z'
     claimed_by: 20260811T212749Z-conductor-sweep-81edaf
     claimed_at: '2026-08-11T21:27:54Z'
