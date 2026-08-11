@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
@@ -619,11 +619,10 @@ tasks:
       Merged silasfelinus/kind_robots#1759 (squash f35d0c60c2b90cca96a4def04f101c818a63d9ff). Verified: eslint clean on the changed file, vue-tsc --noEmit clean (exit 0), test:layout-contract holds (0 new violations). Noted pre-existing prettier formatting drift in this file (unrelated to the fix, confirmed present before this change via git stash) as a flag for a future dedicated pass rather than folding it into this diff. All 16 PR checks green. Recurring polish task rearmed for a future bounded pass.
 
       Scoped Model Builder recipe-selector interaction fix: quantity inputs inside selectable output labels now stop click propagation without cancelling their native number-input behavior.
-    updated: '2026-08-11T11:39:00Z'
+
+      Merged silasfelinus/kind_robots#1768 as f53a1d0dd0c1cb985443f282e4b242b62db27d18. Model Builder quantity controls now stop clicks from bubbling to the wrapping output label without cancelling the number input's native mouse behavior. Exact head 7b31d2ad27101044415b645fb2ab5e4a79816f7c completed all 14 attached workflows successfully, including TypeScript Type Check #31487447482 and Contract Tests #31487447438. Recurring polish task rearmed for a future bounded pass.
+    updated: '2026-08-11T11:46:00Z'
     implementation_pr: 'silasfelinus/kind_robots#1759'
-    owner: worker
-    claimed_by: 20260811T113246Z-modelbuilder-t029-b4c7e2
-    claimed_at: '2026-08-11T11:32:46Z'
 
   - id: t-030
     milestone: m6
