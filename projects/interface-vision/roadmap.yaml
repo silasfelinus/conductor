@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2961,11 +2961,12 @@ tasks:
       Silas explicitly authorized the next non-byte-exact quality/layout pass in-session on 2026-08-11: fix the Memory Dungeon follow-up bug, do another quality check, and use remaining scope for a general layout pass. This clears the specific t-104 pause recorded after slice 37; proceed with a bounded, visually intentional pass rather than another byte-exact-only sweep.
 
       Memory Dungeon quality pass is ready for CI review on worker/interface-vision-t-104-memory-qc-a7f3. Follow-up fixes keep difficulty and deck changes pending until explicit restart, honor each difficulty's configured starting lives, stop log/leaderboard toggles from shrinking the board by making them overlays, expose the log toggle at small widths, compact life display on small screens, and remove the 48px card-size floor so the maximizing layout cannot force cards outside a shallow viewport. Branch diff is one intended file, components/pages/memory-dungeon.vue (114 additions / 33 deletions against the #1755 merge).
-    updated: '2026-08-11T09:27:00Z'
+
+      Slice 38 / Memory Dungeon quality pass merged as silasfelinus/kind_robots#1758 at 8fa203026eca1b71c2d1783757a0a99c2db2798a. The pass fixed the restart-only settings contract by keeping difficulty and deck choices pending until Enter/Restart, restored each difficulty's configured starting lives, made the Dungeon Log and Global Leaderboard dismissible overlays so neither steals board geometry, exposed the log at small widths, compacted small-screen life chrome, and removed the board algorithm's forced 48px minimum so shallow layouts can still fit. Exact-head PR CI completed green across all 14 observed workflows, including TypeScript 31478486022, Contract Tests 31478486057, Layout Contract 31478486097, and MDC Scroll Ownership 31478486103. Production deployment dpl_2JEmEiAzZzfdCvLS7cnsXtYK2D14 reached READY and /play/memory returned 200 serving build 8fa203026eca1b71c2d1783757a0a99c2db2798a; no error/fatal runtime logs appeared for that deployment in the verification window. Return the umbrella to ready for the next bounded interface slice.
+    updated: '2026-08-11T09:45:00Z'
     implementation_pr: 'silasfelinus/kind_robots#1699'
     claimed_by: 2026-08-11T091700Z-interface-vision-t104-memdungeon-qc-a7f3
     claimed_at: '2026-08-11T09:20:00Z'
-    owner: worker
 
   - id: t-105
     milestone: m6
