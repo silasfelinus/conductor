@@ -186,19 +186,21 @@ tasks:
 - id: t-013
   milestone: m4
   title: Bring the other three Storybook setup steps up to the board
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   note: |-
     The casting board sits inside a four-step wizard whose other steps -- premise, world/flavor, review -- still read as a form, so the "assembling a story" feeling exists on exactly one screen. The world-and-flavor step already uses card-based ingredient pickers and is closest; premise and review are plain. The open design question is whether the whole wizard becomes one board or the steps stay distinct while sharing the card language.
 
-    First bounded t-013 slice: promote the shared narrative ingredient pickers to kr-panel-flat board cards so Storybook's World step uses the same card language as the casting board and existing Review cards. Premise already uses structure cards; broader premise/review composition remains for a later slice.
 
-    Merged Kind Robots PR #1737 as 7c4d9168ffb4f9d1a982928e287cf30812cfdfc3. Shared narrative single- and multi-select ingredient pickers now render as kr-panel-flat board cards, carrying the casting-board card language through Storybook's World step while preserving behavior and accessibility. Exact head d3bce953233eb9473215fbeedb19da41cd74ec33 passed all 15 attached workflows including TypeScript, Contract Tests, Layout, Narrative Accessibility, Storybook Studio, and Taskmaster. Keep t-013 ready: premise title/premise composition and final Review composition still need the next bounded pass before t-016 visual acceptance can unblock.
+    Merged Kind Robots PR #1740 as 47ecd6d72363ef40ec851ed73689f36a670b9dfb. Wrapped the premise (setup step 0) title/premise fields, narrator-voice picker, and story-shape picker in kr-panel-flat board cards, matching the card language already carried into the casting board (#1735/#1736) and the world/flavor step ingredient pickers (#1737). Exact head adda0ad7f947aa5ac250ec3ef660c657cb4ef8f9 passed all 16 attached workflows including TypeScript, Contract Tests (130+ verifiers), and Layout Contract before merge.
+
+    Next bounded slice: the Review step (final setup step) already uses kr-panel-flat cards for its dl summary blocks, so it is closer than premise was, but has not had artwork/ingredient-card treatment (e.g. cast/location thumbnails) applied the way NarrativeIngredientCard does elsewhere. The open design question above -- one board vs. distinct card-language steps -- is still unresolved and best left to a session with visual verification rather than guessed at blind.
   claimed_by: 20260811T032800Z-storybook-t013-auto
   claimed_at: '2026-08-11T03:27:49Z'
-  updated: '2026-08-11T03:27:49Z'
+  updated: '2026-08-11T03:36:53Z'
   owner: worker
+  implementation_pr: 'silasfelinus/kind_robots#1740'
 - id: t-014
   milestone: m4
   title: Add "Start a story with this" links on the object surfaces
