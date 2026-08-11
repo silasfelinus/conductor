@@ -6,6 +6,11 @@ structurally valid image. Quality is NOT judged here: a landed render is parked
 for human review in the ArtJob trainer panel. Structural failures (blank frame,
 wrong aspect, unreadable file) are preserved under rejected/render/, recorded in
 the queue, and re-rolled with a changed seed up to a bounded number of attempts.
+
+WebP output requires Pillow. A fresh sandbox may not have it -- run
+`source scripts/provision_kind_robots_deps.sh` first (it installs Pillow
+alongside the kind_robots verification deps; see coloring-book/t-038) rather
+than rediscovering "Pillow is required for WebP output" mid-batch.
 """
 
 from __future__ import annotations
