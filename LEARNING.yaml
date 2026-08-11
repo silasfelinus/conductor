@@ -7642,3 +7642,17 @@ records:
     happened to be present, the missing piece was a live check against the true delivery target, not
     another generation attempt -- and that same live check surfaced an unrelated pre-existing wrong
     asset that every completion-status-only check had missed for two weeks.'
+- date: '2026-08-11'
+  project: coat-dance
+  task: t-002
+  kind: content
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A content-kind task that already reached needs-human can come back with the human''s
+    reply embedded in the note itself (via Kind Robots For You) rather than a roadmap-field edit --
+    check the tail of the note for an unprocessed human reply before assuming a status: ready/needs-human
+    mismatch is drift. Here Silas had already approved the tool picks and asked a direct follow-up
+    question; the task just needed the follow-up answered and its own pre-written "set status: ready
+    on t-003 yourself" instruction carried out, not a new research pass.'
