@@ -575,11 +575,11 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
-    implementation_pr: kind_robots#1815
+    implementation_pr: kind_robots#1816
     note: |-
       DONE (conductor scheduled agent sweep, resumeRun identity guard): resumeRun()'s in-flight bail-out was actually a total absence of one -- unlike openRun(), which short-circuits (state.run?.id === runId) before ever replacing state.run, resumeRun() unconditionally did state.run = adaptRun(data) once it resolved which run to resume, even when that run was already the active one. model-builder-manager.vue calls resumeRun() unconditionally on every mount, so a normal SPA navigation away from and back to Model Builder while an async "Queue generation in background" render was in flight would swap state.run for a freshly-adapted object (adaptItem always resets artJobId/queueState to null), orphaning pollAsyncArtJob's reference to the live item -- the item shows idle with Generate/Queue re-enabled while the original job still renders server-side, inviting a duplicate concurrent render, and the orphaned poll's eventual completion mutates a detached object nothing in the UI references anymore. Fixed by mirroring openRun's identity guard (state.run?.id === String(data.id)) immediately before the state.run = adaptRun(...) assignment. Added utils/scripts/verifyModelBuilderResumeRunIdentityGuard.ts (+ selftest), wired into package.json/contract-tests.yml, mirroring the existing verifyModelBuilderOpenRunIdentityGuard.ts pattern. Found via an Explore subagent given an explicit exclusion list of every bug class already fixed today; confirmed by reading modelBuilderStore.ts directly (adaptItem's artJobId/queueState reset, openRun's existing guard) before editing. kind_robots PR #1815, merged squash 3b68fd8. Rearmed to ready per recurring-task convention.
 
@@ -592,11 +592,14 @@ tasks:
       Model Builder source-picker thumbnails repeated each record's visible label inside the same button's accessible name. Made the thumbnails decorative in gallery, grid, and list modes so screen readers announce each source once while preserving the visible label.
 
       Merged Kind Robots #1801 (squash e9b828e8ef8de2f26607f36a53fc388153896470). Source-picker thumbnails in gallery, grid, and list modes are now decorative, avoiding duplicate accessible labels inside each source button. Exact head 3c9f5963053b965fc299c2e5ca7738b7fa3ac93d completed all 15 attached workflows successfully, including TypeScript #31560066232 and Contract Tests #31560066202. No API, schema, persistence, production-data, or ArtJob changes.
-    updated: '2026-08-12T08:28:46Z'
-    implementation_pr: 'silasfelinus/kind_robots#1811'
+
+      IN REVIEW, BLOCKED ON PRODUCTION OUTAGE (conductor scheduled agent sweep, cancel-run poll guard): cancelRun()'s poll-stopping step picked at most one of state.runs' and state.run's object instances for the cancelled run id via `??`, then nulled artJobId/queueState only on that one. adaptRun/adaptItem never memoize, so state.runs (populated independently by fetchRuns(), e.g. when the History panel mounts) and state.run (the currently open run) can each hold a distinct object instance for the same run id at the same time -- pollAsyncArtJob's closure references whichever item object was live in state.run when generateItemAssetAsync queued the job, so when `??` picked the state.runs copy the poll kept running against state.run's untouched original, defeating the "clearing artJobId stops the poll" mechanism the surrounding comment describes. Repro: queue an async render, open the History panel (populates state.runs), cancel that same run from there -- the orphaned poll keeps hitting the ArtJob-status endpoint every 5s well past cancellation. Fixed by clearing artJobId/queueState on every matching copy found across both collections. Added utils/scripts/verifyModelBuilderCancelRunPollGuard.ts (+ selftest), wired into package.json/contract-tests.yml, mirroring verifyModelBuilderResumeRunIdentityGuard.ts. Found via an Explore subagent given the full accumulated exclusion list; confirmed by reading modelBuilderStore.ts directly before editing. All local verification green (vue-tsc, eslint, prettier on new files, all 47 test:model-builder-* scripts, verifyCaptureGroupGuards, test:workflow-paths; git diff --stat exactly 5 files).
+
+      kind_robots PR #1816 opened and fully verified (18/19 GitHub Actions checks green, only "Build production image" still in progress when last checked) -- but `mergeable_state: blocked` because the separate required "Vercel" status check is failing with "Account is blocked" (target: https://vercel.com/knowledge/why-is-my-account-deployment-blocked), the same production-down incident just filed as kind-robots/t-064 (kind-robots.vercel.app returning HTTP 402 DEPLOYMENT_DISABLED, project-level live: false). This is now confirmed to block ALL kind_robots PR merges, not just break the live site -- not specific to this PR or this fix. Left status: review (not done) since nothing has merged; do NOT rearm to ready while #1816 is open, to avoid a later session re-doing this same fix on a fresh claim. Once kind-robots/t-064 is resolved (Silas clears the Vercel account block), re-check #1816's Vercel status and merge normally, then close this task out per the recurring-task convention.
     owner: worker
     claimed_by: 20260812T0827-mb-t029
     claimed_at: '2026-08-12T08:28:46Z'
+    updated: '2026-08-12T08:52:00Z'
 
   - id: t-030
     milestone: m6
