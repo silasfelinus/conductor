@@ -575,16 +575,16 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
     note: '"DONE (conductor scheduled agent sweep): canApproveAssets never checked for a GENERATE_ASSETS status of ''stale'', so reopening an approved FIELDS_AND_PROMPTS/PITCH stage after generating a candidate (markDownstreamStale flips the stage stale but never clears artImageId/imagePath) left Keep this asset clickable against the leftover pre-edit image -- a user could edit the prompt, skip regenerating, and commit a candidate that silently mismatched its own text fields. Repro: approve GENERATE_ASSETS with a red-dragon candidate, edit FIELDS_AND_PROMPTS to a blue-whale prompt, re-approve fields without regenerating, click Keep this asset -- the committed records artImageId durably mismatches its own text fields. Fixed by requiring status !== stale in canApproveAssets before approval. Added utils/scripts/verifyModelBuilderStaleAssetApprovalGuard.ts (+ selftest) as a sibling regression guard, wired into package.json/contract-tests.yml. Found via an Explore subagent given an explicit exclusion list of every bug class already fixed this cycle and a directive to read the actual guard files rather than trust a summary. kind_robots PR #1791, merged. Rearmed to ready per recurring-task convention."'
-    updated: '2026-08-11T23:51:47Z'
+    updated: '2026-08-12T00:29:47Z'
     implementation_pr: 'silasfelinus/kind_robots#1791'
     owner: worker
-    claimed_by: 20260811T232900Z-conductor-sweep-b71ac
-    claimed_at: '2026-08-11T23:29:47Z'
+    claimed_by: 20260812T003200Z-conductor-sweep-d8caee
+    claimed_at: '2026-08-12T00:29:47Z'
 
   - id: t-030
     milestone: m6
