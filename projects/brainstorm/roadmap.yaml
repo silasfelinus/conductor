@@ -284,12 +284,12 @@ tasks:
   - id: t-012
     milestone: m3
     title: Define reusable source-object context adapter
-    status: ready
+    status: claimed
     depends_on:
       - t-005
       - t-006
-    owner: null
-    updated: '2026-08-10T08:05:00Z'
+    owner: reviewer
+    updated: '2026-08-12T12:57:51Z'
     passes: 0
     stakes: reversible
     note: >-
@@ -298,6 +298,8 @@ tasks:
       Character and Dream and design the contract so Scenario, Reward, Bot, Project and Prompt
       can follow without bespoke endpoints. Limit context to relevant canonical fields and
       avoid leaking private data across ownership/visibility boundaries.
+    claimed_by: 20260812T1245-brainstorm-t012
+    claimed_at: '2026-08-12T12:57:51Z'
 
   - id: t-013
     milestone: m3
