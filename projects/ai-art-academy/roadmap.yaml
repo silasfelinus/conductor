@@ -1280,8 +1280,14 @@ tasks:
     soft_gate: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-12T04:28:53Z'
+    updated: '2026-08-12T06:30:18Z'
     note: |-
+      RECHECK (conductor scheduled sweep, 2026-08-12T06:30:18Z): still draining, healthy,
+      identical unresolved signature (PENDING 530->470, DONE 4136->4150, 24h throughput
+      DONE=25/CANCELLED=1, recentFailed 2/3 lora_name not-in-list, 1/3 connection-refused).
+      No new signal since the 04:28:53Z check. Full detail in RENDER-BACKLOG.md; blocker
+      unchanged (still needs the private ComfyUI /object_info capture per run_log).
+
       RECHECK (conductor scheduled sweep, 2026-08-12T04:28:53Z): still draining, healthy,
       identical unresolved signature (PENDING 554->530, DONE 4129->4136, 24h throughput
       DONE=40/CANCELLED=1, recentFailed 2/3 lora_name not-in-list, 1/3 connection-refused).
