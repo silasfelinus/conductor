@@ -352,7 +352,7 @@ pitches:
 
   - id: ant-farm-excavation
     title: Ant Farm Excavation
-    status: pitched
+    status: candidate
     priority: 13
     surprise: >
       A cross-section sand column, like a childhood ant farm, where a small colony of
@@ -380,6 +380,21 @@ pitches:
     acceptance:
       - at least two tunnels are visibly under construction or collapse at any time
       - excavated trinkets appear at most once per minute and do not repeat consecutively
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/ant-farm-excavation.vue
+        pull_request: silasfelinus/kind_robots#1821
+        verification:
+          - eslint
+          - prettier
+          - vue-tsc (full project)
+          - test:animation-catalog
+          - test:animation-component-attempts
+          - test:workflow-paths
+          - check_animation_novelty.py --strict
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
 
   - id: marble-run-contraption
     title: Marble Run Contraption
