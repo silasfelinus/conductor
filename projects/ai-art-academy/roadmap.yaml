@@ -1280,8 +1280,21 @@ tasks:
     soft_gate: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-12T10:40:00Z'
+    updated: '2026-08-12T22:28:47Z'
     note: |-
+      RECHECK (conductor scheduled Agent run, 2026-08-12T22:28:47Z, logged in
+      RENDER-BACKLOG.md): kind-robots/t-064 (the Vercel production outage that blocked
+      the 10:40Z check below) is now resolved, so `GET /api/art/queue/stats` is
+      reachable again -- draining, healthy: PENDING 442->422 all-time, DONE 4157->4162,
+      oldestPending job 4893 now ~189h (same single straggler, not a new stall).
+      recentFailed (last 3): unchanged, still 2/3 the original t-044 signature (ComfyUI
+      /prompt HTTP 400, lora_name not-in-list), 1/3 connection-refused. Blocker itself
+      unchanged and unrelated to the now-resolved outage -- still needs the private
+      ComfyUI /object_info capture from a Tailscale-connected machine this sandbox
+      can't reach, to reconcile against Resource localPath via
+      scripts/compare_comfy_lora_paths.py. Not attempting a 9th blind naming-convention
+      guess. gate_human: true / soft_gate: true unchanged.
+
       RECHECK BLOCKED (conductor scheduled sweep, 2026-08-12T10:40:00Z):
       `recheck_render_queue.py`'s `GET /api/art/queue/stats` now returns HTTP 402
       "Payment Required" -- the same kind-robots/t-064 production-wide Vercel
