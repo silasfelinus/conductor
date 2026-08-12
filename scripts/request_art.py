@@ -36,7 +36,7 @@ Usage examples:
 
 Environment variables:
   KR_API_TOKEN   Admin API key for kind_robots (required in live mode)
-  KR_BASE_URL    Base URL for kind_robots API (default: https://kind-robots.vercel.app)
+  KR_BASE_URL    Base URL for kind_robots API (default: https://kindrobots.org)
 """
 
 import argparse
@@ -51,9 +51,9 @@ from pathlib import Path
 # Constants
 # ---------------------------------------------------------------------------
 
-# kindrobots.org / www.kindrobots.org are not active deployments; everything
-# runs on the Vercel origin. Override with KR_BASE_URL if that changes.
-DEFAULT_BASE_URL = "https://kind-robots.vercel.app"
+# kindrobots.org is the canonical public and API origin. Override with
+# KR_BASE_URL only for an intentional alternate deployment.
+DEFAULT_BASE_URL = "https://kindrobots.org"
 ENDPOINT_PATH = "/api/conductor/art-request"
 
 # Conductor-owned image root — images for projects live here relative to
