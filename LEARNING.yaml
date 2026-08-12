@@ -7779,3 +7779,12 @@ records:
     merged precedent exactly is safe to finish without going back for a second decision,
     since the policy call was already made, but silently marking the whole task done on the
     merge alone would have left a real gap open while reporting it closed.
+- date: '2026-08-12'
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A prior session's branch-medic flag (stranded worker/model-builder-t-029-20260811-c4a91f, real tested fix never turned into a PR) was picked up and opened as PR #1792 by a later session, then reviewed/merged cleanly by this one -- the cross-session rescue handoff described in AGENTS.md's branch-medic role worked end-to-end without any direct coordination between the three sessions involved."
