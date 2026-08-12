@@ -1,9 +1,0 @@
-version: 1
-project: brainstorm
-task: t-012
-operation: blocked
-updated: '2026-08-12T16:26:00Z'
-note: >-
-  BLOCKED after repeated quality/privacy review failures on Kind Robots PR #1820. AGENTS.md requires a quality/scope rejection to consume a pass and to block at the third such rejection. This task has had at least four distinct quality rejections (stale Character resolve plus source race; overlapping search race; cached Character search; and the current fail-open fresh-list failure affecting Character and Dream), although connector-native ready events did not increment the roadmap passes field. Current exact head e7272c618476d38e9e9cca84edfc7cbc4e2423a5 is Actions-green but still fails closed incorrectly on list retrieval: Character forced fetch falls back to cached characters on error, and Dream fetch returns [] on error while the adapter ignores that result and searches stale store.dreams. Do not continue automatic retry churn. Resolution should explicitly design a fail-closed adapter/list-result contract, then return the task to ready deliberately. Vercel remains separately blocked at the account level.
-learning: >-
-  Authorization-sensitive pickers must distinguish a successful fresh retrieval from store fallback/cache behavior; forcing a fetch is insufficient if the store fails open or the adapter ignores the fresh return value.

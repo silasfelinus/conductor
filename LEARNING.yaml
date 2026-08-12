@@ -7807,3 +7807,14 @@ records:
     this instance; the completion-gate scanner itself would be more robust generalized to
     flag any approveStage/rejectStage call after an await with no adjacent status check,
     rather than needing a new file per call site each time this shape recurs.
+- date: '2026-08-12'
+  project: brainstorm
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: blocked
+  failure_category: null
+  lesson: Authorization-sensitive pickers must distinguish a successful fresh retrieval from store fallback/cache
+    behavior; forcing a fetch is insufficient if the store fails open or the adapter ignores the fresh
+    return value.
