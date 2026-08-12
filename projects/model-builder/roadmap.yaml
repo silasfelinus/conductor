@@ -575,16 +575,16 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#1816'
     note: 'DONE THIS CYCLE (conductor scheduled agent sweep, close-out): kind_robots PR #1816 (cancelRun poll-guard fix) was merged directly by Silas at 2026-08-12T20:57:33Z, well after this session''s original PR-blocked status was recorded. Note: the required Vercel status check was STILL failing ("Account is blocked") at merge time -- Silas merged the code fix anyway, an admin override he is authorized to make, independent of the still-unresolved kind-robots/t-064 production outage (confirmed still returning HTTP 402 DEPLOYMENT_DISABLED as of this close-out, ~20:5X UTC). The code fix itself was fully verified before this session opened the PR: vue-tsc/eslint/prettier clean, all 47 test:model-builder-* scripts pass, verifyCaptureGroupGuards and test:workflow-paths clean. Rearmed to ready per recurring-task convention (recurring tasks never reach status=done). ADVISORY for the next session claiming this: kind-robots/t-064 (production outage) is still open as of this close-out -- a fresh model-builder/t-029 cycle will just produce another kind_robots PR stuck behind the same required-check block unless Silas has resolved the Vercel account by then. Worth checking t-064''s live status before claiming, though this is advisory only, not a hard dependency.'
     owner: worker
-    claimed_by: 20260812T0827-mb-t029
-    claimed_at: '2026-08-12T08:28:46Z'
-    updated: '2026-08-12T20:59:25Z'
+    claimed_by: 20260812T151449-0700-auto11-f6c2
+    claimed_at: '2026-08-12T22:14:49Z'
+    updated: '2026-08-12T22:14:49Z'
 
   - id: t-030
     milestone: m6
