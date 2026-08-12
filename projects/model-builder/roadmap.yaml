@@ -945,3 +945,25 @@ tasks:
     claimed_by: 20260810T221406Z-modelbuilder-t040-srqbk
     claimed_at: '2026-08-10T22:14:06Z'
     updated: '2026-08-10T22:23:49Z'
+
+  - id: t-041
+    milestone: m6
+    title: "Run-scope the background pushItem/batchPushItems network-exception catch path"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-029 (kind_robots PR #1825, 2026-08-12, run-history cancellation-race
+      fix). The batch editor's background pushItem/batchPushItems calls already run-gate
+      their `{success:false}` response path, but the raw network-exception (rejection)
+      path still falls through to the global handleError -- so a request that throws
+      (rather than resolving with success:false) can still surface an error toast/state
+      for a run the user has since cancelled or moved away from, the same class of
+      "action still fires after the user's context changed" issue t-029's history-panel
+      fix addressed for the synchronous UI path. Find the pushItem/batchPushItems
+      catch blocks in modelBuilderStore.ts and gate the exception-path handling the same
+      way the success:false path already is (skip/no-op if the run is stale/cancelled),
+      rather than unconditionally calling handleError. Front-end/store change only; no
+      schema change expected.
+    claimed_by: null
+    claimed_at: null
