@@ -1,7 +1,0 @@
-version: 1
-project: brainstorm
-task: t-012
-operation: ready
-updated: '2026-08-12T16:21:00Z'
-note: >-
-  CORRECTION TO THE 2026-08-12 e7272c6 REVIEW NOTE: the failed-fresh-fetch privacy issue affects both list adapters, not only Character. Character fetchCharacters(true) returns the existing persisted characters array on request failure, and characterAdapter.search then reads store.characters. Dream fetchDreams() returns [] on request failure but leaves store.dreams intact, and dreamAdapter.search ignores the returned fresh array and reads store.dreams instead. Thus either picker can surface stale pre-auth-transition rows when fresh authorization/list retrieval fails. Make both Brainstorm source searches fail closed on unsuccessful fresh retrieval and add regression coverage with preloaded cached rows plus failed fetches, asserting zero candidates. PR #1820 exact head e7272c618476d38e9e9cca84edfc7cbc4e2423a5 remains Actions-green but separately blocked by Vercel Account is blocked.

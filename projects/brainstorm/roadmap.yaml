@@ -288,7 +288,7 @@ tasks:
     depends_on:
       - t-005
       - t-006
-    updated: '2026-08-12T16:14:10Z'
+    updated: '2026-08-12T16:21:00Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -305,6 +305,8 @@ tasks:
       FIX PUSHED 2026-08-12 to Kind Robots PR #1820 exact head e7272c6: characterAdapter.search now calls store.fetchCharacters(true) instead of the unforced default, so the source picker can no longer surface a pre-auth-transition cached Character list -- same staleness class as the resolve() fix, just on the search path. Confirmed Dream's fetchDreams()/fetchDreamById() have no equivalent hasLoaded cache short-circuit, so no analogous fix was needed there. vue-tsc/eslint/prettier clean on changed files; verifyBrainstormSourceAdapters.test.ts extended with a regression assertion and passes; verifyBrainstormWorkbench.mjs/verifyBrainstormStoreContract.mjs/test:workflow-paths/verifyCaptureGroupGuards.ts all clean. Awaiting re-review; merge still blocked separately on kind-robots/t-064 (Vercel account gate).
 
       FOLLOW-UP REVIEW REJECTED (quality/privacy boundary) on Kind Robots PR #1820 exact head e7272c618476d38e9e9cca84edfc7cbc4e2423a5. Character search now calls fetchCharacters(true), but characterStore.fetchCharacters() catches failed revalidation and returns the existing persisted characters array; the adapter then searches store.characters anyway. An expired/unauthorized/network-failed forced fetch can therefore still surface stale private Character rows. Make the Brainstorm Character picker fail closed on unsuccessful fresh authorization (prefer adapter-scoped handling rather than changing global offline fallback semantics unless audited) and add a regression proving a failed forced fetch yields no cached candidates. All 21 attached GitHub Actions passed on this head. Separate Vercel status remains failure: Account is blocked; do not bypass that gate.
+
+      CORRECTION TO THE 2026-08-12 e7272c6 REVIEW NOTE: the failed-fresh-fetch privacy issue affects both list adapters, not only Character. Character fetchCharacters(true) returns the existing persisted characters array on request failure, and characterAdapter.search then reads store.characters. Dream fetchDreams() returns [] on request failure but leaves store.dreams intact, and dreamAdapter.search ignores the returned fresh array and reads store.dreams instead. Thus either picker can surface stale pre-auth-transition rows when fresh authorization/list retrieval fails. Make both Brainstorm source searches fail closed on unsuccessful fresh retrieval and add regression coverage with preloaded cached rows plus failed fetches, asserting zero candidates. PR #1820 exact head e7272c618476d38e9e9cca84edfc7cbc4e2423a5 remains Actions-green but separately blocked by Vercel Account is blocked.
 
   - id: t-013
     milestone: m3
