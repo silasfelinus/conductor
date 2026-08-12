@@ -284,11 +284,11 @@ tasks:
   - id: t-012
     milestone: m3
     title: Define reusable source-object context adapter
-    status: review
+    status: ready
     depends_on:
       - t-005
       - t-006
-    updated: '2026-08-12T15:37:08Z'
+    updated: '2026-08-12T16:14:10Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -303,10 +303,8 @@ tasks:
       FOLLOW-UP REVIEW REJECTED (quality) on Kind Robots PR #1820 exact head bd8287580ed567b057fa2292ee11145fe375ff0c. The sourceSearchToken race fix is correct and all 21 attached GitHub Actions completed successfully, but Character search still calls fetchCharacters() with its default force=false. characterStore short-circuits to persisted/in-memory characters when hasLoaded is true, so after an auth transition the Brainstorm source picker can still list stale Character rows the current session may no longer be authorized to view. Force a fresh authorized Character list fetch for search (or equivalent server-authorized search path) and add regression coverage. Separate Vercel status remains failure: Account is blocked; do not bypass that gate.
 
       FIX PUSHED 2026-08-12 to Kind Robots PR #1820 exact head e7272c6: characterAdapter.search now calls store.fetchCharacters(true) instead of the unforced default, so the source picker can no longer surface a pre-auth-transition cached Character list -- same staleness class as the resolve() fix, just on the search path. Confirmed Dream's fetchDreams()/fetchDreamById() have no equivalent hasLoaded cache short-circuit, so no analogous fix was needed there. vue-tsc/eslint/prettier clean on changed files; verifyBrainstormSourceAdapters.test.ts extended with a regression assertion and passes; verifyBrainstormWorkbench.mjs/verifyBrainstormStoreContract.mjs/test:workflow-paths/verifyCaptureGroupGuards.ts all clean. Awaiting re-review; merge still blocked separately on kind-robots/t-064 (Vercel account gate).
-    owner: worker
-    claimed_by: 20260812T1520-sched-t012-fix2
-    claimed_at: '2026-08-12T15:32:05Z'
-    implementation_pr: 'silasfelinus/kind_robots#1820'
+
+      FOLLOW-UP REVIEW REJECTED (quality/privacy boundary) on Kind Robots PR #1820 exact head e7272c618476d38e9e9cca84edfc7cbc4e2423a5. Character search now calls fetchCharacters(true), but characterStore.fetchCharacters() catches failed revalidation and returns the existing persisted characters array; the adapter then searches store.characters anyway. An expired/unauthorized/network-failed forced fetch can therefore still surface stale private Character rows. Make the Brainstorm Character picker fail closed on unsuccessful fresh authorization (prefer adapter-scoped handling rather than changing global offline fallback semantics unless audited) and add a regression proving a failed forced fetch yields no cached candidates. All 21 attached GitHub Actions passed on this head. Separate Vercel status remains failure: Account is blocked; do not bypass that gate.
 
   - id: t-013
     milestone: m3
