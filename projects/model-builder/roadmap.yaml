@@ -949,7 +949,7 @@ tasks:
   - id: t-041
     milestone: m6
     title: "Run-scope the background pushItem/batchPushItems network-exception catch path"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: >
@@ -965,5 +965,7 @@ tasks:
       way the success:false path already is (skip/no-op if the run is stale/cancelled),
       rather than unconditionally calling handleError. Front-end/store change only; no
       schema change expected.
-    claimed_by: null
-    claimed_at: null
+    claimed_by: 20260812T232745Z-agent-mb041
+    claimed_at: '2026-08-12T23:29:05Z'
+    owner: worker
+    updated: '2026-08-12T23:29:05Z'
