@@ -12,7 +12,7 @@ from __future__ import annotations
 import build_conductor_summary as summary
 
 
-def report_only_daily_dream(_dry_run: bool = False) -> dict:
+def report_only_daily_dream(dry_run: bool = False) -> dict:
     return {
         "status": "idle",
         "message": "Daily Dream creation is owned by the ordered daily-digest cycle.",
