@@ -326,6 +326,18 @@ def compute_transition_ops(
             ops.append(("set", "status", target))
         if target not in {"claimed", "review"}:
             ops.append(("unset", "owner", None))
+        if target == "ready":
+            ops.append(("unset", "claimed_by", None))
+            ops.append(("unset", "claimed_at", None))
+            implementation_pr = event.get("implementation_pr")
+            if implementation_pr is not None:
+                if not isinstance(implementation_pr, str) or not VERIFY_PR_RE.match(implementation_pr.strip()):
+                    raise ValueError(
+                        f"implementation_pr must look like owner/repo#number, got {implementation_pr!r}"
+                    )
+                ops.append(("set", "implementation_pr", implementation_pr.strip()))
+            elif not task.get("recurring"):
+                ops.append(("unset", "implementation_pr", None))
 
     if operation == "needs-human":
         ops.append(("set", "soft_gate", "true" if event.get("soft_gate") else "false"))
