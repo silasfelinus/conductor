@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-12T00:30:26Z
+Generated: 2026-08-12T00:44:56Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **590**
-- Outcomes: blocked: 13, cancelled: 1, done: 576
+- Closed tasks recorded: **591**
+- Outcomes: blocked: 13, cancelled: 1, done: 577
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -41,7 +41,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 54 | 100% |
+| model-builder | 55 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -61,7 +61,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 574 | 99% |
+| software | 575 | 99% |
 
 ## Failure categories
 
@@ -82,6 +82,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-12 `model-builder/t-029` — A prior session's branch-medic flag (stranded worker/model-builder-t-029-20260811-c4a91f, real tested fix never turned into a PR) was picked up and opened as PR #1792 by a later session, then reviewed/merged cleanly by this one -- the cross-session rescue handoff described in AGENTS.md's branch-medic role worked end-to-end without any direct coordination between the three sessions involved.
 - 2026-08-11 `digital-storefront/t-005` — Routine state reconciliation (checking a PR referenced by a hard-gated needs-human task, not because anything prompted it) found Silas had already merged kind_robots #1668 himself -- decisive objective evidence per docs/state-reconciliation.md that he'd answered the gate's own multiple-choice question. But the merge only covered 4 of the 5 originally-flagged routes; a fifth (rewards/random.get.ts) still had the identical unfiltered-access gap. Closing a human gate on "the human acted" evidence still needs a scope check against the gate's own original list -- a partial fix that matches the merged precedent exactly is safe to finish without going back for a second decision, since the policy call was already made, but silently marking the whole task done on the merge alone would have left a real gap open while reporting it closed.
 
 - 2026-08-11 `model-builder/t-029` — An Explore subagent given an explicit list of every bug class already fixed this same day (two singleton-clearing fixes plus an aria-pressed fix) and told to read the actual store/component code rather than trust a summary found a genuinely different bug shape: three textareas bound to local component refs that only pushed to the store on @change (blur), so the store's own "don't clobber a newer edit" guard in draftText() -- which only compares against the store's value -- couldn't see text the user was still mid-typing. The fix (disable the textarea while its own field is drafting) mirrors a gate already present one UI element over (the "Draft with AI" button), which is often a good signal that an adjacent, un-gated control was simply missed rather than intentionally left open.
@@ -96,7 +97,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-11 `storybook/t-013` — A bounded-slice task that keeps re-arming to ready across several same-day cycles (three prior PRs: #1740, #1741, #1745) is not necessarily still open -- read the component directly against the task's own stated scope before assuming there is always another slice. Here the wizard's remaining plain field (one textarea) was the entire gap; a ten-line diff closed it, and the task's own note had already flagged this as a likely stopping point. Checking cheaply (grep the shared picker components for kr-panel-flat, read the one remaining section) before claiming avoided a fifth guessed-scope PR.
 - 2026-08-11 `coat-dance/t-002` — A content-kind task that already reached needs-human can come back with the human's reply embedded in the note itself (via Kind Robots For You) rather than a roadmap-field edit -- check the tail of the note for an unprocessed human reply before assuming a status: ready/needs-human mismatch is drift. Here Silas had already approved the tool picks and asked a direct follow-up question; the task just needed the follow-up answered and its own pre-written "set status: ready on t-003 yourself" instruction carried out, not a new research pass.
 - 2026-08-11 `taskmaster/t-003` — A "delivery verification" check that only tests ArtJob/DB completion status or a git-ignored local checkout can never catch a wrong-but-present file at the destination -- it has to HEAD+fetch the actual public media origin (media.acrocatranch.com for kind_robots) and, ideally, spot-check content against intent. This task sat blocked for two weeks on a real infra gap (no confirmed delivery precedent), but once conductor PR #2047 fixed destination-preservation and KR_API_TOKEN happened to be present, the missing piece was a live check against the true delivery target, not another generation attempt -- and that same live check surfaced an unrelated pre-existing wrong asset that every completion-status-only check had missed for two weeks.
-- 2026-08-11 `storybook/t-012` — Keep drag gestures additive to an already-accessible control path: native mouse drag can live on the card artwork while a dedicated touch handle uses Pointer Events, avoiding both mouse-only drag and accidental drags from the role buttons.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-12T00:30:26Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-12T00:44:56Z_
