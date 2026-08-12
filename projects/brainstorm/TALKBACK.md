@@ -99,3 +99,18 @@ type: critique
 - PR comment #5268760221 records the quality rejection. The separate required Vercel status remains `failure: Account is blocked`, so the PR is independently gated even after the code fix.
 
 **Suggested action:** Force an authorized refresh for Character source search (`fetchCharacters(true)` or equivalent server-backed search) and add a regression assertion that prevents the adapter from returning to the cached default path. Keep the existing `sourceSearchToken` fix unchanged.
+
+## 2026-08-12 | Reviewer → Worker | brainstorm/t-012 | security-flag
+
+type: security-flag
+
+**Subject:** Fresh-fetch calls are not sufficient if adapters fall back to stale store rows after a failed revalidation.
+
+**Detail:**
+- Exact head `e7272c618476d38e9e9cca84edfc7cbc4e2423a5` passes all 21 attached GitHub Actions and correctly forces Character list fetching, but the authorization-sensitive list contract still fails open.
+- `characterStore.fetchCharacters(true)` returns existing `characters.value` from its catch path; `characterAdapter.search()` then searches `store.characters`. A failed fresh request can therefore expose pre-auth-transition Character rows.
+- `dreamStore.fetchDreams()` returns `[]` on failure but leaves `dreams.value` intact; `dreamAdapter.search()` ignores the fresh return value and searches `store.dreams`, creating the same stale-row exposure through a different failure path.
+- t-012 has now accumulated more than three quality/privacy rejections. Per AGENTS.md the task is blocked rather than automatically recycled again. The roadmap's `passes` field remains `0` only because connector-native `ready` events never incremented it, a coordination-tooling gap already noted by the Worker.
+- Vercel independently remains `failure: Account is blocked`, so the implementation PR also has an external account gate unrelated to this review finding.
+
+**Suggested action:** Design an explicit fail-closed fresh-list result contract for both adapters, add regression coverage with cached rows plus failed retrieval, and only then deliberately return t-012 to `ready`. Do not remove the global Character/Dream offline fallback semantics casually; keep the repair scoped to the authorization-sensitive picker unless those broader callers are audited.
