@@ -1,4 +1,4 @@
-updated: "2026-07-29T19:06:47+00:00"
+updated: "2026-08-12T11:33:07+00:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -683,3 +683,71 @@ pitches:
       - startup and clipped Screen FX surfaces both render
       - no resource leaks across repeated mounts
       - concurrent cluster cap and per-cluster facet cap hold under continuous nucleation
+
+  - id: candlelit-reliquary
+    title: Candlelit Reliquary
+    status: pitched
+    priority: 21
+    surprise: >
+      A row of slender tapers burns on a stone ledge, each flame guttering slightly in an
+      unseen draft. Melted wax beads at the rim and drips down the candle body in slow,
+      irregular runs, pooling on the ledge below into a growing, lumpy accretion. Once a taper
+      burns down to a stub its flame gutters out and a fresh full-height taper silently rises
+      in its place, while the wax pool beneath it slowly softens and subsides back toward a
+      thin sheet over many cycles, keeping the ledge from ever fully clogging.
+    passive_loop: >
+      Three to five candles burn independently on staggered timers. Each candle's flame is a
+      small billboard sprite with wick-anchored flicker (procedural noise, not physically
+      simulated combustion). Wax runs are seeded at the rim at a slow, irregular rate and
+      follow a fixed vertical path down the candle's silhouette with slight per-run horizontal
+      drift, each run finishing by depositing into a 1D height-map array for that candle's
+      ledge segment -- the same "accumulate into a height map, don't keep every particle"
+      approach as the existing grain/pile pattern, but the deposit softens and decays the
+      height map slightly on every frame rather than only leveling past a repose threshold, so
+      the pool visibly grows on drip events and visibly (slowly) relaxes between them. When a
+      candle's remaining- height timer reaches zero, the flame gutters (a brief non-looping
+      snuff animation), the stub fades, and a fresh full taper eases up from the base over
+      about two seconds before the flame relights.
+    optional_interaction: >
+      Pointer proximity to a flame bends it gently away, as if from displaced air, springing
+      back once the pointer moves off -- no lasting state change. A click on a candle forces
+      an immediate wax run from that candle's current rim position (rate- limited to one
+      forced run per candle per relight cycle), letting a visitor nudge the pooling forward
+      without being able to spam it into an oversized accretion.
+    technique: >
+      Canvas 2D. Candle bodies are static tapered-rectangle paths redrawn only on
+      height/relight changes, not every frame. Flames are billboard sprites driven by a small
+      flicker noise function. Wax runs are short-lived falling primitives (a bounded pool,
+      same discipline as existing grain/leaf systems elsewhere in the catalog) that terminate
+      by writing into a per-candle height-map array, which is what actually gets rendered as
+      the pool -- so render cost stays flat regardless of how many runs have occurred. The
+      relight taper-rise is a simple eased height interpolation on the candle body, not a
+      particle effect.
+    reduced_motion: >
+      A single static frame of all candles mid-burn at varied heights with modest wax pools
+      already in place, flames rendered as a fixed glow shape with no flicker, no drips, and
+      no relight cycle -- only a very slow, subtle flame-glow brightness drift to confirm the
+      piece is alive.
+    performance_risk: >
+      Unbounded wax-run particle count under a long uptime. Cap concurrent in-flight runs
+      across all candles (shared small pool, same bound as the hourglass-cascade grain pool),
+      store pooled wax purely as per-candle height-map arrays rather than per-drip geometry
+      history, and cap flame flicker and wax-run spawn rate independent of viewport size or
+      elapsed session time.
+    novelty: >
+      The core loop is continuous viscous-drip accumulation into a softening, self- decaying
+      pool paired with a stub-to-fresh-taper relight cycle, distinct from every existing
+      pitch. Hourglass-cascade accumulates discrete dry grains into a pile that only levels
+      past an angle-of-repose threshold and never softens or decays between events; geode-
+      bloom grows faceted crystal lattice geometry outward and recedes facet-by-facet, not a
+      viscous pool that slumps continuously; kintsugi-weather repairs existing fractures
+      rather than depositing new material; tapestry-loom additively constructs then fully
+      unravels a woven pattern, with no pooling or decay dynamic at all. No existing pitch
+      uses continuous soft-material drip accumulation with passive decay, or a burn-
+      down/relight replacement cycle.
+    acceptance:
+      - each candle's flame flickers continuously without requiring interaction
+      - a full burn-down-to-relight cycle per candle completes within the design's target duration and never leaves a candle stuck at zero height
+      - wax pool height visibly grows on drip events and visibly relaxes between them, never resetting instantly and never growing without bound
+      - pointer flame-bend and click-triggered forced drip never block underlying page input, and the forced-drip click is rate-limited to once per candle relight cycle
+      - concurrent wax-run pool size and per-candle height-map bin count stay fixed regardless of viewport size or elapsed session time
