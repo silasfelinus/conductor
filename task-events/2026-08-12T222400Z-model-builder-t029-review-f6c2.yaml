@@ -1,0 +1,15 @@
+version: 1
+project: model-builder
+task: t-029
+operation: review
+owner: worker
+session: 20260812T151449-0700-auto11-f6c2
+updated: '2026-08-12T22:24:00Z'
+note: >
+  Audited the Model Builder run-history cancellation path. The confirmation handler fired
+  cancelRun without awaiting it and left Refresh, New run, other Cancel buttons, and Open
+  enabled while the cancellation PATCH was in flight. That allowed duplicate or conflicting
+  run-history actions against state that was about to be removed/reset. Implementation branch
+  worker/model-builder-t029-cancel-history-f6c2 serializes cancellation in the history UI,
+  awaits the store action, disables competing controls during the request, and exposes a
+  row-level busy state/loading affordance.
