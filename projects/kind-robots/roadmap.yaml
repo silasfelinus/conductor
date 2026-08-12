@@ -2289,3 +2289,45 @@ tasks:
     claimed_by: 20260810T061722Z-auto-e939f1
     claimed_at: '2026-08-10T06:17:22Z'
     updated: '2026-08-10T06:31:30Z'
+
+  - id: t-064
+    milestone: m3
+    title: "PRODUCTION DOWN: kind-robots.vercel.app returns 402 DEPLOYMENT_DISABLED"
+    status: needs-human
+    gate_human: true
+    stakes: outward-facing
+    passes: 0
+    note: >-
+      FOR SILAS: The production site (https://kind-robots.vercel.app and its
+      *.vercel.app aliases) is returning HTTP 402 "Payment required /
+      DEPLOYMENT_DISABLED" on every route as of 2026-08-12T08:34Z, confirmed
+      both via a direct curl and via the authenticated Vercel MCP connector
+      (mcp__Vercel__web_fetch_vercel_url) against /api/health/database.
+
+      What was checked: `mcp__Vercel__get_project` on prj_x6HB2IPpQbvqNqiYVgu3IibJ6FZf
+      shows the latest production deployment (dpl_ExxsAXLYM5podB7DyELze2nTCXsN,
+      commit 3b68fd8) itself as `readyState: READY`, but the PROJECT-level
+      field `"live": false`. That combination -- a ready build that the
+      platform still won't route traffic to -- is the signature of an
+      account-level gate (spend cap hit, payment method failed, subscription
+      lapsed) rather than a broken deployment or a code bug. No custom
+      production domain is configured (only *.vercel.app aliases), so there is
+      no alternate live URL currently serving traffic either.
+
+      Side effects already observed this session: kind_robots API endpoints
+      that conductor scripts call for routine monitoring (fetch_todos.py's
+      Todos endpoint, recheck_render_queue.py's /api/art/queue/stats) both
+      returned HTTP 402 for the same reason, not their own separate bugs --
+      don't chase those as independent issues until this is resolved.
+
+      TO APPROVE / RESOLVE: this needs Silas's direct action on the Vercel
+      dashboard (billing/plan page for the silasfelinus-projects team) --
+      agents have no billing/payment authority per AGENTS.md. Once the account
+      is back in good standing (or a redeploy is triggered if that's what
+      clears it), re-check with `mcp__Vercel__web_fetch_vercel_url` on
+      /api/health/database and set status: done with what fixed it.
+    claimed_by: null
+    claimed_at: null
+    approved_by_human: false
+    owner: null
+    updated: '2026-08-12T08:40:00Z'
