@@ -7788,3 +7788,22 @@ records:
   outcome: done
   failure_category: null
   lesson: "A prior session's branch-medic flag (stranded worker/model-builder-t-029-20260811-c4a91f, real tested fix never turned into a PR) was picked up and opened as PR #1792 by a later session, then reviewed/merged cleanly by this one -- the cross-session rescue handoff described in AGENTS.md's branch-medic role worked end-to-end without any direct coordination between the three sessions involved."
+- date: '2026-08-12'
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    verifyModelBuilderCompletionGate.ts's post-await stage-write scanner only matches
+    direct `item.stages.KEY = ...` assignments in async functions -- it can't see a write
+    that happens indirectly through a synchronous helper call like approveStage()
+    (bracket-notation write inside its own body). autoBuildItem() slipped an unconditional
+    approveStage() call past that existing guard for exactly this reason, silently
+    re-approving a stage a concurrent Edit click had just marked stale mid-await. A new
+    narrow per-call-site guard (verifyModelBuilderAutoBuildApprovalRaceGuard.ts) closed
+    this instance; the completion-gate scanner itself would be more robust generalized to
+    flag any approveStage/rejectStage call after an await with no adjacent status check,
+    rather than needing a new file per call site each time this shape recurs.
