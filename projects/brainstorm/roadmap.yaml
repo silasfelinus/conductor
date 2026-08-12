@@ -284,11 +284,11 @@ tasks:
   - id: t-012
     milestone: m3
     title: Define reusable source-object context adapter
-    status: ready
+    status: claimed
     depends_on:
       - t-005
       - t-006
-    updated: '2026-08-12T14:13:47Z'
+    updated: '2026-08-12T14:37:03Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -297,6 +297,9 @@ tasks:
       REVIEW REJECTED (quality) on Kind Robots PR #1820 exact head 8582736a5eada206391a3c4511469bed9d05a5a5. Character source resolution can reuse a cached/localStorage Character without a fresh server visibility check because fetchCharacterById(ref.id) defaults to force=false; resolve must revalidate authorization before displaying source data. The async source watcher also lacks invalidation/request identity, so a slower old resolve can resurrect a removed or superseded source card. All 21 GitHub Actions on the head passed, but the separate Vercel status remains failure: Account is blocked. Fix these defects on the existing PR branch and rerun exact-head checks; do not bypass the Vercel account gate.
 
       FOLLOW-UP REVIEW REJECTED (quality) on Kind Robots PR #1820 exact head c8b4d4818a670238ba7d9b5a4fd6b5cb191fde78. The prior privacy revalidation and selected-source resolve race are fixed, but runSourceSearch still has no request-identity guard: a slower earlier search can overwrite a newer search's results and clear isSearchingSource while the newer request is still in flight. Add a search token/captured request identity so only the latest search may write results or clear loading state, with regression coverage. All 21 attached GitHub Actions completed successfully on this head. Separate Vercel status remains failure because the account is blocked; do not bypass that gate.
+    owner: worker
+    claimed_by: sched-2026-08-12-t012-retry
+    claimed_at: '2026-08-12T14:37:03Z'
 
   - id: t-013
     milestone: m3
