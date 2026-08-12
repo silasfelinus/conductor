@@ -1,0 +1,7 @@
+version: 1
+project: brainstorm
+task: t-012
+operation: ready
+updated: '2026-08-12T14:13:47Z'
+note: >-
+  FOLLOW-UP REVIEW REJECTED (quality) on Kind Robots PR #1820 exact head c8b4d4818a670238ba7d9b5a4fd6b5cb191fde78. The prior privacy revalidation and selected-source resolve race are fixed, but runSourceSearch still has no request-identity guard: a slower earlier search can overwrite a newer search's results and clear isSearchingSource while the newer request is still in flight. Add a search token/captured request identity so only the latest search may write results or clear loading state, with regression coverage. All 21 attached GitHub Actions completed successfully on this head. Separate Vercel status remains failure because the account is blocked; do not bypass that gate.
