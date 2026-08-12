@@ -1,7 +1,8 @@
+import importlib
 import json
+from pathlib import Path
 
 import scripts.build_conductor_summary as summary
-from scripts.build_conductor_summary_report_only import report_only_daily_dream
 
 
 def test_failed_daily_dream_is_forced_into_model_summary():
@@ -31,8 +32,12 @@ def test_daily_dream_status_file_preserves_machine_readable_outcome(tmp_path, mo
     assert json.loads(path.read_text(encoding="utf-8")) == outcome
 
 
-def test_report_only_daily_dream_accepts_summary_dry_run_keyword():
-    outcome = report_only_daily_dream(dry_run=True)
+def test_report_only_daily_dream_accepts_summary_dry_run_keyword(monkeypatch):
+    scripts_dir = Path(__file__).resolve().parents[1] / "scripts"
+    monkeypatch.syspath_prepend(str(scripts_dir))
+    report_only = importlib.import_module("build_conductor_summary_report_only")
+
+    outcome = report_only.report_only_daily_dream(dry_run=True)
 
     assert outcome == {
         "status": "idle",
