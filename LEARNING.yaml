@@ -7842,10 +7842,11 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: A backslash inside an f-string expression part is invalid grammar before
+  lesson: >-
+    A backslash inside an f-string expression part is invalid grammar before
     Python 3.12 -- CI's "Lint Python scripts" syntax check runs 3.12 so it never
     caught this, only this sandbox's local 3.11 pytest did (via a collection-time
-    SyntaxError, not a real test failure). Worth generalizing: when a script targets
+    SyntaxError, not a real test failure). Worth generalizing -- when a script targets
     an f-string with any escaped-quote/backslash content in its {} expression part,
     extract the literal to a plain variable first regardless of which Python version
     the immediate CI check happens to run, since the actual production runner's
