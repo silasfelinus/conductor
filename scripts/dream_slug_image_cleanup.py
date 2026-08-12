@@ -48,7 +48,7 @@ import urllib.request
 import urllib.error
 from pathlib import Path
 
-KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kind-robots.vercel.app").rstrip("/")
+KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kindrobots.org").rstrip("/")
 KR_API_TOKEN = os.environ.get("KR_API_TOKEN", "").strip()
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = ROOT / "projects" / "dream-cycle" / "media-migration-manifest.json"

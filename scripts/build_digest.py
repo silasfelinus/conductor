@@ -170,7 +170,7 @@ DEFAULT_BRANCH = "main"
 BACKLOG_DIR = "projects/dream-cycle/backlog"
 SHIPPED_PATH = "projects/dream-cycle/SHIPPED.md"
 CONDUCTOR_RAW = f"https://raw.githubusercontent.com/{REPO}/{DEFAULT_BRANCH}"
-KR_BASE_URL = "https://kind-robots.vercel.app"
+KR_BASE_URL = "https://kindrobots.org"
 # Rendered art serves 200 from the self-hosted media origin; the app origin only
 # 307-redirects /images/, which email clients render unreliably.
 KR_MEDIA_ORIGIN = os.environ.get(

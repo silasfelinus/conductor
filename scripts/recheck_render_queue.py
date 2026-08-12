@@ -15,7 +15,7 @@ Usage:
 
 Requires KR_API_TOKEN (admin-capable machine token) in the environment; the
 underlying endpoint is admin-gated. KR_BASE_URL defaults to
-https://kind-robots.vercel.app.
+https://kindrobots.org.
 
 This script never changes a roadmap task's status — it only records what it
 observed. The calling agent still applies normal Failure-triage rules.
@@ -37,7 +37,7 @@ REPO_ROOT = Path(__file__).parent.parent
 LEDGER_FILE = REPO_ROOT / "RENDER-BACKLOG.md"
 LOG_MARKER = "## Log"
 
-KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kind-robots.vercel.app").rstrip("/")
+KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kindrobots.org").rstrip("/")
 KR_API_TOKEN = os.environ.get("KR_API_TOKEN", "").strip()
 
 

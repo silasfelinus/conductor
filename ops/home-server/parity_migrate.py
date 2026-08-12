@@ -48,7 +48,7 @@ import urllib.request
 
 # Default to the Vercel origin: the kindrobots.org domain sits behind Cloudflare,
 # which 403s/404s these API routes. Override with KR_BASE_URL if needed.
-KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kind-robots.vercel.app").rstrip("/")
+KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kindrobots.org").rstrip("/")
 KR_TOKEN = os.environ.get("KR_RELAY_TOKEN", "").strip()
 IMAGES_DIR = os.environ.get("KR_LOCAL_IMAGES_DIR", "").strip().replace("\\", "/").rstrip("/")
 

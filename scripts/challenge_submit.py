@@ -23,7 +23,7 @@ this contender's current leaderboard standing.
 
 Env:
   KR_API_TOKEN   required for --output (Bearer token: Server.apiKey or admin JWT)
-  KR_BASE_URL    default https://kind-robots.vercel.app
+  KR_BASE_URL    default https://kindrobots.org
 
 Usage:
   python scripts/challenge_submit.py <challenge-slug> [--contender conductor-claude]
@@ -39,7 +39,7 @@ import sys
 import urllib.error
 import urllib.request
 
-KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kind-robots.vercel.app").rstrip("/")
+KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kindrobots.org").rstrip("/")
 KR_API_TOKEN = os.environ.get("KR_API_TOKEN", "").strip()
 
 DEFAULT_CONTENDER = "conductor-claude"

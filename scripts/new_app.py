@@ -33,7 +33,7 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-KR_API = "https://kind-robots.vercel.app/api/todos"
+KR_API = "https://kindrobots.org/api/todos"
 SLUG_RE = re.compile(r"^[a-z][a-z0-9-]{1,40}$")
 
 PUBSPEC = """name: {package}

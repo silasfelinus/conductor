@@ -32,7 +32,7 @@ Usage:
 
 Environment:
   KR_API_TOKEN   required (admin or server key)
-  KR_BASE_URL    defaults to https://kind-robots.vercel.app
+  KR_BASE_URL    defaults to https://kindrobots.org
 """
 from __future__ import annotations
 
@@ -62,7 +62,7 @@ from dream_art_prompts import (  # noqa: E402
 ROOT = Path(__file__).resolve().parents[1]
 BACKLOG = ROOT / "projects" / "dream-cycle" / "backlog"
 
-KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kind-robots.vercel.app").rstrip("/")
+KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kindrobots.org").rstrip("/")
 KR_API_TOKEN = os.environ.get("KR_API_TOKEN", "").strip()
 
 # The full house block, as `replaceVagueArtDirection` used to emit it, anchored

@@ -31,7 +31,7 @@ safety net rather than something load-bearing.
 
 Env:
   KR_API_TOKEN        required for --apply (admin or server key); reads are public
-  KR_BASE_URL         default https://kind-robots.vercel.app
+  KR_BASE_URL         default https://kindrobots.org
   KR_MEDIA_IMAGES_DIR self-hosted media share root (e.g. Z:/kindrobots/images)
                       -- checked first, same as reconcile_expressions.py
   KIND_ROBOTS_ROOT    fallback: a local kind_robots git checkout with

@@ -13,7 +13,7 @@ from dataclasses import dataclass
 from typing import Any
 
 GITHUB_API = "https://api.github.com"
-TODOS_API = "https://kind-robots.vercel.app/api/todos"
+TODOS_API = "https://kindrobots.org/api/todos"
 RED_CONCLUSIONS = {
     "action_required",
     "cancelled",
