@@ -23,7 +23,7 @@ per-run approval is required.
 
 Environment:
   KR_API_TOKEN   required for --live (machine auth: user apiKey or admin token)
-  KR_BASE_URL    default https://kind-robots.vercel.app
+  KR_BASE_URL    default https://kindrobots.org
 
 Usage:
   python scripts/consume_art_queue.py                    # dry run
@@ -56,7 +56,7 @@ ROOT = Path(__file__).parent.parent
 ART_GENERATE_FILE = ROOT / "projects" / "art-generate.yaml"
 PROCESS_DIR = ROOT / "projects" / "process"
 
-KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kind-robots.vercel.app").rstrip("/")
+KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kindrobots.org").rstrip("/")
 KR_API_TOKEN = os.environ.get("KR_API_TOKEN", "").strip()
 
 POLL_SECONDS = 5
