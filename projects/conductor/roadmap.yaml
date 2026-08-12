@@ -3849,7 +3849,7 @@ tasks:
   - id: t-114
     milestone: m2
     title: "scripts/build_digest_email_v2.py has a pre-existing syntax error: f-string expression part cannot include a backslash"
-    status: ready
+    status: claimed
     stakes: reversible
     passes: 0
     note: |-
@@ -3865,4 +3865,7 @@ tasks:
       tests/test_build_digest_email_v2.py -q` passes, and confirm this doesn't also affect
       whatever workflow actually imports/runs build_digest_email_v2.py in production (check
       whether it's wired into daily-digest.yml or superseded by build_digest.py).
-    claimed_by: null
+    claimed_by: 20260812T222900Z-cond-t114-b7ol9h
+    owner: worker
+    claimed_at: '2026-08-12T22:29:58Z'
+    updated: '2026-08-12T22:29:58Z'
