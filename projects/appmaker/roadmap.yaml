@@ -155,7 +155,7 @@ tasks:
     the edge (confirmed: main''s own tip reproduces the same failure once nudged, e.g.
     by any 1-2 new route files). Fixing art-styler.vue''s call site only revealed the
     next-worst one; chased all the way through the codebase (there are only 14 files
-    that call $fetch directly -- the rest goes through typed composables/stores) and
+    that call $fetch directly -- the rest goes through typed stores/helpers) and
     pinned $fetch''s R generic (`$fetch<T, string>` or plain `fetch()` for client-only
     static-asset reads) in all 12 affected files: art-styler.vue, coloring-book-manager.vue,
     dream-inspire-button.vue, newsfeed-feed.vue, super-form.vue, watchlist-browse.vue,

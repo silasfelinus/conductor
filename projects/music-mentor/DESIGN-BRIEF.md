@@ -37,7 +37,7 @@ friendly rehearsal buddy, not a grading rubric.
 
 ## MVP shape (this build)
 
-- **Client-side extraction** (`composables/useAudioAnalysis.ts`): decode the file
+- **Client-side extraction** (`stores/helpers/audioAnalysisHelper.ts`): decode the file
   with the Web Audio API and compute a compact feature summary. Dependency-free
   (autocorrelation pitch tracking) so it ships today; a heavier pitch model is a
   later accuracy pass (t-007).

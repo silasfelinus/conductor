@@ -73,7 +73,7 @@ tasks:
     updated: 2026-07-24T00:00:00Z
     pr: "https://github.com/silasfelinus/kind_robots/pull/920"
     note: >
-      composables/useAudioAnalysis.ts — decode audio to AudioBuffer, compute a
+      stores/helpers/audioAnalysisHelper.ts — store-owned helper that decodes audio to AudioBuffer and computes a
       compact feature summary: pitch/intonation (median pitch, voiced %, cents
       deviation, estimated key, vibrato), timing (tempo + stability), dynamics
       (loudness range, contrast), structure (section count). Dependency-free.
@@ -152,7 +152,7 @@ tasks:
     note: >
       The MVP uses a dependency-free autocorrelation pitch tracker (good for monophonic takes, degrades on mixed/polyphonic audio). Evaluate a stronger option (e.g. pitchy / a YIN lib / CREPE) behind the same feature-summary shape so the endpoint and page don't change.
 
-      DONE 2026-07-27 (claude-scheduled-20260727T030748Z-mm-t007): implemented a YIN pitch detector (de Cheveigne & Kawahara 2002) in kind_robots composables/useAudioAnalysis.ts, kept the old tracker as detectPitchAutocorrelation for reference, and added a synthetic accuracy suite (utils/scripts/verifyPitchDetectorAccuracy.test.ts) comparing them on pure/harmonic-rich/noisy tones across 75-1046Hz. Results: YIN detected 35/35 test frames vs. autocorrelation's 32/35 (missed low-register 75-82Hz tones specifically), both 0 octave errors, YIN median 0.7c error vs 0.9c. Switched analyzeAudioFile to YIN. No change to AudioFeatureSummary, the endpoint, or the page. Did not pursue CREPE (would need TensorFlow.js + model weights, at odds with the project's dependency-free client-side design) or pitchy (an npm dependency) since a hand-rolled YIN matched the existing code's style and closed the gap already found. Merged via kind_robots PR #1036.
+      DONE 2026-07-27 (claude-scheduled-20260727T030748Z-mm-t007): implemented a YIN pitch detector (de Cheveigne & Kawahara 2002), now owned by kind_robots stores/helpers/audioAnalysisHelper.ts, kept the old tracker as detectPitchAutocorrelation for reference, and added a synthetic accuracy suite (utils/scripts/verifyPitchDetectorAccuracy.test.ts) comparing them on pure/harmonic-rich/noisy tones across 75-1046Hz. Results: YIN detected 35/35 test frames vs. autocorrelation's 32/35 (missed low-register 75-82Hz tones specifically), both 0 octave errors, YIN median 0.7c error vs 0.9c. Switched analyzeAudioFile to YIN. No change to AudioFeatureSummary, the endpoint, or the page. Did not pursue CREPE (would need TensorFlow.js + model weights, at odds with the project's dependency-free client-side design) or pitchy (an npm dependency) since a hand-rolled YIN matched the existing code's style and closed the gap already found. Merged via kind_robots PR #1036.
     claimed_by: claude-scheduled-20260727T030748Z-mm-t007
     claimed_at: '2026-07-27T03:07:49Z'
 
