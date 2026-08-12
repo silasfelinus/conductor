@@ -469,3 +469,6 @@ queueDepth: PENDING=586, RUNNING=1, DONE=4121, FAILED=3, CANCELLED=2728 (all-tim
 
 ## 2026-08-12T03:38:58Z | ai-art-academy/t-044 | draining
 queueDepth: PENDING=554, RUNNING=1, DONE=4129, FAILED=3, CANCELLED=2752 (all-time). oldestPending: id=4893, age=612521s (~170.1h), engine=COMFY. windowThroughput (24h): DONE=40, CANCELLED=1. recentFailed (last 3): 2/3 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'61':; 1/3 = connection-refused to ComfyUI.
+
+## 2026-08-12T04:28:53Z | ai-art-academy/t-044 | draining
+queueDepth: PENDING=530, DONE=4136, FAILED=3, CANCELLED=2770 (all-time). oldestPending: id=4893, age=615516s (~171.0h), engine=COMFY. windowThroughput (24h): DONE=40, CANCELLED=1. recentFailed (last 3): 2/3 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'61':; 1/3 = connection-refused to ComfyUI.
