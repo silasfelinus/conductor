@@ -73,6 +73,8 @@ def asset_card(asset: dict[str, Any], *, show_art: bool) -> str:
         request = f'<div style="font-size:9px;color:#777;margin-top:7px">Queue: {esc(queue_text)}</div>'
 
     min_height = "410px" if show_art else "220px"
+    no_facets_html = '<span style="font-size:11px;color:#777">Legacy proposal, no structured Facets recorded.</span>'
+    facet_chips_html = _facet_chips([str(value) for value in facets]) or no_facets_html
     return (
         f'<div style="width:300px;min-height:{min_height};border:1px solid {accent};border-radius:12px;'
         f'background:{paper};padding:12px;font-family:Arial,sans-serif;box-sizing:border-box">'
@@ -84,7 +86,7 @@ def asset_card(asset: dict[str, Any], *, show_art: bool) -> str:
         f'<div style="font-size:13px;line-height:1.45;color:#454052">{summary}</div>'
         f'<div style="border-top:1px dashed {accent}66;margin-top:10px;padding-top:7px">'
         f'<div style="font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:{accent};font-weight:700">Seed Facets</div>'
-        f'{_facet_chips([str(value) for value in facets]) or "<span style=\"font-size:11px;color:#777\">Legacy proposal, no structured Facets recorded.</span>"}'
+        f'{facet_chips_html}'
         f'{request}</div></div>'
     )
 
