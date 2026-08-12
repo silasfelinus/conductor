@@ -21,7 +21,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_API_BASE = "https://kind-robots.vercel.app"
+DEFAULT_API_BASE = "https://kindrobots.org"
 MAX_PAYLOAD_BYTES = 4_000_000
 
 
