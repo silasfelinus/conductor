@@ -1,0 +1,8 @@
+version: 1
+project: kind-robots
+task: t-064
+operation: done
+approved_by_human: true
+updated: '2026-08-12T21:06:00Z'
+note: >-
+  CORRECTED AND CLOSED 2026-08-12: Silas clarified that Kind Robots migrated off Vercel this week and `https://kindrobots.org` is the canonical production/API origin. The reported 402 `DEPLOYMENT_DISABLED` was therefore not a Kind Robots production outage; stale Conductor workflows and home-agent defaults were still calling the retired Vercel deployment. Conductor PR #2150 migrated the live callers to `kindrobots.org`, passed Worker PR CI, Security Audit, Process task events, Coloring Render Gate, and Daily Dream Contract, then merged as 85e7bd1. The post-merge Auto Art Generate run 31640782789 verified `KR_BASE_URL=https://kindrobots.org`, Kind Robots API health=true, failed-job repair=success, and both consume lanes=success. Vercel billing/account state is no longer a Kind Robots production gate. Track any actual `kindrobots.org` incident separately.
