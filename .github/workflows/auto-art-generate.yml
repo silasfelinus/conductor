@@ -112,16 +112,33 @@ jobs:
           fi
           python scripts/send_alert_brevo.py --subject "$SUBJECT" --body "$BODY"
 
+      - name: Check Kind Robots API health
+        id: krhealth
+        if: ${{ steps.boxhealth.outputs.up == 'true' }}
+        env:
+          KR_BASE_URL: https://kind-robots.vercel.app
+        run: |
+          STATUS="$(curl --silent --show-error --location --max-time 15 \
+            --output /tmp/kind-robots-health.json --write-out '%{http_code}' \
+            "$KR_BASE_URL/api/health/database" || true)"
+          if [ "$STATUS" = "200" ]; then
+            echo "up=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::Kind Robots API reachable — ArtJob repair/submission enabled."
+          else
+            echo "up=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Kind Robots API unavailable (HTTP ${STATUS:-000}) — preserving queues and skipping API-dependent art work this run."
+          fi
+
       - name: Repair and requeue failed Kind Robots ArtJobs
         id: repair_failed
-        if: ${{ steps.boxhealth.outputs.up == 'true' }}
+        if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
         working-directory: conductor
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
         run: python scripts/repair_failed_kindrobots_artjobs.py --live
 
       - name: Refresh queue to currently-missing project art
-        if: ${{ steps.boxhealth.outputs.up == 'true' && (github.event.inputs.refresh_queue || 'true') != 'false' }}
+        if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' && (github.event.inputs.refresh_queue || 'true') != 'false' }}
         working-directory: conductor
         run: |
           LIMIT="${{ github.event.inputs.limit }}"
@@ -133,7 +150,7 @@ jobs:
       # and project-art backlogs on the way into Kind Robots.
       - name: Submit + wait + verify art requests
         id: consume_requests
-        if: ${{ steps.boxhealth.outputs.up == 'true' }}
+        if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
         continue-on-error: true
         working-directory: conductor
         env:
@@ -148,7 +165,7 @@ jobs:
 
       - name: Submit + wait + verify project-art results
         id: consume
-        if: ${{ steps.boxhealth.outputs.up == 'true' }}
+        if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
         continue-on-error: true
         working-directory: conductor
         env:
@@ -185,11 +202,17 @@ jobs:
 
       - name: Report generation outcome
         run: |
+          echo "Kind Robots API health: ${{ steps.krhealth.outputs.up || 'skipped' }}"
           echo "failed-job repair: ${{ steps.repair_failed.outcome }}"
+          if [ "${{ steps.boxhealth.outputs.up }}" = "true" ] && [ "${{ steps.krhealth.outputs.up }}" != "true" ]; then
+            echo "::warning::ArtJob repair/submission was skipped because the Kind Robots API is unavailable; queued work was preserved."
+          fi
           for step in "batch:${{ steps.consume.outcome }}" "requests:${{ steps.consume_requests.outcome }}"; do
             name="${step%%:*}"; outcome="${step#*:}"
             if [ "$outcome" = "success" ]; then
               echo "$name consume step succeeded."
+            elif [ "${{ steps.krhealth.outputs.up }}" != "true" ]; then
+              echo "$name consume step skipped because Kind Robots API health is down."
             else
               echo "::warning::$name consume step did not fully succeed — the home render box may be offline, the direct media write may have failed, or some jobs timed out. Failed media writes remain retryable; verification fallbacks remain in projects/process/."
             fi
