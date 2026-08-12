@@ -4,6 +4,10 @@
 
 This project is for app-owned Kind Robots work that can be developed safely inside the Conductor loop without changing the existing shared Kind Robots backend or production deployment. The shared backend stays the source of current production behavior; this project defines what a new app layer may own, what it may consume, and where future work must become a pitch or human-gated task.
 
+## Canonical production origin
+
+As of August 2026, the canonical Kind Robots public and API origin is `https://kindrobots.org`. The `kind-robots.vercel.app` hostname is a deployment hostname, not the canonical product/API origin. Any older Conductor note that calls the Vercel hostname the shared or canonical backend should be read as stale domain-era wording; use `kindrobots.org` for current production URLs.
+
 ## Boundary principle
 
 The app may build local UI, orchestration, workspace flows, and project-specific adapters. It must not modify the existing Kind Robots production backend, database schema, billing logic, generation endpoints, auth system, or deployment infrastructure from this repository. When a feature appears to require a shared backend change, the Worker should write a pitch under `pitches/` instead of editing the external system.
