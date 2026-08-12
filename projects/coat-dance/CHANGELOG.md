@@ -1,5 +1,16 @@
 # coat-dance CHANGELOG
 
+## 2026-08-12
+- t-003: wrote the reusable beat-map table template at
+  `source/beatmap.md` (column definitions for Timestamp Range,
+  Movement/Action, Coat Behavior, Camera/Framing, Emotional Tone,
+  Candidate AI Treatment, Generation Method, Restitch Notes; the t-002
+  research doc's suggested fill-in pipeline order; one placeholder row).
+  No real timestamps produced — this sandbox has neither `ffmpeg` nor a
+  Python audio/video stack, matching t-002's documented caveat. Set to
+  `needs-human` (soft) for Silas to confirm the shape before a future
+  task actually populates it.
+
 ## 2026-07-21
 - t-001: wrote BRIEF.md (core premise, runtime assumptions, asset checklist,
   suggested working folders, open questions). Discovered and documented that
