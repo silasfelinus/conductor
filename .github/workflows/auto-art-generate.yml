@@ -48,6 +48,8 @@ jobs:
     timeout-minutes: 150
     permissions:
       contents: write
+    env:
+      KR_BASE_URL: https://kindrobots.org
 
     steps:
       - uses: actions/checkout@v4
@@ -115,8 +117,6 @@ jobs:
       - name: Check Kind Robots API health
         id: krhealth
         if: ${{ steps.boxhealth.outputs.up == 'true' }}
-        env:
-          KR_BASE_URL: https://kind-robots.vercel.app
         run: |
           STATUS="$(curl --silent --show-error --location --max-time 15 \
             --output /tmp/kind-robots-health.json --write-out '%{http_code}' \
