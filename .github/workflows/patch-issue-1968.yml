@@ -1,0 +1,63 @@
+name: Patch issue 1968
+
+on:
+  push:
+    branches:
+      - agent/issue-1968-ready-closeout-metadata
+    paths:
+      - '.github/workflows/patch-issue-1968.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/issue-1968-ready-closeout-metadata
+          fetch-depth: 0
+
+      - name: Patch ready closeout metadata semantics
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('scripts/process_task_events.py')
+          text = path.read_text()
+          old = '''        if target not in {"claimed", "review"}:
+              ops.append(("unset", "owner", None))
+          '''
+          new = '''        if target not in {"claimed", "review"}:
+              ops.append(("unset", "owner", None))
+          if target == "ready":
+              ops.append(("unset", "claimed_by", None))
+              ops.append(("unset", "claimed_at", None))
+              implementation_pr = event.get("implementation_pr")
+              if implementation_pr is not None:
+                  if not isinstance(implementation_pr, str) or not VERIFY_PR_RE.match(implementation_pr.strip()):
+                      raise ValueError(
+                          f"implementation_pr must look like owner/repo#number, got {implementation_pr!r}"
+                      )
+                  ops.append(("set", "implementation_pr", implementation_pr.strip()))
+              elif not task.get("recurring"):
+                  ops.append(("unset", "implementation_pr", None))
+          '''
+          if old not in text:
+              raise SystemExit('target processor block not found; refusing broad rewrite')
+          text = text.replace(old, new, 1)
+          path.write_text(text)
+          PY
+
+      - name: Run targeted regression tests
+        run: python -m pytest -q tests/test_ready_closeout_metadata.py tests/test_process_task_events.py
+
+      - name: Remove temporary patch workflow and commit result
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .github/workflows/patch-issue-1968.yml
+          git add scripts/process_task_events.py tests/test_ready_closeout_metadata.py
+          git commit -m 'fix(task-events): clear stale ready closeout metadata'
+          git push origin HEAD:agent/issue-1968-ready-closeout-metadata
