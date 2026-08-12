@@ -37,7 +37,7 @@ Modes:
 
 Env:
   KR_API_TOKEN        required for --apply (admin or server key); reads are public
-  KR_BASE_URL         default https://kind-robots.vercel.app
+  KR_BASE_URL         default https://kindrobots.org
   KR_MEDIA_IMAGES_DIR self-hosted media share root (e.g. Windows relay's
                       Z:/kindrobots/images, see ops/home-server/SELF-HOSTED-MEDIA.md)
                       — checked first; expression images live here now that
@@ -65,7 +65,7 @@ KIND_ROBOTS_ROOT = Path(
     os.environ.get("KIND_ROBOTS_ROOT", REPO_ROOT.parent / "kind_robots")
 )
 KR_MEDIA_IMAGES_DIR = os.environ.get("KR_MEDIA_IMAGES_DIR", "").strip()
-KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kind-robots.vercel.app").rstrip("/")
+KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kindrobots.org").rstrip("/")
 KR_API_TOKEN = os.environ.get("KR_API_TOKEN", "").strip()
 
 EMOTION_KEYS = [

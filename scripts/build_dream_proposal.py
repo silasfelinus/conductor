@@ -12,7 +12,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 BACKLOG = ROOT / "projects/dream-cycle/backlog"
-KR_BASE_URL = "https://kind-robots.vercel.app"
+KR_BASE_URL = "https://kindrobots.org"
 PACIFIC = ZoneInfo("America/Los_Angeles")
 
 # Network-free keys known to exist in the live catalog. The sidecar resolves slugs.

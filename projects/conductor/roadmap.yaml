@@ -3845,3 +3845,24 @@ tasks:
     claimed_by: 20260810T071354-0700-auto-725e75
     claimed_at: '2026-08-10T14:13:54Z'
     updated: '2026-08-10T14:33:20Z'
+
+  - id: t-114
+    milestone: m2
+    title: "scripts/build_digest_email_v2.py has a pre-existing syntax error: f-string expression part cannot include a backslash"
+    status: ready
+    stakes: reversible
+    passes: 0
+    note: |-
+      Found while fixing t-111-adjacent kindrobots.org migration follow-up (scripts KR_BASE_URL
+      defaults). `pytest -q` at repo root fails 4 tests in tests/test_build_digest_email_v2.py
+      with a collection-time SyntaxError, not a real assertion failure: line ~87 of
+      scripts/build_digest_email_v2.py builds an f-string whose `{...}` expression part contains
+      an escaped backslash-quote (`f'{... or "<span style=\"font-size:11px...\">..."}'`), which
+      is invalid Python grammar before 3.12 (this sandbox's pytest runs 3.11). Confirmed
+      pre-existing and unrelated to the kindrobots.org fix via `git stash` + rerun. Fix: extract
+      the backslash-containing string into a plain variable before the f-string (or otherwise
+      avoid a backslash inside the `{}` expression part), verify `pytest
+      tests/test_build_digest_email_v2.py -q` passes, and confirm this doesn't also affect
+      whatever workflow actually imports/runs build_digest_email_v2.py in production (check
+      whether it's wired into daily-digest.yml or superseded by build_digest.py).
+    claimed_by: null

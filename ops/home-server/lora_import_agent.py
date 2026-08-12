@@ -63,7 +63,7 @@ import urllib.error
 import urllib.request
 
 AGENT_ID = os.environ.get("LORA_AGENT_ID", "").strip() or f"{socket.gethostname()}-lora"
-KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kind-robots.vercel.app").rstrip("/")
+KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kindrobots.org").rstrip("/")
 KR_RELAY_TOKEN = os.environ.get("KR_RELAY_TOKEN", "").strip()
 LORA_ROOT = os.environ.get("LORA_ROOT", "").strip()
 LORA_IMPORT_DIR = os.environ.get(

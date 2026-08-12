@@ -33,7 +33,7 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 BACKLOG = ROOT / "projects" / "dream-cycle" / "backlog"
 PACIFIC = ZoneInfo("America/Los_Angeles")
-PUBLIC_BASE = "https://kind-robots.vercel.app"
+PUBLIC_BASE = "https://kindrobots.org"
 PROPOSAL_RE = re.compile(r"<!-- proposal-data\s*\n(.*?)\n-->", re.DOTALL)
 BUILT_RE = re.compile(r"<!-- built-data\s*\n(.*?)\n-->", re.DOTALL)
 

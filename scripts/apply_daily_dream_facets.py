@@ -22,7 +22,7 @@ from typing import Any, Iterable
 
 ROOT = Path(__file__).resolve().parent.parent
 BACKLOG = ROOT / "projects" / "dream-cycle" / "backlog"
-BASE_URL = os.environ.get("KR_BASE_URL", "https://kind-robots.vercel.app").rstrip("/")
+BASE_URL = os.environ.get("KR_BASE_URL", "https://kindrobots.org").rstrip("/")
 PROPOSAL_RE = re.compile(r"<!-- proposal-data\s*\n(.*?)\n-->", re.DOTALL)
 BUILT_RE = re.compile(r"<!-- built-data\s*\n(.*?)\n-->", re.DOTALL)
 

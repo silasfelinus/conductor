@@ -25,7 +25,7 @@ Usage:
 
 Environment:
     KR_API_TOKEN       required for generation/submission
-    KR_BASE_URL        default https://kind-robots.vercel.app
+    KR_BASE_URL        default https://kindrobots.org
     KR_USER_ID         required only by the synchronous OpenAI Images KR endpoint
     ANTHROPIC_API_KEY  required by claude-api contenders
     OPENAI_API_KEY     required by openai-api text contenders

@@ -45,7 +45,7 @@ REPOS = [
     {"owner": "silasfelinus", "name": "conductor"},
     {"owner": "silasfelinus", "name": "kind_robots"},
 ]
-KR_API_URL = "https://kind-robots.vercel.app/api/todos"
+KR_API_URL = "https://kindrobots.org/api/todos"
 REPORT_PATH = "CONDUCTOR-REPORT.md"
 DAILY_DREAM_STATUS_PATH = os.environ.get("DAILY_DREAM_BUILD_STATUS", "")
 STALE_CLAIMED_HOURS = 4   # flag tasks stuck in "claimed" longer than this

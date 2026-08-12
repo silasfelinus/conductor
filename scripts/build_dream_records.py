@@ -19,7 +19,7 @@ Usage:
 
 Environment:
   KR_API_TOKEN   required for live record creation and attachment
-  KR_BASE_URL    defaults to https://kind-robots.vercel.app
+  KR_BASE_URL    defaults to https://kindrobots.org
 """
 
 from __future__ import annotations
@@ -56,7 +56,7 @@ ROOT = Path(__file__).resolve().parents[1]
 BACKLOG = ROOT / "projects" / "dream-cycle" / "backlog"
 ART_PROMPTS = ROOT / "projects" / "art-prompts.yaml"
 
-KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kind-robots.vercel.app").rstrip("/")
+KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kindrobots.org").rstrip("/")
 # Rendered images live on the self-hosted media origin (200); the app origin
 # only 307-redirects /images/, so HEAD-check the media origin directly.
 KR_MEDIA_ORIGIN = os.environ.get(

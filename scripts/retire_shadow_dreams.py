@@ -32,7 +32,7 @@ Dry-run by default. Pass --apply to actually delete.
 
 Env
 ---
-  KR_BASE_URL   default https://kind-robots.vercel.app
+  KR_BASE_URL   default https://kindrobots.org
   KR_API_TOKEN  required for --apply (Bearer beta-admin)
 """
 
@@ -46,7 +46,7 @@ import urllib.error
 import urllib.request
 from typing import Any
 
-KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kind-robots.vercel.app").rstrip("/")
+KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kindrobots.org").rstrip("/")
 KR_API_TOKEN = os.environ.get("KR_API_TOKEN", "").strip()
 
 SHADOW_TYPES = {"CHARACTER", "NARRATOR", "REWARD"}
