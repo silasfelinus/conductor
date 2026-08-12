@@ -13,6 +13,14 @@ notes_from_silas: |
   Build app-owned logic in this folder. Do not propose changes to the shared
   backend here — if you think one is needed, write a pitch to pitches/ instead.
   Nuxt 4 / Vue 3 / TypeScript / Prisma / Pinia 3 / DaisyUI house style applies.
+  Kind Robots intentionally uses a root-first client layout: components/, pages/,
+  stores/, middleware/, assets/, and utils/ stay at repository root. Do not add an
+  app/ wrapper merely to follow a newer Nuxt directory convention. Do not create a
+  root composables/ island: domain state, API calls, persistence, caching, and
+  orchestration belong to the responsible Pinia store; store implementation
+  machinery belongs in stores/helpers/; genuinely cross-domain stateless code
+  belongs in utils/. Root middleware/ is client/router middleware, while
+  server/middleware/ is Nitro request middleware; they are distinct execution layers.
 
   Slug parity: Dream.slug is the universal key linking conductor projects to
   kind_robots Dreams. Do not add redundant FK fields — enforce slug matching
