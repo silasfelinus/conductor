@@ -422,6 +422,25 @@ def start_lora_watcher():
     threading.Thread(target=lora.watch_loop, name="lora-import", daemon=True).start()
 
 
+def log_media_roots():
+    """Log each recognized direct-media root and whether it's configured.
+
+    Both roots (``images``, ``rewards``) are independently optional -- a job
+    only discovers a missing root when a direct-media write actually fails,
+    hours after the box was misconfigured. Logging the configured/missing
+    state once at startup, alongside ``start_lora_watcher()``'s pattern of
+    logging why a subsystem is enabled or disabled, makes a misconfigured box
+    visible in the relay's own logs immediately."""
+    root_values = {"images": MEDIA_ROOT_VALUE, "rewards": REWARDS_ROOT_VALUE}
+    for kind, hint in MEDIA_ROOT_ENV_HINT.items():
+        value = root_values[kind]
+        if value:
+            relay.log(f"media root '{kind}' configured ({hint} = {value})")
+        else:
+            relay.log(f"media root '{kind}' not configured (missing {hint})")
+
+
 if __name__ == "__main__":
+    log_media_roots()
     start_lora_watcher()
     relay.main()

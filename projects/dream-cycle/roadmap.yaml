@@ -503,23 +503,18 @@ tasks:
   - id: t-021
     milestone: m4
     title: Log configured/missing media roots at relay_media_agent.py startup
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-29T12:40:00Z'
+    updated: '2026-08-12T09:40:46Z'
     note: >
-      Kaizen from t-019's close-out (conductor PR #1419). relay_media_agent.py
-      now has two independent, silently-optional media roots (`images` via
-      KR_MEDIA_IMAGES_DIR/KR_LOCAL_IMAGES_DIR, `rewards` via
-      KR_MEDIA_REWARDS_DIR/KR_LOCAL_REWARDS_DIR) — a job only discovers a
-      missing root when it fails, hours after the box was actually
-      misconfigured. Add a one-time log line at process startup (alongside
-      `start_lora_watcher()`'s pattern of logging why a subsystem is
-      enabled/disabled) listing each recognized media kind and whether its
-      root env var is set, so a misconfigured box is visible in the relay's
-      own logs immediately rather than only surfacing as a retried FAILED
-      ArtJob later.
+      Kaizen from t-019's close-out (conductor PR #1419). relay_media_agent.py now has two independent, silently-optional media roots (`images` via KR_MEDIA_IMAGES_DIR/KR_LOCAL_IMAGES_DIR, `rewards` via KR_MEDIA_REWARDS_DIR/KR_LOCAL_REWARDS_DIR) -- a job only discovers a missing root when it fails, hours after the box was actually misconfigured. Add a one-time log line at process startup (alongside `start_lora_watcher()'s pattern of logging why a subsystem is enabled/disabled) listing each recognized media kind and whether its root env var is set, so a misconfigured box is visible in the relay's own logs immediately rather than only surfacing as a retried FAILED ArtJob later.
+
+      DONE (conductor scheduled agent sweep): added log_media_roots(), called from __main__ before start_lora_watcher(), logging one line per recognized media root (images, rewards) stating whether its env var is configured, mirroring start_lora_watcher()'s own enabled/disabled logging pattern. Added tests/test_relay_media_startup_log.py (4 tests). Verified: py_compile clean under Python 3.12; full pytest suite 1064 passed/1 skipped under Python 3.12; validate_roadmaps.py clean. Merged conductor PR #2127 (23/23 checks green, squash 50e7800).
+    claimed_by: 20260812T0928-dc-t021
+    claimed_at: '2026-08-12T09:32:16Z'
+    implementation_pr: 'silasfelinus/conductor#2127'
 
   - id: t-022
     milestone: m4
