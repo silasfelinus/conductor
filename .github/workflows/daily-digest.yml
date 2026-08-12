@@ -35,7 +35,7 @@ jobs:
       contents: write
     env:
       SHOULD_SEND_EMAIL: ${{ github.event_name == 'schedule' || inputs.send_email == true }}
-      KR_BASE_URL: https://kind-robots.vercel.app
+      KR_BASE_URL: https://kindrobots.org
     steps:
       - uses: actions/checkout@v4
         with:

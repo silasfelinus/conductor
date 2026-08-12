@@ -57,7 +57,7 @@ module.exports = {
         '--ckpt-dir',
         'Z:/ai/models/Stable-diffusion',
         '--cors-allow-origins',
-        'https://kindrobots.org,https://kind-robots.vercel.app,http://localhost:3000,http://localhost:3001',
+        'https://kindrobots.org,http://localhost:3000,http://localhost:3001',
         '--lora-dir',
         'Z:/ai/models/Lora',
         '--vae-dir',
@@ -129,7 +129,7 @@ module.exports = {
       env: {
         KR_RELAY_TOKEN: process.env.KR_RELAY_TOKEN || '',
         KR_RELAY_USER_ID: process.env.KR_RELAY_USER_ID || '',
-        KR_BASE_URL: 'https://kind-robots.vercel.app',
+        KR_BASE_URL: 'https://kindrobots.org',
         // Fast enough to feel immediate without changing the relay's pull-only model.
         POLL_SECONDS: process.env.POLL_SECONDS || '2',
         KR_MEDIA_IMAGES_DIR:
@@ -180,7 +180,7 @@ module.exports = {
       restart_delay: 10000,
       env: {
         KR_RELAY_TOKEN: process.env.KR_RELAY_TOKEN || '',
-        KR_BASE_URL: 'https://kind-robots.vercel.app',
+        KR_BASE_URL: 'https://kindrobots.org',
         KR_LORA_DIR: process.env.KR_LORA_DIR || 'Z:/ai/models/Lora',
         KR_CHECKPOINT_DIR:
           process.env.KR_CHECKPOINT_DIR || 'Z:/ai/models/Stable-diffusion',

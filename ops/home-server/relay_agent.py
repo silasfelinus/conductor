@@ -27,7 +27,7 @@ import urllib.error
 import urllib.request
 
 KR_BASE_URL = os.environ.get(
-    "KR_BASE_URL", "https://kind-robots.vercel.app"
+    "KR_BASE_URL", "https://kindrobots.org"
 ).rstrip("/")
 KR_RELAY_TOKEN = os.environ.get("KR_RELAY_TOKEN", "").strip()
 KR_RELAY_USER_ID = int(os.environ.get("KR_RELAY_USER_ID", "0") or 0)
