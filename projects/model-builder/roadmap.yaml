@@ -575,16 +575,16 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
     note: '"DONE (conductor scheduled agent sweep, follow-up polish slice): model-builder-progress-matrix.vue mounted <model-builder-batch-editor> with no :key while the sibling item-panel right below it carries one, so switching the selected item between two different quantity groups patched the same batch-editor instance instead of remounting it -- local batchValues/onlyEmpty state leaked from one group into the next (e.g. set Rewards theme to synthwave, switch to Scenarios, and synthwave shows up pre-filled and Apply-enabled against the wrong group). Fixed by adding :key=\"selectedItem.outputKey\" to the batch-editor mount, mirroring the item-panel''s own convention. Added utils/scripts/verifyModelBuilderBatchEditorKeyGuard.ts (+ selftest), wired into package.json/contract-tests.yml. Found via an Explore subagent given an explicit exclusion list of every bug class already fixed this cycle and a directive to read the actual component/store code rather than trust a summary. kind_robots PR #1793, merged squash 56773f4. Rearmed to ready per recurring-task convention."'
-    updated: '2026-08-12T00:47:05Z'
+    updated: '2026-08-12T01:27:54Z'
     implementation_pr: 'silasfelinus/kind_robots#1793'
     owner: worker
-    claimed_by: 20260812T003200Z-conductor-sweep-d8caee
-    claimed_at: '2026-08-12T00:29:47Z'
+    claimed_by: 20260812T012754Z-conductor-sweep-abcd1234
+    claimed_at: '2026-08-12T01:27:54Z'
 
   - id: t-030
     milestone: m6
