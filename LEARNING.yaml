@@ -7834,3 +7834,19 @@ records:
     adapters at once (fetchFreshSourceRows checking store.error rather than trusting
     the returned array). Worth generalizing into a shared contract check the next time
     an authorization-sensitive picker is added, rather than re-deriving it per adapter.
+- date: 2026-08-12
+  project: conductor
+  task: t-114
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A backslash inside an f-string expression part is invalid grammar before
+    Python 3.12 -- CI's "Lint Python scripts" syntax check runs 3.12 so it never
+    caught this, only this sandbox's local 3.11 pytest did (via a collection-time
+    SyntaxError, not a real test failure). Worth generalizing: when a script targets
+    an f-string with any escaped-quote/backslash content in its {} expression part,
+    extract the literal to a plain variable first regardless of which Python version
+    the immediate CI check happens to run, since the actual production runner's
+    version is often not the same as CI's syntax-check job.
