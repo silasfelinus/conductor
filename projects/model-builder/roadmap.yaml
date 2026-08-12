@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
@@ -587,7 +587,7 @@ tasks:
       Model Builder source-picker thumbnails repeated each record's visible label inside the same button's accessible name. Made the thumbnails decorative in gallery, grid, and list modes so screen readers announce each source once while preserving the visible label.
 
       Merged Kind Robots #1801 (squash e9b828e8ef8de2f26607f36a53fc388153896470). Source-picker thumbnails in gallery, grid, and list modes are now decorative, avoiding duplicate accessible labels inside each source button. Exact head 3c9f5963053b965fc299c2e5ca7738b7fa3ac93d completed all 15 attached workflows successfully, including TypeScript #31560066232 and Contract Tests #31560066202. No API, schema, persistence, production-data, or ArtJob changes.
-    updated: '2026-08-12T05:29:34Z'
+    updated: '2026-08-12T05:48:57Z'
     implementation_pr: 'silasfelinus/kind_robots#1808'
     owner: worker
     claimed_by: sweep-20260812-0530-mb-t029
