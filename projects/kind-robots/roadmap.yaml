@@ -2320,12 +2320,25 @@ tasks:
       returned HTTP 402 for the same reason, not their own separate bugs --
       don't chase those as independent issues until this is resolved.
 
+      UPDATE 2026-08-12T08:52Z: confirmed this also blocks EVERY kind_robots
+      PR merge, not just the live site. kind_robots PR #1816 (a genuinely
+      unrelated, fully-verified model-builder/t-029 fix -- 18/19 GitHub
+      Actions checks green) sits at `mergeable_state: blocked` because
+      branch protection has a required "Vercel" status check, which is
+      failing with description "Account is blocked" and links to
+      https://vercel.com/knowledge/why-is-my-account-deployment-blocked --
+      GitHub's own copy of the same account-level signal, not a second
+      independent problem. So this is now also stalling all conductor/
+      kind_robots software work, not only production traffic.
+
       TO APPROVE / RESOLVE: this needs Silas's direct action on the Vercel
       dashboard (billing/plan page for the silasfelinus-projects team) --
       agents have no billing/payment authority per AGENTS.md. Once the account
       is back in good standing (or a redeploy is triggered if that's what
       clears it), re-check with `mcp__Vercel__web_fetch_vercel_url` on
-      /api/health/database and set status: done with what fixed it.
+      /api/health/database and set status: done with what fixed it. Also
+      merge kind_robots PR #1816 (model-builder/t-029) once its Vercel check
+      clears -- it has been verified and is just waiting on this gate.
     claimed_by: null
     claimed_at: null
     approved_by_human: false
