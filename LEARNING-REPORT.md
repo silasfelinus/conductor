@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-12T21:08:46Z
+Generated: 2026-08-12T21:41:21Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **593**
-- Outcomes: blocked: 14, cancelled: 1, done: 578
+- Closed tasks recorded: **594**
+- Outcomes: blocked: 14, cancelled: 1, done: 579
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -22,7 +22,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | appmaker | 6 | 100% |
 | approval-portal | 2 | 0% |
 | art-generator-connect | 3 | 100% |
-| brainstorm | 10 | 90% |
+| brainstorm | 11 | 91% |
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 25 | 100% |
@@ -61,13 +61,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 577 | 99% |
+| software | 578 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
-| quality | 12 |
+| quality | 13 |
 | actionable | 9 |
 | transient | 9 |
 | scope | 2 |
@@ -76,12 +76,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - project `coat-dance` — 11% success over 9 closed tasks; aim the next kaizen task here
 - kind `content` — 44% success over 16 closed tasks; aim the next kaizen task here
-- failure category `quality` — 12 occurrences; look for the shared cause across its records
+- failure category `quality` — 13 occurrences; look for the shared cause across its records
 - failure category `actionable` — 9 occurrences; look for the shared cause across its records
 - failure category `transient` — 9 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-08-12 `brainstorm/t-012` — A fail-open picker defect (adapter returns cached rows when a forced-fresh revalidation fails) needed an explicit "fail closed on unsuccessful fresh retrieval" helper, not just forcing the fetch call itself -- four separate quality rejections traced increasingly specific slices of the same class before the fix finally covered both the by-id resolve path and the list-search path on both adapters at once (fetchFreshSourceRows checking store.error rather than trusting the returned array). Worth generalizing into a shared contract check the next time an authorization-sensitive picker is added, rather than re-deriving it per adapter.
 - 2026-08-12 `brainstorm/t-012` — Authorization-sensitive pickers must distinguish a successful fresh retrieval from store fallback/cache behavior; forcing a fetch is insufficient if the store fails open or the adapter ignores the fresh return value.
 - 2026-08-12 `model-builder/t-029` — verifyModelBuilderCompletionGate.ts's post-await stage-write scanner only matches direct `item.stages.KEY = ...` assignments in async functions -- it can't see a write that happens indirectly through a synchronous helper call like approveStage() (bracket-notation write inside its own body). autoBuildItem() slipped an unconditional approveStage() call past that existing guard for exactly this reason, silently re-approving a stage a concurrent Edit click had just marked stale mid-await. A new narrow per-call-site guard (verifyModelBuilderAutoBuildApprovalRaceGuard.ts) closed this instance; the completion-gate scanner itself would be more robust generalized to flag any approveStage/rejectStage call after an await with no adjacent status check, rather than needing a new file per call site each time this shape recurs.
 
@@ -97,7 +98,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-11 `interface-vision/t-104` — Slice 43 of the general-layout-pass kr-note conversion: a genuinely fresh repo-wide grep for the exact hand-rolled rounded-2xl border border-{status}/40 bg-{status}/10 p-4 text-{status} shape (rather than continuing from slice 42's leftover candidate list) found the pool down to exactly two remaining live candidates (giftshop-manager.vue, wonderlab-review-rollout.vue), both converted clean. Explicitly re-verifying with a fresh sweep rather than assuming a stale list is exhaustive (or empty) is worth the cost each time the candidate pool is this close to zero -- a session that only trusts the last note's leftovers risks stopping early or re-checking already-excluded files.
 
-- 2026-08-11 `storybook/t-013` — A bounded-slice task that keeps re-arming to ready across several same-day cycles (three prior PRs: #1740, #1741, #1745) is not necessarily still open -- read the component directly against the task's own stated scope before assuming there is always another slice. Here the wizard's remaining plain field (one textarea) was the entire gap; a ten-line diff closed it, and the task's own note had already flagged this as a likely stopping point. Checking cheaply (grep the shared picker components for kr-panel-flat, read the one remaining section) before claiming avoided a fifth guessed-scope PR.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-12T21:08:46Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-12T21:41:21Z_
