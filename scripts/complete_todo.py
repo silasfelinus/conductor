@@ -11,7 +11,7 @@ Requires: KR_API_TOKEN env var (same token used by fetch_todos.py)
 """
 import json, os, sys, urllib.request, urllib.error
 
-API_BASE = "https://kind-robots.vercel.app/api/todos"
+API_BASE = "https://kindrobots.org/api/todos"
 
 
 def main():
