@@ -7,7 +7,7 @@ If any OPEN todos are returned, the Worker handles the highest-priority one
 before picking from roadmaps.
 
 Requires: KR_API_TOKEN env var (a valid kind_robots JWT for Silas's account)
-API:      GET https://kind-robots.vercel.app/api/todos
+API:      GET https://kindrobots.org/api/todos
           Authorization: Bearer <token>
 
 Exit codes: 0 = success (even if no todos), 1 = auth/network failure
@@ -15,7 +15,7 @@ Stdout: JSON list of OPEN todos sorted HIGH->NORMAL->LOW, then newest-first
 """
 import json, os, sys, urllib.request, urllib.error
 
-API_URL = "https://kind-robots.vercel.app/api/todos"
+API_URL = "https://kindrobots.org/api/todos"
 PRIORITY_ORDER = {"HIGH": 0, "NORMAL": 1, "LOW": 2}
 
 
