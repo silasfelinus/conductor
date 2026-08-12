@@ -503,11 +503,11 @@ tasks:
   - id: t-021
     milestone: m4
     title: Log configured/missing media roots at relay_media_agent.py startup
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-29T12:40:00Z'
+    updated: '2026-08-12T09:32:16Z'
     note: >
       Kaizen from t-019's close-out (conductor PR #1419). relay_media_agent.py
       now has two independent, silently-optional media roots (`images` via
@@ -520,6 +520,8 @@ tasks:
       root env var is set, so a misconfigured box is visible in the relay's
       own logs immediately rather than only surfacing as a retried FAILED
       ArtJob later.
+    claimed_by: 20260812T0928-dc-t021
+    claimed_at: '2026-08-12T09:32:16Z'
 
   - id: t-022
     milestone: m4
