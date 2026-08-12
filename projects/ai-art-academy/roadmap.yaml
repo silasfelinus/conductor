@@ -1280,8 +1280,18 @@ tasks:
     soft_gate: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-12T07:29:13Z'
+    updated: '2026-08-12T10:40:00Z'
     note: |-
+      RECHECK BLOCKED (conductor scheduled sweep, 2026-08-12T10:40:00Z):
+      `recheck_render_queue.py`'s `GET /api/art/queue/stats` now returns HTTP 402
+      "Payment Required" -- the same kind-robots/t-064 production-wide Vercel
+      account block (filed ~08:34Z same day), not a new/separate signal about the
+      LoRA-loading bug itself. The last successful queue read was the
+      07:29:13Z check below, before the outage started. No render-queue
+      monitoring is possible until t-064 clears; this task's own blocker (private
+      ComfyUI /object_info capture) is unchanged and unrelated. Resume the normal
+      recheck cadence once kind-robots.vercel.app is responding again.
+
       RECHECK (conductor scheduled sweep, 2026-08-12T07:29:13Z): still draining, healthy,
       identical unresolved signature (PENDING 470->442, DONE 4150->4157, 24h throughput
       DONE=25/CANCELLED=1, recentFailed 2/3 lora_name not-in-list, 1/3 connection-refused).
