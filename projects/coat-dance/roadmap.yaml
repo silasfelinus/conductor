@@ -132,16 +132,33 @@ tasks:
   - id: t-003
     milestone: m1
     title: "Create source-video beat map template"
-    status: claimed
+    status: needs-human
+    soft_gate: true
     owner: worker
     passes: 0
     stakes: reversible
     depends_on:
       - t-002
     note: >
-      Create a reusable beat-map table format with timestamp ranges, movement/action
-      description, coat behavior, camera/framing notes, emotional tone, candidate AI
-      treatment, generation method, and restitch notes.
+      FOR SILAS: the reusable beat-map table format lives at
+      projects/coat-dance/source/beatmap.md. It contains: column definitions
+      (Timestamp Range, Movement/Action, Coat Behavior, Camera/Framing, Emotional
+      Tone, Candidate AI Treatment, Generation Method, Restitch Notes), the
+      suggested fill-in pipeline order from t-002's tool research, and one
+      placeholder row rather than a preset section count (per BRIEF.md, section
+      count should follow the real beat structure once it's produced).
+
+      TO APPROVE: read the template's column definitions and pipeline order --
+      confirm the shape looks right for populating once a render environment
+      with ffmpeg/librosa/mediapipe is available (this sandbox has neither, so
+      no real timestamps were produced), or leave notes if a column should
+      change. Set approved_by_human: true and status: done, or edit the note
+      with what to adjust.
+
+      What unblocks: t-004 (section-by-section creative treatment) still needs
+      the table actually filled in with real timestamps first -- that's a
+      separate future task once the render-environment tool inventory (BRIEF.md
+      Q3) is confirmed, not this one.
     claimed_by: 20260812T103128Z-coatdance-t003
     claimed_at: '2026-08-12T10:31:29Z'
     updated: '2026-08-12T10:31:29Z'
