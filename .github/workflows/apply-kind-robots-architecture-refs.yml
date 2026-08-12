@@ -1,0 +1,73 @@
+name: Apply Kind Robots Architecture References
+
+on:
+  push:
+    branches:
+      - agent/kind-robots-architecture-refs
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/kind-robots-architecture-refs
+          fetch-depth: 0
+      - name: Update current architecture references
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace(path, old, new):
+              p = Path(path)
+              text = p.read_text()
+              if old not in text:
+                  raise SystemExit(f'missing anchor in {path}: {old}')
+              p.write_text(text.replace(old, new))
+
+          replace(
+              'projects/music-mentor/DESIGN-BRIEF.md',
+              '`composables/useAudioAnalysis.ts`',
+              '`stores/helpers/audioAnalysisHelper.ts`',
+          )
+          replace(
+              'projects/music-mentor/roadmap.yaml',
+              'composables/useAudioAnalysis.ts — decode audio to AudioBuffer, compute a',
+              'stores/helpers/audioAnalysisHelper.ts — store-owned helper that decodes audio to AudioBuffer and computes a',
+          )
+          replace(
+              'projects/music-mentor/roadmap.yaml',
+              'implemented a YIN pitch detector (de Cheveigne & Kawahara 2002) in kind_robots composables/useAudioAnalysis.ts,',
+              'implemented a YIN pitch detector (de Cheveigne & Kawahara 2002), now owned by kind_robots stores/helpers/audioAnalysisHelper.ts,',
+          )
+          replace(
+              'projects/interface-vision/roadmap.yaml',
+              'are now one composable, composables/useEarnedKarma.ts;',
+              'were consolidated into one client owner; that ownership now lives behind stores/userStore.ts with stores/helpers/earnedKarmaHelper.ts handling the reactive tracking;',
+          )
+          replace(
+              'projects/appmaker/roadmap.yaml',
+              'the rest goes through typed composables/stores',
+              'the rest goes through typed stores/helpers',
+          )
+
+          path = Path('projects/kind-robots/roadmap.yaml')
+          text = path.read_text()
+          anchor = '  Nuxt 4 / Vue 3 / TypeScript / Prisma / Pinia 3 / DaisyUI house style applies.\n'
+          if anchor not in text:
+              raise SystemExit('missing Kind Robots house-style anchor')
+          rule = '''  Kind Robots intentionally uses a root-first client layout: components/, pages/,\n  stores/, middleware/, assets/, and utils/ stay at repository root. Do not add an\n  app/ wrapper merely to follow a newer Nuxt directory convention. Do not create a\n  root composables/ island: domain state, API calls, persistence, caching, and\n  orchestration belong to the responsible Pinia store; store implementation\n  machinery belongs in stores/helpers/; genuinely cross-domain stateless code\n  belongs in utils/. Root middleware/ is client/router middleware, while\n  server/middleware/ is Nitro request middleware; they are distinct execution layers.\n'''
+          if rule not in text:
+              text = text.replace(anchor, anchor + rule)
+          path.write_text(text)
+          PY
+      - name: Commit updates
+        run: |
+          git config user.name "conductor-maintenance-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add projects/kind-robots/roadmap.yaml projects/music-mentor/DESIGN-BRIEF.md projects/music-mentor/roadmap.yaml projects/interface-vision/roadmap.yaml projects/appmaker/roadmap.yaml
+          git commit -m "docs: align Kind Robots architecture references"
+          git push origin HEAD:agent/kind-robots-architecture-refs
