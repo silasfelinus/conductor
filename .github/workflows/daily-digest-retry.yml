@@ -3,7 +3,9 @@ name: Daily digest retry watchdog
 # The primary digest can be cancelled before its first step when GitHub Actions
 # cannot allocate a runner or download actions. These later checks use only
 # runner-bundled gh/jq tools, so they can re-run the original workflow without
-# depending on checkout/setup actions themselves.
+# depending on checkout/setup actions themselves. Ordinary workflow failures
+# and timeouts are application signals, not watchdog retry candidates; retrying
+# those only multiplies alerts and can replay already-committed cycle evidence.
 
 on:
   schedule:
@@ -83,7 +85,11 @@ jobs:
           fi
 
           case "${conclusion}" in
-            action_required|cancelled|failure|startup_failure|stale|timed_out)
+            action_required|cancelled|startup_failure|stale)
+              ;;
+            failure|timed_out)
+              echo "::warning::Digest concluded ${conclusion} after workflow execution; leaving the application failure for investigation instead of multiplying alerts: ${run_url}"
+              exit 0
               ;;
             *)
               echo "::warning::Digest conclusion '${conclusion}' is not retryable; leaving it for investigation."
