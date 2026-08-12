@@ -48,6 +48,9 @@ jobs:
           path.write_text(text.replace(old, new, 1))
           PY
 
+      - name: Install targeted Python test dependencies
+        run: python -m pip install --disable-pip-version-check pytest pyyaml
+
       - name: Run targeted regression tests
         run: python -m pytest -q tests/test_ready_closeout_metadata.py tests/test_process_task_events.py
 
