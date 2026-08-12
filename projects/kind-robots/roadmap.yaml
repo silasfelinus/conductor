@@ -2293,54 +2293,19 @@ tasks:
   - id: t-064
     milestone: m3
     title: "PRODUCTION DOWN: kind-robots.vercel.app returns 402 DEPLOYMENT_DISABLED"
-    status: needs-human
+    status: done
     gate_human: true
     stakes: outward-facing
     passes: 0
-    note: >-
-      FOR SILAS: The production site (https://kind-robots.vercel.app and its
-      *.vercel.app aliases) is returning HTTP 402 "Payment required /
-      DEPLOYMENT_DISABLED" on every route as of 2026-08-12T08:34Z, confirmed
-      both via a direct curl and via the authenticated Vercel MCP connector
-      (mcp__Vercel__web_fetch_vercel_url) against /api/health/database.
+    note: |-
+      FOR SILAS: The production site (https://kind-robots.vercel.app and its *.vercel.app aliases) is returning HTTP 402 "Payment required / DEPLOYMENT_DISABLED" on every route as of 2026-08-12T08:34Z, confirmed both via a direct curl and via the authenticated Vercel MCP connector (mcp__Vercel__web_fetch_vercel_url) against /api/health/database.
+      What was checked: `mcp__Vercel__get_project` on prj_x6HB2IPpQbvqNqiYVgu3IibJ6FZf shows the latest production deployment (dpl_ExxsAXLYM5podB7DyELze2nTCXsN, commit 3b68fd8) itself as `readyState: READY`, but the PROJECT-level field `"live": false`. That combination -- a ready build that the platform still won't route traffic to -- is the signature of an account-level gate (spend cap hit, payment method failed, subscription lapsed) rather than a broken deployment or a code bug. No custom production domain is configured (only *.vercel.app aliases), so there is no alternate live URL currently serving traffic either.
+      Side effects already observed this session: kind_robots API endpoints that conductor scripts call for routine monitoring (fetch_todos.py's Todos endpoint, recheck_render_queue.py's /api/art/queue/stats) both returned HTTP 402 for the same reason, not their own separate bugs -- don't chase those as independent issues until this is resolved.
+      UPDATE 2026-08-12T08:52Z: confirmed this also blocks EVERY kind_robots PR merge, not just the live site. kind_robots PR #1816 (a genuinely unrelated, fully-verified model-builder/t-029 fix -- 18/19 GitHub Actions checks green) sits at `mergeable_state: blocked` because branch protection has a required "Vercel" status check, which is failing with description "Account is blocked" and links to https://vercel.com/knowledge/why-is-my-account-deployment-blocked -- GitHub's own copy of the same account-level signal, not a second independent problem. So this is now also stalling all conductor/ kind_robots software work, not only production traffic.
+      TO APPROVE / RESOLVE: this needs Silas's direct action on the Vercel dashboard (billing/plan page for the silasfelinus-projects team) -- agents have no billing/payment authority per AGENTS.md. Once the account is back in good standing (or a redeploy is triggered if that's what clears it), re-check with `mcp__Vercel__web_fetch_vercel_url` on /api/health/database and set status: done with what fixed it. Also merge kind_robots PR #1816 (model-builder/t-029) once its Vercel check clears -- it has been verified and is just waiting on this gate.
 
-      What was checked: `mcp__Vercel__get_project` on prj_x6HB2IPpQbvqNqiYVgu3IibJ6FZf
-      shows the latest production deployment (dpl_ExxsAXLYM5podB7DyELze2nTCXsN,
-      commit 3b68fd8) itself as `readyState: READY`, but the PROJECT-level
-      field `"live": false`. That combination -- a ready build that the
-      platform still won't route traffic to -- is the signature of an
-      account-level gate (spend cap hit, payment method failed, subscription
-      lapsed) rather than a broken deployment or a code bug. No custom
-      production domain is configured (only *.vercel.app aliases), so there is
-      no alternate live URL currently serving traffic either.
-
-      Side effects already observed this session: kind_robots API endpoints
-      that conductor scripts call for routine monitoring (fetch_todos.py's
-      Todos endpoint, recheck_render_queue.py's /api/art/queue/stats) both
-      returned HTTP 402 for the same reason, not their own separate bugs --
-      don't chase those as independent issues until this is resolved.
-
-      UPDATE 2026-08-12T08:52Z: confirmed this also blocks EVERY kind_robots
-      PR merge, not just the live site. kind_robots PR #1816 (a genuinely
-      unrelated, fully-verified model-builder/t-029 fix -- 18/19 GitHub
-      Actions checks green) sits at `mergeable_state: blocked` because
-      branch protection has a required "Vercel" status check, which is
-      failing with description "Account is blocked" and links to
-      https://vercel.com/knowledge/why-is-my-account-deployment-blocked --
-      GitHub's own copy of the same account-level signal, not a second
-      independent problem. So this is now also stalling all conductor/
-      kind_robots software work, not only production traffic.
-
-      TO APPROVE / RESOLVE: this needs Silas's direct action on the Vercel
-      dashboard (billing/plan page for the silasfelinus-projects team) --
-      agents have no billing/payment authority per AGENTS.md. Once the account
-      is back in good standing (or a redeploy is triggered if that's what
-      clears it), re-check with `mcp__Vercel__web_fetch_vercel_url` on
-      /api/health/database and set status: done with what fixed it. Also
-      merge kind_robots PR #1816 (model-builder/t-029) once its Vercel check
-      clears -- it has been verified and is just waiting on this gate.
+      CORRECTED AND CLOSED 2026-08-12: Silas clarified that Kind Robots migrated off Vercel this week and `https://kindrobots.org` is the canonical production/API origin. The reported 402 `DEPLOYMENT_DISABLED` was therefore not a Kind Robots production outage; stale Conductor workflows and home-agent defaults were still calling the retired Vercel deployment. Conductor PR #2150 migrated the live callers to `kindrobots.org`, passed Worker PR CI, Security Audit, Process task events, Coloring Render Gate, and Daily Dream Contract, then merged as 85e7bd1. The post-merge Auto Art Generate run 31640782789 verified `KR_BASE_URL=https://kindrobots.org`, Kind Robots API health=true, failed-job repair=success, and both consume lanes=success. Vercel billing/account state is no longer a Kind Robots production gate. Track any actual `kindrobots.org` incident separately.
     claimed_by: null
     claimed_at: null
-    approved_by_human: false
-    owner: null
-    updated: '2026-08-12T08:40:00Z'
+    approved_by_human: true
+    updated: '2026-08-12T21:06:00Z'
