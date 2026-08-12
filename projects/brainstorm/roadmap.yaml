@@ -284,11 +284,11 @@ tasks:
   - id: t-012
     milestone: m3
     title: Define reusable source-object context adapter
-    status: review
+    status: ready
     depends_on:
       - t-005
       - t-006
-    updated: '2026-08-12T14:37:03Z'
+    updated: '2026-08-12T15:12:47Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -299,10 +299,8 @@ tasks:
       FOLLOW-UP REVIEW REJECTED (quality) on Kind Robots PR #1820 exact head c8b4d4818a670238ba7d9b5a4fd6b5cb191fde78. The prior privacy revalidation and selected-source resolve race are fixed, but runSourceSearch still has no request-identity guard: a slower earlier search can overwrite a newer search's results and clear isSearchingSource while the newer request is still in flight. Add a search token/captured request identity so only the latest search may write results or clear loading state, with regression coverage. All 21 attached GitHub Actions completed successfully on this head. Separate Vercel status remains failure because the account is blocked; do not bypass that gate.
 
       FIX PUSHED 2026-08-12 to Kind Robots PR #1820 exact head bd82875: added sourceSearchToken (mirrors the existing sourceResolveToken pattern) so runSourceSearch drops a stale search's results and no longer clears isSearchingSource out from under a newer, still-in-flight search. vue-tsc/eslint/prettier clean, verifyBrainstormSourceAdapters.test.ts extended with the new guard's assertions and passes, verifyBrainstormWorkbench.mjs/verifyBrainstormStoreContract.mjs/test:workflow-paths unaffected. Awaiting re-review; merge still blocked separately on kind-robots/t-064 (Vercel account gate).
-    owner: worker
-    claimed_by: sched-2026-08-12-t012-retry
-    claimed_at: '2026-08-12T14:37:03Z'
-    implementation_pr: silasfelinus/kind_robots#1820
+
+      FOLLOW-UP REVIEW REJECTED (quality) on Kind Robots PR #1820 exact head bd8287580ed567b057fa2292ee11145fe375ff0c. The sourceSearchToken race fix is correct and all 21 attached GitHub Actions completed successfully, but Character search still calls fetchCharacters() with its default force=false. characterStore short-circuits to persisted/in-memory characters when hasLoaded is true, so after an auth transition the Brainstorm source picker can still list stale Character rows the current session may no longer be authorized to view. Force a fresh authorized Character list fetch for search (or equivalent server-authorized search path) and add regression coverage. Separate Vercel status remains failure: Account is blocked; do not bypass that gate.
 
   - id: t-013
     milestone: m3

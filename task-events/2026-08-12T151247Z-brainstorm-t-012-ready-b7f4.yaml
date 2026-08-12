@@ -1,7 +1,0 @@
-version: 1
-project: brainstorm
-task: t-012
-operation: ready
-updated: '2026-08-12T15:12:47Z'
-note: >-
-  FOLLOW-UP REVIEW REJECTED (quality) on Kind Robots PR #1820 exact head bd8287580ed567b057fa2292ee11145fe375ff0c. The sourceSearchToken race fix is correct and all 21 attached GitHub Actions completed successfully, but Character search still calls fetchCharacters() with its default force=false. characterStore short-circuits to persisted/in-memory characters when hasLoaded is true, so after an auth transition the Brainstorm source picker can still list stale Character rows the current session may no longer be authorized to view. Force a fresh authorized Character list fetch for search (or equivalent server-authorized search path) and add regression coverage. Separate Vercel status remains failure: Account is blocked; do not bypass that gate.
