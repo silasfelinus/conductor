@@ -284,13 +284,14 @@ tasks:
   - id: t-012
     milestone: m3
     title: Define reusable source-object context adapter
-    status: blocked
+    status: done
     depends_on:
       - t-005
       - t-006
-    updated: '2026-08-12T16:26:00Z'
+    updated: '2026-08-12T21:40:00Z'
     passes: 0
     stakes: reversible
+    implementation_pr: 'silasfelinus/kind_robots#1820'
     note: |-
       Create an explicit, inspectable adapter contract for brainstorming from Kind Robots entities. The user sees the selected source object and can remove it. Start with Character and Dream and design the contract so Scenario, Reward, Bot, Project and Prompt can follow without bespoke endpoints. Limit context to relevant canonical fields and avoid leaking private data across ownership/visibility boundaries.
 
@@ -309,6 +310,8 @@ tasks:
       CORRECTION TO THE 2026-08-12 e7272c6 REVIEW NOTE: the failed-fresh-fetch privacy issue affects both list adapters, not only Character. Character fetchCharacters(true) returns the existing persisted characters array on request failure, and characterAdapter.search then reads store.characters. Dream fetchDreams() returns [] on request failure but leaves store.dreams intact, and dreamAdapter.search ignores the returned fresh array and reads store.dreams instead. Thus either picker can surface stale pre-auth-transition rows when fresh authorization/list retrieval fails. Make both Brainstorm source searches fail closed on unsuccessful fresh retrieval and add regression coverage with preloaded cached rows plus failed fetches, asserting zero candidates. PR #1820 exact head e7272c618476d38e9e9cca84edfc7cbc4e2423a5 remains Actions-green but separately blocked by Vercel Account is blocked.
 
       BLOCKED after repeated quality/privacy review failures on Kind Robots PR #1820. AGENTS.md requires a quality/scope rejection to consume a pass and to block at the third such rejection. This task has had at least four distinct quality rejections (stale Character resolve plus source race; overlapping search race; cached Character search; and the current fail-open fresh-list failure affecting Character and Dream), although connector-native ready events did not increment the roadmap passes field. Current exact head e7272c618476d38e9e9cca84edfc7cbc4e2423a5 is Actions-green but still fails closed incorrectly on list retrieval: Character forced fetch falls back to cached characters on error, and Dream fetch returns [] on error while the adapter ignores that result and searches stale store.dreams. Do not continue automatic retry churn. Resolution should explicitly design a fail-closed adapter/list-result contract, then return the task to ready deliberately. Vercel remains separately blocked at the account level.
+
+      CLOSED 2026-08-12: exact head 4a6966d (fetchFreshSourceRows fail-closed helper, pushed directly by Silas) fixes the fail-open security-flag finding -- both characterAdapter.search() and dreamAdapter.search() now return zero candidates whenever a fresh authorized fetch does not succeed (checked via store.error, which fetchCharacters()/fetchDreams() both clear before the request and only set on a caught failure), rather than falling back to whatever the store already had cached. Verified independently: read stores/characterStore.ts and stores/dreamStore.ts directly to confirm clearError()/setLastError()/reportError() give store.error call-accurate semantics, not just trusting the PR description. All 21 GitHub Actions checks green on this head; the Vercel "Account is blocked" status is stale (kind_robots migrated production to kindrobots.org and disabled Vercel Git deployments in kind_robots #1823, merged 2026-08-12) and is not a real merge gate -- confirmed via kind_robots #1816/#1818/#1819/#1821/#1823 all merging today with the same non-required Vercel failure present. Merged Kind Robots PR #1820 (squash 00e6a34).
 
   - id: t-013
     milestone: m3
