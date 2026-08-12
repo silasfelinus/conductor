@@ -284,11 +284,11 @@ tasks:
   - id: t-012
     milestone: m3
     title: Define reusable source-object context adapter
-    status: claimed
+    status: review
     depends_on:
       - t-005
       - t-006
-    updated: '2026-08-12T15:32:05Z'
+    updated: '2026-08-12T15:37:08Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -301,9 +301,12 @@ tasks:
       FIX PUSHED 2026-08-12 to Kind Robots PR #1820 exact head bd82875: added sourceSearchToken (mirrors the existing sourceResolveToken pattern) so runSourceSearch drops a stale search's results and no longer clears isSearchingSource out from under a newer, still-in-flight search. vue-tsc/eslint/prettier clean, verifyBrainstormSourceAdapters.test.ts extended with the new guard's assertions and passes, verifyBrainstormWorkbench.mjs/verifyBrainstormStoreContract.mjs/test:workflow-paths unaffected. Awaiting re-review; merge still blocked separately on kind-robots/t-064 (Vercel account gate).
 
       FOLLOW-UP REVIEW REJECTED (quality) on Kind Robots PR #1820 exact head bd8287580ed567b057fa2292ee11145fe375ff0c. The sourceSearchToken race fix is correct and all 21 attached GitHub Actions completed successfully, but Character search still calls fetchCharacters() with its default force=false. characterStore short-circuits to persisted/in-memory characters when hasLoaded is true, so after an auth transition the Brainstorm source picker can still list stale Character rows the current session may no longer be authorized to view. Force a fresh authorized Character list fetch for search (or equivalent server-authorized search path) and add regression coverage. Separate Vercel status remains failure: Account is blocked; do not bypass that gate.
+
+      FIX PUSHED 2026-08-12 to Kind Robots PR #1820 exact head e7272c6: characterAdapter.search now calls store.fetchCharacters(true) instead of the unforced default, so the source picker can no longer surface a pre-auth-transition cached Character list -- same staleness class as the resolve() fix, just on the search path. Confirmed Dream's fetchDreams()/fetchDreamById() have no equivalent hasLoaded cache short-circuit, so no analogous fix was needed there. vue-tsc/eslint/prettier clean on changed files; verifyBrainstormSourceAdapters.test.ts extended with a regression assertion and passes; verifyBrainstormWorkbench.mjs/verifyBrainstormStoreContract.mjs/test:workflow-paths/verifyCaptureGroupGuards.ts all clean. Awaiting re-review; merge still blocked separately on kind-robots/t-064 (Vercel account gate).
     owner: worker
     claimed_by: 20260812T1520-sched-t012-fix2
     claimed_at: '2026-08-12T15:32:05Z'
+    implementation_pr: 'silasfelinus/kind_robots#1820'
 
   - id: t-013
     milestone: m3
