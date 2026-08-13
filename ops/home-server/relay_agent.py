@@ -109,6 +109,11 @@ RELAY_COMMIT = os.environ.get("KR_RELAY_COMMIT", "").strip() or RELAY_BUILD["com
 # ComfyUI succeeded.
 VIDEO_EXTENSIONS = (".mp4", ".webm", ".mov", ".mkv", ".gif", ".webp")
 
+# Named rather than inlined so the one place that has to survive a cp1252
+# stdout is obvious. emit() guarantees it cannot raise; see _use_utf8_stdout.
+WARN = "\N{WARNING SIGN}"
+WRENCH = "\N{WRENCH}"
+
 
 def _use_utf8_stdout():
     """Stop the console codepage from deciding what the relay may say.
@@ -439,7 +444,26 @@ def describe_comfy_error(entry):
 # the two agree on what "the same LoRA" means. A value ComfyUI already accepts
 # is left untouched, so correct jobs are unaffected.
 
-_OBJECT_INFO_TTL = 120.0
+# 15 minutes, not 2. A render takes ~7.5 minutes, so a 120s TTL expired during
+# every single job -- guaranteeing that the next job's refetch raced a ComfyUI
+# that was busy sampling, and a multi-MB /object_info over a 30s timeout loses
+# that race essentially every time. That is what produced
+# "could not fetch ComfyUI object_info ... timed out" on 2026-08-13, which
+# silently downgraded align_workflow_asset_names to a no-op and submitted
+# unresolved LoRA names straight to ComfyUI.
+#
+# A long TTL is safe because staleness is already handled where it matters:
+# align_workflow_asset_names refetches with force=True the moment a name fails
+# to resolve against the cached copy, so a model added since the last fetch is
+# picked up on demand rather than by expiry. The TTL only bounds how long a
+# REMOVED entry lingers, which costs one failed resolve at worst.
+_OBJECT_INFO_TTL = float(os.environ.get("COMFY_OBJECT_INFO_TTL", "900"))
+
+# ComfyUI serves /object_info from the same process that runs the sampler, so
+# while a render is in flight it can be slow rather than unavailable. Wait
+# longer, and retry once, before giving up and submitting unresolved.
+_OBJECT_INFO_TIMEOUT = float(os.environ.get("COMFY_OBJECT_INFO_TIMEOUT", "90"))
+_OBJECT_INFO_ATTEMPTS = int(os.environ.get("COMFY_OBJECT_INFO_ATTEMPTS", "2"))
 _object_info_cache = {"at": 0.0, "data": None}
 
 
@@ -547,19 +571,43 @@ def fetch_comfy_object_info(force=False):
     ):
         return _object_info_cache["data"]
 
-    try:
-        status, info = http_json("GET", f"{COMFY_URL}/object_info", timeout=30)
-    except Exception as error:  # noqa: BLE001 - resolution is best-effort
-        log(f"⚠️ could not fetch ComfyUI object_info for name resolution: {error}")
-        return _object_info_cache["data"]
+    last_error = None
+    for attempt in range(1, max(1, _OBJECT_INFO_ATTEMPTS) + 1):
+        try:
+            status, info = http_json(
+                "GET", f"{COMFY_URL}/object_info", timeout=_OBJECT_INFO_TIMEOUT
+            )
+        except Exception as error:  # noqa: BLE001 - resolution is best-effort
+            last_error = error
+            if attempt < _OBJECT_INFO_ATTEMPTS:
+                time.sleep(2)
+                continue
+            break
 
-    if status != 200 or not isinstance(info, dict):
-        log(f"⚠️ ComfyUI /object_info returned HTTP {status}; skipping name resolution")
-        return _object_info_cache["data"]
+        if status != 200 or not isinstance(info, dict):
+            last_error = f"HTTP {status}"
+            if attempt < _OBJECT_INFO_ATTEMPTS:
+                time.sleep(2)
+                continue
+            break
 
-    _object_info_cache["at"] = now
-    _object_info_cache["data"] = info
-    return info
+        _object_info_cache["at"] = now
+        _object_info_cache["data"] = info
+        return info
+
+    # Serving a stale copy beats skipping resolution: the model list barely
+    # changes, and a name that is missing from it still force-refetches below.
+    stale = _object_info_cache["data"]
+    log(
+        f"{WARN} could not fetch ComfyUI object_info after "
+        f"{_OBJECT_INFO_ATTEMPTS} attempt(s): {last_error}"
+        + (
+            " - using the last known copy"
+            if stale is not None
+            else " - name resolution skipped for this job"
+        )
+    )
+    return stale
 
 
 # What the last call to align_workflow_asset_names actually did. Read only by
@@ -598,7 +646,7 @@ def align_workflow_asset_names(workflow):
             remaps, unresolved = resolve_workflow_asset_names(workflow, fresh)
 
     for class_type, input_name, old, new in remaps:
-        log(f"🔧 {class_type}.{input_name}: {old!r} -> {new!r}")
+        log(f"{WRENCH} {class_type}.{input_name}: {old!r} -> {new!r}")
 
     _last_resolution.update(state="ran", remaps=len(remaps))
     return unresolved
@@ -878,6 +926,14 @@ def main():
         sys.exit(1)
 
     log_build_identity()
+    # Warm the object_info cache now, before any render is in flight. ComfyUI
+    # serves it from the process that runs the sampler, so this is the one
+    # moment it is reliably fast -- and a warm cache means the first job's
+    # LoRA resolution does not depend on winning a race against the GPU.
+    if fetch_comfy_object_info(force=True) is None:
+        log("object_info unavailable at startup; will retry on the first job")
+    else:
+        log("object_info cached for asset-name resolution")
     log(
         f"agent {AGENT_ID} ({RELAY_VERSION}) polling {KR_BASE_URL} "
         f"every {POLL_SECONDS}s"
