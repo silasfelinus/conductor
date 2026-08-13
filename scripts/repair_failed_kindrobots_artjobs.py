@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-"""Repair and requeue failed Kind Robots ArtJobs with reviewed repair policies.
+"""Repair and requeue failed Kind Robots ArtJobs with legacy paths/prompts.
 
-The standing repair policy is intentionally narrow: only Kind Robots-targeted
-FAILED jobs with a legacy image path or retired vague style token are selected.
-Everything else is reported with a bounded, prompt-free diagnostic.
+The script first lists FAILED jobs through the authenticated queue API, selects
+only Kind Robots-targeted jobs whose imagePath is not canonical or whose prompt
+contains the retired brand-style token, then sends those exact IDs to the
+scoped requeue endpoint. Dry-run by default.
 
-A temporary exact-ID cleanup for the 2026-08-12 incident removes the redundant
-replacement pair created when the independent repair and auto-art workflows ran
-concurrently. It never deletes an ArtJob or image: it keeps the most-progressed
-member of each duplicate pair and cancels only the redundant queue row.
-Dry-run by default.
+Failures outside that deliberately narrow repair policy are reported with a
+bounded diagnostic (id, engine, and error only). This keeps scheduled repair
+runs useful for incident diagnosis without dumping prompts or silently implying
+that an unselected failure was not seen.
 """
 
 import argparse
@@ -29,22 +29,6 @@ VAGUE_ART_DIRECTION = re.compile(
     r"(?:visual\s+)?(?:style|language)\b",
     re.IGNORECASE,
 )
-
-# One-shot cleanup after the 2026-08-12 failed-job migration. The standalone
-# repair workflow created 8276/8278; the simultaneously-started Auto Art
-# Generate workflow created 8277/8279 from an earlier FAILED-list snapshot.
-# Prefer whichever member has already progressed farther, otherwise keep the
-# first-created replacement. 8275 is the single A1111 -> Krea2 replacement and
-# is status-reported only.
-INCIDENT_STATUS_JOB_ID = 8275
-INCIDENT_DUPLICATE_PAIRS = ((8276, 8277), (8278, 8279))
-STATUS_RANK = {
-    "DONE": 5,
-    "RUNNING": 4,
-    "PENDING": 3,
-    "FAILED": 2,
-    "CANCELLED": 1,
-}
 
 
 def failed_jobs():
@@ -71,86 +55,6 @@ def failed_jobs():
         if not pagination.get("hasNextPage"):
             break
         page += 1
-
-
-def fetch_job(job_id):
-    status, response = consumer.http_json(
-        "GET", f"{consumer.KR_BASE_URL}/api/art/queue/{job_id}"
-    )
-    if status != 200 or not response or not response.get("success"):
-        raise RuntimeError(
-            f"ArtJob {job_id} lookup returned HTTP {status}: "
-            f"{response and response.get('message')}"
-        )
-    job = ((response.get("data") or {}).get("job"))
-    if not isinstance(job, dict):
-        raise RuntimeError(f"ArtJob {job_id} lookup returned no job payload.")
-    return job
-
-
-def choose_duplicate_keeper(first, second):
-    """Keep the farther-progressed row; ties keep the first-created row."""
-    first_rank = STATUS_RANK.get(str(first.get("status") or ""), 0)
-    second_rank = STATUS_RANK.get(str(second.get("status") or ""), 0)
-    return second if second_rank > first_rank else first
-
-
-def cleanup_incident_duplicates(live):
-    """Report the incident replacements and cancel only redundant queue rows."""
-    primary = fetch_job(INCIDENT_STATUS_JOB_ID)
-    print(
-        f"Incident replacement ArtJob {INCIDENT_STATUS_JOB_ID}: "
-        f"status={primary.get('status')}; engine={primary.get('engine')}"
-    )
-
-    failures = []
-    for first_id, second_id in INCIDENT_DUPLICATE_PAIRS:
-        first = fetch_job(first_id)
-        second = fetch_job(second_id)
-        keeper = choose_duplicate_keeper(first, second)
-        duplicate = second if keeper is first else first
-        keeper_id = int(keeper["id"])
-        duplicate_id = int(duplicate["id"])
-        duplicate_status = str(duplicate.get("status") or "")
-        print(
-            f"Incident duplicate pair {first_id}/{second_id}: "
-            f"keep {keeper_id} ({keeper.get('status')}), "
-            f"redundant {duplicate_id} ({duplicate_status})"
-        )
-
-        if duplicate_status == "CANCELLED":
-            continue
-        if duplicate_status == "DONE":
-            print(
-                f"  ArtJob {duplicate_id} already DONE; preserving history/image "
-                "instead of destructively deleting output."
-            )
-            continue
-        if not live:
-            print(f"  DRY RUN: would cancel redundant ArtJob {duplicate_id}.")
-            continue
-
-        status, response = consumer.http_json(
-            "POST",
-            f"{consumer.KR_BASE_URL}/api/art/queue/{duplicate_id}/cancel",
-            {
-                "reason": (
-                    f"Cancelled as duplicate of ArtJob {keeper_id}; concurrent "
-                    "2026-08-12 failed-job repair workflows created both rows."
-                )
-            },
-        )
-        if status != 200 or not response or not response.get("success"):
-            failures.append(duplicate_id)
-            print(
-                f"  FAILED cancelling duplicate ArtJob {duplicate_id}: HTTP {status} "
-                f"{response and response.get('message')}",
-                file=sys.stderr,
-            )
-        else:
-            print(f"  Cancelled redundant ArtJob {duplicate_id}.")
-
-    return failures
 
 
 def repair_reasons(job):
@@ -196,18 +100,12 @@ def main() -> int:
     parser.add_argument(
         "--live",
         action="store_true",
-        help="apply reviewed repairs and cancel reviewed duplicate replacement rows",
+        help="repair payloads and requeue the selected failed jobs",
     )
     args = parser.parse_args()
 
     if args.live and not consumer.KR_API_TOKEN:
         print("KR_API_TOKEN is required for --live.", file=sys.stderr)
-        return 1
-
-    try:
-        incident_failures = cleanup_incident_duplicates(args.live)
-    except RuntimeError as error:
-        print(str(error), file=sys.stderr)
         return 1
 
     selected = []
@@ -227,14 +125,11 @@ def main() -> int:
 
     if not selected:
         print("No failed Kind Robots ArtJobs need path/style repair.")
-        if incident_failures:
-            print(f"Duplicate cleanup failures: {incident_failures}", file=sys.stderr)
-            return 1
         return 0
 
     print(
         f"{'LIVE' if args.live else 'DRY RUN'}: "
-        f"{len(selected)} failed ArtJob(s) selected for path/style repair"
+        f"{len(selected)} failed ArtJob(s) selected"
     )
     if not args.live:
         print("Pass --live to repair and requeue these exact IDs.")
@@ -269,7 +164,6 @@ def main() -> int:
         )
 
     print(f"Repaired and requeued {repaired}/{len(selected)} selected ArtJobs.")
-    failures.extend(incident_failures)
     if failures:
         print(f"Failed IDs: {sorted(set(failures))}", file=sys.stderr)
         return 1

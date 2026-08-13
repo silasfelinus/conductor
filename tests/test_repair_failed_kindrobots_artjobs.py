@@ -41,27 +41,3 @@ def test_repair_reasons_remains_default_deny_for_unrelated_failure():
         },
     }
     assert repair.repair_reasons(job) == []
-
-
-def test_duplicate_cleanup_keeps_first_when_statuses_tie():
-    first = {"id": 8276, "status": "PENDING"}
-    second = {"id": 8277, "status": "PENDING"}
-    assert repair.choose_duplicate_keeper(first, second) is first
-
-
-def test_duplicate_cleanup_keeps_running_over_pending():
-    first = {"id": 8276, "status": "PENDING"}
-    second = {"id": 8277, "status": "RUNNING"}
-    assert repair.choose_duplicate_keeper(first, second) is second
-
-
-def test_duplicate_cleanup_keeps_done_over_running():
-    first = {"id": 8278, "status": "DONE"}
-    second = {"id": 8279, "status": "RUNNING"}
-    assert repair.choose_duplicate_keeper(first, second) is first
-
-
-def test_duplicate_cleanup_prefers_pending_over_failed():
-    first = {"id": 8278, "status": "FAILED"}
-    second = {"id": 8279, "status": "PENDING"}
-    assert repair.choose_duplicate_keeper(first, second) is second
