@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-13T07:36:08Z
+Generated: 2026-08-13T07:39:33Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **596**
-- Outcomes: blocked: 14, cancelled: 1, done: 581
+- Closed tasks recorded: **598**
+- Outcomes: blocked: 14, cancelled: 1, done: 583
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -26,7 +26,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 25 | 100% |
-| conductor | 73 | 100% |
+| conductor | 75 | 100% |
 | conductor-app | 2 | 100% |
 | davinci | 3 | 100% |
 | digital-storefront | 29 | 100% |
@@ -61,7 +61,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 580 | 99% |
+| software | 582 | 99% |
 
 ## Failure categories
 
@@ -82,6 +82,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-13 `conductor/t-116` — Two independent sessions leaked KR_API_TOKEN into their own transcripts with the identical broken probe (${VAR:-no} substitutes the live value once set, it isn't a safe fallback) despite one prior TALKBACK entry already documenting the correct -n/-z pattern in prose. Prose-only guidance in a log file is not discoverable enough to stop a repeat mistake -- a copy-pasteable helper script referenced from AGENTS.md is the fix that actually generalizes.
+- 2026-08-13 `conductor/t-115` — select_role.py's github_api_unreachable flag existed but nothing acted on it -- a session could read role: worker at face value and skip reviewing mergeable work the local git checks simply couldn't see (missed 3 green PRs, 2026-08-13 ~05:15 UTC). Downgrading worker/idle to reviewer-uncertain whenever the flag is true closes the gap structurally instead of relying on every session noticing a caveat field. General lesson: a script that already computes a reliability signal should fold it into its top-line recommendation, not just expose it alongside the recommendation for callers to remember to check.
 - 2026-08-13 `model-builder/t-041` — Kaizen chain from t-029 (kind_robots#1825) landed cleanly first-pass: the same run-scoping gate (setStatusForRun) needed to cover both the {success:false} response branch AND the raw network-exception (.catch) branch of pushItem/batchPushItems, not just the one the original PR touched. When a kaizen task targets "the same class of issue" in a sibling code path, check for other branches of the same conditional (success vs. exception) that need the identical fix, not just the one named in the kaizen note.
 - 2026-08-12 `conductor/t-114` — A backslash inside an f-string expression part is invalid grammar before Python 3.12 -- CI's "Lint Python scripts" syntax check runs 3.12 so it never caught this, only this sandbox's local 3.11 pytest did (via a collection-time SyntaxError, not a real test failure). Worth generalizing -- when a script targets an f-string with any escaped-quote/backslash content in its {} expression part, extract the literal to a plain variable first regardless of which Python version the immediate CI check happens to run, since the actual production runner's version is often not the same as CI's syntax-check job.
 - 2026-08-12 `brainstorm/t-012` — A fail-open picker defect (adapter returns cached rows when a forced-fresh revalidation fails) needed an explicit "fail closed on unsuccessful fresh retrieval" helper, not just forcing the fetch call itself -- four separate quality rejections traced increasingly specific slices of the same class before the fix finally covered both the by-id resolve path and the list-search path on both adapters at once (fetchFreshSourceRows checking store.error rather than trusting the returned array). Worth generalizing into a shared contract check the next time an authorization-sensitive picker is added, rather than re-deriving it per adapter.
@@ -93,9 +95,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-11 `model-builder/t-029` — An Explore subagent given an explicit list of every bug class already fixed this same day (two singleton-clearing fixes plus an aria-pressed fix) and told to read the actual store/component code rather than trust a summary found a genuinely different bug shape: three textareas bound to local component refs that only pushed to the store on @change (blur), so the store's own "don't clobber a newer edit" guard in draftText() -- which only compares against the store's value -- couldn't see text the user was still mid-typing. The fix (disable the textarea while its own field is drafting) mirrors a gate already present one UI element over (the "Draft with AI" button), which is often a good signal that an adjacent, un-gated control was simply missed rather than intentionally left open.
 
-- 2026-08-11 `model-builder/t-029` — A stranded worker/* branch (aria-pressed accessibility fix on the recipe-chip selector) had no PR -- the review-claim protocol worked cleanly end to end: posted a REVIEWING marker, waited out all 15 exact-head checks, merged kind_robots #1784. Worth reinforcing: rescuing a stranded branch this way is cheaper than re-deriving the same fix from scratch, and posting the marker first avoided any risk of a concurrent session reviewing the same PR.
-- 2026-08-11 `storybook/t-010` — An Explore subagent reading the Storybook store/composables/components directly (not just filenames) found a real soft-lock: answerCurrentBeat() recorded the reader's answer before weaveBeat() generated the next scene, so a failed generation call left the answer committed with no way to retry (awaitingAnswer requires no answer yet, canFinish requires >= 2 beats -- both false right after a failed opening-beat answer). Fixed by awaiting weaveBeat()'s result and rolling the answer/branchHistory entry back on failure. Also worth recording: the repo's capture-group-guard CI check flagged the new guard script's own `match.exec()` result being indexed after an `assert.ok(match, ...)` check rather than one of its four recognized guard shapes (optional chaining, `if (!match) return`, default-destructure, or `match!`) -- assert-based narrowing isn't one of them, so a plain `if (!match) throw` is the safe default for any new `.exec()`/`.match()` call site in this repo, not just assert.ok.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-13T07:36:08Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-13T07:39:33Z_
