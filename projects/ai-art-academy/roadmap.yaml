@@ -1279,8 +1279,19 @@ tasks:
     gate_human: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-13T19:40:00Z'
+    updated: '2026-08-13T21:40:00Z'
     note: |-
+      RECHECK (conductor scheduled Agent run, 2026-08-13T21:40Z, logged in RENDER-BACKLOG.md):
+      new signal on the queue overall (see t-067, closed this same session -- the separate
+      render-worker stall it tracked has recovered, DONE 4162->4195, staleRunningCount 0), but
+      no new signal on THIS task's own blocker. The exact ArtJobs the merge note asked Silas to
+      re-enqueue (8276/8278) still show their original pre-merge failures (updatedAt 17:56:06Z
+      and 18:02:28Z, both before the 19:40Z fix merge) with the same lora_name not-in-list
+      signature -- they have not been retried since the fix landed, so the fix itself remains
+      unconfirmed end-to-end. Still needs the FOR SILAS step below (pull, `pm2 restart
+      kr-relay`, re-enqueue 8276/8278) to close this task's own gate. gate_human: true /
+      soft_gate unchanged.
+
       MERGED (conductor scheduled Agent run, 2026-08-13T19:40Z): conductor PR #2206
       ("fix(relay): run the asset-name resolver on the path kr-relay actually uses")
       merged to main -- the actual root cause this task tracks. run_comfy_with_recovery
@@ -2137,10 +2148,11 @@ tasks:
   - id: t-067
     milestone: m2
     title: "Render queue stall: zero ArtJob completions across 3+ consecutive recheck windows, ArtJob 6641 stuck ~24h+ on Silas-PC"
-    status: needs-human
+    status: done
     gate_human: true
     passes: 0
     stakes: reversible
+    updated: '2026-08-13T21:40:00Z'
     note: >
       FOR SILAS: the shared kind_robots ComfyUI render queue has produced zero completed
       ArtJobs for at least three consecutive scheduled rechecks in a row (2026-08-12T22:28:47Z,
@@ -2168,4 +2180,17 @@ tasks:
       claim. Once confirmed either recovered or root-caused, set status: done with a note (or
       leave ready with a fresh recheck if still inconclusive). This does not block t-044 --
       that task's own gate is unaffected.
+
+      RECOVERED (conductor scheduled Agent run, 2026-08-13T21:40Z): a fresh authenticated
+      GET /api/art/queue/stats call (via recheck_render_queue.py) shows the stall has cleared
+      on its own -- staleRunningCount is now 0 (ArtJob 6641 is no longer stuck RUNNING), and
+      throughput has resumed: all-time DONE moved 4162 -> 4195, PENDING dropped 425 -> 81, and
+      imagesCreatedInWindow is 33 (vs. the 0 that defined this stall). The queue is classified
+      draining and healthy again. Root cause was never identified (no access to the Silas-PC
+      worker process from this sandbox), but per docs/state-reconciliation.md's recovered-
+      incident guidance, closing recovery on met criteria rather than holding it open pending
+      an unknown root cause -- the two still-failing recentFailed entries (ArtJobs 8276/8278)
+      are the pre-existing t-044 Kontext LoRA naming issue, tracked separately there and
+      unaffected by this closure. If the worker stalls again, re-open under a fresh task
+      rather than reusing this one.
     approved_by_human: false
