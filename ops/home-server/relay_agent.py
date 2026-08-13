@@ -22,6 +22,7 @@ import json
 import os
 import socket
 import subprocess
+import threading
 import sys
 import time
 import urllib.error
@@ -166,15 +167,32 @@ def emit(line):
         pass
 
 
+def human_time(moment):
+    """`Aug 13 3:47PM` -- the scannable half of the timestamp.
+
+    Built by hand rather than with strftime because the no-pad directives that
+    would express it are platform-specific: %-I/%-d are glibc, Windows wants
+    %#I/%#d, and this relay runs on Windows. %b is portable, the rest is
+    arithmetic.
+    """
+    hour = (moment.hour % 12) or 12
+    meridiem = "AM" if moment.hour < 12 else "PM"
+    return f"{moment:%b} {moment.day} {hour}:{moment.minute:02d}{meridiem}"
+
+
 def log(message):
+    # Two stamps, one line: ISO 8601 with the UTC offset for machines and
+    # correlation, then a conventional date-time for reading. `cut -d' ' -f1`
+    # is still the ISO stamp.
+    #
     # ISO 8601 with the UTC offset, not a bare local wall-clock time. Every
     # timestamp this has to be compared against -- ArtJob createdAt/updatedAt,
     # /api/art/queue/stats, GitHub -- is UTC, and a naive "2026-08-13 10:56:11"
     # cannot be lined up against them without knowing the box's timezone and
     # whether DST was in effect. That ambiguity is the difference between "this
     # failed a minute ago" and "this is a week-old line I am re-diagnosing".
-    timestamp = datetime.now().astimezone().isoformat(timespec="seconds")
-    emit(f"[relay {timestamp}] {message}")
+    now = datetime.now().astimezone()
+    emit(f"{now.isoformat(timespec='seconds')} [{human_time(now)}] relay {message}")
 
 
 def log_build_identity():
@@ -465,6 +483,10 @@ _OBJECT_INFO_TTL = float(os.environ.get("COMFY_OBJECT_INFO_TTL", "900"))
 _OBJECT_INFO_TIMEOUT = float(os.environ.get("COMFY_OBJECT_INFO_TIMEOUT", "90"))
 _OBJECT_INFO_ATTEMPTS = int(os.environ.get("COMFY_OBJECT_INFO_ATTEMPTS", "2"))
 _object_info_cache = {"at": 0.0, "data": None}
+# One fetch at a time. Without this the startup warm-up and the first job both
+# pull a multi-MB response from a ComfyUI that is already the bottleneck; the
+# waiter re-checks the cache after acquiring and usually returns immediately.
+_object_info_lock = threading.Lock()
 
 
 def _normalize_asset_name(value):
@@ -563,14 +585,25 @@ def fetch_comfy_object_info(force=False):
     """Fetch ComfyUI's /object_info (node schemas + filename lists), cached for
     a short TTL to avoid refetching the multi-MB blob on every job. Returns the
     dict, or None when the fetch fails (resolution is then skipped, never fatal)."""
+    def _fresh(at_time):
+        return (
+            _object_info_cache["data"] is not None
+            and at_time - _object_info_cache["at"] < _OBJECT_INFO_TTL
+        )
+
     now = time.time()
-    if (
-        not force
-        and _object_info_cache["data"] is not None
-        and now - _object_info_cache["at"] < _OBJECT_INFO_TTL
-    ):
+    if not force and _fresh(now):
         return _object_info_cache["data"]
 
+    with _object_info_lock:
+        # Someone may have fetched it while we waited for the lock.
+        now = time.time()
+        if _fresh(now):
+            return _object_info_cache["data"]
+        return _fetch_object_info_locked(now)
+
+
+def _fetch_object_info_locked(now):
     last_error = None
     for attempt in range(1, max(1, _OBJECT_INFO_ATTEMPTS) + 1):
         try:
@@ -685,6 +718,36 @@ def unresolved_asset_error(unresolved):
         f"list at {COMFY_URL} (missing, misnamed, or an ambiguous basename). "
         "Failing fast instead of submitting a prompt ComfyUI would reject."
     )
+
+
+def warm_object_info_async():
+    """Warm the object_info cache WITHOUT blocking startup.
+
+    The first version of this called fetch_comfy_object_info(force=True)
+    inline, which was wrong: the fetch is allowed to take up to
+    _OBJECT_INFO_TIMEOUT x _OBJECT_INFO_ATTEMPTS plus backoff, so on a box
+    whose ComfyUI was mid-render the relay sat in main() for ~3 minutes before
+    it could claim its first job -- silently, since neither the warm-up line
+    nor the "polling" line had been reached yet. Observed 2026-08-13: a restart
+    logged the build banner and then nothing.
+
+    Warming is an optimisation, never a precondition. Every consumer of the
+    cache already fetches on demand and degrades to submit-as-is, so this runs
+    on a daemon thread and the poll loop starts immediately.
+    """
+
+    def _warm():
+        try:
+            if fetch_comfy_object_info(force=True) is not None:
+                log("object_info cached for asset-name resolution")
+            else:
+                log("object_info not cached yet; will fetch on the first job")
+        except Exception as error:  # noqa: BLE001 - warming must never escape
+            log(f"{WARN} object_info warm-up failed: {error}")
+
+    thread = threading.Thread(target=_warm, name="object-info-warm", daemon=True)
+    thread.start()
+    return thread
 
 
 def run_comfy(payload):
@@ -926,14 +989,7 @@ def main():
         sys.exit(1)
 
     log_build_identity()
-    # Warm the object_info cache now, before any render is in flight. ComfyUI
-    # serves it from the process that runs the sampler, so this is the one
-    # moment it is reliably fast -- and a warm cache means the first job's
-    # LoRA resolution does not depend on winning a race against the GPU.
-    if fetch_comfy_object_info(force=True) is None:
-        log("object_info unavailable at startup; will retry on the first job")
-    else:
-        log("object_info cached for asset-name resolution")
+    warm_object_info_async()
     log(
         f"agent {AGENT_ID} ({RELAY_VERSION}) polling {KR_BASE_URL} "
         f"every {POLL_SECONDS}s"

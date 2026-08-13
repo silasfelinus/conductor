@@ -340,10 +340,13 @@ def test_a_failed_refetch_serves_the_last_known_copy(monkeypatch):
     assert relay.fetch_comfy_object_info(force=True) is known
 
 
-def test_startup_warms_the_cache_before_polling():
-    """The one moment ComfyUI is reliably idle is before the first claim."""
+def test_startup_warms_the_cache_without_blocking_the_poll_loop():
+    """The one moment ComfyUI is reliably idle is before the first claim -- but
+    warming must not gate the poll loop on it. See
+    tests/test_relay_log_timestamps.py::test_warm_up_does_not_block_startup for
+    the timing assertion; this pins the call site."""
     source = (RELAY_DIR / "relay_agent.py").read_text(encoding="utf-8")
     main_body = source[source.index("def main("):]
-    prefetch = main_body.index("fetch_comfy_object_info(force=True)")
+    warm = main_body.index("warm_object_info_async()")
     poll = main_body.index("polling {KR_BASE_URL}")
-    assert prefetch < poll, "object_info must be warmed before the poll loop"
+    assert warm < poll, "object_info must be warmed before the poll loop"

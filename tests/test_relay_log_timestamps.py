@@ -105,3 +105,125 @@ def test_relay_commit_reaches_the_api_without_an_env_var():
     # relayCommit is sent on every heartbeat; it was always None because
     # KR_RELAY_COMMIT was never exported. It must now be populated by detection.
     assert relay.RELAY_COMMIT, "RELAY_COMMIT must fall back to the detected build"
+
+
+# --- Startup must not block on ComfyUI, and must carry exactly one stamp -----
+
+def test_warm_up_does_not_block_startup(monkeypatch):
+    """Warming is an optimisation, never a precondition.
+
+    The first version called fetch_comfy_object_info(force=True) inline in
+    main(). The fetch may take _OBJECT_INFO_TIMEOUT x _OBJECT_INFO_ATTEMPTS
+    plus backoff, so on a box whose ComfyUI was mid-render the relay sat for
+    ~3 minutes before claiming its first job -- silently, because neither the
+    warm-up line nor the "polling" line had been reached. Observed 2026-08-13.
+    """
+    import time as _time
+
+    def slow_and_failing(*a, **k):
+        _time.sleep(0.4)
+        raise OSError("timed out")
+
+    monkeypatch.setattr(relay, "http_json", slow_and_failing)
+    monkeypatch.setattr(relay.time, "sleep", lambda _s: None)
+    monkeypatch.setattr(relay, "log", lambda _m: None)
+    relay._object_info_cache.update(at=0.0, data=None)
+
+    started = _time.monotonic()
+    thread = relay.warm_object_info_async()
+    elapsed = _time.monotonic() - started
+
+    assert elapsed < 0.2, f"warm-up blocked startup for {elapsed:.2f}s"
+    assert thread.daemon, "a warm-up thread must never hold the process open"
+    thread.join(timeout=5)
+
+
+def test_main_warms_before_it_polls():
+    source = (RELAY_DIR / "relay_agent.py").read_text(encoding="utf-8")
+    main_body = source[source.index("def main("):]
+    assert "fetch_comfy_object_info(force=True)" not in main_body.split("while True")[0], (
+        "main() must not fetch object_info inline -- use warm_object_info_async"
+    )
+    assert main_body.index("warm_object_info_async()") < main_body.index(
+        "polling {KR_BASE_URL}"
+    )
+
+
+LINE = re.compile(
+    r"^(?P<iso>\S+) \[(?P<human>[A-Z][a-z]{2} \d{1,2} \d{1,2}:\d{2}[AP]M)\] "
+    r"(?P<source>\S+) (?P<message>.*)$"
+)
+
+
+def test_log_line_leads_with_iso_then_a_readable_time(monkeypatch):
+    """`cut -d' ' -f1` is still the ISO stamp; the bracket is for reading.
+
+    pm2's duplicate prefix is disabled for these two apps
+    (ecosystem.config.js, time:false) -- pm2's own stamp carries no offset,
+    so it was strictly worse than ours."""
+    for module, source_tag in ((relay, "relay"), (lora, "lora-import")):
+        lines = []
+        monkeypatch.setattr("builtins.print", lambda msg, **kw: lines.append(msg))
+        module.log("hello world")
+        match = LINE.match(lines[0])
+        assert match, f"unexpected log shape: {lines[0]!r}"
+        assert ISO_WITH_OFFSET.fullmatch(match["iso"])
+        assert datetime.fromisoformat(match["iso"]).tzinfo is not None
+        assert match["source"] == source_tag
+        assert match["message"] == "hello world"
+        # The two stamps must describe the same instant, not drift apart.
+        parsed = datetime.fromisoformat(match["iso"])
+        assert relay.human_time(parsed) == match["human"]
+
+
+def test_human_time_handles_midnight_and_noon():
+    """12-hour clocks are where hand-rolled formatting goes wrong."""
+    from datetime import datetime as dt
+
+    cases = {
+        (0, 5): "12:05AM",
+        (9, 30): "9:30AM",
+        (11, 59): "11:59AM",
+        (12, 0): "12:00PM",
+        (15, 47): "3:47PM",
+        (23, 59): "11:59PM",
+    }
+    for (hour, minute), expected in cases.items():
+        got = relay.human_time(dt(2026, 8, 13, hour, minute))
+        assert got == f"Aug 13 {expected}", f"{hour:02d}:{minute:02d} -> {got}"
+
+
+def test_human_time_uses_no_platform_specific_directives():
+    """%-I/%-d are glibc; Windows wants %#I/%#d. The relay runs on Windows, so
+    the readable stamp is built by arithmetic, not strftime padding flags.
+
+    Checks USE, not mention -- the docstring explaining this necessarily names
+    the directives it forbids, and a naive substring scan flags itself."""
+    # A no-pad directive as actually used: inside strftime("...") or an
+    # f-string format spec such as {moment:%-I}.
+    used = re.compile(r"""strftime\([^)]*%[-#]|:%[-#]""")
+    for name in ("relay_agent.py", "lora_import_agent.py"):
+        source = (RELAY_DIR / name).read_text(encoding="utf-8")
+        hit = used.search(source)
+        assert hit is None, f"{name} uses a platform-specific directive: {hit.group(0)!r}"
+
+
+def _pm2_app_block(config, app):
+    """The config text for one app: from its name to the start of the next."""
+    start = config.index(f"name: '{app}'")
+    nxt = config.find("name: '", start + 10)
+    return config[start:] if nxt == -1 else config[start:nxt]
+
+
+def test_pm2_does_not_double_stamp_the_self_stamping_agents():
+    config = (RELAY_DIR / "ecosystem.config.js").read_text(encoding="utf-8")
+    # Our agents already lead every line with an offset-qualified stamp.
+    for app in ("kr-relay", "kr-download"):
+        block = _pm2_app_block(config, app)
+        assert "time: false" in block, f"{app} would carry two timestamps per line"
+        assert "time: true" not in block
+    # ComfyUI and sd-webui do not stamp themselves, so pm2 must.
+    for app in ("comfyui", "sd-webui"):
+        block = _pm2_app_block(config, app)
+        assert "time: true" in block, f"{app} does not stamp itself and needs pm2's"
+        assert "log_date_format" in block

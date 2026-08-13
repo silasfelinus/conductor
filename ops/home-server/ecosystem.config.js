@@ -39,13 +39,11 @@ module.exports = {
       out_file: `${LOG_DIR}/comfyui.out.log`,
       error_file: `${LOG_DIR}/comfyui.err.log`,
       merge_logs: true,
-      // pm2 prefixes every log line with this. Without it, ComfyUI's and
-      // sd-webui's own stdout -- where the real generation errors surface --
-      // lands in the log undated, so a red line cannot be told apart from a
-      // week-old one, and a failure cannot be lined up against the ArtJob row
-      // that recorded it. The format matches relay_agent.log's ISO 8601 with
-      // offset, so every stream in this file is comparable to the others and
-      // to the UTC timestamps the Kind Robots API returns.
+      // ComfyUI and sd-webui do not timestamp their own output, and theirs is
+      // where the real generation errors surface -- without this a red line
+      // cannot be told apart from a week-old one. Our own agents DO timestamp
+      // themselves, so they set time:false rather than carry two stamps per
+      // line (see kr-relay below).
       time: true,
       log_date_format: 'YYYY-MM-DDTHH:mm:ssZ'
     },
@@ -89,13 +87,11 @@ module.exports = {
       out_file: `${LOG_DIR}/sd-webui.out.log`,
       error_file: `${LOG_DIR}/sd-webui.err.log`,
       merge_logs: true,
-      // pm2 prefixes every log line with this. Without it, ComfyUI's and
-      // sd-webui's own stdout -- where the real generation errors surface --
-      // lands in the log undated, so a red line cannot be told apart from a
-      // week-old one, and a failure cannot be lined up against the ArtJob row
-      // that recorded it. The format matches relay_agent.log's ISO 8601 with
-      // offset, so every stream in this file is comparable to the others and
-      // to the UTC timestamps the Kind Robots API returns.
+      // ComfyUI and sd-webui do not timestamp their own output, and theirs is
+      // where the real generation errors surface -- without this a red line
+      // cannot be told apart from a week-old one. Our own agents DO timestamp
+      // themselves, so they set time:false rather than carry two stamps per
+      // line (see kr-relay below).
       time: true,
       log_date_format: 'YYYY-MM-DDTHH:mm:ssZ'
     },
@@ -178,15 +174,11 @@ module.exports = {
       out_file: `${LOG_DIR}/kr-relay.out.log`,
       error_file: `${LOG_DIR}/kr-relay.err.log`,
       merge_logs: true,
-      // pm2 prefixes every log line with this. Without it, ComfyUI's and
-      // sd-webui's own stdout -- where the real generation errors surface --
-      // lands in the log undated, so a red line cannot be told apart from a
-      // week-old one, and a failure cannot be lined up against the ArtJob row
-      // that recorded it. The format matches relay_agent.log's ISO 8601 with
-      // offset, so every stream in this file is comparable to the others and
-      // to the UTC timestamps the Kind Robots API returns.
-      time: true,
-      log_date_format: 'YYYY-MM-DDTHH:mm:ssZ'
+      // relay_agent.log / lora_import_agent.log already emit ISO 8601 with the
+      // UTC offset as the first field of every line. pm2's prefix would make it
+      // twice per line, and pm2's own stamp carries no offset -- strictly worse
+      // than ours. One stamp, ours, leading the line so `cut -d' ' -f1` gets it.
+      time: false
     },
 
     // kr-download — pull-based model download agent. The companion to kr-relay:
@@ -231,15 +223,11 @@ module.exports = {
       out_file: `${LOG_DIR}/kr-download.out.log`,
       error_file: `${LOG_DIR}/kr-download.err.log`,
       merge_logs: true,
-      // pm2 prefixes every log line with this. Without it, ComfyUI's and
-      // sd-webui's own stdout -- where the real generation errors surface --
-      // lands in the log undated, so a red line cannot be told apart from a
-      // week-old one, and a failure cannot be lined up against the ArtJob row
-      // that recorded it. The format matches relay_agent.log's ISO 8601 with
-      // offset, so every stream in this file is comparable to the others and
-      // to the UTC timestamps the Kind Robots API returns.
-      time: true,
-      log_date_format: 'YYYY-MM-DDTHH:mm:ssZ'
+      // relay_agent.log / lora_import_agent.log already emit ISO 8601 with the
+      // UTC offset as the first field of every line. pm2's prefix would make it
+      // twice per line, and pm2's own stamp carries no offset -- strictly worse
+      // than ours. One stamp, ours, leading the line so `cut -d' ' -f1` gets it.
+      time: false
     }
   ]
 }

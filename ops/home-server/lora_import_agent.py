@@ -112,12 +112,28 @@ def _use_utf8_stdout():
 _use_utf8_stdout()
 
 
+def human_time(moment):
+    """`Aug 13 3:47PM` -- the scannable half of the timestamp.
+
+    Built by hand rather than with strftime because the no-pad directives that
+    would express it are platform-specific: %-I/%-d are glibc, Windows wants
+    %#I/%#d, and this relay runs on Windows. %b is portable, the rest is
+    arithmetic.
+    """
+    hour = (moment.hour % 12) or 12
+    meridiem = "AM" if moment.hour < 12 else "PM"
+    return f"{moment:%b} {moment.day} {hour}:{moment.minute:02d}{meridiem}"
+
+
 def log(message):
     # ISO 8601 with offset, matching relay_agent.log -- these two streams
     # interleave in the same pm2 log, so they have to be comparable to each
     # other and to the UTC timestamps on the ArtJob rows they explain.
-    stamp = datetime.now().astimezone().isoformat(timespec="seconds")
-    line = f"[lora-import {stamp}] {message}"
+    now = datetime.now().astimezone()
+    line = (
+        f"{now.isoformat(timespec='seconds')} [{human_time(now)}] "
+        f"lora-import {message}"
+    )
     try:
         print(line, flush=True)
     except UnicodeEncodeError:
