@@ -318,7 +318,7 @@ tasks:
     title: Ship Character-aware brainstorming and art-prompt variations
     status: done
     depends_on: t-012
-    owner: worker
+    owner: null
     updated: '2026-08-13T17:57:13Z'
     passes: 0
     stakes: reversible
@@ -328,8 +328,26 @@ tasks:
       batches such as "20 art prompts for this Character under these constraints." Output is
       text only in this task. Provide a reusable deep-link/query-state contract for other
       surfaces to launch Brainstorm with source + intent prefilled.
-    claimed_by: 20260813T1800Z-sched-conductor-brainstorm-t013
-    claimed_at: '2026-08-13T17:39:15Z'
+
+      DONE 2026-08-13 (conductor scheduled Agent run): kind_robots PR #1856 merged squash
+      1fd0cc40. buildBrainstormPrompts never actually read BrainstormSourceRef even though
+      t-012 already let a user pick/persist one -- a Character-grounded session generated the
+      same premise-only ideas as freeform. Added server/utils/brainstorm/brainstormSourceContext(Kit).ts
+      to resolve a source ref into a compact, canView-checked trait summary and fold it into
+      the prompt as a "Grounded in this Kind Robots object" block (resolve failure degrades to
+      ungrounded, never fails the request). Added the reusable deep-link/query-state contract
+      on brainstorm-manager.vue (source/sourceId/intent query keys, generic over modelType,
+      mirrors storybook-page.vue seedFromQuery()) and wired the first entry point on
+      character-manager.vue ("Brainstorm variations" button). Art-prompt variations use the
+      existing count/returnTypes/mode machinery plus the new intent prefill rather than a new
+      return-type taxonomy. Scope deliberately Character-only; Dream-aware grounding is
+      t-014, which slots into the same one-entry resolver registry. Verified: eslint clean,
+      prettier clean on all new files, vue-tsc --noEmit exit 0, all 5 brainstorm contract
+      scripts pass (generation, source-context, object-entry-links, workbench, source-adapters).
+      Kaizen filed as a note in the PR: character-card.vue still has no entry point, only
+      character-manager.vue's detail panel does.
+    claimed_by: ''
+    claimed_at: ''
     implementation_pr: 'silasfelinus/kind_robots#1856'
 
   - id: t-014

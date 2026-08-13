@@ -7900,3 +7900,19 @@ records:
     the correct -n/-z pattern in prose. Prose-only guidance in a log file is not
     discoverable enough to stop a repeat mistake -- a copy-pasteable helper script
     referenced from AGENTS.md is the fix that actually generalizes.
+- date: '2026-08-13'
+  project: brainstorm
+  task: t-013
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A source-object reference can be fully wired through a UI (picker, session
+    persistence, request payload) and still be inert if nothing on the server
+    actually reads it -- t-012 built the whole Character/Dream picker+adapter
+    contract, but buildBrainstormPrompts never consulted request.source, so a
+    "grounded" session generated identical output to a freeform one. When a
+    task says "X-aware," verify the trait data actually reaches the model
+    prompt, not just that the UI can select and remember X.
