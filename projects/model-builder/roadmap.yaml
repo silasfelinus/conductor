@@ -983,10 +983,10 @@ tasks:
   - id: t-042
     milestone: m6
     title: "Add a meta-guard auditing every Model Builder store action that toasts success/failure for confirmed-outcome-before-toast"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
-    owner: worker
+    owner: null
     note: >
       Kaizen from t-029 (kind_robots PR #1859, 2026-08-13, batchSetField
       confirmed-success fix). This is the third t-029 cycle in a row to find the same
@@ -1003,7 +1003,22 @@ tasks:
       action added to the store gets this property checked automatically instead of
       needing its own bespoke guard discovered a cycle later. Front-end/tooling change
       only; no schema change expected.
-    claimed_by: 20260813T203301Z-sched-mb-t042
-    claimed_at: '2026-08-13T20:33:02Z'
+
+      DONE (conductor scheduled Agent run, 2026-08-13): implemented as
+      verifyModelBuilderConfirmedOutcomeGuard.ts. Computes the store's own
+      Promise-returning helpers directly from each function's signature (async, or
+      an explicit `: Promise<...>` return type -- pushItem's plain `void` return
+      correctly excludes it, matching the store's established fire-and-forget
+      convention) and flags any function with a 'success'-toned toast that also
+      contains a bare, unhandled call to one of those helpers ahead of it. New
+      self-test covers the buggy shape, the fixed shape, the `void`-marked
+      intentional fire-and-forget shape, and the established "fire a void-returning
+      helper, then toast on separately-confirmed work" pattern (verified this does
+      NOT false-positive against generateItemAsset). Guard passes clean against the
+      real store; all 24 pre-existing verifyModelBuilder* guards pass; eslint/
+      prettier clean; vue-tsc --noEmit clean. kind_robots PR #1860 merged squash
+      976ce28.
+    claimed_by: null
+    claimed_at: null
     updated: '2026-08-13T20:33:02Z'
     implementation_pr: 'silasfelinus/kind_robots#1860'
