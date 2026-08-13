@@ -38,7 +38,16 @@ module.exports = {
       kill_timeout: 15000,
       out_file: `${LOG_DIR}/comfyui.out.log`,
       error_file: `${LOG_DIR}/comfyui.err.log`,
-      merge_logs: true
+      merge_logs: true,
+      // pm2 prefixes every log line with this. Without it, ComfyUI's and
+      // sd-webui's own stdout -- where the real generation errors surface --
+      // lands in the log undated, so a red line cannot be told apart from a
+      // week-old one, and a failure cannot be lined up against the ArtJob row
+      // that recorded it. The format matches relay_agent.log's ISO 8601 with
+      // offset, so every stream in this file is comparable to the others and
+      // to the UTC timestamps the Kind Robots API returns.
+      time: true,
+      log_date_format: 'YYYY-MM-DDTHH:mm:ssZ'
     },
     {
       // Stable Diffusion WebUI (forge-neo) at D:\code\sd-webui-forge-neo.
@@ -79,7 +88,16 @@ module.exports = {
       kill_timeout: 15000,
       out_file: `${LOG_DIR}/sd-webui.out.log`,
       error_file: `${LOG_DIR}/sd-webui.err.log`,
-      merge_logs: true
+      merge_logs: true,
+      // pm2 prefixes every log line with this. Without it, ComfyUI's and
+      // sd-webui's own stdout -- where the real generation errors surface --
+      // lands in the log undated, so a red line cannot be told apart from a
+      // week-old one, and a failure cannot be lined up against the ArtJob row
+      // that recorded it. The format matches relay_agent.log's ISO 8601 with
+      // offset, so every stream in this file is comparable to the others and
+      // to the UTC timestamps the Kind Robots API returns.
+      time: true,
+      log_date_format: 'YYYY-MM-DDTHH:mm:ssZ'
     },
     // kr-relay — pull-based bridge between the kind_robots ArtJob queue and the
     // local engines. relay_media_agent.py wraps the proven relay_agent.py and
@@ -152,7 +170,16 @@ module.exports = {
       },
       out_file: `${LOG_DIR}/kr-relay.out.log`,
       error_file: `${LOG_DIR}/kr-relay.err.log`,
-      merge_logs: true
+      merge_logs: true,
+      // pm2 prefixes every log line with this. Without it, ComfyUI's and
+      // sd-webui's own stdout -- where the real generation errors surface --
+      // lands in the log undated, so a red line cannot be told apart from a
+      // week-old one, and a failure cannot be lined up against the ArtJob row
+      // that recorded it. The format matches relay_agent.log's ISO 8601 with
+      // offset, so every stream in this file is comparable to the others and
+      // to the UTC timestamps the Kind Robots API returns.
+      time: true,
+      log_date_format: 'YYYY-MM-DDTHH:mm:ssZ'
     },
 
     // kr-download — pull-based model download agent. The companion to kr-relay:
@@ -189,7 +216,16 @@ module.exports = {
       },
       out_file: `${LOG_DIR}/kr-download.out.log`,
       error_file: `${LOG_DIR}/kr-download.err.log`,
-      merge_logs: true
+      merge_logs: true,
+      // pm2 prefixes every log line with this. Without it, ComfyUI's and
+      // sd-webui's own stdout -- where the real generation errors surface --
+      // lands in the log undated, so a red line cannot be told apart from a
+      // week-old one, and a failure cannot be lined up against the ArtJob row
+      // that recorded it. The format matches relay_agent.log's ISO 8601 with
+      // offset, so every stream in this file is comparable to the others and
+      // to the UTC timestamps the Kind Robots API returns.
+      time: true,
+      log_date_format: 'YYYY-MM-DDTHH:mm:ssZ'
     }
   ]
 }

@@ -61,6 +61,7 @@ import sys
 import time
 import urllib.error
 import urllib.request
+from datetime import datetime
 
 AGENT_ID = os.environ.get("LORA_AGENT_ID", "").strip() or f"{socket.gethostname()}-lora"
 KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kindrobots.org").rstrip("/")
@@ -96,7 +97,10 @@ MODEL_EXTS = (".safetensors", ".pt", ".ckpt", ".pth", ".bin")
 
 
 def log(message):
-    stamp = time.strftime("%Y-%m-%d %H:%M:%S")
+    # ISO 8601 with offset, matching relay_agent.log -- these two streams
+    # interleave in the same pm2 log, so they have to be comparable to each
+    # other and to the UTC timestamps on the ArtJob rows they explain.
+    stamp = datetime.now().astimezone().isoformat(timespec="seconds")
     print(f"[lora-import {stamp}] {message}", flush=True)
 
 
