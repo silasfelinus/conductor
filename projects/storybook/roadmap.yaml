@@ -289,7 +289,7 @@ tasks:
 - id: t-020
   milestone: m4
   title: Give the reader a signal when answerCurrentBeat's silent no-op guard rejects a submission
-  status: review
+  status: done
   passes: 0
   stakes: reversible
   note: |-
@@ -302,7 +302,10 @@ tasks:
     leaves the reader with no feedback -- the composer looks like nothing happened rather than
     showing why the submission was rejected. If reachable, surface a short inline message; if not
     reachable through normal UI flow, close this out with that finding recorded.
+
+    FINDING (conductor scheduled Agent run, 2026-08-13): traced every branch of the guard (!active || !beat || beat.answer || !clean || isWeaving.value) against narrative-response-composer.vue and storybookStore.ts. None are reachable through normal UI flow: !active/!beat can't occur while the composer is visible and enabled (composer is v-if="store.session && !store.isComplete", and session/first-beat creation happens in the same synchronous span as isWeaving flipping true); !clean can't occur because the composer's own submit() already trims and rejects empty/whitespace-only input before ever emitting submit; beat.answer/isWeaving.value (double-submit) can't occur because both flip inside the same synchronous block that starts weaveBeat before any await, and the composer's disabled/loading props mirror those same flags -- the HTML spec drains Vue's microtask render queue before a second click/keydown task can run submit() again. No code behavior change; left a comment on the guard in kind_robots recording this analysis and the condition that would make it reachable again (moving session/beat creation off the synchronous path, or a new caller that skips the composer). Verified: eslint clean on touched lines (2 pre-existing unrelated errors confirmed via git stash to predate this change), prettier clean on touched lines (pre-existing STORYBOOK_MODES formatting drift confirmed via git stash to predate this change and left untouched), vue-tsc --noEmit repo-wide exit 0, both existing answer-guard self-tests (verifyStorybookAnswerInputPreservationGuard, verifyStorybookAnswerRollbackGuard) still pass. silasfelinus/kind_robots#1850 merged.
   owner: reviewer
   claimed_by: 20260813T144700Z-sched-conductor-storybook-t020
   claimed_at: '2026-08-13T14:47:05Z'
-  updated: '2026-08-13T14:47:05Z'
+  updated: '2026-08-13T15:04:12Z'
+  implementation_pr: 'silasfelinus/kind_robots#1850'
