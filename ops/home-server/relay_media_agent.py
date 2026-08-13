@@ -4,15 +4,15 @@
 Kind Robots-targeted jobs that carry both:
 
 - targetRepo: silasfelinus/kind_robots
-- imagePath: public/images/<path> or public/rewards/<path>
+- imagePath: public/images/<path>
 
-are written beneath KR_MEDIA_IMAGES_DIR (images) or KR_MEDIA_REWARDS_DIR
-(rewards) before the ArtJob is marked successful. ``public/rewards/...`` is a
-real top-level directory in the kind_robots repo, a sibling of
-``public/images/...`` -- not nested under it -- so it gets its own root
-config instead of being folded into the images root. Historical
-``images/...`` and ``rewards/...`` forms are normalized to their canonical
-``public/...`` spelling before validation. If the filesystem write or
+are written beneath KR_MEDIA_IMAGES_DIR before the ArtJob is marked
+successful. There is ONE media root: everything Kind Robots serves lives under
+``images/``, and ``rewards/`` is a folder inside it -- ``/images/rewards/...``
+is what the media origin actually serves and what 227 of 261 live Rewards
+store. Historical ``images/...``, ``rewards/...`` and ``public/rewards/...``
+spellings are folded to that canonical root before validation, matching
+kind_robots' own server/utils/artJobNormalization.ts. If the filesystem write or
 manifest update fails, the job is reported FAILED and remains retryable
 instead of silently completing with a missing public file.
 
@@ -39,14 +39,7 @@ MEDIA_ROOT_VALUE = (
     os.environ.get("KR_MEDIA_IMAGES_DIR", "").strip()
     or os.environ.get("KR_LOCAL_IMAGES_DIR", "").strip()
 )
-REWARDS_ROOT_VALUE = (
-    os.environ.get("KR_MEDIA_REWARDS_DIR", "").strip()
-    or os.environ.get("KR_LOCAL_REWARDS_DIR", "").strip()
-)
-MEDIA_ROOT_ENV_HINT = {
-    "images": "KR_MEDIA_IMAGES_DIR (or KR_LOCAL_IMAGES_DIR)",
-    "rewards": "KR_MEDIA_REWARDS_DIR (or KR_LOCAL_REWARDS_DIR)",
-}
+MEDIA_ROOT_ENV_HINT = "KR_MEDIA_IMAGES_DIR (or KR_LOCAL_IMAGES_DIR)"
 IMAGE_EXTENSIONS = {".webp", ".png", ".jpg", ".jpeg", ".gif", ".svg"}
 GENERATED_IMAGE_EXTENSIONS = {".webp", ".png", ".jpg", ".jpeg", ".gif"}
 VIDEO_EXTENSIONS = {".mp4", ".webm", ".mov", ".mkv", ".webp"}
@@ -69,10 +62,10 @@ def normalize_kindrobots_image_path(value):
 
     Jobs created before the direct-media contract used several equivalent forms:
     ``/images/...``, ``images/...``, ``/public/images/...``, Windows separators,
-    full media URLs, and the separate ``rewards/...``/``public/rewards/...``
-    logical root. The relay accepts those historical spellings only long enough
-    to canonicalize them to ``public/images/...`` or ``public/rewards/...``.
-    Unrelated paths remain unchanged and fail the safety validation below.
+    full media URLs, and the legacy ``rewards/...``/``public/rewards/...``
+    spellings. The relay accepts those only long enough to canonicalize them to
+    ``public/images/...``. Unrelated paths remain unchanged and fail the safety
+    validation below.
     """
 
     image_path = str(value or "").strip().replace("\\", "/")
@@ -97,10 +90,14 @@ def normalize_kindrobots_image_path(value):
         return image_path
     if image_path.startswith("images/"):
         return f"public/{image_path}"
+    # Legacy reward spellings fold UNDER the images root -- `rewards/` is a
+    # folder inside it, not a sibling of it. This mirrors kind_robots'
+    # server/utils/artJobNormalization.ts:normalizeKindRobotsImagePath, which
+    # has applied exactly this rule since art-job ingestion was written.
     if image_path.startswith("public/rewards/"):
-        return image_path
+        return f"public/images/{image_path[len('public/'):]}"
     if image_path.startswith("rewards/"):
-        return f"public/{image_path}"
+        return f"public/images/{image_path}"
     return image_path
 
 
@@ -114,32 +111,27 @@ def direct_media_target(job):
 
     logical = PurePosixPath(image_path)
     parts = logical.parts
-    if len(parts) < 3 or parts[0] != "public" or parts[1] not in MEDIA_ROOT_ENV_HINT:
+    if len(parts) < 3 or parts[0] != "public" or parts[1] != "images":
         raise ValueError(
-            "Kind Robots media job imagePath must begin with public/images/ "
-            "or public/rewards/"
+            "Kind Robots media job imagePath must begin with public/images/"
         )
 
     relative_parts = parts[2:]
     if any(part in ("", ".", "..") for part in relative_parts):
         raise ValueError(f"Unsafe media imagePath: {image_path}")
 
-    return parts[1], Path(*relative_parts)
+    return Path(*relative_parts)
 
 
 def direct_media_relative(job):
-    target = direct_media_target(job)
-    return target[1] if target is not None else None
+    return direct_media_target(job)
 
 
-def media_root(kind="images"):
-    if kind not in MEDIA_ROOT_ENV_HINT:
-        raise ValueError(f"Unknown media root kind: {kind}")
-    value = REWARDS_ROOT_VALUE if kind == "rewards" else MEDIA_ROOT_VALUE
+def media_root():
+    value = MEDIA_ROOT_VALUE
     if not value:
         raise RuntimeError(
-            f"{MEDIA_ROOT_ENV_HINT[kind]} is required for direct Kind Robots "
-            f"{kind} media jobs"
+            f"{MEDIA_ROOT_ENV_HINT} is required for direct Kind Robots media jobs"
         )
     root = Path(value).expanduser().resolve()
     root.mkdir(parents=True, exist_ok=True)
@@ -219,8 +211,8 @@ def write_direct_media(job, media):
     if target is None:
         return None
 
-    media_kind, relative = target
-    root = media_root(media_kind)
+    relative = target
+    root = media_root()
     destination = (root / relative).resolve()
     if destination != root and root not in destination.parents:
         raise ValueError(f"Media destination escaped root: {destination}")
@@ -238,8 +230,7 @@ def write_direct_media(job, media):
         encoded = encode_image_for_suffix(raw, suffix)
 
     atomic_write(destination, encoded)
-    if media_kind == "images":
-        refresh_manifests(root, destination)
+    refresh_manifests(root, destination)
     relay.log(f"direct media: {destination}")
     return destination
 
@@ -370,15 +361,12 @@ def process_with_media(job):
     if target is None:
         return ORIGINAL_PROCESS(job)
 
-    media_kind, relative = target
+    relative = target
     job_id = job["id"]
     engine = (job.get("engine") or "A1111").upper()
     payload = job_payload(job)
     payload["_relayClientId"] = f"{relay.AGENT_ID}-artjob-{job_id}"
-    relay.log(
-        f"job {job_id}: {engine} direct media -> "
-        f"{relative.as_posix()} (logical root: {media_kind})"
-    )
+    relay.log(f"job {job_id}: {engine} direct media -> {relative.as_posix()}")
 
     if engine == "COMFY":
         media = relay.run_comfy(payload)
@@ -440,21 +428,17 @@ def start_lora_watcher():
 
 
 def log_media_roots():
-    """Log each recognized direct-media root and whether it's configured.
+    """Log the direct-media root and whether it is configured.
 
-    Both roots (``images``, ``rewards``) are independently optional -- a job
-    only discovers a missing root when a direct-media write actually fails,
-    hours after the box was misconfigured. Logging the configured/missing
-    state once at startup, alongside ``start_lora_watcher()``'s pattern of
-    logging why a subsystem is enabled or disabled, makes a misconfigured box
-    visible in the relay's own logs immediately."""
-    root_values = {"images": MEDIA_ROOT_VALUE, "rewards": REWARDS_ROOT_VALUE}
-    for kind, hint in MEDIA_ROOT_ENV_HINT.items():
-        value = root_values[kind]
-        if value:
-            relay.log(f"media root '{kind}' configured ({hint} = {value})")
-        else:
-            relay.log(f"media root '{kind}' not configured (missing {hint})")
+    There is exactly one. A job otherwise only discovers a missing root when a
+    write actually fails, hours after the box was misconfigured, so this states
+    it at startup alongside ``start_lora_watcher()``'s enabled/disabled line."""
+    if MEDIA_ROOT_VALUE:
+        relay.log(
+            f"media root configured ({MEDIA_ROOT_ENV_HINT} = {MEDIA_ROOT_VALUE})"
+        )
+    else:
+        relay.log(f"media root not configured (missing {MEDIA_ROOT_ENV_HINT})")
 
 
 if __name__ == "__main__":

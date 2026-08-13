@@ -1,3 +1,30 @@
+"""Reward art lives UNDER the images root, in a ``rewards`` folder inside it.
+
+There is one media root. This file previously asserted the opposite -- that
+``public/rewards/...`` was a sibling root with its own KR_MEDIA_REWARDS_DIR --
+on the strength of `public/rewards/` existing in the kind_robots checkout. That
+directory is 13 legacy committed files, and nothing serves from it.
+
+Measured on 2026-08-13, against production:
+
+    227 of 261 live Rewards store an imagePath under /images/rewards/...
+      0 store one under /rewards/...
+    https://media.acrocatranch.com/images/rewards/skill/adhd-spark.webp
+      -> 200 image/webp
+
+kind_robots settled this rule first and independently: its
+server/utils/artJobNormalization.ts:normalizeKindRobotsImagePath rewrites
+`rewards/` -> `images/rewards/` and "has since art-job ingestion was written",
+and utils/scripts/repairRewardImagePaths.ts calls `/rewards/` the LEGACY_PREFIX
+and `/images/rewards/` the CORRECT_PREFIX, having repaired 195 rows on
+2026-08-04. The relay was the last place holding a second, contradictory
+definition -- and because KR_MEDIA_REWARDS_DIR was never configured on the box,
+every reward job routed through it would have failed with "KR_MEDIA_REWARDS_DIR
+is required". The startup line reporting that missing root is what surfaced it
+(Silas, 2026-08-13: "there is no public/rewards and shouldnt be, all images
+live inside images/").
+"""
+
 import base64
 import importlib.util
 import sys
@@ -20,86 +47,41 @@ def load_relay_media_module(monkeypatch):
     return module
 
 
-def test_relay_keeps_literal_images_rewards_subfolder_under_images_root(
-    monkeypatch,
-):
-    """``public/images/rewards/...`` is a literal image path (a folder named
-    ``rewards`` under the images root) and is unrelated to the real
-    ``public/rewards/...`` reward-asset root -- it must stay under the images
-    root unchanged, not be confused with the sibling root below."""
-    relay_media = load_relay_media_module(monkeypatch)
-    image_path = "public/images/rewards/favor/test.webp"
-
-    assert (
-        relay_media.normalize_kindrobots_image_path(image_path) == image_path
-    )
-
-    media_kind, relative = relay_media.direct_media_target(
-        {
-            "payload": {
-                "targetRepo": "silasfelinus/kind_robots",
-                "imagePath": image_path,
-            }
-        }
-    )
-
-    assert media_kind == "images"
-    assert relative == Path("rewards/favor/test.webp")
-
-
 @pytest.mark.parametrize(
     "image_path",
     [
+        "public/images/rewards/favor/test.webp",
+        "/images/rewards/favor/test.webp",
+        "images/rewards/favor/test.webp",
         "public/rewards/favor/test.webp",
         "/public/rewards/favor/test.webp",
         "rewards/favor/test.webp",
         "/rewards/favor/test.webp",
         r"public\rewards\favor\test.webp",
+        "https://media.acrocatranch.com/images/rewards/favor/test.webp",
     ],
 )
-def test_relay_canonicalizes_reward_paths_under_their_own_sibling_root(
-    monkeypatch, image_path
-):
-    """``public/rewards/...`` is a real top-level directory in the
-    kind_robots repo, a sibling of ``public/images/...`` -- not nested under
-    it (confirmed against the live checkout: ``public/rewards/favor/...``
-    exists, ``public/images/rewards/...`` does not). It must resolve to its
-    own ``rewards`` media root, not be folded into the images root."""
+def test_every_reward_spelling_folds_under_the_images_root(monkeypatch, image_path):
     relay_media = load_relay_media_module(monkeypatch)
 
     assert relay_media.normalize_kindrobots_image_path(image_path) == (
-        "public/rewards/favor/test.webp"
+        "public/images/rewards/favor/test.webp"
     )
 
-    media_kind, relative = relay_media.direct_media_target(
-        {
-            "payload": {
-                "targetRepo": "silasfelinus/kind_robots",
-                "imagePath": image_path,
-            }
+    job = {
+        "payload": {
+            "targetRepo": "silasfelinus/kind_robots",
+            "imagePath": image_path,
         }
-    )
-
-    assert media_kind == "rewards"
-    assert relative == Path("favor/test.webp")
-    assert relay_media.direct_media_relative(
-        {
-            "payload": {
-                "targetRepo": "silasfelinus/kind_robots",
-                "imagePath": image_path,
-            }
-        }
-    ) == Path("favor/test.webp")
+    }
+    assert relay_media.direct_media_target(job) == Path("rewards/favor/test.webp")
+    assert relay_media.direct_media_relative(job) == Path("rewards/favor/test.webp")
 
 
-def test_relay_writes_rewards_under_their_own_root_not_inside_images(
-    tmp_path, monkeypatch
-):
+def test_reward_art_is_written_inside_the_images_root(tmp_path, monkeypatch):
     relay_media = load_relay_media_module(monkeypatch)
-    image_root = tmp_path / "kindrobots" / "image"
-    rewards_root = tmp_path / "kindrobots" / "rewards"
+    image_root = tmp_path / "kindrobots" / "images"
     monkeypatch.setattr(relay_media, "MEDIA_ROOT_VALUE", str(image_root))
-    monkeypatch.setattr(relay_media, "REWARDS_ROOT_VALUE", str(rewards_root))
     monkeypatch.setattr(
         relay_media, "encode_image_for_suffix", lambda raw, _suffix: raw
     )
@@ -118,24 +100,22 @@ def test_relay_writes_rewards_under_their_own_root_not_inside_images(
         },
     )
 
-    assert destination == rewards_root / "favor" / "sample.webp"
+    # The path the media origin actually serves: <images root>/rewards/...
+    assert destination == image_root.resolve() / "rewards" / "favor" / "sample.webp"
     assert destination.read_bytes() == b"encoded-image"
-    # Reward jobs don't get the images-gallery manifest treatment -- that's
-    # specific to the browsable images gallery, not the reward-asset root.
-    assert not (image_root / "collections.json").exists()
+    # Rewards are part of the browsable images tree now, so they get the same
+    # manifest treatment as everything else under it.
+    assert (image_root / "collections.json").exists()
+    assert (destination.parent / "gallery.json").exists()
 
 
-def test_relay_reward_job_fails_loudly_without_rewards_root_configured(
-    monkeypatch,
-):
-    """A missing KR_MEDIA_REWARDS_DIR must fail loudly (retryable FAILED job)
-    rather than silently guessing a physical path or falling back to the
-    images root -- that silent-wrong-location failure is exactly the bug
-    this fix replaces."""
+def test_a_missing_images_root_fails_loudly(monkeypatch):
+    """No silent guess at a physical path, and no half-configured second root
+    to forget: one root, named in the error."""
     relay_media = load_relay_media_module(monkeypatch)
-    monkeypatch.setattr(relay_media, "REWARDS_ROOT_VALUE", "")
+    monkeypatch.setattr(relay_media, "MEDIA_ROOT_VALUE", "")
 
-    with pytest.raises(RuntimeError, match="KR_MEDIA_REWARDS_DIR"):
+    with pytest.raises(RuntimeError, match="KR_MEDIA_IMAGES_DIR"):
         relay_media.write_direct_media(
             {
                 "payload": {
@@ -149,6 +129,18 @@ def test_relay_reward_job_fails_loudly_without_rewards_root_configured(
                 "is_video": False,
             },
         )
+
+
+def test_there_is_no_second_media_root(monkeypatch):
+    """A rewards-specific root must not come back. It is unreachable config
+    that silently fails every reward job when unset."""
+    relay_media = load_relay_media_module(monkeypatch)
+    assert not hasattr(relay_media, "REWARDS_ROOT_VALUE")
+    source = (
+        Path(__file__).parents[1] / "ops" / "home-server" / "relay_media_agent.py"
+    ).read_text(encoding="utf-8")
+    assert "KR_MEDIA_REWARDS_DIR" not in source
+    assert "KR_LOCAL_REWARDS_DIR" not in source
 
 
 def test_relay_rejects_non_image_public_roots(monkeypatch):
@@ -174,14 +166,8 @@ def test_relay_rejects_path_traversal(monkeypatch):
         )
 
 
-def test_relay_uses_configured_image_and_rewards_roots_independently(
-    tmp_path, monkeypatch
-):
+def test_media_root_resolves_the_single_configured_root(tmp_path, monkeypatch):
     relay_media = load_relay_media_module(monkeypatch)
     image_root = tmp_path / "media-cache" / "images"
-    rewards_root = tmp_path / "media-cache" / "rewards"
     monkeypatch.setattr(relay_media, "MEDIA_ROOT_VALUE", str(image_root))
-    monkeypatch.setattr(relay_media, "REWARDS_ROOT_VALUE", str(rewards_root))
-
-    assert relay_media.media_root("images") == image_root.resolve()
-    assert relay_media.media_root("rewards") == rewards_root.resolve()
+    assert relay_media.media_root() == image_root.resolve()

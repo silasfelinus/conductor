@@ -17,62 +17,35 @@ def load_relay_media_module(monkeypatch):
     return module
 
 
-def test_log_media_roots_reports_each_configured_root(monkeypatch):
+def test_log_media_roots_reports_the_configured_root(monkeypatch):
     relay_media = load_relay_media_module(monkeypatch)
     monkeypatch.setattr(relay_media, "MEDIA_ROOT_VALUE", "/srv/kindrobots/images")
-    monkeypatch.setattr(relay_media, "REWARDS_ROOT_VALUE", "/srv/kindrobots/rewards")
 
     logged = []
     monkeypatch.setattr(relay_media.relay, "log", logged.append)
-
     relay_media.log_media_roots()
 
-    assert len(logged) == 2
-    images_line, rewards_line = logged
-    assert "images" in images_line
-    assert "configured" in images_line
-    assert "not configured" not in images_line
-    assert "/srv/kindrobots/images" in images_line
-    assert "rewards" in rewards_line
-    assert "configured" in rewards_line
-    assert "not configured" not in rewards_line
-    assert "/srv/kindrobots/rewards" in rewards_line
+    # Exactly one root. The second line this used to emit ("media root
+    # 'rewards' not configured") described config that should never have
+    # existed -- rewards live in a folder under the images root.
+    assert len(logged) == 1
+    assert "configured" in logged[0]
+    assert "not configured" not in logged[0]
+    assert "/srv/kindrobots/images" in logged[0]
+    assert "rewards" not in logged[0].lower()
 
 
-def test_log_media_roots_reports_each_missing_root_with_env_hint(monkeypatch):
+def test_log_media_roots_reports_a_missing_root_with_env_hint(monkeypatch):
     relay_media = load_relay_media_module(monkeypatch)
     monkeypatch.setattr(relay_media, "MEDIA_ROOT_VALUE", "")
-    monkeypatch.setattr(relay_media, "REWARDS_ROOT_VALUE", "")
 
     logged = []
     monkeypatch.setattr(relay_media.relay, "log", logged.append)
-
     relay_media.log_media_roots()
 
-    assert len(logged) == 2
-    images_line, rewards_line = logged
-    assert "images" in images_line
-    assert "not configured" in images_line
-    assert "KR_MEDIA_IMAGES_DIR" in images_line
-    assert "rewards" in rewards_line
-    assert "not configured" in rewards_line
-    assert "KR_MEDIA_REWARDS_DIR" in rewards_line
-
-
-def test_log_media_roots_handles_mixed_configuration(monkeypatch):
-    relay_media = load_relay_media_module(monkeypatch)
-    monkeypatch.setattr(relay_media, "MEDIA_ROOT_VALUE", "/srv/kindrobots/images")
-    monkeypatch.setattr(relay_media, "REWARDS_ROOT_VALUE", "")
-
-    logged = []
-    monkeypatch.setattr(relay_media.relay, "log", logged.append)
-
-    relay_media.log_media_roots()
-
-    assert len(logged) == 2
-    images_line, rewards_line = logged
-    assert "not configured" not in images_line
-    assert "not configured" in rewards_line
+    assert len(logged) == 1
+    assert "not configured" in logged[0]
+    assert "KR_MEDIA_IMAGES_DIR" in logged[0]
 
 
 def test_main_entrypoint_logs_media_roots_before_starting_lora_watcher(monkeypatch):
