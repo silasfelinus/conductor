@@ -3874,31 +3874,15 @@ tasks:
   - id: t-115
     milestone: m2
     title: "select_role.py should flag its own recommendation as uncertain when github_api_unreachable is true"
-    status: review
+    status: done
     stakes: reversible
     passes: 0
-    note: >
-      Kaizen from a scheduled sweep (2026-08-13, ~05:15 UTC, see root TALKBACK.md same
-      date): select_role.py returned role: worker with reason "ready task available:
-      ai-art-academy/t-044", but its own output also carried
-      github_api_unreachable: true (11 direct api.github.com calls 403'd) -- meaning its
-      local git-branch-based PR/branch checks had no visibility into actual open PR
-      state. The GitHub MCP connector, checked manually in the same session, found three
-      fully-green open PRs (silasfelinus/conductor#2174, silasfelinus/kind_robots#1838,
-      #1839) that select_role.py's recommendation completely missed. A session that
-      trusts the top-line "role: worker" without reading the caveat field would skip
-      reviewing mergeable work -- the same "trigger says X but reality says Y"
-      pattern conductor/t-026 already documents for stale platform trigger schedules.
-      Add a distinct role (e.g. role: reviewer-uncertain, or fold into the existing
-      reviewer branch) that select_role.py returns whenever github_api_unreachable is
-      true and its local checks found nothing -- explicitly telling the session
-      "I could not verify PR/branch state via API; check the GitHub MCP connector
-      directly before picking worker" rather than silently defaulting to worker.
-      Small, reversible change confined to scripts/select_role.py and its tests.
+    note: 'DONE: select_role.py now returns role: reviewer-uncertain (with underlying_role/underlying_reason) whenever worker/idle would have won but github_api_unreachable is true. Implemented in silasfelinus/conductor#2180, merged 2026-08-13T07:28:17Z. 4 new tests + 3 existing tests updated; full suite 1073 passed/1 skipped.'
     owner: worker
     claimed_by: claude-conductor-20260813T063810Z-t115t116
     claimed_at: '2026-08-13T06:38:12Z'
-    updated: '2026-08-13T06:38:12Z'
+    updated: '2026-08-13T07:29:12Z'
+    implementation_pr: 'silasfelinus/conductor#2180'
 
   - id: t-116
     milestone: m2
