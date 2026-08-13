@@ -1,3 +1,7 @@
-Repair run: https://github.com/silasfelinus/conductor/actions/runs/31643605677
-Started: 2026-08-12T21:41:05Z
+Repair run: https://github.com/silasfelinus/conductor/actions/runs/31663544191
+Started: 2026-08-13T03:19:21Z
+Unhandled FAILED ArtJobs (3):
+  ArtJob 8116: engine=A1111; error=<urlopen error [WinError 10061] No connection could be made because the target machine actively refused it>
+  ArtJob 7623: engine=COMFY; error=ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'61': {'errors': [{'type': 'value_not_in_list', 'message': 'Value not in list', 'details': "lora_name: 'Flux/SFW/3D_Cartoon_Vision_flux_v1.safetensors' not in (list of length 2231)", 'extra_info': {'input_name': 'lora_name', 'input_config': None, 'received_value': 'Flux/SFW/3D_Cartoon_Vision_flux_v1.safetensors'}}], 'dependent_outputs': ['9'], 'class_type': 'LoraLoaderModelOnly'}}). No accepted prompt for client Silas-PC-prompt-1786522675506910200 appeared within 120.0s.
+  ArtJob 7622: engine=COMFY; error=ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'61': {'errors': [{'type': 'value_not_in_list', 'message': 'Value not in list', 'details': "lora_name: 'Kontext/SFW/acrylic.safetensors' not in (list of length 2231)", 'extra_info': {'input_name': 'lora_name', 'input_config': None, 'received_value': 'Kontext/SFW/acrylic.safetensors'}}], 'dependent_outputs': ['9'], 'class_type': 'LoraLoaderModelOnly'}}). No accepted prompt for client Silas-PC-prompt-1786522239215625200 appeared within 120.0s.
 No failed Kind Robots ArtJobs need path/style repair.
