@@ -68,6 +68,15 @@ rather than duplicates:
                     separately-approved platform trigger of its own.
   - worker        — run_worker.py's ready-task check (conductor only)
   - idle          — none of the above; dream-cycle fallback applies
+  - reviewer-uncertain — worker/idle would have won, but github_api_unreachable
+                    is true, so the reviewer/workflow-medic/pr-medic/branch-
+                    medic checks above never got real signal (conductor/t-115).
+                    Not a fresh eighth branch of the decision order — a
+                    downgrade applied to whichever of worker/idle would have
+                    otherwise won, once the GitHub-backed checks it beat are
+                    known-unreliable. `underlying_role`/`underlying_reason`
+                    carry what select_role() would have returned had the API
+                    been reachable.
 
 Decision order (first match wins) — reviewing fresh work stays highest
 leverage (keeps the pipeline flowing); a silently-failing scheduled workflow
@@ -86,6 +95,10 @@ reviewable; idle falls through last:
   5. site_audit_overdue                       -> site-auditor
   6. ready_task exists                        -> worker
   7. none of the above                        -> idle
+  Then (conductor/t-115): if the winner is worker/idle AND github_api_unreachable
+  is true, downgrade that result to reviewer-uncertain — steps 1-4 above never
+  got real GitHub-backed signal, so worker/idle winning by default isn't safe
+  to trust as-is.
 
 This intentionally does not call OpenAI, Claude, or any other model API — same
 contract as the scripts it composes. Real role-appropriate work still happens
@@ -706,9 +719,40 @@ def select_role(
         github_api_unreachable_detail = None
     github_api_unreachable = github_token_missing or bool(_unreachable_urls)
 
+    # conductor/t-115: `worker` and `idle` are the only two roles reachable
+    # WITHOUT a GitHub-backed signal actually firing (ready_task comes from
+    # the roadmap, not from GitHub) — every role above them in the decision
+    # order already required a real GitHub-backed finding to win, so those
+    # stay trustworthy regardless of API reachability. But `worker`/`idle`
+    # are reached just as easily when reviewer/workflow-medic/pr-medic/
+    # branch-medic all came back empty *because the API itself was
+    # unreachable*, not because there's genuinely nothing to review/fix/
+    # triage. Silently keeping `worker`/`idle` in that case caused a real
+    # miss (root TALKBACK.md, 2026-08-13 ~05:15 UTC): this function returned
+    # `role: worker` while every api.github.com call 403'd, and three
+    # fully-green open PRs sat unreviewed until a session checked the GitHub
+    # MCP connector by hand. Downgrade to `reviewer-uncertain` instead of a
+    # bare recommendation whenever that gap is live, so a caller reading only
+    # `role` (not the `github_api_unreachable` caveat field) still gets
+    # steered to check GitHub directly before starting worker/idle work.
+    underlying_role = role
+    underlying_reason = reason
+    if role in ('worker', 'idle') and github_api_unreachable:
+        role = 'reviewer-uncertain'
+        reason = (
+            f'GitHub API was unreachable ({github_api_unreachable_detail}) — the '
+            f'reviewer/workflow-medic/pr-medic/branch-medic checks above could not '
+            f'verify PR/branch state, so the underlying "{underlying_role}" '
+            f'recommendation ({underlying_reason}) is unverified. Check the GitHub '
+            f'MCP connector (or another working transport) for open/reviewable PRs '
+            f'directly before falling back to {underlying_role}.'
+        )
+
     return {
         'role': role,
         'reason': reason,
+        'underlying_role': underlying_role,
+        'underlying_reason': underlying_reason,
         'repos_checked': repos,
         'candidate_worker_branch_count': len(review_branches),
         'candidate_worker_branches': review_branches,

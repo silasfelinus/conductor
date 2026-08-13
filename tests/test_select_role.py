@@ -215,8 +215,11 @@ def test_site_auditor_reason_when_audit_has_never_run():
 
 
 def test_worker_when_only_ready_task_exists_and_audit_not_due():
+    # github_token set + no failures -> github_api_unreachable is False, so
+    # the conductor/t-115 downgrade below never applies and this exercises
+    # plain decision-order logic only.
     with _apply(_patched(queue_summary=SOME_READY_TASK)):
-        result = select_role.select_role()
+        result = select_role.select_role(github_token="fake-token")
 
     assert result["role"] == "worker"
     assert "some-project/t-002" in result["reason"]
@@ -224,7 +227,7 @@ def test_worker_when_only_ready_task_exists_and_audit_not_due():
 
 def test_idle_when_nothing_needs_doing():
     with _apply(_patched()):
-        result = select_role.select_role()
+        result = select_role.select_role(github_token="fake-token")
 
     assert result["role"] == "idle"
 
@@ -247,7 +250,7 @@ def test_remote_refresh_failure_does_not_crash_selection():
     ), mock.patch.object(
         select_role.run_worker, "build_queue_summary", return_value=EMPTY_QUEUE
     ):
-        result = select_role.select_role()
+        result = select_role.select_role(github_token="fake-token")
 
     assert result["role"] == "idle"
 
@@ -302,7 +305,10 @@ def test_github_api_unreachable_surfaced_when_real_requests_fail():
     """A 403/network failure against api.github.com must flip the flag even
     though every affected signal still degrades cleanly to an empty list
     (conductor/t-084's whole point: that emptiness alone is indistinguishable
-    from a genuine zero-signal result unless this flag is checked)."""
+    from a genuine zero-signal result unless this flag is checked). Per
+    conductor/t-115, the resulting role is also downgraded from the bare
+    "idle" it would otherwise be to "reviewer-uncertain" — see the dedicated
+    tests below."""
     with mock.patch.object(select_role.run_reviewer, "refresh_remotes"), mock.patch.object(
         select_role.run_reviewer, "remote_worker_branches", return_value=[]
     ), mock.patch.object(
@@ -317,10 +323,60 @@ def test_github_api_unreachable_surfaced_when_real_requests_fail():
     ):
         result = select_role.select_role(github_token='fake-token')
 
-    assert result["role"] == "idle"
+    assert result["role"] == "reviewer-uncertain"
+    assert result["underlying_role"] == "idle"
     assert result["candidate_reviewable_pr_count"] == 0
     assert result["github_api_unreachable"] is True
-    assert "GitHub API call(s) failed" in result["github_api_unreachable_detail"]
+
+
+# --- reviewer-uncertain downgrade: conductor/t-115 --------------------------
+
+
+def test_worker_downgrades_to_reviewer_uncertain_when_api_unreachable():
+    """The exact miss this task documents (root TALKBACK.md, 2026-08-13 ~05:15
+    UTC): a ready task exists, but github_api_unreachable is true, so the
+    reviewer/pr-medic/etc. checks it beat never got real signal. `worker`
+    alone would silently hide that from a caller reading only `role`."""
+    with _apply(_patched(queue_summary=SOME_READY_TASK)):
+        result = select_role.select_role(github_token='')  # no token -> unreachable
+
+    assert result["role"] == "reviewer-uncertain"
+    assert result["underlying_role"] == "worker"
+    assert "some-project/t-002" in result["underlying_reason"]
+    assert "GitHub API was unreachable" in result["reason"]
+    assert "worker" in result["reason"]
+
+
+def test_idle_downgrades_to_reviewer_uncertain_when_api_unreachable():
+    with _apply(_patched()):
+        result = select_role.select_role(github_token='')
+
+    assert result["role"] == "reviewer-uncertain"
+    assert result["underlying_role"] == "idle"
+
+
+def test_worker_not_downgraded_when_api_reachable():
+    """The downgrade is conditional on github_api_unreachable, not automatic
+    for worker/idle — a fully-reachable API with genuinely nothing to review
+    must still recommend a bare `worker`."""
+    with _apply(_patched(queue_summary=SOME_READY_TASK)):
+        result = select_role.select_role(github_token='fake-token')
+
+    assert result["role"] == "worker"
+    assert result["underlying_role"] == "worker"
+
+
+def test_reviewer_role_not_downgraded_even_when_api_unreachable():
+    """Roles that already required a real GitHub-backed finding to win
+    (reviewer, workflow-medic, pr-medic, branch-medic, site-auditor) are
+    trustworthy regardless of github_api_unreachable — only worker/idle ever
+    get downgraded."""
+    with _apply(_patched(remote_worker_branches=["worker/some-task"])):
+        result = select_role.select_role(github_token='')
+
+    assert result["role"] == "reviewer"
+    assert result["underlying_role"] == "reviewer"
+    assert result["github_api_unreachable"] is True
 
 
 def test_gh_request_records_failure_for_reachability_tracking():

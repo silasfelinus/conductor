@@ -364,6 +364,14 @@ To verify kind_robots changes locally (vue-tsc / eslint) in an ephemeral sandbox
 client with the two required workarounds (CYPRESS_INSTALL_BINARY=0 and a dummy
 DATABASE_URL) baked in, instead of every session re-deriving them (conductor/t-046).
 
+Several scripts here (`fetch_todos.py`, admin-gated kind_robots API calls, etc.) need
+`KR_API_TOKEN` in the environment. To check whether it's set **without ever printing the
+value itself**, run `scripts/kr_token_set.sh` (or `source` it) rather than hand-typing a
+probe: `${VAR:-no}` looks like a safe fallback but actually substitutes the live value
+once the variable is set, so a hand-rolled check can leak the token straight into a
+session's own tool-output transcript (root `TALKBACK.md`, 2026-08-12 and 2026-08-13, two
+independent sessions hit exactly this — conductor/t-116).
+
 **Visually verifying a front-end change: use the Vercel MCP connector, not local `nuxt
 dev`.** Local `npm run dev` 500s immediately in this sandbox because `DATABASE_URL`
 points at an unreachable dummy MariaDB host — SSR never reaches page markup, so there
