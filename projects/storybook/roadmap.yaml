@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   note: |-
@@ -144,11 +144,13 @@ tasks:
     Storybook opening generation persisted a zero-beat active session before the first model call; a failed opening therefore left the reader soft-locked with no answer or retry path. Branch worker/storybook-t010-seed-notice-20260813-8af3 now rolls back only that empty session on opening failure while preserving the setup draft and error, with Storybook studio regression coverage.
 
     Merged silasfelinus/kind_robots#1835 as e611508fbc39b5a96ba6a0df303d5cad1e1463b6. Storybook now rolls back a just-created zero-beat active session when opening generation fails, preserving the setup draft and generation error so the reader can retry instead of being soft-locked. Exact implementation head cb83c5333d22aa7ce0e60796505fbaf8bd871b18 completed all 17 attached GitHub Actions successfully, including Storybook Studio, Storybook Answer Rollback, Storybook Branch State, Storybook Session Library, TypeScript, Contract Tests, Layout, Facet Catalog, and Project Architecture. Return this open-ended polish lane to ready for future bounded Storybook improvements.
-  updated: '2026-08-13T12:39:18Z'
-  implementation_pr: 'silasfelinus/kind_robots#1835'
+
+    Recurring storybook/t-010 bug-hunt cycle (conductor scheduled Agent run). Explore-style subagent read stores/storybookStore.ts, storybook-page.vue, narrative-response-composer.vue, and all 5 existing verifyStorybook* guards fresh to confirm no overlap. Found a new, real gap: submitAnswer() in components/conductor/storybook-page.vue optimistically clears the composer's answerInput ref before awaiting store.answerCurrentBeat(); NarrativeResponseComposer is a fully controlled component with no local text state, so answerInput is the only place the reader's typed answer lives once submitted. answerCurrentBeat's own rollback (verifyStorybookAnswerRollbackGuard) restores store consistency on a failed weaveBeat call, but never restored the composer's local text -- the reader saw the textarea go silently blank and had to recall and retype their entire answer. Fixed by capturing answerCurrentBeat's outcome and restoring answerInput to the submitted value when store.errorMessage confirms a real weaveBeat failure (vs. answerCurrentBeat's own no-op guard, which never sets errorMessage). Added verifyStorybookAnswerInputPreservationGuard.mjs following this lane's established narrow-textual-checker convention (mirrors verifyStorybookAnswerRollbackGuard's extraction-and-assert style), wired via a new dedicated storybook-answer-input-preservation-contract.yml workflow (this lane uses per-guard workflow files, not package.json scripts -- confirmed against all 5 prior guards). Verified: new guard passes against the fix and correctly fails against the pre-fix shape (round-tripped in-process); all 5 pre-existing verifyStorybook* guards pass (no regressions); eslint clean; prettier clean on new files (pre-existing storybook-page.vue drift confirmed via git stash to predate this change); vue-tsc --noEmit repo-wide exit 0; git status --porcelain showed exactly the 3 intended files. kind_robots PR #1846 merged (squash 83e953c9). Rearmed to ready per recurring-task convention -- t-010 never reaches done.
+  updated: '2026-08-13T12:52:18Z'
+  implementation_pr: 'silasfelinus/kind_robots#1846'
   owner: worker
-  claimed_by: 20260813T123917-sched-conductor-sb-t010
-  claimed_at: '2026-08-13T12:39:18Z'
+  claimed_by: ''
+  claimed_at: ''
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
@@ -284,3 +286,20 @@ tasks:
   claimed_at: '2026-08-11T00:30:09Z'
   updated: '2026-08-11T00:43:21Z'
   implementation_pr: 'silasfelinus/kind_robots#1735'
+- id: t-020
+  milestone: m4
+  title: Give the reader a signal when answerCurrentBeat's silent no-op guard rejects a submission
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: |-
+    Kaizen from t-010 (kind_robots PR #1846, answer-input-preservation fix). answerCurrentBeat's
+    early guard (`!active || !beat || beat.answer || !clean || isWeaving.value`) returns false
+    silently with no user-facing signal at all -- distinct from #1846's scope, which only covers a
+    real weaveBeat failure (signaled via store.errorMessage). Check whether any of those branches
+    are actually reachable through the UI (e.g. a rapid double-submit while isWeaving is still
+    true, or a whitespace-only answer slipping past the composer's own validation) in a way that
+    leaves the reader with no feedback -- the composer looks like nothing happened rather than
+    showing why the submission was rejected. If reachable, surface a short inline message; if not
+    reachable through normal UI flow, close this out with that finding recorded.
+  owner: null
