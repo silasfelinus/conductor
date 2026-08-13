@@ -575,16 +575,16 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    implementation_pr: 'silasfelinus/kind_robots#1825'
+    implementation_pr: 'silasfelinus/kind_robots#1838'
     note: 'Reconciliation (conductor scheduled sweep, state-reconciliation duty): task was left at status: claimed (claimed 2026-08-13T02:13:10Z by 20260813T021310Z-model-builder-t029-3cb533, TTL 90 min, now 74+ min stale) even though its own note already documented kind_robots PR #1825 (run-history cancellation-race fix) merged as 90f2739 and said it had been rearmed to ready. Verified #1825 is merged via GitHub MCP (merged_at 2026-08-12T22:27:25Z). Same stale-claimed-after-merge pattern AGENTS.md documents for superkate-hairstyle-ai/t-017 and storybook/t-010. Rearmed to ready per recurring-task convention -- t-029 never reaches done; no code change, bookkeeping only.'
     owner: worker
-    claimed_by: 20260813T042836-modelbuilder-t029-
-    claimed_at: '2026-08-13T04:28:37Z'
-    updated: '2026-08-13T04:28:37Z'
+    claimed_by: ''
+    claimed_at: ''
+    updated: '2026-08-13T05:28:11Z'
 
   - id: t-030
     milestone: m6
