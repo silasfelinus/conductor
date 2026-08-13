@@ -13,7 +13,7 @@
 const COMFY_DIR = 'D:/comfy/comfy-fast'
 const SD_DIR = 'D:/code/sd-webui-forge-neo'
 const LOG_DIR = `${__dirname}/logs`
-const KR_MEDIA_IMAGES_DIR = 'Z:/kindrobots/image'
+const KR_MEDIA_IMAGES_DIR = 'Z:/kindrobots/images'
 // ----------------------------------------------------------------------------
 
 module.exports = {
