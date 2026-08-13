@@ -7868,3 +7868,35 @@ records:
     sibling code path, check for other branches of the same conditional
     (success vs. exception) that need the identical fix, not just the one
     named in the kaizen note.
+- date: '2026-08-13'
+  project: conductor
+  task: t-115
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    select_role.py's github_api_unreachable flag existed but nothing acted on it --
+    a session could read role: worker at face value and skip reviewing mergeable
+    work the local git checks simply couldn't see (missed 3 green PRs, 2026-08-13
+    ~05:15 UTC). Downgrading worker/idle to reviewer-uncertain whenever the flag is
+    true closes the gap structurally instead of relying on every session noticing a
+    caveat field. General lesson: a script that already computes a reliability
+    signal should fold it into its top-line recommendation, not just expose it
+    alongside the recommendation for callers to remember to check.
+- date: '2026-08-13'
+  project: conductor
+  task: t-116
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Two independent sessions leaked KR_API_TOKEN into their own transcripts with
+    the identical broken probe (${VAR:-no} substitutes the live value once set,
+    it isn't a safe fallback) despite one prior TALKBACK entry already documenting
+    the correct -n/-z pattern in prose. Prose-only guidance in a log file is not
+    discoverable enough to stop a repeat mistake -- a copy-pasteable helper script
+    referenced from AGENTS.md is the fix that actually generalizes.
