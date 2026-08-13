@@ -1,0 +1,8 @@
+version: 1
+project: storybook
+task: t-010
+operation: review
+owner: worker
+session: 20260813T022027Z-storybook-t010-8af3
+updated: '2026-08-13T02:30:00Z'
+note: 'Storybook opening generation persisted a zero-beat active session before the first model call; a failed opening therefore left the reader soft-locked with no answer or retry path. Branch worker/storybook-t010-seed-notice-20260813-8af3 now rolls back only that empty session on opening failure while preserving the setup draft and error, with Storybook studio regression coverage.'
