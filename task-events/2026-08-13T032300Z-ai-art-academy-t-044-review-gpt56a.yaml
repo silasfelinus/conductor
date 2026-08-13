@@ -1,0 +1,13 @@
+version: 1
+project: ai-art-academy
+task: t-044
+operation: review
+owner: worker
+session: 2026-08-13T031500Z-ai-art-academy-t-044-gpt56a
+updated: '2026-08-13T03:23:00Z'
+note: >-
+  Diagnosed the three persistent failed ArtJobs as two known Comfy LoRA
+  value_not_in_list failures plus one obsolete A1111 connection-refused row.
+  First implementation adds bounded prompt-free diagnostics to the scheduled
+  failed-job repair pass so the authenticated production workflow exposes exact
+  unhandled IDs/errors before any broader retry policy is changed.
