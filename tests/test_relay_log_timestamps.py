@@ -34,29 +34,6 @@ ISO_WITH_OFFSET = re.compile(
 )
 
 
-def test_relay_log_line_carries_an_offset_qualified_timestamp(monkeypatch):
-    lines = []
-    monkeypatch.setattr("builtins.print", lambda msg, **kwargs: lines.append(msg))
-    relay.log("polling")
-    assert len(lines) == 1
-    stamp = ISO_WITH_OFFSET.search(lines[0])
-    assert stamp, f"no offset-qualified timestamp in {lines[0]!r}"
-    # Parseable, not merely regex-shaped -- an unparseable stamp is no better
-    # than none when correlating against the queue.
-    parsed = datetime.fromisoformat(stamp.group(0).replace("Z", "+00:00"))
-    assert parsed.tzinfo is not None
-    assert "polling" in lines[0]
-
-
-def test_lora_import_log_uses_the_same_format(monkeypatch):
-    # Both streams interleave in one pm2 log, so they must be comparable.
-    lines = []
-    monkeypatch.setattr("builtins.print", lambda msg, **kwargs: lines.append(msg))
-    lora.log("importing")
-    assert ISO_WITH_OFFSET.search(lines[0]), lines[0]
-    assert "importing" in lines[0]
-
-
 def test_naive_local_timestamps_are_gone_from_both_agents():
     # The exact pattern that caused the ambiguity: strftime with no %z.
     for name in ("relay_agent.py", "lora_import_agent.py"):
@@ -150,30 +127,36 @@ def test_main_warms_before_it_polls():
 
 
 LINE = re.compile(
-    r"^(?P<iso>\S+) \[(?P<human>[A-Z][a-z]{2} \d{1,2} \d{1,2}:\d{2}[AP]M)\] "
+    r"^(?P<human>[A-Z][a-z]{2} \d{1,2} \d{1,2}:\d{2}:\d{2}[AP]M) "
     r"(?P<source>\S+) (?P<message>.*)$"
 )
 
 
-def test_log_line_leads_with_iso_then_a_readable_time(monkeypatch):
-    """`cut -d' ' -f1` is still the ISO stamp; the bracket is for reading.
+def test_log_line_is_one_readable_local_time(monkeypatch):
+    """One stamp, readable, seconds included.
 
-    pm2's duplicate prefix is disabled for these two apps
-    (ecosystem.config.js, time:false) -- pm2's own stamp carries no offset,
-    so it was strictly worse than ours."""
+    The ISO stamp that used to lead every line was dropped as noise (Silas,
+    2026-08-13). pm2's duplicate prefix is disabled for these two apps
+    (ecosystem.config.js, time:false), so this is the only stamp on the line --
+    which is why it has to carry seconds: a claim and its submit are seconds
+    apart, and minute granularity would collapse them."""
     for module, source_tag in ((relay, "relay"), (lora, "lora-import")):
         lines = []
         monkeypatch.setattr("builtins.print", lambda msg, **kw: lines.append(msg))
         module.log("hello world")
         match = LINE.match(lines[0])
         assert match, f"unexpected log shape: {lines[0]!r}"
-        assert ISO_WITH_OFFSET.fullmatch(match["iso"])
-        assert datetime.fromisoformat(match["iso"]).tzinfo is not None
         assert match["source"] == source_tag
         assert match["message"] == "hello world"
-        # The two stamps must describe the same instant, not drift apart.
-        parsed = datetime.fromisoformat(match["iso"])
-        assert relay.human_time(parsed) == match["human"]
+
+
+def test_both_agents_format_the_same_instant_identically():
+    """They interleave in one pm2 log; a divergent format makes them
+    incomparable at a glance."""
+    from datetime import datetime as dt
+
+    moment = dt(2026, 8, 13, 15, 47, 9)
+    assert relay.human_time(moment) == lora.human_time(moment) == "Aug 13 3:47:09PM"
 
 
 def test_human_time_handles_midnight_and_noon():
@@ -181,12 +164,12 @@ def test_human_time_handles_midnight_and_noon():
     from datetime import datetime as dt
 
     cases = {
-        (0, 5): "12:05AM",
-        (9, 30): "9:30AM",
-        (11, 59): "11:59AM",
-        (12, 0): "12:00PM",
-        (15, 47): "3:47PM",
-        (23, 59): "11:59PM",
+        (0, 5): "12:05:00AM",
+        (9, 30): "9:30:00AM",
+        (11, 59): "11:59:00AM",
+        (12, 0): "12:00:00PM",
+        (15, 47): "3:47:00PM",
+        (23, 59): "11:59:00PM",
     }
     for (hour, minute), expected in cases.items():
         got = relay.human_time(dt(2026, 8, 13, hour, minute))

@@ -177,22 +177,20 @@ def human_time(moment):
     """
     hour = (moment.hour % 12) or 12
     meridiem = "AM" if moment.hour < 12 else "PM"
-    return f"{moment:%b} {moment.day} {hour}:{moment.minute:02d}{meridiem}"
+    return (
+        f"{moment:%b} {moment.day} "
+        f"{hour}:{moment.minute:02d}:{moment.second:02d}{meridiem}"
+    )
 
 
 def log(message):
-    # Two stamps, one line: ISO 8601 with the UTC offset for machines and
-    # correlation, then a conventional date-time for reading. `cut -d' ' -f1`
-    # is still the ISO stamp.
-    #
-    # ISO 8601 with the UTC offset, not a bare local wall-clock time. Every
-    # timestamp this has to be compared against -- ArtJob createdAt/updatedAt,
-    # /api/art/queue/stats, GitHub -- is UTC, and a naive "2026-08-13 10:56:11"
-    # cannot be lined up against them without knowing the box's timezone and
-    # whether DST was in effect. That ambiguity is the difference between "this
-    # failed a minute ago" and "this is a week-old line I am re-diagnosing".
-    now = datetime.now().astimezone()
-    emit(f"{now.isoformat(timespec='seconds')} [{human_time(now)}] relay {message}")
+    # One readable local time, seconds included. The ISO stamp that used to
+    # lead every line was dropped as noise (Silas, 2026-08-13) -- what it bought
+    # was an explicit UTC offset for correlating against ArtJob
+    # createdAt/updatedAt, and in practice the box's own local time reads fine
+    # for that. Seconds stay because job timings are compared at that
+    # granularity (a claim and its submit are seconds apart).
+    emit(f"{human_time(datetime.now().astimezone())} relay {message}")
 
 
 def log_build_identity():

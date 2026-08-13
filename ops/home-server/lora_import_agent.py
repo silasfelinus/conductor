@@ -122,18 +122,16 @@ def human_time(moment):
     """
     hour = (moment.hour % 12) or 12
     meridiem = "AM" if moment.hour < 12 else "PM"
-    return f"{moment:%b} {moment.day} {hour}:{moment.minute:02d}{meridiem}"
+    return (
+        f"{moment:%b} {moment.day} "
+        f"{hour}:{moment.minute:02d}:{moment.second:02d}{meridiem}"
+    )
 
 
 def log(message):
-    # ISO 8601 with offset, matching relay_agent.log -- these two streams
-    # interleave in the same pm2 log, so they have to be comparable to each
-    # other and to the UTC timestamps on the ArtJob rows they explain.
-    now = datetime.now().astimezone()
-    line = (
-        f"{now.isoformat(timespec='seconds')} [{human_time(now)}] "
-        f"lora-import {message}"
-    )
+    # Same shape as relay_agent.log -- these two streams interleave in one pm2
+    # log, so they have to line up with each other.
+    line = f"{human_time(datetime.now().astimezone())} lora-import {message}"
     try:
         print(line, flush=True)
     except UnicodeEncodeError:
