@@ -471,18 +471,16 @@ tasks:
   - id: t-018
     milestone: m6
     title: "Audit actual art coverage for all 1,024 Da Vinci endings"
-    status: claimed
-    owner: reviewer
+    status: needs-human
+    owner: null
     passes: 0
     stakes: reversible
-    note: >
-      Verify the seeded LifeEnding/Milestone records against real delivered assets, not path
-      strings or queued prompts. Produce exact counts for ending icons/heroes that exist,
-      resolve to an image, are still queued, or are missing. Also inventory contextual art
-      during the run itself. The expected universe is exactly 1,024 outcome keys.
-    claimed_by: 20260813T023100Z-davinci-t018-c9f1
-    claimed_at: '2026-08-13T02:30:11Z'
-    updated: '2026-08-13T02:30:11Z'
+    note: 'kind_robots PR #1836 merged (852f02e5, all 19 checks green): new admin-only GET /api/davinci/endings/coverage endpoint. Classifies every LifeEnding''s icon/hero art as resolved (real ArtImage row), queued (path-string only -- per seedDaVinciEndings.ts/docs/notes/davinci-ending-seed.md the importer never sets the ArtImage id fields), or missing; cross-checks dangling ArtImage refs; reports seeded-vs-expected (1024) count; inventories contextual LifeRunArt (by sceneType, runs with/without art). vue-tsc/eslint/prettier clean before merge. BLOCKED on gathering the actual counts: kind_robots production (kindrobots.org) is self-hosted on Unraid and only updates via a manual Force Update in the Unraid UI (docs/runbooks/migration-credential-boundary.md) -- there is no auto-deploy-on-merge. Confirmed the endpoint is not yet live: GET /api/davinci/endings/coverage with a valid KR_API_TOKEN currently returns the SPA shell (route not found in the running build), not JSON. FOR SILAS: next Force Update on Alexandria will pick up this endpoint; once live, a future session (or Silas directly) can call it and record the real icon/hero/contextual-art counts here. TO APPROVE: no decision needed -- this is a deploy-timing gate, not a judgment call; the task will self-resolve once the endpoint answers with real data. set status: ready (or done, if you or a future session records the counts directly) once verified live.'
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-13T02:44:06Z'
+    implementation_pr: 'silasfelinus/kind_robots#1836'
+    soft_gate: true
 
   - id: t-019
     milestone: m6
