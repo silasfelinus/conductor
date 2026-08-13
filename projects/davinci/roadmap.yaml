@@ -471,18 +471,15 @@ tasks:
   - id: t-018
     milestone: m6
     title: "Audit actual art coverage for all 1,024 Da Vinci endings"
-    status: claimed
-    owner: reviewer
+    status: review
+    owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Verify the seeded LifeEnding/Milestone records against real delivered assets, not path
-      strings or queued prompts. Produce exact counts for ending icons/heroes that exist,
-      resolve to an image, are still queued, or are missing. Also inventory contextual art
-      during the run itself. The expected universe is exactly 1,024 outcome keys.
+    note: 'Opened kind_robots PR #1836: new admin-only GET /api/davinci/endings/coverage endpoint that classifies every LifeEnding''s icon/hero art as resolved (real ArtImage row via iconArtImageId/heroArtImageId), queued (path-string only, per seedDaVinciEndings.ts/docs/notes/davinci-ending-seed.md the importer never sets the ArtImage id fields), or missing. Cross-checks dangling ArtImage refs and reports seeded-vs-expected (1024) ending count. Also inventories contextual (in-run) art via LifeRunArt (total rows, by sceneType, runs with/without art) per the task''s ''also inventory contextual art'' instruction. vue-tsc/eslint/prettier clean. This PR ships the audit tool; running it against production and recording the actual counts is the remaining step -- this sandbox has no live DB/API access to call the new route directly.'
     claimed_by: 20260813T023100Z-davinci-t018-c9f1
     claimed_at: '2026-08-13T02:30:11Z'
-    updated: '2026-08-13T02:30:11Z'
+    updated: '2026-08-13T02:38:47Z'
+    implementation_pr: 'silasfelinus/kind_robots#1836'
 
   - id: t-019
     milestone: m6
