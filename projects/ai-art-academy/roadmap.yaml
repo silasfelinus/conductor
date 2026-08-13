@@ -1279,8 +1279,10 @@ tasks:
     gate_human: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-13T21:40:00Z'
+    updated: '2026-08-13T22:44:55Z'
     note: |-
+      RECHECK (conductor scheduled Agent run, 2026-08-13T22:42Z, logged in RENDER-BACKLOG.md): new signal -- the exact verification ArtJobs this task's own gate is waiting on (8276/8278) were retried and failed again at 22:09:32Z/22:09:39Z, but with a DIFFERENT signature than every prior recheck: 'charmap' codec can't encode character '\U0001f527' in position 34: character maps to <undefined> -- not the original lora_name not-in-list rejection. No recentFailed entry shows the lora_name signature anymore; queue is draining (DONE 4162->4199 since the last check, healthy throughput). This charmap failure is the exact bug conductor PR #2217 ("fix(relay): a log line must never be able to fail a render", merged 9f20e75 at 2026-08-13T22:12:47Z) fixes -- align_workflow_asset_names' own remap-success log line contained the wrench emoji U+1F527 and crashed print() under pm2's cp1252 stdout on Windows, failing the job one line after it had already resolved the LoRA name correctly. 8276/8278 failed 3 minutes BEFORE that fix merged, so they have not been retried against it yet. Net effect: the original t-044 blocker (LoRA naming) appears resolved by the earlier PR #2206 merge -- no lora_name failures observed since -- and the log-encoding crash that was masking that success is now also fixed in code as of #2217. FOR SILAS: pull, `pm2 restart kr-relay`, and re-enqueue 8276/8278 (or any COMFY job) -- if they clear now, both blockers are confirmed closed and this task's gate can shut. gate_human: true / soft_gate unchanged pending that live check.
+
       RECHECK (conductor scheduled Agent run, 2026-08-13T21:40Z, logged in RENDER-BACKLOG.md):
       new signal on the queue overall (see t-067, closed this same session -- the separate
       render-worker stall it tracked has recovered, DONE 4162->4195, staleRunningCount 0), but

@@ -502,3 +502,6 @@ queueDepth: PENDING=103, RUNNING=1, DONE=4173, FAILED=2, CANCELLED=3172 (all-tim
 
 ## 2026-08-13T20:31:36Z | ai-art-academy/t-044 | draining
 queueDepth: PENDING=89, RUNNING=1, DONE=4187, FAILED=2, CANCELLED=3172 (all-time). oldestPending: id=4894, age=759679s (~211.0h), engine=COMFY. windowThroughput (24h): PENDING=1, DONE=7, FAILED=2, CANCELLED=2. recentFailed (last 2): 2/2 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'61':.
+
+## 2026-08-13T22:42:30Z | ai-art-academy/t-044 | draining
+queueDepth: PENDING=74, RUNNING=3, DONE=4199, FAILED=3, CANCELLED=3172 (all-time). oldestPending: id=4894, age=767534s (~213.2h), engine=COMFY. windowThroughput (24h): PENDING=1, DONE=7, FAILED=2, CANCELLED=2. recentFailed (last 3): 2/3 = 'charmap' codec can't encode character '\U0001f527' in position 34: character maps to <undefined>; 1/3 = 'charmap' codec can't encode characters in position 34-35: character maps to <undefined>.
