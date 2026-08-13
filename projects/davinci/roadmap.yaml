@@ -513,7 +513,7 @@ tasks:
   - id: t-021
     milestone: m6
     title: "Da Vinci visual style and interaction polish pass"
-    status: review
+    status: ready
     owner: worker
     passes: 0
     stakes: reversible
@@ -524,30 +524,38 @@ tasks:
       make its controls/layout consistent with current kr-* primitives, then make it visually
       intentional. Verify phone/tablet/desktop with rendered preview geometry and screenshots.
 
+      NOT YET DONE -- one bounded slice landed, more remains before t-022 (Silas's visual
+      acceptance gate, depends_on this task) should be considered unblocked.
 
-      First slice (conductor scheduled Agent run): the layout-contract's 8 machine-checked
-      rules were already 100% clean for davinci-page.vue going in, and interface-vision's
-      DESIGN-BRIEF explicitly warns against forcing bespoke crafted UI onto shared classes
-      ("not a .kr-panel crusade") -- so scoped this pass to a concrete, verifiable gap rather
-      than a cosmetic reskin. Fixed: the dimension grid only distinguished "has any positive
-      value" (success green) from everything else, including dimensions the player has
+
+      Slice 1 (conductor scheduled Agent run, merged kind_robots PR #1842): the
+      layout-contract's 8 machine-checked rules were already 100% clean for
+      davinci-page.vue going in, and interface-vision's DESIGN-BRIEF explicitly warns
+      against forcing bespoke crafted UI onto shared classes ("not a .kr-panel crusade")
+      -- so scoped this slice to a concrete, verifiable gap rather than a cosmetic
+      reskin. Fixed: the dimension grid only distinguished "has any positive value"
+      (success green) from everything else, including dimensions the player has
       actively driven negative (several curated chapters have negative-effect choices by
-      design). Gave the pill a real three-way tone (success/error/neutral) via two extracted
-      helpers, matching the existing status-tint formula. Also added a defense-in-depth
-      :disabled guard to the one async-triggering button in the file that was missing one.
-      Added a narrow textual regression guard (verifyDaVinciDimensionToneGuard.ts + selftest)
-      following this project's established convention, wired into package.json and
-      contract-tests.yml. Verified: new guard + selftest pass, existing
-      test:davinci-narration suite passes, eslint/prettier clean, vue-tsc --noEmit repo-wide
-      exit 0, test:layout-contract holds with no new violations. kind_robots PR #1842 open.
-      Did not attempt live playtest verification (t-024's scope; headless Chromium can't
-      reach any HTTPS host through this sandbox's proxy per AGENTS.md) -- verification here
-      is static (types/lint/guard/contract), which is what's actually checkable for a
-      template class-binding change. The remaining "controls/layout consistency" and broader
-      "visually intentional" work is left for a follow-up slice.
-    claimed_by: 20260813T1045-davinci-t021
-    claimed_at: '2026-08-13T10:38:39Z'
-    updated: '2026-08-13T11:05:00Z'
+      design). Gave the pill a real three-way tone (success/error/neutral) via two
+      extracted helpers, matching the existing status-tint formula. Also added a
+      defense-in-depth :disabled guard to the one async-triggering button in the file
+      that was missing one. Added a narrow textual regression guard
+      (verifyDaVinciDimensionToneGuard.ts + selftest) following this project's
+      established convention, wired into package.json and contract-tests.yml. Verified:
+      new guard + selftest pass, existing test:davinci-narration suite passes,
+      eslint/prettier clean, vue-tsc --noEmit repo-wide exit 0, test:layout-contract
+      holds with no new violations. Did not attempt live playtest verification (t-024's
+      scope; headless Chromium can't reach any HTTPS host through this sandbox's proxy
+      per AGENTS.md) -- verification here is static (types/lint/guard/contract), which
+      is what's actually checkable for a template class-binding change.
+
+      REMAINING: the broader "controls/layout consistency with kr-* primitives" and
+      "visually intentional" passes across the rest of davinci-page.vue (the DESIGN-BRIEF
+      itself cautions this is not a wholesale kr-panel crusade -- next slice should keep
+      auditing for concrete, verifiable gaps rather than a blanket reskin), plus the
+      phone/tablet/desktop rendered-preview verification this task's own note calls for.
+      Rearmed to ready for a follow-up slice.
+    updated: '2026-08-13T11:20:00Z'
 
   - id: t-022
     milestone: m5
