@@ -499,19 +499,16 @@ tasks:
   - id: t-020
     milestone: m6
     title: "Integrate contextual art throughout the playable Da Vinci run"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-017
-    note: >
-      The narrator already proposes artPrompt but the old roadmap explicitly deferred
-      LifeRunArt consumption. Add a coherent in-run art treatment so chapters, transitions,
-      and the final ending do not feel like a text prototype wrapped around a finished API.
-      Reuse shared Kind Robots art/provenance infrastructure; do not invent a parallel store.
+    note: 'DONE 2026-08-13 (session 20260813T0335Z-davinci-t020-r7k2). Built the first real in-run art treatment by reusing the shared narrative-art request pipeline Storybook/Taskmaster already use (server/api/art/enqueue.post.ts narrativeContext, stores/helpers/narrativeArtJobsHelper.ts, NarrativeArtStatus) rather than inventing a parallel store -- confirmed LifeRunArt had zero prior server/component call sites via grep before starting. Added a davinci NarrativeProduct + profile (utils/narrativeArtProfiles.ts, krea2, interactive priority 100 -- does NOT touch the reserved priority-200 dream-cycle tier) and extended the storybook/taskmaster product allowlists in enqueue.post.ts, queue/narrative.get.ts, and artStore.ts to include davinci. server/utils/davinci.ts gained attachLifeRunArt() (idempotent per lifeRunId+chapter+sceneType, since the table has no unique constraint on that triple) and getLifeRunForUser() now includes Art so a resumed run redisplays already-attached art without a second round trip; new owner-gated POST /api/davinci/runs/:id/art wraps it. components/conductor/davinci-page.vue requests art through the shared controller keyed directly off the narrators own per-chapter artPrompt cadence -- sceneType THRESHOLD for each narrated chapter transition, sceneType ENDING for a personalized illustration of this runs specific outcome (distinct from the shared per-outcomeKey ending art the seed importer already seeds onto Milestone/LifeEnding), with a synthesized fallback prompt when no chapter proposed one. Renders via the existing NarrativeArtStatus component for pending/queued/rendering/failed/done states so reading and choosing never block on art generation. No schema migration -- LifeRunArt already had every field needed. Verified: npx vue-tsc --noEmit (full project) 0 errors; eslint clean on every changed/added file (pre-existing unrelated errors on davinci.ts:14 and artStore.ts confirmed via git stash to predate this change); prettier --check clean except confirmed pre-existing drift (git-stash-verified) in narrative.get.ts/artStore.ts/narrativeArtProfiles.ts/davinci.ts, none in touched lines; npm run test:davinci-narration 35/35 unaffected. Live browser smoke test of the full queue-relay-resolve-attach-display flow deferred -- no reachable DATABASE_URL in this sandbox, the same standing limitation documented for every prior davinci/animation-manager/model-builder task. kind_robots PR #1837 merged squash (69296e3), all 23 CI checks green. t-021 (visual/interaction polish) is now unblocked.'
     claimed_by: 20260813T0335Z-davinci-t020-r7k2
     claimed_at: '2026-08-13T03:34:19Z'
-    updated: '2026-08-13T03:34:19Z'
+    updated: '2026-08-13T03:52:51Z'
+    implementation_pr: 'silasfelinus/kind_robots#1837'
 
   - id: t-021
     milestone: m6
