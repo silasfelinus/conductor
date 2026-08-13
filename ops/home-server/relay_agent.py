@@ -20,6 +20,7 @@ import hashlib
 import io
 import json
 import os
+import signal
 import socket
 import subprocess
 import threading
@@ -718,6 +719,68 @@ def unresolved_asset_error(unresolved):
     )
 
 
+# The job this process claimed and has not finished. Read by the shutdown
+# handler so a restart hands the job back instead of abandoning it.
+_in_flight_job_id = None
+
+
+def release_in_flight_claim(reason):
+    """Hand a claimed-but-unfinished job back to the queue.
+
+    Without this, every relay restart strands whatever was rendering: the row
+    stays RUNNING with a stale claimedAt, and nothing reaps it, because the
+    claim endpoint only FAILs a stale RUNNING job once attempts >= MAX_ATTEMPTS.
+    Below that it is merely re-claimable after STALE_CLAIM_MINUTES -- correct,
+    but it means the dashboard counts abandoned work as "running" for as long as
+    it takes the queue to come back around. On 2026-08-13 six restarts in one
+    afternoon left three RUNNING rows against one real render.
+
+    resetAttempts is false on purpose. The attempt was already counted when the
+    job was claimed, and a job that crashes the relay on every start would loop
+    forever if each abandonment gave it a fresh budget; leaving the count intact
+    means it eventually reaches MAX_ATTEMPTS and stops. A human requeue still
+    resets, which is the right asymmetry.
+    """
+    job_id = _in_flight_job_id
+    if not job_id:
+        return
+    log(f"{reason}: releasing claim on job {job_id}")
+    try:
+        status, _ = http_json(
+            "POST",
+            f"{KR_BASE_URL}/api/art/queue/{job_id}/requeue",
+            {"resetAttempts": False},
+            bearer=KR_RELAY_TOKEN,
+            timeout=5,
+        )
+        if status == 200:
+            log(f"job {job_id} returned to the queue")
+        else:
+            log(f"{WARN} could not release job {job_id}: HTTP {status}")
+    except Exception as error:  # noqa: BLE001 - shutdown must not raise
+        log(f"{WARN} could not release job {job_id}: {error}")
+
+
+def install_shutdown_handler():
+    """Release the in-flight claim on SIGTERM/SIGINT.
+
+    pm2 sends SIGTERM on restart, stop and delete. Python's default SIGTERM
+    disposition kills the process outright -- no exception, no finally, so the
+    existing KeyboardInterrupt catch never sees it and the claim leaks.
+    """
+
+    def _handle(signum, _frame):
+        release_in_flight_claim(f"signal {signum}")
+        sys.exit(0)
+
+    for sig in (signal.SIGTERM, signal.SIGINT):
+        try:
+            signal.signal(sig, _handle)
+        except (ValueError, OSError, AttributeError):
+            # Not the main thread, or a platform without this signal.
+            pass
+
+
 def warm_object_info_async():
     """Warm the object_info cache WITHOUT blocking startup.
 
@@ -987,6 +1050,7 @@ def main():
         sys.exit(1)
 
     log_build_identity()
+    install_shutdown_handler()
     warm_object_info_async()
     log(
         f"agent {AGENT_ID} ({RELAY_VERSION}) polling {KR_BASE_URL} "
@@ -1005,12 +1069,18 @@ def main():
 
             job = claim_job()
             if job:
-                process(job)
+                global _in_flight_job_id
+                _in_flight_job_id = job["id"]
+                try:
+                    process(job)
+                finally:
+                    _in_flight_job_id = None
                 continue
         except KeyboardInterrupt:
             raise
         except Exception as error:  # noqa: BLE001 - relay must survive failures
             log(f"error: {error}")
+            _in_flight_job_id = None
             if job:
                 try:
                     complete_job(job["id"], False, error=error)

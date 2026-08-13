@@ -140,6 +140,11 @@ module.exports = {
       windowsHide: true,
       autorestart: true,
       restart_delay: 10000,
+      // Give the SIGTERM handler room to hand its in-flight job back to the
+      // queue before pm2 escalates to SIGKILL. pm2's default is 1600ms, which
+      // is tight for one HTTPS round trip; without the release the job stays
+      // RUNNING until the queue's 15-minute stale window comes around.
+      kill_timeout: 10000,
       env: {
         KR_RELAY_TOKEN: process.env.KR_RELAY_TOKEN || '',
         KR_RELAY_USER_ID: process.env.KR_RELAY_USER_ID || '',
@@ -204,6 +209,11 @@ module.exports = {
       windowsHide: true,
       autorestart: true,
       restart_delay: 10000,
+      // Give the SIGTERM handler room to hand its in-flight job back to the
+      // queue before pm2 escalates to SIGKILL. pm2's default is 1600ms, which
+      // is tight for one HTTPS round trip; without the release the job stays
+      // RUNNING until the queue's 15-minute stale window comes around.
+      kill_timeout: 10000,
       env: {
         KR_RELAY_TOKEN: process.env.KR_RELAY_TOKEN || '',
         KR_BASE_URL: 'https://kindrobots.org',
