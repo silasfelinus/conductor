@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-08-11T14:42:11.173172+00:00",
+  "generated_at": "2026-08-12T23:49:45.526909+00:00",
   "summary": {
     "roadmaps": 45,
     "active_projects": 23,
     "continuous_projects": 2,
-    "tasks": 982,
-    "ready": 32,
-    "waiting": 65,
-    "needs_human": 35,
-    "in_progress": 1,
-    "done": 840,
+    "tasks": 985,
+    "ready": 31,
+    "waiting": 62,
+    "needs_human": 36,
+    "in_progress": 2,
+    "done": 845,
     "errors": 0,
-    "warnings": 0,
-    "info": 60
+    "warnings": 1,
+    "info": 61
   },
   "projects": [
     {
@@ -65,13 +65,12 @@
       "task_count": 38,
       "counts": {
         "done": 27,
-        "needs-human": 1,
-        "ready": 1,
+        "needs-human": 2,
         "waiting": 9
       },
       "open_count": 11,
-      "human_attention": 1,
-      "ready": 1,
+      "human_attention": 2,
+      "ready": 0,
       "waiting": 9,
       "claimed": 0,
       "review": 0,
@@ -104,17 +103,17 @@
       "autonomous": false,
       "task_count": 43,
       "counts": {
-        "done": 38,
-        "needs-human": 3,
+        "done": 39,
+        "needs-human": 2,
         "waiting": 2
       },
-      "open_count": 5,
-      "human_attention": 3,
+      "open_count": 4,
+      "human_attention": 2,
       "ready": 0,
       "waiting": 2,
       "claimed": 0,
       "review": 0,
-      "done": 38
+      "done": 39
     },
     {
       "slug": "mermaids-of-venice",
@@ -142,9 +141,9 @@
       "override_status": "active",
       "priority_index": 7,
       "autonomous": false,
-      "task_count": 63,
+      "task_count": 64,
       "counts": {
-        "done": 61,
+        "done": 62,
         "needs-human": 2
       },
       "open_count": 2,
@@ -153,7 +152,7 @@
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 61
+      "done": 62
     },
     {
       "slug": "kindrobots-unraid",
@@ -181,18 +180,19 @@
       "override_status": "active",
       "priority_index": 9,
       "autonomous": false,
-      "task_count": 40,
+      "task_count": 41,
       "counts": {
-        "claimed": 1,
         "done": 38,
-        "needs-human": 1
+        "needs-human": 1,
+        "ready": 1,
+        "review": 1
       },
-      "open_count": 2,
+      "open_count": 3,
       "human_attention": 1,
-      "ready": 0,
+      "ready": 1,
       "waiting": 0,
-      "claimed": 1,
-      "review": 0,
+      "claimed": 0,
+      "review": 1,
       "done": 38
     },
     {
@@ -220,9 +220,9 @@
       "override_status": "active",
       "priority_index": 11,
       "autonomous": false,
-      "task_count": 113,
+      "task_count": 114,
       "counts": {
-        "done": 111,
+        "done": 112,
         "needs-human": 2
       },
       "open_count": 2,
@@ -231,7 +231,7 @@
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 111
+      "done": 112
     },
     {
       "slug": "taskmaster",
@@ -322,11 +322,12 @@
       "counts": {
         "blocked": 6,
         "done": 2,
-        "ready": 2
+        "needs-human": 1,
+        "ready": 1
       },
       "open_count": 8,
-      "human_attention": 0,
-      "ready": 2,
+      "human_attention": 1,
+      "ready": 1,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
@@ -417,17 +418,17 @@
       "autonomous": false,
       "task_count": 23,
       "counts": {
-        "done": 11,
-        "ready": 2,
-        "waiting": 10
+        "done": 12,
+        "ready": 4,
+        "waiting": 7
       },
-      "open_count": 12,
+      "open_count": 11,
       "human_attention": 0,
-      "ready": 2,
-      "waiting": 10,
+      "ready": 4,
+      "waiting": 7,
       "claimed": 0,
       "review": 0,
-      "done": 11
+      "done": 12
     },
     {
       "slug": "wishmaster",
@@ -496,14 +497,15 @@
       "task_count": 17,
       "counts": {
         "done": 15,
-        "ready": 2
+        "ready": 1,
+        "review": 1
       },
       "open_count": 2,
       "human_attention": 0,
-      "ready": 2,
+      "ready": 1,
       "waiting": 0,
       "claimed": 0,
-      "review": 0,
+      "review": 1,
       "done": 15
     },
     {
@@ -514,16 +516,16 @@
       "autonomous": true,
       "task_count": 22,
       "counts": {
-        "done": 20,
-        "ready": 2
+        "done": 21,
+        "ready": 1
       },
-      "open_count": 2,
+      "open_count": 1,
       "human_attention": 0,
-      "ready": 2,
+      "ready": 1,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 20
+      "done": 21
     },
     {
       "slug": "animation-studio",
@@ -884,6 +886,13 @@
   ],
   "findings": [
     {
+      "severity": "warning",
+      "code": "SOFT_NEEDS_HUMAN",
+      "project": "coloring-book",
+      "task": "t-022",
+      "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
+    },
+    {
       "severity": "info",
       "code": "APPROVAL_WITHOUT_GATE",
       "project": "ai-art-academy",
@@ -959,6 +968,13 @@
       "project": "coloring-book",
       "task": "t-002",
       "message": "approved_by_human is set on a task that is not human-gated."
+    },
+    {
+      "severity": "info",
+      "code": "NEEDS_HUMAN_NOTE_FORMAT",
+      "project": "coloring-book",
+      "task": "t-022",
+      "message": "needs-human note does not use the AGENTS.md FOR SILAS action format."
     },
     {
       "severity": "info",

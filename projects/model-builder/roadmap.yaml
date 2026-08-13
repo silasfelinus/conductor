@@ -949,9 +949,10 @@ tasks:
   - id: t-041
     milestone: m6
     title: "Run-scope the background pushItem/batchPushItems network-exception catch path"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
+    implementation_pr: 'silasfelinus/kind_robots#1829'
     note: >
       Kaizen from t-029 (kind_robots PR #1825, 2026-08-12, run-history cancellation-race
       fix). The batch editor's background pushItem/batchPushItems calls already run-gate
@@ -965,6 +966,15 @@ tasks:
       way the success:false path already is (skip/no-op if the run is stale/cancelled),
       rather than unconditionally calling handleError. Front-end/store change only; no
       schema change expected.
+
+      IMPLEMENTED (2026-08-12T23:xxZ, this session): both catch blocks now mirror the
+      `.then` success:false branch -- gate on `if (runId)` and route through
+      `setStatusForRun(runId, 'error', ...)` instead of calling the unscoped global
+      `handleError()`. Added utils/scripts/verifyModelBuilderPushItemErrorScopeGuard.ts
+      (+ .test.ts self-test) as a static regression guard, following the same convention
+      as verifyModelBuilderCancelRunPollGuard.ts from t-029. Verified: vue-tsc clean,
+      test:lint-ratchet holds (339/24, -53, no rule worse), new guard passes against the
+      fix and fails against the pre-fix source. PR: kind_robots#1829, awaiting CI.
     claimed_by: 20260812T232745Z-agent-mb041
     claimed_at: '2026-08-12T23:29:05Z'
     owner: worker
