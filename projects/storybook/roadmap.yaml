@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   note: |-
@@ -144,11 +144,11 @@ tasks:
     Storybook opening generation persisted a zero-beat active session before the first model call; a failed opening therefore left the reader soft-locked with no answer or retry path. Branch worker/storybook-t010-seed-notice-20260813-8af3 now rolls back only that empty session on opening failure while preserving the setup draft and error, with Storybook studio regression coverage.
 
     Merged silasfelinus/kind_robots#1835 as e611508fbc39b5a96ba6a0df303d5cad1e1463b6. Storybook now rolls back a just-created zero-beat active session when opening generation fails, preserving the setup draft and generation error so the reader can retry instead of being soft-locked. Exact implementation head cb83c5333d22aa7ce0e60796505fbaf8bd871b18 completed all 17 attached GitHub Actions successfully, including Storybook Studio, Storybook Answer Rollback, Storybook Branch State, Storybook Session Library, TypeScript, Contract Tests, Layout, Facet Catalog, and Project Architecture. Return this open-ended polish lane to ready for future bounded Storybook improvements.
-  updated: '2026-08-13T03:19:53Z'
+  updated: '2026-08-13T05:34:18Z'
   implementation_pr: 'silasfelinus/kind_robots#1835'
   owner: worker
-  claimed_by: 20260812T201953-0700-cycle11-9f2b
-  claimed_at: '2026-08-13T03:19:53Z'
+  claimed_by: ''
+  claimed_at: ''
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
