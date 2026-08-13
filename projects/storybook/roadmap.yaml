@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   note: |-
@@ -146,11 +146,11 @@ tasks:
     Merged silasfelinus/kind_robots#1835 as e611508fbc39b5a96ba6a0df303d5cad1e1463b6. Storybook now rolls back a just-created zero-beat active session when opening generation fails, preserving the setup draft and generation error so the reader can retry instead of being soft-locked. Exact implementation head cb83c5333d22aa7ce0e60796505fbaf8bd871b18 completed all 17 attached GitHub Actions successfully, including Storybook Studio, Storybook Answer Rollback, Storybook Branch State, Storybook Session Library, TypeScript, Contract Tests, Layout, Facet Catalog, and Project Architecture. Return this open-ended polish lane to ready for future bounded Storybook improvements.
 
     Recurring storybook/t-010 bug-hunt cycle (conductor scheduled Agent run). Explore-style subagent read stores/storybookStore.ts, storybook-page.vue, narrative-response-composer.vue, and all 5 existing verifyStorybook* guards fresh to confirm no overlap. Found a new, real gap: submitAnswer() in components/conductor/storybook-page.vue optimistically clears the composer's answerInput ref before awaiting store.answerCurrentBeat(); NarrativeResponseComposer is a fully controlled component with no local text state, so answerInput is the only place the reader's typed answer lives once submitted. answerCurrentBeat's own rollback (verifyStorybookAnswerRollbackGuard) restores store consistency on a failed weaveBeat call, but never restored the composer's local text -- the reader saw the textarea go silently blank and had to recall and retype their entire answer. Fixed by capturing answerCurrentBeat's outcome and restoring answerInput to the submitted value when store.errorMessage confirms a real weaveBeat failure (vs. answerCurrentBeat's own no-op guard, which never sets errorMessage). Added verifyStorybookAnswerInputPreservationGuard.mjs following this lane's established narrow-textual-checker convention (mirrors verifyStorybookAnswerRollbackGuard's extraction-and-assert style), wired via a new dedicated storybook-answer-input-preservation-contract.yml workflow (this lane uses per-guard workflow files, not package.json scripts -- confirmed against all 5 prior guards). Verified: new guard passes against the fix and correctly fails against the pre-fix shape (round-tripped in-process); all 5 pre-existing verifyStorybook* guards pass (no regressions); eslint clean; prettier clean on new files (pre-existing storybook-page.vue drift confirmed via git stash to predate this change); vue-tsc --noEmit repo-wide exit 0; git status --porcelain showed exactly the 3 intended files. kind_robots PR #1846 merged (squash 83e953c9). Rearmed to ready per recurring-task convention -- t-010 never reaches done.
-  updated: '2026-08-13T12:52:18Z'
+  updated: '2026-08-13T21:41:15Z'
   implementation_pr: 'silasfelinus/kind_robots#1846'
   owner: worker
-  claimed_by: ''
-  claimed_at: ''
+  claimed_by: sched-conductor-sb-t010-20260813T220000Z
+  claimed_at: '2026-08-13T21:41:15Z'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
