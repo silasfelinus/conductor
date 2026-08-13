@@ -3895,3 +3895,30 @@ tasks:
       "I could not verify PR/branch state via API; check the GitHub MCP connector
       directly before picking worker" rather than silently defaulting to worker.
       Small, reversible change confined to scripts/select_role.py and its tests.
+
+  - id: t-116
+    milestone: m2
+    title: "Add scripts/kr_token_set.sh helper: the shell-safe way to check KR_API_TOKEN without echoing it"
+    status: ready
+    stakes: reversible
+    passes: 0
+    note: >
+      Kaizen from a recurring, twice-unacknowledged security-flag in root TALKBACK.md
+      (2026-08-12 and 2026-08-13 ~02:26 UTC): two independent sessions both typed the
+      identical broken probe `echo "KR_API_TOKEN set: ${KR_API_TOKEN:+yes}${KR_API_TOKEN:-no}"`
+      before calling a production admin API -- `${VAR:-no}` substitutes the *live value*
+      once the var is set, so the full token printed into each session's own tool-output
+      transcript (sandbox-only both times, never committed or transmitted externally, but
+      still a real leak into a place it doesn't need to be). The 2026-08-12 entry's
+      "correct pattern" guidance (`[ -n "${VAR:-}" ] && echo yes || echo no`) lived only in
+      TALKBACK prose, which evidently isn't discoverable enough to stop a second identical
+      mistake. Add `scripts/kr_token_set.sh` (or equivalent) using the safe `-n`/`-z`
+      pattern, so any session checking whether `KR_API_TOKEN` is set has a single
+      copy-pasteable command instead of re-deriving (and getting wrong) the check from
+      scratch. Reference it from AGENTS.md's cross-repo verification section near the
+      existing `KR_API_TOKEN` mentions. Small, reversible, no behavior change to any
+      production path.
+      FOR SILAS: separately from this tooling fix, the twice-repeated TALKBACK
+      security-flag entries (2026-08-12, 2026-08-13) still carry an open question only you
+      can answer -- whether `KR_API_TOKEN` should be rotated given it was printed into two
+      sandboxed session transcripts. Neither entry has been acknowledged yet (hard rule 8).
