@@ -5,6 +5,11 @@ The script first lists FAILED jobs through the authenticated queue API, selects
 only Kind Robots-targeted jobs whose imagePath is not canonical or whose prompt
 contains the retired brand-style token, then sends those exact IDs to the
 scoped requeue endpoint. Dry-run by default.
+
+Failures outside that deliberately narrow repair policy are reported with a
+bounded diagnostic (id, engine, and error only). This keeps scheduled repair
+runs useful for incident diagnosis without dumping prompts or silently implying
+that an unselected failure was not seen.
 """
 
 import argparse
@@ -18,6 +23,7 @@ import consume_art_queue as consumer  # noqa: E402
 KIND_ROBOTS_REPO = "silasfelinus/kind_robots"
 PAGE_SIZE = 200
 REQUEUE_BATCH_SIZE = 100
+DIAGNOSTIC_ERROR_LIMIT = 1000
 VAGUE_ART_DIRECTION = re.compile(
     r"\b(?:(?:rich|cohesive|friendly)\s+)?Kind\s+Robots\s+"
     r"(?:visual\s+)?(?:style|language)\b",
@@ -74,6 +80,16 @@ def repair_reasons(job):
     return reasons
 
 
+def failure_diagnostic(job):
+    """Return a prompt-free, bounded diagnostic for an unhandled FAILED row."""
+    job_id = job.get("id", "?")
+    engine = str(job.get("engine") or "unknown").strip() or "unknown"
+    error = " ".join(str(job.get("error") or "(no error text)").split())
+    if len(error) > DIAGNOSTIC_ERROR_LIMIT:
+        error = error[: DIAGNOSTIC_ERROR_LIMIT - 1] + "…"
+    return f"ArtJob {job_id}: engine={engine}; error={error}"
+
+
 def chunks(values, size):
     for index in range(0, len(values), size):
         yield values[index : index + size]
@@ -93,12 +109,19 @@ def main() -> int:
         return 1
 
     selected = []
+    unhandled = []
     for job in failed_jobs():
         reasons = repair_reasons(job)
         if not reasons:
+            unhandled.append(job)
             continue
         selected.append(int(job["id"]))
         print(f"  ArtJob {job['id']}: {', '.join(reasons)}")
+
+    if unhandled:
+        print(f"Unhandled FAILED ArtJobs ({len(unhandled)}):")
+        for job in unhandled:
+            print(f"  {failure_diagnostic(job)}")
 
     if not selected:
         print("No failed Kind Robots ArtJobs need path/style repair.")
