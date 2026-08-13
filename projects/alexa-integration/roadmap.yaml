@@ -314,50 +314,15 @@ tasks:
 - id: t-015
   milestone: m4
   title: Polish and upgrade Voice Lab front-end surface
-  status: review
-  owner: worker
-  updated: '2026-08-13T13:34:47Z'
+  status: ready
+  owner: null
+  updated: '2026-08-13T13:55:45Z'
   passes: 0
   stakes: reversible
-  note: 'UI polish + upgrade for the alexa-integration front end now that the scaffold page is live at
-    /voice-lab. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/wonder/voice-lab.webp
-    and tutorial art at public/images/tutorials/wonder/voice-lab.webp; (2) add a matching section for
-    ''voice-lab'' under tutorialChannels.wonder.sections in kind_robots/stores/helpers/tutorialCards.ts;
-    (3) verify the PROJECT Dream liveUrl points at /voice-lab (admin can run the Conductor ''Placements''
-    button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full
-    interactive experience for this project.
-
-    PROGRESS 2026-07-20 (conductor burst-rotation session, kind_robots PR #643 merged squash fd3d3b3):
-    step (2) confirmed already done in a prior cycle -- tutorialChannels.wonder.sections already carries
-    a ''voice-lab'' entry in stores/helpers/tutorialCards.ts. Step (4) done this cycle: replaced the bare
-    ProjectFrontPage scaffold with a live #interactive slot (the same pattern storybook-page.vue uses) --
-    a relay-status readout plus a "try it" console that sends a sample "Serendipity: ..." request through
-    the existing serendipityVoiceStore (the same client /serendipity-voice uses), and an adapter reference
-    table (chat/character/dream/art/music/project/control) mirroring serendipity-voice''s README status
-    table, plus a launch link to the full Serendipity Voice view. Remaining and kept ready: step (1) --
-    dashboard-tab + tutorial .webp art, art-generation relay still down this session (same finding as
-    several other projects'' cycles today); step (3) -- liveUrl/channelKey/tabKey backfill needs an admin
-    Placements click, not independently verifiable from this session. Verified before merge: eslint clean,
-    prettier clean, full-project npm run test (vue-tsc --noEmit) exit 0. All 3 kind_robots PR checks green
-    (TypeScript, Contract verifiers, GitGuardian).
-
-    PROGRESS 2026-07-29 (conductor burst-mode cycle, claude-conductor-burst-20260729T010702-alexa-t015):
-    step (4) follow-on -- dispatched an Explore subagent to re-read the interactive experience in full
-    (voice-lab-page.vue + serendipityVoiceStore.ts). Found a real, previously-unfixed re-entrancy race:
-    pollOnce() had no guard against overlap between the setInterval-driven poll and the poll triggered
-    from sendVoiceText() (the "Try it" button). Two concurrent pollOnce() calls read the same
-    commandCursor/messageCursor, both receive the same command/message batch, and both apply it -- a
-    toggle animation command applied twice silently self-cancels (effect flickers on then off), and
-    duplicate message objects get pushed into the feed with colliding :key values. Fixed with a
-    pollInFlight guard in pollOnce() and a sending state around sendVoiceText() that disables the
-    voice-lab "Try it" input/button while a request is in flight. Verified: eslint clean, prettier
-    clean, full-project npm run test (vue-tsc --noEmit) exit 0. kind_robots PR #1127 -- all 12 CI
-    checks green (TypeScript, Contract verifiers, verify, facet-catalog, GitGuardian, and the narrative
-    contract suite) -- MERGED. Steps (1) and (3) remain genuinely blocked as documented above; not
-    touched this cycle. Rearmed to `ready` -- those two steps are still outstanding, same pattern as
-    other "Polish and upgrade X" tasks with a genuinely blocked substep.'
-  claimed_by: 20260813T133600Z-sched-conductor-alexa-t015
-  claimed_at: '2026-08-13T13:34:47Z'
+  note: 'UI polish + upgrade for the alexa-integration front end now that the scaffold page is live at /voice-lab. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/wonder/voice-lab.webp and tutorial art at public/images/tutorials/wonder/voice-lab.webp; (2) add a matching section for ''voice-lab'' under tutorialChannels.wonder.sections in kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl points at /voice-lab (admin can run the Conductor ''Placements'' button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full interactive experience for this project. PROGRESS 2026-07-20 (conductor burst-rotation session, kind_robots PR #643 merged squash fd3d3b3): step (2) confirmed already done in a prior cycle -- tutorialChannels.wonder.sections already carries a ''voice-lab'' entry in stores/helpers/tutorialCards.ts. Step (4) done this cycle: replaced the bare ProjectFrontPage scaffold with a live #interactive slot (the same pattern storybook-page.vue uses) -- a relay-status readout plus a "try it" console that sends a sample "Serendipity: ..." request through the existing serendipityVoiceStore (the same client /serendipity-voice uses), and an adapter reference table (chat/character/dream/art/music/project/control) mirroring serendipity-voice''s README status table, plus a launch link to the full Serendipity Voice view. Remaining and kept ready: step (1) -- dashboard-tab + tutorial .webp art, art-generation relay still down this session (same finding as several other projects'' cycles today); step (3) -- liveUrl/channelKey/tabKey backfill needs an admin Placements click, not independently verifiable from this session. Verified before merge: eslint clean, prettier clean, full-project npm run test (vue-tsc --noEmit) exit 0. All 3 kind_robots PR checks green (TypeScript, Contract verifiers, GitGuardian). PROGRESS 2026-07-29 (conductor burst-mode cycle, claude-conductor-burst-20260729T010702-alexa-t015): step (4) follow-on -- dispatched an Explore subagent to re-read the interactive experience in full (voice-lab-page.vue + serendipityVoiceStore.ts). Found a real, previously-unfixed re-entrancy race: pollOnce() had no guard against overlap between the setInterval-driven poll and the poll triggered from sendVoiceText() (the "Try it" button). Two concurrent pollOnce() calls read the same commandCursor/messageCursor, both receive the same command/message batch, and both apply it -- a toggle animation command applied twice silently self-cancels (effect flickers on then off), and duplicate message objects get pushed into the feed with colliding :key values. Fixed with a pollInFlight guard in pollOnce() and a sending state around sendVoiceText() that disables the voice-lab "Try it" input/button while a request is in flight. Verified: eslint clean, prettier clean, full-project npm run test (vue-tsc --noEmit) exit 0. kind_robots PR #1127 -- all 12 CI checks green (TypeScript, Contract verifiers, verify, facet-catalog, GitGuardian, and the narrative contract suite) -- MERGED. Steps (1) and (3) remain genuinely blocked as documented above; not touched this cycle. Rearmed to `ready` -- those two steps are still outstanding, same pattern as other "Polish and upgrade X" tasks with a genuinely blocked substep. PROGRESS 2026-08-13 (conductor scheduled Agent run, 20260813T133600Z-sched-conductor-alexa-t015): step (4) follow-on -- dispatched an Explore subagent to re-read voice-lab-page.vue, serendipity-page.vue, and serendipityVoiceStore.ts fresh against the exclusion list of the already-fixed pollInFlight re-entrancy race (PR #1127). Found a real, distinct gap in the same area: pollOnce()''s pollInFlight guard only prevents two polls from racing each other -- it never checked whether stop() (explicit Disconnect, or onBeforeUnmount on voice-lab-page.vue/serendipity-page.vue) had run while its own commands/messages fetch was still in flight. sendVoiceText() awaits its POST to /api/handle, then calls `await pollOnce()`; if the user disconnects or navigates away while that trailing poll''s fetches are still resolving, the poll had no way to know -- it would unconditionally set `connected.value = true` and apply any pending commands (which can toggle global animation effects or change the app theme) even though stop() had already cleared the poll interval. Net effect: a self-contradictory UI (green "connected" badge next to a "Connect" button) permanently stuck until manual reconnect, and a voice command landing on global stores after the page that was listening had already gone. Fixed by re-checking `polling.value` right after the fetches resolve, before any state is applied. Added verifySerendipityVoicePollGuard.ts + .test.ts following this project''s narrow-textual-checker convention (mirrors verifyDaVinciDimensionToneGuard.ts), wired into package.json and contract-tests.yml. Verified: new guard + selftest pass, eslint clean, prettier clean, vue-tsc --noEmit repo-wide exit 0, git status showed exactly the 5 intended files. kind_robots PR #1847 -- all 20 CI checks green -- MERGED. Steps (1) and (3) remain genuinely blocked as documented above; not touched this cycle. Rearmed to `ready` -- those two steps are still outstanding, same pattern as other "Polish and upgrade X" tasks with a genuinely blocked substep.'
+  claimed_by: ''
+  claimed_at: ''
+  implementation_pr: 'silasfelinus/kind_robots#1847'
 - id: t-016
   milestone: m4
   title: Fix control-adapter theme-domain over-claiming any utterance containing the word "theme"
