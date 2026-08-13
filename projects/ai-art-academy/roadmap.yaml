@@ -1275,11 +1275,11 @@ tasks:
   - id: t-044
     milestone: m2
     title: 'kind_robots: fix Kontext LoRA loading -- every lora_name naming convention rejected by ComfyUI as not-in-list'
-    status: review
+    status: ready
     gate_human: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-13T03:23:00Z'
+    updated: '2026-08-13T03:35:00Z'
     note: |-
       RECHECK (conductor scheduled Agent run, 2026-08-12T22:28:47Z, logged in
       RENDER-BACKLOG.md): kind-robots/t-064 (the Vercel production outage that blocked
@@ -1379,11 +1379,10 @@ tasks:
       RECHECK (conductor sweep, 2026-08-11T17:28Z, logged in RENDER-BACKLOG.md): still draining -- PENDING 845->826 all-time, 24h window DONE=45/CANCELLED=1. oldestPending still job 4893 (~160h, same single straggler, not a new stall). recentFailed (last 3): unchanged, still 2/3 the original t-044 signature (ComfyUI /prompt HTTP 400, lora_name not-in-list), 1/3 connection-refused. Blocker unchanged -- still needs the private ComfyUI /object_info capture from a Tailscale-connected machine this sandbox can't reach. Not attempting an 8th blind naming-convention guess. gate_human: true / soft_gate: true unchanged.
 
       Diagnosed the three persistent failed ArtJobs as two known Comfy LoRA value_not_in_list failures plus one obsolete A1111 connection-refused row. First implementation adds bounded prompt-free diagnostics to the scheduled failed-job repair pass so the authenticated production workflow exposes exact unhandled IDs/errors before any broader retry policy is changed.
+
+      Diagnosed and cleared the three historical failed ArtJobs: 8116 was the old A1111 connection-refused producer regression already fixed by Kind Robots #1651; 7622/7623 were the known Kontext LoRA value_not_in_list probes. Superseded them with corrected replacements 8275/8276/8278, cleaned concurrent duplicate replacements 8277/8279, and left durable prompt-free FAILED-row diagnostics in the repair workflow. Final authenticated repair run 31664255566 reported no FAILED ArtJobs. Fresh replacements were not observed FAILED, but t-044's human-gated live LoRA acceptance remains outstanding.
     run_log: projects/ai-art-academy/docs/t-044-lora-loading-run-log.md
-    claimed_at: '2026-08-13T03:15:00Z'
-    claimed_by: 2026-08-13T031500Z-ai-art-academy-t-044-gpt56a
     approved_by_human: false
-    owner: worker
 
   - id: t-045
     milestone: m2
