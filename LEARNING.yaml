@@ -7851,3 +7851,20 @@ records:
     extract the literal to a plain variable first regardless of which Python version
     the immediate CI check happens to run, since the actual production runner's
     version is often not the same as CI's syntax-check job.
+- date: 2026-08-13
+  project: model-builder
+  task: t-041
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Kaizen chain from t-029 (kind_robots#1825) landed cleanly first-pass: the
+    same run-scoping gate (setStatusForRun) needed to cover both the
+    {success:false} response branch AND the raw network-exception (.catch)
+    branch of pushItem/batchPushItems, not just the one the original PR
+    touched. When a kaizen task targets "the same class of issue" in a
+    sibling code path, check for other branches of the same conditional
+    (success vs. exception) that need the identical fix, not just the one
+    named in the kaizen note.
