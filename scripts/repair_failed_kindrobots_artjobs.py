@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-"""Repair and requeue failed Kind Robots ArtJobs with legacy paths/prompts.
+"""Repair and requeue failed Kind Robots ArtJobs with reviewed repair policies.
 
-The script first lists FAILED jobs through the authenticated queue API, selects
-only Kind Robots-targeted jobs whose imagePath is not canonical or whose prompt
-contains the retired brand-style token, then sends those exact IDs to the
-scoped requeue endpoint. Dry-run by default.
+The script lists FAILED jobs through the authenticated queue API and applies two
+strictly scoped repair lanes:
 
-Failures outside that deliberately narrow repair policy are reported with a
-bounded diagnostic (id, engine, and error only). This keeps scheduled repair
-runs useful for incident diagnosis without dumping prompts or silently implying
-that an unselected failure was not seen.
+1. one-time incident migrations for exact, reviewed ArtJob ids; and
+2. the standing Kind Robots path/style normalization policy.
+
+Everything else is reported with a bounded prompt-free diagnostic. Dry-run by
+default. The exact-id incident lane is intentionally temporary and fail-closed:
+it verifies the expected engine/error signature before making any request.
 """
 
 import argparse
@@ -29,6 +29,32 @@ VAGUE_ART_DIRECTION = re.compile(
     r"(?:visual\s+)?(?:style|language)\b",
     re.IGNORECASE,
 )
+
+# 2026-08-12 incident cleanup. These are immutable source-row ids already
+# reviewed from the authenticated production queue. The single-job retry API
+# creates a replacement first and only then marks the FAILED source superseded.
+# Keeping the ids exact makes this a one-shot migration rather than a policy to
+# retry arbitrary future failures.
+INCIDENT_RETRIES = {
+    8116: {
+        "engine": "A1111",
+        "error_contains": "WinError 10061",
+        "body": {"mode": "NEW_OUTPUT", "preset": "krea2", "refreshSeed": True},
+        "reason": "obsolete site A1111 job; rebuild replacement on Krea2/Comfy",
+    },
+    7622: {
+        "engine": "COMFY",
+        "error_contains": "Kontext/SFW/acrylic.safetensors",
+        "body": {"mode": "NEW_OUTPUT", "refreshSeed": False},
+        "reason": "Kontext LoRA verification retry with current Resource refresh",
+    },
+    7623: {
+        "engine": "COMFY",
+        "error_contains": "Flux/SFW/3D_Cartoon_Vision_flux_v1.safetensors",
+        "body": {"mode": "NEW_OUTPUT", "refreshSeed": False},
+        "reason": "Kontext LoRA verification retry with current Resource refresh",
+    },
+}
 
 
 def failed_jobs():
@@ -55,6 +81,26 @@ def failed_jobs():
         if not pagination.get("hasNextPage"):
             break
         page += 1
+
+
+def incident_retry_plan(job):
+    """Return the reviewed exact-id retry plan, failing closed on drift."""
+    try:
+        job_id = int(job.get("id"))
+    except (TypeError, ValueError):
+        return None
+    plan = INCIDENT_RETRIES.get(job_id)
+    if not plan:
+        return None
+
+    engine = str(job.get("engine") or "").strip()
+    error = str(job.get("error") or "")
+    if engine != plan["engine"] or plan["error_contains"] not in error:
+        raise RuntimeError(
+            f"ArtJob {job_id} no longer matches its reviewed incident signature; "
+            "refusing automatic retry."
+        )
+    return plan
 
 
 def repair_reasons(job):
@@ -95,12 +141,50 @@ def chunks(values, size):
         yield values[index : index + size]
 
 
+def retry_incident_jobs(incident_jobs, live):
+    if not incident_jobs:
+        return [], []
+
+    print(f"Reviewed incident ArtJobs ({len(incident_jobs)}):")
+    for job, plan in incident_jobs:
+        print(f"  ArtJob {job['id']}: {plan['reason']}")
+
+    if not live:
+        print("DRY RUN: incident replacements not created.")
+        return [], []
+
+    replacements = []
+    failures = []
+    for job, plan in incident_jobs:
+        job_id = int(job["id"])
+        status, response = consumer.http_json(
+            "POST",
+            f"{consumer.KR_BASE_URL}/api/art/queue/{job_id}/reenqueue",
+            plan["body"],
+            timeout=180,
+        )
+        if status != 201 or not response or not response.get("success"):
+            failures.append(job_id)
+            print(
+                f"  FAILED ArtJob {job_id}: HTTP {status} "
+                f"{response and response.get('message')}",
+                file=sys.stderr,
+            )
+            continue
+
+        replacement = ((response.get("data") or {}).get("job") or {}).get("id")
+        replacements.append((job_id, replacement))
+        print(f"  ArtJob {job_id} -> replacement ArtJob {replacement}")
+
+    return replacements, failures
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--live",
         action="store_true",
-        help="repair payloads and requeue the selected failed jobs",
+        help="apply the reviewed repairs and requeue selected failed jobs",
     )
     args = parser.parse_args()
 
@@ -108,15 +192,29 @@ def main() -> int:
         print("KR_API_TOKEN is required for --live.", file=sys.stderr)
         return 1
 
+    jobs = list(failed_jobs())
+    incident_jobs = []
     selected = []
     unhandled = []
-    for job in failed_jobs():
-        reasons = repair_reasons(job)
-        if not reasons:
-            unhandled.append(job)
-            continue
-        selected.append(int(job["id"]))
-        print(f"  ArtJob {job['id']}: {', '.join(reasons)}")
+
+    try:
+        for job in jobs:
+            plan = incident_retry_plan(job)
+            if plan:
+                incident_jobs.append((job, plan))
+                continue
+
+            reasons = repair_reasons(job)
+            if not reasons:
+                unhandled.append(job)
+                continue
+            selected.append(int(job["id"]))
+            print(f"  ArtJob {job['id']}: {', '.join(reasons)}")
+    except RuntimeError as error:
+        print(str(error), file=sys.stderr)
+        return 1
+
+    replacements, incident_failures = retry_incident_jobs(incident_jobs, args.live)
 
     if unhandled:
         print(f"Unhandled FAILED ArtJobs ({len(unhandled)}):")
@@ -125,11 +223,16 @@ def main() -> int:
 
     if not selected:
         print("No failed Kind Robots ArtJobs need path/style repair.")
+        if incident_failures:
+            print(f"Incident retry failures: {incident_failures}", file=sys.stderr)
+            return 1
+        if replacements:
+            print(f"Created {len(replacements)} reviewed incident replacement(s).")
         return 0
 
     print(
         f"{'LIVE' if args.live else 'DRY RUN'}: "
-        f"{len(selected)} failed ArtJob(s) selected"
+        f"{len(selected)} failed ArtJob(s) selected for path/style repair"
     )
     if not args.live:
         print("Pass --live to repair and requeue these exact IDs.")
@@ -164,6 +267,7 @@ def main() -> int:
         )
 
     print(f"Repaired and requeued {repaired}/{len(selected)} selected ArtJobs.")
+    failures.extend(incident_failures)
     if failures:
         print(f"Failed IDs: {sorted(set(failures))}", file=sys.stderr)
         return 1
