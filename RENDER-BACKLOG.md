@@ -505,3 +505,6 @@ queueDepth: PENDING=89, RUNNING=1, DONE=4187, FAILED=2, CANCELLED=3172 (all-time
 
 ## 2026-08-13T22:42:30Z | ai-art-academy/t-044 | draining
 queueDepth: PENDING=74, RUNNING=3, DONE=4199, FAILED=3, CANCELLED=3172 (all-time). oldestPending: id=4894, age=767534s (~213.2h), engine=COMFY. windowThroughput (24h): PENDING=1, DONE=7, FAILED=2, CANCELLED=2. recentFailed (last 3): 2/3 = 'charmap' codec can't encode character '\U0001f527' in position 34: character maps to <undefined>; 1/3 = 'charmap' codec can't encode characters in position 34-35: character maps to <undefined>.
+
+## 2026-08-13T23:36:01Z | ai-art-academy/t-044 | draining
+queueDepth: PENDING=74, RUNNING=3, DONE=4202, CANCELLED=3172 (all-time). oldestPending: id=4894, age=770744s (~214.1h), engine=COMFY. windowThroughput (24h): PENDING=2, RUNNING=1, DONE=7, CANCELLED=2. recentFailed: none.
