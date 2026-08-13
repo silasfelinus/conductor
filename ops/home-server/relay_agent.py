@@ -472,6 +472,41 @@ def align_workflow_asset_names(workflow):
     return unresolved
 
 
+def last_resolution_note():
+    """The resolver-state suffix stamped onto a ComfyUI rejection.
+
+    Defined once and shared by every submission path, so a caller that
+    reimplements submission cannot quietly drop the diagnosis half of the
+    error while keeping the rest.
+    """
+    return (
+        f"[asset-name resolution: {_last_resolution['state']}, "
+        f"{_last_resolution['remaps']} remap(s)]"
+    )
+
+
+def unresolved_asset_error(unresolved):
+    """The fail-fast raised when a name cannot match ComfyUI's live list.
+
+    Shared for the same reason as `last_resolution_note`: both submission
+    paths must refuse an unresolvable name identically. `relay_media_agent`'s
+    `run_comfy_with_recovery` reimplemented submission and, until 2026-08-13,
+    called neither this nor `align_workflow_asset_names` — so every job going
+    through the media wrapper (i.e. every job `kr-relay` actually runs)
+    bypassed the resolver entirely and POSTed the unresolved name straight to
+    ComfyUI. See the module docstring in relay_media_agent.py.
+    """
+    details = "; ".join(
+        f"{class_type}.{input_name}={value!r}"
+        for class_type, input_name, value in unresolved
+    )
+    return RuntimeError(
+        f"ComfyUI has no matching file for: {details}. Not in the live model "
+        f"list at {COMFY_URL} (missing, misnamed, or an ambiguous basename). "
+        "Failing fast instead of submitting a prompt ComfyUI would reject."
+    )
+
+
 def run_comfy(payload):
     workflow = payload.get("workflow")
     if not isinstance(workflow, dict) or not workflow:
@@ -486,15 +521,7 @@ def run_comfy(payload):
     # rejection -- surface it immediately with the exact node/input/value.
     unresolved = align_workflow_asset_names(workflow)
     if unresolved:
-        details = "; ".join(
-            f"{class_type}.{input_name}={value!r}"
-            for class_type, input_name, value in unresolved
-        )
-        raise RuntimeError(
-            f"ComfyUI has no matching file for: {details}. Not in the live model "
-            f"list at {COMFY_URL} (missing, misnamed, or an ambiguous basename). "
-            "Failing fast instead of submitting a prompt ComfyUI would reject."
-        )
+        raise unresolved_asset_error(unresolved)
 
     want_video = str(payload.get("media") or "").strip().lower() == "video"
 
@@ -520,8 +547,7 @@ def run_comfy(payload):
         raise RuntimeError(
             f"ComfyUI /prompt returned HTTP {status} at {COMFY_URL}: "
             f"{response and response.get('node_errors')} "
-            f"[asset-name resolution: {_last_resolution['state']}, "
-            f"{_last_resolution['remaps']} remap(s)]"
+            f"{last_resolution_note()}"
         )
 
     prompt_id = response["prompt_id"]

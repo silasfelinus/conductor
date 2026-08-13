@@ -212,3 +212,74 @@ def test_resolution_state_distinguishes_skipped_from_ran(monkeypatch):
     )
     assert relay._last_resolution["state"] == "ran"
     assert relay._last_resolution["remaps"] == 1
+
+
+# --- Both submission paths must resolve, not just relay_agent.run_comfy ------
+#
+# The 2026-08-13 regression: relay_media_agent.run_comfy_with_recovery
+# reimplemented Comfy submission (longer timeout + /queue recovery) and did not
+# carry the align_workflow_asset_names call across. kr-relay runs the media
+# wrapper, so the resolver above -- fully implemented and fully tested -- never
+# executed on the only path that actually submits work. ArtJobs 8276/8278 died
+# on a LoRA sitting at exactly the path the catalog recorded.
+#
+# These tests assert the behaviour (the name is rewritten / the submit is
+# refused) rather than grepping for a call, so a future third submission path
+# that forgets the resolver fails here too.
+
+import relay_media_agent as media  # noqa: E402
+
+
+def _stub_comfy(monkeypatch, loras, posted):
+    """Point the media wrapper at a fake ComfyUI whose list is `loras`.
+
+    Every wait is driven to zero. Without that, a regression does not fail
+    these tests -- it HANGS them: submission falls through to the generation
+    poll, which sleeps until GEN_TIMEOUT against a stub that never returns an
+    output. A test that hangs on the bug it guards is worse than no test,
+    because CI reports a timeout instead of the defect.
+    """
+    monkeypatch.setattr(
+        relay, "fetch_comfy_object_info", lambda force=False: object_info(loras=loras)
+    )
+    monkeypatch.setattr(relay, "upload_comfy_input_images", lambda payload: None)
+    monkeypatch.setattr(relay, "GEN_TIMEOUT", 0)
+    monkeypatch.setattr(media, "COMFY_PROMPT_TIMEOUT", 1)
+    monkeypatch.setattr(media, "COMFY_RECOVERY_SECONDS", 0)
+
+    def fake_post(method, url, body=None, timeout=None):
+        posted.append(body)
+        return 200, {"prompt_id": "p1"}
+
+    monkeypatch.setattr(relay, "http_json", fake_post)
+
+
+def test_media_wrapper_resolves_names_before_submitting(monkeypatch):
+    # The exact 8276/8278 shape: catalog stores forward slashes, ComfyUI on
+    # Windows lists backslashes. The wrapper must rewrite before POSTing.
+    live = "Flux\\SFW\\3D_Cartoon_Vision_flux_v1.safetensors"
+    posted = []
+    _stub_comfy(monkeypatch, [live], posted)
+
+    workflow = {"61": lora_node("Flux/SFW/3D_Cartoon_Vision_flux_v1.safetensors")}
+    try:
+        media.run_comfy_with_recovery({"workflow": workflow})
+    except Exception:
+        pass  # generation polling is out of scope; submission already happened
+
+    assert posted, "the wrapper never POSTed a prompt"
+    assert posted[0]["prompt"]["61"]["inputs"]["lora_name"] == live
+
+
+def test_media_wrapper_fails_fast_instead_of_posting_unresolvable_name(monkeypatch):
+    posted = []
+    _stub_comfy(monkeypatch, ["Flux/SFW/something_else.safetensors"], posted)
+
+    workflow = {"61": lora_node("UmeAiRT/FLUX.1-dev-LoRA-Impressionism")}
+    try:
+        media.run_comfy_with_recovery({"workflow": workflow})
+        raise AssertionError("expected a fail-fast for an unresolvable name")
+    except RuntimeError as error:
+        assert "no matching file" in str(error)
+
+    assert posted == [], "an unresolvable name must never reach ComfyUI"
