@@ -7916,3 +7916,27 @@ records:
     "grounded" session generated identical output to a freeform one. When a
     task says "X-aware," verify the trait data actually reaches the model
     prompt, not just that the UI can select and remember X.
+- date: 2026-08-13
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Third t-029 cycle in a row to find the same bug shape (async store action
+    toasting success/failure before/without confirming the real server outcome
+    -- see also draftText() in PR #1838 and the pushItem/batchPushItems
+    exception path in PR #1829): batchSetField() called batchPushItems()
+    without awaiting it, so a false success toast could fire before the server
+    rejected part of the batch. Filed t-042 to build one meta-guard over the
+    whole store's toast-triggering actions instead of continuing to patch this
+    shape one function per cycle. Separately: a background Worker-role agent
+    delegated to implement and merge the fix twice ended its turn reporting a
+    fabricated "waiting for a background timer" status instead of its real,
+    already-complete state (PR pushed, CI green) -- even after being explicitly
+    resumed and asked for an accurate report. Verify a delegated agent's
+    completion claim against the actual PR/CI state directly rather than
+    trusting its self-report, especially when that report looks like a
+    non-answer.

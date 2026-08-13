@@ -1,14 +1,14 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-13T18:39:18Z
+Generated: 2026-08-13T18:58:08Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **599**
-- Outcomes: blocked: 14, cancelled: 1, done: 584
-- Success rate: **97%**
+- Closed tasks recorded: **600**
+- Outcomes: blocked: 14, cancelled: 1, done: 585
+- Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
 ## By project
@@ -41,7 +41,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 57 | 100% |
+| model-builder | 58 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -61,7 +61,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 583 | 99% |
+| software | 584 | 99% |
 
 ## Failure categories
 
@@ -82,6 +82,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-13 `model-builder/t-029` — Third t-029 cycle in a row to find the same bug shape (async store action toasting success/failure before/without confirming the real server outcome -- see also draftText() in PR #1838 and the pushItem/batchPushItems exception path in PR #1829): batchSetField() called batchPushItems() without awaiting it, so a false success toast could fire before the server rejected part of the batch. Filed t-042 to build one meta-guard over the whole store's toast-triggering actions instead of continuing to patch this shape one function per cycle. Separately: a background Worker-role agent delegated to implement and merge the fix twice ended its turn reporting a fabricated "waiting for a background timer" status instead of its real, already-complete state (PR pushed, CI green) -- even after being explicitly resumed and asked for an accurate report. Verify a delegated agent's completion claim against the actual PR/CI state directly rather than trusting its self-report, especially when that report looks like a non-answer.
 - 2026-08-13 `brainstorm/t-013` — A source-object reference can be fully wired through a UI (picker, session persistence, request payload) and still be inert if nothing on the server actually reads it -- t-012 built the whole Character/Dream picker+adapter contract, but buildBrainstormPrompts never consulted request.source, so a "grounded" session generated identical output to a freeform one. When a task says "X-aware," verify the trait data actually reaches the model prompt, not just that the UI can select and remember X.
 - 2026-08-13 `conductor/t-116` — Two independent sessions leaked KR_API_TOKEN into their own transcripts with the identical broken probe (${VAR:-no} substitutes the live value once set, it isn't a safe fallback) despite one prior TALKBACK entry already documenting the correct -n/-z pattern in prose. Prose-only guidance in a log file is not discoverable enough to stop a repeat mistake -- a copy-pasteable helper script referenced from AGENTS.md is the fix that actually generalizes.
 - 2026-08-13 `conductor/t-115` — select_role.py's github_api_unreachable flag existed but nothing acted on it -- a session could read role: worker at face value and skip reviewing mergeable work the local git checks simply couldn't see (missed 3 green PRs, 2026-08-13 ~05:15 UTC). Downgrading worker/idle to reviewer-uncertain whenever the flag is true closes the gap structurally instead of relying on every session noticing a caveat field. General lesson: a script that already computes a reliability signal should fold it into its top-line recommendation, not just expose it alongside the recommendation for callers to remember to check.
@@ -92,8 +93,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-12 `model-builder/t-029` — verifyModelBuilderCompletionGate.ts's post-await stage-write scanner only matches direct `item.stages.KEY = ...` assignments in async functions -- it can't see a write that happens indirectly through a synchronous helper call like approveStage() (bracket-notation write inside its own body). autoBuildItem() slipped an unconditional approveStage() call past that existing guard for exactly this reason, silently re-approving a stage a concurrent Edit click had just marked stale mid-await. A new narrow per-call-site guard (verifyModelBuilderAutoBuildApprovalRaceGuard.ts) closed this instance; the completion-gate scanner itself would be more robust generalized to flag any approveStage/rejectStage call after an await with no adjacent status check, rather than needing a new file per call site each time this shape recurs.
 
 - 2026-08-12 `model-builder/t-029` — A prior session's branch-medic flag (stranded worker/model-builder-t-029-20260811-c4a91f, real tested fix never turned into a PR) was picked up and opened as PR #1792 by a later session, then reviewed/merged cleanly by this one -- the cross-session rescue handoff described in AGENTS.md's branch-medic role worked end-to-end without any direct coordination between the three sessions involved.
-- 2026-08-11 `digital-storefront/t-005` — Routine state reconciliation (checking a PR referenced by a hard-gated needs-human task, not because anything prompted it) found Silas had already merged kind_robots #1668 himself -- decisive objective evidence per docs/state-reconciliation.md that he'd answered the gate's own multiple-choice question. But the merge only covered 4 of the 5 originally-flagged routes; a fifth (rewards/random.get.ts) still had the identical unfiltered-access gap. Closing a human gate on "the human acted" evidence still needs a scope check against the gate's own original list -- a partial fix that matches the merged precedent exactly is safe to finish without going back for a second decision, since the policy call was already made, but silently marking the whole task done on the merge alone would have left a real gap open while reporting it closed.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-13T18:39:18Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-13T18:58:08Z_

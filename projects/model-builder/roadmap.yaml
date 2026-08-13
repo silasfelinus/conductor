@@ -979,3 +979,27 @@ tasks:
     claimed_at: '2026-08-12T23:29:05Z'
     owner: worker
     updated: '2026-08-13T00:27:59Z'
+
+  - id: t-042
+    milestone: m6
+    title: "Add a meta-guard auditing every Model Builder store action that toasts success/failure for confirmed-outcome-before-toast"
+    status: ready
+    passes: 0
+    stakes: reversible
+    owner: null
+    note: >
+      Kaizen from t-029 (kind_robots PR #1859, 2026-08-13, batchSetField
+      confirmed-success fix). This is the third t-029 cycle in a row to find the same
+      shape of bug in stores/modelBuilderStore.ts: an async store action toasting
+      success/failure before (or without) actually awaiting/gating on the real server
+      outcome (see also PR #1838's draftText() run-scoping fix and PR #1829's
+      pushItem/batchPushItems exception-path scoping). Each cycle has so far added one
+      narrow verifyModelBuilder*Guard.ts per fixed function rather than a single guard
+      that audits the whole file's action surface at once. Build one meta-guard that
+      enumerates every exported/store action in modelBuilderStore.ts which calls a
+      toast/status function, and asserts each such action either (a) is not async and
+      has no server round-trip, or (b) awaits its async work and branches its
+      toast/status call on the confirmed result -- so the next new batch/draft/push-style
+      action added to the store gets this property checked automatically instead of
+      needing its own bespoke guard discovered a cycle later. Front-end/tooling change
+      only; no schema change expected.
