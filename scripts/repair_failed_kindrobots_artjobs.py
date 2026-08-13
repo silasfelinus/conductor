@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """Repair and requeue failed Kind Robots ArtJobs with reviewed repair policies.
 
-The script lists FAILED jobs through the authenticated queue API and applies two
-strictly scoped repair lanes:
+The standing repair policy is intentionally narrow: only Kind Robots-targeted
+FAILED jobs with a legacy image path or retired vague style token are selected.
+Everything else is reported with a bounded, prompt-free diagnostic.
 
-1. one-time incident migrations for exact, reviewed ArtJob ids; and
-2. the standing Kind Robots path/style normalization policy.
-
-Everything else is reported with a bounded prompt-free diagnostic. Dry-run by
-default. The exact-id incident lane is intentionally temporary and fail-closed:
-it verifies the expected engine/error signature before making any request.
+A temporary exact-ID cleanup for the 2026-08-12 incident removes the redundant
+replacement pair created when the independent repair and auto-art workflows ran
+concurrently. It never deletes an ArtJob or image: it keeps the most-progressed
+member of each duplicate pair and cancels only the redundant queue row.
+Dry-run by default.
 """
 
 import argparse
@@ -30,30 +30,20 @@ VAGUE_ART_DIRECTION = re.compile(
     re.IGNORECASE,
 )
 
-# 2026-08-12 incident cleanup. These are immutable source-row ids already
-# reviewed from the authenticated production queue. The single-job retry API
-# creates a replacement first and only then marks the FAILED source superseded.
-# Keeping the ids exact makes this a one-shot migration rather than a policy to
-# retry arbitrary future failures.
-INCIDENT_RETRIES = {
-    8116: {
-        "engine": "A1111",
-        "error_contains": "WinError 10061",
-        "body": {"mode": "NEW_OUTPUT", "preset": "krea2", "refreshSeed": True},
-        "reason": "obsolete site A1111 job; rebuild replacement on Krea2/Comfy",
-    },
-    7622: {
-        "engine": "COMFY",
-        "error_contains": "Kontext/SFW/acrylic.safetensors",
-        "body": {"mode": "NEW_OUTPUT", "refreshSeed": False},
-        "reason": "Kontext LoRA verification retry with current Resource refresh",
-    },
-    7623: {
-        "engine": "COMFY",
-        "error_contains": "Flux/SFW/3D_Cartoon_Vision_flux_v1.safetensors",
-        "body": {"mode": "NEW_OUTPUT", "refreshSeed": False},
-        "reason": "Kontext LoRA verification retry with current Resource refresh",
-    },
+# One-shot cleanup after the 2026-08-12 failed-job migration. The standalone
+# repair workflow created 8276/8278; the simultaneously-started Auto Art
+# Generate workflow created 8277/8279 from an earlier FAILED-list snapshot.
+# Prefer whichever member has already progressed farther, otherwise keep the
+# first-created replacement. 8275 is the single A1111 -> Krea2 replacement and
+# is status-reported only.
+INCIDENT_STATUS_JOB_ID = 8275
+INCIDENT_DUPLICATE_PAIRS = ((8276, 8277), (8278, 8279))
+STATUS_RANK = {
+    "DONE": 5,
+    "RUNNING": 4,
+    "PENDING": 3,
+    "FAILED": 2,
+    "CANCELLED": 1,
 }
 
 
@@ -83,24 +73,84 @@ def failed_jobs():
         page += 1
 
 
-def incident_retry_plan(job):
-    """Return the reviewed exact-id retry plan, failing closed on drift."""
-    try:
-        job_id = int(job.get("id"))
-    except (TypeError, ValueError):
-        return None
-    plan = INCIDENT_RETRIES.get(job_id)
-    if not plan:
-        return None
-
-    engine = str(job.get("engine") or "").strip()
-    error = str(job.get("error") or "")
-    if engine != plan["engine"] or plan["error_contains"] not in error:
+def fetch_job(job_id):
+    status, response = consumer.http_json(
+        "GET", f"{consumer.KR_BASE_URL}/api/art/queue/{job_id}"
+    )
+    if status != 200 or not response or not response.get("success"):
         raise RuntimeError(
-            f"ArtJob {job_id} no longer matches its reviewed incident signature; "
-            "refusing automatic retry."
+            f"ArtJob {job_id} lookup returned HTTP {status}: "
+            f"{response and response.get('message')}"
         )
-    return plan
+    job = ((response.get("data") or {}).get("job"))
+    if not isinstance(job, dict):
+        raise RuntimeError(f"ArtJob {job_id} lookup returned no job payload.")
+    return job
+
+
+def choose_duplicate_keeper(first, second):
+    """Keep the farther-progressed row; ties keep the first-created row."""
+    first_rank = STATUS_RANK.get(str(first.get("status") or ""), 0)
+    second_rank = STATUS_RANK.get(str(second.get("status") or ""), 0)
+    return second if second_rank > first_rank else first
+
+
+def cleanup_incident_duplicates(live):
+    """Report the incident replacements and cancel only redundant queue rows."""
+    primary = fetch_job(INCIDENT_STATUS_JOB_ID)
+    print(
+        f"Incident replacement ArtJob {INCIDENT_STATUS_JOB_ID}: "
+        f"status={primary.get('status')}; engine={primary.get('engine')}"
+    )
+
+    failures = []
+    for first_id, second_id in INCIDENT_DUPLICATE_PAIRS:
+        first = fetch_job(first_id)
+        second = fetch_job(second_id)
+        keeper = choose_duplicate_keeper(first, second)
+        duplicate = second if keeper is first else first
+        keeper_id = int(keeper["id"])
+        duplicate_id = int(duplicate["id"])
+        duplicate_status = str(duplicate.get("status") or "")
+        print(
+            f"Incident duplicate pair {first_id}/{second_id}: "
+            f"keep {keeper_id} ({keeper.get('status')}), "
+            f"redundant {duplicate_id} ({duplicate_status})"
+        )
+
+        if duplicate_status == "CANCELLED":
+            continue
+        if duplicate_status == "DONE":
+            print(
+                f"  ArtJob {duplicate_id} already DONE; preserving history/image "
+                "instead of destructively deleting output."
+            )
+            continue
+        if not live:
+            print(f"  DRY RUN: would cancel redundant ArtJob {duplicate_id}.")
+            continue
+
+        status, response = consumer.http_json(
+            "POST",
+            f"{consumer.KR_BASE_URL}/api/art/queue/{duplicate_id}/cancel",
+            {
+                "reason": (
+                    f"Cancelled as duplicate of ArtJob {keeper_id}; concurrent "
+                    "2026-08-12 failed-job repair workflows created both rows."
+                )
+            },
+        )
+        if status != 200 or not response or not response.get("success"):
+            failures.append(duplicate_id)
+            print(
+                f"  FAILED cancelling duplicate ArtJob {duplicate_id}: HTTP {status} "
+                f"{response and response.get('message')}",
+                file=sys.stderr,
+            )
+        else:
+            print(f"  Cancelled redundant ArtJob {duplicate_id}.")
+
+    return failures
 
 
 def repair_reasons(job):
@@ -141,50 +191,12 @@ def chunks(values, size):
         yield values[index : index + size]
 
 
-def retry_incident_jobs(incident_jobs, live):
-    if not incident_jobs:
-        return [], []
-
-    print(f"Reviewed incident ArtJobs ({len(incident_jobs)}):")
-    for job, plan in incident_jobs:
-        print(f"  ArtJob {job['id']}: {plan['reason']}")
-
-    if not live:
-        print("DRY RUN: incident replacements not created.")
-        return [], []
-
-    replacements = []
-    failures = []
-    for job, plan in incident_jobs:
-        job_id = int(job["id"])
-        status, response = consumer.http_json(
-            "POST",
-            f"{consumer.KR_BASE_URL}/api/art/queue/{job_id}/reenqueue",
-            plan["body"],
-            timeout=180,
-        )
-        if status != 201 or not response or not response.get("success"):
-            failures.append(job_id)
-            print(
-                f"  FAILED ArtJob {job_id}: HTTP {status} "
-                f"{response and response.get('message')}",
-                file=sys.stderr,
-            )
-            continue
-
-        replacement = ((response.get("data") or {}).get("job") or {}).get("id")
-        replacements.append((job_id, replacement))
-        print(f"  ArtJob {job_id} -> replacement ArtJob {replacement}")
-
-    return replacements, failures
-
-
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--live",
         action="store_true",
-        help="apply the reviewed repairs and requeue selected failed jobs",
+        help="apply reviewed repairs and cancel reviewed duplicate replacement rows",
     )
     args = parser.parse_args()
 
@@ -192,29 +204,21 @@ def main() -> int:
         print("KR_API_TOKEN is required for --live.", file=sys.stderr)
         return 1
 
-    jobs = list(failed_jobs())
-    incident_jobs = []
-    selected = []
-    unhandled = []
-
     try:
-        for job in jobs:
-            plan = incident_retry_plan(job)
-            if plan:
-                incident_jobs.append((job, plan))
-                continue
-
-            reasons = repair_reasons(job)
-            if not reasons:
-                unhandled.append(job)
-                continue
-            selected.append(int(job["id"]))
-            print(f"  ArtJob {job['id']}: {', '.join(reasons)}")
+        incident_failures = cleanup_incident_duplicates(args.live)
     except RuntimeError as error:
         print(str(error), file=sys.stderr)
         return 1
 
-    replacements, incident_failures = retry_incident_jobs(incident_jobs, args.live)
+    selected = []
+    unhandled = []
+    for job in failed_jobs():
+        reasons = repair_reasons(job)
+        if not reasons:
+            unhandled.append(job)
+            continue
+        selected.append(int(job["id"]))
+        print(f"  ArtJob {job['id']}: {', '.join(reasons)}")
 
     if unhandled:
         print(f"Unhandled FAILED ArtJobs ({len(unhandled)}):")
@@ -224,10 +228,8 @@ def main() -> int:
     if not selected:
         print("No failed Kind Robots ArtJobs need path/style repair.")
         if incident_failures:
-            print(f"Incident retry failures: {incident_failures}", file=sys.stderr)
+            print(f"Duplicate cleanup failures: {incident_failures}", file=sys.stderr)
             return 1
-        if replacements:
-            print(f"Created {len(replacements)} reviewed incident replacement(s).")
         return 0
 
     print(
