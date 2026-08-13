@@ -1279,8 +1279,25 @@ tasks:
     gate_human: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-13T06:33:20Z'
+    updated: '2026-08-13T08:33:00Z'
     note: |-
+      RECHECK (conductor scheduled Agent run, 2026-08-13T08:33:00Z, logged in
+      RENDER-BACKLOG.md): the zero-completion pattern flagged two checks ago is now
+      confirmed, not transient -- a third consecutive recheck (08:29:51Z) still shows
+      all-time DONE flat at 4162 (unchanged since 06:32:41Z, and windowThroughput carried
+      no DONE at 22:28:47Z either -- three checks spanning ~10h with zero completions).
+      A direct authenticated `/api/art/queue/stats` call also shows `imagesCreatedInWindow`
+      has dropped to 0 (it was 11 at the prior 06:33Z check), and `staleRunningCount: 1`
+      is still the same ArtJob 6641 claimed by `Silas-PC` since 2026-08-12T08:20:20Z (~24h
+      and counting). Per the prior note's own "may warrant its own follow-up task once
+      confirmed on a later recheck" -- filed ai-art-academy/t-067 (hard needs-human) to
+      track this render-worker stall separately from t-044's own LoRA-naming blocker,
+      since it looks like a distinct problem (the worker not processing the queue at all,
+      not a specific job being rejected). t-044 itself is unchanged -- still needs the
+      private ComfyUI /object_info capture from a Tailscale-connected machine this sandbox
+      can't reach. Not attempting a 9th blind naming-convention guess. gate_human: true /
+      soft_gate: true unchanged.
+
       RECHECK (conductor scheduled Agent run, 2026-08-13T06:33:20Z, logged in
       RENDER-BACKLOG.md): new signal, not a repeat of the usual pattern -- queue is now
       classified `growing` (PENDING 422->425 all-time) with the FIRST two consecutive
@@ -2084,3 +2101,39 @@ tasks:
     claimed_at: '2026-08-08T00:32:58Z'
     updated: '2026-08-08T00:32:58Z'
     implementation_pr: 'silasfelinus/kind_robots#1588'
+
+  - id: t-067
+    milestone: m2
+    title: "Render queue stall: zero ArtJob completions across 3+ consecutive recheck windows, ArtJob 6641 stuck ~24h+ on Silas-PC"
+    status: needs-human
+    gate_human: true
+    passes: 0
+    stakes: reversible
+    note: >
+      FOR SILAS: the shared kind_robots ComfyUI render queue has produced zero completed
+      ArtJobs for at least three consecutive scheduled rechecks in a row (2026-08-12T22:28:47Z,
+      2026-08-13T06:32:41Z, 2026-08-13T08:29:51Z -- see RENDER-BACKLOG.md, all-time DONE flat
+      at 4162 across that whole span). This is a new, worse pattern than the queue's normal
+      draining/growing cycles seen throughout t-044's recheck history -- previously the queue
+      always kept some completion throughput even during bad windows.
+
+      What it contains: a direct authenticated GET /api/art/queue/stats call (this session,
+      2026-08-13T~08:30Z) confirms staleRunningCount: 1 -- ArtJob 6641 (engine COMFY, project
+      facet-catalog) has sat RUNNING, claimed by "Silas-PC", since 2026-08-12T08:20:20Z (~24h
+      and counting). imagesCreatedInWindow is now 0 (a prior 2026-08-13T06:33Z check saw 11
+      images created via the Comfy server despite zero DONE transitions -- that has since also
+      dropped to zero, so it looks less like a status-tracking bug and more like the worker
+      itself has stopped producing). PENDING keeps growing slowly (425, up from 422 the prior
+      day) with no offsetting completions.
+
+      This looks distinct from t-044's own blocker (the Kontext LoRA lora_name naming
+      convention, which needs a private ComfyUI /object_info capture) -- this is about the
+      render worker on Silas-PC not processing the queue at all right now, not about a specific
+      job's LoRA reference being rejected.
+
+      TO APPROVE: check whether the ComfyUI worker process on Silas-PC is still running and
+      responsive, and whether ArtJob 6641 needs to be manually failed/requeued to unstick the
+      claim. Once confirmed either recovered or root-caused, set status: done with a note (or
+      leave ready with a fresh recheck if still inconclusive). This does not block t-044 --
+      that task's own gate is unaffected.
+    approved_by_human: false
