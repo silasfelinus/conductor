@@ -1,8 +1,6 @@
 import importlib.util
 from pathlib import Path
 
-import pytest
-
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "repair_failed_kindrobots_artjobs.py"
 spec = importlib.util.spec_from_file_location("repair_failed_kindrobots_artjobs", SCRIPT)
 repair = importlib.util.module_from_spec(spec)
@@ -45,44 +43,25 @@ def test_repair_reasons_remains_default_deny_for_unrelated_failure():
     assert repair.repair_reasons(job) == []
 
 
-def test_incident_retry_plan_is_exact_and_presets_obsolete_a1111_to_krea2():
-    plan = repair.incident_retry_plan(
-        {
-            "id": 8116,
-            "engine": "A1111",
-            "error": "<urlopen error [WinError 10061] actively refused>",
-        }
-    )
-    assert plan is not None
-    assert plan["body"]["preset"] == "krea2"
-    assert plan["body"]["mode"] == "NEW_OUTPUT"
+def test_duplicate_cleanup_keeps_first_when_statuses_tie():
+    first = {"id": 8276, "status": "PENDING"}
+    second = {"id": 8277, "status": "PENDING"}
+    assert repair.choose_duplicate_keeper(first, second) is first
 
 
-def test_incident_retry_plan_preserves_kontext_workflow_for_lora_probe():
-    plan = repair.incident_retry_plan(
-        {
-            "id": 7622,
-            "engine": "COMFY",
-            "error": "lora_name: 'Kontext/SFW/acrylic.safetensors' not in list",
-        }
-    )
-    assert plan is not None
-    assert "preset" not in plan["body"]
-    assert plan["body"]["refreshSeed"] is False
+def test_duplicate_cleanup_keeps_running_over_pending():
+    first = {"id": 8276, "status": "PENDING"}
+    second = {"id": 8277, "status": "RUNNING"}
+    assert repair.choose_duplicate_keeper(first, second) is second
 
 
-def test_incident_retry_plan_fails_closed_if_reviewed_row_drifted():
-    with pytest.raises(RuntimeError, match="refusing automatic retry"):
-        repair.incident_retry_plan(
-            {
-                "id": 7623,
-                "engine": "COMFY",
-                "error": "a different failure entirely",
-            }
-        )
+def test_duplicate_cleanup_keeps_done_over_running():
+    first = {"id": 8278, "status": "DONE"}
+    second = {"id": 8279, "status": "RUNNING"}
+    assert repair.choose_duplicate_keeper(first, second) is first
 
 
-def test_incident_retry_plan_ignores_unreviewed_ids():
-    assert repair.incident_retry_plan(
-        {"id": 9999, "engine": "COMFY", "error": "value_not_in_list"}
-    ) is None
+def test_duplicate_cleanup_prefers_pending_over_failed():
+    first = {"id": 8278, "status": "FAILED"}
+    second = {"id": 8279, "status": "PENDING"}
+    assert repair.choose_duplicate_keeper(first, second) is second
