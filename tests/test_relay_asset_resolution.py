@@ -283,3 +283,67 @@ def test_media_wrapper_fails_fast_instead_of_posting_unresolvable_name(monkeypat
         assert "no matching file" in str(error)
 
     assert posted == [], "an unresolvable name must never reach ComfyUI"
+
+
+# --- object_info fetching: the cache must outlive a render -------------------
+#
+# 2026-08-13: "could not fetch ComfyUI object_info for name resolution: timed
+# out", repeatedly, on a healthy box. _OBJECT_INFO_TTL was 120s while a render
+# takes ~7.5 minutes, so the cache expired during every job and the next job's
+# refetch raced a ComfyUI busy sampling -- a multi-MB response over a 30s
+# timeout loses that race. align_workflow_asset_names then returned [] and the
+# unresolved LoRA name went to ComfyUI anyway.
+
+def test_object_info_ttl_outlives_a_render():
+    # GEN_TIMEOUT is the relay's own upper bound on one render. A TTL shorter
+    # than that guarantees a cold cache mid-queue.
+    assert relay._OBJECT_INFO_TTL >= 600, (
+        f"TTL {relay._OBJECT_INFO_TTL}s expires during a render"
+    )
+    assert relay._OBJECT_INFO_TIMEOUT >= 60, (
+        "a busy ComfyUI needs more than a token wait for a multi-MB response"
+    )
+    assert relay._OBJECT_INFO_ATTEMPTS >= 2, "a single attempt has no retry"
+
+
+def test_object_info_retries_before_giving_up(monkeypatch):
+    calls = []
+
+    def flaky(method, url, body=None, bearer=None, timeout=None):
+        calls.append(timeout)
+        if len(calls) == 1:
+            raise OSError("timed out")
+        return 200, {"LoraLoaderModelOnly": {"input": {"required": {}}}}
+
+    monkeypatch.setattr(relay, "http_json", flaky)
+    monkeypatch.setattr(relay.time, "sleep", lambda _s: None)
+    relay._object_info_cache.update(at=0.0, data=None)
+
+    info = relay.fetch_comfy_object_info(force=True)
+    assert info is not None, "a transient timeout must not defeat the fetch"
+    assert len(calls) == 2
+    assert all(t >= 60 for t in calls)
+
+
+def test_a_failed_refetch_serves_the_last_known_copy(monkeypatch):
+    """Stale beats nothing: returning None downgrades resolution to a no-op
+    and submits the unresolved name, which is the original bug."""
+    known = {"LoraLoaderModelOnly": {"input": {"required": {"lora_name": [["a"], {}]}}}}
+    relay._object_info_cache.update(at=0.0, data=known)
+
+    def always_fails(*a, **k):
+        raise OSError("timed out")
+
+    monkeypatch.setattr(relay, "http_json", always_fails)
+    monkeypatch.setattr(relay.time, "sleep", lambda _s: None)
+
+    assert relay.fetch_comfy_object_info(force=True) is known
+
+
+def test_startup_warms_the_cache_before_polling():
+    """The one moment ComfyUI is reliably idle is before the first claim."""
+    source = (RELAY_DIR / "relay_agent.py").read_text(encoding="utf-8")
+    main_body = source[source.index("def main("):]
+    prefetch = main_body.index("fetch_comfy_object_info(force=True)")
+    poll = main_body.index("polling {KR_BASE_URL}")
+    assert prefetch < poll, "object_info must be warmed before the poll loop"
