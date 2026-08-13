@@ -149,6 +149,13 @@ module.exports = {
         KR_RELAY_USER_ID: process.env.KR_RELAY_USER_ID || '',
         KR_BASE_URL: 'https://kindrobots.org',
         // Fast enough to feel immediate without changing the relay's pull-only model.
+        // Windows picks stdout's encoding from the console codepage (cp1252)
+        // whenever stdout is a pipe -- which it always is under pm2. Any
+        // non-cp1252 character in a log line then raises UnicodeEncodeError
+        // from print(), and a raise inside align_workflow_asset_names fails
+        // the render (ArtJobs 8276/8278, 2026-08-13). The agents force UTF-8
+        // themselves; this also covers the tools they subprocess out to.
+        PYTHONIOENCODING: 'utf-8',
         POLL_SECONDS: process.env.POLL_SECONDS || '2',
         KR_MEDIA_IMAGES_DIR:
           process.env.KR_MEDIA_IMAGES_DIR || KR_MEDIA_IMAGES_DIR,
@@ -211,6 +218,13 @@ module.exports = {
         KR_LORA_DIR: process.env.KR_LORA_DIR || 'Z:/ai/models/Lora',
         KR_CHECKPOINT_DIR:
           process.env.KR_CHECKPOINT_DIR || 'Z:/ai/models/Stable-diffusion',
+        // Windows picks stdout's encoding from the console codepage (cp1252)
+        // whenever stdout is a pipe -- which it always is under pm2. Any
+        // non-cp1252 character in a log line then raises UnicodeEncodeError
+        // from print(), and a raise inside align_workflow_asset_names fails
+        // the render (ArtJobs 8276/8278, 2026-08-13). The agents force UTF-8
+        // themselves; this also covers the tools they subprocess out to.
+        PYTHONIOENCODING: 'utf-8',
         KR_DOWNLOAD_POLL_SECONDS: process.env.KR_DOWNLOAD_POLL_SECONDS || '30',
         KR_CIVITAI_TOKEN: process.env.KR_CIVITAI_TOKEN || ''
       },

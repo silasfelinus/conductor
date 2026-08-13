@@ -110,6 +110,57 @@ RELAY_COMMIT = os.environ.get("KR_RELAY_COMMIT", "").strip() or RELAY_BUILD["com
 VIDEO_EXTENSIONS = (".mp4", ".webm", ".mov", ".mkv", ".gif", ".webp")
 
 
+def _use_utf8_stdout():
+    """Stop the console codepage from deciding what the relay may say.
+
+    On Windows, Python picks stdout's encoding from the locale codepage
+    (cp1252 here) whenever stdout is not a terminal -- which is exactly the
+    case under pm2, where stdout is a pipe into a log file. Every non-cp1252
+    character in a log message then raises UnicodeEncodeError from print().
+
+    That is not cosmetic. `log("\N{HAMMER AND WRENCH} ...")` in
+    align_workflow_asset_names and the two `\N{WARNING SIGN}` lines in
+    fetch_comfy_object_info are all un-encodable in cp1252, and a raise from
+    inside align_workflow_asset_names propagates out of run_comfy and FAILS
+    THE JOB. ArtJobs 8276/8278 died exactly this way on 2026-08-13 -- the
+    resolver had matched the LoRA and was logging the remap it was about to
+    apply when print() killed the render. Worse, the warning that exists to
+    report an unreachable /object_info would itself crash before reporting it.
+    """
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8", errors="replace")
+        except (AttributeError, ValueError, OSError):
+            # Python < 3.7, an already-detached stream, or a stream that
+            # refuses reconfiguration. emit()'s fallback still covers us.
+            pass
+
+
+_use_utf8_stdout()
+
+
+def emit(line):
+    """print() that can never take a job down with it.
+
+    _use_utf8_stdout() should make this unreachable, but a log call is not
+    worth a failed render under any circumstance, so the encoding is degraded
+    rather than raised. backslashreplace keeps the line readable and reversible
+    (a dropped remap line is a lost diagnosis) instead of silently emitting
+    nothing.
+    """
+    try:
+        print(line, flush=True)
+    except UnicodeEncodeError:
+        encoding = getattr(sys.stdout, "encoding", None) or "ascii"
+        print(
+            line.encode(encoding, "backslashreplace").decode(encoding, "replace"),
+            flush=True,
+        )
+    except OSError:
+        # A closed or broken stdout must not end the relay either.
+        pass
+
+
 def log(message):
     # ISO 8601 with the UTC offset, not a bare local wall-clock time. Every
     # timestamp this has to be compared against -- ArtJob createdAt/updatedAt,
@@ -118,7 +169,7 @@ def log(message):
     # whether DST was in effect. That ambiguity is the difference between "this
     # failed a minute ago" and "this is a week-old line I am re-diagnosing".
     timestamp = datetime.now().astimezone().isoformat(timespec="seconds")
-    print(f"[relay {timestamp}] {message}", flush=True)
+    emit(f"[relay {timestamp}] {message}")
 
 
 def log_build_identity():
