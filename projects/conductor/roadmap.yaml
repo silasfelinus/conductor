@@ -3903,7 +3903,7 @@ tasks:
   - id: t-116
     milestone: m2
     title: "Add scripts/kr_token_set.sh helper: the shell-safe way to check KR_API_TOKEN without echoing it"
-    status: ready
+    status: claimed
     stakes: reversible
     passes: 0
     note: >
@@ -3926,3 +3926,7 @@ tasks:
       security-flag entries (2026-08-12, 2026-08-13) still carry an open question only you
       can answer -- whether `KR_API_TOKEN` should be rotated given it was printed into two
       sandboxed session transcripts. Neither entry has been acknowledged yet (hard rule 8).
+    owner: worker
+    claimed_by: claude-conductor-20260813T063810Z-t115t116
+    claimed_at: '2026-08-13T06:38:17Z'
+    updated: '2026-08-13T06:38:17Z'
