@@ -96,12 +96,38 @@ CACHE_DB = os.environ.get("CACHE_DB", "").strip()
 MODEL_EXTS = (".safetensors", ".pt", ".ckpt", ".pth", ".bin")
 
 
+def _use_utf8_stdout():
+    """See relay_agent._use_utf8_stdout -- same cp1252 trap, same fix.
+
+    Duplicated rather than imported because this module runs standalone too
+    (`python lora_import_agent.py`), where relay_agent is not loaded.
+    """
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8", errors="replace")
+        except (AttributeError, ValueError, OSError):
+            pass
+
+
+_use_utf8_stdout()
+
+
 def log(message):
     # ISO 8601 with offset, matching relay_agent.log -- these two streams
     # interleave in the same pm2 log, so they have to be comparable to each
     # other and to the UTC timestamps on the ArtJob rows they explain.
     stamp = datetime.now().astimezone().isoformat(timespec="seconds")
-    print(f"[lora-import {stamp}] {message}", flush=True)
+    line = f"[lora-import {stamp}] {message}"
+    try:
+        print(line, flush=True)
+    except UnicodeEncodeError:
+        encoding = getattr(sys.stdout, "encoding", None) or "ascii"
+        print(
+            line.encode(encoding, "backslashreplace").decode(encoding, "replace"),
+            flush=True,
+        )
+    except OSError:
+        pass
 
 
 def model_files(folder):
