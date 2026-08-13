@@ -983,10 +983,10 @@ tasks:
   - id: t-042
     milestone: m6
     title: "Add a meta-guard auditing every Model Builder store action that toasts success/failure for confirmed-outcome-before-toast"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    owner: null
+    owner: worker
     note: >
       Kaizen from t-029 (kind_robots PR #1859, 2026-08-13, batchSetField
       confirmed-success fix). This is the third t-029 cycle in a row to find the same
@@ -1003,3 +1003,6 @@ tasks:
       action added to the store gets this property checked automatically instead of
       needing its own bespoke guard discovered a cycle later. Front-end/tooling change
       only; no schema change expected.
+    claimed_by: 20260813T203301Z-sched-mb-t042
+    claimed_at: '2026-08-13T20:33:02Z'
+    updated: '2026-08-13T20:33:02Z'
