@@ -1279,8 +1279,34 @@ tasks:
     gate_human: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-13T03:35:00Z'
+    updated: '2026-08-13T06:33:20Z'
     note: |-
+      RECHECK (conductor scheduled Agent run, 2026-08-13T06:33:20Z, logged in
+      RENDER-BACKLOG.md): new signal, not a repeat of the usual pattern -- queue is now
+      classified `growing` (PENDING 422->425 all-time) with the FIRST two consecutive
+      zero-completion windows seen across this task's whole recheck history:
+      `windowThroughput` carried no DONE entries at both this check and the prior
+      22:28:47Z one, and all-time DONE is flat at 4162 across that ~8h span (confirmed
+      via a direct authenticated `/api/art/queue/stats` call, not just the recheck
+      script's one-line summary). recentFailed is empty (no new failures either) --
+      consistent with jobs simply not being picked up rather than failing fast. Two
+      details from the full response worth flagging: (1) `staleRunningCount: 1` --
+      ArtJob 6641 (engine COMFY, project facet-catalog) has sat `RUNNING`, claimed by
+      `Silas-PC`, since 2026-08-12T08:20:20Z (~22h and counting as of this check) --
+      this matches the RUNNING=1 seen constant across every recheck since that
+      timestamp, so it looks like the same stuck job the whole time, not a new one each
+      check; (2) `imagesCreatedInWindow: 11` (all via the Comfy server) despite
+      `windowThroughput` showing zero DONE -- images are apparently being generated
+      without their ArtJob rows completing the DONE transition, a possible separate
+      status-tracking bug from the original t-044 lora_name signature. Not attempting a
+      fix here -- this looks adjacent to but distinct from t-044's own blocker (private
+      ComfyUI /object_info capture, still unchanged) and may warrant its own follow-up
+      task once confirmed on a later recheck. FOR SILAS: worth a look at ArtJob 6641
+      (stuck ~22h on Silas-PC) and whether the Comfy worker there needs a restart/kick;
+      also worth checking whether the 11 images created in this window have orphaned
+      ArtJob rows still stuck at RUNNING/PENDING instead of DONE. gate_human: true /
+      soft_gate: true unchanged -- this task's own gate is unaffected either way.
+
       RECHECK (conductor scheduled Agent run, 2026-08-12T22:28:47Z, logged in
       RENDER-BACKLOG.md): kind-robots/t-064 (the Vercel production outage that blocked
       the 10:40Z check below) is now resolved, so `GET /api/art/queue/stats` is
