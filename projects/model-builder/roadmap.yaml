@@ -575,16 +575,16 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#1825'
     note: 'DONE THIS CYCLE (scheduled Agent run review/merge): kind_robots PR #1825 (run-history cancellation-race fix) reviewed and merged as 90f2739 -- all 17 checks green, mergeable_state clean before merge. Verified store.cancelRun(runId) is already an async function returning Promise<void> (sets an error status rather than throwing on failure), so the PRs finally block correctly clears cancellingRunId on both success and the handled-error path. Diff is component-only (model-builder-run-history.vue): serializes confirmCancel with a cancellingRunId guard, disables Refresh/New run/Cancel/Confirm/Open while a cancellation PATCH is in flight, adds aria-busy plus a Cancelling... spinner label. Rearmed to ready per recurring-task convention -- t-029 never reaches done. Prior implementation_pr field (#1816) was a stale reference from an earlier same-day cycle already merged directly by Silas; superseded here by #1825.'
     owner: worker
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-12T22:27:44Z'
+    claimed_by: 20260813T021310Z-model-builder-t029-3cb533
+    claimed_at: '2026-08-13T02:13:10Z'
+    updated: '2026-08-13T02:13:10Z'
 
   - id: t-030
     milestone: m6
