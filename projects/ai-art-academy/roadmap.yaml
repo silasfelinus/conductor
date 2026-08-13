@@ -1279,8 +1279,20 @@ tasks:
     gate_human: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-13T08:33:00Z'
+    updated: '2026-08-13T10:36:04Z'
     note: |-
+      RECHECK (conductor scheduled Agent run, 2026-08-13T10:36:04Z, logged in
+      RENDER-BACKLOG.md): state is byte-identical to the prior 08:29Z/09:28Z checks
+      (DONE flat at 4162, PENDING=425, RUNNING=1 still ArtJob 6641 stuck on
+      Silas-PC, now ~26h+ and counting; windowThroughput carries no DONE entries,
+      only PENDING=3/CANCELLED=2). No new signal beyond what t-067 (needs-human)
+      already tracks -- appending the recheck log entry and moving on to other
+      ready work this cycle rather than re-diagnosing the same already-escalated
+      stall. t-044 itself unchanged -- still needs the private ComfyUI
+      /object_info capture from a Tailscale-connected machine this sandbox can't
+      reach. Not attempting a 9th blind naming-convention guess. gate_human: true /
+      soft_gate: true unchanged.
+
       RECHECK (conductor scheduled Agent run, 2026-08-13T08:33:00Z, logged in
       RENDER-BACKLOG.md): the zero-completion pattern flagged two checks ago is now
       confirmed, not transient -- a third consecutive recheck (08:29:51Z) still shows
