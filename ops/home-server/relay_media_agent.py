@@ -277,6 +277,22 @@ def run_comfy_with_recovery(payload):
         raise ValueError('COMFY payload needs a "workflow" object (API format)')
 
     relay.upload_comfy_input_images(payload)
+
+    # Resolve model/LoRA names against ComfyUI's live lists before POSTing,
+    # exactly as relay_agent.run_comfy does. This wrapper reimplements
+    # submission (longer timeout + /queue recovery) and, until 2026-08-13,
+    # reimplemented it without this call -- so every job kr-relay runs went to
+    # ComfyUI with whatever name the catalog happened to store, and the
+    # resolver that exists to fix slash/case/prefix drift never ran on the only
+    # path that actually executes. ArtJobs 8276/8278 died on
+    # `lora_name: 'Flux/SFW/3D_Cartoon_Vision_flux_v1.safetensors' not in
+    # (list of length 2231)` for a file sitting at exactly that path on the
+    # share, which is the drift tests/test_relay_asset_resolution.py already
+    # covers -- it was simply never invoked here.
+    unresolved = relay.align_workflow_asset_names(workflow)
+    if unresolved:
+        raise relay.unresolved_asset_error(unresolved)
+
     want_video = str(payload.get("media") or "").strip().lower() == "video"
     client_id = str(
         payload.get("_relayClientId")
@@ -295,7 +311,8 @@ def run_comfy_with_recovery(payload):
         if status != 200 or not response or not response.get("prompt_id"):
             raise RuntimeError(
                 f"ComfyUI /prompt returned HTTP {status} at {relay.COMFY_URL}: "
-                f"{response and response.get('node_errors')}"
+                f"{response and response.get('node_errors')} "
+                f"{relay.last_resolution_note()}"
             )
         prompt_id = response["prompt_id"]
     except Exception as error:  # noqa: BLE001 - accepted prompt may be recoverable
