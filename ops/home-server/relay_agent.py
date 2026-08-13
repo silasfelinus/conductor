@@ -21,10 +21,13 @@ import io
 import json
 import os
 import socket
+import subprocess
 import sys
 import time
 import urllib.error
 import urllib.request
+from datetime import datetime, timezone
+from pathlib import Path
 
 KR_BASE_URL = os.environ.get(
     "KR_BASE_URL", "https://kindrobots.org"
@@ -41,7 +44,62 @@ HEARTBEAT_SECONDS = float(os.environ.get("HEARTBEAT_SECONDS", "60"))
 RELAY_VERSION = os.environ.get(
     "KR_RELAY_VERSION", "conductor-relay-completion-proof-v1"
 ).strip()
-RELAY_COMMIT = os.environ.get("KR_RELAY_COMMIT", "").strip()
+
+def detect_relay_build():
+    """Identify the code actually running, without needing anyone to set an env var.
+
+    "Is this a live problem or a stale one, and is the box even running the
+    fix?" has cost this project real time repeatedly. On 2026-08-13 a LoRA
+    resolver that had been merged, tested, and pulled was diagnosed as a stale
+    deployment, because nothing in the relay's logs or its heartbeat said which
+    build was running -- the actual cause was a second submission path that
+    never called it. KR_RELAY_COMMIT existed for exactly this and was empty,
+    because it required a human to export it on every start.
+
+    So derive it: git first (the relay runs from a conductor checkout), then
+    this file's mtime, which still answers "older or newer than the fix?" on a
+    box with no git. Returns a dict; never raises, never blocks startup.
+    """
+    here = Path(__file__).resolve().parent
+
+    def git(*args):
+        return subprocess.run(
+            ["git", *args],
+            cwd=here,
+            capture_output=True,
+            text=True,
+            timeout=5,
+            check=True,
+        ).stdout.strip()
+
+    try:
+        commit = git("rev-parse", "--short", "HEAD")
+        committed_at = git("log", "-1", "--format=%cI")
+        dirty = bool(git("status", "--porcelain", "--", "."))
+        return {
+            "commit": commit + ("-dirty" if dirty else ""),
+            "committed_at": committed_at,
+            "source": "git",
+        }
+    except (OSError, ValueError, subprocess.SubprocessError):
+        pass
+
+    try:
+        mtime = datetime.fromtimestamp(
+            Path(__file__).resolve().stat().st_mtime, timezone.utc
+        ).astimezone()
+        return {
+            "commit": "",
+            "committed_at": mtime.isoformat(timespec="seconds"),
+            "source": "mtime",
+        }
+    except OSError:
+        return {"commit": "", "committed_at": "", "source": "unknown"}
+
+
+RELAY_BUILD = detect_relay_build()
+# An explicit env var still wins; it just is no longer the only way to get one.
+RELAY_COMMIT = os.environ.get("KR_RELAY_COMMIT", "").strip() or RELAY_BUILD["commit"]
 
 # .webp covers animated-clip jobs saved via ComfyUI's native SaveAnimatedWEBP
 # node (kind_robots' video generator defaults to it: smaller/better quality
@@ -53,8 +111,31 @@ VIDEO_EXTENSIONS = (".mp4", ".webm", ".mov", ".mkv", ".gif", ".webp")
 
 
 def log(message):
-    timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+    # ISO 8601 with the UTC offset, not a bare local wall-clock time. Every
+    # timestamp this has to be compared against -- ArtJob createdAt/updatedAt,
+    # /api/art/queue/stats, GitHub -- is UTC, and a naive "2026-08-13 10:56:11"
+    # cannot be lined up against them without knowing the box's timezone and
+    # whether DST was in effect. That ambiguity is the difference between "this
+    # failed a minute ago" and "this is a week-old line I am re-diagnosing".
+    timestamp = datetime.now().astimezone().isoformat(timespec="seconds")
     print(f"[relay {timestamp}] {message}", flush=True)
+
+
+def log_build_identity():
+    """Log which build is running, at startup, before anything can go wrong.
+
+    Pairs with log_media_roots(): state that is invisible until it causes a
+    confusing failure hours later belongs in the log at boot.
+    """
+    build = RELAY_BUILD
+    commit = RELAY_COMMIT or "unknown"
+    when = build["committed_at"] or "unknown"
+    if build["source"] == "git":
+        log(f"build {commit} committed {when} (git)")
+    elif build["source"] == "mtime":
+        log(f"build {commit or 'unknown'} relay_agent.py modified {when} (no git)")
+    else:
+        log("build unknown (no git, no readable mtime)")
 
 
 def http_json(method, url, body=None, bearer=None, timeout=60):
@@ -719,6 +800,7 @@ def main():
         log("KR_RELAY_TOKEN and KR_RELAY_USER_ID are required - exiting")
         sys.exit(1)
 
+    log_build_identity()
     log(
         f"agent {AGENT_ID} ({RELAY_VERSION}) polling {KR_BASE_URL} "
         f"every {POLL_SECONDS}s"
