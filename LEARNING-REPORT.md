@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-14T07:21:23Z
+Generated: 2026-08-14T07:26:00Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **603**
-- Outcomes: blocked: 14, cancelled: 1, done: 588
+- Closed tasks recorded: **604**
+- Outcomes: blocked: 14, cancelled: 1, done: 589
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -41,7 +41,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 60 | 100% |
+| model-builder | 61 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -61,7 +61,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 587 | 99% |
+| software | 588 | 99% |
 
 ## Failure categories
 
@@ -82,6 +82,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-14 `model-builder/t-044` — Kaizen from t-029 (PR #1882): before writing a coverage guard for "the async-fetch staleness pattern," actually read every performFetch call site first rather than assuming the two known-fixed functions' exact ticket-counter shape generalizes. It doesn't: modelBuilderStore.ts uses six independently-correct staleness idioms (ticket-counter, capture-compare, cancelled-run-check, identity-check, serialized-lock, write-only) depending on what each function does with the response. A guard that blindly demanded the ticket shape everywhere would have false-flagged ~8 already-correct, already-audited functions. The shippable design was a registry-driven coverage check (verifyModelBuilderAsyncFetchStalenessCoverage.ts, kind_robots#1884): every performFetch( call site must be classified in an explicit registry with a spot-checked marker, so a genuinely NEW unaudited call site fails CI, without re-litigating already-solved cases.
 - 2026-08-14 `conductor/t-117` — Doc-only kaizen closing a twice-repeated security-flag (TALKBACK.md 2026-08-13, 2026-08-14): a non-isolated background Agent doing git-mutating work in a repo a foreground session is still actively using can silently discard the foreground's uncommitted edits or delete its designated branch (with any unpushed commits on it). Promoted from documented-but-skippable CLAUDE.md prose to AGENTS.md hard rule 12: isolation:'worktree' is required for any background Agent mutating git state in a repo the foreground session is concurrently using, not only for the narrower "in-flight workaround" case rule 11 already covered.
 - 2026-08-14 `model-builder/t-029` — Fifth t-029 cycle found a genuinely new bug shape, not another instance of the unawaited-call pattern t-042's confirmedOutcomeGuard meta-guard already covers: recordArtifact() DID await its performFetch() call, but performFetch never rejects for an HTTP-level failure (it always resolves with { success: false }), so recordArtifact's try/catch around that await was silently dead code -- any failure was discarded with no .success check anywhere, no error surfaced, and the caller still popped a success toast and marked the stage ready regardless. The existing meta-guard only flags a BARE (non-awaited) call to a Promise- returning helper before a success toast; it has no way to see that an awaited callee's own internals swallow their result. Worth widening t-042's guard (or adding a sibling one) to also flag any store function whose body awaits performFetch inside a try/catch with no `.success` check anywhere in scope -- the same "silently-dead catch block" shape likely recurs elsewhere in this store (and possibly other Pinia stores) wherever performFetch's always-resolve contract isn't the author's first assumption. Filed as this cycle's kaizen suggestion rather than a new task, since the fix (widen an existing guard) is speculative until a second instance is found.
 - 2026-08-14 `model-builder/t-029` — Fourth t-029 cycle found a fifth instance of the same missing-cancellation-guard shape flagged in the prior cycle's lesson (generateItemAssetAsync's catch block called handleError() unconditionally instead of checking cancelledRunIds first, unlike its synchronous sibling generateItemAsset and every other cancellable async entry point in the store). This time delegated to an isolated worktree-background agent rather than doing the audit inline -- worked cleanly (PR #1874 opened and merged autonomously, ~25 min wall clock, no foreground git race since the worktree kept it out of the session's own working directory). Confirms the isolation:'worktree' guidance from 2026-08-13's security-flag TALKBACK entry is sound for this shape of delegated task. Also reinforces the prior cycle's own suggestion: a single meta-guard auditing every store action for "does this path handle cancellation consistently" would likely have caught this without a fifth cycle of one-bug-at-a-time patching.
@@ -91,7 +92,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-13 `conductor/t-115` — select_role.py's github_api_unreachable flag existed but nothing acted on it -- a session could read role: worker at face value and skip reviewing mergeable work the local git checks simply couldn't see (missed 3 green PRs, 2026-08-13 ~05:15 UTC). Downgrading worker/idle to reviewer-uncertain whenever the flag is true closes the gap structurally instead of relying on every session noticing a caveat field. General lesson: a script that already computes a reliability signal should fold it into its top-line recommendation, not just expose it alongside the recommendation for callers to remember to check.
 - 2026-08-13 `model-builder/t-041` — Kaizen chain from t-029 (kind_robots#1825) landed cleanly first-pass: the same run-scoping gate (setStatusForRun) needed to cover both the {success:false} response branch AND the raw network-exception (.catch) branch of pushItem/batchPushItems, not just the one the original PR touched. When a kaizen task targets "the same class of issue" in a sibling code path, check for other branches of the same conditional (success vs. exception) that need the identical fix, not just the one named in the kaizen note.
 - 2026-08-12 `conductor/t-114` — A backslash inside an f-string expression part is invalid grammar before Python 3.12 -- CI's "Lint Python scripts" syntax check runs 3.12 so it never caught this, only this sandbox's local 3.11 pytest did (via a collection-time SyntaxError, not a real test failure). Worth generalizing -- when a script targets an f-string with any escaped-quote/backslash content in its {} expression part, extract the literal to a plain variable first regardless of which Python version the immediate CI check happens to run, since the actual production runner's version is often not the same as CI's syntax-check job.
-- 2026-08-12 `brainstorm/t-012` — A fail-open picker defect (adapter returns cached rows when a forced-fresh revalidation fails) needed an explicit "fail closed on unsuccessful fresh retrieval" helper, not just forcing the fetch call itself -- four separate quality rejections traced increasingly specific slices of the same class before the fix finally covered both the by-id resolve path and the list-search path on both adapters at once (fetchFreshSourceRows checking store.error rather than trusting the returned array). Worth generalizing into a shared contract check the next time an authorization-sensitive picker is added, rather than re-deriving it per adapter.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-14T07:21:23Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-14T07:26:00Z_
