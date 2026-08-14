@@ -273,3 +273,24 @@ tasks:
     multi-user voting, this app is meant for solo users, with possibly a
     public facing aspect, but no need for multi-user voting." Current
     single-admin-status design is correct as-is; no code change needed.
+- id: t-015
+  milestone: m1
+  title: 'kind_robots: wire or drop the dead ProjectFrontConfig.channelKey/tabKey fields'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from conductor-app/t-013's close-out (2026-08-14): every project front page's
+    static `fallback` config declares `channelKey`/`tabKey` (see
+    `components/conductor/projectFront.ts`'s `ProjectFrontConfig`), but
+    `project-front-page.vue`'s `view` computed never reads either field -- they're dead
+    data at runtime. This let conductor-app-page.vue's `channelKey: 'conductor'` (not a
+    real nav channel; only home/play/plan/admin exist) sit wrong for weeks with nothing
+    ever surfacing it, until a manual audit caught it (fixed in kind_robots PR #1889).
+    Either wire the field into the shell (e.g. a "back to <channel>" link once the live
+    Project record resolves channelKey/tabKey) or drop the two unused fields from
+    `ProjectFrontConfig` and every fallback config that sets them, so a future stale
+    value can't hide the same way. Check whether any other project's fallback config has
+    the same kind of drift while auditing (grep every `components/conductor/*-page.vue`
+    for `channelKey:`/`tabKey:` against `utils/projectPlacements.ts`).
