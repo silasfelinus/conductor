@@ -1022,3 +1022,29 @@ tasks:
     claimed_at: null
     updated: '2026-08-13T20:33:02Z'
     implementation_pr: 'silasfelinus/kind_robots#1860'
+
+  - id: t-043
+    milestone: m6
+    title: "Tighten or drop kind_robots' PR-triggered 'Build production image' Docker job -- slowest, least predictable check, not required for merge"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: |-
+      Kaizen from t-029 (kind_robots PR #1882, 2026-08-14): the "Build production
+      image" Docker-publish check is consistently the slowest and least predictable
+      job on every kind_robots PR, and contributes nothing to the merge gate --
+      every required check on #1882 was green by 06:04:19Z but the Docker job was
+      still running past its typical ~9-minute duration when the merge fired at
+      06:04:54Z (confirmed against the last 4 completed runs of the same workflow).
+      It has hung/run long enough on prior PRs in this same recurring task's history
+      to be treated as an accepted "non-blocking, still running at merge time"
+      pattern rather than investigated. Either give it a tighter timeout so a hang
+      surfaces as a clear CI failure instead of dangling silently, or -- if it is
+      genuinely only a post-merge publish step with no PR-time value -- drop it from
+      the PR-triggered workflow entirely and run it only on push to main. Not
+      model-builder-specific; this is general kind_robots CI infra, filed here per
+      the recurring task's own kaizen convention since it surfaced from this cycle.
+    owner: null
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-14T06:12:00Z'
