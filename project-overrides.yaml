@@ -62,9 +62,12 @@ overrides:
     kind: software
     # Frontend placement — synced to the kind_robots Project row by
     # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
-    # for 'newsfeed' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
-    liveUrl: /newsfeed
-    channelKey: lab
+    # for 'newsfeed' in kind_robots utils/projectPlacements.ts.
+    # Corrected 2026-08-14 (conductor/coat-dance t-010 cycle) — the 'lab' channel
+    # was dissolved 2026-07-28 (kind_robots commit 6cd42c2); this doc-only field
+    # never followed. projectPlacements.ts is CI-enforced and was already correct.
+    liveUrl: /plan/newsfeed
+    channelKey: home
     tabKey: newsfeed
 
   - slug: global-ui
@@ -94,10 +97,16 @@ overrides:
     priority: normal
     # Frontend placement — synced to the kind_robots Project row by
     # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
-    # for 'humboldt-scoop' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
-    liveUrl: /humboldt-scoop
-    channelKey: lab
-    tabKey: humboldt-scoop
+    # for 'humboldt-scoop' in kind_robots utils/projectPlacements.ts.
+    # Corrected 2026-08-14 (conductor/coat-dance t-010 cycle): the 'lab' channel
+    # was dissolved 2026-07-28 (kind_robots commit 6cd42c2, "dissolve the Lab
+    # channel into forever nav") and 'humboldt-scoop' moved to plan/projects
+    # alongside coat-dance/sketchy/ruler-hooked; this doc-only field was never
+    # updated to match. projectPlacements.ts is CI-enforced (verifyChannelContent.ts)
+    # and was already correct — only this comment/value was stale.
+    liveUrl: /plan/projects/humboldt-scoop
+    channelKey: plan
+    tabKey: projects
 
   - slug: humboldt-scoop-cms
     status: active
@@ -197,10 +206,12 @@ overrides:
     kind: software
     # Frontend placement — synced to the kind_robots Project row by
     # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
-    # for 'sketchy' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
-    liveUrl: /sketchy
-    channelKey: lab
-    tabKey: sketchy
+    # for 'sketchy' in kind_robots utils/projectPlacements.ts.
+    # Corrected 2026-08-14 (conductor/coat-dance t-010 cycle) — see humboldt-scoop
+    # entry above for the 'lab' channel dissolution this doc field never followed.
+    liveUrl: /plan/projects/sketchy
+    channelKey: plan
+    tabKey: projects
 
   - slug: pinball-hero
     status: retired
@@ -223,9 +234,12 @@ overrides:
     priority: high
     # Frontend placement — synced to the kind_robots Project row by
     # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
-    # for 'mural-design' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
-    liveUrl: /mural
-    channelKey: lab
+    # for 'mural-design' in kind_robots utils/projectPlacements.ts.
+    # Corrected 2026-08-14 (conductor/coat-dance t-010 cycle) — the 'lab' channel
+    # was dissolved 2026-07-28 (kind_robots commit 6cd42c2); this doc-only field
+    # never followed. projectPlacements.ts is CI-enforced and was already correct.
+    liveUrl: /build/mural
+    channelKey: admin
     tabKey: mural
 
   - slug: storybook
@@ -254,9 +268,12 @@ overrides:
     kind: software
     # Frontend placement — synced to the kind_robots Project row by
     # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
-    # for 'davinci' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
-    liveUrl: /davinci
-    channelKey: lab
+    # for 'davinci' in kind_robots utils/projectPlacements.ts.
+    # Corrected 2026-08-14 (conductor/coat-dance t-010 cycle) — the 'lab' channel
+    # was dissolved 2026-07-28 (kind_robots commit 6cd42c2); this doc-only field
+    # never followed. projectPlacements.ts is CI-enforced and was already correct.
+    liveUrl: /play/davinci
+    channelKey: play
     tabKey: davinci
 
   - slug: media-watchlist
@@ -265,9 +282,12 @@ overrides:
     kind: software
     # Frontend placement — synced to the kind_robots Project row by
     # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
-    # for 'media-watchlist' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
-    liveUrl: /watchlist
-    channelKey: lab
+    # for 'media-watchlist' in kind_robots utils/projectPlacements.ts.
+    # Corrected 2026-08-14 (conductor/coat-dance t-010 cycle) — the 'lab' channel
+    # was dissolved 2026-07-28 (kind_robots commit 6cd42c2); this doc-only field
+    # never followed. projectPlacements.ts is CI-enforced and was already correct.
+    liveUrl: /plan/watchlist
+    channelKey: plan
     tabKey: watchlist
 
   - slug: conductor-app
@@ -287,9 +307,12 @@ overrides:
     kind: software
     # Frontend placement — synced to the kind_robots Project row by
     # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
-    # for 'alexa-integration' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
-    liveUrl: /voice-lab
-    channelKey: lab
+    # for 'alexa-integration' in kind_robots utils/projectPlacements.ts.
+    # Corrected 2026-08-14 (conductor/coat-dance t-010 cycle) — the 'lab' channel
+    # was dissolved 2026-07-28 (kind_robots commit 6cd42c2); this doc-only field
+    # never followed. projectPlacements.ts is CI-enforced and was already correct.
+    liveUrl: /plan/voice-lab
+    channelKey: plan
     tabKey: voice-lab
 
   - slug: mermaids-of-venice
@@ -314,10 +337,20 @@ overrides:
     kind: content
     # Frontend placement — synced to the kind_robots Project row by
     # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
-    # for 'coat-dance' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
-    liveUrl: /coat-dance
-    channelKey: lab
-    tabKey: coat-dance
+    # for 'coat-dance' in kind_robots utils/projectPlacements.ts.
+    # Corrected 2026-08-14 (coat-dance/t-010 cycle): the 'lab' channel was
+    # dissolved 2026-07-28 (kind_robots commit 6cd42c2, "dissolve the Lab channel
+    # into forever nav") and coat-dance moved to plan/projects alongside the other
+    # unfinished pitches (sketchy, ruler-hooked, humboldt-scoop, also corrected this
+    # cycle); this doc-only field was never updated to match.
+    # projectPlacements.ts is CI-enforced (verifyChannelContent.ts) and was
+    # already correct — only this comment/value was stale. t-010 step (3)'s
+    # "admin Placements click" does not apply to this field: sync_projects.py
+    # never wrote channelKey/tabKey downstream (test_sync_projects.py asserts as
+    # much) — this file's values are documentation only.
+    liveUrl: /plan/projects/coat-dance
+    channelKey: plan
+    tabKey: projects
 
   - slug: career-transition
     status: retired # archived (reaffirmed 2026-07-16 by Silas) — conductor itself may become the career
@@ -398,10 +431,12 @@ overrides:
     kind: software
     # Frontend placement — synced to the kind_robots Project row by
     # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
-    # for 'ruler-hooked' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
-    liveUrl: /ruler-hooked
-    channelKey: lab
-    tabKey: ruler-hooked
+    # for 'ruler-hooked' in kind_robots utils/projectPlacements.ts.
+    # Corrected 2026-08-14 (conductor/coat-dance t-010 cycle) — see humboldt-scoop
+    # entry above for the 'lab' channel dissolution this doc field never followed.
+    liveUrl: /plan/projects/ruler-hooked
+    channelKey: plan
+    tabKey: projects
 
   - slug: music-mentor
     status: active

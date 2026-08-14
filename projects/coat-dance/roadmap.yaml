@@ -253,7 +253,7 @@ tasks:
   - id: t-010
     milestone: m1
     title: "Polish and upgrade Coat Dance front-end surface"
-    status: claimed
+    status: review
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -311,6 +311,50 @@ tasks:
       pipeline whose stalled schedule was fixed today, PR #1058) — no more agent
       action needed for step (1). Step (3) (admin Placements click) remains the
       only actually human-gated remainder.
-    updated: '2026-08-14T17:30:52Z'
+
+      PROGRESS 2026-08-14 (conductor scheduled Agent run, claude-scheduled-20260814T1727Z):
+      re-audited step (1) and step (3) from scratch since both had gone quiet for three
+      weeks. Confirmed via kind_robots `main`: neither
+      `public/images/dashboard-tabs/art/coat-dance.webp` nor
+      `public/images/tutorials/art/coat-dance.webp` exists, and this repo's
+      `projects/art-prompts.yaml` `images:` list — where the 2026-07-25 entries were
+      added — is now empty (`images: []`). Traced why: `images:` in art-prompts.yaml is
+      the icon/card/hero project-cover queue (schema is `{project, icon:{...},
+      card:{...}, hero:{...}}`, consumed by `distribute_images.py`'s
+      `prompts_data.get("images")` loop, which only reads the `icon`/`card`/`hero` keys)
+      — it was never a general-purpose asset queue and has no consumer path for
+      arbitrary `target_repo`/`image_path` pairs like a dashboard-tab or tutorial image
+      targeting `silasfelinus/kind_robots`. The 2026-07-25 entries were added to the
+      wrong queue and were never actually consumable; whatever pruned them left no
+      trace in this session's shallow clone. The right queue is `requests:` (the
+      site-wide missing-image report list `consume_art_requests_to_media.py` actually
+      drains every 6h via `auto-art-generate.yml`) — its entries already support
+      arbitrary `target_repo`/`image_path`, which is exactly what step (1) needs. Added
+      two properly-shaped `requests:` entries this cycle:
+      `kind-robots-dashboard-tab-art-coat-dance` (512x768 card, targets
+      `dashboard-tabs/art/coat-dance.webp`) and `kind-robots-tutorial-art-coat-dance`
+      (1280x720 hero, targets `tutorials/art/coat-dance.webp`), both prompted on the
+      real 2006 HSU trench-coat-as-duet-partner premise per ART-PROMPTS.md's style
+      guide, sizes confirmed against `sample/generation/README.md`'s standard art
+      sizes and the consuming Vue components' aspect-ratio classes
+      (`aspect-2/3`/`object-cover`). Verified via
+      `repair_art_request_defaults.py`'s dry-run: 0 path/prompt issues found, so the
+      shape matches what the consumer expects. Step (1) now has a real chance to drain
+      on the next `auto-art-generate` run (cron `0 */6 * * *`), assuming the render box
+      is up. Step (3): also re-checked whether the admin "Placements" click this note
+      has referenced since 2026-07-20 does anything for coat-dance specifically — it
+      does not touch kind_robots' `utils/projectPlacements.ts` (CI-enforced,
+      already-correct static file, confirmed unrelated to this task) or fix anything
+      that was actually broken; the real bug found this cycle was that conductor's own
+      `project-overrides.yaml` `channelKey`/`tabKey`/`liveUrl` for coat-dance (and
+      several sibling projects) were stale documentation left over from the 2026-07-28
+      Lab-channel dissolution (kind_robots commit 6cd42c2) — fixed directly in this
+      cycle's PR, so step (3) as originally scoped no longer applies; no admin action
+      needed for placement. Remaining and kept ready: step (1) draining through the
+      relay (out of agent control, tracked separately via ai-art-academy/t-044's
+      render-box health signal) and step (4)'s further evolution of the interactive
+      slot once real production milestones exist to reflect (still 0% into production,
+      m1-m5 all not-started, t-002 through t-009 all blocked on the source video).
+    updated: '2026-08-14T17:50:00Z'
     claimed_by: claude-scheduled-20260814T1727Z
     claimed_at: '2026-08-14T17:30:52Z'
