@@ -175,20 +175,108 @@ tasks:
 - id: t-010
   milestone: m3
   title: Graduation flow (monorepo app to its own repo)
-  status: claimed
+  status: needs-human
   owner: reviewer
   passes: 0
   stakes: irreversible
   gate_human: true
   approved_by_human: true
+  soft_gate: true
   depends_on: t-009
-  note: 'git subtree split to preserve history, push via installation token, flip the AppRepo row, removal
-    PR in the monorepo. Both PRs are needs-human per design section 5c.
+  note: |-
+    SOFT NEEDS-HUMAN (conductor scheduled Agent run, 2026-08-14T21:45Z session):
+    dispatched a research pass over both repos before writing any code and found
+    three real architectural gaps the design doc's one-paragraph §5c sketch
+    doesn't resolve -- picking wrong on any of them means building throwaway or
+    actively risky code, so stopping here rather than guessing on an
+    `irreversible`/`gate_human: true` task.
 
-    '
-  claimed_by: 2026-08-14T2145-appmaker-t010-graduation
-  claimed_at: '2026-08-14T21:28:40Z'
-  updated: '2026-08-14T21:28:40Z'
+    FOR SILAS: three open questions, any answer unblocks real implementation:
+
+    1. HISTORY PRESERVATION MECHANISM: §5c says "git subtree split... to
+    preserve history" then "push via installation token". Those two clauses are
+    in tension with an invariant this project's own code already enforces --
+    `mintInstallationToken()` in appmakerGithub.ts is module-private and its own
+    docstring says the token must NEVER leave the kind_robots server. `git
+    subtree split` is a git-CLI operation needing a real local checkout with
+    full history (only the conductor repo's local script layer can run it,
+    per the existing `git_plumbing.py`/`worker_merge_pr.py` convention) -- but
+    the token that would authenticate a push can only live inside the
+    kind_robots Nuxt server process, which has no git binary or persistent
+    checkout (it's serverless). The only path that honors both constraints is
+    a commit-replay: the conductor script serializes the subtree-split commit
+    chain (parent/message/author + full tree per commit) and POSTs it to a new
+    kind_robots endpoint, which replays it via GitHub's Git Data API (blob ->
+    tree -> commit -> ref-update, chained) so the token never leaves the
+    server. That's real new infrastructure, not a wrapper around the existing
+    `pushScaffoldBranchAndOpenPr` (which does one-commit-per-file Contents-API
+    PUTs and explicitly does not preserve history) -- worth Silas's explicit
+    nod before it's built and pointed at someone's real external repo, since a
+    bug here writes malformed/partial history into a repo the agent can't
+    cleanly undo. ALTERNATIVE if full history isn't actually load-bearing for
+    Silas: relax §5c to a single-commit "squash graduate" (reuse
+    `pushScaffoldBranchAndOpenPr`'s existing proven mechanism verbatim, just
+    pointed at the graduation branch/PR instead of a scaffold PR) -- far less
+    new-code risk, ships this task in a fraction of the time, loses per-commit
+    history in the new repo (still fully preserved in conductor's own history
+    the removal PR points back to).
+
+    2. OWNERSHIP MODEL MISMATCH: t-009's external-repo flow (create-app.post.ts,
+    scaffold.post.ts) is entirely `AppRepo`-row + `userId`-scoped -- a specific
+    user connects their GithubInstallation and owns the AppRepo being created.
+    But the actual monorepo fleet this page shows (GET /api/appmaker/apps,
+    backing appmaker-page.vue's "Apps" grid) is sourced by listing the
+    conductor repo's `apps/` directory directly (`conductorList('apps')`) --
+    none of today's 12 scaffolded apps (appmaker, conductor, kind-robots,
+    storybook, wishmaster, etc.) have a corresponding `AppRepo` row at all;
+    they were created via the Project-scoped `scripts/new_app.py` Todo flow
+    (t-004), which predates and never wired into the `AppRepo` model t-008
+    added. So "pick 'graduate' on an app" has no existing per-app owner/
+    installation to hang the action off of for any app in the actual visible
+    fleet today. FOR SILAS: who is allowed to graduate a monorepo-scoped app
+    that has no individual owner -- admin-only (gated the same way
+    `scaffold.post.ts` gates on `requireAdminApiUser`), or does graduation
+    first require the app's Project to have a `userId` owner assigned (a
+    smaller, separable task)?
+
+    3. TARGET-REPO PREREQUISITE: whichever answer to (2), graduating still
+    needs a target external repo + a GithubInstallation already connected for
+    whoever is allowed to trigger it -- there is no "create a fresh repo for
+    me" path in scope (§7 explicitly excludes it: "Creating repos for users").
+    So the UI trigger needs to surface "connect GitHub + pick/create a repo"
+    as a precondition, same as t-009's (currently unused-by-any-page)
+    `create-app.post.ts` grant-check already assumes.
+
+    Recommend resolving (1) first (it's the one with real irreversible-repo
+    risk if guessed wrong) -- once decided, this task is straightforward
+    software work: a `graduate-request` endpoint mirroring
+    `scaffold-request.post.ts`'s Todo-filing pattern (reversible, no git/token
+    risk in that half at all), a "Graduate" UI trigger, and the
+    conductor-script + kind_robots-endpoint pair implementing whichever
+    mechanism (1) resolves to. Both resulting PRs (target-repo push +
+    monorepo removal) stay needs-human regardless, per the original design.
+
+    Also verified and worth recording since it's a standing environment
+    constraint, not specific to this task: this sandbox's local conductor
+    checkout is a SHALLOW clone (`git rev-parse --is-shallow-repository` =
+    true; every apps/<slug>/ path shows exactly 1 commit in local `git log`
+    regardless of real history) -- any future `graduate_app.py` needs to
+    `git fetch --unshallow` (or otherwise ensure full history) before running
+    `git subtree split`, or it will silently produce single-commit "history"
+    even once question (1) is resolved in favor of full replay.
+
+    Not blocking other appmaker work -- t-012 (front-end polish, separate
+    task) is unaffected. Releasing the claim below since there is nothing
+    further to build until Silas answers at least (1).
+
+    ---
+
+    Original design note (unchanged): git subtree split to preserve history,
+    push via installation token, flip the AppRepo row, removal PR in the
+    monorepo. Both PRs are needs-human per design section 5c.
+  claimed_by: null
+  claimed_at: null
+  updated: '2026-08-14T21:45:00Z'
 - id: t-004
   milestone: m4
   title: Build the AppMaker page in kind_robots
