@@ -8005,3 +8005,24 @@ records:
     rule 12: isolation:'worktree' is required for any background Agent mutating git
     state in a repo the foreground session is concurrently using, not only for the
     narrower "in-flight workaround" case rule 11 already covered.
+- date: '2026-08-14'
+  project: model-builder
+  task: t-044
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Kaizen from t-029 (PR #1882): before writing a coverage guard for "the async-fetch
+    staleness pattern," actually read every performFetch call site first rather than
+    assuming the two known-fixed functions' exact ticket-counter shape generalizes.
+    It doesn't: modelBuilderStore.ts uses six independently-correct staleness idioms
+    (ticket-counter, capture-compare, cancelled-run-check, identity-check,
+    serialized-lock, write-only) depending on what each function does with the
+    response. A guard that blindly demanded the ticket shape everywhere would have
+    false-flagged ~8 already-correct, already-audited functions. The shippable design
+    was a registry-driven coverage check (verifyModelBuilderAsyncFetchStalenessCoverage.ts,
+    kind_robots#1884): every performFetch( call site must be classified in an explicit
+    registry with a spot-checked marker, so a genuinely NEW unaudited call site fails
+    CI, without re-litigating already-solved cases.
