@@ -3964,3 +3964,34 @@ tasks:
     claimed_at: '2026-08-14T03:35:00Z'
     updated: '2026-08-14T03:35:00Z'
     implementation_pr: 'silasfelinus/conductor#2233'
+
+  - id: t-118
+    milestone: m2
+    title: "select_role.py: surface a stale recurring-pitch task (e.g. animation-manager/t-006) as its own role signal"
+    stakes: reversible
+    passes: 0
+    note: >
+      Kaizen from conductor PR #2248 (animation-manager/t-006, 2026-08-14): the task's
+      note history shows multi-day gaps between runs (e.g. 2026-07-29 -> 2026-08-12) with
+      no indication of a skipped no-op day per its own daily-cap rule -- the recurring
+      daily-pitch cadence depends entirely on some rotation/session happening to pick it
+      up on a given Pacific day, with nothing flagging when it doesn't. select_role.py
+      already promotes several other "nothing else noticed" conditions into their own
+      role (workflow-medic for failing scheduled workflows, pr-medic for stale red PRs,
+      branch-medic for stranded branches, site-auditor for an overdue weekly audit) --
+      this task asks for the same treatment for `recurring: true` tasks that haven't run
+      in more than N days (a `stale-recurring` or similar role, or simply folding the
+      check into an existing low-priority role). Scope: read `recurring: true` tasks
+      across active-project roadmaps, extract the most recent `RAN <date>` marker from
+      each task's `note:` field (or `updated`, if that is reliably bumped by every real
+      run and not just claim/re-arm bookkeeping -- check both before picking one), and
+      flag any that are more than `--recurring-stale-days` (suggest default 3, generous
+      enough to not fire on a single rotation miss but tight enough to catch the kind of
+      two-week gap t-006 had) past their last run. This is a soft signal, lowest priority
+      (below `worker` for a genuinely `ready` task, since a stale recurring task can
+      always be picked up as an ordinary `ready` task too) -- it should not preempt real
+      new work, just make sure a stale cadence doesn't silently stay stale indefinitely
+      the way t-006 did for two weeks with no session or check ever surfacing it.
+    status: ready
+    owner: null
+    updated: '2026-08-14T10:53:00Z'
