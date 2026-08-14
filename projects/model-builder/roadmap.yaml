@@ -1052,27 +1052,12 @@ tasks:
   - id: t-044
     milestone: m6
     title: "Build a coverage guard for the async-fetch staleness pattern itself, instead of rediscovering it function-by-function each cycle"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
-    note: |-
-      Kaizen from t-029 (kind_robots PR #1882, 2026-08-14): the monotonic
-      request-ticket staleness-guard pattern (fetchRunsRequestId, now also
-      openRunRequestId) has been hand-applied to three separate async-fetch
-      call sites in modelBuilderStore.ts across three separate bug-hunt
-      cycles, each time discovered by a fresh manual read-through rather than
-      any automated check. Build a
-      verifyModelBuilderAsyncFetchStalenessCoverage.ts guard that walks every
-      async function in the store making a performFetch (or equivalent)
-      call and flags any one that lacks a matching monotonic-ticket
-      check (capture-at-top, checked in both success and catch branches)
-      before applying the response to shared state -- so the next
-      unguarded fetch (e.g. a future resumeRun-adjacent addition) is caught
-      in one CI run instead of needing another full manual cycle to
-      rediscover the same bug class. Follows the same narrow
-      textual/AST-checker + self-test convention as the existing
-      verifyModelBuilder* guards.
+    note: 'Coverage guard shipped: verifyModelBuilderAsyncFetchStalenessCoverage.ts (+ self-test) enumerates every performFetch( call site in modelBuilderStore.ts and requires each to carry a recorded staleness-guard classification, failing CI on a new unaudited call site. Audit found 6 distinct valid staleness idioms already in use (ticket-counter, capture-compare, cancelled-run-check, identity-check, serialized-lock, write-only), documented per-function with rationale -- does not blanket-require the ticket-counter shape. All 67 existing test:model-builder-* scripts pass, eslint/prettier/vue-tsc clean. Merged silasfelinus/kind_robots#1884.'
     owner: worker
     claimed_by: conductor-sweep-20260814T0703-mb-t044
     claimed_at: '2026-08-14T07:16:53Z'
-    updated: '2026-08-14T07:16:53Z'
+    updated: '2026-08-14T07:21:07Z'
+    implementation_pr: 'silasfelinus/kind_robots#1884'
