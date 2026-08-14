@@ -1279,8 +1279,11 @@ tasks:
     gate_human: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-14T01:29:47Z'
+    updated: '''2026-08-14T09:36:21Z'''
     note: |-
+      RECHECK (conductor scheduled Agent run, 2026-08-14T09:36:21Z, logged in RENDER-BACKLOG.md): queue still growing and now the connection-refused signature has persisted continuously across 8 consecutive checks (~9h, since 00:36Z) -- longer than any prior connection-refused streak this task has logged, so the 00:36Z hypothesis that it was "transiently unreachable" no longer fits. That said this is not a full stall like t-067's (now done): DONE keeps climbing (4207->4270, +63 over ~8h) and PENDING has stabilized around 700-750 rather than climbing further, so ComfyUI is up and processing the bulk of the queue -- only recentFailed's last-2-sample keeps landing on connection-refused, consistent with intermittent/partial connectivity flakiness rather than an outage. Not filing a new escalation task: still no recurrence of the original lora_name or charmap signature, and throughput remains positive. 8276/8278 still not individually confirmed terminal (no per-job endpoint available to this sandbox). Not closing the gate -- connection-refused remains an open, now longer-running question distinct from t-044's own blocker. gate_human: true / soft_gate unchanged.
+
+
       RECHECK (conductor scheduled Agent run, 2026-08-14T01:28:45Z, logged in RENDER-BACKLOG.md): queue still growing (PENDING 100->137, DONE 4202->4207, +5 completions this window, CANCELLED flat at 3172) -- some throughput but not draining. recentFailed unchanged at 2/2 connection-refused to ComfyUI, same infra signature as the two prior checks, still no recurrence of the original lora_name or the charmap signature. 8276/8278 not individually re-observed this pass (no per-job endpoint available to this sandbox). Not closing the gate -- connection-refused remains an open question distinct from t-044's own blocker, and no terminal DONE/FAILED confirmation on the two verification jobs yet. gate_human: true / soft_gate unchanged.
 
 
