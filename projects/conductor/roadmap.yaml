@@ -3932,3 +3932,35 @@ tasks:
     claimed_at: '2026-08-13T06:38:17Z'
     updated: '2026-08-13T07:28:35Z'
     implementation_pr: 'silasfelinus/conductor#2180'
+
+  - id: t-117
+    milestone: m2
+    title: "Promote non-isolated background-Agent git race guardrail from CLAUDE.md prose into an AGENTS.md hard rule"
+    stakes: reversible
+    passes: 0
+    note: >
+      Kaizen from a twice-unacknowledged security-flag in root TALKBACK.md (2026-08-13 and
+      2026-08-14): a non-isolated background Agent (no `isolation: 'worktree'`) run in the
+      same working directory as an active foreground session performs git-mutating
+      operations (checkout/reset/claim/close-out) that silently discard the foreground
+      session's own uncommitted edits or unpushed branch. The 2026-08-13 instance lost an
+      uncommitted `RENDER-BACKLOG.md` edit; the 2026-08-14 recurrence deleted the
+      foreground session's designated git branch outright (recovered via
+      `mcp__github__create_branch`, no unpushed commits lost that time, but a session that
+      *did* have unpushed local commits at dispatch time would have lost them). Both
+      TALKBACK entries independently suggest the same fix: promote the rule from
+      documented-but-skippable guidance (currently CLAUDE.md's "Don't delegate an in-flight
+      git workaround to a background subagent", which only covers the narrower
+      push_files-workaround case) into a broader, explicit AGENTS.md hard rule --
+      `isolation: 'worktree'` is REQUIRED, not optional, for any background Agent that will
+      run git-mutating commands (`claim_task.py`, `set_task_field.py`, `close_task.py`,
+      plain `git commit`/`push`, etc.) in a repo a foreground session is still actively (even
+      passively, mid-edit) using. Update AGENTS.md's Hard rule 11 (or add a new hard rule)
+      to state this generally, and cross-reference both TALKBACK incidents and the existing
+      CLAUDE.md section. Doc-only change, no behavior change to any script.
+    status: done
+    owner: reviewer
+    claimed_by: claude-conductor-quirky-curie-20260814T0335Z-t117
+    claimed_at: '2026-08-14T03:35:00Z'
+    updated: '2026-08-14T03:35:00Z'
+    implementation_pr: 'silasfelinus/conductor#2233'

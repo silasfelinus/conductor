@@ -1135,6 +1135,17 @@ Silas approval is required for the image generation itself.
     after dispatching it, since it only knows the file content it was handed at dispatch
     time. See CLAUDE.md's "Don't delegate an in-flight git workaround to a background
     subagent" (conductor/t-066).
+12. `isolation: 'worktree'` is REQUIRED, not optional, for any background Agent that will
+    run git-mutating commands (`claim_task.py`, `set_task_field.py`, `close_task.py`, plain
+    `git commit`/`push`, `push_files`, `create_branch`, force-push, etc.) in a repo a
+    foreground session is still actively — even passively, mid-edit — using. This
+    generalizes rule 11 beyond the narrower in-flight-workaround case: a non-isolated
+    background Agent's git operations in a shared working directory can silently discard
+    the foreground session's uncommitted edits (TALKBACK.md 2026-08-13) or delete its
+    designated git branch outright, including any unpushed commits on it (TALKBACK.md
+    2026-08-14, conductor/t-117). If the background task doesn't need to mutate git state
+    in this repo, `isolation: 'worktree'` is unnecessary — the rule applies specifically
+    when it does.
 
 **Reviewer batch-merge note (companion to rule 9):** `refresh-status.yml` lands a
 `chore: refresh STATUS.md and workspace.html` commit on `main` within seconds of every

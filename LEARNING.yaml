@@ -7988,3 +7988,20 @@ records:
     contract isn't the author's first assumption. Filed as this cycle's kaizen
     suggestion rather than a new task, since the fix (widen an existing guard) is
     speculative until a second instance is found.
+- date: '2026-08-14'
+  project: conductor
+  task: t-117
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Doc-only kaizen closing a twice-repeated security-flag (TALKBACK.md 2026-08-13,
+    2026-08-14): a non-isolated background Agent doing git-mutating work in a repo a
+    foreground session is still actively using can silently discard the foreground's
+    uncommitted edits or delete its designated branch (with any unpushed commits on
+    it). Promoted from documented-but-skippable CLAUDE.md prose to AGENTS.md hard
+    rule 12: isolation:'worktree' is required for any background Agent mutating git
+    state in a repo the foreground session is concurrently using, not only for the
+    narrower "in-flight workaround" case rule 11 already covered.
