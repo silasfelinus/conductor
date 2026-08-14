@@ -1,4 +1,4 @@
-updated: "2026-08-12T11:33:07+00:00"
+updated: "2026-08-14T10:43:43+00:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -766,3 +766,70 @@ pitches:
       - wax pool height visibly grows on drip events and visibly relaxes between them, never resetting instantly and never growing without bound
       - pointer flame-bend and click-triggered forced drip never block underlying page input, and the forced-drip click is rate-limited to once per candle relight cycle
       - concurrent wax-run pool size and per-candle height-map bin count stay fixed regardless of viewport size or elapsed session time
+
+  - id: frost-window-etching
+    title: Frost Window Etching
+    status: pitched
+    priority: 22
+    surprise: >
+      A dark windowpane slowly grows pale frost crystals inward from its edges -- thin,
+      branching fern-like fractals spreading and forking as they creep toward the center, each
+      branch a little different from the last. Once the pane is mostly etched over, a warm
+      unseen breath fogs a patch near the center and wipes a soft, irregular clear circle
+      through the frost, which then slowly regrows from its rim over the following minutes
+      rather than snapping back instantly.
+    passive_loop: >
+      Frost growth uses diffusion-limited aggregation seeded from a sparse ring of points
+      along the pane's border: a small, bounded set of "walker" points drift via slow random
+      motion each frame and freeze in place (adding a short crystal segment) the moment they
+      land adjacent to existing frost, biased slightly outward-to-inward so growth reliably
+      advances toward the center rather than stalling at the edges. Frozen segments are
+      written once into a persistent frost bitmap/height-field (same discipline as the
+      existing grain/wax height-map pattern elsewhere in the catalog) and never revisited, so
+      render cost stays flat as the pattern fills in regardless of how many segments have
+      frozen. When frost coverage crosses a high-coverage threshold, a soft radial-gradient
+      "breath" patch appears near a randomized center point and erases frost density within
+      its radius over about two seconds; that cleared region then slowly regrows frost from
+      its rim inward using the same walker process, re-seeded at the clear boundary rather
+      than starting over from the pane edges.
+    optional_interaction: >
+      Pointer movement near the glass leaves a faint warm trail that thins frost density
+      slightly wherever it passes, fading back to full frost over the following seconds -- a
+      transient nudge, not a lasting wipe. A click forces an immediate breath-patch clear
+      centered on the click point (rate-limited to one forced clear per pane per regrowth
+      cycle), independent of the ambient high-coverage trigger.
+    technique: >
+      Canvas 2D with an offscreen frost bitmap the size of the pane, updated incrementally:
+      each frame processes a small bounded batch of active walker points (spawn-capped, same
+      shared-pool discipline as other passive pieces in the catalog) and writes frozen
+      segments directly into the bitmap, which is drawn to the visible canvas via drawImage
+      without per-frame full-pane recomputation. The breath-patch clear is a masked radial
+      gradient composited onto the bitmap once per trigger, not a per-frame effect.
+    reduced_motion: >
+      A single static frame showing the pane roughly two-thirds etched with frost in a
+      natural-looking branching pattern and one soft partially-regrown clear patch already
+      present -- no walker motion, no breath trigger, no pointer trail, only a very slow,
+      subtle overall frost-opacity drift to confirm the piece is alive.
+    performance_risk: >
+      Unbounded walker count or an unbounded frost-segment history under long uptime. Cap
+      concurrent active walkers per pane (small fixed pool, same bound class as the hourglass-
+      cascade grain pool and candlelit-reliquary wax-run pool), store frozen growth purely in
+      the fixed-size offscreen bitmap rather than as a growing list of segment records, and
+      cap breath-patch trigger frequency and pointer-trail sampling rate independent of
+      viewport size or elapsed session time.
+    novelty: >
+      The core loop is diffusion-limited-aggregation branching growth into a persistent
+      bitmap, paired with a periodic soft erase-and-regrow cycle, distinct from every existing
+      pitch. Geode-bloom grows faceted, hexagonal- lattice-constrained crystal geometry
+      outward and recedes facet-by-facet, not freeform branching fractal walkers; kintsugi-
+      weather repairs pre-existing fractures rather than growing new branching structure from
+      scratch; candlelit-reliquary and hourglass-cascade both accumulate into a height-map
+      from falling/dripping primitives, not from randomly-walking freeze-on-contact points;
+      tapestry-loom additively constructs a fixed woven motif rather than a randomized
+      branching pattern. No existing pitch uses diffusion-limited aggregation, edge-seeded
+      branching growth, or a breath-fogged erase/regrow cycle.
+    acceptance:
+      - frost visibly branches and spreads inward from the pane edges without requiring interaction, and no two growth cycles produce an identical pattern
+      - the breath-patch clear-and-regrow cycle completes within the design's target duration and never leaves the pane permanently fully clear or permanently fully frosted
+      - pointer warm-trail thinning and click-triggered forced clears never block underlying page input, and the forced clear is rate-limited to once per pane per regrowth cycle
+      - active walker count and frost-bitmap size stay fixed regardless of viewport size or elapsed session time
