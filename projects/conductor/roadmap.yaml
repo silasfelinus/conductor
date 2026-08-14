@@ -3970,33 +3970,10 @@ tasks:
     title: "select_role.py: surface a stale recurring-pitch task (e.g. animation-manager/t-006) as its own role signal"
     stakes: reversible
     passes: 0
-    note: >
-      Kaizen from conductor PR #2248 (animation-manager/t-006, 2026-08-14): the task's
-      note history shows multi-day gaps between runs (e.g. 2026-07-29 -> 2026-08-12) with
-      no indication of a skipped no-op day per its own daily-cap rule -- the recurring
-      daily-pitch cadence depends entirely on some rotation/session happening to pick it
-      up on a given Pacific day, with nothing flagging when it doesn't. select_role.py
-      already promotes several other "nothing else noticed" conditions into their own
-      role (workflow-medic for failing scheduled workflows, pr-medic for stale red PRs,
-      branch-medic for stranded branches, site-auditor for an overdue weekly audit) --
-      this task asks for the same treatment for `recurring: true` tasks that haven't run
-      in more than N days (a `stale-recurring` or similar role, or simply folding the
-      check into an existing low-priority role). Scope: read `recurring: true` tasks
-      across active-project roadmaps, extract the most recent `RAN <date>` marker from
-      each task's `note:` field (or `updated`, if that is reliably bumped by every real
-      run and not just claim/re-arm bookkeeping -- check both before picking one), and
-      flag any that are more than `--recurring-stale-days` (suggest default 3, generous
-      enough to not fire on a single rotation miss but tight enough to catch the kind of
-      two-week gap t-006 had) past their last run. This is a soft signal, lowest priority
-      (below `worker` for a genuinely `ready` task, since a stale recurring task can
-      always be picked up as an ordinary `ready` task too) -- it should not preempt real
-      new work, just make sure a stale cadence doesn't silently stay stale indefinitely
-      the way t-006 did for two weeks with no session or check ever surfacing it.
-
-
-      IMPLEMENTED (conductor scheduled Agent run, 2026-08-14, session claude-scheduled-20260814T120411Z-conductor-t118): added select_role.py's eighth role, `stale-recurring`. find_stale_recurring_tasks() reads run_worker.load_roadmaps()'s already-workable (active/continuous) roadmaps for `recurring: true`, `status: ready` tasks, computes last_recurring_activity() as the later of the latest `RAN <date>`/`NO-OP <date>` note marker or the `updated:` field's date (checked both, per this task's own scope note -- some recurring tasks like animation-manager/t-006 self-report RAN markers, others like model-builder/t-029 rely solely on `updated:` being bumped every real cycle), and flags anything `--recurring-stale-days` (default 3) or older. Deliberately restricted to `status: ready` (not just not-done): a recurring task sitting at needs-human/waiting/claimed/review is blocked on something other than a session picking it up, so surfacing it here would misrepresent it as unattended, actionable work -- an early full-repo dry run without that filter surfaced coloring-book's three human-gated production-pass tasks, which is exactly the false-positive class this restriction avoids. Wired in at decision-order position 7 (below `worker`'s ready_task check, above `idle`) per the task's own "lowest priority, should not preempt real new work" framing -- `stale_recurring_tasks`/`stale_recurring_task_count` are reported in the JSON output regardless of which role wins, so the signal is visible even on a cycle where `worker` wins instead. Folded into the existing conductor/t-115 reviewer-uncertain downgrade (roadmap-only signals aren't trustworthy when the GitHub-backed checks above them never got real signal this run). Updated AGENTS.md's role-assignment section to document the new role. Added 24 new tests (unit coverage for last_recurring_activity()/find_stale_recurring_tasks() -- RAN vs NO-OP markers, updated:-fallback, stray-YAML-quote tolerance via _extract_date(), status filtering, threshold-boundary, cross-roadmap aggregation -- plus select_role() decision-order/downgrade coverage) and updated three pre-existing tests whose raw mock.patch blocks (not the shared _patched() helper) would otherwise have exercised the real repo's live roadmap state. Full suite green (1124 passed, 1 skipped, 35 subtests); validate_roadmaps.py clean. kind_robots not touched -- conductor-only change.
-    status: review
+    note: 'Merged via conductor PR #2250 (squash 1e2253a). select_role.py''s eighth role, `stale-recurring`, is live: find_stale_recurring_tasks() flags a `recurring: true`, `status: ready` task whose latest RAN/NO-OP note marker or updated: bump (whichever is later) is 3+ days stale, wired in below `worker`''s ready_task check and above `idle`, with stale_recurring_tasks/stale_recurring_task_count reported in the output regardless of which role wins. AGENTS.md''s role-assignment section documents it. 24 new tests + 3 updated pre-existing tests; full suite green at merge (1124 passed, 1 skipped, 35 subtests); all 22 CI checks green including the historically-slow Analyze (javascript-typescript) CodeQL job.'
+    status: done
     owner: worker
-    updated: '2026-08-14T12:04:12Z'
+    updated: '2026-08-14T12:11:38Z'
     claimed_by: claude-scheduled-20260814T120411Z-conductor-t118
     claimed_at: '2026-08-14T12:04:12Z'
+    implementation_pr: 'silasfelinus/conductor#2250'
