@@ -1026,7 +1026,7 @@ tasks:
   - id: t-043
     milestone: m6
     title: "Tighten or drop kind_robots' PR-triggered 'Build production image' Docker job -- slowest, least predictable check, not required for merge"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: |-
@@ -1044,10 +1044,10 @@ tasks:
       the PR-triggered workflow entirely and run it only on push to main. Not
       model-builder-specific; this is general kind_robots CI infra, filed here per
       the recurring task's own kaizen convention since it surfaced from this cycle.
-    owner: null
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-14T06:12:00Z'
+    owner: reviewer
+    claimed_by: sched-conductor-mb-t043-20260814T0715Z
+    claimed_at: '2026-08-14T07:56:19Z'
+    updated: '2026-08-14T07:56:19Z'
 
   - id: t-044
     milestone: m6
