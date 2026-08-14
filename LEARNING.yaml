@@ -8026,3 +8026,12 @@ records:
     kind_robots#1884): every performFetch( call site must be classified in an explicit
     registry with a spot-checked marker, so a genuinely NEW unaudited call site fails
     CI, without re-litigating already-solved cases.
+- date: 2026-08-14
+  project: conductor-app
+  task: t-013
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A task's checklist can silently finish itself via unrelated cycles (art relay draining, an admin Placements backfill) between sessions -- re-verify each open step against live state before assuming a 3-week-old gap still holds; two of this task's three flagged blockers had already resolved themselves."

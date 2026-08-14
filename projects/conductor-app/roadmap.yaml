@@ -234,39 +234,15 @@ tasks:
 - id: t-013
   milestone: m1
   title: Polish and upgrade Conductor App front-end surface
-  status: claimed
-  owner: worker
+  status: done
+  owner: null
   passes: 0
   stakes: reversible
-  note: 'UI polish + upgrade for the conductor-app front end now that the scaffold page is live at
-    /conductor-app. Steps: (1) generate final dashboard-tab art at
-    public/images/dashboard-tabs/conductor/conductor-app.webp and tutorial art at
-    public/images/tutorials/conductor/conductor-app.webp; (2) add a matching section for ''conductor-app''
-    under tutorialChannels.conductor.sections in kind_robots/stores/helpers/tutorialCards.ts; (3) verify
-    the PROJECT Dream liveUrl points at /conductor-app (admin can run the Conductor ''Placements'' button
-    to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full
-    interactive experience for this project.
-
-    PROGRESS 2026-07-20 (conductor agent session claude-conductor-agent-20260720T-run2,
-    kind_robots PR #647 merged squash bb093c2): step (2) done -- added a ''conductor-app''
-    section under tutorialChannels.conductor.sections in stores/helpers/tutorialCards.ts,
-    resolving via tutorialImage(''conductor'', ''conductor-app'') with a placeholder fallback
-    until dedicated art lands. Step (4) advanced: the scaffold (ProjectFrontPage + fallback
-    config) already existed but had no #interactive slot; added one showing live done/total
-    task counts and the next ready tasks for this project, sourced from
-    conductorStore.projects, mirroring appmaker-page.vue''s use of the same store and the
-    #interactive pattern storybook/serendipity/davinci already use. Remaining and kept
-    ready: step (1) dashboard-tab + tutorial art (art-generation relay confirmed still slow
-    to drain this session -- see art-generator-connect/t-019 and t-022) and step (3) the
-    liveUrl/channelKey/tabKey backfill (needs an admin Placements click, not independently
-    verifiable from this session). Verified before merge: eslint clean, prettier clean,
-    full-project npm run test (vue-tsc --noEmit) exit 0. All 3 kind_robots PR checks green
-    (TypeScript, Contract verifiers, GitGuardian).
-
-    '
-  updated: '2026-08-14T19:29:56Z'
-  claimed_by: 2026-08-14T19-30-00Z-sched-conductor-appt013
-  claimed_at: '2026-08-14T19:29:56Z'
+  note: 'UI polish + upgrade for the conductor-app front end now that the scaffold page is live at /conductor-app. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/conductor/conductor-app.webp and tutorial art at public/images/tutorials/conductor/conductor-app.webp; (2) add a matching section for ''conductor-app'' under tutorialChannels.conductor.sections in kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl points at /conductor-app (admin can run the Conductor ''Placements'' button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full interactive experience for this project. PROGRESS 2026-07-20 (conductor agent session claude-conductor-agent-20260720T-run2, kind_robots PR #647 merged squash bb093c2): step (2) done -- added a ''conductor-app'' section under tutorialChannels.conductor.sections in stores/helpers/tutorialCards.ts, resolving via tutorialImage(''conductor'', ''conductor-app'') with a placeholder fallback until dedicated art lands. Step (4) advanced: the scaffold (ProjectFrontPage + fallback config) already existed but had no #interactive slot; added one showing live done/total task counts and the next ready tasks for this project, sourced from conductorStore.projects, mirroring appmaker-page.vue''s use of the same store and the #interactive pattern storybook/serendipity/davinci already use. Remaining and kept ready: step (1) dashboard-tab + tutorial art (art-generation relay confirmed still slow to drain this session -- see art-generator-connect/t-019 and t-022) and step (3) the liveUrl/channelKey/tabKey backfill (needs an admin Placements click, not independently verifiable from this session). Verified before merge: eslint clean, prettier clean, full-project npm run test (vue-tsc --noEmit) exit 0. All 3 kind_robots PR checks green (TypeScript, Contract verifiers, GitGuardian). CLOSED 2026-08-14 (scheduled conductor sweep session 2026-08-14T19-30-00Z-sched-conductor-appt013): re-audited all four steps against live state rather than assuming the 2026-07-20 gaps still held. Step (1): confirmed via curl that both art assets are now live at the CDN (media.acrocatranch.com/images/dashboard-tabs/conductor/conductor-app.webp and .../tutorials/conductor/conductor-app.webp, both 200) -- drained by taskmaster/t-004''s ArtJob 8240 (tutorial) plus an earlier already-healthy dashboard-tab image, per art-prompts.yaml''s requests: ledger. Step (2): confirmed still in place from 2026-07-20. Step (3): fetched kind_robots'' utils/projectPlacements.ts fresh -- conductor-app: {channelKey: plan, tabKey: conductor-app} matches this roadmap''s own project-overrides.yaml exactly, so the placement backfill already happened; no drift to fix (unlike the 8-project stale-channelKey sweep coat-dance/t-010 needed the same day). While verifying step (3) against content/channels/plan/conductor-app.md, found and fixed a real but separate bug: conductor-app-page.vue''s own fallback `config.channelKey` was hardcoded to ''conductor'' -- not a real nav channel (only home/play/plan/admin exist) -- while its sibling content doc, projectPlacements.ts, and this roadmap''s override all agree on ''plan''. Fixed in kind_robots PR #1889 (squash 77a7690), verified eslint/prettier/vue-tsc/layout-contract clean, 20/20 CI checks green, merged. Currently dead code at runtime (project-front-page.vue''s view computed doesn''t read fallback.channelKey yet) but correct for any future consumer (e.g. a "back to channel" link). Step (4): the existing #interactive slot (live task-progress bar + next-3-ready-tasks list) is a reasonable, working interactive experience for what this project fundamentally is -- a companion-app status/launch page, not a complex in-app tool -- matching the pattern used by davinci/storybook/appmaker''s own front pages. No further open-ended polish identified as blocking. All four steps verified complete; closing to done.'
+  updated: '2026-08-14T19:38:38Z'
+  claimed_by: null
+  claimed_at: null
+  implementation_pr: 'silasfelinus/kind_robots#1889'
 
 - id: t-014
   milestone: m3
@@ -297,3 +273,24 @@ tasks:
     multi-user voting, this app is meant for solo users, with possibly a
     public facing aspect, but no need for multi-user voting." Current
     single-admin-status design is correct as-is; no code change needed.
+- id: t-015
+  milestone: m1
+  title: 'kind_robots: wire or drop the dead ProjectFrontConfig.channelKey/tabKey fields'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from conductor-app/t-013's close-out (2026-08-14): every project front page's
+    static `fallback` config declares `channelKey`/`tabKey` (see
+    `components/conductor/projectFront.ts`'s `ProjectFrontConfig`), but
+    `project-front-page.vue`'s `view` computed never reads either field -- they're dead
+    data at runtime. This let conductor-app-page.vue's `channelKey: 'conductor'` (not a
+    real nav channel; only home/play/plan/admin exist) sit wrong for weeks with nothing
+    ever surfacing it, until a manual audit caught it (fixed in kind_robots PR #1889).
+    Either wire the field into the shell (e.g. a "back to <channel>" link once the live
+    Project record resolves channelKey/tabKey) or drop the two unused fields from
+    `ProjectFrontConfig` and every fallback config that sets them, so a future stale
+    value can't hide the same way. Check whether any other project's fallback config has
+    the same kind of drift while auditing (grep every `components/conductor/*-page.vue`
+    for `channelKey:`/`tabKey:` against `utils/projectPlacements.ts`).
