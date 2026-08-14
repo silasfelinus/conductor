@@ -1,7 +1,7 @@
 """Tests for scripts/select_role.py (conductor/t-026, extended, cross-repo,
 + weekly site audit, + green non-worker/* PR reviewer check).
 
-select_role.py composes six signals (open worker/* branches, green non-
+select_role.py composes seven signals (open worker/* branches, green non-
 worker/* PRs past a grace period, red+stale open PRs, stranded branches, an
 overdue weekly site audit, ready tasks) into one role recommendation, in
 priority order, so a session decides its own role on arrival instead of
@@ -56,8 +56,9 @@ def _patched(
     stranded_branches=(),
     audit_status=None,
     queue_summary=None,
+    stale_recurring_tasks=(),
 ):
-    """One combined patch context covering all seven signals, each defaulted
+    """One combined patch context covering all eight signals, each defaulted
     to "nothing found"/"not overdue" and overridden per-test — keeps each
     test asserting only the signal(s) it's actually about."""
     return (
@@ -76,6 +77,10 @@ def _patched(
         mock.patch.object(select_role, "site_audit_status", return_value=audit_status or AUDIT_NOT_OVERDUE),
         mock.patch.object(
             select_role.run_worker, "build_queue_summary", return_value=queue_summary or EMPTY_QUEUE
+        ),
+        mock.patch.object(select_role.run_worker, "load_roadmaps", return_value=[]),
+        mock.patch.object(
+            select_role, "find_stale_recurring_tasks", return_value=list(stale_recurring_tasks)
         ),
     )
 
@@ -232,6 +237,57 @@ def test_idle_when_nothing_needs_doing():
     assert result["role"] == "idle"
 
 
+# --- stale-recurring: conductor/t-118 ---------------------------------------
+
+
+def test_stale_recurring_outranked_by_worker_when_ready_task_exists():
+    """A genuinely ready task always wins over a stale recurring task -- this
+    role never preempts real new work, it only fires as a fallback."""
+    with _apply(_patched(
+        queue_summary=SOME_READY_TASK,
+        stale_recurring_tasks=[{"project": "dream-cycle", "task_id": "t-006", "title": "x", "days_since": 10}],
+    )):
+        result = select_role.select_role(github_token="fake-token")
+
+    assert result["role"] == "worker"
+    # Still surfaced even though it didn't win, same convention as every
+    # other non-winning signal.
+    assert result["stale_recurring_task_count"] == 1
+
+
+def test_stale_recurring_wins_over_idle_when_no_ready_task():
+    with _apply(_patched(
+        stale_recurring_tasks=[
+            {"project": "dream-cycle", "task_id": "t-006", "title": "Daily Dream maintenance", "days_since": 10}
+        ],
+    )):
+        result = select_role.select_role(github_token="fake-token")
+
+    assert result["role"] == "stale-recurring"
+    assert "dream-cycle/t-006" in result["reason"]
+
+
+def test_stale_recurring_outranked_by_higher_signals():
+    with _apply(_patched(
+        remote_worker_branches=[{"branch": "worker/x-t-001"}],
+        stale_recurring_tasks=[{"project": "dream-cycle", "task_id": "t-006", "title": "x", "days_since": 10}],
+    )):
+        result = select_role.select_role(github_token="fake-token")
+
+    assert result["role"] == "reviewer"
+    assert result["stale_recurring_task_count"] == 1
+
+
+def test_stale_recurring_downgrades_to_reviewer_uncertain_when_api_unreachable():
+    with _apply(_patched(
+        stale_recurring_tasks=[{"project": "dream-cycle", "task_id": "t-006", "title": "x", "days_since": 10}],
+    )):
+        result = select_role.select_role(github_token="")  # no token -> unreachable
+
+    assert result["role"] == "reviewer-uncertain"
+    assert result["underlying_role"] == "stale-recurring"
+
+
 def test_remote_refresh_failure_does_not_crash_selection():
     with mock.patch.object(
         select_role.run_reviewer, "refresh_remotes", side_effect=RuntimeError("network down")
@@ -249,6 +305,8 @@ def test_remote_refresh_failure_does_not_crash_selection():
         select_role, "site_audit_status", return_value=AUDIT_NOT_OVERDUE
     ), mock.patch.object(
         select_role.run_worker, "build_queue_summary", return_value=EMPTY_QUEUE
+    ), mock.patch.object(
+        select_role, "find_stale_recurring_tasks", return_value=[]
     ):
         result = select_role.select_role(github_token="fake-token")
 
@@ -272,6 +330,8 @@ def test_select_role_checks_both_default_repos():
         select_role, "site_audit_status", return_value=AUDIT_NOT_OVERDUE
     ), mock.patch.object(
         select_role.run_worker, "build_queue_summary", return_value=EMPTY_QUEUE
+    ), mock.patch.object(
+        select_role, "find_stale_recurring_tasks", return_value=[]
     ):
         select_role.select_role()
 
@@ -317,6 +377,8 @@ def test_github_api_unreachable_surfaced_when_real_requests_fail():
         select_role, "site_audit_status", return_value=AUDIT_NOT_OVERDUE
     ), mock.patch.object(
         select_role.run_worker, "build_queue_summary", return_value=EMPTY_QUEUE
+    ), mock.patch.object(
+        select_role, "find_stale_recurring_tasks", return_value=[]
     ), mock.patch(
         "urllib.request.urlopen",
         side_effect=urllib.error.HTTPError("url", 403, "Forbidden", {}, None),
@@ -872,6 +934,149 @@ def test_find_stranded_branches_routes_local_repo_to_local_and_others_to_remote(
     assert remote_fn.call_args.args[0] == "silasfelinus/kind_robots"
     repos_seen = {b["repo"] for b in stranded}
     assert repos_seen == {"silasfelinus/conductor", "silasfelinus/kind_robots"}
+
+
+# --- stale-recurring: last_recurring_activity / find_stale_recurring_tasks -
+
+
+def test_last_recurring_activity_reads_the_latest_ran_marker():
+    task = {
+        "note": (
+            "Daily loop.\n"
+            "RAN 2026-07-19 (~19:46 UTC): did a thing.\n"
+            "RAN 2026-07-27 (~19:20 UTC): did another thing.\n"
+        ),
+        "updated": "2026-07-20T07:17:00Z",  # deliberately older than the latest RAN marker
+    }
+    assert select_role.last_recurring_activity(task) == date(2026, 7, 27)
+
+
+def test_last_recurring_activity_counts_no_op_markers_too():
+    """A NO-OP cycle is still a real, checked cycle (e.g. 'daily cap already
+    hit today') -- it must count as activity, not as a gap."""
+    task = {"note": "RAN 2026-07-28 (~21:09 UTC): x.\nNO-OP 2026-07-28 (~23:12 UTC): already ran today."}
+    assert select_role.last_recurring_activity(task) == date(2026, 7, 28)
+
+
+def test_last_recurring_activity_falls_back_to_updated_when_no_marker():
+    """model-builder/t-029's convention: no RAN/NO-OP marker at all, just a
+    reliably-bumped `updated:` field."""
+    task = {"note": "Recurring bug-hunt cycle, no dated markers.", "updated": "2026-08-01T01:37:00Z"}
+    assert select_role.last_recurring_activity(task) == date(2026, 8, 1)
+
+
+def test_last_recurring_activity_tolerates_stray_yaml_quoting():
+    """A pre-existing quirk elsewhere in this repo's roadmaps round-trips
+    `updated: '''2026-08-14T09:36:21Z'''` through PyYAML as the literal
+    string "'2026-08-14T09:36:21Z'" (quotes included) -- must still parse."""
+    task = {"note": "no markers here", "updated": "'2026-08-14T09:36:21Z'"}
+    assert select_role.last_recurring_activity(task) == date(2026, 8, 14)
+
+
+def test_last_recurring_activity_prefers_later_of_note_and_updated():
+    """Whichever signal is fresher wins -- neither is trusted blindly over
+    the other (t-118's own scope note: 'check both before picking one')."""
+    task = {"note": "RAN 2026-07-01 (old cycle).", "updated": "2026-08-10T00:00:00Z"}
+    assert select_role.last_recurring_activity(task) == date(2026, 8, 10)
+
+
+def test_last_recurring_activity_none_when_no_signal_at_all():
+    assert select_role.last_recurring_activity({}) is None
+
+
+def _recurring_roadmap(project, tasks):
+    return {"_project": project, "tasks": tasks}
+
+
+def test_find_stale_recurring_tasks_flags_overdue_ready_task():
+    roadmaps = [
+        _recurring_roadmap("dream-cycle", [
+            {
+                "id": "t-006",
+                "title": "Daily Dream maintenance",
+                "recurring": True,
+                "status": "ready",
+                "note": "RAN 2026-08-09 (~x UTC): did the thing.",
+            }
+        ])
+    ]
+    stale = select_role.find_stale_recurring_tasks(roadmaps, stale_days=3.0, today=date(2026, 8, 14))
+    assert stale == [{
+        "project": "dream-cycle",
+        "task_id": "t-006",
+        "title": "Daily Dream maintenance",
+        "last_activity": "2026-08-09",
+        "days_since": 5,
+    }]
+
+
+def test_find_stale_recurring_tasks_ignores_fresh_task():
+    roadmaps = [
+        _recurring_roadmap("dream-cycle", [
+            {"id": "t-006", "recurring": True, "status": "ready", "note": "RAN 2026-08-13 (~x UTC): x."}
+        ])
+    ]
+    stale = select_role.find_stale_recurring_tasks(roadmaps, stale_days=3.0, today=date(2026, 8, 14))
+    assert stale == []
+
+
+def test_find_stale_recurring_tasks_ignores_non_recurring_tasks():
+    roadmaps = [
+        _recurring_roadmap("some-project", [
+            {"id": "t-001", "status": "ready", "note": "RAN 2026-01-01 (~x UTC): x."}
+        ])
+    ]
+    assert select_role.find_stale_recurring_tasks(roadmaps, stale_days=3.0, today=date(2026, 8, 14)) == []
+
+
+def test_find_stale_recurring_tasks_ignores_non_ready_statuses():
+    """A recurring task blocked on a human gate, an open claim, or an
+    in-review PR isn't unattended, actionable work -- surfacing it here would
+    be misleading (see find_stale_recurring_tasks()'s own docstring)."""
+    roadmaps = [
+        _recurring_roadmap("coloring-book", [
+            {"id": "t-022", "recurring": True, "status": "needs-human", "note": "RAN 2026-01-01."},
+            {"id": "t-023", "recurring": True, "status": "waiting", "note": "RAN 2026-01-01."},
+            {"id": "t-024", "recurring": True, "status": "claimed", "note": "RAN 2026-01-01."},
+            {"id": "t-025", "recurring": True, "status": "review", "note": "RAN 2026-01-01."},
+            {"id": "t-026", "recurring": True, "status": "done", "note": "RAN 2026-01-01."},
+        ])
+    ]
+    assert select_role.find_stale_recurring_tasks(roadmaps, stale_days=3.0, today=date(2026, 8, 14)) == []
+
+
+def test_find_stale_recurring_tasks_treats_no_signal_as_maximally_stale():
+    roadmaps = [
+        _recurring_roadmap("some-project", [{"id": "t-001", "recurring": True, "status": "ready"}])
+    ]
+    stale = select_role.find_stale_recurring_tasks(roadmaps, stale_days=3.0, today=date(2026, 8, 14))
+    assert stale == [{
+        "project": "some-project",
+        "task_id": "t-001",
+        "title": None,
+        "last_activity": None,
+        "days_since": None,
+    }]
+
+
+def test_find_stale_recurring_tasks_exactly_at_threshold_counts_as_stale():
+    roadmaps = [
+        _recurring_roadmap("dream-cycle", [
+            {"id": "t-006", "recurring": True, "status": "ready", "note": "RAN 2026-08-11 (~x UTC): x."}
+        ])
+    ]
+    stale = select_role.find_stale_recurring_tasks(roadmaps, stale_days=3.0, today=date(2026, 8, 14))
+    assert len(stale) == 1
+    assert stale[0]["days_since"] == 3
+
+
+def test_find_stale_recurring_tasks_aggregates_across_roadmaps():
+    roadmaps = [
+        _recurring_roadmap("proj-a", [{"id": "t-001", "recurring": True, "status": "ready"}]),
+        _recurring_roadmap("proj-b", [{"id": "t-002", "recurring": True, "status": "ready"}]),
+    ]
+    stale = select_role.find_stale_recurring_tasks(roadmaps, stale_days=3.0, today=date(2026, 8, 14))
+    assert {(s["project"], s["task_id"]) for s in stale} == {("proj-a", "t-001"), ("proj-b", "t-002")}
 
 
 # --- site-auditor: find_last_audit_report / site_audit_status --------------
