@@ -29,7 +29,7 @@ this system's own architecture (kind_robots work is tracked as a conductor
 roadmap task that names a kind_robots PR, not as its own independent
 Worker/Reviewer cycle) — see AGENTS.md's "Cross-repo tasks" section.
 
-Seven roles, each backed by an existing piece of tooling this script composes
+Eight roles, each backed by an existing piece of tooling this script composes
 rather than duplicates:
   - reviewer      — run_reviewer.py's open-worker/*-branch check (conductor only),
                     plus find_reviewable_claude_prs()'s check for any other open
@@ -67,16 +67,35 @@ rather than duplicates:
                     frequent than weekly) rather than needing a brand-new,
                     separately-approved platform trigger of its own.
   - worker        — run_worker.py's ready-task check (conductor only)
+  - stale-recurring — find_stale_recurring_tasks()'s check: a `recurring: true`
+                    task (across active/continuous roadmaps) whose most recent
+                    `RAN <date>`/`NO-OP <date>` note marker or `updated:` bump
+                    (whichever is later) is >= --recurring-stale-days old
+                    (default 3). Lowest-priority soft signal (conductor/t-118)
+                    — only wins when nothing above it, including a genuine
+                    ready_task, already claims the cycle; a stale recurring
+                    task is always ALSO pickable as an ordinary ready task, so
+                    this never preempts real new work. Exists because a
+                    continuous-lifecycle project's recurring task (e.g.
+                    animation-manager/t-006) sits after every `active` project
+                    in priority order, so as long as active work keeps
+                    draining, ordinary worker selection can go weeks without
+                    ever reaching it — the exact 2026-07-29 -> 2026-08-12 gap
+                    that had no check ever surfacing it.
+                    `stale_recurring_tasks`/`stale_recurring_task_count` are
+                    reported in the output regardless of which role wins, so a
+                    caller can see staleness even when `worker` won instead.
   - idle          — none of the above; dream-cycle fallback applies
-  - reviewer-uncertain — worker/idle would have won, but github_api_unreachable
-                    is true, so the reviewer/workflow-medic/pr-medic/branch-
-                    medic checks above never got real signal (conductor/t-115).
-                    Not a fresh eighth branch of the decision order — a
-                    downgrade applied to whichever of worker/idle would have
-                    otherwise won, once the GitHub-backed checks it beat are
-                    known-unreliable. `underlying_role`/`underlying_reason`
-                    carry what select_role() would have returned had the API
-                    been reachable.
+  - reviewer-uncertain — worker/idle/stale-recurring would have won, but
+                    github_api_unreachable is true, so the reviewer/workflow-
+                    medic/pr-medic/branch-medic checks above never got real
+                    signal (conductor/t-115). Not a fresh branch of the
+                    decision order — a downgrade applied to whichever of
+                    worker/idle/stale-recurring would have otherwise won, once
+                    the GitHub-backed checks it beat are known-unreliable.
+                    `underlying_role`/`underlying_reason` carry what
+                    select_role() would have returned had the API been
+                    reachable.
 
 Decision order (first match wins) — reviewing fresh work stays highest
 leverage (keeps the pipeline flowing); a silently-failing scheduled workflow
@@ -94,11 +113,12 @@ reviewable; idle falls through last:
   4. stranded_branch_count > 0                -> branch-medic
   5. site_audit_overdue                       -> site-auditor
   6. ready_task exists                        -> worker
-  7. none of the above                        -> idle
-  Then (conductor/t-115): if the winner is worker/idle AND github_api_unreachable
-  is true, downgrade that result to reviewer-uncertain — steps 1-4 above never
-  got real GitHub-backed signal, so worker/idle winning by default isn't safe
-  to trust as-is.
+  7. stale_recurring_task_count > 0           -> stale-recurring
+  8. none of the above                        -> idle
+  Then (conductor/t-115, extended by t-118): if the winner is worker/idle/
+  stale-recurring AND github_api_unreachable is true, downgrade that result to
+  reviewer-uncertain — steps 1-4 above never got real GitHub-backed signal, so
+  a roadmap-only winner by default isn't safe to trust as-is.
 
 This intentionally does not call OpenAI, Claude, or any other model API — same
 contract as the scripts it composes. Real role-appropriate work still happens
@@ -634,6 +654,123 @@ def site_audit_status(
     return {'overdue': days_since >= stale_days, 'last_report': name, 'days_since': days_since}
 
 
+# --- stale-recurring: a `recurring: true` task hasn't run in N days --------
+
+# conductor/t-118 (kaizen from PR #2248, animation-manager/t-006): a
+# `recurring: true` task's cadence depends entirely on some rotation/session
+# happening to land on its project on a given day. Continuous-lifecycle
+# projects (e.g. animation-manager) sit after every `active` project in
+# ordered_workable_slugs(), so as long as any active project has ready,
+# non-gated work -- which is nearly always true given this repo's current
+# backlog -- run_worker.find_ready_task() never even reaches a continuous
+# project's recurring task, regardless of how long it's gone unrun. t-006
+# itself stayed `status: ready` the entire 2026-07-29 -> 2026-08-12 gap; the
+# problem was never selectability, it was that nothing flagged the gap.
+#
+# Most recurring tasks self-report each cycle with a `RAN <date>` (or, for a
+# no-op cycle that still counts as "checked", `NO-OP <date>`) marker appended
+# to their `note:` field -- see animation-manager/t-006's history. Not every
+# recurring task follows that convention (e.g. model-builder/t-029 relies on
+# its `updated:` field being bumped every real cycle instead). Per t-118's
+# own scope note ("check both before picking one"), this reads both signals
+# and takes whichever is more recent -- either one being fresh is enough to
+# call the task not-stale.
+RECURRING_MARKER_RE = re.compile(r'\b(?:RAN|NO-OP)\s+(\d{4}-\d{2}-\d{2})')
+DEFAULT_RECURRING_STALE_DAYS = 3.0
+
+
+def _extract_date(text: str) -> date | None:
+    """First YYYY-MM-DD found in `text`, tolerant of stray quoting (e.g.
+    `updated: '''2026-08-14T09:36:21Z'''`, a pre-existing YAML quoting quirk
+    elsewhere in this repo's roadmaps that round-trips through PyYAML as the
+    literal string "'2026-08-14T09:36:21Z'", quotes included)."""
+    match = re.search(r'(\d{4}-\d{2}-\d{2})', text)
+    if not match:
+        return None
+    try:
+        return date.fromisoformat(match.group(1))
+    except ValueError:
+        return None
+
+
+def last_recurring_activity(task: dict) -> date | None:
+    """Most recent evidence this `recurring: true` task actually ran a real
+    cycle: the latest `RAN`/`NO-OP <date>` marker in its note, or its
+    `updated:` field's date, whichever is later. None if neither is present
+    or parseable -- treated by the caller as maximally stale, same
+    convention as site_audit_status()'s never-run case."""
+    candidates: list[date] = []
+
+    note = task.get('note')
+    if isinstance(note, str):
+        for match in RECURRING_MARKER_RE.finditer(note):
+            try:
+                candidates.append(date.fromisoformat(match.group(1)))
+            except ValueError:
+                continue
+
+    updated = task.get('updated')
+    if isinstance(updated, str):
+        parsed = _extract_date(updated)
+        if parsed:
+            candidates.append(parsed)
+
+    return max(candidates) if candidates else None
+
+
+def find_stale_recurring_tasks(
+    roadmaps: list[dict],
+    *,
+    stale_days: float = DEFAULT_RECURRING_STALE_DAYS,
+    today: date | None = None,
+) -> list[dict]:
+    """`recurring: true`, `status: ready` tasks, across the already-workable
+    (active or continuous) roadmaps `run_worker.load_roadmaps()` returns,
+    whose most recent activity (see `last_recurring_activity()`) is >=
+    `stale_days` old.
+
+    Restricted to `status: ready` deliberately, not just not-done: a
+    recurring task sitting at `needs-human`/`waiting`/`claimed`/`review` is
+    blocked on something other than a session picking it up (a human gate,
+    an in-flight claim, an open PR) — surfacing it here as though it's
+    unattended, actionable work would be misleading, and per t-118's own
+    framing ("a stale recurring task can always be picked up as an ordinary
+    ready task too") this role only ever means to duplicate-surface work
+    that IS ordinarily pickable, just currently being skipped by priority
+    order."""
+    today = today or datetime.now(timezone.utc).date()
+    stale: list[dict] = []
+
+    for roadmap in roadmaps:
+        project = roadmap.get('_project')
+        for task in roadmap.get('tasks', []):
+            if not isinstance(task, dict) or not task.get('recurring'):
+                continue
+            if task.get('status') != 'ready':
+                continue
+
+            last_activity = last_recurring_activity(task)
+            if last_activity is None:
+                days_since = None
+                overdue = True
+            else:
+                days_since = (today - last_activity).days
+                overdue = days_since >= stale_days
+
+            if not overdue:
+                continue
+
+            stale.append({
+                'project': project,
+                'task_id': task.get('id'),
+                'title': task.get('title'),
+                'last_activity': last_activity.isoformat() if last_activity else None,
+                'days_since': days_since,
+            })
+
+    return stale
+
+
 def select_role(
     *,
     repos: list[str] | None = None,
@@ -645,6 +782,7 @@ def select_role(
     watched_workflows: tuple[str, ...] = DEFAULT_WATCHED_WORKFLOWS,
     workflow_fail_threshold: int = DEFAULT_WORKFLOW_FAIL_THRESHOLD,
     workflow_fail_thresholds: dict[str, int] | None = None,
+    recurring_stale_days: float = DEFAULT_RECURRING_STALE_DAYS,
 ) -> dict[str, object]:
     repos = list(repos) if repos else list(DEFAULT_REPOS)
     _reset_github_reachability_tracking()
@@ -668,6 +806,7 @@ def select_role(
     audit = site_audit_status(stale_days=audit_stale_days)
     queue = run_worker.build_queue_summary()
     ready_task = queue.get('ready_task')
+    stale_recurring = find_stale_recurring_tasks(run_worker.load_roadmaps(), stale_days=recurring_stale_days)
 
     if review_branches or reviewable_prs:
         role = 'reviewer'
@@ -706,6 +845,19 @@ def select_role(
     elif ready_task:
         role = 'worker'
         reason = f'ready task available: {ready_task.get("project")}/{ready_task.get("task_id")}'
+    elif stale_recurring:
+        # conductor/t-118: lowest-priority, soft-signal fallback -- only wins
+        # when nothing above it (including a genuine ready_task) already has
+        # a claim on the session. A stale recurring task is always ALSO
+        # pickable as an ordinary ready task (this role never preempts that
+        # path); it exists so a continuous-lifecycle project's recurring
+        # cadence doesn't silently stay stale forever on a cycle where
+        # active-project ready work has fully drained. `stale_recurring_tasks`
+        # is still reported below regardless of which role wins, so a caller
+        # can see (and choose to act on) staleness even when `worker` won.
+        role = 'stale-recurring'
+        names = ', '.join(f'{t["project"]}/{t["task_id"]}' for t in stale_recurring)
+        reason = f'{len(stale_recurring)} recurring task(s) stale {recurring_stale_days}+ days with no other work claiming this cycle: {names}'
     else:
         role = 'idle'
         reason = 'nothing to review, fix, triage, audit, or work — dream-cycle fallback applies'
@@ -735,9 +887,11 @@ def select_role(
     # bare recommendation whenever that gap is live, so a caller reading only
     # `role` (not the `github_api_unreachable` caveat field) still gets
     # steered to check GitHub directly before starting worker/idle work.
+    # `stale-recurring` (conductor/t-118) is roadmap-only too, same as
+    # worker/idle -- it needs the same downgrade for the same reason.
     underlying_role = role
     underlying_reason = reason
-    if role in ('worker', 'idle') and github_api_unreachable:
+    if role in ('worker', 'idle', 'stale-recurring') and github_api_unreachable:
         role = 'reviewer-uncertain'
         reason = (
             f'GitHub API was unreachable ({github_api_unreachable_detail}) — the '
@@ -770,6 +924,8 @@ def select_role(
         'ready_task': ready_task,
         'projects_with_ready_tasks': queue.get('projects_with_ready_tasks', []),
         'projects_needing_human': queue.get('projects_needing_human', []),
+        'stale_recurring_task_count': len(stale_recurring),
+        'stale_recurring_tasks': stale_recurring,
         'github_api_unreachable': github_api_unreachable,
         'github_api_unreachable_detail': github_api_unreachable_detail,
     }
@@ -803,6 +959,12 @@ def main() -> None:
             "workflow not listed here uses --workflow-fail-threshold instead"
         ),
     )
+    parser.add_argument(
+        '--recurring-stale-days',
+        type=float,
+        default=DEFAULT_RECURRING_STALE_DAYS,
+        help='flag a recurring: true task as stale-recurring once this many days pass with no RAN/NO-OP note marker or updated: bump',
+    )
     args = parser.parse_args()
 
     print('[select-role] model API calls are disabled by design', file=sys.stderr)
@@ -828,6 +990,7 @@ def main() -> None:
         watched_workflows=tuple(w.strip() for w in args.watched_workflows.split(',') if w.strip()),
         workflow_fail_threshold=args.workflow_fail_threshold,
         workflow_fail_thresholds=workflow_fail_thresholds,
+        recurring_stale_days=args.recurring_stale_days,
     )
     print(json.dumps(result, indent=2))
 

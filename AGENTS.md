@@ -594,7 +594,7 @@ repo's control — but the SESSION's behavior no longer has to depend on it.
 **Every session, regardless of what a trigger happened to name it, decides its own
 role from live state on arrival:**
 
-1. Run `python scripts/select_role.py` (composes six existing, no-model-call state
+1. Run `python scripts/select_role.py` (composes seven existing, no-model-call state
    checks into one recommendation, in priority order). It returns one of:
    - **`role: reviewer`** — at least one `worker/*` branch is open and not yet merged
      into `main`. Reviewing an existing PR is higher-leverage than starting new work,
@@ -624,15 +624,28 @@ role from live state on arrival:**
      weekly instead of "whenever the queue happens to run dry." See "If you're doing
      the weekly site audit" below.
    - **`role: worker`** — none of the above, but a `ready` task exists.
+   - **`role: stale-recurring`** — no `ready` task from an active project, but a
+     `recurring: true` task (most often a `continuous`-lifecycle project's, e.g.
+     animation-manager/t-006) has gone `--recurring-stale-days` (default 3) or more
+     with no `RAN <date>`/`NO-OP <date>` note marker or `updated:` bump — the exact
+     "sat `status: ready` unrun for two weeks with nothing flagging it" gap
+     conductor/t-118 documents. Lowest-priority soft signal: it never preempts a
+     genuine `worker` pickup, only fires when nothing else claims the cycle. Treat it
+     as an ordinary `ready` task once you land on it (claim it, do the recurring
+     work, re-arm per that task's own convention). `stale_recurring_tasks` is also
+     reported in the JSON output even when a different role wins, so don't wait for
+     this role to actually surface a staleness signal you notice while reading the
+     output for another role.
    - **`role: idle`** — none of the above. Fall through to the idle-fallback rule
      (dream-cycle's "nothing better to do" contract, or `autonomous: true` projects'
      own rule).
 2. Follow the matching section below. A session isn't locked to one role for its
    whole run: if you finish reviewing everything open, re-run `select_role.py` — it
-   may now recommend `workflow-medic`, `pr-medic`, `branch-medic`, `site-auditor`, or
-   `worker` — and keep going in the same session rather than stopping. This is what
-   "agents disperse and work as needed" means in practice: the role is a live
-   recommendation you re-check, not a label stamped on you before you started.
+   may now recommend `workflow-medic`, `pr-medic`, `branch-medic`, `site-auditor`,
+   `worker`, or `stale-recurring` — and keep going in the same session rather than
+   stopping. This is what "agents disperse and work as needed" means in practice: the
+   role is a live recommendation you re-check, not a label stamped on you before you
+   started.
 3. If a human explicitly asked for one role in this session (e.g. "review PR #123"),
    honor that directly — `select_role.py` is for the *unprompted, trigger-fired* case,
    not a override of an explicit instruction.
