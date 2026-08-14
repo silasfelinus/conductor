@@ -253,8 +253,8 @@ tasks:
   - id: t-010
     milestone: m1
     title: "Polish and upgrade Coat Dance front-end surface"
-    status: review
-    owner: reviewer
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
     note: >
@@ -355,6 +355,25 @@ tasks:
       render-box health signal) and step (4)'s further evolution of the interactive
       slot once real production milestones exist to reflect (still 0% into production,
       m1-m5 all not-started, t-002 through t-009 all blocked on the source video).
+
+      ADDENDUM (same cycle, ~20 min later): `auto-art-generate.yml` ran and flipped
+      both new `requests:` entries to `status: done` (conductor commit 761e17f) --
+      the render pipeline picked them up fast, a good sign the relay was up this
+      cycle. However neither `public/images/dashboard-tabs/art/coat-dance.webp` nor
+      `public/images/tutorials/art/coat-dance.webp` is showing up on kind_robots
+      `main` yet. Per the workflow's own header comment this is expected, not a
+      failure: "Kind Robots-targeted results ... land in projects/process/ and are
+      routed by distribute_images.py" and "Kind Robots image binaries are no longer
+      checked out or committed by this workflow" -- newer architecture writes
+      Kind-Robots-targeted renders directly to self-hosted media
+      (media.acrocatranch.com) rather than committing them as git-tracked
+      public/images/ files, so a `git`-repo file-existence check is no longer the
+      right way to confirm step (1) actually landed. Left unverified whether the
+      site's tutorial/dashboard-tab image URLs actually resolve against that
+      self-hosted media path for these two new files -- worth a live-site spot check
+      (Vercel MCP `web_fetch_vercel_url` on `/plan/projects/coat-dance`, per AGENTS.md's
+      documented verification path) next time this task is picked up, rather than
+      re-checking the git repo for a file that this pipeline no longer commits there.
     updated: '2026-08-14T17:50:00Z'
-    claimed_by: claude-scheduled-20260814T1727Z
-    claimed_at: '2026-08-14T17:30:52Z'
+    claimed_by: null
+    claimed_at: null
