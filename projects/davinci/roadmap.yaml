@@ -513,24 +513,21 @@ tasks:
   - id: t-021
     milestone: m6
     title: "Da Vinci visual style and interaction polish pass"
-    status: claimed
+    status: ready
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-017, t-020]
     implementation_pr: 'silasfelinus/kind_robots#1854'
     note: >
-      Apply the Interface Vision sequence to this product: first make every state work, then make its controls/layout consistent with current kr-* primitives, then make it visually intentional. Verify phone/tablet/desktop with rendered preview geometry and screenshots.
-      NOT YET DONE -- one more bounded slice landed, more remains before t-022 (Silas's visual acceptance gate, depends_on this task) should be considered unblocked.
-
+      Apply the Interface Vision sequence to this product: first make every state work, then make its controls/layout consistent with current kr-* primitives, then make it visually intentional. Verify phone/tablet/desktop with rendered preview geometry and screenshots. NOT YET DONE -- one more bounded slice landed, more remains before t-022 (Silas's visual acceptance gate, depends_on this task) should be considered unblocked.
       Slice 1 (conductor scheduled Agent run, merged kind_robots PR #1842): the layout-contract's 8 machine-checked rules were already 100% clean for davinci-page.vue going in, and interface-vision's DESIGN-BRIEF explicitly warns against forcing bespoke crafted UI onto shared classes ("not a .kr-panel crusade") -- so scoped this slice to a concrete, verifiable gap rather than a cosmetic reskin. Fixed: the dimension grid only distinguished "has any positive value" (success green) from everything else, including dimensions the player has actively driven negative (several curated chapters have negative-effect choices by design). Gave the pill a real three-way tone (success/error/neutral) via two extracted helpers, matching the existing status-tint formula. Also added a defense-in-depth :disabled guard to the one async-triggering button in the file that was missing one. Added a narrow textual regression guard (verifyDaVinciDimensionToneGuard.ts + selftest) following this project's established convention, wired into package.json and contract-tests.yml. Verified: new guard + selftest pass, existing test:davinci-narration suite passes, eslint/prettier clean, vue-tsc --noEmit repo-wide exit 0, test:layout-contract holds with no new violations.
-
       Slice 2 (conductor scheduled Agent run, kind_robots PR #1854): continued the same "concrete, verifiable gap, not a reskin" scoping. Explore subagent audited davinci-page.vue against assets/css/tailwind.css's documented .kr-note-warning status-tint formula (border-{status}/40 + bg-{status}/10) and found the narration-error callout used bg-warning/5 -- half the canonical opacity, and the sole outlier against every other border-warning/40 callout in the app (12 other files all use bg-warning/10). Fixed the opacity token, added verifyDaVinciNarrationErrorToneGuard.ts + selftest following the same narrow-textual-checker convention, wired into package.json and contract-tests.yml alongside the dimension-tone guard. Verified: new guard + selftest pass, dimension-tone guard + selftest still pass, test:davinci-narration (26 checks) still passes, test:layout-contract holds with no new violations, eslint/prettier clean, vue-tsc --noEmit repo-wide exit 0, git status --porcelain showed exactly the 5 intended files.
-
       REMAINING: the broader "controls/layout consistency with kr-* primitives" and "visually intentional" passes across the rest of davinci-page.vue (the DESIGN-BRIEF itself cautions this is not a wholesale kr-panel crusade -- next slice should keep auditing for concrete, verifiable gaps rather than a blanket reskin), plus the phone/tablet/desktop rendered-preview verification this task's own note calls for. Rearmed to ready for a follow-up slice.
-    updated: '2026-08-13T22:45:45Z'
-    claimed_by: sched-conductor-dv-t021-20260813T224500Z
-    claimed_at: '2026-08-13T22:45:45Z'
+       CONFIRMED 2026-08-14 (conductor scheduled Agent run, reconciliation sweep): kind_robots PR #1854 (Slice 2) merged. Task was left at status: claimed after merge instead of re-arming to ready per its own note -- correcting that drift here. Next slice should continue the concrete-gap audit rather than starting a reskin.
+    updated: '2026-08-14T00:42:44Z'
+    claimed_by: ''
+    claimed_at: ''
 
   - id: t-022
     milestone: m5
