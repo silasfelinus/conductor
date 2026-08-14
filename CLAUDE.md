@@ -165,3 +165,17 @@ foreground fix lands. If delegation is truly unavoidable, have the subagent re-f
 and diff against the *current* remote tip immediately before it pushes (not just use
 the content it was handed at dispatch time), so a stale call fails loudly on an
 unexpected base instead of silently overwriting newer commits.
+
+**This generalizes beyond the workaround case above.** Two independent incidents within
+24 hours (TALKBACK.md 2026-08-13 and 2026-08-14) showed the same root cause reaching
+further than "in-flight workaround" scenarios: a non-isolated background Agent (no
+`isolation: 'worktree'`) doing ANY git-mutating work (`claim_task.py`,
+`set_task_field.py`, `close_task.py`, plain `git commit`/`push`) in the same working
+directory as an active foreground session can silently discard that session's state.
+2026-08-13 lost an uncommitted file edit; 2026-08-14 deleted the foreground session's
+own designated git branch outright (recovered via `mcp__github__create_branch`, but a
+session with unpushed local commits on that branch at dispatch time would have lost
+them for real). See AGENTS.md hard safety rule 11 for the standing rule this promotes
+to: `isolation: 'worktree'` is REQUIRED, not optional, for any background Agent that
+will run git-mutating commands in a repo a foreground session is still actively (even
+passively, mid-edit) using — not only for the narrower in-flight-workaround case above.
