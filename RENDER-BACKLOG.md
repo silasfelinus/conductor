@@ -529,3 +529,6 @@ queueDepth: PENDING=730, RUNNING=3, DONE=4240, FAILED=2, CANCELLED=3172 (all-tim
 
 ## 2026-08-14T07:03:30Z | ai-art-academy/t-044 | growing
 queueDepth: PENDING=720, RUNNING=3, DONE=4250, FAILED=2, CANCELLED=3172 (all-time). oldestPending: id=4894, age=797593s (~221.6h), engine=COMFY. windowThroughput (24h): PENDING=648, RUNNING=1, DONE=54. recentFailed (last 2): 2/2 = connection-refused to ComfyUI.
+
+## 2026-08-14T07:55:25Z | ai-art-academy/t-044 | growing
+queueDepth: PENDING=713, RUNNING=3, DONE=4257, FAILED=2, CANCELLED=3172 (all-time). oldestPending: id=4894, age=800708s (~222.4h), engine=COMFY. windowThroughput (24h): PENDING=641, RUNNING=1, DONE=61. recentFailed (last 2): 2/2 = connection-refused to ComfyUI.
