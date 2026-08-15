@@ -2228,8 +2228,21 @@ tasks:
     gate_human: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-15T01:28:20Z'
+    updated: '2026-08-15T02:30:59Z'
     note: >
+      RECHECK (conductor scheduled Agent run, 2026-08-15T02:29Z, logged in RENDER-BACKLOG.md):
+      still active and still growing. A fresh authenticated /api/art/queue/stats call confirms
+      all 25 recentFailed entries remain 100% projectSlug facet-catalog with the identical
+      "ComfyUI reported a workflow error: node 3 (CLIPTextEncode): hostbuf_file_reader_read
+      failed" signature. 24h windowThroughput FAILED climbed from 186 (prior check, 01:28Z) to
+      417 (~1h later), all-time FAILED 186->423, PENDING backlog still growing (oldest now
+      ~23.1h old, id 8772, still facet-catalog). No qualitative change -- same isolated root
+      cause, no spread to other projects, worker itself still alive (DONE still climbing
+      normally, 4411 all-time). Not re-notifying Silas since the prior cycle already flagged
+      this by push notification with the full diagnosis; this recheck is a state update only.
+      gate_human: true / soft_gate unchanged, still needs ComfyUI-host eyes this sandbox cannot
+      reach.
+
       FOR SILAS: a fresh recheck_render_queue.py probe (this session, 2026-08-15T01:28:20Z)
       found a new, distinct, and actively-growing failure pattern -- not t-044's own LoRA-naming
       blocker and not t-067's worker-stall pattern (both unaffected). 24h FAILED count jumped
