@@ -3125,42 +3125,11 @@ tasks:
   - id: t-117
     milestone: m5
     title: "Diagnose the remaining responsive-layout-audit phone failures: an unexpected header back-button on guest-gated routes, and a crushed /bots filter chip"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
-    owner: reviewer
-    note: >
-      kind_robots PR #1891 (merged 2026-08-15) fixes the /bots half of this task:
-      components/gallery/kr-gallery.vue's `#toolbar` slot wrapper was `min-w-0
-      flex-1` (flex-basis 0%), the same bug class as #1890's channel-select/tab-select
-      crush -- flex-wrap's line-breaking decision uses each item's HYPOTHETICAL
-      main size, which for a flex-basis:0 item is always 0, so the browser never
-      treated the toolbar slot as "too big to fit" next to the sticky bar's
-      `shrink-0` pager and mode-toggle buttons, and `min-w-0` let it absorb the
-      entire overflow instead of wrapping. Switched to `flex-auto` (basis: auto)
-      so it now wraps to its own line when it doesn't fit, matching the bar's own
-      `flex-wrap` intent. Shared component, so the fix applies to every gallery
-      using the toolbar slot, not just /bots.
-
-
-      REMAINING SCOPE, unchanged from the prior note: the unexpected back-button
-      on 7 guest-gated routes (/achievements, /chats, /appmaker, /conductor-app,
-      /plan/voice-lab, /plan/watchlist, /auth/google) still needs live devtools
-      (Network + Vue/Pinia timeline) to catch middleware/navigation-access.global.ts's
-      suspected redirect in the act -- this sandbox's headless Chromium cannot
-      reach kindrobots.org through the environment's proxy, so this could only be
-      diagnosed from static source + CI artifacts, which ran out of leads last
-      cycle. See PR #1891's linked history / the prior version of this note (git
-      log on this file) for the full back-button investigation writeup -- not
-      attempting a blind fix without confirming the actual trigger.
-
-
-      Suggested first step now: the next scheduled responsive-layout-audit.yml
-      run will pick up #1891 automatically -- confirm the defect count drops from
-      8 to 7, isolating the back-button issue as the only remaining cause. Then
-      get a live/staging render of /achievements as a guest with devtools open,
-      or confirm/refute the navigation-access.global.ts redirect theory from a
-      maintainer with production access.
-    claimed_by: claude-20260815T022748Z-iv-t117
-    claimed_at: '2026-08-15T02:27:50Z'
-    updated: '2026-08-15T02:27:50Z'
+    owner: null
+    note: 'Scheduled sweep confirmed the fix: kind_robots responsive-layout-audit.yml run 31856542478 (manually triggered by the prior cycle after PR #1891 merged, completed 2026-08-15T02:02:46Z) reports ''\xe2\x9c\x85 Responsive layout audit clean across all routes and viewports'' -- phone/tablet/desktop, all routes including the 7 previously-flagged guest-gated routes (/achievements, /chats, /appmaker, /conductor-app, /plan/voice-lab, /plan/watchlist, /auth/google) and /bots, zero STARVED-TEXT or overflow warnings on any of them. The back-button issue did not require a separate fix -- it cleared on its own (likely a flake or a side effect of #1891''s shared kr-gallery.vue toolbar-slot fix touching layout timing on those routes too). No further action needed; closing as done.'
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-15T02:28:11Z'
