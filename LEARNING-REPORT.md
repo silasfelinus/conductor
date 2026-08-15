@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-15T20:47:19Z
+Generated: 2026-08-15T21:39:45Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **614**
-- Outcomes: blocked: 14, cancelled: 1, done: 599
+- Closed tasks recorded: **617**
+- Outcomes: blocked: 14, cancelled: 1, done: 602
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
 | interface-vision | 83 | 100% |
-| kapowarr | 4 | 100% |
+| kapowarr | 7 | 100% |
 | kind-robots | 49 | 98% |
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
@@ -62,7 +62,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 598 | 99% |
+| software | 601 | 99% |
 
 ## Failure categories
 
@@ -83,6 +83,9 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-15 `kapowarr/t-004` — Same cycle as t-002/t-003 -- applied projects/kapowarr/docs/t-004-launch-flair.md verbatim. Live smoke test against an empty library confirmed GET /api/system/launchflair returns {"title": null} and exercises the frontend's DEFAULT_FLAIR_LINES fallback path, not just the happy path.
+- 2026-08-15 `kapowarr/t-003` — Same cycle as t-002/t-004 -- applied projects/kapowarr/docs/t-003-configurable-title.md verbatim. Live smoke test confirmed the important edge case the design doc called out: app_title correctly excluded from the host/port/url_base restart-trigger tuple (no server restart on save), and the System Status page's upstream attribution/donate links render unchanged regardless of the configured title.
+- 2026-08-15 `kapowarr/t-002` — This session's GitHub scope newly included silasfelinus/Kapowarr (a prior session's t-014 escalation had asked Silas to widen it) -- the fully designed handoff patch from projects/kapowarr/docs/t-002-loading-lines.md was applied verbatim, verified in a fresh venv (mypy, isort, unittest, node --check, and a live app run), and shipped as silasfelinus/Kapowarr#1 instead of producing a fourth handoff doc. A well-specified handoff written for a future differently-scoped session paid off exactly as designed once that session arrived.
 - 2026-08-15 `model-builder/t-029` — Seventh t-029 cycle followed the prior cycle's suggestion to widen scope to modelBuilderFields.ts/modelBuilderRecipes.ts/relations.ts, found those genuinely race-free (pure static data and a pure read-only check), then broadened the search one hop further to the PATCH write paths that consume those files' output (prepareItemUpdate, feeding items/[id].patch.ts and items/batch.patch.ts) and found a real bug there instead: a blind wholesale stageStatuses overwrite, the same stale- snapshot class already fixed once in commit.post.ts's COMMIT-only write but never generalized to the PATCH/batch-PATCH routes. Most exploitable in the batch route, where every entry does its own DB round trip before the shared transaction starts, widening the concurrent-write window well past the single-item route's. When a suggested lead turns out clean, checking one hop downstream of it (what actually consumes that file's output) found a real bug an earlier cycle's own fix pattern had already named but not generalized -- a second instance of an already-known bug shape is still worth finding.
 - 2026-08-15 `model-builder/t-029` — Sixth t-029 cycle found a bug class distinct from the five prior cycles: a server-side check-then-act race (findUnique-then-create against FacetProfile's single-column facetId PK) rather than another client-side async-fetch-ordering or unawaited-promise-before-toast instance. Two ModelBuildRuns can target the same existing Facet concurrently since nothing serializes runs by sourceId; the item-level idempotencyKey claim only prevents the same item double-committing. Fixed with facetProfile.upsert(), which resolves create-vs-update atomically at the database instead of racing on a stale client-side read. When a prior cycle explicitly names unexplored files, reading those files on their own terms (rather than pattern-matching the previous bug shape onto them) found a genuinely new, more severe bug — a whole-transaction rollback aborting a sibling write, not just a stale UI read.
 - 2026-08-15 `kapowarr/t-010` — Verifying a cross-repo projection is stronger when grounded in the receiving side's actual code (dispatched a background agent to read kind_robots' server/api/conductor/sync.post.ts and conductorProjectionDb.ts) rather than just poking the public API and declaring it fine -- confirmed there's no separate Milestone/Task SQL table (roadmap YAML is stored as a blob and re-parsed per-request), which ruled out an entire class of task-level sync-lag risk. Found and fixed a real staleness bug the task note called out by name: m1/m2 milestone status was stuck at not-started despite real done/needs-human/ready tasks under both -- 'verify the projection' should mean checking the data is both present AND accurate, not just present.
@@ -90,9 +93,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-15 `kapowarr/t-006` — A read-only git clone of the target repo (public HTTPS, no auth, distinct from the session's GitHub MCP scope) let a design-only task ground its spec in the actual ABC/class chain instead of the task note's abstractions -- found that TorrentDownload.update_status() already polls purely through the ExternalDownloadClient interface with zero torrent-specific logic, so a Usenet client is a peer implementation, not a new mechanism, and located the one real shared touchpoint (download_queue.py's TorrentDownload-specific isinstance dispatch) that does need to change. Worth doing before writing any cross-repo design/handoff doc: reading the real code turns a plausible design into a verified one and surfaces the one non-obvious shared edge a task note alone won't mention.
 - 2026-08-15 `kapowarr/t-001` — For a brand-new project's first task (a design brief with no existing repo context in this session's GitHub scope), WebFetch against the public upstream and fork repos/docs grounded the architecture section in the project's real download-client model (built-in DDL vs. external clients) instead of guessing from the task notes alone -- worth doing for any design-brief task on a project this session hasn't touched before, especially when the target codebase itself is outside the session's repo scope.
 - 2026-08-15 `davinci/t-024` — When a 'playtest-driven tuning' task can't be done literally (sandbox has no live-user auth against the app's OpenAI-backed endpoint), a Monte Carlo simulation against the actual production constants and distribution answers the same design question more rigorously than a handful of manual runs -- and can overturn the obvious hypothesis: the flagged +-2 swing bound turned out not to matter at all (any single nonzero touch already crosses the pass=1 threshold regardless of magnitude), while the real, unflagged lever was chapter-count coverage (avg 4.2/10 dimensions never touched by the original 3-chapter minimum). Simulate before tuning the constant that looks obviously guilty.
-- 2026-08-15 `conductor-app/t-015` — When a task offers wire-or-drop for dead config fields, check whether the wire target already has a canonical source elsewhere (utils/projectPlacements.ts here) before adding new UI plumbing -- dropping the redundant copy removes the whole stale-duplicate bug class with a purely mechanical, zero-risk diff, where wiring would have added an unverified UI surface. Also: grep scope for a drift audit should match the actual usage pattern (ProjectFrontConfig), not a directory convention (components/conductor/*) -- coloring-book-page.vue lived outside that directory and would have been missed.
-- 2026-08-15 `storybook/t-021` — A kaizen guard task from a hand-fixed field-drop bug (t-010's scenario fix) should assert the general shape (every input.<field> a builder reads must survive a rebuild helper) rather than re-checking the one field that broke -- caught the same bug class generically instead of only re-guarding scenario.
-- 2026-08-14 `conductor-app/t-013` — A task's checklist can silently finish itself via unrelated cycles (art relay draining, an admin Placements backfill) between sessions -- re-verify each open step against live state before assuming a 3-week-old gap still holds; two of this task's three flagged blockers had already resolved themselves.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-15T20:47:19Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-15T21:39:45Z_
