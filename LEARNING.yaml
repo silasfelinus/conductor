@@ -8145,3 +8145,48 @@ records:
     output) found a real bug an earlier cycle's own fix pattern had already
     named but not generalized -- a second instance of an already-known bug
     shape is still worth finding.
+- date: 2026-08-15
+  project: kapowarr
+  task: t-002
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    This session's GitHub scope newly included silasfelinus/Kapowarr (a prior
+    session's t-014 escalation had asked Silas to widen it) -- the fully
+    designed handoff patch from projects/kapowarr/docs/t-002-loading-lines.md
+    was applied verbatim, verified in a fresh venv (mypy, isort, unittest,
+    node --check, and a live app run), and shipped as silasfelinus/Kapowarr#1
+    instead of producing a fourth handoff doc. A well-specified handoff
+    written for a future differently-scoped session paid off exactly as
+    designed once that session arrived.
+- date: 2026-08-15
+  project: kapowarr
+  task: t-003
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Same cycle as t-002/t-004 -- applied projects/kapowarr/docs/t-003-configurable-title.md
+    verbatim. Live smoke test confirmed the important edge case the design doc
+    called out: app_title correctly excluded from the host/port/url_base
+    restart-trigger tuple (no server restart on save), and the System Status
+    page's upstream attribution/donate links render unchanged regardless of
+    the configured title.
+- date: 2026-08-15
+  project: kapowarr
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Same cycle as t-002/t-003 -- applied projects/kapowarr/docs/t-004-launch-flair.md
+    verbatim. Live smoke test against an empty library confirmed
+    GET /api/system/launchflair returns {"title": null} and exercises the
+    frontend's DEFAULT_FLAIR_LINES fallback path, not just the happy path.
