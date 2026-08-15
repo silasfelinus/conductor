@@ -259,41 +259,12 @@ tasks:
   - id: t-010
     milestone: m2
     title: Polish and upgrade Ruler Hooked front-end surface
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      UI polish + upgrade for the ruler-hooked front end now that the scaffold page is
-      live at /ruler-hooked. Steps: (1) generate final dashboard-tab art at
-      public/images/dashboard-tabs/wonder/ruler-hooked.webp and tutorial art at
-      public/images/tutorials/wonder/ruler-hooked.webp; (2) add a matching section for
-      'ruler-hooked' under tutorialChannels.wonder.sections in
-      kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl
-      points at /ruler-hooked (admin can run the Conductor 'Placements' button to
-      backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into
-      the full interactive experience for this project.
-      RECHECKED 2026-07-21 (~23:12 UTC, conductor scheduled burst,
-      claude-conductor-burst-20260721T231500Z-rh-t010): steps (2), (3), and (4) are
-      ALL already done, not just "kept ready" placeholders -- verified directly against
-      kind_robots main (a688bfef): (2) stores/helpers/tutorialCards.ts already has a
-      full 'ruler-hooked' entry under tutorialChannels.wonder.sections (title/body/image,
-      matches every other shipped project's entry shape); (3) utils/projectPlacements.ts
-      already has a correct PROJECT_PLACEMENTS['ruler-hooked'] entry (channelKey: lab,
-      tabKey: ruler-hooked, route: /ruler-hooked) -- this is the hardcoded map the front
-      end actually reads for routing/display (per the storybook/t-010 precedent), so the
-      live behavior is already correct independent of whether the admin-only 'Placements'
-      DB-backfill button has ever been clicked; (4) components/conductor/ruler-hooked-page.vue's
-      #interactive slot already mounts the real <RulerHookedGame /> component (shipped by
-      t-007/t-012's Phase 1+2 build) -- not a placeholder scaffold. Only step (1) art
-      remains open, and it is still genuinely blocked: called the live relay-status API
-      directly (GET https://kind-robots.vercel.app/api/art/queue/relay-status,
-      authenticated) and got {"agents":[]} -- zero relay agents currently registered/
-      reporting at all (not just a stuck queue item), confirming the home ComfyUI relay
-      is offline right now, consistent with every other project's finding this week.
-      No kind_robots code change needed this cycle -- re-armed to ready
-      (transient/external block, no pass consumed) rather than left at review/claimed.
-    updated: '2026-08-15T19:31:02Z'
+    note: 'RECHECK 2026-08-15 (~19:30 UTC, conductor scheduled Agent run, sched-conductor-rh-t010-20260815T1930Z): all four steps now verified complete against kind_robots main and production. (1) Art: relay is back online (relay-status API confirms agent ''Silas-PC'' reporting live) -- and per curl against production, both public/images/dashboard-tabs/wonder/ruler-hooked.webp (200, image/webp, 104586 bytes) and public/images/tutorials/wonder/ruler-hooked.webp (200, image/webp, 93712 bytes) already exist and are live; the tutorial asset traces to taskmaster/t-004''s earlier audit (art-prompts.yaml id asset-audit-t004-tutorial-wonder-ruler-hooked, status: done, last_art_job_id 8246) and the dashboard-tab asset is confirmed live too, so no new art request was needed. (2) tutorialCards.ts: confirmed via GitHub code search -- stores/helpers/tutorialCards.ts has the ''ruler-hooked'' entry under tutorialChannels.wonder.sections with image: tutorialImage(''wonder'', ''ruler-hooked''), matching the live asset path. (3) Placement: utils/projectPlacements.ts PROJECT_PLACEMENTS[''ruler-hooked''] = { channelKey: ''plan'', tabKey: ''projects'', route: ''/plan/projects/ruler-hooked'' } -- confirmed this repo''s project-overrides.yaml ruler-hooked entry (liveUrl/channelKey/tabKey) was already corrected to match on 2026-08-14 (coat-dance/t-010 cycle''s lab-channel-dissolution fix swept this project too). (4) Interactive component: components/ruler-hooked/ruler-hooked-page.vue mounts the real components/ruler-hooked/ruler-hooked-game.vue in the #interactive slot -- an offline-first, client-only playable PoC backed by a localStorage store, not a placeholder. Live spot check: https://kindrobots.org/plan/projects/ruler-hooked returns 200 with real SSR markup ("Ruler Hooked" title/content present). No kind_robots code change needed this cycle -- every remaining step from the original task note is independently confirmed done. Closing as done rather than re-arming; this task''s scope was a bounded 4-step checklist (unlike the open-ended recurring bug-hunt convention used by storybook/model-builder/kapowarr''s "polish" tasks), and all four are now met.'
+    updated: '2026-08-15T19:31:55Z'
     claimed_by: sched-conductor-rh-t010-20260815T1930Z
     claimed_at: '2026-08-15T19:31:02Z'
 
