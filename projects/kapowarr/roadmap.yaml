@@ -212,8 +212,8 @@ tasks:
   - id: t-015
     milestone: m2
     title: "Bound the external-client connectivity-test retry/backoff with a timeout"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -230,6 +230,9 @@ tasks:
       path so a user testing a dead client isn't stuck waiting minute-plus for a
       spinner. Same cross-repo boundary as other kapowarr code tasks --
       implementation belongs in silasfelinus/Kapowarr, not this repo.
+    claimed_by: conductor-sweep-20260815-2350
+    claimed_at: '2026-08-15T23:26:58Z'
+    updated: '2026-08-15T23:26:58Z'
 
   - id: t-016
     milestone: m2
