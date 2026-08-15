@@ -1,0 +1,166 @@
+project: kapowarr
+kind: software
+
+notes_from_silas: |
+  Evolve Silas's personal Kapowarr fork (silasfelinus/Kapowarr) into a more
+  comfortable -arr-style comic manager while preserving clear credit to the
+  original project. All implementation work belongs in repositories owned by
+  silasfelinus; upstream Casvt/Kapowarr is reference-only unless Silas explicitly
+  asks otherwise.
+
+  Higher-than-average priority. Start with small personality/QoL wins, then build
+  the larger Usenet/NZB path deliberately. Keep Conductor and Kind Robots project
+  state synchronized; treat missing Project/conductorSlug or milestone projection
+  as a bug to investigate rather than silently continuing.
+
+milestones:
+  - id: m1
+    title: "SHAPE — fork identity, personality, and architecture"
+    weight: 25
+    status: not-started
+
+  - id: m2
+    title: "BUILD — QoL and Usenet/NZB support"
+    weight: 50
+    status: not-started
+
+  - id: m3
+    title: "POLISH & SHIP — tests, migration safety, and sync integrity"
+    weight: 25
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Write the Kapowarr fork design brief"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Document the fork goals, upstream-credit policy, architecture boundaries,
+      first-release scope, and what should remain easy to rebase from upstream.
+      Work only in silasfelinus-owned repositories.
+
+  - id: t-002
+    milestone: m1
+    title: "Add rotating funny loading lines"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Add Radarr/Sonarr-style playful loading copy through a centralized mechanism
+      that is easy to extend and test. Keep ordinary loading behavior functional
+      when JavaScript or data lookup fails.
+
+  - id: t-003
+    milestone: m1
+    title: "Make the displayed application title configurable"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Allow a custom visible product title without obscuring the Kapowarr origin,
+      license, or attribution. Prefer configuration over a hard-coded fork rename
+      so upstream merges stay manageable.
+
+  - id: t-004
+    milestone: m1
+    title: "Add database-driven launch flair"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      On launch, optionally derive a playful line or visual flourish from a random
+      comic/title already in the local database. Sanitize displayed data and use a
+      deterministic generic fallback for empty or unavailable libraries.
+
+  - id: t-005
+    milestone: m2
+    title: "Audit -arr quality-of-life gaps"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Compare the fork's library, search, queue, download-client, settings, health,
+      import, and history flows against mature -arr interaction patterns. Convert
+      concrete friction into scoped follow-up tasks instead of broad rewrites.
+
+  - id: t-006
+    milestone: m2
+    title: "Design the Usenet/NZB boundary"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Map the existing external-client abstraction and specify how NZB discovery,
+      SABnzbd submission, status polling, completion, and import should fit without
+      coupling Usenet behavior to the existing scraper. Treat upstream issue #71
+      and related requests as research only; do not modify upstream.
+
+  - id: t-007
+    milestone: m2
+    title: "Implement SABnzbd download-client support"
+    status: not-started
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Add SABnzbd as a peer to existing external download clients, including
+      connection testing, submission, status handling, cancellation where the API
+      supports it, configuration validation, and focused tests.
+
+  - id: t-008
+    milestone: m2
+    title: "Implement NZB source/indexer ingestion"
+    status: not-started
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Add an extensible NZB/indexer path separately from the SABnzbd client. Define
+      normalized search results and handoff so additional indexers/download clients
+      can be supported later without another architecture rewrite.
+
+  - id: t-009
+    milestone: m3
+    title: "Harden download completion and import workflows"
+    status: not-started
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Exercise success, duplicate, failed, stalled, missing-file, and restart cases
+      for direct, torrent, and NZB downloads. Add regression coverage around comic
+      matching, post-processing, and safe cleanup.
+
+  - id: t-010
+    milestone: m3
+    title: "Verify Conductor to Kind Robots project projection"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Verify kapowarr appears in Kind Robots with conductorSlug=kapowarr and that
+      lifecycle, priority, tasks, milestones, and commit-stamped projection agree
+      with Conductor. Investigate and repair repo-side sync failures or stale
+      milestone projection as they appear; never silently mark this task done if
+      only the roadmap exists.
+
+  - id: t-011
+    milestone: m3
+    title: "Document fork maintenance and upstream refresh workflow"
+    status: not-started
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Document how to fetch/compare upstream, keep customizations isolated, resolve
+      conflicts, run tests, and preserve attribution. No upstream PR or issue is
+      required for this fork-maintenance workflow.
