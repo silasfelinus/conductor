@@ -1,38 +1,38 @@
 # Roadmap Audit
 
-Generated: `2026-08-13T20:47:04.674974+00:00`
+Generated: `2026-08-15T01:32:41.756678+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **45** roadmaps, **23** active + **2** continuous projects, **990** tasks
-- **31 ready**, **60 waiting**, **38 needs-human**, **0 claimed/review**, **852 done**
+- **45** roadmaps, **23** active + **2** continuous projects, **997** tasks
+- **31 ready**, **60 waiting**, **39 needs-human**, **0 claimed/review**, **858 done**
 - Findings: **0 errors**, **1 warnings**, **61 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
-| 1 | `interface-vision` | active | software | 0 | 2 | 1 | 0 | 114 / 117 |
-| 2 | `ai-art-academy` | active | software | 1 | 3 | 3 | 0 | 60 / 67 |
+| 1 | `interface-vision` | active | software | 1 | 2 | 1 | 0 | 114 / 118 |
+| 2 | `ai-art-academy` | active | software | 1 | 3 | 3 | 0 | 61 / 68 |
 | 3 | `coloring-book` | active | software | 0 | 9 | 2 | 0 | 27 / 38 |
 | 4 | `humboldt-scoop-cms` | active | software | 0 | 0 | 1 | 0 | 11 / 12 |
 | 5 | `digital-storefront` | active | software | 0 | 2 | 2 | 0 | 39 / 43 |
 | 6 | `mermaids-of-venice` | active | content | 1 | 0 | 8 | 0 | 4 / 13 |
 | 7 | `kind-robots` | active | software | 0 | 0 | 2 | 0 | 62 / 64 |
 | 8 | `kindrobots-unraid` | active | software | 0 | 6 | 1 | 0 | 6 / 13 |
-| 9 | `model-builder` | active | software | 1 | 0 | 1 | 0 | 40 / 42 |
+| 9 | `model-builder` | active | software | 1 | 0 | 1 | 0 | 42 / 44 |
 | 10 | `lora-ingestion` | active | infrastructure | 0 | 0 | 1 | 0 | 5 / 6 |
-| 11 | `conductor` | active | software | 0 | 0 | 2 | 0 | 114 / 116 |
+| 11 | `conductor` | active | software | 0 | 0 | 2 | 0 | 116 / 118 |
 | 12 | `taskmaster` | active | software | 0 | 0 | 1 | 0 | 3 / 4 |
 | 13 | `storybook` | active | software | 2 | 0 | 1 | 0 | 17 / 20 |
 | 14 | `davinci` | active | software | 2 | 2 | 1 | 0 | 19 / 24 |
 | 15 | `mural-design` | active | content | 0 | 3 | 1 | 0 | 3 / 7 |
 | 16 | `coat-dance` | active | content | 1 | 0 | 1 | 0 | 2 / 10 |
 | 17 | `alexa-integration` | active | software | 1 | 0 | 1 | 0 | 17 / 19 |
-| 18 | `conductor-app` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
-| 19 | `appmaker` | active | software | 2 | 0 | 0 | 0 | 10 / 12 |
+| 18 | `conductor-app` | active | software | 2 | 0 | 0 | 0 | 13 / 15 |
+| 19 | `appmaker` | active | software | 1 | 0 | 1 | 0 | 10 / 12 |
 | 20 | `media-watchlist` | active | software | 1 | 0 | 0 | 0 | 15 / 16 |
 | 21 | `brainstorm` | active | software | 4 | 6 | 0 | 0 | 13 / 23 |
 | 22 | `wishmaster` | retired | software | 1 | 0 | 1 | 0 | 2 / 4 |
