@@ -372,96 +372,71 @@ once the variable is set, so a hand-rolled check can leak the token straight int
 session's own tool-output transcript (root `TALKBACK.md`, 2026-08-12 and 2026-08-13, two
 independent sessions hit exactly this — conductor/t-116).
 
-**Visually verifying a front-end change: use the Vercel MCP connector, not local `nuxt
-dev`.** Local `npm run dev` 500s immediately in this sandbox because `DATABASE_URL`
-points at an unreachable dummy MariaDB host — SSR never reaches page markup, so there
-is no way to visually or keyboard-nav check a change locally (hit independently by at
-least three newsfeed tasks: t-010, t-014, t-017). The Vercel MCP connector gives a
-session a real rendered page instead (confirmed working, newsfeed/t-017, 2026-07-19):
-1. `mcp__Vercel__list_teams` — get the team ID (kind_robots is under
-   `silasfelinus-projects`).
-2. `mcp__Vercel__list_projects` (with that team ID) — get the kind-robots project ID
-   (`prj_x6HB2IPpQbvqNqiYVgu3IibJ6FZf` as of 2026-07-19; re-fetch if this ever changes).
-3. `mcp__Vercel__list_deployments` (project ID + team ID) — find the deployment for the
-   branch/PR you care about (matched via `meta.githubPrId`/`githubCommitRef`) and take
-   its `url`. **Which branches get a preview is controlled by `git.deploymentEnabled` in
-   kind_robots' `vercel.json`, not by Vercel's defaults.** As of 2026-08-03 `claude/*` is
-   `true` (Silas approved enabling it, so agent-authored UI work can be verified BEFORE
-   it merges rather than only after); `agent/*`, `worker/*`, and `conductor/*` remain
-   `false` for cost. On one of those three prefixes, no preview will ever exist — skip
-   straight to the post-merge production path below instead of hunting for one.
-4. `mcp__Vercel__web_fetch_vercel_url` on `https://<that url>/<route>` — returns the
-   actual rendered HTML (full SSR markup, not the stock Nuxt welcome page). Use a
-   regular `WebFetch` first only if the deployment has no Vercel Authentication
-   protection; `web_fetch_vercel_url` is the one that works regardless, since it
-   authenticates as this MCP server's connected Vercel account.
-   `mcp__Vercel__get_deployment_build_logs` / `get_runtime_errors` on the same
-   project/deployment are useful alongside this for diagnosing a build or runtime
-   failure rather than just confirming markup.
-This does NOT require deploying anything new — Vercel builds the preview automatically
-for every PR on an enabled branch prefix (see step 3 for which). For a prefix that is
-disabled, verify against the PRODUCTION deployment after merging on CI-green instead:
-poll `list_deployments` for the deploy carrying your merge commit, wait for `READY`,
-then fetch the route. Note that `vercel.json`'s `ignoreCommand`
-(`scripts/vercel-ignore-build.mjs`) skips builds whose changed files are all docs/tests,
-so a documentation-only merge shows as `CANCELED` rather than deploying — that is
-correct behavior, not a failure. `list_deployments`' `state` field also surfaces the current
-production deployment's health (`READY` vs `ERROR`) — worth a glance whenever a
-session is investigating why a change "isn't showing up," since that can mean
-production itself is failing to build rather than the change being wrong. (Concrete
-example: the 2026-07-19 t-017 check found production in `ERROR` — a genuine backend
-bug, unquoted `Character` table name in raw SQL breaking every deploy since PR #515;
-see kind_robots PR #517.)
+**Visually verifying a front-end change: kind_robots production is self-hosted at
+`kindrobots.org`, not Vercel.** As of 2026-08-12 kind_robots migrated off Vercel
+entirely — Vercel Git deployments are disabled repo-wide (there is no `vercel.json` in
+the repo anymore) and production is served from a self-hosted container on Unraid at
+`https://kindrobots.org` (kind-robots/t-064, closed 2026-08-12; see the
+`kindrobots-unraid` project). **A `*.vercel.app` URL returning `402 Payment Required` /
+`DEPLOYMENT_PAUSED` / `DEPLOYMENT_DISABLED`, or `mcp__Vercel__get_project` showing
+`live: false`, is the expected state of retired infrastructure — it is NOT a production
+incident and does not need a new gate or notification.** (Re-confirmed 2026-08-15: every
+`*.vercel.app` URL for the project 402s/503s while `kindrobots.org` itself serves fine —
+200, real SSR markup, real image assets.)
 
-**What "visual verification" actually means here, and what a browser can't add**
-(interface-vision/t-091, measured 2026-08-04). t-091 recorded a session where the
-Vercel MCP server never became available and a headless-Chromium fallback got
-`net::ERR_CONNECTION_RESET` against `*.vercel.app`, and hypothesised that no
-scheduled/non-interactive session can ever verify a preview. A later
-non-interactive session re-ran every probe. Three of the four premises did not
-hold:
+This changes what verification is actually possible and when:
 
-- **Vercel MCP was present** and `list_teams` / `list_deployments` /
-  `web_fetch_vercel_url` all worked, returning HTTP 200 and full SSR markup. Its
-  absence in the earlier session was that session's condition, not a property of
-  headless runs — so treat a missing connector as "retry/report", not "impossible".
-- **Raw `curl` reached both `*.vercel.app` and `api.github.com`** — 200 each, bare
-  and via `$HTTPS_PROXY`. The "the proxy only brokers tool-mediated paths"
-  hypothesis is wrong; ordinary HTTPS egress works.
-- **Chromium fails on every HTTPS host, not just Vercel.** `example.com` resets
-  identically. Passing an explicit `proxy:`, `--proxy-server`, `--disable-http2`,
-  `--disable-quic`, `--ignore-certificate-errors`, and context
-  `ignoreHTTPSErrors` each changed nothing, and results were byte-identical with
-  and without an explicit proxy option (a no-proxy launch still returned
-  `ERR_TUNNEL_CONNECTION_FAILED`, so Chromium picks the proxy up regardless). The
-  proxy's own `__agentproxy/status` logged only Chromium's plain-HTTP telemetry
-  calls to `clients2.google.com` (`kind: not_connect`) — no failure for the target
-  host at all. So this is a Chromium-through-the-proxy limitation, not egress
-  policy, not TLS trust, and nothing to do with the preview being protected.
+- **No PR preview exists anymore.** Vercel previews are gone for every branch prefix,
+  not just the `agent/*`/`worker/*`/`conductor/*` ones that were already disabled for
+  cost before the migration. A session cannot visually verify an *unmerged* branch's UI
+  — verification pre-merge is limited to `vue-tsc`/`eslint`/unit tests/
+  `test:layout-contract`.
+- **No auto-deploy-on-merge either.** The Unraid container only picks up a merged commit
+  when Silas runs a manual "Force Update" in the Unraid UI (see the `kindrobots-unraid`
+  roadmap and `docs/runbooks/migration-credential-boundary.md`). A merged, CI-green PR
+  can sit un-deployed for a while — check `https://kindrobots.org/api/health/database`,
+  and whether the specific code path you changed actually answers as expected, before
+  concluding a change "isn't showing up" means it's wrong (davinci/t-018 hit exactly
+  this deploy-timing gap on 2026-08-08: a new endpoint returned the SPA shell, not JSON,
+  until the next Force Update).
+- **Post-deploy, direct HTTPS is the verification path.** Plain `curl` or `WebFetch`
+  against `https://kindrobots.org/<route>` (or an asset path such as
+  `/images/dashboard-tabs/art/<slug>.webp`) works directly in this sandbox — no MCP
+  connector is required for this host, egress to it is unrestricted like any ordinary
+  HTTPS host. This returns real SSR markup with the same caveats as before: it proves a
+  route loads, isn't a 500, and contains the markup you expect from SSR; it does NOT
+  prove anything that only appears after hydration, nor layout, spacing, or anything
+  pixel-level. Say which of those you actually checked.
+- **Real cross-width geometry**: `responsive-layout-audit.yml`'s `audit` check now runs
+  on a schedule and via manual `workflow_dispatch` against production
+  (`https://kindrobots.org` by default, overridable via its `base_url` input) — Vercel
+  preview support was removed from the workflow along with the rest of the Vercel infra,
+  so it no longer fires per-PR against a branch preview. It measures rendered geometry at
+  phone/tablet/desktop widths, fails on elements that spill past the viewport or get
+  crushed to a sliver, and uploads screenshots as artifacts every run. Trigger it
+  manually after a merge + confirmed Force Update if you need fresh geometry/screenshots
+  for a specific change; it will not run automatically per-PR the way the retired
+  Vercel-preview flow did.
+- **Chromium-through-the-sandbox-proxy still fails on every HTTPS host, not just
+  Vercel's** (interface-vision/t-091, measured 2026-08-04): a headless-Chromium fallback
+  in this sandbox gets `net::ERR_CONNECTION_RESET`/`ERR_TUNNEL_CONNECTION_FAILED`
+  regardless of target host (confirmed byte-identical against `example.com`),
+  independent of proxy flags (`proxy:`, `--proxy-server`, `--disable-http2`,
+  `--disable-quic`, `--ignore-certificate-errors`, `ignoreHTTPSErrors` all changed
+  nothing). This is a Chromium-through-the-proxy limitation, not anything about the
+  target being Vercel or kindrobots.org — don't reach for a local headless-browser
+  fallback in a non-interactive session; use `curl`/`WebFetch` for markup and let CI's
+  `audit` check carry real pixels.
 
-The practical consequence: `web_fetch_vercel_url` is the verification path a
-session drives itself, and it returns **pre-hydration HTML**. That is enough to
-prove a route loads, isn't a 500, and contains the markup you expect from SSR —
-it is NOT enough to check a class that only appears after hydration, nor layout,
-spacing, or anything pixel-level. Say which of those you actually checked.
-
-**But a session does not have to drive a browser to get real geometry.**
-kind_robots' `responsive-layout-audit.yml` (the `audit` check, ~10 min) already
-launches headless Chromium against the PR's own Vercel preview, measures rendered
-geometry at phone/tablet/desktop widths, fails on elements that spill past the
-viewport or get crushed to a sliver, and uploads **screenshots as artifacts on
-every run, pass or fail**. It waits for the deployment to answer 200 and for three
-consecutive healthy `/api/health/database` checks first, so it measures real
-galleries rather than empty states, and it treats a 401/403 preview as an error
-rather than "passed". It runs in CI, where the network works, so the Chromium
-limitation above never applies to it.
-
-So a UI change on a `claude/*` branch is NOT merging on structural CI alone. The
-honest summary of what a non-interactive session can claim: SSR markup via
-`web_fetch_vercel_url` (itself), real cross-width geometry plus screenshots via
-the `audit` check (CI), structural invariants via the layout contract (CI), and
-nothing about aesthetics. Wait for `audit` before merging a layout change — it is
-slower than the rest and it is the one carrying the pixels.
+So a UI change on a `claude/*` branch is NOT merging on structural CI alone. The honest
+summary of what a non-interactive session can claim: SSR markup via `curl`/`WebFetch`
+against `kindrobots.org` post-deploy (itself), real cross-width geometry plus
+screenshots via the `audit` check (CI, scheduled/manual against production), structural
+invariants via the layout contract (CI), and nothing about aesthetics pre-deploy or
+pre-Force-Update. The old Vercel MCP connector flow
+(`list_teams`/`list_projects`/`list_deployments`/`web_fetch_vercel_url` against the
+kind-robots Vercel project) is retired for kind_robots verification purposes — its data
+now describes decommissioned infrastructure, not anything a merge or preview affects.
 
 When a cross-repo task is selected:
 1. Claim the conductor roadmap task exactly as usual on `main`.
