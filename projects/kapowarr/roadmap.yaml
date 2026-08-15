@@ -173,21 +173,15 @@ tasks:
   - id: t-012
     milestone: m2
     title: "Add a Discord/generic-webhook notification system"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      From the t-005 QoL audit (projects/kapowarr/docs/t-005-arr-qol-audit.md):
-      zero existing notification/webhook code anywhere in the fork. Add a
-      pluggable notification target (start with Discord + a generic webhook,
-      matching Sonarr/Radarr's pattern) that can fire on download-complete,
-      import-failed, and future health-warning events. Same cross-repo boundary
-      as other kapowarr code tasks -- implementation belongs in
-      silasfelinus/Kapowarr, not this repo.
+    note: 'Implemented and merged in silasfelinus/Kapowarr#5 (squash 79c57e5): new notification_services table + backend/implementations/notifications.py sends a POST to enabled Discord/generic-webhook services on download-complete (PostProcessor.success) and import-failed (PostProcessor.perm_failed, torrent blocklist path). Settings > Notifications page for CRUD + test. Live testing caught and fixed two real bugs before merge: (1) the Test buttons unreachable-host case took 90+s due to Sessions retry/backoff, same class of bug health.py already fixed for health checks -- bounded the same way (ThreadPoolExecutor + future.result timeout); (2) firing from a background thread raised a Working outside of application context error since the bounding executors worker thread does not inherit Flask app context -- fixed by pushing Server().app.app_context() in the worker itself. Re-verified end-to-end against a local HTTP receiver: both events delivered correct payloads. Health-warning events deliberately deferred per the tasks own future framing; NotificationEvent is designed to extend. See PR body for full verification and the Flags-for-Reviewer note on perm_failed()s current torrent-only reach.'
     claimed_by: 20260815T222717Z-kapowarr-t012
     claimed_at: '2026-08-15T22:27:18Z'
-    updated: '2026-08-15T22:27:18Z'
+    updated: '2026-08-15T22:44:32Z'
+    implementation_pr: 'silasfelinus/Kapowarr#5'
 
   - id: t-013
     milestone: m2
