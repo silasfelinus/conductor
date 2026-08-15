@@ -3125,78 +3125,42 @@ tasks:
   - id: t-117
     milestone: m5
     title: "Diagnose the remaining responsive-layout-audit phone failures: an unexpected header back-button on guest-gated routes, and a crushed /bots filter chip"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
-    owner: reviewer
+    owner: null
     note: >
-      kind_robots' responsive-layout-audit.yml (scheduled, phone/tablet/desktop against
-      production) has failed every scheduled run since at least 2026-08-12T03:53Z (30+
-      consecutive failures as of this note, always "14 route/viewport combination(s) with
-      layout defects", always phone-only). Diagnosed this cycle (conductor scheduled Agent
-      run, 2026-08-14T~22:30Z) by reading the actual job logs and downloading the audit's
-      own screenshot artifact (responsive-audit-31840575701, run
-      https://github.com/silasfelinus/kind_robots/actions/runs/31840575701) rather than
-      guessing from source alone.
+      kind_robots PR #1891 (merged 2026-08-15) fixes the /bots half of this task:
+      components/gallery/kr-gallery.vue's `#toolbar` slot wrapper was `min-w-0
+      flex-1` (flex-basis 0%), the same bug class as #1890's channel-select/tab-select
+      crush -- flex-wrap's line-breaking decision uses each item's HYPOTHETICAL
+      main size, which for a flex-basis:0 item is always 0, so the browser never
+      treated the toolbar slot as "too big to fit" next to the sticky bar's
+      `shrink-0` pager and mode-toggle buttons, and `min-w-0` let it absorb the
+      entire overflow instead of wrapping. Switched to `flex-auto` (basis: auto)
+      so it now wraps to its own line when it doesn't fit, matching the bar's own
+      `flex-wrap` intent. Shared component, so the fix applies to every gallery
+      using the toolbar slot, not just /bots.
 
 
-      SIX of the 14 are fixed by kind_robots PR #1890 (workspace-header.vue: capped
-      channel-select's width at max-w-[45%] so it can't consume tab-select's flex-1
-      sibling's entire share -- root cause was the CSS flexbox shrink algorithm giving a
-      zero-flex-basis sibling none of an overflow, so the long "Sanctuary" channel label
-      (9 chars, longest of the five channel labels) always crushed the adjacent tab label
-      to a ~32px sliver on /about, /cart, /giving, /mermaids, /privacy, /sanctuary). Once
-      #1890 merges, re-run the audit and confirm the defect count drops 14 -> 8. This task
-      covers the remaining 8, which are two SEPARATE, unrelated causes:
+      REMAINING SCOPE, unchanged from the prior note: the unexpected back-button
+      on 7 guest-gated routes (/achievements, /chats, /appmaker, /conductor-app,
+      /plan/voice-lab, /plan/watchlist, /auth/google) still needs live devtools
+      (Network + Vue/Pinia timeline) to catch middleware/navigation-access.global.ts's
+      suspected redirect in the act -- this sandbox's headless Chromium cannot
+      reach kindrobots.org through the environment's proxy, so this could only be
+      diagnosed from static source + CI artifacts, which ran out of leads last
+      cycle. See PR #1891's linked history / the prior version of this note (git
+      log on this file) for the full back-button investigation writeup -- not
+      attempting a blind fix without confirming the actual trigger.
 
 
-      (1) UNEXPECTED BACK BUTTON (7 routes: /achievements, /chats, /appmaker,
-      /conductor-app, /plan/voice-lab, /plan/watchlist, /auth/google). Screenshots confirm
-      workspace-header.vue's back-button (v-if="showBackButton", i.e.
-      navStore.canGoBack===true) renders on these routes even though the audit visits each
-      route via a single fresh `page.goto()` -- no prior in-app navigation that should make
-      canGoBack true. Confirmed NOT explained by: (a) app.vue's route.fullPath watcher --
-      its `{immediate:true}` first call always has previousPath===undefined, so a single
-      fresh load can only ever push one routeHistory entry (canGoBack stays false) unless a
-      SECOND, distinct fullPath is recorded after mount; (b) sessionStorage/localStorage
-      carryover between the audit's `ctx.newPage()` calls -- routeHistory is a plain
-      in-memory Pinia ref with no persist call. The strongest remaining lead, not confirmed:
-      middleware/navigation-access.global.ts is client-only
-      (`if (import.meta.server) return`) and defers its real access check to Nuxt's
-      `app:mounted` hook specifically so SSR content paints first -- for a route requiring
-      an account permission (e.g. content/channels/home/achievements.md has
-      `requiredPermission: authenticated`) it calls `navigateTo({path:'/login',...},
-      {replace:true})` once userStore/channelContentStore finish initializing (up to a
-      4000ms race). That WOULD push a second, distinct route.fullPath and flip canGoBack to
-      true. What does NOT fit: the audit's own screenshots, taken after `networkidle` +
-      three healthy /api/health/database checks, still show the ORIGINAL page's content
-      (Jellybean Quests gallery on /achievements, "Please log in to view messages" on
-      /chats) rather than the /login page the redirect should have produced -- so either the
-      redirect is racing the screenshot (plausible, given the 4s cap and unresolved timing),
-      or something else entirely is flipping canGoBack. Needs live devtools (Network +
-      Vue devtools timeline) or an instrumented staging build to catch the actual second
-      navigateTo call in the act -- this sandbox's headless Chromium cannot reach kindrobots.org
-      through the environment's proxy (see AGENTS.md's "What 'visual verification' actually
-      means here" section), so this could only be diagnosed from static source + production
-      CI artifacts, and that ran out of runway here. NOT attempting a blind fix (e.g.
-      disabling the back button, or forcing canGoBack false on SSR-fresh loads) without
-      confirming the actual trigger -- the back button may be legitimate/desired once its
-      cause is understood, and the real fix might be elsewhere (e.g. giving tab-select a
-      floor that survives the back button too, independent of channel-select's cap).
-
-
-      (2) /bots FAILS ON AN UNRELATED ELEMENT, not the header at all:
-      `CRUSHED <div> "NarratorAllPrompt BotAll statusesR" w=5 .min-w-0 flex-1` -- some kind
-      of filter-chip or status-summary strip on the Bots gallery page. Not investigated this
-      cycle (out of scope once the header pattern was identified as the dominant cause);
-      needs its own read of whatever component renders that string on /bots.
-
-
-      Suggested first step: re-run responsive-layout-audit.yml after #1890 merges (confirms
-      the fix and gives a clean 8-defect baseline for this task), then get a live/staging
-      render of /achievements as a guest with browser devtools open on the Network and
-      Vue/Pinia timeline to catch navigation-access.global.ts's redirect (or rule it out) in
-      real time.
-    claimed_by: 2026-08-15T003015-t117-toolbar-crush
-    claimed_at: '2026-08-15T00:30:16Z'
-    updated: '2026-08-15T00:30:16Z'
+      Suggested first step now: the next scheduled responsive-layout-audit.yml
+      run will pick up #1891 automatically -- confirm the defect count drops from
+      8 to 7, isolating the back-button issue as the only remaining cause. Then
+      get a live/staging render of /achievements as a guest with devtools open,
+      or confirm/refute the navigation-access.global.ts redirect theory from a
+      maintainer with production access.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-15T00:38:00Z'
