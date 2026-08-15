@@ -3125,10 +3125,10 @@ tasks:
   - id: t-117
     milestone: m5
     title: "Diagnose the remaining responsive-layout-audit phone failures: an unexpected header back-button on guest-gated routes, and a crushed /bots filter chip"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    owner: null
+    owner: reviewer
     note: >
       kind_robots PR #1891 (merged 2026-08-15) fixes the /bots half of this task:
       components/gallery/kr-gallery.vue's `#toolbar` slot wrapper was `min-w-0
@@ -3161,6 +3161,6 @@ tasks:
       get a live/staging render of /achievements as a guest with devtools open,
       or confirm/refute the navigation-access.global.ts redirect theory from a
       maintainer with production access.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-15T00:38:00Z'
+    claimed_by: claude-20260815T022748Z-iv-t117
+    claimed_at: '2026-08-15T02:27:50Z'
+    updated: '2026-08-15T02:27:50Z'
