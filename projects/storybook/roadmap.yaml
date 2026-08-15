@@ -330,10 +330,10 @@ tasks:
 - id: t-022
   milestone: m4
   title: Factor the repeated brace-matching extractFunctionBody helper out of the verifyStorybook* guards
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  owner: null
+  owner: reviewer
   note: >
     Kaizen from t-021 (kind_robots PR #1893). Several verifyStorybook*.mjs guards -- this repo now
     has at least verifyStorybookAnswerInputPreservationGuard, verifyStorybookRestartScenarioFrameGuard,
@@ -345,3 +345,6 @@ tasks:
     its own regression case (the git-stash round-trip each guard's own history documents). Keep the
     signature general enough for the one shape variance already seen across guards (a plain
     `function name(` vs an `async function name(` signature).
+  claimed_by: claude-scheduled-20260815T072700Z-storybook-t022
+  claimed_at: '2026-08-15T07:32:56Z'
+  updated: '2026-08-15T07:32:56Z'
