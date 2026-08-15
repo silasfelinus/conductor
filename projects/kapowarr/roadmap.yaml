@@ -238,7 +238,7 @@ tasks:
   - id: t-016
     milestone: m2
     title: "Bound send_notification()'s per-service thread fan-out with a worker pool"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -257,4 +257,29 @@ tasks:
       silasfelinus/Kapowarr, not this repo.
     claimed_by: conductor-sweep-20260815-2350
     claimed_at: '2026-08-15T23:33:49Z'
-    updated: '2026-08-15T23:33:49Z'
+    updated: '2026-08-15T23:39:11Z'
+    implementation_pr: 'silasfelinus/Kapowarr#7'
+
+  - id: t-017
+    milestone: m2
+    title: "Bound ExternalClients.add()/update_client()'s unbounded .test() calls the same way t-015 bounded the Test button"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-015 (silasfelinus/Kapowarr#6): that task bounded the
+      interactive Settings-page "Test" button's connectivity check
+      (ExternalClients.test(), behind POST /api/externalclients/test) to 10s,
+      deliberately leaving ExternalClients.add() and
+      BaseExternalClient.update_client() untouched -- both still call a client
+      type's .test() classmethod directly and unbounded, inheriting the same
+      full 5-retry/exponential-backoff Session cycle (90+ seconds against a
+      genuinely unreachable host) t-015 just fixed for the Test button. Apply
+      the same one-worker ThreadPoolExecutor + future.result(timeout=...)
+      bound (reuse EXTERNAL_CLIENT_TEST_TIMEOUT from
+      backend/implementations/external_clients.py) to these two write paths
+      so adding or editing a client with an unreachable/wrong URL doesn't hang
+      the request for over a minute. Same cross-repo boundary as other
+      kapowarr code tasks -- implementation belongs in silasfelinus/Kapowarr,
+      not this repo.

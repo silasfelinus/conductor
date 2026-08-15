@@ -8235,3 +8235,21 @@ records:
     new background-thread network call in this codebase should assume
     neither Session's default retry/backoff nor Flask's app context are
     safe to take for granted off the request/download thread.
+- date: 2026-08-15
+  project: kapowarr
+  task: t-015
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A retry/backoff bug fixed once for one caller (health.py's HEALTH_CHECK_TIMEOUT) doesn't fix itself for other callers of the same unbounded ExternalClients.test() -- the interactive Test button had the identical 90+s hang until bounded separately in Kapowarr#6; add()/update_client() still have it (kapowarr/t-017 kaizen)."
+- date: 2026-08-15
+  project: kapowarr
+  task: t-016
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Bounding a call's *duration* (NOTIFICATION_REQUEST_TIMEOUT) and bounding its *fan-out* (how many can run at once) are separate problems needing separate fixes -- t-013/t-012 solved the former, t-016 solved the latter with a shared ThreadPoolExecutor replacing per-call Thread() spawns. Verified live with both an isolated concurrency test (peak=8 of 30 submissions) and a full DB-to-HTTP end-to-end delivery test."
