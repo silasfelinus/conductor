@@ -3125,10 +3125,10 @@ tasks:
   - id: t-117
     milestone: m5
     title: "Diagnose the remaining responsive-layout-audit phone failures: an unexpected header back-button on guest-gated routes, and a crushed /bots filter chip"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    owner: null
+    owner: reviewer
     note: >
       kind_robots' responsive-layout-audit.yml (scheduled, phone/tablet/desktop against
       production) has failed every scheduled run since at least 2026-08-12T03:53Z (30+
@@ -3197,6 +3197,6 @@ tasks:
       render of /achievements as a guest with browser devtools open on the Network and
       Vue/Pinia timeline to catch navigation-access.global.ts's redirect (or rule it out) in
       real time.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-14T22:35:00Z'
+    claimed_by: 2026-08-15T003015-t117-toolbar-crush
+    claimed_at: '2026-08-15T00:30:16Z'
+    updated: '2026-08-15T00:30:16Z'
