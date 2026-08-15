@@ -276,8 +276,8 @@ tasks:
 - id: t-015
   milestone: m1
   title: 'kind_robots: wire or drop the dead ProjectFrontConfig.channelKey/tabKey fields'
-  status: ready
-  owner: null
+  status: claimed
+  owner: reviewer
   passes: 0
   stakes: reversible
   note: >
@@ -294,3 +294,6 @@ tasks:
     value can't hide the same way. Check whether any other project's fallback config has
     the same kind of drift while auditing (grep every `components/conductor/*-page.vue`
     for `channelKey:`/`tabKey:` against `utils/projectPlacements.ts`).
+  claimed_by: claude-scheduled-20260815T1028Z-condapp-t015
+  claimed_at: '2026-08-15T10:37:42Z'
+  updated: '2026-08-15T10:37:42Z'
