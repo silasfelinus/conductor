@@ -538,3 +538,6 @@ queueDepth: PENDING=700, RUNNING=3, DONE=4270, FAILED=2, CANCELLED=3172 (all-tim
 
 ## 2026-08-14T16:01:09Z | ai-art-academy/t-044 | growing
 queueDepth: PENDING=623, RUNNING=1, DONE=4350, FAILED=1, CANCELLED=3173 (all-time). oldestPending: id=4894, age=829852s (~230.5h), engine=COMFY. windowThroughput (24h): PENDING=591, DONE=112, CANCELLED=1. recentFailed (last 1): 1/1 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'61':.
+
+## 2026-08-15T01:28:20Z | ai-art-academy/t-044 | growing
+queueDepth: PENDING=377, RUNNING=1, DONE=4411, FAILED=186, CANCELLED=3179 (all-time). oldestPending: id=8517, age=79539s (~22.1h), engine=COMFY. windowThroughput (24h): PENDING=377, RUNNING=1, DONE=74, FAILED=180, CANCELLED=1. recentFailed (last 25): 25/25 = generic workflow error (no node/exception detail forwarded).
