@@ -276,10 +276,11 @@ tasks:
 - id: t-015
   milestone: m1
   title: 'kind_robots: wire or drop the dead ProjectFrontConfig.channelKey/tabKey fields'
-  status: claimed
+  status: done
   owner: reviewer
   passes: 0
   stakes: reversible
+  implementation_pr: silasfelinus/kind_robots#1896
   note: >
     Kaizen from conductor-app/t-013's close-out (2026-08-14): every project front page's
     static `fallback` config declares `channelKey`/`tabKey` (see
@@ -294,6 +295,19 @@ tasks:
     value can't hide the same way. Check whether any other project's fallback config has
     the same kind of drift while auditing (grep every `components/conductor/*-page.vue`
     for `channelKey:`/`tabKey:` against `utils/projectPlacements.ts`).
-  claimed_by: claude-scheduled-20260815T1028Z-condapp-t015
-  claimed_at: '2026-08-15T10:37:42Z'
-  updated: '2026-08-15T10:37:42Z'
+
+
+    DONE (conductor scheduled Agent run, 2026-08-15T10:40Z): chose drop over wire -- the
+    real channel/tab placement is already canonically tracked in
+    `utils/projectPlacements.ts` and the live Project DB row, read from there by the
+    actual nav/placement resolver, so the fallback-config copies were pure redundant
+    duplicates and exactly the kind of stale-copy risk that hid the original bug.
+    Audited every `components/conductor/*-page.vue` and `components/coloring/*-page.vue`
+    per the task's own instruction; found and fixed 13 files total (the coloring-book
+    one wasn't under `components/conductor/`, so a narrower grep would have missed it).
+    Verified vue-tsc/eslint clean, test:layout-contract holds, test:davinci-narration
+    and test:challenge-center pass (both touched files). Merged kind_robots PR #1896
+    (14 files, 29 deletions, 0 additions).
+  claimed_by: ''
+  claimed_at: ''
+  updated: '2026-08-15T10:40:00Z'
