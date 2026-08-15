@@ -330,21 +330,12 @@ tasks:
 - id: t-022
   milestone: m4
   title: Factor the repeated brace-matching extractFunctionBody helper out of the verifyStorybook* guards
-  status: claimed
+  status: done
   passes: 0
   stakes: reversible
   owner: reviewer
-  note: >
-    Kaizen from t-021 (kind_robots PR #1893). Several verifyStorybook*.mjs guards -- this repo now
-    has at least verifyStorybookAnswerInputPreservationGuard, verifyStorybookRestartScenarioFrameGuard,
-    and verifyStorybookRestartInputCompletenessGuard -- each hand-roll their own identical
-    brace-matching extractFunctionBody(content, name) helper to pull a named function's body out of
-    a TypeScript file by source text. Factor one shared implementation into
-    utils/scripts/lib/extractTsFunctionBody.mjs (or similar), update the existing guards to import
-    it instead of their own copy, and confirm every guard still passes and still fails correctly on
-    its own regression case (the git-stash round-trip each guard's own history documents). Keep the
-    signature general enough for the one shape variance already seen across guards (a plain
-    `function name(` vs an `async function name(` signature).
+  note: 'Kaizen from t-021 (kind_robots PR #1893). Factored the repeated brace-matching extractFunctionBody helper (each of verifyStorybookAnswerInputPreservationGuard, verifyStorybookRestartScenarioFrameGuard, and verifyStorybookRestartInputCompletenessGuard hand-rolled its own identical copy) into utils/scripts/lib/extractTsFunctionBody.mjs, with a signature regex covering both the plain `\function name('' and `\async function name('' shapes seen across the guards (plus optional leading indentation). Verified all 9 verifyStorybook*.mjs guards still pass, and each of the three touched guards still fails correctly on its own documented regression case via a git-stash round-trip. eslint/prettier clean, vue-tsc --noEmit clean repo-wide. kind_robots PR #1894, 21/21 CI checks green, squash-merged 2f17c34.'
   claimed_by: claude-scheduled-20260815T072700Z-storybook-t022
   claimed_at: '2026-08-15T07:32:56Z'
-  updated: '2026-08-15T07:32:56Z'
+  updated: '2026-08-15T07:49:33Z'
+  implementation_pr: 'silasfelinus/kind_robots#1894'
