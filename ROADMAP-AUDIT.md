@@ -1,6 +1,6 @@
 # Roadmap Audit
 
-Generated: `2026-08-15T03:31:47.989157+00:00`
+Generated: `2026-08-15T04:32:06.980869+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
@@ -15,14 +15,14 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `interface-vision` | active | software | 0 | 2 | 1 | 0 | 115 / 118 |
-| 2 | `ai-art-academy` | active | software | 0 | 3 | 3 | 1 | 61 / 68 |
+| 2 | `ai-art-academy` | active | software | 1 | 3 | 3 | 0 | 61 / 68 |
 | 3 | `coloring-book` | active | software | 0 | 9 | 2 | 0 | 27 / 38 |
 | 4 | `humboldt-scoop-cms` | active | software | 0 | 0 | 1 | 0 | 11 / 12 |
 | 5 | `digital-storefront` | active | software | 0 | 2 | 2 | 0 | 39 / 43 |
 | 6 | `mermaids-of-venice` | active | content | 1 | 0 | 8 | 0 | 4 / 13 |
 | 7 | `kind-robots` | active | software | 0 | 0 | 2 | 0 | 62 / 64 |
 | 8 | `kindrobots-unraid` | active | software | 0 | 6 | 1 | 0 | 6 / 13 |
-| 9 | `model-builder` | active | software | 1 | 0 | 1 | 0 | 42 / 44 |
+| 9 | `model-builder` | active | software | 0 | 0 | 1 | 1 | 42 / 44 |
 | 10 | `lora-ingestion` | active | infrastructure | 0 | 0 | 1 | 0 | 5 / 6 |
 | 11 | `conductor` | active | software | 0 | 0 | 2 | 0 | 116 / 118 |
 | 12 | `taskmaster` | active | software | 0 | 0 | 1 | 0 | 3 / 4 |
