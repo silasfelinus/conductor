@@ -2231,8 +2231,31 @@ tasks:
     gate_human: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-15T02:30:59Z'
+    updated: '2026-08-15T03:29:28Z'
     note: >
+      RECHECK (conductor scheduled Agent run, 2026-08-15T03:29Z, logged in RENDER-BACKLOG.md):
+      root cause unchanged, but a new secondary observation worth flagging. Queried
+      /api/art/queue/stats raw (not just recheck_render_queue.py's bucketed summary, which
+      collapses this into "generic workflow error" since it substring-matches "workflow error"
+      before the free-text fallback) directly: all 25 recentFailed entries are still byte-for-byte
+      the same "ComfyUI reported a workflow error: node 3 (CLIPTextEncode): hostbuf_file_reader_read
+      failed" signature, still 100% projectSlug facet-catalog, same job ids 8935-8959 as the
+      01:28Z/02:30Z checks -- their updatedAt timestamps are frozen at ~01:00-01:04Z, i.e.
+      unchanged since the burst's initial window. queueDepth now shows PENDING=0/RUNNING=0/
+      oldestPending=none (the ~377-then-141-job backlog from the last two checks has fully
+      drained -- either processed through or the pipeline stopped submitting new facet-catalog
+      work after ~01:04Z). Yet all-time FAILED climbed again, 423 -> 564 (+141) in this ~1h
+      window, with zero new entries appearing in recentFailed's top-25 sample. That combination
+      (aggregate FAILED counter still climbing, but the "last 25 failed" sample frozen on
+      hour-old ids) doesn't fit either "still actively failing the same way" or "resolved" --
+      it's consistent with either (a) a batch of previously-PENDING jobs finally reaching a
+      terminal FAILED state late, stamped with an earlier attempt timestamp, or (b) the
+      recentFailed sample itself being stale/cached server-side. Not enough visibility from this
+      sandbox to tell which; flagging rather than guessing. Not re-notifying Silas -- same
+      isolated root cause as already pushed, this is a state nuance not a new incident.
+      gate_human: true / soft_gate unchanged, still needs ComfyUI-host eyes this sandbox cannot
+      reach.
+
       RECHECK (conductor scheduled Agent run, 2026-08-15T02:29Z, logged in RENDER-BACKLOG.md):
       still active and still growing. A fresh authenticated /api/art/queue/stats call confirms
       all 25 recentFailed entries remain 100% projectSlug facet-catalog with the identical
