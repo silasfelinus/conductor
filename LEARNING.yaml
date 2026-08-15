@@ -8071,3 +8071,21 @@ records:
   outcome: done
   failure_category: null
   lesson: "For a brand-new project's first task (a design brief with no existing repo context in this session's GitHub scope), WebFetch against the public upstream and fork repos/docs grounded the architecture section in the project's real download-client model (built-in DDL vs. external clients) instead of guessing from the task notes alone -- worth doing for any design-brief task on a project this session hasn't touched before, especially when the target codebase itself is outside the session's repo scope."
+- date: 2026-08-15
+  project: kapowarr
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A read-only git clone of the target repo (public HTTPS, no auth, distinct from the session's GitHub MCP scope) let a design-only task ground its spec in the actual ABC/class chain instead of the task note's abstractions -- found that TorrentDownload.update_status() already polls purely through the ExternalDownloadClient interface with zero torrent-specific logic, so a Usenet client is a peer implementation, not a new mechanism, and located the one real shared touchpoint (download_queue.py's TorrentDownload-specific isinstance dispatch) that does need to change. Worth doing before writing any cross-repo design/handoff doc: reading the real code turns a plausible design into a verified one and surfaces the one non-obvious shared edge a task note alone won't mention."
+- date: 2026-08-15
+  project: kapowarr
+  task: t-002
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: needs-human
+  failure_category: actionable
+  lesson: "kapowarr/t-002 (and every other m1 personality/QoL task) requires pushing code to silasfelinus/Kapowarr, which is outside this session's (and apparently every current conductor session's) GitHub MCP scope -- DESIGN-BRIEF.md correctly predicted this. The fully-specified patch is still valuable as a handoff doc (AGENTS.md's documented cross-repo pattern), but burning a claim on an implementation task that can never reach done in this session is pure overhead. Future sessions picking up kapowarr code tasks (t-003, t-004, t-005 if it produces code diffs, t-007+) should check GitHub scope FIRST and go straight to the handoff-doc pattern rather than discovering the wall mid-task."

@@ -98,18 +98,14 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Design the Usenet/NZB boundary"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Map the existing external-client abstraction and specify how NZB discovery,
-      SABnzbd submission, status polling, completion, and import should fit without
-      coupling Usenet behavior to the existing scraper. Treat upstream issue #71
-      and related requests as research only; do not modify upstream.
+    note: 'Design spec written at projects/kapowarr/docs/t-006-usenet-nzb-boundary.md, grounded in a read-only inspection of the live silasfelinus/Kapowarr source (external_clients.py, definitions.py''s ExternalDownloadClient/Download/ExternalDownload ABCs, download_clients.py''s TorrentDownload, search.py''s ranking pipeline). Maps two seams: (1) a new SABnzbd(BaseExternalClient) + NZBDownload(ExternalDownload) pair that reuses the existing polling contract (TorrentDownload.update_status() already calls through the ABC, not torrent-specific -- confirmed by reading it) with one flagged real touchpoint (download_queue.py''s isinstance(download, TorrentDownload) dispatch needs widening), and (2) a new NZB indexer search module feeding the existing source-agnostic SearchResultData/_rank_search_result pipeline, parallel to and never touching getcomics.py. Treated upstream issue #71 as research only -- no upstream reads/writes beyond public content, no upstream PR/issue. t-007/t-008 (not-started) can implement directly from this spec.'
     claimed_by: 20260815T1440Z-kapowarr-t006
     claimed_at: '2026-08-15T14:32:18Z'
-    updated: '2026-08-15T14:32:18Z'
+    updated: '2026-08-15T14:35:29Z'
 
   - id: t-007
     milestone: m2
