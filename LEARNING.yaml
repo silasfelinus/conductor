@@ -8098,3 +8098,25 @@ records:
   outcome: done
   failure_category: null
   lesson: "Verifying a cross-repo projection is stronger when grounded in the receiving side's actual code (dispatched a background agent to read kind_robots' server/api/conductor/sync.post.ts and conductorProjectionDb.ts) rather than just poking the public API and declaring it fine -- confirmed there's no separate Milestone/Task SQL table (roadmap YAML is stored as a blob and re-parsed per-request), which ruled out an entire class of task-level sync-lag risk. Found and fixed a real staleness bug the task note called out by name: m1/m2 milestone status was stuck at not-started despite real done/needs-human/ready tasks under both -- 'verify the projection' should mean checking the data is both present AND accurate, not just present."
+- date: '2026-08-15'
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Sixth t-029 cycle found a bug class distinct from the five prior cycles: a
+    server-side check-then-act race (findUnique-then-create against
+    FacetProfile's single-column facetId PK) rather than another client-side
+    async-fetch-ordering or unawaited-promise-before-toast instance. Two
+    ModelBuildRuns can target the same existing Facet concurrently since
+    nothing serializes runs by sourceId; the item-level idempotencyKey claim
+    only prevents the same item double-committing. Fixed with
+    facetProfile.upsert(), which resolves create-vs-update atomically at the
+    database instead of racing on a stale client-side read. When a prior
+    cycle explicitly names unexplored files, reading those files on their own
+    terms (rather than pattern-matching the previous bug shape onto them)
+    found a genuinely new, more severe bug — a whole-transaction rollback
+    aborting a sibling write, not just a stale UI read.
