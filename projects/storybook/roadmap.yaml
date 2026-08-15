@@ -307,10 +307,10 @@ tasks:
 - id: t-021
   milestone: m4
   title: Add a completeness guard so restartInput() forwards every StorybookBible field buildBible() consumes
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  owner: null
+  owner: worker
   note: |-
     Kaizen from t-010 (kind_robots PR #1892, restart-scenario-frame fix). restartInput() and
     duplicateStory()'s cloneSession() both independently need to agree on "every StorybookBible
@@ -321,3 +321,6 @@ tasks:
     guards -- assert the actual key set, not UI behavior) that checks restartInput()'s returned
     object's keys are a superset of every StorybookStartInput field buildBible() actually reads,
     so a future optional-field addition can't silently repeat this exact bug class.
+  claimed_by: sched-conductor-sb-t021-20260815T062827Z
+  claimed_at: '2026-08-15T06:28:31Z'
+  updated: '2026-08-15T06:28:31Z'
