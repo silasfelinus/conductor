@@ -307,11 +307,13 @@ tasks:
 - id: t-021
   milestone: m4
   title: Add a completeness guard so restartInput() forwards every StorybookBible field buildBible() consumes
-  status: review
+  status: done
   passes: 0
   stakes: reversible
   owner: worker
   note: |-
+    CLOSED (conductor scheduled Agent run, session sched-conductor-sb-t021-20260815T062827Z): implemented as specified. Added utils/scripts/verifyStorybookRestartInputCompletenessGuard.mjs -- extracts every `input.<field>` read inside buildBible() (stores/storybookStore.ts) and every top-level key of the object restartInput() returns (stores/helpers/storybookLibraryHelper.ts), asserts the latter is a superset of the former, so the next optional bible field forgotten in restartInput() fails CI instead of silently repeating the scenario bug. New CI workflow storybook-restart-input-completeness-contract.yml matches the existing 8 verifyStorybook* contracts' shape. Verified: fail/pass round-trip via git-stash (removed scenario from restartInput()'s return, guard failed with a clear message naming the missing field; restored, guard passed), all 8 pre-existing verifyStorybook* guards still pass (no regression), eslint clean, prettier clean, vue-tsc --noEmit repo-wide clean, git status showed exactly the 2 intended files. kind_robots PR #1893, 22/22 checks green, merged squash 49b9b9f1.
+
     Kaizen from t-010 (kind_robots PR #1892, restart-scenario-frame fix). restartInput() and
     duplicateStory()'s cloneSession() both independently need to agree on "every StorybookBible
     field that should survive a session-derived transform" -- restartInput() silently dropped
@@ -324,3 +326,22 @@ tasks:
   claimed_by: sched-conductor-sb-t021-20260815T062827Z
   claimed_at: '2026-08-15T06:28:31Z'
   updated: '2026-08-15T06:28:31Z'
+  implementation_pr: 'silasfelinus/kind_robots#1893'
+- id: t-022
+  milestone: m4
+  title: Factor the repeated brace-matching extractFunctionBody helper out of the verifyStorybook* guards
+  status: ready
+  passes: 0
+  stakes: reversible
+  owner: null
+  note: >
+    Kaizen from t-021 (kind_robots PR #1893). Several verifyStorybook*.mjs guards -- this repo now
+    has at least verifyStorybookAnswerInputPreservationGuard, verifyStorybookRestartScenarioFrameGuard,
+    and verifyStorybookRestartInputCompletenessGuard -- each hand-roll their own identical
+    brace-matching extractFunctionBody(content, name) helper to pull a named function's body out of
+    a TypeScript file by source text. Factor one shared implementation into
+    utils/scripts/lib/extractTsFunctionBody.mjs (or similar), update the existing guards to import
+    it instead of their own copy, and confirm every guard still passes and still fails correctly on
+    its own regression case (the git-stash round-trip each guard's own history documents). Keep the
+    signature general enough for the one shape variance already seen across guards (a plain
+    `function name(` vs an `async function name(` signature).
