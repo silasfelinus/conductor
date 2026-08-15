@@ -8062,3 +8062,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "When a 'playtest-driven tuning' task can't be done literally (sandbox has no live-user auth against the app's OpenAI-backed endpoint), a Monte Carlo simulation against the actual production constants and distribution answers the same design question more rigorously than a handful of manual runs -- and can overturn the obvious hypothesis: the flagged +-2 swing bound turned out not to matter at all (any single nonzero touch already crosses the pass=1 threshold regardless of magnitude), while the real, unflagged lever was chapter-count coverage (avg 4.2/10 dimensions never touched by the original 3-chapter minimum). Simulate before tuning the constant that looks obviously guilty."
+- date: 2026-08-15
+  project: kapowarr
+  task: t-001
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "For a brand-new project's first task (a design brief with no existing repo context in this session's GitHub scope), WebFetch against the public upstream and fork repos/docs grounded the architecture section in the project's real download-client model (built-in DDL vs. external clients) instead of guessing from the task notes alone -- worth doing for any design-brief task on a project this session hasn't touched before, especially when the target codebase itself is outside the session's repo scope."
