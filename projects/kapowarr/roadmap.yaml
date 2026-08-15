@@ -17,12 +17,12 @@ milestones:
   - id: m1
     title: "SHAPE — fork identity, personality, and architecture"
     weight: 25
-    status: not-started
+    status: in-progress
 
   - id: m2
     title: "BUILD — QoL and Usenet/NZB support"
     weight: 50
-    status: not-started
+    status: in-progress
 
   - id: m3
     title: "POLISH & SHIP — tests, migration safety, and sync integrity"
@@ -146,16 +146,11 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Verify Conductor to Kind Robots project projection"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Verify kapowarr appears in Kind Robots with conductorSlug=kapowarr and that
-      lifecycle, priority, tasks, milestones, and commit-stamped projection agree
-      with Conductor. Investigate and repair repo-side sync failures or stale
-      milestone projection as they appear; never silently mark this task done if
-      only the roadmap exists.
+    note: 'Verified live: GET https://kindrobots.org/api/projects shows the kapowarr Project row (id 2109) with conductorSlug=kapowarr, status=ACTIVE, priority=HIGH -- matching project-overrides.yaml''s status: active / priority: high exactly. GET /api/conductor/projects confirms the commit-stamped ConductorProjection: sourceCommitSha tracked the live claim commit (840a745, this task''s own claim) within the same minute it was pushed -- sync is real-time, not stale. Milestones/tasks in that response are re-parsed from the raw roadmap.yaml text on every request (no separate Milestone/Task SQL table -- confirmed by reading kind_robots'' server/api/conductor/sync.post.ts, conductorProjectionDb.ts, and conductorRoadmap.ts directly), so task-level state (t-001 done, t-002/t-003/t-004 needs-human, etc.) is always current by construction. One real staleness bug found and fixed: m1 and m2 milestone status were both hard-coded ''not-started'' in roadmap.yaml despite m1 having 1 done + 3 needs-human tasks and m2 having 2 done + 2 ready tasks -- flipped both to ''in-progress'' here (m3 correctly stays not-started; no completed work yet). No sync failures found; no repair needed beyond the milestone-status fix.'
     claimed_by: 20260815T163758Z-kapowarr-t010
     claimed_at: '2026-08-15T16:38:02Z'
     updated: '2026-08-15T16:38:02Z'

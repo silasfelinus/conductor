@@ -8089,3 +8089,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A read-only clone plus targeted grep for -arr-convention keywords (notification, webhook, health check, import_list, calendar) across the whole fork found two genuine, scoped gaps (no notification system, no health-warnings panel) while also confirming several areas the roadmap notes didn't call out as already mature (queue reorder/blocklist, per-issue search, download-client test-connection, multi-root-folder support) -- recording the negative findings in the audit doc, not just the positive ones, keeps a future audit from re-flagging already-solved territory. Deliberately declined to turn every absent feature into a task (import lists, calendar) when the friction was speculative rather than concrete, per the task's own 'convert concrete friction, not broad rewrites' instruction."
+- date: 2026-08-15
+  project: kapowarr
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Verifying a cross-repo projection is stronger when grounded in the receiving side's actual code (dispatched a background agent to read kind_robots' server/api/conductor/sync.post.ts and conductorProjectionDb.ts) rather than just poking the public API and declaring it fine -- confirmed there's no separate Milestone/Task SQL table (roadmap YAML is stored as a blob and re-parsed per-request), which ruled out an entire class of task-level sync-lag risk. Found and fixed a real staleness bug the task note called out by name: m1/m2 milestone status was stuck at not-started despite real done/needs-human/ready tasks under both -- 'verify the projection' should mean checking the data is both present AND accurate, not just present."
