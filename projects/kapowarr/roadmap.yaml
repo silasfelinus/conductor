@@ -230,3 +230,24 @@ tasks:
       path so a user testing a dead client isn't stuck waiting minute-plus for a
       spinner. Same cross-repo boundary as other kapowarr code tasks --
       implementation belongs in silasfelinus/Kapowarr, not this repo.
+
+  - id: t-016
+    milestone: m2
+    title: "Bound send_notification()'s per-service thread fan-out with a worker pool"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-012 (silasfelinus/Kapowarr#5): send_notification() fires one
+      plain threading.Thread per matching, enabled notification service per event
+      (backend/implementations/notifications.py), each of which itself spins up a
+      one-worker ThreadPoolExecutor to bound the actual HTTP call. Fine at today's
+      scale (a handful of services, downloads aren't that frequent), but a library
+      with many enabled services and frequent concurrent downloads could accumulate
+      many short-lived threads at once with no cap. Replace the per-call Thread +
+      one-off ThreadPoolExecutor with a small shared, bounded worker pool (reusing
+      the ThreadPoolExecutor + future.result(timeout=NOTIFICATION_REQUEST_TIMEOUT)
+      pattern that already exists, just not sized/shared across calls). Same
+      cross-repo boundary as other kapowarr code tasks -- implementation belongs in
+      silasfelinus/Kapowarr, not this repo.
