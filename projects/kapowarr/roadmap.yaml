@@ -63,15 +63,16 @@ tasks:
   - id: t-003
     milestone: m1
     title: "Make the displayed application title configurable"
-    status: needs-human
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: 'FOR SILAS: The full patch to make the displayed application title configurable is written at projects/kapowarr/docs/t-003-configurable-title.md (one new PublicSettingsValues field app_title, one Constants.DEFAULT_APP_TITLE, and small diffs across settings.py, ui.py, server.py, base.html, login.html, page_not_found.html, settings_general.html/js -- nine total files, no new files). What it contains: a DB-backed app_title setting (default empty = falls back to ''Kapowarr'') that replaces the browser tab title, login screen heading, and PWA manifest name/short_name; the System Status page''s Kapowarr version/GitHub/Donate attribution is deliberately left untouched so upstream credit stays visible regardless of the custom title. TO APPROVE: this session''s GitHub access does not cover silasfelinus/Kapowarr (same boundary as t-002), so the patch could not be applied/pushed/tested there. Either paste the patch into a Kapowarr-scoped session/PR yourself, or ask a future conductor session with Kapowarr repo access to apply it from the handoff doc. Once merged in Kapowarr and the settings round-trip is confirmed, set status: done here (soft gate -- other kapowarr tasks are unaffected and remain pickable).'
+    note: 'Applied and merged in silasfelinus/Kapowarr#1 (squash 09c2574) — this session had Kapowarr in its GitHub scope, so the previously-designed handoff patch (projects/kapowarr/docs/t-003-configurable-title.md) was implemented and verified live: PUT /api/settings with app_title round-trips, login/tab-title/PWA-manifest pick it up with no server restart, System Status attribution stays untouched. See TALKBACK.md for full verification notes.'
     claimed_by: 20260815T152810Z-kapowarr-t003
     claimed_at: '2026-08-15T15:28:11Z'
-    updated: '2026-08-15T15:31:19Z'
-    soft_gate: true
+    updated: '2026-08-15T21:33:16Z'
+    soft_gate: false
+    implementation_pr: 'silasfelinus/Kapowarr#1'
 
   - id: t-004
     milestone: m1
