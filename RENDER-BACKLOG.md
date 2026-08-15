@@ -544,3 +544,9 @@ queueDepth: PENDING=377, RUNNING=1, DONE=4411, FAILED=186, CANCELLED=3179 (all-t
 
 ## 2026-08-15T02:30:17Z | ai-art-academy/t-044 | growing
 queueDepth: PENDING=141, DONE=4411, FAILED=423, CANCELLED=3179 (all-time). oldestPending: id=8772, age=83252s (~23.1h), engine=COMFY. windowThroughput (24h): PENDING=141, DONE=74, FAILED=417, CANCELLED=1. recentFailed (last 25): 25/25 = generic workflow error (no node/exception detail forwarded).
+
+## 2026-08-15T03:29:16Z | ai-art-academy/t-044 | healthy
+queueDepth: DONE=4411, FAILED=564, CANCELLED=3179 (all-time). oldestPending: none. windowThroughput (24h): DONE=7. recentFailed (last 25): 25/25 = generic workflow error (no node/exception detail forwarded).
+
+## 2026-08-15T03:29:28Z | ai-art-academy/t-068 | healthy
+queueDepth: DONE=4411, FAILED=564, CANCELLED=3179 (all-time). oldestPending: none. windowThroughput (24h): DONE=7. recentFailed (last 25): 25/25 = generic workflow error (no node/exception detail forwarded).
