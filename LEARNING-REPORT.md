@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-15T21:39:45Z
+Generated: 2026-08-15T21:56:51Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **617**
-- Outcomes: blocked: 14, cancelled: 1, done: 602
+- Closed tasks recorded: **618**
+- Outcomes: blocked: 14, cancelled: 1, done: 603
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
 | interface-vision | 83 | 100% |
-| kapowarr | 7 | 100% |
+| kapowarr | 8 | 100% |
 | kind-robots | 49 | 98% |
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
@@ -62,7 +62,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 601 | 99% |
+| software | 602 | 99% |
 
 ## Failure categories
 
@@ -83,6 +83,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-15 `kapowarr/t-013` — Designed and implemented from scratch (unlike t-002/t-003/t-004, no prior handoff doc existed) -- found three existing, already-used primitives (ComicVine.test_key(), ExternalClients.test(), RootFolder.size is None) to build the new health check on top of instead of writing new low-level detection logic. Live testing (not just unit-level checks) caught a real bug the design alone wouldn't have surfaced: aggregating multiple network checks into one endpoint that fires on every page load inherited each check's full retry/ backoff duration (90+ seconds for one unreachable client), which is fine for a one-off Settings "Test" button but not for an every-page-load health panel. Fixed with a bounded per-check timeout, and a second live test caught that `with ThreadPoolExecutor(...) as executor` still blocks on `shutdown(wait=True)` even after individual futures time out -- switching to manual `shutdown(wait=False)` was needed too. Running the actual app end-to-end, not just static checks, is what found both issues.
 - 2026-08-15 `kapowarr/t-004` — Same cycle as t-002/t-003 -- applied projects/kapowarr/docs/t-004-launch-flair.md verbatim. Live smoke test against an empty library confirmed GET /api/system/launchflair returns {"title": null} and exercises the frontend's DEFAULT_FLAIR_LINES fallback path, not just the happy path.
 - 2026-08-15 `kapowarr/t-003` — Same cycle as t-002/t-004 -- applied projects/kapowarr/docs/t-003-configurable-title.md verbatim. Live smoke test confirmed the important edge case the design doc called out: app_title correctly excluded from the host/port/url_base restart-trigger tuple (no server restart on save), and the System Status page's upstream attribution/donate links render unchanged regardless of the configured title.
 - 2026-08-15 `kapowarr/t-002` — This session's GitHub scope newly included silasfelinus/Kapowarr (a prior session's t-014 escalation had asked Silas to widen it) -- the fully designed handoff patch from projects/kapowarr/docs/t-002-loading-lines.md was applied verbatim, verified in a fresh venv (mypy, isort, unittest, node --check, and a live app run), and shipped as silasfelinus/Kapowarr#1 instead of producing a fourth handoff doc. A well-specified handoff written for a future differently-scoped session paid off exactly as designed once that session arrived.
@@ -92,7 +93,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-15 `kapowarr/t-005` — A read-only clone plus targeted grep for -arr-convention keywords (notification, webhook, health check, import_list, calendar) across the whole fork found two genuine, scoped gaps (no notification system, no health-warnings panel) while also confirming several areas the roadmap notes didn't call out as already mature (queue reorder/blocklist, per-issue search, download-client test-connection, multi-root-folder support) -- recording the negative findings in the audit doc, not just the positive ones, keeps a future audit from re-flagging already-solved territory. Deliberately declined to turn every absent feature into a task (import lists, calendar) when the friction was speculative rather than concrete, per the task's own 'convert concrete friction, not broad rewrites' instruction.
 - 2026-08-15 `kapowarr/t-006` — A read-only git clone of the target repo (public HTTPS, no auth, distinct from the session's GitHub MCP scope) let a design-only task ground its spec in the actual ABC/class chain instead of the task note's abstractions -- found that TorrentDownload.update_status() already polls purely through the ExternalDownloadClient interface with zero torrent-specific logic, so a Usenet client is a peer implementation, not a new mechanism, and located the one real shared touchpoint (download_queue.py's TorrentDownload-specific isinstance dispatch) that does need to change. Worth doing before writing any cross-repo design/handoff doc: reading the real code turns a plausible design into a verified one and surfaces the one non-obvious shared edge a task note alone won't mention.
 - 2026-08-15 `kapowarr/t-001` — For a brand-new project's first task (a design brief with no existing repo context in this session's GitHub scope), WebFetch against the public upstream and fork repos/docs grounded the architecture section in the project's real download-client model (built-in DDL vs. external clients) instead of guessing from the task notes alone -- worth doing for any design-brief task on a project this session hasn't touched before, especially when the target codebase itself is outside the session's repo scope.
-- 2026-08-15 `davinci/t-024` — When a 'playtest-driven tuning' task can't be done literally (sandbox has no live-user auth against the app's OpenAI-backed endpoint), a Monte Carlo simulation against the actual production constants and distribution answers the same design question more rigorously than a handful of manual runs -- and can overturn the obvious hypothesis: the flagged +-2 swing bound turned out not to matter at all (any single nonzero touch already crosses the pass=1 threshold regardless of magnitude), while the real, unflagged lever was chapter-count coverage (avg 4.2/10 dimensions never touched by the original 3-chapter minimum). Simulate before tuning the constant that looks obviously guilty.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-15T21:39:45Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-15T21:56:51Z_
