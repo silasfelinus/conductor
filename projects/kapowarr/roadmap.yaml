@@ -87,17 +87,12 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Audit -arr quality-of-life gaps"
-    status: claimed
-    owner: worker
+    status: done
+    owner: null
     passes: 0
     stakes: reversible
-    note: >
-      Compare the fork's library, search, queue, download-client, settings, health,
-      import, and history flows against mature -arr interaction patterns. Convert
-      concrete friction into scoped follow-up tasks instead of broad rewrites.
-    claimed_by: 20260815T153326Z-kapowarr-t005
-    claimed_at: '2026-08-15T15:33:26Z'
-    updated: '2026-08-15T15:33:26Z'
+    note: 'Audit written at projects/kapowarr/docs/t-005-arr-qol-audit.md, grounded in a read-only inspection of the live silasfelinus/Kapowarr source (queue.js, view_volume.js, settings_download_clients.js, root_folders.py, status.html, history.html). Found queue reorder/delete/blocklist, per-issue/per-volume search, download-client test-connection, and multi-root-folder support already mature -- no action needed there. Concrete gaps: no notification/webhook system at all (t-012 created), no health-check/system-warnings panel (t-013 created). Import lists and a calendar view were considered and deliberately not turned into tasks (see doc for reasoning) to keep follow-ups scoped to real friction rather than speculative new surface.'
+    updated: '2026-08-15T15:35:39Z'
 
   - id: t-006
     milestone: m2
@@ -172,3 +167,35 @@ tasks:
       Document how to fetch/compare upstream, keep customizations isolated, resolve
       conflicts, run tests, and preserve attribution. No upstream PR or issue is
       required for this fork-maintenance workflow.
+
+  - id: t-012
+    milestone: m2
+    title: "Add a Discord/generic-webhook notification system"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      From the t-005 QoL audit (projects/kapowarr/docs/t-005-arr-qol-audit.md):
+      zero existing notification/webhook code anywhere in the fork. Add a
+      pluggable notification target (start with Discord + a generic webhook,
+      matching Sonarr/Radarr's pattern) that can fire on download-complete,
+      import-failed, and future health-warning events. Same cross-repo boundary
+      as other kapowarr code tasks -- implementation belongs in
+      silasfelinus/Kapowarr, not this repo.
+
+  - id: t-013
+    milestone: m2
+    title: "Add a health-check / system-warnings panel"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      From the t-005 QoL audit (projects/kapowarr/docs/t-005-arr-qol-audit.md):
+      the System Status page has no equivalent of Sonarr's "Health" checks (e.g.
+      unreachable download client, invalid ComicVine API key, missing/
+      inaccessible root folder). Add a warnings surface so these are visible in
+      the UI instead of only discoverable via logs or a stalled queue. Same
+      cross-repo boundary as other kapowarr code tasks -- implementation belongs
+      in silasfelinus/Kapowarr, not this repo.
