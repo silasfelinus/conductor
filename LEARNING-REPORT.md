@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-15T17:28:48Z
+Generated: 2026-08-15T17:42:54Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **612**
-- Outcomes: blocked: 14, cancelled: 1, done: 597
+- Closed tasks recorded: **613**
+- Outcomes: blocked: 14, cancelled: 1, done: 598
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -42,7 +42,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 61 | 100% |
+| model-builder | 62 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -62,7 +62,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 596 | 99% |
+| software | 597 | 99% |
 
 ## Failure categories
 
@@ -83,6 +83,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-15 `model-builder/t-029` — Sixth t-029 cycle found a bug class distinct from the five prior cycles: a server-side check-then-act race (findUnique-then-create against FacetProfile's single-column facetId PK) rather than another client-side async-fetch-ordering or unawaited-promise-before-toast instance. Two ModelBuildRuns can target the same existing Facet concurrently since nothing serializes runs by sourceId; the item-level idempotencyKey claim only prevents the same item double-committing. Fixed with facetProfile.upsert(), which resolves create-vs-update atomically at the database instead of racing on a stale client-side read. When a prior cycle explicitly names unexplored files, reading those files on their own terms (rather than pattern-matching the previous bug shape onto them) found a genuinely new, more severe bug — a whole-transaction rollback aborting a sibling write, not just a stale UI read.
 - 2026-08-15 `kapowarr/t-010` — Verifying a cross-repo projection is stronger when grounded in the receiving side's actual code (dispatched a background agent to read kind_robots' server/api/conductor/sync.post.ts and conductorProjectionDb.ts) rather than just poking the public API and declaring it fine -- confirmed there's no separate Milestone/Task SQL table (roadmap YAML is stored as a blob and re-parsed per-request), which ruled out an entire class of task-level sync-lag risk. Found and fixed a real staleness bug the task note called out by name: m1/m2 milestone status was stuck at not-started despite real done/needs-human/ready tasks under both -- 'verify the projection' should mean checking the data is both present AND accurate, not just present.
 - 2026-08-15 `kapowarr/t-005` — A read-only clone plus targeted grep for -arr-convention keywords (notification, webhook, health check, import_list, calendar) across the whole fork found two genuine, scoped gaps (no notification system, no health-warnings panel) while also confirming several areas the roadmap notes didn't call out as already mature (queue reorder/blocklist, per-issue search, download-client test-connection, multi-root-folder support) -- recording the negative findings in the audit doc, not just the positive ones, keeps a future audit from re-flagging already-solved territory. Deliberately declined to turn every absent feature into a task (import lists, calendar) when the friction was speculative rather than concrete, per the task's own 'convert concrete friction, not broad rewrites' instruction.
 - 2026-08-15 `kapowarr/t-006` — A read-only git clone of the target repo (public HTTPS, no auth, distinct from the session's GitHub MCP scope) let a design-only task ground its spec in the actual ABC/class chain instead of the task note's abstractions -- found that TorrentDownload.update_status() already polls purely through the ExternalDownloadClient interface with zero torrent-specific logic, so a Usenet client is a peer implementation, not a new mechanism, and located the one real shared touchpoint (download_queue.py's TorrentDownload-specific isinstance dispatch) that does need to change. Worth doing before writing any cross-repo design/handoff doc: reading the real code turns a plausible design into a verified one and surfaces the one non-obvious shared edge a task note alone won't mention.
@@ -92,7 +93,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-15 `storybook/t-021` — A kaizen guard task from a hand-fixed field-drop bug (t-010's scenario fix) should assert the general shape (every input.<field> a builder reads must survive a rebuild helper) rather than re-checking the one field that broke -- caught the same bug class generically instead of only re-guarding scenario.
 - 2026-08-14 `conductor-app/t-013` — A task's checklist can silently finish itself via unrelated cycles (art relay draining, an admin Placements backfill) between sessions -- re-verify each open step against live state before assuming a 3-week-old gap still holds; two of this task's three flagged blockers had already resolved themselves.
 - 2026-08-14 `model-builder/t-044` — Kaizen from t-029 (PR #1882): before writing a coverage guard for "the async-fetch staleness pattern," actually read every performFetch call site first rather than assuming the two known-fixed functions' exact ticket-counter shape generalizes. It doesn't: modelBuilderStore.ts uses six independently-correct staleness idioms (ticket-counter, capture-compare, cancelled-run-check, identity-check, serialized-lock, write-only) depending on what each function does with the response. A guard that blindly demanded the ticket shape everywhere would have false-flagged ~8 already-correct, already-audited functions. The shippable design was a registry-driven coverage check (verifyModelBuilderAsyncFetchStalenessCoverage.ts, kind_robots#1884): every performFetch( call site must be classified in an explicit registry with a spot-checked marker, so a genuinely NEW unaudited call site fails CI, without re-litigating already-solved cases.
-- 2026-08-14 `conductor/t-117` — Doc-only kaizen closing a twice-repeated security-flag (TALKBACK.md 2026-08-13, 2026-08-14): a non-isolated background Agent doing git-mutating work in a repo a foreground session is still actively using can silently discard the foreground's uncommitted edits or delete its designated branch (with any unpushed commits on it). Promoted from documented-but-skippable CLAUDE.md prose to AGENTS.md hard rule 12: isolation:'worktree' is required for any background Agent mutating git state in a repo the foreground session is concurrently using, not only for the narrower "in-flight workaround" case rule 11 already covered.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-15T17:28:48Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-15T17:42:54Z_
