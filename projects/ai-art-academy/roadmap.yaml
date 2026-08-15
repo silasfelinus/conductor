@@ -1275,11 +1275,11 @@ tasks:
   - id: t-044
     milestone: m2
     title: 'kind_robots: fix Kontext LoRA loading -- every lora_name naming convention rejected by ComfyUI as not-in-list'
-    status: ready
+    status: claimed
     gate_human: true
     passes: 0
     stakes: reversible
-    updated: '''2026-08-14T16:01:09Z'''
+    updated: '2026-08-15T03:29:09Z'
     note: |-
       RECHECK (conductor scheduled Agent run, 2026-08-14T16:01:09Z, logged in RENDER-BACKLOG.md): significant new signal -- recentFailed flipped from the ~14h-long connection-refused streak back to the ORIGINAL t-044 signature, and on one of this task's own two tracked verification jobs: ArtJob 8276 failed again at 2026-08-14T11:41:40Z with `lora_name: 'Flux/SFW/3D_Cartoon_Vision_flux_v1.safetensors' not in (list of length 2231)` -- byte-for-byte the pre-fix `value_not_in_list` rejection this whole task exists to track, not a new/different job. The error is stamped `[asset-name resolution: skipped-no-object-info, 0 remap(s)]` -- ops/home-server/relay_agent.py's align_workflow_asset_names() only reaches that state when fetch_comfy_object_info() returns None, which per the code's own comments only happens when there is no cached copy AND every fetch attempt in that call failed (the TTL/retry/stale-fallback machinery added for the 2026-08-13T22:12:47Z charmap fix, PR #2217, exists specifically to serve a stale cached copy rather than skip -- so a `skipped-no-object-info` outcome implies the relay process had no object_info cached at all at that moment, e.g. shortly after a cold start/restart, combined with the fetch attempts also failing, consistent with the same connection-refused flakiness this task has logged all day). This contradicts the 2026-08-13T23:36Z/22:42Z notes' optimistic read that the original blocker was resolved pending only a terminal DONE/FAILED confirmation -- it is NOT resolved end-to-end; the fail-open path (submit unresolved rather than block/retry-longer when object_info is unavailable) can still reproduce the exact original symptom whenever the relay's cache is cold. Not attempting a blind code change to this already carefully-tuned resolver (TTL/retry/stale-fallback all have documented rationale in relay_agent.py's own comments) without visibility into the relay process's actual uptime/restart pattern around 11:41Z, which this sandbox cannot observe. Queue itself remains healthy otherwise: DONE 4270->4350 (+80), PENDING 700->623 (draining), staleRunningCount 0. FOR SILAS: ArtJob 8276 -- one of this task's own two tracked verification jobs -- failed again today at 11:41:40Z with the original pre-fix error, tagged `[asset-name resolution: skipped-no-object-info]`. Worth checking whether kr-relay restarted around that time (a cold cache would explain it) and whether the fail-open behavior (submit unresolved rather than wait/retry longer for object_info) is the tradeoff you want, or whether object_info unavailability should hold the job instead of guaranteeing it fails. Not closing the gate -- this is a regression on the tracked signal, not a green light. gate_human: true / soft_gate unchanged.
 
@@ -1484,6 +1484,9 @@ tasks:
       Diagnosed and cleared the three historical failed ArtJobs: 8116 was the old A1111 connection-refused producer regression already fixed by Kind Robots #1651; 7622/7623 were the known Kontext LoRA value_not_in_list probes. Superseded them with corrected replacements 8275/8276/8278, cleaned concurrent duplicate replacements 8277/8279, and left durable prompt-free FAILED-row diagnostics in the repair workflow. Final authenticated repair run 31664255566 reported no FAILED ArtJobs. Fresh replacements were not observed FAILED, but t-044's human-gated live LoRA acceptance remains outstanding.
     run_log: projects/ai-art-academy/docs/t-044-lora-loading-run-log.md
     approved_by_human: false
+    owner: reviewer
+    claimed_by: claude-scheduled-20260815T032908Z-aa-t044
+    claimed_at: '2026-08-15T03:29:09Z'
 
   - id: t-045
     milestone: m2
