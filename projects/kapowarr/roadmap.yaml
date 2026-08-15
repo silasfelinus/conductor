@@ -189,18 +189,14 @@ tasks:
   - id: t-013
     milestone: m2
     title: "Add a health-check / system-warnings panel"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    note: >
-      From the t-005 QoL audit (projects/kapowarr/docs/t-005-arr-qol-audit.md):
-      the System Status page has no equivalent of Sonarr's "Health" checks (e.g.
-      unreachable download client, invalid ComicVine API key, missing/
-      inaccessible root folder). Add a warnings surface so these are visible in
-      the UI instead of only discoverable via logs or a stalled queue. Same
-      cross-repo boundary as other kapowarr code tasks -- implementation belongs
-      in silasfelinus/Kapowarr, not this repo.
+    note: 'Implemented and merged in silasfelinus/Kapowarr#2 (squash f70537e): new GET /api/system/health aggregates a ComicVine API-key check, a per-external-client reachability test, and a root-folder accessibility check into warnings shown on the Status page. Live testing surfaced a real robustness bug (an unreachable download client made the endpoint take 90+ seconds due to Session retry/backoff) which was fixed with a bounded per-check timeout before merging. See TALKBACK.md for full verification notes.'
+    updated: '2026-08-15T21:50:41Z'
+    soft_gate: false
+    implementation_pr: 'silasfelinus/Kapowarr#2'
 
   - id: t-014
     milestone: m1
@@ -212,3 +208,25 @@ tasks:
     gate_human: true
     note: 'FOR SILAS: Update 2026-08-15 (later same day) — this session''s GitHub scope now includes silasfelinus/Kapowarr (confirmed via mcp__github__get_file_contents and a real push), so option (a) appears to already be in effect for this trigger. Used it to apply, verify (mypy/isort/unittest/live smoke test), and ship the three accumulated handoff patches: silasfelinus/Kapowarr#1 (squash 09c2574) closes t-002/t-003/t-004. t-012 and t-013 are unblocked and pickable by a future cycle without the handoff-doc workaround. TO APPROVE: if this scope grant is intentional and standing (not a one-off), please close this task done — the concrete blocker it tracked is resolved and demonstrated working end-to-end. If it was unintentional or session-specific, leave this open so the pattern can be re-escalated if a future session hits the wall again.'
     updated: '2026-08-15T21:33:42Z'
+
+  - id: t-015
+    milestone: m2
+    title: "Bound the external-client connectivity-test retry/backoff with a timeout"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-013 (silasfelinus/Kapowarr#2): the Settings page's existing
+      "Test" button for external download clients (POST /api/externalclients/test,
+      backed by ExternalClients.test() -> each client's classmethod test(), which
+      uses the shared Session class) has no timeout of its own -- against a
+      genuinely unreachable client it waits out Session's full retry cycle (5
+      retries with exponential backoff, observed to take 90+ seconds live during
+      t-013's testing) before reporting failure. t-013 fixed this for the new
+      health-check endpoint with a bounded per-call timeout run in a thread pool
+      (see backend/internals/health.py's HEALTH_CHECK_TIMEOUT / _run_bounded);
+      apply the same or a similar bound to the interactive Test button's request
+      path so a user testing a dead client isn't stuck waiting minute-plus for a
+      spinner. Same cross-repo boundary as other kapowarr code tasks --
+      implementation belongs in silasfelinus/Kapowarr, not this repo.
