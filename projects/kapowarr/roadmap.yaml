@@ -237,8 +237,8 @@ tasks:
   - id: t-016
     milestone: m2
     title: "Bound send_notification()'s per-service thread fan-out with a worker pool"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -254,3 +254,6 @@ tasks:
       pattern that already exists, just not sized/shared across calls). Same
       cross-repo boundary as other kapowarr code tasks -- implementation belongs in
       silasfelinus/Kapowarr, not this repo.
+    claimed_by: conductor-sweep-20260815-2350
+    claimed_at: '2026-08-15T23:33:49Z'
+    updated: '2026-08-15T23:33:49Z'
