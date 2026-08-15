@@ -8044,3 +8044,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A kaizen guard task from a hand-fixed field-drop bug (t-010's scenario fix) should assert the general shape (every input.<field> a builder reads must survive a rebuild helper) rather than re-checking the one field that broke -- caught the same bug class generically instead of only re-guarding scenario."
+- date: 2026-08-15
+  project: conductor-app
+  task: t-015
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "When a task offers wire-or-drop for dead config fields, check whether the wire target already has a canonical source elsewhere (utils/projectPlacements.ts here) before adding new UI plumbing -- dropping the redundant copy removes the whole stale-duplicate bug class with a purely mechanical, zero-risk diff, where wiring would have added an unverified UI surface. Also: grep scope for a drift audit should match the actual usage pattern (ProjectFrontConfig), not a directory convention (components/conductor/*) -- coloring-book-page.vue lived outside that directory and would have been missed."
