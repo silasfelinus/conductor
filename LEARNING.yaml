@@ -8190,3 +8190,28 @@ records:
     verbatim. Live smoke test against an empty library confirmed
     GET /api/system/launchflair returns {"title": null} and exercises the
     frontend's DEFAULT_FLAIR_LINES fallback path, not just the happy path.
+- date: 2026-08-15
+  project: kapowarr
+  task: t-013
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Designed and implemented from scratch (unlike t-002/t-003/t-004, no
+    prior handoff doc existed) -- found three existing, already-used
+    primitives (ComicVine.test_key(), ExternalClients.test(),
+    RootFolder.size is None) to build the new health check on top of
+    instead of writing new low-level detection logic. Live testing (not
+    just unit-level checks) caught a real bug the design alone wouldn't
+    have surfaced: aggregating multiple network checks into one endpoint
+    that fires on every page load inherited each check's full retry/
+    backoff duration (90+ seconds for one unreachable client), which is
+    fine for a one-off Settings "Test" button but not for an
+    every-page-load health panel. Fixed with a bounded per-check timeout,
+    and a second live test caught that `with ThreadPoolExecutor(...) as
+    executor` still blocks on `shutdown(wait=True)` even after individual
+    futures time out -- switching to manual `shutdown(wait=False)` was
+    needed too. Running the actual app end-to-end, not just static checks,
+    is what found both issues.
