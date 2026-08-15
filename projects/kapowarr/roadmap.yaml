@@ -189,18 +189,14 @@ tasks:
   - id: t-013
     milestone: m2
     title: "Add a health-check / system-warnings panel"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    note: >
-      From the t-005 QoL audit (projects/kapowarr/docs/t-005-arr-qol-audit.md):
-      the System Status page has no equivalent of Sonarr's "Health" checks (e.g.
-      unreachable download client, invalid ComicVine API key, missing/
-      inaccessible root folder). Add a warnings surface so these are visible in
-      the UI instead of only discoverable via logs or a stalled queue. Same
-      cross-repo boundary as other kapowarr code tasks -- implementation belongs
-      in silasfelinus/Kapowarr, not this repo.
+    note: 'Implemented and merged in silasfelinus/Kapowarr#2 (squash f70537e): new GET /api/system/health aggregates a ComicVine API-key check, a per-external-client reachability test, and a root-folder accessibility check into warnings shown on the Status page. Live testing surfaced a real robustness bug (an unreachable download client made the endpoint take 90+ seconds due to Session retry/backoff) which was fixed with a bounded per-check timeout before merging. See TALKBACK.md for full verification notes.'
+    updated: '2026-08-15T21:50:41Z'
+    soft_gate: false
+    implementation_pr: 'silasfelinus/Kapowarr#2'
 
   - id: t-014
     milestone: m1
