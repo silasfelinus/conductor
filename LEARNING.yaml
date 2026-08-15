@@ -8215,3 +8215,23 @@ records:
     futures time out -- switching to manual `shutdown(wait=False)` was
     needed too. Running the actual app end-to-end, not just static checks,
     is what found both issues.
+- date: 2026-08-15
+  project: kapowarr
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Implemented + merged silasfelinus/Kapowarr#5. Live end-to-end testing
+    (running the actual app, not just static checks) caught two real bugs
+    before merge: a 90+ second unbounded retry/backoff on the new Test
+    button (same bug class health.py already fixed once in t-013 --
+    fixed the same way, ThreadPoolExecutor + future.result(timeout=...));
+    and a "Working outside of application context" crash because the
+    bounding executor's worker thread doesn't inherit the caller's Flask
+    app context, needed explicitly via Server().app.app_context(). Any
+    new background-thread network call in this codebase should assume
+    neither Session's default retry/backoff nor Flask's app context are
+    safe to take for granted off the request/download thread.
