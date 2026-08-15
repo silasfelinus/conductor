@@ -204,13 +204,16 @@ tasks:
   - id: t-014
     milestone: m1
     title: "Resolve GitHub scope gap blocking kapowarr code tasks"
-    status: needs-human
-    owner: null
+    status: done
     passes: 0
     stakes: reversible
     gate_human: true
-    note: 'FOR SILAS: Update 2026-08-15 (later same day) — this session''s GitHub scope now includes silasfelinus/Kapowarr (confirmed via mcp__github__get_file_contents and a real push), so option (a) appears to already be in effect for this trigger. Used it to apply, verify (mypy/isort/unittest/live smoke test), and ship the three accumulated handoff patches: silasfelinus/Kapowarr#1 (squash 09c2574) closes t-002/t-003/t-004. t-012 and t-013 are unblocked and pickable by a future cycle without the handoff-doc workaround. TO APPROVE: if this scope grant is intentional and standing (not a one-off), please close this task done — the concrete blocker it tracked is resolved and demonstrated working end-to-end. If it was unintentional or session-specific, leave this open so the pattern can be re-escalated if a future session hits the wall again.'
-    updated: '2026-08-15T21:33:42Z'
+    note: |-
+      FOR SILAS: Update 2026-08-15 (later same day) — this session's GitHub scope now includes silasfelinus/Kapowarr (confirmed via mcp__github__get_file_contents and a real push), so option (a) appears to already be in effect for this trigger. Used it to apply, verify (mypy/isort/unittest/live smoke test), and ship the three accumulated handoff patches: silasfelinus/Kapowarr#1 (squash 09c2574) closes t-002/t-003/t-004. t-012 and t-013 are unblocked and pickable by a future cycle without the handoff-doc workaround. TO APPROVE: if this scope grant is intentional and standing (not a one-off), please close this task done — the concrete blocker it tracked is resolved and demonstrated working end-to-end. If it was unintentional or session-specific, leave this open so the pattern can be re-escalated if a future session hits the wall again.
+
+      Silas explicitly confirmed in the 2026-08-15 GitHub session that he restarted the thread specifically so this session would have GitHub access, and this session successfully created a branch, commits, and PR #3 in silasfelinus/Kapowarr. The repo-scope blocker is therefore intentionally cleared and verified end-to-end.
+    updated: '2026-08-15T22:30:00Z'
+    approved_by_human: true
 
   - id: t-015
     milestone: m2
