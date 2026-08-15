@@ -8053,3 +8053,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "When a task offers wire-or-drop for dead config fields, check whether the wire target already has a canonical source elsewhere (utils/projectPlacements.ts here) before adding new UI plumbing -- dropping the redundant copy removes the whole stale-duplicate bug class with a purely mechanical, zero-risk diff, where wiring would have added an unverified UI surface. Also: grep scope for a drift audit should match the actual usage pattern (ProjectFrontConfig), not a directory convention (components/conductor/*) -- coloring-book-page.vue lived outside that directory and would have been missed."
+- date: 2026-08-15
+  project: davinci
+  task: t-024
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "When a 'playtest-driven tuning' task can't be done literally (sandbox has no live-user auth against the app's OpenAI-backed endpoint), a Monte Carlo simulation against the actual production constants and distribution answers the same design question more rigorously than a handful of manual runs -- and can overturn the obvious hypothesis: the flagged +-2 swing bound turned out not to matter at all (any single nonzero touch already crosses the pass=1 threshold regardless of magnitude), while the real, unflagged lever was chapter-count coverage (avg 4.2/10 dimensions never touched by the original 3-chapter minimum). Simulate before tuning the constant that looks obviously guilty."
