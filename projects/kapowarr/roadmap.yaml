@@ -75,17 +75,15 @@ tasks:
   - id: t-004
     milestone: m1
     title: "Add database-driven launch flair"
-    status: claimed
+    status: needs-human
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      On launch, optionally derive a playful line or visual flourish from a random
-      comic/title already in the local database. Sanitize displayed data and use a
-      deterministic generic fallback for empty or unavailable libraries.
+    note: 'FOR SILAS: The full patch to add database-driven launch flair is written at projects/kapowarr/docs/t-004-launch-flair.md (one new Library.get_random_title() method, one new /api/system/launchflair route, one new launch_flair.js file, and small diffs to base.html and general.css -- no new dependencies, no schema change). What it contains: a header line, shown on every page load, built from a random comic title already in the library (e.g. "Currently rereading Saga..."), sanitized and truncated before display and written via textContent (never innerHTML) so DB content can never render as markup; falls back to a generic line when the library is empty or the request fails, never a blank half-sentence. TO APPROVE: this session''s GitHub access does not cover silasfelinus/Kapowarr (same boundary as t-002/t-003), so the patch could not be applied/pushed/tested there. Either paste the patch into a Kapowarr-scoped session/PR yourself, or ask a future conductor session with Kapowarr repo access to apply it from the handoff doc. Once merged in Kapowarr and visually confirmed (real title substitution, empty-library fallback, truncation/sanitization), set status: done here (soft gate -- other kapowarr tasks are unaffected and remain pickable).'
     claimed_by: 20260815T162659Z-kapowarr-t004
     claimed_at: '2026-08-15T16:27:02Z'
     updated: '2026-08-15T16:27:02Z'
+    soft_gate: true
 
   - id: t-005
     milestone: m2

@@ -8089,3 +8089,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A read-only clone plus targeted grep for -arr-convention keywords (notification, webhook, health check, import_list, calendar) across the whole fork found two genuine, scoped gaps (no notification system, no health-warnings panel) while also confirming several areas the roadmap notes didn't call out as already mature (queue reorder/blocklist, per-issue search, download-client test-connection, multi-root-folder support) -- recording the negative findings in the audit doc, not just the positive ones, keeps a future audit from re-flagging already-solved territory. Deliberately declined to turn every absent feature into a task (import lists, calendar) when the friction was speculative rather than concrete, per the task's own 'convert concrete friction, not broad rewrites' instruction."
+- date: 2026-08-15
+  project: kapowarr
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: needs-human
+  failure_category: null
+  lesson: "Fourth kapowarr code task in a row to hit the GitHub-scope wall (session covers conductor + kind_robots, not silasfelinus/Kapowarr) -- the read-only-clone-plus-handoff-doc pattern from t-002/t-003 continues to work cleanly, but a fifth occurrence should prompt escalating the scope gap to Silas directly rather than deferring again. Designed the sanitization/truncation/fallback requirements (control-char stripping, textContent-only rendering, deterministic empty-library fallback) into the patch up front rather than as a follow-up, matching the task note's explicit ask."
