@@ -8120,3 +8120,28 @@ records:
     terms (rather than pattern-matching the previous bug shape onto them)
     found a genuinely new, more severe bug — a whole-transaction rollback
     aborting a sibling write, not just a stale UI read.
+- date: '2026-08-15'
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Seventh t-029 cycle followed the prior cycle's suggestion to widen scope
+    to modelBuilderFields.ts/modelBuilderRecipes.ts/relations.ts, found those
+    genuinely race-free (pure static data and a pure read-only check), then
+    broadened the search one hop further to the PATCH write paths that
+    consume those files' output (prepareItemUpdate, feeding
+    items/[id].patch.ts and items/batch.patch.ts) and found a real bug there
+    instead: a blind wholesale stageStatuses overwrite, the same stale-
+    snapshot class already fixed once in commit.post.ts's COMMIT-only write
+    but never generalized to the PATCH/batch-PATCH routes. Most exploitable
+    in the batch route, where every entry does its own DB round trip before
+    the shared transaction starts, widening the concurrent-write window well
+    past the single-item route's. When a suggested lead turns out clean,
+    checking one hop downstream of it (what actually consumes that file's
+    output) found a real bug an earlier cycle's own fix pattern had already
+    named but not generalized -- a second instance of an already-known bug
+    shape is still worth finding.
