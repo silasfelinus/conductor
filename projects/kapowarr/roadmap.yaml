@@ -49,17 +49,15 @@ tasks:
   - id: t-002
     milestone: m1
     title: "Add rotating funny loading lines"
-    status: claimed
+    status: needs-human
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Add Radarr/Sonarr-style playful loading copy through a centralized mechanism
-      that is easy to extend and test. Keep ordinary loading behavior functional
-      when JavaScript or data lookup fails.
+    note: 'FOR SILAS: The exact patch for rotating funny loading lines is written at projects/kapowarr/docs/t-002-loading-lines.md (one new file, frontend/static/js/loading_lines.js, plus four one-line template diffs in base.html/volumes.html/view_volume.html/library_import.html). What it contains: a centralized playful-line array, a pure pickLoadingLine(lines, randomFn) lookup function, and an applyLoadingLines() that degrades to the existing plain "Loading..." text if JS fails -- exactly per the task note''s fallback requirement. TO APPROVE: this session''s GitHub access does not cover silasfelinus/Kapowarr, so the patch could not be applied/pushed/tested there. Either paste the patch into a Kapowarr-scoped session/PR yourself, or ask a future conductor session with Kapowarr repo access to apply it from the handoff doc. Once merged in Kapowarr, set status: done here (soft gate -- other kapowarr tasks are unaffected and remain pickable).'
     claimed_by: 20260815T1428Z-kapowarr-t002
     claimed_at: '2026-08-15T14:29:36Z'
-    updated: '2026-08-15T14:29:36Z'
+    updated: '2026-08-15T14:30:30Z'
+    soft_gate: true
 
   - id: t-003
     milestone: m1
