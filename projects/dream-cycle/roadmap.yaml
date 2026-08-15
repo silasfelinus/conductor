@@ -110,11 +110,11 @@ tasks:
   - id: t-006
     milestone: m4
     title: 'Daily Dream maintenance: author proposals and verify the canonical pipeline'
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-09T20:19:26+00:00'
+    updated: '2026-08-15T06:35:32Z'
     depends_on: t-004
     note: |-
       CURRENT CONTRACT: read PIPELINE.md. Maintain today's deterministic six-asset proposal, fold in Silas notes, inspect pinned retries, verify Facets/art/digest evidence, and replenish useful idea inventory. Never create Daily Dream objects manually. Only delegated non-dream scheduler cards may advance stage by stage in their home projects.
@@ -151,6 +151,9 @@ tasks:
       Root cause confirmed: built Daily Dream art requests were staged at the tail of projects/art-prompts.yaml and the auto-art workflow drained generic project art first, so priority 200 never applied because the requests had not become ArtJobs. Prepared a focused fix that prioritizes dream-cycle at the staging boundary, runs request art before project art, and makes the digest distinguish awaiting ArtJob from a submitted queue job.
 
       Merged conductor PR #1981 at edac5380. Daily Dream now runs as one ordered morning cycle: author once at the start, build the eligible prior proposal, attach Facets, submit durable priority-200 ArtJobs, commit evidence even across captured failures, verify the cycle, then send the digest. The email shows the older completed bundle art-rich first and the just-built bundle second without empty art slots; the newly authored steering proposal is not a showcase section. Final-head Daily Dream Contract #89, Worker PR CI #2446 (1041 tests), Security Audit #2424, and Process task events #3809 all completed successfully.
+    owner: worker
+    claimed_by: sched-conductor-dc-t006-20260815T063000Z
+    claimed_at: '2026-08-15T06:35:32Z'
   - id: t-007
     milestone: m5
     title: Generate dream-cycle project art (icon, card, hero)
