@@ -364,3 +364,24 @@ tasks:
     claimed_at: '2026-08-16T02:32:19Z'
     updated: '2026-08-16T02:33:47Z'
     implementation_pr: 'silasfelinus/conductor#2315'
+
+  - id: t-021
+    milestone: m2
+    title: "Make library import continuous, paced, and observable"
+    status: claimed
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >
+      User-prioritized before SAB/NZB work: evolve the existing manual library
+      importer for a 4500+ volume collection. Preserve Review Scan, add an explicit
+      unattended mode that can check all root-folder candidates without repeated
+      confirmation, pace ComicVine conservatively, stop disguising ComicVine
+      throttling as a missing match, keep unmatched folders available for review,
+      and expose visible checked/imported/review/remaining progress. First slice is
+      implemented in silasfelinus/Kapowarr#13; follow-up confidence scoring and
+      durable restart persistence can build on the same conveyor after live use.
+    claimed_by: 20260816T090200Z-kapowarr-t021-import-a7c9
+    claimed_at: '2026-08-16T09:02:00Z'
+    updated: '2026-08-16T09:02:00Z'
+    implementation_pr: 'silasfelinus/Kapowarr#13'
