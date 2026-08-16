@@ -8383,3 +8383,21 @@ records:
     letting 'surgical for now' quietly become 'permanent') is what actually closes the loop --
     this cycle also resolved the fix's own deferred sub-decision (whether manual edits should
     clear a stale error too) rather than re-deferring it a second time."
+- date: 2026-08-16
+  project: alexa-integration
+  task: t-015
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "applyCommand()'s action parameter is a union shared across every command
+    target (on/off/toggle/clear/set/draft), but set/draft only carry meaning for the
+    theme/art targets. Unsupported *targets* were already reported as ignored;
+    unsupported *actions* on a supported target had no equivalent check, so an
+    animation command with action: set/draft fell through untouched and still posted a
+    false 'Applied: <effect> on.' success message. When a field's type is a union
+    shared across multiple branches, each branch needs its own explicit
+    valid-subset check -- a guard scoped to one branch (here, target) doesn't
+    protect the others by default. Kaizen t-020 audits the theme/art branches for the
+    same class of gap."

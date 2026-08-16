@@ -380,3 +380,25 @@ tasks:
   updated: '2026-08-10T08:36:48Z'
   owner: worker
   implementation_pr: 'silasfelinus/conductor#2013'
+
+- id: t-020
+  milestone: m4
+  title: Extend the animation action/target-mismatch guard to the theme and art command targets
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-015's 2026-08-16 cycle (kind_robots PR #1912): applyCommand() in
+    serendipityVoiceStore.ts now rejects an animation command whose action isn't
+    on/off/toggle (set/draft are only meaningful for other targets), reporting it as
+    ignored instead of silently faking success. That cycle only audited the animation
+    target. theme and art are the two targets where set/draft ARE meaningful, but they
+    may have their own narrower mismatches worth checking (e.g. an animation-only action
+    like toggle reaching theme/art, or a target-specific payload shape assumption that
+    doesn't hold for every action). Read applyCommand()'s theme/art branches fresh and
+    confirm each action they accept is actually meaningful for that target; add the same
+    ignored-and-reported guard for any mismatch found, extending
+    verifySerendipityVoiceActionGuard.ts's TARGET_FUNCTIONS rather than adding a new
+    guard file. If nothing is actually wrong there, note that explicitly and close as a
+    verified no-op rather than forcing a change.
