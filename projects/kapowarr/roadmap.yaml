@@ -287,3 +287,25 @@ tasks:
     claimed_at: '2026-08-16T00:28:56Z'
     updated: '2026-08-16T00:36:52Z'
     implementation_pr: 'silasfelinus/Kapowarr#9'
+
+  - id: t-018
+    milestone: m2
+    title: "Dedupe ExternalClients.test()'s inline bound into the shared _test_client_bounded() helper"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-017 (silasfelinus/Kapowarr#9): that task factored the
+      one-worker ThreadPoolExecutor + future.result(timeout=...) bounding
+      pattern out of ExternalClients.test() into a shared
+      _test_client_bounded() helper for add()/update_client() to reuse, but
+      deliberately left ExternalClients.test() itself with its own
+      near-identical inline copy of the same bounding logic -- it needed to
+      keep returning a ClientTestResult dict (for the interactive Settings
+      "Test" button) rather than raising, which _test_client_bounded()
+      doesn't support today. Extend _test_client_bounded() (or add a thin
+      wrapper) so ExternalClients.test() can call it too, removing the last
+      duplicate copy of the timeout/executor/app-context plumbing. Same
+      cross-repo boundary as other kapowarr code tasks -- implementation
+      belongs in silasfelinus/Kapowarr, not this repo.
