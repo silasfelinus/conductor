@@ -8365,3 +8365,21 @@ records:
     asserting at least one pushItem/PATCH call site writes it -- rather than one guard per
     fixed field -- would likely catch this class proactively; filed as model-builder/t-045's
     sibling suggestion for a future cycle."
+- date: 2026-08-16
+  project: model-builder
+  task: t-045
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "t-029 cycle 7's item.error persistence sweep (#1908) covered generateItemAsset/
+    generateItemAssetAsync/pollAsyncArtJob/commitItem but deliberately left out draftText()
+    to keep that fix surgical -- exactly the kind of scoped-on-purpose gap a filed kaizen task
+    exists to close, rather than something the original cycle missed. draftText() turned out
+    to be the highest-frequency failure path of all (autoBuildItem's very first step), so the
+    gap was live from the moment #1908 merged. When a fix is deliberately scoped narrower than
+    the full bug class it demonstrates, filing the remaining scope as its own task (rather than
+    letting 'surgical for now' quietly become 'permanent') is what actually closes the loop --
+    this cycle also resolved the fix's own deferred sub-decision (whether manual edits should
+    clear a stale error too) rather than re-deferring it a second time."
