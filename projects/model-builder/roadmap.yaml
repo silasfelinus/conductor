@@ -575,16 +575,16 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    implementation_pr: 'silasfelinus/kind_robots#1903'
-    note: 'Recurring model-builder/t-029 bug-hunt cycle (conductor scheduled Agent run, session sched-conductor-mb-t029-20260816T052808Z, worktree-isolated background agent). Followed the prior cycles two deferred leads: (1) syncCharacterFacetsInTransaction/syncBotFacetsInTransaction (server/utils/characterFacetSync.ts, botFacetSync.ts) -- confirmed their facet-visibility reads and writes happen inside the same Prisma transaction as the caller, no stale-check-then-write window, not a live bug; (2) widening the re-check discipline to the auto-build/batch-editor Vue components -- traced commitItem()/autoBuildItem()/autoBuildRun()/batchAutoBuild() in stores/modelBuilderStore.ts and found a genuine bug: autoBuildRun() and batchAutoBuild() tallied only committed/skipped outcomes, never failed, and unconditionally set setStatus(success, ...) even when items legitimately failed (including commits rejected by the prior cycles new assertArtImageAttachable re-check) -- a misleading green success banner on a run with a real failure. Fixed by tallying failed and switching tone to error with a failed-count note whenever failed > 0, in both functions. Also did a fresh sweep of every server/api/model-builder/** route for other stale-check/missing-ownership gaps -- all already correctly hardened by prior cycles, nothing new found there. Verified: new guard (verifyModelBuilderAutoBuildFailedSummaryGuard.ts + .test.ts) + self-test pass, all 73 test:model-builder-* npm scripts pass (71 pre-existing + 2 new, no regression), vue-tsc --noEmit exits 0 repo-wide, eslint/prettier clean on touched files. Opened kind_robots PR #1903, all 24 required checks green, squash-merged e89d986f. Suggested next lead for a future cycle: UI-level display of per-item error state during batch/auto-build (currently only visible on the selected items own panel, no at-a-glance indicator during a large run), or re-check whether linkSourceToTargets hand-maintained switch (t-032) has grown new gaps.'
-    owner: worker
-    claimed_by: sched-conductor-mb-t029-20260816T062730Z
-    claimed_at: '2026-08-16T06:27:37Z'
-    updated: '2026-08-16T06:27:37Z'
+    implementation_pr: 'silasfelinus/kind_robots#1904'
+    note: 'Fourth model-builder/t-029 cycle 2026-08-16 (front-end polish, per the tasks actual title -- three earlier cycles today already did a heavy backend security-audit pass). Delegated to a worktree-isolated background agent. The prior cycles suggested lead (at-a-glance per-item failure indicator during batch/auto-build) was implemented: store genuinely lacked per-item detail beyond an aggregate failed count -- item.error was only set by 2 of autoBuildItem()s several failed branches, so a badge built on item.error alone would miss most failures. Added BuildItem.lastAutoBuildOutcome, mirrored onto every item autoBuildRun()/batchAutoBuild() touch (including the already-committed branch), plus a failed count on runProgress. UI: model-builder-progress-matrix.vue gets a failed count in the run summary and a per-item warning icon with error tooltip; model-builder-batch-editor.vue s per-item badge now shows failed instead of falling back to the bare stage count. New guard verifyModelBuilderAutoBuildOutcomePersistenceGuard.ts + self-test, wired into package.json/contract-tests.yml. Verified: all 75 test:model-builder-* npm scripts pass (73 pre-existing + 2 new), vue-tsc --noEmit exits 0 repo-wide, eslint/prettier clean on touched files (two pre-existing unrelated issues in modelBuilderStore.ts left out of scope, confirmed present on main before this change). Opened kind_robots PR #1904 (7 files, +461/-24), Contract verifiers + TypeScript checks green, squash-merged a75ded64. Suggested next lead for a future cycle: re-check linkSourceToTargets hand-maintained switch (t-032) for gaps, since the backend audit angle (leads 1-3) is now well-covered across three cycles.'
+    owner: null
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-16T06:59:23Z'
 
   - id: t-030
     milestone: m6
