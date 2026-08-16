@@ -368,20 +368,15 @@ tasks:
   - id: t-021
     milestone: m2
     title: "Make library import continuous, paced, and observable"
-    status: claimed
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
-    note: >
-      User-prioritized before SAB/NZB work: evolve the existing manual library
-      importer for a 4500+ volume collection. Preserve Review Scan, add an explicit
-      unattended mode that can check all root-folder candidates without repeated
-      confirmation, pace ComicVine conservatively, stop disguising ComicVine
-      throttling as a missing match, keep unmatched folders available for review,
-      and expose visible checked/imported/review/remaining progress. First slice is
-      implemented in silasfelinus/Kapowarr#13; follow-up confidence scoring and
-      durable restart persistence can build on the same conveyor after live use.
+    note: |-
+      User-prioritized before SAB/NZB work: evolve the existing manual library importer for a 4500+ volume collection. Preserve Review Scan, add an explicit unattended mode that can check all root-folder candidates without repeated confirmation, pace ComicVine conservatively, stop disguising ComicVine throttling as a missing match, keep unmatched folders available for review, and expose visible checked/imported/review/remaining progress. First slice is implemented in silasfelinus/Kapowarr#13; follow-up confidence scoring and durable restart persistence can build on the same conveyor after live use.
+
+
+      Implemented and merged silasfelinus/Kapowarr#13 (squash 5c4d5f5). The existing review importer now surfaces ComicVine throttling instead of converting it to a missing match; Continuous Auto-Import snapshots the unimported folder queue once, processes it one folder at a time with conservative ComicVine pacing and cooldown, auto-imports the current best match without renaming, leaves unmatched folders for review, and exposes checked/imported/review/remaining progress through the existing background-task API. The importer page reconnects to a running task after navigation. PR and post-merge Python 3.8-3.12 matrices, docs, and container builds all passed; main published ghcr.io/silasfelinus/kapowarr:latest and sha-5c4d5f5 with digest sha256:bc810d0645f82016304533d4013cd742643f611f41141eb04398387c70452b9a. Follow-up confidence-margin policy and durable task persistence across container restarts remain explicit future refinements after live-library testing.
     claimed_by: 20260816T090200Z-kapowarr-t021-import-a7c9
     claimed_at: '2026-08-16T09:02:00Z'
-    updated: '2026-08-16T09:02:00Z'
+    updated: '2026-08-16T09:04:30Z'
     implementation_pr: 'silasfelinus/Kapowarr#13'
