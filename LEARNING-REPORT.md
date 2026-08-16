@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-16T00:41:01Z
+Generated: 2026-08-16T00:48:01Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **622**
-- Outcomes: blocked: 14, cancelled: 1, done: 607
+- Closed tasks recorded: **623**
+- Outcomes: blocked: 14, cancelled: 1, done: 608
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
 | interface-vision | 83 | 100% |
-| kapowarr | 12 | 100% |
+| kapowarr | 13 | 100% |
 | kind-robots | 49 | 98% |
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
@@ -62,7 +62,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 606 | 99% |
+| software | 607 | 99% |
 
 ## Failure categories
 
@@ -83,6 +83,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-16 `kapowarr/t-018` — mypy passing is necessary but not sufficient -- a leftover reference to a variable no longer bound in its enclosing scope (a stale `finally: executor.shutdown(...)` left behind after refactoring the executor into a shared helper) is a pure runtime NameError that static typing doesn't catch. Only caught because live testing against a real unreachable host is a hard requirement for this class of change, not skipped as 'just a dedupe.'
 - 2026-08-16 `kapowarr/t-017` — A ThreadPoolExecutor-bounded call that touches Settings()/get_db() needs its own Flask app context pushed inside the worker function (Server().app.app_context()) -- Settings.get_settings()'s @lru_cache(1) usually masks a missing context in production (whichever thread calls it first warms the cache for everyone), but a cold-cache path (fresh process, or the first call ever) hits a hard RuntimeError. Hit and fixed for send_notification() in t-012, then independently for ExternalClients.add()/update_client() here -- ExternalClients.test() itself likely has the same latent gap (kapowarr/t-018 kaizen).
 - 2026-08-15 `kapowarr/t-016` — Bounding a call's *duration* (NOTIFICATION_REQUEST_TIMEOUT) and bounding its *fan-out* (how many can run at once) are separate problems needing separate fixes -- t-013/t-012 solved the former, t-016 solved the latter with a shared ThreadPoolExecutor replacing per-call Thread() spawns. Verified live with both an isolated concurrency test (peak=8 of 30 submissions) and a full DB-to-HTTP end-to-end delivery test.
 - 2026-08-15 `kapowarr/t-015` — A retry/backoff bug fixed once for one caller (health.py's HEALTH_CHECK_TIMEOUT) doesn't fix itself for other callers of the same unbounded ExternalClients.test() -- the interactive Test button had the identical 90+s hang until bounded separately in Kapowarr#6; add()/update_client() still have it (kapowarr/t-017 kaizen).
@@ -93,7 +94,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-15 `kapowarr/t-003` — Same cycle as t-002/t-004 -- applied projects/kapowarr/docs/t-003-configurable-title.md verbatim. Live smoke test confirmed the important edge case the design doc called out: app_title correctly excluded from the host/port/url_base restart-trigger tuple (no server restart on save), and the System Status page's upstream attribution/donate links render unchanged regardless of the configured title.
 - 2026-08-15 `kapowarr/t-002` — This session's GitHub scope newly included silasfelinus/Kapowarr (a prior session's t-014 escalation had asked Silas to widen it) -- the fully designed handoff patch from projects/kapowarr/docs/t-002-loading-lines.md was applied verbatim, verified in a fresh venv (mypy, isort, unittest, node --check, and a live app run), and shipped as silasfelinus/Kapowarr#1 instead of producing a fourth handoff doc. A well-specified handoff written for a future differently-scoped session paid off exactly as designed once that session arrived.
 - 2026-08-15 `model-builder/t-029` — Seventh t-029 cycle followed the prior cycle's suggestion to widen scope to modelBuilderFields.ts/modelBuilderRecipes.ts/relations.ts, found those genuinely race-free (pure static data and a pure read-only check), then broadened the search one hop further to the PATCH write paths that consume those files' output (prepareItemUpdate, feeding items/[id].patch.ts and items/batch.patch.ts) and found a real bug there instead: a blind wholesale stageStatuses overwrite, the same stale- snapshot class already fixed once in commit.post.ts's COMMIT-only write but never generalized to the PATCH/batch-PATCH routes. Most exploitable in the batch route, where every entry does its own DB round trip before the shared transaction starts, widening the concurrent-write window well past the single-item route's. When a suggested lead turns out clean, checking one hop downstream of it (what actually consumes that file's output) found a real bug an earlier cycle's own fix pattern had already named but not generalized -- a second instance of an already-known bug shape is still worth finding.
-- 2026-08-15 `model-builder/t-029` — Sixth t-029 cycle found a bug class distinct from the five prior cycles: a server-side check-then-act race (findUnique-then-create against FacetProfile's single-column facetId PK) rather than another client-side async-fetch-ordering or unawaited-promise-before-toast instance. Two ModelBuildRuns can target the same existing Facet concurrently since nothing serializes runs by sourceId; the item-level idempotencyKey claim only prevents the same item double-committing. Fixed with facetProfile.upsert(), which resolves create-vs-update atomically at the database instead of racing on a stale client-side read. When a prior cycle explicitly names unexplored files, reading those files on their own terms (rather than pattern-matching the previous bug shape onto them) found a genuinely new, more severe bug — a whole-transaction rollback aborting a sibling write, not just a stale UI read.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-16T00:41:01Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-16T00:48:01Z_
