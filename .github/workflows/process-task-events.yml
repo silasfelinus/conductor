@@ -21,6 +21,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: conductor-task-events
@@ -90,6 +91,11 @@ jobs:
               break
             fi
 
+            roadmap_changed=0
+            if git diff --name-only -- projects | grep -Eq '^projects/[^/]+/roadmap\.yaml$'; then
+              roadmap_changed=1
+            fi
+
             git add projects task-events LEARNING.yaml
             git commit -m "chore: process task events [skip ci]"
 
@@ -98,6 +104,19 @@ jobs:
             git fetch --quiet origin main
             if git push --quiet "$push_url" HEAD:main; then
               echo "Pushed cleanly."
+
+              # The processor commit deliberately carries [skip ci] so its task-event
+              # cleanup does not recursively wake every push workflow. That also means
+              # the path-triggered Kind Robots projection workflow will not start on
+              # its own. Explicitly dispatch it after a successful roadmap mutation so
+              # task lifecycle changes are projected immediately instead of waiting for
+              # some unrelated later Conductor commit.
+              if [ "$roadmap_changed" -eq 1 ]; then
+                echo "Roadmap changed; dispatching Kind Robots projection sync."
+                gh workflow run sync-kind-robots-projection.yml \
+                  --repo "$GITHUB_REPOSITORY" \
+                  --ref main
+              fi
               break
             fi
 
