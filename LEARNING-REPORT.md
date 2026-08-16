@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-16T09:28:41Z
+Generated: 2026-08-16T09:46:34Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **630**
-- Outcomes: blocked: 14, cancelled: 1, done: 615
+- Closed tasks recorded: **631**
+- Outcomes: blocked: 14, cancelled: 1, done: 616
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -51,7 +51,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | ruler-hooked | 4 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
-| storybook | 10 | 100% |
+| storybook | 11 | 100% |
 | storymaker | 1 | 100% |
 | superkate-hairstyle-ai | 18 | 100% |
 | superkate-services-calculator | 12 | 100% |
@@ -62,7 +62,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 614 | 99% |
+| software | 615 | 99% |
 
 ## Failure categories
 
@@ -83,6 +83,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-16 `storybook/t-010` — A completeness guard (t-017's verifyStorybookObjectEntryLinks.mjs) that only asserts wiring is *present* -- button exists, query key is sent, seedFromQuery consumes it -- can pass cleanly while the values flowing through that wiring silently disagree. characterOptions built a synthetic id-based slug while the deep-link sender used the entity's real slug; three sibling ingredient types (Scenario/Facet/Reward) all keyed off the real slug correctly, so cross-checking a new field against its siblings' convention (not just its own local logic) is what surfaced the one outlier. A presence guard and an agreement guard test different failure modes -- both are worth having when a value crosses a wire boundary.
 - 2026-08-16 `kapowarr/t-021` — The old library-import path masked ComicVine throttling as a no-match, making a reliability failure look like harmless empty search results. Large unattended jobs also need a stable work snapshot: self-review caught and removed an initial design that would have rescanned the entire library for every processed folder. Finally, the fork's Python Tests workflow was development-only, so PR/main test triggers were enabled and verified across Python 3.8 through 3.12 before merge.
 - 2026-08-16 `model-builder/t-029` — A sixth same-day cycle again avoided the five already-mined leads and instead read the genuinely unexplored item-panel/recipe-selector/source-picker/run-history/manager front-end files, tracing a UI code comment ('snapshot survives resume') that turned out to be aspirational rather than true back to its root cause: normalizeStages()/adaptRun() gated JSON-string server data on typeof raw === 'object', which is never true once a value has round-tripped through a String @db.LongText column. A code comment asserting behavior ('X survives Y') is a claim, not a guarantee -- when a comment describes a property the surrounding code doesn't visibly enforce, tracing the actual data path back to its type at the boundary (string vs. parsed object) is a cheap way to catch the gap between what a comment promises and what the code actually does.
 - 2026-08-16 `model-builder/t-029` — A fifth same-day cycle deliberately avoided re-walking the four already-audited leads (backend commit/promotion races, autoBuildRun status accuracy, per-item outcome UI) and instead read a genuinely untouched file (stores/helpers/modelBuilderFields.ts), which surfaced a real silent data-loss bug: a duplicated blob parser in commit.post.ts dropped every line without a colon, truncating multi-line prose fields to their first line only at COMMIT time -- invisible in the preview panel, which parses the same blob correctly for display. Two independent copies of the same parsing logic drifting apart (one used for preview, one for the actual DB write) is exactly the shape of bug a single-copy refactor (delegate to one shared splitter) prevents structurally rather than relying on both copies staying in sync by discipline. Worth generalizing: when a codebase has a 'preview' and a 'commit' path over the same data, check whether they share one implementation or two -- a second copy is a standing invitation for silent drift.
@@ -92,7 +93,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-16 `kapowarr/t-019` — When a task note says 'port X, scoped down per the note,' read the note's stated scope literally rather than porting everything -- dropping conductor's own STRANDED-tier age-based judgment logic (as the task explicitly asked) kept silasfelinus/Kapowarr#11's branch_janitor.py to two simple tiers (MERGED auto-delete, FORCE explicit override) instead of over-porting complexity the target repo didn't need. A live end-to-end smoke test against a real local bare git remote (not just mocked unit tests) is what actually proved the merged/unmerged/force-delete behavior worked, matching this repo's own convention for anything that shells out to git.
 - 2026-08-16 `kapowarr/t-018` — mypy passing is necessary but not sufficient -- a leftover reference to a variable no longer bound in its enclosing scope (a stale `finally: executor.shutdown(...)` left behind after refactoring the executor into a shared helper) is a pure runtime NameError that static typing doesn't catch. Only caught because live testing against a real unreachable host is a hard requirement for this class of change, not skipped as 'just a dedupe.'
 - 2026-08-16 `kapowarr/t-017` — A ThreadPoolExecutor-bounded call that touches Settings()/get_db() needs its own Flask app context pushed inside the worker function (Server().app.app_context()) -- Settings.get_settings()'s @lru_cache(1) usually masks a missing context in production (whichever thread calls it first warms the cache for everyone), but a cold-cache path (fresh process, or the first call ever) hits a hard RuntimeError. Hit and fixed for send_notification() in t-012, then independently for ExternalClients.add()/update_client() here -- ExternalClients.test() itself likely has the same latent gap (kapowarr/t-018 kaizen).
-- 2026-08-15 `kapowarr/t-016` — Bounding a call's *duration* (NOTIFICATION_REQUEST_TIMEOUT) and bounding its *fan-out* (how many can run at once) are separate problems needing separate fixes -- t-013/t-012 solved the former, t-016 solved the latter with a shared ThreadPoolExecutor replacing per-call Thread() spawns. Verified live with both an isolated concurrency test (peak=8 of 30 submissions) and a full DB-to-HTTP end-to-end delivery test.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-16T09:28:41Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-16T09:46:34Z_
