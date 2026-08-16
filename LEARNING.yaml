@@ -8347,3 +8347,21 @@ records:
   outcome: done
   failure_category: null
   lesson: "A completeness guard (t-017's verifyStorybookObjectEntryLinks.mjs) that only asserts wiring is *present* -- button exists, query key is sent, seedFromQuery consumes it -- can pass cleanly while the values flowing through that wiring silently disagree. characterOptions built a synthetic id-based slug while the deep-link sender used the entity's real slug; three sibling ingredient types (Scenario/Facet/Reward) all keyed off the real slug correctly, so cross-checking a new field against its siblings' convention (not just its own local logic) is what surfaced the one outlier. A presence guard and an agreement guard test different failure modes -- both are worth having when a value crosses a wire boundary."
+- date: 2026-08-16
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "This is at least the fourth model-builder/t-029 cycle to find a 'local-only store
+    mutation never actually reaches the server' bug in modelBuilderStore.ts -- stageStatuses/
+    sourceSnapshot JSON-string parsing on resume, prose-field truncation on commit, and now
+    item.error never persisted on any failure branch (silently dropping the entire per-item
+    failure-visibility feature on reload/reopen). Tracing a field's read side back to its
+    write side across the whole store, not just the function that was the original suspect,
+    is what surfaces these. A single meta-guard enumerating every server-readable field and
+    asserting at least one pushItem/PATCH call site writes it -- rather than one guard per
+    fixed field -- would likely catch this class proactively; filed as model-builder/t-045's
+    sibling suggestion for a future cycle."
