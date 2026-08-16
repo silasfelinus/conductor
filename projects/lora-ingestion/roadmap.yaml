@@ -106,7 +106,9 @@ tasks:
     Landed on kind_robots branch claude/lora-organization-catalog-coyhav (commit c4bdb60). pages/lora.vue (My Library + Discover-stub tabs) + components/lora/{lora-card,add-lora,lora-gallery}.vue built on reactable-card; resourceStore.visibleLoras adds LORA/LYCORIS + maturity gating. Search + base-model + maturity + sort filters, client-side pagination, add/edit via updateResource (PATCH) / batch upsert. All SFCs compile clean. Ships with t-004 in the same PR.
 
     Reconciled during the open-roadmap drift audit. Kind Robots PR #1124 merged the My Library LoRA browser, filtering, maturity handling, pagination, and add/edit surfaces described by this task. The implementation is on main, so review is complete.
-  updated: '2026-08-03T07:15:04Z'
+
+    CORRECTION (2026-08-16, lora-ingestion/t-007): the file paths above are stale. The front end was later rebuilt content-driven and none of `pages/lora.vue`, `components/lora/lora-card.vue`, or `components/lora/lora-gallery.vue` exist on current kind_robots main. The actual shipped surface is `content/resources.md` (route `/resources`, channelKey `play`, tabKey `resources`) mounting `components/resources/resource-manager.vue`, which embeds the Library/Discover tabs, backed by `components/resources/resource-gallery.vue` and `components/resources/resource-card.vue`. `components/lora/add-lora.vue` and `components/lora/lora-discover.vue` still exist and match. Functionally equivalent rename/rebuild, not a regression.
+  updated: '2026-08-16T05:29:00Z'
 - id: t-006
   milestone: m5
   title: Discover tab + DownloadRequest queue + version-update flow
@@ -122,7 +124,7 @@ tasks:
 - id: t-007
   milestone: m5
   title: Correct t-005/t-006's stale file-path claims (front end was later rebuilt content-driven)
-  status: claimed
+  status: done
   owner: reviewer
   passes: 0
   stakes: reversible
@@ -142,6 +144,12 @@ tasks:
     integration/t-019, which self-corrected the same class of drift. Add a
     short dated note to t-005 and/or t-006 recording the actual current
     file paths.
+
+    DONE (2026-08-16): added a dated correction note directly to t-005
+    recording the actual current file paths (content/resources.md +
+    components/resources/{resource-manager,resource-gallery,resource-card}.vue).
+    Conductor-repo-only doc fix; no kind_robots implementation needed since
+    the front end already matches reality, only the roadmap note was stale.
   claimed_by: sched-conductor-lora-t007-20260816T052922Z
   claimed_at: '2026-08-16T05:29:23Z'
-  updated: '2026-08-16T05:29:23Z'
+  updated: '2026-08-16T05:35:00Z'
