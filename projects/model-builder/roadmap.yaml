@@ -1052,23 +1052,12 @@ tasks:
   - id: t-045
     milestone: m6
     title: "Extend the item.error server-persistence fix (t-029 cycle 7) to draftText()'s failure path"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-029 cycle 7 (kind_robots PR #1908, 2026-08-16): item.error is now
-      persisted to the server on every generateItemAsset/generateItemAssetAsync/
-      pollAsyncArtJob/commitItem failure branch, and cleared on success. draftText()
-      (the AI-drafting function for pitch/fields/artPrompt) is the most-likely-to-fire
-      failure path in autoBuildItem -- an empty/failed AI draft is often the very first
-      thing attempted -- but it still never touches item.error at all, only a transient
-      global toast, so a draft failure has no persistent trace once the toast dismisses.
-      Extend the same persistence pattern to draftText()'s failure path, and decide
-      whether/how updatePitch/updateFields/updatePrompt (shared by both manual edits and
-      AI drafts) should clear a stale error on a successful edit -- left out of cycle 7
-      deliberately to keep that fix surgical. Front-end/store change only; no schema
-      change expected.
+    note: 'Done — implemented via a worktree-isolated background agent (foreground stayed in conductor throughout, per AGENTS.md hard safety rule 12). draftText() (autoBuildItem''s first step: PITCH, then FIELDS_AND_PROMPTS) was the one item.error-persistence gap left out of t-029 cycle 7 (kind_robots#1908) — its catch block only ever surfaced a transient setStatusForRun toast, so an empty/failed AI draft left no trace once the toast dismissed. Fix: draftText()''s catch block now sets+pushes item.error like the other four functions (its two mid-flight discard branches — edited/approved while drafting — deliberately do not, mirroring the existing "already approved" race guards elsewhere). Also resolved the deferred decision from cycle 7: updatePitch/updateFields/updatePrompt now clear item.error on a successful edit (manual or AI-drafted alike), avoiding the asymmetry where only an AI redraft cleared the banner. Extended the existing verifyModelBuilderErrorPersistenceGuard.ts guard (TARGET_FUNCTIONS + self-test) rather than adding a new guard file — no CI workflow changes needed. Verified: all 81 test:model-builder-* npm scripts pass, vue-tsc clean, eslint/prettier clean on touched files (2 pre-existing unrelated findings confirmed present on main before this change). kind_robots PR #1909, all checks green, squash-merged fce76a2.'
     owner: worker
     claimed_by: 20260816T112800Z-mb-t045
     claimed_at: '2026-08-16T11:28:21Z'
-    updated: '2026-08-16T11:29:19Z'
+    updated: '2026-08-16T12:06:48Z'
+    implementation_pr: 'silasfelinus/kind_robots#1909'
