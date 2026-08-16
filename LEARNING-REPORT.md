@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-16T12:10:46Z
+Generated: 2026-08-16T12:13:42Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **632**
-- Outcomes: blocked: 14, cancelled: 1, done: 617
+- Closed tasks recorded: **633**
+- Outcomes: blocked: 14, cancelled: 1, done: 618
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -42,7 +42,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 67 | 100% |
+| model-builder | 68 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -62,7 +62,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 616 | 99% |
+| software | 617 | 99% |
 
 ## Failure categories
 
@@ -83,6 +83,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-16 `model-builder/t-045` — t-029 cycle 7's item.error persistence sweep (#1908) covered generateItemAsset/ generateItemAssetAsync/pollAsyncArtJob/commitItem but deliberately left out draftText() to keep that fix surgical -- exactly the kind of scoped-on-purpose gap a filed kaizen task exists to close, rather than something the original cycle missed. draftText() turned out to be the highest-frequency failure path of all (autoBuildItem's very first step), so the gap was live from the moment #1908 merged. When a fix is deliberately scoped narrower than the full bug class it demonstrates, filing the remaining scope as its own task (rather than letting 'surgical for now' quietly become 'permanent') is what actually closes the loop -- this cycle also resolved the fix's own deferred sub-decision (whether manual edits should clear a stale error too) rather than re-deferring it a second time.
 - 2026-08-16 `model-builder/t-029` — This is at least the fourth model-builder/t-029 cycle to find a 'local-only store mutation never actually reaches the server' bug in modelBuilderStore.ts -- stageStatuses/ sourceSnapshot JSON-string parsing on resume, prose-field truncation on commit, and now item.error never persisted on any failure branch (silently dropping the entire per-item failure-visibility feature on reload/reopen). Tracing a field's read side back to its write side across the whole store, not just the function that was the original suspect, is what surfaces these. A single meta-guard enumerating every server-readable field and asserting at least one pushItem/PATCH call site writes it -- rather than one guard per fixed field -- would likely catch this class proactively; filed as model-builder/t-045's sibling suggestion for a future cycle.
 - 2026-08-16 `storybook/t-010` — A completeness guard (t-017's verifyStorybookObjectEntryLinks.mjs) that only asserts wiring is *present* -- button exists, query key is sent, seedFromQuery consumes it -- can pass cleanly while the values flowing through that wiring silently disagree. characterOptions built a synthetic id-based slug while the deep-link sender used the entity's real slug; three sibling ingredient types (Scenario/Facet/Reward) all keyed off the real slug correctly, so cross-checking a new field against its siblings' convention (not just its own local logic) is what surfaced the one outlier. A presence guard and an agreement guard test different failure modes -- both are worth having when a value crosses a wire boundary.
 - 2026-08-16 `kapowarr/t-021` — The old library-import path masked ComicVine throttling as a no-match, making a reliability failure look like harmless empty search results. Large unattended jobs also need a stable work snapshot: self-review caught and removed an initial design that would have rescanned the entire library for every processed folder. Finally, the fork's Python Tests workflow was development-only, so PR/main test triggers were enabled and verified across Python 3.8 through 3.12 before merge.
@@ -92,7 +93,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-16 `kind-robots/t-065` — A task note's own paraphrase of 'same pattern as an earlier task' can be less precise than that earlier task's actual diff -- t-065's note said 'add a short dated correction note to t-046,' but t-055 (the cited precedent) had actually added a dated entry to a separate site-audit-inventory-notes.md doc specifically to avoid rewriting an already-closed task's long note. Reading the real precedent's implementation, not just its task-note summary, produced the better (and actually-intended) outcome.
 - 2026-08-16 `kapowarr/t-020` — Milestone-level status: fields don't auto-derive from their tasks' individual statuses in this roadmap format -- they're independently hand-set and can silently drift stale even when every task under them is accurate. This is the third independent surfacing of the same pattern (after kind-robots/t-058 and kindrobots-unraid's noted-but-unfiled instance in the same audit), reinforcing the audit's own kaizen suggestion that validate_roadmaps.py should warn when a milestone's tasks are more advanced than its own status field.
 - 2026-08-16 `kapowarr/t-019` — When a task note says 'port X, scoped down per the note,' read the note's stated scope literally rather than porting everything -- dropping conductor's own STRANDED-tier age-based judgment logic (as the task explicitly asked) kept silasfelinus/Kapowarr#11's branch_janitor.py to two simple tiers (MERGED auto-delete, FORCE explicit override) instead of over-porting complexity the target repo didn't need. A live end-to-end smoke test against a real local bare git remote (not just mocked unit tests) is what actually proved the merged/unmerged/force-delete behavior worked, matching this repo's own convention for anything that shells out to git.
-- 2026-08-16 `kapowarr/t-018` — mypy passing is necessary but not sufficient -- a leftover reference to a variable no longer bound in its enclosing scope (a stale `finally: executor.shutdown(...)` left behind after refactoring the executor into a shared helper) is a pure runtime NameError that static typing doesn't catch. Only caught because live testing against a real unreachable host is a hard requirement for this class of change, not skipped as 'just a dedupe.'
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-16T12:10:46Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-16T12:13:42Z_
