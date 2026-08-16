@@ -1,0 +1,11 @@
+version: 1
+project: kapowarr
+task: t-021
+operation: done
+session: 20260816T090200Z-kapowarr-t021-import-a7c9
+updated: '2026-08-16T09:07:30Z'
+note: >-
+  Projection resync verification after merging the task-event dispatcher fix.
+  No implementation state changed; this repeat done transition is intentionally
+  idempotent and exists to exercise the full task-event processor -> explicit
+  Kind Robots projection workflow path on the already-completed importer task.
