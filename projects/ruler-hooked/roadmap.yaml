@@ -393,30 +393,14 @@ tasks:
   - id: t-014
     milestone: m3
     title: Audit and expand the event/character card deck for real content depth
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     note: >
-      With t-010 closed (2026-08-15), every m1/m2 task is done and the PoC (slideshow
-      play-loop, save slots, kingdom-health compositing, real dashboard-tab/tutorial art)
-      is live at /plan/projects/ruler-hooked. m3 ("content depth, app packaging,
-      Steam/Unreal research") is the only remaining real work: t-009 already covered the
-      Steam/Unreal research half. This task covers the "content depth" half. Read the
-      current event/character card deck the game actually ships with (components/
-      ruler-hooked/ruler-hooked-card.vue + whatever data source it draws from -- decks.md
-      per the component's own header comment) and count how many distinct event/character
-      cards exist versus what the design brief implies ("different characters/events
-      appear on different runs"). If the deck is thin (a handful of cards, low replay
-      variety), author a meaningfully larger set of new event cards in the established
-      format -- using existing kind_robots Characters where they fit per
-      notes_from_silas, cartoony/goofy tone with nuanced sides on each choice, each choice
-      wired to real kingdom-health-axis and landscape-region effects (not cosmetic-only)
-      -- and add them through the deck's real data path, not a one-off hack. If the audit
-      finds the deck already has strong content depth, document that finding instead of
-      inventing padding, and consider whether "app packaging" (an installable/offline PWA
-      wrapper, distinct from the client-side localStorage offline-play that already works)
-      is the more useful next slice for a follow-up task.
-    owner: worker
-    claimed_by: 2026-08-16T123013-sweep-rulerhooked
-    claimed_at: '2026-08-16T12:30:15Z'
-    updated: '2026-08-16T12:30:15Z'
+      With t-010 closed (2026-08-15), every m1/m2 task is done and the PoC (slideshow play-loop, save slots, kingdom-health compositing, real dashboard-tab/tutorial art) is live at /plan/projects/ruler-hooked. m3 ("content depth, app packaging, Steam/Unreal research") is the only remaining real work: t-009 already covered the Steam/Unreal research half. This task covers the "content depth" half. Read the current event/character card deck the game actually ships with (components/ ruler-hooked/ruler-hooked-card.vue + whatever data source it draws from -- decks.md per the component's own header comment) and count how many distinct event/character cards exist versus what the design brief implies ("different characters/events appear on different runs"). If the deck is thin (a handful of cards, low replay variety), author a meaningfully larger set of new event cards in the established format -- using existing kind_robots Characters where they fit per notes_from_silas, cartoony/goofy tone with nuanced sides on each choice, each choice wired to real kingdom-health-axis and landscape-region effects (not cosmetic-only) -- and add them through the deck's real data path, not a one-off hack. If the audit finds the deck already has strong content depth, document that finding instead of inventing padding, and consider whether "app packaging" (an installable/offline PWA wrapper, distinct from the client-side localStorage offline-play that already works) is the more useful next slice for a follow-up task.
+      DONE (conductor scheduled Agent run, kind_robots PR #1911, squash-merged 93783f2): audit confirmed the deck was genuinely thin -- utils/rulerHooked/content.ts (the real data path components/ruler-hooked/ruler-hooked-card.vue reads from) shipped exactly 1 deck (kingdom-core, 3 free-draw cards) + 1 arc (child-elopes, 3 steps) = 6 distinct cards total, plus 4 characters, 3 rewards, 2 endings -- well short of the design brief's explicit replay-variety goal. Expanded rather than documented: 10 new free-draw cards added to kingdom-core; 1 new deck (lake-mysteries, 4 cards); 2 new arcs (envoy-treaty, bog-witch-bargain), 3 steps each, same branch-into-two-endings shape as child-elopes; 7 new characters (existing 4 -- Vex, Sela, Robin, Ash -- reused across several new cards per the brief); 5 new rewards; 2 new endings (one MIXED, one SECRET). Result: 6 cards/1 arc/2 endings -> 25 cards/3 arcs/4 endings. Every new choice moves real kingdomHealth sliders and/or pins a real region state (only states already defined in the regions manifest: far_shore/treeline/village_edge) -- no cosmetic-only choices, matching the existing cards' effects structure exactly; every new interrupt card keeps the mandatory requeue: true defer path. Verified: engine.selftest.ts and game.selftest.ts both ALL PASS, vue-tsc --noEmit (repo-wide) exit 0, eslint clean, prettier --check clean, test:layout-contract holds with no new violations, git status --porcelain showed exactly one file touched (utils/rulerHooked/content.ts). All 23 kind_robots CI checks passed, mergeable_state: clean, squash-merged. App-packaging (an installable/offline PWA wrapper, distinct from the client-side localStorage offline-play that already works) was NOT built this cycle -- filed as ruler-hooked/t-015 for a future slice per this task's own note.
+    owner: null
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-16T13:34:57Z'
+    implementation_pr: 'silasfelinus/kind_robots#1911'
