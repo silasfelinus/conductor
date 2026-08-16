@@ -1048,3 +1048,27 @@ tasks:
     claimed_at: '2026-08-14T07:16:53Z'
     updated: '2026-08-14T07:21:07Z'
     implementation_pr: 'silasfelinus/kind_robots#1884'
+
+  - id: t-045
+    milestone: m6
+    title: "Extend the item.error server-persistence fix (t-029 cycle 7) to draftText()'s failure path"
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-029 cycle 7 (kind_robots PR #1908, 2026-08-16): item.error is now
+      persisted to the server on every generateItemAsset/generateItemAssetAsync/
+      pollAsyncArtJob/commitItem failure branch, and cleared on success. draftText()
+      (the AI-drafting function for pitch/fields/artPrompt) is the most-likely-to-fire
+      failure path in autoBuildItem -- an empty/failed AI draft is often the very first
+      thing attempted -- but it still never touches item.error at all, only a transient
+      global toast, so a draft failure has no persistent trace once the toast dismisses.
+      Extend the same persistence pattern to draftText()'s failure path, and decide
+      whether/how updatePitch/updateFields/updatePrompt (shared by both manual edits and
+      AI drafts) should clear a stale error on a successful edit -- left out of cycle 7
+      deliberately to keep that fix surgical. Front-end/store change only; no schema
+      change expected.
+    owner: null
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-16T11:07:10Z'
