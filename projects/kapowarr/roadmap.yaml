@@ -313,3 +313,28 @@ tasks:
     claimed_at: '2026-08-16T00:39:34Z'
     updated: '2026-08-16T00:45:42Z'
     implementation_pr: 'silasfelinus/Kapowarr#10'
+
+  - id: t-019
+    milestone: m2
+    title: "Add a branch-janitor workflow to silasfelinus/Kapowarr"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from this session's end-of-cycle branch cleanup sweep (root
+      TALKBACK.md, 2026-08-16): silasfelinus/Kapowarr has no delete-on-merge
+      and, unlike conductor/kind_robots, no branch-janitor.yml workflow --
+      session credentials 403 on `git push origin --delete <branch>` for
+      every confirmed-superseded stale branch found (6 this cycle: old
+      claude/* and worker/* branches whose content is fully present in main
+      under different squash-merge SHAs), and there is no GitHub MCP tool
+      that deletes a branch ref directly either. Port conductor's
+      scripts/branch_janitor.py / .github/workflows/branch-janitor.yml
+      pattern (or a minimal equivalent scoped to Kapowarr's actual needs --
+      it doesn't need conductor's STRANDED-tier judgment logic, just a
+      workflow_dispatch-triggered "delete these named branches via the
+      Actions token" escape hatch) so a future session can clear confirmed-
+      superseded branches without needing elevated ref-deletion credentials.
+      Same cross-repo boundary as other kapowarr code tasks -- implementation
+      belongs in silasfelinus/Kapowarr, not this repo.
