@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-16T09:03:00Z
+Generated: 2026-08-16T09:28:41Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **629**
-- Outcomes: blocked: 14, cancelled: 1, done: 614
+- Closed tasks recorded: **630**
+- Outcomes: blocked: 14, cancelled: 1, done: 615
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
 | interface-vision | 83 | 100% |
-| kapowarr | 15 | 100% |
+| kapowarr | 16 | 100% |
 | kind-robots | 50 | 98% |
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
@@ -62,7 +62,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 613 | 99% |
+| software | 614 | 99% |
 
 ## Failure categories
 
@@ -83,6 +83,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-16 `kapowarr/t-021` — The old library-import path masked ComicVine throttling as a no-match, making a reliability failure look like harmless empty search results. Large unattended jobs also need a stable work snapshot: self-review caught and removed an initial design that would have rescanned the entire library for every processed folder. Finally, the fork's Python Tests workflow was development-only, so PR/main test triggers were enabled and verified across Python 3.8 through 3.12 before merge.
 - 2026-08-16 `model-builder/t-029` — A sixth same-day cycle again avoided the five already-mined leads and instead read the genuinely unexplored item-panel/recipe-selector/source-picker/run-history/manager front-end files, tracing a UI code comment ('snapshot survives resume') that turned out to be aspirational rather than true back to its root cause: normalizeStages()/adaptRun() gated JSON-string server data on typeof raw === 'object', which is never true once a value has round-tripped through a String @db.LongText column. A code comment asserting behavior ('X survives Y') is a claim, not a guarantee -- when a comment describes a property the surrounding code doesn't visibly enforce, tracing the actual data path back to its type at the boundary (string vs. parsed object) is a cheap way to catch the gap between what a comment promises and what the code actually does.
 - 2026-08-16 `model-builder/t-029` — A fifth same-day cycle deliberately avoided re-walking the four already-audited leads (backend commit/promotion races, autoBuildRun status accuracy, per-item outcome UI) and instead read a genuinely untouched file (stores/helpers/modelBuilderFields.ts), which surfaced a real silent data-loss bug: a duplicated blob parser in commit.post.ts dropped every line without a colon, truncating multi-line prose fields to their first line only at COMMIT time -- invisible in the preview panel, which parses the same blob correctly for display. Two independent copies of the same parsing logic drifting apart (one used for preview, one for the actual DB write) is exactly the shape of bug a single-copy refactor (delegate to one shared splitter) prevents structurally rather than relying on both copies staying in sync by discipline. Worth generalizing: when a codebase has a 'preview' and a 'commit' path over the same data, check whether they share one implementation or two -- a second copy is a standing invitation for silent drift.
 - 2026-08-16 `model-builder/t-029` — A recurring task's title is the scope contract, not just a label -- after three same-day cycles of 'bug-hunt cycle' backend security audits on a task literally named 'Polish and upgrade Model Builder front-end surface,' the fourth cycle returned to genuine front-end work (a batch/auto-build per-item failure indicator) and found the store itself was under-instrumented for it (item.error only set on 2 of several 'failed' return paths), which the backend-only lens of the prior three cycles had no reason to surface. When a recurring task's cycles drift away from its own title toward whatever the last cycle's kaizen suggested, checking the title itself is a cheap way to catch scope drift before it compounds.
@@ -92,7 +93,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-16 `kapowarr/t-018` — mypy passing is necessary but not sufficient -- a leftover reference to a variable no longer bound in its enclosing scope (a stale `finally: executor.shutdown(...)` left behind after refactoring the executor into a shared helper) is a pure runtime NameError that static typing doesn't catch. Only caught because live testing against a real unreachable host is a hard requirement for this class of change, not skipped as 'just a dedupe.'
 - 2026-08-16 `kapowarr/t-017` — A ThreadPoolExecutor-bounded call that touches Settings()/get_db() needs its own Flask app context pushed inside the worker function (Server().app.app_context()) -- Settings.get_settings()'s @lru_cache(1) usually masks a missing context in production (whichever thread calls it first warms the cache for everyone), but a cold-cache path (fresh process, or the first call ever) hits a hard RuntimeError. Hit and fixed for send_notification() in t-012, then independently for ExternalClients.add()/update_client() here -- ExternalClients.test() itself likely has the same latent gap (kapowarr/t-018 kaizen).
 - 2026-08-15 `kapowarr/t-016` — Bounding a call's *duration* (NOTIFICATION_REQUEST_TIMEOUT) and bounding its *fan-out* (how many can run at once) are separate problems needing separate fixes -- t-013/t-012 solved the former, t-016 solved the latter with a shared ThreadPoolExecutor replacing per-call Thread() spawns. Verified live with both an isolated concurrency test (peak=8 of 30 submissions) and a full DB-to-HTTP end-to-end delivery test.
-- 2026-08-15 `kapowarr/t-015` — A retry/backoff bug fixed once for one caller (health.py's HEALTH_CHECK_TIMEOUT) doesn't fix itself for other callers of the same unbounded ExternalClients.test() -- the interactive Test button had the identical 90+s hang until bounded separately in Kapowarr#6; add()/update_client() still have it (kapowarr/t-017 kaizen).
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-16T09:03:00Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-16T09:28:41Z_
