@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-16T14:44:03Z
+Generated: 2026-08-16T14:58:55Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **634**
-- Outcomes: blocked: 14, cancelled: 1, done: 619
+- Closed tasks recorded: **635**
+- Outcomes: blocked: 14, cancelled: 1, done: 620
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -19,7 +19,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | alexa-integration | 3 | 100% |
 | animation-manager | 13 | 100% |
 | animation-studio | 2 | 50% |
-| appmaker | 6 | 100% |
+| appmaker | 7 | 100% |
 | approval-portal | 2 | 0% |
 | art-generator-connect | 3 | 100% |
 | brainstorm | 12 | 92% |
@@ -62,7 +62,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 618 | 99% |
+| software | 619 | 99% |
 
 ## Failure categories
 
@@ -83,6 +83,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-16 `appmaker/t-012` — A condition like `tasks.length === 0` reads as a reasonable 'freshly scaffolded' check in isolation, but was backwards in practice because the scaffolder (scripts/new_app.py) always seeds 3 tasks up front -- checking the UI condition against the actual data-seeding code, not just its surface plausibility, is what surfaced that every real app's card silently showed a blank description while the fallback literal only fired on a genuine lookup failure. Separately: a single CI job failing with a live-API 502 unrelated to the diff (GET /api/characters, in a population-quality contract check) is a textbook transient failure -- rerunning just that job and confirming a clean pass on retry is the correct triage, not blaming the diff or force-merging past it unexamined.
 - 2026-08-16 `alexa-integration/t-015` — applyCommand()'s action parameter is a union shared across every command target (on/off/toggle/clear/set/draft), but set/draft only carry meaning for the theme/art targets. Unsupported *targets* were already reported as ignored; unsupported *actions* on a supported target had no equivalent check, so an animation command with action: set/draft fell through untouched and still posted a false 'Applied: <effect> on.' success message. When a field's type is a union shared across multiple branches, each branch needs its own explicit valid-subset check -- a guard scoped to one branch (here, target) doesn't protect the others by default. Kaizen t-020 audits the theme/art branches for the same class of gap.
 - 2026-08-16 `model-builder/t-045` — t-029 cycle 7's item.error persistence sweep (#1908) covered generateItemAsset/ generateItemAssetAsync/pollAsyncArtJob/commitItem but deliberately left out draftText() to keep that fix surgical -- exactly the kind of scoped-on-purpose gap a filed kaizen task exists to close, rather than something the original cycle missed. draftText() turned out to be the highest-frequency failure path of all (autoBuildItem's very first step), so the gap was live from the moment #1908 merged. When a fix is deliberately scoped narrower than the full bug class it demonstrates, filing the remaining scope as its own task (rather than letting 'surgical for now' quietly become 'permanent') is what actually closes the loop -- this cycle also resolved the fix's own deferred sub-decision (whether manual edits should clear a stale error too) rather than re-deferring it a second time.
 - 2026-08-16 `model-builder/t-029` — This is at least the fourth model-builder/t-029 cycle to find a 'local-only store mutation never actually reaches the server' bug in modelBuilderStore.ts -- stageStatuses/ sourceSnapshot JSON-string parsing on resume, prose-field truncation on commit, and now item.error never persisted on any failure branch (silently dropping the entire per-item failure-visibility feature on reload/reopen). Tracing a field's read side back to its write side across the whole store, not just the function that was the original suspect, is what surfaces these. A single meta-guard enumerating every server-readable field and asserting at least one pushItem/PATCH call site writes it -- rather than one guard per fixed field -- would likely catch this class proactively; filed as model-builder/t-045's sibling suggestion for a future cycle.
@@ -92,7 +93,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-16 `model-builder/t-029` — A fifth same-day cycle deliberately avoided re-walking the four already-audited leads (backend commit/promotion races, autoBuildRun status accuracy, per-item outcome UI) and instead read a genuinely untouched file (stores/helpers/modelBuilderFields.ts), which surfaced a real silent data-loss bug: a duplicated blob parser in commit.post.ts dropped every line without a colon, truncating multi-line prose fields to their first line only at COMMIT time -- invisible in the preview panel, which parses the same blob correctly for display. Two independent copies of the same parsing logic drifting apart (one used for preview, one for the actual DB write) is exactly the shape of bug a single-copy refactor (delegate to one shared splitter) prevents structurally rather than relying on both copies staying in sync by discipline. Worth generalizing: when a codebase has a 'preview' and a 'commit' path over the same data, check whether they share one implementation or two -- a second copy is a standing invitation for silent drift.
 - 2026-08-16 `model-builder/t-029` — A recurring task's title is the scope contract, not just a label -- after three same-day cycles of 'bug-hunt cycle' backend security audits on a task literally named 'Polish and upgrade Model Builder front-end surface,' the fourth cycle returned to genuine front-end work (a batch/auto-build per-item failure indicator) and found the store itself was under-instrumented for it (item.error only set on 2 of several 'failed' return paths), which the backend-only lens of the prior three cycles had no reason to surface. When a recurring task's cycles drift away from its own title toward whatever the last cycle's kaizen suggested, checking the title itself is a cheap way to catch scope drift before it compounds.
 - 2026-08-16 `kind-robots/t-065` — A task note's own paraphrase of 'same pattern as an earlier task' can be less precise than that earlier task's actual diff -- t-065's note said 'add a short dated correction note to t-046,' but t-055 (the cited precedent) had actually added a dated entry to a separate site-audit-inventory-notes.md doc specifically to avoid rewriting an already-closed task's long note. Reading the real precedent's implementation, not just its task-note summary, produced the better (and actually-intended) outcome.
-- 2026-08-16 `kapowarr/t-020` — Milestone-level status: fields don't auto-derive from their tasks' individual statuses in this roadmap format -- they're independently hand-set and can silently drift stale even when every task under them is accurate. This is the third independent surfacing of the same pattern (after kind-robots/t-058 and kindrobots-unraid's noted-but-unfiled instance in the same audit), reinforcing the audit's own kaizen suggestion that validate_roadmaps.py should warn when a milestone's tasks are more advanced than its own status field.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-16T14:44:03Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-16T14:58:55Z_
