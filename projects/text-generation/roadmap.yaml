@@ -121,8 +121,9 @@ tasks:
     status: waiting
     owner: null
     passes: 0
-    stakes: security-sensitive
-    gate_human: false
+    stakes: reversible
+    gate_human: true
+    approved_by_human: false
     depends_on:
       - t-002
       - t-003
@@ -135,7 +136,8 @@ tasks:
       limits, cancel upstream streams when clients disconnect, avoid secret-bearing
       logs, and verify ownership/visibility before every server selection. Preserve
       the ability to use a home/private server without weakening the rest of the app
-      into an open proxy.
+      into an open proxy. This task changes a security boundary and therefore stays
+      human-gated before merge even though the code itself is reversible.
     acceptance: >-
       Focused security tests cover unauthorized server access, arbitrary URL attempts,
       metadata/link-local targets, redirects, timeout/cancellation, and secret leakage;
