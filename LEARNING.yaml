@@ -8401,3 +8401,22 @@ records:
     valid-subset check -- a guard scoped to one branch (here, target) doesn't
     protect the others by default. Kaizen t-020 audits the theme/art branches for the
     same class of gap."
+- date: 2026-08-16
+  project: appmaker
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A condition like `tasks.length === 0` reads as a reasonable 'freshly
+    scaffolded' check in isolation, but was backwards in practice because the
+    scaffolder (scripts/new_app.py) always seeds 3 tasks up front -- checking the
+    UI condition against the actual data-seeding code, not just its surface
+    plausibility, is what surfaced that every real app's card silently showed a
+    blank description while the fallback literal only fired on a genuine lookup
+    failure. Separately: a single CI job failing with a live-API 502 unrelated to
+    the diff (GET /api/characters, in a population-quality contract check) is a
+    textbook transient failure -- rerunning just that job and confirming a clean
+    pass on retry is the correct triage, not blaming the diff or force-merging
+    past it unexamined."
