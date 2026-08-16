@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   note: |-
@@ -150,11 +150,11 @@ tasks:
 
 
     Recurring storybook/t-010 bug-hunt cycle (conductor scheduled Agent run, session sched-conductor-sb-t010-20260813T220000Z). Found a new, real gap distinct from all 6 prior verifyStorybook* guards: storybookLibraryHelper watches the active session (deep watch) and calls upsert() on every change, including (1) beginStory reassigning session.value to a brand-new zero-beat session before the first weaveBeat call, and (2) the rollback-to-null that follows if that opening weaveBeat call fails -- either firing archives a permanent, unopenable "Untitled story" phantom into the readers localStorage-persisted recent-stories library (capped at 20), which can push a real story out of the window. Fixed by guarding upsert() itself (the single choke point for the watcher, archiveCurrent, duplicateStory, and restartStory) to skip beats.length === 0 sessions -- every legitimate caller only ever archives a session that already wove its opening beat. Added verifyStorybookLibraryPhantomSessionGuard.mjs + dedicated storybook-library-phantom-session-contract.yml workflow, matching the lane convention (per-guard workflow files). Verified: new guard passes against the fix, fails against the pre-fix shape (git-stash round-trip); all 6 pre-existing verifyStorybook* guards pass (no regressions); eslint clean; prettier clean on new files (pre-existing storybookLibraryHelper.ts drift confirmed via git stash to predate this change); vue-tsc --noEmit repo-wide exit 0; git status --porcelain showed exactly the 3 intended files. kind_robots PR #1861, all 19 required checks green, merged squash f39cd4431e70e25ab6cb9a4bac63ddbad4cbc56f. Rearmed to ready per recurring-task convention -- t-010 never reaches done.
-  updated: '2026-08-16T09:43:34Z'
+  updated: '2026-08-16T15:28:02Z'
   implementation_pr: 'silasfelinus/kind_robots#1907'
   owner: worker
-  claimed_by: ''
-  claimed_at: ''
+  claimed_by: sched-conductor-sb-t010-20260816T1530Z
+  claimed_at: '2026-08-16T15:28:02Z'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
