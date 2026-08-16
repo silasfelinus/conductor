@@ -397,8 +397,8 @@ tasks:
 - id: t-021
   milestone: m4
   title: Add equivalent test coverage for applyThemeCommand's "unknown theme" and applyArtCommand-adjacent resolveEffectId "no match" error branches
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: 'Kaizen from t-020''s 2026-08-16 cycle (kind_robots PR #1915). That cycle only
@@ -410,3 +410,6 @@ tasks:
     both error paths fresh, add regression tests/guards for any gap found (extending an
     existing verifySerendipityVoice*.ts file where it fits the same convention rather than
     a new one), or close as a verified no-op if coverage is already adequate.'
+  claimed_by: scheduled-conductor-20260816T203000Z-alexa-t021
+  claimed_at: '2026-08-16T20:28:03Z'
+  updated: '2026-08-16T20:28:03Z'
