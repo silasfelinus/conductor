@@ -118,3 +118,27 @@ tasks:
 
     Reconciled during the open-roadmap drift audit. Kind Robots PR #1124 merged the Discover browser and DownloadRequest queue, while the Conductor import agent landed the matching claim/download/complete loop. The task note already records the implementation and verification; review is complete. End-to-end relay verification remains separately and correctly tracked by t-003.
   updated: '2026-08-03T07:15:05Z'
+
+- id: t-007
+  milestone: m5
+  title: Correct t-005/t-006's stale file-path claims (front end was later rebuilt content-driven)
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from the 2026-08-16 weekly site audit. t-005/t-006 (both done)
+    describe the front end as `pages/lora.vue` (My Library + Discover tabs)
+    plus `components/lora/{lora-card,lora-gallery}.vue`. None of those three
+    exact files exist on current kind_robots main. The actual shipped
+    surface is content-driven: `content/resources.md` (route `/resources`,
+    channelKey `play`, tabKey `resources`) mounting
+    `components/resources/resource-manager.vue`, which itself embeds the
+    Library/Discover tabs, backed by `resource-gallery.vue` and
+    `resource-card.vue` (`components/lora/add-lora.vue` and
+    `components/lora/lora-discover.vue` do still exist and match). This is a
+    live, functionally-equivalent rename/rebuild with no correction note
+    anywhere recording it -- unlike ruler-hooked/t-013 or alexa-
+    integration/t-019, which self-corrected the same class of drift. Add a
+    short dated note to t-005 and/or t-006 recording the actual current
+    file paths.
