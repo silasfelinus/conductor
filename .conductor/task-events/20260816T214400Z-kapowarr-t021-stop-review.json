@@ -1,9 +1,0 @@
-{
-  "project": "kapowarr",
-  "task_id": "t-021",
-  "to": "done",
-  "session": "20260816T214400Z-kapowarr-t021-stop-review",
-  "expected_from": ["done"],
-  "implementation_pr": "silasfelinus/Kapowarr#16",
-  "note": "Live-control follow-up shipped in silasfelinus/Kapowarr#16, merged as 3ba5294a399795329b886c426b0154733638b4bf. Continuous Library Import can now be manually stopped at a safe folder boundary, including responsive cancellation during ComicVine cooldowns. While it is still running, Review Holds exposes the accumulated tied/weak/no-candidate groups in the normal editable import table using the ComicVine results already fetched by the conveyor, so opening review does not duplicate searches. The background progress poll no longer steals the page after Run in Background or while reviewing. PR exact-head Python 3.8-3.12, docs, and container checks passed; post-merge main Python 3.8-3.12, docs, and GHCR publish also passed. Published ghcr.io/silasfelinus/kapowarr:latest and sha-3ba5294 with digest sha256:3cfc9fedf643c05842eb32a522a22aa931b0ab5b363cf6947429e382d4ab50c2. Active task/review state is still process-memory only and does not survive a container restart; durable importer job persistence remains separate future work."
-}
