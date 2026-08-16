@@ -8253,3 +8253,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Bounding a call's *duration* (NOTIFICATION_REQUEST_TIMEOUT) and bounding its *fan-out* (how many can run at once) are separate problems needing separate fixes -- t-013/t-012 solved the former, t-016 solved the latter with a shared ThreadPoolExecutor replacing per-call Thread() spawns. Verified live with both an isolated concurrency test (peak=8 of 30 submissions) and a full DB-to-HTTP end-to-end delivery test."
+- date: 2026-08-16
+  project: kapowarr
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A ThreadPoolExecutor-bounded call that touches Settings()/get_db() needs its own Flask app context pushed inside the worker function (Server().app.app_context()) -- Settings.get_settings()'s @lru_cache(1) usually masks a missing context in production (whichever thread calls it first warms the cache for everyone), but a cold-cache path (fresh process, or the first call ever) hits a hard RuntimeError. Hit and fixed for send_notification() in t-012, then independently for ExternalClients.add()/update_client() here -- ExternalClients.test() itself likely has the same latent gap (kapowarr/t-018 kaizen)."
