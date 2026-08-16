@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-16T07:33:56Z
+Generated: 2026-08-16T08:01:25Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **627**
-- Outcomes: blocked: 14, cancelled: 1, done: 612
+- Closed tasks recorded: **628**
+- Outcomes: blocked: 14, cancelled: 1, done: 613
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -42,7 +42,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 64 | 100% |
+| model-builder | 65 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -62,7 +62,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 611 | 99% |
+| software | 612 | 99% |
 
 ## Failure categories
 
@@ -83,6 +83,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-16 `model-builder/t-029` — A fifth same-day cycle deliberately avoided re-walking the four already-audited leads (backend commit/promotion races, autoBuildRun status accuracy, per-item outcome UI) and instead read a genuinely untouched file (stores/helpers/modelBuilderFields.ts), which surfaced a real silent data-loss bug: a duplicated blob parser in commit.post.ts dropped every line without a colon, truncating multi-line prose fields to their first line only at COMMIT time -- invisible in the preview panel, which parses the same blob correctly for display. Two independent copies of the same parsing logic drifting apart (one used for preview, one for the actual DB write) is exactly the shape of bug a single-copy refactor (delegate to one shared splitter) prevents structurally rather than relying on both copies staying in sync by discipline. Worth generalizing: when a codebase has a 'preview' and a 'commit' path over the same data, check whether they share one implementation or two -- a second copy is a standing invitation for silent drift.
 - 2026-08-16 `model-builder/t-029` — A recurring task's title is the scope contract, not just a label -- after three same-day cycles of 'bug-hunt cycle' backend security audits on a task literally named 'Polish and upgrade Model Builder front-end surface,' the fourth cycle returned to genuine front-end work (a batch/auto-build per-item failure indicator) and found the store itself was under-instrumented for it (item.error only set on 2 of several 'failed' return paths), which the backend-only lens of the prior three cycles had no reason to surface. When a recurring task's cycles drift away from its own title toward whatever the last cycle's kaizen suggested, checking the title itself is a cheap way to catch scope drift before it compounds.
 - 2026-08-16 `kind-robots/t-065` — A task note's own paraphrase of 'same pattern as an earlier task' can be less precise than that earlier task's actual diff -- t-065's note said 'add a short dated correction note to t-046,' but t-055 (the cited precedent) had actually added a dated entry to a separate site-audit-inventory-notes.md doc specifically to avoid rewriting an already-closed task's long note. Reading the real precedent's implementation, not just its task-note summary, produced the better (and actually-intended) outcome.
 - 2026-08-16 `kapowarr/t-020` — Milestone-level status: fields don't auto-derive from their tasks' individual statuses in this roadmap format -- they're independently hand-set and can silently drift stale even when every task under them is accurate. This is the third independent surfacing of the same pattern (after kind-robots/t-058 and kindrobots-unraid's noted-but-unfiled instance in the same audit), reinforcing the audit's own kaizen suggestion that validate_roadmaps.py should warn when a milestone's tasks are more advanced than its own status field.
@@ -93,7 +94,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-15 `kapowarr/t-015` — A retry/backoff bug fixed once for one caller (health.py's HEALTH_CHECK_TIMEOUT) doesn't fix itself for other callers of the same unbounded ExternalClients.test() -- the interactive Test button had the identical 90+s hang until bounded separately in Kapowarr#6; add()/update_client() still have it (kapowarr/t-017 kaizen).
 - 2026-08-15 `kapowarr/t-012` — Implemented + merged silasfelinus/Kapowarr#5. Live end-to-end testing (running the actual app, not just static checks) caught two real bugs before merge: a 90+ second unbounded retry/backoff on the new Test button (same bug class health.py already fixed once in t-013 -- fixed the same way, ThreadPoolExecutor + future.result(timeout=...)); and a "Working outside of application context" crash because the bounding executor's worker thread doesn't inherit the caller's Flask app context, needed explicitly via Server().app.app_context(). Any new background-thread network call in this codebase should assume neither Session's default retry/backoff nor Flask's app context are safe to take for granted off the request/download thread.
 
-- 2026-08-15 `kapowarr/t-013` — Designed and implemented from scratch (unlike t-002/t-003/t-004, no prior handoff doc existed) -- found three existing, already-used primitives (ComicVine.test_key(), ExternalClients.test(), RootFolder.size is None) to build the new health check on top of instead of writing new low-level detection logic. Live testing (not just unit-level checks) caught a real bug the design alone wouldn't have surfaced: aggregating multiple network checks into one endpoint that fires on every page load inherited each check's full retry/ backoff duration (90+ seconds for one unreachable client), which is fine for a one-off Settings "Test" button but not for an every-page-load health panel. Fixed with a bounded per-check timeout, and a second live test caught that `with ThreadPoolExecutor(...) as executor` still blocks on `shutdown(wait=True)` even after individual futures time out -- switching to manual `shutdown(wait=False)` was needed too. Running the actual app end-to-end, not just static checks, is what found both issues.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-16T07:33:56Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-16T08:01:25Z_
