@@ -390,3 +390,21 @@ tasks:
   claimed_at: '2026-08-16T14:43:29Z'
   updated: '2026-08-16T14:54:53Z'
   implementation_pr: 'silasfelinus/kind_robots#1913'
+
+- id: t-013
+  milestone: m4
+  title: Audit other AppMaker fleet-list rendering for the same stale-literal description gap
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-012's 2026-08-16 cycle (kind_robots PR #1913): the `fleet` computed in
+    appmaker-page.vue showed a permanently blank card description for every real,
+    registry-tracked app because `tasks.length === 0` was almost never true in practice
+    (scripts/new_app.py always seeds 3 tasks), so the real per-app text (`project?.goal`
+    / `project?.notesFromSilas`) never reached the UI. Fixed for the `fleet`/Apps card
+    grid. Check whether the same page's "pending" apps list (apps still scaffolding, not
+    yet in the registry) or any other conductorStore-driven list in this project has a
+    similar stale-literal-over-real-data gap, and fix any found the same way. If nothing
+    else is affected, close as a verified no-op rather than forcing a change.
