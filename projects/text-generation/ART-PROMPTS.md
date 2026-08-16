@@ -1,0 +1,7 @@
+# Text Generation project art prompts
+
+These three project-asset prompts follow the Conductor project-art convention and are intended for the shared image queue.
+
+- `text-generation-icon.webp` (256×256): premium app icon for Text Generation, a compact home server cube feeding one luminous ribbon of words into a clean speech bubble, private local compute meeting conversation, crisp readable silhouette at small sizes, polished Kind Robots product icon, square composition, no readable text, no logo, no watermark, no collage.
+- `text-generation-card.webp` (512×768): portrait key art for Text Generation, a cozy self-hosted AI desk with a small server rack, laptop, and several glowing language streams converging through one secure routing hub into a single finished page, tactile technical detail, approachable maker-lab atmosphere, professional product illustration, 2:3 portrait composition, no readable text, no logo, no watermark, no collage.
+- `text-generation-hero.webp` (1280×720): wide cinematic hero for Text Generation, a private home server on one side and distant cloud compute on the other connected through a calm central Kind Robots routing node, flowing speech and document-shaped light trails showing chat and long-form generation choosing either path, secure interoperable AI infrastructure with warm human-scale technology, 16:9 landscape composition, no readable text, no logo, no watermark, no collage.
