@@ -8271,3 +8271,30 @@ records:
   outcome: done
   failure_category: null
   lesson: "mypy passing is necessary but not sufficient -- a leftover reference to a variable no longer bound in its enclosing scope (a stale `finally: executor.shutdown(...)` left behind after refactoring the executor into a shared helper) is a pure runtime NameError that static typing doesn't catch. Only caught because live testing against a real unreachable host is a hard requirement for this class of change, not skipped as 'just a dedupe.'"
+- date: 2026-08-16
+  project: kapowarr
+  task: t-019
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "When a task note says 'port X, scoped down per the note,' read the note's stated scope literally rather than porting everything -- dropping conductor's own STRANDED-tier age-based judgment logic (as the task explicitly asked) kept silasfelinus/Kapowarr#11's branch_janitor.py to two simple tiers (MERGED auto-delete, FORCE explicit override) instead of over-porting complexity the target repo didn't need. A live end-to-end smoke test against a real local bare git remote (not just mocked unit tests) is what actually proved the merged/unmerged/force-delete behavior worked, matching this repo's own convention for anything that shells out to git."
+- date: 2026-08-16
+  project: kapowarr
+  task: t-020
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Milestone-level status: fields don't auto-derive from their tasks' individual statuses in this roadmap format -- they're independently hand-set and can silently drift stale even when every task under them is accurate. This is the third independent surfacing of the same pattern (after kind-robots/t-058 and kindrobots-unraid's noted-but-unfiled instance in the same audit), reinforcing the audit's own kaizen suggestion that validate_roadmaps.py should warn when a milestone's tasks are more advanced than its own status field."
+- date: 2026-08-16
+  project: kind-robots
+  task: t-065
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A task note's own paraphrase of 'same pattern as an earlier task' can be less precise than that earlier task's actual diff -- t-065's note said 'add a short dated correction note to t-046,' but t-055 (the cited precedent) had actually added a dated entry to a separate site-audit-inventory-notes.md doc specifically to avoid rewriting an already-closed task's long note. Reading the real precedent's implementation, not just its task-note summary, produced the better (and actually-intended) outcome."
