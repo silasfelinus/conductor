@@ -1,0 +1,17 @@
+version: 1
+project: kapowarr
+task: t-021
+operation: done
+updated: '2026-08-16T11:39:00Z'
+verify_pr: silasfelinus/Kapowarr#14
+implementation_pr: silasfelinus/Kapowarr#14
+note: >-
+  Follow-up confidence hardening shipped in silasfelinus/Kapowarr#14. Continuous
+  Auto-Import now uses the existing filename-evidence score but only imports
+  unattended when the best ComicVine candidate scores at least 4/5 and leads the
+  runner-up by at least 2 points. Exact ties, one-point leads, and weak single
+  candidates stay untouched in the needs-review bucket, while Review Scan keeps
+  the historical best-guess behavior. PR and post-merge Python 3.8-3.12 tests,
+  docs, and container builds passed. Main d38b08e published
+  ghcr.io/silasfelinus/kapowarr:latest and sha-d38b08e with digest
+  sha256:653bbb5c5d83f848dfdff12dc97ad9f8403e203169b470b0fbdfcdeecc3142e6.
