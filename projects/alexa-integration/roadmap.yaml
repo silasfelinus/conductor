@@ -393,3 +393,20 @@ tasks:
   claimed_at: '2026-08-16T16:28:44Z'
   updated: '2026-08-16T16:40:31Z'
   implementation_pr: 'silasfelinus/kind_robots#1915'
+
+- id: t-021
+  milestone: m4
+  title: Add equivalent test coverage for applyThemeCommand's "unknown theme" and applyArtCommand-adjacent resolveEffectId "no match" error branches
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: 'Kaizen from t-020''s 2026-08-16 cycle (kind_robots PR #1915). That cycle only
+    covered the target/action-mismatch shape (theme accepts only set, art accepts only
+    draft). It left an open question: does resolveEffectId()''s "no match" branch (animation
+    target, unresolvable effect) and applyThemeCommand()''s "Unknown theme" branch
+    (themeStore.setActiveTheme() resolving with result.success === false) have equivalent
+    regression coverage to the guards already built for target/action mismatches? Read
+    both error paths fresh, add regression tests/guards for any gap found (extending an
+    existing verifySerendipityVoice*.ts file where it fits the same convention rather than
+    a new one), or close as a verified no-op if coverage is already adequate.'
