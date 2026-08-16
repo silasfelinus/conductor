@@ -404,3 +404,13 @@ tasks:
     claimed_at: null
     updated: '2026-08-16T13:34:57Z'
     implementation_pr: 'silasfelinus/kind_robots#1911'
+
+  - id: t-015
+    milestone: m3
+    title: Ship an installable/offline PWA wrapper for Ruler Hooked
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: t-014
+    note: >
+      Filed as the deferred follow-up from t-014's own note (2026-08-16, conductor scheduled Agent run): with content depth now addressed (t-014 expanded the deck from 6 to 25 cards / 1 to 3 arcs / 2 to 4 endings, merged kind_robots PR #1911), m3's remaining scope is "app packaging" -- an installable, offline-capable PWA wrapper for Ruler Hooked, distinct from the client-side localStorage offline-play that already works today (the game already plays fully offline once loaded; this task is about installability -- a manifest.webmanifest, service worker for asset precaching, and an "Add to Home Screen"/install prompt, so the PoC can be launched like a native app without a browser chrome). Scope: audit whether kind_robots already has a shared PWA/service-worker convention used by any other app in the monorepo (reuse it if so, rather than inventing a ruler-hooked-specific one); if none exists, keep the first slice narrow (installability + asset caching for the ruler-hooked route only, not a site-wide PWA conversion) per this project's established "concrete, verifiable gap, not a reskin" scoping discipline. Verify an actual install prompt fires and the route loads with network disabled after first visit.
