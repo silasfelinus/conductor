@@ -8262,3 +8262,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A ThreadPoolExecutor-bounded call that touches Settings()/get_db() needs its own Flask app context pushed inside the worker function (Server().app.app_context()) -- Settings.get_settings()'s @lru_cache(1) usually masks a missing context in production (whichever thread calls it first warms the cache for everyone), but a cold-cache path (fresh process, or the first call ever) hits a hard RuntimeError. Hit and fixed for send_notification() in t-012, then independently for ExternalClients.add()/update_client() here -- ExternalClients.test() itself likely has the same latent gap (kapowarr/t-018 kaizen)."
+- date: 2026-08-16
+  project: kapowarr
+  task: t-018
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "mypy passing is necessary but not sufficient -- a leftover reference to a variable no longer bound in its enclosing scope (a stale `finally: executor.shutdown(...)` left behind after refactoring the executor into a shared helper) is a pure runtime NameError that static typing doesn't catch. Only caught because live testing against a real unreachable host is a hard requirement for this class of change, not skipped as 'just a dedupe.'"
