@@ -209,12 +209,13 @@ tasks:
 - id: t-010
   milestone: m4
   title: 'Store readiness: signing, privacy labels, account deletion, release checklist'
-  status: review
+  status: needs-human
   owner: worker
   passes: 0
   stakes: outward-facing
   gate_human: true
   approved_by_human: false
+  soft_gate: false
   depends_on: t-006
   note: 'Prepare (do NOT submit) App Store / Play Store release: bundle ids, signing docs (secrets stay
     out of source control), privacy nutrition labels (local mode = zero collection), Apple-required account
@@ -249,10 +250,22 @@ tasks:
     needs-human after this slice''s PR merges, not done, since real scope (signing + privacy URL +
     submission) is still blocked on Silas.
 
+    MERGED 2026-08-16 (scheduled conductor sweep, session claude/blissful-curie-m5b1va): reviewed PR #2345
+    (all 24 CI checks green, mergeable_state clean, scoped 5-file/351+/3- diff) and squash-merged
+    d9c5541. FOR SILAS: projects/conductor-app/store-readiness.md has the full checklist. TO APPROVE /
+    ACT: (1) decide on Android release signing (keystore vs. Play App Signing) -- build.gradle.kts still
+    signs release with the debug keystore, (2) get a reachable privacy-policy URL for both store
+    listings, (3) enroll/confirm Apple Developer Program + iOS distribution cert, (4) review the drafted
+    privacy data-collection table against the live Prisma schema, (5) run the TestFlight/internal-track
+    plan and the actual store submissions. Nothing here can be done by an agent -- all five need your
+    credentials or judgment call. Set approved_by_human: true and status: done once submission is
+    actually complete (or once you decide this task''s remaining scope is handled elsewhere).
+
     '
   claimed_by: scheduled-conductor-20260816T2130Z-conductorapp-t010
   claimed_at: '2026-08-16T21:39:56Z'
-  updated: '2026-08-16T21:39:56Z'
+  updated: '2026-08-16T22:34:05Z'
+  implementation_pr: 'silasfelinus/conductor#2345'
 - id: t-011
   milestone: m1
   title: Add CI guard that every conductor write endpoint in kind_robots calls an auth guard
