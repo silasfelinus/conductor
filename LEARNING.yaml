@@ -8298,3 +8298,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A task note's own paraphrase of 'same pattern as an earlier task' can be less precise than that earlier task's actual diff -- t-065's note said 'add a short dated correction note to t-046,' but t-055 (the cited precedent) had actually added a dated entry to a separate site-audit-inventory-notes.md doc specifically to avoid rewriting an already-closed task's long note. Reading the real precedent's implementation, not just its task-note summary, produced the better (and actually-intended) outcome."
+- date: 2026-08-16
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A recurring task's title is the scope contract, not just a label -- after three same-day cycles of 'bug-hunt cycle' backend security audits on a task literally named 'Polish and upgrade Model Builder front-end surface,' the fourth cycle returned to genuine front-end work (a batch/auto-build per-item failure indicator) and found the store itself was under-instrumented for it (item.error only set on 2 of several 'failed' return paths), which the backend-only lens of the prior three cycles had no reason to surface. When a recurring task's cycles drift away from its own title toward whatever the last cycle's kaizen suggested, checking the title itself is a cheap way to catch scope drift before it compounds."
