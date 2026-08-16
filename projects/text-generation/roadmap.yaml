@@ -1,0 +1,165 @@
+project: text-generation
+kind: software
+notes_from_silas: >-
+  Add first-class text generation capabilities to Kind Robots. Existing cloud text
+  providers include OpenAI and Anthropic/Claude. Private/self-hosted text generation
+  should be a supported path for chat and general text generation rather than an
+  ad-hoc special case.
+
+milestones:
+  - id: m1
+    title: Provider contract and private-server design
+    weight: 20
+    status: not-started
+  - id: m2
+    title: Unified text generation and server integration
+    weight: 55
+    status: not-started
+  - id: m3
+    title: Security, UX, and regression hardening
+    weight: 25
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: Map the existing text stack and write the private-server design brief
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: false
+    note: >-
+      Start from the code that already exists, not a greenfield provider rewrite.
+      Inventory server/api/chats/openai/stream.post.ts,
+      server/api/chats/anthropic/stream.post.ts,
+      server/api/chats/ollama/stream.post.ts, server/utils/serverResolver.ts, the
+      Prisma Server model, preferredTextServerId, server CRUD/health APIs, and the
+      current chat/text consumers. The current runtime already accepts stored server
+      profiles in the OpenAI and Anthropic routes and has a native Ollama stream
+      route, but the capability routing and product surface are incomplete. Produce
+      projects/text-generation/BRIEF.md defining: one-shot generation vs chat vs
+      streaming contracts; provider/profile capabilities; model selection; server
+      ownership/visibility; error and cancellation semantics; mana accounting; a
+      compatibility/migration plan for the three existing endpoints; and what is
+      explicitly out of scope. Treat briefs as direction, not permanent contracts.
+    acceptance: >-
+      BRIEF.md is committed with a current-state capability map, target generation
+      contract, migration strategy, security boundaries, success criteria, and a
+      concrete implementation sequence. It explicitly explains what the existing
+      Ollama and stored-server plumbing already provides and what is still missing.
+
+  - id: t-002
+    milestone: m2
+    title: Build a shared server-side text generation provider layer
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: false
+    depends_on: t-001
+    note: >-
+      Consolidate duplicated provider mechanics behind a typed server-side service
+      while preserving existing endpoint behavior. Support OpenAI, Anthropic, native
+      Ollama, and trusted OpenAI-compatible/custom servers without making callers know
+      transport quirks. Keep provider credentials server-side. Do not accept arbitrary
+      per-request upstream URLs.
+    acceptance: >-
+      A focused provider service covers message normalization, provider endpoint
+      resolution, auth headers, model/options mapping, streaming lifecycle, and
+      normalized errors; existing OpenAI/Anthropic/Ollama chat behavior remains
+      covered by automated tests.
+
+  - id: t-003
+    milestone: m2
+    title: Add first-class trusted private text-server profiles
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: false
+    depends_on: t-001
+    note: >-
+      Reuse the existing Server model and admin server surfaces where they fit. Make
+      text-capable private/self-hosted servers explicit and selectable, including
+      native Ollama and OpenAI-compatible endpoints. Fix capability resolution so
+      supported server types are actually discoverable for text generation. Include
+      an authenticated health/test operation and user preferredTextServerId selection.
+      Private-network access is allowed only through stored trusted profiles created
+      by an authorized user/admin, never through arbitrary client-supplied URLs.
+    acceptance: >-
+      An authorized user can configure/select a trusted private text server, verify
+      its health, and resolve it through the canonical server resolver; unsupported or
+      unauthorized server profiles are rejected with useful errors.
+
+  - id: t-004
+    milestone: m2
+    title: Expose unified one-shot and streaming text generation APIs
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: false
+    depends_on:
+      - t-002
+      - t-003
+    note: >-
+      Add a canonical generation surface suitable for non-chat product features as
+      well as conversations. Support prompt/system/messages input, streaming and
+      non-streaming output, model/provider selection via trusted server profile, and
+      existing mana/resource rules. Keep compatibility shims for current chat routes
+      until callers are migrated rather than breaking them wholesale.
+    acceptance: >-
+      Automated integration tests demonstrate the same application call can generate
+      text through system OpenAI/Anthropic and a configured private server, with both
+      one-shot and streaming modes returning a normalized contract and correct mana
+      behavior.
+
+  - id: t-005
+    milestone: m3
+    title: Harden private-server networking, secrets, and failure behavior
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: security-sensitive
+    gate_human: false
+    depends_on:
+      - t-002
+      - t-003
+      - t-004
+    note: >-
+      Treat private LLM connectivity as a deliberate SSRF boundary. Trusted stored
+      profiles may target approved LAN/private addresses, but untrusted request data
+      may not choose destinations. Block cloud metadata/link-local destinations and
+      unsafe redirects, constrain protocols, set connection/read timeouts and response
+      limits, cancel upstream streams when clients disconnect, avoid secret-bearing
+      logs, and verify ownership/visibility before every server selection. Preserve
+      the ability to use a home/private server without weakening the rest of the app
+      into an open proxy.
+    acceptance: >-
+      Focused security tests cover unauthorized server access, arbitrary URL attempts,
+      metadata/link-local targets, redirects, timeout/cancellation, and secret leakage;
+      approved private profiles still work end-to-end.
+
+  - id: t-006
+    milestone: m3
+    title: Wire text-provider selection into the product surfaces and document setup
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: false
+    depends_on:
+      - t-004
+      - t-005
+    note: >-
+      Update the relevant admin/chat/generation UI so private servers and cloud
+      providers are understandable choices rather than hidden request parameters.
+      Document a practical self-hosted setup path, starting with Ollama and an
+      OpenAI-compatible server, including network reachability expectations for the
+      self-hosted Kind Robots deployment. Avoid exposing API keys or raw secret values
+      to the browser.
+    acceptance: >-
+      The supported text-generation surfaces can select a configured provider/server,
+      setup documentation covers at least Ollama plus an OpenAI-compatible private
+      endpoint, and CI/type/lint/integration coverage is green.
