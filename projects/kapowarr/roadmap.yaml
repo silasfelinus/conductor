@@ -27,7 +27,7 @@ milestones:
   - id: m3
     title: "POLISH & SHIP — tests, migration safety, and sync integrity"
     weight: 25
-    status: not-started
+    status: in-progress
 
 tasks:
   - id: t-001
@@ -346,7 +346,7 @@ tasks:
   - id: t-020
     milestone: m3
     title: "Fix stale m3 milestone status (stamped not-started, but t-010 is done)"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -362,4 +362,5 @@ tasks:
       status field.
     claimed_by: claude-20260816-tm7pmn-t020
     claimed_at: '2026-08-16T02:32:19Z'
-    updated: '2026-08-16T02:32:19Z'
+    updated: '2026-08-16T02:33:47Z'
+    implementation_pr: 'silasfelinus/conductor#2315'
