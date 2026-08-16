@@ -209,8 +209,8 @@ tasks:
 - id: t-010
   milestone: m4
   title: 'Store readiness: signing, privacy labels, account deletion, release checklist'
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: outward-facing
   gate_human: true
@@ -222,6 +222,9 @@ tasks:
     by Silas.
 
     '
+  claimed_by: scheduled-conductor-20260816T2130Z-conductorapp-t010
+  claimed_at: '2026-08-16T21:39:56Z'
+  updated: '2026-08-16T21:39:56Z'
 - id: t-011
   milestone: m1
   title: Add CI guard that every conductor write endpoint in kind_robots calls an auth guard
