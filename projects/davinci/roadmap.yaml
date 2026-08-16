@@ -513,8 +513,8 @@ tasks:
   - id: t-021
     milestone: m6
     title: "Da Vinci visual style and interaction polish pass"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-017, t-020]
@@ -527,9 +527,9 @@ tasks:
       Slice 3 (kind_robots PR #1866, merged 2026-08-13 23:24 -- reconciled here 2026-08-15 after this drift went undetected through the 2026-08-14 reconciliation sweep above, which only re-confirmed Slice 2/PR #1854 and missed that #1866 had already landed the day before): the "See your ending" resolve panel was a standalone v-if, not part of the v-if/v-else-if chain that switches between the narrating/narrationError/currentChapter states above it (`!narrating && (canEndRun || !currentChapter)`). narrateChapter() clears aiChapter (making currentChapter null) before the request that can then fail, so during a narration failure `!currentChapter` was also true -- the resolve panel rendered stacked underneath the narration-error retry panel, showing "See your ending" / "Your chapters are told" at the same time as "Try again" / "Play the written chapters instead", even at chapter 1 with zero recorded choices. Fixed by excluding narrationError from the condition: `!narrating && !narrationError && (canEndRun || !currentChapter)`. Added verifyDaVinciResolvePanelGuard.ts + selftest, wired into package.json and contract-tests.yml alongside the two prior guards. Verified per the PR body: new guard + selftest pass, both prior guards + selftests still pass, test:davinci-narration still passes, test:layout-contract holds, eslint/prettier clean, vue-tsc --noEmit repo-wide exit 0, exactly 5 intended files touched.
       Slice 4 (conductor scheduled Agent run, kind_robots PR #1895, merged 2026-08-15): continued the same "concrete, verifiable gap, not a reskin" scoping. Audited davinci-page.vue's busy/loading indicators against the app-wide convention (role="status" + aria-live="polite" on the wrapper, aria-hidden="true" on the decorative spinner -- used in academy-manager.vue, model-builder-manager.vue, model-builder-run-history.vue, narrative-response-composer.vue, kr-chat-window.vue, watchlist-browse.vue, narrative-ingredient-picker.vue/-multi-picker.vue) and found the "narrator is writing this chapter" busy block (`v-if="narrating"`) was the one outlier: a purely visual loading-dots spinner with no role/aria-live on the wrapper and no aria-hidden on the spinner, so a screen-reader user got no signal that AI narration was in flight. Added role="status"/aria-live="polite" to the wrapper and aria-hidden="true" to the spinner. Added verifyDaVinciNarratingStatusGuard.ts + selftest following the same narrow-textual-checker convention, wired into package.json and contract-tests.yml alongside the three existing davinci guards. Verified: new guard + selftest pass, all three prior guards + selftests still pass, test:davinci-narration still passes, test:layout-contract holds with no new violations, eslint clean, prettier --check clean (after one --write pass to normalize the two new files), vue-tsc --noEmit repo-wide exit 0, exactly 5 intended files touched (components/conductor/davinci-page.vue, utils/scripts/verifyDaVinciNarratingStatusGuard.ts, utils/scripts/verifyDaVinciNarratingStatusGuard.test.ts, package.json, .github/workflows/contract-tests.yml). All 25 kind_robots CI checks passed before merge, including the 8m28s "Build production image" job.
       REMAINING: the broader "controls/layout consistency with kr-* primitives" and "visually intentional" passes across the rest of davinci-page.vue (the DESIGN-BRIEF itself cautions this is not a wholesale kr-panel crusade -- next slice should keep auditing for concrete, verifiable gaps rather than a blanket reskin), plus the phone/tablet/desktop rendered-preview verification this task's own note calls for. Rearmed to ready for a follow-up slice.
-    updated: '2026-08-15T10:00:00Z'
-    claimed_by: ''
-    claimed_at: ''
+    updated: '2026-08-16T12:28:52Z'
+    claimed_by: 2026-08-16T122852-sweep-davinci
+    claimed_at: '2026-08-16T12:28:52Z'
 
   - id: t-022
     milestone: m5
