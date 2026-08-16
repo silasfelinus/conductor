@@ -8420,3 +8420,19 @@ records:
     textbook transient failure -- rerunning just that job and confirming a clean
     pass on retry is the correct triage, not blaming the diff or force-merging
     past it unexamined."
+- date: 2026-08-16
+  project: alexa-integration
+  task: t-020
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The target/action-mismatch bug class from t-015 (a shared VoiceBusCommand.action
+    union reaching a dispatch branch where most of its values are meaningless) generalized
+    cleanly to the other two targets once actually re-read fresh: applyThemeCommand() and
+    applyArtCommand() never checked command.action at all, an omission invisible unless you
+    specifically compare each dispatch function against its siblings for the same missing
+    guard shape. Extending the existing guard into a TARGET_FUNCTIONS structure (mirroring
+    modelBuilderStore.ts's own multi-function guard convention) kept the fix in one file
+    instead of three near-duplicates."

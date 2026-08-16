@@ -384,24 +384,29 @@ tasks:
 - id: t-020
   milestone: m4
   title: Extend the animation action/target-mismatch guard to the theme and art command targets
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
-  note: >
-    Kaizen from t-015's 2026-08-16 cycle (kind_robots PR #1912): applyCommand() in
-    serendipityVoiceStore.ts now rejects an animation command whose action isn't
-    on/off/toggle (set/draft are only meaningful for other targets), reporting it as
-    ignored instead of silently faking success. That cycle only audited the animation
-    target. theme and art are the two targets where set/draft ARE meaningful, but they
-    may have their own narrower mismatches worth checking (e.g. an animation-only action
-    like toggle reaching theme/art, or a target-specific payload shape assumption that
-    doesn't hold for every action). Read applyCommand()'s theme/art branches fresh and
-    confirm each action they accept is actually meaningful for that target; add the same
-    ignored-and-reported guard for any mismatch found, extending
-    verifySerendipityVoiceActionGuard.ts's TARGET_FUNCTIONS rather than adding a new
-    guard file. If nothing is actually wrong there, note that explicitly and close as a
-    verified no-op rather than forcing a change.
+  note: 'alexa-integration/t-020: kaizen from t-015 verified real -- applyThemeCommand() and applyArtCommand() in serendipityVoiceStore.ts never checked command.action at all, so a mis-targeted on/off/toggle/clear command reaching either could still fall through and report a false "Applied: theme set to X." or "Art draft received." Added the same ignored-and-reported guard used for the animation target (theme accepts only set, art accepts only draft), extending verifySerendipityVoiceActionGuard.ts into a TARGET_FUNCTIONS structure covering all three dispatch functions instead of a new guard file. Verified: both npm test scripts pass, all 3 sibling serendipity-voice guards still pass, vue-tsc/eslint/prettier clean, diff scoped to exactly 3 files. kind_robots PR #1915: 25/25 checks green, mergeable_state clean, squash-merged 479cb59.'
   claimed_by: scheduled-conductor-20260816T162841Z-alexa-t020
   claimed_at: '2026-08-16T16:28:44Z'
-  updated: '2026-08-16T16:28:44Z'
+  updated: '2026-08-16T16:40:31Z'
+  implementation_pr: 'silasfelinus/kind_robots#1915'
+
+- id: t-021
+  milestone: m4
+  title: Add equivalent test coverage for applyThemeCommand's "unknown theme" and applyArtCommand-adjacent resolveEffectId "no match" error branches
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: 'Kaizen from t-020''s 2026-08-16 cycle (kind_robots PR #1915). That cycle only
+    covered the target/action-mismatch shape (theme accepts only set, art accepts only
+    draft). It left an open question: does resolveEffectId()''s "no match" branch (animation
+    target, unresolvable effect) and applyThemeCommand()''s "Unknown theme" branch
+    (themeStore.setActiveTheme() resolving with result.success === false) have equivalent
+    regression coverage to the guards already built for target/action mismatches? Read
+    both error paths fresh, add regression tests/guards for any gap found (extending an
+    existing verifySerendipityVoice*.ts file where it fits the same convention rather than
+    a new one), or close as a verified no-op if coverage is already adequate.'
