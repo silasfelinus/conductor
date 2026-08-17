@@ -500,27 +500,12 @@ tasks:
   - id: t-023
     milestone: m4
     title: "Check upstream Casvt/Kapowarr for changes worth importing"
-    status: claimed
+    status: ready
     owner: worker
     passes: 0
     stakes: reversible
     recurring: true
-    note: >
-      Follow FORK_MAINTENANCE.md's own workflow (t-011, silasfelinus/Kapowarr#30):
-      add/fetch the upstream remote, diff origin/main against upstream/main since
-      the last checked commit, and note anything worth cherry-picking or merging --
-      a real bugfix in shared code the fork hasn't diverged on is worth taking, a
-      change to fork-only territory (Usenet/NZB, notifications, health-check,
-      branding) usually is not. If nothing upstream has moved or nothing found is
-      worth importing, that is a valid no-op outcome for this cycle -- note it and
-      re-arm to ready, same as any other recurring task (see AGENTS.md's
-      "Recurring tasks" section). This is m4's standing task: milestones m1-m3
-      shipped everything currently scoped (fork identity, Usenet/NZB, tests/
-      migration/sync), and an active project needs real open work rather than
-      inferring "finished" from an empty queue -- see
-      docs/state-reconciliation.md and scripts/validate_roadmaps.py's
-      active-project-has-no-open-tasks check, which this task exists to satisfy
-      honestly (tracking a real fork-maintenance obligation, not a placeholder).
+    note: 'No-op cycle (2026-08-17): re-verified against live Casvt/Kapowarr per FORK_MAINTENANCE.md workflow -- added upstream remote, fetched upstream/main, ran git merge-base against origin/main. upstream/main HEAD is still 55946aa (the V1.3.1 tag / same fork point recorded by t-011 earlier today), 0 commits ahead of the merge-base. Fork remains 50 commits ahead (49 recorded by t-011 plus t-011''s own doc commit). Nothing upstream to import this cycle. Re-armed to ready per AGENTS.md Recurring tasks rule.'
     claimed_by: 20260817T192729Z-kap-t023
     claimed_at: '2026-08-17T19:27:31Z'
-    updated: '2026-08-17T19:27:31Z'
+    updated: '2026-08-17T19:28:07Z'
