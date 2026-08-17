@@ -535,21 +535,12 @@ tasks:
   - id: t-034
     milestone: m9
     title: "Give HSS_Contacts its own phone/sms_opt_in so a representative can opt into SMS"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-021 (humboldtscoopsolutions PR #55): the wp-cron sweep now
-      texts the account holder alongside every email it sends
-      (HSS_Notify::send_sms()), but authorized representatives (HSS_Contacts)
-      have no phone or SMS-opt-in column of their own, so they can only ever
-      be reached by email through this path -- unlike the account holder, who
-      has both. Add phone/sms_opt_in columns to wp_hss_contacts (additive
-      migration), and extend HSS_Notify::send_sms() to text opted-in
-      representatives too, not just the account holder. Keep the two consent
-      flags independent, same as can_receive_updates/can_request_changes
-      already are for this table.
+    note: 'Implemented and merged silasfelinus/humboldtscoopsolutions#59 (squash 09698b7). Schema 2.10.0 adds an additive sms_opt_in column to wp_hss_contacts (dbDelta, default off); HSS_Contacts::create() defaults it to 0. Refactored HSS_Sms to extract the shared visit-lifecycle message text into send_visit_message(), so the existing visit_status() (account holder) and the new visit_status_to($visit, $phone) (an already-opted-in phone, caller checks consent) send identical text through one place. HSS_Notify::send_sms() now also texts every representative scoped to the visit''s property (HSS_Contacts::for_property(), same scoping the email fan-out already uses) with can_receive_updates, sms_opt_in, and a phone on file, skipping a representative who shares the account holder''s own number so nobody is texted twice for one visit. Portal UI: contact_form() gained an sms_opt_in checkbox gated on HSS_Config::is_sms_configured(), same as the customer''s own; contact_save persists it. Verified: php -l clean on every touched file; schema-test.php extended with checks for the new column/default; new representative-sms-test.php (15 checks, same static-source discipline as representative-access-test.php -- no live WordPress/MariaDB/SMS provider in this sandbox) asserts the representative''s consent is actually wired into the send path, not merely stored; every *.php file in site/tests/ still exits 0; tools-test.sh passes unchanged. Repo has no CI workflows configured; merged on local verification per established precedent (t-021/t-022/t-032/t-033).'
     claimed_by: 2026-08-17-sched-t034
     claimed_at: '2026-08-17T21:34:53Z'
-    updated: '2026-08-17T21:34:53Z'
+    updated: '2026-08-17T21:40:57Z'
+    implementation_pr: 'silasfelinus/humboldtscoopsolutions#59'
