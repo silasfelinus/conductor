@@ -8455,3 +8455,23 @@ records:
     check (index-based anchor comparisons rather than full brace-parsing) instead of adding
     a fourth guard file, per the task note's own preference -- kept the fix inside the file
     whose npm script/CI step already covered it, so no workflow-file change was needed."
+- date: 2026-08-17
+  project: text-generation
+  task: t-001
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The roadmap note assumed the private-server path was mostly unbuilt; a full read of
+    server/api/chats/{openai,anthropic,ollama}/stream.post.ts, serverResolver.ts, and the
+    Server Prisma model showed the opposite -- a working native Ollama route, full server
+    CRUD/health infrastructure, and consistent mana gating already exist. The real gaps were
+    narrower and more specific: serverResolver.ts's capabilityWhere('text') silently excludes
+    OLLAMA from type-based resolution, three near-identical chat routes each duplicate a private
+    cost estimator that has drifted from an already-correct shared estimateTextCostUsd (which
+    also correctly multiplies by n, unlike the OpenAI route's local copy), and there is zero
+    AbortController/cancellation wiring anywhere in the stack (server or chatStore.ts). Treating
+    'map the existing code' as a literal instruction rather than a formality caught a concrete,
+    fixable billing-undercount bug (uncounted n) and a routing gap (Ollama) that a
+    memory-based/greenfield-assuming brief would have missed or re-invented differently."
