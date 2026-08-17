@@ -211,8 +211,8 @@ tasks:
   - id: t-008
     milestone: m3
     title: Unify OpenAI/Anthropic header construction into one shared code path
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     gate_human: false
@@ -230,3 +230,6 @@ tasks:
       ollama}/stream.post.ts and generate/text.post.ts all call it; existing
       contract tests (text-provider-service, text-generation-dispatch) still pass
       with no behavior change for any existing caller.
+    claimed_by: 20260817T073849Z-textgen-t008
+    claimed_at: '2026-08-17T07:38:50Z'
+    updated: '2026-08-17T07:38:50Z'
