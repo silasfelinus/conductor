@@ -1,34 +1,42 @@
-# humboldt-scoop-cms — code has moved
+# humboldt-scoop-cms — canonical Humboldt Scoop Solutions project
 
-**The CMS and field client now live in [`silasfelinus/humboldtscoopsolutions`](https://github.com/silasfelinus/humboldtscoopsolutions).**
+The slug is historical. **This is now the one continuing Conductor project for the entire Humboldt Scoop Solutions product.**
 
-Seeded there 2026-08-15 from this directory. Do not continue editing the service
-here — changes made in conductor will not reach the working copy and recreate the
-split-brain problem the move was meant to end.
+It owns coordination from the already-working public website forward through:
 
-## What stays in conductor
+- public website and quote/signup flow
+- customer web portal
+- admin/business-management portal
+- dispatcher and route planning
+- scooper/worker portal and field workflow
+- shared customer/property/pet/visit/billing data
+- notifications, proof-of-service, and operational tooling
+- Android and iOS apps for clients and staff
+- production hardening, beta distribution, and App Store / Play Store release
 
-`roadmap.yaml` — task status, milestones, human gates, completion history.
-Per [`SOURCE_OF_TRUTH.md`](../../SOURCE_OF_TRUTH.md), Conductor is the canonical
-coordination ledger. Status *about* this work stays here; the work itself lives
-in the other repo.
+The original `humboldt-scoop` project is **finished** and historical. Do not create a third HSS project for mobile, portal, worker, or admin work; extend this roadmap instead.
 
-Still open here: **t-010** (`needs-human`) — review real-address privacy, map
-costs, and launch gates. That gate is unaffected by the move.
+## Canonical code
 
-## What moved
+All implementation work lives in [`silasfelinus/humboldtscoopsolutions`](https://github.com/silasfelinus/humboldtscoopsolutions):
 
-| Was here | Now |
+| Area | Canonical path |
 |---|---|
-| `src/`, `ops/`, `route-cards/`, `route-planner/`, `package.json`, `tsconfig.json` | `cms/` |
-| `SCHEMA.md`, `STACK.md`, `PRIVACY-LAUNCH-REVIEW.md` | `cms/` |
-| `field_client/` | `field-client/` |
+| Public WordPress site + customer portal/admin plugin | `site/` |
+| CMS, route planner, dispatcher, shared API | `cms/` |
+| Flutter mobile client | `field-client/` |
+| Architecture, integration, backlog, provenance | `docs/` |
 
-`apps/humboldt-scoop-cms/` (repo root) was **not** carried over — it is an
-AppMaker scaffold whose `lib/main.dart` is a 22-line hello-world, under a
-different package name (`humboldt_scoop_cms`) than the real client
-(`humboldt_scoop_field_client`). Copying it alongside `field_client` would have
-produced a broken mixed-package build. Platform directories are regenerated in
-the new repo with `cd field-client && flutter create .`.
+The code copies still present under this Conductor directory are historical imports only. **Never implement against them.** If archaeology here reveals something better, port it into the canonical repo and record that salvage there.
 
-Verified at move time: `npm run build` clean, `npm test` 25/25 passing.
+## Identity model
+
+Do not model staff as a single mutually-exclusive role enum. **Admin/business-management capability and scooper/worker capability are independent grants. A person may have either or both.**
+
+That matters immediately: a business owner/manager may also work routes. Authentication and every web/mobile surface should derive available actions from capabilities, not force a user into one persona.
+
+Customers remain a separate portal audience, while authorized representatives are customer-account delegates with their own limited permissions.
+
+## History
+
+Tasks `t-001` through `t-012` built the original CMS/routing/field-client foundation. Their detailed implementation notes remain in Git history and are summarized in `HISTORY.md`. The current roadmap preserves those task IDs as completed foundation work and continues from there.
