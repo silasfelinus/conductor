@@ -24,25 +24,12 @@ tasks:
   - id: t-001
     milestone: m1
     title: Map the existing text stack and write the private-server design brief
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     gate_human: false
-    note: >-
-      Start from the code that already exists, not a greenfield provider rewrite.
-      Inventory server/api/chats/openai/stream.post.ts,
-      server/api/chats/anthropic/stream.post.ts,
-      server/api/chats/ollama/stream.post.ts, server/utils/serverResolver.ts, the
-      Prisma Server model, preferredTextServerId, server CRUD/health APIs, and the
-      current chat/text consumers. The current runtime already accepts stored server
-      profiles in the OpenAI and Anthropic routes and has a native Ollama stream
-      route, but the capability routing and product surface are incomplete. Produce
-      projects/text-generation/BRIEF.md defining: one-shot generation vs chat vs
-      streaming contracts; provider/profile capabilities; model selection; server
-      ownership/visibility; error and cancellation semantics; mana accounting; a
-      compatibility/migration plan for the three existing endpoints; and what is
-      explicitly out of scope. Treat briefs as direction, not permanent contracts.
+    note: 'Done: design brief merged (conductor#2351) -- capability map, target generation contract, migration strategy, security boundaries, success criteria, and implementation sequence for t-002 through t-006. Unblocks the next text-generation milestone tasks.'
     acceptance: >-
       BRIEF.md is committed with a current-state capability map, target generation
       contract, migration strategy, security boundaries, success criteria, and a
@@ -50,7 +37,8 @@ tasks:
       Ollama and stored-server plumbing already provides and what is still missing.
     claimed_by: scheduled-conductor-20260817T0029Z-textgen-t001
     claimed_at: '2026-08-17T00:29:34Z'
-    updated: '2026-08-17T00:29:34Z'
+    updated: '2026-08-17T01:27:59Z'
+    implementation_pr: 'silasfelinus/conductor#2351'
 
   - id: t-002
     milestone: m2
