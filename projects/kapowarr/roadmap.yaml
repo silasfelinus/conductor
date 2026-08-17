@@ -186,14 +186,17 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Harden download completion and import workflows"
-    status: not-started
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
       Exercise success, duplicate, failed, stalled, missing-file, and restart cases
       for direct, torrent, and NZB downloads. Add regression coverage around comic
       matching, post-processing, and safe cleanup.
+    claimed_by: scheduled-conductor-20260817T1700Z-kapowarr-t009
+    claimed_at: '2026-08-17T17:00:00Z'
+    updated: '2026-08-17T17:00:00Z'
 
   - id: t-010
     milestone: m3
