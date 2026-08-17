@@ -8538,3 +8538,28 @@ records:
     serverCapabilities.ts's getCapabilityServerTypes() closely enough that the same contract-test
     shape (assert each type-family present/absent, assert no duplicates, assert the exact
     expected set) could be reused with only the type list changed."
+- date: 2026-08-17
+  project: text-generation
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The three legacy chat streaming routes had already converged on a clean split between
+    provider-agnostic mechanics (textProviderService.ts, from t-002) and provider-specific shape
+    (endpoint URL, payload fields, auth). That split made the new unified endpoint mostly a matter
+    of extracting the THIRD piece -- per-provider payload/response dialect -- into its own pure
+    module (textGenerationDispatch.ts) rather than writing a new endpoint from scratch: one file
+    that knows OpenAI/Anthropic/Ollama's three payload shapes and three response shapes, reused by
+    a thin route. Provider selection from a resolved server's serverType (rather than a separate
+    caller-supplied provider flag) turned out to be both simpler and more correct -- it can't drift
+    from what the server actually is. One deliberate behavior improvement over the legacy routes:
+    resolving the caller's preferredTextServerId/isDefault server even with no explicit
+    serverId/serverName, instead of only ever falling back to the cloud default the way
+    resolveOptionalTextServer does -- new endpoints are free to fix small inconsistencies like this
+    that would be a breaking change on an existing route. No live OpenAI/Anthropic/Ollama API keys
+    exist in this sandbox, so verification stayed at the same DB-free contract-test depth
+    established by t-002/t-003/t-007 (34 synthetic-fixture checks covering every dispatch branch)
+    rather than a live integration test the acceptance text technically asked for -- flagged
+    explicitly for the reviewer/Silas rather than silently substituted."

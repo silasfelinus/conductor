@@ -109,7 +109,7 @@ tasks:
   - id: t-004
     milestone: m2
     title: Expose unified one-shot and streaming text generation APIs
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -130,12 +130,13 @@ tasks:
       behavior.
     claimed_by: scheduled-conductor-20260817T0530Z-textgen-t004
     claimed_at: '2026-08-17T06:48:42Z'
-    updated: '2026-08-17T06:48:42Z'
+    updated: '2026-08-17T07:06:40Z'
+    implementation_pr: 'silasfelinus/kind_robots#1923'
 
   - id: t-005
     milestone: m3
     title: Harden private-server networking, secrets, and failure behavior
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -206,3 +207,26 @@ tasks:
     claimed_at: '2026-08-17T05:31:06Z'
     updated: '2026-08-17T05:41:38Z'
     implementation_pr: 'silasfelinus/kind_robots#1922'
+
+  - id: t-008
+    milestone: m3
+    title: Unify OpenAI/Anthropic header construction into one shared code path
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: false
+    note: >-
+      Kaizen from t-004: server/api/generate/text.post.ts's buildUpstreamAuth
+      hand-builds OpenAI/Anthropic auth headers inline, duplicating the shape of
+      textProviderService.ts's existing buildTextServerAuthHeaders (used for Ollama
+      and any generic stored-server case). Fold both into one shared header-building
+      function in textProviderService.ts so the legacy chat routes and the new
+      unified generation endpoint share exactly one code path instead of two
+      independently-maintained ones.
+    acceptance: >-
+      A single header-construction function in textProviderService.ts covers
+      OpenAI/Anthropic/Ollama/generic-server auth shapes; chats/{openai,anthropic,
+      ollama}/stream.post.ts and generate/text.post.ts all call it; existing
+      contract tests (text-provider-service, text-generation-dispatch) still pass
+      with no behavior change for any existing caller.
