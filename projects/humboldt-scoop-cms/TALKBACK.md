@@ -194,3 +194,52 @@ type: pattern
 **Kaizen task:** none filed — the deferred VROOM app-integration is already named as explicit future
 work in the task's own spec, and the "fold real pm2 output back into the task note" follow-up is
 already captured in the Worker's own TALKBACK entry above.
+
+## 2026-08-17 | Agent (scheduled conductor sweep) | humboldt-scoop-cms/t-014 | pattern
+
+**Decision:** implemented and merged humboldtscoopsolutions PR #39 (squash).
+
+**Detail:**
+- Read `docs/CANONICAL-SOURCES.md`'s "Staff identity rule" and `docs/DATA-ARCHITECTURE.md` in the
+  canonical `humboldtscoopsolutions` repo before writing anything — the rule (independent admin/scooper
+  capabilities, not a mutually-exclusive enum) was already spelled out there, along with an explicit
+  note that this exact task was the prerequisite the roadmap was waiting on.
+- Read the actual current gate (`HSS_Admin::CAP = 'manage_options'`) and confirmed the CMS
+  (`cms/src/server.ts`) has zero auth on any route before designing — matched the task note's claim
+  exactly rather than assuming.
+- Mirrored an existing in-codebase pattern instead of inventing a new one: `wp_hss_contacts` already
+  keeps `can_receive_updates`/`can_request_changes` as two independent TINYINT flags rather than one
+  permission enum, for the same "don't conflate two different grants" reason. `wp_hss_staff.is_admin`/
+  `is_scooper` is the same shape, deliberately, not a new join-table RBAC system that YAGNI didn't call
+  for.
+- The capability check is additive, not a replacement: `HSS_Staff::filter_user_has_cap()` still honors
+  `manage_options`, so no existing WordPress administrator lost admin-screen access. This was a
+  deliberate design constraint, not an oversight — a security-sensitive auth change that locked out the
+  one person who could fix it would be a worse failure mode than the bug it replaces.
+- Added a "Staff" admin screen specifically because a capability model with no way to grant the
+  capability is unusable — this wasn't in the task's explicit checklist but was necessary to make the
+  rest of the change mean anything.
+- Built `cms/src/auth/staffCapabilities.ts` as a pure, DB-free capability-mapping module (same
+  discipline as the existing `cms/src/db/rows.ts`) rather than wiring live authentication into CMS
+  routes — that's explicitly `t-015`'s scope ("Authenticate the CMS and field client against staff
+  capabilities"), and building unauthenticated middleware now would have been untestable, dead code
+  ahead of the identity-resolution piece t-015 adds.
+- Verified everything actually runnable in-sandbox: `php -l` on every changed file, the full existing
+  PHP/shell test suite (`schema-test.php`, `pricing-test.php`, `quote-form-test.php`, `tools-test.sh`,
+  `front-page-copy-test.sh`, `theme-css-test.sh`) plus new assertions I added for the staff table/class/
+  capability filter, and the CMS's `npm test` (53/53, 6 new) and `tsc --noEmit`. Could not run
+  `schema-dry-run.sh`/`verify-schema.php` against a real MariaDB (Alexandria-only) — updated their
+  expected-table-count and column assertions by inspection and said so plainly in the PR rather than
+  claiming full verification.
+
+**What was good:** found and followed an explicit design document (`docs/CANONICAL-SOURCES.md`) that
+already resolved the "enum vs. independent flags" question before writing any code, instead of
+re-deriving the decision. Correctly scoped the boundary with `t-015` (identity/capability model here,
+authentication wiring there) rather than either doing too little (schema with no way to grant it) or
+too much (unauthenticated middleware with nothing to authenticate).
+
+**What to improve:** none specific this cycle — the one real verification gap (live MariaDB dry run)
+is inherent to the sandbox, not a shortcut I took, and is flagged explicitly in the PR.
+
+**Kaizen task:** none filed — `t-015` is already the queued, correctly-scoped next step; no new gap
+surfaced beyond what the roadmap already tracks.
