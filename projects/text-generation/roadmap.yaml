@@ -63,18 +63,13 @@ tasks:
   - id: t-002
     milestone: m2
     title: Build a shared server-side text generation provider layer
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     gate_human: false
     depends_on: t-001
-    note: >-
-      Consolidate duplicated provider mechanics behind a typed server-side service
-      while preserving existing endpoint behavior. Support OpenAI, Anthropic, native
-      Ollama, and trusted OpenAI-compatible/custom servers without making callers know
-      transport quirks. Keep provider credentials server-side. Do not accept arbitrary
-      per-request upstream URLs.
+    note: 'Closed 2026-08-17: shared server-side text provider service merged via kind_robots PR #1919 (squash 21bcde9). server/utils/textProviderService.ts extracts the mechanics duplicated across all three chat streaming routes (optional server resolution, provider-key precedence, per-authType auth headers, SSE/ndjson header setup, byte-relay-then-mana pump, error status extraction, refId shaping); all three routes now call the single shared estimateTextCostUsd instead of three drifted local estimators. Net -367 lines. t-003 (Ollama capability-routing fix + private-server profile UX) is the next task per BRIEF.md sequence; t-004 stays waiting on both t-002 and t-003.'
     acceptance: >-
       A focused provider service covers message normalization, provider endpoint
       resolution, auth headers, model/options mapping, streaming lifecycle, and
@@ -82,7 +77,8 @@ tasks:
       covered by automated tests.
     claimed_by: scheduled-conductor-20260817T0227Z-textgen-t002
     claimed_at: '2026-08-17T02:28:11Z'
-    updated: '2026-08-17T02:28:11Z'
+    updated: '2026-08-17T02:46:09Z'
+    implementation_pr: 'silasfelinus/kind_robots#1919'
 
   - id: t-003
     milestone: m2
