@@ -1,30 +1,22 @@
-# humboldt-scoop — code has moved
+# humboldt-scoop — FINISHED historical site project
 
-**The website code now lives in [`silasfelinus/humboldtscoopsolutions`](https://github.com/silasfelinus/humboldtscoopsolutions), under `site/`.**
+**This project is finished.** It proved the original website/front-end path and is retained only as completion history and provenance.
 
-Seeded there 2026-08-15 from this directory's `scoops/` import. Do not continue
-editing the site here — changes made in conductor will not reach the working
-copy and recreate the split-brain problem the move was meant to end.
+All ongoing Humboldt Scoop Solutions work is coordinated by **`humboldt-scoop-cms`**, whose historical slug now represents the whole HSS product: the public website, customer portal, admin/dispatch surfaces, scooper/worker tools, shared backend, and Android/iOS apps through App Store / Play Store release.
 
-## What stays in conductor
+The only canonical implementation repository is [`silasfelinus/humboldtscoopsolutions`](https://github.com/silasfelinus/humboldtscoopsolutions). Website code lives there under `site/`. **Do not develop against the copies under this Conductor directory.**
 
-`roadmap.yaml` — task status, milestones, human gates, completion history.
-Per [`SOURCE_OF_TRUTH.md`](../../SOURCE_OF_TRUTH.md), Conductor is the canonical
-coordination ledger. Status *about* this work stays here; the work itself lives
-in the other repo.
+## Why this stays
+
+Conductor is the coordination ledger, so the completed `roadmap.yaml` and historical notes remain available. The directory is not a second implementation of HSS.
 
 ## What moved
 
-| Was here | Now |
+| Was here | Canonical location now |
 |---|---|
-| `scoops/` (custom themes, `humboldt-scoop-portal` plugin, uploads, `compose.yaml`, config) | `site/` |
-| `scoops/NOTES.md`, `scoops/ASSET-INVENTORY.md` | `site/docs/` |
-| `CONTENT-BRIEF.md` | `docs/CONTENT-BRIEF.md` |
+| `scoops/` (custom themes, `humboldt-scoop-portal`, uploads/config import) | `humboldtscoopsolutions/site/` |
+| `scoops/NOTES.md`, `scoops/ASSET-INVENTORY.md` | `humboldtscoopsolutions/site/docs/` |
+| `CONTENT-BRIEF.md` | `humboldtscoopsolutions/docs/CONTENT-BRIEF.md` |
+| ongoing product roadmap | `projects/humboldt-scoop-cms/roadmap.yaml` |
 
-`scoops/wp-admin/` and `scoops/wp-includes/` (79MB of vendored WordPress 7.0)
-were not carried over — the `wordpress:php8.2-apache` image supplies core.
-
-The copy under `scoops/` here is retained for now as the import of record. It can
-be deleted once the new repo is reconciled against the Alexandria PC — see
-`docs/INVENTORY.md` in the new repo for what that reconciliation still needs
-(a database dump, above all).
+The legacy copies here are archaeology only. If they contain a useful implementation that the canonical repo lacks, salvage that implementation into `silasfelinus/humboldtscoopsolutions` first and record the provenance there; never revive this directory as a working codebase.
