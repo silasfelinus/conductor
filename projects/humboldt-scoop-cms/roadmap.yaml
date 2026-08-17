@@ -294,8 +294,8 @@ tasks:
   - id: t-017
     milestone: m7
     title: "Build the customer invite/link identity bridge"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -303,6 +303,9 @@ tasks:
       records key on wp_hss_customers.id. Add an invite/link flow so a customer created by
       admin/CMS can receive portal access without duplicate records, and make the linkage
       explicit/auditable rather than only happening on first login.
+    claimed_by: scheduled-conductor-20260817T115200Z-hss-t017
+    claimed_at: '2026-08-17T11:47:20Z'
+    updated: '2026-08-17T11:47:20Z'
 
   - id: t-018
     milestone: m8
