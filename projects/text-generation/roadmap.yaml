@@ -63,8 +63,8 @@ tasks:
   - id: t-002
     milestone: m2
     title: Build a shared server-side text generation provider layer
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     gate_human: false
@@ -80,6 +80,9 @@ tasks:
       resolution, auth headers, model/options mapping, streaming lifecycle, and
       normalized errors; existing OpenAI/Anthropic/Ollama chat behavior remains
       covered by automated tests.
+    claimed_by: scheduled-conductor-20260817T0227Z-textgen-t002
+    claimed_at: '2026-08-17T02:28:11Z'
+    updated: '2026-08-17T02:28:11Z'
 
   - id: t-003
     milestone: m2
