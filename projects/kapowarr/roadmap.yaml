@@ -29,6 +29,11 @@ milestones:
     weight: 25
     status: done
 
+  - id: m4
+    title: "MAINTAIN — track upstream, respond to real usage"
+    weight: 10
+    status: in-progress
+
 tasks:
   - id: t-001
     milestone: m1
@@ -491,3 +496,28 @@ tasks:
     claimed_at: '2026-08-17T14:27:56Z'
     updated: '2026-08-17T14:35:43Z'
     implementation_pr: 'silasfelinus/Kapowarr#27'
+
+  - id: t-023
+    milestone: m4
+    title: "Check upstream Casvt/Kapowarr for changes worth importing"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    recurring: true
+    note: >
+      Follow FORK_MAINTENANCE.md's own workflow (t-011, silasfelinus/Kapowarr#30):
+      add/fetch the upstream remote, diff origin/main against upstream/main since
+      the last checked commit, and note anything worth cherry-picking or merging --
+      a real bugfix in shared code the fork hasn't diverged on is worth taking, a
+      change to fork-only territory (Usenet/NZB, notifications, health-check,
+      branding) usually is not. If nothing upstream has moved or nothing found is
+      worth importing, that is a valid no-op outcome for this cycle -- note it and
+      re-arm to ready, same as any other recurring task (see AGENTS.md's
+      "Recurring tasks" section). This is m4's standing task: milestones m1-m3
+      shipped everything currently scoped (fork identity, Usenet/NZB, tests/
+      migration/sync), and an active project needs real open work rather than
+      inferring "finished" from an empty queue -- see
+      docs/state-reconciliation.md and scripts/validate_roadmaps.py's
+      active-project-has-no-open-tasks check, which this task exists to satisfy
+      honestly (tracking a real fork-maintenance obligation, not a placeholder).
