@@ -307,11 +307,14 @@ tasks:
   - id: t-018
     milestone: m8
     title: "Ship authorized-representative UI for customers and admins"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: 'The wp_hss_contacts schema and permission model already exist. Expose add/edit/remove in the customer portal and verification in the admin customer view. Preserve the distinction between can_receive_updates and can_request_changes; the latter remains an explicit grant. VERIFIED 2026-08-17: this is more than a missing UI. HSS_Contacts::may_request_changes() is written and schema-tested, and is called by nothing -- HSS_Portal::handle_forms() gates the change_request action on is_user_logged_in() alone. So a representative granted can_request_changes cannot use it, and the grant is not what authorises anything today. Wire the check at the same time as the UI, or the UI will hand out a permission the code does not honour.'
+    claimed_by: scheduled-conductor-20260817T1330Z-hss-t018
+    claimed_at: '2026-08-17T13:14:35Z'
+    updated: '2026-08-17T13:14:35Z'
 
   - id: t-019
     milestone: m8
