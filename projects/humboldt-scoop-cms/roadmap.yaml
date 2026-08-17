@@ -294,18 +294,15 @@ tasks:
   - id: t-017
     milestone: m7
     title: "Build the customer invite/link identity bridge"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Resolve the two-identity seam: the portal keys on WordPress user_id while operational
-      records key on wp_hss_customers.id. Add an invite/link flow so a customer created by
-      admin/CMS can receive portal access without duplicate records, and make the linkage
-      explicit/auditable rather than only happening on first login.
+    note: 'Shipped in humboldtscoopsolutions PR #47 (schema 2.6.0). Bridges the two-identity seam explicitly: wp_hss_customers gains linked_at/linked_via; new wp_hss_customer_invites table (hash-only tokens, mirrors HSS_Staff_Tokens). HSS_Customer_Invites::issue/revoke/peek/redeem -- redeem() is the only path allowed to set an existing customer row user_id away from 0, and refuses with a named WP_Error (not a silent overwrite/duplicate) when either side of the link is already claimed elsewhere; idempotent on a retried same-pair redemption. HSS_Customers gains get()/create() (admin-entered customer, user_id=0 allowed) and a register() guard against a plain self-signup colliding with an unlinked existing row. Admin Customers screen gets an Add-a-customer form plus per-customer invite issue/revoke panel. Portal preserves an invite token through login/register and shows an explicit confirm step before linking, never automatic. Migration audited line-by-line before merge: additive-only (2 new nullable/defaulted columns, 1 new CREATE TABLE, no DROP/rewrite). Deferred: no merge tool yet for an actual conflict -- filed as t-032, logged in docs/BACKLOG.md. Verified: php -l clean repo-wide, full existing PHP/shell suite plus new site/tests/customer-link-test.php (40+ assertions) pass. NOT verified in this sandbox (no live MariaDB, no browser): a real dbDelta run and an end-to-end invite-link click-through.'
     claimed_by: scheduled-conductor-20260817T115200Z-hss-t017
     claimed_at: '2026-08-17T11:47:20Z'
-    updated: '2026-08-17T11:47:20Z'
+    updated: '2026-08-17T11:59:56Z'
+    implementation_pr: 'silasfelinus/humboldtscoopsolutions#47'
 
   - id: t-018
     milestone: m8
@@ -500,3 +497,20 @@ tasks:
       one role-aware CMS page (GET /me, "My Visits Today" tab); this task closes the remaining
       gap so a dual-capability admin+scooper staff member reaches business management without
       a second URL.
+
+  - id: t-032
+    milestone: m7
+    title: "Build an admin merge tool for two customer records that represent the same person"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-017: HSS_Customer_Invites::redeem() and HSS_Customers::register() both
+      correctly refuse rather than silently merge when an invite/registration conflicts with
+      an already-linked customer or user record -- the right default, but there is currently
+      no admin tool to resolve the conflict beyond a "contact us" error message. Once real
+      usage generates a few of these (most likely: a customer who registered organically
+      before their invite arrived), build an admin screen that shows the two candidate
+      records side by side and moves properties/pets/visits/subscriptions from one
+      customer_id onto the other. See docs/BACKLOG.md in humboldtscoopsolutions.
