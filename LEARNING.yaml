@@ -8499,3 +8499,42 @@ records:
     DATABASE_URL just by importing the file -- dynamic-importing the Prisma-touching piece
     inside its own function body keeps the rest of the module importable standalone, which
     mattered here because contract-tests.yml is explicitly documented as a DB-free workflow."
+- date: 2026-08-17
+  project: text-generation
+  task: t-003
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "getCapabilityServerTypes()'s 'text'/'chat' where-clause excluded OLLAMA even though
+    server/api/chats/ollama/stream.post.ts's own request path already worked end-to-end --
+    the exclusion only broke server-side *resolution* (serverId/serverName/preferredTextServerId
+    lookups), not the route itself, so a request that already had its target server object in
+    hand would still succeed while every id/name/preference-based lookup silently failed to
+    find that same Ollama server. A route working in isolation is not evidence its resolver path
+    works too when they're separate code paths sharing only a where-clause. Most of t-003's
+    stated acceptance criteria (health/test operation, preferredTextServerId selection UI,
+    explicit-server-add form) were already built by earlier server-selector/serverStore work --
+    reading the actual UI and API surface before assuming a gap existed narrowed the real fix to
+    one array literal plus its missing test coverage, rather than re-implementing already-working
+    infrastructure."
+- date: 2026-08-17
+  project: text-generation
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A dashboard's default query scope can silently exclude an entire class of records
+    even after the underlying data becomes real and resolvable -- server/api/server/uptime.get.ts
+    hardcoded ['A1111','COMFY'] as its default serverType filter from when the panel was built
+    for art/GPU servers only; once t-003 made OPENAI/ANTHROPIC/OLLAMA/CUSTOM genuinely resolvable
+    text servers, they still had zero uptime/latency visibility because nothing in the UI ever
+    surfaced the ?serverType= override that would have shown them. The fix pattern from t-003
+    (extract the array into a pure, exported, DB-free-testable function) generalized directly:
+    server/utils/serverUptimeScope.ts's getUptimeDefaultServerTypes() mirrors
+    serverCapabilities.ts's getCapabilityServerTypes() closely enough that the same contract-test
+    shape (assert each type-family present/absent, assert no duplicates, assert the exact
+    expected set) could be reused with only the type list changed."
