@@ -1,131 +1,145 @@
-# Humboldt Scoop CMS — Customer Management Software
-# New build. This is a starter roadmap — Silas, edit freely.
+# Humboldt Scoop Solutions — unified product roadmap
+# Historical project key retained for continuity: humboldt-scoop-cms.
+# The original humboldt-scoop site project is finished. This roadmap owns all
+# ongoing HSS work through web portals, field operations, mobile apps, and stores.
 # Progress % = done weight (+ half for in-progress) / total weight.
 
 project: humboldt-scoop-cms
 kind: software
 
 notes_from_silas: |
-  Customer-management software for the Humboldt Scoop service. Starter roadmap —
-  I'll refine. Think: customers, their pets/yards, recurring service schedules,
-  visit logs, billing, and a customer route maker that produces a mapped route for
-  a selected number of customer/user records. Pick a stack that's simple to self-host.
-  Do NOT wire real payment, customer data, addresses, or map-provider billing without
-  flagging me (needs-human). Build with seed/dummy data only until I say otherwise.
+  2026-08-17 direction: this is the ONE continuing Humboldt Scoop Solutions
+  project. The original humboldt-scoop project is finished; it successfully
+  delivered the working public-facing site foundation. Do not create separate
+  projects for the website, CMS, admin portal, worker portal, customer portal,
+  Android app, or iOS app. They are surfaces of the same service and share the
+  same customer/business data.
 
-  Route planning should use deterministic routing/optimization rather than an LLM.
-  Android is the first field-client target, while Linux and iOS compatibility remain
-  goals. Approved AI features may use team-owned LLM tokens, with keys server-side.
+  The historical "CMS" slug is retained so task history and projection joins do
+  not break, but its scope is now the whole product from today's website through
+  production Android/iOS apps available in their stores.
+
+  Admin/business-management and scooper/worker are NOT mutually-exclusive roles.
+  Model them as independent capabilities. A person can be admin-only,
+  scooper-only, or both. Customer access is a separate audience; authorized
+  representatives are limited delegates of a customer account.
+
+  Keep the system self-hostable and avoid paid API services except by explicit
+  exception. Deterministic routing stays non-LLM. Real customer data, production
+  credentials, payment-mode changes, destructive migrations, and outward-facing
+  store publication remain explicit launch gates rather than being implied by
+  ordinary development approval.
+
+  Canonical implementation repository: silasfelinus/humboldtscoopsolutions.
+  Conductor stores coordination/history only. Never implement against the old
+  code copies under projects/humboldt-scoop*; salvage useful archaeology into
+  the canonical repository instead.
 
 milestones:
+  # Completed foundation. Weight zero keeps history visible without making the
+  # new product phase appear artificially complete.
   - id: m1
-    title: "Stack chosen + skeleton app runs locally"
-    weight: 15
-    status: not-started
+    title: "FOUNDATION — stack + skeleton"
+    weight: 0
+    status: done
   - id: m2
-    title: "Customer + property data model"
-    weight: 15
-    status: not-started
+    title: "FOUNDATION — customer/property model"
+    weight: 0
+    status: done
   - id: m3
-    title: "Recurring service scheduling"
-    weight: 20
-    status: not-started
+    title: "FOUNDATION — scheduling + route-card API"
+    weight: 0
+    status: done
   - id: m4
-    title: "Visit logging + history"
-    weight: 15
-    status: not-started
+    title: "FOUNDATION — visit logging/history"
+    weight: 0
+    status: done
   - id: m5
-    title: "Invoicing (draft-only, no live payments)"
-    weight: 15
-    status: not-started
+    title: "FOUNDATION — billing/invoice surface"
+    weight: 0
+    status: done
   - id: m6
-    title: "Mapped customer route planning + field client"
+    title: "FOUNDATION — routing, dispatcher, field client"
+    weight: 0
+    status: done
+
+  - id: m7
+    title: "UNIFY — canonical source, identity, auth, capabilities"
     weight: 20
+    status: in-progress
+  - id: m8
+    title: "WEB PORTALS — public, customer, admin, dispatcher, worker"
+    weight: 25
+    status: not-started
+  - id: m9
+    title: "OPERATIONS — notifications, commerce promises, proof of service"
+    weight: 20
+    status: not-started
+  - id: m10
+    title: "MOBILE — resilient Android/iOS portals"
+    weight: 20
+    status: not-started
+  - id: m11
+    title: "SHIP — production rollout, betas, Play Store + App Store"
+    weight: 15
     status: not-started
 
 tasks:
+  # ── Completed foundation retained by ID ──────────────────────────────
   - id: t-001
     milestone: m1
     title: "Propose a stack + scaffold a running skeleton"
     status: done
     owner: worker
-    updated: "2026-06-30T00:00:00Z"
     passes: 0
     stakes: reversible
     note: >
-      In projects/humboldt-scoop-cms/, propose a simple self-hostable stack
-      in a short STACK.md (one recommendation + one alternative, with reasoning),
-      then scaffold a minimal app that runs locally with a health-check route.
-      Seed/dummy data only.
+      Hono/TypeScript self-hostable service skeleton delivered. Full historical
+      note is preserved in HISTORY.md / Git history.
 
   - id: t-002
     milestone: m2
     title: "Design the customer + property schema"
     status: done
     owner: worker
-    updated: "2026-06-30T00:00:00Z"
     passes: 0
     stakes: reversible
     note: >
-      Draft the data model (customers, properties/yards, pets, service plans) as a
-      schema file + a short SCHEMA.md explaining choices. No migrations against a
-      real DB — definition + seed data only.
+      Initial customer/property/pet/service model delivered and later reconciled
+      with the WordPress-owned shared schema.
 
   - id: t-003
     milestone: m3
-    title: "Write yard route calendar card spec (dummy data)"
+    title: "Write yard route calendar card spec"
     status: done
     owner: worker
-    updated: "2026-06-30T00:00:00Z"
     passes: 0
     stakes: reversible
-    gate_human: true
     approved_by_human: true
     note: >
-      FOR SILAS: A route card spec has been written at
-      projects/humboldt-scoop-cms/route-cards/SPEC.md. It defines what information
-      appears on a crew member's daily visit card: customer name, pet notes (name,
-      breed, temperament), yard notes, visit checklist, and gate-access placeholder.
-      Three sample dummy cards are included so you can see what it looks like.
-      There is also a note about a possible product path (selling a printable
-      route-card template to other small service businesses).
-      TO APPROVE: Read route-cards/SPEC.md. If the fields and approach look right
-      for the real Humboldt Scoop workflow, set approved_by_human: true and
-      status: done. If you want changes, add a note here with what to fix.
-      Nothing goes live until you approve; this is dummy data only.
+      Crew route-card specification delivered and approved.
 
   - id: t-004
     milestone: m1
     title: "Scaffold the app skeleton from STACK.md — run health-check"
     status: done
     owner: worker
-    updated: "2026-06-30T00:00:00Z"
     passes: 0
     stakes: reversible
     note: >
-      Already delivered as part of t-001. The Hono/TypeScript app skeleton exists at
-      projects/humboldt-scoop-cms/: src/server.ts has GET / and GET /health routes,
-      package.json and tsconfig.json are configured, and npm run dev starts the server.
-      Schema types from t-002 are in src/schema.ts. Marked done — no further scaffold
-      work needed; next step is wiring real CMS routes once t-003 is approved.
+      Delivered as part of the foundation scaffold.
 
   - id: t-005
     milestone: m3
     title: "Wire customer and route-card API routes using seed data"
     status: done
     owner: worker
-    updated: "2026-06-30T00:00:00Z"
     passes: 0
     stakes: reversible
     depends_on: t-003
     note: >
-      Added three routes to src/server.ts using seedData from schema.ts.
-      GET /customers lists all customers with their properties, pets, and active plan.
-      GET /customers/:id returns full detail including service plans, visits, and draft invoices.
-      GET /routes/today returns ordered route cards matching SPEC.md fields including
-      pet details, yard notes, visit checklist, and a gate-details placeholder.
-      Falls back to all scheduled visits when no dummy visits match today's date.
-      Dummy data only — no auth, no real customer data, no billing.
+      Customer detail and route-card API surface delivered; seed mode remains a
+      test fixture while the canonical CMS now also has a shared-database layer.
 
   - id: t-006
     milestone: m6
@@ -134,48 +148,10 @@ tasks:
     owner: worker
     passes: 0
     stakes: reversible
-    gate_human: true
     approved_by_human: true
     note: >
-      FOR SILAS: wrote projects/humboldt-scoop-cms/route-planner/SPEC.md — the
-      route-planner design brief this task asked for. It defines the selection model
-      (date/filter, start/optional-end location, explicit-pick or fill-to-N customer
-      selection), the ordered-stop-list + map + per-stop card output, and the manual
-      drag-reorder/locked-stop/skipped-customer/save-export interactions.
-      TO APPROVE: it recommends self-hosted OSRM (road routing) + VROOM (stop-order
-      optimization) + Leaflet (map/draggable waypoints) as the v1 stack — no per-request
-      billing, no API keys, customer addresses never leave your own server — with
-      OpenRouteService's hosted free tier as a same-shape fallback if standing up two
-      self-hosted services is more than you want to own for a first version. No LLM is
-      used for routing per your direction. Section 8 of the spec has three open
-      questions (stack choice, Android client architecture, round-trip-by-default
-      assumption) — answer those, then set approved_by_human: true and status: done
-      to unblock t-007 (the deterministic route-plan API implementation).
-
-      APPROVED 2026-07-26 (Silas): "absolutely no paid API services. this is
-      generally always going to be my choice with the rarest of EXCEPTIONS. I
-      have unraid and the same host box that runs comfy and our comfy relay,
-      as well as the serendipity voice relay. We should always be able to
-      find a solution that can be hosted by me. Bonus points if the solution
-      can be added directly from the conductor repo and ran as pm2. Other
-      than that I do not care what we choose, other than to eliminate extra
-      costs and minimize complexity of setup." This rules out the
-      OpenRouteService fallback outright (it's a hosted third-party API) —
-      v1 stack is confirmed self-hosted OSRM + VROOM + Leaflet only, deployed
-      alongside the existing Comfy/Comfy-relay/serendipity-voice-relay
-      services on Silas's own box. Bonus goal for whoever implements t-007:
-      package OSRM/VROOM startup so it can be checked into the conductor repo
-      and run under pm2 (pm2 can manage arbitrary executables, not just Node
-      processes) rather than a separate standalone deploy. Section 8's other
-      two questions (Android client architecture, round-trip-by-default) are
-      NOT answered — Silas said "I do not care what we choose" on hosting/cost
-      only; those two remain implementation-time defaults (round-trip stands
-      as spec'd unless corrected; client architecture is whichever
-      implementer's call when the Android app itself is built) and do not
-      block starting t-007.
-    claimed_by: claude-hourly-2026-07-15-0148
-    claimed_at: '2026-07-15T01:53:37Z'
-    updated: '2026-07-26T00:00:00Z'
+      Deterministic routing direction approved: self-hosted OSRM + VROOM + Leaflet,
+      with no paid routing API requirement.
 
   - id: t-007
     milestone: m6
@@ -186,68 +162,8 @@ tasks:
     stakes: reversible
     depends_on: t-006
     note: >
-      Add seed-data API routes that accept date/filter, selectedCustomerIds or customerCount,
-      start/end coordinates, and route options. Build a travel-time/distance matrix and use a
-      deterministic optimizer appropriate for small service routes, such as nearest-neighbor
-      plus 2-opt for v1 or an approved OR-Tools service. Return ordered stops, geometry or map
-      instructions, totals, warnings, and an explanation of any excluded records. No real addresses.
-
-      UPDATE 2026-07-26: t-006 approved. Confirmed stack is self-hosted OSRM
-      (road-network matrix/polyline) + VROOM (stop-order optimization), no
-      paid third-party API — see t-006's note for Silas's exact hosting
-      constraints (his own box, bonus for pm2-from-conductor-repo). No
-      OpenRouteService fallback; do not build against it.
-
-      IMPLEMENTED 2026-07-26 (conductor scheduled burst-mode rotation,
-      claude-conductor-burst-20260726T110853Z-hscms-t007): added `POST /routes/plan`
-      (`src/server.ts`) plus a new `src/routing/` module:
-      - `matrixProvider.ts`: a `RouteMatrixProvider` interface with two implementations --
-        `HaversineMatrixProvider` (deterministic straight-line distance/estimated-duration
-        fallback, zero network/keys, the default) and `OSRMMatrixProvider` (calls a
-        self-hosted OSRM instance's `/table` and `/route` HTTP endpoints via `OSRM_BASE_URL`,
-        matching t-006's approved stack -- this is the real integration point for once Silas
-        stands up OSRM; see new t-012 for that standup work, deliberately out of scope here).
-        Provider selection is `getConfiguredMatrixProvider()`: OSRM if `OSRM_BASE_URL` is set,
-        Haversine fallback otherwise, so the API is fully usable today with zero infra.
-      - `optimizer.ts`: nearest-neighbor construction + 2-opt improvement over a fixed-endpoint
-        open path (start -> stops -> end), per this task's own "nearest-neighbor plus 2-opt for
-        v1" note -- no LLM, no randomness, same input always produces the same order. Locked
-        stops use SPEC.md section 4's simpler v1 approach: optimize the unlocked subset, then
-        splice locked stops back in at their fixed position; out-of-range or colliding lock
-        requests are ignored and reported rather than silently dropped or applied wrong.
-      - `planRoute.ts`: orchestrates eligibility (date/filter match against seed visits),
-        explicit and fill-to-N selection (fill-to-N sorts by earliest-due or by proximity to
-        the start point), matrix + optimizer + geometry calls, per-stop ETA/cumulative
-        distance-time using a service-duration-per-yard-size constant, and assembles the
-        ordered-stops/totals/warnings/excluded response this task's note asks for. Any eligible
-        customer not selected, and any eligible customer whose property has no coordinates on
-        file, is surfaced in `excluded` with a reason -- never silently dropped.
-      - `schema.ts`: added optional `Property.coordinates` (dummy, approximate single-point
-        coordinates for named sample Humboldt-area neighborhoods -- not geocoded from any real
-        address) and four more dummy customers/properties/visits on a shared test date
-        (2026-07-28) so fill-to-N/explicit/locked-stop/missing-coordinates behavior has more
-        than one real candidate to exercise -- one of the five (`cus-alvarez`) deliberately has
-        no coordinates on file to cover the missing-coordinates exclusion path.
-      Verified: full-project `npm run build` (`tsc --noEmit`-equivalent) clean; added
-      `node --test`-based unit/integration tests (19 total, all passing) covering haversine math,
-      the OSRM provider's request/response shape (fetch mocked, no live network), the optimizer's
-      brute-force-verified optimality on a small deterministic layout plus its locked-stop
-      splicing and out-of-range/collision handling, and `planRoute`'s explicit/fill-to-N/
-      proximity/locked/neighborhood-filter/zero-stops/missing-coordinates behavior end to end
-      against the seed data. Also manually smoke-tested the running dev server with a live
-      `curl` POST to `/routes/plan` and inspected the full JSON response.
-      Not done here (explicitly out of scope for "the API"): the dispatcher map UI (t-008,
-      already `waiting` on this task), the Android client (t-009), and actually standing up a
-      live OSRM/VROOM instance on Silas's box -- no OSM extract can be fetched or docker
-      container run from this sandbox. Filed that standup + pm2-packaging work as new t-012
-      per t-006's "bonus points" note, `stakes: reversible`, no `depends_on` (independent infra
-      work; t-007/t-008 both work today against the Haversine fallback regardless of when t-012
-      lands).
-
-      MERGED 2026-07-26: conductor PR #1132, merged by Silas directly -- squash `bd81377f`.
-    claimed_by: claude-conductor-burst-20260726T110853Z-hscms-t007
-    claimed_at: '2026-07-26T11:08:54Z'
-    updated: '2026-07-26T11:08:54Z'
+      Route-plan API, OSRM integration point, Haversine fallback, and deterministic
+      nearest-neighbor + 2-opt optimizer delivered; Conductor PR #1132.
 
   - id: t-008
     milestone: m6
@@ -258,96 +174,26 @@ tasks:
     stakes: reversible
     depends_on: t-007
     note: >
-      Build the route-maker UI using the approved map provider. Let users choose N customers,
-      preview them on a map, optimize, inspect stop cards, drag/reorder, lock stops, remove/add
-      customers, recalculate, and save a route draft. Display distance, estimated drive time,
-      estimated service time, and route warnings. All component/API interaction goes through store state.
-
-      IMPLEMENTED 2026-07-26 (claude-conductor-scheduled-20260726T121447Z-hscms-t008): built
-      GET /dispatch, a self-contained HTML/JS dispatcher page (no framework/bundler, matching
-      STACK.md's "small Hono service, admin UI later" direction -- there is no state-management
-      "store" library in this codebase yet, so "component/API interaction goes through store
-      state" is satisfied by the page's own local JS state instead, which is the equivalent this
-      stack actually has). Covers every listed behavior: date/neighborhood/frequency filter,
-      explicit multi-select (check/uncheck = add/remove) and fill-to-N selection modes, a Leaflet
-      map with numbered stop markers + polyline (decodes the routing provider's real polyline
-      when present, straight-line fallback otherwise -- see the polyline note below), draggable
-      stop cards for manual reorder, a per-stop "Lock position" toggle, a "Remove" action per
-      stop, live recalculation via POST /routes/plan on every change, and "Save draft" / "View
-      saved drafts" against two new endpoints.
-
-      New backend surface: GET /routes/eligible (exposes planRoute.ts's existing
-      collectEligibleStops -- exported, not duplicated -- so the UI's checklist and the plan
-      endpoint always agree on what "eligible" means), POST /routes/draft, GET /routes/drafts,
-      GET /routes/drafts/:id (src/routing/drafts.ts, in-memory only -- dummy data, no DB in this
-      project yet, drafts do not survive a restart; documented as a v1 placeholder in the module
-      comment, not a design decision to keep drafts ephemeral forever).
-
-      Fixed a real gap while wiring the map: RoutePlanResponse only ever exposed `instructions`
-      (text strings), never the routing provider's actual polyline geometry, even though
-      OSRMMatrixProvider.getRouteGeometry() already computes one -- planRoute.ts was silently
-      discarding it. Added `polyline: string | null` to RoutePlanResponse/planRoute.ts so the map
-      draws the real road-network line once Silas stands up OSRM (t-012); today (haversine
-      fallback) it's null and the UI falls back to straight stop-to-stop segments, matching what
-      SPEC.md says the fallback provider actually offers.
-
-      Leaflet is vendored from node_modules (server.ts serves /vendor/leaflet/* via
-      @hono/node-server's serveStatic) rather than loaded from a CDN -- found via an actual
-      Playwright browser test that a CDN script tag (unpkg) hit ERR_CONNECTION_RESET in this
-      sandbox's restricted egress and left the whole map dead ("L is not defined"); vendoring
-      removes that external runtime dependency entirely for whoever deploys this. Map *tiles*
-      still come from the public OpenStreetMap tile server (free, no key, no billing -- the
-      "free tile provider" option route-planner/SPEC.md's own §3a/§5 explicitly names as
-      acceptable); a tile-fetch failure only blanks the background imagery, markers/polyline/
-      stop-cards keep working regardless (verified this too, since some tile requests also hit
-      the sandbox's egress restriction).
-
-      Verified for real, not just typechecked: `npm run build` (tsc, clean) and `npm test`
-      (25/25 passing, incl. 6 new tests for the polyline field, collectEligibleStops's export,
-      and the drafts store) both green; then ran the actual dev server and drove /dispatch with
-      a headless Playwright browser (chromium at /opt/pw-browsers/chromium) -- loaded eligible
-      customers, planned a route, toggled a lock, removed a stop, dragged-reordered, saved a
-      draft, listed saved drafts, and switched selection mode/round-trip toggles, confirming no
-      JS errors and each action's expected DOM/state change actually happened (screenshot taken
-      of the rendered map+card layout).
-
-      Deferred, not attempted here: locked-stop drag interaction directly on the Leaflet map
-      itself (Leaflet Routing Machine's draggable waypoints, per SPEC.md §3a) -- the stop-card
-      list's drag/reorder covers the same manual-override requirement without that extra
-      dependency; revisit only if Silas specifically wants on-map dragging once OSRM/VROOM (t-012)
-      are live. Also deferred: a dedicated "add a specific not-yet-selected customer" control
-      beyond the existing explicit-mode checkbox list (the checklist already covers add/remove
-      since it lists every eligible customer, checked by default).
-
-      MERGED 2026-07-26: conductor PR #1139 (squash 616337a).
-    claimed_by: claude-conductor-scheduled-20260726T121447Z-hscms-t008
-    claimed_at: '2026-07-26T12:14:47Z'
-    updated: '2026-07-26T12:14:47Z'
+      Dispatcher map, route editing/locks, drafts, and local Leaflet assets delivered;
+      Conductor PR #1139.
 
   - id: t-009
     milestone: m6
     title: "Add Android-first crew route view with Linux/iOS-safe architecture"
     status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-008
-    note: |-
-      Create or extend a Flutter client for Android-first field use: today's route, map, next stop, route card, visit completion, notes, and safe handoff to installed navigation. Keep provider, storage, permissions, and deep-link services abstracted so Linux and iOS builds can consume the same API and route-plan records. Use dummy data and no background customer tracking.
-
-
-      Claiming the highest-priority eligible ready task after the Academy collision and the shared render-backlog production task were skipped.
-
-      Implemented an Android-first Flutter field client with today route, next stop, route cards, completion notes, navigation handoff, dummy data, and abstracted API/storage/navigation services.
-
-      MERGED 2026-07-27: PR #1193 squash-merged as 53da495e. Added an Android-first Flutter crew client with today-route progress, next-stop focus, pet and yard notes, crew notes, visit completion, explicit installed-navigation handoff, dummy-data startup, and injectable API/storage/navigation boundaries for Linux and iOS reuse.
-    claimed_by: claude-scheduled-20260727T022230Z-hscms-t009
-    claimed_at: '2026-07-27T02:22:30Z'
-    updated: '2026-07-27T02:31:30Z'
+    note: >
+      Flutter field-client working slice delivered with abstract API/storage/navigation
+      boundaries; Conductor PR #1193. Canonical copy is field-client/ in the HSS repo.
 
   - id: t-010
     milestone: m6
     title: "Review real-address privacy, map costs, and launch gates"
-    status: needs-human
+    status: done
+    owner: null
     passes: 0
     stakes: irreversible
     depends_on:
@@ -355,20 +201,15 @@ tasks:
       - t-008
       - t-009
     gate_human: true
-    approved_by_human: false
-    note: |-
-      Before any real customer address enters the system, document data retention, encryption, access roles, logs, geocoding/provider data handling, API billing limits, offline behavior, and deletion/export. Real addresses, customer data, map billing, production credentials, and crew rollout remain hard needs-human gates for Silas.
-
-      DONE 2026-07-27 (conductor burst-mode rotation, claude-conductor-burst-20260727T1900Z-hscms-t010): wrote projects/humboldt-scoop-cms/PRIVACY-LAUNCH-REVIEW.md, reviewing the actual shipped t-007/t-008/t-009 implementation (verified against src/server.ts, src/routing/matrixProvider.ts, src/routing/drafts.ts, field_client/lib/route_services.dart, and ops/routing/) across all 8 requested areas. Findings: zero real data, zero live billing, zero undisclosed third-party data flows in the current dummy-data build -- the only external calls a deployed instance makes are free/keyless (OpenStreetMap tiles, Overpass API for the road-network extract) or self-hosted/unmetered (OSRM/VROOM, no API key). Two gaps flagged as their own prerequisite tasks rather than launch details to settle mid-import: (1) no authentication/access-role system exists anywhere in this codebase yet (grepped clean), needed before any real customer record or crew rollout; (2) no geocoding provider is wired up (RoutePlanRequest already expects numeric lat/lng, so address-to-coordinate conversion is unbuilt), needed before a real address can enter the system at all -- self-hosted Nominatim recommended to match this project's self-hosted-only posture and avoid a new billing surface. FOR SILAS: review PRIVACY-LAUNCH-REVIEW.md's section 9 (the two flagged gaps) and either approve them as prerequisite tasks (I'll file them) or tell me how you want them sequenced; then set approved_by_human: true and status: done. Real addresses, customer data import, map-provider billing changes, and crew rollout remain separate hard needs-human gates regardless of this review's findings.
-
-
-      SENT BACK by silasfelinus via Kind Robots For You. approved
-
-      State-reconciliation correction (conductor scheduled agent run, 2026-08-05): status was `ready` with the review deliverable (PRIVACY-LAUNCH-REVIEW.md) already complete since 2026-07-27 -- nothing further for an agent to build until Silas answers the "FOR SILAS" ask already in this task's note (approve or resequence the two flagged prerequisite-task gaps: auth/access-role system, geocoding provider). Corrected to `needs-human` (gate_human: true was already set) so it stops looking pickable. Could not confirm from PR/commit history what the note's existing "SENT BACK by silasfelinus via Kind Robots For You. approved" line (dated ~2026-08-04) is scoped to -- the whole review, or just an acknowledgement -- so this event does NOT set approved_by_human or status: done, per the "neither agent, ever" rule. Flagged directly to Silas in this session's report instead. TO APPROVE: if "approved" meant the full review including both prerequisite-task gaps, set approved_by_human: true and status: done directly (or tell the next cycle to file the two prerequisite tasks first, per the original FOR SILAS ask).
-    claimed_by: claude-conductor-burst-20260727T1900Z-hscms-t010
-    claimed_at: '2026-07-27T19:08:07Z'
-    updated: '2026-08-05T15:41:17+00:00'
-    soft_gate: false
+    approved_by_human: true
+    updated: '2026-08-17T10:08:00Z'
+    note: >
+      PRIVACY-LAUNCH-REVIEW.md was completed previously and correctly identified
+      authentication/capabilities and geocoding as prerequisite engineering gaps.
+      2026-08-17 direction accepts the review and promotes those gaps into explicit
+      successor tasks (t-014/t-015 and t-020). Closing this review does NOT authorize
+      real-data activation, crew rollout, payment-mode changes, or app-store publication;
+      those remain explicit gates in t-028/t-029.
 
   - id: t-011
     milestone: m1
@@ -377,48 +218,282 @@ tasks:
     owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-15T04:24:00Z'
     note: >
-      DONE 2026-07-15 (claude-burst-2026-07-15-hourly2): kind_robots PR #273
-      merged (squash c16e3fb7). Applied the CORRECTED tutorialChannels convention
-      (conductor/t-044) instead of the stale note text this task originally
-      carried — a new top-level ExtraTutorialKey channel keyed by 'scoop-cms'
-      (the project's own tab key), not nested under
-      tutorialChannels.conductor.sections. Dashboard-tab and tutorial art derived
-      from the already-approved public/images/projects/humboldt-scoop-cms-hero.webp
-      (1600x900, exact match) since no KR_API_TOKEN generation backend is
-      available this session — same workaround as the humboldt-scoop/t-008
-      precedent (PR #269). Enriched scoop-cms-page.vue's fallback config with
-      real sections/stats/collectionLabel sourced from STACK.md/SCHEMA.md.
-      dashboardHelper.ts's tab and projectPlacements.ts's humboldt-scoop-cms entry
-      were already correct (channelKey 'conductor', tabKey 'scoop-cms', route
-      '/scoop-cms') — no change needed; Silas can still run the Conductor
-      'Placements' button to backfill the Project's liveUrl. Verified: npm run
-      test:channel-content (passed), eslint + prettier (clean), vue-tsc (zero new
-      errors — pre-existing failures match the tracked kind-robots/t-020
-      backlog); "Contract Tests" CI passed, "TypeScript" CI failed but only on
-      that same pre-existing backlog (confirmed none of it touches this PR's
-      files) so merged anyway. Building the actual admin CMS (customer/
-      schedule/route console) remains out of scope, gated behind t-006
-      (needs-human, still waiting on Silas).
+      Kind Robots project/tutorial surface delivered in Kind Robots PR #273.
 
   - id: t-012
     milestone: m6
-    title: "Stand up self-hosted OSRM + VROOM services and package pm2 startup from the conductor repo"
+    title: "Stand up self-hosted OSRM + VROOM scaffolding and pm2 startup"
     status: done
     owner: worker
     passes: 0
     stakes: reversible
     note: >
-      Filed 2026-07-26 (t-007 close-out kaizen). t-007 implemented `POST /routes/plan` against a pluggable `RouteMatrixProvider` (`src/routing/matrixProvider.ts`) with a working `HaversineMatrixProvider` fallback (no infra needed) and an `OSRMMatrixProvider` that calls a self-hosted OSRM instance's `/table` and `/route` HTTP endpoints via `OSRM_BASE_URL` -- but no actual OSRM (or VROOM) process exists yet anywhere. Per t-006's approval note (Silas, 2026-07-26): "I have unraid and the same host box that runs comfy and our comfy relay, as well as the serendipity voice relay... Bonus points if the solution can be added directly from the conductor repo and ran as pm2." This task is that standup: (1) a small Humboldt-County-scale OpenStreetMap extract (single-digit MB per SPEC.md section 3a) fetched/pinned for `osrm-backend` to build against; (2) an `osrm-backend` process (Docker or native binary) serving the `/table` and `/route` HTTP API t-007's `OSRMMatrixProvider` already expects; (3) a `vroom` process/binary for stop-order optimization as a longer-term replacement for t-007's nearest-neighbor+2-opt optimizer, if/when full VROOM integration is wanted (SPEC.md section 3a notes VROOM "pairs directly with OSRM's matrix output") -- not required for t-007/t-008 to work today, since the 2-opt optimizer is a complete v1 on its own; (4) pm2 process definitions (e.g. `ecosystem.config.cjs`-style, matching the existing comfy/comfy-relay/serendipity-voice-relay convention on Silas's box) checked into the conductor repo so both services start under pm2 rather than a separate standalone deploy; (5) documentation of the exact `OSRM_BASE_URL` value to set once running, and how to refresh the OSM extract (SPEC.md suggests quarterly is plenty for a service area this size). This is infra/ops work, not app code -- independent of t-007/t-008/t-009, which all already work against the Haversine fallback regardless of when this lands. No `depends_on` since nothing in this milestone is blocked waiting on it. Actually running the resulting pm2 processes happens on Silas's own box, outside any sandbox -- this task covers getting the checked-in scripts/config to the point where that's a `pm2 start` away, not remotely operating his infrastructure.
+      OSRM/VROOM pm2 scaffolding delivered in Conductor PR #1144. Canonical copy
+      is now humboldtscoopsolutions/cms/ops/routing/. Live host verification remains
+      operational deployment work, not a second codebase.
 
-      IMPLEMENTED 2026-07-26 (claude-conductor-burst-20260726T140648Z-hscms-t012): shipped the scaffolding in projects/humboldt-scoop-cms/ops/routing/ -- ecosystem.config.cjs (pm2 process defs for osrm-backend and vroom, both run as `docker run` in the foreground with --network host so pm2 supervises them directly, matching ops/home-server/ecosystem.config.js's convention), fetch-extract.sh (downloads a Humboldt County bbox extract via the Overpass API, converts to .osm.pbf, runs osrm-extract/partition/customize -- the mld-algorithm preprocessing osrm-routed serves), vroom-config.yml (points VROOM's car profile at the osrm-backend container), and README.md (one-time setup, OSRM_BASE_URL wiring, refresh cadence, host-networking caveat for non-Linux Docker hosts). Confirmed the ecosystem.config.cjs loads cleanly under Node and the shell script passes `bash -n`. Item (3) (vroom) is stood up per the task spec but intentionally NOT wired into the app -- t-007's nearest-neighbor + 2-opt optimizer already covers stop-order for v1, so full VROOM integration stays future work, not a blocker here. Per this task's own note: actually running these pm2 processes happens on Silas's box, outside any sandbox -- this delivers the checked-in scripts/config to the point where that's a `./fetch-extract.sh && pm2 start ecosystem.config.cjs` away. No app code touched (src/routing/* already worked against the Haversine fallback and needs no changes to pick up OSRM once OSRM_BASE_URL is set).
+  # ── Unified HSS program ──────────────────────────────────────────────
+  - id: t-013
+    milestone: m7
+    title: "Consolidate HSS project identity and canonical source map"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-17T10:08:00Z'
+    note: >
+      2026-08-17 consolidation: original humboldt-scoop remains finished; this slug
+      is the one ongoing HSS project; repos.yaml now points only this project at
+      silasfelinus/humboldtscoopsolutions. README/HISTORY document the supersession
+      rule so old Conductor copies cannot silently become working implementations again.
 
-      DONE 2026-07-26 (Reviewer, conductor scheduled session): merged PR #1144 -- all 23 CI checks
-      green, additive-only (new `ops/routing/` directory + roadmap/TALKBACK bookkeeping, no app code
-      touched), reversible, matches the task spec. Live verification of osrm-backend/vroom actually
-      answering requests still needs Silas's box per the PR's own test plan; that's operational
-      follow-up, not a gap in this task's scope.
-    claimed_by: claude-conductor-burst-20260726T140648Z-hscms-t012
-    claimed_at: '2026-07-26T14:06:51Z'
-    updated: '2026-07-26T14:32:00Z'
+  - id: t-014
+    milestone: m7
+    title: "Implement capability-based staff identity: admin and scooper are independent"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Replace persona-by-location assumptions with explicit capabilities. At minimum,
+      model business/admin management and scooper/worker service execution as independent
+      grants; one account may have either or both. Do not create a mutually-exclusive
+      ADMIN|WORKER enum. Today the WordPress admin plugin simply gates all business screens
+      behind manage_options, while the CMS has no auth at all. Define canonical staff
+      identity/capability records and authorization checks that every web/mobile surface
+      can consume. Customer identity remains separate; authorized representatives are
+      delegates, not staff.
+
+  - id: t-015
+    milestone: m7
+    title: "Authenticate the CMS and field client against staff capabilities"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-014
+    note: >
+      Add real CMS/API authentication and scoped authorization. A scooper should receive
+      only the route/customer details needed for assigned work; an admin can manage the
+      business; dual-capability users can do both from one identity. Wire the Flutter client
+      to the same contract. Keep secrets server-side and test privilege boundaries.
+
+  - id: t-016
+    milestone: m8
+    title: "Unify admin, dispatcher, and scooper workflows in the website"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-014
+      - t-015
+    note: >
+      Stop treating wp-admin Visits, the CMS /dispatch page, and the worker field view as
+      unrelated products. Build role-aware web surfaces over the same data: business/admin
+      management, today's routes/dispatch, and worker visit execution. A dual-capability
+      user should move between admin and scooper tools without changing accounts.
+
+  - id: t-017
+    milestone: m7
+    title: "Build the customer invite/link identity bridge"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Resolve the two-identity seam: the portal keys on WordPress user_id while operational
+      records key on wp_hss_customers.id. Add an invite/link flow so a customer created by
+      admin/CMS can receive portal access without duplicate records, and make the linkage
+      explicit/auditable rather than only happening on first login.
+
+  - id: t-018
+    milestone: m8
+    title: "Ship authorized-representative UI for customers and admins"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      The wp_hss_contacts schema and permission model already exist. Expose add/edit/remove
+      in the customer portal and verification in the admin customer view. Preserve the
+      distinction between can_receive_updates and can_request_changes; the latter remains
+      an explicit grant.
+
+  - id: t-019
+    milestone: m8
+    title: "Salvage the native quote form and REST handler; retire CF7 deliberately"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      A better implementation is already hiding in retired code: the old theme has a native
+      quote form + JS fallback, and HSS_Rest::quote already validates, honeypots, inserts into
+      wp_hss_quote_requests, and emails the office. Port the useful pieces into hss-theme,
+      add proper schema fields for contact preference/time, yard size, deodorization,
+      Poopstakes, and marketing-consent timestamp, test beside CF7, then cut over only after
+      end-to-end verification. Do not lose live leads during migration.
+
+  - id: t-020
+    milestone: m7
+    title: "Add self-hosted geocoding and a safe address-to-coordinate workflow"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Implement the missing geocoding step using a self-hosted option such as Nominatim,
+      consistent with the no-paid-API posture. Address edits must invalidate old coordinates;
+      unroutable properties remain visibly flagged. Building/testing this does not itself
+      authorize production customer data import.
+
+  - id: t-021
+    milestone: m9
+    title: "Finish notification operations: failure UI, SMS, and en-route status"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      HSS_Notify already sends email completion/reminder notices and records failures;
+      HSS_Sms and an enroute mail template already exist. Surface delivery failures to the
+      office, add optional SMS under customer/contact preferences, and wire a deliberate
+      en-route transition without making notification outages block crew completion writes.
+
+  - id: t-022
+    milestone: m9
+    title: "Finish advertised commerce promises: referrals, free first visit, deodorization"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Close the gaps already advertised on the site. Use the existing referred_by and
+      deodorizing storage where appropriate. Ensure a Yard Restoration never consumes the
+      free first recurring visit. Keep Stripe changes in test mode until the production gate.
+
+  - id: t-023
+    milestone: m9
+    title: "Add opt-in proof-of-service photos with retention and offline-safe upload"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-015
+    note: >
+      photos_opt_in already exists. Decide and document storage/retention/access/deletion,
+      then add worker capture/compression/queued upload and customer/admin viewing. Property
+      photos are private customer data; uploads must survive intermittent field connectivity.
+
+  - id: t-024
+    milestone: m10
+    title: "Make field work durable offline and sync safely after reconnect"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-015
+    note: >
+      Replace MemoryRouteStorage with durable local storage, cache assigned route/visit data,
+      queue completion/notes/photo writes, and reconcile safely after connectivity returns.
+      Preserve the abstract storage/API boundaries already built into the Flutter client.
+
+  - id: t-025
+    milestone: m10
+    title: "Build essentialized role-aware mobile portals for customer, admin, and worker"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-014
+      - t-015
+      - t-017
+    note: >
+      Evolve the Flutter app from the current worker slice into an essentialized mobile portal
+      over the same service used by the website. Customers get account/visit/request essentials;
+      workers get assigned routes and visit execution; admins get the small set of management
+      actions worth doing on a phone. A user with both admin and worker capabilities gets both
+      toolsets without duplicate login or account switching.
+
+  - id: t-026
+    milestone: m10
+    title: "Finish Android production beta and Play Store readiness"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    depends_on:
+      - t-024
+      - t-025
+    note: >
+      Phone-scale design pass, HTTPS/prod endpoint configuration, permissions, signing,
+      crash/privacy checks, internal beta, store assets/listing/privacy disclosures, and a
+      release candidate suitable for Play Store submission.
+
+  - id: t-027
+    milestone: m10
+    title: "Finish iOS production beta and App Store readiness"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    depends_on:
+      - t-024
+      - t-025
+    note: >
+      Validate the shared Flutter architecture on iOS, finish platform permissions/signing,
+      TestFlight beta, store assets/listing/privacy disclosures, and a release candidate
+      suitable for App Store submission.
+
+  - id: t-028
+    milestone: m11
+    title: "Approve and execute real-data / production crew rollout"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: irreversible
+    gate_human: true
+    approved_by_human: false
+    depends_on:
+      - t-014
+      - t-015
+      - t-020
+    note: >
+      Hard launch gate. Before switching from test/seed behavior to real customer addresses,
+      production credentials, or real crew assignments, verify auth boundaries, backups,
+      retention/deletion/export, TLS, geocoding, schema dry run/migrations, and rollback.
+      Development may proceed around this gate; crossing it requires explicit human approval.
+
+  - id: t-029
+    milestone: m11
+    title: "Publish HSS Android and iOS apps to the public stores"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    approved_by_human: false
+    depends_on:
+      - t-026
+      - t-027
+      - t-028
+    note: >
+      Final outward-facing gate: submit the production-ready Android and iOS builds, complete
+      store-account/review requirements, address review feedback, and verify the public releases.
+      The project is not finished until both portals are actually available in their stores.
+
+  - id: t-030
+    milestone: m8
+    title: "Finish remaining public-site polish inside the unified HSS project"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Treat the public front end as delivered foundation, not a separate project, while still
+      allowing normal fine-tuning: mobile layout, accessibility, performance, stale WordPress
+      leftovers, copy/SEO polish, and integration seams. All changes land in the canonical HSS
+      repo under site/ and remain part of this single roadmap.
