@@ -327,18 +327,15 @@ tasks:
   - id: t-020
     milestone: m7
     title: "Add self-hosted geocoding and a safe address-to-coordinate workflow"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Implement the missing geocoding step using a self-hosted option such as Nominatim,
-      consistent with the no-paid-API posture. Address edits must invalidate old coordinates;
-      unroutable properties remain visibly flagged. Building/testing this does not itself
-      authorize production customer data import.
+    note: 'Shipped in humboldtscoopsolutions PR #44. Self-hosted only (Nominatim), no fallback to the public nominatim.openstreetmap.org instance anywhere in the code -- unconfigured means not geocoding, matching cms/PRIVACY-LAUNCH-REVIEW.md''s recommended direction. HSS_Config::nominatim_base_url()/is_geocoding_configured(). HSS_Geocoder calls Nominatim''s /search endpoint (wp_remote_get, timeout, WP_Error on failure, rejects 0,0 null-island). HSS_Properties::update_address() centralizes the address-changed-clears-coordinates check that was previously ad hoc at HSS_Rest::save_profile()''s one call site -- and fixes a real gap: the old check only compared address/city, missing state/postal_code. HSS_Geocode_Sweep retries missing-coordinate properties hourly via wp-cron, mirroring HSS_Notify''s proven pattern (no claim-then-stamp -- a failed geocode simply stays ''missing'' and is retried next sweep, since there''s nothing to over-notify about). cms/ops/routing/nominatim/ has checked-in pm2/Docker scaffolding to run the actual instance, sibling to the existing OSRM/VROOM scaffold -- not runnable in this sandbox, same as that scaffold. Unroutable properties remaining visibly flagged needed no change (HSS_Properties::is_routable() and the admin ''no coordinates'' pill already existed). Updated cms/PRIVACY-LAUNCH-REVIEW.md and docs/DATA-ARCHITECTURE.md -- both prerequisite gaps that doc originally flagged (auth via t-014/t-015, geocoding via this task) are now closed; real customer data import remains t-028''s separate hard gate, untouched by this task. Verified: full PHP/shell test suite plus new site/tests/geocoding-test.php, php -l on every file, node --check on the new ecosystem.config.cjs. NOT verified in this sandbox (no Docker, no outbound network): the actual Nominatim container or an end-to-end geocode against it.'
     claimed_by: scheduled-conductor-20260817T111504Z-hss-t020
     claimed_at: '2026-08-17T11:15:05Z'
-    updated: '2026-08-17T11:15:05Z'
+    updated: '2026-08-17T11:28:06Z'
+    implementation_pr: 'silasfelinus/humboldtscoopsolutions#44'
 
   - id: t-021
     milestone: m9

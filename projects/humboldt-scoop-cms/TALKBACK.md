@@ -294,3 +294,57 @@ sandbox, not a shortcut taken, and is flagged for whoever next has a real Flutte
 **Kaizen task:** none filed -- no new systematic gap surfaced; the two follow-on tasks this closure
 unblocked (t-023 photos, t-024 offline durability) are already correctly scoped and queued rather
 than needing a kaizen task to invent them.
+
+## 2026-08-17 | Agent (scheduled conductor sweep) | humboldt-scoop-cms/t-020 | pattern
+
+**Decision:** implemented and merged humboldtscoopsolutions PR #44 (squash).
+
+**Detail:**
+- Dispatched a background exploration agent to map every place a property address can be created
+  or edited before writing anything, rather than assuming an admin edit screen existed. Found the
+  opposite of what I'd have guessed: property creation/editing is customer-portal-only (auto-create
+  on first dashboard view, then a Service Details form posting to `hss/v1/profile`), and the
+  address-changed-clears-coordinates safety net already existed but was duplicated ad hoc at that
+  one call site, comparing only `address`/`city` and silently missing `state`/`postal_code`.
+- Read `cms/PRIVACY-LAUNCH-REVIEW.md` in full before designing (the task note explicitly implied
+  it) -- it had already named the correct direction (self-hosted Nominatim, no paid API, own task)
+  in 2026-08-15, so the "which geocoder" decision was already made; the work was implementing it
+  faithfully, not re-deciding it.
+- Kept `HSS_Geocoder` (the network call) and `HSS_Properties` (the database write) in separate
+  classes on purpose, matching `HSS_Notify`'s own header comment, which explicitly documents this
+  exact separation for the identical reason (a write must not block on or fail because of a
+  follow-up action's network dependency). Centralized the address-changed check into
+  `HSS_Properties::update_address()` rather than teaching `update()` itself to be geocoding-aware,
+  so a DB-only class never gains an HTTP dependency.
+- Mirrored `HSS_Notify`'s wp-cron registration pattern exactly for `HSS_Geocode_Sweep`
+  (`boot()`/`schedule()`/`unschedule()`, same hourly cadence, same activation/deactivation wiring)
+  but deliberately did NOT copy its claim-then-stamp pattern: a failed geocode should keep being
+  retried (staying in `missing_coordinates()`), unlike a sent notification, since there's nothing
+  to over-notify about here -- explained this reasoning in both the sweep class's own doc comment
+  and the PR.
+- Wrote `cms/ops/routing/nominatim/` as checked-in scaffolding rather than attempting to actually
+  stand up a Nominatim container (no Docker/network access in this sandbox) -- same precedent
+  `t-012` (OSRM/VROOM) already established for this exact repo, right down to the "VERIFY ON THE
+  ACTUAL HOST" disclaimer and reusing the same shared OSM extract instead of duplicating the fetch.
+- Added `site/tests/geocoding-test.php` as a new file rather than extending `schema-test.php`,
+  since this task added zero schema/columns -- matches this repo's own convention of one test file
+  per concern (`pricing-test.php`, `quote-form-test.php` are likewise separate).
+- Caught two false-positive test failures from my own doc comments during self-review (a guard
+  checking "no reference to the public Nominatim host" matched my own explanatory prose saying
+  "there is no fallback to X") -- fixed by tightening the checks to look for actual usage patterns
+  (a URL literal, a `ClassName::` call) rather than bare substring matches, instead of stripping the
+  documentation that triggered them.
+
+**What was good:** surveyed the actual current code before designing instead of assuming a shape
+from the task note's wording alone, which surfaced a real bug (the state/postal_code gap) the task
+wouldn't otherwise have caught. Kept the network-call/database-write separation consistent with an
+already-established pattern in this exact codebase rather than inventing a new shape.
+
+**What to improve:** none specific this cycle -- the Nominatim Docker image's exact interface is
+flagged as unverified (consistent with the same caveat OSRM/VROOM's scaffold already carries), not
+a shortcut taken.
+
+**Kaizen task:** none filed -- the PR's own "Kaizen suggestion" section already named a small,
+non-blocking follow-up (a portal-side "we couldn't find that address" UI hint), left for whoever
+picks up the next user-facing portal task rather than filed as a dedicated roadmap item for
+something this minor.
