@@ -136,8 +136,8 @@ tasks:
   - id: t-005
     milestone: m3
     title: Harden private-server networking, secrets, and failure behavior
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     gate_human: true
@@ -160,6 +160,9 @@ tasks:
       Focused security tests cover unauthorized server access, arbitrary URL attempts,
       metadata/link-local targets, redirects, timeout/cancellation, and secret leakage;
       approved private profiles still work end-to-end.
+    claimed_by: scheduled-conductor-20260817T0829Z-textgen-t005
+    claimed_at: '2026-08-17T08:30:13Z'
+    updated: '2026-08-17T08:30:13Z'
 
   - id: t-006
     milestone: m3
