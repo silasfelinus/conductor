@@ -251,27 +251,20 @@ tasks:
   - id: t-014
     milestone: m7
     title: "Implement capability-based staff identity: admin and scooper are independent"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Replace persona-by-location assumptions with explicit capabilities. At minimum,
-      model business/admin management and scooper/worker service execution as independent
-      grants; one account may have either or both. Do not create a mutually-exclusive
-      ADMIN|WORKER enum. Today the WordPress admin plugin simply gates all business screens
-      behind manage_options, while the CMS has no auth at all. Define canonical staff
-      identity/capability records and authorization checks that every web/mobile surface
-      can consume. Customer identity remains separate; authorized representatives are
-      delegates, not staff.
+    note: 'Shipped in humboldtscoopsolutions PR #39 (schema 2.4.0). wp_hss_staff: user_id (optional WP link), name, email, phone, independent is_admin/is_scooper flags (not a mutually-exclusive enum), status for soft-deactivation. HSS_Staff accessor class. HSS_Staff::init() adds a hss_manage_business capability (granted to existing manage_options holders plus any staff row with is_admin=1) and HSS_Admin::CAP now gates on it instead of manage_options directly. New Staff admin screen to grant/revoke capabilities. cms/src/auth/staffCapabilities.ts: pure capability-mapping module for t-015 to build authentication on top of. Deliberately does not wire CMS/field-client authentication -- that is t-015''s scope. All local test suites (schema-test.php, pricing-test.php, quote-form-test.php, tools-test.sh, front-page-copy-test.sh, theme-css-test.sh, cms npm test 53/53, tsc --noEmit) pass; site/tools/verify-schema.php and schema-dry-run.sh updated by inspection but still need a live MariaDB dry run on Alexandria before production activation, same as every prior schema bump.'
     claimed_by: scheduled-conductor-20260817T102828Z-hss-t014
     claimed_at: '2026-08-17T10:28:29Z'
-    updated: '2026-08-17T10:28:29Z'
+    updated: '2026-08-17T10:37:39Z'
+    implementation_pr: 'silasfelinus/humboldtscoopsolutions#39'
 
   - id: t-015
     milestone: m7
     title: "Authenticate the CMS and field client against staff capabilities"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
