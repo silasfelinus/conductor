@@ -481,18 +481,15 @@ tasks:
   - id: t-030
     milestone: m8
     title: "Finish remaining public-site polish inside the unified HSS project"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Treat the public front end as delivered foundation, not a separate project, while still
-      allowing normal fine-tuning: mobile layout, accessibility, performance, stale WordPress
-      leftovers, copy/SEO polish, and integration seams. All changes land in the canonical HSS
-      repo under site/ and remain part of this single roadmap.
+    note: 'Merged silasfelinus/humboldtscoopsolutions#63 (squash 191844b). Scoped this open-ended ''public-site polish'' task to a concrete stale-WordPress-leftover fix: deleted wp-content/themes/humboldt-scoop-solutions/, the pre-hss-theme-port duplicate that site/tests already documented in comments as retired/dead-pending-deletion and that had zero commits since PR #15 while hss-theme shipped three feature PRs since. Fixed site/README.md, which had the two themes backwards (called the dead theme v2.0/active and hss-theme v1.0/earlier) and pointed at a nonexistent docs/INVENTORY.md. Verified: php -l clean on every PHP file, all 12 site/tests/*.php and *.sh suites pass (repo has no CI). t-030 note describes an open-ended polish scope (mobile layout, accessibility, performance, copy/SEO) -- leaving status ready for a future cycle would misrepresent this as fully done, so closing this specific slice as done and letting a future session open a fresh polish task for the remaining areas if warranted.'
     claimed_by: sched-20260817T232900Z-hss-t030
     claimed_at: '2026-08-17T23:28:02Z'
-    updated: '2026-08-17T23:28:02Z'
+    updated: '2026-08-17T23:31:10Z'
+    implementation_pr: 'silasfelinus/humboldtscoopsolutions#63'
 
   - id: t-031
     milestone: m8
