@@ -8044,3 +8044,555 @@ records:
   outcome: done
   failure_category: null
   lesson: "A kaizen guard task from a hand-fixed field-drop bug (t-010's scenario fix) should assert the general shape (every input.<field> a builder reads must survive a rebuild helper) rather than re-checking the one field that broke -- caught the same bug class generically instead of only re-guarding scenario."
+- date: 2026-08-15
+  project: conductor-app
+  task: t-015
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "When a task offers wire-or-drop for dead config fields, check whether the wire target already has a canonical source elsewhere (utils/projectPlacements.ts here) before adding new UI plumbing -- dropping the redundant copy removes the whole stale-duplicate bug class with a purely mechanical, zero-risk diff, where wiring would have added an unverified UI surface. Also: grep scope for a drift audit should match the actual usage pattern (ProjectFrontConfig), not a directory convention (components/conductor/*) -- coloring-book-page.vue lived outside that directory and would have been missed."
+- date: 2026-08-15
+  project: davinci
+  task: t-024
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "When a 'playtest-driven tuning' task can't be done literally (sandbox has no live-user auth against the app's OpenAI-backed endpoint), a Monte Carlo simulation against the actual production constants and distribution answers the same design question more rigorously than a handful of manual runs -- and can overturn the obvious hypothesis: the flagged +-2 swing bound turned out not to matter at all (any single nonzero touch already crosses the pass=1 threshold regardless of magnitude), while the real, unflagged lever was chapter-count coverage (avg 4.2/10 dimensions never touched by the original 3-chapter minimum). Simulate before tuning the constant that looks obviously guilty."
+- date: 2026-08-15
+  project: kapowarr
+  task: t-001
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "For a brand-new project's first task (a design brief with no existing repo context in this session's GitHub scope), WebFetch against the public upstream and fork repos/docs grounded the architecture section in the project's real download-client model (built-in DDL vs. external clients) instead of guessing from the task notes alone -- worth doing for any design-brief task on a project this session hasn't touched before, especially when the target codebase itself is outside the session's repo scope."
+- date: 2026-08-15
+  project: kapowarr
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A read-only git clone of the target repo (public HTTPS, no auth, distinct from the session's GitHub MCP scope) let a design-only task ground its spec in the actual ABC/class chain instead of the task note's abstractions -- found that TorrentDownload.update_status() already polls purely through the ExternalDownloadClient interface with zero torrent-specific logic, so a Usenet client is a peer implementation, not a new mechanism, and located the one real shared touchpoint (download_queue.py's TorrentDownload-specific isinstance dispatch) that does need to change. Worth doing before writing any cross-repo design/handoff doc: reading the real code turns a plausible design into a verified one and surfaces the one non-obvious shared edge a task note alone won't mention."
+- date: 2026-08-15
+  project: kapowarr
+  task: t-005
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A read-only clone plus targeted grep for -arr-convention keywords (notification, webhook, health check, import_list, calendar) across the whole fork found two genuine, scoped gaps (no notification system, no health-warnings panel) while also confirming several areas the roadmap notes didn't call out as already mature (queue reorder/blocklist, per-issue search, download-client test-connection, multi-root-folder support) -- recording the negative findings in the audit doc, not just the positive ones, keeps a future audit from re-flagging already-solved territory. Deliberately declined to turn every absent feature into a task (import lists, calendar) when the friction was speculative rather than concrete, per the task's own 'convert concrete friction, not broad rewrites' instruction."
+- date: 2026-08-15
+  project: kapowarr
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Verifying a cross-repo projection is stronger when grounded in the receiving side's actual code (dispatched a background agent to read kind_robots' server/api/conductor/sync.post.ts and conductorProjectionDb.ts) rather than just poking the public API and declaring it fine -- confirmed there's no separate Milestone/Task SQL table (roadmap YAML is stored as a blob and re-parsed per-request), which ruled out an entire class of task-level sync-lag risk. Found and fixed a real staleness bug the task note called out by name: m1/m2 milestone status was stuck at not-started despite real done/needs-human/ready tasks under both -- 'verify the projection' should mean checking the data is both present AND accurate, not just present."
+- date: '2026-08-15'
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Sixth t-029 cycle found a bug class distinct from the five prior cycles: a
+    server-side check-then-act race (findUnique-then-create against
+    FacetProfile's single-column facetId PK) rather than another client-side
+    async-fetch-ordering or unawaited-promise-before-toast instance. Two
+    ModelBuildRuns can target the same existing Facet concurrently since
+    nothing serializes runs by sourceId; the item-level idempotencyKey claim
+    only prevents the same item double-committing. Fixed with
+    facetProfile.upsert(), which resolves create-vs-update atomically at the
+    database instead of racing on a stale client-side read. When a prior
+    cycle explicitly names unexplored files, reading those files on their own
+    terms (rather than pattern-matching the previous bug shape onto them)
+    found a genuinely new, more severe bug — a whole-transaction rollback
+    aborting a sibling write, not just a stale UI read.
+- date: '2026-08-15'
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Seventh t-029 cycle followed the prior cycle's suggestion to widen scope
+    to modelBuilderFields.ts/modelBuilderRecipes.ts/relations.ts, found those
+    genuinely race-free (pure static data and a pure read-only check), then
+    broadened the search one hop further to the PATCH write paths that
+    consume those files' output (prepareItemUpdate, feeding
+    items/[id].patch.ts and items/batch.patch.ts) and found a real bug there
+    instead: a blind wholesale stageStatuses overwrite, the same stale-
+    snapshot class already fixed once in commit.post.ts's COMMIT-only write
+    but never generalized to the PATCH/batch-PATCH routes. Most exploitable
+    in the batch route, where every entry does its own DB round trip before
+    the shared transaction starts, widening the concurrent-write window well
+    past the single-item route's. When a suggested lead turns out clean,
+    checking one hop downstream of it (what actually consumes that file's
+    output) found a real bug an earlier cycle's own fix pattern had already
+    named but not generalized -- a second instance of an already-known bug
+    shape is still worth finding.
+- date: 2026-08-15
+  project: kapowarr
+  task: t-002
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    This session's GitHub scope newly included silasfelinus/Kapowarr (a prior
+    session's t-014 escalation had asked Silas to widen it) -- the fully
+    designed handoff patch from projects/kapowarr/docs/t-002-loading-lines.md
+    was applied verbatim, verified in a fresh venv (mypy, isort, unittest,
+    node --check, and a live app run), and shipped as silasfelinus/Kapowarr#1
+    instead of producing a fourth handoff doc. A well-specified handoff
+    written for a future differently-scoped session paid off exactly as
+    designed once that session arrived.
+- date: 2026-08-15
+  project: kapowarr
+  task: t-003
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Same cycle as t-002/t-004 -- applied projects/kapowarr/docs/t-003-configurable-title.md
+    verbatim. Live smoke test confirmed the important edge case the design doc
+    called out: app_title correctly excluded from the host/port/url_base
+    restart-trigger tuple (no server restart on save), and the System Status
+    page's upstream attribution/donate links render unchanged regardless of
+    the configured title.
+- date: 2026-08-15
+  project: kapowarr
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Same cycle as t-002/t-003 -- applied projects/kapowarr/docs/t-004-launch-flair.md
+    verbatim. Live smoke test against an empty library confirmed
+    GET /api/system/launchflair returns {"title": null} and exercises the
+    frontend's DEFAULT_FLAIR_LINES fallback path, not just the happy path.
+- date: 2026-08-15
+  project: kapowarr
+  task: t-013
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Designed and implemented from scratch (unlike t-002/t-003/t-004, no
+    prior handoff doc existed) -- found three existing, already-used
+    primitives (ComicVine.test_key(), ExternalClients.test(),
+    RootFolder.size is None) to build the new health check on top of
+    instead of writing new low-level detection logic. Live testing (not
+    just unit-level checks) caught a real bug the design alone wouldn't
+    have surfaced: aggregating multiple network checks into one endpoint
+    that fires on every page load inherited each check's full retry/
+    backoff duration (90+ seconds for one unreachable client), which is
+    fine for a one-off Settings "Test" button but not for an
+    every-page-load health panel. Fixed with a bounded per-check timeout,
+    and a second live test caught that `with ThreadPoolExecutor(...) as
+    executor` still blocks on `shutdown(wait=True)` even after individual
+    futures time out -- switching to manual `shutdown(wait=False)` was
+    needed too. Running the actual app end-to-end, not just static checks,
+    is what found both issues.
+- date: 2026-08-15
+  project: kapowarr
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Implemented + merged silasfelinus/Kapowarr#5. Live end-to-end testing
+    (running the actual app, not just static checks) caught two real bugs
+    before merge: a 90+ second unbounded retry/backoff on the new Test
+    button (same bug class health.py already fixed once in t-013 --
+    fixed the same way, ThreadPoolExecutor + future.result(timeout=...));
+    and a "Working outside of application context" crash because the
+    bounding executor's worker thread doesn't inherit the caller's Flask
+    app context, needed explicitly via Server().app.app_context(). Any
+    new background-thread network call in this codebase should assume
+    neither Session's default retry/backoff nor Flask's app context are
+    safe to take for granted off the request/download thread.
+- date: 2026-08-15
+  project: kapowarr
+  task: t-015
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A retry/backoff bug fixed once for one caller (health.py's HEALTH_CHECK_TIMEOUT) doesn't fix itself for other callers of the same unbounded ExternalClients.test() -- the interactive Test button had the identical 90+s hang until bounded separately in Kapowarr#6; add()/update_client() still have it (kapowarr/t-017 kaizen)."
+- date: 2026-08-15
+  project: kapowarr
+  task: t-016
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Bounding a call's *duration* (NOTIFICATION_REQUEST_TIMEOUT) and bounding its *fan-out* (how many can run at once) are separate problems needing separate fixes -- t-013/t-012 solved the former, t-016 solved the latter with a shared ThreadPoolExecutor replacing per-call Thread() spawns. Verified live with both an isolated concurrency test (peak=8 of 30 submissions) and a full DB-to-HTTP end-to-end delivery test."
+- date: 2026-08-16
+  project: kapowarr
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A ThreadPoolExecutor-bounded call that touches Settings()/get_db() needs its own Flask app context pushed inside the worker function (Server().app.app_context()) -- Settings.get_settings()'s @lru_cache(1) usually masks a missing context in production (whichever thread calls it first warms the cache for everyone), but a cold-cache path (fresh process, or the first call ever) hits a hard RuntimeError. Hit and fixed for send_notification() in t-012, then independently for ExternalClients.add()/update_client() here -- ExternalClients.test() itself likely has the same latent gap (kapowarr/t-018 kaizen)."
+- date: 2026-08-16
+  project: kapowarr
+  task: t-018
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "mypy passing is necessary but not sufficient -- a leftover reference to a variable no longer bound in its enclosing scope (a stale `finally: executor.shutdown(...)` left behind after refactoring the executor into a shared helper) is a pure runtime NameError that static typing doesn't catch. Only caught because live testing against a real unreachable host is a hard requirement for this class of change, not skipped as 'just a dedupe.'"
+- date: 2026-08-16
+  project: kapowarr
+  task: t-019
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "When a task note says 'port X, scoped down per the note,' read the note's stated scope literally rather than porting everything -- dropping conductor's own STRANDED-tier age-based judgment logic (as the task explicitly asked) kept silasfelinus/Kapowarr#11's branch_janitor.py to two simple tiers (MERGED auto-delete, FORCE explicit override) instead of over-porting complexity the target repo didn't need. A live end-to-end smoke test against a real local bare git remote (not just mocked unit tests) is what actually proved the merged/unmerged/force-delete behavior worked, matching this repo's own convention for anything that shells out to git."
+- date: 2026-08-16
+  project: kapowarr
+  task: t-020
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Milestone-level status: fields don't auto-derive from their tasks' individual statuses in this roadmap format -- they're independently hand-set and can silently drift stale even when every task under them is accurate. This is the third independent surfacing of the same pattern (after kind-robots/t-058 and kindrobots-unraid's noted-but-unfiled instance in the same audit), reinforcing the audit's own kaizen suggestion that validate_roadmaps.py should warn when a milestone's tasks are more advanced than its own status field."
+- date: 2026-08-16
+  project: kind-robots
+  task: t-065
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A task note's own paraphrase of 'same pattern as an earlier task' can be less precise than that earlier task's actual diff -- t-065's note said 'add a short dated correction note to t-046,' but t-055 (the cited precedent) had actually added a dated entry to a separate site-audit-inventory-notes.md doc specifically to avoid rewriting an already-closed task's long note. Reading the real precedent's implementation, not just its task-note summary, produced the better (and actually-intended) outcome."
+- date: 2026-08-16
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A recurring task's title is the scope contract, not just a label -- after three same-day cycles of 'bug-hunt cycle' backend security audits on a task literally named 'Polish and upgrade Model Builder front-end surface,' the fourth cycle returned to genuine front-end work (a batch/auto-build per-item failure indicator) and found the store itself was under-instrumented for it (item.error only set on 2 of several 'failed' return paths), which the backend-only lens of the prior three cycles had no reason to surface. When a recurring task's cycles drift away from its own title toward whatever the last cycle's kaizen suggested, checking the title itself is a cheap way to catch scope drift before it compounds."
+- date: 2026-08-16
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A fifth same-day cycle deliberately avoided re-walking the four already-audited leads (backend commit/promotion races, autoBuildRun status accuracy, per-item outcome UI) and instead read a genuinely untouched file (stores/helpers/modelBuilderFields.ts), which surfaced a real silent data-loss bug: a duplicated blob parser in commit.post.ts dropped every line without a colon, truncating multi-line prose fields to their first line only at COMMIT time -- invisible in the preview panel, which parses the same blob correctly for display. Two independent copies of the same parsing logic drifting apart (one used for preview, one for the actual DB write) is exactly the shape of bug a single-copy refactor (delegate to one shared splitter) prevents structurally rather than relying on both copies staying in sync by discipline. Worth generalizing: when a codebase has a 'preview' and a 'commit' path over the same data, check whether they share one implementation or two -- a second copy is a standing invitation for silent drift."
+- date: 2026-08-16
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A sixth same-day cycle again avoided the five already-mined leads and instead read the genuinely unexplored item-panel/recipe-selector/source-picker/run-history/manager front-end files, tracing a UI code comment ('snapshot survives resume') that turned out to be aspirational rather than true back to its root cause: normalizeStages()/adaptRun() gated JSON-string server data on typeof raw === 'object', which is never true once a value has round-tripped through a String @db.LongText column. A code comment asserting behavior ('X survives Y') is a claim, not a guarantee -- when a comment describes a property the surrounding code doesn't visibly enforce, tracing the actual data path back to its type at the boundary (string vs. parsed object) is a cheap way to catch the gap between what a comment promises and what the code actually does."
+- date: '2026-08-16'
+  project: kapowarr
+  task: t-021
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'The old library-import path masked ComicVine throttling as a no-match, making a reliability
+    failure look like harmless empty search results. Large unattended jobs also need a stable work snapshot:
+    self-review caught and removed an initial design that would have rescanned the entire library for
+    every processed folder. Finally, the fork''s Python Tests workflow was development-only, so PR/main
+    test triggers were enabled and verified across Python 3.8 through 3.12 before merge.'
+- date: 2026-08-16
+  project: storybook
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A completeness guard (t-017's verifyStorybookObjectEntryLinks.mjs) that only asserts wiring is *present* -- button exists, query key is sent, seedFromQuery consumes it -- can pass cleanly while the values flowing through that wiring silently disagree. characterOptions built a synthetic id-based slug while the deep-link sender used the entity's real slug; three sibling ingredient types (Scenario/Facet/Reward) all keyed off the real slug correctly, so cross-checking a new field against its siblings' convention (not just its own local logic) is what surfaced the one outlier. A presence guard and an agreement guard test different failure modes -- both are worth having when a value crosses a wire boundary."
+- date: 2026-08-16
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "This is at least the fourth model-builder/t-029 cycle to find a 'local-only store
+    mutation never actually reaches the server' bug in modelBuilderStore.ts -- stageStatuses/
+    sourceSnapshot JSON-string parsing on resume, prose-field truncation on commit, and now
+    item.error never persisted on any failure branch (silently dropping the entire per-item
+    failure-visibility feature on reload/reopen). Tracing a field's read side back to its
+    write side across the whole store, not just the function that was the original suspect,
+    is what surfaces these. A single meta-guard enumerating every server-readable field and
+    asserting at least one pushItem/PATCH call site writes it -- rather than one guard per
+    fixed field -- would likely catch this class proactively; filed as model-builder/t-045's
+    sibling suggestion for a future cycle."
+- date: 2026-08-16
+  project: model-builder
+  task: t-045
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "t-029 cycle 7's item.error persistence sweep (#1908) covered generateItemAsset/
+    generateItemAssetAsync/pollAsyncArtJob/commitItem but deliberately left out draftText()
+    to keep that fix surgical -- exactly the kind of scoped-on-purpose gap a filed kaizen task
+    exists to close, rather than something the original cycle missed. draftText() turned out
+    to be the highest-frequency failure path of all (autoBuildItem's very first step), so the
+    gap was live from the moment #1908 merged. When a fix is deliberately scoped narrower than
+    the full bug class it demonstrates, filing the remaining scope as its own task (rather than
+    letting 'surgical for now' quietly become 'permanent') is what actually closes the loop --
+    this cycle also resolved the fix's own deferred sub-decision (whether manual edits should
+    clear a stale error too) rather than re-deferring it a second time."
+- date: 2026-08-16
+  project: alexa-integration
+  task: t-015
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "applyCommand()'s action parameter is a union shared across every command
+    target (on/off/toggle/clear/set/draft), but set/draft only carry meaning for the
+    theme/art targets. Unsupported *targets* were already reported as ignored;
+    unsupported *actions* on a supported target had no equivalent check, so an
+    animation command with action: set/draft fell through untouched and still posted a
+    false 'Applied: <effect> on.' success message. When a field's type is a union
+    shared across multiple branches, each branch needs its own explicit
+    valid-subset check -- a guard scoped to one branch (here, target) doesn't
+    protect the others by default. Kaizen t-020 audits the theme/art branches for the
+    same class of gap."
+- date: 2026-08-16
+  project: appmaker
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A condition like `tasks.length === 0` reads as a reasonable 'freshly
+    scaffolded' check in isolation, but was backwards in practice because the
+    scaffolder (scripts/new_app.py) always seeds 3 tasks up front -- checking the
+    UI condition against the actual data-seeding code, not just its surface
+    plausibility, is what surfaced that every real app's card silently showed a
+    blank description while the fallback literal only fired on a genuine lookup
+    failure. Separately: a single CI job failing with a live-API 502 unrelated to
+    the diff (GET /api/characters, in a population-quality contract check) is a
+    textbook transient failure -- rerunning just that job and confirming a clean
+    pass on retry is the correct triage, not blaming the diff or force-merging
+    past it unexamined."
+- date: 2026-08-16
+  project: alexa-integration
+  task: t-020
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The target/action-mismatch bug class from t-015 (a shared VoiceBusCommand.action
+    union reaching a dispatch branch where most of its values are meaningless) generalized
+    cleanly to the other two targets once actually re-read fresh: applyThemeCommand() and
+    applyArtCommand() never checked command.action at all, an omission invisible unless you
+    specifically compare each dispatch function against its siblings for the same missing
+    guard shape. Extending the existing guard into a TARGET_FUNCTIONS structure (mirroring
+    modelBuilderStore.ts's own multi-function guard convention) kept the fix in one file
+    instead of three near-duplicates."
+- date: 2026-08-16
+  project: alexa-integration
+  task: t-021
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "t-020's own kaizen note named a plausible-sounding follow-up scope (audit the
+    'unknown theme'/'no match' error branches) that turned out, on a fresh read, to already
+    be functionally correct -- both branches already had the early return / proper if-else
+    split needed to avoid a false-success ack. The real gap was regression coverage, not a
+    bug: nothing protected those two branches from a future edit quietly dropping the early
+    return, the lastError/pushLocalMessage report, or the postAck() success-only gating,
+    which is exactly the false-success shape t-015/t-020 fixed for the action-mismatch case.
+    Extended the existing checkSerendipityVoiceActionGuard.ts file with a second exported
+    check (index-based anchor comparisons rather than full brace-parsing) instead of adding
+    a fourth guard file, per the task note's own preference -- kept the fix inside the file
+    whose npm script/CI step already covered it, so no workflow-file change was needed."
+- date: 2026-08-17
+  project: text-generation
+  task: t-001
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The roadmap note assumed the private-server path was mostly unbuilt; a full read of
+    server/api/chats/{openai,anthropic,ollama}/stream.post.ts, serverResolver.ts, and the
+    Server Prisma model showed the opposite -- a working native Ollama route, full server
+    CRUD/health infrastructure, and consistent mana gating already exist. The real gaps were
+    narrower and more specific: serverResolver.ts's capabilityWhere('text') silently excludes
+    OLLAMA from type-based resolution, three near-identical chat routes each duplicate a private
+    cost estimator that has drifted from an already-correct shared estimateTextCostUsd (which
+    also correctly multiplies by n, unlike the OpenAI route's local copy), and there is zero
+    AbortController/cancellation wiring anywhere in the stack (server or chatStore.ts). Treating
+    'map the existing code' as a literal instruction rather than a formality caught a concrete,
+    fixable billing-undercount bug (uncounted n) and a routing gap (Ollama) that a
+    memory-based/greenfield-assuming brief would have missed or re-invented differently."
+- date: 2026-08-17
+  project: text-generation
+  task: t-002
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Extracting shared mechanics into a new server/utils/*.ts file risks a silent Nuxt
+    auto-import name collision when the new file's export name happens to match an existing
+    server/utils export -- nuxi prepare only WARNs ('Duplicated imports... ignored'), it does
+    not fail the build, so a colliding helper name can quietly shadow (or be shadowed by) an
+    unrelated existing function with different behavior. Ran into this for real: the shared
+    module's first draft named its Server-auth-header builder `buildServerAuthHeaders`,
+    identical to an existing, differently-shaped helper in serverApi.ts (Content-Type vs
+    Accept header contract) used by two other call sites. Caught by actually running `nuxi
+    prepare` locally and reading its warnings, not by vue-tsc/eslint (neither flags this).
+    Renamed to a distinct name rather than merging the two behaviors, to keep the migration's
+    'no observable behavior change' guarantee intact. Also: a shared module that mixes pure
+    helpers with one Prisma-touching function (via a static import chain through
+    serverResolver.ts -> prisma.ts) will make an otherwise-DB-free self-test require
+    DATABASE_URL just by importing the file -- dynamic-importing the Prisma-touching piece
+    inside its own function body keeps the rest of the module importable standalone, which
+    mattered here because contract-tests.yml is explicitly documented as a DB-free workflow."
+- date: 2026-08-17
+  project: text-generation
+  task: t-003
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "getCapabilityServerTypes()'s 'text'/'chat' where-clause excluded OLLAMA even though
+    server/api/chats/ollama/stream.post.ts's own request path already worked end-to-end --
+    the exclusion only broke server-side *resolution* (serverId/serverName/preferredTextServerId
+    lookups), not the route itself, so a request that already had its target server object in
+    hand would still succeed while every id/name/preference-based lookup silently failed to
+    find that same Ollama server. A route working in isolation is not evidence its resolver path
+    works too when they're separate code paths sharing only a where-clause. Most of t-003's
+    stated acceptance criteria (health/test operation, preferredTextServerId selection UI,
+    explicit-server-add form) were already built by earlier server-selector/serverStore work --
+    reading the actual UI and API surface before assuming a gap existed narrowed the real fix to
+    one array literal plus its missing test coverage, rather than re-implementing already-working
+    infrastructure."
+- date: 2026-08-17
+  project: text-generation
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A dashboard's default query scope can silently exclude an entire class of records
+    even after the underlying data becomes real and resolvable -- server/api/server/uptime.get.ts
+    hardcoded ['A1111','COMFY'] as its default serverType filter from when the panel was built
+    for art/GPU servers only; once t-003 made OPENAI/ANTHROPIC/OLLAMA/CUSTOM genuinely resolvable
+    text servers, they still had zero uptime/latency visibility because nothing in the UI ever
+    surfaced the ?serverType= override that would have shown them. The fix pattern from t-003
+    (extract the array into a pure, exported, DB-free-testable function) generalized directly:
+    server/utils/serverUptimeScope.ts's getUptimeDefaultServerTypes() mirrors
+    serverCapabilities.ts's getCapabilityServerTypes() closely enough that the same contract-test
+    shape (assert each type-family present/absent, assert no duplicates, assert the exact
+    expected set) could be reused with only the type list changed."
+- date: 2026-08-17
+  project: text-generation
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The three legacy chat streaming routes had already converged on a clean split between
+    provider-agnostic mechanics (textProviderService.ts, from t-002) and provider-specific shape
+    (endpoint URL, payload fields, auth). That split made the new unified endpoint mostly a matter
+    of extracting the THIRD piece -- per-provider payload/response dialect -- into its own pure
+    module (textGenerationDispatch.ts) rather than writing a new endpoint from scratch: one file
+    that knows OpenAI/Anthropic/Ollama's three payload shapes and three response shapes, reused by
+    a thin route. Provider selection from a resolved server's serverType (rather than a separate
+    caller-supplied provider flag) turned out to be both simpler and more correct -- it can't drift
+    from what the server actually is. One deliberate behavior improvement over the legacy routes:
+    resolving the caller's preferredTextServerId/isDefault server even with no explicit
+    serverId/serverName, instead of only ever falling back to the cloud default the way
+    resolveOptionalTextServer does -- new endpoints are free to fix small inconsistencies like this
+    that would be a breaking change on an existing route. No live OpenAI/Anthropic/Ollama API keys
+    exist in this sandbox, so verification stayed at the same DB-free contract-test depth
+    established by t-002/t-003/t-007 (34 synthetic-fixture checks covering every dispatch branch)
+    rather than a live integration test the acceptance text technically asked for -- flagged
+    explicitly for the reviewer/Silas rather than silently substituted."
+- date: 2026-08-17
+  project: text-generation
+  task: t-008
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Verifying an unrelated task's typecheck can surface pre-existing drift with a
+    root cause several commits back: main's committed Prisma generated client was
+    stale (missing the ProjectPageContent model that #1924 had already added to
+    both the schema and two live API routes), breaking vue-tsc --noEmit for anyone
+    who touched server/ code afterward. Isolated the two failures via git stash
+    before assuming they were caused by this session's own edits, confirmed the
+    fix (a plain prisma generate regeneration, purely additive) resolved them on
+    its own, and shipped it as its own small standalone PR rather than folding an
+    unrelated mechanical fix into t-008's diff. The kaizen itself (unifying the
+    three-way-duplicated OpenAI/Anthropic auth-header dialect switch into
+    textProviderService.ts's buildCloudProviderAuthHeaders) was low-risk and
+    behavior-preserving by construction -- same header shapes/values for every
+    caller -- which made full contract-test coverage of the new shared function
+    (26 assertions) enough to merge with confidence, no live-provider smoke test
+    needed for a refactor that touches no logic, only where code lives.
+- date: 2026-08-17
+  project: storybook
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "openStory()'s redundant-resume bug had already been partially fixed twice at individual call sites (mount, query watcher) before this cycle found a third unguarded caller (the active story's own 'Resume' button); guarding the shared choke-point function itself instead of each call site closes the bug class for every current and future caller in one fix."

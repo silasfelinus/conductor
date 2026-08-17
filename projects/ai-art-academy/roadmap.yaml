@@ -1275,12 +1275,15 @@ tasks:
   - id: t-044
     milestone: m2
     title: 'kind_robots: fix Kontext LoRA loading -- every lora_name naming convention rejected by ComfyUI as not-in-list'
-    status: ready
+    status: needs-human
     gate_human: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-15T03:29:09Z'
+    updated: '2026-08-15T16:52:00Z'
     note: |-
+      RECHECK (conductor scheduled Agent run, 2026-08-15T16:52Z, logged in RENDER-BACKLOG.md): CLOSING SIGNAL -- both of this task's own tracked verification jobs are now confirmed terminal DONE with real output, via a per-job endpoint (GET /api/art/queue/<id>) not previously used by this task's rechecks: ArtJob 8276 status=DONE, error=null, artImageId=17853, updatedAt=2026-08-15T10:36:38Z; ArtJob 8278 status=DONE, error=null, artImageId=17710, updatedAt=2026-08-14T12:17:19Z. Neither shows the original lora_name not-in-list rejection or the charmap crash. Queue overall: draining, PENDING=513/RUNNING=1/DONE=4467/CANCELLED=3179 (all-time), 24h throughput DONE=6, recentFailed=[] (empty), staleRunningCount=0 -- healthy across the board. This meets the exact closing bar the 2026-08-13T23:36Z recheck set: "a next recheck that finds them DONE ... should close this task outright." Not setting approved_by_human or status: done myself -- gate_human: true means only Silas sets that per AGENTS.md's hard-gate rule, even though the technical verification this gate exists to confirm is now complete. FOR SILAS: both tracked verification ArtJobs (8276, 8278) completed successfully with real image output and no error, and the queue has had zero recentFailed entries across this check. TO APPROVE: set approved_by_human: true and status: done -- nothing further to verify from this sandbox's side. Setting status: needs-human here so this surfaces clearly instead of cycling through another blind recheck.
+
+
       RECHECK (conductor scheduled Agent run, 2026-08-15T03:29:09Z, logged in RENDER-BACKLOG.md):
       no new signal for t-044's own blocker. Raw /api/art/queue/stats recentFailed (last 25,
       cross-checked directly, not just recheck_render_queue.py's lossy bucket) shows zero
@@ -1497,8 +1500,8 @@ tasks:
     run_log: projects/ai-art-academy/docs/t-044-lora-loading-run-log.md
     approved_by_human: false
     owner: reviewer
-    claimed_by: claude-scheduled-20260815T032908Z-aa-t044
-    claimed_at: '2026-08-15T03:29:09Z'
+    claimed_by: 20260815T165200Z-aiartacademy-t044-recheck
+    claimed_at: '2026-08-15T16:52:00Z'
 
   - id: t-045
     milestone: m2

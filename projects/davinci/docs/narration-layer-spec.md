@@ -46,9 +46,10 @@ the top of the narration call, not a new subsystem.
   the pass/fail-by-threshold design where different runs can take different
   numbers of chapters to swing all ten dimensions.
 - **Chapter count:** no fixed total. The client offers a player-visible "end
-  the run" action any time after chapter 3 (enough chapters for the
-  narrator to have touched a meaningful subset of dimensions); the narrator
-  is *not* told when to end things — see "First build slice" in
+  the run" action any time after chapter 6 (raised from the original design
+  default of 3 — see t-024 below, simulation-backed: at chapter 3 an average
+  of 4.2/10 dimensions had never been touched by any choice at all); the
+  narrator is *not* told when to end things — see "First build slice" in
   `design-brief.md`, which already scopes the run shell as minimal.
 - **Resolution timing:** unchanged from the existing API — the client calls
   `POST /api/davinci/runs/:id/resolve` explicitly (player-triggered "end my
@@ -251,12 +252,18 @@ over HTTP from inside a server util. Same two-branch `botId → characterId →
 default bot 433` order, same columns, same normalized shape — just no self-HTTP
 hop.
 
-**The open question above is still open.** The `[-2, 2]` clamp and the
-"offer end-run after chapter 3" gate shipped as specced, both still design
-defaults awaiting real playtesting. They are now single constants
+**The open question above is resolved (davinci/t-024, 2026-08-15).** Simulated
+20k+ runs against the actual production constants and effect distribution
 (`NARRATION_EFFECT_MIN`/`MAX` in `davinciNarration.ts`,
-`MIN_CHAPTERS_BEFORE_ENDING` in `davinci-page.vue`), so tuning them is a
-one-line change plus a contract-test update.
+`MIN_CHAPTERS_BEFORE_ENDING` in `davinci-page.vue`). Findings: the `[-2, 2]`
+swing is not the driver of early lock-in — `DAVINCI_PASS_VALUE` is 1, so any
+single nonzero positive touch already passes a dimension regardless of
+whether the max swing is 1 or 2 — left unchanged. The real lever is chapter
+count: at the original chapter-3 gate, an average of 4.2/10 dimensions had
+never been touched by any choice (guaranteed-fail, not a player decision);
+raised the gate to chapter 6 (~1.8/10 untouched on average) so a real spread
+of dimensions gets a chance to move before a player can lock in an ending.
+Both remain single constants, so further tuning is still a one-line change.
 
 Still deferred, unchanged: freeform choice input, the `milestoneCandidate`
 UI treatment beyond a one-line hint, `LifeRunArt` generation from the proposed

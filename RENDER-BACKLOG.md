@@ -553,3 +553,6 @@ queueDepth: DONE=4411, FAILED=564, CANCELLED=3179 (all-time). oldestPending: non
 
 ## 2026-08-15T06:27:46Z | healthy
 queueDepth: DONE=4411, FAILED=564, CANCELLED=3179 (all-time). oldestPending: none. windowThroughput (24h): DONE=7. recentFailed (last 25): 25/25 = generic workflow error (no node/exception detail forwarded).
+
+## 2026-08-15T16:47:04Z | ai-art-academy/t-044 | draining
+queueDepth: PENDING=513, RUNNING=1, DONE=4467, CANCELLED=3179 (all-time). oldestPending: id=7283, age=918955s (~255.3h), engine=COMFY. windowThroughput (24h): DONE=6. recentFailed: none.

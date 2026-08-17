@@ -87,7 +87,8 @@ class AuthController extends AsyncNotifier<AuthState> {
           body: {'username': username, 'password': password});
       final map = res as Map<String, dynamic>;
       final token = (map['token'] ??
-          (map['data'] is Map ? (map['data'] as Map)['token'] : null)) as String?;
+              (map['data'] is Map ? (map['data'] as Map)['token'] : null))
+          as String?;
       if (token == null || token.isEmpty) {
         throw ApiException(500, 'Login response contained no token');
       }
@@ -108,6 +109,21 @@ class AuthController extends AsyncNotifier<AuthState> {
   Future<void> logout() async {
     await ref.read(appStorageProvider).clearJwt();
     ref.invalidateSelf();
+  }
+
+  /// Permanently deletes the signed-in user's account and everything they
+  /// own (server-side cascade — see kind_robots' `deleteUserWithOwnedData`).
+  /// Irreversible; the caller is responsible for confirming with the user
+  /// before calling this. On success the app is returned to the welcome
+  /// screen, same as "Switch server mode".
+  Future<void> deleteAccount() async {
+    final api = ref.read(apiClientProvider);
+    final current = state.valueOrNull;
+    if (api == null || current is! SignedIn) {
+      throw StateError('No signed-in account to delete');
+    }
+    await api.delete('/api/users/${current.user.id}');
+    await ref.read(serverConfigProvider.notifier).reset();
   }
 }
 

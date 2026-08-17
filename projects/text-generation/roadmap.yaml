@@ -1,0 +1,276 @@
+project: text-generation
+kind: software
+notes_from_silas: >-
+  Add first-class text generation capabilities to Kind Robots. Existing cloud text
+  providers include OpenAI and Anthropic/Claude. Private/self-hosted text generation
+  should be a supported path for chat and general text generation rather than an
+  ad-hoc special case.
+
+milestones:
+  - id: m1
+    title: Provider contract and private-server design
+    weight: 20
+    status: not-started
+  - id: m2
+    title: Unified text generation and server integration
+    weight: 55
+    status: not-started
+  - id: m3
+    title: Security, UX, and regression hardening
+    weight: 25
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: Map the existing text stack and write the private-server design brief
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    gate_human: false
+    implementation_pr: silasfelinus/conductor#2351
+    note: >-
+      Start from the code that already exists, not a greenfield provider rewrite.
+      Inventory server/api/chats/openai/stream.post.ts,
+      server/api/chats/anthropic/stream.post.ts,
+      server/api/chats/ollama/stream.post.ts, server/utils/serverResolver.ts, the
+      Prisma Server model, preferredTextServerId, server CRUD/health APIs, and the
+      current chat/text consumers. The current runtime already accepts stored server
+      profiles in the OpenAI and Anthropic routes and has a native Ollama stream
+      route, but the capability routing and product surface are incomplete. Produce
+      projects/text-generation/BRIEF.md defining: one-shot generation vs chat vs
+      streaming contracts; provider/profile capabilities; model selection; server
+      ownership/visibility; error and cancellation semantics; mana accounting; a
+      compatibility/migration plan for the three existing endpoints; and what is
+      explicitly out of scope. Treat briefs as direction, not permanent contracts.
+
+
+      Closed 2026-08-17: projects/text-generation/BRIEF.md merged via PR #2351,
+      covering all six required sections (capability map, target contract,
+      migration strategy, security boundaries, success criteria, implementation
+      sequence) plus the required Ollama/stored-server current-vs-missing
+      explanation. t-002/t-003 are now unblocked by resolve_deps.py.
+    acceptance: >-
+      BRIEF.md is committed with a current-state capability map, target generation
+      contract, migration strategy, security boundaries, success criteria, and a
+      concrete implementation sequence. It explicitly explains what the existing
+      Ollama and stored-server plumbing already provides and what is still missing.
+    claimed_by: scheduled-conductor-20260817T0029Z-textgen-t001
+    claimed_at: '2026-08-17T00:29:34Z'
+    updated: '2026-08-17T00:29:34Z'
+
+  - id: t-002
+    milestone: m2
+    title: Build a shared server-side text generation provider layer
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    gate_human: false
+    depends_on: t-001
+    note: 'Closed 2026-08-17: shared server-side text provider service merged via kind_robots PR #1919 (squash 21bcde9). server/utils/textProviderService.ts extracts the mechanics duplicated across all three chat streaming routes (optional server resolution, provider-key precedence, per-authType auth headers, SSE/ndjson header setup, byte-relay-then-mana pump, error status extraction, refId shaping); all three routes now call the single shared estimateTextCostUsd instead of three drifted local estimators. Net -367 lines. t-003 (Ollama capability-routing fix + private-server profile UX) is the next task per BRIEF.md sequence; t-004 stays waiting on both t-002 and t-003.'
+    acceptance: >-
+      A focused provider service covers message normalization, provider endpoint
+      resolution, auth headers, model/options mapping, streaming lifecycle, and
+      normalized errors; existing OpenAI/Anthropic/Ollama chat behavior remains
+      covered by automated tests.
+    claimed_by: scheduled-conductor-20260817T0227Z-textgen-t002
+    claimed_at: '2026-08-17T02:28:11Z'
+    updated: '2026-08-17T02:46:09Z'
+    implementation_pr: 'silasfelinus/kind_robots#1919'
+
+  - id: t-003
+    milestone: m2
+    title: Add first-class trusted private text-server profiles
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    gate_human: false
+    depends_on: t-001
+    note: >-
+      Reuse the existing Server model and admin server surfaces where they fit. Make
+      text-capable private/self-hosted servers explicit and selectable, including
+      native Ollama and OpenAI-compatible endpoints. Fix capability resolution so
+      supported server types are actually discoverable for text generation. Include
+      an authenticated health/test operation and user preferredTextServerId selection.
+      Private-network access is allowed only through stored trusted profiles created
+      by an authorized user/admin, never through arbitrary client-supplied URLs.
+    acceptance: >-
+      An authorized user can configure/select a trusted private text server, verify
+      its health, and resolve it through the canonical server resolver; unsupported or
+      unauthorized server profiles are rejected with useful errors.
+    claimed_by: scheduled-conductor-20260817T0426Z-textgen-t003
+    claimed_at: '2026-08-17T04:27:44Z'
+    updated: '2026-08-17T05:30:24Z'
+    implementation_pr: 'silasfelinus/kind_robots#1921'
+
+  - id: t-004
+    milestone: m2
+    title: Expose unified one-shot and streaming text generation APIs
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    gate_human: false
+    depends_on:
+      - t-002
+      - t-003
+    note: >-
+      Add a canonical generation surface suitable for non-chat product features as
+      well as conversations. Support prompt/system/messages input, streaming and
+      non-streaming output, model/provider selection via trusted server profile, and
+      existing mana/resource rules. Keep compatibility shims for current chat routes
+      until callers are migrated rather than breaking them wholesale.
+    acceptance: >-
+      Automated integration tests demonstrate the same application call can generate
+      text through system OpenAI/Anthropic and a configured private server, with both
+      one-shot and streaming modes returning a normalized contract and correct mana
+      behavior.
+    claimed_by: scheduled-conductor-20260817T0530Z-textgen-t004
+    claimed_at: '2026-08-17T06:48:42Z'
+    updated: '2026-08-17T07:06:40Z'
+    implementation_pr: 'silasfelinus/kind_robots#1923'
+
+  - id: t-005
+    milestone: m3
+    title: Harden private-server networking, secrets, and failure behavior
+    status: needs-human
+    owner: worker
+    passes: 1
+    stakes: reversible
+    gate_human: true
+    approved_by_human: false
+    implementation_pr: 'silasfelinus/kind_robots#1926'
+    depends_on:
+      - t-002
+      - t-003
+      - t-004
+    note: >-
+      Treat private LLM connectivity as a deliberate SSRF boundary. Trusted stored
+      profiles may target approved LAN/private addresses, but untrusted request data
+      may not choose destinations. Block cloud metadata/link-local destinations and
+      unsafe redirects, constrain protocols, set connection/read timeouts and response
+      limits, cancel upstream streams when clients disconnect, avoid secret-bearing
+      logs, and verify ownership/visibility before every server selection. Preserve
+      the ability to use a home/private server without weakening the rest of the app
+      into an open proxy. This task changes a security boundary and therefore stays
+      human-gated before merge even though the code itself is reversible.
+
+
+      FOR SILAS: kind_robots PR #1926 (open, not merged) implements this. Two new
+      files -- server/utils/networkSafety.ts (destination validation: blocks cloud
+      metadata IPs/hostnames and link-local ranges; blocks loopback UNLESS the caller
+      explicitly opts in) and server/utils/safeFetch.ts (validates before dialing and
+      on every redirect hop, one connect-timeout budget, correct 301/302/303
+      method-downgrade). Wired into generate/text.post.ts and the three legacy chat
+      routes in place of plain fetch(). sendMeteredStream (textProviderService.ts) now
+      caps response size, enforces a per-chunk idle timeout, and aborts the upstream
+      request when the client disconnects.
+
+
+      Deliberately does NOT block RFC1918 (10/8, 172.16/12, 192.168/16) or the
+      100.64.0.0/10 Tailscale CGNAT range -- home-LAN and Tailscale servers are this
+      project's actual intended use case (ServerAccessMode.TAILSCALE already exists in
+      the schema), so blocking them would break the feature. Loopback (127.0.0.1,
+      ::1, "localhost") IS blocked by default, since any authenticated user (not just
+      admins) can set a Server.baseUrl -- except for ollama/stream.post.ts's
+      config.ollamaBaseUrl fallback (nuxt.config.ts default: http://localhost:11434,
+      an operator env var, not user input), which explicitly opts back in via a new
+      allowLoopback flag threaded only to that one call site.
+
+
+      TO APPROVE: read the PR diff (10 files, ~1080 lines, mostly the two new
+      utility modules) and confirm the blocked/allowed scope above matches your
+      intent -- in particular whether loopback should default-block for DB-stored
+      servers, and whether RFC1918/Tailscale staying unblocked is correct. If yes,
+      merge kind_robots#1926, then set approved_by_human: true and status: done here
+      (or say so and a session will do the close-out). If you want a narrower or wider
+      blocked range, say what to change and it'll be revised on the same PR.
+
+
+      What unblocks when approved: t-006 (product-surface wiring + self-hosted setup
+      docs) is already status: waiting on this task via depends_on; nothing else is
+      gated behind it.
+    acceptance: >-
+      Focused security tests cover unauthorized server access, arbitrary URL attempts,
+      metadata/link-local targets, redirects, timeout/cancellation, and secret leakage;
+      approved private profiles still work end-to-end.
+    claimed_by: scheduled-conductor-20260817T0829Z-textgen-t005
+    claimed_at: '2026-08-17T08:30:13Z'
+    updated: '2026-08-17T08:53:00Z'
+
+  - id: t-006
+    milestone: m3
+    title: Wire text-provider selection into the product surfaces and document setup
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: false
+    depends_on:
+      - t-004
+      - t-005
+    note: >-
+      Update the relevant admin/chat/generation UI so private servers and cloud
+      providers are understandable choices rather than hidden request parameters.
+      Document a practical self-hosted setup path, starting with Ollama and an
+      OpenAI-compatible server, including network reachability expectations for the
+      self-hosted Kind Robots deployment. Avoid exposing API keys or raw secret values
+      to the browser.
+    acceptance: >-
+      The supported text-generation surfaces can select a configured provider/server,
+      setup documentation covers at least Ollama plus an OpenAI-compatible private
+      endpoint, and CI/type/lint/integration coverage is green.
+
+  - id: t-007
+    milestone: m3
+    title: Extend the admin server-uptime dashboard to cover text-capable servers
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    gate_human: false
+    note: >-
+      Kaizen from t-001's research: server/api/server/uptime.get.ts currently
+      restricts its serverType where-clause to A1111/COMFY by default (overridable
+      via ?serverType= but not surfaced anywhere for text). Once t-003/t-004 land
+      real text-server profiles, extend the admin uptime dashboard's default scope
+      (or its UI) to include OPENAI/ANTHROPIC/OLLAMA/CUSTOM text servers so their
+      health/uptime is as visible as the art/GPU servers already are.
+    acceptance: >-
+      The admin uptime dashboard can show uptime/latency history for a text-capable
+      server without requiring a manual ?serverType= override, verified by a test
+      or a documented manual check.
+    claimed_by: scheduled-conductor-20260817T0450Z-textgen-t007
+    claimed_at: '2026-08-17T05:31:06Z'
+    updated: '2026-08-17T05:41:38Z'
+    implementation_pr: 'silasfelinus/kind_robots#1922'
+
+  - id: t-008
+    milestone: m3
+    title: Unify OpenAI/Anthropic header construction into one shared code path
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    gate_human: false
+    note: >-
+      Kaizen from t-004: server/api/generate/text.post.ts's buildUpstreamAuth
+      hand-builds OpenAI/Anthropic auth headers inline, duplicating the shape of
+      textProviderService.ts's existing buildTextServerAuthHeaders (used for Ollama
+      and any generic stored-server case). Fold both into one shared header-building
+      function in textProviderService.ts so the legacy chat routes and the new
+      unified generation endpoint share exactly one code path instead of two
+      independently-maintained ones.
+    acceptance: >-
+      A single header-construction function in textProviderService.ts covers
+      OpenAI/Anthropic/Ollama/generic-server auth shapes; chats/{openai,anthropic,
+      ollama}/stream.post.ts and generate/text.post.ts all call it; existing
+      contract tests (text-provider-service, text-generation-dispatch) still pass
+      with no behavior change for any existing caller.
+    claimed_by: 20260817T073849Z-textgen-t008
+    claimed_at: '2026-08-17T07:38:50Z'
+    updated: '2026-08-17T07:55:58Z'
+    implementation_pr: 'silasfelinus/kind_robots#1925'

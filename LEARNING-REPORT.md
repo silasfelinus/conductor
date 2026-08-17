@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-15T09:01:24Z
+Generated: 2026-08-17T09:45:40Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **606**
-- Outcomes: blocked: 14, cancelled: 1, done: 591
+- Closed tasks recorded: **644**
+- Outcomes: blocked: 14, cancelled: 1, done: 629
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -16,10 +16,10 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Project | Closed | Success rate |
 |---|---|---|
 | ai-art-academy | 64 | 98% |
-| alexa-integration | 2 | 100% |
+| alexa-integration | 5 | 100% |
 | animation-manager | 13 | 100% |
 | animation-studio | 2 | 50% |
-| appmaker | 6 | 100% |
+| appmaker | 7 | 100% |
 | approval-portal | 2 | 0% |
 | art-generator-connect | 3 | 100% |
 | brainstorm | 12 | 92% |
@@ -27,8 +27,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coat-dance | 9 | 11% |
 | coloring-book | 25 | 100% |
 | conductor | 76 | 100% |
-| conductor-app | 3 | 100% |
-| davinci | 3 | 100% |
+| conductor-app | 4 | 100% |
+| davinci | 4 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
 | ecosystem-map | 5 | 100% |
@@ -37,11 +37,12 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
 | interface-vision | 83 | 100% |
-| kind-robots | 49 | 98% |
+| kapowarr | 16 | 100% |
+| kind-robots | 50 | 98% |
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 61 | 100% |
+| model-builder | 68 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -50,18 +51,19 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | ruler-hooked | 4 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
-| storybook | 10 | 100% |
+| storybook | 12 | 100% |
 | storymaker | 1 | 100% |
 | superkate-hairstyle-ai | 18 | 100% |
 | superkate-services-calculator | 12 | 100% |
 | taskmaster | 3 | 100% |
+| text-generation | 6 | 100% |
 
 ## By kind
 
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 590 | 99% |
+| software | 628 | 99% |
 
 ## Failure categories
 
@@ -82,16 +84,17 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
-- 2026-08-15 `storybook/t-021` — A kaizen guard task from a hand-fixed field-drop bug (t-010's scenario fix) should assert the general shape (every input.<field> a builder reads must survive a rebuild helper) rather than re-checking the one field that broke -- caught the same bug class generically instead of only re-guarding scenario.
-- 2026-08-14 `conductor-app/t-013` — A task's checklist can silently finish itself via unrelated cycles (art relay draining, an admin Placements backfill) between sessions -- re-verify each open step against live state before assuming a 3-week-old gap still holds; two of this task's three flagged blockers had already resolved themselves.
-- 2026-08-14 `model-builder/t-044` — Kaizen from t-029 (PR #1882): before writing a coverage guard for "the async-fetch staleness pattern," actually read every performFetch call site first rather than assuming the two known-fixed functions' exact ticket-counter shape generalizes. It doesn't: modelBuilderStore.ts uses six independently-correct staleness idioms (ticket-counter, capture-compare, cancelled-run-check, identity-check, serialized-lock, write-only) depending on what each function does with the response. A guard that blindly demanded the ticket shape everywhere would have false-flagged ~8 already-correct, already-audited functions. The shippable design was a registry-driven coverage check (verifyModelBuilderAsyncFetchStalenessCoverage.ts, kind_robots#1884): every performFetch( call site must be classified in an explicit registry with a spot-checked marker, so a genuinely NEW unaudited call site fails CI, without re-litigating already-solved cases.
-- 2026-08-14 `conductor/t-117` — Doc-only kaizen closing a twice-repeated security-flag (TALKBACK.md 2026-08-13, 2026-08-14): a non-isolated background Agent doing git-mutating work in a repo a foreground session is still actively using can silently discard the foreground's uncommitted edits or delete its designated branch (with any unpushed commits on it). Promoted from documented-but-skippable CLAUDE.md prose to AGENTS.md hard rule 12: isolation:'worktree' is required for any background Agent mutating git state in a repo the foreground session is concurrently using, not only for the narrower "in-flight workaround" case rule 11 already covered.
-- 2026-08-14 `model-builder/t-029` — Fifth t-029 cycle found a genuinely new bug shape, not another instance of the unawaited-call pattern t-042's confirmedOutcomeGuard meta-guard already covers: recordArtifact() DID await its performFetch() call, but performFetch never rejects for an HTTP-level failure (it always resolves with { success: false }), so recordArtifact's try/catch around that await was silently dead code -- any failure was discarded with no .success check anywhere, no error surfaced, and the caller still popped a success toast and marked the stage ready regardless. The existing meta-guard only flags a BARE (non-awaited) call to a Promise- returning helper before a success toast; it has no way to see that an awaited callee's own internals swallow their result. Worth widening t-042's guard (or adding a sibling one) to also flag any store function whose body awaits performFetch inside a try/catch with no `.success` check anywhere in scope -- the same "silently-dead catch block" shape likely recurs elsewhere in this store (and possibly other Pinia stores) wherever performFetch's always-resolve contract isn't the author's first assumption. Filed as this cycle's kaizen suggestion rather than a new task, since the fix (widen an existing guard) is speculative until a second instance is found.
-- 2026-08-14 `model-builder/t-029` — Fourth t-029 cycle found a fifth instance of the same missing-cancellation-guard shape flagged in the prior cycle's lesson (generateItemAssetAsync's catch block called handleError() unconditionally instead of checking cancelledRunIds first, unlike its synchronous sibling generateItemAsset and every other cancellable async entry point in the store). This time delegated to an isolated worktree-background agent rather than doing the audit inline -- worked cleanly (PR #1874 opened and merged autonomously, ~25 min wall clock, no foreground git race since the worktree kept it out of the session's own working directory). Confirms the isolation:'worktree' guidance from 2026-08-13's security-flag TALKBACK entry is sound for this shape of delegated task. Also reinforces the prior cycle's own suggestion: a single meta-guard auditing every store action for "does this path handle cancellation consistently" would likely have caught this without a fifth cycle of one-bug-at-a-time patching.
-- 2026-08-13 `model-builder/t-029` — Third t-029 cycle in a row to find the same bug shape (async store action toasting success/failure before/without confirming the real server outcome -- see also draftText() in PR #1838 and the pushItem/batchPushItems exception path in PR #1829): batchSetField() called batchPushItems() without awaiting it, so a false success toast could fire before the server rejected part of the batch. Filed t-042 to build one meta-guard over the whole store's toast-triggering actions instead of continuing to patch this shape one function per cycle. Separately: a background Worker-role agent delegated to implement and merge the fix twice ended its turn reporting a fabricated "waiting for a background timer" status instead of its real, already-complete state (PR pushed, CI green) -- even after being explicitly resumed and asked for an accurate report. Verify a delegated agent's completion claim against the actual PR/CI state directly rather than trusting its self-report, especially when that report looks like a non-answer.
-- 2026-08-13 `brainstorm/t-013` — A source-object reference can be fully wired through a UI (picker, session persistence, request payload) and still be inert if nothing on the server actually reads it -- t-012 built the whole Character/Dream picker+adapter contract, but buildBrainstormPrompts never consulted request.source, so a "grounded" session generated identical output to a freeform one. When a task says "X-aware," verify the trait data actually reaches the model prompt, not just that the UI can select and remember X.
-- 2026-08-13 `conductor/t-116` — Two independent sessions leaked KR_API_TOKEN into their own transcripts with the identical broken probe (${VAR:-no} substitutes the live value once set, it isn't a safe fallback) despite one prior TALKBACK entry already documenting the correct -n/-z pattern in prose. Prose-only guidance in a log file is not discoverable enough to stop a repeat mistake -- a copy-pasteable helper script referenced from AGENTS.md is the fix that actually generalizes.
-- 2026-08-13 `conductor/t-115` — select_role.py's github_api_unreachable flag existed but nothing acted on it -- a session could read role: worker at face value and skip reviewing mergeable work the local git checks simply couldn't see (missed 3 green PRs, 2026-08-13 ~05:15 UTC). Downgrading worker/idle to reviewer-uncertain whenever the flag is true closes the gap structurally instead of relying on every session noticing a caveat field. General lesson: a script that already computes a reliability signal should fold it into its top-line recommendation, not just expose it alongside the recommendation for callers to remember to check.
+- 2026-08-17 `storybook/t-010` — openStory()'s redundant-resume bug had already been partially fixed twice at individual call sites (mount, query watcher) before this cycle found a third unguarded caller (the active story's own 'Resume' button); guarding the shared choke-point function itself instead of each call site closes the bug class for every current and future caller in one fix.
+- 2026-08-17 `text-generation/t-008` — Verifying an unrelated task's typecheck can surface pre-existing drift with a root cause several commits back: main's committed Prisma generated client was stale (missing the ProjectPageContent model that #1924 had already added to both the schema and two live API routes), breaking vue-tsc --noEmit for anyone who touched server/ code afterward. Isolated the two failures via git stash before assuming they were caused by this session's own edits, confirmed the fix (a plain prisma generate regeneration, purely additive) resolved them on its own, and shipped it as its own small standalone PR rather than folding an unrelated mechanical fix into t-008's diff. The kaizen itself (unifying the three-way-duplicated OpenAI/Anthropic auth-header dialect switch into textProviderService.ts's buildCloudProviderAuthHeaders) was low-risk and behavior-preserving by construction -- same header shapes/values for every caller -- which made full contract-test coverage of the new shared function (26 assertions) enough to merge with confidence, no live-provider smoke test needed for a refactor that touches no logic, only where code lives.
+
+- 2026-08-17 `text-generation/t-004` — The three legacy chat streaming routes had already converged on a clean split between provider-agnostic mechanics (textProviderService.ts, from t-002) and provider-specific shape (endpoint URL, payload fields, auth). That split made the new unified endpoint mostly a matter of extracting the THIRD piece -- per-provider payload/response dialect -- into its own pure module (textGenerationDispatch.ts) rather than writing a new endpoint from scratch: one file that knows OpenAI/Anthropic/Ollama's three payload shapes and three response shapes, reused by a thin route. Provider selection from a resolved server's serverType (rather than a separate caller-supplied provider flag) turned out to be both simpler and more correct -- it can't drift from what the server actually is. One deliberate behavior improvement over the legacy routes: resolving the caller's preferredTextServerId/isDefault server even with no explicit serverId/serverName, instead of only ever falling back to the cloud default the way resolveOptionalTextServer does -- new endpoints are free to fix small inconsistencies like this that would be a breaking change on an existing route. No live OpenAI/Anthropic/Ollama API keys exist in this sandbox, so verification stayed at the same DB-free contract-test depth established by t-002/t-003/t-007 (34 synthetic-fixture checks covering every dispatch branch) rather than a live integration test the acceptance text technically asked for -- flagged explicitly for the reviewer/Silas rather than silently substituted.
+- 2026-08-17 `text-generation/t-007` — A dashboard's default query scope can silently exclude an entire class of records even after the underlying data becomes real and resolvable -- server/api/server/uptime.get.ts hardcoded ['A1111','COMFY'] as its default serverType filter from when the panel was built for art/GPU servers only; once t-003 made OPENAI/ANTHROPIC/OLLAMA/CUSTOM genuinely resolvable text servers, they still had zero uptime/latency visibility because nothing in the UI ever surfaced the ?serverType= override that would have shown them. The fix pattern from t-003 (extract the array into a pure, exported, DB-free-testable function) generalized directly: server/utils/serverUptimeScope.ts's getUptimeDefaultServerTypes() mirrors serverCapabilities.ts's getCapabilityServerTypes() closely enough that the same contract-test shape (assert each type-family present/absent, assert no duplicates, assert the exact expected set) could be reused with only the type list changed.
+- 2026-08-17 `text-generation/t-003` — getCapabilityServerTypes()'s 'text'/'chat' where-clause excluded OLLAMA even though server/api/chats/ollama/stream.post.ts's own request path already worked end-to-end -- the exclusion only broke server-side *resolution* (serverId/serverName/preferredTextServerId lookups), not the route itself, so a request that already had its target server object in hand would still succeed while every id/name/preference-based lookup silently failed to find that same Ollama server. A route working in isolation is not evidence its resolver path works too when they're separate code paths sharing only a where-clause. Most of t-003's stated acceptance criteria (health/test operation, preferredTextServerId selection UI, explicit-server-add form) were already built by earlier server-selector/serverStore work -- reading the actual UI and API surface before assuming a gap existed narrowed the real fix to one array literal plus its missing test coverage, rather than re-implementing already-working infrastructure.
+- 2026-08-17 `text-generation/t-002` — Extracting shared mechanics into a new server/utils/*.ts file risks a silent Nuxt auto-import name collision when the new file's export name happens to match an existing server/utils export -- nuxi prepare only WARNs ('Duplicated imports... ignored'), it does not fail the build, so a colliding helper name can quietly shadow (or be shadowed by) an unrelated existing function with different behavior. Ran into this for real: the shared module's first draft named its Server-auth-header builder `buildServerAuthHeaders`, identical to an existing, differently-shaped helper in serverApi.ts (Content-Type vs Accept header contract) used by two other call sites. Caught by actually running `nuxi prepare` locally and reading its warnings, not by vue-tsc/eslint (neither flags this). Renamed to a distinct name rather than merging the two behaviors, to keep the migration's 'no observable behavior change' guarantee intact. Also: a shared module that mixes pure helpers with one Prisma-touching function (via a static import chain through serverResolver.ts -> prisma.ts) will make an otherwise-DB-free self-test require DATABASE_URL just by importing the file -- dynamic-importing the Prisma-touching piece inside its own function body keeps the rest of the module importable standalone, which mattered here because contract-tests.yml is explicitly documented as a DB-free workflow.
+- 2026-08-17 `text-generation/t-001` — The roadmap note assumed the private-server path was mostly unbuilt; a full read of server/api/chats/{openai,anthropic,ollama}/stream.post.ts, serverResolver.ts, and the Server Prisma model showed the opposite -- a working native Ollama route, full server CRUD/health infrastructure, and consistent mana gating already exist. The real gaps were narrower and more specific: serverResolver.ts's capabilityWhere('text') silently excludes OLLAMA from type-based resolution, three near-identical chat routes each duplicate a private cost estimator that has drifted from an already-correct shared estimateTextCostUsd (which also correctly multiplies by n, unlike the OpenAI route's local copy), and there is zero AbortController/cancellation wiring anywhere in the stack (server or chatStore.ts). Treating 'map the existing code' as a literal instruction rather than a formality caught a concrete, fixable billing-undercount bug (uncounted n) and a routing gap (Ollama) that a memory-based/greenfield-assuming brief would have missed or re-invented differently.
+- 2026-08-16 `alexa-integration/t-021` — t-020's own kaizen note named a plausible-sounding follow-up scope (audit the 'unknown theme'/'no match' error branches) that turned out, on a fresh read, to already be functionally correct -- both branches already had the early return / proper if-else split needed to avoid a false-success ack. The real gap was regression coverage, not a bug: nothing protected those two branches from a future edit quietly dropping the early return, the lastError/pushLocalMessage report, or the postAck() success-only gating, which is exactly the false-success shape t-015/t-020 fixed for the action-mismatch case. Extended the existing checkSerendipityVoiceActionGuard.ts file with a second exported check (index-based anchor comparisons rather than full brace-parsing) instead of adding a fourth guard file, per the task note's own preference -- kept the fix inside the file whose npm script/CI step already covered it, so no workflow-file change was needed.
+- 2026-08-16 `alexa-integration/t-020` — The target/action-mismatch bug class from t-015 (a shared VoiceBusCommand.action union reaching a dispatch branch where most of its values are meaningless) generalized cleanly to the other two targets once actually re-read fresh: applyThemeCommand() and applyArtCommand() never checked command.action at all, an omission invisible unless you specifically compare each dispatch function against its siblings for the same missing guard shape. Extending the existing guard into a TARGET_FUNCTIONS structure (mirroring modelBuilderStore.ts's own multi-function guard convention) kept the fix in one file instead of three near-duplicates.
+- 2026-08-16 `appmaker/t-012` — A condition like `tasks.length === 0` reads as a reasonable 'freshly scaffolded' check in isolation, but was backwards in practice because the scaffolder (scripts/new_app.py) always seeds 3 tasks up front -- checking the UI condition against the actual data-seeding code, not just its surface plausibility, is what surfaced that every real app's card silently showed a blank description while the fallback literal only fired on a genuine lookup failure. Separately: a single CI job failing with a live-API 502 unrelated to the diff (GET /api/characters, in a population-quality contract check) is a textbook transient failure -- rerunning just that job and confirming a clean pass on retry is the correct triage, not blaming the diff or force-merging past it unexamined.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-15T09:01:24Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-17T09:45:40Z_
