@@ -83,8 +83,8 @@ tasks:
   - id: t-003
     milestone: m2
     title: Add first-class trusted private text-server profiles
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     gate_human: false
@@ -101,6 +101,9 @@ tasks:
       An authorized user can configure/select a trusted private text server, verify
       its health, and resolve it through the canonical server resolver; unsupported or
       unauthorized server profiles are rejected with useful errors.
+    claimed_by: scheduled-conductor-20260817T0426Z-textgen-t003
+    claimed_at: '2026-08-17T04:27:44Z'
+    updated: '2026-08-17T04:27:44Z'
 
   - id: t-004
     milestone: m2
