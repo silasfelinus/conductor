@@ -109,8 +109,8 @@ tasks:
   - id: t-004
     milestone: m2
     title: Expose unified one-shot and streaming text generation APIs
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     gate_human: false
@@ -128,6 +128,9 @@ tasks:
       text through system OpenAI/Anthropic and a configured private server, with both
       one-shot and streaming modes returning a normalized contract and correct mana
       behavior.
+    claimed_by: scheduled-conductor-20260817T0530Z-textgen-t004
+    claimed_at: '2026-08-17T06:48:42Z'
+    updated: '2026-08-17T06:48:42Z'
 
   - id: t-005
     milestone: m3
