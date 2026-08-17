@@ -481,9 +481,11 @@ tasks:
       Live reset-handoff repair shipped in silasfelinus/Kapowarr#25, merged as 8e0ccf480c8e4cf6b025f24d9adaa8e7e8113d5a. Root cause: Reset & Re-evaluate waited for the recheck task to disappear, then fired startContinuousImport asynchronously and immediately released its reset UI state without confirming that the browser had attached to the newly created continuous_library_import task. The UI now waits up to 15 seconds for that task to become visible, explicitly attaches the normal progress poller before finishing the reset flow, and disables Continuous-only Review/Stop/Background controls while the snapshot rebuild itself is running. PR and post-merge Python 3.8-3.12 tests, docs, and container builds all passed. GHCR latest and sha-8e0ccf4 were published at digest sha256:259e1032e96d590abfc8d212fbc76fca72e79fc1ab174dc30b5f287b07fb4da9.
 
       Adjacent live-use follow-ups shipped after the continuous importer work. silasfelinus/Kapowarr#31 (merge 0c8ed204) keeps large Volumes galleries responsive by revealing the first 50 entries immediately and hydrating the remainder in browser-idle batches while preserving complete Mass Edit semantics. silasfelinus/Kapowarr#32 (merge 206c63f9) adds the first built-in comic-reader slice: authenticated issue/page endpoints, CBZ/ZIP and loose-image reading without permanent extraction, natural page ordering, responsive swipe/keyboard/page-fit UI, and Read actions on downloaded issues. Both exact PR heads passed Python 3.8-3.12, docs, and container workflows before merge. CBR/RAR, PDF, and remembered reading position remain explicit reader follow-ups.
+
+      Adjacent comic-reader follow-up shipped in silasfelinus/Kapowarr#33, squash 779c2c47648ab0cb4ecd9373a23098efa5a4370b. The built-in reader now supports issue-linked PDF files in addition to CBZ/ZIP and loose images. PDFs are streamed only through an authenticated issue-derived endpoint with Flask conditional responses left intact for HTTP range/206 behavior, then embedded in the existing responsive reader using the browser-native PDF renderer. Image/CBZ page mode remains preferred when both forms are linked. Exact PR head 5c0fb22d passed Python 3.8-3.12, docs, and container workflows before squash merge. CBR/RAR remains the next reader-format follow-up.
     claimed_by: 20260816T090200Z-kapowarr-t021-import-a7c9
     claimed_at: '2026-08-16T09:02:00Z'
-    updated: '2026-08-17 23:19:00+00:00'
+    updated: '2026-08-17T23:45:00Z'
     implementation_pr: 'silasfelinus/Kapowarr#13'
 
   - id: t-022
