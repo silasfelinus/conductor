@@ -8614,3 +8614,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "server.ts's top-level side effects (opens a DB pool, starts listening) make it unimportable from a test -- pulling authorization logic into pure, side-effect-free modules (scopeVisits.ts) before wiring it into the entrypoint is what made 'test privilege boundaries' actually achievable rather than aspirational."
+- date: 2026-08-17
+  project: humboldt-scoop-cms
+  task: t-020
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A background survey of actual current write paths (not the task note's assumed shape) found the real address-edit flow was customer-portal-only with a duplicated, incomplete (address/city only, missing state/postal_code) safety check -- surveying before designing caught a real bug the task wouldn't otherwise have surfaced."
