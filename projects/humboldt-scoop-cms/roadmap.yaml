@@ -522,27 +522,15 @@ tasks:
   - id: t-033
     milestone: m8
     title: "Extend site/tools/portal-roles-check.php to cover the representative identity"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-018: portal-roles-check.php documents itself as covering four
-      identities (owner/admin, scooper, dual-role, plain customer) against a real
-      WordPress. t-018 added a fifth -- a logged-in user with no customer row of
-      their own, recognised only via HSS_Contacts::for_email() as someone's
-      authorized representative -- and could only be verified with static regex
-      tests in this sandbox (no live MariaDB/WordPress here). Add the fifth
-      identity to the tool's fixture set and assert render_representative_home()
-      renders the change-request form only when the target account has a real WP
-      user id, and never creates a customer/property row for the representative.
-      Separately worth a look: whether any CI lane could run this tool against an
-      ephemeral MariaDB/WordPress container, since right now this whole class of
-      bug (a GET manufacturing rows, a permission check nobody calls) is only ever
-      caught by static tests or manual review.
+    note: 'Implemented and merged silasfelinus/humboldtscoopsolutions#58 (squash fc5d5e0). Added a fifth fixture user to site/tools/portal-roles-check.php (hss_fixture_rep) with two HSS_Contacts rows: one representing the client fixture''s already-created customer (a real linked WP user id), one representing an offline-signup customer inserted directly (user_id=0). Asserts the representative label renders with neither staff tools nor the ordinary dashboard, the linked account''s section shows the change-request form (''Manage Your Plan''), the offline account''s section is routed to a human instead, and the render creates no customer/property row -- the same write-guard the other four identities already have. Also truncates wp_hss_contacts alongside the existing three fixture tables so the tool stays idempotent across runs. Verified: php -l clean, and the existing static suites (representative-access-test.php, portal-test.php) still pass unchanged. No live WordPress/MariaDB available in this sandbox to run portal-roles-check.php itself -- same documented limitation as t-018/t-032; the new section closely mirrors the four identities already verified against a real WordPress and reuses HSS_Customers/HSS_Contacts methods already covered elsewhere. Repo has no CI workflows configured; merged on local verification per established precedent (t-021/t-022/t-032).'
     claimed_by: 2026-08-17-sched-t033
     claimed_at: '2026-08-17T21:27:27Z'
-    updated: '2026-08-17T21:27:27Z'
+    updated: '2026-08-17T21:34:02Z'
+    implementation_pr: 'silasfelinus/humboldtscoopsolutions#58'
 
   - id: t-034
     milestone: m9
