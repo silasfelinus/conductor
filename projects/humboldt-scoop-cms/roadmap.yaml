@@ -344,14 +344,15 @@ tasks:
   - id: t-021
     milestone: m9
     title: "Finish notification operations: failure UI, SMS, and en-route status"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: 'Surface notification delivery failures to the office, extend SMS coverage, and wire a deliberate en-route transition without making notification outages block crew completion writes. CORRECTED 2026-08-17 (the original note overstated what is missing): SMS IS already wired -- HSS_Visits::notify() sends HSS_Mail::visit_status() and HSS_Sms::visit_status() together on every status change. What lacks SMS is specifically the wp-cron sweep in class-hss-notify.php, which is email-only. And something DOES set en-route: the admin visit-status form accepts ''enroute'' and notifies on it. The real gap is that only an admin at a desk can trigger it -- there is no scooper-facing way to say ''on my way'' from a truck. That makes the useful part of this task blocked on t-014/t-015 staff identity, not on notification code. Do not rebuild HSS_Sms or the en-route path; they work.'
+    note: 'Shipped in humboldtscoopsolutions PR #55 (schema 2.7.0). Closed the three real gaps: (1) POST /visits/:id/enroute (field client "I''m on my way" button + dispatch page''s "My Visits Today" tab) -- the scooper-facing en-route trigger that never existed; (2) HSS_Notify::send_sms() texts the account holder alongside every email the wp-cron sweep already sends (was email-only); (3) a new read-only Notifications admin page lists HSS_Notify::failures(). New notified_enroute_at column backs a sweep_enroute() claim, same pattern as sweep_completed(). SMS coverage stays account-holder-only (HSS_Contacts reps have no phone/opt-in column -- flagged as a kaizen). Did not touch HSS_Sms/the admin-form enroute path per the task note.'
     claimed_by: scheduled-conductor-20260817T-hss-t021
     claimed_at: '2026-08-17T17:27:27Z'
-    updated: '2026-08-17T17:27:27Z'
+    updated: '2026-08-17T17:42:39Z'
+    implementation_pr: 'silasfelinus/humboldtscoopsolutions#55'
 
   - id: t-022
     milestone: m9
@@ -543,3 +544,22 @@ tasks:
       ephemeral MariaDB/WordPress container, since right now this whole class of
       bug (a GET manufacturing rows, a permission check nobody calls) is only ever
       caught by static tests or manual review.
+
+  - id: t-034
+    milestone: m9
+    title: "Give HSS_Contacts its own phone/sms_opt_in so a representative can opt into SMS"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-021 (humboldtscoopsolutions PR #55): the wp-cron sweep now
+      texts the account holder alongside every email it sends
+      (HSS_Notify::send_sms()), but authorized representatives (HSS_Contacts)
+      have no phone or SMS-opt-in column of their own, so they can only ever
+      be reached by email through this path -- unlike the account holder, who
+      has both. Add phone/sms_opt_in columns to wp_hss_contacts (additive
+      migration), and extend HSS_Notify::send_sms() to text opted-in
+      representatives too, not just the account holder. Keep the two consent
+      flags independent, same as can_receive_updates/can_request_changes
+      already are for this table.
