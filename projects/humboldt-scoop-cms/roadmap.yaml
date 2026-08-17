@@ -327,8 +327,8 @@ tasks:
   - id: t-020
     milestone: m7
     title: "Add self-hosted geocoding and a safe address-to-coordinate workflow"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -336,6 +336,9 @@ tasks:
       consistent with the no-paid-API posture. Address edits must invalidate old coordinates;
       unroutable properties remain visibly flagged. Building/testing this does not itself
       authorize production customer data import.
+    claimed_by: scheduled-conductor-20260817T111504Z-hss-t020
+    claimed_at: '2026-08-17T11:15:05Z'
+    updated: '2026-08-17T11:15:05Z'
 
   - id: t-021
     milestone: m9
