@@ -113,14 +113,43 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Implement SABnzbd download-client support"
-    status: not-started
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
-      Add SABnzbd as a peer to existing external download clients, including
-      connection testing, submission, status handling, cancellation where the API
-      supports it, configuration validation, and focused tests.
+      Implemented and merged silasfelinus/Kapowarr#26 (squash 973ad03), per the
+      seam mapped in t-006's design doc. Added DownloadType.USENET and a
+      SABnzbd(BaseExternalClient) peer to qBittorrent/Transmission (connection
+      test, submission, queue+history status polling, cancellation), registered
+      it in ExternalClients.get_client_types(), and added
+      NZBDownload(ExternalDownload, BaseDirectDownload) modeled on
+      TorrentDownload. download_queue.py's shared external-download polling
+      loop was extracted into __run_external_download(); the new
+      __run_usenet_download() always uses PostProcessorTorrentsComplete since
+      Usenet never seeds (torrent behavior unchanged). Real constraint found
+      during implementation, corrected vs. the design doc's assumption: SABnzbd
+      has no per-job arbitrary target-folder parameter (submits under a fixed
+      'kapowarr' category instead, folder mapped in SABnzbd's own settings),
+      and doesn't expose a completed download's folder until its history
+      reports 'Completed' -- NZBDownload.update_status() picks that up from
+      SABnzbd.get_download()'s 'storage' key rather than assuming zero polling
+      changes. Verified by reading the code (not assumed): the settings UI and
+      /externalclients* API routes are already fully client-type-registry-
+      driven, so SABnzbd needed zero UI/route changes to become
+      selectable/configurable. mypy -p backend clean, isort clean on touched
+      files, python -m unittest discover: 96/96 passing (25 new: 14 client
+      unit tests against mocked SABnzbd API responses, 11 NZBDownload tests).
+      SABnzbd's exact JSON field names are documented from its long-stable
+      public API but not live-verified (no reachable instance in this
+      sandbox) -- flagged in the module docstring for first real use.
+      NZBDownload exists and is unit-tested but has no caller yet -- wiring a
+      real search result into it is t-008 (NZB indexer ingestion), not this
+      task.
+    claimed_by: claude-20260817T134700Z-kapowarr-t007
+    claimed_at: '2026-08-17T13:47:00Z'
+    updated: '2026-08-17T13:49:00Z'
+    implementation_pr: 'silasfelinus/Kapowarr#26'
 
   - id: t-008
     milestone: m2
@@ -404,3 +433,26 @@ tasks:
     claimed_at: '2026-08-16T09:02:00Z'
     updated: '2026-08-17 11:25:00+00:00'
     implementation_pr: 'silasfelinus/Kapowarr#13'
+
+  - id: t-022
+    milestone: m3
+    title: "Rename the settings UI's Torrent-labeled client picker to a generic External Client label"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-007 (silasfelinus/Kapowarr#26): the "Choose/Add/Edit Torrent
+      Client" settings windows, element ids (#torrent-client-list,
+      #add-torrent-form, etc.), and JS function names
+      (loadTorrentList/loadAddTorrent/...) are already fully client-type-
+      registry-driven under the hood -- GET /externalclients/options lists
+      every registered client type generically, SABnzbd included since t-007 --
+      but the UI copy and internal ids still say "Torrent" everywhere. Purely
+      cosmetic (nothing is functionally broken; SABnzbd is fully configurable
+      today through this same UI), but will read oddly to a user picking
+      "SABnzbd" from a window titled "Add Torrent Client". Rename labels/ids to
+      something protocol-neutral (e.g. "External Client"), verify no JS/CSS
+      selector depends on the literal "torrent" substring, and confirm the
+      existing Remote Mapping section (which already reads generically) isn't
+      affected.

@@ -8650,3 +8650,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A task note flagging 'this is more than a missing UI -- a permission check is written and called by nothing' was the real scope, not a footnote: shipping the CRUD UI alone would have handed out a can_request_changes grant the code still couldn't honour. Tracing the unused permission check to its actual enforcement point (change_request handling, keyed by WP user id) surfaced a real second gap -- rendering the form for a target account with no linked WP user id would have aggregated change-request history across unrelated no-account customers -- that a UI-only reading of the task would have missed entirely."
+- date: 2026-08-17
+  project: kapowarr
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A prior design doc's 'confirmed by reading the template' claims are worth re-verifying, not just citing: tracing the actual settings-UI JS and API routes (not just the doc's summary) confirmed the client-type registry really was UI-driven with zero extra work needed, while the doc's separate 'update_status() needs zero changes' claim for the polling loop turned out to be wrong once the actual seeding_handling branch was read -- both a positive and negative case for the same 'verify, don't just cite' discipline in one task."
