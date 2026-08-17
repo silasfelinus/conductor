@@ -327,17 +327,13 @@ tasks:
   - id: t-019
     milestone: m8
     title: "Salvage the native quote form and REST handler; retire CF7 deliberately"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    note: >
-      A better implementation is already hiding in retired code: the old theme has a native
-      quote form + JS fallback, and HSS_Rest::quote already validates, honeypots, inserts into
-      wp_hss_quote_requests, and emails the office. Port the useful pieces into hss-theme,
-      add proper schema fields for contact preference/time, yard size, deodorization,
-      Poopstakes, and marketing-consent timestamp, test beside CF7, then cut over only after
-      end-to-end verification. Do not lose live leads during migration.
+    note: '2026-08-17: shipped and merged as silasfelinus/humboldtscoopsolutions#36 BEFORE this task was authored -- the roadmap and docs/CANONICAL-SOURCES.md were both written against pre-merge main and describe it as outstanding. CF7 removed outright rather than run in parallel, per Silas: "we are in Alpha. We have no customers... Just do what is BEST, do not care about losing things if they are substandard." The form is native markup in hss-theme/front-page.php posting to /hss/v1/quote; schema 2.3.0 added yard_size, contact_method, contact_time, deodorizing, poopstakes, marketing_consent and marketing_consent_at (stamped only on actual consent). Verified against real MariaDB 10.11 + WordPress: 2.2.0 upgrades in place with exactly 7 ADD COLUMNs, idempotent on re-run; a real WP_REST_Request wrote all 13 fields with no loss; honeypot dropped, bad email 400d. quote-form-test.php now renders the real template and walks form -> get_param -> column in both directions, with both failure modes confirmed.'
+    updated: '2026-08-17T10:31:14Z'
+    implementation_pr: 'silasfelinus/humboldtscoopsolutions#36'
 
   - id: t-020
     milestone: m7
