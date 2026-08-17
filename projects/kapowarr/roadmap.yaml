@@ -186,17 +186,38 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Harden download completion and import workflows"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
+    implementation_pr: 'silasfelinus/Kapowarr#29'
     note: >
-      Exercise success, duplicate, failed, stalled, missing-file, and restart cases
-      for direct, torrent, and NZB downloads. Add regression coverage around comic
-      matching, post-processing, and safe cleanup.
+      Added regression coverage for backend/features/post_processing.py (34 tests)
+      and backend/features/download_queue.py's DownloadHandler (31 tests) --
+      previously zero coverage for either module. Covers success/canceled/
+      permanently-failed/shutdown/stalled/seeding-once cases for the external
+      (torrent+NZB) download polling state machine, queue management
+      (_process_queue, set_queue_location, duplicate-add short-circuit),
+      remove()'s branch logic (queued vs actively-downloading vs
+      silently-died-thread vs external-download exclusion), and the restart
+      path (__load_downloads, broken-link/limit-reached/issue-not-found/
+      client-not-working/successful-restore cases). Comic matching
+      (backend/implementations/matching.py) already had solid coverage in
+      tests/Tbackend/matching.py -- confirmed by reading it first rather than
+      duplicating it. Real bug found and fixed while writing the restart-path
+      coverage: __load_downloads()'s LinkBroken except-handler read
+      download['source'], but the download_queue table/SELECT only has
+      source_type -- on a real sqlite3.Row this raised an uncaught IndexError,
+      killing the queue-restore loop mid-iteration on every server restart
+      where a queued link had gone broken, silently dropping every row after
+      it. Fixed (one-line) and locked in with a regression test verified to
+      fail pre-fix and pass post-fix. Full suite 193/193 (128 pre-existing +
+      65 new), mypy clean, isort clean. Merged silasfelinus/Kapowarr#29
+      (squash 6f79c1e) -- all 7 checks green, mergeable_state: clean, diff
+      matched exactly (967/+, 1/-, 3 files).
     claimed_by: scheduled-conductor-20260817T1700Z-kapowarr-t009
     claimed_at: '2026-08-17T17:00:00Z'
-    updated: '2026-08-17T17:00:00Z'
+    updated: '2026-08-17T17:15:00Z'
 
   - id: t-010
     milestone: m3
