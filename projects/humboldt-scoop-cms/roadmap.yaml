@@ -278,21 +278,18 @@ tasks:
   - id: t-016
     milestone: m8
     title: "Unify admin, dispatcher, and scooper workflows in the website"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on:
       - t-014
       - t-015
-    note: >
-      Stop treating wp-admin Visits, the CMS /dispatch page, and the worker field view as
-      unrelated products. Build role-aware web surfaces over the same data: business/admin
-      management, today's routes/dispatch, and worker visit execution. A dual-capability
-      user should move between admin and scooper tools without changing accounts.
+    note: 'Shipped in humboldtscoopsolutions PR #46. Survey found wp-admin Visits already correctly gated on hss_manage_business (PR #39) and the CMS /dispatch JSON API already correctly capability-gated per PR #42 -- no change needed to either. Added GET /me (reports isAdmin/isScooper from the resolved staff token) and a role-aware My Visits Today tab on the existing /dispatch page, reusing the same GET /routes/today and POST /visits/:id/complete contracts the Flutter field client already calls. Dual-capability admin+scooper staff get both tabs and switch without a second login or app; scooper-only goes straight to My Visits; admin-only is unchanged; unauthenticated is unchanged. Tabs are explicitly a convenience layer only -- every JSON route keeps its own independent capability check. Deferred: wp-admin and the CMS remain two separate hosts with no shared navigation and no CMS-side business-management view; filed as t-031. Verified: cms npm test 72/72 (+1 new covering /me), tsc --noEmit clean, node --check clean, full PHP/shell suite re-run unaffected, live seed-mode service exercised end-to-end via curl. Not verified in this sandbox: real browser click-through, database-mode auth paths, Flutter re-run.'
     claimed_by: scheduled-conductor-20260817T113600Z-hss-t016
     claimed_at: '2026-08-17T11:34:45Z'
-    updated: '2026-08-17T11:34:45Z'
+    updated: '2026-08-17T11:44:11Z'
+    implementation_pr: 'silasfelinus/humboldtscoopsolutions#46'
 
   - id: t-017
     milestone: m7
