@@ -22,12 +22,12 @@ milestones:
   - id: m2
     title: "BUILD — QoL and Usenet/NZB support"
     weight: 50
-    status: in-progress
+    status: done
 
   - id: m3
     title: "POLISH & SHIP — tests, migration safety, and sync integrity"
     weight: 25
-    status: in-progress
+    status: done
 
 tasks:
   - id: t-001
@@ -234,17 +234,15 @@ tasks:
   - id: t-011
     milestone: m3
     title: "Document fork maintenance and upstream refresh workflow"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     claimed_by: 20260817T182917Z-kapowarr-t011
     claimed_at: '2026-08-17T18:29:17Z'
-    updated: '2026-08-17T18:29:17Z'
-    note: >
-      Document how to fetch/compare upstream, keep customizations isolated, resolve
-      conflicts, run tests, and preserve attribution. No upstream PR or issue is
-      required for this fork-maintenance workflow.
+    updated: '2026-08-17T18:44:00Z'
+    implementation_pr: 'silasfelinus/Kapowarr#30'
+    note: 'Implemented and merged in silasfelinus/Kapowarr#30 (squash 7af5aaf): new FORK_MAINTENANCE.md covering fetch/compare upstream (adding the upstream remote, git merge-base, log/diff against Casvt/Kapowarr), deciding what to pull in while keeping fork customizations isolated at the commit level (Usenet/NZB indexer + download-client support, notifications, health-check panel, branding vs. shared upstream code), resolving conflicts (fork-only areas vs. shared logic vs. branding/identity files), running the existing mypy/isort/autopep8/unittest tooling, and preserving attribution (license, README fork notice, upstream links, commit authorship on import). Linked from README.md''s fork notice. Verified live against the real Casvt/Kapowarr repo before writing the doc: fork point is the V1.3.1 tag (55946aa), fork is 49 commits ahead, upstream/main has 0 commits since that point. mypy clean (70 files), full unittest suite 193/193 passing. Docs-only change (215/-1, 2 files); all 7 CI checks green, mergeable_state clean, diff matched exactly intended scope before squash-merge.'
 
   - id: t-012
     milestone: m2
