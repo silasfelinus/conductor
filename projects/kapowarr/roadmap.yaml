@@ -154,17 +154,31 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Implement NZB source/indexer ingestion"
-    status: not-started
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
+    implementation_pr: 'silasfelinus/Kapowarr#28'
     note: >
       Add an extensible NZB/indexer path separately from the SABnzbd client. Define
       normalized search results and handoff so additional indexers/download clients
       can be supported later without another architecture rewrite.
+
+
+      Implemented via a new Indexer/Indexers DB-backed registry (Newznab-compatible:
+      title/base_url/api_key, no per-indexer client-type hierarchy needed since Newznab
+      is one shared spec), search_indexer() normalising results into the existing
+      SearchResultData shape (picked up automatically by search.py's SearchSource
+      discovery -- zero changes to the search/matching pipeline), and
+      create_nzb_download() handing off to NZBDownload (t-007) via a new 'nzb' branch
+      in download_queue.py's add(), mirroring the 'gc' branch. New additive-only
+      `indexers` table (migration handler 46). Settings CRUD API + page included,
+      mirroring the existing Notifications settings page. mypy clean, isort clean,
+      full suite 128/128 (32 new). Not live-verified against a real indexer (none
+      reachable in this sandbox) -- same caveat as t-005/t-007.
     claimed_by: scheduled-conductor-20260817T1530Z-kapowarr-t008
     claimed_at: '2026-08-17T15:30:00Z'
-    updated: '2026-08-17T15:30:00Z'
+    updated: '2026-08-17T16:05:00Z'
 
   - id: t-009
     milestone: m3
