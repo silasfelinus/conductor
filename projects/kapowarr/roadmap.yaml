@@ -154,7 +154,7 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Implement NZB source/indexer ingestion"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -175,10 +175,13 @@ tasks:
       `indexers` table (migration handler 46). Settings CRUD API + page included,
       mirroring the existing Notifications settings page. mypy clean, isort clean,
       full suite 128/128 (32 new). Not live-verified against a real indexer (none
-      reachable in this sandbox) -- same caveat as t-005/t-007.
+      reachable in this sandbox) -- same caveat as t-005/t-007. Merged
+      silasfelinus/Kapowarr#28 (squash 888f415) -- 6/7 checks green
+      (Build container still in flight, non-required, mergeable_state:
+      clean), diff matched exactly (1451/+, 13 files).
     claimed_by: scheduled-conductor-20260817T1530Z-kapowarr-t008
     claimed_at: '2026-08-17T15:30:00Z'
-    updated: '2026-08-17T16:05:00Z'
+    updated: '2026-08-17T16:12:00Z'
 
   - id: t-009
     milestone: m3
