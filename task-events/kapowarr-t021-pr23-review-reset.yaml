@@ -1,0 +1,8 @@
+version: 1
+project: kapowarr
+task: t-021
+operation: done
+updated: "2026-08-17T09:56:00Z"
+verify_pr: silasfelinus/Kapowarr#23
+note: >-
+  Kapowarr#23 shipped a serialized Reset & Re-evaluate All Holds workflow. It cooperatively stops an active continuous import, retires stale paused review jobs, rescans current unimported filesystem paths, creates a fresh durable job ID, and restarts the current cvinfo/whole-run/artifact-aware matcher without touching already imported files or the append-only postmortem log.
