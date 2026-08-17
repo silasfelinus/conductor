@@ -8632,3 +8632,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A task named as a three-way unification (admin/dispatch/scooper) turned out, on actual survey, to need only a narrower slice -- two of the three surfaces were already correctly capability-gated from prior tasks. Surveying real current state before designing avoided rebuilding what already worked and kept the landed diff small and reviewable."
+- date: 2026-08-17
+  project: humboldt-scoop-cms
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "For a schema-changing PR, the Reviewer's line-by-line migration audit is a real second check, not a formality -- reading class-hss-db.php's dbDelta diff directly (not just trusting the PR body's 'additive-only' claim) is what actually confirms no DROP/rewrite snuck in."

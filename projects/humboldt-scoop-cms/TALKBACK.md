@@ -399,3 +399,45 @@ silently narrowing the task's stated scope.
 **Kaizen task:** t-031 -- "Add an admin business-management view inside the CMS, and/or
 shared navigation between wp-admin and the CMS host, so a dual-capability admin+scooper
 staff member reaches business management without a second URL." `stakes: reversible`.
+
+## 2026-08-17 | Agent (scheduled conductor sweep) | humboldt-scoop-cms/t-017 | pattern
+
+**Decision:** implemented and merged humboldtscoopsolutions PR #47 (squash, additive-only migration audited line-by-line before merge).
+
+**Detail:**
+- Dispatched a background agent to survey the actual identity-bridge gap before designing.
+  Found the seam was bridged in exactly one ambient place -- `HSS_Customers::get_or_create()`
+  stamping `user_id` onto a customer row the moment a logged-in WordPress user hit the
+  portal, with no conflict checking and no way for an admin-entered customer row to exist
+  and get linked later at all.
+- Mirrored `HSS_Staff_Tokens` (PR #42) as the established pattern for issue/hash/redeem
+  tokens, split into `peek()` (non-consuming, for a confirm step) and `redeem()` (the
+  one-time consuming act) since an invite is redeemed once and closed, unlike a staff
+  token that's repeatedly authenticated against.
+- Verified the migration myself before merging (Reviewer's line-by-line audit obligation for
+  schema changes): schema 2.6.0 is additive-only -- two new nullable/defaulted columns on
+  `wp_hss_customers` (`linked_at`, `linked_via`) and one new `CREATE TABLE
+  wp_hss_customer_invites`. No `DROP`, no data rewrites.
+- `redeem()` explicitly refuses (named `WP_Error`) rather than silently overwriting or
+  duplicating when either side of the link is already claimed by someone else; idempotent
+  on a retried same-pair redemption. Read the actual `class-hss-customer-invites.php` diff
+  before merging, not just the PR description, to confirm the conflict checks are load-
+  bearing in the code path (t-018's cautionary precedent -- a permission check that exists
+  but nothing calls -- was explicitly on the implementing agent's mind too, per the PR body).
+- No merge tool exists yet for resolving a conflict once one occurs in practice; correctly
+  deferred to `docs/BACKLOG.md` and a kaizen task rather than built speculatively.
+- Verified (implementing agent, cross-checked by this review): `php -l` clean repo-wide,
+  full existing PHP/shell suite passes, new `customer-link-test.php` (40+ structural
+  assertions). Not verifiable in this sandbox: live MariaDB `dbDelta` run, browser
+  click-through of the invite flow -- same standing limitation as every prior schema PR.
+
+**What was good:** actually read the schema-changing diff line-by-line before merging
+rather than trusting the PR description's "additive-only" claim at face value -- this is
+the specific audit obligation AGENTS.md places on the Reviewer for migration PRs, not
+optional due diligence.
+
+**What to improve:** none specific this cycle.
+
+**Kaizen task:** t-032 -- "Build an admin merge tool for two customer records that turn out
+to represent the same person (the case `HSS_Customer_Invites::redeem()` and
+`HSS_Customers::register()` currently refuse rather than resolve)." `stakes: reversible`.
