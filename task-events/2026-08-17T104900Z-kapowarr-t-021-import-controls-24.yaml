@@ -1,8 +1,0 @@
-version: 1
-project: kapowarr
-task: t-021
-operation: done
-updated: '2026-08-17T10:49:00Z'
-verify_pr: silasfelinus/Kapowarr#24
-note: >-
-  Follow-up UI repair shipped in silasfelinus/Kapowarr#24, merged as e0f890dd285f953de60db43d87c9c5953ec52eb5. Reset & Re-evaluate All Holds is now directly available on the main Library Import screen. A background Continuous Auto-Import exposes View Progress, Review Holds, Stop Import, and Reset & Re-evaluate controls on that same screen, and Review Scan / Continuous start buttons are disabled while the continuous conveyor is active so two importers cannot collide. The older synchronous Review Scan loader now has Back to Import Options and blocks overlapping scans until its server request settles; it is intentionally not labeled as cancellable because the synchronous backend has no cancellation token. Exact-head and post-merge Python 3.8-3.12, docs, and container checks passed. GHCR latest and sha-e0f890d were published at digest sha256:1d0c812a29f8bcb43ad555944266cc8580d5c1beea5b49ce9eb5822427e3d865.
