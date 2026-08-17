@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-17T10:42:13Z
+Generated: 2026-08-17T10:44:22Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **644**
-- Outcomes: blocked: 14, cancelled: 1, done: 629
+- Closed tasks recorded: **645**
+- Outcomes: blocked: 14, cancelled: 1, done: 630
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | global-ui | 13 | 100% |
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
-| humboldt-scoop-cms | 4 | 100% |
+| humboldt-scoop-cms | 5 | 100% |
 | interface-vision | 83 | 100% |
 | kapowarr | 16 | 100% |
 | kind-robots | 50 | 98% |
@@ -63,7 +63,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 628 | 99% |
+| software | 629 | 99% |
 
 ## Failure categories
 
@@ -84,6 +84,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-17 `humboldt-scoop-cms/t-014` — docs/CANONICAL-SOURCES.md had already resolved this task's central design question (independent admin/scooper capability flags, not a mutually-exclusive enum) before implementation started -- reading a cross-repo project's own design docs first can eliminate a design decision entirely rather than re-deriving it in-session.
 - 2026-08-17 `storybook/t-010` — openStory()'s redundant-resume bug had already been partially fixed twice at individual call sites (mount, query watcher) before this cycle found a third unguarded caller (the active story's own 'Resume' button); guarding the shared choke-point function itself instead of each call site closes the bug class for every current and future caller in one fix.
 - 2026-08-17 `text-generation/t-008` — Verifying an unrelated task's typecheck can surface pre-existing drift with a root cause several commits back: main's committed Prisma generated client was stale (missing the ProjectPageContent model that #1924 had already added to both the schema and two live API routes), breaking vue-tsc --noEmit for anyone who touched server/ code afterward. Isolated the two failures via git stash before assuming they were caused by this session's own edits, confirmed the fix (a plain prisma generate regeneration, purely additive) resolved them on its own, and shipped it as its own small standalone PR rather than folding an unrelated mechanical fix into t-008's diff. The kaizen itself (unifying the three-way-duplicated OpenAI/Anthropic auth-header dialect switch into textProviderService.ts's buildCloudProviderAuthHeaders) was low-risk and behavior-preserving by construction -- same header shapes/values for every caller -- which made full contract-test coverage of the new shared function (26 assertions) enough to merge with confidence, no live-provider smoke test needed for a refactor that touches no logic, only where code lives.
 
@@ -94,7 +95,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-17 `text-generation/t-001` — The roadmap note assumed the private-server path was mostly unbuilt; a full read of server/api/chats/{openai,anthropic,ollama}/stream.post.ts, serverResolver.ts, and the Server Prisma model showed the opposite -- a working native Ollama route, full server CRUD/health infrastructure, and consistent mana gating already exist. The real gaps were narrower and more specific: serverResolver.ts's capabilityWhere('text') silently excludes OLLAMA from type-based resolution, three near-identical chat routes each duplicate a private cost estimator that has drifted from an already-correct shared estimateTextCostUsd (which also correctly multiplies by n, unlike the OpenAI route's local copy), and there is zero AbortController/cancellation wiring anywhere in the stack (server or chatStore.ts). Treating 'map the existing code' as a literal instruction rather than a formality caught a concrete, fixable billing-undercount bug (uncounted n) and a routing gap (Ollama) that a memory-based/greenfield-assuming brief would have missed or re-invented differently.
 - 2026-08-16 `alexa-integration/t-021` — t-020's own kaizen note named a plausible-sounding follow-up scope (audit the 'unknown theme'/'no match' error branches) that turned out, on a fresh read, to already be functionally correct -- both branches already had the early return / proper if-else split needed to avoid a false-success ack. The real gap was regression coverage, not a bug: nothing protected those two branches from a future edit quietly dropping the early return, the lastError/pushLocalMessage report, or the postAck() success-only gating, which is exactly the false-success shape t-015/t-020 fixed for the action-mismatch case. Extended the existing checkSerendipityVoiceActionGuard.ts file with a second exported check (index-based anchor comparisons rather than full brace-parsing) instead of adding a fourth guard file, per the task note's own preference -- kept the fix inside the file whose npm script/CI step already covered it, so no workflow-file change was needed.
 - 2026-08-16 `alexa-integration/t-020` — The target/action-mismatch bug class from t-015 (a shared VoiceBusCommand.action union reaching a dispatch branch where most of its values are meaningless) generalized cleanly to the other two targets once actually re-read fresh: applyThemeCommand() and applyArtCommand() never checked command.action at all, an omission invisible unless you specifically compare each dispatch function against its siblings for the same missing guard shape. Extending the existing guard into a TARGET_FUNCTIONS structure (mirroring modelBuilderStore.ts's own multi-function guard convention) kept the fix in one file instead of three near-duplicates.
-- 2026-08-16 `appmaker/t-012` — A condition like `tasks.length === 0` reads as a reasonable 'freshly scaffolded' check in isolation, but was backwards in practice because the scaffolder (scripts/new_app.py) always seeds 3 tasks up front -- checking the UI condition against the actual data-seeding code, not just its surface plausibility, is what surfaced that every real app's card silently showed a blank description while the fallback literal only fired on a genuine lookup failure. Separately: a single CI job failing with a live-API 502 unrelated to the diff (GET /api/characters, in a population-quality contract check) is a textbook transient failure -- rerunning just that job and confirming a clean pass on retry is the correct triage, not blaming the diff or force-merging past it unexamined.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-17T10:42:13Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-17T10:44:22Z_
