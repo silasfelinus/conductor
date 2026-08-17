@@ -8695,3 +8695,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A task note that says 'the real gap is X' is a starting hypothesis, not a spec -- tracing the actual write paths (HSS_Notify's own doc comment on why it polls instead of hooking) surfaced that the new scooper-facing write needed the identical wp-cron backstop the existing completion path already has, and designing the SMS extension surfaced a real customer-mismatch bug (HSS_Sms::visit_status()'s get_by_user(0) lookup) that a shallower 'just call the existing function' implementation would have shipped silently. Also: when a schema's status enum gains a new value on one side (WordPress: 'enroute' already existed in HSS_Visits::statuses()), grep the other side's own type/enum definitions (cms/src/schema.ts's VisitStatus, db/rows.ts's VISIT_STATUSES) before assuming they already agree -- they didn't, and a real enroute row would have been silently remapped to 'scheduled' by the CMS's own fallback-on-unrecognized-value logic."
+- date: '2026-08-17'
+  project: kapowarr
+  task: t-011
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "For a fork-maintenance doc, live-verifying the documented commands against the real upstream remote (adding Casvt/Kapowarr as `upstream`, fetching, running the actual `git merge-base`) caught nothing wrong here but is worth doing on principle -- a fork-maintenance doc that only describes commands in the abstract, without confirming they resolve cleanly against the actual upstream repo, risks documenting a merge-base or remote-URL assumption that silently doesn't hold. Also: this closed out both remaining m3 tasks and the milestone reconciliation left m2 and m3 with zero open tasks -- flagged in TALKBACK for a human/next-session judgment call on whether kapowarr needs a new milestone or an explicit finish decision, rather than inferring project completion from N/N per the standing caution against that."
