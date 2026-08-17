@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-17T11:15:39Z
+Generated: 2026-08-17T11:33:40Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **646**
-- Outcomes: blocked: 14, cancelled: 1, done: 631
+- Closed tasks recorded: **647**
+- Outcomes: blocked: 14, cancelled: 1, done: 632
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | global-ui | 13 | 100% |
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
-| humboldt-scoop-cms | 6 | 100% |
+| humboldt-scoop-cms | 7 | 100% |
 | interface-vision | 83 | 100% |
 | kapowarr | 16 | 100% |
 | kind-robots | 50 | 98% |
@@ -63,7 +63,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 630 | 99% |
+| software | 631 | 99% |
 
 ## Failure categories
 
@@ -84,6 +84,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-17 `humboldt-scoop-cms/t-020` — A background survey of actual current write paths (not the task note's assumed shape) found the real address-edit flow was customer-portal-only with a duplicated, incomplete (address/city only, missing state/postal_code) safety check -- surveying before designing caught a real bug the task wouldn't otherwise have surfaced.
 - 2026-08-17 `humboldt-scoop-cms/t-015` — server.ts's top-level side effects (opens a DB pool, starts listening) make it unimportable from a test -- pulling authorization logic into pure, side-effect-free modules (scopeVisits.ts) before wiring it into the entrypoint is what made 'test privilege boundaries' actually achievable rather than aspirational.
 - 2026-08-17 `humboldt-scoop-cms/t-014` — docs/CANONICAL-SOURCES.md had already resolved this task's central design question (independent admin/scooper capability flags, not a mutually-exclusive enum) before implementation started -- reading a cross-repo project's own design docs first can eliminate a design decision entirely rather than re-deriving it in-session.
 - 2026-08-17 `storybook/t-010` — openStory()'s redundant-resume bug had already been partially fixed twice at individual call sites (mount, query watcher) before this cycle found a third unguarded caller (the active story's own 'Resume' button); guarding the shared choke-point function itself instead of each call site closes the bug class for every current and future caller in one fix.
@@ -94,7 +95,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-17 `text-generation/t-003` — getCapabilityServerTypes()'s 'text'/'chat' where-clause excluded OLLAMA even though server/api/chats/ollama/stream.post.ts's own request path already worked end-to-end -- the exclusion only broke server-side *resolution* (serverId/serverName/preferredTextServerId lookups), not the route itself, so a request that already had its target server object in hand would still succeed while every id/name/preference-based lookup silently failed to find that same Ollama server. A route working in isolation is not evidence its resolver path works too when they're separate code paths sharing only a where-clause. Most of t-003's stated acceptance criteria (health/test operation, preferredTextServerId selection UI, explicit-server-add form) were already built by earlier server-selector/serverStore work -- reading the actual UI and API surface before assuming a gap existed narrowed the real fix to one array literal plus its missing test coverage, rather than re-implementing already-working infrastructure.
 - 2026-08-17 `text-generation/t-002` — Extracting shared mechanics into a new server/utils/*.ts file risks a silent Nuxt auto-import name collision when the new file's export name happens to match an existing server/utils export -- nuxi prepare only WARNs ('Duplicated imports... ignored'), it does not fail the build, so a colliding helper name can quietly shadow (or be shadowed by) an unrelated existing function with different behavior. Ran into this for real: the shared module's first draft named its Server-auth-header builder `buildServerAuthHeaders`, identical to an existing, differently-shaped helper in serverApi.ts (Content-Type vs Accept header contract) used by two other call sites. Caught by actually running `nuxi prepare` locally and reading its warnings, not by vue-tsc/eslint (neither flags this). Renamed to a distinct name rather than merging the two behaviors, to keep the migration's 'no observable behavior change' guarantee intact. Also: a shared module that mixes pure helpers with one Prisma-touching function (via a static import chain through serverResolver.ts -> prisma.ts) will make an otherwise-DB-free self-test require DATABASE_URL just by importing the file -- dynamic-importing the Prisma-touching piece inside its own function body keeps the rest of the module importable standalone, which mattered here because contract-tests.yml is explicitly documented as a DB-free workflow.
 - 2026-08-17 `text-generation/t-001` — The roadmap note assumed the private-server path was mostly unbuilt; a full read of server/api/chats/{openai,anthropic,ollama}/stream.post.ts, serverResolver.ts, and the Server Prisma model showed the opposite -- a working native Ollama route, full server CRUD/health infrastructure, and consistent mana gating already exist. The real gaps were narrower and more specific: serverResolver.ts's capabilityWhere('text') silently excludes OLLAMA from type-based resolution, three near-identical chat routes each duplicate a private cost estimator that has drifted from an already-correct shared estimateTextCostUsd (which also correctly multiplies by n, unlike the OpenAI route's local copy), and there is zero AbortController/cancellation wiring anywhere in the stack (server or chatStore.ts). Treating 'map the existing code' as a literal instruction rather than a formality caught a concrete, fixable billing-undercount bug (uncounted n) and a routing gap (Ollama) that a memory-based/greenfield-assuming brief would have missed or re-invented differently.
-- 2026-08-16 `alexa-integration/t-021` — t-020's own kaizen note named a plausible-sounding follow-up scope (audit the 'unknown theme'/'no match' error branches) that turned out, on a fresh read, to already be functionally correct -- both branches already had the early return / proper if-else split needed to avoid a false-success ack. The real gap was regression coverage, not a bug: nothing protected those two branches from a future edit quietly dropping the early return, the lastError/pushLocalMessage report, or the postAck() success-only gating, which is exactly the false-success shape t-015/t-020 fixed for the action-mismatch case. Extended the existing checkSerendipityVoiceActionGuard.ts file with a second exported check (index-based anchor comparisons rather than full brace-parsing) instead of adding a fourth guard file, per the task note's own preference -- kept the fix inside the file whose npm script/CI step already covered it, so no workflow-file change was needed.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-17T11:15:39Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-17T11:33:40Z_
