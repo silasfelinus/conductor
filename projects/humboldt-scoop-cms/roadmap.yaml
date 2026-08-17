@@ -518,3 +518,25 @@ tasks:
       before their invite arrived), build an admin screen that shows the two candidate
       records side by side and moves properties/pets/visits/subscriptions from one
       customer_id onto the other. See docs/BACKLOG.md in humboldtscoopsolutions.
+
+  - id: t-033
+    milestone: m8
+    title: "Extend site/tools/portal-roles-check.php to cover the representative identity"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-018: portal-roles-check.php documents itself as covering four
+      identities (owner/admin, scooper, dual-role, plain customer) against a real
+      WordPress. t-018 added a fifth -- a logged-in user with no customer row of
+      their own, recognised only via HSS_Contacts::for_email() as someone's
+      authorized representative -- and could only be verified with static regex
+      tests in this sandbox (no live MariaDB/WordPress here). Add the fifth
+      identity to the tool's fixture set and assert render_representative_home()
+      renders the change-request form only when the target account has a real WP
+      user id, and never creates a customer/property row for the representative.
+      Separately worth a look: whether any CI lane could run this tool against an
+      ephemeral MariaDB/WordPress container, since right now this whole class of
+      bug (a GET manufacturing rows, a permission check nobody calls) is only ever
+      caught by static tests or manual review.
