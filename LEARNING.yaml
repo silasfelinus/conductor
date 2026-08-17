@@ -8641,3 +8641,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "For a schema-changing PR, the Reviewer's line-by-line migration audit is a real second check, not a formality -- reading class-hss-db.php's dbDelta diff directly (not just trusting the PR body's 'additive-only' claim) is what actually confirms no DROP/rewrite snuck in."
+- date: 2026-08-17
+  project: humboldt-scoop-cms
+  task: t-018
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A task note flagging 'this is more than a missing UI -- a permission check is written and called by nothing' was the real scope, not a footnote: shipping the CRUD UI alone would have handed out a can_request_changes grant the code still couldn't honour. Tracing the unused permission check to its actual enforcement point (change_request handling, keyed by WP user id) surfaced a real second gap -- rendering the form for a target account with no linked WP user id would have aggregated change-request history across unrelated no-account customers -- that a UI-only reading of the task would have missed entirely."

@@ -307,14 +307,14 @@ tasks:
   - id: t-018
     milestone: m8
     title: "Ship authorized-representative UI for customers and admins"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     note: 'PR open: silasfelinus/humboldtscoopsolutions#54. Adds HSS_Contacts::for_email(), a representative-routed portal view (render_representative_home()) checked before get_or_create() would manufacture a customer row, add/edit/remove UI in the customer dashboard (render_contacts()/contact_form()), read-only per-customer verification on the admin Customers screen (customer_contacts_section()), and wires the previously-unused HSS_Contacts::may_request_changes() into change_request handling via an on-behalf-of customer id. Verified: php -l clean repo-wide, full existing test suite green, new site/tests/representative-access-test.php (28 assertions). NOT verified in this sandbox (no live MariaDB, no browser): an actual representative login/session end-to-end.'
     claimed_by: scheduled-conductor-20260817T1330Z-hss-t018
     claimed_at: '2026-08-17T13:14:35Z'
-    updated: '2026-08-17T13:30:00Z'
+    updated: '2026-08-17T13:20:20Z'
     implementation_pr: 'silasfelinus/humboldtscoopsolutions#54'
 
   - id: t-019
@@ -518,3 +518,25 @@ tasks:
       before their invite arrived), build an admin screen that shows the two candidate
       records side by side and moves properties/pets/visits/subscriptions from one
       customer_id onto the other. See docs/BACKLOG.md in humboldtscoopsolutions.
+
+  - id: t-033
+    milestone: m8
+    title: "Extend site/tools/portal-roles-check.php to cover the representative identity"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-018: portal-roles-check.php documents itself as covering four
+      identities (owner/admin, scooper, dual-role, plain customer) against a real
+      WordPress. t-018 added a fifth -- a logged-in user with no customer row of
+      their own, recognised only via HSS_Contacts::for_email() as someone's
+      authorized representative -- and could only be verified with static regex
+      tests in this sandbox (no live MariaDB/WordPress here). Add the fifth
+      identity to the tool's fixture set and assert render_representative_home()
+      renders the change-request form only when the target account has a real WP
+      user id, and never creates a customer/property row for the representative.
+      Separately worth a look: whether any CI lane could run this tool against an
+      ephemeral MariaDB/WordPress container, since right now this whole class of
+      bug (a GET manufacturing rows, a permission check nobody calls) is only ever
+      caught by static tests or manual review.
