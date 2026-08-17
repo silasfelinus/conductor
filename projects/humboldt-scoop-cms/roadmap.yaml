@@ -522,8 +522,8 @@ tasks:
   - id: t-033
     milestone: m8
     title: "Extend site/tools/portal-roles-check.php to cover the representative identity"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -540,6 +540,9 @@ tasks:
       ephemeral MariaDB/WordPress container, since right now this whole class of
       bug (a GET manufacturing rows, a permission check nobody calls) is only ever
       caught by static tests or manual review.
+    claimed_by: 2026-08-17-sched-t033
+    claimed_at: '2026-08-17T21:27:27Z'
+    updated: '2026-08-17T21:27:27Z'
 
   - id: t-034
     milestone: m9
