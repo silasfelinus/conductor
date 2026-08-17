@@ -8587,3 +8587,12 @@ records:
     caller -- which made full contract-test coverage of the new shared function
     (26 assertions) enough to merge with confidence, no live-provider smoke test
     needed for a refactor that touches no logic, only where code lives.
+- date: 2026-08-17
+  project: storybook
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "openStory()'s redundant-resume bug had already been partially fixed twice at individual call sites (mount, query watcher) before this cycle found a third unguarded caller (the active story's own 'Resume' button); guarding the shared choke-point function itself instead of each call site closes the bug class for every current and future caller in one fix."
