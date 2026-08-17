@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-17T01:28:06Z
+Generated: 2026-08-17T02:27:21Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **637**
-- Outcomes: blocked: 14, cancelled: 1, done: 622
+- Closed tasks recorded: **638**
+- Outcomes: blocked: 14, cancelled: 1, done: 623
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -56,13 +56,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | superkate-hairstyle-ai | 18 | 100% |
 | superkate-services-calculator | 12 | 100% |
 | taskmaster | 3 | 100% |
+| text-generation | 1 | 100% |
 
 ## By kind
 
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 621 | 99% |
+| software | 622 | 99% |
 
 ## Failure categories
 
@@ -83,6 +84,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-17 `text-generation/t-001` — The roadmap note assumed the private-server path was mostly unbuilt; a full read of server/api/chats/{openai,anthropic,ollama}/stream.post.ts, serverResolver.ts, and the Server Prisma model showed the opposite -- a working native Ollama route, full server CRUD/health infrastructure, and consistent mana gating already exist. The real gaps were narrower and more specific: serverResolver.ts's capabilityWhere('text') silently excludes OLLAMA from type-based resolution, three near-identical chat routes each duplicate a private cost estimator that has drifted from an already-correct shared estimateTextCostUsd (which also correctly multiplies by n, unlike the OpenAI route's local copy), and there is zero AbortController/cancellation wiring anywhere in the stack (server or chatStore.ts). Treating 'map the existing code' as a literal instruction rather than a formality caught a concrete, fixable billing-undercount bug (uncounted n) and a routing gap (Ollama) that a memory-based/greenfield-assuming brief would have missed or re-invented differently.
 - 2026-08-16 `alexa-integration/t-021` — t-020's own kaizen note named a plausible-sounding follow-up scope (audit the 'unknown theme'/'no match' error branches) that turned out, on a fresh read, to already be functionally correct -- both branches already had the early return / proper if-else split needed to avoid a false-success ack. The real gap was regression coverage, not a bug: nothing protected those two branches from a future edit quietly dropping the early return, the lastError/pushLocalMessage report, or the postAck() success-only gating, which is exactly the false-success shape t-015/t-020 fixed for the action-mismatch case. Extended the existing checkSerendipityVoiceActionGuard.ts file with a second exported check (index-based anchor comparisons rather than full brace-parsing) instead of adding a fourth guard file, per the task note's own preference -- kept the fix inside the file whose npm script/CI step already covered it, so no workflow-file change was needed.
 - 2026-08-16 `alexa-integration/t-020` — The target/action-mismatch bug class from t-015 (a shared VoiceBusCommand.action union reaching a dispatch branch where most of its values are meaningless) generalized cleanly to the other two targets once actually re-read fresh: applyThemeCommand() and applyArtCommand() never checked command.action at all, an omission invisible unless you specifically compare each dispatch function against its siblings for the same missing guard shape. Extending the existing guard into a TARGET_FUNCTIONS structure (mirroring modelBuilderStore.ts's own multi-function guard convention) kept the fix in one file instead of three near-duplicates.
 - 2026-08-16 `appmaker/t-012` — A condition like `tasks.length === 0` reads as a reasonable 'freshly scaffolded' check in isolation, but was backwards in practice because the scaffolder (scripts/new_app.py) always seeds 3 tasks up front -- checking the UI condition against the actual data-seeding code, not just its surface plausibility, is what surfaced that every real app's card silently showed a blank description while the fallback literal only fired on a genuine lookup failure. Separately: a single CI job failing with a live-API 502 unrelated to the diff (GET /api/characters, in a population-quality contract check) is a textbook transient failure -- rerunning just that job and confirming a clean pass on retry is the correct triage, not blaming the diff or force-merging past it unexamined.
@@ -92,7 +94,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-16 `storybook/t-010` — A completeness guard (t-017's verifyStorybookObjectEntryLinks.mjs) that only asserts wiring is *present* -- button exists, query key is sent, seedFromQuery consumes it -- can pass cleanly while the values flowing through that wiring silently disagree. characterOptions built a synthetic id-based slug while the deep-link sender used the entity's real slug; three sibling ingredient types (Scenario/Facet/Reward) all keyed off the real slug correctly, so cross-checking a new field against its siblings' convention (not just its own local logic) is what surfaced the one outlier. A presence guard and an agreement guard test different failure modes -- both are worth having when a value crosses a wire boundary.
 - 2026-08-16 `kapowarr/t-021` — The old library-import path masked ComicVine throttling as a no-match, making a reliability failure look like harmless empty search results. Large unattended jobs also need a stable work snapshot: self-review caught and removed an initial design that would have rescanned the entire library for every processed folder. Finally, the fork's Python Tests workflow was development-only, so PR/main test triggers were enabled and verified across Python 3.8 through 3.12 before merge.
 - 2026-08-16 `model-builder/t-029` — A sixth same-day cycle again avoided the five already-mined leads and instead read the genuinely unexplored item-panel/recipe-selector/source-picker/run-history/manager front-end files, tracing a UI code comment ('snapshot survives resume') that turned out to be aspirational rather than true back to its root cause: normalizeStages()/adaptRun() gated JSON-string server data on typeof raw === 'object', which is never true once a value has round-tripped through a String @db.LongText column. A code comment asserting behavior ('X survives Y') is a claim, not a guarantee -- when a comment describes a property the surrounding code doesn't visibly enforce, tracing the actual data path back to its type at the boundary (string vs. parsed object) is a cheap way to catch the gap between what a comment promises and what the code actually does.
-- 2026-08-16 `model-builder/t-029` — A fifth same-day cycle deliberately avoided re-walking the four already-audited leads (backend commit/promotion races, autoBuildRun status accuracy, per-item outcome UI) and instead read a genuinely untouched file (stores/helpers/modelBuilderFields.ts), which surfaced a real silent data-loss bug: a duplicated blob parser in commit.post.ts dropped every line without a colon, truncating multi-line prose fields to their first line only at COMMIT time -- invisible in the preview panel, which parses the same blob correctly for display. Two independent copies of the same parsing logic drifting apart (one used for preview, one for the actual DB write) is exactly the shape of bug a single-copy refactor (delegate to one shared splitter) prevents structurally rather than relying on both copies staying in sync by discipline. Worth generalizing: when a codebase has a 'preview' and a 'commit' path over the same data, check whether they share one implementation or two -- a second copy is a standing invitation for silent drift.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-17T01:28:06Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-17T02:27:21Z_
