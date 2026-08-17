@@ -8713,3 +8713,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A merge tool that only rewrites the FK column an admin-side listing joins on (customer_id) can look complete while staying broken from the customer's own portal, which keys its dashboard history queries on a redundant user_id column carried alongside customer_id on the same rows -- worth checking which column a *customer-facing* read path actually filters on, not just which one an *admin* listing joins on, before assuming one FK rewrite covers both. Also: fixed a pre-existing test (commerce-promises-test.php) that hardcoded a literal SCHEMA_VERSION string instead of version_compare, the exact anti-pattern a sibling test's own comment already named -- this task's legitimate schema bump broke it for real, a good reminder that a hardcoded-version test is a live landmine for the next unrelated schema change, not just a style nit."
+- date: '2026-08-17'
+  project: humboldt-scoop-cms
+  task: t-031
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A task note offering '<option A>, and/or <option B>' is not an invitation to build the bigger option by default -- reading the smaller/existing side first (wp-admin's own 'Scoop Solutions' menu already covered every business-management screen the note listed) turned this into a much smaller, lower-risk shared-navigation change instead of a duplicated CMS-side admin surface that would have needed to stay in sync with wp-admin's forever after. Worth checking what already exists before scoping toward the larger reading of an ambiguous task."
