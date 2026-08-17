@@ -1,0 +1,21 @@
+version: 1
+project: kapowarr
+task: t-021
+operation: done
+updated: 2026-08-16T23:57:00-07:00
+verify_pr: silasfelinus/Kapowarr#20
+note: >-
+  Library Import review UX shipped in silasfelinus/Kapowarr#20, merged as
+  8d849724e7c9d7fe2afbfa411b971cf2e13f34cf. Review rows now collapse by
+  Kapowarr's existing volume group_number so a proposed volume appears once while
+  its underlying issue/file rows remain hidden and synchronized for the existing
+  per-file import payload. Groups without any proposed ComicVine match default to
+  unchecked and disabled; assigning a manual group match makes them importable and
+  selected. Select All operates only on visible matched volume groups. A Show
+  matched only toggle filters the review table without deleting holds, and grouped
+  rows expose an expandable file list when individual issues need inspection.
+  Matching thresholds and backend import policy are unchanged. Exact-head and
+  post-merge Python 3.8-3.12 checks passed, docs passed, and the production container
+  published ghcr.io/silasfelinus/kapowarr:latest and
+  ghcr.io/silasfelinus/kapowarr:sha-8d84972 at digest
+  sha256:beadf34f7da7774a5595cc75a71498fd7efce0490860d4c2becf1a8d02582ad5.
