@@ -510,19 +510,14 @@ tasks:
   - id: t-032
     milestone: m7
     title: "Build an admin merge tool for two customer records that represent the same person"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-017: HSS_Customer_Invites::redeem() and HSS_Customers::register() both
-      correctly refuse rather than silently merge when an invite/registration conflicts with
-      an already-linked customer or user record -- the right default, but there is currently
-      no admin tool to resolve the conflict beyond a "contact us" error message. Once real
-      usage generates a few of these (most likely: a customer who registered organically
-      before their invite arrived), build an admin screen that shows the two candidate
-      records side by side and moves properties/pets/visits/subscriptions from one
-      customer_id onto the other. See docs/BACKLOG.md in humboldtscoopsolutions.
+    note: 'Merged silasfelinus/humboldtscoopsolutions#57. Added HSS_Customers::merge_preview()/merge() plus a Merge Customers admin screen: side-by-side preview, then confirm which record survives. Moves properties/pets/contacts/invites by customer_id and rewrites customer_id+user_id together on subscriptions/invoices/service_visits/change_requests (portal history queries key on user_id). Refuses when both rows already carry a different real WordPress account or Stripe customer. Schema 2.9.0 adds merged_into/merged_at/merged_by; absorbed rows kept for history, excluded from identity lookups via merged_into IS NULL. site/tests/customer-merge-test.php passes; no live WordPress/MariaDB in this sandbox to exercise the migration itself.'
+    updated: '2026-08-17T20:37:12Z'
+    claimed_by: claude-20260817T203702Z-hss-t032
+    implementation_pr: 'silasfelinus/humboldtscoopsolutions#57'
 
   - id: t-033
     milestone: m8
