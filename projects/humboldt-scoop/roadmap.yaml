@@ -1,14 +1,18 @@
-# Humboldt Scoop Solutions — Site
-# Existing site; Silas will drop the current codebase in projects/humboldt-scoop/site.
-# Progress % = done weight (+ half for in-progress) / total weight.
+# Humboldt Scoop Solutions — original public-site project (FINISHED)
+# Historical coordination record. Ongoing HSS work is humboldt-scoop-cms.
 
 project: humboldt-scoop
 kind: software
 
 notes_from_silas: |
-  This is the existing Humboldt Scoop site — I'll add the current codebase to
-  projects/humboldt-scoop/scoops. First real test of the loop. Do NOT deploy or
-  touch DNS unattended (status: needs-human). PRs piling up is fine.
+  FINISHED. This project proved and delivered the original Humboldt Scoop Solutions
+  public-site/front-end path. The working site now lives in the canonical repository
+  silasfelinus/humboldtscoopsolutions under site/ and is already beyond this roadmap's
+  original frontend goal.
+
+  Do not reopen this project for website fine-tuning. All ongoing HSS work — including
+  public-site polish — belongs to humboldt-scoop-cms, the continuing unified HSS project.
+  The historical code copies under this Conductor directory are provenance only.
 
 milestones:
   - id: m1
@@ -18,19 +22,19 @@ milestones:
   - id: m2
     title: "Existing site imported + building cleanly"
     weight: 20
-    status: not-started
+    status: done
   - id: m3
-    title: "Content + copy refresh"
+    title: "Content + copy refresh / front-end foundation"
     weight: 25
-    status: not-started
+    status: done
   - id: m4
-    title: "Contact / quote-request flow"
+    title: "Contact / quote-request foundation"
     weight: 25
-    status: not-started
+    status: done
   - id: m5
-    title: "SEO + analytics"
+    title: "SEO / analytics foundation handed to unified project"
     weight: 20
-    status: not-started
+    status: done
 
 tasks:
   - id: t-001
@@ -38,139 +42,75 @@ tasks:
     title: "Confirm the loop: trivial no-op PR through the full cycle"
     status: done
     owner: worker
-    updated: "2026-06-26T00:00:00Z"
     passes: 0
     stakes: reversible
-    note: >
-      Smoke test. Add a line to projects/humboldt-scoop/CHANGELOG.md noting the
-      loop is live, open a PR, let the reviewer merge it.
+    note: "Completed loop smoke test."
 
   - id: t-002
     milestone: m2
     title: "Audit the imported site and report build/run steps"
     status: done
     owner: worker
-    updated: "2026-06-30T00:00:00Z"
     passes: 0
     stakes: reversible
-    note: >
-      Site is now at projects/humboldt-scoop/scoops/ (WordPress, Docker-based).
-      Read the files, document how to build/run it in
-      projects/humboldt-scoop/scoops/NOTES.md, and flag anything that needs
-      attention as new tasks. Do not change site code — just inventory.
-      Previous worker attempt (PR #12) was done before the site landed; closed.
+    note: "Imported WordPress/Docker site audited; detailed historical note remains in Git history."
 
   - id: t-003
     milestone: m2
     title: "Add local Docker compose wrapper for the imported WordPress site"
     status: done
     owner: worker
-    updated: "2026-06-26T18:00:00Z"
     passes: 0
     stakes: reversible
-    note: >
-      Add a minimal compose.yaml and .env.example for projects/humboldt-scoop/scoops/
-      so the imported WordPress site can be started consistently with MySQL/MariaDB.
-      Keep secrets out of git and do not deploy.
+    note: "Local compose/env wrapper delivered."
 
   - id: t-004
     milestone: m2
     title: "Confirm imported theme, plugins, uploads, and database assets"
     status: done
     owner: worker
-    updated: "2026-06-30T00:00:00Z"
     passes: 0
     stakes: reversible
     note: >
-      Wrote projects/humboldt-scoop/scoops/ASSET-INVENTORY.md. Targeted GitHub file
-      reads show only WordPress core/config scaffolding, with theme/plugin guard files
-      present but no verified business theme, plugins, uploads, or database import.
-      Local recursive listing is still recommended when local clone access is available.
+      Historical audit completed, but its guessed-path asset conclusions were later
+      disproved by live reconciliation. Canonical truth is now maintained in
+      humboldtscoopsolutions/docs/INVENTORY.md.
 
   - id: t-005
     milestone: m2
     title: "Harden WordPress config defaults before staging"
     status: done
     owner: worker
-    updated: "2026-06-30T04:59:30Z"
     passes: 0
     stakes: reversible
-    depends_on: t-003
-    note: >
-      Completed in PR #48. WordPress config now requires environment-provided auth material
-      instead of committed fallback strings. Deployment and DNS remain gated for Silas.
+    note: "Environment-provided auth material enforced; completed in Conductor PR #48."
 
   - id: t-006
     milestone: m2
-    title: "Remove fallback dev-credential defaults from compose.yaml auth key/salt entries"
+    title: "Remove fallback dev-credential defaults from compose auth material"
     status: done
     owner: worker
-    updated: "2026-06-30T06:00:00Z"
     passes: 0
     stakes: reversible
-    depends_on: t-005
-    note: >
-      Completed in PR #50. Removed the compose fallback placeholders for local WordPress
-      auth material and clarified the local environment example. Deployment remains gated.
+    note: "Fallback credential placeholders removed; completed in Conductor PR #50."
 
   - id: t-007
     milestone: m3
     title: "Audit current site pages and draft a content refresh brief"
     status: done
     owner: worker
-    updated: "2026-06-30T00:00:00Z"
     passes: 0
     stakes: reversible
-    note: >
-      Wrote projects/humboldt-scoop/CONTENT-BRIEF.md. Full audit of front-page.php from
-      humboldt-scoop-solutions theme: all 7 nav sections documented (Hero, Why Us,
-      What We Offer, Pricing, Who We Serve, About/Team, FAQ, Poopstakes, Contact).
-      Gaps: team photos (P1, placeholder initials), team bios (P1, titles only),
-      pricing confirmation in WP admin (P1), 2-3 FAQ additions (P2). Tone assessment:
-      warm and local, recommended Humboldt-identity copy refresh and founder story.
-      Priority order and suggested copy tweaks in the brief. Research only, no live edits.
+    note: "Content/service-area/tone audit delivered in CONTENT-BRIEF.md and later moved to the canonical HSS repo."
 
   - id: t-008
     milestone: m3
     title: "Polish and upgrade Humboldt Scoop front-end surface"
     status: done
     owner: worker
-    updated: '2026-07-15T02:30:00Z'
     passes: 0
     stakes: reversible
     note: >
-      DONE (kind_robots PR pending, branch claude/keen-fermat-fvajrc). Original spec
-      referenced 'tutorialChannels.wonder.sections' and
-      'public/images/tutorials/wonder/humboldt-scoop.webp' -- both stale: 'wonder' is
-      only a dashboardHelper.ts tab-group/folder name, not a tutorialChannels key, and
-      tutorialCards.ts had NO entry at all for humboldt-scoop (verified by reading the
-      file directly). (1) art: no KR_API_TOKEN this session, so derived
-      dashboard-tab + tutorial webp art from the already-approved
-      public/images/projects/humboldt-scoop-hero.webp (1600x900, matches sibling
-      dashboard-tab dimensions exactly) instead of generating fresh -- same pattern as
-      challenge-center/t-019 and coloring-book/t-019. (2) added a new top-level
-      'humboldt-scoop' tutorialChannels entry (ExtraTutorialKey, mirroring the
-      mural/challenges pattern) with real content sourced from CONTENT-BRIEF.md
-      (service tiers, service area, Poopstakes), plus its tutorialRouteMap entry.
-      dashboardHelper.ts's 'wonder' tab entry for humboldt-scoop already existed from a
-      prior task -- no change needed. (3) PROJECT_PLACEMENTS['humboldt-scoop'] already
-      correctly maps channelKey/tabKey/route -- verified by reading
-      utils/projectPlacements.ts; live Project.liveUrl DB sync still needs an admin to
-      click the Conductor 'Placements' button, out of session scope (not a code change).
-      (4) step 4 ("evolve the placeholder scaffold into the full interactive
-      experience"): read project-front-page.vue -- it's a complete, polished shared
-      bridge-page component (hero, live-project merge, launch CTA, sections, gallery
-      strip, deliverables panel), not a bare placeholder. Per CONTROL.md's actual
-      direction for this project ("Import the existing site... don't redesign"), a
-      polished external bridge page IS the correct full experience for a real-world
-      WordPress business site -- so instead enriched the existing config: added a
-      service-area section, a stats strip, and collectionLabel: 'humboldt-scoop' to
-      surface the 3 already-approved inspiration images via ProjectGalleryStrip.
-      Verified `npm run test` (vue-tsc) shows 82 pre-existing TypeScript errors
-      unrelated to any touched file (Prisma InputJsonValue/string schema-drift errors
-      across server/api/*, server/utils/davinci.ts, utils/scripts/*) -- confirmed none
-      reference tutorialCards.ts or humboldt-scoop-page.vue. This pre-existing error
-      count is larger than kind-robots/t-020's "two errors" framing; left a note for
-      the Reviewer to consider refreshing that task rather than expanding this PR.
-    claimed_by: conductor-hourly-20260715-0215
-    claimed_at: '2026-07-15T02:14:03Z'
+      Public-site project surface and Kind Robots bridge were completed. Subsequent live
+      website work is substantially beyond this task and now belongs to the unified
+      humboldt-scoop-cms roadmap rather than reopening this finished project.
