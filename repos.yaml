@@ -17,15 +17,13 @@ repos:
     kind: software
     description: Kind Robots — Silas's personal frontend + AI art platform
 
-  - slug: humboldt-scoop
-    repo: silasfelinus/humboldt-scoop
-    kind: software
-    description: Humboldt Scoop Solutions public website
-
+  # HSS has one canonical implementation repository. The historical
+  # `humboldt-scoop` Conductor project is finished; `humboldt-scoop-cms` is the
+  # continuing coordination slug for the entire product, not a second codebase.
   - slug: humboldt-scoop-cms
-    repo: silasfelinus/humboldt-scoop-cms
+    repo: silasfelinus/humboldtscoopsolutions
     kind: software
-    description: Internal customer-management tool for the poop-scoop business
+    description: Humboldt Scoop Solutions — website, customer/admin/worker portals, routing/CMS, and iOS/Android clients
 
   - slug: approval-portal
     repo: silasfelinus/approval-portal
