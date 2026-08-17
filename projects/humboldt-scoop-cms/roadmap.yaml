@@ -494,21 +494,15 @@ tasks:
   - id: t-031
     milestone: m8
     title: "Add an admin business-management view inside the CMS, and/or shared navigation between wp-admin and the CMS host"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-016: wp-admin Visits and the CMS /dispatch page are still two separate
-      hosts/code paths with no shared navigation, and there is no CMS-side equivalent of
-      wp-admin's business-management screens (customers, subscriptions, invoices, change
-      requests, staff/token management). t-016 unified dispatch + worker visit-execution into
-      one role-aware CMS page (GET /me, "My Visits Today" tab); this task closes the remaining
-      gap so a dual-capability admin+scooper staff member reaches business management without
-      a second URL.
+    note: 'Shipped silasfelinus/humboldtscoopsolutions#62 (squash 4bf160b): CMS HSS_WP_ADMIN_URL powers a Business management link on the dispatch page (admin-capable staff only, via GET /me); wp-admin HSS_CMS_URL adds an Open Dispatch / Field Console link to every Scoop Solutions page via the shared open() header, plus a Settings status row. Both optional/independent, silent no-op when unset or malformed. wp-admins existing Scoop Solutions menu already covers the business-management screens the task named, so this took the shared-navigation half of the tasks and/or rather than duplicating a working screen. Verified: cms npm test 81/81 (7 new), tsc clean; php site/tests/cms-nav-test.php 14/14 (new) plus all 10 pre-existing site/tests/*.php suites clean; php -l clean.'
     claimed_by: sched-20260817T222934Z-t031
     claimed_at: '2026-08-17T22:29:35Z'
-    updated: '2026-08-17T22:29:35Z'
+    updated: '2026-08-17T22:41:07Z'
+    implementation_pr: 'silasfelinus/humboldtscoopsolutions#62'
 
   - id: t-032
     milestone: m7
