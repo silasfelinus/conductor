@@ -8499,3 +8499,26 @@ records:
     DATABASE_URL just by importing the file -- dynamic-importing the Prisma-touching piece
     inside its own function body keeps the rest of the module importable standalone, which
     mattered here because contract-tests.yml is explicitly documented as a DB-free workflow."
+- date: 2026-08-17
+  project: text-generation
+  task: t-003
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: transient
+  lesson: "Hit the exact DATABASE_URL-at-import trap t-002's own LEARNING.yaml entry (same day,
+    same file) had just documented -- a new DB-free contract test statically importing
+    serverResolver.ts (for a pure, DB-free helper) transitively pulled in ./prisma, which throws
+    at module load without DATABASE_URL, and the Contract verifiers CI job intentionally sets
+    none. Reading the sibling lesson before writing the test would have caught it before the
+    first CI push; instead it surfaced as a real CI failure, one push cycle. Fixed more durably
+    than the documented dynamic-import workaround: extracted the pure capability->serverType
+    map into its own server/utils/serverCapabilities.ts with zero Prisma dependency (type-only
+    import), so serverResolver.ts and the guard both import a module that can never accidentally
+    grow a Prisma-touching call site again -- verified by running the guard locally with
+    DATABASE_URL explicitly unset to reproduce the CI job exactly, not just re-reading the diff.
+    Also confirmed most of the task's acceptance criteria (health/test action,
+    preferredTextServerId settings UI) were already built by earlier, unrelated work -- reading
+    the actual current code before assuming a full feature build was needed kept this a small,
+    scoped fix instead of a duplicate reimplementation."

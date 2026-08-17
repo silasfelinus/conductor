@@ -97,6 +97,26 @@ tasks:
       an authenticated health/test operation and user preferredTextServerId selection.
       Private-network access is allowed only through stored trusted profiles created
       by an authorized user/admin, never through arbitrary client-supplied URLs.
+
+
+      Closed 2026-08-17: kind_robots PR #1921 merged (squash bc9538d). The real gap
+      was narrower than the task's full acceptance text -- reading BRIEF.md and the
+      actual code first showed the authenticated health/test action
+      (server/api/server/health/[id].{get,patch}.ts) and the preferredTextServerId
+      settings UI (components/navigation/server-selector.vue + stores/serverStore.ts)
+      already existed. The one real bug: serverResolver.ts's capabilityWhere('text' |
+      'chat') excluded OLLAMA from the where-clause every resolveServer() lookup path
+      ANDs against -- explicit serverId, serverName, and preferredTextServerId alike
+      -- so an Ollama server could never resolve for text generation even though its
+      own chat route worked. Fixed by adding OLLAMA to the allowed set, extracted into
+      an exported getCapabilityServerTypes(), and covered by a new DB-free contract
+      test (test:server-capability-routing). First CI run failed because the new test
+      imported serverResolver.ts, which transitively touches Prisma at module load and
+      throws without DATABASE_URL (the Contract verifiers job intentionally sets none);
+      fixed by splitting the pure capability map into its own
+      server/utils/serverCapabilities.ts with zero Prisma dependency, verified locally
+      with DATABASE_URL unset to reproduce the CI job exactly. t-004 (unified
+      generation API) is now unblocked by resolve_deps.py.
     acceptance: >-
       An authorized user can configure/select a trusted private text server, verify
       its health, and resolve it through the canonical server resolver; unsupported or
@@ -109,7 +129,7 @@ tasks:
   - id: t-004
     milestone: m2
     title: Expose unified one-shot and streaming text generation APIs
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
