@@ -264,8 +264,8 @@ tasks:
   - id: t-015
     milestone: m7
     title: "Authenticate the CMS and field client against staff capabilities"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-014
@@ -274,6 +274,9 @@ tasks:
       only the route/customer details needed for assigned work; an admin can manage the
       business; dual-capability users can do both from one identity. Wire the Flutter client
       to the same contract. Keep secrets server-side and test privilege boundaries.
+    claimed_by: scheduled-conductor-20260817T104723Z-hss-t015
+    claimed_at: '2026-08-17T10:47:24Z'
+    updated: '2026-08-17T10:47:24Z'
 
   - id: t-016
     milestone: m8
