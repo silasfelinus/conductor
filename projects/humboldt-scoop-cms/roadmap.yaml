@@ -544,3 +544,22 @@ tasks:
       ephemeral MariaDB/WordPress container, since right now this whole class of
       bug (a GET manufacturing rows, a permission check nobody calls) is only ever
       caught by static tests or manual review.
+
+  - id: t-034
+    milestone: m9
+    title: "Give HSS_Contacts its own phone/sms_opt_in so a representative can opt into SMS"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-021 (humboldtscoopsolutions PR #55): the wp-cron sweep now
+      texts the account holder alongside every email it sends
+      (HSS_Notify::send_sms()), but authorized representatives (HSS_Contacts)
+      have no phone or SMS-opt-in column of their own, so they can only ever
+      be reached by email through this path -- unlike the account holder, who
+      has both. Add phone/sms_opt_in columns to wp_hss_contacts (additive
+      migration), and extend HSS_Notify::send_sms() to text opted-in
+      representatives too, not just the account holder. Keep the two consent
+      flags independent, same as can_receive_updates/can_request_changes
+      already are for this table.
