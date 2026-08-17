@@ -264,24 +264,21 @@ tasks:
   - id: t-015
     milestone: m7
     title: "Authenticate the CMS and field client against staff capabilities"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-014
-    note: >
-      Add real CMS/API authentication and scoped authorization. A scooper should receive
-      only the route/customer details needed for assigned work; an admin can manage the
-      business; dual-capability users can do both from one identity. Wire the Flutter client
-      to the same contract. Keep secrets server-side and test privilege boundaries.
+    note: 'Shipped in humboldtscoopsolutions PR #42 (schema 2.5.0). wp_hss_staff_tokens (staff_id, token_hash sha256, label, created_at, last_used_at, revoked_at) + HSS_Staff_Tokens issue/revoke/resolve, managed from a new Tokens section on the Staff admin screen. wp_hss_service_visits.assigned_staff_id (default 0=unassigned) settable from the visit-scheduling form. CMS: cms/src/auth/authenticate.ts (requireCapability/requireAnyCapability Hono middleware resolving a bearer token to a staff member; DB mode hashes+queries the token table, seed/dev mode uses a small non-secret roster in seedStaff.ts) and cms/src/auth/scopeVisits.ts (pure, unit-tested scopeVisitsForStaff/mayActOnVisit). /customers*, /routes/plan, /routes/eligible, /routes/draft(s) now require the admin capability; /routes/today and POST /visits/:id/complete accept admin or scooper, with a scooper-only caller scoped to visits assigned_staff_id names them on (unassigned = admin-only, least privilege by default). Dispatcher page got a ''Set staff token'' prompt + apiFetch() helper. Field client got TokenStorage/AuthHttpClient/SettingsScreen, wired into main.dart behind --dart-define=CMS_BASE_URL (DummyRouteApi unchanged when unset). Verified: full PHP/shell test suite, cms npm test 71/71 + tsc clean, node --check on the dispatcher page''s script, php -l on every PHP file. NOT verified in this sandbox (no Flutter/Dart toolchain, no live MariaDB): flutter analyze/test, and schema-dry-run.sh''s live-database check -- pubspec.lock needs ''flutter pub get'' for the new shared_preferences dependency. humboldt-scoop-cms''s t-013->t-014->t-015 sequence is now fully shipped.'
     claimed_by: scheduled-conductor-20260817T104723Z-hss-t015
     claimed_at: '2026-08-17T10:47:24Z'
-    updated: '2026-08-17T10:47:24Z'
+    updated: '2026-08-17T11:09:37Z'
+    implementation_pr: 'silasfelinus/humboldtscoopsolutions#42'
 
   - id: t-016
     milestone: m8
     title: "Unify admin, dispatcher, and scooper workflows in the website"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -364,7 +361,7 @@ tasks:
   - id: t-023
     milestone: m9
     title: "Add opt-in proof-of-service photos with retention and offline-safe upload"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -377,7 +374,7 @@ tasks:
   - id: t-024
     milestone: m10
     title: "Make field work durable offline and sync safely after reconnect"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible

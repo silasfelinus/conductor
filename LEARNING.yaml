@@ -8605,3 +8605,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "docs/CANONICAL-SOURCES.md had already resolved this task's central design question (independent admin/scooper capability flags, not a mutually-exclusive enum) before implementation started -- reading a cross-repo project's own design docs first can eliminate a design decision entirely rather than re-deriving it in-session."
+- date: 2026-08-17
+  project: humboldt-scoop-cms
+  task: t-015
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "server.ts's top-level side effects (opens a DB pool, starts listening) make it unimportable from a test -- pulling authorization logic into pure, side-effect-free modules (scopeVisits.ts) before wiring it into the entrypoint is what made 'test privilege boundaries' actually achievable rather than aspirational."
