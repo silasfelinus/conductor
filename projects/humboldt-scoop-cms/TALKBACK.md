@@ -243,3 +243,54 @@ is inherent to the sandbox, not a shortcut I took, and is flagged explicitly in 
 
 **Kaizen task:** none filed — `t-015` is already the queued, correctly-scoped next step; no new gap
 surfaced beyond what the roadmap already tracks.
+
+## 2026-08-17 | Agent (scheduled conductor sweep) | humboldt-scoop-cms/t-015 | pattern
+
+**Decision:** implemented and merged humboldtscoopsolutions PR #42 (squash).
+
+**Detail:**
+- Read the actual current state of both surfaces before designing: `cms/src/server.ts` had zero
+  auth on any route, and `field-client/lib/route_services.dart` had exactly two outbound call
+  sites, both inside one class (`HttpRouteApi`), both sharing a single injectable `http.Client` --
+  confirmed via a background exploration agent before deciding the shape of the fix, rather than
+  guessing at the field client's structure.
+- Chose a staff bearer token over WordPress session cookies or OAuth: the CMS is a separate Node
+  service and the field client a mobile app, so neither has (or should acquire) a WordPress
+  session. A token table (`wp_hss_staff_tokens`, WordPress-owned per this project's schema
+  ownership rule) that both sides check the same way keeps one identity model instead of
+  reinventing auth twice.
+- Deliberately split "authenticate" (resolve a token to a staff member) from "authorize" (does
+  that staff member hold the needed capability) into two composable Hono middlewares
+  (`requireCapability`/`requireAnyCapability`) plus a pure scoping module (`scopeVisits.ts`) --
+  pulled the scoping logic out of `server.ts` specifically because `server.ts` has top-level side
+  effects (opens the DB pool, calls `serve()`) that make it unimportable from a test, and "test
+  privilege boundaries" was explicit in the task note.
+- Design decision documented in the PR and task note: an unassigned visit
+  (`assigned_staff_id = 0`, the schema default) is admin-only, not open to any scooper. Chose
+  least-privilege-by-default over an "open pool" model since the task note's own phrasing
+  ("assigned work") implies assignment is required, not optional; flagged this explicitly as a
+  one-line reversible choice (`mayActOnVisit`) if the real workflow wants otherwise.
+- Seed/dev-mode auth (`cms/src/auth/seedStaff.ts`) uses a small, committed, explicitly-documented
+  non-secret roster rather than skipping auth entirely in dev mode -- keeps `requireCapability()`
+  and the scoping behavior exercisable and testable without a database, matching this project's
+  existing "seed data is safe to commit, real data never is" convention.
+- Verified everything actually runnable in-sandbox: full existing PHP/shell test suite plus 20+
+  new schema/wiring assertions in `schema-test.php`, `cms`'s `npm test` (71/71, 16 new) and
+  `tsc --noEmit`, `php -l` on every PHP file, `node --check` on the dispatcher page's extracted
+  `<script>` block (its only available syntax check, since it has no build step). Explicitly did
+  NOT claim to have run `flutter analyze`/`flutter test` (no Flutter/Dart toolchain in this
+  sandbox) or a live-database dry run -- said so plainly in the PR rather than implying full
+  coverage of code that could not actually be executed here.
+
+**What was good:** split authentication from authorization into separately-testable pieces instead
+of one monolithic route-guard, which is exactly what let "test privilege boundaries" actually
+happen (16 new tests covering token resolution, capability middleware, and visit-scoping logic in
+isolation). Was explicit in both the PR and this note about the one real verification gap (Flutter
+tooling) rather than blurring "I wrote it carefully" with "I confirmed it compiles."
+
+**What to improve:** none specific this cycle -- the Flutter verification gap is inherent to the
+sandbox, not a shortcut taken, and is flagged for whoever next has a real Flutter environment.
+
+**Kaizen task:** none filed -- no new systematic gap surfaced; the two follow-on tasks this closure
+unblocked (t-023 photos, t-024 offline durability) are already correctly scoped and queued rather
+than needing a kaizen task to invent them.
