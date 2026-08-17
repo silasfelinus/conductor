@@ -136,12 +136,13 @@ tasks:
   - id: t-005
     milestone: m3
     title: Harden private-server networking, secrets, and failure behavior
-    status: claimed
+    status: needs-human
     owner: worker
-    passes: 0
+    passes: 1
     stakes: reversible
     gate_human: true
     approved_by_human: false
+    implementation_pr: 'silasfelinus/kind_robots#1926'
     depends_on:
       - t-002
       - t-003
@@ -156,13 +157,49 @@ tasks:
       the ability to use a home/private server without weakening the rest of the app
       into an open proxy. This task changes a security boundary and therefore stays
       human-gated before merge even though the code itself is reversible.
+
+
+      FOR SILAS: kind_robots PR #1926 (open, not merged) implements this. Two new
+      files -- server/utils/networkSafety.ts (destination validation: blocks cloud
+      metadata IPs/hostnames and link-local ranges; blocks loopback UNLESS the caller
+      explicitly opts in) and server/utils/safeFetch.ts (validates before dialing and
+      on every redirect hop, one connect-timeout budget, correct 301/302/303
+      method-downgrade). Wired into generate/text.post.ts and the three legacy chat
+      routes in place of plain fetch(). sendMeteredStream (textProviderService.ts) now
+      caps response size, enforces a per-chunk idle timeout, and aborts the upstream
+      request when the client disconnects.
+
+
+      Deliberately does NOT block RFC1918 (10/8, 172.16/12, 192.168/16) or the
+      100.64.0.0/10 Tailscale CGNAT range -- home-LAN and Tailscale servers are this
+      project's actual intended use case (ServerAccessMode.TAILSCALE already exists in
+      the schema), so blocking them would break the feature. Loopback (127.0.0.1,
+      ::1, "localhost") IS blocked by default, since any authenticated user (not just
+      admins) can set a Server.baseUrl -- except for ollama/stream.post.ts's
+      config.ollamaBaseUrl fallback (nuxt.config.ts default: http://localhost:11434,
+      an operator env var, not user input), which explicitly opts back in via a new
+      allowLoopback flag threaded only to that one call site.
+
+
+      TO APPROVE: read the PR diff (10 files, ~1080 lines, mostly the two new
+      utility modules) and confirm the blocked/allowed scope above matches your
+      intent -- in particular whether loopback should default-block for DB-stored
+      servers, and whether RFC1918/Tailscale staying unblocked is correct. If yes,
+      merge kind_robots#1926, then set approved_by_human: true and status: done here
+      (or say so and a session will do the close-out). If you want a narrower or wider
+      blocked range, say what to change and it'll be revised on the same PR.
+
+
+      What unblocks when approved: t-006 (product-surface wiring + self-hosted setup
+      docs) is already status: waiting on this task via depends_on; nothing else is
+      gated behind it.
     acceptance: >-
       Focused security tests cover unauthorized server access, arbitrary URL attempts,
       metadata/link-local targets, redirects, timeout/cancellation, and secret leakage;
       approved private profiles still work end-to-end.
     claimed_by: scheduled-conductor-20260817T0829Z-textgen-t005
     claimed_at: '2026-08-17T08:30:13Z'
-    updated: '2026-08-17T08:30:13Z'
+    updated: '2026-08-17T08:53:00Z'
 
   - id: t-006
     milestone: m3
