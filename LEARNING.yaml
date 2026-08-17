@@ -8623,3 +8623,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A background survey of actual current write paths (not the task note's assumed shape) found the real address-edit flow was customer-portal-only with a duplicated, incomplete (address/city only, missing state/postal_code) safety check -- surveying before designing caught a real bug the task wouldn't otherwise have surfaced."
+- date: 2026-08-17
+  project: humboldt-scoop-cms
+  task: t-016
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A task named as a three-way unification (admin/dispatch/scooper) turned out, on actual survey, to need only a narrower slice -- two of the three surfaces were already correctly capability-gated from prior tasks. Surveying real current state before designing avoided rebuilding what already worked and kept the landed diff small and reviewable."

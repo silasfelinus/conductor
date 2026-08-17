@@ -481,3 +481,19 @@ tasks:
       allowing normal fine-tuning: mobile layout, accessibility, performance, stale WordPress
       leftovers, copy/SEO polish, and integration seams. All changes land in the canonical HSS
       repo under site/ and remain part of this single roadmap.
+
+  - id: t-031
+    milestone: m8
+    title: "Add an admin business-management view inside the CMS, and/or shared navigation between wp-admin and the CMS host"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-016: wp-admin Visits and the CMS /dispatch page are still two separate
+      hosts/code paths with no shared navigation, and there is no CMS-side equivalent of
+      wp-admin's business-management screens (customers, subscriptions, invoices, change
+      requests, staff/token management). t-016 unified dispatch + worker visit-execution into
+      one role-aware CMS page (GET /me, "My Visits Today" tab); this task closes the remaining
+      gap so a dual-capability admin+scooper staff member reaches business management without
+      a second URL.

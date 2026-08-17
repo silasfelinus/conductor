@@ -348,3 +348,54 @@ a shortcut taken.
 non-blocking follow-up (a portal-side "we couldn't find that address" UI hint), left for whoever
 picks up the next user-facing portal task rather than filed as a dedicated roadmap item for
 something this minor.
+
+## 2026-08-17 | Agent (scheduled conductor sweep) | humboldt-scoop-cms/t-016 | pattern
+
+**Decision:** implemented and merged humboldtscoopsolutions PR #46 (squash).
+
+**Detail:**
+- Dispatched a background exploration agent to survey all three named surfaces before
+  designing anything, rather than assuming the task's three-way split needed a three-way
+  rebuild. Found wp-admin Visits was already correctly gated on `hss_manage_business`
+  (PR #39) with a scooper-filtered assignment dropdown -- no change needed there -- and
+  that the CMS `/dispatch` page's underlying JSON API was already correctly
+  capability-gated per PR #42. What was actually missing was narrower than the task
+  read at first glance: the CMS page itself had no scooper-shaped view, and no
+  browser-based worker view existed at all (only the Flutter field client).
+- Scoped to the most valuable landable slice rather than attempting the full
+  admin+dispatch+scooper convergence in one pass: added a `GET /me` capability-report
+  endpoint and a role-aware "My Visits Today" tab on the existing `/dispatch` page,
+  reusing the exact same `/routes/today` and `POST /visits/:id/complete` contracts the
+  Flutter field client already calls -- so a visit completed from the browser and one
+  completed from the phone app are indistinguishable to the server afterward. A
+  dual-capability (admin+scooper) staff member now gets both tabs and switches without a
+  second login or app, the specific case the task named.
+- Documented the tab UI explicitly as a convenience layer, not a security boundary --
+  every JSON route underneath keeps enforcing its own capability check independently.
+  Deferred the larger remaining gap (wp-admin and the CMS are still two separate
+  hosts/code paths with no shared navigation and no CMS-side business-management view)
+  to a named follow-up rather than attempting it in the same pass.
+- Verified: `cms npm test` 72/72 (71 prior + 1 new, covering `/me` reporting both
+  capability flags regardless of which one satisfied `requireAnyCapability`), `tsc
+  --noEmit` clean, `node --check` on the extracted page script, full existing PHP/shell
+  suite re-run unaffected (no PHP touched), and the actual seed-mode service exercised
+  end-to-end with curl (`/dispatch`, `/me`, `/routes/today` scoping, visit completion).
+  Not verifiable in this sandbox: real browser click-through, database-mode auth paths,
+  Flutter re-run (field client untouched).
+- This repo has no CI workflows beyond GitGuardian (confirmed: no
+  `.github/workflows/`), so "green" here means local verification plus the one GitHub
+  App check, consistent with how PR #45 (Silas's own direct edit) merged minutes
+  earlier.
+
+**What was good:** delegated the exploration to a background agent with clear
+instructions not to touch the conductor repo, then read the actual returned diff and PR
+body before merging rather than trusting the self-report -- the diff matched the report
+exactly (3 files, the described `/me` route and tab UI, no scope creep).
+
+**What to improve:** none specific this cycle -- scoping decision (dispatch+worker
+convergence now, admin+CMS convergence later) was made explicit in the PR rather than
+silently narrowing the task's stated scope.
+
+**Kaizen task:** t-031 -- "Add an admin business-management view inside the CMS, and/or
+shared navigation between wp-admin and the CMS host, so a dual-capability admin+scooper
+staff member reaches business management without a second URL." `stakes: reversible`.
