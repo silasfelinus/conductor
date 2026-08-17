@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-17T07:56:02Z
+Generated: 2026-08-17T08:02:15Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **642**
-- Outcomes: blocked: 14, cancelled: 1, done: 627
+- Closed tasks recorded: **643**
+- Outcomes: blocked: 14, cancelled: 1, done: 628
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -56,14 +56,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | superkate-hairstyle-ai | 18 | 100% |
 | superkate-services-calculator | 12 | 100% |
 | taskmaster | 3 | 100% |
-| text-generation | 5 | 100% |
+| text-generation | 6 | 100% |
 
 ## By kind
 
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 626 | 99% |
+| software | 627 | 99% |
 
 ## Failure categories
 
@@ -84,6 +84,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-17 `text-generation/t-008` — Verifying an unrelated task's typecheck can surface pre-existing drift with a root cause several commits back: main's committed Prisma generated client was stale (missing the ProjectPageContent model that #1924 had already added to both the schema and two live API routes), breaking vue-tsc --noEmit for anyone who touched server/ code afterward. Isolated the two failures via git stash before assuming they were caused by this session's own edits, confirmed the fix (a plain prisma generate regeneration, purely additive) resolved them on its own, and shipped it as its own small standalone PR rather than folding an unrelated mechanical fix into t-008's diff. The kaizen itself (unifying the three-way-duplicated OpenAI/Anthropic auth-header dialect switch into textProviderService.ts's buildCloudProviderAuthHeaders) was low-risk and behavior-preserving by construction -- same header shapes/values for every caller -- which made full contract-test coverage of the new shared function (26 assertions) enough to merge with confidence, no live-provider smoke test needed for a refactor that touches no logic, only where code lives.
+
 - 2026-08-17 `text-generation/t-004` — The three legacy chat streaming routes had already converged on a clean split between provider-agnostic mechanics (textProviderService.ts, from t-002) and provider-specific shape (endpoint URL, payload fields, auth). That split made the new unified endpoint mostly a matter of extracting the THIRD piece -- per-provider payload/response dialect -- into its own pure module (textGenerationDispatch.ts) rather than writing a new endpoint from scratch: one file that knows OpenAI/Anthropic/Ollama's three payload shapes and three response shapes, reused by a thin route. Provider selection from a resolved server's serverType (rather than a separate caller-supplied provider flag) turned out to be both simpler and more correct -- it can't drift from what the server actually is. One deliberate behavior improvement over the legacy routes: resolving the caller's preferredTextServerId/isDefault server even with no explicit serverId/serverName, instead of only ever falling back to the cloud default the way resolveOptionalTextServer does -- new endpoints are free to fix small inconsistencies like this that would be a breaking change on an existing route. No live OpenAI/Anthropic/Ollama API keys exist in this sandbox, so verification stayed at the same DB-free contract-test depth established by t-002/t-003/t-007 (34 synthetic-fixture checks covering every dispatch branch) rather than a live integration test the acceptance text technically asked for -- flagged explicitly for the reviewer/Silas rather than silently substituted.
 - 2026-08-17 `text-generation/t-007` — A dashboard's default query scope can silently exclude an entire class of records even after the underlying data becomes real and resolvable -- server/api/server/uptime.get.ts hardcoded ['A1111','COMFY'] as its default serverType filter from when the panel was built for art/GPU servers only; once t-003 made OPENAI/ANTHROPIC/OLLAMA/CUSTOM genuinely resolvable text servers, they still had zero uptime/latency visibility because nothing in the UI ever surfaced the ?serverType= override that would have shown them. The fix pattern from t-003 (extract the array into a pure, exported, DB-free-testable function) generalized directly: server/utils/serverUptimeScope.ts's getUptimeDefaultServerTypes() mirrors serverCapabilities.ts's getCapabilityServerTypes() closely enough that the same contract-test shape (assert each type-family present/absent, assert no duplicates, assert the exact expected set) could be reused with only the type list changed.
 - 2026-08-17 `text-generation/t-003` — getCapabilityServerTypes()'s 'text'/'chat' where-clause excluded OLLAMA even though server/api/chats/ollama/stream.post.ts's own request path already worked end-to-end -- the exclusion only broke server-side *resolution* (serverId/serverName/preferredTextServerId lookups), not the route itself, so a request that already had its target server object in hand would still succeed while every id/name/preference-based lookup silently failed to find that same Ollama server. A route working in isolation is not evidence its resolver path works too when they're separate code paths sharing only a where-clause. Most of t-003's stated acceptance criteria (health/test operation, preferredTextServerId selection UI, explicit-server-add form) were already built by earlier server-selector/serverStore work -- reading the actual UI and API surface before assuming a gap existed narrowed the real fix to one array literal plus its missing test coverage, rather than re-implementing already-working infrastructure.
@@ -93,7 +95,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-16 `alexa-integration/t-020` — The target/action-mismatch bug class from t-015 (a shared VoiceBusCommand.action union reaching a dispatch branch where most of its values are meaningless) generalized cleanly to the other two targets once actually re-read fresh: applyThemeCommand() and applyArtCommand() never checked command.action at all, an omission invisible unless you specifically compare each dispatch function against its siblings for the same missing guard shape. Extending the existing guard into a TARGET_FUNCTIONS structure (mirroring modelBuilderStore.ts's own multi-function guard convention) kept the fix in one file instead of three near-duplicates.
 - 2026-08-16 `appmaker/t-012` — A condition like `tasks.length === 0` reads as a reasonable 'freshly scaffolded' check in isolation, but was backwards in practice because the scaffolder (scripts/new_app.py) always seeds 3 tasks up front -- checking the UI condition against the actual data-seeding code, not just its surface plausibility, is what surfaced that every real app's card silently showed a blank description while the fallback literal only fired on a genuine lookup failure. Separately: a single CI job failing with a live-API 502 unrelated to the diff (GET /api/characters, in a population-quality contract check) is a textbook transient failure -- rerunning just that job and confirming a clean pass on retry is the correct triage, not blaming the diff or force-merging past it unexamined.
 - 2026-08-16 `alexa-integration/t-015` — applyCommand()'s action parameter is a union shared across every command target (on/off/toggle/clear/set/draft), but set/draft only carry meaning for the theme/art targets. Unsupported *targets* were already reported as ignored; unsupported *actions* on a supported target had no equivalent check, so an animation command with action: set/draft fell through untouched and still posted a false 'Applied: <effect> on.' success message. When a field's type is a union shared across multiple branches, each branch needs its own explicit valid-subset check -- a guard scoped to one branch (here, target) doesn't protect the others by default. Kaizen t-020 audits the theme/art branches for the same class of gap.
-- 2026-08-16 `model-builder/t-045` — t-029 cycle 7's item.error persistence sweep (#1908) covered generateItemAsset/ generateItemAssetAsync/pollAsyncArtJob/commitItem but deliberately left out draftText() to keep that fix surgical -- exactly the kind of scoped-on-purpose gap a filed kaizen task exists to close, rather than something the original cycle missed. draftText() turned out to be the highest-frequency failure path of all (autoBuildItem's very first step), so the gap was live from the moment #1908 merged. When a fix is deliberately scoped narrower than the full bug class it demonstrates, filing the remaining scope as its own task (rather than letting 'surgical for now' quietly become 'permanent') is what actually closes the loop -- this cycle also resolved the fix's own deferred sub-decision (whether manual edits should clear a stale error too) rather than re-deferring it a second time.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-17T07:56:02Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-17T08:02:15Z_
