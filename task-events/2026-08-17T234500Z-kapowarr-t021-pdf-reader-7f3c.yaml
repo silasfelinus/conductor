@@ -1,0 +1,15 @@
+version: 1
+project: kapowarr
+task: t-021
+operation: done
+updated: '2026-08-17T23:45:00Z'
+note: >-
+  Adjacent comic-reader follow-up shipped in silasfelinus/Kapowarr#33, squash
+  779c2c47648ab0cb4ecd9373a23098efa5a4370b. The built-in reader now supports
+  issue-linked PDF files in addition to CBZ/ZIP and loose images. PDFs are
+  streamed only through an authenticated issue-derived endpoint with Flask
+  conditional responses left intact for HTTP range/206 behavior, then embedded
+  in the existing responsive reader using the browser-native PDF renderer.
+  Image/CBZ page mode remains preferred when both forms are linked. Exact PR
+  head 5c0fb22d passed Python 3.8-3.12, docs, and container workflows before
+  squash merge. CBR/RAR remains the next reader-format follow-up.
