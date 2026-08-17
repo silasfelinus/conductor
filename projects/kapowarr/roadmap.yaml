@@ -437,25 +437,12 @@ tasks:
   - id: t-022
     milestone: m3
     title: "Rename the settings UI's Torrent-labeled client picker to a generic External Client label"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-007 (silasfelinus/Kapowarr#26): the "Choose/Add/Edit Torrent
-      Client" settings windows, element ids (#torrent-client-list,
-      #add-torrent-form, etc.), and JS function names
-      (loadTorrentList/loadAddTorrent/...) are already fully client-type-
-      registry-driven under the hood -- GET /externalclients/options lists
-      every registered client type generically, SABnzbd included since t-007 --
-      but the UI copy and internal ids still say "Torrent" everywhere. Purely
-      cosmetic (nothing is functionally broken; SABnzbd is fully configurable
-      today through this same UI), but will read oddly to a user picking
-      "SABnzbd" from a window titled "Add Torrent Client". Rename labels/ids to
-      something protocol-neutral (e.g. "External Client"), verify no JS/CSS
-      selector depends on the literal "torrent" substring, and confirm the
-      existing Remote Mapping section (which already reads generically) isn't
-      affected.
+    note: 'Renamed Torrent-labeled download-client settings UI (windows, element ids, JS function names, CSS selectors) to generic External Client naming. Kaizen from t-007 (Kapowarr#26). Verified: repo-wide grep found no other file depended on the literal torrent substring for these ids (only legitimately torrent-specific backend/implementations/torrent_clients/Transmission.py remains); Remote Mapping section unaffected; node --check clean; Jinja template parse clean. Merged as Kapowarr#27 (squash a5cb166), CI 7/7 green, mergeable_state clean, diff 59/-59 across exactly the 3 intended files.'
     claimed_by: 2026-08-17-sched-t022
     claimed_at: '2026-08-17T14:27:56Z'
-    updated: '2026-08-17T14:27:56Z'
+    updated: '2026-08-17T14:35:43Z'
+    implementation_pr: 'silasfelinus/Kapowarr#27'
