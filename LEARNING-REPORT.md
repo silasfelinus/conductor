@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-18T07:29:28Z
+Generated: 2026-08-18T07:39:36Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **668**
-- Outcomes: blocked: 14, cancelled: 1, done: 653
+- Closed tasks recorded: **669**
+- Outcomes: blocked: 14, cancelled: 1, done: 654
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | global-ui | 13 | 100% |
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
-| humboldt-scoop-cms | 17 | 100% |
+| humboldt-scoop-cms | 18 | 100% |
 | interface-vision | 83 | 100% |
 | kapowarr | 27 | 100% |
 | kind-robots | 50 | 98% |
@@ -63,7 +63,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 652 | 99% |
+| software | 653 | 99% |
 
 ## Failure categories
 
@@ -84,6 +84,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-18 `humboldt-scoop-cms/t-035` — A same-day sibling session (t-037 close-out, same rotation) had already read t-035's own self-gating note ("only worth doing once/if a second widget is proposed") and deliberately skipped it -- I claimed and implemented it anyway without first grepping today's TALKBACK/LEARNING.yaml for a prior skip decision on this exact task id, relying only on the roadmap note itself. The work was small, reversible, and harmless (kept merged rather than reverted), but the real gap is that a "ready but conditionally not-yet" task has no roadmap status that actually encodes that, so two same-day sessions made different individually-reasonable calls on the same task.
 - 2026-08-18 `humboldt-scoop-cms/t-037` — Before picking the file-order-next ready task, read its note for a self-gating condition ("only worth doing once X is proposed") and check whether that condition actually holds -- t-035 gated on a second cross-host widget that doesn't exist yet, so it was correctly skipped in favor of t-037, one of t-025's real deferred follow-ups with a concrete existing pattern (HSS_Staff_Tokens) to mirror.
 - 2026-08-18 `humboldt-scoop-cms/t-024` — Mirroring an existing durable-queue pattern in the same codebase (FilePhotoUploadQueue from t-023) made a genuinely large offline-durability feature (route cache + write queue + reconcile-on-fetch) tractable in one pass without changing the RouteApi/RouteStorage interfaces the task asked to preserve; also fixed a real latent bug found along the way (RouteStop.fromJson silently dropping crewNotes) that would have made cached completions lose their notes on app restart.
 - 2026-08-18 `kapowarr/t-028` — Portable comic lists should preserve unresolved gaps and enrich source identity when local matching provides stronger IDs; acquisition should be an explicit action over resolved missing entries.
@@ -93,7 +94,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-18 `kapowarr/t-026` — A protocol adapter lands cleanly when search query planning, result provenance, and queue preparation are separate seams. Preserve explicit source identity through legacy link-only task contracts rather than reintroducing source-specific branches.
 - 2026-08-18 `kapowarr/t-025` — Selective architecture ports are safer than wholesale upstream copies when the fork already has working protocol-specific features; introduce seams around existing behavior, then add new protocols through the seams.
 - 2026-08-18 `humboldt-scoop-cms/t-023` — The obvious in-codebase precedent (pet photos, stored as an ordinary WordPress media-library attachment) was the wrong pattern here, and the reason was architectural, not stylistic: the CMS that actually receives the field client's upload runs on a different host from WordPress with no shared filesystem, a fact only stated in a deployment-config comment (cms/ecosystem.config.cjs), not in any doc a feature-scoping read would normally reach first. Worth checking where a write physically lands (which process, which host) before reusing a same-repo pattern that looks superficially identical -- two features can both be 'upload a photo' and still need incompatible storage. Also: caught and fixed a real bug of my own before it shipped by re-deriving a timezone assumption instead of trusting it -- a first draft stamped created_at with site-local time but compared it against a UTC-computed retention cutoff, which would have silently mispurged photos by the site's configured offset on every sweep run; the fix was to pick one clock (GMT) for both the write and the comparison and say why in the code, not to patch the symptom.
-- 2026-08-17 `humboldt-scoop-cms/t-030` — An open-ended 'polish' task with no obvious next action is workable by grepping the codebase itself for evidence the code already knows is stale -- two test-file comments in this repo had, weeks earlier, already called a dead theme directory 'retired' and 'a dead duplicate pending deletion', which nobody had acted on. That's a cheap, high-confidence source of scoped work: search for a project's own accumulated in-code annotations of known-stale things before treating a vague polish task as unscopable.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-18T07:29:28Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-18T07:39:36Z_
