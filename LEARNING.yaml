@@ -8983,3 +8983,13 @@ records:
     record), the live DB record wins if it actually satisfies the ask --
     verify what's live via the site's own API rather than trusting the most
     convenient-looking file in the repo.
+- date: 2026-08-18
+  project: kapowarr
+  task: t-047
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Scheduled tasks must record failure outcomes before leaving the queue, and scraped sources require
+    live markup verification.
