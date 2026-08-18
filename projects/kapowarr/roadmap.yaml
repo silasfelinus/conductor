@@ -1030,3 +1030,16 @@ tasks:
   claimed_by: 2026-08-18T195800Z-kapowarr-t-047-a8f3
   claimed_at: '2026-08-18T19:58:00Z'
   updated: '2026-08-18 20:16:00+00:00'
+- id: t-048
+  milestone: m6
+  title: Refresh task history immediately after task completion
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    User clarified that the manually triggered Weekly Pull List task succeeded,
+    but the Tasks page did not refresh its History table when the task-ended
+    WebSocket event arrived. Refresh task history (and scheduled execution
+    timestamps) after completion, ensuring the task-history insert is committed
+    before the event tells clients to reload it.
