@@ -418,7 +418,7 @@ tasks:
   - id: t-026
     milestone: m10
     title: "Finish Android production beta and Play Store readiness"
-    status: claimed
+    status: needs-human
     owner: worker
     passes: 0
     stakes: outward-facing
@@ -426,12 +426,41 @@ tasks:
       - t-024
       - t-025
     note: >
-      Phone-scale design pass, HTTPS/prod endpoint configuration, permissions, signing,
-      crash/privacy checks, internal beta, store assets/listing/privacy disclosures, and a
-      release candidate suitable for Play Store submission.
+      FOR SILAS: All the software-only prep is done and merged
+      (silasfelinus/humboldtscoopsolutions#79, field-client/). It contains a
+      release-signing scaffold (build.gradle.kts reads a git-ignored
+      key.properties, falls back to debug signing with a loud warning when
+      absent), a fixed real bug (the release manifest was missing the
+      INTERNET permission -- every network call would have silently failed
+      on a release build), a minimal crash logger, a version bump to
+      1.0.0+1, and three drafted docs under field-client/docs/:
+      PLAY-STORE-READINESS.md (the full numbered checklist below, in detail),
+      PRIVACY-POLICY-DRAFT.md, and PLAY-STORE-LISTING-DRAFT.md.
+
+      TO APPROVE / DO: this task can't reach done without you, because
+      actual submission needs things only you can create --
+      (1) a Play Console developer account + the $25 fee, (2) run
+      `keytool -genkey` locally per key.properties.example and keep the
+      real keystore safe (losing it loses the ability to update the same
+      listing later -- opt into Google Play App Signing to make this
+      resettable), (3) publish PRIVACY-POLICY-DRAFT.md's text at a real URL
+      (e.g. a new page on the existing WordPress site) and fill in the
+      placeholders, (4) review/edit the listing copy draft, (5) capture
+      real screenshots on a device/emulator, (6) fill in Play Console's
+      Data Safety and content-rating forms, (7) run
+      `flutter build appbundle --release` once key.properties exists to
+      produce the actual release candidate, then upload/submit. Once you've
+      done these (or want to fast-track/skip any), set status: done (and
+      approved_by_human: true if you want the record to reflect an explicit
+      go-ahead) -- that unblocks t-027 (iOS) and t-029 (actual store
+      publish) to proceed on the same footing.
+
+      iOS (t-027) is a separate task, untouched here.
     claimed_by: 20260818T082745Z-hsscms-t026
     claimed_at: '2026-08-18T08:28:51Z'
-    updated: '2026-08-18T08:28:51Z'
+    updated: '2026-08-18T08:38:13Z'
+    soft_gate: false
+    implementation_pr: 'silasfelinus/humboldtscoopsolutions#79'
 
   - id: t-027
     milestone: m10
