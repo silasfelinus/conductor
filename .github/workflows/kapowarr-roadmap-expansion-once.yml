@@ -1,0 +1,429 @@
+name: Expand Kapowarr aggregation roadmap once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/kapowarr-roadmap-expansion-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  expand:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Expand Kapowarr roadmap
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path('projects/kapowarr/roadmap.yaml')
+          text = path.read_text()
+
+          old_notes = '''  Higher-than-average priority. Start with small personality/QoL wins, then build
+  the larger Usenet/NZB path deliberately. Keep Conductor and Kind Robots project
+  state synchronized; treat missing Project/conductorSlug or milestone projection
+  as a bug to investigate rather than silently continuing.
+'''
+          new_notes = '''  Higher-than-average priority. Aggregation is the primary product goal; multi-user
+  support and deep reader polish are intentionally secondary for now. After live
+  hardening the existing SABnzbd/Newznab path, expand the -arr acquisition fabric
+  (Torznab/Prowlarr/Jackett and torrent lifecycle), then prioritize weekly release
+  lists, story arcs/read lists, GetComics discovery/recommendations, metadata-provider
+  resilience, and additional sources. Do not run recurring upstream-fork monitoring;
+  inspect upstream deliberately when a concrete integration or sync task calls for it.
+
+  Keep Conductor and Kind Robots project state synchronized; treat missing
+  Project/conductorSlug or milestone projection as a bug to investigate rather than
+  silently continuing.
+'''
+          if old_notes not in text:
+              raise SystemExit('expected notes_from_silas block not found')
+          text = text.replace(old_notes, new_notes, 1)
+
+          milestone_anchor = '''  - id: m4
+    title: "MAINTAIN — track upstream, respond to real usage"
+    weight: 10
+    status: in-progress
+
+tasks:
+'''
+          milestone_replacement = '''  - id: m4
+    title: "MAINTAIN — respond to real usage without recurring upstream monitoring"
+    weight: 10
+    status: in-progress
+
+  - id: m5
+    title: "ACQUIRE — complete the -arr-style source/indexer/client fabric"
+    weight: 40
+    status: in-progress
+
+  - id: m6
+    title: "DISCOVER & CURATE — weekly lists, story arcs, wanted, and recommendations"
+    weight: 30
+    status: not-started
+
+  - id: m7
+    title: "METADATA — reduce ComicVine dependence and preserve portable identity"
+    weight: 20
+    status: not-started
+
+  - id: m8
+    title: "SOURCES — broaden lawful discovery and acquisition options"
+    weight: 15
+    status: not-started
+
+  - id: m9
+    title: "READER FOLLOW-UPS — format completeness after aggregation priorities"
+    weight: 5
+    status: not-started
+
+tasks:
+'''
+          if milestone_anchor not in text:
+              raise SystemExit('expected m4 milestone anchor not found')
+          text = text.replace(milestone_anchor, milestone_replacement, 1)
+
+          old_tail = '''  - id: t-023
+    milestone: m4
+    title: "Check upstream Casvt/Kapowarr for changes worth importing"
+    status: ready
+    owner: worker
+    passes: 0
+    stakes: reversible
+    recurring: true
+    note: 'No-op cycle (2026-08-17): re-verified against live Casvt/Kapowarr per FORK_MAINTENANCE.md workflow -- added upstream remote, fetched upstream/main, ran git merge-base against origin/main. upstream/main HEAD is still 55946aa (the V1.3.1 tag / same fork point recorded by t-011 earlier today), 0 commits ahead of the merge-base. Fork remains 50 commits ahead (49 recorded by t-011 plus t-011''s own doc commit). Nothing upstream to import this cycle. Re-armed to ready per AGENTS.md Recurring tasks rule.'
+    claimed_by: 20260817T192729Z-kap-t023
+    claimed_at: '2026-08-17T19:27:31Z'
+    updated: '2026-08-17T19:28:07Z'
+'''
+          new_tail = '''  - id: t-023
+    milestone: m4
+    title: "Check upstream Casvt/Kapowarr for changes worth importing"
+    status: done
+    owner: null
+    passes: 0
+    stakes: reversible
+    recurring: false
+    note: >
+      Recurring upstream monitoring retired by explicit user direction on
+      2026-08-17. Keep FORK_MAINTENANCE.md as the deliberate one-time sync
+      procedure, but only inspect/import upstream when a concrete task needs it.
+      The prior no-op cycle confirmed stable upstream/main remained at V1.3.1.
+    claimed_by: 20260817T192729Z-kap-t023
+    claimed_at: '2026-08-17T19:27:31Z'
+    updated: '2026-08-18T00:51:00Z'
+
+  - id: t-024
+    milestone: m5
+    title: "Live-verify and harden Newznab to SABnzbd end-to-end"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      The SABnzbd client and Newznab search/NZB handoff are merged and heavily
+      unit-tested, but neither was live-verified against the user's real services
+      during implementation. Exercise caps/search/download/queue/history/storage,
+      remote mappings, restart persistence, failures, and post-processing on the
+      real stack before treating Usenet support as complete.
+
+  - id: t-025
+    milestone: m5
+    title: "Reconcile relevant upstream development acquisition architecture"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Perform a one-time selective reconciliation against Casvt/development's
+      newer indexer/download-client/download-prepper/query-builder/search-planner
+      architecture. Preserve fork-only SABnzbd/Newznab, importer, notifications,
+      health, reader, and branding behavior. This is not recurring monitoring;
+      it is foundation work to avoid growing new acquisition sources on an older
+      search architecture.
+
+  - id: t-026
+    milestone: m5
+    title: "Add Torznab with first-class Prowlarr and Jackett support"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Implement torrent indexers as protocol peers to Newznab so Prowlarr and
+      Jackett can feed the normal Kapowarr search/ranking/queue pipeline. Support
+      multiple configured indexers, test/caps behavior, categories, tracker/source
+      provenance, and clean handoff to the existing torrent clients.
+
+  - id: t-027
+    milestone: m6
+    title: "Add weekly release and pull-list workflows"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Build a comic-native weekly releases view and pull-list workflow after the
+      current NZB path is live-hardened. Cross-reference upcoming/new releases
+      with monitored library volumes, expose wanted additions clearly, and keep
+      the data-source boundary replaceable rather than coupling it to ComicVine.
+
+  - id: t-028
+    milestone: m6
+    title: "Add story arcs and portable CBL/read-list workflows"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Model ordered story arcs/read lists across volumes and issues, support CBL
+      import/export where practical, and let an arc identify missing issues that
+      acquisition search can fill. Keep this aggregation/collection oriented;
+      per-user reading-state sophistication is intentionally out of scope for now.
+
+  - id: t-029
+    milestone: m6
+    title: "Build a GetComics Discover browser"
+    status: not-started
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Implement the spirit of upstream issue #6: browse recent GetComics releases
+      inside Kapowarr, open/search/add matching series, and optionally monitor a
+      discovered series. Reuse source parsing/search infrastructure instead of
+      screen-scraping a second unrelated path.
+
+  - id: t-030
+    milestone: m6
+    title: "Add library-informed Discover and Similar recommendations"
+    status: not-started
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Extend Discover with explainable recommendations based on the current
+      library: related series/franchise/title stems, publisher, creators and
+      characters when metadata supports them, plus recent source releases not
+      already owned. Start deterministic and inspectable rather than opaque ML.
+
+  - id: t-031
+    milestone: m5
+    title: "Harden torrent lifecycle, hardlinks, and oversized pack handling"
+    status: not-started
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Close acquisition gaps reflected in upstream issues #208 and #212: allow a
+      pack that contains extra issues to satisfy missing monitored issues when the
+      user permits it, add hardlink handling for seed-safe imports, and verify
+      rename/conversion/post-processing does not break active seeding.
+
+  - id: t-032
+    milestone: m5
+    title: "Add source quality preferences and upgrade policy"
+    status: not-started
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Bring more Sonarr/Radarr-style acquisition control to comics: source/client
+      priority, GetComics SD/HD preference where both exist (upstream issue #222),
+      pack preference, and optional later upgrade searches without replacing a
+      known-good file with a worse candidate.
+
+  - id: t-033
+    milestone: m6
+    title: "Add Wanted/Missing workbench and manual import"
+    status: not-started
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Add an -arr-style global Wanted view for monitored missing issues/volumes,
+      searchable and actionable in bulk, with a manual import path for files the
+      user already acquired elsewhere. Incorporate the useful intent of upstream
+      issue #344 without duplicating the continuous library importer.
+
+  - id: t-034
+    milestone: m5
+    title: "Add watched-folder auto import for external downloads"
+    status: not-started
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Implement upstream issue #122's useful workflow: watch one or more inbound
+      folders, match completed external files to known volumes/issues, then move,
+      rename, convert, and register them through the same hardened post-processing
+      pipeline. Do not compete with the root-library continuous importer.
+
+  - id: t-035
+    milestone: m5
+    title: "Add NZBGet as a second Usenet download client"
+    status: not-started
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Generalize the Usenet client seam beyond SABnzbd with NZBGet-compatible
+      submission/status/history/cancel handling so the acquisition matrix is not
+      tied to a single downloader.
+
+  - id: t-036
+    milestone: m6
+    title: "Add calendar and upcoming monitored release view"
+    status: not-started
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Complement weekly pull lists with an -arr-style calendar of upcoming and
+      recently released monitored issues, with direct search actions and clear
+      source/metadata provenance.
+
+  - id: t-037
+    milestone: m7
+    title: "Introduce a metadata-provider abstraction"
+    status: not-started
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Stop treating ComicVine as an irreplaceable global singleton. Define stable
+      provider IDs, cross-provider external IDs, search/fetch capabilities, cover
+      provenance, and conflict rules so alternate metadata providers can coexist
+      without destabilizing existing ComicVine libraries.
+
+  - id: t-038
+    milestone: m7
+    title: "Add Metron as an alternate metadata provider"
+    status: not-started
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Implement upstream issue #182 after the provider boundary exists. Support
+      Metron search/volume/issue metadata and durable Metron IDs, with graceful
+      fallback when ComicVine is unavailable or rate-limited rather than silently
+      mixing identities.
+
+  - id: t-039
+    milestone: m7
+    title: "Use and export portable comic metadata"
+    status: not-started
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Expand current local-metadata awareness into deliberate ComicInfo.xml and
+      compatible series metadata import/export. Incorporate upstream issues #139
+      and #50 so imported files can identify themselves and managed CBZ/archives
+      retain useful metadata even outside Kapowarr.
+
+  - id: t-040
+    milestone: m8
+    title: "Add an Anna's Archive source adapter"
+    status: not-started
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Track upstream issue #171 and the maintainer's preference for Anna's Archive
+      over separate Z-Library/Libgen integrations. Fit search/discovery into the
+      generic source/indexer boundary and only automate downloads that are lawfully
+      accessible to the user; do not implement access-control or DRM circumvention.
+
+  - id: t-041
+    milestone: m8
+    title: "Add Internet Archive public-download source support"
+    status: not-started
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Integrate Internet Archive search/metadata and official downloadable assets
+      where the item permits direct public access. Treat controlled-lending or
+      restricted items as browse/link-out only; do not build page ripping or access
+      control bypasses. Lower priority than Anna's Archive and the core -arr fabric.
+
+  - id: t-042
+    milestone: m8
+    title: "Evaluate debrid acquisition support"
+    status: not-started
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Assess upstream issue #276 and common -arr-adjacent workflows for a clean
+      debrid client boundary. Implement only if it adds meaningful source coverage
+      without contaminating the generic search/download architecture with a
+      provider-specific shortcut.
+
+  - id: t-043
+    milestone: m8
+    title: "Evaluate eMule/aMule for non-US comic catalogs"
+    status: not-started
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Preserve upstream issue #178 as a lower-priority acquisition research item,
+      especially for European/non-US catalogs that are poorly represented in the
+      current source mix. Require a maintainable client API and matching strategy
+      before implementation.
+
+  - id: t-044
+    milestone: m5
+    title: "Verify downloaded comic/archive integrity"
+    status: not-started
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Incorporate upstream issue #154: verify CBZ/ZIP/CBR/RAR and other supported
+      archive containers can open and contain plausible page content, surface CRC
+      or corruption problems, and integrate failures with history/blocklist/retry
+      rather than discovering damage only when a reader opens the file.
+
+  - id: t-045
+    milestone: m9
+    title: "Add CBR/RAR and remaining archive formats to the built-in reader"
+    status: not-started
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Reader-only follow-up after aggregation priorities. Kapowarr's library and
+      file-processing layers already recognize CBR/RAR (plus CB7/7z, CBT/tar and
+      other containers); the built-in reader currently opens CBZ/ZIP, loose images,
+      and PDF. Add safe temporary/streamed extraction for CBR/RAR first, then other
+      practical comic archive formats without changing their existing management
+      support.
+'''
+          if old_tail not in text:
+              raise SystemExit('expected t-023 tail not found')
+          text = text.replace(old_tail, new_tail, 1)
+
+          path.write_text(text)
+
+      - name: Validate roadmap
+        run: |
+          python scripts/check_roadmap_yaml.py projects/kapowarr/roadmap.yaml
+          python scripts/validate_roadmaps.py
+
+      - name: Commit roadmap and remove one-shot workflow
+        run: |
+          git config user.name "conductor-bot"
+          git config user.email "conductor-bot@users.noreply.github.com"
+          git rm .github/workflows/kapowarr-roadmap-expansion-once.yml
+          git add projects/kapowarr/roadmap.yaml
+          git commit -m "roadmap: expand Kapowarr aggregation priorities"
+          git push origin HEAD:main
