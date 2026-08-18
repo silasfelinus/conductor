@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-18T18:29:42Z
+Generated: 2026-08-18T19:06:27Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **678**
-- Outcomes: blocked: 15, cancelled: 1, done: 662
+- Closed tasks recorded: **679**
+- Outcomes: blocked: 15, cancelled: 1, done: 663
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -22,7 +22,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | appmaker | 8 | 100% |
 | approval-portal | 2 | 0% |
 | art-generator-connect | 3 | 100% |
-| brainstorm | 13 | 92% |
+| brainstorm | 14 | 93% |
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 25 | 100% |
@@ -63,7 +63,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 662 | 99% |
+| software | 663 | 99% |
 
 ## Failure categories
 
@@ -84,6 +84,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-18 `brainstorm/t-015` — A "run prettier --write across the whole file" reflex on a large existing file can silently launder unrelated pre-existing debt into a scoped PR -- confirmed here via git stash that the file already failed prettier --check on main before any edits, and the full-file reformat broke an unrelated test's fragile literal-text regex match by reflowing a paragraph never touched by this task. Fix: after --write, check git diff --stat -- if it's far larger than the authored content, revert to HEAD and reapply only the substantive edits by hand. When adding a field orthogonal to an existing config axis (e.g. output "domain" vs. style "mode"), keep it a separate field rather than overloading the existing one's value space -- easier to reason about and compose.
+
 - 2026-08-18 `brainstorm/t-014` — When a task's own scope comment lives in the code ("X is wired today, Y is <task-id>'s scope -- add a resolver here"), that comment is the actual spec, more precise than the roadmap note. For a "wire an additional lightweight adapter" ask that has two halves (a picker adapter and a context-grounding resolver), wire both for the new entity rather than just the minimum picker half -- a picker-only addition reproduces the exact "shows up but doesn't ground generation" gap the task exists to close for the first entity. Also worth checking whether a script you're substantially extending was ever actually wired into CI (verifyBrainstormSourceContext.ts, added in t-013, had never been) -- fixing that gap costs little once you're already touching the file.
 
 - 2026-08-18 `appmaker/t-013` — Kaizen audit tasks ("check whether the same gap exists elsewhere") are cheap to close honestly when the answer is no -- read the one other conductorStore-driven list on the page (pending scaffolds), confirmed it renders no description field at all so the stale-literal gap t-012 fixed can't recur there, and swept the wider tree for any other appmaker-owned list before concluding "verified no-op." Closed via close_task.py with the audit trail in the note rather than forcing an unnecessary diff.
@@ -95,7 +97,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-18 `humboldt-scoop-cms/t-039` — For a task framed as "a real design question, not just a UI addition," resolve the architecture before delegating -- here that meant confirming the CMS and WordPress plugin share one physical database (not a network integration) and that only the WordPress side can send mail, then pointing the delegate at HSS_Notify's existing shared-table/wp-cron-sweep precedent instead of letting it invent a new synchronous cross-service call or a third-party email dependency. A fully-specified design (table/column names, transactional claim-to-token, generic-response account-enumeration guard, custom short cron interval, plaintext-nulled-atomically-with-send) produced a clean single-pass implementation with no security-relevant rework needed on review.
 - 2026-08-18 `humboldt-scoop-cms/t-026` — A stakes:outward-facing task ("Finish Android production beta and Play Store readiness") still has a real, bounded, mergeable software slice inside it -- release-signing scaffold, permissions/endpoint audit (which caught a genuine bug, a missing INTERNET permission in the release manifest), crash logging, and drafted store/privacy docs -- even though the task as a whole can never reach done without Silas's accounts/keys/URLs. Splitting "what's mechanically buildable" from "what only a human with real-world credentials can do" and shipping the former as a merged PR, with the latter as a numbered checklist in the needs-human note, gets real progress landed instead of parking the whole task untouched until Silas has time to do everything himself.
 - 2026-08-18 `humboldt-scoop-cms/t-036` — When a task explicitly says "revisit deliberately rather than assuming X belongs here," do the architecture investigation (grep the actual endpoints/write paths) in the foreground before delegating implementation -- handing an under-scoped judgment call to a background agent blind risks it either over-building (a mobile route planner nobody asked to keep) or under-building (skipping a genuinely useful feature). Concrete evidence handed to the delegate (exact file/line patterns to mirror) produced a clean single-pass implementation with no scope drift on either the declined half (route planning) or the built half (customer edit).
-- 2026-08-18 `humboldt-scoop-cms/t-035` — A same-day sibling session (t-037 close-out, same rotation) had already read t-035's own self-gating note ("only worth doing once/if a second widget is proposed") and deliberately skipped it -- I claimed and implemented it anyway without first grepping today's TALKBACK/LEARNING.yaml for a prior skip decision on this exact task id, relying only on the roadmap note itself. The work was small, reversible, and harmless (kept merged rather than reverted), but the real gap is that a "ready but conditionally not-yet" task has no roadmap status that actually encodes that, so two same-day sessions made different individually-reasonable calls on the same task.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-18T18:29:42Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-18T19:06:27Z_
