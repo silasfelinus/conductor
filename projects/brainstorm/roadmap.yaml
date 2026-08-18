@@ -353,19 +353,16 @@ tasks:
   - id: t-014
     milestone: m3
     title: Ship Dream-aware brainstorming and expand adapter coverage
-    status: claimed
+    status: done
     depends_on: t-012
     owner: worker
-    updated: '2026-08-18T17:29:13Z'
+    updated: '2026-08-18T17:55:49Z'
     passes: 0
     stakes: reversible
-    note: >-
-      Support Dream-derived titles, locations, sensory details, encounters, threats, rewards,
-      characters and visual concepts without collapsing the Brainstorm page back into the
-      Dream gallery. Add at least one additional lightweight entity adapter if the contract
-      proves clean, and document the recipe for the rest.
+    note: 'PROGRESS 2026-08-18 (conductor scheduled Agent run, 2026-08-18T-scheduled-brainstorm-t014): Ship Dream-aware brainstorming and expand adapter coverage. brainstormSourceContext.ts previously only had a characterContext resolver (brainstorm/t-013); resolveBrainstormSourceContext had no entry for dream, so picking a Dream as a Brainstorm source showed the pickers label but generated exactly the same premise-only ideas as a freeform session. Added dreamContext (title/type, premise, sensory detail via flavorText, visual concept via artPrompt, linked Characters, linked Rewards, and the locations/encounters/threats carried by linked Scenarios) and formatDreamContext in brainstormSourceContextKit.ts, same joinFacts-based/MAX_CONTEXT_LENGTH-bounded shape and canView revalidation contract as characterContext. Added the additional lightweight entity adapter the task asked for: a Scenario picker adapter in brainstormSourceAdapters.ts (force-revalidate + fail-closed search, same discipline as Character/Dream) plus a matching scenarioContext resolver and formatScenarioContext, so Scenario is not left as a picker-only source with no grounding (the exact gap this task closed for Dream). Extended verifyBrainstormSourceContext.ts and verifyBrainstormSourceAdapters.test.ts with the new formatting/contract assertions, and wired verifyBrainstormSourceContext.ts into package.json/contract-tests.yml -- it existed since t-013 but was never actually run in CI; fixed that gap since this PR substantially extends it. Verified: eslint/prettier clean, vue-tsc --noEmit clean, both brainstorm contract tests pass locally (via provision_kind_robots_deps.sh) and in CI (Contract verifiers check, green). kind_robots PR #1937 (squash f6d92ae) -- all checks green except comment-contract, a pre-existing unrelated failure (verifyPopulationDraftQuality.ts live GET to kindrobots.org/api/characters returned 502; confirmed via direct curl that production itself was 502ing at the time, matching the exact precedent from alexa-integration/t-015 and davinci/t-021 earlier the same day); mergeable_state was unstable (non-required check only), so merged. Reward, Bot, Project, and Prompt remain the documented next candidates for both the picker adapter and the context resolver -- comments in both files updated to reflect Dream/Scenario now done.'
     claimed_by: 2026-08-18T-scheduled-brainstorm-t014
     claimed_at: '2026-08-18T17:29:13Z'
+    implementation_pr: 'silasfelinus/kind_robots#1937'
 
   - id: t-015
     milestone: m4
