@@ -549,8 +549,8 @@ tasks:
   - id: t-035
     milestone: m8
     title: "Extract a render_header_extras() hook before HSS_Admin::open() grows a second cross-host widget"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -560,6 +560,9 @@ tasks:
       Scoop Solutions page (a notice banner, a second cross-host link, etc.) should
       not just get appended to open() as a third inline block. Small, low-priority --
       only worth doing once/if a second such widget is actually proposed.
+    claimed_by: 20260818T072856-hsscms-t035
+    claimed_at: '2026-08-18T07:28:57Z'
+    updated: '2026-08-18T07:28:57Z'
 
   - id: t-036
     milestone: m10
