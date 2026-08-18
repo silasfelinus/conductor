@@ -926,3 +926,27 @@ tasks:
   note: Reader-only follow-up after aggregation priorities. Library/file-processing already recognizes
     CBR/RAR plus CB7/7z, CBT/tar and other containers; the reader currently opens CBZ/ZIP, loose images
     and PDF. Add safe extraction for CBR/RAR first, then other practical formats.
+- id: t-046
+  milestone: m6
+  title: Document the content-API push workaround's stale-base risk
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from t-027 (Kapowarr#42): a background agent isolated from the shared git
+    checkout pushed its branch via the GitHub content API (create_branch + push_files)
+    instead of git, using a start-of-task snapshot of main. main moved concurrently
+    (kapowarr/t-026 merged mid-task), and the agent's push silently reverted a line
+    t-026 had added to a file it also touched (frontend/ui.py's `import
+    frontend.torznab`) -- a regression neither the agent's own isolated-copy tests nor
+    the PR's CI could detect, since both only exercised the agent's own before/after
+    snapshot, not live main. Caught only by diffing the PR's actual file list against
+    current main before merging.
+
+    Document (FORK_MAINTENANCE.md or a new docs/ note) that any content-API-based push
+    workaround must re-fetch each touched file's *current* remote content immediately
+    before constructing the write, not rely on a start-of-task snapshot -- and that a
+    reviewing session merging such a PR should specifically diff every touched file
+    against live main before merging rather than trusting green CI alone, since CI
+    cannot detect an import-time-only removal with no direct test coverage.

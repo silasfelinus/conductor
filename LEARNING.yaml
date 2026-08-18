@@ -8762,3 +8762,18 @@ records:
   lesson: A protocol adapter lands cleanly when search query planning, result provenance, and queue preparation
     are separate seams. Preserve explicit source identity through legacy link-only task contracts rather
     than reintroducing source-specific branches.
+- date: 2026-08-18
+  project: kapowarr
+  task: t-027
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A background agent pushing via the GitHub content API (create_branch/push_files)
+    instead of git, because sandbox isolation blocks git-mutating ops against a shared
+    checkout, works from a point-in-time file snapshot with no non-fast-forward safety
+    net -- if a concurrent PR merges a change to a file it also touches, its push can
+    silently revert that change. Neither isolated-copy tests nor CI caught it here
+    (an import-only removal with no direct test coverage). Reviewing sessions merging
+    such a PR must diff every touched file against live main, not just trust green CI.
