@@ -672,22 +672,16 @@ tasks:
   - id: t-038
     milestone: m10
     title: Add WordPress admin-side UI for customer app-token issuance
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-025
-    note: >
-      Deferred from t-025 (silasfelinus/humboldtscoopsolutions#75): issuance is
-      only reachable today via the CMS's own admin-gated endpoint
-      (POST /customers/:id/app-token), which is what the mobile Admin toolset
-      calls. t-025's PR deliberately left a WordPress wp-admin screen (mirroring
-      staff_tokens_section for staff) as follow-up, since it wasn't load-bearing
-      for the mobile app itself. Worth doing once desktop/WP-admin-side customer
-      management wants the same capability without opening the CMS directly.
+    note: 'Built HSS_Customer_Tokens::issue() plus a WordPress admin issue form on the Customers screen, mirroring staff_tokens_section()''s shape exactly (one-time plaintext reveal, nonce-checked POST handler, same admin capability gate as page_customers()/page_staff()). Investigation found t-037 (merged, PR #76) had already built list/revoke and explicitly deferred issue() to this task, so the real gap was narrower than the original scope. issue() writes only to wp_hss_customer_tokens (never wp_hss_staff_tokens), uses the same SHA-256-of-32-random-bytes scheme as cms/src/auth/customerTokenHash.ts, so a token from either the WP screen or the CMS''s own admin-gated endpoint (t-025) resolves identically. Full 15-file/4-script site/tests/ suite passes (0 failures), including the extended customer-token-admin-test.php (29 checks). Merged silasfelinus/humboldtscoopsolutions#81 (squash 36afef2).'
     claimed_by: 2026-08-18T094355Z-hss-t038-19cd9261
     claimed_at: '2026-08-18T09:43:56Z'
-    updated: '2026-08-18T09:43:56Z'
+    updated: '2026-08-18T09:50:05Z'
+    implementation_pr: 'silasfelinus/humboldtscoopsolutions#81'
 
   - id: t-039
     milestone: m10
