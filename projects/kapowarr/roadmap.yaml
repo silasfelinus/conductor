@@ -774,14 +774,19 @@ tasks:
 - id: t-030
   milestone: m6
   title: Add library-informed Discover and Similar recommendations
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   note: |-
     Extend Discover with explainable recommendations from the current library: related series/franchise/title stems, publisher, creators and characters when metadata supports them, plus recent source releases not already owned. Start deterministic, not opaque ML.
 
     Promote library-informed Discover and Similar recommendations now that the acquisition foundation, weekly pull lists, story arcs/CBL, torrent lifecycle hardening, Torznab, and the first GetComics Discover browser are merged.
-  updated: '2026-08-18T05:46:23+00:00'
+
+    Claim the library-informed Discover and Similar recommendations slice. Build deterministic, explainable recommendations on top of the newly merged Discover page without duplicating acquisition/search paths.
+  updated: '2026-08-18T05:47:08+00:00'
+  owner: worker
+  claimed_by: 20260818T054700Z-kap-t030-discover-similar
+  claimed_at: '2026-08-18T05:47:08+00:00'
 - id: t-031
   milestone: m5
   title: Harden torrent lifecycle, hardlinks, and oversized pack handling
