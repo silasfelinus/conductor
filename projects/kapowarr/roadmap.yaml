@@ -775,7 +775,7 @@ tasks:
 - id: t-031
   milestone: m5
   title: Harden torrent lifecycle, hardlinks, and oversized pack handling
-  status: ready
+  status: done
   passes: 1
   stakes: reversible
   note: |-
@@ -784,6 +784,8 @@ tasks:
     Promote torrent lifecycle hardening to ready now that t-025 acquisition architecture and t-026 Torznab support are complete. #37 already covers safe nested range-pack normalization; remaining scope is seed-safe hardlink/copy import, single-file torrent handling, and range-aware missing-issue acquisition.
 
     Claim torrent lifecycle hardening as the final acquisition-foundation lane before Discover. #37 already handles safe nested range-pack normalization; remaining work is range-aware issue matching, seed-safe hardlink-first import with copy fallback, single-file torrent handling, and ensuring rename/conversion/post-processing do not mutate active seed content.
+
+    Torrent lifecycle hardening is merged in silasfelinus/Kapowarr#41 (squash 7cf14d69c757c8e7e06df347c5738d82cc452811). The final merge-ref verification passed Python 3.8-3.12, docs, and container against current main after the weekly-release work landed. The implementation adds hardlink-first seed-safe imports with copy fallback, single-file torrent-root handling, deferred inode metadata processing until seed cleanup, range-aware issue search, direct already-owned issue pruning, and one-pack-only oversized-range fallback.
   retry_context: >
     pass 1 failed (quality): silasfelinus/Kapowarr#41 opened for this task but CI is red on
     `test (3.12)` (matrix fail-fast cancelled 3.8-3.11, so only 3.12 ran to completion) —
@@ -804,8 +806,7 @@ tasks:
     step in the pipeline if the tests are catching a real regression — then push to PR #41
     (still open) rather than opening a new one, and confirm all 5 Python-version jobs go
     green (not just 3.12) before re-requesting review.
-  updated: '2026-08-18T03:31:00+00:00'
-  owner: worker
+  updated: '2026-08-18 04:20:00+00:00'
   claimed_by: 20260818T025300Z-kap-t031
   claimed_at: '2026-08-18T02:53:15+00:00'
 - id: t-032
