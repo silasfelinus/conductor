@@ -367,21 +367,18 @@ tasks:
   - id: t-015
     milestone: m4
     title: Add dedicated art-prompt brainstorm mode
-    status: claimed
+    status: done
     depends_on:
       - t-008
       - t-013
     owner: worker
-    updated: '2026-08-18T18:04:04Z'
+    updated: '2026-08-18T18:59:11Z'
     passes: 0
     stakes: reversible
-    note: >-
-      Text-only art ideation: generate varied image prompts with composition, subject, action,
-      environment and visual-direction diversity. It should work freeform or from an entity.
-      Do not enqueue images merely because the user requested 20 prompt ideas. Candidate cards
-      gain an explicit optional "Generate art" action only after this text mode is solid.
+    note: 'PROGRESS 2026-08-18 (conductor scheduled Agent run, 2026-08-18T-scheduled-brainstorm-t015): Add dedicated art-prompt brainstorm mode. Added a second Brainstorm output domain (BRAINSTORM_OUTPUT_DOMAINS: ideas | art-prompts) orthogonal to the existing mode creative-direction knob -- outputDomain changes WHAT KIND of thing a candidates text field is (a concept/joke vs. a ready-to-use image-generation prompt), not how it is stylistically pushed. art-prompts mode instructs the model to vary composition, subject, action, environment, and visual direction across the batch (more than one dimension per candidate, no two candidates sharing the same combination), write each prompt as a dense consumable string, and never describe the act of generating/enqueuing an image -- matching the task notes explicit scope boundary (Do not enqueue images merely because the user requested 20 prompt ideas; the Generate art action stays out of scope). Works freeform or grounded in an entity via the existing source mechanism, unchanged. Wired end to end: types/brainstorm.ts (BRAINSTORM_OUTPUT_DOMAINS, outputDomain on BrainstormGenerateRequest/BrainstormSessionSnapshot), brainstormPrompt.ts (buildBrainstormPrompts branches its QUALITY BAR/OUTPUT CONTRACT sections on outputDomain, byte-identical for the default ideas domain), generate.post.ts (server-side validation, never trusts the client value), brainstormPersistence.ts + prisma/brainstorm.prisma + a new additive-only migration (20260818190000_add_brainstorm_output_domain) so outputDomain persists through saved sessions and degrades to ideas for any pre-existing/unrecognized value, brainstormStore.ts (outputDomain mirrors every existing mode touch point), and brainstorm-manager.vue (an Output toggle next to the premise field; count label and generate-button text adapt; the Visual directions starter premise now actually uses the new domain instead of asking for portrait concepts under the ideas domain). Extended verifyBrainstormGeneration.ts and verifyBrainstormPersistence.ts with real coverage (framing, the enqueue-disclaimer, the diversity-dimensions line, endpoint normalization, schema/migration assertions, save-stored-reopen round-trip, legacy/corrupt-value fallback) and regenerated the Prisma client. Verified: eslint clean, vue-tsc --noEmit clean, all 7 brainstorm contract scripts pass locally and in CI. kind_robots PR #1938 (squash 324781f) -- all 36 checks green except the same known-unrelated comment-contract production-502 flake documented earlier today (alexa-integration/t-015, davinci/t-021, brainstorm/t-014); mergeable_state was unstable (non-required check only), so merged. Kaizen note recorded in the PR: the reused ideas-domain RESPONSE LENSES (dark-humor/pun/dad-joke/...) may be worth revisiting with a dedicated per-domain lens set once real usage shows whether they read naturally for art prompts.'
     claimed_by: 2026-08-18T-scheduled-brainstorm-t015
     claimed_at: '2026-08-18T18:04:04Z'
+    implementation_pr: 'silasfelinus/kind_robots#1938'
 
   - id: t-016
     milestone: m4

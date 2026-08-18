@@ -8945,3 +8945,23 @@ records:
     ever actually wired into CI (verifyBrainstormSourceContext.ts, added in
     t-013, had never been) -- fixing that gap costs little once you're already
     touching the file.
+- date: 2026-08-18
+  project: brainstorm
+  task: t-015
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A "run prettier --write across the whole file" reflex on a large existing
+    file can silently launder unrelated pre-existing debt into a scoped PR --
+    confirmed here via git stash that the file already failed prettier
+    --check on main before any edits, and the full-file reformat broke an
+    unrelated test's fragile literal-text regex match by reflowing a
+    paragraph never touched by this task. Fix: after --write, check git diff
+    --stat -- if it's far larger than the authored content, revert to HEAD
+    and reapply only the substantive edits by hand. When adding a field
+    orthogonal to an existing config axis (e.g. output "domain" vs. style
+    "mode"), keep it a separate field rather than overloading the existing
+    one's value space -- easier to reason about and compose.
