@@ -367,12 +367,12 @@ tasks:
   - id: t-015
     milestone: m4
     title: Add dedicated art-prompt brainstorm mode
-    status: ready
+    status: claimed
     depends_on:
       - t-008
       - t-013
-    owner: null
-    updated: '2026-08-10T08:05:00Z'
+    owner: worker
+    updated: '2026-08-18T18:04:04Z'
     passes: 0
     stakes: reversible
     note: >-
@@ -380,6 +380,8 @@ tasks:
       environment and visual-direction diversity. It should work freeform or from an entity.
       Do not enqueue images merely because the user requested 20 prompt ideas. Candidate cards
       gain an explicit optional "Generate art" action only after this text mode is solid.
+    claimed_by: 2026-08-18T-scheduled-brainstorm-t015
+    claimed_at: '2026-08-18T18:04:04Z'
 
   - id: t-016
     milestone: m4
