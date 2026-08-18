@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-18T14:52:15Z
+Generated: 2026-08-18T14:57:45Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **675**
-- Outcomes: blocked: 15, cancelled: 1, done: 659
+- Closed tasks recorded: **676**
+- Outcomes: blocked: 15, cancelled: 1, done: 660
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -16,7 +16,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Project | Closed | Success rate |
 |---|---|---|
 | ai-art-academy | 64 | 98% |
-| alexa-integration | 5 | 100% |
+| alexa-integration | 6 | 100% |
 | animation-manager | 13 | 100% |
 | animation-studio | 2 | 50% |
 | appmaker | 7 | 100% |
@@ -63,7 +63,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 659 | 99% |
+| software | 660 | 99% |
 
 ## Failure categories
 
@@ -84,6 +84,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-18 `alexa-integration/t-015` — This project's recurring self-audit of serendipityVoiceStore.ts has now found three distinct bug shapes across four cycles: false acknowledgements from action/target mismatches (t-015/t-020), missing error-reporting regression coverage (t-021), and this cycle's missing acknowledgement on an otherwise-correct success path (applyArtCommand() never called postAck() at all, so a fully successful voice-driven art draft got no spoken confirmation back through the relay -- the mirror image of the false-success bugs, not a repeat of them). Comparing each dispatch function against its siblings for a missing behavior, not just a wrong one, is what surfaced it. Also reconfirmed the appmaker/t-012 lesson from 2026-08-16: a single CI job failing with a live 502 to kindrobots.org (this time in the Comment Migration Contract workflow, hitting /api/bots on rerun after /api/characters on the first try) is a transient, diff-unrelated production flake -- confirmed directly via curl against the live host before merging past it, rather than assuming or guessing.
 - 2026-08-18 `storybook/t-010` — isolation:'worktree' stops a background agent from colliding on shared LOCAL git state, but does nothing to stop it from colliding with a dispatching session that starts fixing the SAME remote PR directly (e.g. after the agent's final report looked stuck/garbled) -- both sides independently diagnosed and fixed the identical CI failure and both called merge; GitHub's idempotent merge meant no harm this time, but a session should stop the agent or wait for its real completion before touching a PR it's still delegated, not race it.
 - 2026-08-18 `model-builder/t-029` — A background agent that spawns its own Monitor and then reports back only "still waiting on it" (never a real final summary) is a distinct failure mode from prior background-agent guidance -- don't wait on it indefinitely; check GitHub directly (PR/branch/CI state) the same way you'd verify any other agent's self-report, since the agent's actual work product (the PR) can be sound even when its wrap-up communication isn't.
 - 2026-08-18 `kapowarr/t-033` — A claim past CLAIM_TTL_MINUTES isn't automatically scratch work -- read the stale branch's actual diff before reclaiming; a small-but-sound partial scaffold (this one: a backend query + route registration, no UI/tests yet) is worth resuming on top of, not discarding and reimplementing from zero.
@@ -93,7 +94,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-18 `humboldt-scoop-cms/t-035` — A same-day sibling session (t-037 close-out, same rotation) had already read t-035's own self-gating note ("only worth doing once/if a second widget is proposed") and deliberately skipped it -- I claimed and implemented it anyway without first grepping today's TALKBACK/LEARNING.yaml for a prior skip decision on this exact task id, relying only on the roadmap note itself. The work was small, reversible, and harmless (kept merged rather than reverted), but the real gap is that a "ready but conditionally not-yet" task has no roadmap status that actually encodes that, so two same-day sessions made different individually-reasonable calls on the same task.
 - 2026-08-18 `humboldt-scoop-cms/t-037` — Before picking the file-order-next ready task, read its note for a self-gating condition ("only worth doing once X is proposed") and check whether that condition actually holds -- t-035 gated on a second cross-host widget that doesn't exist yet, so it was correctly skipped in favor of t-037, one of t-025's real deferred follow-ups with a concrete existing pattern (HSS_Staff_Tokens) to mirror.
 - 2026-08-18 `humboldt-scoop-cms/t-024` — Mirroring an existing durable-queue pattern in the same codebase (FilePhotoUploadQueue from t-023) made a genuinely large offline-durability feature (route cache + write queue + reconcile-on-fetch) tractable in one pass without changing the RouteApi/RouteStorage interfaces the task asked to preserve; also fixed a real latent bug found along the way (RouteStop.fromJson silently dropping crewNotes) that would have made cached completions lose their notes on app restart.
-- 2026-08-18 `kapowarr/t-028` — Portable comic lists should preserve unresolved gaps and enrich source identity when local matching provides stronger IDs; acquisition should be an explicit action over resolved missing entries.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-18T14:52:15Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-18T14:57:45Z_
