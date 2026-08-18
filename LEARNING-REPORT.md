@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-18T11:51:40Z
+Generated: 2026-08-18T12:13:55Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **673**
-- Outcomes: blocked: 15, cancelled: 1, done: 657
+- Closed tasks recorded: **674**
+- Outcomes: blocked: 15, cancelled: 1, done: 658
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -42,7 +42,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 68 | 100% |
+| model-builder | 69 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -63,7 +63,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 657 | 99% |
+| software | 658 | 99% |
 
 ## Failure categories
 
@@ -84,6 +84,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-18 `model-builder/t-029` — A background agent that spawns its own Monitor and then reports back only "still waiting on it" (never a real final summary) is a distinct failure mode from prior background-agent guidance -- don't wait on it indefinitely; check GitHub directly (PR/branch/CI state) the same way you'd verify any other agent's self-report, since the agent's actual work product (the PR) can be sound even when its wrap-up communication isn't.
 - 2026-08-18 `kapowarr/t-033` — A claim past CLAIM_TTL_MINUTES isn't automatically scratch work -- read the stale branch's actual diff before reclaiming; a small-but-sound partial scaffold (this one: a backend query + route registration, no UI/tests yet) is worth resuming on top of, not discarding and reimplementing from zero.
 - 2026-08-18 `humboldt-scoop-cms/t-039` — For a task framed as "a real design question, not just a UI addition," resolve the architecture before delegating -- here that meant confirming the CMS and WordPress plugin share one physical database (not a network integration) and that only the WordPress side can send mail, then pointing the delegate at HSS_Notify's existing shared-table/wp-cron-sweep precedent instead of letting it invent a new synchronous cross-service call or a third-party email dependency. A fully-specified design (table/column names, transactional claim-to-token, generic-response account-enumeration guard, custom short cron interval, plaintext-nulled-atomically-with-send) produced a clean single-pass implementation with no security-relevant rework needed on review.
 - 2026-08-18 `humboldt-scoop-cms/t-026` — A stakes:outward-facing task ("Finish Android production beta and Play Store readiness") still has a real, bounded, mergeable software slice inside it -- release-signing scaffold, permissions/endpoint audit (which caught a genuine bug, a missing INTERNET permission in the release manifest), crash logging, and drafted store/privacy docs -- even though the task as a whole can never reach done without Silas's accounts/keys/URLs. Splitting "what's mechanically buildable" from "what only a human with real-world credentials can do" and shipping the former as a merged PR, with the latter as a numbered checklist in the needs-human note, gets real progress landed instead of parking the whole task untouched until Silas has time to do everything himself.
@@ -93,7 +94,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-18 `humboldt-scoop-cms/t-024` — Mirroring an existing durable-queue pattern in the same codebase (FilePhotoUploadQueue from t-023) made a genuinely large offline-durability feature (route cache + write queue + reconcile-on-fetch) tractable in one pass without changing the RouteApi/RouteStorage interfaces the task asked to preserve; also fixed a real latent bug found along the way (RouteStop.fromJson silently dropping crewNotes) that would have made cached completions lose their notes on app restart.
 - 2026-08-18 `kapowarr/t-028` — Portable comic lists should preserve unresolved gaps and enrich source identity when local matching provides stronger IDs; acquisition should be an explicit action over resolved missing entries.
 - 2026-08-18 `kapowarr/t-046` — Documented the content-API push workaround's stale-base risk (AGENT_WORKFLOW_NOTES.md, Kapowarr#43) — any agent forced to push via create_branch+push_files instead of git push must re-fetch each touched file's live content immediately before writing, and reviewing sessions must diff the actual PR file list against main before merging rather than trusting green CI alone.
-- 2026-08-18 `kapowarr/t-031` — Preserve mature post-processing contracts where possible; test seed-safety behavior directly and keep range metadata optional on legacy download paths.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-18T11:51:40Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-18T12:13:55Z_
