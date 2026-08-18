@@ -745,13 +745,17 @@ tasks:
 - id: t-028
   milestone: m6
   title: Add story arcs and portable CBL/read-list workflows
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
-  note: Model ordered story arcs/read lists across volumes and issues, support CBL import/export where
-    practical, and let arcs identify missing issues acquisition can fill. Keep this aggregation oriented;
-    per-user reading-state sophistication is out of scope for now.
+  note: |-
+    Model ordered story arcs/read lists across volumes and issues, support CBL import/export where practical, and let arcs identify missing issues acquisition can fill. Keep this aggregation oriented; per-user reading-state sophistication is out of scope for now.
+
+    Claim story arcs and portable CBL/read-list workflows as the final planned curation foundation before the GetComics Discover browser. Keep this aggregation-oriented: ordered cross-volume issue lists, CBL import/export, missing-issue visibility and acquisition hooks; no multi-user reading-state scope.
+  claimed_by: 20260818T042200Z-kapowarr-t028
+  claimed_at: '2026-08-18 04:22:00+00:00'
+  updated: '2026-08-18 04:22:00+00:00'
 - id: t-029
   milestone: m6
   title: Build a GetComics Discover browser
