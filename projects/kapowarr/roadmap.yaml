@@ -855,7 +855,7 @@ tasks:
 - id: t-033
   milestone: m6
   title: Add Wanted/Missing workbench and manual import
-  status: claimed
+  status: done
   passes: 0
   stakes: reversible
   note: |-
@@ -864,10 +864,11 @@ tasks:
     Promote the global Wanted/Missing workbench and manual import as the next Kapowarr task after source/indexer/client quality policy completed. Build an -arr-style view over monitored missing issues with search/bulk actions, while reusing the existing hardened acquisition and import paths rather than duplicating them.
 
     Claim the global Wanted/Missing workbench and manual import. Build a searchable global view of monitored missing issues with per-row and bulk acquisition actions, then reuse existing file matching/import seams for manual import rather than creating a parallel library importer.
-  updated: '2026-08-18T11:28:24Z'
+  updated: '2026-08-18T11:46:50Z'
   owner: worker
   claimed_by: 20260818T112823Z-kapowarr-t033-resume
   claimed_at: '2026-08-18T11:28:24Z'
+  implementation_pr: 'silasfelinus/Kapowarr#50'
 - id: t-034
   milestone: m5
   title: Add watched-folder auto import for external downloads
