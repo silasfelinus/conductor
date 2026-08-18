@@ -776,14 +776,19 @@ tasks:
 - id: t-031
   milestone: m5
   title: Harden torrent lifecycle, hardlinks, and oversized pack handling
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   note: |-
     Close acquisition gaps reflected in upstream issues #208 and #212: allow packs with extra issues to satisfy monitored gaps when permitted, add seed-safe hardlink imports, and verify rename/conversion/post-processing does not break active seeding.
 
     Promote torrent lifecycle hardening to ready now that t-025 acquisition architecture and t-026 Torznab support are complete. #37 already covers safe nested range-pack normalization; remaining scope is seed-safe hardlink/copy import, single-file torrent handling, and range-aware missing-issue acquisition.
-  updated: '2026-08-18T02:52:26+00:00'
+
+    Claim torrent lifecycle hardening as the final acquisition-foundation lane before Discover. #37 already handles safe nested range-pack normalization; remaining work is range-aware issue matching, seed-safe hardlink-first import with copy fallback, single-file torrent handling, and ensuring rename/conversion/post-processing do not mutate active seed content.
+  updated: '2026-08-18T02:53:15+00:00'
+  owner: worker
+  claimed_by: 20260818T025300Z-kap-t031
+  claimed_at: '2026-08-18T02:53:15+00:00'
 - id: t-032
   milestone: m5
   title: Add source quality preferences and upgrade policy
