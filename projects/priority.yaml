@@ -1,10 +1,15 @@
 # Which project leads when multiple have ready tasks. Top of list wins.
-# Finite active projects always outrank continuous projects. Paused, finished, and
+# Scheduled operational commitments preempt this project queue through select_role.py;
+# in particular, Daily Dream / daily-digest health is handled before ordinary worker
+# pickup because it is expected to deliver every day.
+# Among finite project work, Kapowarr is the current top priority.
+# Finite active projects otherwise outrank continuous projects. Paused, finished, and
 # retired projects are historical records and do not belong in the selectable queue.
-# Continuous programs are fallback work; dream-cycle stays last by design.
+# Continuous programs are fallback work; dream-cycle's ordinary maintenance task stays
+# last because the actual Daily Dream production/digest workflow has its own schedule.
 order:
-  - interface-vision
   - kapowarr
+  - interface-vision
   - ai-art-academy
   - coloring-book
   - humboldt-scoop-cms
