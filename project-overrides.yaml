@@ -436,7 +436,15 @@ overrides:
     kind: software
 
   - slug: ruler-hooked
-    status: active
+    status: finished # flipped 2026-08-18 (conductor scheduled Agent run) -- all 15 tasks
+    # done, nothing open. Goal ("playable slideshow fishing/kingdom-management PoC,
+    # offline-playable") is met: m1/m2 shipped the PoC (t-001..t-013), t-014 expanded
+    # content depth (6->25 cards, 1->3 arcs, 2->4 endings), t-009 covered the Steam/Unreal
+    # research half of m3, and t-015 shipped an installable/offline PWA wrapper (app
+    # packaging), closing out m3's three named components. Deliberately-deferred polish
+    # (site-wide PWA conversion, offline SPA-nav caching via Nuxt Content, install-prompt
+    # UI on other routes; an actual Steam/Unreal port) remains documented in t-015's and
+    # t-009's own notes as future bucket-list scope, not required by the stated PoC goal.
     priority: normal
     kind: software
     # Frontend placement — synced to the kind_robots Project row by
