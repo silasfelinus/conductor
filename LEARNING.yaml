@@ -8925,3 +8925,23 @@ records:
     can't recur there, and swept the wider tree for any other appmaker-owned
     list before concluding "verified no-op." Closed via close_task.py with the
     audit trail in the note rather than forcing an unnecessary diff.
+- date: 2026-08-18
+  project: brainstorm
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    When a task's own scope comment lives in the code ("X is wired today, Y is
+    <task-id>'s scope -- add a resolver here"), that comment is the actual spec,
+    more precise than the roadmap note. For a "wire an additional lightweight
+    adapter" ask that has two halves (a picker adapter and a context-grounding
+    resolver), wire both for the new entity rather than just the minimum picker
+    half -- a picker-only addition reproduces the exact "shows up but doesn't
+    ground generation" gap the task exists to close for the first entity.
+    Also worth checking whether a script you're substantially extending was
+    ever actually wired into CI (verifyBrainstormSourceContext.ts, added in
+    t-013, had never been) -- fixing that gap costs little once you're already
+    touching the file.
