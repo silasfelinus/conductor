@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-18T17:29:43Z
+Generated: 2026-08-18T18:02:38Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **677**
-- Outcomes: blocked: 15, cancelled: 1, done: 661
+- Closed tasks recorded: **678**
+- Outcomes: blocked: 15, cancelled: 1, done: 662
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -22,7 +22,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | appmaker | 8 | 100% |
 | approval-portal | 2 | 0% |
 | art-generator-connect | 3 | 100% |
-| brainstorm | 12 | 92% |
+| brainstorm | 13 | 92% |
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 25 | 100% |
@@ -63,7 +63,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 661 | 99% |
+| software | 662 | 99% |
 
 ## Failure categories
 
@@ -84,6 +84,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-18 `brainstorm/t-014` — When a task's own scope comment lives in the code ("X is wired today, Y is <task-id>'s scope -- add a resolver here"), that comment is the actual spec, more precise than the roadmap note. For a "wire an additional lightweight adapter" ask that has two halves (a picker adapter and a context-grounding resolver), wire both for the new entity rather than just the minimum picker half -- a picker-only addition reproduces the exact "shows up but doesn't ground generation" gap the task exists to close for the first entity. Also worth checking whether a script you're substantially extending was ever actually wired into CI (verifyBrainstormSourceContext.ts, added in t-013, had never been) -- fixing that gap costs little once you're already touching the file.
+
 - 2026-08-18 `appmaker/t-013` — Kaizen audit tasks ("check whether the same gap exists elsewhere") are cheap to close honestly when the answer is no -- read the one other conductorStore-driven list on the page (pending scaffolds), confirmed it renders no description field at all so the stale-literal gap t-012 fixed can't recur there, and swept the wider tree for any other appmaker-owned list before concluding "verified no-op." Closed via close_task.py with the audit trail in the note rather than forcing an unnecessary diff.
 
 - 2026-08-18 `alexa-integration/t-015` — This project's recurring self-audit of serendipityVoiceStore.ts has now found three distinct bug shapes across four cycles: false acknowledgements from action/target mismatches (t-015/t-020), missing error-reporting regression coverage (t-021), and this cycle's missing acknowledgement on an otherwise-correct success path (applyArtCommand() never called postAck() at all, so a fully successful voice-driven art draft got no spoken confirmation back through the relay -- the mirror image of the false-success bugs, not a repeat of them). Comparing each dispatch function against its siblings for a missing behavior, not just a wrong one, is what surfaced it. Also reconfirmed the appmaker/t-012 lesson from 2026-08-16: a single CI job failing with a live 502 to kindrobots.org (this time in the Comment Migration Contract workflow, hitting /api/bots on rerun after /api/characters on the first try) is a transient, diff-unrelated production flake -- confirmed directly via curl against the live host before merging past it, rather than assuming or guessing.
@@ -94,7 +96,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-18 `humboldt-scoop-cms/t-026` — A stakes:outward-facing task ("Finish Android production beta and Play Store readiness") still has a real, bounded, mergeable software slice inside it -- release-signing scaffold, permissions/endpoint audit (which caught a genuine bug, a missing INTERNET permission in the release manifest), crash logging, and drafted store/privacy docs -- even though the task as a whole can never reach done without Silas's accounts/keys/URLs. Splitting "what's mechanically buildable" from "what only a human with real-world credentials can do" and shipping the former as a merged PR, with the latter as a numbered checklist in the needs-human note, gets real progress landed instead of parking the whole task untouched until Silas has time to do everything himself.
 - 2026-08-18 `humboldt-scoop-cms/t-036` — When a task explicitly says "revisit deliberately rather than assuming X belongs here," do the architecture investigation (grep the actual endpoints/write paths) in the foreground before delegating implementation -- handing an under-scoped judgment call to a background agent blind risks it either over-building (a mobile route planner nobody asked to keep) or under-building (skipping a genuinely useful feature). Concrete evidence handed to the delegate (exact file/line patterns to mirror) produced a clean single-pass implementation with no scope drift on either the declined half (route planning) or the built half (customer edit).
 - 2026-08-18 `humboldt-scoop-cms/t-035` — A same-day sibling session (t-037 close-out, same rotation) had already read t-035's own self-gating note ("only worth doing once/if a second widget is proposed") and deliberately skipped it -- I claimed and implemented it anyway without first grepping today's TALKBACK/LEARNING.yaml for a prior skip decision on this exact task id, relying only on the roadmap note itself. The work was small, reversible, and harmless (kept merged rather than reverted), but the real gap is that a "ready but conditionally not-yet" task has no roadmap status that actually encodes that, so two same-day sessions made different individually-reasonable calls on the same task.
-- 2026-08-18 `humboldt-scoop-cms/t-037` — Before picking the file-order-next ready task, read its note for a self-gating condition ("only worth doing once X is proposed") and check whether that condition actually holds -- t-035 gated on a second cross-host widget that doesn't exist yet, so it was correctly skipped in favor of t-037, one of t-025's real deferred follow-ups with a concrete existing pattern (HSS_Staff_Tokens) to mirror.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-18T17:29:43Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-18T18:02:38Z_
