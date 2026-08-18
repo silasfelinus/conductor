@@ -760,17 +760,15 @@ tasks:
 - id: t-029
   milestone: m6
   title: Build a GetComics Discover browser
-  status: claimed
+  status: done
   passes: 0
   stakes: reversible
-  note: |-
-    Implement the spirit of upstream issue #6: browse recent GetComics releases inside Kapowarr, open/search/add matching series, and optionally monitor discovered series. Reuse source parsing/search infrastructure instead of a second scraping path.
-
-    Acquisition/indexer plumbing, weekly pull lists, story arcs/CBL workflows, oversized-pack handling, and torrent lifecycle hardening are now merged. GetComics Discover is the next aggregation-facing product task. Build it on the existing source/search abstractions rather than creating a separate download path.
-  updated: '2026-08-18T05:29:04Z'
+  note: 'Implemented and merged silasfelinus/Kapowarr#45 (squash a391576) via an isolated background worker agent. New "Discover" page under Activity > Discover: browses GetComics recent-posts listing (paged), cross-references each item against the whole library via match_title(), and links not-yet-added items straight into the existing Add Volume flow (/add?q=<series>) rather than building a second add/search path. Backend: DiscoverItemData/DiscoverMatchData/DiscoverSource in definitions.py, backend/implementations/discover.py (reuses getcomics.py _get_max_page for pagination, best-effort cover-image extraction incl. lazy-load data-src/data-lazy-src), backend/features/discover.py (DiscoverSources registry mirroring WeeklyReleaseSources/SearchSources, match_discover_items_to_library() checks whole library not just monitored). Frontend: frontend/discover.py (GET /activity/discover, GET /api/discover?page=N, following reading_lists.py routing convention), discover.html/js/css modelled on pull_list + blocklist page-turner, nav entry in base.html. 21 new fixture-based unit tests (tests/Tbackend/discover.py); full suite 313/313 pass, isort/mypy clean. No live network egress in sandbox so GC markup (esp. cover-image lazy-load heuristic) unverified against the live site -- same standing caveat as weekly_releases.py. Verified merge myself via GitHub MCP before closing: PR #45 state=closed/merged=true, 10 files changed +967/-0, diff matches the PR description exactly, no unexpected reverted lines.'
+  updated: '2026-08-18T05:44:58Z'
   owner: worker
   claimed_by: 20260818T052904Z-kap-t029-conductor-sweep
   claimed_at: '2026-08-18T05:29:04Z'
+  implementation_pr: 'silasfelinus/Kapowarr#45'
 - id: t-030
   milestone: m6
   title: Add library-informed Discover and Similar recommendations
