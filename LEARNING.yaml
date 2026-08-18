@@ -8965,3 +8965,21 @@ records:
     orthogonal to an existing config axis (e.g. output "domain" vs. style
     "mode"), keep it a separate field rather than overloading the existing
     one's value space -- easier to reason about and compose.
+- date: 2026-08-18
+  project: brainstorm
+  task: t-018
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A persona-recovery task with an open-ended "add flavor" instruction doesn't
+    require inventing anything -- audit the live database first. The real,
+    already-generated Brainbot Bot record (art, tagline, voice) sitting unused
+    was a stronger fit than restoring a legacy gitignored asset or a stale
+    seed-script record that never populated production. When multiple
+    candidate sources of truth exist (a seed file, a content .md, a live DB
+    record), the live DB record wins if it actually satisfies the ask --
+    verify what's live via the site's own API rather than trusting the most
+    convenient-looking file in the repo.
