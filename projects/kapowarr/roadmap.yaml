@@ -1069,7 +1069,7 @@ tasks:
 - id: t-050
   milestone: m5
   title: Allow indexers to be enabled or disabled
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
@@ -1077,6 +1077,8 @@ tasks:
     User-reported live follow-up on 2026-08-18. Searches can be delayed by a slow or unavailable configured indexer. Add a persistent per-indexer enabled toggle in Settings, default existing and newly created indexers to enabled, preserve disabled indexer configuration, and exclude disabled indexers consistently from automatic, manual, Wanted, Discover, and other shared search paths.
 
     Claim the user-requested per-indexer enable toggle and ensure disabled indexers are excluded through the shared search registry.
+
+    Implementation is ready on worker/kapowarr-t-050-indexer-toggle. The settings list exposes immediate Enabled/Disabled controls for Newznab and Torznab indexers while preserving credentials, categories, priorities, and the existing enabled-only shared search registry. Node syntax and focused toggle-payload checks pass.
   claimed_by: 2026-08-18T212948Z-kapowarr-t-050-b73c
   claimed_at: '2026-08-18T21:29:48Z'
-  updated: '2026-08-18T21:29:48Z'
+  updated: '2026-08-18T21:34:42Z'
