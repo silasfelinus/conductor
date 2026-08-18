@@ -582,8 +582,8 @@ tasks:
   - id: t-037
     milestone: m10
     title: Add admin UI to list and revoke issued customer app-access tokens
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-025
@@ -594,6 +594,9 @@ tasks:
       a customer or revoke one without going to the database directly -- the
       staff-token side already has this via the Staff admin screen's Tokens
       section (t-015); mirror that pattern for wp_hss_customer_tokens.
+    claimed_by: 20260818T062811Z-hsscms-t037
+    claimed_at: '2026-08-18T06:28:11Z'
+    updated: '2026-08-18T06:28:11Z'
 
   - id: t-038
     milestone: m10
