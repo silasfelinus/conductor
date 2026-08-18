@@ -760,13 +760,14 @@ tasks:
 - id: t-029
   milestone: m6
   title: Build a GetComics Discover browser
-  status: not-started
-  owner: null
+  status: ready
   passes: 0
   stakes: reversible
-  note: 'Implement the spirit of upstream issue #6: browse recent GetComics releases inside Kapowarr,
-    open/search/add matching series, and optionally monitor discovered series. Reuse source parsing/search
-    infrastructure instead of a second scraping path.'
+  note: |-
+    Implement the spirit of upstream issue #6: browse recent GetComics releases inside Kapowarr, open/search/add matching series, and optionally monitor discovered series. Reuse source parsing/search infrastructure instead of a second scraping path.
+
+    Acquisition/indexer plumbing, weekly pull lists, story arcs/CBL workflows, oversized-pack handling, and torrent lifecycle hardening are now merged. GetComics Discover is the next aggregation-facing product task. Build it on the existing source/search abstractions rather than creating a separate download path.
+  updated: '2026-08-18 04:43:00+00:00'
 - id: t-030
   milestone: m6
   title: Add library-informed Discover and Similar recommendations
