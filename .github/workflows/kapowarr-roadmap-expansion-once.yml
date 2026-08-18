@@ -1,0 +1,43 @@
+name: Expand Kapowarr aggregation roadmap once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/kapowarr-roadmap-expansion-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  expand:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install roadmap dependency
+        run: python -m pip install pyyaml
+
+      - name: Expand Kapowarr roadmap
+        run: python scripts/kapowarr_roadmap_expansion_once.py
+
+      - name: Validate roadmap
+        run: |
+          python scripts/check_roadmap_yaml.py
+          python scripts/validate_roadmaps.py
+
+      - name: Commit roadmap and remove one-shot files
+        run: |
+          git config user.name "conductor-bot"
+          git config user.email "conductor-bot@users.noreply.github.com"
+          git rm .github/workflows/kapowarr-roadmap-expansion-once.yml
+          git rm scripts/kapowarr_roadmap_expansion_once.py
+          git add projects/kapowarr/roadmap.yaml
+          git commit -m "roadmap: expand Kapowarr aggregation priorities"
+          git push origin HEAD:main
