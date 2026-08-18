@@ -890,13 +890,21 @@ tasks:
     and cancel handling so the acquisition matrix is not tied to one downloader.
 - id: t-036
   milestone: m6
-  title: Add calendar and upcoming monitored release view
-  status: not-started
+  title: Build a publisher-aware weekly release calendar and subscriptions
+  status: ready
   owner: null
   passes: 0
   stakes: reversible
-  note: Complement weekly pull lists with an -arr-style calendar of upcoming and recently released monitored
-    issues, direct search actions, and clear source/metadata provenance.
+  note: |-
+    User-prioritized live follow-up on 2026-08-18. Replace the current thin GetComics-only
+    monitored-match table with a real weekly release catalogue: retain all releases, store
+    publisher and release-week/date metadata, support previous/current/next week navigation
+    and publisher/library/status filters, and expose actions for adding, monitoring, wanting,
+    and searching releases. Add explicit per-publisher subscription modes so a user can browse,
+    automatically add/monitor new series, or automatically mark new releases wanted and search
+    through the normal enabled-indexer/acquisition pipeline. Keep release metadata separate from
+    GetComics availability; publisher automation must be opt-in and must not bypass existing
+    acquisition preferences or enabled-indexer controls.
 - id: t-037
   milestone: m7
   title: Introduce a metadata-provider abstraction
