@@ -154,11 +154,11 @@ tasks:
 - id: t-006
   milestone: m3
   title: Polish and upgrade Media Watchlist front-end surface
-  status: ready
-  owner: worker
+  status: claimed
+  owner: reviewer
   passes: 0
   stakes: reversible
-  updated: '2026-08-14T16:57:00Z'
+  updated: '2026-08-18T16:32:51Z'
   note: 'UI polish + upgrade for the media-watchlist front end now that the scaffold page is live at /watchlist. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/wonder/watchlist.webp and tutorial art at public/images/tutorials/wonder/watchlist.webp; (2) add a matching section for ''watchlist'' under tutorialChannels.wonder.sections in kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl points at /watchlist (admin can run the Conductor ''Placements'' button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full interactive experience for this project.
 
     PROGRESS 2026-07-20 (conductor agent session claude-conductor-agent-20260720T1412Z, kind_robots PR #649 merged squash 5af699e): step (2) confirmed already done -- a ''watchlist'' section already existed under tutorialChannels.wonder.sections in stores/helpers/tutorialCards.ts, no action needed. Step (4) advanced within polish-pass scope: added real headline `stats` (2,440 entries logged, 12 years tracked, 60 starred favorites) to watchlist-page.vue''s fallback config, sourced from the validated media_list.md import (t-007, data/import-report.md), and corrected the `deliverables` list, which previously claimed a nonexistent "Watchlist data model and API" -- verified no MediaEntry Prisma model or server route exists in kind_robots yet. A full interactive browse/filter UI is NOT built: that needs the actual MediaEntry schema + API (SCHEMA-PROPOSAL.md/BROWSE-UX.md already spec it), which is materially larger than a polish pass -- same judgment call storybook/t-010 and davinci/t-014 made for their own live-data gaps. Remaining and kept ready: step (1) dashboard-tab + tutorial .webp art (already queued in art-prompts.yaml as kind-robots-watchlist-image-607fccd0, blocked on the art-generation relay -- confirmed still down this session, consistent with every other project that checked it today) and step (3) the liveUrl/channelKey/tabKey backfill (admin Placements click, not an agent action). Verified before merge: eslint clean, prettier clean, full-project vue-tsc --noEmit exit 0. All 3 kind_robots PR checks green (TypeScript, Contract verifiers, GitGuardian).
@@ -174,8 +174,8 @@ tasks:
     PROGRESS 2026-08-14 (conductor scheduled Agent run, claude-conductor-scheduled-20260814T1640Z-mw-t006): re-audited BROWSE-UX.md §4 as the prior entry asked, since ai-art-academy/t-044 (the only higher-priority ready task) had just been rechecked 39 minutes earlier with nothing new to add. Found three remaining gaps, all rendering-only -- the data was already computed by `stats.get.ts` but never reached the UI: "By media type" horizontal bar chart and "Top starred" (top 5 titles) both had their backing fields (`countByType`, `topStarred`) in the API response but absent from the frontend''s `MediaEntryStats` type entirely; "By month" sparkline reused the same `countByMonth` breakdown the "most active month" line already read, just rendered as 12 relative-height bars instead of reduced to a single max. Added all three to `watchlist-browse.vue` with plain DaisyUI `<progress>` bars / CSS height percentages (no charting library). Generalized `countForChipGroup()` to take a plain count map instead of a `YearComparisonRow` so the new all-time breakdown and the existing per-year table share it. First pass used `sm:grid-cols-2` for the new panel and tripped `verifyLayoutContract.ts`''s viewport-grid rule (shared components must gate columns on container width, not a viewport breakpoint) -- fixed with `grid-cols-[repeat(auto-fit,minmax(16rem,1fr))]`, the intrinsic-grid pattern the contract script''s own comments document. Verified: full-project `vue-tsc --noEmit` exit 0, eslint clean, prettier clean, `verifyLayoutContract.ts` clean with no new violations. kind_robots PR #1887 merged squash caae3e0. Steps (1) and (3) remain the same open items as every prior cycle (art-generation relay backlog; liveUrl/channelKey/tabKey admin-only Placements click). BROWSE-UX.md §4 (Stats view) is now fully built end to end -- every tile, filter, chart, and list the spec calls for. Releasing the claim; kept at status: ready, same recurring-task convention -- a future cycle should re-audit §1-§3/§5 fresh (this is the first full re-read since §3''s Related-entries slice landed 2026-07-29) rather than assume §4''s completeness generalizes.
 
     '
-  claimed_by: null
-  claimed_at: null
+  claimed_by: 2026-08-18T-scheduled-mw-t006
+  claimed_at: '2026-08-18T16:32:51Z'
 - id: t-008
   milestone: m3
   title: Spec the MediaEntry Prisma model and minimal browse API from SCHEMA-PROPOSAL.md/BROWSE-UX.md
