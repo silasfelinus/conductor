@@ -733,16 +733,15 @@ tasks:
 - id: t-027
   milestone: m6
   title: Add weekly release and pull-list workflows
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
-  note: Build a comic-native weekly releases and pull-list workflow after the current NZB path is live-hardened.
-    Cross-reference new releases with monitored library volumes, surface wanted additions, and keep the
-    release data source replaceable.
+  note: 'Weekly comic-release and pull-list workflow, built as a v1: a pluggable WeeklyReleaseSource abstraction (backend/base/definitions.py + backend/features/pull_list.py registry, mirroring the existing SearchSource pattern), one concrete GetComics-backed source (backend/implementations/weekly_releases.py), cross-referencing against monitored library volumes by title (match_releases_to_library()), a weekly scheduled task (WeeklyPullListCheck, 7-day interval, auto-gets a Run button on the Tasks page), a new pull_list_entries table (fresh-install schema + migration 47), and a read-only GET /api/pulllist endpoint plus a new /activity/pull-list UI page with Refresh and Check Now. 27 new tests (fixture-based HTML parsing, title-matching, DB persistence). Deliberately deferred: ComicVine-ID matching (title-only for now), one-click download from a match, a second release source, and notification-system wiring -- listed as kaizen candidates in the PR body. Built by an isolated background agent (no local git access to the shared Kapowarr checkout by design) that pushed via the GitHub API (create_branch + push_files) against a *stale* snapshot of main taken before kapowarr/t-026 (Torznab) had merged concurrently. This silently reverted the `import frontend.torznab` line in frontend/ui.py that registers the /torznab-indexers* settings routes -- a real regression that would have broken t-026s just-merged feature. Caught by diffing the PR against current main before merging (not trusting the agents self-report), fixed with a follow-up commit restoring the import line, re-verified all 7 checks green on the corrected commit, then squash-merged as 4b752b6. No migration-slot collision with t-026 (it never touches db_migration.py). Kaizen for next cycle: when a background agent must push via the GitHub content API instead of git (sandbox/isolation constraints), it should re-fetch each touched files *current* remote content immediately before constructing its patch/push, not rely on a snapshot taken at task-start -- otherwise any file a concurrent PR also touches is at risk of a silent revert.'
   claimed_by: 20260818T022900Z-kap-t027-conductor-sweep
   claimed_at: '2026-08-18T02:29:57Z'
-  updated: '2026-08-18T02:29:57Z'
+  updated: '2026-08-18T03:10:16Z'
+  implementation_pr: 'silasfelinus/Kapowarr#42'
 - id: t-028
   milestone: m6
   title: Add story arcs and portable CBL/read-list workflows
@@ -927,3 +926,27 @@ tasks:
   note: Reader-only follow-up after aggregation priorities. Library/file-processing already recognizes
     CBR/RAR plus CB7/7z, CBT/tar and other containers; the reader currently opens CBZ/ZIP, loose images
     and PDF. Add safe extraction for CBR/RAR first, then other practical formats.
+- id: t-046
+  milestone: m6
+  title: Document the content-API push workaround's stale-base risk
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from t-027 (Kapowarr#42): a background agent isolated from the shared git
+    checkout pushed its branch via the GitHub content API (create_branch + push_files)
+    instead of git, using a start-of-task snapshot of main. main moved concurrently
+    (kapowarr/t-026 merged mid-task), and the agent's push silently reverted a line
+    t-026 had added to a file it also touched (frontend/ui.py's `import
+    frontend.torznab`) -- a regression neither the agent's own isolated-copy tests nor
+    the PR's CI could detect, since both only exercised the agent's own before/after
+    snapshot, not live main. Caught only by diffing the PR's actual file list against
+    current main before merging.
+
+    Document (FORK_MAINTENANCE.md or a new docs/ note) that any content-API-based push
+    workaround must re-fetch each touched file's *current* remote content immediately
+    before constructing the write, not rely on a start-of-task snapshot -- and that a
+    reviewing session merging such a PR should specifically diff every touched file
+    against live main before merging rather than trusting green CI alone, since CI
+    cannot detect an import-time-only removal with no direct test coverage.
