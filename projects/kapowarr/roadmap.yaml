@@ -772,7 +772,7 @@ tasks:
 - id: t-030
   milestone: m6
   title: Add library-informed Discover and Similar recommendations
-  status: claimed
+  status: done
   passes: 0
   stakes: reversible
   note: |-
@@ -781,8 +781,9 @@ tasks:
     Promote library-informed Discover and Similar recommendations now that the acquisition foundation, weekly pull lists, story arcs/CBL, torrent lifecycle hardening, Torznab, and the first GetComics Discover browser are merged.
 
     Claim the library-informed Discover and Similar recommendations slice. Build deterministic, explainable recommendations on top of the newly merged Discover page without duplicating acquisition/search paths.
-  updated: '2026-08-18T05:47:08+00:00'
-  owner: worker
+
+    Library-informed Discover recommendations merged in silasfelinus/Kapowarr#46 as squash 904496ec1e2e56a11e5557420943aac28e140f26. Adds Recent/For You modes, a bounded three-page recent-source sample, deterministic explainable title/franchise scoring, already-owned suppression, weak-overlap rejection, and per-result reasons linking to the related owned volume. Exact PR head 3a255568daa53ff1542ddafcc4ec01ab40bef70f passed Python 3.8-3.12, docs, and container before merge.
+  updated: '2026-08-18T05:58:09+00:00'
   claimed_by: 20260818T054700Z-kap-t030-discover-similar
   claimed_at: '2026-08-18T05:47:08+00:00'
 - id: t-031
