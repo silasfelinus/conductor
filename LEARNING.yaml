@@ -8787,3 +8787,12 @@ records:
   failure_category: quality
   lesson: Preserve mature post-processing contracts where possible; test seed-safety behavior directly
     and keep range metadata optional on legacy download paths.
+- date: 2026-08-18
+  project: kapowarr
+  task: t-046
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Documented the content-API push workaround's stale-base risk (AGENT_WORKFLOW_NOTES.md, Kapowarr#43) — any agent forced to push via create_branch+push_files instead of git push must re-fetch each touched file's live content immediately before writing, and reviewing sessions must diff the actual PR file list against main before merging rather than trusting green CI alone.
