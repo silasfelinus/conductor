@@ -1,0 +1,12 @@
+version: 1
+project: kapowarr
+task: t-048
+operation: review
+owner: worker
+session: 2026-08-18T202700Z-kapowarr-t-048-7c2e
+updated: 2026-08-18T20:30:00+00:00
+note: >-
+  Implementation is ready in silasfelinus/Kapowarr#53. The task-history row is
+  committed before task_ended, and the Tasks page refreshes History and
+  scheduled timestamps when that WebSocket event arrives. Local verification
+  passed 365 tests, mypy, isort, Node syntax checks, and diff checks.
