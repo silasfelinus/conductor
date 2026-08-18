@@ -673,17 +673,31 @@ tasks:
 - id: t-024
   milestone: m5
   title: Live-verify and harden Newznab to SABnzbd end-to-end
-  status: claimed
+  status: needs-human
   passes: 0
   stakes: reversible
   note: |-
-    The SABnzbd client and Newznab search/NZB handoff are merged and heavily unit-tested, but neither was live-verified against the user's real services during implementation. Exercise caps/search/download/queue/history/storage, remote mappings, restart persistence, failures, and post-processing on the real stack before treating Usenet support as complete.
-
-    Projection resync after the aggregation roadmap expansion; no implementation state changed.
-  updated: '2026-08-18T01:27:57Z'
+    FOR SILAS: Kapowarr#36 (merged, squash 92d8923) hardened three real failure-handling
+    gaps in the Newznab-to-SABnzbd path, found by code audit rather than live testing (no
+    real indexer/SABnzbd instance is reachable from this sandbox).
+    What it contains: (1) the download-status polling loop no longer dies silently on a
+    client outage/malformed response -- it now retries for ~5 minutes before marking the
+    download failed instead of freezing forever with no error; (2) SABnzbd queue/history
+    parsing and (3) Newznab search-result parsing no longer crash on a null/malformed field
+    a misbehaving indexer or proxy could send. 61 new tests, full suite 216/216, mypy/isort
+    clean. None of this required your real services -- it's defensive coding, not the live
+    verification this task actually asked for.
+    TO APPROVE: this task's actual ask -- live-verify caps/search/download/queue/history/
+    storage, remote mappings, restart persistence, real failures, and post-processing
+    against your real indexer + SABnzbd instance -- still hasn't happened and can't from
+    this sandbox. When you (or a session with access to your real stack) has run through
+    that exercise, set status: done here (or note what broke so it can be fixed). Nothing
+    else is blocked on this in the meantime.
+  updated: '2026-08-18T01:36:47Z'
   owner: worker
   claimed_by: 20260818T0130Z-kap-t024
   claimed_at: '2026-08-18T01:27:57Z'
+  soft_gate: true
 - id: t-025
   milestone: m5
   title: Reconcile relevant upstream development acquisition architecture
