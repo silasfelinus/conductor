@@ -1051,8 +1051,7 @@ tasks:
 - id: t-049
   milestone: m6
   title: Surface queued and downloading status on volume views
-  status: review
-  owner: worker
+  status: done
   passes: 0
   stakes: reversible
   note: |-
@@ -1061,6 +1060,8 @@ tasks:
     Claim the user-reported live follow-up to expose queued and downloading status consistently on volume detail and gallery views.
 
     Implementation is ready on worker/kapowarr-t-049-download-status. A shared live queue store now drives queued/downloading badges on volume detail, poster gallery, and table views with progress and speed where available. Node syntax checks and a multi-download summary smoke test pass.
+
+    Merged silasfelinus/Kapowarr#54 at a819314 after all seven PR jobs passed. Volume detail, poster gallery, and table views now share live queued/downloading state with progress and speed, and clear it when the queue entry ends.
   claimed_by: 2026-08-18T204527Z-kapowarr-t-049-a91d
   claimed_at: '2026-08-18T20:45:27Z'
-  updated: '2026-08-18T20:54:02Z'
+  updated: '2026-08-18T20:57:18Z'
