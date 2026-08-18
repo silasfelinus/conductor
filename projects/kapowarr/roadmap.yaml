@@ -701,13 +701,17 @@ tasks:
 - id: t-025
   milestone: m5
   title: Reconcile relevant upstream development acquisition architecture
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
-  note: Perform a one-time selective reconciliation against Casvt/development's newer indexer/download-client/download-prepper/query-builder/search-planner
-    architecture. Preserve fork-only SABnzbd/Newznab, importer, notifications, health, reader, and branding
-    behavior. This is foundation work, not recurring monitoring.
+  note: |-
+    Perform a one-time selective reconciliation against Casvt/development's newer indexer/download-client/download-prepper/query-builder/search-planner architecture. Preserve fork-only SABnzbd/Newznab, importer, notifications, health, reader, and branding behavior. This is foundation work, not recurring monitoring.
+
+    Claimed for the selective upstream development acquisition-architecture reconciliation after Kapowarr #35 and #36 landed. Preserve working GetComics/Newznab/SAB behavior while introducing the upstream planner/query/indexer seams needed for Torznab/Prowlarr and Discover.
+  claimed_by: 20260818T013700Z-kapowarr-t025
+  claimed_at: '2026-08-18T01:46:35+00:00'
+  updated: '2026-08-18T01:46:35+00:00'
 - id: t-026
   milestone: m5
   title: Add Torznab with first-class Prowlarr and Jackett support
