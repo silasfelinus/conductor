@@ -826,14 +826,16 @@ tasks:
 - id: t-032
   milestone: m5
   title: Add source quality preferences and upgrade policy
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   note: |-
     Bring more Sonarr/Radarr-style acquisition control to comics: source/client priority, GetComics SD/HD preference (upstream issue #222), pack preference, and optional later upgrade searches without replacing a known-good file with a worse candidate.
 
     Promote source quality preferences and upgrade policy as the next Kapowarr acquisition task after Discover/For You and torrent lifecycle hardening merged.
-  updated: '2026-08-18T08:17:00Z'
+
+    First source-quality slice is ready for review on worker/kapowarr-t-032-20260818T081700Z-a7c4: protocol source priority, GetComics HD/SD preference, pack preference, user-facing Download Settings controls, and regression coverage. Automatic replacement upgrades and per-client/indexer priority remain deliberately deferred until durable quality/provenance can make them safe.
+  updated: '2026-08-18T08:30:00Z'
   owner: worker
   claimed_by: 2026-08-18T081700Z-kapowarr-t-032-a7c4
   claimed_at: '2026-08-18T08:17:00Z'
