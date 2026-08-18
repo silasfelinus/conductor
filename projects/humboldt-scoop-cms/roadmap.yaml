@@ -401,7 +401,7 @@ tasks:
   - id: t-025
     milestone: m10
     title: "Build essentialized role-aware mobile portals for customer, admin, and worker"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -409,15 +409,11 @@ tasks:
       - t-014
       - t-015
       - t-017
-    note: >
-      Evolve the Flutter app from the current worker slice into an essentialized mobile portal
-      over the same service used by the website. Customers get account/visit/request essentials;
-      workers get assigned routes and visit execution; admins get the small set of management
-      actions worth doing on a phone. A user with both admin and worker capabilities gets both
-      toolsets without duplicate login or account switching.
+    note: 'Implemented and merged silasfelinus/humboldtscoopsolutions#75 (squash 94259a2) via an isolated background worker agent. Evolves the Flutter field client from worker-only into a role-aware app shell: Worker (unchanged, t-024 offline queue untouched) + Admin (new, read-only over existing admin-gated endpoints: today routes, customer list/detail) + Customer (new) toolsets in one app/one login -- a dual-capability staff member gets both toolsets from one /me resolution, no second login. New customer-facing auth surface on the CMS (none existed before): wp_hss_customer_tokens table (schema 2.14.0), customerAuth.ts/customerScope.ts mirroring the staff bearer-token contract via a structurally separate table/resolve path (a customer token can never satisfy a staff capability check or vice versa), GET /customer/me, GET /customer/visits(+/:id) (404 not 403 for another customers visit; customer-safe field shape), POST /customer/requests (writes to the pre-existing wp_hss_change_requests table -- zero new admin surface needed), admin-gated POST /customers/:id/app-token for issuance. Tests include the required cross-customer-isolation cases (customer A vs B visit, both list and by-id, both directions) -- 111/111 CMS tests pass, tsc clean. No Flutter toolchain in sandbox (standing limitation, t-021/t-023/t-024 precedent) -- hand-reviewed carefully, new Flutter unit tests written but unrun; merged on hand-verification alone matching prior precedent. Verified merge myself via GitHub MCP before closing: PR #75 state=closed/merged=true, 26 files +2315/-76, matches PR description, no unexpected reverted lines. Filed 4 follow-up tasks (t-036..t-039) for explicitly deferred scope: admin write actions on phone, token list/revoke UI, WP admin-side issuance UI, and customer self-registration.'
     claimed_by: 20260818T0555Z-hscms-t025-conductor-sweep
     claimed_at: '2026-08-18T05:50:11Z'
-    updated: '2026-08-18T05:50:11Z'
+    updated: '2026-08-18T06:12:28Z'
+    implementation_pr: 'silasfelinus/humboldtscoopsolutions#75'
 
   - id: t-026
     milestone: m10
@@ -564,3 +560,73 @@ tasks:
       Scoop Solutions page (a notice banner, a second cross-host link, etc.) should
       not just get appended to open() as a third inline block. Small, low-priority --
       only worth doing once/if a second such widget is actually proposed.
+
+  - id: t-036
+    milestone: m10
+    title: Add admin write actions to the mobile portal (route drafting/planning, editing a customer)
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-025
+    note: >
+      Deferred from t-025 (silasfelinus/humboldtscoopsolutions#75): the mobile
+      Admin toolset shipped read-only (today's routes, customer list/detail) over
+      already-existing admin-gated CMS endpoints. Route drafting/planning and
+      editing a customer record are dispatcher/desktop-shaped workflows that
+      t-025's own task note flagged as likely out of scope for "worth doing on a
+      phone" -- revisit deliberately rather than assuming they belong here; may
+      turn out route drafting genuinely wants the desktop dispatcher UI to stay
+      canonical and this task closes as "not needed."
+
+  - id: t-037
+    milestone: m10
+    title: Add admin UI to list and revoke issued customer app-access tokens
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-025
+    note: >
+      Deferred from t-025 (silasfelinus/humboldtscoopsolutions#75): customer
+      app-token issuance (POST /customers/:id/app-token, admin-gated) works
+      end-to-end, but there is no admin-facing way to see which tokens exist for
+      a customer or revoke one without going to the database directly -- the
+      staff-token side already has this via the Staff admin screen's Tokens
+      section (t-015); mirror that pattern for wp_hss_customer_tokens.
+
+  - id: t-038
+    milestone: m10
+    title: Add WordPress admin-side UI for customer app-token issuance
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-025
+    note: >
+      Deferred from t-025 (silasfelinus/humboldtscoopsolutions#75): issuance is
+      only reachable today via the CMS's own admin-gated endpoint
+      (POST /customers/:id/app-token), which is what the mobile Admin toolset
+      calls. t-025's PR deliberately left a WordPress wp-admin screen (mirroring
+      staff_tokens_section for staff) as follow-up, since it wasn't load-bearing
+      for the mobile app itself. Worth doing once desktop/WP-admin-side customer
+      management wants the same capability without opening the CMS directly.
+
+  - id: t-039
+    milestone: m10
+    title: Design and build customer self-registration for mobile app access
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-025
+    note: >
+      Deferred from t-025 (silasfelinus/humboldtscoopsolutions#75): v1 shipped
+      admin-issued customer tokens only (an admin taps "send app access" for a
+      customer via the new POST /customers/:id/app-token endpoint), matching the
+      task's "at least one path end-to-end" guidance. A customer self-service
+      registration/first-login flow (verifying they are who they claim to be
+      against an existing wp_hss_customers row, likely via the existing
+      HSS_Customer_Invites-style hash-token-in-a-link pattern from t-017) is a
+      real design question, not just a UI addition -- worth its own scoped pass
+      rather than folding into t-025's already-large diff.
