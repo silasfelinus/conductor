@@ -8887,3 +8887,25 @@ records:
   outcome: done
   failure_category: null
   lesson: "isolation:'worktree' stops a background agent from colliding on shared LOCAL git state, but does nothing to stop it from colliding with a dispatching session that starts fixing the SAME remote PR directly (e.g. after the agent's final report looked stuck/garbled) -- both sides independently diagnosed and fixed the identical CI failure and both called merge; GitHub's idempotent merge meant no harm this time, but a session should stop the agent or wait for its real completion before touching a PR it's still delegated, not race it."
+- date: 2026-08-18
+  project: alexa-integration
+  task: t-015
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "This project's recurring self-audit of serendipityVoiceStore.ts has now
+    found three distinct bug shapes across four cycles: false acknowledgements from
+    action/target mismatches (t-015/t-020), missing error-reporting regression
+    coverage (t-021), and this cycle's missing acknowledgement on an otherwise-correct
+    success path (applyArtCommand() never called postAck() at all, so a fully
+    successful voice-driven art draft got no spoken confirmation back through the
+    relay -- the mirror image of the false-success bugs, not a repeat of them).
+    Comparing each dispatch function against its siblings for a missing behavior,
+    not just a wrong one, is what surfaced it. Also reconfirmed the appmaker/t-012
+    lesson from 2026-08-16: a single CI job failing with a live 502 to
+    kindrobots.org (this time in the Comment Migration Contract workflow, hitting
+    /api/bots on rerun after /api/characters on the first try) is a transient,
+    diff-unrelated production flake -- confirmed directly via curl against the live
+    host before merging past it, rather than assuming or guessing."
