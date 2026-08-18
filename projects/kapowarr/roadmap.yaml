@@ -826,7 +826,7 @@ tasks:
 - id: t-032
   milestone: m5
   title: Add source quality preferences and upgrade policy
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   note: |-
@@ -837,7 +837,12 @@ tasks:
     First source-quality slice is ready for review on worker/kapowarr-t-032-20260818T081700Z-a7c4: protocol source priority, GetComics HD/SD preference, pack preference, user-facing Download Settings controls, and regression coverage. Automatic replacement upgrades and per-client/indexer priority remain deliberately deferred until durable quality/provenance can make them safe.
 
     Preference slice merged in silasfelinus/Kapowarr#47 as squash f2a4b802ee009549d78307b468a4a79fcab1ade5. Exact head 45021253a8c2eb76d9005cb30e5baccc60dd40b6 passed Python 3.8-3.12, docs, and container. Shipped protocol source priority, GetComics HD/SD preference, pack preference, and Download Settings controls with defaults preserving existing behavior. Keep t-032 open for per-client/indexer priority and durable acquisition-quality provenance before any automatic replacement/upgrade searches.
-  updated: '2026-08-18T08:45:00Z'
+
+    Continue t-032 after PR #47 with per-client/indexer priority and durable quality/provenance design before any automatic replacement upgrades.
+  updated: '2026-08-18T08:50:00Z'
+  owner: worker
+  claimed_by: 2026-08-18T085000Z-kapowarr-t-032-b94d
+  claimed_at: '2026-08-18T08:50:00Z'
 - id: t-033
   milestone: m6
   title: Add Wanted/Missing workbench and manual import
