@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-18T08:29:22Z
+Generated: 2026-08-18T08:49:45Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **670**
-- Outcomes: blocked: 14, cancelled: 1, done: 655
+- Closed tasks recorded: **671**
+- Outcomes: blocked: 15, cancelled: 1, done: 655
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | global-ui | 13 | 100% |
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
-| humboldt-scoop-cms | 19 | 100% |
+| humboldt-scoop-cms | 20 | 95% |
 | interface-vision | 83 | 100% |
 | kapowarr | 27 | 100% |
 | kind-robots | 50 | 98% |
@@ -63,7 +63,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 654 | 99% |
+| software | 655 | 99% |
 
 ## Failure categories
 
@@ -84,6 +84,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-18 `humboldt-scoop-cms/t-026` — A stakes:outward-facing task ("Finish Android production beta and Play Store readiness") still has a real, bounded, mergeable software slice inside it -- release-signing scaffold, permissions/endpoint audit (which caught a genuine bug, a missing INTERNET permission in the release manifest), crash logging, and drafted store/privacy docs -- even though the task as a whole can never reach done without Silas's accounts/keys/URLs. Splitting "what's mechanically buildable" from "what only a human with real-world credentials can do" and shipping the former as a merged PR, with the latter as a numbered checklist in the needs-human note, gets real progress landed instead of parking the whole task untouched until Silas has time to do everything himself.
 - 2026-08-18 `humboldt-scoop-cms/t-036` — When a task explicitly says "revisit deliberately rather than assuming X belongs here," do the architecture investigation (grep the actual endpoints/write paths) in the foreground before delegating implementation -- handing an under-scoped judgment call to a background agent blind risks it either over-building (a mobile route planner nobody asked to keep) or under-building (skipping a genuinely useful feature). Concrete evidence handed to the delegate (exact file/line patterns to mirror) produced a clean single-pass implementation with no scope drift on either the declined half (route planning) or the built half (customer edit).
 - 2026-08-18 `humboldt-scoop-cms/t-035` — A same-day sibling session (t-037 close-out, same rotation) had already read t-035's own self-gating note ("only worth doing once/if a second widget is proposed") and deliberately skipped it -- I claimed and implemented it anyway without first grepping today's TALKBACK/LEARNING.yaml for a prior skip decision on this exact task id, relying only on the roadmap note itself. The work was small, reversible, and harmless (kept merged rather than reverted), but the real gap is that a "ready but conditionally not-yet" task has no roadmap status that actually encodes that, so two same-day sessions made different individually-reasonable calls on the same task.
 - 2026-08-18 `humboldt-scoop-cms/t-037` — Before picking the file-order-next ready task, read its note for a self-gating condition ("only worth doing once X is proposed") and check whether that condition actually holds -- t-035 gated on a second cross-host widget that doesn't exist yet, so it was correctly skipped in favor of t-037, one of t-025's real deferred follow-ups with a concrete existing pattern (HSS_Staff_Tokens) to mirror.
@@ -93,7 +94,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-18 `kapowarr/t-031` — Preserve mature post-processing contracts where possible; test seed-safety behavior directly and keep range metadata optional on legacy download paths.
 - 2026-08-18 `kapowarr/t-027` — A background agent pushing via the GitHub content API (create_branch/push_files) instead of git, because sandbox isolation blocks git-mutating ops against a shared checkout, works from a point-in-time file snapshot with no non-fast-forward safety net -- if a concurrent PR merges a change to a file it also touches, its push can silently revert that change. Neither isolated-copy tests nor CI caught it here (an import-only removal with no direct test coverage). Reviewing sessions merging such a PR must diff every touched file against live main, not just trust green CI.
 - 2026-08-18 `kapowarr/t-026` — A protocol adapter lands cleanly when search query planning, result provenance, and queue preparation are separate seams. Preserve explicit source identity through legacy link-only task contracts rather than reintroducing source-specific branches.
-- 2026-08-18 `kapowarr/t-025` — Selective architecture ports are safer than wholesale upstream copies when the fork already has working protocol-specific features; introduce seams around existing behavior, then add new protocols through the seams.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-18T08:29:22Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-18T08:49:45Z_
