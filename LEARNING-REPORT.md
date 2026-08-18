@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-18T11:28:56Z
+Generated: 2026-08-18T11:51:06Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **672**
-- Outcomes: blocked: 15, cancelled: 1, done: 656
+- Closed tasks recorded: **673**
+- Outcomes: blocked: 15, cancelled: 1, done: 657
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
 | interface-vision | 83 | 100% |
-| kapowarr | 27 | 100% |
+| kapowarr | 28 | 100% |
 | kind-robots | 50 | 98% |
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
@@ -63,7 +63,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 656 | 99% |
+| software | 657 | 99% |
 
 ## Failure categories
 
@@ -84,6 +84,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-18 `kapowarr/t-033` — A claim past CLAIM_TTL_MINUTES isn't automatically scratch work -- read the stale branch's actual diff before reclaiming; a small-but-sound partial scaffold (this one: a backend query + route registration, no UI/tests yet) is worth resuming on top of, not discarding and reimplementing from zero.
 - 2026-08-18 `humboldt-scoop-cms/t-039` — For a task framed as "a real design question, not just a UI addition," resolve the architecture before delegating -- here that meant confirming the CMS and WordPress plugin share one physical database (not a network integration) and that only the WordPress side can send mail, then pointing the delegate at HSS_Notify's existing shared-table/wp-cron-sweep precedent instead of letting it invent a new synchronous cross-service call or a third-party email dependency. A fully-specified design (table/column names, transactional claim-to-token, generic-response account-enumeration guard, custom short cron interval, plaintext-nulled-atomically-with-send) produced a clean single-pass implementation with no security-relevant rework needed on review.
 - 2026-08-18 `humboldt-scoop-cms/t-026` — A stakes:outward-facing task ("Finish Android production beta and Play Store readiness") still has a real, bounded, mergeable software slice inside it -- release-signing scaffold, permissions/endpoint audit (which caught a genuine bug, a missing INTERNET permission in the release manifest), crash logging, and drafted store/privacy docs -- even though the task as a whole can never reach done without Silas's accounts/keys/URLs. Splitting "what's mechanically buildable" from "what only a human with real-world credentials can do" and shipping the former as a merged PR, with the latter as a numbered checklist in the needs-human note, gets real progress landed instead of parking the whole task untouched until Silas has time to do everything himself.
 - 2026-08-18 `humboldt-scoop-cms/t-036` — When a task explicitly says "revisit deliberately rather than assuming X belongs here," do the architecture investigation (grep the actual endpoints/write paths) in the foreground before delegating implementation -- handing an under-scoped judgment call to a background agent blind risks it either over-building (a mobile route planner nobody asked to keep) or under-building (skipping a genuinely useful feature). Concrete evidence handed to the delegate (exact file/line patterns to mirror) produced a clean single-pass implementation with no scope drift on either the declined half (route planning) or the built half (customer edit).
@@ -93,7 +94,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-18 `kapowarr/t-028` — Portable comic lists should preserve unresolved gaps and enrich source identity when local matching provides stronger IDs; acquisition should be an explicit action over resolved missing entries.
 - 2026-08-18 `kapowarr/t-046` — Documented the content-API push workaround's stale-base risk (AGENT_WORKFLOW_NOTES.md, Kapowarr#43) — any agent forced to push via create_branch+push_files instead of git push must re-fetch each touched file's live content immediately before writing, and reviewing sessions must diff the actual PR file list against main before merging rather than trusting green CI alone.
 - 2026-08-18 `kapowarr/t-031` — Preserve mature post-processing contracts where possible; test seed-safety behavior directly and keep range metadata optional on legacy download paths.
-- 2026-08-18 `kapowarr/t-027` — A background agent pushing via the GitHub content API (create_branch/push_files) instead of git, because sandbox isolation blocks git-mutating ops against a shared checkout, works from a point-in-time file snapshot with no non-fast-forward safety net -- if a concurrent PR merges a change to a file it also touches, its push can silently revert that change. Neither isolated-copy tests nor CI caught it here (an import-only removal with no direct test coverage). Reviewing sessions merging such a PR must diff every touched file against live main, not just trust green CI.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-18T11:28:56Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-18T11:51:06Z_
