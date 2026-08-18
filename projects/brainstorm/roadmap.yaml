@@ -416,19 +416,16 @@ tasks:
   - id: t-018
     milestone: m5
     title: Recover and modernize the Brainstorm bot/persona from repository evidence
-    status: claimed
+    status: done
     depends_on: t-002
     owner: reviewer
-    updated: '2026-08-18T19:46:29Z'
+    updated: '2026-08-18T20:10:20Z'
     passes: 0
     stakes: reversible
-    note: >-
-      Audit historical seed data, avatar assets (`brain1.webp` and successors), Bot records,
-      copy and endpoint prompts for the original Brainstorm persona. Preserve recognizable
-      character where compatible with current bot/narrator architecture. Functional generation
-      must not hard-depend on a single bot ID. Add persona flavor after the workbench works.
+    note: 'DONE 2026-08-18 (conductor scheduled Agent run, worktree-isolated background agent). Audited historical Brainstorm persona evidence: stores/seeds/seedBots.ts has a stale dev-seed Brainb0t record referencing avatarImage /images/avatars/brain1.webp -- confirmed via git log --all --diff-filter=A that this path was never a committed repo file (public/images/** is gitignored) and the seed schema is stale relative to the live Bot table, so it never actually populated production. The legacy asset IS live at kindrobots.org/images/avatars/brain1.webp but wired to nothing in current code. content/brainstorm.md already carries recognizable persona copy that was never lost (tooltip, amiTip, dottiTip, kind-icon:brain). Found a fully modern live Bot record already in production (GET /api/bots id 4, name Brainbot, slug brainstorm-bot, tagline, narrativeVoice, generated art) with zero UI surface. Confirmed generate.post.ts and server/utils/brainstorm/** have zero botId coupling -- the no-hard-dependency requirement was already satisfied by prior t-006/t-012 work, no fix needed. Added a small soft reversible persona flourish to components/brainstorm/brainstorm-manager.vue: on mount, softly fetches the live brainstorm-bot record via the existing useBotStore().fetchBots() and shows its avatar/tagline in the header badge, falling back silently to the plain emoji on any failure -- persona is never read by the generation path. Verified: vue-tsc --noEmit clean, eslint clean, verifyBrainstormWorkbench.mjs + verifyBrainstormStoreContract.mjs both pass, live-checked brain1.webp and /api/bots via curl. kind_robots PR #1940 (1 file, +47/-1), all 30 CI checks green, squash-merged 1cd1ff873. Did not restore brain1.webp or the stale seedBots.ts record -- reused the live, already-generated Brainbot record instead (materially better: real art, tagline, voice), no schema/migration/seed change needed. Kaizen t-024 filed: Brainbot and 68 other live Bot records have no reachable gallery surface on the site.'
     claimed_by: claude-scheduled-20260818T1945-brainstorm-t018
     claimed_at: '2026-08-18T19:46:29Z'
+    implementation_pr: 'silasfelinus/kind_robots#1940'
 
   - id: t-019
     milestone: m5
@@ -524,3 +521,23 @@ tasks:
       the right utility and personality, set `approved_by_human: true` and `status: done`; if not,
       leave concrete notes and return the project to active refinement. This gate controls only
       declaring the finite revival project finished, not routine reversible development.
+
+  - id: t-024
+    milestone: m5
+    title: Give live Bot/PROMPTBOT records (Brainbot and others) a reachable gallery surface
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from t-018's 2026-08-18 cycle (kind_robots PR #1940): while recovering the
+      Brainstorm persona, found a fully modern, live Bot record already in production
+      (GET /api/bots id 4, name "Brainbot", slug brainstorm-bot, tagline, narrativeVoice,
+      generated avatar/card/hero/icon art) with zero UI surface anywhere on the site --
+      bot-gallery.vue exists but isn't mounted by any content route. At least 69 live
+      Bot records total, several (AMIbot, Rapbot, Brainbot, etc.) already fully authored
+      with art and voice, sitting unused. Mount bot-gallery.vue (or an equivalent
+      lightweight surface) somewhere reachable so this content isn't invisible. Scope
+      check first: confirm whether a dedicated project already owns Bot/PROMPTBOT
+      presentation before building a new one here; if so, retarget or fold this task
+      into that project instead of duplicating.
