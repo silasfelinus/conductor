@@ -1047,3 +1047,13 @@ tasks:
   claimed_by: 2026-08-18T202700Z-kapowarr-t-048-7c2e
   claimed_at: '2026-08-18 20:27:00+00:00'
   updated: '2026-08-18T20:40:14Z'
+
+- id: t-049
+  milestone: m6
+  title: Surface queued and downloading status on volume views
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    User-reported live follow-up on 2026-08-18. A monitored volume can be queued or actively downloading in Activity while both its volume detail page and gallery card still look idle. Expose the existing download-queue state on both surfaces with clear queued/downloading status and live progress where available, using one shared data path so the two views remain consistent.
