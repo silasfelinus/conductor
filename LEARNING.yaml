@@ -8751,3 +8751,14 @@ records:
   lesson: Selective architecture ports are safer than wholesale upstream copies when the fork already
     has working protocol-specific features; introduce seams around existing behavior, then add new protocols
     through the seams.
+- date: 2026-08-18
+  project: kapowarr
+  task: t-026
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A protocol adapter lands cleanly when search query planning, result provenance, and queue preparation
+    are separate seams. Preserve explicit source identity through legacy link-only task contracts rather
+    than reintroducing source-specific branches.

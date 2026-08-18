@@ -716,7 +716,7 @@ tasks:
 - id: t-026
   milestone: m5
   title: Add Torznab with first-class Prowlarr and Jackett support
-  status: claimed
+  status: done
   passes: 0
   stakes: reversible
   note: |-
@@ -725,8 +725,9 @@ tasks:
     Integration decision: do not fork Prowlarr for the first implementation. Kapowarr should consume Prowlarr through its generic Torznab/Newznab-facing indexer/proxy boundary, so Prowlarr remains an independently updated service. A later native Prowlarr Settings > Apps adapter that pushes indexers into Kapowarr can be proposed upstream to Prowlarr; maintain a Prowlarr fork only if that upstream integration genuinely requires changes that cannot land there.
 
     Claim Torznab integration as the next acquisition task after t-025. Implement Torznab as a Torrent protocol peer to Newznab using the new SearchSources/QueryBuilders/DownloadPreppers seams, with multiple configured feeds suitable for Prowlarr and Jackett, source provenance, capability testing, comic categories, and clean handoff to existing torrent clients.
-  updated: '2026-08-18T02:11:15+00:00'
-  owner: worker
+
+    Torznab support merged as Kapowarr #40 (squash 4a8235e). Prowlarr/Jackett-compatible Torznab feeds are first-class Torrent search peers to GetComics/Newznab, configurable from Settings > Indexers with editable comic categories, source-aware search results, .torrent-to-magnet handoff, qBittorrent compatibility, and restart-safe queue restoration. Exact PR head passed Python 3.8-3.12, docs, and container builds. Not live-verified against the user's actual Prowlarr/Jackett + torrent-client stack; archival history/blocklist source-type labels remain coarse while search/active queue provenance uses the configured indexer name.
+  updated: '2026-08-18T02:44:27+00:00'
   claimed_by: 20260818T021100Z-kap-t026
   claimed_at: '2026-08-18T02:11:15+00:00'
 - id: t-027
