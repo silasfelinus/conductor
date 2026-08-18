@@ -370,8 +370,8 @@ tasks:
   - id: t-023
     milestone: m9
     title: "Add opt-in proof-of-service photos with retention and offline-safe upload"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-015
@@ -379,6 +379,9 @@ tasks:
       photos_opt_in already exists. Decide and document storage/retention/access/deletion,
       then add worker capture/compression/queued upload and customer/admin viewing. Property
       photos are private customer data; uploads must survive intermittent field connectivity.
+    claimed_by: hss-photos-2026-08-18T0030
+    claimed_at: '2026-08-18T00:28:58Z'
+    updated: '2026-08-18T00:28:58Z'
 
   - id: t-024
     milestone: m10
