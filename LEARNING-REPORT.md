@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-18T01:42:24Z
+Generated: 2026-08-18T02:30:41Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **660**
-- Outcomes: blocked: 14, cancelled: 1, done: 645
+- Closed tasks recorded: **661**
+- Outcomes: blocked: 14, cancelled: 1, done: 646
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 15 | 100% |
 | interface-vision | 83 | 100% |
-| kapowarr | 21 | 100% |
+| kapowarr | 22 | 100% |
 | kind-robots | 50 | 98% |
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
@@ -63,7 +63,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 644 | 99% |
+| software | 645 | 99% |
 
 ## Failure categories
 
@@ -84,6 +84,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-18 `kapowarr/t-025` — Selective architecture ports are safer than wholesale upstream copies when the fork already has working protocol-specific features; introduce seams around existing behavior, then add new protocols through the seams.
 - 2026-08-18 `humboldt-scoop-cms/t-023` — The obvious in-codebase precedent (pet photos, stored as an ordinary WordPress media-library attachment) was the wrong pattern here, and the reason was architectural, not stylistic: the CMS that actually receives the field client's upload runs on a different host from WordPress with no shared filesystem, a fact only stated in a deployment-config comment (cms/ecosystem.config.cjs), not in any doc a feature-scoping read would normally reach first. Worth checking where a write physically lands (which process, which host) before reusing a same-repo pattern that looks superficially identical -- two features can both be 'upload a photo' and still need incompatible storage. Also: caught and fixed a real bug of my own before it shipped by re-deriving a timezone assumption instead of trusting it -- a first draft stamped created_at with site-local time but compared it against a UTC-computed retention cutoff, which would have silently mispurged photos by the site's configured offset on every sweep run; the fix was to pick one clock (GMT) for both the write and the comparison and say why in the code, not to patch the symptom.
 - 2026-08-17 `humboldt-scoop-cms/t-030` — An open-ended 'polish' task with no obvious next action is workable by grepping the codebase itself for evidence the code already knows is stale -- two test-file comments in this repo had, weeks earlier, already called a dead theme directory 'retired' and 'a dead duplicate pending deletion', which nobody had acted on. That's a cheap, high-confidence source of scoped work: search for a project's own accumulated in-code annotations of known-stale things before treating a vague polish task as unscopable.
 - 2026-08-17 `humboldt-scoop-cms/t-031` — A task note offering '<option A>, and/or <option B>' is not an invitation to build the bigger option by default -- reading the smaller/existing side first (wp-admin's own 'Scoop Solutions' menu already covered every business-management screen the note listed) turned this into a much smaller, lower-risk shared-navigation change instead of a duplicated CMS-side admin surface that would have needed to stay in sync with wp-admin's forever after. Worth checking what already exists before scoping toward the larger reading of an ambiguous task.
@@ -93,7 +94,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-17 `kapowarr/t-009` — Writing regression coverage for a module that had zero tests surfaced a real production bug that manual reading alone hadn't caught: __load_downloads()'s LinkBroken except-handler referenced a dict key ('source') that doesn't exist on the row it was handling (the actual column is 'source_type') -- on a real sqlite3.Row this raises IndexError, uncaught by the surrounding except clause, silently killing the startup queue-restore loop partway through. The bug was invisible to mypy (dict/Row __getitem__ isn't statically typed) and to every prior manual code read across t-006/t-007/t-008. Lesson for future 'add tests to an untested module' tasks: write the regression test to actually exercise the exception-handling branches (not just the happy path), and verify each new test fails without its corresponding fix before committing -- a passing-on-first-try test for a bug you just 'fixed' is not proof it would have caught the original bug.
 - 2026-08-17 `kapowarr/t-008` — Reusing an existing extensibility seam (get_subclasses(SearchSource), already used for GetComics) rather than inventing a parallel 'indexer type registry' the way external_clients.py has for download clients kept the diff scoped: Newznab is one shared API spec nearly every indexer implements identically, so per-indexer-instance CRUD rows (mirroring the simpler notifications.py registry, not the type-hierarchy external_clients.py one) was the right complexity match, not a rewrite. Also: a Newznab item's own title field carries no file extension (extract_filename_data needs it stripped from a Content-Disposition-recovered filename, or issue-number parsing silently corrupts) -- worth flagging for any future indexer/download-client task that recovers a title from a header rather than an API field.
 - 2026-08-17 `kapowarr/t-022` — Before renaming a cosmetic torrent- id/label vocabulary to something generic, a repo-wide grep for the literal substring across every file type (not just the three files the task note named) is what confirms scope is actually complete -- it also cleanly separated the truly torrent-specific backend/implementations/torrent_clients/Transmission.py from the generic frontend UI, so nothing outside the intended 3 files needed touching.
-- 2026-08-17 `kapowarr/t-007` — A prior design doc's 'confirmed by reading the template' claims are worth re-verifying, not just citing: tracing the actual settings-UI JS and API routes (not just the doc's summary) confirmed the client-type registry really was UI-driven with zero extra work needed, while the doc's separate 'update_status() needs zero changes' claim for the polling loop turned out to be wrong once the actual seeding_handling branch was read -- both a positive and negative case for the same 'verify, don't just cite' discipline in one task.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-18T01:42:24Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-18T02:30:41Z_
