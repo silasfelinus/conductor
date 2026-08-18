@@ -1015,3 +1015,17 @@ tasks:
   claimed_at: '2026-08-18T04:27:32Z'
   updated: '2026-08-18T04:30:22Z'
   implementation_pr: 'silasfelinus/Kapowarr#43'
+- id: t-047
+  milestone: m6
+  title: Hide collected Discover volumes and surface weekly pull-list task failures
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    User-reported live follow-up on 2026-08-18. Discover now loads successfully but
+    should omit releases whose volume is already present in the collection instead of
+    displaying them with an In Library badge. The manually triggered weekly pull-list
+    check silently disappeared without reaching the finished task list; trace and fix
+    the task lifecycle so failures remain observable and actionable rather than
+    vanishing. Keep both changes within the existing Discover/pull-list/task seams.
