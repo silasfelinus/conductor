@@ -582,21 +582,16 @@ tasks:
   - id: t-037
     milestone: m10
     title: Add admin UI to list and revoke issued customer app-access tokens
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-025
-    note: >
-      Deferred from t-025 (silasfelinus/humboldtscoopsolutions#75): customer
-      app-token issuance (POST /customers/:id/app-token, admin-gated) works
-      end-to-end, but there is no admin-facing way to see which tokens exist for
-      a customer or revoke one without going to the database directly -- the
-      staff-token side already has this via the Staff admin screen's Tokens
-      section (t-015); mirror that pattern for wp_hss_customer_tokens.
+    note: 'Delivered: HSS_Customer_Tokens (for_customer/revoke), an App tokens column + section on the Customers admin screen (list + nonce-checked revoke), and site/tests/customer-token-admin-test.php. Issuance stays on the CMS''s own admin-gated endpoint; a WordPress-side issuance UI is t-038.'
     claimed_by: 20260818T062811Z-hsscms-t037
     claimed_at: '2026-08-18T06:28:11Z'
-    updated: '2026-08-18T06:28:11Z'
+    updated: '2026-08-18T06:34:07Z'
+    implementation_pr: 'silasfelinus/humboldtscoopsolutions#76'
 
   - id: t-038
     milestone: m10
