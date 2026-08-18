@@ -1069,8 +1069,7 @@ tasks:
 - id: t-050
   milestone: m5
   title: Allow indexers to be enabled or disabled
-  status: review
-  owner: worker
+  status: done
   passes: 0
   stakes: reversible
   note: |-
@@ -1079,6 +1078,8 @@ tasks:
     Claim the user-requested per-indexer enable toggle and ensure disabled indexers are excluded through the shared search registry.
 
     Implementation is ready on worker/kapowarr-t-050-indexer-toggle. The settings list exposes immediate Enabled/Disabled controls for Newznab and Torznab indexers while preserving credentials, categories, priorities, and the existing enabled-only shared search registry. Node syntax and focused toggle-payload checks pass.
+
+    Merged silasfelinus/Kapowarr#55 at 60897ba after all seven PR jobs passed. Indexer cards now expose immediate Enabled/Disabled controls for both Newznab and Torznab while preserving configuration and using the existing enabled-only shared search registry.
   claimed_by: 2026-08-18T212948Z-kapowarr-t-050-b73c
   claimed_at: '2026-08-18T21:29:48Z'
-  updated: '2026-08-18T21:34:42Z'
+  updated: '2026-08-18T21:36:00Z'
