@@ -826,7 +826,7 @@ tasks:
 - id: t-032
   milestone: m5
   title: Add source quality preferences and upgrade policy
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   note: |-
@@ -845,7 +845,9 @@ tasks:
     Per-indexer priority merged in silasfelinus/Kapowarr#48 as squash 0a4f5284f10023e2fe74cac2a12ba6b0f949dcc9. Exact head bb35fd182adeb2e553195212fc529ab7c468a64c passed Python 3.8-3.12, docs, and container. Continue t-032 for external download-client priority and explicit durable provenance design; automatic replacement upgrades remain disabled until provenance exists.
 
     Finalize t-032 selection controls with external download-client priority while preserving load balancing inside equal-priority tiers, and document/structure durable acquisition provenance required for safe future replacement upgrades.
-  updated: '2026-08-18T09:25:00Z'
+
+    Final t-032 slice is ready for review on worker/kapowarr-t-032-20260818T092500Z-d31e. Adds external download-client priority with least-used balancing preserved inside equal-priority tiers, deletion-safe priority cleanup, a lightweight edit-dialog priority control, regression coverage, and an explicit durable acquisition-provenance contract gating any future automatic replacement upgrades.
+  updated: '2026-08-18T09:35:00Z'
   owner: worker
   claimed_by: 2026-08-18T092500Z-kapowarr-t-032-d31e
   claimed_at: '2026-08-18T09:25:00Z'
