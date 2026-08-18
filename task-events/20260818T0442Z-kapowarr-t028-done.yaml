@@ -1,0 +1,22 @@
+version: 1
+project: kapowarr
+task: t-028
+operation: done
+updated: 2026-08-18T04:42:00+00:00
+verify_pr: silasfelinus/Kapowarr#44
+note: >-
+  Story arcs and portable CBL/read-list workflows are merged in
+  silasfelinus/Kapowarr#44 (squash d44c8c98e25f90a6e18193ee81f2897a16d780e8).
+  The feature preserves ordered cross-volume entries, resolves exact ComicVine
+  IDs before conservative title/year/issue fallback, keeps unresolved gaps
+  visible, reports owned/missing status, exports enriched CBL identity, and can
+  queue existing acquisition tasks for resolved missing issues. Exact head
+  passed Python 3.8-3.12, docs, container, namespace-CBL regression, shared-file
+  diff audit, and review-thread gates.
+learning:
+  date: 2026-08-18
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  lesson: Portable comic lists should preserve unresolved gaps and enrich source identity when local matching provides stronger IDs; acquisition should be an explicit action over resolved missing entries.
