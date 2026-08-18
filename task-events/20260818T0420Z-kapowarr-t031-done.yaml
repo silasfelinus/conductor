@@ -1,0 +1,22 @@
+version: 1
+project: kapowarr
+task: t-031
+operation: done
+updated: 2026-08-18T04:20:00+00:00
+verify_pr: silasfelinus/Kapowarr#41
+note: >-
+  Torrent lifecycle hardening is merged in silasfelinus/Kapowarr#41 (squash
+  7cf14d69c757c8e7e06df347c5738d82cc452811). The final merge-ref verification
+  passed Python 3.8-3.12, docs, and container against current main after the
+  weekly-release work landed. The implementation adds hardlink-first seed-safe
+  imports with copy fallback, single-file torrent-root handling, deferred inode
+  metadata processing until seed cleanup, range-aware issue search, direct
+  already-owned issue pruning, and one-pack-only oversized-range fallback.
+learning:
+  date: 2026-08-18
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: quality
+  lesson: Preserve mature post-processing contracts where possible; test seed-safety behavior directly and keep range metadata optional on legacy download paths.
