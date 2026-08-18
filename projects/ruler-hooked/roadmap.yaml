@@ -36,7 +36,7 @@ milestones:
   - id: m3
     title: "POLISH & SHIP — content depth, app packaging, Steam/Unreal research"
     weight: 25
-    status: in-progress
+    status: done
 
 tasks:
   - id: t-001
@@ -408,13 +408,13 @@ tasks:
   - id: t-015
     milestone: m3
     title: Ship an installable/offline PWA wrapper for Ruler Hooked
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-014
-    note: >
-      Filed as the deferred follow-up from t-014's own note (2026-08-16, conductor scheduled Agent run): with content depth now addressed (t-014 expanded the deck from 6 to 25 cards / 1 to 3 arcs / 2 to 4 endings, merged kind_robots PR #1911), m3's remaining scope is "app packaging" -- an installable, offline-capable PWA wrapper for Ruler Hooked, distinct from the client-side localStorage offline-play that already works today (the game already plays fully offline once loaded; this task is about installability -- a manifest.webmanifest, service worker for asset precaching, and an "Add to Home Screen"/install prompt, so the PoC can be launched like a native app without a browser chrome). Scope: audit whether kind_robots already has a shared PWA/service-worker convention used by any other app in the monorepo (reuse it if so, rather than inventing a ruler-hooked-specific one); if none exists, keep the first slice narrow (installability + asset caching for the ruler-hooked route only, not a site-wide PWA conversion) per this project's established "concrete, verifiable gap, not a reskin" scoping discipline. Verify an actual install prompt fires and the route loads with network disabled after first visit.
+    note: 'DONE (conductor scheduled Agent run, 2026-08-18T18:28-scheduled-ruler-hooked-t015): shipped an installable/offline PWA wrapper for the Ruler Hooked route. Convention audit found kind_robots already has a shared, site-wide install-chrome-only @vite-pwa/nuxt convention (added for ai-art-academy/t-062/t-063/t-066, with a dedicated CI budget guard verifyPwaPrecacheBudget.ts) -- reused and extended it rather than building a ruler-hooked-specific manifest/service-worker, per the task note''s explicit preference. Two narrow nuxt.config.ts additions: (1) pwa.client.installPrompt, which was never set and left the shared $pwa composable''s beforeinstallprompt/install() flow permanently dead site-wide -- enabling it is what makes an install affordance possible anywhere, though only ruler-hooked-page.vue actually renders the UI for it; (2) pwa.workbox.runtimeCaching, one NetworkFirst cache entry scoped by regex to exactly /plan/projects/ruler-hooked''s document (maxEntries: 1), closing the real gap -- the game already played fully offline via localStorage once loaded, but a hard reload with network off failed because Nitro does not give SSR HTML the long-lived cache headers hashed build assets get. Did not touch globPatterns (still icons/manifest only, confirmed by the unchanged-and-passing precache budget check) and did not attempt a site-wide PWA conversion, per the task''s narrow-first-slice instruction. Added an explicit Install/Not-now banner in components/conductor/ruler-hooked-page.vue. Verified: production build succeeds; manifest.webmanifest unchanged; sw.js precache list unchanged plus the new NetworkFirst registerRoute entry; vue-tsc --noEmit clean; eslint on changed files clean and the repo lint ratchet holds (339 problems, -53, no rule regressed); verifyPwaPrecacheBudget.ts passes locally and in CI. NOT verified (no real browser in this sandbox): an actual beforeinstallprompt event/native install dialog, or a real network-disabled reload-after-first-visit check -- flagged explicitly in the PR body per this task''s own honesty discipline. One transient CI anomaly (Contract Tests job hung 15+ min at checkout on first run, unrelated to this diff, confirmed by a clean ~2.5min re-run) resolved via cancel+rerun. kind_robots PR #1939 (squash bd1e6d9f), all 28 checks green, merged. Deliberately left for follow-up: site-wide PWA conversion, caching Nuxt Content''s data-fetch path for offline client-side SPA navigation into the route, and install-prompt UI on any other route.'
     owner: worker
     claimed_by: 2026-08-18T18:28-scheduled-ruler-hooked-t015
     claimed_at: '2026-08-18T18:28:19Z'
-    updated: '2026-08-18T18:28:19Z'
+    updated: '2026-08-18T19:06:35Z'
+    implementation_pr: 'silasfelinus/kind_robots#1939'
