@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-18T02:30:41Z
+Generated: 2026-08-18T03:13:21Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **661**
-- Outcomes: blocked: 14, cancelled: 1, done: 646
+- Closed tasks recorded: **663**
+- Outcomes: blocked: 14, cancelled: 1, done: 648
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 15 | 100% |
 | interface-vision | 83 | 100% |
-| kapowarr | 22 | 100% |
+| kapowarr | 24 | 100% |
 | kind-robots | 50 | 98% |
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
@@ -63,7 +63,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 645 | 99% |
+| software | 647 | 99% |
 
 ## Failure categories
 
@@ -84,6 +84,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-18 `kapowarr/t-027` — A background agent pushing via the GitHub content API (create_branch/push_files) instead of git, because sandbox isolation blocks git-mutating ops against a shared checkout, works from a point-in-time file snapshot with no non-fast-forward safety net -- if a concurrent PR merges a change to a file it also touches, its push can silently revert that change. Neither isolated-copy tests nor CI caught it here (an import-only removal with no direct test coverage). Reviewing sessions merging such a PR must diff every touched file against live main, not just trust green CI.
+- 2026-08-18 `kapowarr/t-026` — A protocol adapter lands cleanly when search query planning, result provenance, and queue preparation are separate seams. Preserve explicit source identity through legacy link-only task contracts rather than reintroducing source-specific branches.
 - 2026-08-18 `kapowarr/t-025` — Selective architecture ports are safer than wholesale upstream copies when the fork already has working protocol-specific features; introduce seams around existing behavior, then add new protocols through the seams.
 - 2026-08-18 `humboldt-scoop-cms/t-023` — The obvious in-codebase precedent (pet photos, stored as an ordinary WordPress media-library attachment) was the wrong pattern here, and the reason was architectural, not stylistic: the CMS that actually receives the field client's upload runs on a different host from WordPress with no shared filesystem, a fact only stated in a deployment-config comment (cms/ecosystem.config.cjs), not in any doc a feature-scoping read would normally reach first. Worth checking where a write physically lands (which process, which host) before reusing a same-repo pattern that looks superficially identical -- two features can both be 'upload a photo' and still need incompatible storage. Also: caught and fixed a real bug of my own before it shipped by re-deriving a timezone assumption instead of trusting it -- a first draft stamped created_at with site-local time but compared it against a UTC-computed retention cutoff, which would have silently mispurged photos by the site's configured offset on every sweep run; the fix was to pick one clock (GMT) for both the write and the comparison and say why in the code, not to patch the symptom.
 - 2026-08-17 `humboldt-scoop-cms/t-030` — An open-ended 'polish' task with no obvious next action is workable by grepping the codebase itself for evidence the code already knows is stale -- two test-file comments in this repo had, weeks earlier, already called a dead theme directory 'retired' and 'a dead duplicate pending deletion', which nobody had acted on. That's a cheap, high-confidence source of scoped work: search for a project's own accumulated in-code annotations of known-stale things before treating a vague polish task as unscopable.
@@ -92,8 +94,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-17 `kapowarr/t-011` — For a fork-maintenance doc, live-verifying the documented commands against the real upstream remote (adding Casvt/Kapowarr as `upstream`, fetching, running the actual `git merge-base`) caught nothing wrong here but is worth doing on principle -- a fork-maintenance doc that only describes commands in the abstract, without confirming they resolve cleanly against the actual upstream repo, risks documenting a merge-base or remote-URL assumption that silently doesn't hold. Also: this closed out both remaining m3 tasks and the milestone reconciliation left m2 and m3 with zero open tasks -- flagged in TALKBACK for a human/next-session judgment call on whether kapowarr needs a new milestone or an explicit finish decision, rather than inferring project completion from N/N per the standing caution against that.
 - 2026-08-17 `humboldt-scoop-cms/t-021` — A task note that says 'the real gap is X' is a starting hypothesis, not a spec -- tracing the actual write paths (HSS_Notify's own doc comment on why it polls instead of hooking) surfaced that the new scooper-facing write needed the identical wp-cron backstop the existing completion path already has, and designing the SMS extension surfaced a real customer-mismatch bug (HSS_Sms::visit_status()'s get_by_user(0) lookup) that a shallower 'just call the existing function' implementation would have shipped silently. Also: when a schema's status enum gains a new value on one side (WordPress: 'enroute' already existed in HSS_Visits::statuses()), grep the other side's own type/enum definitions (cms/src/schema.ts's VisitStatus, db/rows.ts's VISIT_STATUSES) before assuming they already agree -- they didn't, and a real enroute row would have been silently remapped to 'scheduled' by the CMS's own fallback-on-unrecognized-value logic.
 - 2026-08-17 `kapowarr/t-009` — Writing regression coverage for a module that had zero tests surfaced a real production bug that manual reading alone hadn't caught: __load_downloads()'s LinkBroken except-handler referenced a dict key ('source') that doesn't exist on the row it was handling (the actual column is 'source_type') -- on a real sqlite3.Row this raises IndexError, uncaught by the surrounding except clause, silently killing the startup queue-restore loop partway through. The bug was invisible to mypy (dict/Row __getitem__ isn't statically typed) and to every prior manual code read across t-006/t-007/t-008. Lesson for future 'add tests to an untested module' tasks: write the regression test to actually exercise the exception-handling branches (not just the happy path), and verify each new test fails without its corresponding fix before committing -- a passing-on-first-try test for a bug you just 'fixed' is not proof it would have caught the original bug.
-- 2026-08-17 `kapowarr/t-008` — Reusing an existing extensibility seam (get_subclasses(SearchSource), already used for GetComics) rather than inventing a parallel 'indexer type registry' the way external_clients.py has for download clients kept the diff scoped: Newznab is one shared API spec nearly every indexer implements identically, so per-indexer-instance CRUD rows (mirroring the simpler notifications.py registry, not the type-hierarchy external_clients.py one) was the right complexity match, not a rewrite. Also: a Newznab item's own title field carries no file extension (extract_filename_data needs it stripped from a Content-Disposition-recovered filename, or issue-number parsing silently corrupts) -- worth flagging for any future indexer/download-client task that recovers a title from a header rather than an API field.
-- 2026-08-17 `kapowarr/t-022` — Before renaming a cosmetic torrent- id/label vocabulary to something generic, a repo-wide grep for the literal substring across every file type (not just the three files the task note named) is what confirms scope is actually complete -- it also cleanly separated the truly torrent-specific backend/implementations/torrent_clients/Transmission.py from the generic frontend UI, so nothing outside the intended 3 files needed touching.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-18T02:30:41Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-18T03:13:21Z_
