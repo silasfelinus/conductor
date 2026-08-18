@@ -381,14 +381,14 @@ tasks:
 - id: t-012
   milestone: m4
   title: Polish and upgrade AppMaker front-end surface
-  status: ready
-  owner: worker
+  status: claimed
+  owner: reviewer
   passes: 0
   stakes: reversible
   note: 'PROGRESS 2026-08-16 (conductor scheduled Agent run, 2026-08-16T1500-sched-conductor-appmaker-t012): fresh read-through of appmaker-page.vue/conductorStore.ts excluding the three already-fixed items (refreshToken sequencing, fetchProjects force in-flight sharing, slug-candidate validation). Found a real UX bug: the fleet computed derived each cards description solely from `tasks.length === 0 ? "Freshly scaffolded." : ""`. scripts/new_app.py always seeds a scaffolded apps roadmap with 3 tasks up front, so tasks.length === 0 was essentially never true for a real, registry-tracked app -- the logic was backwards in practice: every successfully tracked app showed a permanently blank description, while "Freshly scaffolded." only ever appeared when the project lookup itself failed (a data problem, not a success state). The ConductorProject type already carries real per-app text (goal from roadmap.yaml, and notesFromSilas which new_app.py always seeds even as a placeholder) that was never surfaced despite the template already having a v-if="app.description" slot ready for it. Fixed by preferring project?.goal || project?.notesFromSilas, falling back to the old literal only when there is truly no project data yet. Added utils/scripts/verifyAppmakerFleetDescriptionGuard.ts + .test.ts mirroring verifyAppmakerSlugCandidateGuard.ts, wired into package.json and contract-tests.yml. Verified: new guard + selftest pass, existing slug-candidate guard unaffected, eslint/prettier clean, full-project vue-tsc --noEmit clean, git status showed exactly the 5 intended files. kind_robots PR #1913 -- one job (comment-contract) failed on first run with an unrelated live-API 502 (GET /api/characters, in verifyPopulationDraftQuality.ts, nothing to do with this diff); reran just that job and it passed clean on retry, confirming transient. All other checks green -- MERGED (squash c17902d). Steps (1) dashboard-tab/tutorial art and (3) liveUrl/channelKey/tabKey Placements backfill remain blocked exactly as before. Rearmed to ready -- kaizen t-013 filed to audit the same fleet computed used elsewhere (e.g. pending-apps list) for the same kind of stale-literal gap.'
-  claimed_by: 2026-08-16T1500-sched-conductor-appmaker-t012
-  claimed_at: '2026-08-16T14:43:29Z'
-  updated: '2026-08-16T14:54:53Z'
+  claimed_by: claude-scheduled-20260818T1930-appmaker-t012
+  claimed_at: '2026-08-18T19:29:21Z'
+  updated: '2026-08-18T19:29:21Z'
   implementation_pr: 'silasfelinus/kind_robots#1913'
 
 - id: t-013
