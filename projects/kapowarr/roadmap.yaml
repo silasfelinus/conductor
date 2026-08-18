@@ -1033,7 +1033,7 @@ tasks:
 - id: t-048
   milestone: m6
   title: Refresh task history immediately after task completion
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
@@ -1041,6 +1041,8 @@ tasks:
     User clarified that the manually triggered Weekly Pull List task succeeded, but the Tasks page did not refresh its History table when the task-ended WebSocket event arrived. Refresh task history (and scheduled execution timestamps) after completion, ensuring the task-history insert is committed before the event tells clients to reload it.
 
     Claim the clarified live follow-up: refresh Tasks history after task completion and commit the row before notifying clients.
+
+    Implementation is ready in silasfelinus/Kapowarr#53. The task-history row is committed before task_ended, and the Tasks page refreshes History and scheduled timestamps when that WebSocket event arrives. Local verification passed 365 tests, mypy, isort, Node syntax checks, and diff checks.
   claimed_by: 2026-08-18T202700Z-kapowarr-t-048-7c2e
   claimed_at: '2026-08-18 20:27:00+00:00'
-  updated: '2026-08-18 20:27:00+00:00'
+  updated: '2026-08-18 20:30:00+00:00'
