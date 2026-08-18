@@ -826,7 +826,7 @@ tasks:
 - id: t-032
   milestone: m5
   title: Add source quality preferences and upgrade policy
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   note: |-
@@ -843,7 +843,12 @@ tasks:
     Per-indexer priority follow-up is ready for review on worker/kapowarr-t-032-20260818T085000Z-b94d. Adds 1-100 priority for Newznab and Torznab feeds using deletion-safe config metadata, applies priority as stable same-protocol ordering only, exposes it in Settings > Indexers, and tests both protocol search paths. Durable file acquisition-quality provenance remains required before automatic replacement upgrades can be safe.
 
     Per-indexer priority merged in silasfelinus/Kapowarr#48 as squash 0a4f5284f10023e2fe74cac2a12ba6b0f949dcc9. Exact head bb35fd182adeb2e553195212fc529ab7c468a64c passed Python 3.8-3.12, docs, and container. Continue t-032 for external download-client priority and explicit durable provenance design; automatic replacement upgrades remain disabled until provenance exists.
-  updated: '2026-08-18T09:20:00Z'
+
+    Finalize t-032 selection controls with external download-client priority while preserving load balancing inside equal-priority tiers, and document/structure durable acquisition provenance required for safe future replacement upgrades.
+  updated: '2026-08-18T09:25:00Z'
+  owner: worker
+  claimed_by: 2026-08-18T092500Z-kapowarr-t-032-d31e
+  claimed_at: '2026-08-18T09:25:00Z'
 - id: t-033
   milestone: m6
   title: Add Wanted/Missing workbench and manual import
