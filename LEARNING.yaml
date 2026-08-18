@@ -8806,3 +8806,12 @@ records:
   failure_category: null
   lesson: Portable comic lists should preserve unresolved gaps and enrich source identity when local matching
     provides stronger IDs; acquisition should be an explicit action over resolved missing entries.
+- date: 2026-08-18
+  project: humboldt-scoop-cms
+  task: t-024
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Mirroring an existing durable-queue pattern in the same codebase (FilePhotoUploadQueue from t-023) made a genuinely large offline-durability feature (route cache + write queue + reconcile-on-fetch) tractable in one pass without changing the RouteApi/RouteStorage interfaces the task asked to preserve; also fixed a real latent bug found along the way (RouteStop.fromJson silently dropping crewNotes) that would have made cached completions lose their notes on app restart.
