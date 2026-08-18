@@ -674,13 +674,13 @@ tasks:
   milestone: m5
   title: Live-verify and harden Newznab to SABnzbd end-to-end
   status: ready
-  owner: null
   passes: 0
   stakes: reversible
-  note: The SABnzbd client and Newznab search/NZB handoff are merged and heavily unit-tested, but neither
-    was live-verified against the user's real services during implementation. Exercise caps/search/download/queue/history/storage,
-    remote mappings, restart persistence, failures, and post-processing on the real stack before treating
-    Usenet support as complete.
+  note: |-
+    The SABnzbd client and Newznab search/NZB handoff are merged and heavily unit-tested, but neither was live-verified against the user's real services during implementation. Exercise caps/search/download/queue/history/storage, remote mappings, restart persistence, failures, and post-processing on the real stack before treating Usenet support as complete.
+
+    Projection resync after the aggregation roadmap expansion; no implementation state changed.
+  updated: '2026-08-18 01:08:00+00:00'
 - id: t-025
   milestone: m5
   title: Reconcile relevant upstream development acquisition architecture
