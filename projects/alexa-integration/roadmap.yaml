@@ -314,7 +314,7 @@ tasks:
 - id: t-015
   milestone: m4
   title: Polish and upgrade Voice Lab front-end surface
-  status: claimed
+  status: review
   owner: worker
   updated: '2026-08-18T14:33:45Z'
   passes: 0
@@ -322,7 +322,7 @@ tasks:
   note: 'PROGRESS 2026-08-16 (conductor scheduled Agent run, 2026-08-16T1445-sched-conductor-alexa-t015): fresh read-through of serendipityVoiceStore.ts/voice-lab-page.vue/serendipity-page.vue excluding the three already-fixed races (pollInFlight overlap #1127; stale-poll-after-stop #1847; cursor-reset #1888). Found a real, distinct correctness bug: VoiceBusCommand.action is a shared union (on/off/toggle/clear/set/draft) across every command target, but set/draft only make sense for theme/art targets. For target: animation, a command with action: set or draft fell through every on/off/toggle branch untouched, still hit the unconditional setSurfacePlacement() call, and posted a false "Applied: <effect> on." message/ack -- the UI silently claimed success while the effects actual on/off state never changed. Unsupported *targets* were already reported as ignored; unsupported *actions* on a supported target had no equivalent guard. Fixed by rejecting non on/off/toggle animation actions in applyCommand() the same way unsupported targets are reported. Added utils/scripts/verifySerendipityVoiceActionGuard.ts + .test.ts following the existing poll-guard/cursor-reset convention, wired into package.json and contract-tests.yml. Verified: new guard + selftest pass, both pre-existing guards still pass, eslint/prettier clean, full-project vue-tsc --noEmit clean, git status showed exactly the 5 intended files. kind_robots PR #1912 -- all 25 required checks green (only the non-required "Build production image" check was still running at merge time, same documented deploy-not-required precedent) -- MERGED (squash cd24d1b). Step (1) (dashboard-tab/tutorial art) remains blocked on the render backlog. Rearmed to ready -- kaizen t-020 filed to extend the same action/target-mismatch guard to the theme and art command targets, which were not audited this cycle.'
   claimed_by: 2026-08-18T1445-alexa-t015
   claimed_at: '2026-08-18T14:33:45Z'
-  implementation_pr: 'silasfelinus/kind_robots#1912'
+  implementation_pr: 'silasfelinus/kind_robots#1935'
 - id: t-016
   milestone: m4
   title: Fix control-adapter theme-domain over-claiming any utterance containing the word "theme"
