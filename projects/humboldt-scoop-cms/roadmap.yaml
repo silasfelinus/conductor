@@ -465,7 +465,7 @@ tasks:
   - id: t-027
     milestone: m10
     title: "Finish iOS production beta and App Store readiness"
-    status: claimed
+    status: needs-human
     owner: worker
     passes: 0
     stakes: outward-facing
@@ -473,12 +473,45 @@ tasks:
       - t-024
       - t-025
     note: >
-      Validate the shared Flutter architecture on iOS, finish platform permissions/signing,
-      TestFlight beta, store assets/listing/privacy disclosures, and a release candidate
-      suitable for App Store submission.
+      FOR SILAS: All the software-only prep is done and merged
+      (silasfelinus/humboldtscoopsolutions#80, field-client/). It contains an
+      iOS Info.plist audit (result: no missing usage-description keys --
+      camera-only permission was already correct from t-023, no location/
+      background-mode/custom-URL-scheme usage exists to need one), a
+      release-signing scaffold (Release.xcconfig optionally includes a
+      git-ignored Config/Release.xcconfig for a real DEVELOPMENT_TEAM/manual
+      cert+profile, mirroring the Android key.properties pattern), and three
+      docs under field-client/docs/: APP-STORE-READINESS.md (the full numbered
+      checklist below, in detail), a PRIVACY-POLICY-DRAFT.md update (now covers
+      both platforms under one URL instead of Android-only wording), and
+      APP-STORE-LISTING-DRAFT.md (name/subtitle/description/keywords/category
+      plus an App Privacy data-collection table).
+
+      TO APPROVE / DO: this task cannot reach done without you, because actual
+      submission needs things only you can create -- (1) enroll in the Apple
+      Developer Program ($99/year, your own Apple ID), (2) create the app
+      record in App Store Connect, (3) set up real signing (Xcode automatic
+      signing + DEVELOPMENT_TEAM in a local ios/Config/Release.xcconfig, or
+      manual cert/profile -- never commit that file), (4) publish
+      PRIVACY-POLICY-DRAFT.md's text at a real URL (same one used for Android),
+      (5) review/edit the listing copy draft including the App Privacy table,
+      (6) capture real screenshots on a device/Simulator from a Mac with Xcode,
+      (7) complete App Store Connect's App Privacy and age-rating
+      questionnaires, (8) run `flutter build ipa --release` once signing exists
+      to produce the release archive, then (9) upload via Xcode
+      Organizer/Transporter, create a TestFlight beta, and submit for App
+      Review. Once you have done these (or want to fast-track/skip any), set
+      status: done (and approved_by_human: true if you want the record to
+      reflect an explicit go-ahead) -- that unblocks t-029 (actual store
+      publish) to proceed on the same footing as Android.
+
+      Android (t-026) already reached this same needs-human state and is a
+      separate task.
     claimed_by: 2026-08-18T092755Z-hss-t027-
     claimed_at: '2026-08-18T09:27:56Z'
-    updated: '2026-08-18T09:27:56Z'
+    updated: '2026-08-18T09:36:49Z'
+    soft_gate: false
+    implementation_pr: 'silasfelinus/humboldtscoopsolutions#80'
 
   - id: t-028
     milestone: m11
