@@ -384,8 +384,8 @@ tasks:
   - id: t-024
     milestone: m10
     title: "Make field work durable offline and sync safely after reconnect"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-015
@@ -393,6 +393,9 @@ tasks:
       Replace MemoryRouteStorage with durable local storage, cache assigned route/visit data,
       queue completion/notes/photo writes, and reconcile safely after connectivity returns.
       Preserve the abstract storage/API boundaries already built into the Flutter client.
+    claimed_by: 20260818T043409-hscms-t024
+    claimed_at: '2026-08-18T04:34:10Z'
+    updated: '2026-08-18T04:34:10Z'
 
   - id: t-025
     milestone: m10
