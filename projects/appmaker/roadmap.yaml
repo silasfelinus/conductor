@@ -394,20 +394,46 @@ tasks:
 - id: t-013
   milestone: m4
   title: Audit other AppMaker fleet-list rendering for the same stale-literal description gap
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
   note: >
-    Kaizen from t-012's 2026-08-16 cycle (kind_robots PR #1913): the `fleet` computed in
-    appmaker-page.vue showed a permanently blank card description for every real,
+    Kaizen from t-012's 2026-08-16 cycle (kind_robots PR #1913): the `fleet` computed
+    in appmaker-page.vue showed a permanently blank card description for every real,
     registry-tracked app because `tasks.length === 0` was almost never true in practice
     (scripts/new_app.py always seeds 3 tasks), so the real per-app text (`project?.goal`
     / `project?.notesFromSilas`) never reached the UI. Fixed for the `fleet`/Apps card
-    grid. Check whether the same page's "pending" apps list (apps still scaffolding, not
-    yet in the registry) or any other conductorStore-driven list in this project has a
-    similar stale-literal-over-real-data gap, and fix any found the same way. If nothing
-    else is affected, close as a verified no-op rather than forcing a change.
+    grid. Check whether the same page's "pending" apps list (apps still scaffolding,
+    not yet in the registry) or any other conductorStore-driven list in this project
+    has a similar stale-literal-over-real-data gap, and fix any found the same way.
+    If nothing else is affected, close as a verified no-op rather than forcing a change.
+
+    AUDITED 2026-08-18 (conductor scheduled Agent run): read appmaker-page.vue in full.
+    It is the only page component for this project (mounted once, from
+    conductor-manager.vue). Two conductorStore-driven lists exist:
+
+    1. The "pending" scaffolds list (apps still filing, not yet in the registry) --
+       sourced from /api/appmaker/apps' `pending: PendingScaffold[]`, not
+       conductorStore at all. It renders only `item.slug` in a badge, with
+       `requestedAt` in a hover tooltip via `formatDate()`. No description field is
+       rendered here, so there is no stale-literal-over-real-data text to go stale --
+       the gap t-012 fixed doesn't exist on this list.
+    2. The "fleet" Apps card grid -- already fixed by t-012's PR #1913 (verified
+       present in the current file: `description: project?.goal ||
+       project?.notesFromSilas || ''`, falling back to "Freshly scaffolded." only when
+       there is truly no project data yet).
+
+    Searched the wider kind_robots tree for any other component reading
+    `conductorStore.projects` (components/pages/{appmaker,conductor,conductor-pitch-manager}-page.vue,
+    components/taskmaster/taskmaster-sample-tasks.vue,
+    components/conductor/conductor-app-page.vue) -- none belong to the appmaker
+    project's own UI surface (conductor-manager.vue just mounts AppmakerPage under the
+    'appmaker' workspace tab; the rest are the conductor/pitch/taskmaster projects'
+    own pages, out of this task's scope). No other appmaker-specific component exists.
+
+    Verified no-op: nothing else in this project has the stale-literal gap. Closing
+    without a code change per the task's own "if nothing else is affected" clause.
   claimed_by: 2026-08-18T152852Z-appmaker-t013-c7d2
   claimed_at: '2026-08-18T15:28:57Z'
-  updated: '2026-08-18T15:28:57Z'
+  updated: '2026-08-18T15:30:13Z'
