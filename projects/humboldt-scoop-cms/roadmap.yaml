@@ -370,18 +370,16 @@ tasks:
   - id: t-023
     milestone: m9
     title: "Add opt-in proof-of-service photos with retention and offline-safe upload"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-015
-    note: >
-      photos_opt_in already exists. Decide and document storage/retention/access/deletion,
-      then add worker capture/compression/queued upload and customer/admin viewing. Property
-      photos are private customer data; uploads must survive intermittent field connectivity.
+    note: 'Built end to end: wp_hss_visit_photos table (schema 2.12.0, LONGBLOB storage since the CMS runs on a different host from WordPress with no shared filesystem), CMS POST /visits/:id/photos with live consent re-check, authenticated per-photo REST viewing (not a public media-library URL), a daily retention sweep (180 days) plus admin delete-on-request, and a field-client capture/compress/offline-queue flow gated on photosOptIn. Full storage/retention/access reasoning in docs/DATA-ARCHITECTURE.md (humboldtscoopsolutions repo). Flutter changes are unverified by a toolchain (none available in this sandbox, same standing limitation as every prior Flutter task here) -- documented in field-client/README.md.'
     claimed_by: hss-photos-2026-08-18T0030
     claimed_at: '2026-08-18T00:28:58Z'
-    updated: '2026-08-18T00:28:58Z'
+    updated: '2026-08-18T00:53:41Z'
+    implementation_pr: 'silasfelinus/humboldtscoopsolutions#66'
 
   - id: t-024
     milestone: m10
