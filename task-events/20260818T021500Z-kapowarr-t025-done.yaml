@@ -1,0 +1,14 @@
+version: 1
+project: kapowarr
+task: t-025
+operation: done
+note: "Selective upstream acquisition-architecture reconciliation completed without replacing fork-specific Newznab/SAB behavior. Kapowarr #38 made search sources and query planning protocol-aware; Kapowarr #39 moved source-specific queue handoff into a DownloadPrepper registry. Existing GetComics/Newznab behavior remains behind those seams, and a future source can register without adding new branches to manual_search() or DownloadHandler.add()."
+verify_pr: silasfelinus/Kapowarr#39
+learning:
+  date: 2026-08-18
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Selective architecture ports are safer than wholesale upstream copies when the fork already has working protocol-specific features; introduce seams around existing behavior, then add new protocols through the seams."
