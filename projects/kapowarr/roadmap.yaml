@@ -1065,3 +1065,13 @@ tasks:
   claimed_by: 2026-08-18T204527Z-kapowarr-t-049-a91d
   claimed_at: '2026-08-18T20:45:27Z'
   updated: '2026-08-18T20:57:18Z'
+
+- id: t-050
+  milestone: m5
+  title: Allow indexers to be enabled or disabled
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    User-reported live follow-up on 2026-08-18. Searches can be delayed by a slow or unavailable configured indexer. Add a persistent per-indexer enabled toggle in Settings, default existing and newly created indexers to enabled, preserve disabled indexer configuration, and exclude disabled indexers consistently from automatic, manual, Wanted, Discover, and other shared search paths.
