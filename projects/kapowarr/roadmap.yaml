@@ -1018,17 +1018,14 @@ tasks:
 - id: t-047
   milestone: m6
   title: Hide collected Discover volumes and surface weekly pull-list task failures
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
-  note: >-
-    User-reported live follow-up on 2026-08-18. Discover now loads successfully but
-    should omit releases whose volume is already present in the collection instead of
-    displaying them with an In Library badge. The manually triggered weekly pull-list
-    check silently disappeared without reaching the finished task list; trace and fix
-    the task lifecycle so failures remain observable and actionable rather than
-    vanishing. Keep both changes within the existing Discover/pull-list/task seams.
+  note: |-
+    User-reported live follow-up on 2026-08-18. Discover now loads successfully but should omit releases whose volume is already present in the collection instead of displaying them with an In Library badge. The manually triggered weekly pull-list check silently disappeared without reaching the finished task list; trace and fix the task lifecycle so failures remain observable and actionable rather than vanishing. Keep both changes within the existing Discover/pull-list/task seams.
+
+    Implementation complete on worker/live-discover-pulllist-20260818. Discover excludes owned volumes; the weekly source URL and live row parser are repaired; empty source results preserve the last good pull list; and failed tasks are retained in task history with their error. Local verification: 364/364 unit tests, mypy clean, isort clean, live GetComics parse returned 61 releases.
   claimed_by: 2026-08-18T195800Z-kapowarr-t-047-a8f3
   claimed_at: '2026-08-18T19:58:00Z'
-  updated: '2026-08-18T19:58:00Z'
+  updated: '2026-08-18T20:12:00Z'
