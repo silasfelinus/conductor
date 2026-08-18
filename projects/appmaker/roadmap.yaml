@@ -381,14 +381,14 @@ tasks:
 - id: t-012
   milestone: m4
   title: Polish and upgrade AppMaker front-end surface
-  status: claimed
-  owner: reviewer
+  status: ready
+  owner: null
   passes: 0
   stakes: reversible
-  note: 'PROGRESS 2026-08-16 (conductor scheduled Agent run, 2026-08-16T1500-sched-conductor-appmaker-t012): fresh read-through of appmaker-page.vue/conductorStore.ts excluding the three already-fixed items (refreshToken sequencing, fetchProjects force in-flight sharing, slug-candidate validation). Found a real UX bug: the fleet computed derived each cards description solely from `tasks.length === 0 ? "Freshly scaffolded." : ""`. scripts/new_app.py always seeds a scaffolded apps roadmap with 3 tasks up front, so tasks.length === 0 was essentially never true for a real, registry-tracked app -- the logic was backwards in practice: every successfully tracked app showed a permanently blank description, while "Freshly scaffolded." only ever appeared when the project lookup itself failed (a data problem, not a success state). The ConductorProject type already carries real per-app text (goal from roadmap.yaml, and notesFromSilas which new_app.py always seeds even as a placeholder) that was never surfaced despite the template already having a v-if="app.description" slot ready for it. Fixed by preferring project?.goal || project?.notesFromSilas, falling back to the old literal only when there is truly no project data yet. Added utils/scripts/verifyAppmakerFleetDescriptionGuard.ts + .test.ts mirroring verifyAppmakerSlugCandidateGuard.ts, wired into package.json and contract-tests.yml. Verified: new guard + selftest pass, existing slug-candidate guard unaffected, eslint/prettier clean, full-project vue-tsc --noEmit clean, git status showed exactly the 5 intended files. kind_robots PR #1913 -- one job (comment-contract) failed on first run with an unrelated live-API 502 (GET /api/characters, in verifyPopulationDraftQuality.ts, nothing to do with this diff); reran just that job and it passed clean on retry, confirming transient. All other checks green -- MERGED (squash c17902d). Steps (1) dashboard-tab/tutorial art and (3) liveUrl/channelKey/tabKey Placements backfill remain blocked exactly as before. Rearmed to ready -- kaizen t-013 filed to audit the same fleet computed used elsewhere (e.g. pending-apps list) for the same kind of stale-literal gap.'
-  claimed_by: claude-scheduled-20260818T1930-appmaker-t012
-  claimed_at: '2026-08-18T19:29:21Z'
-  updated: '2026-08-18T19:29:21Z'
+  note: 'PROGRESS 2026-08-16 (conductor scheduled Agent run, 2026-08-16T1500-sched-conductor-appmaker-t012): fresh read-through of appmaker-page.vue/conductorStore.ts excluding the three already-fixed items (refreshToken sequencing, fetchProjects force in-flight sharing, slug-candidate validation). Found a real UX bug: the fleet computed derived each cards description solely from `tasks.length === 0 ? "Freshly scaffolded." : ""`. scripts/new_app.py always seeds a scaffolded apps roadmap with 3 tasks up front, so tasks.length === 0 was essentially never true for a real, registry-tracked app -- the logic was backwards in practice: every successfully tracked app showed a permanently blank description, while "Freshly scaffolded." only ever appeared when the project lookup itself failed (a data problem, not a success state). The ConductorProject type already carries real per-app text (goal from roadmap.yaml, and notesFromSilas which new_app.py always seeds even as a placeholder) that was never surfaced despite the template already having a v-if="app.description" slot ready for it. Fixed by preferring project?.goal || project?.notesFromSilas, falling back to the old literal only when there is truly no project data yet. Added utils/scripts/verifyAppmakerFleetDescriptionGuard.ts + .test.ts mirroring verifyAppmakerSlugCandidateGuard.ts, wired into package.json and contract-tests.yml. Verified: new guard + selftest pass, existing slug-candidate guard unaffected, eslint/prettier clean, full-project vue-tsc --noEmit clean, git status showed exactly the 5 intended files. kind_robots PR #1913 -- one job (comment-contract) failed on first run with an unrelated live-API 502 (GET /api/characters, in verifyPopulationDraftQuality.ts, nothing to do with this diff); reran just that job and it passed clean on retry, confirming transient. All other checks green -- MERGED (squash c17902d). Steps (1) dashboard-tab/tutorial art and (3) liveUrl/channelKey/tabKey Placements backfill remain blocked exactly as before. Rearmed to ready -- kaizen t-013 filed to audit the same fleet computed used elsewhere (e.g. pending-apps list) for the same kind of stale-literal gap. PROGRESS 2026-08-18 (conductor scheduled Agent run, claude-scheduled-20260818T1930-appmaker-t012): worktree-isolated background agent read appmaker-page.vue, conductorStore.ts, the appmaker server routes (apps.get.ts, scaffold-request.post.ts, projectCap.ts), and both existing guards in full. Confirmed all four prior fixes (refreshToken sequencing, fetchProjects force in-flight sharing, slug-candidate validation, fleet description fallback) still hold. Checked slug case-handling, FREE_PROJECT_LIMIT consistency between client and server (both 2, intentionally duplicated -- client can''t import server-only files), pending-scaffold dedup, and loading/creating state gating -- no new code bug found. Found one real but out-of-scope discrepancy: content/channels/plan/appmaker.md sets requiredRole: ADMIN, enforced live by middleware/navigation-access.global.ts, so no non-admin user can ever reach /appmaker -- yet the page''s own copy ("Sign in to create an app. Browsing is open to everyone") and the FREE_PROJECT_LIMIT messaging read as if it''s open to any signed-in free-tier user, and the entire non-admin cap-enforcement path in scaffold-request.post.ts is currently unreachable. Checked sibling plan-channel tabs: conductor-app.md, voice-lab.md, and watchlist.md are also requiredRole: ADMIN while brainstorm.md, model-builder.md, and coloring.md are open, so this reads as a deliberate current-phase choice (internal agent-tooling views) rather than an oversight -- flagged, not fixed, since opening project creation to the whole userbase is an outward-facing access-control decision outside this task''s stakes. Filed appmaker/t-014 (soft needs-human) for Silas to decide: keep admin-only and fix the self-serve copy, or actually open the tab up. No PR opened this cycle -- legitimate no-new-bug outcome. Re-armed to ready.'
+  claimed_by: ''
+  claimed_at: ''
+  updated: '2026-08-18T19:38:44Z'
   implementation_pr: 'silasfelinus/kind_robots#1913'
 
 - id: t-013
@@ -408,6 +408,44 @@ tasks:
     not yet in the registry) or any other conductorStore-driven list in this project
     has a similar stale-literal-over-real-data gap, and fix any found the same way.
     If nothing else is affected, close as a verified no-op rather than forcing a change.
+
+- id: t-014
+  milestone: m4
+  title: "Decide: keep /appmaker admin-only and fix its self-serve copy, or open project creation to all users"
+  status: needs-human
+  soft_gate: true
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    FOR SILAS: found during the 2026-08-18 t-012 polish cycle (kind_robots main,
+    no PR -- this is a read-only finding). content/channels/plan/appmaker.md sets
+    requiredRole: ADMIN, enforced live by middleware/navigation-access.global.ts,
+    so no non-admin user can currently reach /appmaker -- an anonymous visitor is
+    redirected to /login and a logged-in non-admin to / with access=denied, even
+    on the server-rendered HTML.
+
+    What it contains: appmaker-page.vue's own copy still reads as if the tab is
+    open to any signed-in user ("Sign in to create an app. Browsing is open to
+    everyone"), and describes a FREE_PROJECT_LIMIT of 2 apps per free-tier user.
+    server/api/appmaker/scaffold-request.post.ts's entire non-admin cap-enforcement
+    path is consequently unreachable in production right now. Checked sibling
+    plan-channel tabs: conductor-app.md, voice-lab.md, and watchlist.md are also
+    requiredRole: ADMIN, while brainstorm.md, model-builder.md, and coloring.md
+    are open -- so this looks like a deliberate current-phase choice (these read
+    as your internal agent-tooling views) rather than an accidental oversight,
+    but the page's own copy was never updated to match.
+
+    TO APPROVE: tell us which way to take it, and set status: ready (a future
+    t-012 cycle will implement it) or done directly if you'd rather leave it as
+    documentation: (a) keep /appmaker admin-only -- rewrite the sign-in/free-tier
+    copy in appmaker-page.vue to reflect that it's an internal tool, or (b) drop
+    requiredRole: ADMIN from appmaker.md so the existing self-serve copy and cap
+    logic actually apply, in which case also sanity-check the abuse surface of
+    public project creation (scaffold rate limits, GitHub App install flow)
+    before flipping it live, since that would be an outward-facing change.
+    Nothing unblocks on this beyond appmaker's own future polish cycles picking
+    a consistent story.
 
     AUDITED 2026-08-18 (conductor scheduled Agent run): read appmaker-page.vue in full.
     It is the only page component for this project (mounted once, from
