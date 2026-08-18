@@ -8909,3 +8909,19 @@ records:
     /api/bots on rerun after /api/characters on the first try) is a transient,
     diff-unrelated production flake -- confirmed directly via curl against the live
     host before merging past it, rather than assuming or guessing."
+- date: 2026-08-18
+  project: appmaker
+  task: t-013
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Kaizen audit tasks ("check whether the same gap exists elsewhere") are
+    cheap to close honestly when the answer is no -- read the one other
+    conductorStore-driven list on the page (pending scaffolds), confirmed it
+    renders no description field at all so the stale-literal gap t-012 fixed
+    can't recur there, and swept the wider tree for any other appmaker-owned
+    list before concluding "verified no-op." Closed via close_task.py with the
+    audit trail in the note rather than forcing an unnecessary diff.
