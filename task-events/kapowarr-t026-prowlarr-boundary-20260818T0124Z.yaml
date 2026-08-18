@@ -1,7 +1,0 @@
-version: 1
-project: kapowarr
-task: t-026
-operation: ready
-updated: 2026-08-18T01:24:00+00:00
-note: >-
-  Integration decision: do not fork Prowlarr for the first implementation. Kapowarr should consume Prowlarr through its generic Torznab/Newznab-facing indexer/proxy boundary, so Prowlarr remains an independently updated service. A later native Prowlarr Settings > Apps adapter that pushes indexers into Kapowarr can be proposed upstream to Prowlarr; maintain a Prowlarr fork only if that upstream integration genuinely requires changes that cannot land there.
