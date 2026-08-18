@@ -826,7 +826,7 @@ tasks:
 - id: t-032
   milestone: m5
   title: Add source quality preferences and upgrade policy
-  status: review
+  status: done
   passes: 0
   stakes: reversible
   note: |-
@@ -847,8 +847,9 @@ tasks:
     Finalize t-032 selection controls with external download-client priority while preserving load balancing inside equal-priority tiers, and document/structure durable acquisition provenance required for safe future replacement upgrades.
 
     Final t-032 slice is ready for review on worker/kapowarr-t-032-20260818T092500Z-d31e. Adds external download-client priority with least-used balancing preserved inside equal-priority tiers, deletion-safe priority cleanup, a lightweight edit-dialog priority control, regression coverage, and an explicit durable acquisition-provenance contract gating any future automatic replacement upgrades.
-  updated: '2026-08-18T09:35:00Z'
-  owner: worker
+
+    Source quality preferences and selection policy are complete across Kapowarr #47, #48, and #49. Shipped protocol source ordering, GetComics HD/SD preference, pack preference, per-Newznab/Torznab indexer priority, and external download-client priority with least-used balancing preserved inside equal-priority tiers. PR #49 merged as 44e621e78aad6c32be41f7a6f5e271d49eaae9b0 from exact head 5f4717a484e0ab3511ec12b21c4ab3bae302df72 after Python 3.8-3.12, docs, container, JS syntax, diff, and review-thread gates passed. Automatic replacement upgrades remain intentionally disabled until durable per-file acquisition provenance exists; docs/acquisition-quality-provenance.md defines that safety contract for a separate follow-up task.
+  updated: '2026-08-18T09:40:00Z'
   claimed_by: 2026-08-18T092500Z-kapowarr-t-032-d31e
   claimed_at: '2026-08-18T09:25:00Z'
 - id: t-033
