@@ -847,7 +847,7 @@ tasks:
   - id: t-024
     milestone: m5
     title: "Social platform policy review for AI-generated and automated content"
-    status: claimed
+    status: done
     owner: worker
     updated: '2026-08-19T08:03:46Z'
     passes: 0
@@ -867,6 +867,25 @@ tasks:
       Flag any platform where responsible participation is not currently possible, and
       recommend a starting set of two or three rather than all of them. Research only —
       no account creation, no posting, no API keys.
+
+      RESEARCH DONE 2026-08-19. Full findings in
+      projects/kind-economy/research/social-platform-policy.md, one section per platform
+      plus a comparison table. Bluesky and Instagram are the recommended starting pair:
+      Bluesky explicitly welcomes automation with a first-class "Automated" account
+      self-label and generous rate limits, no fundraising-specific rule found; Instagram
+      has the clearest first-class AI-content label of any platform (Meta's "AI info"),
+      at the cost of a standard Meta App Review gate. YouTube and Discord are workable
+      second-tier options. Mastodon is a real risk: the widely-adopted default Community
+      Standards (and apparently mastodon.social itself) explicitly prohibit accounts that
+      "primarily or exclusively post AI-generated content," which is a structural conflict
+      with what AMI is — instance choice matters. X now charges per post (~$0.015, +$0.20
+      for any post with a URL) under its Feb 2026 pay-per-use API pricing, a real
+      per-post cost unique to X. TikTok requires an API-client compliance audit before
+      posts are even publicly visible. The one open item this research cannot resolve in
+      the abstract, as flagged in the task brief: Reddit and Discord both have solid
+      site-wide/API-level bot paths (Reddit's Responsible Builder Policy, Discord's Bot
+      Account + Verification), but actual bot bans happen per-subreddit and per-server —
+      any real deployment to a specific community needs its own rules check first.
     claimed_by: worker-2026-08-19T08:08:00Z-t024-platform-policy
     claimed_at: '2026-08-19T08:03:46Z'
 
