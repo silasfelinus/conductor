@@ -465,23 +465,30 @@ tasks:
   - id: t-021
     milestone: m5
     title: Add Brainstorm-specific tests, telemetry-free quality fixtures, and duplicate checks
-    status: claimed
+    status: done
     depends_on:
       - t-006
       - t-009
       - t-012
     owner: worker
-    updated: '2026-08-19T20:36:04Z'
+    updated: '2026-08-19T21:08:26Z'
     passes: 0
     stakes: reversible
     note: >-
-      Build deterministic fixtures around parser validation, requested result counts, duplicate
-      suppression, candidate state transitions, regeneration lineage, object-context privacy,
-      route behavior and save/reopen flows. Do not add analytics as a shortcut. Include prompt
-      fixtures covering practical lists and playful absurdity so future refactors do not sand
-      Brainstorm into generic corporate prose.
+      Kaizen from t-018s 2026-08-18 cycle wired to real coverage (conductor scheduled Agent run, 2026-08-19).
+
+      Split the pure BrainstormCandidate normalizers and state-transition logic out of stores/brainstormStore.ts into stores/helpers/brainstormCandidateLifecycle.ts -- same split already used for brainstormSourceAdapterKit.ts/brainstormSourceContextKit.ts, for the same reason: brainstormStore.ts pulls in useServerStore -> userStore -> achievementStore, and achievementStore.ts calls the Vite-only import.meta.glob(...) at module load time, so the store itself cannot be imported from a plain tsx test process. Behavior unchanged -- pure extraction, store actions are now thin findCandidate-then-delegate wrappers.
+
+      Added utils/scripts/verifyBrainstormCandidateLifecycle.test.ts: real behavioral fixtures (not source-text shape checks) for candidate state transitions (keep/reject/reset), edit/regenerate/restore revision lineage, branch-origin computation, error classification, the stores own exact-duplicate response check (previously untested), and client-side save/reopen restore (normalizeStoredCandidate/normalizeStoredBatch round-tripping a realistic session payload through JSON) -- the client half of save/reopen; the server half already had deep coverage in verifyBrainstormPersistence.ts.
+
+      Updated verifyBrainstormStoreContract.mjs to check the new helper file for internal-detail assertions that moved with the logic, kept call-site/wiring checks against the store. Wired the new test into brainstorm-store-contract.yml.
+
+      Parser validation/requested-result-counts/duplicate-suppression (server-side near-duplicate check) and object-context privacy were already solid (verifyBrainstormGeneration.ts, verifyBrainstormSourceContext.ts) -- deliberately not duplicated.
+
+      Verified: full brainstorm test suite (7 verify scripts) green, no regressions; eslint/prettier clean on touched files; repo-wide vue-tsc --noEmit clean; git status --porcelain showed exactly the 6 intended files. First CI run failed (ERR_MODULE_NOT_FOUND on the @/ path alias -- the new job installs with npm ci --ignore-scripts, which skips the nuxi prepare postinstall that generates the tsconfig path mapping); fixed by switching the new helper file to relative imports, verified locally by temporarily removing .nuxt entirely and re-running clean. kind_robots PR #1973 -- 34/35 checks green before merge (only "Build production image", the documented non-required deploy-image job, still in flight), squash-merged eec10db.
     claimed_by: 20260819T203603-brainstorm-t021-sched
     claimed_at: '2026-08-19T20:36:04Z'
+    implementation_pr: 'silasfelinus/kind_robots#1973'
 
   - id: t-022
     milestone: m6

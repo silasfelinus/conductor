@@ -9256,3 +9256,29 @@ records:
     up, especially for reachability/mounting claims in a codebase with this
     much concurrent agent activity -- re-verify the premise against live
     main before writing any diff, not just before merging one.
+- date: 2026-08-19
+  project: brainstorm
+  task: t-021
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Adding real behavioral test coverage for Pinia store logic in this repo
+    hits a real environmental wall: a store file that imports another store
+    transitively (brainstormStore.ts -> serverStore -> userStore ->
+    achievementStore) can be unimportable from a plain tsx process even
+    though none of the actual logic under test needs Pinia, because some
+    unrelated store in the chain calls a Vite-only API (import.meta.glob) at
+    module load time. The fix already has a name in this codebase --
+    brainstormSourceAdapterKit.ts/brainstormSourceContextKit.ts already
+    split pure logic out for exactly this reason -- but it's not written
+    down as a general rule anywhere, so it's worth re-deriving the "does
+    this file transitively import a store with a Vite-only top-level call"
+    question explicitly before assuming a store's exports are tsx-testable.
+    Second lesson: a CI job that installs with `npm ci --ignore-scripts`
+    (for speed) skips the `nuxi prepare` postinstall that generates the '@/'
+    path-alias tsconfig -- any new tsx-run script under such a job must use
+    relative imports, not '@/', or verify locally with `.nuxt` removed
+    before trusting it'll pass in CI.
