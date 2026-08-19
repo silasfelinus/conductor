@@ -9134,3 +9134,19 @@ records:
     more directly on point than the originally-flagged commercial-co-venture states, and
     surfaced a concrete design lever (redirect to the donation platform's own hosted page
     vs. embedding it) worth flagging even though this task's scope was research-only.
+- date: 2026-08-19
+  project: kind-economy
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Clean first-pass Worker output: additive-only migration (ADD COLUMN IF NOT EXISTS /
+    CREATE INDEX matching the repo's established convention), a resolver that never throws
+    (a lookup failure degrades to "no attribution" rather than failing the charge), and both
+    open policy questions (mission-share fallback on unresolved creatorUserId, self-attribution
+    recorded but not decided) handled exactly as the task note specified rather than guessed
+    at. Reviewed the actual diff (schema, migration.sql, manaAttribution.ts, manaGate.ts wiring)
+    rather than trusting the PR description alone.
