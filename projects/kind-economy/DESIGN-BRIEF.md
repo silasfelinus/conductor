@@ -152,11 +152,23 @@ likely already cleared. If it was an ordinary SOS Certificate of Dissolution wit
 there may be a residual balance. Check the paperwork for a 3502, or call the FTB nonprofit
 line at (916) 845-4171. The EIN itself is on the IRS CP 575 letter.
 
-**Timing (Silas, 2026-08-19):** January 1 was "just a random date but beyond this year,
-since I don't see taking in any money for a while. It can be later, it just didn't seem
-like a quick priority here in mid-August." The entity track is therefore **deferred to
-2027 or later** and weighted 5 — kept alive because he does want it long term, but
-explicitly not competing with the revenue and fundraising work.
+**A new name, not a revival (Silas, 2026-08-19):** *"When we restart, it will be a new
+name and new nonprofit. Kind robots is the future, save one human was the seed."* Save
+One Human's name is retired along with its corporation. Any future entity carries the
+Kind Robots identity and is a fresh incorporation — never framed as reviving the seed.
+
+**Triggered by revenue, not by a date (Silas, 2026-08-19):** *"We don't need to think
+about 501.3 or whatever status until we have so much more under our belt and are
+legitimately taking in money as an entity from users."* The January 1 target is
+withdrawn. `m6` is weighted 5, and its tasks now depend on `t-013` — the first real
+dollar — so the entity track cannot become actionable before the platform is actually
+earning. `t-018` is **closed**, with its findings recorded, rather than parked at
+`needs-human`, because `audit_human_gates.py` filters purely on `status == "needs-human"`
+and would otherwise resurface it in every session sweep forever.
+
+**What this settles by default:** the near-term shape is Path C1 — the platform operates
+for-profit, and the mission share is donated directly to the Against Malaria Foundation.
+`t-003` stays open only to confirm that formally with a CPA.
 
 ## The decision that gates everything else
 
