@@ -9042,3 +9042,13 @@ records:
     function allowlist, a later cycle should periodically check whether new or
     overlooked functions with the same shape are missing from that list,
     rather than assuming a fixed guard covers a whole bug class permanently.
+
+- date: 2026-08-19
+  project: kapowarr
+  task: t-054
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Bound remote metadata resolution as a whole and pair every loading state with success and rejection exits; source health data should be visible before acquisition."
