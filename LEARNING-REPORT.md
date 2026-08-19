@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-19T21:31:08Z
+Generated: 2026-08-19T21:50:42Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **698**
-- Outcomes: blocked: 15, cancelled: 1, done: 682
+- Closed tasks recorded: **699**
+- Outcomes: blocked: 15, cancelled: 1, done: 683
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -52,7 +52,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | ruler-hooked | 4 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
-| storybook | 13 | 100% |
+| storybook | 14 | 100% |
 | storymaker | 1 | 100% |
 | superkate-hairstyle-ai | 18 | 100% |
 | superkate-services-calculator | 12 | 100% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 682 | 99% |
+| software | 683 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-19 `storybook/t-010` — Cycle 20 of the recurring storybook/t-010 bug-hunt: Dream rows without a first-class Prisma model of their own (Location is just dreamType === 'LOCATION' on the generic Dream table) are easy to under-serve relative to Character/Reward/Scenario/Facet, which each have both a dedicated model and a dedicated detail component with its own "start a story" deep-link CTA. The generic dream-narration.vue detail surface had no such CTA for any Dream type, so seedFromQuery()'s ?location= query key had been dead code with no sender anywhere in the repo since it was added. Worth checking, for any future object type added to Storybook's seed-query set, whether it actually has a first-class detail component or only the generic Dream surface -- the generic surface is the one that silently misses new CTAs.
+
 - 2026-08-19 `brainstorm/t-021` — Adding real behavioral test coverage for Pinia store logic in this repo hits a real environmental wall: a store file that imports another store transitively (brainstormStore.ts -> serverStore -> userStore -> achievementStore) can be unimportable from a plain tsx process even though none of the actual logic under test needs Pinia, because some unrelated store in the chain calls a Vite-only API (import.meta.glob) at module load time. The fix already has a name in this codebase -- brainstormSourceAdapterKit.ts/brainstormSourceContextKit.ts already split pure logic out for exactly this reason -- but it's not written down as a general rule anywhere, so it's worth re-deriving the "does this file transitively import a store with a Vite-only top-level call" question explicitly before assuming a store's exports are tsx-testable. Second lesson: a CI job that installs with `npm ci --ignore-scripts` (for speed) skips the `nuxi prepare` postinstall that generates the '@/' path-alias tsconfig -- any new tsx-run script under such a job must use relative imports, not '@/', or verify locally with `.nuxt` removed before trusting it'll pass in CI.
 
 - 2026-08-19 `brainstorm/t-024` — The task's own "scope check first" step is what caught this: before building any UI, re-verified whether bot-gallery.vue was actually unmounted as the t-018 kaizen note claimed, and found the claim already false on current main -- content/bots.md -> bot-manager.vue -> bot-interact.vue -> bot-gallery.vue is a complete, CI-verified (test:route-gallery-contract) mount chain reachable via the play channel's normal nav, not just a direct URL. Closed with no code change and no kind_robots PR. Worth generalizing: a kaizen-sourced task's premise can go stale between when it was written and when it is picked up, especially for reachability/mounting claims in a codebase with this much concurrent agent activity -- re-verify the premise against live main before writing any diff, not just before merging one.
@@ -102,8 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-19 `kind-economy/t-005` — A flat "donate a third" plan does not net to zero for tax purposes by default -- gross receipts and a charitable deduction are separate line items whose offset depends entirely on entity type and itemization, and for a sole prop/LLC taking the standard deduction the offset is worth nothing. The fix has to be structural (keep the mission third out of gross receipts entirely via a direct customer-to-charity donation) rather than a bigger deduction. Also: when researching a compliance question, the framing in the task note ("check these N states") can undersell the real exposure -- a broader, newer category of law (California's charitable-fundraising-platform registration, which reads broadly enough to plausibly cover an embedded donate-at-checkout flow) was more directly on point than the originally-flagged commercial-co-venture states, and surfaced a concrete design lever (redirect to the donation platform's own hosted page vs. embedding it) worth flagging even though this task's scope was research-only.
 
 - 2026-08-19 `kapowarr/t-056` — Provider abstraction is incomplete while one provider's identifier remains a schema requirement; keep compatibility IDs nullable and route refresh through each entity's durable provider identity.
-- 2026-08-19 `kind-economy/t-004` — When a live claim on the site outpaces the mechanism behind it, "future tense" is nearly always the right default over "leave it and document the gap" -- it costs nothing, is fully reversible, and removes a live credibility risk immediately. Also: a CI job stuck `queued` with the parent run auto-concluding `failure` (no logs, zero jobs actually run) is a transient infra stall, not a real check failure -- confirm by running the same commands locally before trusting the red state, then retry the workflow run to verify before merging.\n
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-19T21:31:08Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-19T21:50:42Z_
