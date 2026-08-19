@@ -655,22 +655,14 @@ tasks:
   - id: t-016
     milestone: m4
     title: "Mission remittance runbook and reconciliation"
-    status: ready
+    status: done
     owner: null
-    updated: '2026-08-19T00:00:00Z'
+    updated: '2026-08-19T19:43:41Z'
     passes: 0
     stakes: reversible
     depends_on: [t-005, t-010]
-    note: >
-      Write the operational runbook for actually sending the mission share to the
-      fundraiser, using whichever route t-005 recommends: cadence, who initiates, how
-      the amount is derived from t-010's accrual, where the receipt is filed, and how
-      the remittance is recorded back against the ledger so the outstanding balance
-      returns to zero. Include the reconciliation check that catches the two failure
-      modes that matter — remitting less than accrued (the promise is broken) and
-      double-remitting the same period (the money is gone twice). Runbook and tooling
-      only; the actual donation is Silas's action, and this task must not automate a
-      transfer.
+    note: 'Runbook written at projects/kind-economy/docs/mission-remittance-runbook.md (conductor PR #2526): cadence (quarterly, or sooner once outstanding sits non-trivial), who initiates (Silas, manually -- no agent moves money), how the amount is derived from t-010 accrual dashboard outstandingCents, where the receipt/reference is filed, and how the remittance is logged back so outstanding returns to zero. Reconciliation tooling shipped in kind_robots PR #1972 (squash-merged 88d193c): checkMissionRemittanceReconciliation() in server/utils/missionAccrual.ts flags under-remitted (outstanding > 0, promise broken) vs over-remitted (outstanding < 0, likely double-remit) vs reconciled (== 0), wired into GET /api/economy/mission-accrual and surfaced as a banner on /mission-accrual. No transfer automated. Verified: npm run test:mission-accrual 6/6, sibling contract tests re-run clean, vue-tsc/eslint/prettier clean, git status showed exactly the 4 intended files, 32/32 kind_robots CI checks green before merge.'
+    implementation_pr: 'silasfelinus/kind_robots#1972'
 
   - id: t-017
     milestone: m4

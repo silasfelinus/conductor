@@ -9213,3 +9213,25 @@ records:
     landed, the recovery move is "verify live state, then dispatch a fresh
     agent to independently confirm and complete" -- not "assume it succeeded"
     and not "discard and redo from scratch."
+- date: 2026-08-19
+  project: kind-economy
+  task: t-016
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    The two failure modes the task named -- under-remitting (promise broken)
+    and double-remitting (money gone twice) -- turned out not to need any new
+    schema or per-period tracking: because a remittance is meant to bring the
+    running outstanding = accrued - remitted balance back to exactly zero,
+    both collapse onto the sign of outstandingCents immediately after a
+    remittance is logged (positive = under-remitted, negative = over-remitted/
+    likely duplicate, zero = reconciled). Read the existing t-010 accrual
+    dashboard code first rather than assuming a new bucketing mechanism was
+    needed -- the simplest correct design was already implied by the ledger
+    shape that existed. Also caught mid-session: resolve_deps.py only edits
+    the local working tree, it does not commit/push -- its output needs an
+    explicit commit+PR+merge before claim_task.py will see the unblocked task
+    on origin/main (worth remembering for any future session running it).
