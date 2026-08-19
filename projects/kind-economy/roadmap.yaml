@@ -629,63 +629,13 @@ tasks:
   - id: t-014
     milestone: m4
     title: "Design the creator payout mechanism"
-    status: claimed
+    status: needs-human
     owner: worker
-    updated: '2026-08-19T12:30:48Z'
+    updated: '2026-08-19T12:32:58Z'
     passes: 0
     stakes: reversible
     depends_on: [t-008]
-    note: >
-      MODEL DECIDED (Silas, 2026-08-19), so this is now a design task with a settled
-      shape rather than an open question: "we credit the creator with more tokens, which
-      are the paid resource used to generate interactions. Then when they reach a
-      threshold, they can request a withdrawal and we pay. Since we only create tokens
-      when users pay money, and we only credit a portion of tokens paid back to creators,
-      a reasonable withdrawal timer should prevent most situations of fraud."
-      This is a good design and the economic reasoning behind it is sound — credit in
-      tokens, pay on request past a threshold, and let the fact that a round trip returns
-      only a third make self-dealing unprofitable. Three things it still needs, none of
-      which break it:
-
-      (1) EARNED MANA IS A LIABILITY THE MOMENT IT IS CREDITED, not when it is paid. Once
-      tokens are redeemable, every outstanding earned balance is money owed. Model it as
-      such, keep it in its own bucket (t-006), and make sure nothing that mints mana for
-      fun — achievements, refills, admin adjustments — can ever land in it.
-
-      (2) THE WITHDRAWAL TIMER SHOULD BE AT LEAST AS LONG AS THE CARD-DISPUTE WINDOW.
-      Silas's instinct that a timer prevents most fraud is right, and the number that
-      makes it right is the chargeback window: a cardholder can dispute a payment months
-      after the fact (commonly up to ~120 days depending on network and reason code). The
-      attack the timer defeats is buy-tokens-with-a-stolen-card, spend on a confederate's
-      asset, confederate withdraws, chargeback lands after the cash is gone. A timer
-      shorter than the dispute window does not close that; one at least as long does.
-      Confirm the current window against Stripe's own dispute documentation rather than
-      taking ~120 days on faith, and set the threshold high enough that a payout is worth
-      its own transfer fee.
-
-      (3) THE MODEL IS SOUND; THE CODE DOES NOT IMPLEMENT IT YET. Silas's design has two
-      distinct resources — free mana (limited access, lower queue priority, never
-      purchased) and tokens (the paid resource, created only when real money is spent) —
-      and creator credit comes from token spends only. In that model a giveaway
-      structurally cannot become withdrawable cash, so there is no arbitrage to defend
-      against; the guarantee is in the shape of the data, not in a rule.
-      Today's code has only `User.mana`, a single Int fed by both Stripe purchases
-      (reason PURCHASE) and free refills (reason CYCLE_REFILL), with no token model in the
-      schema at all. So the invariant this task depends on is not currently expressible:
-      any creator-credit rule written against `User.mana` would credit giveaway balance as
-      readily as purchased balance. t-006 introduces the split; this task must not assume
-      it and should assert end to end that credit only ever derives from a paid spend.
-
-      REMAINING DESIGN WORK: how the withdrawal is actually paid (Stripe Connect Express
-      vs manual transfer at this scale — there is no payout mechanism in the repo today,
-      zero references to Connect, transfer_data, or application_fee); minimum threshold;
-      what identity and tax information a creator must supply before receiving anything
-      and at what dollar level that kicks in (1099-NEC, W-9 collection, non-US creators);
-      and what happens to earned balances from creators who never onboard.
-      One question for the CPA rather than for an agent: when does credited-but-unwithdrawn
-      earned mana become taxable income to the creator — at credit, or at redemption?
-      Constructive receipt could make it the former, which would change reporting.
-      Flag anything else that needs professional review and say so plainly.
+    note: 'Design complete for the settled model (see PAYOUT-MECHANISM-DESIGN.md): liability accounting, chargeback-window-based withdrawal timer (recommend 120 days), and the token/earnedTokens data-shape gap is now closed by t-006/t-007/t-008. Four items need Silas: payout path (manual vs Stripe Connect, recommend manual v1), minimum threshold, identity/tax collection policy, and unclaimed-balance handling. One needs a CPA: constructive-receipt timing on earnedTokens. Parked at needs-human for those five decisions.'
     claimed_by: claude-20260819T122808Z-t014
     claimed_at: '2026-08-19T12:30:48Z'
 
