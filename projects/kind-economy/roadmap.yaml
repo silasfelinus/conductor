@@ -43,6 +43,21 @@ notes_from_silas: >
   - The ledger is append-only. No task may add a code path that edits or deletes a
     settled split row.
 
+  ENTITY DIRECTION (Silas, 2026-08-19), so no future session relitigates it:
+  - Save One Human is dissolved and its name is retired. "When we restart, it will be a
+    new name and new nonprofit. Kind robots is the future, save one human was the seed."
+    Any m6 work is a fresh incorporation under the Kind Robots identity — never a
+    revival, and never framed as one.
+  - Nonprofit status is explicitly NOT a current concern: "We don't need to think about
+    501.3 or whatever status until we have so much more under our belt and are
+    legitimately taking in money as an entity from users." m6 is weighted 5, its tasks
+    are `waiting` behind t-013 (the first real dollar), and the trigger is revenue, not
+    a date. Do not surface it as pending work, do not propose reviving it early, and do
+    not re-open t-018 — it is closed with its findings recorded.
+  - The near-term shape is therefore settled by default: the platform operates
+    for-profit and the mission share is donated directly to the Against Malaria
+    Foundation. t-003 remains open only to confirm that formally with a CPA.
+
 milestones:
   - id: m1
     title: "SHAPE — decide the money model"
@@ -65,7 +80,7 @@ milestones:
     weight: 15
     status: not-started
   - id: m6
-    title: "ENTITY — a NEW nonprofit, if and when; Save One Human is dissolved"
+    title: "ENTITY — a new nonprofit under a new name, once real revenue exists"
     weight: 5
     status: not-started
 
@@ -649,111 +664,100 @@ tasks:
   - id: t-018
     milestone: m6
     title: "Establish the true current legal status of Save One Human"
-    status: needs-human
-    owner: null
+    status: done
+    owner: reviewer
     updated: '2026-08-19T00:00:00Z'
-    passes: 0
+    passes: 1
     stakes: outward-facing
     gate_human: true
-    approved_by_human: false
+    approved_by_human: true
     note: >
-      SUBSTANTIALLY ANSWERED 2026-08-19. One narrow question remains and it is a
-      closure check, not a decision input — nothing in this project waits on it.
+      DONE 2026-08-19. Closed under CONTROL.md's human-gate clearance rule: Silas
+      resolved this in-session ("Save one human is definitely disbanded... I finalized
+      that around 2023-2024" and "that is moot, we are just going to go forward on all
+      the things that can be done first"). Deliberately closed rather than parked,
+      because audit_human_gates.py filters purely on status == needs-human and would
+      otherwise resurface this in every session sweep forever — the exact stale-gate
+      pattern CLAUDE.md documents.
 
-      DISSOLVED (Silas, 2026-08-19): "Save one human is definitely disbanded, as far as
-      I know. I finalized that around 2023-2024." Recorded as his own account rather than
-      a verified filing; the confirming record is the CA SOS entity status, which this
-      session could not reach (see below). Consequence: there is nothing to reinstate.
-      Any future entity is a NEW incorporation with a NEW EIN — an old EIN cannot be
-      reused for a new corporation — so m6 is "incorporate fresh, if and when", never
-      "revive". The upside of that is real: a new corporation inherits none of the old
-      one's tax history, so whatever the answer to the open question below, it does not
-      follow him into a future entity.
+      WHAT WAS ESTABLISHED, for the record:
+      - DISSOLVED, finalized circa 2023-2024 (Silas's own account). Nothing to reinstate.
+      - NEVER A 501(c)(3). Federal exemption was never applied for. The SaveOneHuman
+        README's registration checklist marks only three of ten steps complete: name,
+        articles of incorporation (form arts-pb.pdf, nonprofit PUBLIC BENEFIT
+        corporation, $30, via northwestregisteredagent.com), and EIN. Never done: board,
+        bylaws + conflict-of-interest policy, initial board actions, CT-1 with the CA AG,
+        Statement of Information with the CA SOS, IRS Form 1023/1023-EZ, FTB Form 3500.
+      - NO PUBLIC IRS RECORD, and there never was one. ProPublica Nonprofit Explorer,
+        which mirrors the IRS Exempt Organizations Business Master File, returns
+        total_results: 0 — the expected result for an entity that never received a
+        determination letter, since the IRS only publishes organizations it recognized.
+        The EIN is not published anywhere because the IRS does not publish EINs for
+        non-exempt entities. The surviving public record is the CA SOS corporate filing.
+      - The name is retired anyway. Silas, 2026-08-19: "when we restart, it will be a new
+        name and new nonprofit. Kind robots is the future, save one human was the seed."
+        So no future work depends on this entity's disposition at all.
 
-      NEVER A 501(c)(3). Federal exemption was never applied for. The SaveOneHuman
-      README's registration checklist marks only three of ten steps complete — name,
-      articles of incorporation (form arts-pb.pdf, nonprofit PUBLIC BENEFIT corporation,
-      $30, via northwestregisteredagent.com), and EIN. Not struck through: board, bylaws
-      + conflict-of-interest policy, initial board actions, CT-1 with the CA AG's
-      Registry of Charitable Trusts, Statement of Information with the CA SOS, IRS Form
-      1023/1023-EZ, and FTB Form 3500. Independently corroborated: ProPublica Nonprofit
-      Explorer, which mirrors the IRS Exempt Organizations Business Master File, returns
-      total_results: 0 for "save one human" — exactly what a never-applied entity
-      produces, since the IRS only publishes organizations it has actually recognized.
-      So no public IRS record exists or ever did, and the EIN is not published anywhere
-      because the IRS does not publish EINs for non-exempt entities. The surviving public
-      record is the CA Secretary of State corporate filing.
-
-      THE ONE OPEN QUESTION — which dissolution route was used, and was FTB Form 3502
-      filed? This matters because a CA nonprofit corporation that never obtained FTB
-      exemption is taxed like a for-profit and accrues the $800 minimum franchise tax
-      every year it exists, regardless of revenue; a corporation stays subject to it
-      until a Certificate of Dissolution is filed with the SOS. Incorporated 2020,
-      dissolved 2023-2024, that is roughly three to four years of exposure. California
-      provides a specific remedy for exactly this situation: FTB Form 3502, "Nonprofit
-      Corporation Request for Pre-Dissolution Tax Abatement" (Revenue & Taxation Code
-      section 23156), which abates unpaid qualified taxes, interest, and penalties for a
-      nonprofit certifying under penalty of perjury that it never conducted business or
-      has ceased, and holds no remaining assets. Save One Human — zero revenue, ever —
-      is the textbook case for it. Short-form dissolution was NOT available: that route
-      closes 24 months after incorporation, and 2023-2024 is well past it.
-      So: if the dissolution was handled through the FTB 3502 abatement path, the accrued
-      franchise tax is very likely already cleared and this is closed. If it went through
-      an ordinary SOS Certificate of Dissolution without a 3502, there may be a residual
-      balance. FOR SILAS: check the dissolution paperwork for a Form 3502, or call the
-      FTB nonprofit line at (916) 845-4171 with the entity name to confirm the account
-      shows a zero balance. Worth ten minutes for peace of mind; not worth blocking
-      anything over, since a future entity would be new and unencumbered either way.
-
-      NOT LEGAL OR TAX ADVICE. General rules from public sources; the actual situation
-      needs a CPA or nonprofit attorney.
+      OPTIONAL, NON-BLOCKING, FOR SILAS WHENEVER HE FEELS LIKE IT — nothing waits on it
+      and he does not believe there is an issue: a CA nonprofit corporation that never
+      obtained FTB exemption accrues the $800 minimum franchise tax until a Certificate
+      of Dissolution is filed, so 2020-2024 is a few years of theoretical exposure.
+      California's remedy is FTB Form 3502, "Nonprofit Corporation Request for
+      Pre-Dissolution Tax Abatement" (R&TC section 23156), which abates unpaid qualified
+      taxes, interest, and penalties for a nonprofit certifying it never conducted
+      business and holds no assets — and with zero revenue ever, Save One Human is the
+      textbook case, so a competently handled dissolution very likely used it. If he ever
+      wants certainty: check the dissolution paperwork for a 3502, or call the FTB
+      nonprofit line at (916) 845-4171. Critically, a future entity would be a NEW
+      corporation with a NEW EIN and inherits none of this either way.
+      NOT LEGAL OR TAX ADVICE.
 
   - id: t-019
     milestone: m6
-    title: "Assemble the fresh-incorporation checklist and filing calendar"
+    title: "Assemble the fresh-incorporation checklist, when revenue justifies it"
     status: waiting
     owner: null
     updated: '2026-08-19T00:00:00Z'
     passes: 0
     stakes: reversible
-    depends_on: [t-018, t-003]
+    depends_on: [t-003, t-013]
     note: >
-      DEFERRED, not cancelled (Silas, 2026-08-19): "I like the idea of doing it long
-      term, but that's why I said Jan 1, which was just a random date but beyond this
-      year, since I don't see taking in any money for a while. It can be later, it just
-      didn't seem like a quick priority here in mid-August." So there is no January 1
-      deadline and this task should NOT be picked up ahead of m2-m5 work. Do not treat it
-      as ready just because it is unblocked.
-      SCOPE CORRECTED 2026-08-19: Save One Human is dissolved (see t-018), so this is
-      a FRESH INCORPORATION checklist, not a reinstatement one. All ten steps are in
-      scope, not the seven that were left undone — new articles, new EIN, new everything.
-      Silas may reuse the name if it is still available, which is its own check.
-      When it is time: research and drafting only — no filing, no signing, no payment, no
-      agent contact with any agency. Once t-003 settles whether a nonprofit is wanted at
-      all, build the dated checklist: every form, its filing window, its fee, its
-      dependencies, and which have long lead times (IRS determination letters
-      historically run months). Draft what agents CAN draft (bylaws from a standard CA
-      template, conflict-of-interest policy, initial board resolutions) into
-      projects/kind-economy/entity/, clearly marked as unreviewed drafts requiring
-      attorney review.
-      Learn from the first attempt rather than repeating it: incorporating and stopping is
+      DO NOT PICK THIS UP YET. Silas, 2026-08-19: "We don't need to think about 501.3 or
+      whatever status until we have so much more under our belt and are legitimately
+      taking in money as an entity from users." The trigger is revenue, not a date — the
+      earlier January 1 target is withdrawn entirely, and this now depends_on t-013 (the
+      first real dollar) precisely so it cannot become actionable before the platform is
+      actually earning. If a session finds this pickable, that means live payments are
+      working, which is the point.
+
+      A NEW NAME AND A NEW ENTITY. Silas, 2026-08-19: "when we restart, it will be a new
+      name and new nonprofit. Kind robots is the future, save one human was the seed."
+      So this is not a Save One Human revival under any framing — that name is retired,
+      the corporation is dissolved (t-018), and the future entity carries the Kind Robots
+      identity. Name availability against the CA SOS register is its own early check.
+
+      WHEN IT IS TIME: research and drafting only — no filing, no signing, no payment, no
+      agent contact with any agency. Build the dated checklist: every form, its filing
+      window, its fee, its dependencies, and which have long lead times (IRS
+      determination letters historically run months). Draft what agents CAN draft (bylaws
+      from a standard CA template, conflict-of-interest policy, initial board
+      resolutions) into projects/kind-economy/entity/, clearly marked as unreviewed
+      drafts requiring attorney review.
+
+      LEARN FROM THE SEED RATHER THAN REPEATING IT. Incorporating and stopping is exactly
       what produced a public benefit corporation that was never exempt, never registered
-      with the AG, and quietly accruing $800/year. The lesson is that incorporation is the
-      cheap, easy step and the exemption filings are the ones that actually matter — so
-      the checklist should treat IRS 1023/1023-EZ and FTB 3500 as the real milestones and
-      the SOS filing as a prerequisite, not an achievement. Do not file articles until
-      the whole path is funded and scheduled.
-      Note the sequencing trap t-018 surfaced: FTB Form 3500A is the cheap path but
-      requires an existing IRS determination letter, which this entity has never had. So
-      federal exemption (1023-EZ if eligible) has to come first, or the more involved
-      full Form 3500 is required. Whichever year this lands in, the entity's effective
-      date should still line up with a clean tax year to avoid a part-year filing — that
-      was the only real substance behind the original January 1 date.
+      with the AG, and quietly accruing $800/year for doing nothing. Incorporation is the
+      cheap, easy step; the exemption filings (IRS 1023/1023-EZ, FTB 3500) are the ones
+      that actually matter. Treat those as the real milestones, the SOS filing as a
+      prerequisite rather than an achievement, and do not file articles until the whole
+      path is funded and scheduled. Note the sequencing trap too: FTB Form 3500A is the
+      cheap route but requires an existing IRS determination letter, so federal exemption
+      has to come first or the fuller Form 3500 is required.
 
   - id: t-020
     milestone: m6
-    title: "GATE: file the incorporation paperwork for a new nonprofit"
-    status: needs-human
+    title: "GATE: file the incorporation paperwork for the new nonprofit"
+    status: waiting
     owner: null
     updated: '2026-08-19T00:00:00Z'
     passes: 0
@@ -762,14 +766,17 @@ tasks:
     approved_by_human: false
     depends_on: [t-019]
     note: >
-      FOR SILAS ONLY, with an attorney or CPA. Filing with the state or the IRS is
-      irreversible, creates ongoing obligations, and is squarely outside what any agent
-      may do. This task exists to hold the milestone open and to be the place the filing
-      confirmations get recorded once they exist — not for an agent to act on.
-      Deferred to 2027 or later per Silas's 2026-08-19 direction; m6 is weighted 5 for
-      exactly this reason. Save One Human is dissolved, so this is incorporating a NEW
-      nonprofit from scratch — retitled accordingly. If t-003 lands on path C1
-      (for-profit platform donating directly to the Against Malaria Foundation) AND Silas
-      decides he does not want a charitable arm long-term, this task and t-019 close as
-      intentionally not-doing rather than sitting open forever — but he has said he does
-      like the idea long term, so the default is deferred, not dropped.
+      FOR SILAS ONLY, with an attorney or CPA, and not for a long time. Filing with the
+      state or the IRS is irreversible and creates ongoing obligations; no agent may
+      file, sign, submit, or pay anything with any agency, ever, under any status this
+      task carries.
+      Deliberately `waiting` rather than `needs-human`: audit_human_gates.py reports
+      every needs-human task in an active project on every run, so parking a
+      years-out item there would nag Silas in each session sweep for something he has
+      explicitly said is not a current concern. `gate_human: true` and
+      `stakes: irreversible` still hold, so nothing can auto-execute it — the change is
+      purely about not manufacturing a recurring alert. Flip it back to needs-human when
+      t-019 actually completes and a filing decision is genuinely live.
+      This is a NEW nonprofit under a NEW name (Kind Robots is the future; Save One Human
+      was the seed and is dissolved), so it is a fresh incorporation, not a revival. It
+      also exists to be the place filing confirmations get recorded once they exist.
