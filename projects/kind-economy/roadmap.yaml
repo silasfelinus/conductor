@@ -418,22 +418,16 @@ tasks:
   - id: t-010
     milestone: m2
     title: "Mission-share accrual dashboard for Silas"
-    status: claimed
+    status: done
     owner: worker
-    updated: '2026-08-19T12:28:12Z'
+    updated: '2026-08-19T12:55:45Z'
     passes: 0
     stakes: reversible
     depends_on: [t-008]
-    note: >
-      Admin-only counterpart to t-009: how much mission share has accrued, how much has
-      been remitted, and what the outstanding balance owed to the fundraiser is. This is
-      the operational record Silas needs to make each donation and the reconciliation
-      record that keeps the accounting defensible at tax time. Show the $840 already
-      raised through againstmalaria.com/amibot as clearly SEPARATE from platform-accrued
-      mission share — those dollars never touched our books and must never be double
-      counted or presented as platform revenue.
+    note: 'Admin-only mission-share accrual dashboard, merged kind_robots#1964. Accrued (RevenueSplit.missionShareCents, reversal-excluded) vs remitted vs outstanding. Added a new admin-only append-only MissionRemittance ledger (judgment call -- no prior mechanism existed to record a real-world remittance; not speced explicitly but required to make "remitted"/"outstanding" computable). The ~$840 raised directly at againstmalaria.com/amibot is shown as a separate, hardcoded, clearly-labeled figure, never folded into platform totals. No money moves; pure bookkeeping.'
     claimed_by: claude-20260819T122808Z-t010
     claimed_at: '2026-08-19T12:28:12Z'
+    implementation_pr: 'silasfelinus/kind_robots#1964'
 
   - id: t-021
     milestone: m2
