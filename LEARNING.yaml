@@ -9113,3 +9113,24 @@ records:
   outcome: done
   failure_category: null
   lesson: "Provider abstraction is incomplete while one provider's identifier remains a schema requirement; keep compatibility IDs nullable and route refresh through each entity's durable provider identity."
+- date: 2026-08-19
+  project: kind-economy
+  task: t-005
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A flat "donate a third" plan does not net to zero for tax purposes by default --
+    gross receipts and a charitable deduction are separate line items whose offset depends
+    entirely on entity type and itemization, and for a sole prop/LLC taking the standard
+    deduction the offset is worth nothing. The fix has to be structural (keep the mission
+    third out of gross receipts entirely via a direct customer-to-charity donation) rather
+    than a bigger deduction. Also: when researching a compliance question, the framing in
+    the task note ("check these N states") can undersell the real exposure -- a broader,
+    newer category of law (California's charitable-fundraising-platform registration,
+    which reads broadly enough to plausibly cover an embedded donate-at-checkout flow) was
+    more directly on point than the originally-flagged commercial-co-venture states, and
+    surfaced a concrete design lever (redirect to the donation platform's own hosted page
+    vs. embedding it) worth flagging even though this task's scope was research-only.
