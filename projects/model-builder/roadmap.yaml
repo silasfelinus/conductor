@@ -575,16 +575,16 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#1966'
     note: 'Cycle 17 (2026-08-19). Dispatched to a worktree-isolated background agent in kind_robots on claude/eager-bohr-f5imc5. Found a genuine new bug: prepareItemUpdate()''s assertContentStageEditable gate (guards pitch/fieldsDraft/promptDraft/artImageId against an already-approved or still-locked content stage) checked only a single findUnique read taken once at the very top of the PATCH handler, before the write transaction even opened -- the sibling stageStatuses merge was already hardened to re-read fresh in PR #1900, but this gate, which decides whether the write is allowed at all, never got the same treatment. Concrete repro: concurrent approveStage(PITCH) and updatePitch() requests both read PITCH as ready; approveStage commits first (PITCH -> approved), but updatePitch already passed its stale gate check and its own stageStatuses diff finds no change, so it silently overwrites item.pitch while the approved badge lies about what is actually stored. Fixed by threading contentStageChecks through PreparedItemUpdate and re-running assertContentStageEditable a second time inside the write transaction against a fresh findUnique, in runs/index.ts, items/[id].patch.ts, and items/batch.patch.ts (per-entry, so one stale item does not abort unrelated batch siblings). Also widened verifyModelBuilderPatchStaleStageStatusGuard.ts from a fixed 400-char proximity window to a distance-independent read-before-write check, since this fix legitimately grows that gap. Added verifyModelBuilderContentStageFreshnessGuard.ts + self-test; verified via git-stash round trip (fails pre-fix with 5 errors, passes post-fix). All 99 prior test:model-builder-* guards pass, vue-tsc clean, eslint clean, only pre-existing prettier drift untouched. kind_robots PR #1966: hit one CI infra stall (Contract verifiers job stuck at the Checkout step for ~7 minutes on the first attempt, matching the known facet-alias-smoke/CodeQL stall pattern already tracked in conductor/t-106) -- cancelled and re-ran the workflow once per the documented CI-red policy (died before any test body ran); the re-run completed cleanly in ~3 minutes, all 33 checks green, squash-merged ba43797. Suggested next lead: assertArtImageAttachable''s TOCTOU shape (eager-checked but not re-validated at write time) has only been confirmed re-checked at commit time (commit.post.ts) -- the PATCH routes themselves (items/[id].patch.ts, items/batch.patch.ts) have not yet been checked for the same eager-only-no-write-time-revalidation pattern this cycle just fixed for content-stage editability; worth a dedicated look next cycle.'
     owner: reviewer
-    claimed_by: 20260819T133100Z-modelbuilder-t029-c17
-    claimed_at: '2026-08-19T13:31:04Z'
-    updated: '2026-08-19T14:06:20Z'
+    claimed_by: 20260819T142733Z-modelbuilder-t029-c18
+    claimed_at: '2026-08-19T14:27:39Z'
+    updated: '2026-08-19T14:27:39Z'
 
   - id: t-030
     milestone: m6
