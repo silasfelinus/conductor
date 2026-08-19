@@ -2,19 +2,23 @@
 # Scheduled operational commitments preempt this project queue through select_role.py;
 # in particular, Daily Dream / daily-digest health is handled before ordinary worker
 # pickup because it is expected to deliver every day.
-# Among finite project work, Kind Economy is the current top priority (Kapowarr next).
+# Among finite project work, Kapowarr is the current top priority.
 # Finite active projects otherwise outrank continuous projects. Paused, finished, and
 # retired projects are historical records and do not belong in the selectable queue.
 # Continuous programs are fallback work; dream-cycle's ordinary maintenance task stays
 # last because the actual Daily Dream production/digest workflow has its own schedule.
-# Kind Economy leads: Silas declared it a "vitally important tentpole to our site and
-# my life trajectory" in-session on 2026-08-19 (CONTROL.md clearance rule — his direct
-# direction outranks the standing order below). It is the money layer: Stripe going
-# live, the three-way paid-usage split, creator payouts, mission remittance, and the
-# Save One Human entity decision.
+# Kind Economy sits directly behind Kapowarr: Silas declared it a "vitally important
+# tentpole to our site and my life trajectory" in-session on 2026-08-19, and it is
+# registered `priority: urgent` in project-overrides.yaml. It is NOT placed first
+# because tests/test_project_priority_contract.py CI-enforces `order[0] == "kapowarr"`,
+# and rewriting that guard to promote a project Silas did not ask to promote would be
+# overriding an existing human priority decision rather than recording a new one. If
+# Silas wants Kind Economy at the top, that test moves with it — his call, not an
+# agent's. It is the money layer: Stripe going live, the three-way paid-usage split,
+# creator payouts, mission remittance, and the Save One Human entity decision.
 order:
-  - kind-economy
   - kapowarr
+  - kind-economy
   - interface-vision
   - ai-art-academy
   - coloring-book
