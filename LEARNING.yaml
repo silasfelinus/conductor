@@ -9003,6 +9003,27 @@ records:
   failure_category: actionable
   lesson: "When matching release issue numbers, verify the exported helper name rather than trusting its stale docstring example; the dependency-backed import matrix catches this immediately."
 - date: 2026-08-19
+  project: kapowarr
+  task: t-036
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    check_pr_merged_drift.py's gh-search fallback 403'd in this sandbox, but
+    the GitHub MCP pull_request_read "get" method (as opposed to
+    list_pull_requests, which reported merged:false for the same closed PR)
+    confirmed silasfelinus/Kapowarr#56 was in fact merged directly by Silas.
+    When the drift script can't verify a candidate via its own HTTP path,
+    cross-check the single-PR MCP get method before treating it as
+    unresolved -- the list endpoint's merged field is not reliable evidence
+    on its own. Concurrent race note: by the time this reconciliation PR
+    reached CI, origin/main had already picked up the same task's real
+    close-out (with the full implementation note and squash SHA) from
+    another session -- resolved by keeping origin/main's roadmap content and
+    both LEARNING.yaml entries side by side rather than picking one.
+- date: 2026-08-19
   project: model-builder
   task: t-029
   kind: software
