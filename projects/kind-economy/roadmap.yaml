@@ -563,9 +563,9 @@ tasks:
   - id: t-012
     milestone: m3
     title: "Document and provision the payment environment configuration"
-    status: ready
-    owner: null
-    updated: '2026-08-19T00:00:00Z'
+    status: claimed
+    owner: worker
+    updated: '2026-08-19T07:42:19Z'
     passes: 0
     stakes: reversible
     note: >
@@ -590,6 +590,8 @@ tasks:
       assertion so it returns a structured 500 like its siblings; verify the others
       match). Write it as docs plus a committed .env.example with placeholder values.
       NEVER commit a real key, and never echo a real value into any file, log, or PR.
+    claimed_by: worker-2026-08-19T07:47:00Z-t012-payment-env-docs
+    claimed_at: '2026-08-19T07:42:19Z'
 
   - id: t-013
     milestone: m3
