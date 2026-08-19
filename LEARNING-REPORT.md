@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-19T20:59:39Z
+Generated: 2026-08-19T21:28:30Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **697**
-- Outcomes: blocked: 15, cancelled: 1, done: 681
+- Closed tasks recorded: **698**
+- Outcomes: blocked: 15, cancelled: 1, done: 682
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -22,7 +22,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | appmaker | 8 | 100% |
 | approval-portal | 2 | 0% |
 | art-generator-connect | 3 | 100% |
-| brainstorm | 16 | 94% |
+| brainstorm | 17 | 94% |
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 25 | 100% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 681 | 99% |
+| software | 682 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-19 `brainstorm/t-021` — Adding real behavioral test coverage for Pinia store logic in this repo hits a real environmental wall: a store file that imports another store transitively (brainstormStore.ts -> serverStore -> userStore -> achievementStore) can be unimportable from a plain tsx process even though none of the actual logic under test needs Pinia, because some unrelated store in the chain calls a Vite-only API (import.meta.glob) at module load time. The fix already has a name in this codebase -- brainstormSourceAdapterKit.ts/brainstormSourceContextKit.ts already split pure logic out for exactly this reason -- but it's not written down as a general rule anywhere, so it's worth re-deriving the "does this file transitively import a store with a Vite-only top-level call" question explicitly before assuming a store's exports are tsx-testable. Second lesson: a CI job that installs with `npm ci --ignore-scripts` (for speed) skips the `nuxi prepare` postinstall that generates the '@/' path-alias tsconfig -- any new tsx-run script under such a job must use relative imports, not '@/', or verify locally with `.nuxt` removed before trusting it'll pass in CI.
+
 - 2026-08-19 `brainstorm/t-024` — The task's own "scope check first" step is what caught this: before building any UI, re-verified whether bot-gallery.vue was actually unmounted as the t-018 kaizen note claimed, and found the claim already false on current main -- content/bots.md -> bot-manager.vue -> bot-interact.vue -> bot-gallery.vue is a complete, CI-verified (test:route-gallery-contract) mount chain reachable via the play channel's normal nav, not just a direct URL. Closed with no code change and no kind_robots PR. Worth generalizing: a kaizen-sourced task's premise can go stale between when it was written and when it is picked up, especially for reachability/mounting claims in a codebase with this much concurrent agent activity -- re-verify the premise against live main before writing any diff, not just before merging one.
 
 - 2026-08-19 `kind-economy/t-016` — The two failure modes the task named -- under-remitting (promise broken) and double-remitting (money gone twice) -- turned out not to need any new schema or per-period tracking: because a remittance is meant to bring the running outstanding = accrued - remitted balance back to exactly zero, both collapse onto the sign of outstandingCents immediately after a remittance is logged (positive = under-remitted, negative = over-remitted/ likely duplicate, zero = reconciled). Read the existing t-010 accrual dashboard code first rather than assuming a new bucketing mechanism was needed -- the simplest correct design was already implied by the ledger shape that existed. Also caught mid-session: resolve_deps.py only edits the local working tree, it does not commit/push -- its output needs an explicit commit+PR+merge before claim_task.py will see the unblocked task on origin/main (worth remembering for any future session running it).
@@ -102,8 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-19 `kapowarr/t-056` — Provider abstraction is incomplete while one provider's identifier remains a schema requirement; keep compatibility IDs nullable and route refresh through each entity's durable provider identity.
 - 2026-08-19 `kind-economy/t-004` — When a live claim on the site outpaces the mechanism behind it, "future tense" is nearly always the right default over "leave it and document the gap" -- it costs nothing, is fully reversible, and removes a live credibility risk immediately. Also: a CI job stuck `queued` with the parent run auto-concluding `failure` (no logs, zero jobs actually run) is a transient infra stall, not a real check failure -- confirm by running the same commands locally before trusting the red state, then retry the workflow run to verify before merging.\n
 
-- 2026-08-19 `kapowarr/t-038` — A provider abstraction does not by itself remove a legacy provider monopoly: database NOT NULL columns and Add-form assumptions remain product boundaries. Metron fallback was therefore shipped through its explicit ComicVine cross-links with durable Metron provenance, while native-only records were withheld from a knowingly broken Add path. Also, never follow an authenticated API's pagination URL verbatim; reconstruct the next page on the configured origin so credentials cannot cross an origin boundary.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-19T20:59:39Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-19T21:28:30Z_
