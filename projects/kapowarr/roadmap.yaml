@@ -1107,9 +1107,12 @@ tasks:
 - id: t-051
   milestone: m5
   title: Restore Prowlarr Newznab and Torznab search results
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
+  claimed_by: 20260819T004000Z-kapowarr-t051-6e2b
+  claimed_at: '2026-08-19T00:40:00Z'
+  updated: '2026-08-19T00:40:00Z'
   note: |-
     User-reported live follow-up on 2026-08-19. Kapowarr manual search returns a GetComics match for Gwar: Orgasmageddon while the same query in Prowlarr returns valid NZB and torrent releases. Support both host-style Newznab base URLs and full Prowlarr Newznab feed URLs without corrupting the endpoint, align Torznab category behavior with Prowlarr manual search so valid comic/eBook mappings are not silently excluded, preserve explicit user category filters, and add regression coverage using the reported release titles.
