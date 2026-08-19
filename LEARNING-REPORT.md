@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-19T12:00:44Z
+Generated: 2026-08-19T12:04:14Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **693**
-- Outcomes: blocked: 15, cancelled: 1, done: 677
+- Closed tasks recorded: **694**
+- Outcomes: blocked: 15, cancelled: 1, done: 678
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -38,7 +38,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop-cms | 21 | 95% |
 | interface-vision | 83 | 100% |
 | kapowarr | 36 | 100% |
-| kind-economy | 4 | 100% |
+| kind-economy | 5 | 100% |
 | kind-robots | 50 | 98% |
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 677 | 99% |
+| software | 678 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-19 `kind-economy/t-009` — A new dashboard page's content/*.md frontmatter can declare background* art routes that verifyPageBackdrop.ts requires a matching PageSeed entry in stores/seeds/pageBackdropArtPrompts.ts for -- easy to miss in a sandbox with no live DB/browser to catch the 404 directly, but caught reliably by CI's contract check. Worth adding "does this page need a backdrop seed entry" to the standard pre-PR checklist for any task creating a new page.
+
 - 2026-08-19 `kind-economy/t-008` — Clean first-pass Worker output on a genuinely ambiguous accounting task: the roadmap note left two real judgment calls open (a documented rounding rule for the 3-way split, and how to treat a per-transaction payment-processing fee when tokens are purchased in batches but spent fungibly later) and the Worker resolved both with a named constant, an inline rationale, and a 20,000-iteration property test proving the sum-to-gross invariant holds exactly including negative-margin rows -- rather than picking a plausible number and moving on. It also independently re-verified the task note's own claim ("costUsd is never reconciled against real billing") by grepping every gate.commit() call site itself instead of taking the note at face value, and surfaced it as a flagged follow-up rather than baking a false assumption into the schema doc comments. Reviewed the migration.sql line-by-line (additive CREATE TABLE + one FK only) before merging, per this repo's financial-ledger convention -- the Worker's own PR body correctly left the PR unmerged for exactly that reason instead of assuming a non-gate_human task meant no review was needed.
 
 - 2026-08-19 `kind-economy/t-007` — Clean first-pass Worker output: additive-only migration (ADD COLUMN IF NOT EXISTS / CREATE INDEX matching the repo's established convention), a resolver that never throws (a lookup failure degrades to "no attribution" rather than failing the charge), and both open policy questions (mission-share fallback on unresolved creatorUserId, self-attribution recorded but not decided) handled exactly as the task note specified rather than guessed at. Reviewed the actual diff (schema, migration.sql, manaAttribution.ts, manaGate.ts wiring) rather than trusting the PR description alone.
@@ -99,8 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-19 `kapowarr/t-055` — Human-triggered bulk operations should preserve successes and return item-level failures; background jobs can keep strict exception semantics for checkpointed retries.
 - 2026-08-19 `kapowarr/t-037` — Separate stable external identity from provider credentials and UI policy; additive maps let alternate metadata coexist without destabilizing legacy libraries.
 - 2026-08-19 `kapowarr/t-054` — Bound remote metadata resolution as a whole and pair every loading state with success and rejection exits; source health data should be visible before acquisition.
-- 2026-08-19 `model-builder/t-029` — Twelfth cycle of this recurring bug-hunt task. The suggested accessibility lead from cycle 11 was genuinely exhausted (both target components already covered or not applicable), and the fallback -- read a genuinely fresh file (the store) rather than re-walking already-audited components -- surfaced a real sibling instance of a bug class an existing guard already covered for other functions (verifyModelBuilderAutoBuildFailedSummaryGuard's TARGET_FUNCTIONS list). When a guard is written against an explicit function allowlist, a later cycle should periodically check whether new or overlooked functions with the same shape are missing from that list, rather than assuming a fixed guard covers a whole bug class permanently.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-19T12:00:44Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-19T12:04:14Z_
