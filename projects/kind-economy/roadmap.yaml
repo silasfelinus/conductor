@@ -786,7 +786,7 @@ tasks:
   - id: t-023
     milestone: m5
     title: "Design 'The Sift' — the two-bowl AI/non-AI donation experiment"
-    status: claimed
+    status: needs-human
     owner: worker
     updated: '2026-08-19T08:00:19Z'
     passes: 0
@@ -823,6 +823,24 @@ tasks:
       Outward-facing: escalate to needs-human before it goes live. It is a public
       statement about a live culture-war topic made in the name of a charity fundraiser,
       and that is Silas's call to make with his eyes open, not an agent's.
+
+      DESIGN READY 2026-08-19, escalated per the task's own instruction. Full design at
+      projects/kind-economy/THE-SIFT-DESIGN.md. The hard mechanical problem (attribution
+      without custody) is resolved concretely, not hand-waved: Every.org's donate link
+      supports partner_metadata (base64 JSON, echoed back in the partner webhook) and
+      webhook_token, verified directly against Every.org's own docs -- two donate links
+      to the SAME every.org/againstmalaria flow, tagged {"bowl":"ai"} vs {"bowl":"human"},
+      let Kind Robots tally each bowl from confirmed-donation webhook events with zero
+      self-reporting and zero custody of funds. Framing copy, tally display, and an
+      honest backfire section are drafted. The one non-negotiable this doc deliberately
+      does NOT resolve -- and flags as the real precondition for launch -- is non-AI-side
+      content: that copy/art must be hand-made by someone who genuinely holds the
+      anti-AI position, which is out of scope for an agent to draft (an AI writing the
+      "AI is bad" case is exactly the steelmanned-then-undercut failure the task warns
+      against). A reduced-risk fallback ("aesthetic preference" framing, no argumentative
+      copy) is offered if that can't be secured in good faith. Needs Silas to: review the
+      attribution mechanism, decide full-culture-war-framing vs. the fallback, and secure
+      real human-authored anti-AI content before any implementation task is claimed.
     claimed_by: worker-2026-08-19T08:02:00Z-t023-the-sift
     claimed_at: '2026-08-19T08:00:19Z'
 
