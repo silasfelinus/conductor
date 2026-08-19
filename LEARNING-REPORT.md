@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-19T19:43:36Z
+Generated: 2026-08-19T19:48:26Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **695**
-- Outcomes: blocked: 15, cancelled: 1, done: 679
+- Closed tasks recorded: **696**
+- Outcomes: blocked: 15, cancelled: 1, done: 680
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -38,7 +38,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop-cms | 21 | 95% |
 | interface-vision | 83 | 100% |
 | kapowarr | 36 | 100% |
-| kind-economy | 5 | 100% |
+| kind-economy | 6 | 100% |
 | kind-robots | 50 | 98% |
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 679 | 99% |
+| software | 680 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-19 `kind-economy/t-016` — The two failure modes the task named -- under-remitting (promise broken) and double-remitting (money gone twice) -- turned out not to need any new schema or per-period tracking: because a remittance is meant to bring the running outstanding = accrued - remitted balance back to exactly zero, both collapse onto the sign of outstandingCents immediately after a remittance is logged (positive = under-remitted, negative = over-remitted/ likely duplicate, zero = reconciled). Read the existing t-010 accrual dashboard code first rather than assuming a new bucketing mechanism was needed -- the simplest correct design was already implied by the ledger shape that existed. Also caught mid-session: resolve_deps.py only edits the local working tree, it does not commit/push -- its output needs an explicit commit+PR+merge before claim_task.py will see the unblocked task on origin/main (worth remembering for any future session running it).
+
 - 2026-08-19 `davinci/t-021` — Slice 9 fixed a real focus-loss bug (chapter-swap v-if/v-else-if unmounting the clicked button with nothing restoring focus), verified against a real, named precedent (model-builder-manager.vue's identical fix) rather than inventing a pattern from scratch. Separately, this cycle demonstrated the documented "in-flight git workaround" recovery path working as intended at a new scale: a first background agent pushed the implementation commit then died mid-run (API connection lost) before opening the PR. Rather than trusting an unseen report or re-doing the work blind, the foreground session checked live GitHub state directly (list_branches/list_commits) to confirm exactly one clean commit existed on the stranded branch, then dispatched a second worktree-isolated agent with explicit instructions to independently re-verify the diff's claims (not just trust the first agent's commit message) before finishing the PR+merge. Worth generalizing: when a background agent dies mid-task after a git-mutating step already landed, the recovery move is "verify live state, then dispatch a fresh agent to independently confirm and complete" -- not "assume it succeeded" and not "discard and redo from scratch."
 
 - 2026-08-19 `kind-economy/t-009` — A new dashboard page's content/*.md frontmatter can declare background* art routes that verifyPageBackdrop.ts requires a matching PageSeed entry in stores/seeds/pageBackdropArtPrompts.ts for -- easy to miss in a sandbox with no live DB/browser to catch the 404 directly, but caught reliably by CI's contract check. Worth adding "does this page need a backdrop seed entry" to the standard pre-PR checklist for any task creating a new page.
@@ -101,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-19 `kapowarr/t-038` — A provider abstraction does not by itself remove a legacy provider monopoly: database NOT NULL columns and Add-form assumptions remain product boundaries. Metron fallback was therefore shipped through its explicit ComicVine cross-links with durable Metron provenance, while native-only records were withheld from a knowingly broken Add path. Also, never follow an authenticated API's pagination URL verbatim; reconstruct the next page on the configured origin so credentials cannot cross an origin boundary.
 
 - 2026-08-19 `kapowarr/t-055` — Human-triggered bulk operations should preserve successes and return item-level failures; background jobs can keep strict exception semantics for checkpointed retries.
-- 2026-08-19 `kapowarr/t-037` — Separate stable external identity from provider credentials and UI policy; additive maps let alternate metadata coexist without destabilizing legacy libraries.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-19T19:43:36Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-19T19:48:26Z_
