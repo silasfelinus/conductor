@@ -1152,12 +1152,15 @@ tasks:
 - id: t-054
   milestone: m5
   title: Make torrent search results actionable and informative
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
   claimed_by: 20260819T013500Z-kapowarr-t054-4c7a
   claimed_at: '2026-08-19T01:35:00Z'
-  updated: '2026-08-19T01:35:00Z'
+  updated: '2026-08-19T01:40:23Z'
   note: |-
     User-reported live follow-up on 2026-08-19. Adding a Torznab result can leave the manual-search action spinning indefinitely, torrent results omit the seed/leech availability already supplied by Prowlarr, and the manual-search dialog does not identify the selected volume or issue. Diagnose and bound the torrent-add path so every click reaches a visible success or failure state, carry Torznab seeders/leechers through the search API into clear result columns, and label the dialog with the title that initiated the search. Cover Torznab parsing and the client/UI terminal-state behavior with regressions.
+
+
+    Review handoff: worker/kapowarr-t-054-torrent-search bounds Torznab metadata resolution to 30 seconds, guarantees manual-search buttons leave loading on success and failure, exposes parsed seed/leech counts, and labels the dialog with the selected volume/issue. Compile, workflow-YAML, Node syntax, and three frontend behavior tests pass; dependency-backed Python tests require CI.
