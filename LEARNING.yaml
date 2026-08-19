@@ -9087,3 +9087,20 @@ records:
     provenance, while native-only records were withheld from a knowingly broken Add path.
     Also, never follow an authenticated API's pagination URL verbatim; reconstruct the next
     page on the configured origin so credentials cannot cross an origin boundary.
+
+- date: 2026-08-19
+  project: kind-economy
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    When a live claim on the site outpaces the mechanism behind it, "future tense" is
+    nearly always the right default over "leave it and document the gap" -- it costs
+    nothing, is fully reversible, and removes a live credibility risk immediately. Also:
+    a CI job stuck `queued` with the parent run auto-concluding `failure` (no logs,
+    zero jobs actually run) is a transient infra stall, not a real check failure --
+    confirm by running the same commands locally before trusting the red state, then
+    retry the workflow run to verify before merging.
