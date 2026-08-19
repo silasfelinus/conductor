@@ -145,25 +145,16 @@ tasks:
   - id: t-004
     milestone: m1
     title: "Reconcile the live creator-earnings copy with what actually exists"
-    status: review
+    status: done
     owner: worker
-    updated: '2026-08-19T05:31:44Z'
+    updated: '2026-08-19T05:42:10Z'
     passes: 0
     stakes: reversible
     depends_on: [t-001]
-    note: >
-      CREATOR_EARNINGS_MESSAGE in kind_robots stores/helpers/tutorialCards.ts currently
-      states the three-way split as present-tense fact on six tutorial channels, and
-      narrator seeds repeat the mission claim widely. No user has been shortchanged (paid
-      volume is effectively zero) so this is a credibility item, not an incident — but it
-      should be deliberate. Inventory every surface that promises creator earnings, then
-      propose ONE of: (a) shift the earnings copy to explicit future tense ("will earn",
-      "coming soon") until m2 ships, or (b) leave it and accept the gap knowingly, with
-      the reasoning written down. Ship the copy change as a small kind_robots PR if (a);
-      the mission/fundraiser copy itself is accurate and should NOT be touched either way
-      — only the specific claim that creators are earning a share today.
+    note: 'DONE 2026-08-19. Inventoried every surface promising creator earnings in kind_robots. Executed option (a) (shift to future tense): reworded CREATOR_EARNINGS_MESSAGE (stores/helpers/tutorialCards.ts, six tutorial channels) and softened about-page.vue''s VISION card creator-revenue clause. Mission/fundraiser copy left untouched (accurate today). Merged silasfelinus/kind_robots#1954 (vue-tsc + eslint clean; layout-contract CI job initially stuck queued/failed as a transient infra stall -- confirmed via local test:layout-contract + verifyMixedPanePrimitivesFixture both passing, then via workflow re-run succeeding on retry).'
     claimed_by: claude-20260819T052739Z-t004
     claimed_at: '2026-08-19T05:27:40Z'
+    implementation_pr: 'silasfelinus/kind_robots#1954'
 
   - id: t-005
     milestone: m1
