@@ -9282,3 +9282,23 @@ records:
     path-alias tsconfig -- any new tsx-run script under such a job must use
     relative imports, not '@/', or verify locally with `.nuxt` removed
     before trusting it'll pass in CI.
+- date: 2026-08-19
+  project: storybook
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Cycle 20 of the recurring storybook/t-010 bug-hunt: Dream rows without a
+    first-class Prisma model of their own (Location is just dreamType ===
+    'LOCATION' on the generic Dream table) are easy to under-serve relative to
+    Character/Reward/Scenario/Facet, which each have both a dedicated model and
+    a dedicated detail component with its own "start a story" deep-link CTA.
+    The generic dream-narration.vue detail surface had no such CTA for any Dream
+    type, so seedFromQuery()'s ?location= query key had been dead code with no
+    sender anywhere in the repo since it was added. Worth checking, for any
+    future object type added to Storybook's seed-query set, whether it actually
+    has a first-class detail component or only the generic Dream surface --
+    the generic surface is the one that silently misses new CTAs.
