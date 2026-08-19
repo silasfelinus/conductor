@@ -1179,3 +1179,21 @@ tasks:
     User-reported live follow-up on 2026-08-19. Adding a Torznab result can leave the manual-search action spinning indefinitely, torrent results omit the seed/leech availability already supplied by Prowlarr, and the manual-search dialog does not identify the selected volume or issue. Diagnose and bound the torrent-add path so every click reaches a visible success or failure state, carry Torznab seeders/leechers through the search API into clear result columns, and label the dialog with the title that initiated the search. Cover Torznab parsing and the client/UI terminal-state behavior with regressions.
 
     Merged silasfelinus/Kapowarr#60 as 60b3cdccfd76576df1d0a8d23733f5378f683d57. The indefinite action state came from an unhandled frontend rejection plus a Torznab metadata request that could spend several minutes inside shared retries. Torrent metadata resolution is now capped at 30 seconds and every manual-search action reaches a visible success or error state. Search results show Prowlarr seed/leech availability and the dialog identifies the selected volume/issue. Python 3.8-3.12, three frontend interaction tests, docs, PR container, and all post-merge tests/docs/container publication passed.
+
+- id: t-055
+  milestone: m4
+  title: Make Review Holds imports resumable and actionable
+  status: claimed
+  owner: worker
+  passes: 0
+  stakes: reversible
+  claimed_by: 2026-08-19T033800Z-kapowarr-t055-import
+  claimed_at: '2026-08-19T03:38:00Z'
+  updated: '2026-08-19T03:38:00Z'
+  note: |-
+    User-reported live failure on 2026-08-19. Continuous Library Import resumes a saved job with hundreds
+    of Review Holds, but clicking Import aborts the selected batch with a generic InternalError. Trace and
+    repair the manual Review Holds import path: validate selected mappings, fix corrupted edited-match
+    payloads, isolate recoverable per-volume failures so successful rows remain imported, return concise
+    path-specific results/errors, reconcile completed review rows, and leave failed rows selected for retry.
+    Do not reset the long-running saved job or discard existing review decisions.
