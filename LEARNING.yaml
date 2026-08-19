@@ -9072,3 +9072,18 @@ records:
   outcome: done
   failure_category: null
   lesson: "Human-triggered bulk operations should preserve successes and return item-level failures; background jobs can keep strict exception semantics for checkpointed retries."
+- date: 2026-08-19
+  project: kapowarr
+  task: t-038
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A provider abstraction does not by itself remove a legacy provider monopoly: database
+    NOT NULL columns and Add-form assumptions remain product boundaries. Metron fallback
+    was therefore shipped through its explicit ComicVine cross-links with durable Metron
+    provenance, while native-only records were withheld from a knowingly broken Add path.
+    Also, never follow an authenticated API's pagination URL verbatim; reconstruct the next
+    page on the configured origin so credentials cannot cross an origin boundary.
