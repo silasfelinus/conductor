@@ -8993,3 +8993,12 @@ records:
   failure_category: null
   lesson: Scheduled tasks must record failure outcomes before leaving the queue, and scraped sources require
     live markup verification.
+- date: 2026-08-19
+  project: kapowarr
+  task: t-036
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: actionable
+  lesson: "When matching release issue numbers, verify the exported helper name rather than trusting its stale docstring example; the dependency-backed import matrix catches this immediately."
