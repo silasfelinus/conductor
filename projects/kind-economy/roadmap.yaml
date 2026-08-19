@@ -178,7 +178,7 @@ tasks:
 
   - id: t-005
     milestone: m1
-    title: "Rule the remittance mechanism in or out before anyone designs toward it"
+    title: "Decide how the mission third reaches AMF — structure first, mechanism second"
     status: ready
     owner: null
     updated: '2026-08-19T00:00:00Z'
@@ -186,17 +186,71 @@ tasks:
     stakes: reversible
     depends_on: [t-001]
     note: >
-      Research-only, no account creation and no contact with any organization. Determine
-      how the mission share can actually reach the Against Malaria Foundation, and write
-      the findings to research/remittance-options.md. Evaluate at minimum: a plain
-      periodic corporate donation via the existing againstmalaria.com/amibot fundraiser
-      page (does AMF support a recurring or bulk corporate gift attributed to an existing
-      fundraiser?); AMF's own documented corporate-giving route if it differs; and
-      whether Stripe Connect transfers to AMF are possible at all (the brief expects not,
-      since AMF would need to be an onboarded Connect account — confirm and rule it out
-      explicitly so nobody builds toward it). Recommend one primary and one fallback.
-      Do NOT email or contact AMF; if a question can only be answered by asking them,
-      write the exact question down for Silas to send.
+      RESCOPED 2026-08-19. Silas asked the right question: "can I take money and then
+      give it directly to againstmalaria to be considered tax neutral? Is there a way we
+      can automate that 1/3 so it is directly paid to our fundraiser to avoid any irs
+      double dipping?" The answer determines the mechanism, so this task now covers the
+      structure first and the plumbing second. Research and recommendation only — no
+      account creation, no contact with AMF or any platform, no money moved.
+
+      THE PROBLEM IS REAL, not hypothetical. Taking $100 and donating $33 does NOT net to
+      zero by default. The $100 is gross receipts; the $33 is a separate charitable
+      contribution whose deductibility depends entirely on entity type:
+        - Sole proprietorship / single-member LLC: a charitable contribution is NOT a
+          Schedule C business expense. It flows to the owner's Schedule A itemized
+          deductions. If Silas takes the standard deduction — as most filers do — the
+          deduction is worth NOTHING and he is taxed on the full amount. This is exactly
+          the double-dip he is worried about and it is the current default.
+        - Partnership / S-corp: same shape, passes through to the personal return.
+        - C-corp: the corporation deducts directly, but capped at 10% of taxable income,
+          with excess carried forward five years — and for tax years beginning after
+          2025-12-31 there is ALSO a new 1% floor. Donating a third of revenue blows past
+          10% immediately.
+
+      THE STRUCTURAL FIX IS TO KEEP IT OUT OF GROSS RECEIPTS IN THE FIRST PLACE. Evaluate
+      these three and recommend one primary and one fallback, writing findings to
+      research/remittance-options.md:
+
+      (A) MAKE THE MISSION THIRD THE CUSTOMER'S DONATION, NOT OURS — the strongest option
+      and the direct answer to "automate that 1/3". Structure checkout so the customer's
+      mission third goes to AMF as their own donation rather than passing through Kind
+      Robots. It never becomes our revenue, so there is no deduction question at all; our
+      gross receipts are two thirds, out of which the creator third is paid. The customer
+      gets a deductible donation, which is a genuine selling point rather than fine print,
+      and the claim "a third of what you pay buys nets" becomes literally true and
+      independently verifiable instead of a promise.
+      Mechanism to evaluate: a donation-platform API rather than Stripe Connect. Stripe
+      Connect is almost certainly a dead end — AMF would have to be an onboarded Connect
+      account — so rule it out explicitly and stop designing toward it. Every.org
+      publishes a free no-platform-fee donation API with embeddable donate links,
+      programmatic fundraiser creation, and partner webhooks for recording each donation,
+      covering 1M+ 501(c)(3)s; the webhook is what would reconcile a donation back to the
+      interaction that generated it. AMF is reachable: The Against Malaria Foundation
+      (US) is a real 501(c)(3), EIN 20-3069841, registered in Kansas City MO, and
+      donations from US donors are deductible. Verify it is actually listed and routable
+      on whichever platform is chosen before recommending it.
+      THE CATCH TO RESEARCH HONESTLY: soliciting or collecting donations on a charity's
+      behalf is a commercial co-venture / charitable solicitation in many states and
+      carries registration requirements. Routing through a platform that is itself the
+      receiving charity (or its donor-advised fund) may handle most of that, but do not
+      assume it — this is the part most likely to make option A more expensive than it
+      looks, and it must be checked rather than waved through.
+
+      (B) SECTION 162 BUSINESS EXPENSE INSTEAD OF SECTION 170 CHARITABLE CONTRIBUTION.
+      If a payment to a charity carries a genuine return benefit commensurate with its
+      value — sponsorship, advertising, logo placement — it can be an ordinary business
+      expense with NO percentage ceiling, rather than a capped charitable contribution.
+      This is a real distinction, not a loophole, but the code explicitly prohibits
+      reclassifying what is really a gift as a business expense to dodge the limits, so it
+      only works where the business return is actual. Fact-specific; flag for the CPA.
+
+      (C) BASELINE, ALREADY WORKING: keep pointing donors out to againstmalaria.com/amibot
+      for direct giving. Zero complication, zero reporting, and it is how the existing
+      ~$840 was raised. Whatever else gets built, this stays.
+
+      NOT LEGAL OR TAX ADVICE — general rules from public sources. The recommendation must
+      say plainly that a CPA confirms the structure before anything is built on it, and
+      must not present option A as settled merely because it is elegant.
 
   # --------------------------------------------------------------- m2 LEDGER
   - id: t-006
@@ -214,6 +268,32 @@ tasks:
       daily (CYCLE_REFILL) plus a 250-mana SIGNUP_BONUS, so purchased and granted mana
       are commingled and a spend cannot be attributed to either. Design and ship the
       minimum change that makes "this generation was paid for" a fact the server knows.
+
+      SCOPE EXPANDED 2026-08-19 — THREE BUCKETS, NOT TWO. Silas settled the payout model
+      (see t-014): creators are credited in tokens, and past a threshold they can request
+      a cash withdrawal. That makes some mana redeemable for real money, which changes
+      this task's shape fundamentally. Mana is currently something the system MINTS
+      freely — CYCLE_REFILL, SIGNUP_BONUS, ADMIN_REFUND, ACHIEVEMENT_CONFIRMED,
+      ADJUSTMENT, KARMA_CONVERSION all create it from nothing. If any mana is
+      cash-redeemable and the balance is undifferentiated, then ALL of it is
+      cash-redeemable, and every achievement award becomes a cash liability. So model at
+      least three kinds:
+        - GRANTED — refills, bonuses, achievements, admin adjustments. Spendable, never
+          redeemable for cash, and CRITICALLY it must never generate creator credit (see
+          the fraud note below).
+        - PURCHASED — bought by that user with real money. Spendable. Not cash-redeemable
+          either; converting it back to cash is a refund, which is a Stripe operation
+          with its own rules, not a withdrawal.
+        - EARNED — creator share credited from someone else's paid spend. The only kind
+          that can ever be withdrawn as cash, and therefore a real liability on the books
+          from the moment it is credited, not from when it is paid.
+      THE ANTI-FRAUD INVARIANT this exists to enforce: only PAID mana spends generate
+      creator credit. Silas's own reasoning bounds the obvious abuse — cycling purchased
+      tokens through your own asset returns only a third, so it loses money — but that
+      argument depends entirely on the input costing money. Free mana has zero input cost,
+      so if granted mana could generate creator credit, a user could convert daily refills
+      into withdrawable cash at a 1/3 rate, profitably, forever. That is the actual hole,
+      and this bucket separation is what closes it.
       Start with a written options comparison (paid/free sub-balances on User, versus
       FIFO ManaLot rows, versus a running paidManaPurchased/paidManaSpent counter pair
       with an explicit spend-order policy) before writing schema — the ManaTransaction
@@ -351,10 +431,14 @@ tasks:
       creator will actually see it — if that sentence cannot be written without wincing,
       the policy is wrong, not the sentence.
       Also decide the adjacent case: a creator running THEIR OWN object. Same principle
-      should apply (you earn on your own work) but it opens a wash-trading shape once
-      real payouts exist — someone could cycle paid mana through their own asset to
-      convert platform credit into cash, losing only the platform and mission thirds. Cap
-      it, flag it, or accept it knowingly, but do not discover it after t-015.
+      should apply — you earn on your own work — and Silas's 2026-08-19 payout model
+      largely answers the abuse question that comes with it: a round trip through your own
+      asset returns only a third of what you spent, so it loses money and is not worth
+      doing. That reasoning holds for PURCHASED mana. It does NOT hold for granted mana,
+      whose input cost is zero, which is why t-006's rule that only paid spends generate
+      creator credit is load-bearing rather than a detail. Verify that invariant actually
+      holds in code here rather than assuming it, and decide whether self-attributed
+      spends should additionally be excluded, capped, or simply logged and visible.
 
   # ---------------------------------------------------------- m3 LIVE STRIPE
   - id: t-011
@@ -430,23 +514,57 @@ tasks:
   - id: t-014
     milestone: m4
     title: "Design the creator payout mechanism"
-    status: waiting
+    status: ready
     owner: null
     updated: '2026-08-19T00:00:00Z'
     passes: 0
     stakes: reversible
-    depends_on: [t-003, t-008]
+    depends_on: [t-008]
     note: >
-      Design only — no accounts, no onboarding, no money. There is no payout mechanism
-      in the repo today (zero references to Stripe Connect, transfer_data, or
-      application_fee). Write research/payout-design.md covering: Stripe Connect Express
-      versus manual payouts at this scale; the minimum payout threshold (paying out $0.40
-      costs more than it pays); payout cadence; what identity and tax information a
-      creator must supply before receiving anything and at what dollar threshold that
-      kicks in (1099-NEC / 1099-K considerations, W-9 collection, non-US creators); and
-      what happens to unclaimed balances from creators who never onboard. Flag anything
-      that needs a CPA and say so plainly rather than guessing. Depends on t-003 because
-      the paying entity determines the tax treatment of every one of these answers.
+      MODEL DECIDED (Silas, 2026-08-19), so this is now a design task with a settled
+      shape rather than an open question: "we credit the creator with more tokens, which
+      are the paid resource used to generate interactions. Then when they reach a
+      threshold, they can request a withdrawal and we pay. Since we only create tokens
+      when users pay money, and we only credit a portion of tokens paid back to creators,
+      a reasonable withdrawal timer should prevent most situations of fraud."
+      This is a good design and the economic reasoning behind it is sound — credit in
+      tokens, pay on request past a threshold, and let the fact that a round trip returns
+      only a third make self-dealing unprofitable. Three things it still needs, none of
+      which break it:
+
+      (1) EARNED MANA IS A LIABILITY THE MOMENT IT IS CREDITED, not when it is paid. Once
+      tokens are redeemable, every outstanding earned balance is money owed. Model it as
+      such, keep it in its own bucket (t-006), and make sure nothing that mints mana for
+      fun — achievements, refills, admin adjustments — can ever land in it.
+
+      (2) THE WITHDRAWAL TIMER SHOULD BE AT LEAST AS LONG AS THE CARD-DISPUTE WINDOW.
+      Silas's instinct that a timer prevents most fraud is right, and the number that
+      makes it right is the chargeback window: a cardholder can dispute a payment months
+      after the fact (commonly up to ~120 days depending on network and reason code). The
+      attack the timer defeats is buy-tokens-with-a-stolen-card, spend on a confederate's
+      asset, confederate withdraws, chargeback lands after the cash is gone. A timer
+      shorter than the dispute window does not close that; one at least as long does.
+      Confirm the current window against Stripe's own dispute documentation rather than
+      taking ~120 days on faith, and set the threshold high enough that a payout is worth
+      its own transfer fee.
+
+      (3) THE FREE-MANA HOLE, which the "we only create tokens when users pay" premise
+      does not quite cover — the system also mints mana for free via CYCLE_REFILL,
+      SIGNUP_BONUS, ACHIEVEMENT_CONFIRMED and admin adjustments. Free mana has zero input
+      cost, so if it could generate creator credit, converting refills into withdrawable
+      cash at a 1/3 rate would be profitable rather than lossy. t-006's bucket separation
+      is the fix; this task should assert it end to end.
+
+      REMAINING DESIGN WORK: how the withdrawal is actually paid (Stripe Connect Express
+      vs manual transfer at this scale — there is no payout mechanism in the repo today,
+      zero references to Connect, transfer_data, or application_fee); minimum threshold;
+      what identity and tax information a creator must supply before receiving anything
+      and at what dollar level that kicks in (1099-NEC, W-9 collection, non-US creators);
+      and what happens to earned balances from creators who never onboard.
+      One question for the CPA rather than for an agent: when does credited-but-unwithdrawn
+      earned mana become taxable income to the creator — at credit, or at redemption?
+      Constructive receipt could make it the former, which would change reporting.
+      Flag anything else that needs professional review and say so plainly.
 
   - id: t-015
     milestone: m4
