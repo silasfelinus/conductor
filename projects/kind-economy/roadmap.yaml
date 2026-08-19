@@ -467,9 +467,9 @@ tasks:
   - id: t-027
     milestone: m2
     title: "Close the metering gaps — every paid-resource generation charges"
-    status: ready
-    owner: null
-    updated: '2026-08-19T00:00:00Z'
+    status: claimed
+    owner: worker
+    updated: '2026-08-19T07:27:47Z'
     passes: 0
     stakes: reversible
     note: >
@@ -529,6 +529,8 @@ tasks:
       endpoint should fail CI rather than be discovered by another manual audit.
 
   # ---------------------------------------------------------- m3 LIVE STRIPE
+    claimed_by: worker-2026-08-19T07:30:00Z-t027-metering-gaps
+    claimed_at: '2026-08-19T07:27:47Z'
   - id: t-011
     milestone: m3
     title: "Run the Stripe checkout/webhook/fulfillment matrix end-to-end in TEST mode"
