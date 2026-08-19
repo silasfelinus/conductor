@@ -1137,9 +1137,12 @@ tasks:
 - id: t-053
   milestone: m4
   title: Stop blocking web startup on post-migration VACUUM
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
+  claimed_by: 20260819T011300Z-kapowarr-t053-8d1f
+  claimed_at: '2026-08-19T01:13:00Z'
+  updated: '2026-08-19T01:13:00Z'
   note: |-
     User-reported live follow-up on 2026-08-19. After migration 48 succeeds and database_version advances to 49, startup emits no further log and the frontend remains unreachable. The synchronous post-migration VACUUM is the only remaining database operation on that path and can block for a long time on a large library without progress output. Remove heavyweight compaction from startup, retain only bounded/cheap optimization if useful, log migration completion, and cover the post-migration operation so future schema upgrades reach the web server promptly.
