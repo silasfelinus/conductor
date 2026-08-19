@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-19T10:50:04Z
+Generated: 2026-08-19T11:32:06Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **692**
-- Outcomes: blocked: 15, cancelled: 1, done: 676
+- Closed tasks recorded: **693**
+- Outcomes: blocked: 15, cancelled: 1, done: 677
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -38,7 +38,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop-cms | 21 | 95% |
 | interface-vision | 83 | 100% |
 | kapowarr | 36 | 100% |
-| kind-economy | 3 | 100% |
+| kind-economy | 4 | 100% |
 | kind-robots | 50 | 98% |
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 676 | 99% |
+| software | 677 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-19 `kind-economy/t-008` — Clean first-pass Worker output on a genuinely ambiguous accounting task: the roadmap note left two real judgment calls open (a documented rounding rule for the 3-way split, and how to treat a per-transaction payment-processing fee when tokens are purchased in batches but spent fungibly later) and the Worker resolved both with a named constant, an inline rationale, and a 20,000-iteration property test proving the sum-to-gross invariant holds exactly including negative-margin rows -- rather than picking a plausible number and moving on. It also independently re-verified the task note's own claim ("costUsd is never reconciled against real billing") by grepping every gate.commit() call site itself instead of taking the note at face value, and surfaced it as a flagged follow-up rather than baking a false assumption into the schema doc comments. Reviewed the migration.sql line-by-line (additive CREATE TABLE + one FK only) before merging, per this repo's financial-ledger convention -- the Worker's own PR body correctly left the PR unmerged for exactly that reason instead of assuming a non-gate_human task meant no review was needed.
+
 - 2026-08-19 `kind-economy/t-007` — Clean first-pass Worker output: additive-only migration (ADD COLUMN IF NOT EXISTS / CREATE INDEX matching the repo's established convention), a resolver that never throws (a lookup failure degrades to "no attribution" rather than failing the charge), and both open policy questions (mission-share fallback on unresolved creatorUserId, self-attribution recorded but not decided) handled exactly as the task note specified rather than guessed at. Reviewed the actual diff (schema, migration.sql, manaAttribution.ts, manaGate.ts wiring) rather than trusting the PR description alone.
 
 - 2026-08-19 `kind-economy/t-005` — A flat "donate a third" plan does not net to zero for tax purposes by default -- gross receipts and a charitable deduction are separate line items whose offset depends entirely on entity type and itemization, and for a sole prop/LLC taking the standard deduction the offset is worth nothing. The fix has to be structural (keep the mission third out of gross receipts entirely via a direct customer-to-charity donation) rather than a bigger deduction. Also: when researching a compliance question, the framing in the task note ("check these N states") can undersell the real exposure -- a broader, newer category of law (California's charitable-fundraising-platform registration, which reads broadly enough to plausibly cover an embedded donate-at-checkout flow) was more directly on point than the originally-flagged commercial-co-venture states, and surfaced a concrete design lever (redirect to the donation platform's own hosted page vs. embedding it) worth flagging even though this task's scope was research-only.
@@ -99,8 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-19 `kapowarr/t-054` — Bound remote metadata resolution as a whole and pair every loading state with success and rejection exits; source health data should be visible before acquisition.
 - 2026-08-19 `model-builder/t-029` — Twelfth cycle of this recurring bug-hunt task. The suggested accessibility lead from cycle 11 was genuinely exhausted (both target components already covered or not applicable), and the fallback -- read a genuinely fresh file (the store) rather than re-walking already-audited components -- surfaced a real sibling instance of a bug class an existing guard already covered for other functions (verifyModelBuilderAutoBuildFailedSummaryGuard's TARGET_FUNCTIONS list). When a guard is written against an explicit function allowlist, a later cycle should periodically check whether new or overlooked functions with the same shape are missing from that list, rather than assuming a fixed guard covers a whole bug class permanently.
 
-- 2026-08-19 `kapowarr/t-036` — check_pr_merged_drift.py's gh-search fallback 403'd in this sandbox, but the GitHub MCP pull_request_read "get" method (as opposed to list_pull_requests, which reported merged:false for the same closed PR) confirmed silasfelinus/Kapowarr#56 was in fact merged directly by Silas. When the drift script can't verify a candidate via its own HTTP path, cross-check the single-PR MCP get method before treating it as unresolved -- the list endpoint's merged field is not reliable evidence on its own. Concurrent race note: by the time this reconciliation PR reached CI, origin/main had already picked up the same task's real close-out (with the full implementation note and squash SHA) from another session -- resolved by keeping origin/main's roadmap content and both LEARNING.yaml entries side by side rather than picking one.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-19T10:50:04Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-19T11:32:06Z_
