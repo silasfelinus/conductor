@@ -1207,13 +1207,14 @@ tasks:
 - id: t-056
   milestone: m7
   title: Make Metron a fully native metadata identity
-  status: review
+  status: done
   owner: worker
   passes: 1
   stakes: reversible
   claimed_by: worker-2026-08-19T04:31:00Z-t056-metron-native
   claimed_at: '2026-08-19T04:31:00Z'
-  updated: '2026-08-19T06:43:47Z'
+  updated: '2026-08-19T06:46:00Z'
+  implementation_pr: silasfelinus/Kapowarr#64
   note: |-
     Silas explicitly requested the reasonable completion of Metron support after t-038 shipped safe
     ComicVine-linked fallback. Remove the remaining legacy requirement that every volume and issue have a
@@ -1225,3 +1226,10 @@ tasks:
     recommended bearer-token authentication without removing Basic auth. Local verification passed 393
     tests, a fresh database-version-51 startup smoke test, mypy on all touched Python sources, import-order
     checks, JavaScript syntax checks, and whitespace validation.
+    Merged silasfelinus/Kapowarr#64 as cb3161b2e4a260e4dda7a9ec74672df417efdd06. Metron-only
+    series and issues now search, add, refresh, and retain durable provider identities without invented
+    ComicVine IDs. Configured providers search concurrently; Metron issue-list responses avoid per-issue
+    detail bursts; token and Basic authentication are supported. Python 3.8-3.12 tests, docs, and the PR
+    container build all passed. Learning: provider abstraction is not complete while a legacy provider's
+    identifier remains a schema requirement; portable identity needs nullable compatibility columns and
+    refresh routing keyed by the stored provider identity.

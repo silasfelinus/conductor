@@ -9103,4 +9103,13 @@ records:
     a CI job stuck `queued` with the parent run auto-concluding `failure` (no logs,
     zero jobs actually run) is a transient infra stall, not a real check failure --
     confirm by running the same commands locally before trusting the red state, then
-    retry the workflow run to verify before merging.
+    retry the workflow run to verify before merging.\n
+- date: 2026-08-19
+  project: kapowarr
+  task: t-056
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: null
+  lesson: "Provider abstraction is incomplete while one provider's identifier remains a schema requirement; keep compatibility IDs nullable and route refresh through each entity's durable provider identity."
