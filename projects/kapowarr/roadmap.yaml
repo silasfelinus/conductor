@@ -1149,3 +1149,12 @@ tasks:
     User-reported live follow-up on 2026-08-19. After migration 48 succeeds and database_version advances to 49, startup emits no further log and the frontend remains unreachable. The synchronous post-migration VACUUM is the only remaining database operation on that path and can block for a long time on a large library without progress output. Remove heavyweight compaction from startup, retain only bounded/cheap optimization if useful, log migration completion, and cover the post-migration operation so future schema upgrades reach the web server promptly.
 
     Merged silasfelinus/Kapowarr#59 as 3965925ed014c59870eb8d7079174ca148f65473. The user's report that the frontend eventually loaded confirmed synchronous post-migration VACUUM—not a second migration failure—was blocking startup. Startup now skips that unbounded compaction and logs migration completion. The regression passed on Python 3.8-3.12; docs, PR container, and all post-merge tests/docs/container publication passed.
+- id: t-054
+  milestone: m5
+  title: Make torrent search results actionable and informative
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: |-
+    User-reported live follow-up on 2026-08-19. Adding a Torznab result can leave the manual-search action spinning indefinitely, torrent results omit the seed/leech availability already supplied by Prowlarr, and the manual-search dialog does not identify the selected volume or issue. Diagnose and bound the torrent-add path so every click reaches a visible success or failure state, carry Torznab seeders/leechers through the search API into clear result columns, and label the dialog with the title that initiated the search. Cover Torznab parsing and the client/UI terminal-state behavior with regressions.
