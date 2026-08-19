@@ -88,26 +88,57 @@ Five concrete gaps, each verified by reading the code:
    item rather than an incident — but the copy should be **deliberately** either moved to
    future tense or backed by a real mechanism, not left to drift.
 
-### Legal / entity side
+### Legal / entity side — researched 2026-08-19
 
-From the `SaveOneHuman` repo's own checklist and history:
+**Save One Human was never a 501(c)(3).** Federal exemption was never applied for.
 
-- California nonprofit corporation — **name reserved, articles filed, EIN obtained** ✅
-- Board of directors — **never appointed** ❌
-- Bylaws + conflict-of-interest policy — **never drafted** ❌
-- Initial board actions — **never taken** ❌
-- CT-1 initial registration with the CA AG's Registry of Charitable Trusts — **never
-  filed** ❌
-- Revenue, ever: **$0**
-- Current posture: mid-unwind, overdue zero-dollar filings being submitted
-- Website: static GitHub Pages at `saveonehuman.org`; `index.html` only —
-  `about`, `donate`, `values`, `links`, `thanks`, `stretch` are 1-byte placeholders
+The repo's own registration checklist records exactly three of ten steps complete:
 
-Silas's stated target is to restart the entity **around January 1**, to line the entity
-up with a clean fiscal/tax year and avoid extra part-year filings while infrastructure
-is still being built.
+| Step | State |
+|---|---|
+| Determine the corporation's name | ✅ |
+| File articles of incorporation (`arts-pb.pdf`, Nonprofit **Public Benefit** Corporation, $30) | ✅ |
+| Obtain an EIN | ✅ |
+| Appoint the board of directors | ❌ |
+| Draft bylaws + conflict-of-interest policy | ❌ |
+| Take initial board actions | ❌ |
+| File CT-1 with the CA AG's Registry of Charitable Trusts | ❌ |
+| File the Statement of Information with the CA Secretary of State | ❌ |
+| **Apply for federal tax exemption (IRS Form 1023/1023-EZ)** | ❌ **never applied** |
+| **Apply for California tax exemption (FTB Form 3500)** | ❌ **never applied** |
 
----
+Independently corroborated: **ProPublica Nonprofit Explorer returns zero results** for
+"save one human" (`total_results: 0`). Nonprofit Explorer mirrors the IRS Exempt
+Organizations Business Master File, which only lists organizations the IRS has actually
+recognized as exempt — so zero results is exactly what a never-applied entity produces.
+There is no public IRS record of this entity and there never was one. The EIN exists but
+is not published anywhere, because the IRS does not publish EINs for non-exempt entities.
+**The public record that does exist is the California Secretary of State corporate
+filing.**
+
+**The expensive finding.** A California nonprofit corporation that never obtained FTB
+exemption is taxed exactly like a for-profit corporation and owes the **$800 minimum
+franchise tax for every year it existed**, regardless of revenue. Zero income does not
+mean zero tax, and filing returns showing $0 taken in does not by itself discharge it.
+Incorporated in 2020, that is potentially five-plus years of $800 plus penalties and
+interest. This may already have been resolved during the unwind — or it may be an open
+liability. Either way it is the single biggest factor in whether reinstating or starting
+fresh is cheaper, and it belongs to a CPA.
+
+*Not legal or tax advice — general rules from public sources; the actual situation needs
+a professional.*
+
+**Two facts still outstanding**, both blocked on sources this session could not reach:
+the corporation's current CA SOS status and entity number (bizfileonline.sos.ca.gov sits
+behind Incapsula bot protection and rejects automated queries; the AG registry at
+rct.doj.ca.gov returned 503), and the FTB account balance. The EIN itself is on the IRS
+CP 575 confirmation letter or retrievable from the IRS Business & Specialty Tax Line.
+
+**Timing (Silas, 2026-08-19):** January 1 was "just a random date but beyond this year,
+since I don't see taking in any money for a while. It can be later, it just didn't seem
+like a quick priority here in mid-August." The entity track is therefore **deferred to
+2027 or later** and weighted 5 — kept alive because he does want it long term, but
+explicitly not competing with the revenue and fundraising work.
 
 ## The decision that gates everything else
 
@@ -135,7 +166,9 @@ is already a registered charity, or (c2) **through a revived Save One Human** ac
 the charitable arm.
 
 > **Key finding: restarting the nonprofit is not required to make the revenue share
-> work.** Path **C1** — for-profit platform, mission share donated straight to AMF — is
+> work** — and the research above makes the case stronger, since there is no dormant
+> 501(c)(3) to reactivate cheaply. Path **C1** is now clearly the near-term answer.
+> Path **C1** — for-profit platform, mission share donated straight to AMF — is
 > the cheapest honest route and needs no entity work at all. Reviving Save One Human
 > earns its keep only if Silas specifically wants tax-deductible donations flowing to a
 > Kind Robots-controlled charity, wants grant eligibility, or wants the mission to
@@ -173,6 +206,21 @@ simple and the donor-intent story clean.
 
 ---
 
+## Decisions made (Silas, 2026-08-19)
+
+- **The split is on NET, not gross.** "Profit share should be net. Not gross." Stripe
+  fees and the real model/GPU cost of the generation come off the top; the three shares
+  are equal slices of what remains. Two consequences fall out: the ledger must capture
+  *actual* provider cost rather than an estimate, and a spend whose costs exceed its
+  gross needs an explicit zero/negative-margin path rather than a negative creator share.
+- **Silas earns creator share on his own assets**, on the same terms as everyone else —
+  "but want that to feel honest, transparent, and fair." Because he is also the admin,
+  that means two of three shares on his own work, which is defensible but must be
+  *visible*. Handled as `t-021`.
+- **The entity track is deferred** to 2027 or later. See above.
+- **Still open:** per-interaction vs. pooled creator share. This shapes the whole m2
+  schema (`t-002`).
+
 ## MVP shape
 
 The smallest honest slice that makes the three-way split real, ordered so that every
@@ -194,12 +242,46 @@ is where the human gates live.
 
 ---
 
+## Fundraising & outreach (m5, added 2026-08-19)
+
+Everything above is plumbing — it makes money *split* correctly. None of it makes money
+*arrive*. Three initiatives from Silas, each with its own task:
+
+**The butterfly event** (`t-022`). A public, butterfly-themed fundraiser. AMI is a horde
+of rainbow butterflies and the money buys nets, so the theme carries the argument rather
+than decorating it. The design constraint is the same one that keeps the website simple:
+**don't take custody of donations.** Point people at againstmalaria.com/amibot and let
+them give directly. Collecting money on another charity's behalf pulls California's
+charitable-solicitation registration rules into a small community event; direct-to-AMF
+sidesteps the category entirely.
+
+**The Sift** (`t-023`). Silas's strongest idea: the panhandler-with-multiple-bowls bit,
+run as AI supporters vs. AI skeptics, with the non-AI side's content made entirely
+without AI. What makes the original work is that it's funny, it costs the giver nothing,
+and both bowls buy the same sandwich — all three properties have to survive. Both sides
+fund malaria nets identically; the vote is expressive, the money is never conditional.
+The non-AI side has to be *genuinely good*, argued in hand-made work by someone who means
+it — if it's visibly the weaker exhibit the whole thing reads as rigged and deserves to.
+The hard mechanical problem is attribution: if donations go directly to AMF we may not be
+able to see who gave to which side, so the tally may need two distinct fundraiser links
+or self-reporting. That gets resolved in the design, not hand-waved.
+
+**Labelled-AI social content** (`t-024`, `t-025`, `t-026`). Silas shelved this over
+anti-AI backlash; the responsible version is buildable, and the guardrails belong in the
+architecture rather than in a policy document. AMI posts *as AMI* — a labelled AI
+character with a stated purpose, never a synthetic persona presenting as human, and never
+a system that could become one by flipping a config value. V1 is **draft-only**: the
+pipeline generates and queues, a human approves before anything posts. The daily
+dream/digest cycle already produces real generated art and writing every day, which is
+far better source material than anything written to be promotional. Platform policy
+research (`t-024`) comes first because it determines what the pipeline is allowed to be.
+
 ## Non-goals for v1
 
 - Redesigning the mana economy or repricing generation
 - Print-on-demand fulfillment (owned by `digital-storefront` m4 / t-040)
 - The storefront catalog itself (owned by `digital-storefront`)
-- Marketing, launch, or any public announcement of creator earnings
+- Any public announcement of creator earnings before the mechanism exists
 - Crypto, DAF, or any donation vehicle beyond a plain corporate donation
 
 ## Relationship to `digital-storefront`

@@ -45,7 +45,7 @@ notes_from_silas: >
 
 milestones:
   - id: m1
-    title: "SHAPE — decide the money model and the entity question"
+    title: "SHAPE — decide the money model"
     weight: 20
     status: in-progress
   - id: m2
@@ -54,15 +54,19 @@ milestones:
     status: not-started
   - id: m3
     title: "LIVE STRIPE — first real dollar, safely"
-    weight: 20
+    weight: 15
     status: not-started
   - id: m4
     title: "DISPERSAL — creator payouts and mission remittance"
-    weight: 20
+    weight: 15
     status: not-started
   - id: m5
-    title: "ENTITY — Save One Human restart-or-retire, Jan 1 target"
-    weight: 10
+    title: "FUNDRAISING & OUTREACH — actually raise money, responsibly"
+    weight: 15
+    status: not-started
+  - id: m6
+    title: "ENTITY — Save One Human, deferred to 2027 or later"
+    weight: 5
     status: not-started
 
 tasks:
@@ -100,21 +104,22 @@ tasks:
     gate_human: true
     approved_by_human: false
     note: >
-      FOR SILAS — soft checkpoint, nothing downstream is blocked on it; m2's ledger work
-      is safe to start regardless of how you answer. Read DESIGN-BRIEF.md and confirm or
-      redirect. Three specific questions the brief could not answer for you:
-      (a) Should the legal/entity track (m5) stay inside this project, or split out into
-      its own `content`-kind project with its own cadence? It is bundled here because it
-      is one story, but its deliverables are documents you file, not code.
-      (b) Is "split equally" literally 1/3 each, or is it the shape and the exact
-      percentages are still open? Stripe's own fee (~2.9% + 30c) and the raw model/GPU
-      cost of the generation both come out somewhere — the brief assumes they come off
-      the top before the split, so the three shares are equal slices of net, not gross.
-      Confirm or correct that.
-      (c) Is the creator's share earned per-interaction (someone runs YOUR scenario),
-      or pooled and distributed by usage share over a period? Per-interaction is more
-      honest and much easier to explain; pooled is much cheaper to pay out. This
-      decision shapes the whole m2 schema.
+      PARTIALLY ANSWERED 2026-08-19. Silas confirmed: "Profit share should be net. Not
+      gross." That settles the basis — Stripe fees and the raw model/GPU cost of the
+      generation come off the top, and the three shares are equal slices of NET. Recorded
+      in t-008, which is now unblocked on that point.
+      He also deprioritized the entity track: Jan 1 was "just a random date but beyond
+      this year, since I don't see taking in any money for a while... it just didn't seem
+      like a quick priority here in mid-August." m6 is reweighted to 5 and deferred; see
+      t-018's findings, which materially change the restart cost.
+      STILL OPEN, and it shapes the whole m2 schema so it wants an answer before t-008:
+      is the creator's share earned PER-INTERACTION (someone runs YOUR scenario, you earn
+      on that specific spend) or POOLED and distributed by usage share over a period?
+      Per-interaction is more honest and far easier to explain to a creator; pooled is
+      much cheaper to actually pay out and smooths tiny amounts into payable sums. A
+      plausible third answer is per-interaction accrual with pooled PAYOUT — accrue
+      honestly per spend, disburse on a schedule once a threshold is met — which gets
+      most of both and is what t-008/t-014 will assume unless told otherwise.
 
   - id: t-003
     milestone: m1
@@ -246,9 +251,18 @@ tasks:
       rather than left to drift; a property test over many random amounts should assert
       the invariant holds. Rows are never edited or deleted — a correction is a new
       reversing row referencing the original, exactly like ManaTransaction's reversedById
-      pattern. Blocked until t-002(b) confirms the split percentages and net-vs-gross
-      basis; if Silas has answered, apply his answer, and if not, implement 1/3-1/3-1/3
-      of net behind a single named constant that is trivial to change.
+      pattern.
+      BASIS DECIDED (Silas, 2026-08-19): "Profit share should be net. Not gross." So the
+      row records gross, then subtracts payment-processing fees and the actual model/GPU
+      cost of the generation, and splits what remains three equal ways. Two things this
+      makes non-optional: the ledger must capture real per-generation provider cost, not
+      a guess (`ManaTransaction.costUsd` already exists and `chargeForGeneration` already
+      threads `estCostUsd` — check whether that estimate is ever reconciled against the
+      provider's actual billed cost, and if it is not, say so rather than quietly
+      treating an estimate as truth); and a spend whose costs exceed its gross must
+      produce a zero or negative-margin row that is handled explicitly, not a negative
+      creator share. Keep the 1/3-1/3-1/3 ratio behind one named constant so a future
+      change to the percentages is a one-line edit.
 
   - id: t-009
     milestone: m2
@@ -287,6 +301,45 @@ tasks:
       raised through againstmalaria.com/amibot as clearly SEPARATE from platform-accrued
       mission share — those dollars never touched our books and must never be double
       counted or presented as platform revenue.
+
+  - id: t-021
+    milestone: m2
+    title: "Self-attribution policy — can Silas earn creator share on his own assets"
+    status: ready
+    owner: null
+    updated: '2026-08-19T00:00:00Z'
+    passes: 0
+    stakes: reversible
+    depends_on: [t-007]
+    note: >
+      FROM SILAS, 2026-08-19: "I'm kinda feeling like for assets I made, I would be able
+      to earn creator share percent, but want that to feel honest, transparent, and
+      fair." He is right on both counts and they pull against each other, which is why
+      this is its own task rather than a footnote in t-007.
+      The case FOR is strong and should not be apologised for: he made the assets, the
+      creator share exists to reward exactly that, and carving himself out would mean the
+      platform's most prolific creator is the only one who works for free — which would
+      quietly distort every incentive the split is meant to create, and would make the
+      numbers lie about what creator earnings actually look like at scale.
+      The problem is that he is also the site admin, so on his own assets he receives the
+      platform third AND the creator third — two thirds of net — and he sets the rules.
+      Nothing about that is dishonest, but it is invisible, and invisible is what turns a
+      fair arrangement into one that looks bad the first time someone graphs it.
+      Design the policy so the answer is boring in public. At minimum: (1) admin-owned
+      assets earn creator share on exactly the same terms as everyone else's, with no
+      special multiplier and no exceptions; (2) every RevenueSplit row records the
+      creator identity regardless of who it is, so admin earnings are never a separate
+      untracked path; (3) the mission-share dashboard (t-010) and any public transparency
+      surface break out admin-attributed creator earnings as their own visible line
+      rather than folding them into "platform"; (4) write the plain sentence that
+      explains it to a stranger who is inclined to assume the worst, and put it where a
+      creator will actually see it — if that sentence cannot be written without wincing,
+      the policy is wrong, not the sentence.
+      Also decide the adjacent case: a creator running THEIR OWN object. Same principle
+      should apply (you earn on your own work) but it opens a wash-trading shape once
+      real payouts exist — someone could cycle paid mana through their own asset to
+      convert platform credit into cash, losing only the platform and mission thirds. Cap
+      it, flag it, or accept it knowingly, but do not discover it after t-015.
 
   # ---------------------------------------------------------- m3 LIVE STRIPE
   - id: t-011
@@ -439,9 +492,162 @@ tasks:
       makes art, not by a lawyer, and keep the mission share visible in it rather than
       buried, because that is the actual reason anyone is here.
 
-  # --------------------------------------------------------------- m5 ENTITY
-  - id: t-018
+  # -------------------------------------------- m5 FUNDRAISING & OUTREACH
+  - id: t-022
     milestone: m5
+    title: "Design the butterfly-themed public fundraising event"
+    status: ready
+    owner: null
+    updated: '2026-08-19T00:00:00Z'
+    passes: 0
+    stakes: reversible
+    note: >
+      FROM SILAS, 2026-08-19: "hosting a public event for fundraising, themed on
+      butterflies." AMI is a horde of rainbow butterflies and malaria nets are the thing
+      being funded, so the theme is not decoration — it is the pitch, and it should carry
+      the actual argument (a net costs a few dollars; a life costs about $5,000; here is
+      what your twenty bucks does).
+      Planning and design only — no venue booked, no deposit paid, no date announced, no
+      vendor contacted. Produce a written event plan: format and scale options (gallery
+      night of AMI-generated art, community make-a-butterfly workshop, talk plus
+      donation drive), venue candidates, rough budget, what the site's own generated art
+      contributes, and what would have to be true for it to break even rather than cost
+      more than it raises — a fundraiser that loses money is a donation with extra steps.
+      THE CRITICAL DESIGN CONSTRAINT, and it is the same one that keeps the website
+      simple: DO NOT TAKE CUSTODY OF DONATIONS. Point attendees at
+      againstmalaria.com/amibot and let them give directly — QR codes on the wall, a
+      laptop at the door. The moment Kind Robots collects money at an event and forwards
+      it, it is soliciting charitable contributions on another organization's behalf, and
+      California has registration rules for that which are wildly out of proportion to a
+      small community event. Direct-to-AMF sidesteps the entire category. If Silas wants
+      to sell something at the event (prints, merch), that is ordinary commerce and goes
+      through the normal storefront — keep the two flows visibly separate.
+      Escalate to needs-human before anything is booked, paid for, or publicly announced.
+
+  - id: t-023
+    milestone: m5
+    title: "Design 'The Sift' — the two-bowl AI/non-AI donation experiment"
+    status: ready
+    owner: null
+    updated: '2026-08-19T00:00:00Z'
+    passes: 0
+    stakes: reversible
+    note: >
+      FROM SILAS, 2026-08-19: "doing an online sift, inspired by panhandlers with
+      multiple bowls asking for who gives more money: Christian, Atheists, Muslims,
+      etc... but for people who support ai and those who don't, with all the content for
+      the non-ai side generated without ai."
+      This is the best fundraising idea in the batch and also the easiest to get wrong,
+      so design it carefully before building anything. What makes the panhandler version
+      work is that it is funny, it costs the giver nothing extra, and both bowls buy the
+      same sandwich. Keep all three properties.
+      NON-NEGOTIABLES for the design: (1) BOTH BOWLS FUND MALARIA NETS. Identical
+      destination, identical impact. The vote is expressive; the money is not
+      conditional. If one side's donations did something different, it stops being a
+      poll and becomes a hostage situation. (2) THE NON-AI SIDE MUST BE GENUINELY GOOD.
+      Silas's own instinct here is the whole ballgame — the anti-AI case gets made in
+      hand-written words and hand-made art, with no generated content anywhere near it,
+      and it must be argued by someone who actually believes it rather than
+      steelmanned-then-undercut. If the non-AI bowl is visibly the weaker exhibit, the
+      whole thing reads as a rigged game and deserves to. Budget real effort (or a
+      commission) for that side, and label its provenance as clearly as the AI side's.
+      (3) NO MOCKERY IN EITHER DIRECTION, including in the results display. The running
+      total is the joke; the people are not. (4) The AI side must be labelled AI, per
+      t-024's disclosure rules.
+      Deliverable is a design doc: the framing copy, how the two sides are presented,
+      how the tally is displayed, how donations are attributed to a side when the money
+      goes directly to AMF (this is the genuinely hard mechanical problem — direct-to-AMF
+      giving means we may not be able to see who gave what, so the tally may need to be
+      self-reported, or use two distinct AMF fundraiser links if AMF supports that;
+      resolve it in the design, do not hand-wave it), and an honest section on how this
+      could backfire.
+      Outward-facing: escalate to needs-human before it goes live. It is a public
+      statement about a live culture-war topic made in the name of a charity fundraiser,
+      and that is Silas's call to make with his eyes open, not an agent's.
+
+  - id: t-024
+    milestone: m5
+    title: "Social platform policy review for AI-generated and automated content"
+    status: ready
+    owner: null
+    updated: '2026-08-19T00:00:00Z'
+    passes: 0
+    stakes: reversible
+    note: >
+      Prerequisite research for t-025 — do this BEFORE building any posting pipeline,
+      because it determines what the pipeline is allowed to be.
+      For each candidate platform (Bluesky, Mastodon, Instagram, TikTok, YouTube, X,
+      Reddit, Discord), write to research/social-platform-policy.md: what the current
+      terms say about AI-generated content and required disclosure labels; what they say
+      about automated/API posting and bot accounts, including whether a bot must be
+      registered or flagged as one; whether charitable solicitation or fundraising links
+      trigger extra rules; and rate/volume limits. Note especially that some platforms
+      have first-class AI-content labels that are better to use than a hand-rolled
+      disclaimer, and that Reddit and Discord have per-community rules that override the
+      site-wide ones and are where most bot bans actually come from.
+      Flag any platform where responsible participation is not currently possible, and
+      recommend a starting set of two or three rather than all of them. Research only —
+      no account creation, no posting, no API keys.
+
+  - id: t-025
+    milestone: m5
+    title: "Build the labelled-AI social content pipeline (draft-only, human-approved)"
+    status: waiting
+    owner: null
+    updated: '2026-08-19T00:00:00Z'
+    passes: 0
+    stakes: reversible
+    depends_on: [t-024]
+    note: >
+      FROM SILAS, 2026-08-19: "I originally had so many ideas about generating social
+      media personalities for Amibot to create posts/tweets, etc to raise money. I was
+      dissuaded because of the significant amount of pushback against ai. This should be
+      done responsibly, but wiring up a route for our daily agent work to create content,
+      clearly marked as ai, to the various popular sites, working towards fund raising."
+      The instinct to do it responsibly is the thing that makes it viable, so build the
+      guardrails into the architecture rather than into a policy document nobody reads.
+      HARD DESIGN RULES: (1) AMI posts AS AMI. A clearly-labelled AI character with a
+      stated purpose is defensible and on-brand; a synthetic persona presenting as a
+      human being is not, and would deserve every bit of the backlash it got. Never build
+      the second thing, and do not build a system that could become it by changing a
+      config value. (2) DRAFT-ONLY IN V1. The pipeline generates and queues; a human
+      approves before anything posts. Full automation is a separate, later, gated
+      decision, not a v1 default — the failure mode of an unattended AI account posting
+      for a charity is reputational and irreversible in a way no CI check catches.
+      (3) Disclosure on every item, using each platform's native AI label where t-024
+      found one. (4) A volume ceiling, because the fastest way to be read as spam is to
+      behave like it, and a charity that spams has spent its credibility on nothing.
+      There is real raw material already: the daily dream/digest cycle produces genuine
+      generated art and writing every day, which is far better source content than
+      anything written to be promotional. Wire that in as the feed. Every post should be
+      able to justify itself as worth someone's attention even to a reader who does not
+      donate and does not like AI.
+      Build the queue, the labelling, the approval surface, and the volume limits. Do NOT
+      connect a live account or post anything — that is t-026's gate.
+
+  - id: t-026
+    milestone: m5
+    title: "GATE: connect real social accounts and publish the first posts"
+    status: needs-human
+    owner: null
+    updated: '2026-08-19T00:00:00Z'
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    approved_by_human: false
+    depends_on: [t-025]
+    note: >
+      FOR SILAS ONLY. Publishing under Kind Robots' name in public, on platforms with
+      live audiences, on a topic (AI) that a lot of people are actively angry about. No
+      agent creates a social account, connects an API key, or publishes a post.
+      When approving, decide explicitly: which platforms (from t-024's recommendation),
+      who reviews the queue and how often, what the volume ceiling is, and what the
+      response plan is if a post gets a hostile reception — deciding that in advance,
+      calmly, is much better than deciding it while a thread is going badly.
+
+  # --------------------------------------------------------------- m6 ENTITY
+  - id: t-018
+    milestone: m6
     title: "Establish the true current legal status of Save One Human"
     status: needs-human
     owner: null
@@ -451,22 +657,58 @@ tasks:
     gate_human: true
     approved_by_human: false
     note: >
-      FOR SILAS — fact-finding only you can do, and everything else in m5 depends on the
-      answer. The SaveOneHuman repo's own checklist shows articles filed and an EIN
-      obtained, but board never appointed, bylaws never drafted, initial board actions
-      never taken, and the CT-1 initial registration with the CA AG's Registry of
-      Charitable Trusts never filed. You have since been unwinding the entity and filing
-      overdue zero-dollar returns. What is unknown from here: whether dissolution was
-      actually COMPLETED or merely begun. If completed, "restarting" means a new
-      incorporation; if the filings were brought current but dissolution never finished,
-      reinstatement is likely far cheaper. Check three sources — CA Secretary of State
-      business search, Franchise Tax Board entity status, and the AG's Registry of
-      Charitable Trusts — and record the answer here. Also record whether the federal
-      501(c)(3) exemption was ever actually granted (Form 1023/1023-EZ) or only the state
-      incorporation was done, because that changes the restart cost enormously.
+      LARGELY ANSWERED 2026-08-19 by research; only two facts remain and both need
+      Silas's own credentials or mail.
+
+      WHAT WAS ESTABLISHED. The SaveOneHuman README's own registration checklist records
+      exactly three of ten steps as complete: name determined, articles of incorporation
+      filed (form arts-pb.pdf — Articles of Incorporation of a Nonprofit PUBLIC BENEFIT
+      Corporation, $30 fee, via northwestregisteredagent.com), and EIN obtained. Seven
+      are NOT struck through: appoint board, draft bylaws + conflict-of-interest policy,
+      take initial board actions, file CT-1 with the CA AG's Registry of Charitable
+      Trusts, file the Statement of Information with the CA Secretary of State, apply for
+      FEDERAL tax exemption (IRS Form 1023/1023-EZ), and apply for CALIFORNIA tax
+      exemption (FTB Form 3500).
+
+      THE HEADLINE: Save One Human was never a 501(c)(3). Federal exemption was never
+      even applied for. Independently corroborated — ProPublica Nonprofit Explorer, which
+      mirrors the IRS Exempt Organizations Business Master File, returns zero results for
+      "save one human" (total_results: 0). That is the expected result for an entity that
+      never received a determination letter, since the IRS only publishes organizations
+      it has actually recognized. So there is no public IRS record of this entity and
+      there never was one; the EIN exists but is not published anywhere, because the IRS
+      does not publish EINs for non-exempt entities. The public record that DOES exist is
+      the California Secretary of State corporate filing.
+
+      THE EXPENSIVE PART, and the reason this matters more than it looks: a California
+      nonprofit corporation that never obtained FTB exemption is taxed exactly like a
+      for-profit corporation and owes the $800 MINIMUM FRANCHISE TAX for every year it
+      existed, regardless of revenue. Zero income does not mean zero tax. Incorporated
+      2020, that is potentially five-plus years of $800 plus penalties and interest.
+      Filing returns showing $0 taken in does not by itself discharge that. This may
+      already have been resolved during the unwind, or it may be an open liability —
+      either way it belongs to a CPA, not to an agent, and it is the single biggest
+      factor in whether "restart" or "start fresh" is cheaper.
+
+      NOT LEGAL OR TAX ADVICE. General rules researched from public sources; Silas's
+      actual situation needs a CPA or nonprofit attorney.
+
+      STILL NEEDED FROM SILAS — both blocked here because the sources are bot-protected
+      or require his own records:
+      (1) The corporation's current CA SOS status and entity number. Search the entity
+      name at bizfileonline.sos.ca.gov (this session could not — the site sits behind
+      Incapsula bot protection and rejects automated queries). The status field is what
+      distinguishes ACTIVE from SUSPENDED/FORFEITED from DISSOLVED, and that determines
+      whether reinstatement or fresh incorporation is the path. Also check the AG's
+      Registry of Charitable Trusts at rct.doj.ca.gov (returned 503 from here).
+      (2) The FTB account balance for the entity, and the EIN itself — the EIN is on the
+      IRS CP 575 confirmation letter, or retrievable from the IRS Business & Specialty
+      Tax Line.
+      Useful free resource found while researching: Public Counsel's California Nonprofit
+      Reinstatement Guide (publiccounsel.org), which walks the revival path end to end.
 
   - id: t-019
-    milestone: m5
+    milestone: m6
     title: "Assemble the restart checklist and Jan 1 filing calendar"
     status: waiting
     owner: null
@@ -475,24 +717,33 @@ tasks:
     stakes: reversible
     depends_on: [t-018, t-003]
     note: >
-      Research and drafting only — no filing, no signing, no payment, no agent contact
-      with any agency. Once t-018 establishes the real status and t-003 settles whether a
-      nonprofit is wanted at all, build the dated checklist working backward from Silas's
-      January 1 target: every form, its filing window, its fee, its dependencies, and
-      which ones have a long lead time (IRS determination letters historically take
-      months, which may mean starting well before January even though the entity's
-      effective date is January 1). Cover the gaps the SaveOneHuman README already lists
-      as incomplete — appoint the board, draft bylaws and a conflict-of-interest policy,
-      take initial board actions, file CT-1 — plus federal exemption, annual RRF-1, state
-      and federal returns, and the ongoing calendar that follows. Draft the documents
-      agents CAN draft (bylaws from a standard CA template, conflict-of-interest policy,
-      initial board resolutions) into projects/kind-economy/entity/ clearly marked as
-      unreviewed drafts requiring attorney review. Explicitly note anything where the
-      January 1 timing genuinely does reduce paperwork versus where it does not, since
-      the whole point of that date is avoiding a part-year filing.
+      DEFERRED, not cancelled (Silas, 2026-08-19): "I like the idea of doing it long
+      term, but that's why I said Jan 1, which was just a random date but beyond this
+      year, since I don't see taking in any money for a while. It can be later, it just
+      didn't seem like a quick priority here in mid-August." So there is no January 1
+      deadline and this task should NOT be picked up ahead of m2-m5 work. Do not treat it
+      as ready just because it is unblocked.
+      When it is time: research and drafting only — no filing, no signing, no payment, no
+      agent contact with any agency. Once t-018's two remaining facts land and t-003
+      settles whether a nonprofit is wanted at all, build the dated checklist: every form,
+      its filing window, its fee, its dependencies, and which have long lead times (IRS
+      determination letters historically run months). Cover the seven steps the
+      SaveOneHuman README lists as incomplete — board, bylaws, conflict-of-interest
+      policy, initial board actions, CT-1, Statement of Information, federal exemption —
+      plus FTB exemption, annual RRF-1, state and federal returns, and the ongoing
+      calendar. Draft what agents CAN draft (bylaws from a standard CA template,
+      conflict-of-interest policy, initial board resolutions) into
+      projects/kind-economy/entity/, clearly marked as unreviewed drafts requiring
+      attorney review.
+      Note the sequencing trap t-018 surfaced: FTB Form 3500A is the cheap path but
+      requires an existing IRS determination letter, which this entity has never had. So
+      federal exemption (1023-EZ if eligible) has to come first, or the more involved
+      full Form 3500 is required. Whichever year this lands in, the entity's effective
+      date should still line up with a clean tax year to avoid a part-year filing — that
+      was the only real substance behind the original January 1 date.
 
   - id: t-020
-    milestone: m5
+    milestone: m6
     title: "GATE: file the restart paperwork"
     status: needs-human
     owner: null
@@ -506,7 +757,10 @@ tasks:
       FOR SILAS ONLY, with an attorney or CPA. Filing with the state or the IRS is
       irreversible, creates ongoing obligations, and is squarely outside what any agent
       may do. This task exists to hold the milestone open and to be the place the filing
-      confirmations get recorded once they exist — not for an agent to act on. If t-003
-      lands on path C1 (for-profit platform donating directly to the Against Malaria
-      Foundation), this task and t-019 should be closed as intentionally not-doing rather
-      than left open indefinitely, and m5 reweighted into the rest of the project.
+      confirmations get recorded once they exist — not for an agent to act on.
+      Deferred to 2027 or later per Silas's 2026-08-19 direction; m6 is weighted 5 for
+      exactly this reason. If t-003 lands on path C1 (for-profit platform donating
+      directly to the Against Malaria Foundation) AND Silas decides he does not want the
+      charitable arm long-term, this task and t-019 close as intentionally not-doing
+      rather than sitting open forever — but he has said he does like the idea long term,
+      so the default is deferred, not dropped.
