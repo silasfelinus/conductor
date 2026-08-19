@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-19T20:36:34Z
+Generated: 2026-08-19T20:59:39Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **696**
-- Outcomes: blocked: 15, cancelled: 1, done: 680
+- Closed tasks recorded: **697**
+- Outcomes: blocked: 15, cancelled: 1, done: 681
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -22,7 +22,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | appmaker | 8 | 100% |
 | approval-portal | 2 | 0% |
 | art-generator-connect | 3 | 100% |
-| brainstorm | 15 | 93% |
+| brainstorm | 16 | 94% |
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 25 | 100% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 680 | 99% |
+| software | 681 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-19 `brainstorm/t-024` — The task's own "scope check first" step is what caught this: before building any UI, re-verified whether bot-gallery.vue was actually unmounted as the t-018 kaizen note claimed, and found the claim already false on current main -- content/bots.md -> bot-manager.vue -> bot-interact.vue -> bot-gallery.vue is a complete, CI-verified (test:route-gallery-contract) mount chain reachable via the play channel's normal nav, not just a direct URL. Closed with no code change and no kind_robots PR. Worth generalizing: a kaizen-sourced task's premise can go stale between when it was written and when it is picked up, especially for reachability/mounting claims in a codebase with this much concurrent agent activity -- re-verify the premise against live main before writing any diff, not just before merging one.
+
 - 2026-08-19 `kind-economy/t-016` — The two failure modes the task named -- under-remitting (promise broken) and double-remitting (money gone twice) -- turned out not to need any new schema or per-period tracking: because a remittance is meant to bring the running outstanding = accrued - remitted balance back to exactly zero, both collapse onto the sign of outstandingCents immediately after a remittance is logged (positive = under-remitted, negative = over-remitted/ likely duplicate, zero = reconciled). Read the existing t-010 accrual dashboard code first rather than assuming a new bucketing mechanism was needed -- the simplest correct design was already implied by the ledger shape that existed. Also caught mid-session: resolve_deps.py only edits the local working tree, it does not commit/push -- its output needs an explicit commit+PR+merge before claim_task.py will see the unblocked task on origin/main (worth remembering for any future session running it).
 
 - 2026-08-19 `davinci/t-021` — Slice 9 fixed a real focus-loss bug (chapter-swap v-if/v-else-if unmounting the clicked button with nothing restoring focus), verified against a real, named precedent (model-builder-manager.vue's identical fix) rather than inventing a pattern from scratch. Separately, this cycle demonstrated the documented "in-flight git workaround" recovery path working as intended at a new scale: a first background agent pushed the implementation commit then died mid-run (API connection lost) before opening the PR. Rather than trusting an unseen report or re-doing the work blind, the foreground session checked live GitHub state directly (list_branches/list_commits) to confirm exactly one clean commit existed on the stranded branch, then dispatched a second worktree-isolated agent with explicit instructions to independently re-verify the diff's claims (not just trust the first agent's commit message) before finishing the PR+merge. Worth generalizing: when a background agent dies mid-task after a git-mutating step already landed, the recovery move is "verify live state, then dispatch a fresh agent to independently confirm and complete" -- not "assume it succeeded" and not "discard and redo from scratch."
@@ -102,7 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-19 `kapowarr/t-038` — A provider abstraction does not by itself remove a legacy provider monopoly: database NOT NULL columns and Add-form assumptions remain product boundaries. Metron fallback was therefore shipped through its explicit ComicVine cross-links with durable Metron provenance, while native-only records were withheld from a knowingly broken Add path. Also, never follow an authenticated API's pagination URL verbatim; reconstruct the next page on the configured origin so credentials cannot cross an origin boundary.
 
-- 2026-08-19 `kapowarr/t-055` — Human-triggered bulk operations should preserve successes and return item-level failures; background jobs can keep strict exception semantics for checkpointed retries.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-19T20:36:34Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-19T20:59:39Z_
