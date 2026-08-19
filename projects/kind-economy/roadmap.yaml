@@ -179,9 +179,9 @@ tasks:
   - id: t-005
     milestone: m1
     title: "Decide how the mission third reaches AMF — structure first, mechanism second"
-    status: ready
-    owner: null
-    updated: '2026-08-19T00:00:00Z'
+    status: claimed
+    owner: worker
+    updated: '2026-08-19T07:08:01Z'
     passes: 0
     stakes: reversible
     depends_on: [t-001]
@@ -253,6 +253,8 @@ tasks:
       must not present option A as settled merely because it is elegant.
 
   # --------------------------------------------------------------- m2 LEDGER
+    claimed_by: worker-2026-08-19T07:05:00Z-t005-amf-remittance
+    claimed_at: '2026-08-19T07:08:01Z'
   - id: t-006
     milestone: m2
     title: "Split the paid token resource from free mana"
