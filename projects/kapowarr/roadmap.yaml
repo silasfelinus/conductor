@@ -946,11 +946,14 @@ tasks:
 - id: t-038
   milestone: m7
   title: Add Metron as an alternate metadata provider
-  status: not-started
-  owner: null
+  status: claimed
+  owner: worker
+  claimed_by: worker-2026-08-19T04:12:00Z-t038-metron
+  claimed_at: '2026-08-19T04:12:00Z'
+  updated: '2026-08-19'
   passes: 0
   stakes: reversible
-  note: 'Implement upstream issue #182 after the provider boundary exists. Support Metron search and volume/issue
+  note: 'Promoted and claimed at Silas''s explicit direction on 2026-08-19. Implement upstream issue #182 after the provider boundary exists. Support Metron search and volume/issue
     metadata with durable IDs and graceful fallback when ComicVine is unavailable or rate-limited rather
     than silently mixing identities.'
 - id: t-039
