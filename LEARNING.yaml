@@ -9023,3 +9023,22 @@ records:
     close-out (with the full implementation note and squash SHA) from
     another session -- resolved by keeping origin/main's roadmap content and
     both LEARNING.yaml entries side by side rather than picking one.
+- date: 2026-08-19
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Twelfth cycle of this recurring bug-hunt task. The suggested accessibility
+    lead from cycle 11 was genuinely exhausted (both target components already
+    covered or not applicable), and the fallback -- read a genuinely fresh
+    file (the store) rather than re-walking already-audited components --
+    surfaced a real sibling instance of a bug class an existing guard already
+    covered for other functions (verifyModelBuilderAutoBuildFailedSummaryGuard's
+    TARGET_FUNCTIONS list). When a guard is written against an explicit
+    function allowlist, a later cycle should periodically check whether new or
+    overlooked functions with the same shape are missing from that list,
+    rather than assuming a fixed guard covers a whole bug class permanently.
