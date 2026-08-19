@@ -9172,3 +9172,18 @@ records:
     (additive CREATE TABLE + one FK only) before merging, per this repo's financial-ledger
     convention -- the Worker's own PR body correctly left the PR unmerged for exactly that
     reason instead of assuming a non-gate_human task meant no review was needed.
+- date: 2026-08-19
+  project: kind-economy
+  task: t-009
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A new dashboard page's content/*.md frontmatter can declare background*
+    art routes that verifyPageBackdrop.ts requires a matching PageSeed entry
+    in stores/seeds/pageBackdropArtPrompts.ts for -- easy to miss in a sandbox
+    with no live DB/browser to catch the 404 directly, but caught reliably by
+    CI's contract check. Worth adding "does this page need a backdrop seed
+    entry" to the standard pre-PR checklist for any task creating a new page.
