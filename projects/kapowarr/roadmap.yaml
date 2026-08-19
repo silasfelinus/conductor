@@ -1134,3 +1134,12 @@ tasks:
     User-reported production startup failure on 2026-08-19. Database migration 48 runs after the current base schema has already created publisher_subscriptions and publisher_automation_history, then attempts unconditional CREATE TABLE statements and aborts with sqlite3.OperationalError before the application starts. Make the migration tolerate the current schema and a retry after partial execution, preserve existing pull-list data, and add an upgrade-path regression test that reproduces setup_db ordering.
 
     Merged silasfelinus/Kapowarr#58 as 6171fa296100f305a5cb37131b0198384580c3eb. Migration 48 now tolerates publisher tables already created by setup_db, and the production-order regression proves legacy pull-list data plus subscription/history rows survive. The exact old exception was reproduced locally; the patched smoke, Python 3.8-3.12, docs, PR container, and post-merge tests/docs/container publication all passed. Learning: every upgrade fixture must execute the current base schema before the historical migration handler, because that is Kapowarr's real startup order.
+- id: t-053
+  milestone: m4
+  title: Stop blocking web startup on post-migration VACUUM
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: |-
+    User-reported live follow-up on 2026-08-19. After migration 48 succeeds and database_version advances to 49, startup emits no further log and the frontend remains unreachable. The synchronous post-migration VACUUM is the only remaining database operation on that path and can block for a long time on a large library without progress output. Remove heavyweight compaction from startup, retain only bounded/cheap optimization if useful, log migration completion, and cover the post-migration operation so future schema upgrades reach the web server promptly.
