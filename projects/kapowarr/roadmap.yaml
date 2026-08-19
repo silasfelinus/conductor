@@ -891,13 +891,14 @@ tasks:
 - id: t-036
   milestone: m6
   title: Build a publisher-aware weekly release calendar and subscriptions
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
   claimed_by: 20260819T000211Z-kapowarr-t036-7f3c
   claimed_at: '2026-08-19T00:02:11Z'
-  updated: '2026-08-19T00:23:00Z'
+  updated: '2026-08-19T00:29:21Z'
+  implementation_pr: silasfelinus/Kapowarr#56
   note: |-
     User-prioritized live follow-up on 2026-08-18. Replace the current thin GetComics-only
     monitored-match table with a real weekly release catalogue: retain all releases, store
@@ -913,6 +914,10 @@ tasks:
     background manual grabs, migrations, responsive filters and pagination. Local syntax,
     JavaScript, schema and migration smoke checks pass; the full dependency-backed matrix is
     delegated to the implementation PR because package installation is unavailable in this worker.
+    Shipped in silasfelinus/Kapowarr#56, squash 69e9e68fc98080c248d881599f01df2972467fd4,
+    after container and docs builds plus the Python 3.8-3.12 matrix passed. The first matrix run
+    caught a stale helper name in a docstring; correcting it to the exported extract_issue_number
+    helper made the complete rerun green.
 - id: t-037
   milestone: m7
   title: Introduce a metadata-provider abstraction
