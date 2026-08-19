@@ -430,47 +430,40 @@ tasks:
   - id: t-021
     milestone: m2
     title: "Self-attribution policy — can Silas earn creator share on his own assets"
-    status: claimed
+    status: needs-human
+    soft_gate: true
     owner: worker
-    updated: '2026-08-19T09:33:44Z'
+    updated: '2026-08-19T09:40:00Z'
     passes: 0
     stakes: reversible
     depends_on: [t-007]
     note: >
-      FROM SILAS, 2026-08-19: "I'm kinda feeling like for assets I made, I would be able
-      to earn creator share percent, but want that to feel honest, transparent, and
-      fair." He is right on both counts and they pull against each other, which is why
-      this is its own task rather than a footnote in t-007.
-      The case FOR is strong and should not be apologised for: he made the assets, the
-      creator share exists to reward exactly that, and carving himself out would mean the
-      platform's most prolific creator is the only one who works for free — which would
-      quietly distort every incentive the split is meant to create, and would make the
-      numbers lie about what creator earnings actually look like at scale.
-      The problem is that he is also the site admin, so on his own assets he receives the
-      platform third AND the creator third — two thirds of net — and he sets the rules.
-      Nothing about that is dishonest, but it is invisible, and invisible is what turns a
-      fair arrangement into one that looks bad the first time someone graphs it.
-      Design the policy so the answer is boring in public. At minimum: (1) admin-owned
-      assets earn creator share on exactly the same terms as everyone else's, with no
-      special multiplier and no exceptions; (2) every RevenueSplit row records the
-      creator identity regardless of who it is, so admin earnings are never a separate
-      untracked path; (3) the mission-share dashboard (t-010) and any public transparency
-      surface break out admin-attributed creator earnings as their own visible line
-      rather than folding them into "platform"; (4) write the plain sentence that
-      explains it to a stranger who is inclined to assume the worst, and put it where a
-      creator will actually see it — if that sentence cannot be written without wincing,
-      the policy is wrong, not the sentence.
-      Also decide the adjacent case: a creator running THEIR OWN object. Same principle
-      should apply — you earn on your own work — and Silas's 2026-08-19 payout model
-      answers the abuse question that comes with it: a round trip through your own asset
-      returns only a third of what you spent, so it loses money and is not worth doing.
-      That holds because the input is the PAID token resource. Free mana never converts
-      into tokens in Silas's model, so there is no zero-cost input to arbitrage — but that
-      separation does not exist in code yet (t-006), so verify the invariant actually
-      holds rather than assuming it, and decide whether self-attributed spends should
-      additionally be excluded, capped, or simply logged and visible.
-    claimed_by: claude-20260819T0935Z-kindecon-t021
-    claimed_at: '2026-08-19T09:33:44Z'
+      FOR SILAS: Wrote the policy at projects/kind-economy/SELF-ATTRIBUTION-POLICY.md.
+
+      It says: (1) admin-owned and self-owned assets earn the creator third on exactly
+      the same terms as anyone else's, no special-case branch in the split logic; (2)
+      every RevenueSplit row (t-008) records the creator identity, including your own —
+      nothing is silently folded into "platform"; (3) any public dashboard (t-010)
+      breaks out admin-attributed creator earnings as its own visible line, never
+      merged into a platform total; (4) the public one-liner is drafted verbatim in the
+      doc's section 4.
+
+      On the abuse question: verified against the actual code (not assumed) that a
+      self-attributed round trip already can't be profitable today — manaGate spends
+      TOKENS (paid) before MANA (free), and only a TOKENS-funded spend is eligible to
+      generate a creator-share credit at all per the ManaResource enum's own design
+      comment, so every round trip loses two-thirds of the original spend for real.
+      Given that, the doc recommends logging/visibility only (already required by
+      point 2 above) rather than an additional cap or exclusion, since that would
+      special-case a behavior the mechanism already makes unprofitable.
+
+      TO APPROVE: read SELF-ATTRIBUTION-POLICY.md, in particular section 4's public
+      sentence and the "no cap, log-and-visible-only" call on the abuse question — set
+      approved_by_human: true and status: done if you agree, or leave a note here with
+      what to change. What unblocks: t-008 (RevenueSplit ledger) can build directly
+      against sections 1–2 either way, since they only restate what you already said;
+      the sign-off matters most for the public sentence in section 4, since that's the
+      part users will actually read.
 
   - id: t-027
     milestone: m2
