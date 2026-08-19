@@ -447,6 +447,70 @@ tasks:
       holds rather than assuming it, and decide whether self-attributed spends should
       additionally be excluded, capped, or simply logged and visible.
 
+  - id: t-027
+    milestone: m2
+    title: "Close the metering gaps — every paid-resource generation charges"
+    status: ready
+    owner: null
+    updated: '2026-08-19T00:00:00Z'
+    passes: 0
+    stakes: reversible
+    note: >
+      FROM SILAS, 2026-08-19: "any time a user (non admin and non-family) use our llm
+      services or comfy, it should cost mana or tokens, and they should be prompted if
+      it's a token purchase, obviously. If they are using the site with their own api
+      keys or comfy/sd url, then that's cool, no mana expended."
+
+      AUDIT ALREADY DONE (2026-08-19). Good news first: coverage is much better than it
+      looks from a naive grep. 25 generation endpoints are metered, via manaGate directly
+      or through one of its wrappers — authAndGate (comfyGate.ts), authAndTextGate and
+      withTextMana (textGate.ts), withArtMana (generationMana.ts), chargeForGeneration
+      (charge.ts). Anyone re-running this audit should derive that wrapper list from
+      what actually reaches manaGate rather than grepping for manaGate by name; three
+      separate passes produced false positives here before the wrapper set was complete,
+      including on art/generate.post.ts, which does charge (via withArtMana) but names
+      neither manaGate nor chargeForGeneration anywhere in the file.
+
+      TWO GENUINE GAPS, both authenticated but free:
+      (1) server/api/characters/generate.ts — validates an API key, then calls
+          https://api.openai.com/v1/chat/completions using the SERVER's OPENAI_API_KEY
+          with no gate of any kind. Any user holding a valid token can spend Silas's
+          OpenAI budget without spending anything of their own. This is precisely the
+          case his instruction describes and it is the highest-value fix in this task.
+      (2) server/api/comfy/test/generate.post.ts — requireMachineUser (any authenticated
+          user or server key, NOT admin-only), then runComfySmokeGeneration against a
+          resolved comfy server. Named "test", but it is a real generation path on real
+          hardware reachable by any authenticated user. Either gate it like its siblings
+          or restrict it to admin/server-key; decide which, do not leave it as is.
+
+      CONFIRMED NOT GAPS, recorded so a later pass does not re-flag them: the
+      art/queue/* family (claim, complete, edit, reenqueue, reenqueue-failed,
+      trainer-redo) is queue management, charged at enqueue, and the re-run routes are
+      already admin/server-key gated; art/sd/currentModel, comfy/prompt/[promptId],
+      comfy/test/info, server/heartbeat and server/uptime are read-only or infra;
+      botcafe/amibot.ts is a 16-line static response.
+
+      THE EXEMPTION LOGIC ALREADY EXISTS and matches what Silas asked for — do not
+      rebuild it. manaGate's isFreeGeneration() already exempts admins, the FAMILY role
+      (reading the COMPLETE role set, not just User.Role, so a secondary FAMILY grant is
+      honored), and own-resource use via useOwnResource/serverId. chargeForGeneration
+      logs BYOK and local plans at zero cost for visibility rather than skipping the
+      ledger entry. The fix for both gaps is to route them through the existing gate,
+      not to write new exemption logic.
+
+      ALSO IN SCOPE: the purchase prompt. Silas asked that users "be prompted if it's a
+      token purchase, obviously" — verify the client actually surfaces an affordable
+      prompt-to-buy when a gate rejects for insufficient balance rather than failing with
+      a bare error. manaGate throws 402 INSUFFICIENT_MANA (server/utils/mana.ts); check
+      what the front end does with that today and make it a real prompt if it does not.
+
+      REGRESSION GUARD, so this cannot silently regress: add a contract test that
+      enumerates every server/api route reaching an LLM or comfy/diffusion host and
+      asserts each one either reaches a gate wrapper or appears on an explicit,
+      commented allowlist. The repo already uses this pattern (verify*Guard.ts +
+      self-test wired into package.json and contract-tests.yml). A new unmetered
+      endpoint should fail CI rather than be discovered by another manual audit.
+
   # ---------------------------------------------------------- m3 LIVE STRIPE
   - id: t-011
     milestone: m3
@@ -485,6 +549,18 @@ tasks:
     passes: 0
     stakes: reversible
     note: >
+      WHERE THE SECRETS ACTUALLY GO (established 2026-08-19): kind_robots deploys as a
+      self-hosted Docker Compose stack, not a PaaS. docker-compose.yml gives both the
+      `migrate` and `kind-robots` services `env_file: ${KIND_ROBOTS_ENV_FILE:-.env}`, so
+      every runtime secret comes from a single `.env` beside docker-compose.yml on the
+      host, and `.env*` is gitignored. Deploying is `docker compose pull && docker compose
+      up -d`. Note the Stripe routes read `process.env.STRIPE_SECRET_KEY` DIRECTLY rather
+      than through nuxt.config's runtimeConfig block (which covers openaiApiKey,
+      anthropicApiKey, githubToken, brevoApiKey and friends but names no Stripe key at
+      all). That works — Nitro server routes can read process.env at runtime — but it is
+      an inconsistency worth either documenting or normalizing, and it is why grepping
+      runtimeConfig for Stripe config finds nothing and looks alarming.
+
       kind_robots has no .env.example, so every required payment secret is currently
       tribal knowledge discoverable only by grepping process.env. Produce the documented
       list — STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, STRIPE_PRICE_ID, plus the
