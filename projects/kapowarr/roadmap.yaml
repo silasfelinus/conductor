@@ -38,7 +38,7 @@ milestones:
 - id: m7
   title: METADATA — reduce ComicVine dependence and preserve portable identity
   weight: 20
-  status: not-started
+  status: done
 - id: m8
   title: SOURCES — broaden lawful discovery and acquisition options
   weight: 15
@@ -957,13 +957,31 @@ tasks:
 - id: t-039
   milestone: m7
   title: Use and export portable comic metadata
-  status: not-started
+  status: done
   owner: null
   passes: 0
   stakes: reversible
   note: 'Expand local-metadata awareness into deliberate ComicInfo.xml and compatible series metadata
     import/export. Incorporate upstream issues #139 and #50 so imported files can identify themselves
-    and managed archives retain useful metadata outside Kapowarr.'
+    and managed archives retain useful metadata outside Kapowarr.
+
+
+    Use (import) side already covered: Continuous Auto-Import (t-019/#19) uses safe folder-local
+    series.json or compatible metadata.json ComicVine IDs when filename or same-folder evidence agrees.
+    Export side shipped in silasfelinus/Kapowarr#79, merged as cbad1158eb4308961aa9b6e337ddf3cd3bf58a9e
+    (reviewer pr-medic pass, 2026-08-19). Generates conservative Mylar-compatible series.json 1.0.2
+    metadata for a managed volume; fills only evidence Kapowarr actually knows and never relabels a
+    Metron ID as ComicVine. Preserves an existing series.json by default (existing_preserved), uses
+    exclusive filesystem creation so a concurrent third-party file cannot be clobbered, and explicit
+    overwrite uses same-folder temp-write + atomic replace. Successful materialization is re-scanned so
+    series.json becomes ordinary volume metadata. Does not mutate CBZ/CBR/RAR archives. PR opened with
+    one real test failure (test_existing_series_json_is_preserved_by_default: write_series_json()
+    called serialized_series_json() unconditionally before checking whether the existing file should be
+    preserved) -- fixed by moving the exists()-and-not-overwrite check ahead of serialization; all 445
+    backend unittest cases plus the 4 frontend node --test cases pass post-fix, all 7 CI checks green.
+    Archive-level ComicInfo mutation and a General Files preview/create UI affordance remain deliberately
+    out of scope per the PR''s own "Roadmap" section -- file as a follow-on task if wanted, not implied
+    by this closure.'
 - id: t-040
   milestone: m8
   title: Add an Anna's Archive source adapter
