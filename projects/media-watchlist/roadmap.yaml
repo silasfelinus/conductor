@@ -376,32 +376,12 @@ tasks:
 - id: t-017
   milestone: m3
   title: Decide whether BROWSE-UX.md v1 is complete and this recurring polish task should retire, or write a v2 addendum
-  status: claimed
+  status: needs-human
   owner: worker
   passes: 0
   stakes: reversible
-  note: >-
-    Kaizen from t-006 (kind_robots PR #1936, 2026-08-18). A full §1-§5 re-audit
-    of BROWSE-UX.md against the live watchlist components found every spec item
-    already built (search, all filters, all sort modes, full Stats view incl.
-    year-over-year, CSV export, review editor with auto-save/publish, related
-    entries, external links, rating, and now rewatch). The only two items ever
-    left open across ~10 prior cycles are outside agent control: step (1)
-    dashboard-tab/tutorial art (art-generation relay dependent) and step (3)
-    liveUrl/channelKey/tabKey (already resolved directly in the 2026-08-14
-    cycle -- conductor's own stale project-overrides.yaml fields, not an
-    admin action). Continuing to pick this task up each cycle risks agents
-    inventing marginal UI additions just to show activity (the rewatch slice
-    this cycle was real but genuinely small, and future slices will likely
-    have diminishing value against a fully-implemented v1 spec). Next cycle
-    that reaches this task: either (a) write a BROWSE-UX-v2.md addendum with
-    real new scope (e.g. image covers, explicitly deferred at MVP; a
-    recommendations surface; social features) if there's a real product
-    direction to pursue, or (b) flip t-006 to done and stop treating this
-    project as a standing recurring polish task, converting any remaining art
-    backlog into a one-off task instead. This is a scope/product-direction
-    call, not a pure software slice -- flag for Silas if genuinely unsure
-    rather than guessing.
-  updated: '2026-08-19T19:49:53Z'
+  note: 'FOR SILAS: media-watchlist/t-017 asks whether the BROWSE-UX.md v1 recurring polish task (t-006) should retire or get a v2 addendum. Re-confirmed this cycle: every BROWSE-UX.md v1 spec item is already built on the live site (search, all filters, all sort modes, full Stats view, CSV export, review editor with auto-save/publish, related entries, external links, rating, rewatch) -- nothing left in v1 scope. The only two items ever open across ~10 prior cycles are outside agent control: dashboard-tab/tutorial art (art-generation relay dependent, already queued) and liveUrl/channelKey/tabKey placement (already resolved in a prior cycle, not an admin action). TO APPROVE: pick one -- (a) if you have a real v2 direction in mind (image covers, a recommendations surface, social features, etc.), say so and the next Worker cycle will write BROWSE-UX-v2.md and re-open t-006 against it; (b) if not, reply here or edit the roadmap to flip t-006 to status: done and stop treating media-watchlist as a standing recurring polish task -- any remaining art-relay backlog becomes a one-off task instead of recurring churn. What unblocks: whichever you pick, the next cycle stops guessing at marginal filler UI for a project that is, by its own spec, already complete.'
+  updated: '2026-08-19T19:50:17Z'
   claimed_by: 20260819T194500Z-watchlist-t017-sched
   claimed_at: '2026-08-19T19:49:53Z'
+  soft_gate: true
