@@ -1122,14 +1122,15 @@ tasks:
 - id: t-052
   milestone: m6
   title: Make the weekly-calendar database migration restart-safe
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
   claimed_by: 20260819T010200Z-kapowarr-t052-c14a
   claimed_at: '2026-08-19T01:02:00Z'
-  updated: '2026-08-19T01:07:00Z'
+  updated: '2026-08-19T01:12:00Z'
+  implementation_pr: silasfelinus/Kapowarr#58
   note: |-
     User-reported production startup failure on 2026-08-19. Database migration 48 runs after the current base schema has already created publisher_subscriptions and publisher_automation_history, then attempts unconditional CREATE TABLE statements and aborts with sqlite3.OperationalError before the application starts. Make the migration tolerate the current schema and a retry after partial execution, preserve existing pull-list data, and add an upgrade-path regression test that reproduces setup_db ordering.
 
-    Review handoff: worker/kapowarr-t-052-calendar-migration makes both publisher table creates idempotent and adds an exact production-order SQLite upgrade fixture. The old migration reproduces the reported exception; the patched migration preserves pull-list, subscription, and automation-history rows. Local AST/compile/diff checks and the standalone migration smoke pass; dependency-backed tests require CI.
+    Merged silasfelinus/Kapowarr#58 as 6171fa296100f305a5cb37131b0198384580c3eb. Migration 48 now tolerates publisher tables already created by setup_db, and the production-order regression proves legacy pull-list data plus subscription/history rows survive. The exact old exception was reproduced locally; the patched smoke, Python 3.8-3.12, docs, PR container, and post-merge tests/docs/container publication all passed. Learning: every upgrade fixture must execute the current base schema before the historical migration handler, because that is Kapowarr's real startup order.
