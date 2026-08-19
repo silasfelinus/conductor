@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-19T00:45:53Z
+Generated: 2026-08-19T00:50:24Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **682**
-- Outcomes: blocked: 15, cancelled: 1, done: 666
+- Closed tasks recorded: **683**
+- Outcomes: blocked: 15, cancelled: 1, done: 667
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
 | interface-vision | 83 | 100% |
-| kapowarr | 30 | 100% |
+| kapowarr | 31 | 100% |
 | kind-robots | 50 | 98% |
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
@@ -63,7 +63,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 666 | 99% |
+| software | 667 | 99% |
 
 ## Failure categories
 
@@ -84,6 +84,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-19 `kapowarr/t-036` — check_pr_merged_drift.py's gh-search fallback 403'd in this sandbox, but the GitHub MCP pull_request_read "get" method (as opposed to list_pull_requests, which reported merged:false for the same closed PR) confirmed silasfelinus/Kapowarr#56 was in fact merged directly by Silas. When the drift script can't verify a candidate via its own HTTP path, cross-check the single-PR MCP get method before treating it as unresolved -- the list endpoint's merged field is not reliable evidence on its own. Concurrent race note: by the time this reconciliation PR reached CI, origin/main had already picked up the same task's real close-out (with the full implementation note and squash SHA) from another session -- resolved by keeping origin/main's roadmap content and both LEARNING.yaml entries side by side rather than picking one.
+
 - 2026-08-19 `kapowarr/t-036` — When matching release issue numbers, verify the exported helper name rather than trusting its stale docstring example; the dependency-backed import matrix catches this immediately.
 - 2026-08-18 `kapowarr/t-047` — Scheduled tasks must record failure outcomes before leaving the queue, and scraped sources require live markup verification.
 - 2026-08-18 `brainstorm/t-018` — A persona-recovery task with an open-ended "add flavor" instruction doesn't require inventing anything -- audit the live database first. The real, already-generated Brainbot Bot record (art, tagline, voice) sitting unused was a stronger fit than restoring a legacy gitignored asset or a stale seed-script record that never populated production. When multiple candidate sources of truth exist (a seed file, a content .md, a live DB record), the live DB record wins if it actually satisfies the ask -- verify what's live via the site's own API rather than trusting the most convenient-looking file in the repo.
@@ -97,7 +99,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-18 `alexa-integration/t-015` — This project's recurring self-audit of serendipityVoiceStore.ts has now found three distinct bug shapes across four cycles: false acknowledgements from action/target mismatches (t-015/t-020), missing error-reporting regression coverage (t-021), and this cycle's missing acknowledgement on an otherwise-correct success path (applyArtCommand() never called postAck() at all, so a fully successful voice-driven art draft got no spoken confirmation back through the relay -- the mirror image of the false-success bugs, not a repeat of them). Comparing each dispatch function against its siblings for a missing behavior, not just a wrong one, is what surfaced it. Also reconfirmed the appmaker/t-012 lesson from 2026-08-16: a single CI job failing with a live 502 to kindrobots.org (this time in the Comment Migration Contract workflow, hitting /api/bots on rerun after /api/characters on the first try) is a transient, diff-unrelated production flake -- confirmed directly via curl against the live host before merging past it, rather than assuming or guessing.
 - 2026-08-18 `storybook/t-010` — isolation:'worktree' stops a background agent from colliding on shared LOCAL git state, but does nothing to stop it from colliding with a dispatching session that starts fixing the SAME remote PR directly (e.g. after the agent's final report looked stuck/garbled) -- both sides independently diagnosed and fixed the identical CI failure and both called merge; GitHub's idempotent merge meant no harm this time, but a session should stop the agent or wait for its real completion before touching a PR it's still delegated, not race it.
 - 2026-08-18 `model-builder/t-029` — A background agent that spawns its own Monitor and then reports back only "still waiting on it" (never a real final summary) is a distinct failure mode from prior background-agent guidance -- don't wait on it indefinitely; check GitHub directly (PR/branch/CI state) the same way you'd verify any other agent's self-report, since the agent's actual work product (the PR) can be sound even when its wrap-up communication isn't.
-- 2026-08-18 `kapowarr/t-033` — A claim past CLAIM_TTL_MINUTES isn't automatically scratch work -- read the stale branch's actual diff before reclaiming; a small-but-sound partial scaffold (this one: a backend query + route registration, no UI/tests yet) is worth resuming on top of, not discarding and reimplementing from zero.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-19T00:45:53Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-19T00:50:24Z_
