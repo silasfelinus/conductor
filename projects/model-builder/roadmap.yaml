@@ -575,16 +575,16 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#1951'
     note: 'Fifteenth model-builder/t-029 cycle 2026-08-19. Delegated to a worktree-isolated background agent. Cycle 14 suggested auditing model-builder-batch-editor.vue, model-builder-progress-matrix.vue, model-builder-recipe-selector.vue, and model-builder-source-picker.vue for focus-management/keyboard-navigation gaps. That audit plus a fresh read of modelBuilderStore.ts found the store and those four components exceptionally hardened already -- every race/staleness scenario traced already has an explicit guard. The genuine bug found was one level down from cycle 14''s own fix: model-builder-manager.vue swaps its <main> content between the three wizard steps via a plain v-if/v-else-if chain, and several buttons *inside* the currently-displayed step (progress-matrix "New run", recipe-selector "Change source", source-picker''s source-record buttons) change store.step, unmounting the very button that was clicked with nothing moving focus anywhere -- keyboard/screen-reader users dropped to <body> and had to tab in from the top of the page again. Fix: gave <main> a template ref + tabindex="-1" and a watch(() => store.step, ...) that checks whether the control that changed the step was itself inside <main> (vs. the header crumb nav, which lives outside <main> and never unmounts, so must stay untouched) before refocusing <main> once the new step renders -- distinguishing the two shapes so the header crumb-click case is left alone. Added verifyModelBuilderStepContentFocusGuard.ts + self-test, wired into package.json/contract-tests.yml. Verified: vue-tsc --noEmit clean repo-wide, eslint/prettier clean on touched files, all 95 test:model-builder-* npm scripts pass (93 prior + 2 new), git-stash round trip confirms the new guard fails against the pre-fix component (all 5 checks) and passes clean post-fix. Opened kind_robots PR #1951 (5 files, +392/-1); the delegated agent''s own final report degenerated into a stall message after opening the PR rather than confirming CI, so a separate background agent was dispatched purely to poll check-runs via GitHub MCP and merge once green -- confirmed 30/31 checks green (only the standard non-required "Build production image" deploy job still in progress, matching every prior cycle''s documented precedent), squash-merged 9e3b1f14. Verified independently: pulled PR #1951 directly via GitHub MCP (merged: true, file list/diff matches the implementing agent''s self-report exactly). Kaizen note: the implementing agent''s final message this cycle was a stall ("I''ll stop issuing filler commands now and wait for the monitor''s next event before continuing") despite an explicit anti-stall instruction in its dispatch prompt and having already pushed real work -- worth tightening future dispatch prompts to more explicitly forbid ending on any variant of a "waiting" message, not just the specific phrasing used before. Suggested next lead for a future cycle: the manager shell''s two focus-restoration gaps (run-history panel, wizard step content) are both closed now -- a future cycle should look at the remaining four components'' own internal interactive elements (e.g. modals, expandable sections, drag-and-drop) for similar focus-loss gaps, or pivot to a different UX dimension (loading-state announcements, error-message association) if none are found.'
     owner: worker
-    claimed_by: 20260819T022842Z-modelbuilder-t029-c15
-    claimed_at: '2026-08-19T02:28:43Z'
-    updated: '2026-08-19T02:53:04Z'
+    claimed_by: 20260819T032836Z-modelbuilder-t029-c16
+    claimed_at: '2026-08-19T03:28:37Z'
+    updated: '2026-08-19T03:28:37Z'
 
   - id: t-030
     milestone: m6
