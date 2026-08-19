@@ -250,7 +250,7 @@ tasks:
   recurring: true
   passes: 0
   stakes: reversible
-  updated: '2026-08-18T10:58:00Z'
+  updated: '2026-08-19T09:35:00Z'
   note: |-
     DAILY/PROGRESS-GATED CONTRACT (Silas, 2026-08-03): watch
     `projects/mermaids-of-venice/manuscript/Mermaids of Venice v3.doc`. At most
@@ -272,6 +272,11 @@ tasks:
     after either a successful batch or a verified no-op.
 
     Prepared the first progress-gated character-review batch for manuscript blob 11d896012566c53853d935c8f7fb31387d240f25 using AMI, the Old Komodo, and Squiddy Coltrane.
+
+    NO-OP 2026-08-19: `git hash-object` on the current manuscript file is
+    11d896012566c53853d935c8f7fb31387d240f25, identical to state.yaml's recorded
+    last_successful_review.source_blob (2026-08-04) — the manuscript hasn't changed
+    since the last batch. Per contract, produced no review file. Re-armed to `ready`.
 
     Merged PR #1673 with three progress-gated character reviews for manuscript blob 11d896012566c53853d935c8f7fb31387d240f25 and recorded reviewer history for AMI, the Old Komodo, and Squiddy Coltrane.
 
