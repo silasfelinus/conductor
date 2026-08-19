@@ -361,9 +361,9 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Write the immutable RevenueSplit ledger"
-    status: ready
-    owner: null
-    updated: '2026-08-19T00:00:00Z'
+    status: claimed
+    owner: worker
+    updated: '2026-08-19T10:30:15Z'
     passes: 0
     stakes: reversible
     depends_on: [t-006, t-007]
@@ -388,6 +388,8 @@ tasks:
       produce a zero or negative-margin row that is handled explicitly, not a negative
       creator share. Keep the 1/3-1/3-1/3 ratio behind one named constant so a future
       change to the percentages is a one-line edit.
+    claimed_by: claude-20260819T1027Z-kindecon-t008
+    claimed_at: '2026-08-19T10:30:15Z'
 
   - id: t-009
     milestone: m2
