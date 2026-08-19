@@ -1209,14 +1209,19 @@ tasks:
   title: Make Metron a fully native metadata identity
   status: review
   owner: worker
-  passes: 0
+  passes: 1
   stakes: reversible
-  claimed_by: worker-2026-08-19T06:35:00Z-t056-metron-native-resume
-  claimed_at: '2026-08-19T06:27:43Z'
-  updated: '2026-08-19T06:29:42Z'
+  claimed_by: worker-2026-08-19T04:31:00Z-t056-metron-native
+  claimed_at: '2026-08-19T04:31:00Z'
+  updated: '2026-08-19T06:43:47Z'
   note: |-
     Silas explicitly requested the reasonable completion of Metron support after t-038 shipped safe
     ComicVine-linked fallback. Remove the remaining legacy requirement that every volume and issue have a
     ComicVine ID; allow Metron-native search results to preview, add, refresh, and retain durable provider
     identities; keep old API fields nullable for compatibility; make migration 50 restart-safe and
     data-preserving; and keep the existing minimalist, image-forward Add Volume workflow.
+    Implementation is ready for review on the Kapowarr feature branch. It also runs configured provider
+    searches concurrently, follows Metron's current list/detail efficiency guidance, and supports its
+    recommended bearer-token authentication without removing Basic auth. Local verification passed 393
+    tests, a fresh database-version-51 startup smoke test, mypy on all touched Python sources, import-order
+    checks, JavaScript syntax checks, and whitespace validation.
