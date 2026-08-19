@@ -9150,3 +9150,25 @@ records:
     recorded but not decided) handled exactly as the task note specified rather than guessed
     at. Reviewed the actual diff (schema, migration.sql, manaAttribution.ts, manaGate.ts wiring)
     rather than trusting the PR description alone.
+- date: 2026-08-19
+  project: kind-economy
+  task: t-008
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Clean first-pass Worker output on a genuinely ambiguous accounting task: the roadmap note
+    left two real judgment calls open (a documented rounding rule for the 3-way split, and how
+    to treat a per-transaction payment-processing fee when tokens are purchased in batches but
+    spent fungibly later) and the Worker resolved both with a named constant, an inline
+    rationale, and a 20,000-iteration property test proving the sum-to-gross invariant holds
+    exactly including negative-margin rows -- rather than picking a plausible number and moving
+    on. It also independently re-verified the task note's own claim ("costUsd is never
+    reconciled against real billing") by grepping every gate.commit() call site itself instead
+    of taking the note at face value, and surfaced it as a flagged follow-up rather than baking
+    a false assumption into the schema doc comments. Reviewed the migration.sql line-by-line
+    (additive CREATE TABLE + one FK only) before merging, per this repo's financial-ledger
+    convention -- the Worker's own PR body correctly left the PR unmerged for exactly that
+    reason instead of assuming a non-gate_human task meant no review was needed.
