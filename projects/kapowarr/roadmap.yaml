@@ -1183,7 +1183,7 @@ tasks:
 - id: t-055
   milestone: m4
   title: Make Review Holds imports resumable and actionable
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -1197,3 +1197,9 @@ tasks:
     payloads, isolate recoverable per-volume failures so successful rows remain imported, return concise
     path-specific results/errors, reconcile completed review rows, and leave failed rows selected for retry.
     Do not reset the long-running saved job or discard existing review decisions.
+
+    Merged silasfelinus/Kapowarr#62 as 8f58cffbe0b1c2430b09540b4309df83d79e90b6.
+    The manual endpoint now continues per volume and returns imported/skipped/failed details; successful
+    rows disappear while attention rows remain selected with a concise reason. Background retry semantics,
+    saved checkpoints, and existing review decisions remain unchanged. Local verification passed 383 tests,
+    mypy and JavaScript syntax; Python 3.8-3.12, docs, PR container and post-merge publication all passed.
