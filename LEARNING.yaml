@@ -9235,3 +9235,24 @@ records:
     the local working tree, it does not commit/push -- its output needs an
     explicit commit+PR+merge before claim_task.py will see the unblocked task
     on origin/main (worth remembering for any future session running it).
+- date: 2026-08-19
+  project: brainstorm
+  task: t-024
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    The task's own "scope check first" step is what caught this: before
+    building any UI, re-verified whether bot-gallery.vue was actually
+    unmounted as the t-018 kaizen note claimed, and found the claim already
+    false on current main -- content/bots.md -> bot-manager.vue ->
+    bot-interact.vue -> bot-gallery.vue is a complete, CI-verified
+    (test:route-gallery-contract) mount chain reachable via the play
+    channel's normal nav, not just a direct URL. Closed with no code change
+    and no kind_robots PR. Worth generalizing: a kaizen-sourced task's
+    premise can go stale between when it was written and when it is picked
+    up, especially for reachability/mounting claims in a codebase with this
+    much concurrent agent activity -- re-verify the premise against live
+    main before writing any diff, not just before merging one.
