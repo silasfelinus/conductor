@@ -332,26 +332,29 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Attribute each chargeable generation to the creator whose object seeded it"
-    status: claimed
+    status: review
     owner: worker
     updated: '2026-08-19T08:28:10Z'
     passes: 0
     stakes: reversible
     depends_on: [t-006]
     note: >
-      applyMana()'s refId is free text and carries no creator identity, so "the creator
-      of the web object that inspired the interaction" cannot be identified at spend
-      time. First inventory which object types can seed a paid interaction and who owns
-      each (Scenario, Bot, Character, Facet, Pitch, art/Media, packs — check what
-      actually has a userId owner in prisma/schema.prisma and what the generation entry
-      points actually receive). Then thread structured attribution — source type, source
-      id, resolved creator user id — from the generation entry points through manaGate
-      and chargeForGeneration onto the spend record. Define and document the fallback
-      when there is no creator (a user generating from scratch, an admin/system object,
-      a deleted account): the brief's assumption is that the creator share falls to the
-      mission rather than to the platform, but confirm that in the design and state it
-      in the note. Self-attribution (a creator running their own object) must be handled
-      explicitly, not accidentally.
+      Inventoried nine seedable types with a plain owning/creating user: Bot, Character,
+      Facet, Scenario, PitchSheet, ArtImage, Pack (ownerId), Reward, Dream. Implemented as
+      server/utils/manaAttribution.ts's OWNER_LOOKUP registry + resolveManaAttribution(),
+      threaded through manaGate and chargeForGeneration onto four new additive
+      ManaTransaction columns (sourceType/sourceId/creatorUserId/isSelfAttribution).
+      FALLBACK (confirmed per this note's own instruction): a null creatorUserId (no
+      source, unresolvable, or system/deleted-owned) means the creator third of any
+      future RevenueSplit (t-008) falls through to the mission share, never the
+      platform — this task only records that fact, t-008 computes/credits it.
+      SELF-ATTRIBUTION: recorded explicitly via isSelfAttribution, decided by neither
+      this task nor t-008 — t-021 (Self-attribution policy) owns that call; t-008 must
+      check the flag before crediting EARNED tokens on such a row. Wired two entry
+      points with a real identifiable seed object today (brainstorm/generate.post.ts's
+      existing BrainstormSourceRef; characters/generate.ts's Character upgrade path) —
+      every other generation route has no single seed object yet, so passing no source
+      there is correct, not unfinished scope. PR: silasfelinus/kind_robots#1959.
     claimed_by: claude-20260819T082810Z-kindecon-t007
     claimed_at: '2026-08-19T08:28:10Z'
 
