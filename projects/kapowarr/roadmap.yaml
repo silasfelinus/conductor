@@ -946,16 +946,14 @@ tasks:
 - id: t-038
   milestone: m7
   title: Add Metron as an alternate metadata provider
-  status: review
+  status: done
   owner: worker
   claimed_by: worker-2026-08-19T04:12:00Z-t038-metron
   claimed_at: '2026-08-19T04:12:00Z'
-  updated: '2026-08-19T04:22:00Z'
+  updated: '2026-08-19T04:21:00Z'
   passes: 0
   stakes: reversible
-  note: 'Promoted and claimed at Silas''s explicit direction on 2026-08-19. Implementation is on worker/kapowarr-t-038-metron. Implement upstream issue #182 after the provider boundary exists. Support Metron search and volume/issue
-    metadata with durable IDs and graceful fallback when ComicVine is unavailable or rate-limited rather
-    than silently mixing identities.'
+  note: 'Merged silasfelinus/Kapowarr#63 as 3d32cf72a4dfa4065e61cf2aa1225be5ec926c89. Metron is available as an optional Basic-auth provider and safely handles search, volume, issue, cover, and incomplete-batch fallback through explicit ComicVine cross-links while preserving durable Metron provenance. Native-only Metron additions remain intentionally gated by the legacy NOT NULL ComicVine columns instead of surfacing broken Add actions. Local verification passed 386 tests, mypy across 116 source files, touched-file import formatting and JavaScript syntax; PR and post-merge tests/docs/container publication all passed.'
 - id: t-039
   milestone: m7
   title: Use and export portable comic metadata
