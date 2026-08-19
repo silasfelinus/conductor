@@ -847,40 +847,16 @@ tasks:
   - id: t-025
     milestone: m5
     title: "Build the labelled-AI social content pipeline (draft-only, human-approved)"
-    status: claimed
+    status: done
     owner: worker
-    updated: '2026-08-19T12:34:25Z'
+    updated: '2026-08-19T13:04:14Z'
     passes: 0
     stakes: reversible
     depends_on: [t-024]
-    note: >
-      FROM SILAS, 2026-08-19: "I originally had so many ideas about generating social
-      media personalities for Amibot to create posts/tweets, etc to raise money. I was
-      dissuaded because of the significant amount of pushback against ai. This should be
-      done responsibly, but wiring up a route for our daily agent work to create content,
-      clearly marked as ai, to the various popular sites, working towards fund raising."
-      The instinct to do it responsibly is the thing that makes it viable, so build the
-      guardrails into the architecture rather than into a policy document nobody reads.
-      HARD DESIGN RULES: (1) AMI posts AS AMI. A clearly-labelled AI character with a
-      stated purpose is defensible and on-brand; a synthetic persona presenting as a
-      human being is not, and would deserve every bit of the backlash it got. Never build
-      the second thing, and do not build a system that could become it by changing a
-      config value. (2) DRAFT-ONLY IN V1. The pipeline generates and queues; a human
-      approves before anything posts. Full automation is a separate, later, gated
-      decision, not a v1 default — the failure mode of an unattended AI account posting
-      for a charity is reputational and irreversible in a way no CI check catches.
-      (3) Disclosure on every item, using each platform's native AI label where t-024
-      found one. (4) A volume ceiling, because the fastest way to be read as spam is to
-      behave like it, and a charity that spams has spent its credibility on nothing.
-      There is real raw material already: the daily dream/digest cycle produces genuine
-      generated art and writing every day, which is far better source content than
-      anything written to be promotional. Wire that in as the feed. Every post should be
-      able to justify itself as worth someone's attention even to a reader who does not
-      donate and does not like AI.
-      Build the queue, the labelling, the approval surface, and the volume limits. Do NOT
-      connect a live account or post anything — that is t-026's gate.
+    note: 'Draft-only, human-approved labelled-AI social content pipeline, merged kind_robots#1965. SocialPostDraft model with a structurally NOT NULL disclosureLabel (populated by a parameter-less pure function -- no code path can omit it), a three-value status enum (DRAFT/APPROVED/REJECTED, no POSTED value anywhere), a server-enforced 3-per-platform-per-day approval ceiling (429 past it, not just a UI hint), sourced from existing daily-dream/digest output. v1 ships Bluesky + Instagram only; Mastodon deliberately excluded (community standards prohibit AI-primary accounts), X/TikTok deferred to their own gated tasks. Zero live platform API calls, stored credentials, or outbound requests anywhere in the diff -- verified directly. Resolved a real schema.prisma merge conflict against t-010 (concurrent PR, same insertion point) by hand: kept both new models, regenerated the Prisma client via prisma generate rather than hand-merging generated output, reverted an unrelated prisma-format side effect on two untouched schema files before committing.'
     claimed_by: claude-20260819T122808Z-t025
     claimed_at: '2026-08-19T12:34:25Z'
+    implementation_pr: 'silasfelinus/kind_robots#1965'
 
   - id: t-026
     milestone: m5
