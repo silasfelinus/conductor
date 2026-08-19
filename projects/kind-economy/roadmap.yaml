@@ -467,9 +467,9 @@ tasks:
   - id: t-027
     milestone: m2
     title: "Close the metering gaps — every paid-resource generation charges"
-    status: review
+    status: done
     owner: worker
-    updated: '2026-08-19T07:27:47Z'
+    updated: '2026-08-19T07:41:13Z'
     passes: 0
     stakes: reversible
     note: >
@@ -531,6 +531,7 @@ tasks:
   # ---------------------------------------------------------- m3 LIVE STRIPE
     claimed_by: worker-2026-08-19T07:30:00Z-t027-metering-gaps
     claimed_at: '2026-08-19T07:27:47Z'
+    implementation_pr: 'silasfelinus/kind_robots#1955'
   - id: t-011
     milestone: m3
     title: "Run the Stripe checkout/webhook/fulfillment matrix end-to-end in TEST mode"
