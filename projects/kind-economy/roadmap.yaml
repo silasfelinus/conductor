@@ -179,9 +179,9 @@ tasks:
   - id: t-005
     milestone: m1
     title: "Decide how the mission third reaches AMF — structure first, mechanism second"
-    status: claimed
+    status: done
     owner: worker
-    updated: '2026-08-19T07:08:01Z'
+    updated: '2026-08-19T07:11:03Z'
     passes: 0
     stakes: reversible
     depends_on: [t-001]
@@ -251,6 +251,21 @@ tasks:
       NOT LEGAL OR TAX ADVICE — general rules from public sources. The recommendation must
       say plainly that a CPA confirms the structure before anything is built on it, and
       must not present option A as settled merely because it is elegant.
+
+      RESEARCH WRITTEN 2026-08-19 to projects/kind-economy/research/remittance-options.md.
+      Recommendation: Option A (Every.org, not Stripe Connect — ruled out and explained
+      why), specifically as a redirect to Every.org's own hosted AMF donate page rather
+      than an embedded-in-checkout flow, because California's charitable-fundraising-
+      platform law (effective 2024-06-12, Hawaii follows 2026-01-01) defines a covered
+      platform broadly enough to plausibly reach an embedded donate-at-checkout flow —
+      this is a real, more-concrete-than-expected finding beyond the seven commercial-
+      co-venture states originally flagged, and CA/AMF are both confirmed live (AMF listed
+      and routable at every.org/againstmalaria, EIN 20-3069841 matches Silas's records).
+      Option C (existing againstmalaria.com/amibot link-out) stays live unconditionally as
+      the zero-registration fallback. Option B (Section 162 sponsorship) is secondary, not
+      primary. The redirect-vs-embedded registration question is NOT resolved here — it is
+      the specific question for the CPA/attorney conversation, not a formality. No account
+      created, no contact made with AMF/Every.org, no money moved, per task scope.
 
   # --------------------------------------------------------------- m2 LEDGER
     claimed_by: worker-2026-08-19T07:05:00Z-t005-amf-remittance
