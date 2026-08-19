@@ -55,13 +55,16 @@ precisely this reason: the sandbox cannot reach a database or a Stripe account.
 
 Five concrete gaps, each verified by reading the code:
 
-1. **Paid and free tokens are indistinguishable.** `User.mana` is one `Int`.
-   `maybeRefill()` tops every user up to `manaCap` daily (`CYCLE_REFILL`) and grants a
-   250-mana `SIGNUP_BONUS`. Purchased mana lands in the same balance. At spend time
-   (`manaGate` → `chargeForGeneration`) nothing knows whether the mana being burned was
-   bought or given away. **"Paid usage is split three ways" is not currently computable
-   from the data we store.** This is the single biggest blocker and everything else
-   depends on fixing it.
+1. **The paid resource doesn't exist as a separate thing.** The intended model has two
+   currencies — free **mana** (limited access, lower queue priority, never purchased) and
+   paid **tokens** (the resource actually spent on generation, created only when real
+   money is paid). The code has neither: `User.mana` is one `Int` fed by *both* Stripe
+   purchases (`applyMana({ reason: 'PURCHASE' })`) and free grants (`CYCLE_REFILL`,
+   `SIGNUP_BONUS`), and there is **no token model in `schema.prisma` at all**. At spend
+   time (`manaGate` → `chargeForGeneration`) nothing knows whether the balance being
+   burned was bought or given away. **"Paid usage is split three ways" is not currently
+   computable from the data we store.** This is the single biggest blocker and everything
+   else depends on fixing it.
 
 2. **Spends carry no creator attribution.** `applyMana()` takes a free-text
    `refId: String?`. Nothing records *whose* Scenario, Bot, Character, Facet, or artwork
@@ -285,22 +288,25 @@ structure before anything is built on it.*
   money, and we only credit a portion of tokens paid back to creators, a reasonable
   withdrawal timer should prevent most situations of fraud."* The economics are sound —
   a round trip through your own asset returns only a third, so self-dealing loses money.
-  Three refinements in `t-014`: earned mana is a **liability from the moment it's
-  credited**, not when paid; the withdrawal timer should be **at least as long as the
-  card-dispute window** (commonly ~120 days) so a chargeback can't land after the cash is
-  gone; and the "we only create tokens when users pay" premise doesn't cover the mana the
-  system *mints for free* (refills, bonuses, achievements) — free mana has zero input
-  cost, so it must never generate creator credit or the round trip becomes profitable.
-  That last point is why `t-006` now models **three** buckets: granted, purchased, and
-  earned.
+  Two refinements in `t-014`: earned tokens are a **liability from the moment they're
+  credited**, not when paid; and the withdrawal timer should be **at least as long as the
+  card-dispute window** (commonly ~120 days), so a chargeback can't land after the cash is
+  already withdrawn.
+- **The model has two resources; the code has one.** Free **mana** grants limited access
+  at lower queue priority and is never purchased. **Tokens** are the paid resource, and
+  creator credit derives from token spends only — so a giveaway structurally cannot become
+  withdrawable cash. That guarantee lives in the shape of the data rather than in a rule,
+  which is why `t-006` (introducing the split) is a security boundary and not tidiness:
+  until it exists, any creator-credit rule written against `User.mana` would credit
+  giveaway balance as readily as purchased balance.
 
 ## MVP shape
 
 The smallest honest slice that makes the three-way split real, ordered so that every
 reversible step lands before any irreversible one:
 
-1. **Make paid mana distinguishable from granted mana.** Without this, nothing else is
-   computable.
+1. **Split the paid token resource from free mana.** The design assumes two currencies;
+   the code has one. Without this, nothing else is computable.
 2. **Attribute each chargeable generation to a creator** — record source type, source id,
    and creator user id on the spend.
 3. **Write an immutable `RevenueSplit` ledger** — one row per paid spend, in integer

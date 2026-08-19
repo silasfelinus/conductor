@@ -255,7 +255,7 @@ tasks:
   # --------------------------------------------------------------- m2 LEDGER
   - id: t-006
     milestone: m2
-    title: "Make paid mana distinguishable from granted mana"
+    title: "Split the paid token resource from free mana"
     status: ready
     owner: null
     updated: '2026-08-19T00:00:00Z'
@@ -264,45 +264,50 @@ tasks:
     depends_on: [t-001]
     note: >
       THE foundational blocker — nothing else in m2 is computable until this lands.
-      Today User.mana is a single Int and maybeRefill() tops every user up to manaCap
-      daily (CYCLE_REFILL) plus a 250-mana SIGNUP_BONUS, so purchased and granted mana
-      are commingled and a spend cannot be attributed to either. Design and ship the
-      minimum change that makes "this generation was paid for" a fact the server knows.
 
-      SCOPE EXPANDED 2026-08-19 — THREE BUCKETS, NOT TWO. Silas settled the payout model
-      (see t-014): creators are credited in tokens, and past a threshold they can request
-      a cash withdrawal. That makes some mana redeemable for real money, which changes
-      this task's shape fundamentally. Mana is currently something the system MINTS
-      freely — CYCLE_REFILL, SIGNUP_BONUS, ADMIN_REFUND, ACHIEVEMENT_CONFIRMED,
-      ADJUSTMENT, KARMA_CONVERSION all create it from nothing. If any mana is
-      cash-redeemable and the balance is undifferentiated, then ALL of it is
-      cash-redeemable, and every achievement award becomes a cash liability. So model at
-      least three kinds:
-        - GRANTED — refills, bonuses, achievements, admin adjustments. Spendable, never
-          redeemable for cash, and CRITICALLY it must never generate creator credit (see
-          the fraud note below).
-        - PURCHASED — bought by that user with real money. Spendable. Not cash-redeemable
-          either; converting it back to cash is a refund, which is a Stripe operation
-          with its own rules, not a withdrawal.
-        - EARNED — creator share credited from someone else's paid spend. The only kind
-          that can ever be withdrawn as cash, and therefore a real liability on the books
-          from the moment it is credited, not from when it is paid.
-      THE ANTI-FRAUD INVARIANT this exists to enforce: only PAID mana spends generate
-      creator credit. Silas's own reasoning bounds the obvious abuse — cycling purchased
-      tokens through your own asset returns only a third, so it loses money — but that
-      argument depends entirely on the input costing money. Free mana has zero input cost,
-      so if granted mana could generate creator credit, a user could convert daily refills
-      into withdrawable cash at a 1/3 rate, profitably, forever. That is the actual hole,
-      and this bucket separation is what closes it.
-      Start with a written options comparison (paid/free sub-balances on User, versus
-      FIFO ManaLot rows, versus a running paidManaPurchased/paidManaSpent counter pair
-      with an explicit spend-order policy) before writing schema — the ManaTransaction
-      ledger already records every grant and spend, so a backfill of historical paid
-      balance may be derivable rather than lost. Must be additive/reversible: no
-      migration that drops or rewrites existing mana balances, and existing behavior
-      unchanged for users who never bought anything. Include a spend-order policy
-      decision (free-first is friendlier to users; paid-first is friendlier to creators)
-      and say plainly which one you chose and why.
+      THE MODEL (Silas, 2026-08-19) is TWO DISTINCT RESOURCES, and this task exists
+      because the code has only one:
+        - MANA — given away freely. Grants limited access at lower queue priority.
+          Never purchased, never withdrawable, and it never becomes tokens.
+        - TOKENS — the paid resource actually used to generate interactions. "We only
+          generate tokens when actual tokens are spent." Created only when real money
+          is paid.
+      Creator share is credited in TOKENS, from token spends only.
+
+      WHAT THE CODE ACTUALLY HAS TODAY: one currency, `User.mana`, a single Int, fed by
+      both paths. A Stripe top-up lands via `applyMana({ reason: 'PURCHASE' })`
+      (server/api/stripe/webhook.post.ts handleManaTopup) and the free daily refill lands
+      via `applyMana({ reason: 'CYCLE_REFILL' })` (server/utils/refill.ts) — same field,
+      same balance, indistinguishable at spend time. There is NO token model in
+      prisma/schema.prisma at all; the only `token` fields are auth/JWT unrelated to
+      currency. So the paid resource does not exist as a separate thing yet, and today's
+      "mana" is really the paid resource and the free resource wearing one name.
+
+      THE JOB: introduce the split the model already assumes. Free mana stays mana. The
+      purchased resource becomes tokens (or whatever it ends up called — naming is part
+      of this task, since "mana" currently means both and renaming mid-flight is worse
+      than deciding now). Then add the third state the payout model needs:
+        - EARNED tokens — creator share credited from someone else's paid spend. The only
+          balance that can ever be withdrawn as cash, and a real liability from the moment
+          it is credited rather than when it is paid. Purchased tokens are deliberately
+          NOT withdrawable: converting those back to cash is a refund, a Stripe operation
+          with its own rules, not a creator withdrawal.
+
+      WHY THE SPLIT IS THE SECURITY BOUNDARY, not just tidiness: in the two-resource
+      model, free mana structurally cannot produce withdrawable value — there is no path
+      from a giveaway to cash, so the abuse case is closed by the data model rather than
+      by a runtime check somebody could forget. In today's single-balance code that
+      guarantee does not exist: free refills and purchases sit in the same Int, so any
+      creator-credit rule written against `User.mana` would credit giveaway balance
+      exactly as readily as purchased balance. Build the split so the invariant is
+      enforced by construction and cannot be reintroduced by a later caller.
+
+      CONSTRAINTS: additive and reversible. No migration that drops or rewrites existing
+      balances, and no behavior change for users who never bought anything. The
+      ManaTransaction ledger already records every grant and spend with a `reason`, so
+      historical paid balance may be derivable rather than lost — check before assuming a
+      backfill is impossible. Also decide the lower-priority-queue behavior that free mana
+      is supposed to buy ("ideally", per Silas), or explicitly defer it as its own task.
 
   - id: t-007
     milestone: m2
@@ -432,13 +437,13 @@ tasks:
       the policy is wrong, not the sentence.
       Also decide the adjacent case: a creator running THEIR OWN object. Same principle
       should apply — you earn on your own work — and Silas's 2026-08-19 payout model
-      largely answers the abuse question that comes with it: a round trip through your own
-      asset returns only a third of what you spent, so it loses money and is not worth
-      doing. That reasoning holds for PURCHASED mana. It does NOT hold for granted mana,
-      whose input cost is zero, which is why t-006's rule that only paid spends generate
-      creator credit is load-bearing rather than a detail. Verify that invariant actually
-      holds in code here rather than assuming it, and decide whether self-attributed
-      spends should additionally be excluded, capped, or simply logged and visible.
+      answers the abuse question that comes with it: a round trip through your own asset
+      returns only a third of what you spent, so it loses money and is not worth doing.
+      That holds because the input is the PAID token resource. Free mana never converts
+      into tokens in Silas's model, so there is no zero-cost input to arbitrage — but that
+      separation does not exist in code yet (t-006), so verify the invariant actually
+      holds rather than assuming it, and decide whether self-attributed spends should
+      additionally be excluded, capped, or simply logged and visible.
 
   # ---------------------------------------------------------- m3 LIVE STRIPE
   - id: t-011
@@ -548,12 +553,18 @@ tasks:
       taking ~120 days on faith, and set the threshold high enough that a payout is worth
       its own transfer fee.
 
-      (3) THE FREE-MANA HOLE, which the "we only create tokens when users pay" premise
-      does not quite cover — the system also mints mana for free via CYCLE_REFILL,
-      SIGNUP_BONUS, ACHIEVEMENT_CONFIRMED and admin adjustments. Free mana has zero input
-      cost, so if it could generate creator credit, converting refills into withdrawable
-      cash at a 1/3 rate would be profitable rather than lossy. t-006's bucket separation
-      is the fix; this task should assert it end to end.
+      (3) THE MODEL IS SOUND; THE CODE DOES NOT IMPLEMENT IT YET. Silas's design has two
+      distinct resources — free mana (limited access, lower queue priority, never
+      purchased) and tokens (the paid resource, created only when real money is spent) —
+      and creator credit comes from token spends only. In that model a giveaway
+      structurally cannot become withdrawable cash, so there is no arbitrage to defend
+      against; the guarantee is in the shape of the data, not in a rule.
+      Today's code has only `User.mana`, a single Int fed by both Stripe purchases
+      (reason PURCHASE) and free refills (reason CYCLE_REFILL), with no token model in the
+      schema at all. So the invariant this task depends on is not currently expressible:
+      any creator-credit rule written against `User.mana` would credit giveaway balance as
+      readily as purchased balance. t-006 introduces the split; this task must not assume
+      it and should assert end to end that credit only ever derives from a paid spend.
 
       REMAINING DESIGN WORK: how the withdrawal is actually paid (Stripe Connect Express
       vs manual transfer at this scale — there is no payout mechanism in the repo today,
