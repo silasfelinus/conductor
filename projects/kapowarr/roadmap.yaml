@@ -1122,9 +1122,12 @@ tasks:
 - id: t-052
   milestone: m6
   title: Make the weekly-calendar database migration restart-safe
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
+  claimed_by: 20260819T010200Z-kapowarr-t052-c14a
+  claimed_at: '2026-08-19T01:02:00Z'
+  updated: '2026-08-19T01:02:00Z'
   note: |-
     User-reported production startup failure on 2026-08-19. Database migration 48 runs after the current base schema has already created publisher_subscriptions and publisher_automation_history, then attempts unconditional CREATE TABLE statements and aborts with sqlite3.OperationalError before the application starts. Make the migration tolerate the current schema and a retry after partial execution, preserve existing pull-list data, and add an upgrade-path regression test that reproduces setup_db ordering.
