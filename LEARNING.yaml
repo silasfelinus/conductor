@@ -9150,3 +9150,19 @@ records:
     recorded but not decided) handled exactly as the task note specified rather than guessed
     at. Reviewed the actual diff (schema, migration.sql, manaAttribution.ts, manaGate.ts wiring)
     rather than trusting the PR description alone.
+- date: 2026-08-19
+  project: kind-economy
+  task: t-008
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Clean first-pass Worker output on a financial-ledger schema change: additive-only
+    migration (single CREATE TABLE + one FK, no DROP/ALTER), split-math isolated into a
+    pure dependency-free module backed by a 20,000-iteration property test asserting the
+    sum-to-gross invariant exactly, and the PR left deliberately unmerged pending a
+    line-by-line migration audit even with no gate_human flag set. The self-imposed
+    "please audit this before merging" flag on a non-gated task is a pattern worth
+    reinforcing generally for schema changes to money-related tables.
