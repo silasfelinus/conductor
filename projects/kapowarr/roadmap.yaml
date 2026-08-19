@@ -921,7 +921,7 @@ tasks:
 - id: t-037
   milestone: m7
   title: Introduce a metadata-provider abstraction
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -937,6 +937,12 @@ tasks:
     interface while breaking ComicVine's metadata monopoly. Implement the provider boundary as an additive,
     backward-compatible backend/schema seam; ComicVine remains the default and existing screens must not
     gain configuration clutter in this task.
+
+    Merged silasfelinus/Kapowarr#61 as 81c9d8e09ee3db26bac289d15c69169504e1e567.
+    ComicVine now implements a lazy provider/capability boundary; additive provider-neutral volume and
+    issue identity maps enforce conflicts, legacy IDs are restart-safely backfilled, and cover provenance
+    is retained. Existing API fields and the image-first UI are unchanged. Local verification passed 380
+    tests and mypy; Python 3.8-3.12, docs, PR container, and post-merge tests/docs/container publication passed.
 - id: t-038
   milestone: m7
   title: Add Metron as an alternate metadata provider
