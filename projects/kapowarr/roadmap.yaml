@@ -1137,14 +1137,15 @@ tasks:
 - id: t-053
   milestone: m4
   title: Stop blocking web startup on post-migration VACUUM
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
   claimed_by: 20260819T011300Z-kapowarr-t053-8d1f
   claimed_at: '2026-08-19T01:13:00Z'
-  updated: '2026-08-19T01:17:00Z'
+  updated: '2026-08-19T01:20:40Z'
+  implementation_pr: silasfelinus/Kapowarr#59
   note: |-
     User-reported live follow-up on 2026-08-19. After migration 48 succeeds and database_version advances to 49, startup emits no further log and the frontend remains unreachable. The synchronous post-migration VACUUM is the only remaining database operation on that path and can block for a long time on a large library without progress output. Remove heavyweight compaction from startup, retain only bounded/cheap optimization if useful, log migration completion, and cover the post-migration operation so future schema upgrades reach the web server promptly.
 
-    Review handoff: worker/kapowarr-t-053-migration-vacuum removes unconditional VACUUM from the synchronous migration path, adds an explicit completion log, and tests that migration completion performs no cursor maintenance before web startup. Compile/AST/diff checks pass; dependency-backed tests require CI.
+    Merged silasfelinus/Kapowarr#59 as 3965925ed014c59870eb8d7079174ca148f65473. The user's report that the frontend eventually loaded confirmed synchronous post-migration VACUUM—not a second migration failure—was blocking startup. Startup now skips that unbounded compaction and logs migration completion. The regression passed on Python 3.8-3.12; docs, PR container, and all post-merge tests/docs/container publication passed.
