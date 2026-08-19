@@ -273,9 +273,9 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Split the paid token resource from free mana"
-    status: ready
-    owner: null
-    updated: '2026-08-19T00:00:00Z'
+    status: claimed
+    owner: worker
+    updated: '2026-08-19T07:18:46Z'
     passes: 0
     stakes: reversible
     depends_on: [t-001]
@@ -325,6 +325,8 @@ tasks:
       historical paid balance may be derivable rather than lost — check before assuming a
       backfill is impossible. Also decide the lower-priority-queue behavior that free mana
       is supposed to buy ("ideally", per Silas), or explicitly defer it as its own task.
+    claimed_by: worker-2026-08-19T07:20:00Z-t006-token-split
+    claimed_at: '2026-08-19T07:18:46Z'
 
   - id: t-007
     milestone: m2
