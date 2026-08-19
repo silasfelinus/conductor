@@ -921,13 +921,22 @@ tasks:
 - id: t-037
   milestone: m7
   title: Introduce a metadata-provider abstraction
-  status: not-started
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
-  note: Stop treating ComicVine as an irreplaceable global singleton. Define stable provider IDs, cross-provider
+  claimed_by: 2026-08-19T030039Z-kapowarr-t037-metadata
+  claimed_at: '2026-08-19T03:00:39.867Z'
+  updated: '2026-08-19T03:00:39.867Z'
+  note: |-
+    Stop treating ComicVine as an irreplaceable global singleton. Define stable provider IDs, cross-provider
     external IDs, search/fetch capabilities, cover provenance and conflict rules so alternate metadata
     providers can coexist without destabilizing existing libraries.
+
+    Silas explicitly promoted this staged task on 2026-08-19: preserve Kapowarr's minimalist, image-first
+    interface while breaking ComicVine's metadata monopoly. Implement the provider boundary as an additive,
+    backward-compatible backend/schema seam; ComicVine remains the default and existing screens must not
+    gain configuration clutter in this task.
 - id: t-038
   milestone: m7
   title: Add Metron as an alternate metadata provider
