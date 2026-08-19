@@ -8993,3 +8993,20 @@ records:
   failure_category: null
   lesson: Scheduled tasks must record failure outcomes before leaving the queue, and scraped sources require
     live markup verification.
+- date: 2026-08-19
+  project: kapowarr
+  task: t-036
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    check_pr_merged_drift.py's gh-search fallback 403'd in this sandbox, but
+    the GitHub MCP pull_request_read "get" method (as opposed to
+    list_pull_requests, which reported merged:false for the same closed PR)
+    confirmed silasfelinus/Kapowarr#56 was in fact merged directly by Silas.
+    When the drift script can't verify a candidate via its own HTTP path,
+    cross-check the single-PR MCP get method before treating it as
+    unresolved -- the list endpoint's merged field is not reliable evidence
+    on its own.
