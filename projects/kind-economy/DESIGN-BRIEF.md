@@ -55,13 +55,16 @@ precisely this reason: the sandbox cannot reach a database or a Stripe account.
 
 Five concrete gaps, each verified by reading the code:
 
-1. **Paid and free tokens are indistinguishable.** `User.mana` is one `Int`.
-   `maybeRefill()` tops every user up to `manaCap` daily (`CYCLE_REFILL`) and grants a
-   250-mana `SIGNUP_BONUS`. Purchased mana lands in the same balance. At spend time
-   (`manaGate` → `chargeForGeneration`) nothing knows whether the mana being burned was
-   bought or given away. **"Paid usage is split three ways" is not currently computable
-   from the data we store.** This is the single biggest blocker and everything else
-   depends on fixing it.
+1. **The paid resource doesn't exist as a separate thing.** The intended model has two
+   currencies — free **mana** (limited access, lower queue priority, never purchased) and
+   paid **tokens** (the resource actually spent on generation, created only when real
+   money is paid). The code has neither: `User.mana` is one `Int` fed by *both* Stripe
+   purchases (`applyMana({ reason: 'PURCHASE' })`) and free grants (`CYCLE_REFILL`,
+   `SIGNUP_BONUS`), and there is **no token model in `schema.prisma` at all**. At spend
+   time (`manaGate` → `chargeForGeneration`) nothing knows whether the balance being
+   burned was bought or given away. **"Paid usage is split three ways" is not currently
+   computable from the data we store.** This is the single biggest blocker and everything
+   else depends on fixing it.
 
 2. **Spends carry no creator attribution.** `applyMana()` takes a free-text
    `refId: String?`. Nothing records *whose* Scenario, Bot, Character, Facet, or artwork
@@ -215,26 +218,58 @@ search, an FTB entity-status check, and an AG Registry of Charitable Trusts look
 
 ## Minimizing tax and reporting complexity
 
-Silas's explicit ask: send malaria money "directly to the fundraiser and minimize
-reporting and tax complications." Ranked by how little accounting each creates:
+Silas's question, 2026-08-19: *"Can I take money and then give it directly to
+againstmalaria to be considered tax neutral? Is there a way we can automate that 1/3 so
+it is directly paid to our fundraiser to avoid any irs double dipping?"*
 
-1. **Keep sending donors out to `againstmalaria.com/amibot`.** Those dollars never touch
-   our books, never become revenue, and never need to be reported by us. This already
-   works — it raised the $840 — and it should stay, regardless of what else gets built.
-2. **Periodic corporate donation of the accrued mission share.** Kind Robots recognizes
-   100% of paid-token revenue, then donates the mission share to AMF on a schedule
-   (monthly or quarterly). One expense line, one receipt, fully deductible. Requires an
-   accurate accrual ledger, which is exactly what m2 builds.
-3. **Stripe Connect transfers to AMF.** Technically imaginable, practically unavailable —
-   AMF would have to be an onboarded Connect account. Worth ruling out explicitly and
-   early so nobody designs toward it.
+**Short answer: not by default, and the default is the bad case.** Taking $100 and
+donating $33 does not net to zero. The $100 is gross receipts; the $33 is a separate
+charitable contribution whose value depends entirely on entity type:
 
-The mission share is a **corporate donation of platform revenue**, not a pass-through of
-user donations. Keeping those two flows separate — donation traffic goes out to AMF's own
-page, platform revenue is ours and then partly donated — is what keeps the reporting
-simple and the donor-intent story clean.
+| Entity | Treatment |
+|---|---|
+| Sole prop / single-member LLC | **Not** a Schedule C expense. Flows to Schedule A itemized. **Worth nothing if he takes the standard deduction** — taxed on the full amount. |
+| Partnership / S-corp | Same shape; passes through to the personal return. |
+| C-corp | Deducts directly, but capped at **10% of taxable income**, 5-year carryforward — plus a new **1% floor** for tax years beginning after 2025-12-31. A third of revenue blows past 10% immediately. |
 
----
+So the fear is well-founded, and the current default (sole prop, standard deduction) is
+the worst version of it.
+
+### The fix is structural: keep it out of gross receipts
+
+**A. Make the mission third the *customer's* donation, not ours.** Structure checkout so
+the customer's third goes to AMF directly rather than through Kind Robots. It never
+becomes revenue, so there's no deduction question at all — gross receipts are two thirds,
+out of which the creator third is paid. The customer gets the deduction, which is a
+selling point rather than fine print, and "a third of what you pay buys nets" becomes
+literally true and independently verifiable.
+
+*Mechanism:* a donation-platform API, **not** Stripe Connect — AMF would have to be an
+onboarded Connect account, which is effectively a dead end and should stop being designed
+toward. Every.org publishes a free, no-platform-fee donation API with embeddable donate
+links, programmatic fundraiser creation, and **partner webhooks** that would reconcile
+each donation back to the interaction that produced it. AMF is reachable: **The Against
+Malaria Foundation (US) is a real 501(c)(3), EIN 20-3069841**, Kansas City MO, deductible
+for US donors.
+
+*The catch:* collecting or soliciting donations on a charity's behalf is a **commercial
+co-venture** in many states, with registration requirements. Routing through a platform
+that is itself the receiving charity may absorb most of that — but that has to be checked,
+not assumed. It's the most likely reason option A turns out more expensive than it looks.
+
+**B. §162 business expense instead of §170 charitable contribution.** A payment to a
+charity carrying genuine return benefit commensurate with its value (sponsorship,
+advertising, logo placement) is an ordinary business expense with **no percentage
+ceiling**. Real distinction, not a loophole — and the code explicitly forbids
+reclassifying a pure gift as a business expense to dodge the limits, so it only works
+where the business return is actual. Fact-specific; CPA territory.
+
+**C. Baseline, already working:** keep pointing donors out to againstmalaria.com/amibot.
+Zero complication, zero reporting, and it's how the existing ~$840 was raised. Whatever
+else gets built, this stays.
+
+*Not legal or tax advice — general rules from public sources. A CPA confirms the
+structure before anything is built on it.*
 
 ## Decisions made (Silas, 2026-08-19)
 
@@ -248,16 +283,30 @@ simple and the donor-intent story clean.
   that means two of three shares on his own work, which is defensible but must be
   *visible*. Handled as `t-021`.
 - **The entity track is deferred** to 2027 or later. See above.
-- **Still open:** per-interaction vs. pooled creator share. This shapes the whole m2
-  schema (`t-002`).
+- **Creator payout model settled:** credit creators in **tokens**, and past a threshold
+  they request a cash withdrawal. Silas: *"Since we only create tokens when users pay
+  money, and we only credit a portion of tokens paid back to creators, a reasonable
+  withdrawal timer should prevent most situations of fraud."* The economics are sound —
+  a round trip through your own asset returns only a third, so self-dealing loses money.
+  Two refinements in `t-014`: earned tokens are a **liability from the moment they're
+  credited**, not when paid; and the withdrawal timer should be **at least as long as the
+  card-dispute window** (commonly ~120 days), so a chargeback can't land after the cash is
+  already withdrawn.
+- **The model has two resources; the code has one.** Free **mana** grants limited access
+  at lower queue priority and is never purchased. **Tokens** are the paid resource, and
+  creator credit derives from token spends only — so a giveaway structurally cannot become
+  withdrawable cash. That guarantee lives in the shape of the data rather than in a rule,
+  which is why `t-006` (introducing the split) is a security boundary and not tidiness:
+  until it exists, any creator-credit rule written against `User.mana` would credit
+  giveaway balance as readily as purchased balance.
 
 ## MVP shape
 
 The smallest honest slice that makes the three-way split real, ordered so that every
 reversible step lands before any irreversible one:
 
-1. **Make paid mana distinguishable from granted mana.** Without this, nothing else is
-   computable.
+1. **Split the paid token resource from free mana.** The design assumes two currencies;
+   the code has one. Without this, nothing else is computable.
 2. **Attribute each chargeable generation to a creator** — record source type, source id,
    and creator user id on the spend.
 3. **Write an immutable `RevenueSplit` ledger** — one row per paid spend, in integer
