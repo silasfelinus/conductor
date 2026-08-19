@@ -903,9 +903,9 @@ tasks:
   - id: t-025
     milestone: m5
     title: "Build the labelled-AI social content pipeline (draft-only, human-approved)"
-    status: ready
-    owner: null
-    updated: '2026-08-19T00:00:00Z'
+    status: claimed
+    owner: worker
+    updated: '2026-08-19T12:34:25Z'
     passes: 0
     stakes: reversible
     depends_on: [t-024]
@@ -935,6 +935,8 @@ tasks:
       donate and does not like AI.
       Build the queue, the labelling, the approval surface, and the volume limits. Do NOT
       connect a live account or post anything — that is t-026's gate.
+    claimed_by: claude-20260819T122808Z-t025
+    claimed_at: '2026-08-19T12:34:25Z'
 
   - id: t-026
     milestone: m5
