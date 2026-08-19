@@ -527,22 +527,18 @@ tasks:
   - id: t-024
     milestone: m5
     title: Give live Bot/PROMPTBOT records (Brainbot and others) a reachable gallery surface
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     note: >-
-      Kaizen from t-018's 2026-08-18 cycle (kind_robots PR #1940): while recovering the
-      Brainstorm persona, found a fully modern, live Bot record already in production
-      (GET /api/bots id 4, name "Brainbot", slug brainstorm-bot, tagline, narrativeVoice,
-      generated avatar/card/hero/icon art) with zero UI surface anywhere on the site --
-      bot-gallery.vue exists but isn't mounted by any content route. At least 69 live
-      Bot records total, several (AMIbot, Rapbot, Brainbot, etc.) already fully authored
-      with art and voice, sitting unused. Mount bot-gallery.vue (or an equivalent
-      lightweight surface) somewhere reachable so this content isn't invisible. Scope
-      check first: confirm whether a dedicated project already owns Bot/PROMPTBOT
-      presentation before building a new one here; if so, retarget or fold this task
-      into that project instead of duplicating.
+      RESOLVED BY VERIFICATION (conductor scheduled Agent run, 2026-08-19): re-checked the "Scope check first" step the task itself required before building anything, and found the premise already false on current kind_robots main.
+
+      bot-gallery.vue IS mounted and reachable: content/bots.md (frontmatter dashboardKey: bot, dashboardTab: bots) renders `:bot-manager`, whose default (non-forge) panel is bot-interact.vue, which renders bot-gallery.vue directly (`<bot-gallery v-if="!isInteractMode" variant="dashboard" ... />`). content/channels/play/bots.md registers this as a real tab (channelKey: play, tabKey: bots, route: /bots, sort: 30) alongside academy/art -- the play channel and its tabs are read dynamically by channel-select.vue/channelContentStore from these content files, not a hardcoded allow-list, so /bots is reachable from the normal channel-nav a real user clicks through, not just a direct URL.
+
+      Also confirmed `bot` is one of the seven declared CORE_OBJECT_ROUTES (utils/scripts/coreObjectRoutes.ts: object bot -> route /bots -> gallery bot-gallery), and `npm run test:route-gallery-contract` (CI-enforced, utils/scripts/verifyRouteGalleryContract.ts) passes clean and explicitly lists bot-gallery as reachable from /bots (plus every other core-object route where it is embedded as a picker). This is the same check interface-vision/global-ui built specifically to catch an unmounted-gallery gap like the one this task described -- it is green for bot-gallery today.
+
+      No code change made -- there is nothing to fix. The 69-live-Bot-records / zero-UI-surface finding from t-018s 2026-08-18 cycle either was already stale when written or was fixed by an intervening cycle without this task being reconciled; either way current main already satisfies the tasks goal ("Mount bot-gallery.vue ... somewhere reachable"). No kind_robots PR opened since no diff exists to make.
     claimed_by: 20260819T202922-brainstorm-t024-sched
     claimed_at: '2026-08-19T20:29:23Z'
-    updated: '2026-08-19T20:29:23Z'
+    updated: '2026-08-19T20:32:32Z'
