@@ -148,6 +148,181 @@ def test_unknown_node_class_is_skipped():
     assert unresolved == []
 
 
+def test_unknown_node_class_is_named_not_just_skipped():
+    # Skipping it is right (no schema, no way to tell a filename from an INT).
+    # Doing so invisibly is what made the LTX failure below unreadable.
+    workflow = {
+        "99": {"class_type": "SomeCustomNode", "inputs": {"lora_name": "x"}},
+        "61": lora_node("Flux/y.safetensors"),
+    }
+    assert relay.unknown_workflow_classes(
+        workflow, object_info(loras=["Flux/y.safetensors"])
+    ) == ["SomeCustomNode"]
+
+
+# --- ComfyUI's V3 node schema serves combos in a shape of its own ------------
+#
+# 2026-08-19, LTX webp animation: the image2video graph names one checkpoint on
+# two nodes -- 317 `CheckpointLoaderSimple` (V1 schema) and 318
+# `LTXAVTextEncoderLoader` (V3 schema) -- both reading ComfyUI's `checkpoints`
+# list. ComfyUI rejected the prompt on 318 alone, for the value 317 was carrying
+# too, because the resolver only understood the V1 combo shape
+# `[[choices], {opts}]` and V3 nodes serve `["COMBO", {"options": [...]}]`
+# (comfy_api/latest/_io.py: `(i.get_io_type(), i.as_dict())`). A V3 node's
+# filename input was skipped silently: no remap, no unresolved entry, nothing in
+# the failure message but "ran, 2 remap(s)".
+
+
+def v3_ckpt_object_info(checkpoints, opts=None):
+    """object_info as a V3-schema node serves it: type string + options dict."""
+    return {
+        "LTXAVTextEncoderLoader": {
+            "input": {
+                "required": {
+                    "ckpt_name": ["COMBO", {"options": list(checkpoints), **(opts or {})}],
+                    "device": ["COMBO", {"options": ["default", "cpu"]}],
+                }
+            }
+        }
+    }
+
+
+def v3_ckpt_node(name):
+    return {
+        "class_type": "LTXAVTextEncoderLoader",
+        "inputs": {"ckpt_name": name, "device": "default"},
+    }
+
+
+def test_v3_schema_combo_is_resolved():
+    live = "ltx\\ltx-2.3-22b-dev-fp8.safetensors"
+    workflow = {"318": v3_ckpt_node("ltx/ltx-2.3-22b-dev-fp8.safetensors")}
+    remaps, unresolved = relay.resolve_workflow_asset_names(
+        workflow, v3_ckpt_object_info([live])
+    )
+    assert workflow["318"]["inputs"]["ckpt_name"] == live
+    assert unresolved == []
+    assert remaps and remaps[0][3] == live
+
+
+def test_v3_schema_missing_name_is_reported_not_submitted():
+    workflow = {"318": v3_ckpt_node("ltx/nope.safetensors")}
+    remaps, unresolved = relay.resolve_workflow_asset_names(
+        workflow, v3_ckpt_object_info(["ltx/something_else.safetensors"])
+    )
+    assert remaps == []
+    assert unresolved == [
+        ("LTXAVTextEncoderLoader", "ckpt_name", "ltx/nope.safetensors")
+    ]
+
+
+def test_v3_upload_backed_combo_is_never_touched():
+    # V3 spells LoadImage's upload flag `image_upload`, same as V1's opts key.
+    info = {
+        "LoadImage": {
+            "input": {
+                "required": {
+                    "image": ["COMBO", {"options": ["a.png"], "image_upload": True}]
+                }
+            }
+        }
+    }
+    workflow = {"10": {"class_type": "LoadImage", "inputs": {"image": "job-src.png"}}}
+    remaps, unresolved = relay.resolve_workflow_asset_names(workflow, info)
+    assert (remaps, unresolved) == ([], [])
+    assert workflow["10"]["inputs"]["image"] == "job-src.png"
+
+
+def test_v3_remote_combo_is_never_touched():
+    # Remote combos load their real options from a frontend route; whatever
+    # object_info carries is partial, so resolving against it would guess.
+    workflow = {"318": v3_ckpt_node("ltx/ltx-2.3-22b-dev-fp8.safetensors")}
+    remaps, unresolved = relay.resolve_workflow_asset_names(
+        workflow,
+        v3_ckpt_object_info(["ltx/other.safetensors"], opts={"remote": {"route": "/x"}}),
+    )
+    assert (remaps, unresolved) == ([], [])
+
+
+def test_v3_multiselect_combo_is_never_touched():
+    workflow = {"318": v3_ckpt_node("ltx/ltx-2.3-22b-dev-fp8.safetensors")}
+    remaps, unresolved = relay.resolve_workflow_asset_names(
+        workflow,
+        v3_ckpt_object_info(["ltx/other.safetensors"], opts={"multiselect": True}),
+    )
+    assert (remaps, unresolved) == ([], [])
+
+
+def test_the_ltx_webp_animation_graph_resolves_both_checkpoint_nodes():
+    """The whole 2026-08-19 failure, end to end.
+
+    One checkpoint string on a V1 node and a V3 node, one ComfyUI list holding
+    it under a Windows backslash. Before the fix this produced exactly two
+    remaps (LoRA + node 317) and a 400 on node 318.
+    """
+    live_ckpt = "ltx\\ltx-2.3-22b-dev-fp8.safetensors"
+    live_lora = "ltx-2.3-22b-distilled-lora-384.safetensors"
+    stored = "ltx/ltx-2.3-22b-dev-fp8.safetensors"
+
+    info = object_info(loras=[live_lora], checkpoints=[live_ckpt])
+    info.update(v3_ckpt_object_info([live_ckpt]))
+
+    workflow = {
+        "317": ckpt_node(stored),
+        "318": v3_ckpt_node(stored),
+        "293": lora_node(live_lora),
+    }
+    remaps, unresolved = relay.resolve_workflow_asset_names(workflow, info)
+
+    assert unresolved == []
+    assert workflow["317"]["inputs"]["ckpt_name"] == live_ckpt
+    assert workflow["318"]["inputs"]["ckpt_name"] == live_ckpt, (
+        "the V3 text-encoder node is the one ComfyUI rejected"
+    )
+    assert len(remaps) == 2  # both checkpoint nodes; the LoRA was already exact
+
+
+def test_resolution_note_names_unchecked_classes(monkeypatch):
+    # "ran, 2 remap(s)" was true and useless. A node the relay could not check
+    # has to reach the queue, or the next failure reads as a clean run again.
+    info = object_info(loras=["Flux/y.safetensors"])
+    monkeypatch.setattr(relay, "fetch_comfy_object_info", lambda force=False: info)
+
+    relay.align_workflow_asset_names(
+        {"99": {"class_type": "LTXAVTextEncoderLoader", "inputs": {"ckpt_name": "x"}}}
+    )
+    note = relay.last_resolution_note()
+    assert "LTXAVTextEncoderLoader" in note
+    assert "unchecked" in note
+
+    relay.align_workflow_asset_names({"61": lora_node("Flux/y.safetensors")})
+    assert "unchecked" not in relay.last_resolution_note()
+
+
+def test_an_unknown_class_forces_one_refetch(monkeypatch):
+    # The node ComfyUI gained in an update is exactly the case a 15-minute
+    # cache gets wrong, and the cache only refetches when something looks off.
+    stale = object_info(loras=["Flux/y.safetensors"])
+    fresh = object_info(loras=["Flux/y.safetensors"])
+    fresh.update(v3_ckpt_object_info(["ltx\\ltx-2.3-22b-dev-fp8.safetensors"]))
+    calls = []
+
+    def fetch(force=False):
+        calls.append(force)
+        return fresh if force else stale
+
+    monkeypatch.setattr(relay, "fetch_comfy_object_info", fetch)
+
+    workflow = {"318": v3_ckpt_node("ltx/ltx-2.3-22b-dev-fp8.safetensors")}
+    assert relay.align_workflow_asset_names(workflow) == []
+    assert calls == [False, True]
+    assert (
+        workflow["318"]["inputs"]["ckpt_name"]
+        == "ltx\\ltx-2.3-22b-dev-fp8.safetensors"
+    )
+    assert relay._last_resolution["unknown_classes"] == []
+
+
 def test_align_applies_remaps_and_returns_unresolved(monkeypatch):
     # One name resolves (case drift) and gets rewritten in place; one is truly
     # missing and comes back as unresolved for the caller to fail fast on.

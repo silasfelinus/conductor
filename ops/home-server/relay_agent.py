@@ -499,19 +499,62 @@ def _asset_basename(value):
 def _combo_candidates(definition):
     """Return the list of string choices for an object_info input definition,
     or None when the input is not a resolvable filename/enum combo (e.g.
-    INT/FLOAT/STRING, or an upload-backed input). Combo inputs are shaped
-    `[[<choices>], {opts}]`."""
-    if not (isinstance(definition, list) and definition and isinstance(definition[0], list)):
-        return None
-    choices = definition[0]
-    if not choices or not all(isinstance(item, str) for item in choices):
+    INT/FLOAT/STRING, or an upload-backed input).
+
+    ComfyUI serves combo inputs in TWO shapes and the relay must read both:
+
+      V1 (classic `INPUT_TYPES`):  [[<choices>], {opts}]
+      V3 (`io.Schema` nodes):      ["COMBO", {"options": [<choices>], ...}]
+
+    The V3 shape is not a variant anyone opted into: `comfy_api/latest/_io.py`
+    builds a node's V1 info with `d[key][i.id] = (i.get_io_type(), i.as_dict())`,
+    so for a V3 node the head of the pair is the literal string "COMBO" and the
+    choices sit under `opts["options"]`. Reading only the V1 shape therefore
+    skips a V3 node's filename input *silently* -- no remap, no unresolved
+    entry, no log line -- and POSTs whatever the workflow stored.
+
+    That is exactly how the 2026-08-19 LTX webp animation died. The image2video
+    graph names the same checkpoint twice: node 317 `CheckpointLoaderSimple`
+    (V1) and node 318 `LTXAVTextEncoderLoader` (V3), both reading ComfyUI's
+    `checkpoints` list. The resolver remapped 317 (and the LoRA on 293 -- the
+    "2 remap(s)" stamped on the failure), never looked at 318, and ComfyUI
+    rejected the prompt on 318 alone:
+    `ckpt_name: 'ltx/ltx-2.3-22b-dev-fp8.safetensors' not in (list of length
+    58)`, with `input_config: None` -- the V3 validator's tell. One name, one
+    list, two nodes, and only the V1 one was ever checked.
+    """
+    if not (isinstance(definition, (list, tuple)) and definition):
         return None
     opts = definition[1] if len(definition) > 1 and isinstance(definition[1], dict) else {}
+
+    head = definition[0]
+    if isinstance(head, (list, tuple)):
+        choices = list(head)
+    elif head == "COMBO":
+        options = opts.get("options")
+        if not isinstance(options, (list, tuple)):
+            return None
+        choices = list(options)
+    else:
+        return None
+
+    if not choices or not all(isinstance(item, str) for item in choices):
+        return None
     # Upload-backed combos (LoadImage `image`/`mask`, video loaders) are
     # populated from Comfy's input dir. The relay uploads those files separately
     # (upload_comfy_input_images), and a cached/stale object_info won't list a
-    # just-uploaded name -- so never remap or fail-fast on them.
+    # just-uploaded name -- so never remap or fail-fast on them. V3 spells these
+    # `image_upload`/`audio_upload`/`video_upload`/`file_upload`, so the same
+    # substring test covers both schemas.
     if any("upload" in str(key).lower() for key in opts):
+        return None
+    # Remote combos fetch their real options from a route the frontend calls, so
+    # whatever is in object_info is partial at best -- never resolve against it.
+    if opts.get("remote"):
+        return None
+    # Multiselect combos take a list, not a filename string; the loop below only
+    # touches str values anyway, but be explicit rather than incidentally safe.
+    if opts.get("multiselect") or opts.get("multi_select"):
         return None
     return choices
 
@@ -578,6 +621,28 @@ def resolve_workflow_asset_names(workflow, object_info):
                 remaps.append((class_type, input_name, value, match))
 
     return remaps, unresolved
+
+
+def unknown_workflow_classes(workflow, object_info):
+    """class_types in `workflow` that `object_info` does not describe, sorted.
+
+    resolve_workflow_asset_names has to skip these -- with no schema it cannot
+    tell a filename input from an INT -- but skipping them silently is what let
+    the LTX failure above read as a clean "resolution ran" run. A class ComfyUI
+    doesn't describe is also a class ComfyUI cannot execute, so this is either a
+    stale cache (refetch fixes it) or a node that isn't installed (the prompt
+    was doomed regardless). Either way it belongs in the failure message.
+    """
+    if not isinstance(object_info, dict):
+        return []
+    unknown = set()
+    for node in workflow.values():
+        if not isinstance(node, dict):
+            continue
+        class_type = node.get("class_type")
+        if class_type and not isinstance(object_info.get(class_type), dict):
+            unknown.add(class_type)
+    return sorted(unknown)
 
 
 def fetch_comfy_object_info(force=False):
@@ -655,7 +720,7 @@ def _fetch_object_info_locked(now):
 # unreachable, and the only place that distinction existed was a `⚠️` line in
 # the relay's stdout on a machine nobody was watching. Now it rides along with
 # the error.
-_last_resolution = {"state": "not-run", "remaps": 0}
+_last_resolution = {"state": "not-run", "remaps": 0, "unknown_classes": []}
 
 
 def align_workflow_asset_names(workflow):
@@ -668,19 +733,31 @@ def align_workflow_asset_names(workflow):
     can't be fetched (resolution skipped, submit as-is)."""
     object_info = fetch_comfy_object_info()
     if object_info is None:
-        _last_resolution.update(state="skipped-no-object-info", remaps=0)
+        _last_resolution.update(
+            state="skipped-no-object-info", remaps=0, unknown_classes=[]
+        )
         return []
 
     remaps, unresolved = resolve_workflow_asset_names(workflow, object_info)
-    if unresolved:
+    unknown = unknown_workflow_classes(workflow, object_info)
+    # A node class the cache has never heard of is the same "the box moved on
+    # since we last looked" signal as an unresolved name -- ComfyUI gained LTX-2
+    # nodes in an update -- so it earns the same one-shot forced refetch.
+    if unresolved or unknown:
         fresh = fetch_comfy_object_info(force=True)
         if fresh is not None and fresh is not object_info:
             remaps, unresolved = resolve_workflow_asset_names(workflow, fresh)
+            unknown = unknown_workflow_classes(workflow, fresh)
 
     for class_type, input_name, old, new in remaps:
         log(f"{WRENCH} {class_type}.{input_name}: {old!r} -> {new!r}")
+    if unknown:
+        log(
+            f"{WARN} ComfyUI's object_info does not describe: {', '.join(unknown)}"
+            " - any filename inputs on those nodes went unchecked"
+        )
 
-    _last_resolution.update(state="ran", remaps=len(remaps))
+    _last_resolution.update(state="ran", remaps=len(remaps), unknown_classes=unknown)
     return unresolved
 
 
@@ -691,9 +768,13 @@ def last_resolution_note():
     reimplements submission cannot quietly drop the diagnosis half of the
     error while keeping the rest.
     """
+    unknown = _last_resolution.get("unknown_classes") or []
+    unchecked = (
+        f", unchecked node class(es): {', '.join(unknown)}" if unknown else ""
+    )
     return (
         f"[asset-name resolution: {_last_resolution['state']}, "
-        f"{_last_resolution['remaps']} remap(s)]"
+        f"{_last_resolution['remaps']} remap(s){unchecked}]"
     )
 
 
