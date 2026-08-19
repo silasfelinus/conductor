@@ -128,11 +128,29 @@ fresh is cheaper, and it belongs to a CPA.
 *Not legal or tax advice — general rules from public sources; the actual situation needs
 a professional.*
 
-**Two facts still outstanding**, both blocked on sources this session could not reach:
-the corporation's current CA SOS status and entity number (bizfileonline.sos.ca.gov sits
-behind Incapsula bot protection and rejects automated queries; the AG registry at
-rct.doj.ca.gov returned 503), and the FTB account balance. The EIN itself is on the IRS
-CP 575 confirmation letter or retrievable from the IRS Business & Specialty Tax Line.
+**The entity is dissolved.** Silas, 2026-08-19: *"Save one human is definitely
+disbanded, as far as I know. I finalized that around 2023-2024."* Recorded as his account
+rather than a verified filing — the confirming record is the CA SOS entity status, which
+this session could not reach (bizfileonline.sos.ca.gov sits behind Incapsula bot
+protection; the AG registry at rct.doj.ca.gov returned 503).
+
+So **there is nothing to reinstate.** Any future entity is a new incorporation with a new
+EIN — an old EIN cannot be reused for a new corporation. That also means the franchise-tax
+question above, whatever its answer, **does not follow him into a future entity**: a new
+corporation inherits none of the old one's tax history.
+
+**One question left, and it's a ten-minute closure check rather than a blocker:** which
+dissolution route was used, and was **FTB Form 3502** filed? California provides that form
+— *Nonprofit Corporation Request for Pre-Dissolution Tax Abatement*, R&TC §23156 —
+specifically to abate unpaid qualified taxes, interest, and penalties for a nonprofit that
+certifies it never conducted business or has ceased and holds no assets. Save One Human,
+with zero revenue ever, is the textbook case for it. Short-form dissolution was *not*
+available — that route closes 24 months after incorporation, and 2023–2024 is well past.
+
+If the dissolution went through the 3502 abatement path, the accrued franchise tax is very
+likely already cleared. If it was an ordinary SOS Certificate of Dissolution without one,
+there may be a residual balance. Check the paperwork for a 3502, or call the FTB nonprofit
+line at (916) 845-4171. The EIN itself is on the IRS CP 575 letter.
 
 **Timing (Silas, 2026-08-19):** January 1 was "just a random date but beyond this year,
 since I don't see taking in any money for a while. It can be later, it just didn't seem
@@ -162,8 +180,8 @@ board, bylaws, public disclosure.
 **C. Hybrid — the likely answer.**
 For-profit Kind Robots runs the platform, takes payments, and pays creators. The mission
 share goes to charity either (c1) **directly to the Against Malaria Foundation**, which
-is already a registered charity, or (c2) **through a revived Save One Human** acting as
-the charitable arm.
+is already a registered charity, or (c2) **through a newly incorporated charity** acting as
+the charitable arm (Save One Human itself is dissolved and cannot be revived).
 
 > **Key finding: restarting the nonprofit is not required to make the revenue share
 > work** — and the research above makes the case stronger, since there is no dormant
