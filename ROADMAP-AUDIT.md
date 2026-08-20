@@ -1,20 +1,20 @@
 # Roadmap Audit
 
-Generated: `2026-08-20T15:10:57.490926+00:00`
+Generated: `2026-08-20T15:33:53.684758+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **48** roadmaps, **25** active + **2** continuous projects, **1130** tasks
-- **29 ready**, **62 waiting**, **58 needs-human**, **0 claimed/review**, **972 done**
+- **28 ready**, **62 waiting**, **58 needs-human**, **0 claimed/review**, **973 done**
 - Findings: **1 errors**, **4 warnings**, **76 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
-| 1 | `kapowarr` | active | software | 7 | 0 | 1 | 0 | 48 / 56 |
+| 1 | `kapowarr` | active | software | 6 | 0 | 1 | 0 | 49 / 56 |
 | 2 | `kind-economy` | active | software | 0 | 3 | 10 | 0 | 14 / 27 |
 | 3 | `interface-vision` | active | software | 0 | 2 | 1 | 0 | 115 / 118 |
 | 4 | `ai-art-academy` | active | software | 0 | 3 | 4 | 0 | 61 / 68 |
