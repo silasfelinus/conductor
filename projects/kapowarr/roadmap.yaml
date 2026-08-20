@@ -1426,3 +1426,92 @@ tasks:
     for "handed to the client, waiting in a remote queue, transferring nothing." t-042
     found the same gap for debrid cache-waits and t-043 found it for ed2k source queues.
     Whichever lands first should design the state; see t-058.
+- id: t-061
+  milestone: m8
+  title: Generalize the metadata search fan-out to registered providers instead of hardcoding
+    two
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: |-
+    Filed from t-059 (projects/kapowarr/docs/t-059-gcd-metadata-provider.md). Prerequisite
+    for any third metadata provider, and worth doing on its own merits because it deletes
+    special-casing rather than adding it.
+
+    search_metadata_with_fallback() (backend/features/metadata.py:233) is hardcoded to
+    exactly two providers: it imports MetronError by name, calls _metron_is_configured()
+    (metadata.py:224, which peeks at settings.metron_* directly), and runs a two-way
+    gather with provider-specific exception branches. _metron_is_configured() is called at
+    four sites in that file. MetadataProviderRegistry.get() (metadata.py:133) and
+    .capabilities() (metadata.py:147) each lazily import 'comicvine'/'metron' by name, so
+    a third provider needs a third branch in both.
+
+    The registry cannot help because the contract has no notion of "configured":
+    MetadataProvider (metadata.py:29) declares test_key/search_volumes/fetch_volume/
+    fetch_volumes/fetch_issues and nothing that answers "should I be in the fan-out."
+
+    Scope: add is_configured() to MetadataProvider, make search_metadata_with_fallback()
+    iterate registered+configured providers, make the registry's lazy imports table-driven,
+    and remove _metron_is_configured() and its call sites. Behaviour must be unchanged with
+    Metron alone configured -- tests/Tbackend/metadata_providers.py already asserts exactly
+    that (test_configured_metron_results_join_comicvine_results,
+    test_metron_works_without_a_comicvine_key), so those are the regression net. Everything
+    downstream of search is already generic (Volume.add at volumes.py:1100, the refresh
+    path at volumes.py:1471-1477, the POST /api/volumes route at frontend/api.py:796,
+    MetadataIdentityStore); the fan-out is the only place that is not.
+- id: t-062
+  milestone: m8
+  title: Implement a Grand Comics Database metadata provider against its REST API
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-061
+  note: |-
+    Filed from t-059; full evaluation in projects/kapowarr/docs/t-059-gcd-metadata-provider.md.
+    Approved on evidence, not on assumption: GCD's coverage was measured live
+    (/api/series/name/Tintin/ returns 145 series -- 20 Franco-Belgian vs 3 US on page one;
+    Asterix 188; Tex 389, largest being the 973-issue Italian Collana del Tex).
+
+    Build against the REST API at https://www.comics.org/api/, NOT the bulk dump. t-043 and
+    this task's own original note both assumed dump-only; that is out of date. The dump is
+    ~6 GB, bi-weekly, behind an account login, and contains no image URLs at all -- which is
+    why comictagger/gcd_talker has to scrape comics.org HTML for covers and check for
+    Cloudflare challenge pages. The API returns cover URLs directly.
+
+    Five measured traps, each of which a naive implementation hits:
+    (1) Cap search pagination explicitly. Page size is fixed at 50; page_size and limit are
+        silently ignored; /api/series/name/a/ returns 178526 results = 3571 pages. Do NOT
+        reuse Metron's unbounded _all() helper for series-name search.
+    (2) Send Accept: application/json or ?format=json. It is Django REST Framework with a
+        browsable HTML renderer -- without the header you get HTML at HTTP 200.
+    (3) Guard JSON parsing. A series name containing '/' 404s even percent-encoded (Apache
+        AllowEncodedSlashes) and returns an Apache HTML error page, not a JSON error body.
+        Metron's _get() already has the right shape for this.
+    (4) Normalize dates. key_date uses zero placeholders ("1959-00-00" is a real returned
+        value). Use on_sale_date or normalize(key_date) or None; never emit -00- components.
+    (5) volume_number defaults to 1. GCD has no series-level volume number and the issue-level
+        volume field is frequently empty. gcd_talker offers year-as-volume as a user setting;
+        do not adopt that silently, it changes folder naming and matching.
+
+    Shape: fetch_volume = /api/series/{id}/ plus /api/series/{id}/overview/, which returns
+    per-issue number/key_date/on_sale_date/cover_url/longest_story and lets the whole issue
+    list load without a detail request per issue -- the same optimization Metron makes
+    deliberately (metron.py:176-179). Measured cost: 973 issues in 20 requests / 11.5s /
+    no 429 anonymously. publisher comes back as a URL, so resolve the name in fetch_volume
+    only (never per search hit) with a small id->name cache. comicvine_id is None (GCD has
+    no CV cross-link, unlike Metron's cv_id) -- that is fine, it is nullable throughout.
+
+    Open decision for Silas before shipping user-visible credits: GCD data is Creative
+    Commons and requires attribution plus a link back, but the evaluation could NOT confirm
+    the current license version from a primary source (docs.comics.org and www.comics.org
+    HTML both return Cloudflare 403 from the sandbox, while /api/ paths are not challenged;
+    search summaries disagree between CC BY 3.0 and CC BY-SA 4.0, and ShareAlike is a
+    materially stronger obligation). VolumeMetadata.site_url and CoverProvenance already
+    carry the data attribution needs; the placement is a product call.
+
+    Medium-term risk to record: GCD's own wiki says API fields/format are not yet stable and
+    that anonymous access "will likely bye turned off at some point" (auth is Basic/Session
+    with a GCD account, not an API token). The dump stays documented as the fallback if that
+    happens.

@@ -9529,3 +9529,32 @@ records:
     boundary still parses as a complete, shorter archive -- which is now a named test
     asserting the gap rather than a surprise for whoever next reads a passing verdict as
     a guarantee.
+- date: 2026-08-20
+  project: kapowarr
+  task: t-059
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: |-
+    A task note describing an external system's capabilities is a dated snapshot, and
+    re-checking it is the cheapest first move on any provider-evaluation task. t-059
+    inherited t-043's (correct-when-written, eight days stale) framing of the Grand Comics
+    Database as bulk-dump-only; GCD now runs a live public REST API, and the verdict flips
+    on which access path you evaluate — the dump omits image URLs entirely, forcing the
+    HTML cover-scraping that the reference consumer (comictagger/gcd_talker) has to do,
+    while the API returns cover URLs directly.
+    Second, and the more transferable half: "does the contract fit without special-casing"
+    is two questions, and the abstract base class answers only the easy one. MetadataProvider,
+    the registry, the identity store, Volume.add and the add route are all provider-generic
+    here, but search_metadata_with_fallback() hardcodes exactly two providers and the
+    contract has no is_configured() for the registry to route around it. Reading the ABC
+    would have said "fits"; reading every call site said "fits, after one refactor that
+    deletes the incumbent's special-casing rather than adding the newcomer's beside it."
+    Read the call sites, not the interface.
+    Third, four traps that each cost one request to find and would have cost a review cycle
+    later: fixed 50-item pages with page_size silently ignored (a 1-char query is 3,571
+    pages, so the incumbent provider's unbounded pagination helper is unsafe to reuse),
+    an Apache HTML 404 rather than a JSON error for encoded slashes, "1959-00-00" placeholder
+    dates, and no series-level volume number. Probe the API before designing against it.
