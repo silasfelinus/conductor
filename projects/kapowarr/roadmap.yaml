@@ -1555,3 +1555,23 @@ tasks:
   updated: '2026-08-20T22:39:43Z'
   implementation_pr: 'silasfelinus/Kapowarr#98'
 
+- id: t-068
+  milestone: m8
+  title: Identify which Kapowarr page is still slow after the review-holds fix
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from reviewing silasfelinus/Kapowarr#95 (2026-08-20, conductor scheduled
+    Agent run). #95 fixed the review-holds queue filling with unimportable rows
+    (stale paths for files that had moved during import/rename) and made the Logs
+    page reachable and readable, but its own "Not addressed" section flags a
+    separate, still-open slowdown: the PR author didn't know which page was slow, so
+    couldn't chase it, and confirmed the `items=0` poll path (the one this PR's own
+    scope touches) is cheap and unaffected. Next cycle: get a concrete repro (which
+    page, what action, roughly how slow) -- check TALKBACK.md/Kapowarr issues for a
+    user report first, or reproduce cold against a representative library size and
+    profile the slow request/render directly -- before proposing a fix.
+  updated: '2026-08-20T23:30:00Z'
+
