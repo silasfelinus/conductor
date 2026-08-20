@@ -9588,3 +9588,31 @@ records:
     shape of an undownloadable release is meaningless); a reviewer who disagrees now sees
     a failing named test rather than a silent behaviour change. The tier order is the
     actual policy and was otherwise documented only in inline comments -- filed as t-063.
+
+- date: 2026-08-20
+  project: kapowarr
+  task: t-061
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Deleting special-casing from a fan-out is a contract problem before it is a
+    control-flow problem. search_metadata_with_fallback() could not iterate providers
+    because MetadataProvider had no way to answer "should I be in the fan-out" or "is
+    this error me being unavailable, or a bug" -- so the two questions the old code
+    answered inline (_metron_is_configured(), isinstance against MetronError /
+    CVRateLimitReached) had to become is_configured() and unavailable_errors on the
+    contract first. Once they were there the loop wrote itself.
+    Second: preserve the exact success/failure algebra, not just the happy path. The old
+    code returned ComicVine's results when Metron failed recoverably, even if ComicVine
+    returned an empty list -- so the generalized version has to raise on "every provider
+    was unavailable", tracked with an `answered` flag, NOT on "results is empty". Those
+    two conditions look interchangeable and are not; an empty successful search is a
+    valid answer.
+    Third: order the provider list explicitly rather than inheriting dict insertion
+    order. The registry's order depends on which module imported first, so the fan-out's
+    result order would have been an import-order accident; sorting default-first then
+    alphabetically makes the existing ['comicvine', 'metron'] assertion a guarantee
+    instead of a coincidence.
