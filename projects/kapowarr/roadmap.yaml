@@ -1409,12 +1409,38 @@ tasks:
 - id: t-062
   milestone: m8
   title: Implement a Grand Comics Database metadata provider against its REST API
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-061
   note: |-
+    Done 2026-08-20 via Kapowarr PR #96 (squash 96e239e). backend/implementations/gcd.py
+    implements the five measured traps below against https://www.comics.org/api/: search
+    reads exactly one page of /series/name/{name}/ (never follows next), Accept:
+    application/json + ?format=json are always sent, '/' is stripped from search queries
+    before the request, key_date's zero-placeholder components are truncated rather than
+    emitted or discarded, and volume_number always defaults to 1. publisher (a URL) is
+    resolved once per fetch_volume through a small id->name cache; comicvine_id stays None
+    throughout. t-061 had already generalized the search fan-out, so registering 'gcd' in
+    MetadataProviderRegistry._builtin_modules was the only wiring needed -- Volume's refresh
+    path and the add-volume search UI were both already provider-generic.
+
+    Not built: a settings-page UI row for optional gcd_username/gcd_password (GCD works
+    fully anonymously; the credentials only raise its documented rate limit). Filed as
+    t-067. The license/attribution open decision below is still open and still not blocking,
+    since no UI renders a GCD-sourced credit yet -- carries forward to whoever builds that.
+
+    Kaizen: t-066 (unrelated Metron.test_key() bug found while reading metron.py for the
+    request-guarding pattern -- imports the wrong `run`, would raise instead of returning
+    bool; not fixed here to keep this PR scoped).
+
+    20 new unit tests (constructed via object.__new__(Gcd), mirroring Metron's own test
+    pattern, to avoid touching real Settings()/DB state outside an app context). Full
+    suite: 673/673 passing.
+
+    --- Original task note, preserved for the evaluation context below ---
+
     Filed from t-059; full evaluation in projects/kapowarr/docs/t-059-gcd-metadata-provider.md.
     Approved on evidence, not on assumption: GCD's coverage was measured live
     (/api/series/name/Tintin/ returns 145 series -- 20 Franco-Belgian vs 3 US on page one;
@@ -1463,7 +1489,8 @@ tasks:
     happens.
   claimed_by: sched-20260820T212748Z-kapowarr-t062-r5s1
   claimed_at: '2026-08-20T21:27:49Z'
-  updated: '2026-08-20T21:27:49Z'
+  updated: '2026-08-20T21:39:59Z'
+  implementation_pr: 'silasfelinus/Kapowarr#96'
 - id: t-063
   milestone: m5
   title: Pin the search-ranking tier order with one table-driven test instead of pairwise
@@ -1501,3 +1528,22 @@ tasks:
   claimed_at: '2026-08-20T20:45:15Z'
   updated: '2026-08-20T20:52:31Z'
   implementation_pr: 'silasfelinus/Kapowarr#94'
+
+- id: t-066
+  milestone: m8
+  title: 'Metron.test_key() imports the wrong `run` and would raise, not return bool'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: 'Kaizen from t-062 (GCD provider implementation). backend/implementations/metron.py imports `run` from `backend.base.helpers` (`from backend.base.helpers import (AsyncSession, force_range, normalise_string, run)`), but `helpers.py` only re-exports `subprocess.run` (`from subprocess import run`, helpers.py:18) -- there is no async-run helper defined or exported there. `test_key()` calls `run(test())` where `test()` is a coroutine function; `subprocess.run(<coroutine object>)` raises `TypeError`, it does not return `False`. Compare `backend/implementations/comicvine.py`, which does this correctly via `from asyncio import gather, run, sleep` (comicvine.py:7) and the identical `return run(_test_key())` pattern (comicvine.py:468) -- asyncio.run is the one actually needed. Net effect: any caller of `Metron(...).test_key()` (e.g. a settings-page "test credentials" button, if one exists for Metron the way ComicVine has one) gets an unhandled exception instead of a pass/fail result. Fix: change metron.py''s import to `from asyncio import run` (dropping it from the `backend.base.helpers` import list). One-line fix plus a regression test asserting `test_key()` returns a bool (True/False) rather than raising, for both the success and MetronError-caught branches -- the existing test suite has no coverage of `test_key()` at all today, which is how this shipped unnoticed.'
+
+- id: t-067
+  milestone: m8
+  title: Add a settings-page UI row for optional GCD (Grand Comics Database) credentials
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: 'Followup from t-062 (GCD provider implementation, silasfelinus/Kapowarr#96). The GCD provider works fully anonymously -- no credentials are required to search or fetch -- so this was deliberately left out of t-062''s scope to keep that PR focused on the backend contract. `gcd_username`/`gcd_password` already exist as real settings (backend/internals/settings.py: added to PublicSettingsValues, the todict() credential-masking tuple, SENSITIVE_SETTING_KEYS, and the key-conversion elif chain, mirroring metron_username/metron_password exactly) and are already readable/writable through the generic settings API -- there is just no dedicated UI to enter them yet, the same gap Metron''s credentials would have before frontend/templates/settings_metadata.html and frontend/static/js/settings_metadata.js were built out for them. Mirror that existing Metron row: add a `#gcd-username-input`/`#gcd-password-input` pair to settings_metadata.html and wire their load/save in settings_metadata.js exactly the way the three `#metron-*-input` elements are wired today (see settings_metadata.js:5-7 and :15-17). Worth noting in the UI copy that these are optional and only raise GCD''s documented rate limit -- unlike the Metron/ComicVine rows, an empty GCD row is a fully working configuration, not a disabled one.'
+
