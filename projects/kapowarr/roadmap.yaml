@@ -1323,28 +1323,15 @@ tasks:
 - id: t-057
   milestone: m5
   title: Decide what a checksum-less integrity verdict is worth, and verify TAR/CBT
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
-  note: |-
-    Kaizen from t-045 (Kapowarr#86), which taught the reader to open TAR/CBT and so made
-    archive_integrity.py's "nothing here can read tar" reasoning obsolete. That module still
-    returns UNSUPPORTED for tar, and the docstring now gives the honest reason: a tar carries
-    no per-member CRC, so "opens cleanly and holds a plausible page list" is all a tar could
-    ever assert -- strictly weaker than the CRC pass every CORRUPT verdict currently rests on.
-    The open question is whether that weaker signal is worth acting on at all. Its own module
-    docstring argues the asymmetry matters: a false CORRUPT blocklists a good release, deletes
-    it, and steers every future search away from it, so a verdict that cannot prove damage is
-    worse than no verdict. A tar verifier could still catch the two failures that need no
-    checksum -- a truncated file that will not open, and the metadata-only stub an indexer
-    serves in place of a real release -- both of which _judge_contents already models.
-    Decide, then either implement _verify_tar for exactly those two cases (never CORRUPT, only
-    UNREADABLE/EMPTY/OK) or record the decision not to and leave UNSUPPORTED as the answer.
-    Either outcome closes the task; a written reason is the deliverable, not the diff.
+  note: 'Shipped in silasfelinus/Kapowarr#87 (squash c1e510ff11b73b73114ed3d2ce9a03eb1ae1f21e). THE DECISION: neither of the two outcomes this task offered. It asked to either implement _verify_tar for exactly UNREADABLE/EMPTY and never CORRUPT, or record the decision not to. Both rest on the premise that a tar carries no checksum, and that premise is only half true -- it holds for a bare .tar and fails for every compressed form. MEASURED before coding, sweeping a single flipped byte across five-page archives (~1000 offsets per format): bare .tar 521 of 531 body flips open cleanly with the RIGHT member names and the RIGHT member sizes, no signal at all; .tar.gz 1036/1036 caught, .tar.bz2 1042/1042, .tar.xz 1047/1047, all via the wrapper checksum (gzip CRC32 trailer, bzip2 per-block CRCs, xz stream check) and only when the stream is read through to its end. A compressed tar carries BROADER evidence than ZIP per-member CRC, not weaker, since it covers the tar headers too. THE TRAP, and the most valuable finding: verifying a compressed tar the obvious way, by iterating TarFile members instead of reading the stream out, caught 5 of 733 flips -- and the other 728 did not merely pass, they returned a SHORTER MEMBER LIST that _judge_contents happily calls OK. A corrupt five-page archive presents as a healthy one-page archive, at all three errorlevel settings, because the desynchronised stream stops looking like a tar header and tarfile reads that as a clean end-of-archive. So the weak version this task proposed is not just weak, it is actively misleading in exactly the case the module exists to catch -- worse than the UNSUPPORTED it would have replaced. That is why the implemented version decompresses explicitly, with a regression test that asserts the member list really does shrink so it tests the fix rather than the fixture. VERDICTS: CORRUPT for compressed forms only on the decompressors own evidence; UNREADABLE for a truncated or unopenable stream; EMPTY when no member could be a page; OK otherwise; a bare .tar is never CORRUPT. FALSE-POSITIVE GUARDS, since a wrong CORRUPT blocklists a good release, deletes it and steers every future search away: bz2 has no dedicated corruption exception and raises a plain OSError that a genuine disk failure also raises, so it is read as corruption only when errno is unset (the decompressor sets none, the OS always does) and only for bzip2; and only regular-file members are judged, so a tar of nothing but symlinks cannot look populated. ONE LIMIT DOCUMENTED AND PINNED rather than papered over: a bare tar is a run of 512-byte blocks with no index, so truncation landing exactly on a block boundary still parses as a complete shorter archive -- mid-block cuts are caught, aligned ones are not (test_a_block_aligned_bare_tar_truncation_is_undetectable). The suffix list moved to FileConstants.TAR_ARCHIVE_SUFFIXES so the set the reader displays and the set the verifier checks cannot drift apart; tar detection stayed local rather than joining ARCHIVE_MAGIC_BYTES, which also drives rename_with_proper_extension. VERIFIED: full backend suite 581 -> 592 (11 new tests) green on the whole 3.8-3.12 CI matrix, plus 41 frontend tests, docs build and container build; isort clean on both changed files (comic_reader.py and others already fail isort on main under the repos combine_as_imports config, confirmed by git-stash, so only substantially-changed files were brought into line); flake8 count unchanged at 6, all pre-existing E501s on untouched lines; Python 3.8 syntax checked against the matrix floor (gzip.BadGzipFile is 3.8+, exactly at it). NOT VERIFIED: no live download ran end-to-end, same as t-044; and no survey of how common .cbt releases actually are, so the value is bounded by that unknown even though the correctness argument does not depend on it. BEHAVIOUR CHANGE WORTH KNOWING: a TAR-family download that previously returned UNSUPPORTED (always imported) can now be blocklisted and deleted; PublicSettingsValues.verify_downloaded_archives remains the off switch.'
   claimed_by: sched-20260820T1800Z-kapowarr-t057-3e5d
   claimed_at: '2026-08-20T17:45:38Z'
-  updated: '2026-08-20T17:45:38Z'
+  updated: '2026-08-20T18:05:39Z'
+  implementation_pr: 'silasfelinus/Kapowarr#87'
 - id: t-058
   milestone: m8
   title: Implement debrid hoster-unrestrict downloads (Real-Debrid or chosen provider)
