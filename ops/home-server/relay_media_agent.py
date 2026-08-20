@@ -45,6 +45,9 @@ GENERATED_IMAGE_EXTENSIONS = {".webp", ".png", ".jpg", ".jpeg", ".gif"}
 VIDEO_EXTENSIONS = {".mp4", ".webm", ".mov", ".mkv", ".webp"}
 COMFY_PROMPT_TIMEOUT = float(os.environ.get("COMFY_PROMPT_TIMEOUT", "180"))
 COMFY_RECOVERY_SECONDS = float(os.environ.get("COMFY_RECOVERY_SECONDS", "45"))
+COMFY_COMPLETION_GRACE_SECONDS = float(
+    os.environ.get("COMFY_COMPLETION_GRACE_SECONDS", "60")
+)
 ORIGINAL_PROCESS = relay.process
 
 
@@ -262,6 +265,40 @@ def queued_prompt_id_for_client(client_id):
     return None
 
 
+def comfy_prompt_queue_state(prompt_id):
+    """Return running/pending/absent/unknown for one accepted Comfy prompt.
+
+    A generation timeout is only evidence that the job is *slow*. It is not
+    evidence that Comfy stopped working. The exact prompt id in /queue is the
+    authoritative signal that the GPU still owns the job, so callers must not
+    mark an ArtJob failed while this returns running or pending.
+    """
+    try:
+        status, queue = relay.http_json(
+            "GET", f"{relay.COMFY_URL}/queue", timeout=15
+        )
+    except Exception:  # noqa: BLE001 - a failed probe must not orphan GPU work
+        return "unknown"
+    if status != 200 or not isinstance(queue, dict):
+        return "unknown"
+
+    for key, state in (("queue_running", "running"), ("queue_pending", "pending")):
+        for entry in queue.get(key) or []:
+            if not isinstance(entry, (list, tuple)) or len(entry) < 2:
+                continue
+            if entry[1] == prompt_id:
+                return state
+    return "absent"
+
+
+def generation_timeout_seconds(payload):
+    """Use request-aware soft timeout when supplied, else the relay fallback."""
+    value = payload.get("timeoutSeconds")
+    if isinstance(value, (int, float)) and not isinstance(value, bool) and value >= 60:
+        return float(value)
+    return float(relay.GEN_TIMEOUT)
+
+
 def run_comfy_with_recovery(payload):
     workflow = payload.get("workflow")
     if not isinstance(workflow, dict) or not workflow:
@@ -328,32 +365,79 @@ def run_comfy_with_recovery(payload):
     if submit_error:
         relay.log(f"recovered accepted Comfy prompt {prompt_id} for {client_id}")
 
-    deadline = time.time() + relay.GEN_TIMEOUT
-    while time.time() < deadline:
+    kind = "video" if want_video else "image"
+    soft_timeout = generation_timeout_seconds(payload)
+    deadline = time.time() + soft_timeout
+    absent_since = None
+
+    while True:
         time.sleep(2)
         status, history = relay.http_json(
             "GET", f"{relay.COMFY_URL}/history/{prompt_id}"
         )
-        if status != 200 or not history:
-            continue
-        entry = history.get(prompt_id)
-        if not entry:
-            continue
-        result = relay.extract_comfy_output(
-            entry.get("outputs") or {}, want_video, prompt_id=prompt_id
-        )
-        if result:
-            return result
-        comfy_status = (entry.get("status") or {}).get("status_str")
-        if comfy_status == "error":
-            detail = relay.describe_comfy_error(entry)
-            message = "ComfyUI reported a workflow error"
-            raise RuntimeError(f"{message}: {detail}" if detail else message)
+        if status == 200 and history:
+            entry = history.get(prompt_id)
+            if entry:
+                result = relay.extract_comfy_output(
+                    entry.get("outputs") or {}, want_video, prompt_id=prompt_id
+                )
+                if result:
+                    return result
+                comfy_status = (entry.get("status") or {}).get("status_str")
+                if comfy_status == "error":
+                    detail = relay.describe_comfy_error(entry)
+                    message = "ComfyUI reported a workflow error"
+                    raise RuntimeError(f"{message}: {detail}" if detail else message)
 
-    kind = "video" if want_video else "image"
-    raise RuntimeError(
-        f"ComfyUI {kind} job timed out after {relay.GEN_TIMEOUT}s"
-    )
+        now = time.time()
+        if now < deadline:
+            continue
+
+        queue_state = comfy_prompt_queue_state(prompt_id)
+        if queue_state in ("running", "pending"):
+            relay.log(
+                f"ComfyUI {kind} prompt {prompt_id} exceeded the {soft_timeout:.0f}s "
+                f"soft timeout but is still {queue_state}; continuing to watch"
+            )
+            absent_since = None
+            deadline = now + soft_timeout
+            continue
+
+        if queue_state == "unknown":
+            relay.log(
+                f"ComfyUI {kind} prompt {prompt_id} exceeded the {soft_timeout:.0f}s "
+                "soft timeout; /queue status is unavailable, so preserving the live "
+                "ArtJob and retrying the probe"
+            )
+            absent_since = None
+            deadline = now + max(30.0, COMFY_COMPLETION_GRACE_SECONDS)
+            continue
+
+        # Comfy can remove a completed prompt from /queue just before /history
+        # becomes visible. Give that handoff a short grace period instead of
+        # manufacturing a failure in the queue/history race window.
+        if absent_since is None:
+            absent_since = now
+            relay.log(
+                f"ComfyUI {kind} prompt {prompt_id} is no longer in /queue after "
+                f"the {soft_timeout:.0f}s soft timeout; waiting up to "
+                f"{COMFY_COMPLETION_GRACE_SECONDS:.0f}s for final history"
+            )
+            deadline = now + COMFY_COMPLETION_GRACE_SECONDS
+            continue
+
+        if now - absent_since < COMFY_COMPLETION_GRACE_SECONDS:
+            deadline = min(
+                absent_since + COMFY_COMPLETION_GRACE_SECONDS,
+                now + 5,
+            )
+            continue
+
+        raise RuntimeError(
+            f"ComfyUI {kind} prompt {prompt_id} stopped appearing in /queue and "
+            f"produced no final history within {COMFY_COMPLETION_GRACE_SECONDS:.0f}s "
+            f"after the {soft_timeout:.0f}s soft timeout"
+        )
 
 
 def process_with_media(job):
