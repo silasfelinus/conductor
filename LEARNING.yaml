@@ -9495,3 +9495,37 @@ records:
     Nothing in t-043 shrinks by waiting -- EC's version lockstep is a property of aMule
     and first-keyword routing is a property of Kademlia. Leaving it open as "lower-priority
     research" would only guarantee a future session re-derives the same answer.
+- date: 2026-08-20
+  project: kapowarr
+  task: t-057
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    When a task hands you a premise, measure it before designing around it. t-057 said
+    "a tar carries no per-member checksum, so opens-cleanly is all one could ever assert"
+    and offered two outcomes built on that: implement UNREADABLE/EMPTY-only and never
+    CORRUPT, or decline. The premise is half true. It holds for a bare .tar -- 521 of 531
+    flipped-byte fixtures open cleanly with the RIGHT member names and the RIGHT member
+    sizes -- and fails for every compressed form, where reading the stream to its end
+    caught every flip (1036/1036 gz, 1042/1042 bz2, 1047/1047 xz) through the wrapper's
+    own checksum, which covers the tar headers as well as the payload and is therefore
+    broader evidence than ZIP's per-member CRC, not weaker. Implementing the design the
+    task specified would have thrown away a 100%-detection signal on the strength of a
+    format claim nobody had tested.
+    The larger lesson is the trap underneath it, and it generalises past tar: the obvious
+    implementation was WORSE THAN DOING NOTHING. Verifying a compressed tar by iterating
+    TarFile members caught 5 of 733 flips, and the other 728 did not merely pass -- they
+    came back with a shorter member list that the existing name-based judge calls OK, so a
+    corrupt five-page archive presents as a healthy one-page archive at every errorlevel
+    setting. A check that degrades into a confident wrong answer is worse than an honest
+    "no opinion", and you only find that out by building the naive version and measuring
+    it rather than reasoning about it. Same shape as t-044's inverted EMPTY test: in this
+    module the expensive mistake is always the false positive.
+    Third: measure to find the honest limits too, not just the wins. The sweep turned up a
+    blind spot nobody asked about -- a bare tar truncated exactly on a 512-byte block
+    boundary still parses as a complete, shorter archive -- which is now a named test
+    asserting the gap rather than a surprise for whoever next reads a passing verdict as
+    a guarantee.
