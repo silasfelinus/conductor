@@ -186,3 +186,52 @@ def test_override_kind_is_authoritative(_isolate_root, capsys):
 
     assert validate_roadmaps.main() == 0
     assert "Roadmaps valid" in capsys.readouterr().out
+
+
+def test_unknown_task_status_fails(_isolate_root, capsys):
+    write_roadmap(
+        _isolate_root,
+        "demo",
+        "project: demo\nkind: software\ntasks:\n- id: t-001\n  status: not-started\n  stakes: reversible\n",
+    )
+
+    assert validate_roadmaps.main() == 1
+    err = capsys.readouterr().err
+    assert "invalid task status" in err
+    assert "t-001" in err
+    assert "'not-started'" in err
+
+
+def test_every_lifecycle_task_status_is_accepted(_isolate_root, capsys):
+    tasks = "".join(
+        f"- id: t-{index:03d}\n  status: {status}\n  stakes: reversible\n"
+        for index, status in enumerate(sorted(validate_roadmaps.VALID_TASK_STATUSES), start=1)
+    )
+    write_roadmap(_isolate_root, "demo", f"project: demo\nkind: software\ntasks:\n{tasks}")
+
+    assert validate_roadmaps.main() == 0
+    assert "Roadmaps valid" in capsys.readouterr().out
+
+
+def test_task_without_a_status_key_is_not_a_status_error(_isolate_root, capsys):
+    write_roadmap(
+        _isolate_root,
+        "demo",
+        "project: demo\nkind: software\ntasks:\n- id: t-001\n  stakes: reversible\n",
+    )
+
+    assert validate_roadmaps.main() == 0
+    assert "Roadmaps valid" in capsys.readouterr().out
+
+
+def test_task_status_enum_matches_the_advisory_audit(_isolate_root):
+    """The hard CI gate and audit_roadmaps.py's advisory INVALID_STATUS finding must
+    agree, or a lifecycle change would make one of them lie about the other."""
+    import importlib.util
+
+    script = Path(validate_roadmaps.__file__).resolve().parent / "audit_roadmaps.py"
+    spec = importlib.util.spec_from_file_location("audit_roadmaps_status_test", script)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    assert validate_roadmaps.VALID_TASK_STATUSES == module.VALID_STATUS

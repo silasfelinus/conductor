@@ -9355,3 +9355,23 @@ records:
     just auditing each one against the actions it already knows to check.
 
     '
+- date: 2026-08-20
+  project: conductor
+  task: t-120
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A roadmap task in a status outside the documented lifecycle is invisible, not
+    deferred -- every selection path matches `status == "ready"` exactly, so it never
+    surfaces as ready work, a gate, or blocked. Eight such tasks hid the entire
+    remaining backlog of the portfolio's top-priority project, and four scheduled
+    cycles in one day silently fell through to a 12th-ranked recurring polish task as
+    a result. audit_roadmaps.py had been reporting all eight as errors the whole time
+    but is advisory and always exits 0 -- the second time an advisory-only finding
+    (after DUPLICATE_TASK_ID) had to be promoted into validate_roadmaps.py's hard CI
+    gate after it had already caused real damage. When a cycle reports "no claimable
+    work" for a project ranked above the one it picks, verify the claim against a
+    status histogram instead of recording it.

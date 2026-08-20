@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
 validate_roadmaps.py — confirm every projects/*/roadmap.yaml still parses as a
-mapping with a `tasks` list, that no project's tasks reuse an `id`, and that
-actionable task stakes / effective project kinds use supported enum values. Used
-by the process-task-events workflow after a surgical text edit, and by the pytest
-suite (tests/test_validate_roadmaps.py) that runs on every PR via
+mapping with a `tasks` list, that no project's tasks reuse an `id`, and that task
+statuses / actionable task stakes / effective project kinds use supported enum
+values. Used by the process-task-events workflow after a surgical text edit, and by
+the pytest suite (tests/test_validate_roadmaps.py) that runs on every PR via
 .github/workflows/ci.yml, so this fails CI immediately rather than silently
 landing. Safe to run standalone.
 
@@ -17,6 +17,19 @@ twice, then the manual renumbering fix (to t-058..t-061) collided with pre-exist
 t-061/t-062 -- see interface-vision/t-062's note and this repo's TALKBACK.md that
 date. audit_roadmaps.py already detects this (DUPLICATE_TASK_ID) but only reports
 it advisorily; it never fails CI, so the second collision landed anyway.
+
+An unknown task status is the same failure shape, and it bit the portfolio's
+top-priority project (conductor/t-120, 2026-08-20). Every selection path --
+next_ready_task.py's first_ready_task, run_worker.py's find_ready_task,
+claim_task.py, select_role.py -- matches `status == "ready"` exactly, so a task
+parked in a status outside the AGENTS.md lifecycle is not "not yet startable", it
+is invisible: it never appears as ready work, never appears as a gate, and never
+appears as blocked. Kapowarr sat at the top of projects/priority.yaml with its
+entire remaining 8-task backlog written as `status: not-started` (a valid
+*milestone* status, never a task one), so every scheduled cycle read the #1
+project as having no claimable work and fell through to lower-priority recurring
+polish tasks. audit_roadmaps.py had been reporting all 8 as INVALID_STATUS errors
+the whole time, advisorily, exactly like DUPLICATE_TASK_ID before it.
 
 Usage: python scripts/validate_roadmaps.py
 """
@@ -34,6 +47,22 @@ except ModuleNotFoundError:  # imported as scripts.validate_roadmaps in pytest
     from scripts.project_lifecycle import PROJECT_LIFECYCLE_STATUSES, load_project_overrides
 
 ROOT = Path(__file__).resolve().parents[1]
+# The status lifecycle AGENTS.md defines ("Status lifecycle": ready -> claimed ->
+# review -> done, side exits blocked / needs-human / challenged / waiting). Kept
+# deliberately identical to audit_roadmaps.py's VALID_STATUS, which reports the
+# same finding advisorily as INVALID_STATUS; tests/test_validate_roadmaps.py
+# asserts the two sets stay in sync so a future lifecycle change can't leave the
+# hard CI gate and the advisory report disagreeing.
+VALID_TASK_STATUSES = {
+    "ready",
+    "waiting",
+    "blocked",
+    "claimed",
+    "review",
+    "needs-human",
+    "done",
+    "challenged",
+}
 VALID_TASK_STAKES = {"reversible", "outward-facing", "irreversible"}
 VALID_PROJECT_KINDS = {"software", "content", "proposal", "brainstorm", "infrastructure"}
 
@@ -88,6 +117,19 @@ def main() -> int:
                 file=sys.stderr,
             )
             ok = False
+
+        for task in data["tasks"]:
+            if not isinstance(task, dict) or "status" not in task:
+                continue
+            status = task.get("status")
+            if status not in VALID_TASK_STATUSES:
+                print(
+                    f"invalid task status in {path} for {str(task.get('id') or '<missing>')}: {status!r} "
+                    f"-- expected one of {', '.join(sorted(VALID_TASK_STATUSES))}; a task in any other "
+                    "status is invisible to every selection path, not merely not-yet-startable",
+                    file=sys.stderr,
+                )
+                ok = False
 
         for task in data["tasks"]:
             if not isinstance(task, dict) or task.get("status") == "done" or "stakes" not in task:
