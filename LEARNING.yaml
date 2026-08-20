@@ -9302,3 +9302,21 @@ records:
     future object type added to Storybook's seed-query set, whether it actually
     has a first-class detail component or only the generic Dream surface --
     the generic surface is the one that silently misses new CTAs.
+- date: 2026-08-20
+  project: conductor
+  task: t-119
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    The status:review transition (AGENTS.md step 7) was left ambiguous between
+    claim_task.py's sanctioned direct-to-main exception and close_task.py's
+    branch+PR pattern -- resolved by routing it through close_task.py (which
+    already supports arbitrary target statuses, review included) rather than
+    inventing a new script or a new hard-rule-1 exception. model-builder/t-029
+    cycle 21's STATUS.md merge conflict, doing this transition by hand with
+    set_task_field.py + a manually-managed branch, was a symptom of not using
+    the existing fetch-fresh git plumbing, not evidence that branch+PR is the
+    wrong shape for this transition.
