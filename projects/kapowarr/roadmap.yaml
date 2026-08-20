@@ -1052,9 +1052,24 @@ tasks:
   owner: worker
   passes: 0
   stakes: reversible
-  note: 'Assess upstream issue #276 and common -arr-adjacent workflows for a clean debrid client boundary.
-    Implement only if it adds meaningful coverage without contaminating generic search/download architecture
-    with a provider-specific shortcut.'
+  note: |-
+    Assess upstream issue #276 and common -arr-adjacent workflows for a clean debrid client
+    boundary. Implement only if it adds meaningful coverage without contaminating generic
+    search/download architecture with a provider-specific shortcut.
+    OUTCOME 2026-08-20: evaluation delivered at projects/kapowarr/docs/t-042-debrid-boundary.md.
+    Upstream #276 asks for the hoster-unrestrictor pattern ("instead of having to use Mega
+    directly"), not the torrent-cache pattern the word usually implies -- the two have opposite
+    verdicts. Unrestrict: approved, fits BaseDirectDownload._convert_to_pure_link() exactly,
+    with PixelDrainDownload as a near-identical template; no new DownloadType, no migration, no
+    post-processing change. Torrent-cache: ruled out -- DownloadState has no member for the
+    caching wait, BaseDirectDownload resolves eagerly and would fail outright on an uncached
+    magnet, multi-file results have no representation (move_to_dest only touches files[0]), and
+    a new DownloadType member is a breaking settings migration via SOURCE_PREFERENCE_OPTIONS.
+    Motivation is real and already modelled: ONLY_RATE_LIMITED_LINKS plus DownloadLimitReached
+    exist precisely for "the comic is there and the free tier won't give it to me."
+    Not scheduled next: debrid is absent from ARR_PARITY's near-term list, and the one risk that
+    matters (no reachable account to verify against) shrinks by waiting rather than by building.
+    Implementation filed as t-058 at soft needs-human on that single question.
   claimed_by: sched-20260820T1700Z-kapowarr-t042-4c8b
   claimed_at: '2026-08-20T16:48:20Z'
   updated: '2026-08-20T16:56:42Z'
@@ -1325,3 +1340,40 @@ tasks:
     Decide, then either implement _verify_tar for exactly those two cases (never CORRUPT, only
     UNREADABLE/EMPTY/OK) or record the decision not to and leave UNSUPPORTED as the answer.
     Either outcome closes the task; a written reason is the deliverable, not the diff.
+- id: t-058
+  milestone: m8
+  title: Implement debrid hoster-unrestrict downloads (Real-Debrid or chosen provider)
+  status: needs-human
+  owner: null
+  passes: 0
+  stakes: reversible
+  soft_gate: true
+  depends_on: t-042
+  updated: '2026-08-20T17:00:00Z'
+  note: |-
+    FOR SILAS: Nothing has been built. The design work is finished and lives in
+    projects/kapowarr/docs/t-042-debrid-boundary.md -- t-042 evaluated this and the
+    architectural answer is yes, it fits cleanly. One question decides when it gets built,
+    and it is a question only you can answer.
+
+    THE QUESTION: do you have a Real-Debrid (or AllDebrid / Premiumize / TorBox) account
+    an agent could verify against? No debrid account is reachable from an agent sandbox,
+    so without one this ships on mocked tests and a reading of the provider's docs -- and
+    the last time we did that (t-035, NZBGet) the published docs turned out to be wrong
+    about a required parameter, caught only by reading that service's source. Real-Debrid
+    has no public source to read.
+
+    TO APPROVE: set status: ready and add one line naming the provider, plus whether you
+    have an account to test against. If you don't and don't want one, set status: blocked
+    -- the evaluation stands on its own and does not need this task to stay open.
+
+    WHAT IT DOES: GetComics serves comics behind Mega/MediaFire/Pixeldrain links, and the
+    free tiers rate-limit. Kapowarr already models that failure (ONLY_RATE_LIMITED_LINKS).
+    A debrid account is the direct answer, and someone holding one currently cannot use it.
+    Scope is deliberately unrestrict-only: hand an existing hoster link to the debrid API,
+    download the plain HTTPS result. NOT the torrent-caching pattern -- t-042 ruled that
+    out separately, and the doc says why.
+
+    SIZE: ~100 lines plus tests. One DebridDownload(BaseDirectDownload) modelled on
+    PixelDrainDownload, a priority field on the DownloadPreppers registry, one
+    CredentialSource member. No migration, no new DownloadType, no post-processing change.

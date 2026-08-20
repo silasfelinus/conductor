@@ -9437,3 +9437,27 @@ records:
     back through the authenticated page endpoint. The guard is one isfile() check, but
     nothing in the pattern being copied would have suggested needing it. When adding a
     sibling format, ask what the new container can express that the old one could not.
+- date: 2026-08-20
+  project: kapowarr
+  task: t-042
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Read the actual request before evaluating the feature its name implies. "Debrid
+    support" almost always means feed-a-magnet-to-the-cache, and evaluating that would
+    have produced a correct, well-argued, useless answer -- it has no home in this
+    codebase. Upstream #276 is one sentence, and the operative clause is "instead of
+    having to use Mega directly": the user wants a hoster link unrestricted, which maps
+    onto BaseDirectDownload._convert_to_pure_link() so exactly that PixelDrainDownload is
+    already the template. Same two words, opposite verdicts, and the only thing separating
+    them was reading the issue rather than the label.
+    Second: "does this contaminate the generic architecture with a provider-specific
+    shortcut" cannot be answered without checking whether the architecture is generic
+    today. It is not -- __purify_link is a per-hoster if/elif chain, the queue special-cases
+    Mega by isinstance, and the base class sniffs for Pixeldrain's rate-limit URL. Ten such
+    precedents. A constraint written to protect a clean seam reads very differently once
+    you have confirmed the seam is already provider-shaped, and reporting that honestly is
+    more useful than either enforcing the constraint literally or quietly ignoring it.
