@@ -367,7 +367,7 @@ per format:
 
 | form | caught |
 |---|---|
-| bare `.tar` | 10/531 — the other 521 open cleanly with the **right member names and the right member sizes** |
+| bare `.tar` | **0/531** — 521 open cleanly with the **right member names and the right member sizes**; the other 10 merely list fewer members, which still verdicts `OK`. Nothing raised, at all |
 | `.tar.gz` | 1036/1036 |
 | `.tar.bz2` | 1042/1042 |
 | `.tar.xz` | 1047/1047 |
