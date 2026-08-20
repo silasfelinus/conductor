@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-20T14:44:12Z
+Generated: 2026-08-20T15:11:05Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **703**
-- Outcomes: blocked: 15, cancelled: 1, done: 687
+- Closed tasks recorded: **704**
+- Outcomes: blocked: 15, cancelled: 1, done: 688
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
 | interface-vision | 83 | 100% |
-| kapowarr | 36 | 100% |
+| kapowarr | 37 | 100% |
 | kind-economy | 6 | 100% |
 | kind-robots | 50 | 98% |
 | kindrobots-unraid | 5 | 100% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 687 | 99% |
+| software | 688 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-20 `kapowarr/t-034` — When adding an unattended path into an existing pipeline, the reusable seam is usually the one the manual version already uses -- here manual_import_files() plus the mass_rename/mass_convert/mass_process_files trio, rather than fabricating the Download object post_processing.py is built around for something that was never downloaded. Two things worth copying next time: enforce a stated scope boundary in code as well as prose (the "don't compete with continuous import" requirement became both a never-create-a-volume rule and a settings-level folder-collision check, from both sides), and check whether the repo has recently fixed the same shape of problem elsewhere -- a just-landed "large library stalls a background importer" fix was the direct reason this feature got a per-pass volume index instead of an O(files x volumes) database walk.
+
 - 2026-08-20 `conductor/t-120` — A roadmap task in a status outside the documented lifecycle is invisible, not deferred -- every selection path matches `status == "ready"` exactly, so it never surfaces as ready work, a gate, or blocked. Eight such tasks hid the entire remaining backlog of the portfolio's top-priority project, and four scheduled cycles in one day silently fell through to a 12th-ranked recurring polish task as a result. audit_roadmaps.py had been reporting all eight as errors the whole time but is advisory and always exits 0 -- the second time an advisory-only finding (after DUPLICATE_TASK_ID) had to be promoted into validate_roadmaps.py's hard CI gate after it had already caused real damage. When a cycle reports "no claimable work" for a project ranked above the one it picks, verify the claim against a status histogram instead of recording it.
 
 - 2026-08-20 `model-builder/t-029` — Cycle 25 of a long-running recurring polish task: two sibling store-wide "operation in flight" flags (state.autoBuilding for whole-run auto-build, state.batchingOutputKey for group batch ops) had each grown their own exclusion logic over many prior cycles without ever being cross-checked against each other, letting a user start two independent, interleaved orchestration passes over the same run's items concurrently. When a codebase accumulates many narrow single-purpose "in flight" guards over successive cycles, it's worth periodically tracing all such flags against each other as a set, not just auditing each one against the actions it already knows to check.
@@ -103,8 +105,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-19 `davinci/t-021` — Slice 9 fixed a real focus-loss bug (chapter-swap v-if/v-else-if unmounting the clicked button with nothing restoring focus), verified against a real, named precedent (model-builder-manager.vue's identical fix) rather than inventing a pattern from scratch. Separately, this cycle demonstrated the documented "in-flight git workaround" recovery path working as intended at a new scale: a first background agent pushed the implementation commit then died mid-run (API connection lost) before opening the PR. Rather than trusting an unseen report or re-doing the work blind, the foreground session checked live GitHub state directly (list_branches/list_commits) to confirm exactly one clean commit existed on the stranded branch, then dispatched a second worktree-isolated agent with explicit instructions to independently re-verify the diff's claims (not just trust the first agent's commit message) before finishing the PR+merge. Worth generalizing: when a background agent dies mid-task after a git-mutating step already landed, the recovery move is "verify live state, then dispatch a fresh agent to independently confirm and complete" -- not "assume it succeeded" and not "discard and redo from scratch."
 
-- 2026-08-19 `kind-economy/t-009` — A new dashboard page's content/*.md frontmatter can declare background* art routes that verifyPageBackdrop.ts requires a matching PageSeed entry in stores/seeds/pageBackdropArtPrompts.ts for -- easy to miss in a sandbox with no live DB/browser to catch the 404 directly, but caught reliably by CI's contract check. Worth adding "does this page need a backdrop seed entry" to the standard pre-PR checklist for any task creating a new page.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-20T14:44:12Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-20T15:11:05Z_
