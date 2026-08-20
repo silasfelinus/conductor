@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-20T17:28:46Z
+Generated: 2026-08-20T17:41:04Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **707**
-- Outcomes: blocked: 15, cancelled: 1, done: 691
+- Closed tasks recorded: **708**
+- Outcomes: blocked: 15, cancelled: 1, done: 692
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
 | interface-vision | 83 | 100% |
-| kapowarr | 40 | 100% |
+| kapowarr | 41 | 100% |
 | kind-economy | 6 | 100% |
 | kind-robots | 50 | 98% |
 | kindrobots-unraid | 5 | 100% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 691 | 99% |
+| software | 692 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-20 `kapowarr/t-043` — An evaluation task hands you the preconditions it expects to be decisive, and the real work is checking whether they are the binding ones. t-043's note said "require a maintainable client API and matching strategy before implementation." Both fail -- aMule's EC protocol documents its own opcodes and tag formats as "still changing" and requires the client binary to come from the same release as the daemon, and Kad routes every search on the hash of the FIRST keyword, which our query builder guarantees is the series title, the most contended word available. Either finding alone justifies a decline. But answering only those two would have produced a correct verdict on the wrong question, because the task's stated PURPOSE was non-US catalog coverage, and acquisition is not where that coverage is lost: Kapowarr only searches for volumes already in the library, volumes enter via ComicVine + Metron, and a bande dessinee is absent from both -- so it is never added, never monitored, and no protocol is ever asked about it. A fourth download protocol does not enter that chain at any point. Check the premise, not just the preconditions. Second: say plainly when the architecture is NOT the obstacle. Every seam a fourth protocol needs is already open here (SearchSources, DownloadPreppers, ExternalDownloadClient, QueryBuilders are all registries; all 16 DownloadType. reference sites are registrations or lookups, no exhaustive switch). Recording that stops the next source evaluation from re-deriving it and keeps the decline scoped to ed2k instead of reading as "this fork is closed to new sources." Third: this declines rather than defers, and the distinction is worth carrying. t-042 deferred debrid because its one risk (no account to test against) shrinks by waiting. Nothing in t-043 shrinks by waiting -- EC's version lockstep is a property of aMule and first-keyword routing is a property of Kademlia. Leaving it open as "lower-priority research" would only guarantee a future session re-derives the same answer.
 - 2026-08-20 `kapowarr/t-042` — Read the actual request before evaluating the feature its name implies. "Debrid support" almost always means feed-a-magnet-to-the-cache, and evaluating that would have produced a correct, well-argued, useless answer -- it has no home in this codebase. Upstream #276 is one sentence, and the operative clause is "instead of having to use Mega directly": the user wants a hoster link unrestricted, which maps onto BaseDirectDownload._convert_to_pure_link() so exactly that PixelDrainDownload is already the template. Same two words, opposite verdicts, and the only thing separating them was reading the issue rather than the label. Second: "does this contaminate the generic architecture with a provider-specific shortcut" cannot be answered without checking whether the architecture is generic today. It is not -- __purify_link is a per-hoster if/elif chain, the queue special-cases Mega by isinstance, and the base class sniffs for Pixeldrain's rate-limit URL. Ten such precedents. A constraint written to protect a clean seam reads very differently once you have confirmed the seam is already provider-shaped, and reporting that honestly is more useful than either enforcing the constraint literally or quietly ignoring it.
 
 - 2026-08-20 `kapowarr/t-045` — Read a multi-part task's code before believing its note about what is left. This one read "add safe extraction for CBR/RAR first, then other practical formats" as though no part had shipped; CBR/RAR had in fact been in comic_reader.py since the reader landed, so the whole task was its second clause. A roadmap note is a snapshot of intent at filing time and goes stale silently -- three minutes of grep resized the work before any of it was planned wrong. The other lesson is that copying an existing pattern is not the same as copying its threat model. list_tar_pages/read_tar_member mirror the ZIP and RAR pairs almost line for line, and mirroring them exactly would have shipped a file-read primitive: a tar, unlike a zip, can carry symlink members, and extractfile() resolves the link target, so a member named 001.jpg pointing at /etc/passwd would have been served straight back through the authenticated page endpoint. The guard is one isfile() check, but nothing in the pattern being copied would have suggested needing it. When adding a sibling format, ask what the new container can express that the old one could not.
@@ -103,8 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-19 `storybook/t-010` — Cycle 20 of the recurring storybook/t-010 bug-hunt: Dream rows without a first-class Prisma model of their own (Location is just dreamType === 'LOCATION' on the generic Dream table) are easy to under-serve relative to Character/Reward/Scenario/Facet, which each have both a dedicated model and a dedicated detail component with its own "start a story" deep-link CTA. The generic dream-narration.vue detail surface had no such CTA for any Dream type, so seedFromQuery()'s ?location= query key had been dead code with no sender anywhere in the repo since it was added. Worth checking, for any future object type added to Storybook's seed-query set, whether it actually has a first-class detail component or only the generic Dream surface -- the generic surface is the one that silently misses new CTAs.
 
-- 2026-08-19 `brainstorm/t-021` — Adding real behavioral test coverage for Pinia store logic in this repo hits a real environmental wall: a store file that imports another store transitively (brainstormStore.ts -> serverStore -> userStore -> achievementStore) can be unimportable from a plain tsx process even though none of the actual logic under test needs Pinia, because some unrelated store in the chain calls a Vite-only API (import.meta.glob) at module load time. The fix already has a name in this codebase -- brainstormSourceAdapterKit.ts/brainstormSourceContextKit.ts already split pure logic out for exactly this reason -- but it's not written down as a general rule anywhere, so it's worth re-deriving the "does this file transitively import a store with a Vite-only top-level call" question explicitly before assuming a store's exports are tsx-testable. Second lesson: a CI job that installs with `npm ci --ignore-scripts` (for speed) skips the `nuxi prepare` postinstall that generates the '@/' path-alias tsconfig -- any new tsx-run script under such a job must use relative imports, not '@/', or verify locally with `.nuxt` removed before trusting it'll pass in CI.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-20T17:28:46Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-20T17:41:04Z_
