@@ -367,3 +367,60 @@ docstring/usage text recommending `git fetch origin main && git merge
 origin/main --ff-only` (or equivalent) immediately before any
 `set_task_field.py` call that follows a `claim_task.py` call in the same
 session.
+
+## 2026-08-20 | Agent (scheduled conductor sweep) | davinci/t-021 | reviewer
+
+**Decision:** picked davinci/t-021 (slice 10) as the top eligible priority.yaml
+project with genuinely fresh ready work — mermaids-of-venice/t-013 (higher
+priority) had already recorded its once-per-Pacific-day no-op earlier the
+same Pacific day, and model-builder/t-029 and storybook/t-010 (also higher
+priority) had each already run a cycle earlier the same UTC day per the two
+prior TALKBACK entries immediately above this one — re-running any of the
+three the same day would have been a duplicate, not fresh work.
+
+**What happened:**
+- Read slice 9's own REMAINING note (t-021's roadmap note) verbatim rather
+  than re-deriving scope: it explicitly named the next concrete gap — the
+  OUTER `phase` (`loading`/`start`/`playing`/`ending`) v-if/v-else-if chain
+  in `davinci-page.vue` has no persistent wrapper, the identical focus-loss
+  shape slice 9 fixed one level down for `chapterRegion`, and flagged that
+  the narrower fix can't catch every case: `resolveLife`'s "See your ending"
+  click lives inside `chapterRegion`, but its phase transition unmounts the
+  entire `playing` block, `chapterRegion` included.
+- Implemented the same wrap-and-watch pattern one level up: a persistent
+  `phaseRegion` (`tabindex="-1"`) wrapping the whole outer chain, plus a
+  `watch(phase, ...)` that restores focus when the transition originated
+  from an in-region click. Added the 10th `verifyDaVinci*` guard
+  (`verifyDaVinciPhaseFocusGuard.ts` + selftest), wired into `package.json`
+  and `contract-tests.yml` alongside the nine existing guards.
+- Verified per the PR body: new guard fails pre-fix / passes post-fix
+  (git-stash round-trip against the real component), new guard selftest +
+  guard pass, all 9 prior `verifyDaVinci*` guards + selftests still pass,
+  `test:davinci-narration` (16/16) still passes, `test:layout-contract`
+  holds with no new violations, eslint clean, prettier clean (after one
+  `--write` reindent pass), `vue-tsc --noEmit` repo-wide exit 0, exactly the
+  5 intended files touched. Confirmed the large line-count diff on
+  `davinci-page.vue` (566 lines) was prettier's reindent of the whole
+  newly-wrapped block, not unintended content drift, via
+  `git diff --ignore-all-space`.
+- kind_robots PR #1980: watched all 34 check runs directly (not just
+  `mergeable_state`) rather than trusting a single poll — the aggregate
+  "Contract verifiers" job (461 steps across the growing `contract-tests.yml`
+  suite) genuinely took ~2m45s this cycle, confirmed still progressing via
+  `get_workflow_job`'s per-step timestamps rather than assumed-stuck.
+  Squash-merged once every check but the known-slow non-required "Build
+  production image" deploy job was green, per the established
+  merge-when-unstable precedent this project's slices have used since #1895.
+
+**What was good:** read the prior slice's own REMAINING note as the actual
+scope handoff rather than re-auditing the whole file from scratch, and
+caught the case the narrower slice-9 fix couldn't cover (the nested-click
+transition that unmounts the outer container too) by tracing `resolveLife`'s
+actual call path instead of assuming the two focus regions were independent.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** deferred — the PR's own kaizen suggestion (remaining
+kr-panel/kr-stat wrapper consistency for the dimension grid, or the
+still-outstanding cross-width visual verification) is already recorded on
+the task note as the next lead, not yet a confirmed separate roadmap task.
