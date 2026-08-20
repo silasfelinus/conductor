@@ -1465,35 +1465,15 @@ tasks:
   milestone: m5
   title: Pin the search-ranking tier order with one table-driven test instead of pairwise
     boundaries
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
-  note: |-
-    Kaizen from t-060 (silasfelinus/Kapowarr#90). _rank_search_result()
-    (backend/features/search.py) now appends five components in a deliberate order:
-    match, title-word overlap, volume/year, peer availability, pack preference, then
-    issue-number fit. The ORDER is the actual policy -- it is what decides that a
-    well-seeded wrong issue loses to a correct dead one -- but it is documented only in
-    inline comments and enforced only by pairwise tests that each pin one adjacent
-    boundary (t-060 added three such cases; the pack-preference cycle added one).
-
-    Nothing fails if a future component is inserted at the wrong tier, or if two
-    components are silently transposed: every existing pairwise assertion can still pass
-    while the overall policy changes. Three of the components (pack_preference_rank,
-    getcomics_quality_rank, availability_rank) additionally share an unwritten
-    "neutral returns 0 for every result, preserving historical order" contract that no
-    single test states.
-
-    Scope: one table-driven test in tests/Tbackend/acquisition_preferences.py that
-    constructs results differing in exactly one component at a time and asserts the full
-    tier ordering in a single place, plus an assertion that each neutral-capable
-    component returns 0 for every result under its neutral setting. Test-only change --
-    no production behaviour should move. If writing it reveals that the current order is
-    wrong somewhere, fix that in a separate task rather than folding it in.
+  note: 'Done 2026-08-20 via Kapowarr PR #92 (squash fbf8b67). RANKING_TIERS in tests/Tbackend/acquisition_preferences.py now states all six _rank_search_result() components in one table, most significant first, with one test asserting the full sorted tier order and a second guarding that each table entry degrades exactly one component (so an inserted or transposed component fails loudly). Also pins the shared neutral contract for pack_preference_rank, getcomics_quality_rank and availability_rank. Test-only -- backend/ is byte-identical to main. Both new tests were verified to FAIL against a deliberately transposed policy and against a component inserted above match correctness; the latter is caught only by the new guard while all 22 pre-existing tests still pass, which is the gap the task described.'
   claimed_by: sched-20260820T2130Z-kapowarr-t063-b9d4
   claimed_at: '2026-08-20T19:40:54Z'
-  updated: '2026-08-20T19:40:54Z'
+  updated: '2026-08-20T19:45:00Z'
+  implementation_pr: 'silasfelinus/Kapowarr#92'
 - id: t-064
   milestone: m8
   title: Make ComicVine's system-events instrumentation a provider-declared opt-in
@@ -1529,3 +1509,36 @@ tasks:
     and let unrecognized exceptions fall to other_error -- decide which and say why in
     the PR. tests/Tbackend/system_events.py exercises _instrument_comicvine directly and
     is the regression net; the counters it asserts must not change for ComicVine.
+- id: t-065
+  milestone: m5
+  title: Return search ranking as a named tuple instead of a bare positional list
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: |
+    Kaizen from t-063 (Kapowarr PR #92). t-063 pinned the six-component ordering of
+    _rank_search_result() (backend/features/search.py) with a table-driven test, because
+    the order is the actual ranking policy and nothing enforced it as a whole. The test
+    is a safety net over a design that needs one: the function returns a bare List[int]
+    whose positions carry all the meaning, so at every call site the policy is invisible
+    and a component inserted at the wrong index is a silent behaviour change.
+
+    Scope: give the ranking a NamedTuple with one field per tier (match,
+    title_overlap, volume_year, availability, pack_preference, issue_fit) and return
+    that instead of the list. Tuples compare lexicographically exactly as lists do, so
+    the sort at search.py:405 and every comparison in the tests keep working unchanged
+    -- this should be a pure readability change with no behaviour movement, which is
+    the bar to hold it to.
+
+    Two things to check rather than assume. First, the issue-fit component is
+    conditionally appended: the volume-search branch appends nothing at all when
+    issue_number is neither a tuple nor a float, so the current list is not always six
+    long and a fixed-width NamedTuple has to pick a neutral default for that case and
+    prove it does not reorder anything. Second, t-063's
+    test_each_entry_degrades_exactly_its_own_component asserts the rating length equals
+    len(RANKING_TIERS); it will need to move to field names, and doing so should make
+    it stricter, not weaker.
+
+    If this lands, t-063's table becomes a redundant second statement of the order
+    rather than the only one -- keep it anyway, but say so in its comment.
