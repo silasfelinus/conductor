@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-20T09:28:02Z
+Generated: 2026-08-20T09:54:04Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **701**
-- Outcomes: blocked: 15, cancelled: 1, done: 685
+- Closed tasks recorded: **702**
+- Outcomes: blocked: 15, cancelled: 1, done: 686
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -43,7 +43,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 70 | 100% |
+| model-builder | 71 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 685 | 99% |
+| software | 686 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-20 `model-builder/t-029` — Cycle 25 of a long-running recurring polish task: two sibling store-wide "operation in flight" flags (state.autoBuilding for whole-run auto-build, state.batchingOutputKey for group batch ops) had each grown their own exclusion logic over many prior cycles without ever being cross-checked against each other, letting a user start two independent, interleaved orchestration passes over the same run's items concurrently. When a codebase accumulates many narrow single-purpose "in flight" guards over successive cycles, it's worth periodically tracing all such flags against each other as a set, not just auditing each one against the actions it already knows to check.
+
 - 2026-08-20 `davinci/t-021` — Slice 10 of a recurring polish task: reading the prior slice's own REMAINING note as the literal scope handoff (rather than re-auditing the whole file) surfaced a real gap the narrower chapterRegion focus-loss fix (slice 9) couldn't catch on its own -- a nested click whose state transition unmounts the outer container the inner region lives inside, not just the inner region itself. Confirming this required tracing the actual call path (resolveLife -> resumeRun -> phase mutation) rather than assuming two focus-restoring regions at different nesting depths are independent.
 
 - 2026-08-20 `conductor/t-119` — The status:review transition (AGENTS.md step 7) was left ambiguous between claim_task.py's sanctioned direct-to-main exception and close_task.py's branch+PR pattern -- resolved by routing it through close_task.py (which already supports arbitrary target statuses, review included) rather than inventing a new script or a new hard-rule-1 exception. model-builder/t-029 cycle 21's STATUS.md merge conflict, doing this transition by hand with set_task_field.py + a manually-managed branch, was a symptom of not using the existing fetch-fresh git plumbing, not evidence that branch+PR is the wrong shape for this transition.
@@ -103,8 +105,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-19 `kind-economy/t-008` — Clean first-pass Worker output on a genuinely ambiguous accounting task: the roadmap note left two real judgment calls open (a documented rounding rule for the 3-way split, and how to treat a per-transaction payment-processing fee when tokens are purchased in batches but spent fungibly later) and the Worker resolved both with a named constant, an inline rationale, and a 20,000-iteration property test proving the sum-to-gross invariant holds exactly including negative-margin rows -- rather than picking a plausible number and moving on. It also independently re-verified the task note's own claim ("costUsd is never reconciled against real billing") by grepping every gate.commit() call site itself instead of taking the note at face value, and surfaced it as a flagged follow-up rather than baking a false assumption into the schema doc comments. Reviewed the migration.sql line-by-line (additive CREATE TABLE + one FK only) before merging, per this repo's financial-ledger convention -- the Worker's own PR body correctly left the PR unmerged for exactly that reason instead of assuming a non-gate_human task meant no review was needed.
 
-- 2026-08-19 `kind-economy/t-007` — Clean first-pass Worker output: additive-only migration (ADD COLUMN IF NOT EXISTS / CREATE INDEX matching the repo's established convention), a resolver that never throws (a lookup failure degrades to "no attribution" rather than failing the charge), and both open policy questions (mission-share fallback on unresolved creatorUserId, self-attribution recorded but not decided) handled exactly as the task note specified rather than guessed at. Reviewed the actual diff (schema, migration.sql, manaAttribution.ts, manaGate.ts wiring) rather than trusting the PR description alone.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-20T09:28:02Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-20T09:54:04Z_
