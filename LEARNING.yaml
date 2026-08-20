@@ -9375,3 +9375,23 @@ records:
     gate after it had already caused real damage. When a cycle reports "no claimable
     work" for a project ranked above the one it picks, verify the claim against a
     status histogram instead of recording it.
+- date: 2026-08-20
+  project: kapowarr
+  task: t-034
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    When adding an unattended path into an existing pipeline, the reusable seam is
+    usually the one the manual version already uses -- here manual_import_files() plus
+    the mass_rename/mass_convert/mass_process_files trio, rather than fabricating the
+    Download object post_processing.py is built around for something that was never
+    downloaded. Two things worth copying next time: enforce a stated scope boundary in
+    code as well as prose (the "don't compete with continuous import" requirement became
+    both a never-create-a-volume rule and a settings-level folder-collision check, from
+    both sides), and check whether the repo has recently fixed the same shape of problem
+    elsewhere -- a just-landed "large library stalls a background importer" fix was the
+    direct reason this feature got a per-pass volume index instead of an O(files x
+    volumes) database walk.
