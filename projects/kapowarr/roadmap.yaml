@@ -872,13 +872,16 @@ tasks:
 - id: t-034
   milestone: m5
   title: Add watched-folder auto import for external downloads
-  status: ready
-  owner: null
+  status: claimed
+  owner: reviewer
   passes: 0
   stakes: reversible
   note: 'Implement upstream issue #122''s workflow: watch inbound folders, match completed external files
     to known volumes/issues, then move, rename, convert and register through the hardened post-processing
     pipeline. Do not compete with root-library continuous import.'
+  claimed_by: sched-20260820T1450Z-kapowarr-t034
+  claimed_at: '2026-08-20T14:43:42Z'
+  updated: '2026-08-20T14:43:42Z'
 - id: t-035
   milestone: m5
   title: Add NZBGet as a second Usenet download client
