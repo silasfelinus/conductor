@@ -1372,31 +1372,15 @@ tasks:
 - id: t-059
   milestone: m8
   title: Evaluate a metadata provider with genuine non-US comic coverage (GCD first)
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
-  note: |-
-    Filed from t-043 (projects/kapowarr/docs/t-043-ed2k-boundary.md), which set out to
-    evaluate eMule/aMule for non-US catalogs and found that acquisition is the wrong
-    layer for that problem. Kapowarr only searches for volumes already in the library,
-    and volumes enter through ComicVine + Metron -- two anglophone US direct-market
-    databases. A Franco-Belgian album or an Italian fumetto cannot be added, so it is
-    never monitored, so no search of any protocol ever runs for it. Adding a fourth
-    download protocol does not enter that chain anywhere.
-
-    THIS is the lever t-043 was actually reaching for. Scope: evaluate one provider with
-    real international coverage against the existing MetadataProvider /
-    MetadataProviderRegistry seam (docs/metadata-providers.md), which the fork already
-    exercised once by landing Metron beside ComicVine with additive volume_external_ids
-    identity rather than ID conversion. The Grand Comics Database is the obvious first
-    candidate -- international by construction, publishes bulk data dumps -- but its
-    API/dump ergonomics against the provider contract are exactly what this task should
-    establish rather than assume. Deliverable is an evaluation doc with a recommendation,
-    same shape as t-042/t-043; implement only if the contract fits without special-casing.
+  note: 'Evaluated and APPROVED; see projects/kapowarr/docs/t-059-gcd-metadata-provider.md (silasfelinus/conductor#2585). Verdict differs from t-043 in kind: nothing here is structural, so this is approve-and-sequence rather than decline. TWO CORRECTIONS TO THE TASKS OWN PREMISE. (1) GCD IS NO LONGER DUMP-ONLY. The note inherited t-043s (correct-when-written, eight days stale) framing. There is now a live public REST API at https://www.comics.org/api/, reachable anonymously from this sandbox, with an OpenAPI schema at /api/schema/. This decides the verdict, because the dump contains NO IMAGE URLS AT ALL -- which is exactly why the reference consumer, comictagger/gcd_talker, has to scrape comics.org HTML for covers and check for Cloudflare challenge pages while doing it -- whereas the API returns cover_url directly. The dump is also ~6 GB, bi-weekly, and login-gated. Same provider, opposite verdict, entirely down to access path. (2) THE TASKS GATE ("implement only if the contract fits without special-casing") SPLITS. MetadataProvider, MetadataProviderRegistry, MetadataIdentityStore, VolumeMetadata/IssueMetadata, Volume.add (volumes.py:1100), the refresh path (volumes.py:1471-1477) and the POST /api/volumes route (frontend/api.py:796) are all genuinely provider-generic -- every call site was read. But search_metadata_with_fallback() (backend/features/metadata.py:233) is hardcoded to exactly two providers: it imports MetronError by name and calls _metron_is_configured() (metadata.py:224), which peeks at settings.metron_* directly and is called at four sites; the registrys lazy imports name comicvine/metron explicitly in both get() and capabilities(). The registry cannot route around this because the contract has no is_configured(). So the contract fits, the fan-out does not, and the fix DELETES Metrons special-casing rather than adding GCDs beside it. Filed t-061 (generalize the fan-out, ready) and t-062 (implement the GCD provider, waiting on t-061) rather than smuggling a third branch into a function that already has two. COVERAGE, MEASURED NOT ASSUMED: /api/series/name/Tintin/ returns 145 series -- 20 Franco-Belgian vs 3 US on page one, plus Italian, Portuguese, Spanish, Danish, Norwegian, German, Dutch, Thai and Scots/Welsh/Gaelic/Picard; Asterix 188; Tex 389, largest the 973-issue Italian Collana del Tex. FOUR MEASURED TRAPS recorded on t-062 so the implementation does not rediscover them: page size is fixed at 50 with page_size/limit silently ignored, so /api/series/name/a/ is 178,526 results = 3,571 pages and Metrons unbounded _all() helper must NOT be reused for search; a series name containing / 404s even percent-encoded and returns an Apache HTML page rather than a JSON error; key_date returns literal "1959-00-00" placeholders that are not valid dates; GCD has no series-level volume number (default to 1, do not silently adopt gcd_talkers year-as-volume). Cost measured: 973 issues in 20 requests / 11.5s / no 429 anonymously, via /api/series/{id}/overview/, which returns per-issue number/key_date/on_sale_date/cover_url and lets a whole issue list load without a detail request per issue. NOT VERIFIED, stated as judgment: the current GCD license version -- search summaries disagree between CC BY 3.0 and CC BY-SA 4.0 (ShareAlike is materially stronger) and the primary source is behind a Cloudflare 403 that this sandbox reproduced on docs.comics.org and www.comics.org HTML while /api/ paths pass unchallenged; recorded as an open decision for Silas on t-062, not a gate here. Also not verified: the authenticated rate limit (no GCD account), and how well GCD titles match filenames in practice. Deliberately NO EGRESS-BLOCKERS.md entry -- by that ledgers own definition a real HTTP response means reachable and only connection-level failure means blocked, so a bot challenge is not an egress block.'
   claimed_by: sched-20260820T2000Z-kapowarr-t059-a7f2
   claimed_at: '2026-08-20T18:28:24Z'
-  updated: '2026-08-20T18:42:07Z'
+  updated: '2026-08-20T18:45:59Z'
+  implementation_pr: 'silasfelinus/conductor#2585'
 - id: t-060
   milestone: m5
   title: Make peer availability count in search ranking instead of only in the UI
