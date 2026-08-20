@@ -1384,8 +1384,8 @@ tasks:
 - id: t-060
   milestone: m5
   title: Make peer availability count in search ranking instead of only in the UI
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: |-
@@ -1410,6 +1410,9 @@ tasks:
     for "handed to the client, waiting in a remote queue, transferring nothing." t-042
     found the same gap for debrid cache-waits and t-043 found it for ed2k source queues.
     Whichever lands first should design the state; see t-058.
+  claimed_by: sched-20260820T2000Z-kapowarr-t060-c4e1
+  claimed_at: '2026-08-20T18:51:04Z'
+  updated: '2026-08-20T18:51:04Z'
 - id: t-061
   milestone: m8
   title: Generalize the metadata search fan-out to registered providers instead of hardcoding
