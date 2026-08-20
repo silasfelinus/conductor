@@ -111,9 +111,31 @@ todo explicitly asks for it. Scope is exactly what the title/description says.
    burst-mode cycles doing Worker-style roadmap pickup, not only the OpenAI hourly
    Worker. Once implementation is done and you're about to `gh pr create` (or the
    GitHub MCP equivalent), run
-   `python scripts/set_task_field.py <project> <task-id> status review` (and confirm
+   `python scripts/close_task.py <project> <task-id> review --session <id>` (own
+   branch + its own small PR into `main` — **never** `set_task_field.py` followed by
+   a direct commit/push, and never a direct push to `main` the way `claim_task.py`'s
+   single atomic claim commit is sanctioned to do). `close_task.py` is not just for
+   `done`: its `status` argument is generic (its own docstring's usage examples cover
+   `done`, `needs-human`, and this `review` case identically), so the same
+   collision-resistant, fetch-checked-against-`origin/main` git plumbing that avoids
+   a stale-branch merge conflict on `done`/`needs-human` also covers `review` — no
+   new script needed. (Resolved conductor/t-119, 2026-08-20: AGENTS.md previously left
+   this transition's landing mechanism ambiguous — `claim_task.py` has an explicit,
+   documented direct-to-`main` exception to hard rule 1 for its one atomic claim
+   commit, `close_task.py`'s own docstring is explicit that hard rule 1 does **not**
+   carve out a second exception for close-out-shaped bookkeeping, but nothing said
+   which side of that line the `review` transition falls on. Prior git history
+   (`4dac352`, `ec5086a`) was genuinely ambiguous either way. model-builder/t-029
+   cycle 21 (2026-08-20) treated it as needing its own branch+PR per a strict reading
+   of hard rule 1 and hit a real STATUS.md-refresh merge conflict doing so by hand
+   with `set_task_field.py` + a manually-managed branch — but that conflict was a
+   symptom of not using `close_task.py`'s fetch-fresh plumbing for the transition,
+   not of branch+PR being the wrong shape. `close_task.py`'s own git plumbing commits
+   directly against whatever `origin/main`/`origin/<branch>` looks like *at push
+   time*, the same way `claim_task.py`'s does — so routing `review` through it avoids
+   that conflict class without needing a new direct-to-`main` exception.) Confirm
    `claimed_by`/`owner` still identify your session and its actual branch name — it
-   does not need to start with `worker/`) so a later Reviewer sweep can find the
+   does not need to start with `worker/` — so a later Reviewer sweep can find the
    in-progress work by reading roadmap state, instead of having to hand-check the
    open-PR list on GitHub. Skipping this step is exactly what caused
    `superkate-hairstyle-ai/t-017` to sit at `status: claimed` after PR #317 had
@@ -123,11 +145,13 @@ todo explicitly asks for it. Scope is exactly what the title/description says.
    under `CLAIM_TTL_MINUTES` while the PR is still open. If your session merges its
    own PR in the same run (see "Reviewer (Claude) — CAN merge ... from `claude/*`
    branches" below), it's fine for `status: review` to be short-lived — set it before
-   `gh pr create` and flip to `status: done` right after the merge via
-   `scripts/close_task.py` (own branch + its own small PR, never a direct push to
-   `main` — see the "software" close-out step below) — the point is that roadmap
-   state never silently jumps from `claimed` to `done` with no externally-visible
-   checkpoint in between.
+   `gh pr create` and flip to `status: done` right after the merge via another
+   `scripts/close_task.py` call (own branch + its own small PR, never a direct push
+   to `main` — see the "software" close-out step below; several close-outs from the
+   same PR/session can share one `close_task.py` branch, so the `review` and `done`
+   transitions for the same task may land as one PR when both happen in the same
+   run) — the point is that roadmap state never silently jumps from `claimed` to
+   `done` with no externally-visible checkpoint in between.
 
 ### Rotation collisions
 
