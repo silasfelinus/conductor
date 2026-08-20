@@ -1384,35 +1384,15 @@ tasks:
 - id: t-060
   milestone: m5
   title: Make peer availability count in search ranking instead of only in the UI
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
-  note: |-
-    Filed from t-043. SearchResultAvailabilityData (backend/base/definitions.py:660)
-    carries seeders/leechers and Torznab populates it, but _rank_search_result()
-    (backend/features/search.py:57) never reads it -- a grep confirms the only consumers
-    are frontend/static/js/view_volume.js:385 and the manual-search table column. So peer
-    availability is display-only: auto_search will happily pick a zero-seeder release over
-    a healthy one, and a user only sees the difference if they run a manual search and
-    look at the column.
-
-    Scope: teach _rank_search_result() to prefer available releases. Two cautions from
-    t-043's reading. (1) Rank position matters -- availability belongs below
-    match/title/year correctness, in roughly the slot pack_preference_rank() occupies, not
-    above it; a well-seeded wrong issue is still the wrong issue. (2) Absent data must not
-    be penalised: the field is total=False and GetComics/Newznab results have no peer
-    counts at all, so None has to rank neutrally or the change quietly demotes every
-    non-torrent source. Helps torrents today and needs no new protocol.
-
-    Third finding from t-043 recorded here rather than as its own task, since it is not
-    actionable until something needs it: DownloadState (definitions.py:564) has no member
-    for "handed to the client, waiting in a remote queue, transferring nothing." t-042
-    found the same gap for debrid cache-waits and t-043 found it for ed2k source queues.
-    Whichever lands first should design the state; see t-058.
+  note: 'Done; implemented in silasfelinus/Kapowarr#90 (squash 0094dc5). ROOT CAUSE CONFIRMED AS FILED: SearchResultAvailabilityData (backend/base/definitions.py:679) is populated by Torznab (torznab.py:497-500) but _rank_search_result() never read it, so the only consumers were frontend/static/js/view_volume.js:396-397 and the manual-search table column -- peer availability was display-only and auto_search could pick a zero-seeder release over a healthy one. FIX: availability_rank() added beside pack_preference_rank()/getcomics_quality_rank() in backend/features/acquisition_preferences.py and appended in _rank_search_result(). BOTH CAUTIONS FROM THE TASK NOTE HELD, and the second one determined the design: because the field is total=False and only Torznab populates it, a seeder-count gradient cannot place a no-peer-data result anywhere without promoting or demoting every non-torrent source for no reason, so the only shape satisfying "absent data ranks neutrally" is binary -- missing, None and any positive count all score 0; only an explicit zero (or a negative, from a malformed indexer response) is demoted. RANK POSITION went one tier higher than the note suggested, deliberately: below match/title/year correctness as required (a well-seeded wrong issue is still the wrong issue) but ABOVE pack preference, since preferring the shape of a release nobody can download is meaningless. Pinned from both directions by named tests so a reviewer who disagrees gets a failing test, not a silent change. ONE DELIBERATE DIVERGENCE flagged in projects/kapowarr/TALKBACK.md: unlike its neighbours this reads no settings and has no off switch, because zero seeders is a fact about the release rather than a preference about it; a side benefit is that it needs no database and therefore no Flask app_context in tests. VERIFIED: 7 new tests in tests/Tbackend/acquisition_preferences.py covering both cautions, the negative-count case, and both rank-position boundaries; full suite via the project''s own CI command (python -m unittest discover -s ./tests -p ''*.py'') = 619 tests, OK; PR checks all green before merge -- Tests on 3.8/3.9/3.10/3.11/3.12, Build docs, Build container. OUT OF SCOPE, LEFT WHERE IT WAS: the third t-043 finding this task also carried (DownloadState has no member for "handed to the client, waiting in a remote queue, transferring nothing") is untouched -- it is a separate design question, still owned by whichever of t-058/t-042''s debrid work lands first. Kaizen filed as t-063: the ranking TIER ORDER is the actual policy but is pinned only by pairwise adjacent-boundary tests, so a future component inserted at the wrong tier would break nothing.'
   claimed_by: sched-20260820T2000Z-kapowarr-t060-c4e1
   claimed_at: '2026-08-20T18:51:04Z'
-  updated: '2026-08-20T18:57:45Z'
+  updated: '2026-08-20T19:00:48Z'
+  implementation_pr: 'silasfelinus/Kapowarr#90'
 - id: t-061
   milestone: m8
   title: Generalize the metadata search fan-out to registered providers instead of hardcoding
