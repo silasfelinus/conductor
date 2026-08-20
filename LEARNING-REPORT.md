@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-20T13:50:17Z
+Generated: 2026-08-20T14:43:31Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **702**
-- Outcomes: blocked: 15, cancelled: 1, done: 686
+- Closed tasks recorded: **703**
+- Outcomes: blocked: 15, cancelled: 1, done: 687
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -26,7 +26,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 25 | 100% |
-| conductor | 77 | 100% |
+| conductor | 78 | 100% |
 | conductor-app | 4 | 100% |
 | davinci | 6 | 100% |
 | digital-storefront | 29 | 100% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 686 | 99% |
+| software | 687 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-20 `conductor/t-120` — A roadmap task in a status outside the documented lifecycle is invisible, not deferred -- every selection path matches `status == "ready"` exactly, so it never surfaces as ready work, a gate, or blocked. Eight such tasks hid the entire remaining backlog of the portfolio's top-priority project, and four scheduled cycles in one day silently fell through to a 12th-ranked recurring polish task as a result. audit_roadmaps.py had been reporting all eight as errors the whole time but is advisory and always exits 0 -- the second time an advisory-only finding (after DUPLICATE_TASK_ID) had to be promoted into validate_roadmaps.py's hard CI gate after it had already caused real damage. When a cycle reports "no claimable work" for a project ranked above the one it picks, verify the claim against a status histogram instead of recording it.
+
 - 2026-08-20 `model-builder/t-029` — Cycle 25 of a long-running recurring polish task: two sibling store-wide "operation in flight" flags (state.autoBuilding for whole-run auto-build, state.batchingOutputKey for group batch ops) had each grown their own exclusion logic over many prior cycles without ever being cross-checked against each other, letting a user start two independent, interleaved orchestration passes over the same run's items concurrently. When a codebase accumulates many narrow single-purpose "in flight" guards over successive cycles, it's worth periodically tracing all such flags against each other as a set, not just auditing each one against the actions it already knows to check.
 
 - 2026-08-20 `davinci/t-021` — Slice 10 of a recurring polish task: reading the prior slice's own REMAINING note as the literal scope handoff (rather than re-auditing the whole file) surfaced a real gap the narrower chapterRegion focus-loss fix (slice 9) couldn't catch on its own -- a nested click whose state transition unmounts the outer container the inner region lives inside, not just the inner region itself. Confirming this required tracing the actual call path (resolveLife -> resumeRun -> phase mutation) rather than assuming two focus-restoring regions at different nesting depths are independent.
@@ -103,8 +105,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-19 `kind-economy/t-009` — A new dashboard page's content/*.md frontmatter can declare background* art routes that verifyPageBackdrop.ts requires a matching PageSeed entry in stores/seeds/pageBackdropArtPrompts.ts for -- easy to miss in a sandbox with no live DB/browser to catch the 404 directly, but caught reliably by CI's contract check. Worth adding "does this page need a backdrop seed entry" to the standard pre-PR checklist for any task creating a new page.
 
-- 2026-08-19 `kind-economy/t-008` — Clean first-pass Worker output on a genuinely ambiguous accounting task: the roadmap note left two real judgment calls open (a documented rounding rule for the 3-way split, and how to treat a per-transaction payment-processing fee when tokens are purchased in batches but spent fungibly later) and the Worker resolved both with a named constant, an inline rationale, and a 20,000-iteration property test proving the sum-to-gross invariant holds exactly including negative-margin rows -- rather than picking a plausible number and moving on. It also independently re-verified the task note's own claim ("costUsd is never reconciled against real billing") by grepping every gate.commit() call site itself instead of taking the note at face value, and surfaced it as a flagged follow-up rather than baking a false assumption into the schema doc comments. Reviewed the migration.sql line-by-line (additive CREATE TABLE + one FK only) before merging, per this repo's financial-ledger convention -- the Worker's own PR body correctly left the PR unmerged for exactly that reason instead of assuming a non-gate_human task meant no review was needed.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-20T13:50:17Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-20T14:43:31Z_
