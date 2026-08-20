@@ -1042,13 +1042,16 @@ tasks:
 - id: t-045
   milestone: m9
   title: Add CBR/RAR and remaining archive formats to the built-in reader
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: Reader-only follow-up after aggregation priorities. Library/file-processing already recognizes
     CBR/RAR plus CB7/7z, CBT/tar and other containers; the reader currently opens CBZ/ZIP, loose images
     and PDF. Add safe extraction for CBR/RAR first, then other practical formats.
+  claimed_by: sched-20260820T1700Z-kapowarr-t045-9f3d
+  claimed_at: '2026-08-20T16:32:36Z'
+  updated: '2026-08-20T16:32:36Z'
 - id: t-046
   milestone: m6
   title: Document the content-API push workaround's stale-base risk
