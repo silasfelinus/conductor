@@ -9338,3 +9338,20 @@ records:
     actual call path (resolveLife -> resumeRun -> phase mutation) rather
     than assuming two focus-restoring regions at different nesting depths
     are independent.
+- date: 2026-08-20
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Cycle 25 of a long-running recurring polish task: two sibling store-wide "operation in flight"
+    flags (state.autoBuilding for whole-run auto-build, state.batchingOutputKey for group batch ops) had
+    each grown their own exclusion logic over many prior cycles without ever being cross-checked against
+    each other, letting a user start two independent, interleaved orchestration passes over the same run''s
+    items concurrently. When a codebase accumulates many narrow single-purpose "in flight" guards over
+    successive cycles, it''s worth periodically tracing all such flags against each other as a set, not
+    just auditing each one against the actions it already knows to check.
+
+    '
