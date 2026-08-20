@@ -9414,3 +9414,26 @@ records:
     firm absence of any per-group download rate. Where a value's vocabulary is still
     uncertain, key on its stable part (a status prefix) and default the unknown case to
     the safe reading, so the adapter survives versions nobody here can test against.
+- date: 2026-08-20
+  project: kapowarr
+  task: t-045
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Read a multi-part task's code before believing its note about what is left. This one
+    read "add safe extraction for CBR/RAR first, then other practical formats" as though
+    no part had shipped; CBR/RAR had in fact been in comic_reader.py since the reader
+    landed, so the whole task was its second clause. A roadmap note is a snapshot of
+    intent at filing time and goes stale silently -- three minutes of grep resized the
+    work before any of it was planned wrong.
+    The other lesson is that copying an existing pattern is not the same as copying its
+    threat model. list_tar_pages/read_tar_member mirror the ZIP and RAR pairs almost line
+    for line, and mirroring them exactly would have shipped a file-read primitive: a tar,
+    unlike a zip, can carry symlink members, and extractfile() resolves the link target,
+    so a member named 001.jpg pointing at /etc/passwd would have been served straight
+    back through the authenticated page endpoint. The guard is one isfile() check, but
+    nothing in the pattern being copied would have suggested needing it. When adding a
+    sibling format, ask what the new container can express that the old one could not.

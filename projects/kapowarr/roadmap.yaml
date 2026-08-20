@@ -990,23 +990,61 @@ tasks:
 - id: t-040
   milestone: m8
   title: Add an Anna's Archive source adapter
-  status: ready
+  status: needs-human
   owner: null
   passes: 0
   stakes: reversible
-  note: 'Track upstream issue #171 and the maintainer''s preference for Anna''s Archive over separate
-    Z-Library/Libgen integrations. Fit discovery into the generic source/indexer boundary and only automate
-    downloads lawfully accessible to the user; do not bypass access controls.'
+  soft_gate: true
+  updated: '2026-08-20T16:45:00Z'
+  note: |-
+    FOR SILAS: Nothing has been built. This needs one scope decision from you before an
+    agent writes any code, and it is now a soft gate so it stops being re-derived by every
+    scheduled cycle (it was left at `ready` on 2026-08-20 with the reasoning only in
+    TALKBACK, and the very next session hit the same wall and had to go read it).
+
+    The task's own note says "only automate downloads lawfully accessible to the user; do
+    not bypass access controls." For a shadow-library service that is not an implementation
+    detail — it is the entire question, and an unattended run at 3am is the wrong place to
+    settle what counts as lawfully accessible.
+
+    TO APPROVE: replace this note with what you actually want, then set status: ready.
+    The three shapes worth choosing between:
+      1. Metadata/search only — surface Anna's Archive results, link out, never download.
+      2. Download only what the user's own credentials/membership already entitle them to.
+      3. Drop it — set status: blocked and say why, so it stops resurfacing.
+    Whichever you pick, t-041 (Internet Archive) is waiting on the same call in milder form.
+
+    ORIGINAL NOTE: Track upstream issue #171 and the maintainer's preference for Anna's
+    Archive over separate Z-Library/Libgen integrations. Fit discovery into the generic
+    source/indexer boundary and only automate downloads lawfully accessible to the user;
+    do not bypass access controls.
 - id: t-041
   milestone: m8
   title: Add Internet Archive public-download source support
-  status: ready
+  status: needs-human
   owner: null
   passes: 0
   stakes: reversible
-  note: Integrate Internet Archive search/metadata and official downloadable assets where an item permits
-    direct public access. Treat controlled-lending or restricted items as browse/link-out only; do not
-    build page ripping or access-control bypasses.
+  soft_gate: true
+  updated: '2026-08-20T16:45:00Z'
+  note: |-
+    FOR SILAS: Nothing has been built. Same scope call as t-040, one step milder — decide
+    both together.
+
+    Internet Archive genuinely does serve some items as free public downloads, so unlike
+    t-040 there is an unambiguous lawful slice here. The undecided part is the boundary:
+    controlled-lending items (the borrow-for-an-hour ones) are the majority of comics
+    there, and "treat as browse/link-out only" is easy to write and easy for an
+    implementation to quietly erode.
+
+    TO APPROVE: set status: ready, plus one line saying whether controlled-lending items
+    should appear in search results at all (link-out) or be filtered out of the adapter
+    entirely. Either answer is buildable; picking neither is what stalls it.
+
+    ORIGINAL NOTE: Integrate Internet Archive search/metadata and official downloadable
+    assets where an item permits direct public access. Treat controlled-lending or
+    restricted items as browse/link-out only; do not build page ripping or access-control
+    bypasses.
 - id: t-042
   milestone: m8
   title: Evaluate debrid acquisition support
@@ -1262,3 +1300,25 @@ tasks:
     container build all passed. Learning: provider abstraction is not complete while a legacy provider's
     identifier remains a schema requirement; portable identity needs nullable compatibility columns and
     refresh routing keyed by the stored provider identity.
+- id: t-057
+  milestone: m5
+  title: Decide what a checksum-less integrity verdict is worth, and verify TAR/CBT
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: |-
+    Kaizen from t-045 (Kapowarr#86), which taught the reader to open TAR/CBT and so made
+    archive_integrity.py's "nothing here can read tar" reasoning obsolete. That module still
+    returns UNSUPPORTED for tar, and the docstring now gives the honest reason: a tar carries
+    no per-member CRC, so "opens cleanly and holds a plausible page list" is all a tar could
+    ever assert -- strictly weaker than the CRC pass every CORRUPT verdict currently rests on.
+    The open question is whether that weaker signal is worth acting on at all. Its own module
+    docstring argues the asymmetry matters: a false CORRUPT blocklists a good release, deletes
+    it, and steers every future search away from it, so a verdict that cannot prove damage is
+    worse than no verdict. A tar verifier could still catch the two failures that need no
+    checksum -- a truncated file that will not open, and the metadata-only stub an indexer
+    serves in place of a real release -- both of which _judge_contents already models.
+    Decide, then either implement _verify_tar for exactly those two cases (never CORRUPT, only
+    UNREADABLE/EMPTY/OK) or record the decision not to and leave UNSUPPORTED as the answer.
+    Either outcome closes the task; a written reason is the deliverable, not the diff.
