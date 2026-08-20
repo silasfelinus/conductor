@@ -1532,14 +1532,14 @@ tasks:
 - id: t-066
   milestone: m8
   title: 'Metron.test_key() imports the wrong `run` and would raise, not return bool'
-  status: claimed
+  status: review
   owner: reviewer
   passes: 0
   stakes: reversible
   note: 'Kaizen from t-062 (GCD provider implementation). backend/implementations/metron.py imports `run` from `backend.base.helpers` (`from backend.base.helpers import (AsyncSession, force_range, normalise_string, run)`), but `helpers.py` only re-exports `subprocess.run` (`from subprocess import run`, helpers.py:18) -- there is no async-run helper defined or exported there. `test_key()` calls `run(test())` where `test()` is a coroutine function; `subprocess.run(<coroutine object>)` raises `TypeError`, it does not return `False`. Compare `backend/implementations/comicvine.py`, which does this correctly via `from asyncio import gather, run, sleep` (comicvine.py:7) and the identical `return run(_test_key())` pattern (comicvine.py:468) -- asyncio.run is the one actually needed. Net effect: any caller of `Metron(...).test_key()` (e.g. a settings-page "test credentials" button, if one exists for Metron the way ComicVine has one) gets an unhandled exception instead of a pass/fail result. Fix: change metron.py''s import to `from asyncio import run` (dropping it from the `backend.base.helpers` import list). One-line fix plus a regression test asserting `test_key()` returns a bool (True/False) rather than raising, for both the success and MetronError-caught branches -- the existing test suite has no coverage of `test_key()` at all today, which is how this shipped unnoticed.'
   claimed_by: sched-20260820T2200-kapowarr-t066-r1
   claimed_at: '2026-08-20T22:27:11Z'
-  updated: '2026-08-20T22:27:11Z'
+  updated: '2026-08-20T22:31:25Z'
 
 - id: t-067
   milestone: m8
