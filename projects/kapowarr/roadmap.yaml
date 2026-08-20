@@ -1076,16 +1076,15 @@ tasks:
 - id: t-043
   milestone: m8
   title: Evaluate eMule/aMule for non-US comic catalogs
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
-  note: 'Preserve upstream issue #178 as lower-priority acquisition research, especially for European
-    and non-US catalogs poorly represented in the current source mix. Require a maintainable client API
-    and matching strategy before implementation.'
+  note: 'Evaluated and declined; see projects/kapowarr/docs/t-043-ed2k-boundary.md (silasfelinus/conductor#2582). Both preconditions this task set fail. NO MAINTAINABLE CLIENT API: aMules only bidirectional remote surface is the binary EC protocol on TCP 4712 -- no REST/JSON, and amuleweb is a cookie-session HTML app. The EC protocol documentation says of itself that opcodes, tagnames, tag content formats and values are still changing, advising callers to track ECcodes.h or read the source; aMule separately requires the client binary and the daemon to come from the same release or the connection is rejected as Invalid protocol version. Kapowarrs four existing clients (qBittorrent/Transmission/SABnzbd/NZBGet, 246-458 lines each) all tolerate version skew by design. Escapes fail too: the best-known Python EC library is 6 commits / 1 star / unpublished; amulecmd has no machine-readable output mode and re-imports the same-release lockstep. NO MATCHING STRATEGY, because of our own query shape: ComicQueryBuilder always puts the series title first, and Kad routes a search on the hash of the FIRST keyword with the rest filtered client-side -- so every query routes on the most contended word available and result caps bite before volume/year/issue ever influence which node is asked; on ed2k servers keyword tokenization destroys #12 and (2011), losing the issue number, the most important term in an issue search. THE DECIDING FINDING IS UPSTREAM OF BOTH: acquisition is not where non-US catalog coverage is lost. Kapowarr only searches for volumes already in the library, volumes enter via ComicVine + Metron (both anglophone US direct-market databases), so a bande dessinee is never added, never monitored, and no protocol is ever asked about it. A fourth download protocol does not enter that chain at any point. RECORDED PLAINLY: the architecture is NOT the obstacle -- SearchSources, DownloadPreppers, ExternalDownloadClient and QueryBuilders are all open registries and all 16 DownloadType. reference sites are registrations or lookups with no exhaustive switch, so this declines ed2k specifically, not new sources generally. DECLINE RATHER THAN DEFER, unlike t-042 on debrid: there the one risk (no account to test against) shrinks by waiting; nothing here shrinks by waiting, since EC version lockstep is a property of aMule and first-keyword routing is a property of Kademlia. Filed t-059 (non-US metadata provider, GCD first -- the actual lever) and t-060 (make peer availability count in ranking; SearchResultAvailabilityData is populated by Torznab but _rank_search_result never reads it, so auto_search picks blind between a healthy and a zero-seeder release). NOT VERIFIED, stated as judgment: current ed2k/Kad network health -- sources are qualitative and partly promotional, no trustworthy 2026 figures found, and the sandbox did not connect to the network; the verdict does not rest on it.'
   claimed_by: sched-20260820T1930Z-kapowarr-t043-9f2a
   claimed_at: '2026-08-20T17:28:14Z'
-  updated: '2026-08-20T17:37:31Z'
+  updated: '2026-08-20T17:41:00Z'
+  implementation_pr: 'silasfelinus/conductor#2582'
 - id: t-044
   milestone: m5
   title: Verify downloaded comic/archive integrity
