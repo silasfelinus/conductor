@@ -1076,7 +1076,7 @@ tasks:
 - id: t-043
   milestone: m8
   title: Evaluate eMule/aMule for non-US comic catalogs
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
@@ -1085,7 +1085,7 @@ tasks:
     and matching strategy before implementation.'
   claimed_by: sched-20260820T1930Z-kapowarr-t043-9f2a
   claimed_at: '2026-08-20T17:28:14Z'
-  updated: '2026-08-20T17:28:14Z'
+  updated: '2026-08-20T17:37:31Z'
 - id: t-044
   milestone: m5
   title: Verify downloaded comic/archive integrity
@@ -1380,3 +1380,57 @@ tasks:
     SIZE: ~100 lines plus tests. One DebridDownload(BaseDirectDownload) modelled on
     PixelDrainDownload, a priority field on the DownloadPreppers registry, one
     CredentialSource member. No migration, no new DownloadType, no post-processing change.
+- id: t-059
+  milestone: m8
+  title: Evaluate a metadata provider with genuine non-US comic coverage (GCD first)
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: |-
+    Filed from t-043 (projects/kapowarr/docs/t-043-ed2k-boundary.md), which set out to
+    evaluate eMule/aMule for non-US catalogs and found that acquisition is the wrong
+    layer for that problem. Kapowarr only searches for volumes already in the library,
+    and volumes enter through ComicVine + Metron -- two anglophone US direct-market
+    databases. A Franco-Belgian album or an Italian fumetto cannot be added, so it is
+    never monitored, so no search of any protocol ever runs for it. Adding a fourth
+    download protocol does not enter that chain anywhere.
+
+    THIS is the lever t-043 was actually reaching for. Scope: evaluate one provider with
+    real international coverage against the existing MetadataProvider /
+    MetadataProviderRegistry seam (docs/metadata-providers.md), which the fork already
+    exercised once by landing Metron beside ComicVine with additive volume_external_ids
+    identity rather than ID conversion. The Grand Comics Database is the obvious first
+    candidate -- international by construction, publishes bulk data dumps -- but its
+    API/dump ergonomics against the provider contract are exactly what this task should
+    establish rather than assume. Deliverable is an evaluation doc with a recommendation,
+    same shape as t-042/t-043; implement only if the contract fits without special-casing.
+- id: t-060
+  milestone: m5
+  title: Make peer availability count in search ranking instead of only in the UI
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: |-
+    Filed from t-043. SearchResultAvailabilityData (backend/base/definitions.py:660)
+    carries seeders/leechers and Torznab populates it, but _rank_search_result()
+    (backend/features/search.py:57) never reads it -- a grep confirms the only consumers
+    are frontend/static/js/view_volume.js:385 and the manual-search table column. So peer
+    availability is display-only: auto_search will happily pick a zero-seeder release over
+    a healthy one, and a user only sees the difference if they run a manual search and
+    look at the column.
+
+    Scope: teach _rank_search_result() to prefer available releases. Two cautions from
+    t-043's reading. (1) Rank position matters -- availability belongs below
+    match/title/year correctness, in roughly the slot pack_preference_rank() occupies, not
+    above it; a well-seeded wrong issue is still the wrong issue. (2) Absent data must not
+    be penalised: the field is total=False and GetComics/Newznab results have no peer
+    counts at all, so None has to rank neutrally or the change quietly demotes every
+    non-torrent source. Helps torrents today and needs no new protocol.
+
+    Third finding from t-043 recorded here rather than as its own task, since it is not
+    actionable until something needs it: DownloadState (definitions.py:564) has no member
+    for "handed to the client, waiting in a remote queue, transferring nothing." t-042
+    found the same gap for debrid cache-waits and t-043 found it for ed2k source queues.
+    Whichever lands first should design the state; see t-058.
