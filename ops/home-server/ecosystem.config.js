@@ -163,7 +163,11 @@ module.exports = {
         KR_LOCAL_IMAGES_DIR: process.env.KR_LOCAL_IMAGES_DIR || '',
         COMFY_PROMPT_TIMEOUT: process.env.COMFY_PROMPT_TIMEOUT || '180',
         COMFY_RECOVERY_SECONDS: process.env.COMFY_RECOVERY_SECONDS || '45',
-        GEN_TIMEOUT: process.env.GEN_TIMEOUT || '1800',
+        // LTX 2.3 22B video renders at 1280x720 can legitimately outlive the
+        // previous 30-minute wall-clock deadline. Comfy workflow errors still
+        // surface immediately through /history; this only widens the ceiling
+        // for accepted jobs that are still producing no final output yet.
+        GEN_TIMEOUT: process.env.GEN_TIMEOUT || '7200',
         // LoRA auto-import watcher (embedded thread). Unset LORA_ROOT to disable.
         LORA_ROOT: process.env.LORA_ROOT || 'Z:/ai/models/Lora',
         LORA_IMPORT_DIR:
