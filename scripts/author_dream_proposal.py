@@ -35,8 +35,10 @@ proposal is worse than a missing one, because the missing one still gets noticed
 from __future__ import annotations
 
 import argparse
+import datetime
 import json
 import os
+import re
 import sys
 import urllib.error
 import urllib.request
@@ -62,6 +64,25 @@ MAX_TOKENS = 4000
 # wrong with the prompt or the model, and looping burns tokens to no purpose.
 MAX_ATTEMPTS = 2
 
+REPO_ROOT = Path(__file__).resolve().parents[1]
+DREAM_BACKLOG_DIR = REPO_ROOT / "projects" / "dream-cycle" / "backlog"
+HISTORY_CATEGORIES = ("dreams", "locations", "characters", "rewards", "scenarios")
+HISTORY_PROPOSAL_LIMIT = 45
+HISTORY_PROMPT_LIMIT = 20
+
+NAMING_DIRECTIONS = (
+    "Use a grounded two-part name with an ordinary, non-compound family name; "
+    "the world can be strange without the name announcing it.",
+    "Use a one-token mononym, nickname, or callsign that sounds lived-in rather "
+    "than deliberately edgy.",
+    "Use a three-part name or a name with an initial; keep the surname plausible "
+    "rather than ornamental or compound-built.",
+    "Use a speculative one- or two-token name, but avoid clipped X-heavy first "
+    "names and avoid English noun+noun fantasy surnames.",
+    "Use an understated conventional full name. Do not literalize the character's "
+    "species, occupation, personality, or magic in the name.",
+)
+
 SYSTEM_PROMPT = """You are the creative generator for Kind Robots' daily dream \
 cycle. You write one coherent six-asset bundle per day: a dream vibe, a dream \
 location, a Character, an ITEM Reward, a SKILL Reward, and a Scenario.
@@ -84,6 +105,22 @@ Shape:
 Exactly one location, one character, two rewards (one ITEM, one SKILL), one \
 scenario. No narrator. rarity is one of COMMON, UNCOMMON, RARE, EPIC, LEGENDARY.
 
+Naming is part of the creative variation, not decorative filler. Recent names \
+are supplied in the user prompt; treat their distinctive words, roots, sounds, \
+and constructions as spent vocabulary, not as a palette to remix. In particular, \
+do not default to a clipped fantasy first name plus a whimsical compound surname. \
+If a recent character was named "Vex Thistlewick", then "Vexa Thistlemaw" is \
+not a fresh name. Vary register and structure across days: ordinary names, \
+mononyms, callsigns, multi-part names, and genuinely setting-native speculative \
+names can all belong here. Do not manufacture pseudo-ethnic names by vaguely \
+imitating a real culture; if using a real-world naming tradition, use a plausible \
+name rather than syllable salad. Names should fit the character without simply \
+spelling out their species, job, personality, material, or genre Facets.
+
+The same anti-echo rule applies to dream, location, reward, and scenario titles. \
+A new title may share ordinary glue words, but should not recycle the distinctive \
+noun pair or signature construction of a recent title.
+
 Every `look` and `art_direction` string is fed straight to an image model. Write \
 what is physically visible — material, shape, scale, colour, wear, how light \
 falls — not what the thing does. "A dented tin ladle the length of a forearm, \
@@ -102,9 +139,217 @@ Author the scenario LAST, and its `setup` must name the vibe title, the location
 title, and the character name literally."""
 
 
-def _brief_prompt(brief: dict) -> str:
+def _proposal_data(text: str) -> dict:
+    match = re.search(r"<!--\s*proposal-data\s*\n(.*?)\n-->", text, re.DOTALL)
+    if not match:
+        return {}
+    try:
+        payload = json.loads(match.group(1))
+    except json.JSONDecodeError:
+        return {}
+    return payload if isinstance(payload, dict) else {}
+
+
+def _append_unique(values: list[str], value) -> None:
+    if not isinstance(value, str):
+        return
+    clean = value.strip()
+    if clean and clean not in values:
+        values.append(clean)
+
+
+def _names_from_proposal(text: str) -> dict[str, list[str]]:
+    """Collect the names the digest can surface from one proposal file."""
+    out = {category: [] for category in HISTORY_CATEGORIES}
+    data = _proposal_data(text)
+
+    _append_unique(out["dreams"], data.get("title"))
+    vibe = data.get("vibe")
+    if isinstance(vibe, dict):
+        _append_unique(out["dreams"], vibe.get("title"))
+
+    for row in data.get("locations") or []:
+        if isinstance(row, dict):
+            _append_unique(out["locations"], row.get("title"))
+    for row in data.get("characters") or []:
+        if isinstance(row, dict):
+            _append_unique(out["characters"], row.get("name"))
+    for row in data.get("rewards") or []:
+        if isinstance(row, dict):
+            _append_unique(out["rewards"], row.get("name"))
+    for row in data.get("scenarios") or []:
+        if isinstance(row, dict):
+            _append_unique(out["scenarios"], row.get("title"))
+
+    # Older daily proposals may predate proposal-data. Preserve character memory
+    # anyway because character-name recurrence is the costly failure mode here.
+    if not out["characters"]:
+        match = re.search(
+            r"^## Character \(1\)\s*\n-\s+\*\*(.+?)\*\*\s+[—-]",
+            text,
+            re.MULTILINE,
+        )
+        if match:
+            _append_unique(out["characters"], match.group(1))
+    return out
+
+
+def recent_name_history(
+    day: str,
+    proposal_limit: int = HISTORY_PROPOSAL_LIMIT,
+    backlog_dir: Path | str | None = None,
+) -> dict[str, list[str]]:
+    """Read names from recent proposals before `day`, newest names last.
+
+    The backlog is already the durable source behind the digest, so this adds no
+    database or provider dependency. Missing or malformed history degrades to an
+    empty list rather than blocking the day's proposal.
+    """
+    root = Path(backlog_dir) if backlog_dir is not None else DREAM_BACKLOG_DIR
+    history = {category: [] for category in HISTORY_CATEGORIES}
+    if not root.exists():
+        return history
+
+    paths = [
+        path
+        for path in sorted(root.glob("20??-??-??-*.md"))
+        if path.name[:10] < day
+    ][-proposal_limit:]
+
+    for path in paths:
+        try:
+            names = _names_from_proposal(path.read_text(encoding="utf-8"))
+        except OSError:
+            continue
+        for category in HISTORY_CATEGORIES:
+            for name in names[category]:
+                _append_unique(history[category], name)
+    return history
+
+
+def naming_direction(day: str) -> str:
+    """Rotate name structure deterministically instead of finding one new rut."""
+    try:
+        ordinal = datetime.date.fromisoformat(day).toordinal()
+    except ValueError:
+        ordinal = sum(ord(char) for char in day)
+    return NAMING_DIRECTIONS[ordinal % len(NAMING_DIRECTIONS)]
+
+
+def _name_words(name: str) -> list[str]:
+    return re.findall(r"[a-z]+", str(name).casefold())
+
+
+def _edit_distance(left: str, right: str) -> int:
+    if left == right:
+        return 0
+    if not left:
+        return len(right)
+    if not right:
+        return len(left)
+    previous = list(range(len(right) + 1))
+    for i, char_left in enumerate(left, 1):
+        current = [i]
+        for j, char_right in enumerate(right, 1):
+            current.append(
+                min(
+                    current[-1] + 1,
+                    previous[j] + 1,
+                    previous[j - 1] + (char_left != char_right),
+                )
+            )
+        previous = current
+    return previous[-1]
+
+
+def _near_word(left: str, right: str) -> bool:
+    if left == right:
+        return True
+    if min(len(left), len(right)) < 3 or abs(len(left) - len(right)) > 1:
+        return False
+    return _edit_distance(left, right) <= 1
+
+
+def _common_prefix_length(left: str, right: str) -> int:
+    length = 0
+    for a, b in zip(left, right):
+        if a != b:
+            break
+        length += 1
+    return length
+
+
+def name_diversity_complaints(name: str, recent_names: list[str]) -> list[str]:
+    """Reject the high-signal repeats a prompt alone is bad at noticing.
+
+    This intentionally does not attempt to score whether a name is "creative".
+    It catches concrete archive echoes: exact names, reused/near-reused given
+    names, and distinctive long surname roots such as Thistlewick/Thistlemaw.
+    """
+    words = _name_words(name)
+    if not words:
+        return []
+
+    normalized = " ".join(words)
+    first = words[0]
+    last = words[-1] if len(words) > 1 else ""
+    complaints: list[str] = []
+
+    for recent in recent_names:
+        recent_words = _name_words(recent)
+        if not recent_words:
+            continue
+        if normalized == " ".join(recent_words):
+            complaints.append(
+                f"character name {name!r} exactly repeats recent name {recent!r}; "
+                "choose a genuinely different name"
+            )
+            return complaints
+
+    for recent in recent_names:
+        recent_words = _name_words(recent)
+        if not recent_words:
+            continue
+        recent_first = recent_words[0]
+        if _near_word(first, recent_first):
+            complaints.append(
+                f"character given name {first!r} repeats or nearly repeats recent "
+                f"name {recent!r}; choose a different given-name root"
+            )
+            break
+
+    if last:
+        for recent in recent_names:
+            recent_words = _name_words(recent)
+            if len(recent_words) < 2:
+                continue
+            recent_last = recent_words[-1]
+            if (
+                min(len(last), len(recent_last)) >= 6
+                and _common_prefix_length(last, recent_last) >= 6
+            ):
+                complaints.append(
+                    f"character surname {last!r} echoes the distinctive root of "
+                    f"recent name {recent!r}; choose a different surname construction"
+                )
+                break
+    return complaints
+
+
+def _brief_prompt(brief: dict, history: dict[str, list[str]] | None = None) -> str:
     facets = json.dumps(brief["seed_facets"], ensure_ascii=False, indent=2)
     rules = "\n".join(f"- {line}" for line in brief.get("instructions", []))
+    history = history or {category: [] for category in HISTORY_CATEGORIES}
+    history_lines = []
+    for category in HISTORY_CATEGORIES:
+        values = history.get(category) or []
+        if values:
+            history_lines.append(
+                f"- {category.title()}: " + "; ".join(values[-HISTORY_PROMPT_LIMIT:])
+            )
+    history_text = "\n".join(history_lines) or "- No recent naming history available."
+    direction = naming_direction(str(brief["proposal_date"]))
+
     return (
         f"Compose the daily dream bundle for {brief['proposal_date']}.\n\n"
         f"These Facets are the creative constraints. The umbrella genres and "
@@ -112,6 +357,12 @@ def _brief_prompt(brief: dict) -> str:
         f"governs that element. Use them — do not ignore one because it is "
         f"awkward, that friction is the point.\n\n{facets}\n\n"
         f"House rules:\n{rules}\n\n"
+        "Recent naming history, oldest to newest. These are spent vocabulary and "
+        "construction patterns, not inspiration to remix:\n"
+        f"{history_text}\n\n"
+        f"Character naming direction for today: {direction}\n"
+        "This direction is deliberately rotated by date. Follow its structural "
+        "shape while still fitting the character and setting.\n\n"
         f"Return the JSON object only."
     )
 
@@ -153,7 +404,8 @@ def parse_json_object(text: str) -> dict:
 
 def author(day: str, api_key: str, verbose: bool = True) -> dict:
     brief = dreams.build_brief(day)
-    prompt = _brief_prompt(brief)
+    history = recent_name_history(day)
+    prompt = _brief_prompt(brief, history)
     complaints: list[str] = []
 
     for attempt in range(1, MAX_ATTEMPTS + 1):
@@ -175,9 +427,15 @@ def author(day: str, api_key: str, verbose: bool = True) -> dict:
         proposal["seed_facets"] = brief["seed_facets"]
         proposal.pop("narrator", None)
 
-        complaints = dreams.validate_proposal(
-            dreams.normalize(proposal, dreams.existing_slugs())
-        )
+        normalized = dreams.normalize(proposal, dreams.existing_slugs())
+        complaints = dreams.validate_proposal(normalized)
+        characters = proposal.get("characters") or []
+        if characters and isinstance(characters[0], dict):
+            complaints.extend(
+                name_diversity_complaints(
+                    characters[0].get("name", ""), history.get("characters", [])
+                )
+            )
         if not complaints:
             return proposal
         if verbose:
