@@ -3977,3 +3977,28 @@ tasks:
     claimed_by: claude-scheduled-20260814T120411Z-conductor-t118
     claimed_at: '2026-08-14T12:04:12Z'
     implementation_pr: 'silasfelinus/conductor#2250'
+
+  - id: t-119
+    milestone: m2
+    title: "Clarify whether status: review needs its own branch+PR or a direct push, like claim_task.py's atomic commit"
+    stakes: reversible
+    passes: 0
+    status: ready
+    owner: null
+    note: >
+      AGENTS.md step 7 (Picking what to work on) says to run set_task_field.py to set
+      status: review right before opening the implementation PR, but doesn't say how that
+      edit is supposed to reach main. claim_task.py has an explicit, documented exception to
+      hard rule 1 for its single atomic claim commit; close_task.py explicitly uses its own
+      branch+PR. Neither covers the middle status: review transition. Prior git history is
+      ambiguous: commits 4dac352 and ec5086a ("set: <project>/<task-id> status review (kind_robots
+      PR #NNNN)") are plain single commits reachable directly on main, which could mean either
+      "squash-merged via a tiny PR" or "pushed directly" -- indistinguishable after the fact.
+      model-builder/t-029 cycle 21 (2026-08-20) treated it as requiring its own branch+PR per a
+      strict reading of hard rule 1 (conductor PR #2535), which also meant hitting and resolving
+      a real STATUS.md-refresh-driven merge conflict that a direct push wouldn't have hit at all.
+      Resolve this ambiguity one of two ways: (a) confirm branch+PR is correct and say so explicitly
+      in AGENTS.md step 7, or (b) if a direct push is actually intended for this specific transition
+      (mirroring claim_task.py's exception), extend claim_task.py or add a small dedicated helper
+      that pushes it the same collision-resistant way, so future cycles don't have to re-derive the
+      answer or burn a cycle on an auto-gen conflict a direct push would have avoided.
