@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-20T16:49:36Z
+Generated: 2026-08-20T17:03:25Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **706**
-- Outcomes: blocked: 15, cancelled: 1, done: 690
+- Closed tasks recorded: **707**
+- Outcomes: blocked: 15, cancelled: 1, done: 691
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
 | interface-vision | 83 | 100% |
-| kapowarr | 39 | 100% |
+| kapowarr | 40 | 100% |
 | kind-economy | 6 | 100% |
 | kind-robots | 50 | 98% |
 | kindrobots-unraid | 5 | 100% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 690 | 99% |
+| software | 691 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-20 `kapowarr/t-042` — Read the actual request before evaluating the feature its name implies. "Debrid support" almost always means feed-a-magnet-to-the-cache, and evaluating that would have produced a correct, well-argued, useless answer -- it has no home in this codebase. Upstream #276 is one sentence, and the operative clause is "instead of having to use Mega directly": the user wants a hoster link unrestricted, which maps onto BaseDirectDownload._convert_to_pure_link() so exactly that PixelDrainDownload is already the template. Same two words, opposite verdicts, and the only thing separating them was reading the issue rather than the label. Second: "does this contaminate the generic architecture with a provider-specific shortcut" cannot be answered without checking whether the architecture is generic today. It is not -- __purify_link is a per-hoster if/elif chain, the queue special-cases Mega by isinstance, and the base class sniffs for Pixeldrain's rate-limit URL. Ten such precedents. A constraint written to protect a clean seam reads very differently once you have confirmed the seam is already provider-shaped, and reporting that honestly is more useful than either enforcing the constraint literally or quietly ignoring it.
+
 - 2026-08-20 `kapowarr/t-045` — Read a multi-part task's code before believing its note about what is left. This one read "add safe extraction for CBR/RAR first, then other practical formats" as though no part had shipped; CBR/RAR had in fact been in comic_reader.py since the reader landed, so the whole task was its second clause. A roadmap note is a snapshot of intent at filing time and goes stale silently -- three minutes of grep resized the work before any of it was planned wrong. The other lesson is that copying an existing pattern is not the same as copying its threat model. list_tar_pages/read_tar_member mirror the ZIP and RAR pairs almost line for line, and mirroring them exactly would have shipped a file-read primitive: a tar, unlike a zip, can carry symlink members, and extractfile() resolves the link target, so a member named 001.jpg pointing at /etc/passwd would have been served straight back through the authenticated page endpoint. The guard is one isfile() check, but nothing in the pattern being copied would have suggested needing it. When adding a sibling format, ask what the new container can express that the old one could not.
 
 - 2026-08-20 `kapowarr/t-035` — Before writing an adapter for a third-party API you cannot reach, spend the time to read that service's own implementation, not just its documentation, and not memory. NZBGet's published API docs omit a required parameter from `append`'s argument list and ship an example passing 10 of 11 arguments; either would have produced a client that fails on its very first call. Reading the source also surfaced three facts that changed the design rather than the comments -- JSON-RPC 1.1 with no `jsonrpc` member in replies, post-processing happening in the queue so history is terminal, and the firm absence of any per-group download rate. Where a value's vocabulary is still uncertain, key on its stable part (a status prefix) and default the unknown case to the safe reading, so the adapter survives versions nobody here can test against.
@@ -103,8 +105,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-19 `brainstorm/t-021` — Adding real behavioral test coverage for Pinia store logic in this repo hits a real environmental wall: a store file that imports another store transitively (brainstormStore.ts -> serverStore -> userStore -> achievementStore) can be unimportable from a plain tsx process even though none of the actual logic under test needs Pinia, because some unrelated store in the chain calls a Vite-only API (import.meta.glob) at module load time. The fix already has a name in this codebase -- brainstormSourceAdapterKit.ts/brainstormSourceContextKit.ts already split pure logic out for exactly this reason -- but it's not written down as a general rule anywhere, so it's worth re-deriving the "does this file transitively import a store with a Vite-only top-level call" question explicitly before assuming a store's exports are tsx-testable. Second lesson: a CI job that installs with `npm ci --ignore-scripts` (for speed) skips the `nuxi prepare` postinstall that generates the '@/' path-alias tsconfig -- any new tsx-run script under such a job must use relative imports, not '@/', or verify locally with `.nuxt` removed before trusting it'll pass in CI.
 
-- 2026-08-19 `brainstorm/t-024` — The task's own "scope check first" step is what caught this: before building any UI, re-verified whether bot-gallery.vue was actually unmounted as the t-018 kaizen note claimed, and found the claim already false on current main -- content/bots.md -> bot-manager.vue -> bot-interact.vue -> bot-gallery.vue is a complete, CI-verified (test:route-gallery-contract) mount chain reachable via the play channel's normal nav, not just a direct URL. Closed with no code change and no kind_robots PR. Worth generalizing: a kaizen-sourced task's premise can go stale between when it was written and when it is picked up, especially for reachability/mounting claims in a codebase with this much concurrent agent activity -- re-verify the premise against live main before writing any diff, not just before merging one.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-20T16:49:36Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-20T17:03:25Z_
