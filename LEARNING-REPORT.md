@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-20T05:29:11Z
+Generated: 2026-08-20T05:42:19Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **700**
-- Outcomes: blocked: 15, cancelled: 1, done: 684
+- Closed tasks recorded: **701**
+- Outcomes: blocked: 15, cancelled: 1, done: 685
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 77 | 100% |
 | conductor-app | 4 | 100% |
-| davinci | 5 | 100% |
+| davinci | 6 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
 | ecosystem-map | 5 | 100% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 684 | 99% |
+| software | 685 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-20 `davinci/t-021` — Slice 10 of a recurring polish task: reading the prior slice's own REMAINING note as the literal scope handoff (rather than re-auditing the whole file) surfaced a real gap the narrower chapterRegion focus-loss fix (slice 9) couldn't catch on its own -- a nested click whose state transition unmounts the outer container the inner region lives inside, not just the inner region itself. Confirming this required tracing the actual call path (resolveLife -> resumeRun -> phase mutation) rather than assuming two focus-restoring regions at different nesting depths are independent.
+
 - 2026-08-20 `conductor/t-119` — The status:review transition (AGENTS.md step 7) was left ambiguous between claim_task.py's sanctioned direct-to-main exception and close_task.py's branch+PR pattern -- resolved by routing it through close_task.py (which already supports arbitrary target statuses, review included) rather than inventing a new script or a new hard-rule-1 exception. model-builder/t-029 cycle 21's STATUS.md merge conflict, doing this transition by hand with set_task_field.py + a manually-managed branch, was a symptom of not using the existing fetch-fresh git plumbing, not evidence that branch+PR is the wrong shape for this transition.
 
 - 2026-08-19 `storybook/t-010` — Cycle 20 of the recurring storybook/t-010 bug-hunt: Dream rows without a first-class Prisma model of their own (Location is just dreamType === 'LOCATION' on the generic Dream table) are easy to under-serve relative to Character/Reward/Scenario/Facet, which each have both a dedicated model and a dedicated detail component with its own "start a story" deep-link CTA. The generic dream-narration.vue detail surface had no such CTA for any Dream type, so seedFromQuery()'s ?location= query key had been dead code with no sender anywhere in the repo since it was added. Worth checking, for any future object type added to Storybook's seed-query set, whether it actually has a first-class detail component or only the generic Dream surface -- the generic surface is the one that silently misses new CTAs.
@@ -103,8 +105,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-19 `kind-economy/t-007` — Clean first-pass Worker output: additive-only migration (ADD COLUMN IF NOT EXISTS / CREATE INDEX matching the repo's established convention), a resolver that never throws (a lookup failure degrades to "no attribution" rather than failing the charge), and both open policy questions (mission-share fallback on unresolved creatorUserId, self-attribution recorded but not decided) handled exactly as the task note specified rather than guessed at. Reviewed the actual diff (schema, migration.sql, manaAttribution.ts, manaGate.ts wiring) rather than trusting the PR description alone.
 
-- 2026-08-19 `kind-economy/t-005` — A flat "donate a third" plan does not net to zero for tax purposes by default -- gross receipts and a charitable deduction are separate line items whose offset depends entirely on entity type and itemization, and for a sole prop/LLC taking the standard deduction the offset is worth nothing. The fix has to be structural (keep the mission third out of gross receipts entirely via a direct customer-to-charity donation) rather than a bigger deduction. Also: when researching a compliance question, the framing in the task note ("check these N states") can undersell the real exposure -- a broader, newer category of law (California's charitable-fundraising-platform registration, which reads broadly enough to plausibly cover an embedded donate-at-checkout flow) was more directly on point than the originally-flagged commercial-co-venture states, and surfaced a concrete design lever (redirect to the donation platform's own hosted page vs. embedding it) worth flagging even though this task's scope was research-only.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-20T05:29:11Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-20T05:42:19Z_
