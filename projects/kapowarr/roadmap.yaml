@@ -872,16 +872,15 @@ tasks:
 - id: t-034
   milestone: m5
   title: Add watched-folder auto import for external downloads
-  status: claimed
+  status: done
   owner: reviewer
   passes: 0
   stakes: reversible
-  note: 'Implement upstream issue #122''s workflow: watch inbound folders, match completed external files
-    to known volumes/issues, then move, rename, convert and register through the hardened post-processing
-    pipeline. Do not compete with root-library continuous import.'
+  note: 'Shipped in silasfelinus/Kapowarr#82 (squash 03a9a71b552ca7e83905b0877bb456798695da0b). Upstream issue #122, and item 2 on Kapowarr''s own docs/ARR_PARITY.md near-term roadmap -- the last "remains missing" entry in its completed-download-handling row. A new `watched_folder` setting names one inbound folder; a 15-minute interval task (WatchedFolderImport) scans it and imports each file that has stopped changing and matches exactly one volume ALREADY in the library, reusing manual_import_files() for the move+match and then the same mass_rename/mass_convert/mass_process_files steps a completed download goes through. Boundaries, each covered by a test: it never creates a volume (the task note''s "do not compete with root-library continuous import" requirement -- identifying an unknown series needs Continuous Library Import''s ComicVine pacing, and duplicating it would race the same rate limit); an ambiguous file that two volumes could claim is left for a human rather than guessed; a file must sit unmodified for two minutes before import so a large archive still being copied in is never imported truncated, and a file that can''t be stat''d counts as unsettled rather than settled; nothing is deleted that wasn''t imported, only sub-folders emptied by this run''s own moves; Settings rejects a watched folder overlapping a root folder or the download folder, checked from both sides so neither setting can be moved onto the other afterwards; and one volume''s import failing is counted and surfaced in the task message rather than aborting the rest of the pass. LibraryIndex reads each volume once per pass and loads issue lists only for title matches -- matching is O(files x volumes) over DB round-trips, so 30 files on a 2000-volume library would otherwise issue ~60k volume reads per scan (the same shape Kapowarr#81 just fixed for Continuous Import). The Task class is declared in features/tasks.py beside the other interval tasks so get_subclasses(Task) registers it with no import-order dependency: the interval is seeded for every install and a task_library miss would break the whole interval loop. Off by default -- with `watched_folder` empty the pass returns before touching the filesystem. Verified: 493 backend tests pass (36 new), 41 frontend tests pass, flake8/isort clean on all touched files (pre-existing findings confirmed via git-stash), Python 3.8 compatibility hand-checked and confirmed by CI''s 3.8 job. All 7 Kapowarr CI checks green before merge. Not verified: no live run against a real inbound folder on a populated library -- no Kapowarr instance is reachable from this sandbox; first real-world exercise will be on Silas''s install. Deliberately out of scope, both recorded in docs/ARR_PARITY.md: surfacing unmatched files in the manual-import workbench rather than only in the task message, and letting a watched folder feed volume creation once that can share Continuous Library Import''s ComicVine pacing.'
   claimed_by: sched-20260820T1450Z-kapowarr-t034
   claimed_at: '2026-08-20T14:43:42Z'
-  updated: '2026-08-20T14:43:42Z'
+  updated: '2026-08-20T15:07:11Z'
+  implementation_pr: 'silasfelinus/Kapowarr#82'
 - id: t-035
   milestone: m5
   title: Add NZBGet as a second Usenet download client
