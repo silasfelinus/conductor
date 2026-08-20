@@ -1502,3 +1502,33 @@ tasks:
     that anonymous access "will likely bye turned off at some point" (auth is Basic/Session
     with a GCD account, not an API token). The dump stays documented as the fallback if that
     happens.
+- id: t-063
+  milestone: m5
+  title: Pin the search-ranking tier order with one table-driven test instead of pairwise
+    boundaries
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: |-
+    Kaizen from t-060 (silasfelinus/Kapowarr#90). _rank_search_result()
+    (backend/features/search.py) now appends five components in a deliberate order:
+    match, title-word overlap, volume/year, peer availability, pack preference, then
+    issue-number fit. The ORDER is the actual policy -- it is what decides that a
+    well-seeded wrong issue loses to a correct dead one -- but it is documented only in
+    inline comments and enforced only by pairwise tests that each pin one adjacent
+    boundary (t-060 added three such cases; the pack-preference cycle added one).
+
+    Nothing fails if a future component is inserted at the wrong tier, or if two
+    components are silently transposed: every existing pairwise assertion can still pass
+    while the overall policy changes. Three of the components (pack_preference_rank,
+    getcomics_quality_rank, availability_rank) additionally share an unwritten
+    "neutral returns 0 for every result, preserving historical order" contract that no
+    single test states.
+
+    Scope: one table-driven test in tests/Tbackend/acquisition_preferences.py that
+    constructs results differing in exactly one component at a time and asserts the full
+    tier ordering in a single place, plus an assertion that each neutral-capable
+    component returns 0 for every result under its neutral setting. Test-only change --
+    no production behaviour should move. If writing it reveals that the current order is
+    wrong somewhere, fix that in a separate task rather than folding it in.
