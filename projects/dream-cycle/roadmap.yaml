@@ -110,11 +110,11 @@ tasks:
   - id: t-006
     milestone: m4
     title: 'Daily Dream maintenance: author proposals and verify the canonical pipeline'
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-20T21:01:00Z'
+    updated: '2026-08-20T21:11:30Z'
     depends_on: t-004
     note: |-
       RAN (conductor scheduled Agent run, session sched-conductor-dc-t006-20260815T063000Z): flagged stale by select_role.py (no RAN/NO-OP marker or updated bump since 2026-08-09). Verified rather than re-derived: today's Pacific (2026-08-14) daily-dream proposal exists (build_dream_proposal.py --check --fetch passes). Checked the last 6 daily-digest.yml runs (2026-08-09 through 2026-08-14): 5/6 succeeded; the one failure (2026-08-12, run 31616582389) was already root-caused and closed out in the 2026-08-13 TALKBACK entry (conductor/t-115, t-116, dream-cycle pattern note) as a stale GitHub Actions re-run replaying a pre-migration workflow file (KR_BASE_URL still kind-robots.vercel.app) rather than a live regression -- main already had the kindrobots.org fix at the time, and every run since has been green. No new signal, no code change needed. The task itself has gone quiet not because the pipeline is unhealthy but because daily-digest.yml's own author_dream_proposal.py step (CLAUDE.md: "a backstop, not the primary path") now produces the day's proposal automatically most days, so this task's own manual-authoring branch simply hasn't had to fire. Re-arming to ready per recurring-task convention; no idea-inventory replenishment needed this pass (proposal pipeline healthy, not a content shortage).
@@ -155,9 +155,8 @@ tasks:
       Merged conductor PR #1981 at edac5380. Daily Dream now runs as one ordered morning cycle: author once at the start, build the eligible prior proposal, attach Facets, submit durable priority-200 ArtJobs, commit evidence even across captured failures, verify the cycle, then send the digest. The email shows the older completed bundle art-rich first and the just-built bundle second without empty art slots; the newly authored steering proposal is not a showcase section. Final-head Daily Dream Contract #89, Worker PR CI #2446 (1041 tests), Security Audit #2424, and Process task events #3809 all completed successfully.
 
       Followed the already-merged Conductor naming-history fix with a Kind Robots legacy Daily Dream generator fix on branch worker/dream-cycle-t-006-name-diversity-a4c9. The app-side generator no longer exposes only a 12x10 First+whimsical-surname factory: it deterministically rotates grounded full names, mononyms, initials, titles, and bynames within each bundle, keeps names unique, propagates replacements through prose/art prompts, and extends the existing Daily Dream contract verifier with determinism, structural-diversity, stale-name, and cross-day checks.
-    owner: worker
-    claimed_by: 2026-08-20T205400Z-dream-cycle-t-006-chatgpt-a4c9
-    claimed_at: '2026-08-20T20:54:00Z'
+
+      Naming-diversity maintenance completed. The canonical Conductor history-aware naming fix was already merged in conductor#2579. Kind Robots PR #1991 is now merged at c5ce3eee06116690c0c6d0d3b2a1b4e1c3f6ade2, closing the legacy 12x10 First+Last generator leak for future Facet-engine Daily Dreams while preserving existing persisted history. Final-head checks were green: Facet Catalog run 32417639446, TypeScript run 32417639451, Contract Tests run 32417639304, and Taskmaster Checkpoint Engine run 32417639448.
   - id: t-007
     milestone: m5
     title: Generate dream-cycle project art (icon, card, hero)
