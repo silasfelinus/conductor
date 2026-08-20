@@ -1477,8 +1477,8 @@ tasks:
 - id: t-064
   milestone: m8
   title: Make ComicVine's system-events instrumentation a provider-declared opt-in
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: |
@@ -1509,6 +1509,9 @@ tasks:
     and let unrecognized exceptions fall to other_error -- decide which and say why in
     the PR. tests/Tbackend/system_events.py exercises _instrument_comicvine directly and
     is the regression net; the counters it asserts must not change for ComicVine.
+  claimed_by: sched-20260820T202847Z-kapowarr-t064-a7f2
+  claimed_at: '2026-08-20T20:28:51Z'
+  updated: '2026-08-20T20:28:51Z'
 - id: t-065
   milestone: m5
   title: Return search ranking as a named tuple instead of a bare positional list
