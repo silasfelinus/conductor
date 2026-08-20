@@ -314,12 +314,12 @@ tasks:
 - id: t-015
   milestone: m4
   title: Polish and upgrade Voice Lab front-end surface
-  status: review
+  status: done
   owner: worker
-  updated: '2026-08-20T06:38:59Z'
+  updated: '2026-08-20T07:27:57Z'
   passes: 0
   stakes: reversible
-  note: 'Investigated cycle 21''s kaizen lead (''on'' branch always forces fx region to front regardless of prior state). Confirmed real: components/screenfx/screen-fx.vue''s Coverage Zones panel lets a user manually set any region''s placement to ''behind'' independent of voice commands, so a redundant ''turn X on'' while X was already active there silently clobbered that manual placement. Fixed by gating setSurfacePlacement() on stateChanged (an actual on/off/toggle transition happened) in addition to isNowActive. Extended verifySerendipityVoiceActionGuard.ts with a fifth check (checkSerendipityVoiceRedundantOnSurfacePlacementGuard) plus self-test, following the established extension convention. Verified: vue-tsc clean, eslint/prettier clean, all serendipity-voice guard self-tests pass. kind_robots PR #1981 opened, awaiting CI.'
+  note: 'kind_robots PR #1981 squash-merged 473ea48 -- fixed applyCommand() on/off/toggle branch clobbering manually-set fx placement (screen-fx.vue Coverage Zones) on a redundant/idempotent on command by gating setSurfacePlacement() on both stateChanged and isNowActive. Extended verifySerendipityVoiceActionGuard.ts (5th check) + self-test, all guards/vue-tsc/eslint/prettier clean pre-merge. Rearmed to ready is not needed here -- closing t-015 done since this was the last open kaizen lead from the cycle chain (t-018/t-020/t-021 series); no further lead filed this cycle.'
   claimed_by: sched-conductor-alexa-t015-20260820T062911Z-onbugfix
   claimed_at: '2026-08-20T06:29:12Z'
   implementation_pr: 'silasfelinus/kind_robots#1981'
