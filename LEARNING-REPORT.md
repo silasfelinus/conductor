@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-20T16:33:06Z
+Generated: 2026-08-20T16:48:01Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **705**
-- Outcomes: blocked: 15, cancelled: 1, done: 689
+- Closed tasks recorded: **706**
+- Outcomes: blocked: 15, cancelled: 1, done: 690
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
 | interface-vision | 83 | 100% |
-| kapowarr | 38 | 100% |
+| kapowarr | 39 | 100% |
 | kind-economy | 6 | 100% |
 | kind-robots | 50 | 98% |
 | kindrobots-unraid | 5 | 100% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 689 | 99% |
+| software | 690 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-20 `kapowarr/t-045` — Read a multi-part task's code before believing its note about what is left. This one read "add safe extraction for CBR/RAR first, then other practical formats" as though no part had shipped; CBR/RAR had in fact been in comic_reader.py since the reader landed, so the whole task was its second clause. A roadmap note is a snapshot of intent at filing time and goes stale silently -- three minutes of grep resized the work before any of it was planned wrong. The other lesson is that copying an existing pattern is not the same as copying its threat model. list_tar_pages/read_tar_member mirror the ZIP and RAR pairs almost line for line, and mirroring them exactly would have shipped a file-read primitive: a tar, unlike a zip, can carry symlink members, and extractfile() resolves the link target, so a member named 001.jpg pointing at /etc/passwd would have been served straight back through the authenticated page endpoint. The guard is one isfile() check, but nothing in the pattern being copied would have suggested needing it. When adding a sibling format, ask what the new container can express that the old one could not.
+
 - 2026-08-20 `kapowarr/t-035` — Before writing an adapter for a third-party API you cannot reach, spend the time to read that service's own implementation, not just its documentation, and not memory. NZBGet's published API docs omit a required parameter from `append`'s argument list and ship an example passing 10 of 11 arguments; either would have produced a client that fails on its very first call. Reading the source also surfaced three facts that changed the design rather than the comments -- JSON-RPC 1.1 with no `jsonrpc` member in replies, post-processing happening in the queue so history is terminal, and the firm absence of any per-group download rate. Where a value's vocabulary is still uncertain, key on its stable part (a status prefix) and default the unknown case to the safe reading, so the adapter survives versions nobody here can test against.
 
 - 2026-08-20 `kapowarr/t-034` — When adding an unattended path into an existing pipeline, the reusable seam is usually the one the manual version already uses -- here manual_import_files() plus the mass_rename/mass_convert/mass_process_files trio, rather than fabricating the Download object post_processing.py is built around for something that was never downloaded. Two things worth copying next time: enforce a stated scope boundary in code as well as prose (the "don't compete with continuous import" requirement became both a never-create-a-volume rule and a settings-level folder-collision check, from both sides), and check whether the repo has recently fixed the same shape of problem elsewhere -- a just-landed "large library stalls a background importer" fix was the direct reason this feature got a per-pass volume index instead of an O(files x volumes) database walk.
@@ -103,8 +105,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-19 `brainstorm/t-024` — The task's own "scope check first" step is what caught this: before building any UI, re-verified whether bot-gallery.vue was actually unmounted as the t-018 kaizen note claimed, and found the claim already false on current main -- content/bots.md -> bot-manager.vue -> bot-interact.vue -> bot-gallery.vue is a complete, CI-verified (test:route-gallery-contract) mount chain reachable via the play channel's normal nav, not just a direct URL. Closed with no code change and no kind_robots PR. Worth generalizing: a kaizen-sourced task's premise can go stale between when it was written and when it is picked up, especially for reachability/mounting claims in a codebase with this much concurrent agent activity -- re-verify the premise against live main before writing any diff, not just before merging one.
 
-- 2026-08-19 `kind-economy/t-016` — The two failure modes the task named -- under-remitting (promise broken) and double-remitting (money gone twice) -- turned out not to need any new schema or per-period tracking: because a remittance is meant to bring the running outstanding = accrued - remitted balance back to exactly zero, both collapse onto the sign of outstandingCents immediately after a remittance is logged (positive = under-remitted, negative = over-remitted/ likely duplicate, zero = reconciled). Read the existing t-010 accrual dashboard code first rather than assuming a new bucketing mechanism was needed -- the simplest correct design was already implied by the ledger shape that existed. Also caught mid-session: resolve_deps.py only edits the local working tree, it does not commit/push -- its output needs an explicit commit+PR+merge before claim_task.py will see the unblocked task on origin/main (worth remembering for any future session running it).
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-20T16:33:06Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-20T16:48:01Z_
