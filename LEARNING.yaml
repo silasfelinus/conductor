@@ -9395,3 +9395,22 @@ records:
     elsewhere -- a just-landed "large library stalls a background importer" fix was the
     direct reason this feature got a per-pass volume index instead of an O(files x
     volumes) database walk.
+- date: 2026-08-20
+  project: kapowarr
+  task: t-035
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Before writing an adapter for a third-party API you cannot reach, spend the time to
+    read that service's own implementation, not just its documentation, and not memory.
+    NZBGet's published API docs omit a required parameter from `append`'s argument list
+    and ship an example passing 10 of 11 arguments; either would have produced a client
+    that fails on its very first call. Reading the source also surfaced three facts that
+    changed the design rather than the comments -- JSON-RPC 1.1 with no `jsonrpc` member
+    in replies, post-processing happening in the queue so history is terminal, and the
+    firm absence of any per-group download rate. Where a value's vocabulary is still
+    uncertain, key on its stable part (a status prefix) and default the unknown case to
+    the safe reading, so the adapter survives versions nobody here can test against.
