@@ -4006,3 +4006,53 @@ tasks:
     claimed_at: '2026-08-20T01:29:53Z'
     updated: '2026-08-20T01:34:23Z'
     implementation_pr: 'silasfelinus/conductor#2539'
+
+  - id: t-120
+    milestone: m2
+    title: "Fail CI on an unknown task status -- kapowarr's 8 `not-started` tasks made the #1 priority project invisible to every selection path"
+    stakes: reversible
+    passes: 0
+    status: done
+    owner: reviewer
+    note: >
+      Found during a scheduled Agent sweep on 2026-08-20, after four consecutive cycles the
+      same day fell through the whole priority queue to model-builder/t-029 (a recurring
+      polish task ranked 12th) because every project above it read as having no claimable
+      ready work.
+
+      Root cause: `projects/kapowarr/roadmap.yaml` -- the project pinned at
+      `order[0]` in projects/priority.yaml, and CI-enforced there by
+      tests/test_project_priority_contract.py -- carried its entire remaining 8-task
+      backlog (t-034, t-035, t-040..t-045) as `status: not-started`. That is a valid
+      *milestone* status in this repo (scripts/build_workspace.py's colour map,
+      scripts/new_app.py's milestone template) but has never been a task status: AGENTS.md's
+      "Status lifecycle" defines ready/claimed/review/done plus the blocked/needs-human/
+      challenged/waiting side exits, and every selection path matches `status == "ready"`
+      exactly (next_ready_task.py's first_ready_task, run_worker.py's find_ready_task,
+      claim_task.py, select_role.py). A task in any other status is therefore not
+      "not yet startable" -- it is invisible: never surfaced as ready work, never surfaced as
+      a gate, never surfaced as blocked. Kapowarr looked 47/56 done with one soft gate and
+      nothing to do; it actually had 8 unstarted, dependency-free, `stakes: reversible` tasks.
+
+      scripts/audit_roadmaps.py had been reporting all 8 as INVALID_STATUS errors the entire
+      time, but that script is advisory and always exits 0 -- the identical failure shape its
+      sibling scripts/validate_roadmaps.py already documents for DUPLICATE_TASK_ID, which
+      landed twice in interface-vision before it was made a hard gate (conductor/t-107).
+
+      Fix: (1) flipped the 8 kapowarr task statuses to `ready`, restoring the top-priority
+      project to the claimable queue -- verified `next_ready_task.py` now returns
+      kapowarr/t-034 instead of mermaids-of-venice/t-013, and audit_roadmaps.py's error count
+      drops 9 -> 1 (the remaining one is the pre-existing, unrelated global
+      CONTROL_PRIORITY_DRIFT finding). The three genuine `status: not-started` milestone
+      entries (m6/m8/m9) are untouched. (2) Added a VALID_TASK_STATUSES gate to
+      validate_roadmaps.py, which pytest runs on every PR via ci.yml, so this class of drift
+      now fails CI instead of accumulating silently. A test asserts the new enum stays
+      identical to audit_roadmaps.py's VALID_STATUS, so a future lifecycle change can't leave
+      the hard gate and the advisory report disagreeing.
+
+      Verified: full pytest suite 1143 passed / 1 skipped (20 in
+      tests/test_validate_roadmaps.py, 4 of them new), validate_roadmaps.py exits 1 before the
+      roadmap fix and 0 after, audit_roadmaps.py 9 errors -> 1.
+    claimed_by: sched-20260820T1430Z-conductor-t120
+    claimed_at: '2026-08-20T14:30:00Z'
+    updated: '2026-08-20T14:30:00Z'
