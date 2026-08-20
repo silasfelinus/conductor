@@ -1489,36 +1489,12 @@ tasks:
 - id: t-065
   milestone: m5
   title: Return search ranking as a named tuple instead of a bare positional list
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
-  note: |
-    Kaizen from t-063 (Kapowarr PR #92). t-063 pinned the six-component ordering of
-    _rank_search_result() (backend/features/search.py) with a table-driven test, because
-    the order is the actual ranking policy and nothing enforced it as a whole. The test
-    is a safety net over a design that needs one: the function returns a bare List[int]
-    whose positions carry all the meaning, so at every call site the policy is invisible
-    and a component inserted at the wrong index is a silent behaviour change.
-
-    Scope: give the ranking a NamedTuple with one field per tier (match,
-    title_overlap, volume_year, availability, pack_preference, issue_fit) and return
-    that instead of the list. Tuples compare lexicographically exactly as lists do, so
-    the sort at search.py:405 and every comparison in the tests keep working unchanged
-    -- this should be a pure readability change with no behaviour movement, which is
-    the bar to hold it to.
-
-    Two things to check rather than assume. First, the issue-fit component is
-    conditionally appended: the volume-search branch appends nothing at all when
-    issue_number is neither a tuple nor a float, so the current list is not always six
-    long and a fixed-width NamedTuple has to pick a neutral default for that case and
-    prove it does not reorder anything. Second, t-063's
-    test_each_entry_degrades_exactly_its_own_component asserts the rating length equals
-    len(RANKING_TIERS); it will need to move to field names, and doing so should make
-    it stricter, not weaker.
-
-    If this lands, t-063's table becomes a redundant second statement of the order
-    rather than the only one -- keep it anyway, but say so in its comment.
+  note: 'Kaizen from t-063. _rank_search_result() now returns SearchResultRank (a NamedTuple with fields match/title_overlap/volume_year/availability/pack_preference/issue_fit) instead of a bare positional List[int]; tuples compare lexicographically exactly as the old list did so no behaviour moved. issue_fit defaults to 0 for the one case that previously appended nothing (volume-search branch, issue_number neither tuple nor float), which is strictly less than every value the branch computes otherwise so ordering is unchanged. RANKING_TIERS'' test now compares by field name and is pinned against SearchResultRank._fields directly, which is stricter than the old index-based check. Merged silasfelinus/Kapowarr#94.'
   claimed_by: sched-20260820T204500Z-kapowarr-t065-c3e1
   claimed_at: '2026-08-20T20:45:15Z'
-  updated: '2026-08-20T20:50:32Z'
+  updated: '2026-08-20T20:52:31Z'
+  implementation_pr: 'silasfelinus/Kapowarr#94'
