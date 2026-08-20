@@ -1465,8 +1465,8 @@ tasks:
   milestone: m5
   title: Pin the search-ranking tier order with one table-driven test instead of pairwise
     boundaries
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: |-
@@ -1491,6 +1491,9 @@ tasks:
     component returns 0 for every result under its neutral setting. Test-only change --
     no production behaviour should move. If writing it reveals that the current order is
     wrong somewhere, fix that in a separate task rather than folding it in.
+  claimed_by: sched-20260820T2130Z-kapowarr-t063-b9d4
+  claimed_at: '2026-08-20T19:40:54Z'
+  updated: '2026-08-20T19:40:54Z'
 - id: t-064
   milestone: m8
   title: Make ComicVine's system-events instrumentation a provider-declared opt-in
