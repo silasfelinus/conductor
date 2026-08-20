@@ -1030,13 +1030,16 @@ tasks:
 - id: t-044
   milestone: m5
   title: Verify downloaded comic/archive integrity
-  status: ready
-  owner: null
+  status: claimed
+  owner: reviewer
   passes: 0
   stakes: reversible
   note: 'Incorporate upstream issue #154: verify CBZ/ZIP/CBR/RAR and other supported containers can open
     and contain plausible pages, surface CRC/corruption problems, and integrate failures with history/blocklist/retry
     rather than discovering damage only in a reader.'
+  claimed_by: sched-20260820T1545Z-kapowarr-t044-a7c1
+  claimed_at: '2026-08-20T15:41:04Z'
+  updated: '2026-08-20T15:41:04Z'
 - id: t-045
   milestone: m9
   title: Add CBR/RAR and remaining archive formats to the built-in reader
