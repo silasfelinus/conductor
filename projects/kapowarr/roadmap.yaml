@@ -1509,3 +1509,36 @@ tasks:
     and let unrecognized exceptions fall to other_error -- decide which and say why in
     the PR. tests/Tbackend/system_events.py exercises _instrument_comicvine directly and
     is the regression net; the counters it asserts must not change for ComicVine.
+- id: t-065
+  milestone: m5
+  title: Return search ranking as a named tuple instead of a bare positional list
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: |
+    Kaizen from t-063 (Kapowarr PR #92). t-063 pinned the six-component ordering of
+    _rank_search_result() (backend/features/search.py) with a table-driven test, because
+    the order is the actual ranking policy and nothing enforced it as a whole. The test
+    is a safety net over a design that needs one: the function returns a bare List[int]
+    whose positions carry all the meaning, so at every call site the policy is invisible
+    and a component inserted at the wrong index is a silent behaviour change.
+
+    Scope: give the ranking a NamedTuple with one field per tier (match,
+    title_overlap, volume_year, availability, pack_preference, issue_fit) and return
+    that instead of the list. Tuples compare lexicographically exactly as lists do, so
+    the sort at search.py:405 and every comparison in the tests keep working unchanged
+    -- this should be a pure readability change with no behaviour movement, which is
+    the bar to hold it to.
+
+    Two things to check rather than assume. First, the issue-fit component is
+    conditionally appended: the volume-search branch appends nothing at all when
+    issue_number is neither a tuple nor a float, so the current list is not always six
+    long and a fixed-width NamedTuple has to pick a neutral default for that case and
+    prove it does not reorder anything. Second, t-063's
+    test_each_entry_degrades_exactly_its_own_component asserts the rating length equals
+    len(RANKING_TIERS); it will need to move to field names, and doing so should make
+    it stricter, not weaker.
+
+    If this lands, t-063's table becomes a redundant second statement of the order
+    rather than the only one -- keep it anyway, but say so in its comment.
