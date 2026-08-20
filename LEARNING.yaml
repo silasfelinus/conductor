@@ -9320,3 +9320,21 @@ records:
     set_task_field.py + a manually-managed branch, was a symptom of not using
     the existing fetch-fresh git plumbing, not evidence that branch+PR is the
     wrong shape for this transition.
+- date: 2026-08-20
+  project: davinci
+  task: t-021
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Slice 10 of a recurring polish task: reading the prior slice's own
+    REMAINING note as the literal scope handoff (rather than re-auditing the
+    whole file) surfaced a real gap the narrower chapterRegion focus-loss
+    fix (slice 9) couldn't catch on its own -- a nested click whose state
+    transition unmounts the outer container the inner region lives inside,
+    not just the inner region itself. Confirming this required tracing the
+    actual call path (resolveLife -> resumeRun -> phase mutation) rather
+    than assuming two focus-restoring regions at different nesting depths
+    are independent.
