@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-20T17:46:11Z
+Generated: 2026-08-20T18:13:09Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **708**
-- Outcomes: blocked: 15, cancelled: 1, done: 692
+- Closed tasks recorded: **709**
+- Outcomes: blocked: 15, cancelled: 1, done: 693
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
 | interface-vision | 83 | 100% |
-| kapowarr | 41 | 100% |
+| kapowarr | 42 | 100% |
 | kind-economy | 6 | 100% |
 | kind-robots | 50 | 98% |
 | kindrobots-unraid | 5 | 100% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 692 | 99% |
+| software | 693 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-20 `kapowarr/t-057` — When a task hands you a premise, measure it before designing around it. t-057 said "a tar carries no per-member checksum, so opens-cleanly is all one could ever assert" and offered two outcomes built on that: implement UNREADABLE/EMPTY-only and never CORRUPT, or decline. The premise is half true. It holds for a bare .tar -- 521 of 531 flipped-byte fixtures open cleanly with the RIGHT member names and the RIGHT member sizes -- and fails for every compressed form, where reading the stream to its end caught every flip (1036/1036 gz, 1042/1042 bz2, 1047/1047 xz) through the wrapper's own checksum, which covers the tar headers as well as the payload and is therefore broader evidence than ZIP's per-member CRC, not weaker. Implementing the design the task specified would have thrown away a 100%-detection signal on the strength of a format claim nobody had tested. The larger lesson is the trap underneath it, and it generalises past tar: the obvious implementation was WORSE THAN DOING NOTHING. Verifying a compressed tar by iterating TarFile members caught 5 of 733 flips, and the other 728 did not merely pass -- they came back with a shorter member list that the existing name-based judge calls OK, so a corrupt five-page archive presents as a healthy one-page archive at every errorlevel setting. A check that degrades into a confident wrong answer is worse than an honest "no opinion", and you only find that out by building the naive version and measuring it rather than reasoning about it. Same shape as t-044's inverted EMPTY test: in this module the expensive mistake is always the false positive. Third: measure to find the honest limits too, not just the wins. The sweep turned up a blind spot nobody asked about -- a bare tar truncated exactly on a 512-byte block boundary still parses as a complete, shorter archive -- which is now a named test asserting the gap rather than a surprise for whoever next reads a passing verdict as a guarantee.
 - 2026-08-20 `kapowarr/t-043` — An evaluation task hands you the preconditions it expects to be decisive, and the real work is checking whether they are the binding ones. t-043's note said "require a maintainable client API and matching strategy before implementation." Both fail -- aMule's EC protocol documents its own opcodes and tag formats as "still changing" and requires the client binary to come from the same release as the daemon, and Kad routes every search on the hash of the FIRST keyword, which our query builder guarantees is the series title, the most contended word available. Either finding alone justifies a decline. But answering only those two would have produced a correct verdict on the wrong question, because the task's stated PURPOSE was non-US catalog coverage, and acquisition is not where that coverage is lost: Kapowarr only searches for volumes already in the library, volumes enter via ComicVine + Metron, and a bande dessinee is absent from both -- so it is never added, never monitored, and no protocol is ever asked about it. A fourth download protocol does not enter that chain at any point. Check the premise, not just the preconditions. Second: say plainly when the architecture is NOT the obstacle. Every seam a fourth protocol needs is already open here (SearchSources, DownloadPreppers, ExternalDownloadClient, QueryBuilders are all registries; all 16 DownloadType. reference sites are registrations or lookups, no exhaustive switch). Recording that stops the next source evaluation from re-deriving it and keeps the decline scoped to ed2k instead of reading as "this fork is closed to new sources." Third: this declines rather than defers, and the distinction is worth carrying. t-042 deferred debrid because its one risk (no account to test against) shrinks by waiting. Nothing in t-043 shrinks by waiting -- EC's version lockstep is a property of aMule and first-keyword routing is a property of Kademlia. Leaving it open as "lower-priority research" would only guarantee a future session re-derives the same answer.
 - 2026-08-20 `kapowarr/t-042` — Read the actual request before evaluating the feature its name implies. "Debrid support" almost always means feed-a-magnet-to-the-cache, and evaluating that would have produced a correct, well-argued, useless answer -- it has no home in this codebase. Upstream #276 is one sentence, and the operative clause is "instead of having to use Mega directly": the user wants a hoster link unrestricted, which maps onto BaseDirectDownload._convert_to_pure_link() so exactly that PixelDrainDownload is already the template. Same two words, opposite verdicts, and the only thing separating them was reading the issue rather than the label. Second: "does this contaminate the generic architecture with a provider-specific shortcut" cannot be answered without checking whether the architecture is generic today. It is not -- __purify_link is a per-hoster if/elif chain, the queue special-cases Mega by isinstance, and the base class sniffs for Pixeldrain's rate-limit URL. Ten such precedents. A constraint written to protect a clean seam reads very differently once you have confirmed the seam is already provider-shaped, and reporting that honestly is more useful than either enforcing the constraint literally or quietly ignoring it.
 
@@ -102,8 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-20 `conductor/t-119` — The status:review transition (AGENTS.md step 7) was left ambiguous between claim_task.py's sanctioned direct-to-main exception and close_task.py's branch+PR pattern -- resolved by routing it through close_task.py (which already supports arbitrary target statuses, review included) rather than inventing a new script or a new hard-rule-1 exception. model-builder/t-029 cycle 21's STATUS.md merge conflict, doing this transition by hand with set_task_field.py + a manually-managed branch, was a symptom of not using the existing fetch-fresh git plumbing, not evidence that branch+PR is the wrong shape for this transition.
 
-- 2026-08-19 `storybook/t-010` — Cycle 20 of the recurring storybook/t-010 bug-hunt: Dream rows without a first-class Prisma model of their own (Location is just dreamType === 'LOCATION' on the generic Dream table) are easy to under-serve relative to Character/Reward/Scenario/Facet, which each have both a dedicated model and a dedicated detail component with its own "start a story" deep-link CTA. The generic dream-narration.vue detail surface had no such CTA for any Dream type, so seedFromQuery()'s ?location= query key had been dead code with no sender anywhere in the repo since it was added. Worth checking, for any future object type added to Storybook's seed-query set, whether it actually has a first-class detail component or only the generic Dream surface -- the generic surface is the one that silently misses new CTAs.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-20T17:46:11Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-20T18:13:09Z_
