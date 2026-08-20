@@ -1409,8 +1409,8 @@ tasks:
 - id: t-062
   milestone: m8
   title: Implement a Grand Comics Database metadata provider against its REST API
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-061
@@ -1461,6 +1461,9 @@ tasks:
     that anonymous access "will likely bye turned off at some point" (auth is Basic/Session
     with a GCD account, not an API token). The dump stays documented as the fallback if that
     happens.
+  claimed_by: sched-20260820T212748Z-kapowarr-t062-r5s1
+  claimed_at: '2026-08-20T21:27:49Z'
+  updated: '2026-08-20T21:27:49Z'
 - id: t-063
   milestone: m5
   title: Pin the search-ranking tier order with one table-driven test instead of pairwise
