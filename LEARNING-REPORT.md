@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-20T19:41:31Z
+Generated: 2026-08-20T19:52:00Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **712**
-- Outcomes: blocked: 15, cancelled: 1, done: 696
+- Closed tasks recorded: **713**
+- Outcomes: blocked: 15, cancelled: 1, done: 697
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
 | interface-vision | 83 | 100% |
-| kapowarr | 45 | 100% |
+| kapowarr | 46 | 100% |
 | kind-economy | 6 | 100% |
 | kind-robots | 50 | 98% |
 | kindrobots-unraid | 5 | 100% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 696 | 99% |
+| software | 697 | 99% |
 
 ## Failure categories
 
@@ -84,6 +84,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - failure category `transient` — 9 occurrences; look for the shared cause across its records
 
 ## Recent lessons
+
+- 2026-08-20 `kapowarr/t-063` — A test written to catch a silent regression must be shown to fail against that regression, not merely to pass against current behaviour -- and for an ordering policy this is cheap to do: break the policy deliberately, run the suite, restore from a byte-copy. Doing it here proved the task's premise rather than assuming it. Transposing two rating components failed four tests, but inserting a NEW component above match correctness failed only the new table guard while all 22 pre-existing pairwise tests passed. That is the exact gap the task described, demonstrated instead of argued, and it is the evidence that belongs in the PR body. Second: lexicographic list comparison is what makes a whole-order assertion possible in one place. Because a result degraded at tier N differs from the baseline first at index N, it loses to one degraded at any later tier regardless of magnitudes -- so ranking one result per tier and sorting them reproduces the policy backwards, and six adjacent-boundary assertions collapse into one readable list. Third: when two ranking components share an input (pack preference and issue-number fit both read result['issue_number']), no single result can vary one alone. Patching the component's return value rather than driving it through a real preference is what isolates it -- and the coupling itself is worth writing into the test, since it is otherwise only discoverable by trying and failing to construct the case.
 
 - 2026-08-20 `kapowarr/t-061` — Deleting special-casing from a fan-out is a contract problem before it is a control-flow problem. search_metadata_with_fallback() could not iterate providers because MetadataProvider had no way to answer "should I be in the fan-out" or "is this error me being unavailable, or a bug" -- so the two questions the old code answered inline (_metron_is_configured(), isinstance against MetronError / CVRateLimitReached) had to become is_configured() and unavailable_errors on the contract first. Once they were there the loop wrote itself. Second: preserve the exact success/failure algebra, not just the happy path. The old code returned ComicVine's results when Metron failed recoverably, even if ComicVine returned an empty list -- so the generalized version has to raise on "every provider was unavailable", tracked with an `answered` flag, NOT on "results is empty". Those two conditions look interchangeable and are not; an empty successful search is a valid answer. Third: order the provider list explicitly rather than inheriting dict insertion order. The registry's order depends on which module imported first, so the fan-out's result order would have been an import-order accident; sorting default-first then alphabetically makes the existing ['comicvine', 'metron'] assertion a guarantee instead of a coincidence.
 
@@ -138,8 +140,6 @@ dates, and no series-level volume number. Probe the API before designing against
 
 - 2026-08-20 `kapowarr/t-034` — When adding an unattended path into an existing pipeline, the reusable seam is usually the one the manual version already uses -- here manual_import_files() plus the mass_rename/mass_convert/mass_process_files trio, rather than fabricating the Download object post_processing.py is built around for something that was never downloaded. Two things worth copying next time: enforce a stated scope boundary in code as well as prose (the "don't compete with continuous import" requirement became both a never-create-a-volume rule and a settings-level folder-collision check, from both sides), and check whether the repo has recently fixed the same shape of problem elsewhere -- a just-landed "large library stalls a background importer" fix was the direct reason this feature got a per-pass volume index instead of an O(files x volumes) database walk.
 
-- 2026-08-20 `conductor/t-120` — A roadmap task in a status outside the documented lifecycle is invisible, not deferred -- every selection path matches `status == "ready"` exactly, so it never surfaces as ready work, a gate, or blocked. Eight such tasks hid the entire remaining backlog of the portfolio's top-priority project, and four scheduled cycles in one day silently fell through to a 12th-ranked recurring polish task as a result. audit_roadmaps.py had been reporting all eight as errors the whole time but is advisory and always exits 0 -- the second time an advisory-only finding (after DUPLICATE_TASK_ID) had to be promoted into validate_roadmaps.py's hard CI gate after it had already caused real damage. When a cycle reports "no claimable work" for a project ranked above the one it picks, verify the claim against a status histogram instead of recording it.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-20T19:41:31Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-20T19:52:00Z_
