@@ -1397,39 +1397,15 @@ tasks:
   milestone: m8
   title: Generalize the metadata search fan-out to registered providers instead of hardcoding
     two
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
-  note: |-
-    Filed from t-059 (projects/kapowarr/docs/t-059-gcd-metadata-provider.md). Prerequisite
-    for any third metadata provider, and worth doing on its own merits because it deletes
-    special-casing rather than adding it.
-
-    search_metadata_with_fallback() (backend/features/metadata.py:233) is hardcoded to
-    exactly two providers: it imports MetronError by name, calls _metron_is_configured()
-    (metadata.py:224, which peeks at settings.metron_* directly), and runs a two-way
-    gather with provider-specific exception branches. _metron_is_configured() is called at
-    four sites in that file. MetadataProviderRegistry.get() (metadata.py:133) and
-    .capabilities() (metadata.py:147) each lazily import 'comicvine'/'metron' by name, so
-    a third provider needs a third branch in both.
-
-    The registry cannot help because the contract has no notion of "configured":
-    MetadataProvider (metadata.py:29) declares test_key/search_volumes/fetch_volume/
-    fetch_volumes/fetch_issues and nothing that answers "should I be in the fan-out."
-
-    Scope: add is_configured() to MetadataProvider, make search_metadata_with_fallback()
-    iterate registered+configured providers, make the registry's lazy imports table-driven,
-    and remove _metron_is_configured() and its call sites. Behaviour must be unchanged with
-    Metron alone configured -- tests/Tbackend/metadata_providers.py already asserts exactly
-    that (test_configured_metron_results_join_comicvine_results,
-    test_metron_works_without_a_comicvine_key), so those are the regression net. Everything
-    downstream of search is already generic (Volume.add at volumes.py:1100, the refresh
-    path at volumes.py:1471-1477, the POST /api/volumes route at frontend/api.py:796,
-    MetadataIdentityStore); the fan-out is the only place that is not.
+  note: 'Done 2026-08-20 via Kapowarr PR #91 (squash 094e918). search_metadata_with_fallback() now iterates MetadataProviderRegistry.configured_provider_ids(SEARCH_VOLUMES) instead of hardcoding ComicVine+Metron: MetadataProvider gained is_configured() and unavailable_errors, the registry gained a table-driven _builtin_modules lazy-import map, and _metron_is_configured() plus all four of its call sites are gone. Adding a third metadata provider is now implement + register + one table line. 625 tests green on Python 3.8-3.12; the two pre-existing fan-out regression tests assert the same behaviour with only their patch target moved.'
   claimed_by: sched-20260820T2130Z-kapowarr-t061-a7f2
   claimed_at: '2026-08-20T19:27:16Z'
-  updated: '2026-08-20T19:33:35Z'
+  updated: '2026-08-20T19:35:29Z'
+  implementation_pr: 'silasfelinus/Kapowarr#91'
 - id: t-062
   milestone: m8
   title: Implement a Grand Comics Database metadata provider against its REST API
