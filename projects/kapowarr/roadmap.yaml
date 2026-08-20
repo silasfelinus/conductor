@@ -1545,12 +1545,13 @@ tasks:
 - id: t-067
   milestone: m8
   title: Add a settings-page UI row for optional GCD (Grand Comics Database) credentials
-  status: claimed
+  status: done
   owner: reviewer
   passes: 0
   stakes: reversible
   note: 'Followup from t-062 (GCD provider implementation, silasfelinus/Kapowarr#96). The GCD provider works fully anonymously -- no credentials are required to search or fetch -- so this was deliberately left out of t-062''s scope to keep that PR focused on the backend contract. `gcd_username`/`gcd_password` already exist as real settings (backend/internals/settings.py: added to PublicSettingsValues, the todict() credential-masking tuple, SENSITIVE_SETTING_KEYS, and the key-conversion elif chain, mirroring metron_username/metron_password exactly) and are already readable/writable through the generic settings API -- there is just no dedicated UI to enter them yet, the same gap Metron''s credentials would have before frontend/templates/settings_metadata.html and frontend/static/js/settings_metadata.js were built out for them. Mirror that existing Metron row: add a `#gcd-username-input`/`#gcd-password-input` pair to settings_metadata.html and wire their load/save in settings_metadata.js exactly the way the three `#metron-*-input` elements are wired today (see settings_metadata.js:5-7 and :15-17). Worth noting in the UI copy that these are optional and only raise GCD''s documented rate limit -- unlike the Metron/ComicVine rows, an empty GCD row is a fully working configuration, not a disabled one.'
   claimed_by: sched-20260820T2240-kapowarr-t067-r1
   claimed_at: '2026-08-20T22:37:21Z'
-  updated: '2026-08-20T22:37:21Z'
+  updated: '2026-08-20T22:39:43Z'
+  implementation_pr: 'silasfelinus/Kapowarr#98'
 
