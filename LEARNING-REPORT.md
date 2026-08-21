@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-21T03:29:55Z
+Generated: 2026-08-21T04:04:02Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **715**
-- Outcomes: blocked: 15, cancelled: 1, done: 699
+- Closed tasks recorded: **716**
+- Outcomes: blocked: 15, cancelled: 1, done: 700
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -22,7 +22,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | appmaker | 8 | 100% |
 | approval-portal | 2 | 0% |
 | art-generator-connect | 3 | 100% |
-| brainstorm | 17 | 94% |
+| brainstorm | 18 | 94% |
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 25 | 100% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 699 | 99% |
+| software | 700 | 99% |
 
 ## Failure categories
 
@@ -84,6 +84,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - failure category `transient` — 9 occurrences; look for the shared cause across its records
 
 ## Recent lessons
+
+- 2026-08-21 `brainstorm/t-016` — Clean first-pass success on a real feature build (not a bugfix cycle): grepping for existing-but-unused scaffolding (BrainstormCandidate.meta.art) before implementing prevented inventing a parallel tracking mechanism, and it also surfaced a genuine latent bug (client localStorage round-trip silently dropping a JSON meta field the server path already preserved generically) that a narrower "just wire the button" implementation would have missed entirely. Worth generalizing: when a Prisma model's `meta`/JSON column is preserved generically server-side but the client has a hand-written normalizer that only lifts out known sub-fields, any new sub-field added to that type needs an explicit normalizer update or it silently vanishes on the client-only persistence path (localStorage/autosave) even though the server path never had the bug.
 
 - 2026-08-21 `model-builder/t-029` — Cycle 30 of a long-running recurring bug-hunt task: a transient, client-local 'in-progress' marker written directly onto item.stages before an async call (commitItem's COMMIT marker, generateItemAsset's GENERATE_ASSETS marker) has no store-level enforcement stopping an unrelated stageStatuses-diffing write from reading and re-persisting it as real. Three of four batch functions lacked the isItemManualActionInFlight guard their sibling autoBuildItem already had -- the fourth instance of this exact shape across cycles 25, 28, and 29 (see cycle 20's and cycle 25's own entries in this file). Patching one more call site per cycle works but never closes the class; the durable fix is moving the in-flight flag into a separate ephemeral field never serialized into a stageStatuses payload, the same way artJobId/queueState already are kept out of item.stages.
 
@@ -138,8 +140,6 @@ dates, and no series-level volume number. Probe the API before designing against
 - 2026-08-20 `kapowarr/t-043` — An evaluation task hands you the preconditions it expects to be decisive, and the real work is checking whether they are the binding ones. t-043's note said "require a maintainable client API and matching strategy before implementation." Both fail -- aMule's EC protocol documents its own opcodes and tag formats as "still changing" and requires the client binary to come from the same release as the daemon, and Kad routes every search on the hash of the FIRST keyword, which our query builder guarantees is the series title, the most contended word available. Either finding alone justifies a decline. But answering only those two would have produced a correct verdict on the wrong question, because the task's stated PURPOSE was non-US catalog coverage, and acquisition is not where that coverage is lost: Kapowarr only searches for volumes already in the library, volumes enter via ComicVine + Metron, and a bande dessinee is absent from both -- so it is never added, never monitored, and no protocol is ever asked about it. A fourth download protocol does not enter that chain at any point. Check the premise, not just the preconditions. Second: say plainly when the architecture is NOT the obstacle. Every seam a fourth protocol needs is already open here (SearchSources, DownloadPreppers, ExternalDownloadClient, QueryBuilders are all registries; all 16 DownloadType. reference sites are registrations or lookups, no exhaustive switch). Recording that stops the next source evaluation from re-deriving it and keeps the decline scoped to ed2k instead of reading as "this fork is closed to new sources." Third: this declines rather than defers, and the distinction is worth carrying. t-042 deferred debrid because its one risk (no account to test against) shrinks by waiting. Nothing in t-043 shrinks by waiting -- EC's version lockstep is a property of aMule and first-keyword routing is a property of Kademlia. Leaving it open as "lower-priority research" would only guarantee a future session re-derives the same answer.
 - 2026-08-20 `kapowarr/t-042` — Read the actual request before evaluating the feature its name implies. "Debrid support" almost always means feed-a-magnet-to-the-cache, and evaluating that would have produced a correct, well-argued, useless answer -- it has no home in this codebase. Upstream #276 is one sentence, and the operative clause is "instead of having to use Mega directly": the user wants a hoster link unrestricted, which maps onto BaseDirectDownload._convert_to_pure_link() so exactly that PixelDrainDownload is already the template. Same two words, opposite verdicts, and the only thing separating them was reading the issue rather than the label. Second: "does this contaminate the generic architecture with a provider-specific shortcut" cannot be answered without checking whether the architecture is generic today. It is not -- __purify_link is a per-hoster if/elif chain, the queue special-cases Mega by isinstance, and the base class sniffs for Pixeldrain's rate-limit URL. Ten such precedents. A constraint written to protect a clean seam reads very differently once you have confirmed the seam is already provider-shaped, and reporting that honestly is more useful than either enforcing the constraint literally or quietly ignoring it.
 
-- 2026-08-20 `kapowarr/t-045` — Read a multi-part task's code before believing its note about what is left. This one read "add safe extraction for CBR/RAR first, then other practical formats" as though no part had shipped; CBR/RAR had in fact been in comic_reader.py since the reader landed, so the whole task was its second clause. A roadmap note is a snapshot of intent at filing time and goes stale silently -- three minutes of grep resized the work before any of it was planned wrong. The other lesson is that copying an existing pattern is not the same as copying its threat model. list_tar_pages/read_tar_member mirror the ZIP and RAR pairs almost line for line, and mirroring them exactly would have shipped a file-read primitive: a tar, unlike a zip, can carry symlink members, and extractfile() resolves the link target, so a member named 001.jpg pointing at /etc/passwd would have been served straight back through the authenticated page endpoint. The guard is one isfile() check, but nothing in the pattern being copied would have suggested needing it. When adding a sibling format, ask what the new container can express that the old one could not.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-21T03:29:55Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-21T04:04:02Z_
