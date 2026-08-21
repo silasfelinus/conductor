@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-21T02:28:10Z
+Generated: 2026-08-21T02:50:07Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **714**
-- Outcomes: blocked: 15, cancelled: 1, done: 698
+- Closed tasks recorded: **715**
+- Outcomes: blocked: 15, cancelled: 1, done: 699
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -43,7 +43,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 71 | 100% |
+| model-builder | 72 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 698 | 99% |
+| software | 699 | 99% |
 
 ## Failure categories
 
@@ -84,6 +84,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - failure category `transient` — 9 occurrences; look for the shared cause across its records
 
 ## Recent lessons
+
+- 2026-08-21 `model-builder/t-029` — Cycle 30 of a long-running recurring bug-hunt task: a transient, client-local 'in-progress' marker written directly onto item.stages before an async call (commitItem's COMMIT marker, generateItemAsset's GENERATE_ASSETS marker) has no store-level enforcement stopping an unrelated stageStatuses-diffing write from reading and re-persisting it as real. Three of four batch functions lacked the isItemManualActionInFlight guard their sibling autoBuildItem already had -- the fourth instance of this exact shape across cycles 25, 28, and 29 (see cycle 20's and cycle 25's own entries in this file). Patching one more call site per cycle works but never closes the class; the durable fix is moving the in-flight flag into a separate ephemeral field never serialized into a stageStatuses payload, the same way artJobId/queueState already are kept out of item.stages.
 
 - 2026-08-20 `kapowarr/t-062` — A prior evaluation doc that names exact measured traps (response shapes, pagination ceilings, a 404-not-JSON edge case) turns an "implement a REST client" task into something closer to transcription than design -- the risk shifts from "did I miss a trap" to "did I quietly widen scope while transcribing it." Re-reading the evaluation doc's own recommendation section against the actual diff before opening the PR (does every field mapping trace to a table row, is every new file/setting/test named in the doc's follow-on task description) is what kept this PR three files instead of six -- the doc's own field tables for `Series`/`overview` rows against `VolumeMetadata`/ `IssueMetadata` could be pasted almost directly into code comments, and the two schema-shape questions the doc explicitly left unmeasured (a `title` field on overview rows, `longest_story.synopsis`) were exactly the two places worth flagging as judgment calls in the PR body rather than silently guessing. Second: an existing sibling provider is not automatically a safe copy source. Reading `metron.py` for the pattern surfaced a real latent bug in it (`test_key()` imports `run` from `backend.base.helpers`, which re-exports `subprocess.run`, not an async runner -- calling `subprocess.run(<coroutine>)` raises, it doesn't return `False`; the sibling `comicvine.py` gets this right via `from asyncio import gather, run, sleep`). Never had a test covering `test_key()`'s actual return value, so it shipped unnoticed. Filed as kapowarr/t-066 rather than folded into this PR, but the general point is that "match the existing provider's pattern" needs the same scrutiny as any other code being read for reuse, not a pass just because it already merged.
 
@@ -138,8 +140,6 @@ dates, and no series-level volume number. Probe the API before designing against
 
 - 2026-08-20 `kapowarr/t-045` — Read a multi-part task's code before believing its note about what is left. This one read "add safe extraction for CBR/RAR first, then other practical formats" as though no part had shipped; CBR/RAR had in fact been in comic_reader.py since the reader landed, so the whole task was its second clause. A roadmap note is a snapshot of intent at filing time and goes stale silently -- three minutes of grep resized the work before any of it was planned wrong. The other lesson is that copying an existing pattern is not the same as copying its threat model. list_tar_pages/read_tar_member mirror the ZIP and RAR pairs almost line for line, and mirroring them exactly would have shipped a file-read primitive: a tar, unlike a zip, can carry symlink members, and extractfile() resolves the link target, so a member named 001.jpg pointing at /etc/passwd would have been served straight back through the authenticated page endpoint. The guard is one isfile() check, but nothing in the pattern being copied would have suggested needing it. When adding a sibling format, ask what the new container can express that the old one could not.
 
-- 2026-08-20 `kapowarr/t-035` — Before writing an adapter for a third-party API you cannot reach, spend the time to read that service's own implementation, not just its documentation, and not memory. NZBGet's published API docs omit a required parameter from `append`'s argument list and ship an example passing 10 of 11 arguments; either would have produced a client that fails on its very first call. Reading the source also surfaced three facts that changed the design rather than the comments -- JSON-RPC 1.1 with no `jsonrpc` member in replies, post-processing happening in the queue so history is terminal, and the firm absence of any per-group download rate. Where a value's vocabulary is still uncertain, key on its stable part (a status prefix) and default the unknown case to the safe reading, so the adapter survives versions nobody here can test against.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-21T02:28:10Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-21T02:50:07Z_
