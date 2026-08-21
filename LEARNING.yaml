@@ -9675,3 +9675,23 @@ records:
     unnoticed. Filed as kapowarr/t-066 rather than folded into this PR, but the general
     point is that "match the existing provider's pattern" needs the same scrutiny as any
     other code being read for reuse, not a pass just because it already merged.
+- date: 2026-08-21
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Cycle 30 of a long-running recurring bug-hunt task: a transient, client-local
+    'in-progress' marker written directly onto item.stages before an async call
+    (commitItem's COMMIT marker, generateItemAsset's GENERATE_ASSETS marker) has no
+    store-level enforcement stopping an unrelated stageStatuses-diffing write from
+    reading and re-persisting it as real. Three of four batch functions lacked the
+    isItemManualActionInFlight guard their sibling autoBuildItem already had -- the
+    fourth instance of this exact shape across cycles 25, 28, and 29 (see cycle 20's
+    and cycle 25's own entries in this file). Patching one more call site per cycle
+    works but never closes the class; the durable fix is moving the in-flight flag
+    into a separate ephemeral field never serialized into a stageStatuses payload,
+    the same way artJobId/queueState already are kept out of item.stages.
