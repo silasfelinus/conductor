@@ -450,26 +450,22 @@ tasks:
   - id: t-019
     milestone: m5
     title: Integrate Brainstorm entry points across compatible Kind Robots surfaces
-    status: claimed
+    status: done
     depends_on:
       - t-012
       - t-015
     owner: worker
-    updated: '2026-08-21T12:30:16Z'
+    updated: '2026-08-21T12:34:30Z'
     passes: 0
     stakes: reversible
-    note: >-
-      Add focused "Brainstorm variations" handoffs from the highest-value existing surfaces
-      rather than mini-brainstorm implementations: Character/Dream first, then evaluate Prompt,
-      Reward, Scenario, Project and art surfaces. Deep links should carry source entity + intent
-      only and land in the canonical workbench. Do not clutter every card with a new button.
+    note: 'Investigated (conductor scheduled Agent run, session sched-conductor-brainstorm-t019-20260821T123016Z, worktree-isolated background agent). Read the full brainstorm-manager.vue (~1400 lines), character-manager.vue, dream-manager.vue, dream-brainstorm.vue, and stores/helpers/brainstormSourceAdapters.ts before touching anything. Found both explicitly-prioritized halves of this task''s scope already shipped by prior tasks: Character via t-013 (kind_robots#1856, merged) -- character-manager.vue already has a single "Brainstorm variations" button in the detail panel only (not on every card, matching this task''s own "do not clutter" instruction) that navigates to /brainstorm?source=character&sourceId=<id>&intent=<text>, and brainstorm-manager.vue already has a generic seedFromQuery() deep-link contract (reads route.query.source/sourceId/intent on mount, prefills, strips consumed keys) built generic over modelType specifically so later surfaces need no change to that function. Dream via t-014 (kind_robots#1937, merged) -- added a dreamContext resolver to the same source-context registry, and Dream''s actual UI coverage is dream-brainstorm.vue, a full first-class Brainstorm tab already wired into dream-manager.vue (pitch -> riffs -> save-as-Dream-seed). This task''s own note explicitly allows scoping to Character-only if Dream already has adequate coverage via dream-brainstorm.vue -- confirmed it does; adding a second /brainstorm deep-link next to Dream''s existing dedicated tab would itself be redundant clutter, the thing this task warns against. No code change made -- there was no genuine gap left in the Character/Dream scope. Closing as done on that basis. The task''s other half ("then evaluate Prompt, Reward, Scenario, Project and art surfaces") was explicitly out of scope for this pass and is picked up as a new follow-up task, t-027 -- Scenario already has an adapter + context resolver built per t-014''s note, so it''s likely the cheapest next surface to wire an entry point for.'
     claimed_by: sched-conductor-brainstorm-t019-20260821T123016Z
     claimed_at: '2026-08-21T12:30:16Z'
 
   - id: t-020
     milestone: m5
     title: Reconnect Conductor proposal ideation as an explicit downstream consumer
-    status: waiting
+    status: ready
     depends_on:
       - t-010
       - t-019
@@ -607,3 +603,24 @@ tasks:
       the app, and if one exists, wire its already-delivered art across rather than
       dropping it.
     updated: '2026-08-21T05:40:00Z'
+
+  - id: t-027
+    milestone: m5
+    title: Evaluate Brainstorm entry points for Prompt/Reward/Scenario/Project/art surfaces
+    status: ready
+    depends_on: t-019
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Follow-up from t-019 (closed done 2026-08-21): Character and Dream entry points into
+      the canonical brainstorm workbench were found already shipped (t-013/kind_robots#1856,
+      t-014/kind_robots#1937), so t-019 evaluated only those two. This task picks up the
+      remaining half of t-019's original scope: evaluate Prompt, Reward, Scenario, Project,
+      and art surfaces for a focused "Brainstorm variations" deep-link handoff, following the
+      same contract brainstorm-manager.vue's seedFromQuery() already exposes (source/sourceId/
+      intent query params, generic over modelType). Scenario already has an adapter + context
+      resolver built per t-014's note and is likely the cheapest to wire an entry point for
+      first. Keep it additive and scoped -- one focused entry point per surface where it adds
+      real value, not a button on every card.
+    updated: '2026-08-21T13:00:00Z'
