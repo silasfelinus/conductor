@@ -575,16 +575,16 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#1999'
     note: 'Cycle 32 (2026-08-21). Cycle 31''s suggested lead did NOT pan out as a bug: read runs/index.post.ts, runs/index.get.ts, and runs/[id].get.ts line-by-line against their callers in modelBuilderStore.ts -- these server routes are solid, no gap found. Also checked whether any other component reads a source record''s raw fields as fragilely as source-picker.vue did (cycle 31) -- grepped every SOURCE_TYPES/titleField/subtitleField consumer; sourceLabel() only reads titleField, which is always a Prisma string column across every SOURCE_TYPES entry, so it is not exposed to the same bug class. Pivoted to a fresh bug-hunt per the recurring task''s own fallback convention and found a real one: openRun() in modelBuilderStore.ts had no equivalent of resumeRun()''s "do not resume a dead run" check. resumeRun() explicitly verifies status !== ''CANCELLED'' on its remembered-run fetch (with a doc comment about avoiding a read-only 409 trap), but openRun()''s two paths -- the cached lookup in state.runs and its network-fetch fallback -- both had no status check at all, and BuildRun did not even carry a status field. Reopening a run that was cancelled elsewhere (another tab/device, or a race between a concurrent fetchRuns()/cancelRun()) silently loaded it as fully interactive, and every subsequent write would 409 in the background against assertRunWritable''s cancelled check with no visible explanation to the user. Fixed by adding status to BuildRun/adaptRun; openRun()''s cached branch now refuses a CANCELLED cached entry, and its fetch fallback checks response.data.status === ''CANCELLED'' before adopting it, drops the stale state.runs entry, and surfaces an error instead of silently opening a dead run. Added utils/scripts/verifyModelBuilderOpenRunCancelledGuard.ts + .test.ts (mirrors verifyModelBuilderResumeCancelledRunGuard.ts''s established pattern), wired into package.json/contract-tests.yml. Verified: vue-tsc --noEmit repo-wide clean, eslint clean on touched files (2 pre-existing unrelated empty-catch-block findings confirmed via git-stash to predate this change), prettier --check clean on new/touched files, all 121 test:model-builder-* npm scripts pass (including the 2 new ones), git status --porcelain scoped to exactly the 5 intended files. kind_robots PR #1999: all 34 CI checks green, squash-merged 21c33901e15265bb9180c7503d0d440209ab8692. Suggested next lead for cycle 33: a line-by-line pass of stores/helpers/modelBuilderFields.ts/modelBuilderRecipes.ts''s resolveTargetModel/CREATE_TARGETS/defaultFieldsTemplate mapping against every relationship-expansion CREATE output key, confirming each target model and its default-fields skeleton still match the Prisma schema -- the same class of stale-mapping bug cycle 22 found in subtitleField/titleField. Re-armed to ready.'
-    owner: null
-    claimed_by: sched-conductor-mb-t029-cycle32-20260821T102749Z
-    claimed_at: '2026-08-21T10:27:50Z'
-    updated: '2026-08-21T10:54:57Z'
+    owner: worker
+    claimed_by: sched-conductor-mb-t029-cycle33-20260821T110616Z
+    claimed_at: '2026-08-21T11:06:17Z'
+    updated: '2026-08-21T11:06:17Z'
 
   - id: t-030
     milestone: m6
