@@ -1,4 +1,4 @@
-updated: "2026-08-14T10:43:43+00:00"
+updated: "2026-08-21T01:35:00+00:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -833,3 +833,65 @@ pitches:
       - the breath-patch clear-and-regrow cycle completes within the design's target duration and never leaves the pane permanently fully clear or permanently fully frosted
       - pointer warm-trail thinning and click-triggered forced clears never block underlying page input, and the forced clear is rate-limited to once per pane per regrowth cycle
       - active walker count and frost-bitmap size stay fixed regardless of viewport size or elapsed session time
+
+  - id: harmonograph-sand-table
+    title: Harmonograph Sand Table
+    status: pitched
+    priority: 23
+    surprise: >
+      A tabletop sand-drawing device suspended from two decaying pendulums traces a
+      continuously evolving symmetric curve into a fine sand bed. As the pendulums' swing
+      slowly damps, the curve tightens and drifts through elegant looping rosette patterns
+      before a small mechanical rake sweeps the bed clean and a fresh pair of pendulum
+      amplitudes and frequencies kicks off a new curve.
+    passive_loop: >
+      A two-pendulum harmonic simulation -- independent X/Y decaying sinusoids with slowly
+      drifting frequency ratios -- drives a stylus position each frame; the stylus
+      continuously draws a thin groove into a persistent sand height-map/line buffer rather
+      than recomputing the whole curve each frame, so cost stays flat as the curve lengthens.
+      Once amplitude decays below a visibility threshold, or the traced path exceeds a max
+      segment count, a rake arm sweeps diagonally across the bed, erasing the groove buffer
+      region it crosses, and a freshly seeded pendulum configuration begins tracing on the
+      now-clear bed.
+    optional_interaction: >
+      Pointer movement near the table imparts a gentle nudge to the pendulum's damping and
+      frequency drift, as if bumping the table, visibly perturbing the curve without
+      stopping it. A click forces an immediate rake sweep and restart, independent of the
+      ambient decay-triggered cycle, rate-limited to avoid a spam-restart loop.
+    technique: >
+      Canvas 2D. Pendulum position is a closed-form damped harmonic function evaluated per
+      frame from elapsed time, so there is no per-step integration drift. The traced groove
+      is written once into a persistent offscreen line/height buffer (same fixed-buffer
+      discipline as the hourglass-cascade and candlelit-reliquary height-map family, but the
+      source geometry is a single continuous parametric curve rather than settling
+      particles) and drawn via drawImage; the rake-sweep erase masks a moving band across
+      that buffer rather than clearing and redrawing the whole thing.
+    reduced_motion: >
+      A single static frame showing one mostly-completed rosette curve partway through the
+      current cycle, with the rake arm parked off to one side -- no pendulum motion, no rake
+      sweep, only a very slow, subtle line-opacity drift to confirm the piece is alive.
+    performance_risk: >
+      Unbounded curve length if the decay threshold is set too low or frequency drift keeps
+      the curve open indefinitely. Cap max traced segments per cycle independent of viewport
+      size or elapsed uptime, force a rake sweep once the cap is hit even if amplitude
+      hasn't fully decayed, and keep the groove buffer a fixed offscreen canvas sized to the
+      pane rather than a growing point-history array.
+    novelty: >
+      The core loop is a closed-form damped-harmonic (Lissajous-family) curve traced
+      continuously into a persistent line buffer, with a periodic mechanical rake-sweep
+      erase-and-restart cycle -- distinct from every existing pitch. Magnetic-sand-garden's
+      low-resolution simulation buffer forms and collapses topographic islands from grain
+      aggregation, not a single continuously-traced parametric curve; celestial-mobile is
+      constraint-based rigid-body balance physics, not a decaying-pendulum stylus;
+      tapestry-loom additively constructs a fixed woven motif row-by-row rather than a
+      freeform curve; hourglass-cascade and candlelit-reliquary both accumulate from
+      falling/dripping particles settling into a height-map, not from a continuous stylus
+      trace; geode-bloom and frost-window-etching both grow structure outward from
+      nucleation or edge seeds rather than tracing a single continuous parametric path. No
+      existing pitch uses harmonograph/Lissajous pendulum physics or a rake-sweep erase
+      cycle.
+    acceptance:
+      - the traced curve visibly evolves through distinct rosette and loop patterns over each cycle without requiring interaction, and no two cycles trace an identical curve
+      - the rake-sweep erase-and-restart cycle completes within the design's target duration and never leaves the bed permanently fully traced or permanently blank
+      - pointer nudge perturbation and click-triggered forced sweeps never block underlying page input, and the forced sweep is rate-limited
+      - traced-segment buffer size and rake sweep cost stay fixed regardless of viewport size or elapsed session time
