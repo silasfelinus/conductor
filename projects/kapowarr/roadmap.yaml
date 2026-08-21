@@ -1558,20 +1558,11 @@ tasks:
 - id: t-068
   milestone: m8
   title: Identify which Kapowarr page is still slow after the review-holds fix
-  status: ready
+  status: done
   owner: null
   passes: 0
   stakes: reversible
-  note: >
-    Kaizen from reviewing silasfelinus/Kapowarr#95 (2026-08-20, conductor scheduled
-    Agent run). #95 fixed the review-holds queue filling with unimportable rows
-    (stale paths for files that had moved during import/rename) and made the Logs
-    page reachable and readable, but its own "Not addressed" section flags a
-    separate, still-open slowdown: the PR author didn't know which page was slow, so
-    couldn't chase it, and confirmed the `items=0` poll path (the one this PR's own
-    scope touches) is cheap and unaffected. Next cycle: get a concrete repro (which
-    page, what action, roughly how slow) -- check TALKBACK.md/Kapowarr issues for a
-    user report first, or reproduce cold against a representative library size and
-    profile the slow request/render directly -- before proposing a fix.
-  updated: '2026-08-20T23:30:00Z'
+  note: 'Resolved by silasfelinus/Kapowarr#99 ("Build the review list in batches instead of one blocking pass"), merged 2026-08-20. The slow page was the Library Import review list: a continuous import pass holds a whole folder at a time, producing several hundred held folders (thousands of rows, each with its own button) appended to the live list in one synchronous pass -- the page stopped responding until the last row landed, reading as a hang especially on tablet, recurring on every reopen. Fix batches row insertion between frames (first batch painted immediately, list scrollable while the rest fills in), guards against a stale batch appending onto a newer list via a render generation counter, and takes each batch''s Select-All state from the live selection rather than the template default. This PR was authored/merged independently of this investigation task (different session, found via a live repro rather than this task''s planned repro-then-fix path) -- reconciling status to done rather than duplicating the investigation.'
+  updated: '2026-08-21T00:29:10Z'
+  implementation_pr: 'silasfelinus/Kapowarr#99'
 
