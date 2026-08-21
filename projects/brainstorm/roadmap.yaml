@@ -617,3 +617,19 @@ tasks:
     claimed_by: sched-conductor-brainstorm-t027-20260821T130500Z
     claimed_at: '2026-08-21T13:32:05Z'
     implementation_pr: 'silasfelinus/kind_robots#2002'
+
+  - id: t-028
+    milestone: m5
+    title: Add a Brainstorm-variations entry point to Reward's detail view
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: 'Kaizen from t-027 (2026-08-21, kind_robots PR #2002): Reward is the next-cheapest
+      surface after Scenario. reward-manager.vue''s #rewards slot renders reward-interact.vue
+      directly with no gating div (unlike Character/Scenario, which each wrap their detail-only
+      controls in a v-if="...selected*" div). Add a Brainstorm variations adapter to
+      BRAINSTORM_SOURCE_ADAPTERS for reward (mirroring the scenario adapter''s shape), a
+      v-if="rewardStore.selectedReward" gating div at the manager level, and a button following
+      the same startBrainstormWith*() pattern (source=reward, sourceId, intent). Extend
+      verifyBrainstormObjectEntryLinks.mjs with a Reward assertion block.'
