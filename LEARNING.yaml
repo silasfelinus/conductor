@@ -9736,3 +9736,20 @@ records:
     outcome should be checked for this same gap (state that only lives in memory during
     the operation, with nothing surviving a reload once it ends) before assuming
     existing coverage is complete.
+- date: 2026-08-21
+  project: brainstorm
+  task: t-019
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Claimed and dispatched implementation for a task whose deliverable turned out to
+    already exist, shipped by two earlier tasks (t-013, t-014) days prior. No harm done
+    since the dispatched agent verified against actual shipped code before writing
+    anything and correctly declined to manufacture a diff -- but the roadmap task itself
+    should have been closed or re-scoped at the moment t-013/t-014 shipped equivalent
+    coverage, not left `ready` to be rediscovered and re-investigated by a later cycle.
+    When a task ships coverage that satisfies a different, still-open task's stated
+    scope, check for and update that task in the same close-out cycle.

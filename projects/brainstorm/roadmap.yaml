@@ -465,7 +465,7 @@ tasks:
   - id: t-020
     milestone: m5
     title: Reconnect Conductor proposal ideation as an explicit downstream consumer
-    status: waiting
+    status: ready
     depends_on:
       - t-010
       - t-019
@@ -603,3 +603,24 @@ tasks:
       the app, and if one exists, wire its already-delivered art across rather than
       dropping it.
     updated: '2026-08-21T05:40:00Z'
+
+  - id: t-027
+    milestone: m5
+    title: Evaluate Brainstorm entry points for Prompt/Reward/Scenario/Project/art surfaces
+    status: ready
+    depends_on: t-019
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Follow-up from t-019 (closed done 2026-08-21): Character and Dream entry points into
+      the canonical brainstorm workbench were found already shipped (t-013/kind_robots#1856,
+      t-014/kind_robots#1937), so t-019 evaluated only those two. This task picks up the
+      remaining half of t-019's original scope: evaluate Prompt, Reward, Scenario, Project,
+      and art surfaces for a focused "Brainstorm variations" deep-link handoff, following the
+      same contract brainstorm-manager.vue's seedFromQuery() already exposes (source/sourceId/
+      intent query params, generic over modelType). Scenario already has an adapter + context
+      resolver built per t-014's note and is likely the cheapest to wire an entry point for
+      first. Keep it additive and scoped -- one focused entry point per surface where it adds
+      real value, not a button on every card.
+    updated: '2026-08-21T13:00:00Z'
