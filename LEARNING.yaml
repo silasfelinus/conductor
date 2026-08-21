@@ -9715,3 +9715,24 @@ records:
     added to that type needs an explicit normalizer update or it silently vanishes on
     the client-only persistence path (localStorage/autosave) even though the server
     path never had the bug.
+- date: 2026-08-21
+  project: brainstorm
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Found the established precedent (modelBuilderStore.ts's pollAsyncArtJob ->
+    finalizeQueuedArtImage split) before designing a bespoke "verify the delivered
+    image" path for Brainstorm's own enqueue/poll loop -- reusing it caught more than
+    a hand-rolled check would have (finalizeQueuedArtImage re-fetches the ArtImage row
+    itself, not just trusting the job's artImageId field, and routes through the same
+    collection-attachment semantics every other art surface uses). Also worth noting:
+    a "failed" outcome had literally zero persisted signal before this task -- only a
+    transient, session-local busy flag distinguished "generating" from "never tried"
+    or "gave up," so any per-candidate/per-item async operation with a client-visible
+    outcome should be checked for this same gap (state that only lives in memory during
+    the operation, with nothing surviving a reload once it ends) before assuming
+    existing coverage is complete.
