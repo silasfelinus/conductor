@@ -133,15 +133,15 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   note: 'Cycle 26 (2026-08-21). Investigated cycle 25''s suggested next lead first per convention: verifyStorybookLibraryNewStoryConfirmGuard.mjs (added cycle 24) had its own dedicated CI workflow but was never wired into package.json''s test:storybook-library-new-story-confirm-guard script or the test:storybook aggregate -- it still ran in CI, just silently absent from a local npm run test:storybook, unlike all 19 sibling verifyStorybook* guards. Fixed by adding the missing script entry and wiring it into the aggregate, in alphabetical order alongside the other guard scripts. This cycle was a scoping/CI-hygiene fix rather than a fresh bug hunt (same accepted shape as cycle 23). Verified: npm run test:storybook-library-new-story-confirm-guard passes standalone, full npm run test:storybook aggregate (all 20 guards) passes clean, package.json stays valid JSON, prettier --check clean, git status --porcelain scoped to exactly 1 file. kind_robots PR #2009: all required checks green (Contract verifiers, TypeScript, verify, layout-contract, facet-catalog, facet-alias-smoke, all 20 Storybook contracts, No retired provider references, Taskmaster/Narrative art/Shared narrative UI contracts); only Build production image (documented non-required check) was still running at merge time, mergeable_state read unstable not blocked, matching established precedent. Squash-merged f1a66a52. Kaizen note: suggested next lead (cycle 27) -- return to a fresh bug-hunt read of the Storybook surface (e.g. recipe-selector-adjacent components, or any surface not yet covered by the 20 existing guards), since this cycle answered a CI-wiring gap rather than hunting a new bug, mirroring cycle 23/24''s alternation pattern. Rearmed to ready per recurring-task convention -- t-010 never reaches done.'
-  updated: '2026-08-21T20:37:40Z'
+  updated: '2026-08-21T22:41:07Z'
   implementation_pr: 'silasfelinus/kind_robots#2009'
   owner: worker
-  claimed_by: sched-conductor-sb-t010-cycle26-20260821T203100Z
-  claimed_at: '2026-08-21T20:31:00Z'
+  claimed_by: sched-conductor-sb-t010-cycle27-20260821T223500Z
+  claimed_at: '2026-08-21T22:41:07Z'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
