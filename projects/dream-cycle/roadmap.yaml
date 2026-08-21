@@ -110,11 +110,11 @@ tasks:
   - id: t-006
     milestone: m4
     title: 'Daily Dream maintenance: author proposals and verify the canonical pipeline'
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-21T07:29:55Z'
+    updated: '2026-08-21T07:35:00Z'
     depends_on: t-004
     note: |-
       RAN (conductor scheduled Agent run, session sched-conductor-dc-t006-20260815T063000Z): flagged stale by select_role.py (no RAN/NO-OP marker or updated bump since 2026-08-09). Verified rather than re-derived: today's Pacific (2026-08-14) daily-dream proposal exists (build_dream_proposal.py --check --fetch passes). Checked the last 6 daily-digest.yml runs (2026-08-09 through 2026-08-14): 5/6 succeeded; the one failure (2026-08-12, run 31616582389) was already root-caused and closed out in the 2026-08-13 TALKBACK entry (conductor/t-115, t-116, dream-cycle pattern note) as a stale GitHub Actions re-run replaying a pre-migration workflow file (KR_BASE_URL still kind-robots.vercel.app) rather than a live regression -- main already had the kindrobots.org fix at the time, and every run since has been green. No new signal, no code change needed. The task itself has gone quiet not because the pipeline is unhealthy but because daily-digest.yml's own author_dream_proposal.py step (CLAUDE.md: "a backstop, not the primary path") now produces the day's proposal automatically most days, so this task's own manual-authoring branch simply hasn't had to fire. Re-arming to ready per recurring-task convention; no idea-inventory replenishment needed this pass (proposal pipeline healthy, not a content shortage).
@@ -157,9 +157,9 @@ tasks:
       Followed the already-merged Conductor naming-history fix with a Kind Robots legacy Daily Dream generator fix on branch worker/dream-cycle-t-006-name-diversity-a4c9. The app-side generator no longer exposes only a 12x10 First+whimsical-surname factory: it deterministically rotates grounded full names, mononyms, initials, titles, and bynames within each bundle, keeps names unique, propagates replacements through prose/art prompts, and extends the existing Daily Dream contract verifier with determinism, structural-diversity, stale-name, and cross-day checks.
 
       Naming-diversity maintenance completed. The canonical Conductor history-aware naming fix was already merged in conductor#2579. Kind Robots PR #1991 is now merged at c5ce3eee06116690c0c6d0d3b2a1b4e1c3f6ade2, closing the legacy 12x10 First+Last generator leak for future Facet-engine Daily Dreams while preserving existing persisted history. Final-head checks were green: Facet Catalog run 32417639446, TypeScript run 32417639451, Contract Tests run 32417639304, and Taskmaster Checkpoint Engine run 32417639448.
+
+      RAN (conductor scheduled Agent run, session sched-conductor-dc-t006-20260821T070000Z): this session's own startup sweep found build_dream_proposal.py --check --fetch reporting no proposal for 2026-08-21 -- traced rather than papered over per CLAUDE.md's instruction. Root cause is not a broken automation: daily-digest.yml's "Author today's next Daily Dream proposal" step runs author_dream_proposal.py with no --date, which authors for the *current* Pacific calendar day at run time, not the next one -- confirmed from the 2026-08-20 15:54 UTC run's own job log ("Proposal for 2026-08-20 already exists; nothing to author."). This session runs well before the 15:30 UTC daily-digest cron fires for 2026-08-21, so the day's proposal genuinely had not been authored yet by any path -- exactly the "date the cron never covered (yet)" backstop case CLAUDE.md describes, not a regression. ANTHROPIC_API_KEY is unset in this sandbox, so author_dream_proposal.py itself refuses to run here (by design -- it will not write a placeholder); authored the six-asset bundle by hand instead, preserving --brief's seed_facets (deterministic_seed 18165763423560516750, live catalog) unchanged. Bundle: vibe "The Kelp-Ink Transfer" (Office Thriller x Isekai, sea-otter/starship-pilot wildcard), location "The Low-Tide Ledger" (a bureaucratic archive carved into cosmic ice), character Bristle Voss (an otter ex-starship-pilot demoted to filing clerk), ITEM "The Unclosed Requisition" (RARE), SKILL "Dead-Reckoning Filing" (UNCOMMON), scenario "The Tide That Reads Your File" naming all three per the validator's cross-reference rule. Wrote via build_dream_proposal.py --from-json, validated clean, --check --fetch now passes for 2026-08-21. Also checked this cycle's other CURRENT CONTRACT duties: no unfolded "Notes from Silas" sections across any backlog proposal (only the README/_template placeholders matched), no pinned retry currently stuck, and idea inventory (31 status:outline proposals) is well above the five-proposal floor -- no replenishment needed. Re-arming to ready per recurring-task convention.
     owner: reviewer
-    claimed_by: sched-conductor-dc-t006-20260821T070000Z
-    claimed_at: '2026-08-21T07:29:55Z'
   - id: t-007
     milestone: m5
     title: Generate dream-cycle project art (icon, card, hero)
