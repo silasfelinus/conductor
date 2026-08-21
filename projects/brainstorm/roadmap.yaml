@@ -383,10 +383,10 @@ tasks:
   - id: t-016
     milestone: m4
     title: Generate art from selected candidates through durable ArtJobs
-    status: ready
+    status: claimed
     depends_on: t-015
-    owner: null
-    updated: '2026-08-10T08:05:00Z'
+    owner: worker
+    updated: '2026-08-21T03:29:23Z'
     passes: 0
     stakes: reversible
     note: >-
@@ -396,6 +396,8 @@ tasks:
       candidate, prompt, source entity, build/model metadata, ArtJob ID and resulting ArtImage
       relationship. Batch renders require an explicit user action and clear cost/count preview.
       Generated internal art is pre-authorized; no external publication.
+    claimed_by: scheduled-20260821T0400Z-conductor-brainstorm-t016
+    claimed_at: '2026-08-21T03:29:23Z'
 
   - id: t-017
     milestone: m4
