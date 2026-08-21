@@ -14,6 +14,7 @@ import hashlib
 import json
 import os
 import subprocess
+import time
 import urllib.error
 import urllib.request
 from datetime import datetime, timezone
@@ -23,6 +24,16 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_API_BASE = "https://kindrobots.org"
 MAX_PAYLOAD_BYTES = 4_000_000
+
+# The self-hosted Kind Robots endpoint occasionally resets large POST bodies at
+# the TLS layer (observed as ssl.SSLEOFError / "EOF occurred in violation of
+# protocol") from some network paths, even though the same request succeeds
+# moments later or from a different path. This is indistinguishable from a
+# genuine outage without a retry, so a short bounded retry absorbs the
+# transient case before this surfaces as a workflow failure. A real outage or
+# a rejected (4xx) request still fails after exhausting the retries.
+SYNC_RETRY_ATTEMPTS = 3
+SYNC_RETRY_BACKOFF_SECONDS = (2, 5)
 
 
 def read_text(path: Path) -> str:
@@ -113,14 +124,35 @@ def post_snapshot(api_base: str, token: str, payload: bytes) -> dict[str, Any]:
             "User-Agent": "conductor-projection-sync/1.0",
         },
     )
-    try:
-        with urllib.request.urlopen(request, timeout=60) as response:
-            body = response.read().decode("utf-8")
-    except urllib.error.HTTPError as error:
-        body = error.read().decode("utf-8", errors="replace")
-        raise RuntimeError(f"Kind Robots sync failed: HTTP {error.code}: {body}") from error
-    except urllib.error.URLError as error:
-        raise RuntimeError(f"Kind Robots sync failed: {error.reason}") from error
+
+    last_error: Exception | None = None
+    for attempt in range(1, SYNC_RETRY_ATTEMPTS + 1):
+        try:
+            with urllib.request.urlopen(request, timeout=60) as response:
+                body = response.read().decode("utf-8")
+        except urllib.error.HTTPError as error:
+            body = error.read().decode("utf-8", errors="replace")
+            # A real rejection (bad auth, bad payload, validation error) will
+            # not be fixed by retrying — fail immediately with the response.
+            raise RuntimeError(
+                f"Kind Robots sync failed: HTTP {error.code}: {body}"
+            ) from error
+        except urllib.error.URLError as error:
+            # Connection-level failure (timeout, reset, TLS EOF) — plausibly
+            # transient. Retry with a short backoff before giving up.
+            last_error = error
+            if attempt < SYNC_RETRY_ATTEMPTS:
+                time.sleep(SYNC_RETRY_BACKOFF_SECONDS[min(attempt - 1, len(SYNC_RETRY_BACKOFF_SECONDS) - 1)])
+                continue
+            raise RuntimeError(
+                f"Kind Robots sync failed after {SYNC_RETRY_ATTEMPTS} attempts: {error.reason}"
+            ) from error
+        else:
+            break
+    else:  # pragma: no cover - defensive, loop always returns/raises above
+        raise RuntimeError(
+            f"Kind Robots sync failed after {SYNC_RETRY_ATTEMPTS} attempts: {last_error}"
+        )
 
     parsed = json.loads(body)
     if not parsed.get("success"):

@@ -1,7 +1,9 @@
 """Tests for the one-way Conductor -> Kind Robots projection builder."""
 
 import json
+import urllib.error
 from pathlib import Path
+from unittest import mock
 
 import pytest
 
@@ -86,6 +88,69 @@ def test_repository_snapshot_fits_transport_limit():
     payload = projection.encoded_snapshot(projection.build_snapshot())
 
     assert len(payload) < projection.MAX_PAYLOAD_BYTES
+
+
+def test_post_snapshot_retries_transient_connection_errors(monkeypatch):
+    """A TLS/connection-level failure (e.g. the observed ssl.SSLEOFError on the
+    self-hosted Kind Robots endpoint) should be retried, not fail immediately."""
+    attempts = {"n": 0}
+
+    class FakeResponse:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc):
+            return False
+
+        def read(self):
+            return b'{"success": true, "data": {"ok": true}}'
+
+    def flaky_urlopen(request, timeout=60):
+        attempts["n"] += 1
+        if attempts["n"] < projection.SYNC_RETRY_ATTEMPTS:
+            raise urllib.error.URLError("EOF occurred in violation of protocol")
+        return FakeResponse()
+
+    monkeypatch.setattr(projection.urllib.request, "urlopen", flaky_urlopen)
+    monkeypatch.setattr(projection.time, "sleep", lambda _seconds: None)
+
+    result = projection.post_snapshot("https://example.com", "token", b"{}")
+
+    assert attempts["n"] == projection.SYNC_RETRY_ATTEMPTS
+    assert result["data"] == {"ok": True}
+
+
+def test_post_snapshot_gives_up_after_exhausting_retries(monkeypatch):
+    def always_fails(request, timeout=60):
+        raise urllib.error.URLError("EOF occurred in violation of protocol")
+
+    monkeypatch.setattr(projection.urllib.request, "urlopen", always_fails)
+    monkeypatch.setattr(projection.time, "sleep", lambda _seconds: None)
+
+    with pytest.raises(RuntimeError, match="Kind Robots sync failed after"):
+        projection.post_snapshot("https://example.com", "token", b"{}")
+
+
+def test_post_snapshot_does_not_retry_http_errors(monkeypatch):
+    """A real rejection (bad auth, validation) should fail fast, not retry."""
+    attempts = {"n": 0}
+
+    def rejecting_urlopen(request, timeout=60):
+        attempts["n"] += 1
+        raise urllib.error.HTTPError(
+            "https://example.com/api/conductor/sync",
+            401,
+            "Unauthorized",
+            hdrs=None,
+            fp=mock.mock_open(read_data=b'{"error": "bad token"}')(),
+        )
+
+    monkeypatch.setattr(projection.urllib.request, "urlopen", rejecting_urlopen)
+
+    with pytest.raises(RuntimeError, match="HTTP 401"):
+        projection.post_snapshot("https://example.com", "token", b"{}")
+
+    assert attempts["n"] == 1
 
 
 def test_agent_entrypoints_name_the_authority_contract():
