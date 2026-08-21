@@ -417,10 +417,10 @@ tasks:
   - id: t-017
     milestone: m4
     title: Add candidate art results and retry-safe delivery states
-    status: ready
+    status: claimed
     depends_on: t-016
-    owner: null
-    updated: '2026-08-10T08:05:00Z'
+    owner: worker
+    updated: '2026-08-21T05:40:36Z'
     passes: 0
     stakes: reversible
     note: >-
@@ -429,6 +429,8 @@ tasks:
       avoid duplicate enqueues, and verify final delivered URLs before marking image work done.
       Allow generated art to be attached/saved through existing entity-art semantics where
       appropriate rather than inventing Brainstorm-specific image storage.
+    claimed_by: sched-conductor-brainstorm-t017-20260821T054036Z
+    claimed_at: '2026-08-21T05:40:36Z'
 
   - id: t-018
     milestone: m5
