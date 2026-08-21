@@ -575,16 +575,16 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#2007'
     note: 'Cycle 38 (2026-08-21). Cycle 37''s suggested lead: check whether stores/videoStore.ts and stores/resourceGalleryStore.ts, which declare the same QueuedArtJob-shaped status union, have a similar unbounded-retry polling defect before claiming they do. Confirmed videoStore.ts''s waitForJob() has the exact same defect class as cycles 36/37: a while(true) loop polling /api/art/queue/:id whose job comes back null for BOTH "not started yet" and "the status fetch itself failed" (performFetch never throws), and the null fell through to the same "keep polling" branch as a genuine PENDING/RUNNING status with no retry cap and no timeout -- a persistent fetch failure left generate()''s awaited promise never resolving or rejecting, so its own try/catch never ran and state.status sat stuck at queued/rendering forever with nothing surfaced. Checked resourceGalleryStore.ts''s waitForPreview() too: it is already safe -- a bounded for loop (120 attempts x 2.5s) that returns null immediately on a failed fetch rather than continuing to poll, so no fix needed there. Fixed videoStore.ts by counting consecutive non-terminal, non-PENDING/RUNNING outcomes separately and throwing past MAX_CONSECUTIVE_POLL_FAILURES (6, ~30s) instead of looping forever, mirroring cycles 36/37''s fix shape exactly. Added utils/scripts/verifyVideoJobPollFailureGuard.ts + .test.ts, wired into package.json/contract-tests.yml. Verified: new guard self-test + real-file pass, sibling test:video-retry-notice-selftest/test:video-retry-notice pass (confirms no regression), vue-tsc --noEmit clean repo-wide, eslint/prettier --check clean on touched files, git status --porcelain scoped to exactly the 5 intended files. kind_robots PR #2007: all required checks green (Contract verifiers, TypeScript, verify, layout-contract, facet-catalog, facet-alias-smoke, all Storybook contracts, comment-contract, GitGuardian); Build production image was still running at merge time but is documented as not a required status check for merge. Squash-merged 8e33c15f. Suggested next lead for cycle 39: grep stores/ for any other raw performFetch-based poll loop (while(true) + performFetch) to confirm no fourth sibling of this defect class remains before considering it closed app-wide. Re-armed to ready.'
     owner: worker
-    claimed_by: sched-conductor-mb-t029-cycle38-20260821T182804Z
-    claimed_at: '2026-08-21T18:28:08Z'
-    updated: '2026-08-21T18:39:08Z'
+    claimed_by: sched-conductor-mb-t029-cycle39-20260821T192717Z
+    claimed_at: '2026-08-21T19:27:26Z'
+    updated: '2026-08-21T19:27:26Z'
 
   - id: t-030
     milestone: m6
