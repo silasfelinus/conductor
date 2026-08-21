@@ -9695,3 +9695,23 @@ records:
     works but never closes the class; the durable fix is moving the in-flight flag
     into a separate ephemeral field never serialized into a stageStatuses payload,
     the same way artJobId/queueState already are kept out of item.stages.
+- date: 2026-08-21
+  project: brainstorm
+  task: t-016
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Clean first-pass success on a real feature build (not a bugfix cycle): grepping for
+    existing-but-unused scaffolding (BrainstormCandidate.meta.art) before implementing
+    prevented inventing a parallel tracking mechanism, and it also surfaced a genuine
+    latent bug (client localStorage round-trip silently dropping a JSON meta field the
+    server path already preserved generically) that a narrower "just wire the button"
+    implementation would have missed entirely. Worth generalizing: when a Prisma model's
+    `meta`/JSON column is preserved generically server-side but the client has a
+    hand-written normalizer that only lifts out known sub-fields, any new sub-field
+    added to that type needs an explicit normalizer update or it silently vanishes on
+    the client-only persistence path (localStorage/autosave) even though the server
+    path never had the bug.

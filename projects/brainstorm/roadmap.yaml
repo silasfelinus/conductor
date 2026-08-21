@@ -383,19 +383,34 @@ tasks:
   - id: t-016
     milestone: m4
     title: Generate art from selected candidates through durable ArtJobs
-    status: claimed
+    status: done
     depends_on: t-015
     owner: worker
-    updated: '2026-08-21T03:29:23Z'
+    updated: '2026-08-21T04:05:00Z'
     passes: 0
     stakes: reversible
+    implementation_pr: silasfelinus/kind_robots#1993
     note: >-
-      Wire explicit selected-candidate generation to the normal `POST /api/art/enqueue`
-      pipeline. Default Brainstorm-originated generation to current Krea2 settings/build unless
-      the user deliberately chooses another supported option. Preserve Brainstorm session,
-      candidate, prompt, source entity, build/model metadata, ArtJob ID and resulting ArtImage
-      relationship. Batch renders require an explicit user action and clear cost/count preview.
-      Generated internal art is pre-authorized; no external publication.
+      DONE (conductor scheduled Agent run, 2026-08-21, kind_robots PR #1993 merged
+      squash d4a720b): wired explicit selected-candidate art generation to the normal
+      POST /api/art/enqueue pipeline, defaulting to Krea2. brainstorm-candidate-card.vue
+      gained a "Select for art" checkbox (kept candidates only) and thumbnail display of
+      generated images; brainstorm-manager.vue gained an explicit "Generate art" batch
+      button with a "N of M kept ideas selected · Krea 2" count preview and an error
+      banner; brainstormStore.ts gained selection state and generateArtForSelected(),
+      which enqueues one ArtJob per selected candidate, polls each to resolution, and
+      records job/image ids onto candidate.meta.art.{jobIds,imageIds} (the
+      already-scaffolded type from prior work, never previously wired up). Also fixed a
+      real pre-existing bug along the way: the client localStorage autosave round-trip
+      was silently dropping meta.art on every page reload before an explicit server
+      save. New BrainstormArtEnqueueContext/brainstormContext tags each job with
+      session/candidate/source for traceability, kept separate from the narrative-beat
+      dedup context other products use since Brainstorm has no equivalent re-trigger
+      concern. Verified: full-project vue-tsc --noEmit clean, eslint/prettier clean on
+      changed files, all 6 Brainstorm contract scripts pass, verifyLayoutContract.ts
+      holds, no Prisma migration needed. All 38 kind_robots PR checks green before
+      merge. Kaizen filed as t-025 (engine picker for the batch generation UI, currently
+      hardcoded to krea2 with no picker offered).
     claimed_by: scheduled-20260821T0400Z-conductor-brainstorm-t016
     claimed_at: '2026-08-21T03:29:23Z'
 
@@ -550,4 +565,20 @@ tasks:
       No code change made -- there is nothing to fix. The 69-live-Bot-records / zero-UI-surface finding from t-018s 2026-08-18 cycle either was already stale when written or was fixed by an intervening cycle without this task being reconciled; either way current main already satisfies the tasks goal ("Mount bot-gallery.vue ... somewhere reachable"). No kind_robots PR opened since no diff exists to make.
     claimed_by: 20260819T202922-brainstorm-t024-sched
     claimed_at: '2026-08-19T20:29:23Z'
+
+  - id: t-025
+    milestone: m4
+    title: Add an engine picker to Brainstorm's selected-candidate art generation
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from t-016 (2026-08-21, kind_robots PR #1993): batch art generation for
+      selected candidates is hardcoded to the krea2 engine with no UI to choose another
+      supported option, even though enqueueArtGeneration/POST /api/art/enqueue already
+      support flux/kontext/sdxl/etc. Add a lightweight engine selector to the "Generate
+      art" batch control in brainstorm-manager.vue (default remains Krea2 per the
+      original task note), threaded through generateArtForSelected's per-candidate
+      enqueue call. Small, reversible, self-contained.
     updated: '2026-08-19T20:32:32Z'
