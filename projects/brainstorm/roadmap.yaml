@@ -585,3 +585,23 @@ tasks:
       original task note), threaded through generateArtForSelected's per-candidate
       enqueue call. Small, reversible, self-contained.
     updated: '2026-08-19T20:32:32Z'
+
+  - id: t-026
+    milestone: m4
+    title: Give promoted candidates a path to carry their art into entity-art fields
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from t-017 (2026-08-21, kind_robots PR #1995): candidate art delivered
+      through Brainstorm lives only in meta.art.imageIds -- there is no path to carry
+      it forward if a candidate is later promoted into a Character/Dream/other entity
+      with its own entity-art field (server/utils/entityArt.ts's typed system). t-017
+      deliberately kept meta.art as the linkage point rather than forcing the heavier
+      entity-art system onto a non-Prisma-backed candidate; this task is the deferred
+      follow-up once there is a concrete promotion flow to hang it on. Scope: find (or
+      confirm there isn't yet) a "promote this candidate into an X" action anywhere in
+      the app, and if one exists, wire its already-delivered art across rather than
+      dropping it.
+    updated: '2026-08-21T05:40:00Z'
