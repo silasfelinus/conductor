@@ -2314,3 +2314,125 @@ tasks:
       leave at needs-human with an update if still inconclusive. Distinct root cause from t-044
       (LoRA naming) and t-067 (worker stall, recovered 2026-08-13) -- do not conflate.
     approved_by_human: false
+
+  - id: t-069
+    milestone: m7
+    title: "Verify current-production Academy media delivery and end-to-end lesson -> source -> remix flow"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-21T00:00:00Z'
+    note: >
+      Intake: conductor#2380. The Academy has implementation tasks for the frontend and later
+      mobile/device QA, but no finite acceptance task proving the CURRENT production delivery
+      path works end to end. kind_robots PR #1927 restored the self-hosted /images/** bridge for
+      Academy media; implementation and CI are green and merged, but source-level checks do not
+      prove the deployed site serves those images or that a real prompt-mode remix completes.
+      ACCEPTANCE: (1) /academy Timeline and Styles display configured preview/example images
+      through the current production /images route, not by checking the external media origin
+      directly. (2) Remix Studio is reachable for a normal signed-in user. (3) From a Timeline or
+      Styles lesson, "Remix an image in ..." opens Remix Studio with that learned style
+      preselected. (4) Upload source selection works. (5) Starter manifest and starter thumbnails
+      load through the browser-facing path, and choosing a starter makes it the active source
+      image. (6) At least one prompt-mode Academy style enqueues and completes a Kontext remix in
+      current production, and the resulting ArtImage is delivered/renderable at its final URL.
+      (7) Record the relevant ArtJob and ArtImage IDs, distinguishing queued, rendered, delivered,
+      and visually verified. (8) Track any backend-only blocker separately rather than closing
+      this task from static source inspection. The lesson CTA -> Academy manager -> Remix Studio
+      -> art-styler chain is already wired and the curriculum registry is prompt-mode, so this
+      needs no LoRA evaluation gate -- the remaining proof is deployment/product acceptance.
+
+  - id: t-070
+    milestone: m7
+    title: "Backfill rights-clear example works for every current Academy lesson lacking exampleWorks"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-21T00:00:00Z'
+    note: >
+      Intake: conductor#2381. Historical t-013 correctly reached 21/21 exampleWorks coverage for
+      the movement cohort that existed when it closed. The curriculum then expanded and that
+      denominator was never superseded. Re-measured on kind_robots main 2026-08-21:
+      stores/seeds/academyStyles.ts now has 48 style entries and 21 with exampleWorks, leaving 27
+      lessons with no historical example-art strip -- academy-style-detail.vue renders the Example
+      Works section only when lesson.exampleWorks?.length is nonzero, so those lessons show none
+      even when media delivery is healthy. This is content/schema coverage drift, distinct from
+      kind_robots#1927 which repaired delivery for URLs that already exist.
+      ACCEPTANCE: (1) Enumerate the canonical academyStyles.ts slug set and report covered vs
+      missing example-work slugs explicitly. (2) For each missing lesson add at least one
+      historically appropriate, rights-clear example work using the existing provenance schema
+      (workTitle, artist, artist death year where applicable, year, collection, accession/source,
+      accepted license, license terms URL, browser-facing image path). (3) Apply the Academy's
+      policy amendment correctly: historical significance and teaching eligibility are distinct
+      from item-level image reuse rights (PUBLIC-DOMAIN-POLICY.md 1.3 clearance does not imply an
+      accepted-license image exists; 2 is separate). (4) Deliver assets through the current
+      Academy media path, not a repo-local path production no longer serves by default.
+      (5) Extend the example-work verifier so its denominator is the full canonical style list and
+      it fails when a new style is added without either an exampleWorks entry or an explicit
+      policy-backed lesson-only exception. (6) Verify the browser-facing
+      /images/academy/examples/... path for new assets, not only the upstream media origin.
+      (7) Confirm the Example Works strip renders for a representative sample after deployment.
+
+  - id: t-071
+    milestone: m7
+    title: "Backfill per-style Try It failure-mode guidance for every current Academy lesson"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-21T00:00:00Z'
+    note: >
+      Intake: conductor#2382. Historical t-025 correctly backfilled failureMode for all 21
+      movements that existed when it closed; the curriculum then expanded without a superseding
+      coverage task. Re-measured on kind_robots main 2026-08-21: 48 style entries, 36 with a
+      bespoke failureMode, leaving 12 on the generic prompt/LoRA fallback in
+      academy-style-detail.vue. Nothing is functionally broken -- the UI deliberately falls back
+      and the Try It beat still renders -- so this is a curriculum-quality and roadmap-accuracy
+      gap, not a missing-feature incident.
+      ACCEPTANCE: (1) Enumerate the canonical slug set and report the exact bespoke-vs-fallback
+      denominator before editing. (2) Add a historically/style-specific failureMode for every
+      current lesson lacking one, grounded in that lesson's remix behavior and existing teaching
+      notes where available. (3) Preserve the generic mode-level fallback for future styles and
+      defensive rendering. (4) Add or extend a lightweight dynamic coverage contract so a new
+      style without failureMode is surfaced explicitly rather than silently shrinking the
+      bespoke-coverage percentage. (5) Do not bundle Example Works coverage here -- that
+      denominator gap is t-070. Do not reopen t-025 as though it was wrongly completed; it was
+      complete at its then-current denominator, and this records the new finite work created by
+      later curriculum expansion.
+
+  - id: t-072
+    milestone: m7
+    title: "Curate rights-checked artist portraits and denser lesson gallery media for the current Academy curriculum"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-070
+    updated: '2026-08-21T00:00:00Z'
+    note: >
+      Intake: conductor#2399. The Academy frontend is moving to a gallery -> interact presentation
+      (kind_robots PR #1930) but the curriculum media is still too sparse for an art-academy
+      experience. Silas's acceptance direction is explicit: images should lead users into each
+      section; lessons should contain multiple images rather than one thumbnail followed by prose;
+      "Meet the masters" should include images of the artists themselves; arrangement should feel
+      like a gallery/exhibit rather than a textbook accordion. Re-measured on kind_robots main
+      2026-08-21: zero artist-portrait media fields exist in academyStyles.ts. The layout PR
+      deliberately leaves neutral portrait frames rather than fabricating likenesses or adding
+      unreviewed external URLs.
+      ACCEPTANCE: (1) Define a media/provenance shape for artist portraits consumable by the
+      lesson UI without hotlinking third-party pages at runtime. (2) Curate at least one verified
+      public-domain historical portrait, self-portrait, or documented likeness for each named
+      artist where a reliable reusable image exists -- never a generated likeness as a historical
+      portrait. (3) Deliver portrait assets through the current /images/academy/... contract, e.g.
+      an academy/artists/ namespace, with source, license, artist identity, work/photograph
+      identity where applicable, and retrieval metadata. (4) Increase gallery density beyond a
+      single image wherever rights permit; target 2-4 historical works per lesson for the primary
+      Gallery Wall. (5) Coordinate with t-070 as the zero-coverage denominator/backfill task
+      rather than duplicating its provenance work. (6) Add verifier coverage reporting, from the
+      full canonical style set: lessons with 0/1/2+ historical works, named artists with/without
+      portrait media, and broken/missing media-path records. (7) Browser-verify representative
+      ancient, medieval, early-modern, modern, and non-Western lessons after delivery.
+      (8) Preserve accessibility: alt text distinguishes artist portraits/self-portraits from
+      artworks by that artist, and captions retain source/provenance context.
