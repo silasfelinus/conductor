@@ -575,16 +575,16 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#2006'
     note: 'Cycle 37 (2026-08-21). Cycle 36''s suggested lead: the ART_QUEUE_TIMEOUT_MS stale-comment kaizen, or a fresh bug-hunt pass over the linkSourceToTarget/facet-sync path. Traced the ART_QUEUE_TIMEOUT_MS reference (stores/modelBuilderStore.ts:1521) back to its real source: generateItemAsset''s synchronous render path bottoms out in artStore.ts''s waitForQueuedArtJob(), which has the exact same defect class cycle 36 fixed in pollAsyncArtJob -- a failed/null status fetch (network blip, expired session, circuit breaker open, genuine 404) fell through the same branch as a real PENDING/RUNNING status with no retry cap and no timeout, so a persistent failure left the awaited promise never resolving or rejecting and the whole synchronous generation path (generateItemAsset -> generateCurrentArt -> generateArt -> enqueueAndRenderArtImage) hung indefinitely with nothing surfaced. More consequential than the cycle-36 fix since waitForQueuedArtJob backs every synchronous art-generation call site in the app, not just Model Builder. Fixed by counting consecutive non-terminal, non-PENDING/RUNNING outcomes separately and throwing past MAX_CONSECUTIVE_QUEUE_POLL_FAILURES (6, ~30s) instead of looping forever. Also fixed the stale ART_QUEUE_TIMEOUT_MS comment to describe the actual current behavior. Added utils/scripts/verifyArtQueuePollFailureGuard.ts + .test.ts, wired into package.json/contract-tests.yml. Verified: new guard self-test + real-file pass, all 129 test:model-builder-* npm scripts pass (sibling suite, confirms no regression), vue-tsc --noEmit clean, eslint/prettier clean on touched files (pre-existing unrelated no-empty/unused-var findings in both store files confirmed present on main before this change via git stash diff, left untouched), capture-group-guard contract clean against origin/main, git status --porcelain scoped to exactly the 6 intended files. kind_robots PR #2006: all required checks green (Contract verifiers, TypeScript, verify, layout-contract, facet-catalog, facet-alias-smoke, all Storybook contracts, comment-contract, GitGuardian); Build production image was still running at merge time but is documented as not a required status check for merge. Squash-merged 2fbbd1b7. Suggested next lead for cycle 38: videoStore.ts and resourceGalleryStore.ts declare the same QueuedArtJob-shaped status union (PENDING/RUNNING/DONE/FAILED/CANCELLED) -- worth checking whether either has a sibling polling loop with the same unbounded-retry defect before claiming they do. Re-armed to ready.'
     owner: worker
-    claimed_by: sched-conductor-mb-t029-cycle37-20260821T173015Z
-    claimed_at: '2026-08-21T17:30:15Z'
-    updated: '2026-08-21T17:45:01Z'
+    claimed_by: sched-conductor-mb-t029-cycle38-20260821T182804Z
+    claimed_at: '2026-08-21T18:28:08Z'
+    updated: '2026-08-21T18:28:08Z'
 
   - id: t-030
     milestone: m6
