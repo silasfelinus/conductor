@@ -4056,3 +4056,49 @@ tasks:
     claimed_by: sched-20260820T1430Z-conductor-t120
     claimed_at: '2026-08-20T14:30:00Z'
     updated: '2026-08-20T14:30:00Z'
+  - id: t-121
+    milestone: m2
+    title: "Project Sync workflow persistently SSL-EOF-fails posting to kindrobots.org from GitHub Actions -- retry mitigation confirmed insufficient"
+    status: needs-human
+    gate_human: false
+    soft_gate: true
+    owner: null
+    stakes: reversible
+    passes: 1
+    note: >
+      FOR SILAS: the `Project Sync` GitHub Actions workflow (`.github/workflows/project-sync.yml`,
+      runs on every push touching `project-overrides.yaml`/`projects/**/roadmap.yaml`) has failed
+      on every run since 2026-08-20T21:27Z -- 16+ consecutive failures as of this note, spanning
+      roughly 8 hours -- with `ssl.SSLEOFError: EOF occurred in violation of protocol` posting to
+      `https://kindrobots.org/api/conductor/sync`. This means the Kind Robots app's cached view of
+      Conductor's roadmap/project state (`SOURCE_OF_TRUTH.md`'s projection) has been stale since
+      then; nothing about roadmap coordination itself is broken, only what the app surface shows.
+
+      What was checked: the endpoint itself is healthy and fast from this sandbox's own network
+      path -- `curl` posting both a small body and a ~3MB body (matching the real snapshot's
+      size) to the exact endpoint got a clean, fast HTTP response both times (no TLS error), and
+      `https://kindrobots.org/api/health/database` answers 200 normally. So the box is up and can
+      handle the payload; the failure is specific to GitHub Actions runners' network path reaching
+      the self-hosted Unraid endpoint, not a payload-size or code problem in this repo.
+
+      Mitigation already shipped (conductor PR #2604, merged): `sync_kind_robots_projection.py`
+      now retries the POST up to 3 times (2s/5s backoff) on connection-level failures. This did
+      NOT resolve it -- the very next real push (PR #2605, run
+      https://github.com/silasfelinus/conductor/actions/runs/32448591907) still failed all 3
+      attempts with the identical SSL EOF error in ~9 seconds total, confirming this is a
+      persistent block on that network path, not a transient blip the retry could absorb.
+
+      TO APPROVE / INVESTIGATE: this needs a look at whatever sits in front of the Unraid box's
+      `https://kindrobots.org/api/conductor/sync` endpoint (firewall, WAF, fail2ban, reverse
+      proxy) for a rule that treats GitHub Actions' egress IP ranges (Azure cloud-hosting ASNs)
+      differently from ordinary traffic -- e.g. blocking/resetting connections from known
+      hosting-provider ASNs, which would explain why this sandbox's own request succeeds (different
+      network path/ASN) while every GitHub Actions runner request fails identically regardless of
+      which runner IP it draws. Once whatever's blocking it is identified and fixed (or an
+      allowlist added for GitHub's published Actions IP ranges), trigger the `Project Sync`
+      workflow manually (`workflow_dispatch`) to confirm it goes green, then close this task.
+
+      What unblocks when he does: the Kind Robots app's Conductor-projection surface starts
+      reflecting live roadmap/project state again instead of the 2026-08-20T21:27Z snapshot it's
+      currently stuck on. No other roadmap work is blocked by this in the meantime.
+    updated: '2026-08-21T04:56:00Z'
