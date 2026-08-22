@@ -575,16 +575,16 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#2022'
     note: 'Cycle 42: per cycle 41''s kaizen, audited every ephemeral non-server-persisted status field in stores/modelBuilderStore.ts for the lastAutoBuildOutcome one-way-clear-gap bug class. artJobId/queueState, the createOwnedSingleton in-flight flags (generatingItemId/committingItemId/autoBuildingItemId/batchingOutputKey), sourcesError, and StageState.note were all confirmed already correctly cleared/never read as an authoritative signal. Found and fixed a real instance in state.statusMessage/statusTone (the global status banner): approveStage, rejectStage, reopenStage, updatePitch, updateFields, updatePrompt, batchSetField, and batchApproveStage never called clearStatus() at the start of a fresh attempt, so a stale "Failed to save changes." banner from an earlier failed PATCH could keep showing after a later save actually succeeded, until an unrelated action happened to clear it. Fixed by adding clearStatus() to all eight, mirroring where every already-fixed sibling calls it. Added utils/scripts/verifyModelBuilderStaleStatusClearGuard.ts + .test.ts (fails pre-fix, passes post-fix), wired into package.json and .github/workflows/contract-tests.yml. Verified: all 133 test:model-builder-* scripts pass, vue-tsc --noEmit zero new errors, eslint clean on touched files. kind_robots PR #2022: 35/36 CI checks green (only the non-required Build production image still finishing at merge time), squash-merged 9304024232353838eabbe7ce1a01119b1dd99195. Kaizen for cycle 43: stores/modelBuilderStore.ts as a whole fails prettier --check under this repo''s printWidth:80 config (pre-existing, confirmed via git stash against main, out of this cycle''s scope) -- either run a dedicated prettier --write formatting-only PR for this file, or confirm/document that CI''s prettier check is expected to skip it. Re-armed to ready.'
-    owner: worker
-    claimed_by: 20260822T0827Z-modelbuilder-t029-c42
-    claimed_at: '2026-08-22T08:28:37Z'
-    updated: '2026-08-22T08:54:20Z'
+    owner: reviewer
+    claimed_by: 20260822T0926Z-modelbuilder-t029-c43
+    claimed_at: '2026-08-22T09:28:47Z'
+    updated: '2026-08-22T09:28:47Z'
 
   - id: t-030
     milestone: m6
