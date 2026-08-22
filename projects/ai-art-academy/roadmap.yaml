@@ -2501,7 +2501,7 @@ tasks:
   - id: t-072
     milestone: m7
     title: "Curate rights-checked artist portraits and denser lesson gallery media for the current Academy curriculum"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -2564,3 +2564,61 @@ tasks:
       grouping behavior. (5) Update any roadmap tasks whose RECHECK notes currently do the manual
       free-text substring dance (e.g. t-068's own notes) to reference the new grouped view where
       practical, but do not block this task on rewriting every historical note.
+
+  - id: t-074
+    milestone: m7
+    title: "Clear rights for the 14 Academy styles exampleWorks backfill left as tracked exceptions"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-22T00:00:00Z'
+    note: >
+      Follow-on from t-070's close-out (kind_robots PR #2014, merged). That pass backfilled
+      exampleWorks for 12 of 26 uncovered lessons and recorded the remaining 14 as explicit,
+      honestly-scoped exceptions in config/academy-example-work-exceptions.json rather than
+      force-fitting a weaker source or silently dropping them: song-dynasty-landscape,
+      persian-miniature, suprematism, american-regionalism, mughal-miniature, vienna-secession,
+      joseon-genre-painting, the-nabis, precisionism, italian-futurism, fauvism,
+      heidelberg-school, ethiopian-icon-painting, rajput-painting. Several of these
+      (american-regionalism/Grant Wood, vienna-secession/Klimt, suprematism/Malevich,
+      fauvism/Matisse, italian-futurism/Boccioni) hit the same pattern PR #2014 documented for
+      american-regionalism: the named artist passes the PUBLIC-DOMAIN-POLICY.md #1.3 death-date
+      prong but the holding institution's own API still reports is_public_domain: false due to a
+      rights-society digitization restriction distinct from copyright status -- so this needs
+      real per-work verification against each candidate source, not just an open-access-API green
+      light, before an exampleWorks entry can be added for that style.
+      ACCEPTANCE: (1) For each of the 14 styles, re-check whether a rights-clear (CC0 or
+      documented PD-Mark) source image now exists for the style's named artist(s) via the Met
+      Collection API, Wikimedia Commons, or another museum's own open API -- do not assume the
+      2026-08-22 negative result is permanent. (2) Where a clear source exists, add a real
+      exampleWorks entry following the existing provenance schema and remove that style's entry
+      from config/academy-example-work-exceptions.json. (3) Where no rights-clear source exists,
+      leave (or refresh) the tracked exception with an explicit reason rather than silently
+      dropping the gap. (4) Re-run
+      npm run test:academy-examples-manifest to confirm the full-denominator coverage check still
+      passes with the updated exception count. (5) Do not bundle t-072's artist-portrait work
+      here -- that is separately scoped and still depends_on this backfill's zero-coverage
+      denominator being resolved.
+
+  - id: t-075
+    milestone: m7
+    title: "Extract a shared per-style coverage-contract helper for Academy verifier scripts"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-22T00:00:00Z'
+    note: >
+      Kaizen from t-070's close-out (kind_robots PR #2014): verifyAcademyExamplesManifest.ts's new
+      full-denominator check and verifyAcademyFailureModeCoverage.ts (t-071) each independently
+      re-derive the same pattern -- iterate every academyStyles.ts entry, check a per-style
+      optional field, cross-reference an exceptions/coverage list, report bespoke-vs-fallback
+      counts. ACCEPTANCE: (1) Add a small shared helper (e.g. forEachCanonicalStyle plus a
+      generic exceptions-file loader in academyProvenanceSchema.ts or a new
+      academyCoverageContract.ts) that both existing verifiers can adopt without changing their
+      pass/fail behavior. (2) Migrate both verifiers to use it, confirming
+      test:academy-examples-manifest and test:academy-failuremode-coverage still pass identically
+      before and after. (3) Document the helper briefly so the next per-field coverage contract
+      (artist portraits for t-072, or similar) can reuse it instead of re-deriving the pattern a
+      third time.

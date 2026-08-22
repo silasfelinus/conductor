@@ -9814,3 +9814,31 @@ records:
     as inline base64 -> data: URI, not through the static /images/** bridge that
     lesson/starter assets use -- a future check that assumes every ArtImage has a static
     path will get a false negative.
+- date: 2026-08-22
+  project: ai-art-academy
+  task: t-070
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Genuine merged-PR/roadmap drift, caught by the scheduled conductor sweep rather than
+    check_pr_merged_drift.py itself: kind_robots PR #2014 (t-070's actual implementation,
+    12 exampleWorks backfilled + a full-denominator verifier) merged cleanly, and the
+    session that authored it pushed a close_task.py branch flipping the conductor task to
+    status: review -- but that branch never got a PR opened from it, so the conductor
+    roadmap stayed at status: claimed on main with no visible sign anything had shipped.
+    check_pr_merged_drift.py's own automated pass couldn't see this either: its gh-search
+    transport 403'd on the one candidate it tried to verify (ai-art-academy/t-070) and it
+    correctly refused to call that a clean audit rather than silently passing -- but a
+    session that doesn't follow up on that explicit "re-check via a working transport"
+    instruction would have left this stranded indefinitely. The GitHub MCP connector's
+    search_pull_requests found the merged PR immediately once tried directly. Two things
+    worth carrying forward: (1) when a project-close script's own transport 403s/fails
+    partway through the close sequence, the task is NOT closed -- always verify the
+    close-out branch actually got a PR opened and merged, don't assume close_task.py
+    pushing a branch is equivalent to landing the change; (2) a companion-PR promise in a
+    target-repo PR body ("the companion conductor PR updates roadmap.yaml + files t-074")
+    is not evidence the companion PR happened -- check for it explicitly before assuming
+    referenced follow-on tasks (t-074 here) exist.
