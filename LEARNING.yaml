@@ -9915,3 +9915,25 @@ records:
     own comment-blind brace scanner) that this cycle's unrelated edits happened to expose
     as a false failure; treating a sibling guard's confusing break as evidence of a bug in
     that guard's own tooling, not as evidence the new change was wrong, was the right call.
+- date: 2026-08-22
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Cycle 42: the same one-way-clear-gap defect shape from cycle 41 (lastAutoBuildOutcome)
+    recurred in a completely different ephemeral field -- state.statusMessage/statusTone, the
+    global status banner -- because eight mutating functions (approveStage, rejectStage,
+    reopenStage, updatePitch, updateFields, updatePrompt, batchSetField, batchApproveStage)
+    never called the store's own clearStatus() at the start of a fresh attempt, even though
+    seven siblings already did. A single well-known bug class is worth checking function-by-
+    function across an entire store rather than assuming one comprehensive fix closes the
+    category -- the fix pattern (call an existing clear helper at the start of every mutating
+    path, not just the ones that happened to need it last time) generalizes directly. Also
+    reconfirmed (4th independent instance) that a delegated background agent's "waiting on a
+    CI timer" self-report is not a real block -- the coordinating session must poll CI itself
+    and merge, then explicitly tell the sub-agent to stop via SendMessage. Promoted this from a
+    per-cycle TALKBACK observation to AGENTS.md hard safety rule 13.
