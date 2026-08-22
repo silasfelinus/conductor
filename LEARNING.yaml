@@ -9896,3 +9896,22 @@ records:
   outcome: done
   failure_category: null
   lesson: "A shared coverage-contract helper generalizes cleanly across per-style (denominator = academyStyles.length) and per-nested-field (denominator = named-artist count) verifiers as long as the denominator stays a parameter rather than being hardcoded inside the helper."
+- date: 2026-08-22
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Cycle 41: an ephemeral, client-only status field (BuildItem.lastAutoBuildOutcome) that
+    a badge reads but no repair path ever clears is the same defect shape as cycle 30's
+    stray in-progress marker -- any UI flag set as a side effect of one code path needs an
+    explicit audit of every OTHER path that can legitimately supersede it (manual edit, AI
+    redraft, single-item commit), not just the path that originally set it. Also: verifying
+    a fix by running the full sibling test suite is worth doing even when it feels like
+    overkill -- it surfaced a second, unrelated, pre-existing latent bug (a guard script's
+    own comment-blind brace scanner) that this cycle's unrelated edits happened to expose
+    as a false failure; treating a sibling guard's confusing break as evidence of a bug in
+    that guard's own tooling, not as evidence the new change was wrong, was the right call.
