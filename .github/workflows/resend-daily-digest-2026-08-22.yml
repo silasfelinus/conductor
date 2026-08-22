@@ -1,0 +1,24 @@
+name: Resend daily digest 2026-08-22
+
+# One-shot bridge used because the connected GitHub surface cannot invoke
+# workflow_dispatch directly. Merging this file to main dispatches the fixed
+# daily-digest workflow once with email enabled; remove this file after the send.
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/resend-daily-digest-2026-08-22.yml
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch fixed daily digest with email enabled
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run daily-digest.yml --ref main -f send_email=true
