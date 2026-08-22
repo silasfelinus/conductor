@@ -6,8 +6,9 @@ name: daily-digest
 #   3. attach its Facets
 #   4. submit every staged Daily Dream request into the real ArtJob queue
 #   5. commit the durable proposal/build/ArtJob evidence, even on a partial failure
-#   6. verify the cycle succeeded
+#   6. report any Daily Dream failure without blocking digest delivery
 #   7. render and send the digest
+#   8. fail the workflow after delivery if the Daily Dream sidecar was unhealthy
 #
 # The email itself shows the older completed bundle with art first, followed by
 # the bundle just built in a compact no-image layout. Today's newly authored
@@ -46,14 +47,17 @@ jobs:
       - run: pip install pyyaml Pillow
 
       - name: Author today's next Daily Dream proposal
+        id: daily_dream_author
+        continue-on-error: true
         run: python scripts/author_dream_proposal.py
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
 
-      # These three steps can produce durable evidence even when the final exit
-      # code is non-zero: a build retry marker, a partial Facet ledger, or some
+      # These steps can produce durable evidence even when their final exit code
+      # is non-zero: a build retry marker, a partial Facet ledger, or some
       # successfully submitted ArtJob IDs. Keep going long enough to commit that
-      # evidence, then fail the cycle before constructing/sending the digest.
+      # evidence. A Daily Dream failure is reported immediately, but the digest
+      # is still rendered/sent before the workflow is marked failed at the end.
       - name: Build the eligible Daily Dream proposal
         id: daily_dream_build
         continue-on-error: true
@@ -80,6 +84,8 @@ jobs:
 
       - name: Commit Daily Dream cycle evidence
         if: ${{ always() }}
+        id: daily_dream_commit
+        continue-on-error: true
         run: |
           git config user.name "kind-robots-bot"
           git config user.email "noreply@kindrobots.app"
@@ -102,18 +108,20 @@ jobs:
           exit 1
 
       - name: Verify Daily Dream cycle
+        if: ${{ always() }}
         run: |
+          if [ "${{ steps.daily_dream_author.outcome }}" != "success" ]; then
+            echo "::warning::Daily Dream authoring failed; digest delivery will continue."
+          fi
           if [ "${{ steps.daily_dream_build.outcome }}" != "success" ]; then
-            echo "::error::Daily Dream object build failed; durable retry evidence was committed."
-            exit 1
+            echo "::warning::Daily Dream object build failed; digest delivery will continue."
+          elif [ "${{ steps.daily_dream_facets.outcome }}" != "success" ]; then
+            echo "::warning::Daily Dream Facet attachment failed; digest delivery will continue."
+          elif [ "${{ steps.daily_dream_art.outcome }}" != "success" ]; then
+            echo "::warning::Daily Dream ArtJob submission was partial or failed; digest delivery will continue."
           fi
-          if [ "${{ steps.daily_dream_facets.outcome }}" != "success" ]; then
-            echo "::error::Daily Dream Facet attachment failed; durable bundle evidence was committed."
-            exit 1
-          fi
-          if [ "${{ steps.daily_dream_art.outcome }}" != "success" ]; then
-            echo "::error::Daily Dream ArtJob submission was partial or failed; submitted IDs were committed."
-            exit 1
+          if [ "${{ steps.daily_dream_commit.outcome }}" != "success" ]; then
+            echo "::warning::Daily Dream evidence commit failed; digest delivery will continue."
           fi
 
       - name: Build digest JSON
@@ -158,3 +166,30 @@ jobs:
           DIGEST_TO_NAME: ${{ secrets.DIGEST_TO_NAME || vars.DIGEST_TO_NAME }}
           DIGEST_FROM: ${{ secrets.DIGEST_FROM || vars.DIGEST_FROM }}
           DIGEST_FROM_NAME: ${{ secrets.DIGEST_FROM_NAME || vars.DIGEST_FROM_NAME }}
+
+      - name: Fail after digest if Daily Dream cycle failed
+        if: ${{ always() }}
+        run: |
+          failed=0
+          if [ "${{ steps.daily_dream_author.outcome }}" != "success" ]; then
+            echo "::error::Daily Dream authoring failed."
+            failed=1
+          fi
+          if [ "${{ steps.daily_dream_build.outcome }}" != "success" ]; then
+            echo "::error::Daily Dream object build failed; durable retry evidence was attempted."
+            failed=1
+          else
+            if [ "${{ steps.daily_dream_facets.outcome }}" != "success" ]; then
+              echo "::error::Daily Dream Facet attachment failed; durable bundle evidence was attempted."
+              failed=1
+            fi
+            if [ "${{ steps.daily_dream_art.outcome }}" != "success" ]; then
+              echo "::error::Daily Dream ArtJob submission was partial or failed; submitted IDs were attempted."
+              failed=1
+            fi
+          fi
+          if [ "${{ steps.daily_dream_commit.outcome }}" != "success" ]; then
+            echo "::error::Daily Dream evidence commit failed."
+            failed=1
+          fi
+          exit "$failed"
