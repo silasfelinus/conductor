@@ -1,15 +1,15 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-22T12:50:29Z
+Generated: 2026-08-22T12:55:10Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **727**
-- Outcomes: blocked: 15, cancelled: 1, done: 711
+- Closed tasks recorded: **728**
+- Outcomes: blocked: 15, cancelled: 1, done: 712
 - Success rate: **98%**
-- Average passes on successful tasks: **0.0**
+- Average passes on successful tasks: **0.1**
 
 ## By project
 
@@ -43,7 +43,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 74 | 100% |
+| model-builder | 75 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 711 | 99% |
+| software | 712 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-22 `model-builder/t-029` — Cycle 46: closed the exact gap cycle 45's own kaizen note flagged as left open -- pitch/fieldsDraft/promptDraft were capped at MAX_DRAFT_TEXT_LENGTH on the item PATCH path but not on the run CREATE route's own items mapping, even though both write the same @db.Text columns. A cap added at one write path for a shared field is only half the fix until every other write path into that same column is audited too -- the same "one-way-clear-gap" shape as cycle 41/42's lastAutoBuildOutcome/statusMessage bugs, just for a validation cap instead of a state-clearing call. Importing the shared constant (MAX_DRAFT_TEXT_LENGTH) rather than hardcoding a second copy of the same number, plus a guard script asserting the import is actually used, is what keeps two independent write paths for the same column from drifting apart again silently.
+
 - 2026-08-22 `model-builder/t-029` — Cycle 42: the same one-way-clear-gap defect shape from cycle 41 (lastAutoBuildOutcome) recurred in a completely different ephemeral field -- state.statusMessage/statusTone, the global status banner -- because eight mutating functions (approveStage, rejectStage, reopenStage, updatePitch, updateFields, updatePrompt, batchSetField, batchApproveStage) never called the store's own clearStatus() at the start of a fresh attempt, even though seven siblings already did. A single well-known bug class is worth checking function-by- function across an entire store rather than assuming one comprehensive fix closes the category -- the fix pattern (call an existing clear helper at the start of every mutating path, not just the ones that happened to need it last time) generalizes directly. Also reconfirmed (4th independent instance) that a delegated background agent's "waiting on a CI timer" self-report is not a real block -- the coordinating session must poll CI itself and merge, then explicitly tell the sub-agent to stop via SendMessage. Promoted this from a per-cycle TALKBACK observation to AGENTS.md hard safety rule 13.
 
 - 2026-08-22 `model-builder/t-029` — Cycle 41: an ephemeral, client-only status field (BuildItem.lastAutoBuildOutcome) that a badge reads but no repair path ever clears is the same defect shape as cycle 30's stray in-progress marker -- any UI flag set as a side effect of one code path needs an explicit audit of every OTHER path that can legitimately supersede it (manual edit, AI redraft, single-item commit), not just the path that originally set it. Also: verifying a fix by running the full sibling test suite is worth doing even when it feels like overkill -- it surfaced a second, unrelated, pre-existing latent bug (a guard script's own comment-blind brace scanner) that this cycle's unrelated edits happened to expose as a false failure; treating a sibling guard's confusing break as evidence of a bug in that guard's own tooling, not as evidence the new change was wrong, was the right call.
@@ -102,8 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-21 `brainstorm/t-027` — Scoping a broad "evaluate N surfaces" task by shipping the cheapest one first and filing the rest as named follow-ups (t-028 for Reward) kept the diff small (3 files) and avoided forcing a button onto Prompt, which has no standalone detail view yet. A surface with an existing adapter but no UI entry point (Scenario, from t-014) is the cheapest next slice on this kind of task -- check BRAINSTORM_SOURCE_ADAPTERS for already-wired-but-untriggered adapters before starting from scratch on any surface.
 
-- 2026-08-21 `brainstorm/t-019` — Claimed and dispatched implementation for a task whose deliverable turned out to already exist, shipped by two earlier tasks (t-013, t-014) days prior. No harm done since the dispatched agent verified against actual shipped code before writing anything and correctly declined to manufacture a diff -- but the roadmap task itself should have been closed or re-scoped at the moment t-013/t-014 shipped equivalent coverage, not left `ready` to be rediscovered and re-investigated by a later cycle. When a task ships coverage that satisfies a different, still-open task's stated scope, check for and update that task in the same close-out cycle.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-22T12:50:29Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-22T12:55:10Z_
