@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-22T08:29:08Z
+Generated: 2026-08-22T08:59:42Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **726**
-- Outcomes: blocked: 15, cancelled: 1, done: 710
+- Closed tasks recorded: **727**
+- Outcomes: blocked: 15, cancelled: 1, done: 711
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -43,7 +43,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 73 | 100% |
+| model-builder | 74 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 710 | 99% |
+| software | 711 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-22 `model-builder/t-029` — Cycle 42: the same one-way-clear-gap defect shape from cycle 41 (lastAutoBuildOutcome) recurred in a completely different ephemeral field -- state.statusMessage/statusTone, the global status banner -- because eight mutating functions (approveStage, rejectStage, reopenStage, updatePitch, updateFields, updatePrompt, batchSetField, batchApproveStage) never called the store's own clearStatus() at the start of a fresh attempt, even though seven siblings already did. A single well-known bug class is worth checking function-by- function across an entire store rather than assuming one comprehensive fix closes the category -- the fix pattern (call an existing clear helper at the start of every mutating path, not just the ones that happened to need it last time) generalizes directly. Also reconfirmed (4th independent instance) that a delegated background agent's "waiting on a CI timer" self-report is not a real block -- the coordinating session must poll CI itself and merge, then explicitly tell the sub-agent to stop via SendMessage. Promoted this from a per-cycle TALKBACK observation to AGENTS.md hard safety rule 13.
+
 - 2026-08-22 `model-builder/t-029` — Cycle 41: an ephemeral, client-only status field (BuildItem.lastAutoBuildOutcome) that a badge reads but no repair path ever clears is the same defect shape as cycle 30's stray in-progress marker -- any UI flag set as a side effect of one code path needs an explicit audit of every OTHER path that can legitimately supersede it (manual edit, AI redraft, single-item commit), not just the path that originally set it. Also: verifying a fix by running the full sibling test suite is worth doing even when it feels like overkill -- it surfaced a second, unrelated, pre-existing latent bug (a guard script's own comment-blind brace scanner) that this cycle's unrelated edits happened to expose as a false failure; treating a sibling guard's confusing break as evidence of a bug in that guard's own tooling, not as evidence the new change was wrong, was the right call.
 
 - 2026-08-22 `ai-art-academy/t-075` — A shared coverage-contract helper generalizes cleanly across per-style (denominator = academyStyles.length) and per-nested-field (denominator = named-artist count) verifiers as long as the denominator stays a parameter rather than being hardcoded inside the helper.
@@ -102,8 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-21 `brainstorm/t-019` — Claimed and dispatched implementation for a task whose deliverable turned out to already exist, shipped by two earlier tasks (t-013, t-014) days prior. No harm done since the dispatched agent verified against actual shipped code before writing anything and correctly declined to manufacture a diff -- but the roadmap task itself should have been closed or re-scoped at the moment t-013/t-014 shipped equivalent coverage, not left `ready` to be rediscovered and re-investigated by a later cycle. When a task ships coverage that satisfies a different, still-open task's stated scope, check for and update that task in the same close-out cycle.
 
-- 2026-08-21 `brainstorm/t-017` — Found the established precedent (modelBuilderStore.ts's pollAsyncArtJob -> finalizeQueuedArtImage split) before designing a bespoke "verify the delivered image" path for Brainstorm's own enqueue/poll loop -- reusing it caught more than a hand-rolled check would have (finalizeQueuedArtImage re-fetches the ArtImage row itself, not just trusting the job's artImageId field, and routes through the same collection-attachment semantics every other art surface uses). Also worth noting: a "failed" outcome had literally zero persisted signal before this task -- only a transient, session-local busy flag distinguished "generating" from "never tried" or "gave up," so any per-candidate/per-item async operation with a client-visible outcome should be checked for this same gap (state that only lives in memory during the operation, with nothing surviving a reload once it ends) before assuming existing coverage is complete.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-22T08:29:08Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-22T08:59:42Z_
