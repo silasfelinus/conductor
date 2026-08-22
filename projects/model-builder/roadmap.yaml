@@ -575,16 +575,16 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#2008'
     note: 'Cycle 40 (2026-08-21). Followed cycle 39s kaizen lead: audited server/ (Nitro API routes + server/utils) for the inverse defect -- a server-side loop awaiting a job/status that could hang forever on a persistently failing dependency call, rather than the client-side poll loops the prior 6-cycle sweep (36-39) already fixed. Confirmed-clean negative result, not a skipped search: grepped for while(true)/setInterval/poll/waitFor/attempts/retry/backoff across server/api/comfy/** (all engines), server/api/art/queue/**, server/api/resources/**, server/api/video, server/api/store/pod*, server/api/stripe/**, server/api/davinci/**, server/api/model-builder/**, server/api/brainstorm/**, server/api/lora/download/**, server/utils/** (textProviderService, comfyTestClient, queueControl, podVendorClient, davinciNarration, startupAnimations, folderCollections, etc.), plus a structural pass over recursively-invoked async functions. Findings: the shared waitForComfyHistory() (9 occurrences across sdxl/flux/kontext/ltx/hunyuan3d/characterSheet generate routes + comfyTestClient.ts) already has both a wall-clock timeout AND fails fast (throws) on any non-ok/error response rather than looping through failures -- it already implements the exact fix pattern this sweep looks for. The art-job and lora-download queues use a pull architecture (external relay polls the server, not the reverse) with DB-row MAX_ATTEMPTS counters, not retry loops -- no hang risk. Stream pumps (botcafe/stream.ts, textProviderService SSE relay) are excluded reader.read() patterns. Stripe/Printful/DaVinci-narration/GitHub-App calls are one-shot fetches with AbortController deadlines, no loop. No unbounded or failure-blind server-side polling loop exists anywhere in server/. This closes the client-vs-server sweep pair cycles 36-40 opened: client-side (6 stores fixed across cycles 36-39) and server-side (confirmed already-safe, cycle 40) are both now verified for this defect class. No kind_robots PR this cycle -- read-only audit, no code change needed. Kaizen suggestion for next cycle: this specific defect class (poll-treats-failure-as-pending) appears fully closed app-wide; the next model-builder/t-029 cycle should return to a fresh bug-hunt read of the Model Builder front-end surface rather than continuing this now-exhausted lead. Re-armed to ready.'
     owner: worker
-    claimed_by: sched-conductor-mb-t029-cycle40-20260821T222736Z
-    claimed_at: '2026-08-21T22:27:41Z'
-    updated: '2026-08-21T22:31:42Z'
+    claimed_by: 2026-08-22T0727Z-sched-mb-t029-cycle41
+    claimed_at: '2026-08-22T07:33:29Z'
+    updated: '2026-08-22T07:33:29Z'
 
   - id: t-030
     milestone: m6
