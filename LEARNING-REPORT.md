@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-22T02:51:10Z
+Generated: 2026-08-22T02:55:14Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **722**
-- Outcomes: blocked: 15, cancelled: 1, done: 706
+- Closed tasks recorded: **723**
+- Outcomes: blocked: 15, cancelled: 1, done: 707
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -15,7 +15,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 | Project | Closed | Success rate |
 |---|---|---|
-| ai-art-academy | 67 | 99% |
+| ai-art-academy | 68 | 99% |
 | alexa-integration | 6 | 100% |
 | animation-manager | 13 | 100% |
 | animation-studio | 2 | 50% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 706 | 99% |
+| software | 707 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-22 `ai-art-academy/t-073` — Kaizen-sourced tooling fix (grouped error-signature breakdown for GET /api/art/queue/stats, ai-art-academy/t-069's close-out pain point) landed clean across a kind_robots + conductor companion-PR pair. Separately: a background subagent given "verify CI, merge when green" as part of its scope has no way to schedule its own wait for external CI completion and can get stuck looping "waiting for a background timer" across several turns without one ever arriving -- the parent session had to take over the final re-check-and-merge step directly. Future delegated cycles whose scope includes a merge-when-green step should either have the parent handle that step, or be told explicitly to re-check synchronously/immediately rather than attempt a multi-turn wait.
+
 - 2026-08-22 `ai-art-academy/t-070` — A finite backfill task's coverage denominator silently going stale after the thing it counts (academyStyles.ts's canonical style list) grows is a real, recurring failure mode -- historical t-013 correctly reached 21/21 for its own cohort, but nothing kept that "21" honest as the curriculum expanded to 47 styles, so 26 lessons sat with no Example Works strip for roughly a month, completely undetected. The fix that generalizes: any "N/N complete" coverage claim needs its verifier computing the denominator from the CURRENT source of truth every run (here, academyStyles.length), never from a number written down when the task closed. Pairing that with an explicit, named exceptions file (config/academy-example-work-exceptions.json) rather than just lowering the bar to "however many exist today" is what makes a real partial-coverage state distinguishable from silent drift -- every uncovered item must resolve to either real coverage or a reasoned, tracked gap, never neither. Also confirmed a sourcing pattern worth remembering: an open-access museum API returning is_public_domain: true for the WORK does not guarantee the DIGITIZATION is unrestricted -- AIC's own API returned is_public_domain: false for both american-regionalism's named artists (Grant Wood incl. American Gothic, John Steuart Curry) despite both clearing the death-date prong, matching the same rights-society-restriction pattern the historical t-013 TALKBACK already found for Kandinsky/Klee/Gris -- a green light from one open-access API is necessary but not sufficient; check the specific work, not just the artist's era. Finally, this sandbox's Cloudflare-bot-challenged access to artic.edu's own IIIF image CDN (confirmed via a direct HEAD request returning cf-mitigated: challenge, while api.artic.edu's JSON search API worked fine) explains why the file's existing AIC- sourced exampleWorks entries route through Wikimedia Commons instead of citing AIC directly -- worth checking upload.wikimedia.org reachability first for any future AIC-collection sourcing rather than re-discovering the CDN block each time.
 
 - 2026-08-22 `ai-art-academy/t-069` — A "verify current production" task is only as good as its weakest-evidence criterion -- splitting each acceptance item explicitly into LIVE (real HTTP against kindrobots.org/api responses) vs. SOURCE-traced (client-hydration-gated UI this sandbox's broken headless Chromium can't reach) kept the note honest about what was actually proven vs. inferred, per AGENTS.md's explicit "never blur verified and assumed" rule. For the one criterion needing a real render (a completed Kontext remix), KR_API_TOKEN as a Bearer token against the same server route/workflow builder the UI calls (POST /api/art/enqueue -> poll GET /api/art/queue/:id -> GET /api/art/image/:id?includeImageData=true) produced a genuine end-to-end artifact (ArtJob 9009, ArtImage 18263) that could be decoded and visually inspected, not just a "status: DONE" proxy -- this is the strongest verification shape available to a sandboxed session with no browser and is worth reusing for any future "does generation actually work in prod" task. Also worth remembering for next time: freshly-generated ArtImages in production have null path/imagePath and are delivered as inline base64 -> data: URI, not through the static /images/** bridge that lesson/starter assets use -- a future check that assumes every ArtImage has a static path will get a false negative.
@@ -103,8 +105,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-20 `kapowarr/t-062` — A prior evaluation doc that names exact measured traps (response shapes, pagination ceilings, a 404-not-JSON edge case) turns an "implement a REST client" task into something closer to transcription than design -- the risk shifts from "did I miss a trap" to "did I quietly widen scope while transcribing it." Re-reading the evaluation doc's own recommendation section against the actual diff before opening the PR (does every field mapping trace to a table row, is every new file/setting/test named in the doc's follow-on task description) is what kept this PR three files instead of six -- the doc's own field tables for `Series`/`overview` rows against `VolumeMetadata`/ `IssueMetadata` could be pasted almost directly into code comments, and the two schema-shape questions the doc explicitly left unmeasured (a `title` field on overview rows, `longest_story.synopsis`) were exactly the two places worth flagging as judgment calls in the PR body rather than silently guessing. Second: an existing sibling provider is not automatically a safe copy source. Reading `metron.py` for the pattern surfaced a real latent bug in it (`test_key()` imports `run` from `backend.base.helpers`, which re-exports `subprocess.run`, not an async runner -- calling `subprocess.run(<coroutine>)` raises, it doesn't return `False`; the sibling `comicvine.py` gets this right via `from asyncio import gather, run, sleep`). Never had a test covering `test_key()`'s actual return value, so it shipped unnoticed. Filed as kapowarr/t-066 rather than folded into this PR, but the general point is that "match the existing provider's pattern" needs the same scrutiny as any other code being read for reuse, not a pass just because it already merged.
 
-- 2026-08-20 `kapowarr/t-063` — A test written to catch a silent regression must be shown to fail against that regression, not merely to pass against current behaviour -- and for an ordering policy this is cheap to do: break the policy deliberately, run the suite, restore from a byte-copy. Doing it here proved the task's premise rather than assuming it. Transposing two rating components failed four tests, but inserting a NEW component above match correctness failed only the new table guard while all 22 pre-existing pairwise tests passed. That is the exact gap the task described, demonstrated instead of argued, and it is the evidence that belongs in the PR body. Second: lexicographic list comparison is what makes a whole-order assertion possible in one place. Because a result degraded at tier N differs from the baseline first at index N, it loses to one degraded at any later tier regardless of magnitudes -- so ranking one result per tier and sorting them reproduces the policy backwards, and six adjacent-boundary assertions collapse into one readable list. Third: when two ranking components share an input (pack preference and issue-number fit both read result['issue_number']), no single result can vary one alone. Patching the component's return value rather than driving it through a real preference is what isolates it -- and the coupling itself is worth writing into the test, since it is otherwise only discoverable by trying and failing to construct the case.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-22T02:51:10Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-22T02:55:14Z_
