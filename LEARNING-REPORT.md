@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-22T13:40:33Z
+Generated: 2026-08-22T13:52:08Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **728**
-- Outcomes: blocked: 15, cancelled: 1, done: 712
+- Closed tasks recorded: **729**
+- Outcomes: blocked: 15, cancelled: 1, done: 713
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -19,7 +19,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | alexa-integration | 6 | 100% |
 | animation-manager | 13 | 100% |
 | animation-studio | 2 | 50% |
-| appmaker | 8 | 100% |
+| appmaker | 9 | 100% |
 | approval-portal | 2 | 0% |
 | art-generator-connect | 3 | 100% |
 | brainstorm | 21 | 95% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 712 | 99% |
+| software | 713 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-22 `appmaker/t-012` — apps.get.ts's pending-scaffold reader only ever recognized one of AppMaker's two self-serve scaffold flows' Todo titles (the monorepo flow's "Scaffold new app '...'", never the external-repo GitHub-integration flow's "Scaffold external app '...' via AppMaker GitHub integration") -- both the Prisma query's title filter and the extraction regex needed updating together, since fixing only one still silently drops the other flow's real, open Todos from the UI. Same "an endpoint reachable via direct API call, even with no front-end wired up yet, is still worth defending" precedent the prior cycle set for this exact pair of routes' slug-collision guard -- when two routes share a naming convention a downstream reader depends on, audit every reader against every writer, not just the one the current UI happens to call.
+
 - 2026-08-22 `model-builder/t-029` — Cycle 46: closed the exact gap cycle 45's own kaizen note flagged as left open -- pitch/fieldsDraft/promptDraft were capped at MAX_DRAFT_TEXT_LENGTH on the item PATCH path but not on the run CREATE route's own items mapping, even though both write the same @db.Text columns. A cap added at one write path for a shared field is only half the fix until every other write path into that same column is audited too -- the same "one-way-clear-gap" shape as cycle 41/42's lastAutoBuildOutcome/statusMessage bugs, just for a validation cap instead of a state-clearing call. Importing the shared constant (MAX_DRAFT_TEXT_LENGTH) rather than hardcoding a second copy of the same number, plus a guard script asserting the import is actually used, is what keeps two independent write paths for the same column from drifting apart again silently.
 
 - 2026-08-22 `model-builder/t-029` — Cycle 42: the same one-way-clear-gap defect shape from cycle 41 (lastAutoBuildOutcome) recurred in a completely different ephemeral field -- state.statusMessage/statusTone, the global status banner -- because eight mutating functions (approveStage, rejectStage, reopenStage, updatePitch, updateFields, updatePrompt, batchSetField, batchApproveStage) never called the store's own clearStatus() at the start of a fresh attempt, even though seven siblings already did. A single well-known bug class is worth checking function-by- function across an entire store rather than assuming one comprehensive fix closes the category -- the fix pattern (call an existing clear helper at the start of every mutating path, not just the ones that happened to need it last time) generalizes directly. Also reconfirmed (4th independent instance) that a delegated background agent's "waiting on a CI timer" self-report is not a real block -- the coordinating session must poll CI itself and merge, then explicitly tell the sub-agent to stop via SendMessage. Promoted this from a per-cycle TALKBACK observation to AGENTS.md hard safety rule 13.
@@ -102,8 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-22 `ai-art-academy/t-071` — Historical t-025 backfilled failureMode for every movement that existed at closure, but the curriculum expanded afterward with no coverage task tracking the new denominator -- the same drift pattern t-070 hit for exampleWorks. Re-measuring the canonical style list before editing (47 entries, not the roadmap note's stale "48") caught a small inaccuracy before it propagated into a false 12-vs-11 count. Also added a lightweight coverage contract (pass/fail on any style missing failureMode and not in a documented exceptions map) rather than only fixing the current gap -- the exact fix t-025 itself didn't have, which is why this task existed at all. Choosing t-071 over the also-ready but much larger t-070 (27-lesson rights-clearance content task) in the same cycle was deliberate scope discipline: t-070 got flagged as a kaizen suggestion to decompose rather than attempting all 27 lessons in one pass.
 
-- 2026-08-21 `brainstorm/t-027` — Scoping a broad "evaluate N surfaces" task by shipping the cheapest one first and filing the rest as named follow-ups (t-028 for Reward) kept the diff small (3 files) and avoided forcing a button onto Prompt, which has no standalone detail view yet. A surface with an existing adapter but no UI entry point (Scenario, from t-014) is the cheapest next slice on this kind of task -- check BRAINSTORM_SOURCE_ADAPTERS for already-wired-but-untriggered adapters before starting from scratch on any surface.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-22T13:40:33Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-22T13:52:08Z_
