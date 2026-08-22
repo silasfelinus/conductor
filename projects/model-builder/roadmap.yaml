@@ -575,16 +575,16 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#2023'
     note: 'Cycle 44: fresh bug-hunt read of the Model Builder front-end surface per cycle 43''s kaizen lead (full read of stores/modelBuilderStore.ts all 3190 lines, all 7 model-builder components, both store helpers, and every server/api/model-builder/** route). Checked for race conditions across concurrent async ops, stale closures, incomplete state resets, off-by-one/index bugs, error-handling gaps, validation edge cases, mutation correctness, and logic-vs-comment mismatches. Traced three plausible leads to ground and confirmed each already handled: (1) batch functions guard only on autoBuilding not the full isRunOperationInFlight() check, but model-builder-batch-editor.vue''s anyBatching computed already disables all batch buttons the instant any group starts, closing the gap at the UI layer (same reasoning as cycle 25); (2) progress-matrix''s selectedItemId ref looked unwatched across store.run changes, but the component fully unmounts/remounts on the History toggle so it never carries stale state; (3) runs/[id].delete.ts is a real hard-delete endpoint with no front-end caller -- dead code, not a bug. No genuine new bug found this cycle; no fix forced, nothing changed, no PR opened. Re-armed to ready. Given 4 fix/audit cycles (40-42) plus one no-op (44) have now swept nearly every angle of this surface and the code already carries inline cycle-N bug postmortems for most of them, a future cycle may want to either widen scope beyond the current store/component/API surface (e.g. server-side model schema validation, or a UX/accessibility pass) or accept this recurring task has reached diminishing returns for pure bug-hunting and pivot its scope.'
-    owner: worker
-    claimed_by: 20260822T1026Z-modelbuilder-t029-c44
-    claimed_at: '2026-08-22T10:28:44Z'
-    updated: '2026-08-22T10:33:51Z'
+    owner: reviewer
+    claimed_by: 20260822T112828Z-modelbuilder-t029-cs
+    claimed_at: '2026-08-22T11:28:29Z'
+    updated: '2026-08-22T11:28:29Z'
 
   - id: t-030
     milestone: m6
