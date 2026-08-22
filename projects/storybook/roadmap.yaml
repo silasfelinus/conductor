@@ -133,15 +133,15 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   note: 'Cycle 29 (no-op, re-armed): cycle 28s kaizen flagged two options -- continue the server/api sweep more exhaustively, or return to a fresh full-surface read. Checked the server sweep option first and found the actual reason cycles 27/28s server-side weighting never surfaced anything: there is no server/api/storybook/** directory at all, and storybookStore.ts makes zero fetch/$fetch/performFetch calls anywhere. Storybook is a fully client-side, localStorage-backed product (session + setup draft + library all persist via localStorage; the only network calls are chatStore.generateText() for prose generation and the shared narrativeArtJobsHelper for illustrations, both owned by other products surfaces, not Storybooks own). This is worth recording plainly so a future cycle does not keep re-trying a "weight toward server-side" sweep against a surface that structurally has none. Did the fresh full-surface read instead: read storybookStore.ts (925 lines) and storybookLibraryHelper.ts (420 lines) end to end, plus storybook-page.vues full script block (~400 lines: setup wizard, seedFromQuery, onMounted). Chased several concrete hypotheses that looked promising: (1) applyStateDeltas consequences/relationshipShifts sharing one dedup Set keyed by lowercased text -- a real but practically unreachable collision (would require an LLM-authored consequence and relationship-shift string to coincide exactly), not worth a guard. (2) remapDuplicates art status handling for cancelled jobs on duplicate -- traced into narrativeArtJobsHelper.tss resume(), which already skips done/failed/cancelled before ever polling, so no bug. (3) restartStory not resetting storybook-page.vues local setupStep/furthestStep refs -- confirmed the setup wizard unmounts once a session is active, so this is unreachable, mirroring the exact reasoning cycle 28 itself used to rule out a similar false lead. No new bug found this cycle. Releasing the claim without a code change. Kaizen for cycle 30: the two files not yet read end-to-end are storybook-library-page.vue (350 lines) and storybook-page.vues full template (its script is now covered, this cycle only sampled the template with a click/watch/onMounted grep) -- a good next target, or return to the components/narrative/** shared surface (narrative-role-assigner.vue, kr-chat-window.vue) that both Storybook and Taskmaster depend on, which neither projects own audits fully own.'
-  updated: '2026-08-22T14:34:25Z'
+  updated: '2026-08-22T16:33:04Z'
   implementation_pr: 'silasfelinus/kind_robots#2024'
   owner: worker
-  claimed_by: 20260822T143300Z-storybook-t010-cs1
-  claimed_at: '2026-08-22T14:32:00Z'
+  claimed_by: sched-conductor-storybook-t010-20260822T163303Z
+  claimed_at: '2026-08-22T16:33:04Z'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
