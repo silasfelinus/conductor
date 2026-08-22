@@ -2551,13 +2551,25 @@ tasks:
   - id: t-072
     milestone: m7
     title: "Curate rights-checked artist portraits and denser lesson gallery media for the current Academy curriculum"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-070
-    updated: '2026-08-22T03:29:04Z'
+    updated: '2026-08-22T04:05:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#2017'
     note: >
+      CLOSED 2026-08-22: delivered the AcademyArtistPortrait media/provenance shape, wired it
+      into "Meet the masters" in academy-style-detail.vue, added
+      utils/scripts/verifyAcademyArtistPortraitsManifest.ts for coverage reporting, and curated
+      8 real, verified likenesses (Raphael, Rembrandt van Rijn, Jean-Honore Fragonard, Antonio
+      Canova, Jean-Francois Millet, Vincent van Gogh, William Holman Hunt, Thomas Cole) via
+      kind_robots PR #2017 (squash-merged 373dbff2). Full curriculum coverage (~116 named
+      artists), the ancient/medieval/non-Western gap, and post-deploy browser cross-width
+      verification are intentionally out of scope for this pass -- filed as ai-art-academy/t-076.
+      See TALKBACK.md 2026-08-22 for the full resolution writeup.
+
+      ORIGINAL TASK: >
       Intake: conductor#2399. The Academy frontend is moving to a gallery -> interact presentation
       (kind_robots PR #1930) but the curriculum media is still too sparse for an art-academy
       experience. Silas's acceptance direction is explicit: images should lead users into each
@@ -2584,6 +2596,7 @@ tasks:
       artworks by that artist, and captions retain source/provenance context.
     claimed_by: sched-conductor-t072-20260822T032903Z
     claimed_at: '2026-08-22T03:29:04Z'
+    implementation_pr: 'silasfelinus/kind_robots#2017'
 
   - id: t-073
     milestone: m7
@@ -2686,4 +2699,61 @@ tasks:
       test:academy-examples-manifest and test:academy-failuremode-coverage still pass identically
       before and after. (3) Document the helper briefly so the next per-field coverage contract
       (artist portraits for t-072, or similar) can reuse it instead of re-deriving the pattern a
-      third time.
+      third time. Note: t-072 (kind_robots PR #2017) shipped a third independent re-derivation of
+      this pattern in utils/scripts/verifyAcademyArtistPortraitsManifest.ts before this task
+      landed -- fold that verifier into the migration too, not just the original two.
+
+  - id: t-076
+    milestone: m7
+    title: "Curate remaining Academy artist portraits (~108 of 116 named artists still uncovered)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-22T00:00:00Z'
+    note: >
+      Follow-on from t-072 (kind_robots PR #2017): t-072 defined the AcademyArtistPortrait
+      media/provenance shape (AcademyArtist.portrait, mirroring AcademyExampleWork plus `depicts`
+      and `kind` fields -- see conductor's PUBLIC-DOMAIN-POLICY.md section 3.1), wired it into
+      "Meet the masters" in academy-style-detail.vue, added
+      utils/scripts/verifyAcademyArtistPortraitsManifest.ts for coverage reporting, and curated 8
+      real, verified likenesses via the Met Collection API: Raphael (renaissance), Rembrandt van
+      Rijn (baroque), Jean-Honore Fragonard (rococo), Antonio Canova (neoclassicism),
+      Jean-Francois Millet (realism), Vincent van Gogh (post-impressionism), William Holman Hunt
+      (pre-raphaelite), Thomas Cole (hudson-river-school). That leaves 108 of 116 named artists
+      across the 47-style curriculum with no portrait -- 0/47 styles fully covered (most styles
+      have 2+ named artists).
+      Two candidates t-072 deliberately skipped, worth a second look here: Leonardo da Vinci's
+      traditional "self-portrait" (Turin, red chalk) is scholarly-disputed enough that t-072 chose
+      not to ship it as a confident likeness -- may be acceptable with careful, honest captioning
+      ("traditionally attributed" rather than asserting fact); a Millais studio photograph (John
+      and Charles Watkins, Met 1970.659.581) had no individual creator death year on record via
+      the Met API, so the PUBLIC-DOMAIN-POLICY.md section 1.3 prong-1 check could not be completed
+      -- worth checking whether Met or another source records an individual attribution.
+      The ancient/medieval/non-Western gap is structurally harder than the Western
+      15th-20th-century cohort t-072 covered: most of those lessons name anonymous painters
+      (Fayum, Egyptian, Byzantine, illuminated-manuscript) with no possible portrait, or named
+      artists (Duccio, Giotto, Fra Angelico, Bihzad, Fan Kuan, Basawan, Kim Hong-do, Ogata Korin,
+      etc.) predating photography with no confirmed authenticated likeness in any open-access
+      collection t-072 checked (Met). Sourcing these, if possible at all, likely needs
+      institution-specific research beyond the Met (national museums of the relevant countries,
+      Wikimedia Commons cross-referenced against a museum's own open-access statement per
+      PUBLIC-DOMAIN-POLICY.md section 2) rather than the same single-API sweep that worked for
+      t-072's Western cohort -- budget accordingly rather than expecting the same hit rate.
+      ACCEPTANCE: (1) Curate additional real, verified portrait/photograph/sculpture entries
+      following t-072's exact schema and sourcing discipline (real museum/archive API or
+      Wikimedia-Commons-with-clear-museum-provenance, PUBLIC-DOMAIN-POLICY.md section 1.3 both
+      prongs applied to the IMAGE'S CREATOR not the person depicted, an accepted license per
+      section 2.2) -- add to academyStyles.ts + config/academy-artist-portraits-pending.json. (2)
+      Investigate the Leonardo and Millais cases above explicitly rather than silently skipping
+      them again. (3) Re-run npm run test:academy-artist-portraits-manifest after each batch and
+      report the updated coverage numbers. (4) Do not fabricate or guess any provenance field, and
+      never substitute a generated likeness for a missing real one -- an honestly-scoped partial
+      pass beats invented data (same constraint as t-070/t-072). (5) If a genuinely rights-clear
+      likeness cannot be found for some artists after a real search effort, it is fine to close
+      this task against a smaller real batch and file a further follow-on for the rest -- same
+      failure-triage "scope" discipline t-070/t-074 already established for exampleWorks, not an
+      all-or-nothing gate. (6) Once portrait coverage is reasonably broad, item 4 of t-072's
+      original acceptance criteria (browser-verify representative ancient/medieval/early-modern/
+      modern/non-Western lessons after a production deploy + media sync) becomes checkable --
+      note whether that was possible this pass or still blocked on Unraid media-sync access.
