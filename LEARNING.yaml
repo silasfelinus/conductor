@@ -9887,3 +9887,12 @@ records:
     silently discarded a second, wanted uncommitted change to the same file in the same command --
     stage or copy aside real edits before reverting formatting noise in the same file, rather than
     trusting `git checkout --` to be selective.
+- date: 2026-08-22
+  project: ai-art-academy
+  task: t-075
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A shared coverage-contract helper generalizes cleanly across per-style (denominator = academyStyles.length) and per-nested-field (denominator = named-artist count) verifiers as long as the denominator stays a parameter rather than being hardcoded inside the helper."
