@@ -9788,3 +9788,29 @@ records:
     Choosing t-071 over the also-ready but much larger t-070 (27-lesson rights-clearance
     content task) in the same cycle was deliberate scope discipline: t-070 got flagged as
     a kaizen suggestion to decompose rather than attempting all 27 lessons in one pass.
+- date: 2026-08-22
+  project: ai-art-academy
+  task: t-069
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A "verify current production" task is only as good as its weakest-evidence criterion --
+    splitting each acceptance item explicitly into LIVE (real HTTP against
+    kindrobots.org/api responses) vs. SOURCE-traced (client-hydration-gated UI this
+    sandbox's broken headless Chromium can't reach) kept the note honest about what was
+    actually proven vs. inferred, per AGENTS.md's explicit "never blur verified and
+    assumed" rule. For the one criterion needing a real render (a completed Kontext
+    remix), KR_API_TOKEN as a Bearer token against the same server route/workflow
+    builder the UI calls (POST /api/art/enqueue -> poll GET /api/art/queue/:id -> GET
+    /api/art/image/:id?includeImageData=true) produced a genuine end-to-end artifact
+    (ArtJob 9009, ArtImage 18263) that could be decoded and visually inspected, not just
+    a "status: DONE" proxy -- this is the strongest verification shape available to a
+    sandboxed session with no browser and is worth reusing for any future "does
+    generation actually work in prod" task. Also worth remembering for next time:
+    freshly-generated ArtImages in production have null path/imagePath and are delivered
+    as inline base64 -> data: URI, not through the static /images/** bridge that
+    lesson/starter assets use -- a future check that assumes every ArtImage has a static
+    path will get a false negative.
