@@ -9814,3 +9814,37 @@ records:
     as inline base64 -> data: URI, not through the static /images/** bridge that
     lesson/starter assets use -- a future check that assumes every ArtImage has a static
     path will get a false negative.
+- date: '2026-08-22'
+  project: ai-art-academy
+  task: t-070
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A finite backfill task's coverage denominator silently going stale after the thing it
+    counts (academyStyles.ts's canonical style list) grows is a real, recurring failure
+    mode -- historical t-013 correctly reached 21/21 for its own cohort, but nothing kept
+    that "21" honest as the curriculum expanded to 47 styles, so 26 lessons sat with no
+    Example Works strip for roughly a month, completely undetected. The fix that
+    generalizes: any "N/N complete" coverage claim needs its verifier computing the
+    denominator from the CURRENT source of truth every run (here, academyStyles.length),
+    never from a number written down when the task closed. Pairing that with an explicit,
+    named exceptions file (config/academy-example-work-exceptions.json) rather than just
+    lowering the bar to "however many exist today" is what makes a real partial-coverage
+    state distinguishable from silent drift -- every uncovered item must resolve to either
+    real coverage or a reasoned, tracked gap, never neither. Also confirmed a sourcing
+    pattern worth remembering: an open-access museum API returning is_public_domain: true
+    for the WORK does not guarantee the DIGITIZATION is unrestricted -- AIC's own API
+    returned is_public_domain: false for both american-regionalism's named artists (Grant
+    Wood incl. American Gothic, John Steuart Curry) despite both clearing the death-date
+    prong, matching the same rights-society-restriction pattern the historical t-013
+    TALKBACK already found for Kandinsky/Klee/Gris -- a green light from one open-access
+    API is necessary but not sufficient; check the specific work, not just the artist's
+    era. Finally, this sandbox's Cloudflare-bot-challenged access to artic.edu's own IIIF
+    image CDN (confirmed via a direct HEAD request returning cf-mitigated: challenge, while
+    api.artic.edu's JSON search API worked fine) explains why the file's existing AIC-
+    sourced exampleWorks entries route through Wikimedia Commons instead of citing AIC
+    directly -- worth checking upload.wikimedia.org reachability first for any future
+    AIC-collection sourcing rather than re-discovering the CDN block each time.

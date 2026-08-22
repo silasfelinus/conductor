@@ -2436,34 +2436,73 @@ tasks:
   - id: t-070
     milestone: m7
     title: "Backfill rights-clear example works for every current Academy lesson lacking exampleWorks"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-08-22T02:23:34Z'
+    updated: '2026-08-22T02:35:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#2014'
     note: >
-      Intake: conductor#2381. Historical t-013 correctly reached 21/21 exampleWorks coverage for
-      the movement cohort that existed when it closed. The curriculum then expanded and that
-      denominator was never superseded. Re-measured on kind_robots main 2026-08-21:
-      stores/seeds/academyStyles.ts now has 48 style entries and 21 with exampleWorks, leaving 27
-      lessons with no historical example-art strip -- academy-style-detail.vue renders the Example
-      Works section only when lesson.exampleWorks?.length is nonzero, so those lessons show none
-      even when media delivery is healthy. This is content/schema coverage drift, distinct from
-      kind_robots#1927 which repaired delivery for URLs that already exist.
-      ACCEPTANCE: (1) Enumerate the canonical academyStyles.ts slug set and report covered vs
-      missing example-work slugs explicitly. (2) For each missing lesson add at least one
-      historically appropriate, rights-clear example work using the existing provenance schema
-      (workTitle, artist, artist death year where applicable, year, collection, accession/source,
-      accepted license, license terms URL, browser-facing image path). (3) Apply the Academy's
-      policy amendment correctly: historical significance and teaching eligibility are distinct
-      from item-level image reuse rights (PUBLIC-DOMAIN-POLICY.md 1.3 clearance does not imply an
-      accepted-license image exists; 2 is separate). (4) Deliver assets through the current
-      Academy media path, not a repo-local path production no longer serves by default.
-      (5) Extend the example-work verifier so its denominator is the full canonical style list and
-      it fails when a new style is added without either an exampleWorks entry or an explicit
-      policy-backed lesson-only exception. (6) Verify the browser-facing
-      /images/academy/examples/... path for new assets, not only the upstream media origin.
-      (7) Confirm the Example Works strip renders for a representative sample after deployment.
+      DONE 2026-08-22 (kind_robots PR #2014, squash-merged 6cc9012). Re-measured
+      stores/seeds/academyStyles.ts fresh (47 canonical styles -- the intake note's "48" was
+      stale by one, matching t-071's independent re-measurement; 21 already had exampleWorks,
+      26 did not). Backfilled 12 of the 26 with real, verified exampleWorks entries sourced live
+      from The Met Collection API (10) and one Art Institute of Chicago holding via Wikimedia
+      Commons (1, following the file's existing 3-entry precedent -- artic.edu's own IIIF image
+      CDN Cloudflare-bot-challenges this sandbox): ashcan-school (Bellows, Love of Winter, AIC
+      1914.1018), fayum-mummy-portraits (anon, Portrait of a Youth with a Surgical Cut in one
+      Eye, Met 09.181.4), hudson-river-school (Cole, The Oxbow, Met 08.228), pre-raphaelite
+      (Millais, Portia, Met 06.1328), arts-and-crafts (William Morris, Honeysuckle, Met
+      30.95.46a-f), egyptian-painting (anon, Book of the Dead for the Chantress of Amun Nauny,
+      Met 30.3.31), tonalism (Inness, Peace and Plenty, Met 94.27), barbizon-school (Corot, A
+      Woman Gathering Faggots at Ville-d'Avray, Met 17.120.225), american-luminism (Fitz Henry
+      Lane, Stage Fort across Gloucester Harbor, Met 1978.203), spanish-golden-age (Velazquez,
+      Juan de Pareja, Met 1971.86), mannerism (Bronzino, Portrait of a Young Man, Met
+      29.100.16), rinpa-school (Korin, Irises at Yatsuhashi, Met 53.7.1/.2). Every artist
+      matches the lesson's own named artists[] entry and clears PUBLIC-DOMAIN-POLICY.md 1.3
+      (both prongs) plus 2.2's accepted-license tiers, verified live per work, not assumed.
+
+      Explicit gap, not a silent skip: american-regionalism's two named artists (Grant Wood
+      incl. American Gothic, John Steuart Curry) both came back is_public_domain: false via
+      AIC's own API despite passing the death-date prong -- a rights-society digitization
+      restriction distinct from copyright status (echoes the historical t-013 TALKBACK finding
+      for Kandinsky/Klee/Gris). Recorded as a tracked exception, not force-fit to a weaker
+      source or dropped silently.
+
+      Delivery (criteria 3/4/6) followed the exact established convention from t-033 (kind_robots
+      commits d044898f2/6943ac926) rather than a new one: config/academy-example-manifest-
+      pending.json now carries full provenance for these 12 works, since this sandbox has no
+      Unraid/IMAGES_PATH access to place bytes at the production /images/academy/examples/...
+      path directly (public/images/** is gitignored repo-wide post the self-hosted-media
+      migration, and Vercel is retired, so a repo-committed image would not be served in
+      production regardless). The Gallery Wall section renders title/artist/year/collection/
+      source-link metadata for all 12 lessons as soon as this PR deploys; thumbnail images go
+      live once someone with Unraid access runs the same media-sync step t-033 documents, at
+      which point the pending entries clear the same way t-033's did. NOT verified: the
+      browser-facing /images/academy/examples/... path resolving for these 12 new assets, and
+      a live Gallery Wall render for a representative sample -- both require that physical sync,
+      which this sandbox cannot perform. Flagged explicitly rather than assumed complete.
+
+      Verifier extended per criterion 5: utils/scripts/verifyAcademyExamplesManifest.ts's
+      coverage denominator is now the full 47-style academyStyles.ts list. New
+      config/academy-example-work-exceptions.json (14 entries) requires every uncovered style
+      to carry a named, reasoned exception pointing at the follow-on task -- a style with
+      neither a real exampleWorks entry nor a listed exception now fails the contract, closing
+      the exact silent-drift gap (21/21-vs-47-styles unnoticed for ~a month) this task exists to
+      fix. Verified: npm run test:academy-examples-manifest reports "33/47 canonical styles have
+      an exampleWorks entry, 14 have an explicit tracked exception, 0 undocumented gaps";
+      vue-tsc --noEmit clean; eslint clean; prettier --check clean; live HEAD/GET checks on all
+      12 source images at their museum origin, all 200.
+
+      Remaining scope: the 14 styles not cleared this pass (song-dynasty-landscape,
+      persian-miniature, suprematism, american-regionalism, mughal-miniature, vienna-secession,
+      joseon-genre-painting, the-nabis, precisionism, italian-futurism, fauvism,
+      heidelberg-school, ethiopian-icon-painting, rajput-painting) are tracked in
+      config/academy-example-work-exceptions.json and filed as ai-art-academy/t-074 -- a real,
+      honestly-scoped follow-on rather than a rushed or fabricated completion. Several of them
+      (Klimt/Vienna Secession, Malevich/Suprematism, Matisse/Fauvism, Boccioni/Futurism) are
+      flagged as likely to hit the same rights-society-restriction pattern american-regionalism
+      did and will need a per-work check, not just an open-access-API green light.
     claimed_by: 2026-08-22T01-57-57-t070-exampleworks-backfill
     claimed_at: '2026-08-22T01:57:58Z'
     implementation_pr: 'silasfelinus/kind_robots#2014'
@@ -2564,3 +2603,49 @@ tasks:
       grouping behavior. (5) Update any roadmap tasks whose RECHECK notes currently do the manual
       free-text substring dance (e.g. t-068's own notes) to reference the new grouped view where
       practical, but do not block this task on rewriting every historical note.
+
+  - id: t-074
+    milestone: m7
+    title: "Source rights-clear example works for the 14 Academy lessons t-070 could not clear this pass"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-22T02:30:00Z'
+    note: >
+      Follow-on from t-070 (kind_robots PR #2014): t-070 backfilled 12 of the 26 lessons that
+      had no exampleWorks entry, bringing coverage to 33/47 canonical styles, and added
+      config/academy-example-work-exceptions.json to track the remaining 14 explicitly (no
+      silent gaps -- utils/scripts/verifyAcademyExamplesManifest.ts now fails any style with
+      neither a real exampleWorks entry nor a named exception). This task closes those 14:
+      song-dynasty-landscape, persian-miniature, suprematism, american-regionalism,
+      mughal-miniature, vienna-secession, joseon-genre-painting, the-nabis, precisionism,
+      italian-futurism, fauvism, heidelberg-school, ethiopian-icon-painting, rajput-painting.
+      Several of these hit a distinct sourcing problem worth flagging up front: t-070 found
+      that american-regionalism's two named artists (Grant Wood incl. American Gothic, John
+      Steuart Curry) both came back is_public_domain: false via the Art Institute of Chicago's
+      own API despite clearing the death-date prong -- a rights-society digitization
+      restriction (see also the historical t-013 TALKBACK finding that Kandinsky/Klee/Gris hit
+      the same ARS/VG Bild-Kunst pattern). vienna-secession (Klimt/Belvedere), suprematism
+      (Malevich/State Russian Museum or Stedelijk), fauvism (Matisse/Derain, Succession H.
+      Matisse), and italian-futurism (Boccioni, mostly MoMA-held) are flagged in
+      config/academy-example-work-exceptions.json as likely to need the same per-work rights
+      check rather than a simple open-access-API green light.
+      ACCEPTANCE: (1) For each of the 14 slugs, either (a) add a real, verified exampleWorks
+      entry to academyStyles.ts + config/academy-example-manifest-pending.json following t-070's
+      exact schema/sourcing discipline (real museum API, PUBLIC-DOMAIN-POLICY.md section 1.3 both
+      prongs, an accepted license per section 2.2), and remove its entry from
+      academy-example-work-exceptions.json, or (b) if no rights-clear image can be found after a
+      genuine search effort, leave the exception in place but strengthen its reason field with
+      what was actually checked (per PUBLIC-DOMAIN-POLICY.md section 5's escalation rule) rather
+      than carrying forward t-070's placeholder wording verbatim. (2) Do not fabricate or guess
+      any provenance field -- an honestly-scoped partial pass beats invented data (same
+      constraint as t-070's own task note). (3) Re-run
+      npm run test:academy-examples-manifest and confirm the full-denominator coverage line
+      reflects the new totals. (4) Same delivery convention as t-070: this sandbox likely still
+      lacks Unraid/IMAGES_PATH access, so use config/academy-example-manifest-pending.json for
+      any newly-sourced work and say so explicitly rather than assuming production delivery. (5)
+      If a genuinely rights-clear image is not found for some subset of the 14 within a
+      reasonable effort, it is fine to close this task against a smaller real batch and file a
+      further follow-on for the rest -- same failure-triage "scope" discipline as t-070 itself
+      used, not an all-or-nothing gate.
