@@ -9768,3 +9768,23 @@ records:
     A surface with an existing adapter but no UI entry point (Scenario, from t-014) is
     the cheapest next slice on this kind of task -- check BRAINSTORM_SOURCE_ADAPTERS for
     already-wired-but-untriggered adapters before starting from scratch on any surface.
+- date: 2026-08-22
+  project: ai-art-academy
+  task: t-071
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Historical t-025 backfilled failureMode for every movement that existed at closure,
+    but the curriculum expanded afterward with no coverage task tracking the new
+    denominator -- the same drift pattern t-070 hit for exampleWorks. Re-measuring the
+    canonical style list before editing (47 entries, not the roadmap note's stale "48")
+    caught a small inaccuracy before it propagated into a false 12-vs-11 count. Also
+    added a lightweight coverage contract (pass/fail on any style missing failureMode
+    and not in a documented exceptions map) rather than only fixing the current gap --
+    the exact fix t-025 itself didn't have, which is why this task existed at all.
+    Choosing t-071 over the also-ready but much larger t-070 (27-lesson rights-clearance
+    content task) in the same cycle was deliberate scope discipline: t-070 got flagged as
+    a kaizen suggestion to decompose rather than attempting all 27 lessons in one pass.
