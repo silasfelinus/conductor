@@ -2636,50 +2636,15 @@ tasks:
   - id: t-074
     milestone: m7
     title: "Source rights-clear example works for the 14 Academy lessons t-070 could not clear this pass"
-    status: review
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-08-22T04:44:44Z'
-    note: >
-      Follow-on from t-070 (kind_robots PR #2014): t-070 backfilled 12 of the 26 lessons that
-      had no exampleWorks entry, bringing coverage to 33/47 canonical styles, and added
-      config/academy-example-work-exceptions.json to track the remaining 14 explicitly (no
-      silent gaps -- utils/scripts/verifyAcademyExamplesManifest.ts now fails any style with
-      neither a real exampleWorks entry nor a named exception). This task closes those 14:
-      song-dynasty-landscape, persian-miniature, suprematism, american-regionalism,
-      mughal-miniature, vienna-secession, joseon-genre-painting, the-nabis, precisionism,
-      italian-futurism, fauvism, heidelberg-school, ethiopian-icon-painting, rajput-painting.
-      Several of these hit a distinct sourcing problem worth flagging up front: t-070 found
-      that american-regionalism's two named artists (Grant Wood incl. American Gothic, John
-      Steuart Curry) both came back is_public_domain: false via the Art Institute of Chicago's
-      own API despite clearing the death-date prong -- a rights-society digitization
-      restriction (see also the historical t-013 TALKBACK finding that Kandinsky/Klee/Gris hit
-      the same ARS/VG Bild-Kunst pattern). vienna-secession (Klimt/Belvedere), suprematism
-      (Malevich/State Russian Museum or Stedelijk), fauvism (Matisse/Derain, Succession H.
-      Matisse), and italian-futurism (Boccioni, mostly MoMA-held) are flagged in
-      config/academy-example-work-exceptions.json as likely to need the same per-work rights
-      check rather than a simple open-access-API green light.
-      ACCEPTANCE: (1) For each of the 14 slugs, either (a) add a real, verified exampleWorks
-      entry to academyStyles.ts + config/academy-example-manifest-pending.json following t-070's
-      exact schema/sourcing discipline (real museum API, PUBLIC-DOMAIN-POLICY.md section 1.3 both
-      prongs, an accepted license per section 2.2), and remove its entry from
-      academy-example-work-exceptions.json, or (b) if no rights-clear image can be found after a
-      genuine search effort, leave the exception in place but strengthen its reason field with
-      what was actually checked (per PUBLIC-DOMAIN-POLICY.md section 5's escalation rule) rather
-      than carrying forward t-070's placeholder wording verbatim. (2) Do not fabricate or guess
-      any provenance field -- an honestly-scoped partial pass beats invented data (same
-      constraint as t-070's own task note). (3) Re-run
-      npm run test:academy-examples-manifest and confirm the full-denominator coverage line
-      reflects the new totals. (4) Same delivery convention as t-070: this sandbox likely still
-      lacks Unraid/IMAGES_PATH access, so use config/academy-example-manifest-pending.json for
-      any newly-sourced work and say so explicitly rather than assuming production delivery. (5)
-      If a genuinely rights-clear image is not found for some subset of the 14 within a
-      reasonable effort, it is fine to close this task against a smaller real batch and file a
-      further follow-on for the rest -- same failure-triage "scope" discipline as t-070 itself
-      used, not an all-or-nothing gate.
+    updated: '2026-08-22T04:48:33Z'
+    note: 'kind_robots PR #2018 merged (squash c738dd1): sourced/verified 8 of 14 example works (song-dynasty-landscape, persian-miniature, mughal-miniature, rajput-painting, the-nabis, vienna-secession, italian-futurism, ethiopian-icon-painting), each verified live via Met Collection API or Cleveland Museum of Art Open Access API against PUBLIC-DOMAIN-POLICY.md sections 1.3/2/3. Coverage 33/47 -> 41/47. Remaining 6 (suprematism, american-regionalism, precisionism, fauvism, heidelberg-school, joseon-genre-painting) re-verified as genuinely not-yet-sourceable this pass and left excepted with strengthened, evidence-specific reasons per policy section 5 rather than forcing weak matches -- partial-scope close per t-074 acceptance criterion 5, same convention as t-070.'
     claimed_by: 2026-08-22T04-27-54Z-aa-t074-sched
     claimed_at: '2026-08-22T04:27:55Z'
+    implementation_pr: 'silasfelinus/kind_robots#2018'
 
   - id: t-075
     milestone: m7
