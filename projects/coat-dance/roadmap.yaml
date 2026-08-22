@@ -253,8 +253,8 @@ tasks:
   - id: t-010
     milestone: m1
     title: "Polish and upgrade Coat Dance front-end surface"
-    status: ready
-    owner: reviewer
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -267,6 +267,6 @@ tasks:
       VERIFIED LIVE 2026-08-15 (conductor scheduled Agent run, session scheduled-conductor-20260815T1226-coatdance-t010): resolved the prior cycle's open question ("left unverified whether the site's tutorial/dashboard-tab image URLs actually resolve against that self-hosted media path") -- kind_robots migrated off Vercel to a self-hosted kindrobots.org origin on 2026-08-12 (kind-robots/t-064), so checked directly against production rather than the retired Vercel preview flow: `curl https://kindrobots.org/images/dashboard-tabs/art/coat-dance.webp` and `.../images/tutorials/art/coat-dance.webp` both return 200 image/webp (92732 and 88968 bytes respectively, last-modified 2026-07-24 and 2026-07-27) -- step (1) is fully confirmed done, not just queued. https://kindrobots.org/plan/projects/coat-dance itself also renders (200, real SSR markup, title "Coat Dance"). Step (3) was already resolved in the 2026-08-14 cycle (stale project-overrides.yaml fields fixed directly; no admin action needed). Remaining and kept ready: step (4)'s further evolution of the interactive slot, still blocked on the source video (t-003, needs-human, unresolved) -- project remains 0% into production so there is nothing further to build against yet. Also found and fixed conductor's own AGENTS.md, whose "visually verifying a front-end change" section still described the retired Vercel-preview flow as canonical -- corrected in a companion PR to point at kindrobots.org, since that stale doc was exactly what nearly misread this cycle's own Vercel probe as a fresh production outage.
 
       VERIFIED STILL BLOCKED 2026-08-20 (conductor scheduled Agent run, session sched-conductor-coatdance-t010-20260820T0735Z): re-checked before doing any work. Step (4) (evolve the interactive slot) remains blocked on t-003 (source-video beat map), still status: needs-human, unresolved -- no source video has landed since the 2026-08-15 cycle. Steps (1)-(3) remain confirmed done per that cycle's live verification. No agent-actionable scope exists on this task until Silas supplies the source video via t-003. Re-armed to ready; will stay a genuine no-op until t-003 clears.
-    updated: '2026-08-20T07:40:00Z'
-    claimed_by: sched-conductor-coatdance-t010-20260820T0735Z
-    claimed_at: '2026-08-20T07:32:41Z'
+    updated: '2026-08-22T13:32:29Z'
+    claimed_by: 20260822T134500Z-coatdance-t010-cs1
+    claimed_at: '2026-08-22T13:32:29Z'
