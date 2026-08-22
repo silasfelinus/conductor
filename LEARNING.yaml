@@ -9975,3 +9975,19 @@ records:
     prior cycle set for this exact pair of routes' slug-collision guard -- when two routes
     share a naming convention a downstream reader depends on, audit every reader against
     every writer, not just the one the current UI happens to call.
+- date: 2026-08-22
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A session determined its own role as `worker` via select_role.py but then ran
+    claim_task.py with `--owner reviewer` out of habit -- Reviewer is hard-barred from
+    claiming tasks at all, so this was a real (if quickly self-caught) process violation,
+    not just cosmetic metadata. Fixed via a tiny follow-up PR (#2688) correcting only the
+    owner field before any implementation work proceeded. Lesson for future cycles:
+    double-check `--owner` matches the session's live select_role.py recommendation
+    before calling claim_task.py, not after the push already landed on origin/main.
