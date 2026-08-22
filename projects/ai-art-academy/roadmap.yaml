@@ -2441,7 +2441,6 @@ tasks:
     passes: 0
     stakes: reversible
     updated: '2026-08-22T02:35:00Z'
-    implementation_pr: 'silasfelinus/kind_robots#2014'
     note: >
       DONE 2026-08-22 (kind_robots PR #2014, squash-merged 6cc9012). Re-measured
       stores/seeds/academyStyles.ts fresh (47 canonical styles -- the intake note's "48" was
@@ -2540,7 +2539,7 @@ tasks:
   - id: t-072
     milestone: m7
     title: "Curate rights-checked artist portraits and denser lesson gallery media for the current Academy curriculum"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -2651,3 +2650,25 @@ tasks:
       reasonable effort, it is fine to close this task against a smaller real batch and file a
       further follow-on for the rest -- same failure-triage "scope" discipline as t-070 itself
       used, not an all-or-nothing gate.
+
+  - id: t-075
+    milestone: m7
+    title: "Extract a shared per-style coverage-contract helper for Academy verifier scripts"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-22T00:00:00Z'
+    note: >
+      Kaizen from t-070's close-out (kind_robots PR #2014): verifyAcademyExamplesManifest.ts's new
+      full-denominator check and verifyAcademyFailureModeCoverage.ts (t-071) each independently
+      re-derive the same pattern -- iterate every academyStyles.ts entry, check a per-style
+      optional field, cross-reference an exceptions/coverage list, report bespoke-vs-fallback
+      counts. ACCEPTANCE: (1) Add a small shared helper (e.g. forEachCanonicalStyle plus a
+      generic exceptions-file loader in academyProvenanceSchema.ts or a new
+      academyCoverageContract.ts) that both existing verifiers can adopt without changing their
+      pass/fail behavior. (2) Migrate both verifiers to use it, confirming
+      test:academy-examples-manifest and test:academy-failuremode-coverage still pass identically
+      before and after. (3) Document the helper briefly so the next per-field coverage contract
+      (artist portraits for t-072, or similar) can reuse it instead of re-deriving the pattern a
+      third time.
