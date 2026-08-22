@@ -58,10 +58,11 @@ API_VERSION = "2023-06-01"
 # come out flat and the cost is worth it.
 MODEL = os.environ.get("DREAM_AUTHOR_MODEL", "claude-sonnet-5")
 MAX_TOKENS = 4000
-# One retry, fed the validator's own complaints. The validator returns precise,
-# actionable messages ("scenario setup must name the location: X"), which is
-# exactly the shape a model can fix — but a second failure means something is
-# wrong with the prompt or the model, and looping burns tokens to no purpose.
+# One retry, fed the parser/validator's own complaints. The validator returns
+# precise, actionable messages ("scenario setup must name the location: X"),
+# which is exactly the shape a model can fix — but a second failure means
+# something is wrong with the prompt or the model, and looping burns tokens to
+# no purpose.
 MAX_ATTEMPTS = 2
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -419,7 +420,14 @@ def author(day: str, api_key: str, verbose: bool = True) -> dict:
         if verbose:
             print(f"authoring {day} (attempt {attempt}/{MAX_ATTEMPTS})", file=sys.stderr)
 
-        proposal = parse_json_object(call_claude(ask, SYSTEM_PROMPT, api_key))
+        try:
+            proposal = parse_json_object(call_claude(ask, SYSTEM_PROMPT, api_key))
+        except (ValueError, json.JSONDecodeError) as error:
+            complaints = [f"completion was not valid JSON: {error}"]
+            if verbose:
+                print("  rejected: " + complaints[0], file=sys.stderr)
+            continue
+
         # The seed plan is ours, not the model's — it is validated against the
         # live Facet catalog and must survive verbatim. Overwrite rather than
         # trust: a model that helpfully "tidied" the Facets would pass its own
