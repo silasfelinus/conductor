@@ -575,16 +575,16 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#2021'
     note: 'Cycle 41 (2026-08-22). Followed cycle 40s kaizen lead: fresh bug-hunt read of the Model Builder front-end surface (stores/modelBuilderStore.ts + progress-matrix/batch-editor components) rather than continuing the exhausted poll-loop lead. Found a real bug: BuildItem.lastAutoBuildOutcome is written only by autoBuildRun()/batchAutoBuild(), and model-builder-progress-matrix.vue / model-builder-batch-editor.vue render a red failed badge whenever lastAutoBuildOutcome === failed || item.error -- but nothing ever cleared lastAutoBuildOutcome once set. Concrete repro: auto-build all, one items AI draft fails (badge correctly red), user fixes it by hand or a fresh AI redraft succeeds (updateFields clears item.error, banner disappears) -- but the progress-matrix/batch-editor badge keeps lying failed for an item just fixed, with no way to clear it short of a full commit or another whole auto-build pass. Fixed by clearing lastAutoBuildOutcome = null everywhere item.error is already cleared on a fresh attempt/fix: updatePitch, updateFields, updatePrompt (plus their onFailure revert), and the start of generateItemAsset, generateItemAssetAsync, commitItem. Bonus fix found while verifying: verifyModelBuilderAsyncPollFailureGuard.ts own brace-matching helper never skipped // or /* */ comments before checking quotes, so apostrophes in ordinary contractions (doesnt, isnt) were misread as string openers -- it silently over-captured pollAsyncArtJob''s body on the pre-fix file, which this cycles unrelated edits shifted into a hard false-negative function-not-found failure; fixed by skipping comments in the scanner. Guard added: utils/scripts/verifyModelBuilderAutoBuildOutcomeClearGuard.ts + .test.ts (confirmed it fails against the pre-fix store with 9 violations, passes post-fix), wired into package.json and .github/workflows/contract-tests.yml. Verified: all 132 test:model-builder-* npm scripts pass, vue-tsc --noEmit shows the identical single pre-existing unrelated error before/after (zero new errors), eslint/prettier clean on touched files. kind_robots PR #2021: 35/36 CI checks green (only the documented non-required Build production image still running at merge time), squash-merged a991e501437e1110e7ce56f7a576e52785e9ae02. Kaizen suggestion for cycle 42: the flag-it-failed-never-clear-it pattern is worth checking generally -- audit other ephemeral/session-only UI flags in this store (anything not persisted server-side, a la lastAutoBuildOutcome) for the same one-way-clear gap before assuming its fully closed. Re-armed to ready.'
     owner: worker
-    claimed_by: ''
-    claimed_at: ''
-    updated: '2026-08-22T08:16:00Z'
+    claimed_by: 20260822T0827Z-modelbuilder-t029-c42
+    claimed_at: '2026-08-22T08:28:37Z'
+    updated: '2026-08-22T08:28:37Z'
 
   - id: t-030
     milestone: m6
