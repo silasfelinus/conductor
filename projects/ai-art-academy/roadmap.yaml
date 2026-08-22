@@ -2574,11 +2574,11 @@ tasks:
   - id: t-073
     milestone: m7
     title: "Break down GET /api/art/queue/stats recentFailed by error signature, not just free-text bucket"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-08-22T02:31:05Z'
+    updated: '2026-08-22T02:40:42Z'
     note: >
       Kaizen from t-069's close-out (2026-08-22): verifying t-069's live Kontext remix required
       manually fetching and eyeballing the raw `recentFailed` sample from `GET
@@ -2604,6 +2604,7 @@ tasks:
       practical, but do not block this task on rewriting every historical note.
     claimed_by: 2026-08-22T02-31-04-t073-error-signature
     claimed_at: '2026-08-22T02:31:05Z'
+    implementation_pr: 'silasfelinus/kind_robots#2015'
 
   - id: t-074
     milestone: m7
