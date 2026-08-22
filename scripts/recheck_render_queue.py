@@ -70,23 +70,110 @@ def fetch_queue_stats(window_hours: int = 24, timeout: float = 20.0) -> dict:
     return data
 
 
-def summarize_failures(recent_failed: list[dict]) -> str:
-    """Group recentFailed entries by a normalized error signature and return a
-    one-line-per-signature summary, most common first."""
+# Mirrors kind_robots' server/utils/artFailureSignature.ts (ai-art-academy/
+# t-073). Order matters -- more specific patterns must be checked before the
+# generic "workflow error" catch-all, or a known node-level failure (e.g.
+# hostbuf_file_reader_read, itself textually "a workflow error") gets
+# swallowed into the same bucket as any unrelated node failure. That
+# over-collapsing was this function's own pre-t-073 bug: it checked
+# "workflow error" with nothing more specific ahead of it, which is exactly
+# how t-068's hostbuf_file_reader_read burst got flattened into a generic
+# "workflow error" line with no node/exception detail (see t-068's own
+# RECHECK history).
+KNOWN_SIGNATURES: list[tuple[str, str, "collections.abc.Callable[[str], bool]"]] = [
+    (
+        "connection-refused",
+        "ComfyUI unreachable (connection refused)",
+        lambda e: "actively refused" in e or "10061" in e or "ConnectionRefused" in e,
+    ),
+    (
+        "lora-not-in-list",
+        "LoRA name not in list (asset-name resolution)",
+        lambda e: "lora_name" in e and "not in" in e and "list" in e,
+    ),
+    (
+        "hostbuf-file-reader-read",
+        "hostbuf_file_reader_read failed (CLIPTextEncode node)",
+        lambda e: "hostbuf_file_reader_read" in e,
+    ),
+    (
+        "charmap-codec",
+        "'charmap' codec encoding crash (non-ASCII log line)",
+        lambda e: "'charmap' codec" in e,
+    ),
+    (
+        "workflow-error-other",
+        "ComfyUI workflow error (other/unspecified node)",
+        lambda e: "workflow error" in e,
+    ),
+]
+
+
+def classify_signature(error: str | None) -> tuple[str, str]:
+    """Classify a raw ArtJob.error string into a known signature id + label,
+    or an 'other' fallback carrying a truncated snippet of the raw text."""
+    text = str(error or "").strip()
+    if not text:
+        return "no-error-text", "(no error text)"
+    for sig_id, label, test in KNOWN_SIGNATURES:
+        if test(text):
+            return sig_id, label
+    return "other", text[:120]
+
+
+def group_failures_by_signature(recent_failed: list[dict]) -> list[dict]:
+    """Local fallback grouping (signature -> label/count/projectSlugs), used
+    only when the API response doesn't already carry `failuresBySignature`
+    (older deployed instance pre-t-073). Same shape as the TS
+    groupArtFailuresBySignature() output."""
+    groups: dict[str, dict] = {}
+    for entry in recent_failed:
+        sig_id, label = classify_signature(entry.get("error"))
+        project_slug = entry.get("projectSlug")
+        group = groups.setdefault(sig_id, {"signature": sig_id, "label": label, "byProject": {}})
+        group["byProject"][project_slug] = group["byProject"].get(project_slug, 0) + 1
+
+    result = []
+    for group in groups.values():
+        project_slugs = [
+            {"projectSlug": slug, "count": n}
+            for slug, n in sorted(group["byProject"].items(), key=lambda kv: -kv[1])
+        ]
+        count = sum(p["count"] for p in project_slugs)
+        result.append(
+            {
+                "signature": group["signature"],
+                "label": group["label"],
+                "count": count,
+                "projectSlugs": project_slugs,
+            }
+        )
+    return sorted(result, key=lambda g: -g["count"])
+
+
+def summarize_failures(data: dict) -> str:
+    """Render a one-line-per-signature summary from the queue/stats `data`
+    object, most common first. Prefers the API's own `failuresBySignature`
+    (ai-art-academy/t-073) when present -- the authoritative, per-projectSlug
+    grouping computed server-side -- and falls back to a local recomputation
+    from `recentFailed` for an older deployed instance that predates it."""
+    recent_failed = data.get("recentFailed") or []
     if not recent_failed:
         return "recentFailed: none"
 
-    def signature(entry: dict) -> str:
-        error = str(entry.get("error") or "").strip()
-        if "actively refused" in error or "10061" in error or "ConnectionRefused" in error:
-            return "connection-refused to ComfyUI"
-        if "workflow error" in error:
-            return "generic workflow error (no node/exception detail forwarded)"
-        return error[:120] if error else "(no error text)"
+    groups = data.get("failuresBySignature")
+    if not groups:
+        groups = group_failures_by_signature(recent_failed)
 
-    counts = collections.Counter(signature(e) for e in recent_failed)
     total = len(recent_failed)
-    lines = [f"{n}/{total} = {sig}" for sig, n in counts.most_common()]
+    lines = []
+    for g in groups:
+        projects = ", ".join(
+            f"{p.get('projectSlug') or '(none)'}={p.get('count')}"
+            for p in g.get("projectSlugs", [])
+        )
+        project_part = f" [{projects}]" if projects else ""
+        lines.append(f"{g.get('count')}/{total} = {g.get('label', g.get('signature'))}{project_part}")
     return "recentFailed (last " + str(total) + "): " + "; ".join(lines)
 
 
@@ -107,7 +194,6 @@ def format_entry(data: dict, task: str | None) -> tuple[str, str]:
     queue_depth = data.get("queueDepth") or {}
     window_throughput = data.get("windowThroughput") or {}
     oldest_pending = data.get("oldestPending")
-    recent_failed = data.get("recentFailed") or []
 
     status_label = classify(queue_depth, window_throughput)
 
@@ -128,7 +214,7 @@ def format_entry(data: dict, task: str | None) -> tuple[str, str]:
         f"queueDepth: {depth_parts} (all-time).",
         oldest_part,
         f"windowThroughput ({data.get('windowHours', 24)}h): {throughput_parts}.",
-        summarize_failures(recent_failed) + ".",
+        summarize_failures(data) + ".",
     ]
     return status_label, " ".join(lines)
 

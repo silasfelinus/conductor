@@ -2248,6 +2248,18 @@ tasks:
     stakes: reversible
     updated: '2026-08-15T03:29:28Z'
     note: >
+      NOTE (ai-art-academy/t-073, 2026-08-22): the manual "query /api/art/queue/stats raw
+      because recheck_render_queue.py's bucketed summary collapses this into a generic
+      'workflow error' catch-all" dance every RECHECK below had to do by hand is no longer
+      necessary. kind_robots PR #2015 added a `failuresBySignature` field to
+      GET /api/art/queue/stats (grouped by normalized error signature, including this task's
+      own hostbuf_file_reader_read specifically, then by projectSlug) and
+      recheck_render_queue.py's own summarize_failures() now reads it directly instead of the
+      old "workflow error" substring match that used to swallow this exact signature into a
+      generic bucket. A future recheck can read that field/summary line directly rather than
+      re-fetching and eyeballing raw recentFailed. Status/gate unchanged -- this is a
+      tooling note only, not a new diagnosis of the underlying ComfyUI incident.
+
       RECHECK (conductor scheduled Agent run, 2026-08-15T03:29Z, logged in RENDER-BACKLOG.md):
       root cause unchanged, but a new secondary observation worth flagging. Queried
       /api/art/queue/stats raw (not just recheck_render_queue.py's bucketed summary, which
@@ -2574,11 +2586,11 @@ tasks:
   - id: t-073
     milestone: m7
     title: "Break down GET /api/art/queue/stats recentFailed by error signature, not just free-text bucket"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-08-22T02:31:05Z'
+    updated: '2026-08-22T02:40:42Z'
     note: >
       Kaizen from t-069's close-out (2026-08-22): verifying t-069's live Kontext remix required
       manually fetching and eyeballing the raw `recentFailed` sample from `GET
@@ -2604,6 +2616,7 @@ tasks:
       practical, but do not block this task on rewriting every historical note.
     claimed_by: 2026-08-22T02-31-04-t073-error-signature
     claimed_at: '2026-08-22T02:31:05Z'
+    implementation_pr: 'silasfelinus/kind_robots#2015'
 
   - id: t-074
     milestone: m7
