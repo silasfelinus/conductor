@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2991,8 +2991,13 @@ tasks:
       Project gallery pass ready for CI review on worker/interface-vision-t-104-project-gallery-7f3c. It removes the unused Ideas lifecycle filter, keeps pre-Conductor BRAINSTORM rows as an internal Draft state visible under All/Sync, makes new-project UI match PROJECT-CREATION.md by submitting only title/slug/description, restores the intended art geometry (card 2:3 portrait, hero 16:9 landscape, icon square with text-forward row), and lets project titles wrap instead of truncating. One intended Kind Robots file changed.
 
       Gallery slice merged as silasfelinus/kind_robots#2032 at b5edd067ee98a662d8f9cfa841ab774444b90e3d after every exact-head workflow completed successfully, including TypeScript, Contract Tests, Layout Contract, Project Architecture, gallery consistency/adoption coverage, and all Storybook/narrative contracts. Cards are 2:3 portrait, Heroes 16:9 landscape, Icons square/text-forward, titles wrap, the noncanonical Ideas filter is gone, pre-Conductor BRAINSTORM rows are labeled Draft, and creation now follows PROJECT-CREATION.md. Return the umbrella to ready for Silas's next requested bounded slice: the individual project interaction page.
-    updated: '2026-08-23T00:12:30Z'
+
+      Second bounded slice explicitly requested by Silas: improve the individual Conductor project interaction page after the gallery pass. Audit found direct Kind Robots status/priority selectors on this page even though SOURCE_OF_TRUTH.md assigns lifecycle and coordination priority to Conductor; the page also truncates the project, milestone, and completed-task titles. This slice will make coordination state projection-owned/read-only, keep Kind Robots-owned presentation controls editable, and improve detail-page hierarchy/title wrapping without changing roadmap task state.
+    updated: '2026-08-23T00:18:15Z'
     approved_by_human: true
+    owner: worker
+    claimed_by: 20260823T001815Z-chatgpt-iv-t104-project-detail-4d91
+    claimed_at: '2026-08-23T00:18:15Z'
 
   - id: t-105
     milestone: m6
