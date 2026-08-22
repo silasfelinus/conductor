@@ -9937,3 +9937,22 @@ records:
     CI timer" self-report is not a real block -- the coordinating session must poll CI itself
     and merge, then explicitly tell the sub-agent to stop via SendMessage. Promoted this from a
     per-cycle TALKBACK observation to AGENTS.md hard safety rule 13.
+- date: 2026-08-22
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 46
+  outcome: done
+  failure_category: null
+  lesson: >
+    Cycle 46: closed the exact gap cycle 45's own kaizen note flagged as left open --
+    pitch/fieldsDraft/promptDraft were capped at MAX_DRAFT_TEXT_LENGTH on the item PATCH
+    path but not on the run CREATE route's own items mapping, even though both write the
+    same @db.Text columns. A cap added at one write path for a shared field is only half
+    the fix until every other write path into that same column is audited too -- the same
+    "one-way-clear-gap" shape as cycle 41/42's lastAutoBuildOutcome/statusMessage bugs, just
+    for a validation cap instead of a state-clearing call. Importing the shared constant
+    (MAX_DRAFT_TEXT_LENGTH) rather than hardcoding a second copy of the same number, plus a
+    guard script asserting the import is actually used, is what keeps two independent write
+    paths for the same column from drifting apart again silently.
