@@ -133,15 +133,15 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   note: 'Cycle 28 (2026-08-22). Per cycle 27''s kaizen note, weighted this cycle''s read toward the server side (server/api/storybook/**) mirroring model-builder/t-029''s client-vs-server sweep pattern, after first reading all 21 existing verifyStorybook* guards to map already-covered territory. Found a real client-side race instead: content/storybook.md mounts storybook-library-page, which unconditionally renders StorybookPage as a child; both components'' onMounted() call storyStore.restoreFromLocalStorage() in the same synchronous tick (child first, matching the mount order verifyStorybookSeedQueryRaceGuard already proves). The child''s onMounted() also calls seedFromQuery() right after its own restore to seed a deep-linked ingredient (e.g. ?character=<slug> from "Start a story with this character" links), but that mutation only schedules persist() as a microtask -- it does not flush until after both onMounted hooks return. restoreFromLocalStorage() had no guard against being called twice: unlike its own session-restore branch (gated on sessionRaw && !session.value), the draft-restore branch unconditionally re-read and overwrote setupDraft.value every call. So the parent''s redundant second call re-read the pre-seed draft still in localStorage and silently clobbered the just-seeded setupDraft -- routine to hit, not an edge case, since the draft persists continuously while the setup form is open. Fixed with a one-time restoredFromStorage guard flag mirroring the existing modeHydrated pattern in the same file (and taskmasterStore.ts''s analogous already-guarded function). Added utils/scripts/verifyStorybookRestoreIdempotencyGuard.mjs + .github/workflows/storybook-restore-idempotency-contract.yml, wired into package.json''s test:storybook-restore-idempotency-guard and the test:storybook aggregate (now 22 guards), following the established per-guard-workflow convention. Verified: new guard fails pre-fix / passes post-fix (confirmed via git stash), full test:storybook aggregate (22 guards) passes, vue-tsc --noEmit shows only the same single pre-existing unrelated error as baseline (server/api/reactions/index.post.ts BUTTERFLY reaction category), eslint shows the same 2 pre-existing unrelated errors in storybookStore.ts as baseline, prettier --check clean on touched/new files (one pre-existing unrelated drift line confirmed present on baseline too), git status --porcelain scoped to exactly 4 files. kind_robots PR #2024: 36/37 checks green (only the documented non-required Build production image job still in flight at merge time), squash-merged 197b00f. Kaizen for cycle 29: no specific lead flagged -- this cycle''s server-side-weighted read did not surface a server-side bug (the real find was again client-side, a mount-order race); a future cycle could either continue the server/api sweep more exhaustively, or return to a fresh full-surface read. Re-armed to ready.'
-  updated: '2026-08-22T10:57:45Z'
+  updated: '2026-08-22T14:32:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2024'
   owner: worker
-  claimed_by: 20260822T1050Z-storybook-t010-c28
-  claimed_at: '2026-08-22T10:41:30Z'
+  claimed_by: 20260822T143300Z-storybook-t010-cs1
+  claimed_at: '2026-08-22T14:32:00Z'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
