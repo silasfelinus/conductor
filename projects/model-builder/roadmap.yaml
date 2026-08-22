@@ -575,16 +575,16 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: review
     recurring: true
     passes: 46
     stakes: reversible
-    implementation_pr: 'silasfelinus/kind_robots#2026'
+    implementation_pr: 'silasfelinus/kind_robots#2029'
     note: 'Cycle 49 (no-op, re-armed): cycle 48 left two fresh leads -- server/api/model-builder/** access-control paths not yet covered by the existing verify*Guard suite, or item-panel.vue COMMIT-stage disable logic vs a hypothetical stale COMMIT status. Took the server-side lead: read every route in server/api/model-builder/** end to end (items/[id].patch.ts, items/batch.patch.ts, items/[id]/artifacts.post.ts, items/[id]/commit.post.ts, runs/index.post.ts, runs/index.get.ts, runs/[id].get.ts, runs/[id].patch.ts, runs/[id].delete.ts, relations.ts, patch-policy.ts, runs/index.ts) checking auth (requireApiUser), ownership (assertRunAccess/assertSourceOwnership), run-writability (assertRunWritable), content-stage gating (assertContentStageEditable), and field-length caps against their actual Prisma column types. Every write route already calls requireApiUser + assertRunAccess/assertSourceOwnership; every content-write route already calls assertRunWritable and re-checks assertContentStageEditable against a fresh read immediately before its transactional write; assertItemPatchFieldsAreClientWritable blocks targetType/targetId on both the single-item and batch PATCH routes symmetrically; every VarChar/Text field cap (kind/provider/seed/format 64, model 191 matching Prisma default, prompt/negativePrompt/draftPath/promotedPath 20000 under Text 65535, label/sourceLabel 255, recipeVersion 32) matches its schema column type, with LongText fields (selections/usageInfo/workflow/sourceSnapshot) correctly left uncapped. Also checked the item-panel.vue COMMIT lead: the Execute-commit button is NOT disabled while COMMIT.status is stale (only checks isLocked==locked and status!=approved), unlike canApproveAssets which explicitly blocks a stale GENERATE_ASSETS candidate -- but commit.post.ts (line ~808) independently requires every other stage to be status=approved before committing, and markDownstreamStale always stales GENERATE_ASSETS/FIELDS_AND_PROMPTS alongside COMMIT together, so a stale commit attempt is guaranteed to hit that server-side 400 rather than silently succeeding; confirmed not a live gap, just a UX rough edge (clickable button, guaranteed error) already covered by the item-panel.vue comment at line 439 acknowledging exactly this pattern. No new bug found this cycle -- releasing the claim without a code change. A future cycle should look at components/model-builder/model-builder-run-history.vue and model-builder-source-picker.vue (not yet read end-to-end in recent cycles per this task history), or add a UX-only fix disabling Execute-commit while COMMIT.status is stale to avoid the guaranteed-error round-trip found above (cosmetic, not a correctness bug).'
     owner: worker
     claimed_by: sched-conductor-mb-t029-20260822T182842Z
     claimed_at: '2026-08-22T18:28:43Z'
-    updated: '2026-08-22T18:28:43Z'
+    updated: '2026-08-22T18:40:11Z'
 
   - id: t-030
     milestone: m6
