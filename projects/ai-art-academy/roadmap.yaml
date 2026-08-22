@@ -2529,3 +2529,35 @@ tasks:
       ancient, medieval, early-modern, modern, and non-Western lessons after delivery.
       (8) Preserve accessibility: alt text distinguishes artist portraits/self-portraits from
       artworks by that artist, and captions retain source/provenance context.
+
+  - id: t-073
+    milestone: m7
+    title: "Break down GET /api/art/queue/stats recentFailed by error signature, not just free-text bucket"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-22T01:50:00Z'
+    note: >
+      Kaizen from t-069's close-out (2026-08-22): verifying t-069's live Kontext remix required
+      manually fetching and eyeballing the raw `recentFailed` sample from `GET
+      /api/art/queue/stats` to confirm the new render (ArtJob 9009, clean) wasn't being masked by
+      or conflated with an unrelated, already-tracked failure signature (t-068's facet-catalog/
+      dream-cycle "hostbuf_file_reader_read failed" CLIPTextEncode error, which was actively
+      recurring on adjacent job ids moments before). `recheck_render_queue.py`'s bucketed summary
+      already collapses distinct signatures into a generic "workflow error" catch-all (noted
+      separately in t-068's own RECHECK history), so today the only way to tell "is this
+      project's/style's queue actually healthy right now" from a *specific* known-bad signature
+      is a manual recentFailed scan.
+      ACCEPTANCE: (1) Extend the stats endpoint (or recheck_render_queue.py's summary layer) to
+      group recentFailed/recent-window failures by a normalized error signature (e.g. first N
+      chars after stripping job-specific ids/paths, or an explicit small set of known signatures
+      such as lora_name-not-in-list, hostbuf_file_reader_read, connection-refused, charmap-codec)
+      rather than one flat list or a single free-text-matched bucket. (2) Surface counts per
+      signature per projectSlug in the summary so a recheck can answer "is MY project's queue
+      clean" without fetching and reading raw recentFailed entries by hand. (3) Keep the existing
+      flat recentFailed array available for anyone who wants raw detail -- this is an additive
+      summary layer, not a replacement. (4) Add/extend a test or example fixture showing the
+      grouping behavior. (5) Update any roadmap tasks whose RECHECK notes currently do the manual
+      free-text substring dance (e.g. t-068's own notes) to reference the new grouped view where
+      practical, but do not block this task on rewriting every historical note.
