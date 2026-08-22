@@ -83,8 +83,8 @@ jobs:
           KR_MEDIA_ORIGIN: https://media.acrocatranch.com
 
       - name: Commit Daily Dream cycle evidence
-        id: daily_dream_commit
         if: ${{ always() }}
+        id: daily_dream_commit
         continue-on-error: true
         run: |
           git config user.name "kind-robots-bot"
