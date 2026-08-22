@@ -1158,6 +1158,19 @@ Silas approval is required for the image generation itself.
     2026-08-14, conductor/t-117). If the background task doesn't need to mutate git state
     in this repo, `isolation: 'worktree'` is unnecessary — the rule applies specifically
     when it does.
+13. A delegated background agent's "waiting for CI, I'll re-check when my timer fires"
+    self-report is not a live block — confirmed at least four independent times
+    (`projects/model-builder/TALKBACK.md` 2026-08-21 cycle 30, 2026-08-22 cycle 41, and
+    2026-08-22 cycle 42; root `TALKBACK.md` 2026-08-22 ai-art-academy/t-076) across
+    different projects and sessions, including once with an explicit "poll directly,
+    don't sleep-then-stop" instruction in the dispatch prompt. The agent still ends its
+    turn and produces a `task-notification` instead of actually blocking until CI
+    resolves. Never treat that self-report as equivalent to "still running and will
+    merge on its own" — the delegating/coordinating session must poll the PR's CI status
+    itself (`pull_request_read` with `get_check_runs`/`get_status`, or the GitHub MCP
+    equivalent) and merge when green, then explicitly tell the sub-agent to stop (via
+    `SendMessage` to the same agent, never a fresh `Agent` call — see rule 11's sibling
+    guidance) to avoid both sides racing to merge or re-push the same PR.
 
 **Reviewer batch-merge note (companion to rule 9):** `refresh-status.yml` lands a
 `chore: refresh STATUS.md and workspace.html` commit on `main` within seconds of every
