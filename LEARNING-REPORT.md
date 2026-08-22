@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-22T01:48:24Z
+Generated: 2026-08-22T01:56:39Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **720**
-- Outcomes: blocked: 15, cancelled: 1, done: 704
+- Closed tasks recorded: **721**
+- Outcomes: blocked: 15, cancelled: 1, done: 705
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -15,7 +15,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 | Project | Closed | Success rate |
 |---|---|---|
-| ai-art-academy | 65 | 98% |
+| ai-art-academy | 66 | 98% |
 | alexa-integration | 6 | 100% |
 | animation-manager | 13 | 100% |
 | animation-studio | 2 | 50% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 704 | 99% |
+| software | 705 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-22 `ai-art-academy/t-069` — A "verify current production" task is only as good as its weakest-evidence criterion -- splitting each acceptance item explicitly into LIVE (real HTTP against kindrobots.org/api responses) vs. SOURCE-traced (client-hydration-gated UI this sandbox's broken headless Chromium can't reach) kept the note honest about what was actually proven vs. inferred, per AGENTS.md's explicit "never blur verified and assumed" rule. For the one criterion needing a real render (a completed Kontext remix), KR_API_TOKEN as a Bearer token against the same server route/workflow builder the UI calls (POST /api/art/enqueue -> poll GET /api/art/queue/:id -> GET /api/art/image/:id?includeImageData=true) produced a genuine end-to-end artifact (ArtJob 9009, ArtImage 18263) that could be decoded and visually inspected, not just a "status: DONE" proxy -- this is the strongest verification shape available to a sandboxed session with no browser and is worth reusing for any future "does generation actually work in prod" task. Also worth remembering for next time: freshly-generated ArtImages in production have null path/imagePath and are delivered as inline base64 -> data: URI, not through the static /images/** bridge that lesson/starter assets use -- a future check that assumes every ArtImage has a static path will get a false negative.
+
 - 2026-08-22 `ai-art-academy/t-071` — Historical t-025 backfilled failureMode for every movement that existed at closure, but the curriculum expanded afterward with no coverage task tracking the new denominator -- the same drift pattern t-070 hit for exampleWorks. Re-measuring the canonical style list before editing (47 entries, not the roadmap note's stale "48") caught a small inaccuracy before it propagated into a false 12-vs-11 count. Also added a lightweight coverage contract (pass/fail on any style missing failureMode and not in a documented exceptions map) rather than only fixing the current gap -- the exact fix t-025 itself didn't have, which is why this task existed at all. Choosing t-071 over the also-ready but much larger t-070 (27-lesson rights-clearance content task) in the same cycle was deliberate scope discipline: t-070 got flagged as a kaizen suggestion to decompose rather than attempting all 27 lessons in one pass.
 
 - 2026-08-21 `brainstorm/t-027` — Scoping a broad "evaluate N surfaces" task by shipping the cheapest one first and filing the rest as named follow-ups (t-028 for Reward) kept the diff small (3 files) and avoided forcing a button onto Prompt, which has no standalone detail view yet. A surface with an existing adapter but no UI entry point (Scenario, from t-014) is the cheapest next slice on this kind of task -- check BRAINSTORM_SOURCE_ADAPTERS for already-wired-but-untriggered adapters before starting from scratch on any surface.
@@ -103,27 +105,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-20 `kapowarr/t-061` — Deleting special-casing from a fan-out is a contract problem before it is a control-flow problem. search_metadata_with_fallback() could not iterate providers because MetadataProvider had no way to answer "should I be in the fan-out" or "is this error me being unavailable, or a bug" -- so the two questions the old code answered inline (_metron_is_configured(), isinstance against MetronError / CVRateLimitReached) had to become is_configured() and unavailable_errors on the contract first. Once they were there the loop wrote itself. Second: preserve the exact success/failure algebra, not just the happy path. The old code returned ComicVine's results when Metron failed recoverably, even if ComicVine returned an empty list -- so the generalized version has to raise on "every provider was unavailable", tracked with an `answered` flag, NOT on "results is empty". Those two conditions look interchangeable and are not; an empty successful search is a valid answer. Third: order the provider list explicitly rather than inheriting dict insertion order. The registry's order depends on which module imported first, so the fan-out's result order would have been an import-order accident; sorting default-first then alphabetically makes the existing ['comicvine', 'metron'] assertion a guarantee instead of a coincidence.
 
-- 2026-08-20 `kapowarr/t-060` — When a ranking signal is only available from some sources, the shape of the fix is
-forced by the sources that lack it, not by the ones that have it. "Prefer available
-releases" reads like it wants a seeder-count gradient, but peer counts come only from
-Torznab, and a gradient cannot place a no-peer-data result anywhere on it without
-either promoting or demoting every non-torrent source for no reason. The only shape
-that satisfies "absent data ranks neutrally" is binary: demote proven-dead, treat
-unknown and healthy identically. Four lines of production code, and the constraint
-picked them.
-Second: a rank component that encodes a fact about a release (it has no seeders, so
-it cannot download) does not belong behind a user preference, even when every helper
-beside it is preference-driven -- the only value a "prefer_available: off" setting
-could carry is "please also consider releases that cannot download." A side benefit
-worth knowing in this codebase: skipping the settings read also skips the database,
-so the helper's unit tests need no Flask app_context, which is exactly why the
-pre-existing ranking test has to patch pack_preference_rank.
-Third: when placing a new component into an ordered rating list, pin the position
-from both sides with named tests. Here availability was deliberately put one tier
-above where the task note suggested (above pack preference, since preferring the
-shape of an undownloadable release is meaningless); a reviewer who disagrees now sees
-a failing named test rather than a silent behaviour change. The tier order is the
-actual policy and was otherwise documented only in inline comments -- filed as t-063.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-22T01:48:24Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-22T01:56:39Z_
