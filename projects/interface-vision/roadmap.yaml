@@ -2935,8 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: needs-human
-    soft_gate: true
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2986,12 +2985,10 @@ tasks:
       Both candidate families are large (~100 files combined) and require a real design-system judgment call (does kr-note cover gallery empty/error-state placeholders, or does that need its own shared component?) rather than a mechanical byte-exact swap -- the kind of decision every prior slice (1-43) deliberately avoided making unilaterally, restricting itself to hand-rolled markup with an already-established sibling precedent. Not attempting either family blind. Filing this as the soft needs-human slice 43's own note anticipated.
 
       FOR SILAS: the exact-shape kr-note sweep (rounded-2xl border border-{status}/40 bg-{status}/10 p-4 text-{status} manager-notice pattern) is complete -- 0 remaining live candidates across 14 slices (30-43). TO APPROVE: pick one of (a) close this slice of the umbrella as done and let interface-vision/t-104 continue with a different bounded target from its broader "consistency" scope, (b) explicitly extend kr-note's intended use to cover the gallery empty/error-state placeholder family (~5-10 files with strong sibling precedent: bot-gallery.vue, character-gallery.vue, dream-gallery.vue, reward-gallery.vue, scenario-gallery.vue) so a future slice can proceed there with the same discipline as before, or (c) point at a different next bounded shape entirely. Set approved_by_human: true with a note naming the choice, and status: ready, to unblock the next slice.
-    updated: '2026-08-11T14:41:00Z'
-    implementation_pr: 'silasfelinus/kind_robots#1776'
-    claimed_by: 20260811T143456Z-sched-conductor-t104-s44
-    claimed_at: '2026-08-11T14:34:58Z'
-    owner: reviewer
-    approved_by_human: false
+
+      Silas explicitly chose the next bounded consistency target in-session on 2026-08-22: improve the Conductor Projects front end, starting with the project gallery, then the individual project interaction page. This clears t-104 slice 44's soft needs-human choice (c): proceed on the project-gallery shape/status/title inconsistencies before choosing another general consistency family.
+    updated: '2026-08-22T23:49:50Z'
+    approved_by_human: true
 
   - id: t-105
     milestone: m6
