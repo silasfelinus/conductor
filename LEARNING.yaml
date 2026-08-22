@@ -9956,3 +9956,22 @@ records:
     (MAX_DRAFT_TEXT_LENGTH) rather than hardcoding a second copy of the same number, plus a
     guard script asserting the import is actually used, is what keeps two independent write
     paths for the same column from drifting apart again silently.
+- date: 2026-08-22
+  project: appmaker
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    apps.get.ts's pending-scaffold reader only ever recognized one of AppMaker's two
+    self-serve scaffold flows' Todo titles (the monorepo flow's "Scaffold new app '...'",
+    never the external-repo GitHub-integration flow's "Scaffold external app '...' via
+    AppMaker GitHub integration") -- both the Prisma query's title filter and the
+    extraction regex needed updating together, since fixing only one still silently drops
+    the other flow's real, open Todos from the UI. Same "an endpoint reachable via direct
+    API call, even with no front-end wired up yet, is still worth defending" precedent the
+    prior cycle set for this exact pair of routes' slug-collision guard -- when two routes
+    share a naming convention a downstream reader depends on, audit every reader against
+    every writer, not just the one the current UI happens to call.
