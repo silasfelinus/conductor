@@ -9848,3 +9848,21 @@ records:
     sourced exampleWorks entries route through Wikimedia Commons instead of citing AIC
     directly -- worth checking upload.wikimedia.org reachability first for any future
     AIC-collection sourcing rather than re-discovering the CDN block each time.
+- date: 2026-08-22
+  project: ai-art-academy
+  task: t-073
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Kaizen-sourced tooling fix (grouped error-signature breakdown for GET /api/art/queue/stats,
+    ai-art-academy/t-069's close-out pain point) landed clean across a kind_robots + conductor
+    companion-PR pair. Separately: a background subagent given "verify CI, merge when green" as
+    part of its scope has no way to schedule its own wait for external CI completion and can get
+    stuck looping "waiting for a background timer" across several turns without one ever
+    arriving -- the parent session had to take over the final re-check-and-merge step directly.
+    Future delegated cycles whose scope includes a merge-when-green step should either have the
+    parent handle that step, or be told explicitly to re-check synchronously/immediately rather
+    than attempt a multi-turn wait.
