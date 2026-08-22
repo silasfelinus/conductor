@@ -57,13 +57,91 @@ def test_classify_healthy_when_no_pending():
 
 
 def test_summarize_failures_groups_by_signature():
-    summary = recheck.summarize_failures(SAMPLE_DATA["recentFailed"])
-    assert "2/3 = generic workflow error" in summary
-    assert "1/3 = connection-refused to ComfyUI" in summary
+    summary = recheck.summarize_failures(SAMPLE_DATA)
+    assert "2/3 = ComfyUI workflow error (other/unspecified node)" in summary
+    assert "1/3 = ComfyUI unreachable (connection refused)" in summary
 
 
 def test_summarize_failures_empty():
-    assert recheck.summarize_failures([]) == "recentFailed: none"
+    assert recheck.summarize_failures({}) == "recentFailed: none"
+    assert recheck.summarize_failures({"recentFailed": []}) == "recentFailed: none"
+
+
+def test_summarize_failures_does_not_collapse_hostbuf_into_generic_workflow_error():
+    # ai-art-academy/t-073: a specific node-level signature (here
+    # hostbuf_file_reader_read, itself textually "a workflow error") must
+    # not be swallowed by the generic "workflow error" catch-all -- the
+    # over-collapsing bug this task exists to fix.
+    data = {
+        "recentFailed": [
+            {
+                "error": (
+                    "ComfyUI reported a workflow error: node 3 (CLIPTextEncode): "
+                    "hostbuf_file_reader_read failed"
+                ),
+                "projectSlug": "facet-catalog",
+            },
+            {
+                "error": "ComfyUI reported a workflow error: node 7 (VAEDecode): CUDA out of memory",
+                "projectSlug": "dream-cycle",
+            },
+        ]
+    }
+    summary = recheck.summarize_failures(data)
+    assert "hostbuf_file_reader_read failed (CLIPTextEncode node)" in summary
+    assert "ComfyUI workflow error (other/unspecified node)" in summary
+    # The hostbuf line must carry its own count/project breakdown, not be
+    # merged into the generic-workflow-error line's count.
+    assert "1/2 = hostbuf_file_reader_read failed (CLIPTextEncode node) [facet-catalog=1]" in summary
+
+
+def test_summarize_failures_prefers_api_provided_failures_by_signature():
+    # When the API response already carries `failuresBySignature`
+    # (ai-art-academy/t-073), summarize_failures uses it directly rather
+    # than recomputing locally -- proven here by handing it a grouping that
+    # would not match a local recomputation of `recentFailed`, and asserting
+    # the API-provided version wins.
+    data = {
+        "recentFailed": [{"error": "anything", "projectSlug": "x"}],
+        "failuresBySignature": [
+            {
+                "signature": "connection-refused",
+                "label": "ComfyUI unreachable (connection refused)",
+                "count": 1,
+                "projectSlugs": [{"projectSlug": "x", "count": 1}],
+            }
+        ],
+    }
+    summary = recheck.summarize_failures(data)
+    assert "1/1 = ComfyUI unreachable (connection refused) [x=1]" in summary
+
+
+def test_classify_signature_known_and_fallback():
+    assert recheck.classify_signature(None) == ("no-error-text", "(no error text)")
+    assert recheck.classify_signature("")[0] == "no-error-text"
+    assert recheck.classify_signature(
+        "lora_name: 'foo.safetensors' not in (list of length 42)"
+    )[0] == "lora-not-in-list"
+    assert recheck.classify_signature("'charmap' codec can't encode character")[0] == "charmap-codec"
+    sig_id, label = recheck.classify_signature("something totally unrecognized happened")
+    assert sig_id == "other"
+    assert label == "something totally unrecognized happened"
+
+
+def test_group_failures_by_signature_counts_per_project():
+    recent_failed = [
+        {"error": "hostbuf_file_reader_read failed", "projectSlug": "facet-catalog"},
+        {"error": "hostbuf_file_reader_read failed", "projectSlug": "facet-catalog"},
+        {"error": "hostbuf_file_reader_read failed", "projectSlug": "dream-cycle"},
+    ]
+    groups = recheck.group_failures_by_signature(recent_failed)
+    assert len(groups) == 1
+    assert groups[0]["signature"] == "hostbuf-file-reader-read"
+    assert groups[0]["count"] == 3
+    assert groups[0]["projectSlugs"] == [
+        {"projectSlug": "facet-catalog", "count": 2},
+        {"projectSlug": "dream-cycle", "count": 1},
+    ]
 
 
 def test_format_entry_growing():
@@ -72,7 +150,7 @@ def test_format_entry_growing():
     assert "PENDING=135" in detail
     assert "oldestPending: id=2017" in detail
     assert "~53.2h" in detail
-    assert "generic workflow error" in detail
+    assert "ComfyUI workflow error (other/unspecified node)" in detail
 
 
 def test_format_entry_no_oldest_pending():
