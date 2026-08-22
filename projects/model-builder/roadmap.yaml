@@ -575,16 +575,16 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 46
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#2026'
     note: 'Cycle 47 (no-op, re-armed): re-audited the exact lead cycle 46 flagged (whether any other model-builder write path still leaves a @db.Text/@db.VarChar field uncapped) before touching client code. Walked every write path across runs/index.post.ts, runs/[id].patch.ts, items/[id].patch.ts, items/batch.patch.ts, items/[id]/artifacts.post.ts, and items/[id]/commit.post.ts against every VarChar/Text column in prisma/model-builder.prisma: sourceType/sourceLabel/recipeKey/recipeVersion/outputKey/label/generation/targetType/staleReason (VarChar) and pitch/fieldsDraft/promptDraft/error (Text) on ModelBuildRun/Item, plus kind/provider/seed/format/prompt/negativePrompt/draftPath/promotedPath (Text) on ModelBuildArtifact -- every one is already capped at its correct column width via normalizeText/requiredString/.slice(N) on every write path that touches it (cycles 45/46 already closed this class). The remaining uncapped fields (sourceSnapshot/selections/usageInfo/stageStatuses/relationshipDraft/workflow) are all @db.LongText (4GB MySQL limit), not realistically reachable by any live write path, so no further cap is warranted there. Also read commit.post.ts''s pickText/SHORT_TEXT_MAX/NAME_MAX tables against every CREATE_TARGETS column width (Character/Reward/Bot/Scenario/Dream/Project/Facet name+title+prose fields) -- all correct, no gap. Read runs/[id].delete.ts, relations.ts, runs/index.get.ts, runs/[id].get.ts, patch-policy.ts, and the async ArtJob poll path in modelBuilderStore.ts (pollAsyncArtJob) for access-control/race-condition gaps -- all already defended with documented reasoning from prior cycles. No new bug found this cycle. Releasing the claim without a code change -- re-armed to ready; a future cycle should pick a different concrete-gap category (e.g. a fresh full-surface read of modelBuilderStore.ts client logic, or the run-history/batch-editor Vue components, neither of which this cycle''s server-focused audit covered) rather than re-running this same VarChar/Text sweep, which is now exhausted.'
     owner: worker
-    claimed_by: 20260822T132900Z-modelbuilder-t029-cs3
-    claimed_at: '2026-08-22T13:28:31Z'
-    updated: '2026-08-22T13:32:09Z'
+    claimed_by: 20260822T142700Z-modelbuilder-t029-cs4
+    claimed_at: '2026-08-22T14:28:03Z'
+    updated: '2026-08-22T14:28:03Z'
 
   - id: t-030
     milestone: m6
