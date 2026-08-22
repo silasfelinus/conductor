@@ -575,16 +575,16 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 46
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#2030'
     note: 'Cycle 51 (real fix): cycle 50 left three fresh leads (model-builder-batch-editor.vue, model-builder-progress-matrix.vue, model-builder-recipe-selector.vue -- none read end-to-end in recent cycles). Read all three: recipe-selectors quantity input has no client-side clamp but store.setOutputQuantity already clamps 1..MAX_BATCH server-side, not a bug. progress-matrixs selectedItemId ref only initializes once at mount, which looked like a stale-selection risk across a run switch, but confirmed (mirroring cycle 48s own finding) that switching runs always goes through the History panels own unmount/remount of this component, so its always freshly initialized -- not a bug. batch-editors autoBuildFailed/commitBadge/itemStageSummary helpers already agree with progress-matrixs identical helpers per their own comments -- not a bug. Reading on into the sibling single-item surface, model-builder-item-panel.vue, found a real gap: its own Auto button (store.autoBuildItem(item.id)) never checked store.autoBuilding/store.batchingOutputKey, unlike the whole-run (Auto-build all) and batch-group (Auto-build group) Auto buttons, both already fixed for this exact race in cycle 25 (isRunOperationInFlight). isManualActionInFlight here only read this items own generating/queued/committing/drafting flags -- none of which are set for an item a whole-run or batch loop had not reached yet -- so clicking Auto on an item not yet processed by an in-progress Auto-build all/Auto-build group started a second, fully concurrent autoBuildItem() call racing the loops own eventual call for that same item. Added a runOperationInFlight computed mirroring the stores own unexported isRunOperationInFlight and folded it into the buttons :disabled, plus a matching disabled-state title. Added verifyModelBuilderItemPanelAutoRunGuard.ts + selftest following this projects narrow-textual-checker convention, wired into package.json and contract-tests.yml. Verified: new guard fails pre-fix / passes post-fix (git-stash round-trip); all 141 test:model-builder-* scripts pass; eslint clean; prettier --check clean; vue-tsc --noEmit repo-wide exit 0; git status --porcelain scoped to exactly 5 files (reverted an incidental prisma generate regen diff before committing). kind_robots PR #2030: 37/38 CI checks green before merge (only the standard non-required Build production image deploy job still in flight, matching every prior cycles merge-when-unstable precedent), squash-merged 5cbffcd8. REMAINING: components/model-builder/model-builder-item-panel.vue is now the freshest fully-read file; next lead is components/model-builder/model-builder-source-picker.vue and model-builder-run-history.vue (last read cycle 49/50, worth a re-check as the store evolves) or server/api/model-builder/** access-control paths not yet covered by the verify*Guard suite. Rearmed to ready for a follow-up slice.'
-    owner: null
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-22T19:43:28Z'
+    owner: worker
+    claimed_by: sched-conductor-mb-t029-cycle52-20260822T202800Z
+    claimed_at: '2026-08-22T20:28:22Z'
+    updated: '2026-08-22T20:28:22Z'
 
   - id: t-030
     milestone: m6
