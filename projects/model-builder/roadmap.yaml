@@ -575,16 +575,16 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#2025'
-    note: 'Cycle 45 in progress: PR silasfelinus/kind_robots#2025 open, CI running.'
+    note: 'Cycle 45 (real bug found and fixed): server-side validation gap in normalizeText() -- sourceLabel (run PATCH, VarChar(255)), staleReason (item PATCH, VarChar(255)), and targetType (item PATCH, VarChar(64)) had no length cap at all, unlike every similarly-typed sibling field. An oversized sourceLabel/staleReason reached Prisma unchecked and MySQL would reject the write with a raw "Data too long for column" error instead of a clean 400 -- and sourceLabel was validated on run CREATE (truncated to 255) but not on this PATCH route, a real create-vs-update inconsistency. Also capped pitch/fieldsDraft/promptDraft at 20000 chars (they are @db.Text, a real 65535-byte MySQL TEXT limit, not unbounded) matching commit.post.ts own LONG_TEXT_MAX. Added verifyModelBuilderPatchTextCapGuard.ts + .test.ts (schema-driven, mirrors verifyModelBuilderCommitNameWidthGuard.ts) wired into package.json + contract-tests.yml. Fixed a real anchor breakage this surfaced in verifyModelBuilderItemPatchStageGuard.ts (its own test fixtures updated too). Verified: all 135 test:model-builder-* scripts pass, vue-tsc clean (one pre-existing unrelated error confirmed via git stash), eslint/prettier clean, capture-group-guards contract passes. kind_robots PR #2025: 38/39 checks green (only non-required Build production image still in flight), squash-merged 0ad8182. Full TALKBACK entry in projects/model-builder/TALKBACK.md. Re-armed to ready -- next cycle: consider whether the run CREATE path (runs/index.post.ts) should get the same pitch/fieldsDraft/promptDraft cap (currently PATCH-only).'
     owner: reviewer
     claimed_by: 20260822T112828Z-modelbuilder-t029-cs
     claimed_at: '2026-08-22T11:28:29Z'
-    updated: '2026-08-22T11:47:35Z'
+    updated: '2026-08-22T12:01:47Z'
 
   - id: t-030
     milestone: m6
