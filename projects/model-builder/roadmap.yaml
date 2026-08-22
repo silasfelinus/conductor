@@ -575,16 +575,16 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#2023'
     note: 'Cycle 43: per cycle 42''s kaizen, ran `prettier --write` on stores/modelBuilderStore.ts to resolve its prettier --check failure under this repo''s printWidth:80 config. Confirmed via package.json/workflow grep that no CI workflow currently invokes lint:prettier, so this was never CI-blocking -- purely a formatting-drift cleanup, one of the two options cycle 42 flagged. Diff reviewed line-by-line: every hunk is pure re-wrapping, no logic changed. Verified: all 133 test:model-builder-* scripts pass, eslint and vue-tsc show the identical pre-existing (unrelated to this file''s formatting) issues before and after the change (confirmed via git stash against main), git status --porcelain scoped to exactly 1 file. kind_robots PR #2023: all 33 CI checks green, squash-merged ebd3f7f. Kaizen for cycle 44: return to a fresh bug-hunt read of the Model Builder front-end surface -- the lastAutoBuildOutcome/stale-status-clear defect class (cycles 40-42) and the formatting cleanup (cycle 43) are both now exhausted leads. Re-armed to ready.'
-    owner: reviewer
-    claimed_by: 20260822T0926Z-modelbuilder-t029-c43
-    claimed_at: '2026-08-22T09:28:47Z'
-    updated: '2026-08-22T09:41:39Z'
+    owner: worker
+    claimed_by: 20260822T1026Z-modelbuilder-t029-c44
+    claimed_at: '2026-08-22T10:28:44Z'
+    updated: '2026-08-22T10:28:44Z'
 
   - id: t-030
     milestone: m6
