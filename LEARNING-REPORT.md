@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-22T05:33:28Z
+Generated: 2026-08-22T05:39:29Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **724**
-- Outcomes: blocked: 15, cancelled: 1, done: 708
+- Closed tasks recorded: **725**
+- Outcomes: blocked: 15, cancelled: 1, done: 709
 - Success rate: **98%**
 - Average passes on successful tasks: **0.0**
 
@@ -15,7 +15,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 | Project | Closed | Success rate |
 |---|---|---|
-| ai-art-academy | 69 | 99% |
+| ai-art-academy | 70 | 99% |
 | alexa-integration | 6 | 100% |
 | animation-manager | 13 | 100% |
 | animation-studio | 2 | 50% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 708 | 99% |
+| software | 709 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-22 `ai-art-academy/t-075` — A shared coverage-contract helper generalizes cleanly across per-style (denominator = academyStyles.length) and per-nested-field (denominator = named-artist count) verifiers as long as the denominator stays a parameter rather than being hardcoded inside the helper.
 - 2026-08-22 `ai-art-academy/t-072` — A genuinely large curation task (portrait likenesses for 116 named artists across 47 styles) scoped cleanly by following t-070's precedent: ship the schema/tooling foundation plus a real, well-verified partial batch (8 artists via the Met Collection API), file an honest follow-up for the rest rather than either stalling or rushing a low-quality full pass. The coverage verifier was deliberately built as a reporting tool, not a 100%-or-exception hard gate, since partial coverage is the correct steady state here (unlike exampleWorks' full-denominator gate) -- copying a sibling verifier's hard-gate shape without checking whether the underlying task actually wants 100% coverage would have been the wrong contract. Also: an unqualified `git checkout -- <file>` used to discard one unwanted change (a full-file prettier reformat) silently discarded a second, wanted uncommitted change to the same file in the same command -- stage or copy aside real edits before reverting formatting noise in the same file, rather than trusting `git checkout --` to be selective.
 
 - 2026-08-22 `ai-art-academy/t-073` — Kaizen-sourced tooling fix (grouped error-signature breakdown for GET /api/art/queue/stats, ai-art-academy/t-069's close-out pain point) landed clean across a kind_robots + conductor companion-PR pair. Separately: a background subagent given "verify CI, merge when green" as part of its scope has no way to schedule its own wait for external CI completion and can get stuck looping "waiting for a background timer" across several turns without one ever arriving -- the parent session had to take over the final re-check-and-merge step directly. Future delegated cycles whose scope includes a merge-when-green step should either have the parent handle that step, or be told explicitly to re-check synchronously/immediately rather than attempt a multi-turn wait.
@@ -103,8 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-21 `brainstorm/t-016` — Clean first-pass success on a real feature build (not a bugfix cycle): grepping for existing-but-unused scaffolding (BrainstormCandidate.meta.art) before implementing prevented inventing a parallel tracking mechanism, and it also surfaced a genuine latent bug (client localStorage round-trip silently dropping a JSON meta field the server path already preserved generically) that a narrower "just wire the button" implementation would have missed entirely. Worth generalizing: when a Prisma model's `meta`/JSON column is preserved generically server-side but the client has a hand-written normalizer that only lifts out known sub-fields, any new sub-field added to that type needs an explicit normalizer update or it silently vanishes on the client-only persistence path (localStorage/autosave) even though the server path never had the bug.
 
-- 2026-08-21 `model-builder/t-029` — Cycle 30 of a long-running recurring bug-hunt task: a transient, client-local 'in-progress' marker written directly onto item.stages before an async call (commitItem's COMMIT marker, generateItemAsset's GENERATE_ASSETS marker) has no store-level enforcement stopping an unrelated stageStatuses-diffing write from reading and re-persisting it as real. Three of four batch functions lacked the isItemManualActionInFlight guard their sibling autoBuildItem already had -- the fourth instance of this exact shape across cycles 25, 28, and 29 (see cycle 20's and cycle 25's own entries in this file). Patching one more call site per cycle works but never closes the class; the durable fix is moving the in-flight flag into a separate ephemeral field never serialized into a stageStatuses payload, the same way artJobId/queueState already are kept out of item.stages.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-22T05:33:28Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-22T05:39:29Z_
