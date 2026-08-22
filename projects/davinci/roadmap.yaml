@@ -513,7 +513,7 @@ tasks:
   - id: t-021
     milestone: m6
     title: "Da Vinci visual style and interaction polish pass"
-    status: ready
+    status: claimed
     owner: worker
     passes: 0
     stakes: reversible
@@ -528,9 +528,9 @@ tasks:
 
 
       Slice 11 (conductor scheduled Agent run, session sched-conductor-davinci-t021-20260821T052849Z): followed up on slice 10's own lead ("kr-panel/kr-stat wrapper consistency for the dimension grid"). Ran utils/scripts/codemods/kr_panel_codemod.py --root . (dry-run, whole repo) and confirmed zero candidate substitutions anywhere in components/conductor/davinci-page.vue -- the dimension-pill wrapper divs use dynamic :class bindings (dimensionPillClass()/dimensionValueClass()) for per-item tone, not a static class= sequence the mechanical codemod can safely rewrite, and their border/bg values already follow the same status-tint formula (border-{status}/40 + bg-{status}/10) documented for .kr-note elsewhere in the design system -- so this lead was speculative, not a real gap. Re-read the entire template (all v-if/v-else-if phase and chapter blocks, the resolve/ending panel, the endings-on-record list, every button and NarrativeArtStatus usage) against the same focus-loss/aria-grouping/status-tone patterns the prior 10 slices fixed; found no further concrete, verifiable gap of that shape -- phaseRegion and chapterRegion already cover every phase/chapter transition, the dimension grid already has role="group"/aria-label plus 3-way tone, narration error/resuming/narrating states already have their own guards. The one clean kr_panel_codemod.py candidate the dry-run did surface (components/pages/mermaids-page.vue L152) is out of this task's scope (not a Da Vinci file) and left for whichever task owns that general kr-panel audit sweep (interface-vision). REMAINING (unchanged from every prior slice): the outstanding cross-width visual verification is still not possible in this sandbox. Releasing the claim without a code change this slice -- re-armed to ready; a future slice should look for a genuinely new interaction gap (e.g. as Da Vinci narration content evolves) rather than re-checking this same speculative lead.
-    updated: '2026-08-21T05:31:48Z'
-    claimed_by: sched-conductor-davinci-t021-20260821T052849Z
-    claimed_at: '2026-08-21T05:28:50Z'
+    updated: '2026-08-22T15:27:26Z'
+    claimed_by: sched-conductor-davinci-t021-20260822T152725
+    claimed_at: '2026-08-22T15:27:26Z'
 
   - id: t-022
     milestone: m5
