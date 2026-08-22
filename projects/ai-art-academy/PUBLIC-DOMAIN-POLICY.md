@@ -147,6 +147,26 @@ These records live in the starter-library manifest
 (see docs/starter-image-library.md) and, for curriculum example works, in the
 `academy-styles` registry entries.
 
+### 3.1 Artist portraits (ai-art-academy/t-072)
+
+The "Meet the masters" gallery uses the same schema plus two fields, because a
+portrait/photograph/sculpture has a maker distinct from the person shown:
+
+- `depicts` — the curriculum artist pictured (must match the owning entry's `name`).
+- `kind` — `self-portrait` | `portrait` | `photograph` | `sculpture`.
+
+`artist`/`artistDied` always describe whoever **made the image** — the §1.3
+prong-1 check applies to the image's creator, not the person depicted. For a
+self-portrait these are the same person; for a portrait, photograph, or
+sculpture made by someone else (e.g. a photographer's portrait of a painter),
+`artist` is that other person and `artistDied` is their death year. Never a
+generated likeness in this field — a verified image, or the field stays unset.
+Coverage is expected to be partial: many named artists (anonymous painters,
+artists who left no documented likeness) legitimately have none. Records live
+in `AcademyArtist.portrait` in the `academy-styles` registry, tracked the same
+pending-until-media-sync way as example works (see
+`config/academy-artist-portraits-pending.json` in kind_robots).
+
 ## 4. Style imitation rules (policy, stricter than law)
 
 Legal baseline: **styles are not copyrightable.** Copyright protects specific
