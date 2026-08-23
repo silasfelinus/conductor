@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -2995,11 +2995,10 @@ tasks:
       Second bounded slice explicitly requested by Silas: improve the individual Conductor project interaction page after the gallery pass. Audit found direct Kind Robots status/priority selectors on this page even though SOURCE_OF_TRUTH.md assigns lifecycle and coordination priority to Conductor; the page also truncates the project, milestone, and completed-task titles. This slice will make coordination state projection-owned/read-only, keep Kind Robots-owned presentation controls editable, and improve detail-page hierarchy/title wrapping without changing roadmap task state.
 
       Individual project interaction-page slice is ready for CI review on worker/interface-vision-t-104-project-detail-4d91. One Kind Robots file changed. The detail hero now wraps long project titles and presents canonical Conductor lifecycle, coordination priority, and roadmap progress. Direct Kind Robots lifecycle/priority selectors were removed because those fields are Conductor-owned; KR-owned visibility, maturity, reviews, profile text/URLs, and art remain editable. Milestone, active-task, completed-group, and completed-task titles wrap instead of truncating. The project Todo form is explicitly labeled as a Kind Robots task so it is not mistaken for a Conductor roadmap mutation.
-    updated: '2026-08-23T00:24:20Z'
+
+      Individual project interaction-page slice merged as silasfelinus/kind_robots#2033 at 717cfcae4ed3415d8629e4ca6557093cedb33016 after every exact-head workflow completed successfully. The page now presents Conductor-owned lifecycle, coordination priority, roadmap progress/milestones/tasks as read-only projected coordination state; keeps Kind Robots-owned presentation fields editable; distinguishes local project Todos from roadmap tasks; and wraps long project/milestone/task titles. Return the umbrella consistency task to ready for the next bounded interface family.
+    updated: '2026-08-23T00:35:15Z'
     approved_by_human: true
-    owner: worker
-    claimed_by: 20260823T001815Z-chatgpt-iv-t104-project-detail-4d91
-    claimed_at: '2026-08-23T00:18:15Z'
 
   - id: t-105
     milestone: m6
