@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   note: |-
@@ -162,9 +162,42 @@ tasks:
     No new bug found this cycle. All three hypotheses were investigated and ruled out with evidence (call site + test), not just skipped -- same discipline as prior cycles' documented reasoning.
 
     Next lead for cycle 33: this narrative/** shared-surface sweep is not yet exhaustive -- kr-choice-list.vue (referenced by kr-chat-window.vue for turn.choices rendering) and utils/narrativeIngredients.ts (the NarrativeIngredientOption shape both Storybook and Taskmaster build their pickers from) have not had a dedicated read pass in this task's history.
-  updated: '2026-08-23T12:31:29Z'
+
+    Cycle 33: read the two files cycle 32 named as the next lead --
+    kr-choice-list.vue and utils/narrativeIngredients.ts -- plus the 9 callers of
+    kr-choice-list (bot-chat.vue, workspace-narrator.vue, kr-narrator-stage.vue,
+    narrative-response-composer.vue, kr-chat-window.vue, reward-encounter.vue,
+    scenario-story.vue, davinci-page.vue, taskmaster-page.vue) for how each builds
+    its NarrativeChoice[] key. kr-choice-list.vue itself is purely presentational
+    (no store/fetch) and its disabled-button guard already prevents a click on a
+    disabled choice from emitting select -- no bug there. narrativeIngredients.ts's
+    three helpers (artwork/summary/pickRandom/parseTags) are all small, side-effect-
+    free, and each read correctly against their own contract.
+
+    Chased one real hypothesis: davinci-page.vue's currentChapterChoices keys each
+    NarrativeChoice by choice.label, and chooseOptionByKey resolves back via the
+    first choices.find() match on that label -- if a chapter ever had two options
+    with the same label but different destinations, the second would silently
+    resolve to the first's outcome. Checked the adapter's own comment before
+    concluding this is a bug: it explicitly documents that chapter choice labels
+    were already relied on as a unique key by the original hand-rolled v-for this
+    component replaced (:key="choice.label" pre-existing), so this is an inherited,
+    already-reasoned-about invariant, not a regression introduced here. Also checked
+    scenario-story.vue's index-based introListChoices/selectedIntroKey pair: both
+    derive from the same introChoices.value computed off the currently selected
+    scenario, so the index stays consistent between render and lookup -- no bug.
+
+    No new bug found this cycle.
+
+    Next lead for cycle 34: this task has now read every kr-choice-list caller's
+    own choice-building logic at least once. A fresh angle worth trying next is the
+    kr-chat-window.vue streaming-turn path itself (turn.choices rendering, cycle 32's
+    first hypothesis) cross-checked against storybookStore.ts's actual turn-building
+    code end to end, rather than another shared-primitive sweep -- the primitive
+    layer (kr-choice-list + its adapters) looks exhausted for now.
+  updated: '2026-08-23T12:33:45Z'
   implementation_pr: 'silasfelinus/kind_robots#2024'
-  owner: worker
+  owner: null
   claimed_by: claude-scheduled-20260823T123128Z-sb-t010
   claimed_at: '2026-08-23T12:31:29Z'
 - id: t-011
