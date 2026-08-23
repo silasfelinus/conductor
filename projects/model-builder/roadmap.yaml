@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 47
     stakes: reversible
@@ -636,9 +636,9 @@ tasks:
 
       No new bug found; no code change. `git status --porcelain` clean throughout (read-only cycle). Next leads for cycle 62: this cycle's a11y sweep found a real but repo-wide-scoped convention gap (button-internal spinners have no aria-live/aria-hidden anywhere in this component family) that's arguably out of this recurring task's normal one-bug-at-a-time scope -- worth raising as its own kaizen task if a future cycle wants to fix it deliberately across all five components at once, rather than reintroducing it lead-by-lead. Otherwise, with client-state-race, Prisma/migration-drift, cross-repo grep, and now accessibility all covered at least once with no fresh commits landing in between cycles, the next unstalled lead is likely either (a) the live-smoke-test path once available (t-031), or (b) filing the a11y kaizen task above and picking it up as real scoped work next cycle instead of continuing to search for a new angle on already-thoroughly-read files.
     owner: worker
-    claimed_by: claude-conductor-scheduled-20260823T-model-builder-t029
-    claimed_at: '2026-08-23T20:28:16Z'
-    updated: '2026-08-23T20:32:10Z'
+    claimed_by: claude-conductor-scheduled-20260823T2200-model-builder-t029
+    claimed_at: '2026-08-23T21:27:09Z'
+    updated: '2026-08-23T21:27:09Z'
 
   - id: t-030
     milestone: m6
