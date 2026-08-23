@@ -600,3 +600,33 @@ tasks:
     claimed_at: null
     updated: '2026-08-15T11:53:00Z'
     implementation_pr: 'silasfelinus/kind_robots#1897'
+
+  - id: t-025
+    milestone: m6
+    title: "Extract narrativeArtJobsHelper's resume/cache pattern into a shared composable"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-021 slice 14 (kind_robots#2046, merged). storybookStore.ts and
+      davinci-page.vue now both hand-roll the same shape independently: persist a
+      long-lived async job's in-flight state (chapter/beat art from
+      narrativeArtJobsHelper's enqueue()/resume(), which can poll for up to 10
+      minutes) to localStorage so a page reload/remount can find it again, then call
+      narrativeArtJobsHelper.resume() unconditionally on whatever the cache holds
+      (it already no-ops safely for a terminal state). davinci-page.vue's version
+      (persistArtJobs()/resumePendingArtJobs(), added in t-021 slice 14) is the
+      second independent implementation of storybookStore.ts's
+      resumeNarrativeArtJobs() pattern. If a third narrative surface needs the same
+      resume-on-reload behavior, extract both into a shared composable (e.g.
+      usePersistedNarrativeArtJobs(storageKey, runId)) that owns the
+      cache-read/cache-write/resume wiring, and migrate both existing call sites to
+      it -- removing the duplication rather than adding a third copy. Not urgent
+      while there are only two call sites; scope this task down to "just add the
+      composable" if a third surface arrives before this is picked up, rather than
+      also doing a speculative refactor of the two existing ones as a separate
+      concern.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-23T12:30:00Z'
