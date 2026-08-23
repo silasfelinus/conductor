@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -3028,11 +3028,11 @@ tasks:
       The only remaining measured gap is the layout-contract `viewport-grid` rule: 209 shared-component instances of a breakpoint-gated grid-cols count (`sm:grid-cols-2` etc.) that should follow container width instead (`grid-cols-[repeat(auto-fit,minmax(...))]`). This is a materially different kind of fix from every prior slice: it is not a byte-exact class substitution, it requires per-component judgment about an intended minimum column width, and this exact category already caused two real regressions in production before (narrative-ingredient-picker, per this file's own rule-8 docstring, interface-vision t-113/t-114). This sandbox cannot visually verify a layout change -- no Vercel preview, no working headless-Chromium-through-proxy, and kindrobots.org direct-HTTPS verification only proves SSR markup exists, not that a grid renders correctly at a given width. Attempting one of these 209 blind would be guessing on exactly the failure mode this task's 47 prior slices were careful to never risk.
 
       Not treating this as a hard gate -- nothing is broken and 209 pre-existing violations are unchanged from before this session, so there is no regression to escalate. But it is a real scope fork: the mechanical byte-exact-substitution phase of this umbrella looks genuinely done for now (both known pools empty), and the only path to further ratchet the ratchet is the riskier per-component viewport-grid work. Returning to ready as usual per this task's convention, but flagging for Silas/next session: either (a) scope a small, deliberately slow viewport-grid sub-slice (1-2 components, hand-picked for an obviously-safe minmax width, verified post-merge via a Force Update + phone/tablet/desktop screenshot pass) rather than batching many at once the way container-class slices did, or (b) treat the umbrella's mechanical phase as complete and let it sit idle until a new pattern surfaces. No code change this session -- pure investigation, so no PR/CI evidence to cite beyond this note.
-    updated: '2026-08-23T07:40:00Z'
+    updated: '2026-08-23T10:28:20Z'
     approved_by_human: true
     owner: worker
-    claimed_by: claude-scheduled-20260823T072659Z-iv-t104-slice47
-    claimed_at: '2026-08-23T07:27:33Z'
+    claimed_by: claude-scheduled-20260823T102817Z-iv-t104
+    claimed_at: '2026-08-23T10:28:20Z'
     implementation_pr: 'silasfelinus/kind_robots#2043'
 
   - id: t-105
