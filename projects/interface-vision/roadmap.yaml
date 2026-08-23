@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -3049,11 +3049,10 @@ tasks:
       Silas explicitly supplied the next bounded consistency target in-session: revise the Conductor Project detail composition so desktop uses artwork on the left with always-open Project Profile and Add task/comment stacked on the right, Roadmap next and open by default, and Milestones plus Project Notes below collapsed by default. This clears the current soft needs-human scope fork for this slice.
 
       Project-detail desktop composition is ready for review on worker/interface-vision-t-104-project-layout-f2c9. Artwork and the always-open management column now share the primary desktop row; Project Profile sits above the one-box task/comment composer on the right. Roadmap follows and is open by default. Milestones and Project Notes follow as collapsed disclosures. The same component remains stacked below xl widths, and EntityArtManager behavior is unchanged. Added contract coverage for responsive composition, ordering, and default disclosure states.
-    updated: '2026-08-23T23:24:00Z'
+
+      MERGED kind_robots PR #2055 as 53bfaad4ed8b204b268388dd0c40132de2ec3c99. Project detail now uses host-width container queries: artwork on the left with always-open Project Profile plus Add task/comment stacked on the right when there is room; Roadmap follows and is open by default; Milestones and Project Notes follow collapsed. Exact-head TypeScript #5590, Layout #2138, Entity Art Manager #177, Contract Tests #5483, Project Architecture #641, MDC Scroll Ownership #1114, Facet Catalog #3022, and all other triggered workflows completed successfully. No production deploy was performed; live verification awaits the manual Unraid Force Update.
+    updated: '2026-08-23T23:38:00Z'
     approved_by_human: true
-    owner: worker
-    claimed_by: 2026-08-23T231700Z-iv-t104-project-detail-layout-f2c9
-    claimed_at: '2026-08-23T23:18:00Z'
 
   - id: t-105
     milestone: m6
