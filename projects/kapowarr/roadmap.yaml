@@ -1566,3 +1566,19 @@ tasks:
   updated: '2026-08-21T00:29:10Z'
   implementation_pr: 'silasfelinus/Kapowarr#99'
 
+- id: t-069
+  milestone: m4
+  title: Fix 3 stale kapowarr milestone status fields (m4/m6/m9 all fully done but not stamped done)
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from the 2026-08-23 weekly site audit. Same stale-milestone-metadata pattern t-020
+    already fixed for m3, recurring elsewhere: m4 "MAINTAIN" is `in-progress` but all 3 tasks
+    (t-023, t-053, t-055) are done (should be `done`); m6 "DISCOVER & CURATE" is `not-started`
+    but all 11 tasks are done (should be `done`); m9 "READER FOLLOW-UPS" is `not-started` but its
+    only task (t-045) is done (should be `done`). m5/m8 are already correctly `in-progress`
+    (each has a genuine open needs-human task). No task content changes needed — just the 3
+    milestone `status:` fields above.
+
