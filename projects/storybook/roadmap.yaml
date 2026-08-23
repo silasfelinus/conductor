@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   note: |-
@@ -146,11 +146,11 @@ tasks:
     Did not reach components/narrative/** (narrative-role-assigner.vue, kr-chat-window.vue, narrativeBeatsToTurns) this cycle -- storybook-page.vue's own remaining surface was large enough on its own to read properly rather than skim both. That shared surface (used by both Storybook and Taskmaster, per cycle 30's note) is the clear next lead for cycle 32.
 
     Released the claim without a code change; re-armed to `ready`.
-  updated: '2026-08-22T16:34:54Z'
+  updated: '2026-08-23T10:32:39Z'
   implementation_pr: 'silasfelinus/kind_robots#2024'
-  owner: null
-  claimed_by: null
-  claimed_at: '2026-08-22T14:32:00Z'
+  owner: worker
+  claimed_by: claude-scheduled-20260823T102817Z-sb-t010
+  claimed_at: '2026-08-23T10:32:39Z'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
