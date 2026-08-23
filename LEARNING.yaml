@@ -10041,3 +10041,27 @@ records:
     unpatched. Lesson: when a kaizen task names "the sweep step" as the target, check
     which of the repo's (sometimes more than one) selection implementations that step
     actually calls before assuming a single shared module covers it.
+- date: 2026-08-23
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Cycle 57's fix covered three places that swap state.run for a different run (goToStep
+    /selectSource, openRun's two branches, resumeRun's branch) without clearing the
+    in-flight singletons resetRun/resetAll already clear -- but only checked whether each
+    call site clears the singletons, not whether the RESPONSE feeding that call site could
+    itself be stale. resumeRun() has exactly one call site (a component's onMounted) yet
+    was still racy, because unmounting a Vue component does not cancel its in-flight
+    promises: navigating away and back before a slow resumeRun() resolves creates a second
+    concurrent call against the same Pinia singleton, and the older call's stale response
+    can land after the newer one already resolved and the user moved on. Lesson for future
+    cycles: "this function's call site is singular / not button-driven" is not the same
+    guarantee as "this function cannot run twice concurrently" -- component remounts
+    (navigation, not just explicit user clicks) are a second, easy-to-miss source of
+    concurrent async calls against a shared store, and any async chain writing shared
+    state on completion needs a request-ticket guard regardless of how simple its trigger
+    looks.
