@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 46
     stakes: reversible
@@ -590,10 +590,10 @@ tasks:
       `loadSources()` is sound: it captures `requestedType` before the await and re-checks `state.sourceType !== requestedType` on both the success and catch paths before writing state, so a stale response from a fast tab-to-tab click cannot clobber a newer selection's sources or error -- this already covers the same race class as the fetchRuns()/other guarded loaders elsewhere in the store. `sourcesError` is set on both the explicit-empty-list case and the thrown-error case, and the template's Retry button correctly calls `store.loadSources()` directly (not `selectSourceType`, which has an early-return guard that would otherwise no-op on a same-tab retry after zero sources loaded -- but that guard checks `state.sources.length`, which is falsy on both an empty result and a failed fetch, so it never actually blocks the retry path; verified by tracing the boolean, not just reading it optimistically). `setOutputQuantity()` clamps correctly (`Math.floor(quantity) || 1` turns a NaN from a cleared/non-numeric input into 1, then `Math.max(1, Math.min(MAX_BATCH, ...))` bounds it), so typing outside the input's min=1/max=12 HTML attributes (which the browser does not strictly enforce on manual typing, only on the stepper arrows) cannot desync the stored value from the UI's stated bounds. No bug found in this lens either.
 
       Per cycle 53/54's own flag that continued static-only re-scoping was showing diminishing returns: this cycle closes out the specific lead they named, and the combination of exhaustive client-state-race coverage (cycles through ~53), a clean Prisma/migration-drift pass (cycle 54), and this cycle's clean error-handling pass on the two remaining unread-for-that-lens files means every angle either prior cycle named as a next lead has now been checked. Not proposing to pause the task -- Silas owns that call, and a genuinely fresh subsystem may still turn up something a static read can find -- but flagging plainly: this task's static-reading approach against this codebase's *current* state looks close to exhausted, and the next cycle without a live-browser fallback may get more value from a different kind of pass entirely (e.g. reading recent kind_robots commit history for anything that touched model-builder since the last cycle, rather than re-walking already-clean code) than from picking another named subsystem to statically audit. Released the claim; re-armed to `ready`.
-    owner: ''
-    claimed_by: ''
-    claimed_at: ''
-    updated: '2026-08-23T02:29:27Z'
+    owner: worker
+    claimed_by: claude-scheduled-20260823T132757Z-mb-t029
+    claimed_at: '2026-08-23T13:27:58Z'
+    updated: '2026-08-23T13:27:58Z'
 
   - id: t-030
     milestone: m6
