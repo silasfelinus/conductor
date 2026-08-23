@@ -4144,3 +4144,52 @@ tasks:
     updated: '2026-08-23T15:36:42Z'
     claimed_by: claude-scheduled-20260823T152700Z-cd-t123
     claimed_at: '2026-08-23T15:28:44Z'
+  - id: t-124
+    milestone: m2
+    title: "Diagnose the recurring 'Python test suite' CI job stall on conductor PRs"
+    status: needs-human
+    gate_human: false
+    soft_gate: true
+    owner: null
+    stakes: reversible
+    passes: 0
+    note: >
+      Observed twice in a row on the same PR the same day (2026-08-23), on conductor#2728, a
+      docs-only close-out PR touching only `LEARNING.yaml` and `TALKBACK.md` (no code, no test
+      files). The `Python test suite` job's `Run full pytest suite` step hung `in_progress`
+      indefinitely both times -- first attempt cancelled and re-run after ~15 minutes with no
+      progress (vs. this repo's own established baseline of well under a minute, and ~2 minutes
+      observed the same session on two sibling PRs, #2726 and #2727, moments earlier), then the
+      re-run hung again at the identical step for 20+ minutes before this session stopped
+      re-running and filed this task instead, per AGENTS.md's "re-run at most once" guidance.
+      Every other check on both attempts (lint, roadmap/task-events validation, TypeScript build,
+      dependency audit, static checks, GitGuardian, and the non-blocking CodeQL analyzers) went
+      green normally on both attempts -- only this one job/step stalled, twice, at the same place.
+
+      Since the diff was docs-only, this is very unlikely to be caused by the PR's own content --
+      more likely a `pytest`/runner-level issue (a hang in test collection or a specific test that
+      blocks on I/O only under certain runner conditions, a stuck subprocess, or GitHub-side
+      Actions congestion of the kind already documented for the CodeQL javascript-typescript
+      analyzer in conductor/t-106, but this time hitting a DIFFERENT job that t-106's own note
+      explicitly called out as normally fast and unaffected -- "vs. every other check (including
+      this repo's own Python test suite) finishing in under a minute").
+
+      Investigate: (a) whether this reproduces again on unrelated PRs/days (check
+      `Worker PR CI` / `ci.yml` run history for other `Python test suite` jobs with a long
+      "Run full pytest suite" step duration, not just ones that eventually failed outright --
+      a step that hangs and is later cancelled/timed-out may not surface as a simple failure);
+      (b) whether any test in the suite can block on real network I/O without a timeout (GitHub
+      Actions runners have full internet access; this session's own sandbox is more restricted,
+      which could mask a hang that only manifests in CI) -- grep for `requests.`/`urlopen`/socket
+      calls in `tests/` and `scripts/` without an explicit timeout; (c) whether `ci.yml`'s
+      `Python test suite` step needs an explicit `timeout-minutes` on the job (it does not appear
+      to have one currently) so a future hang fails fast and loud instead of blocking a PR
+      indefinitely with no useful signal. If a workflow-level timeout is the right fix, that's a
+      small config change; if it's a genuine hanging test, find and fix the specific test.
+
+      conductor#2728 itself is left open, unmerged, pending this investigation or a human decision
+      to proceed differently -- its actual content (roadmap `status: done` for t-123 plus the
+      TALKBACK/LEARNING close-out entries) is low-risk and already verified locally
+      (`python -m yaml` parse check, diff review), but per AGENTS.md a stuck required check is not
+      force-merged past.
+    updated: '2026-08-23T15:44:00Z'
