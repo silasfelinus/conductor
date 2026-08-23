@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   note: |-
@@ -162,9 +162,11 @@ tasks:
     No new bug found this cycle. All three hypotheses were investigated and ruled out with evidence (call site + test), not just skipped -- same discipline as prior cycles' documented reasoning.
 
     Next lead for cycle 33: this narrative/** shared-surface sweep is not yet exhaustive -- kr-choice-list.vue (referenced by kr-chat-window.vue for turn.choices rendering) and utils/narrativeIngredients.ts (the NarrativeIngredientOption shape both Storybook and Taskmaster build their pickers from) have not had a dedicated read pass in this task's history.
-  updated: '2026-08-23T10:34:51Z'
+  updated: '2026-08-23T12:31:29Z'
   implementation_pr: 'silasfelinus/kind_robots#2024'
   owner: worker
+  claimed_by: claude-scheduled-20260823T123128Z-sb-t010
+  claimed_at: '2026-08-23T12:31:29Z'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
