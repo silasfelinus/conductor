@@ -9991,3 +9991,32 @@ records:
     owner field before any implementation work proceeded. Lesson for future cycles:
     double-check `--owner` matches the session's live select_role.py recommendation
     before calling claim_task.py, not after the push already landed on origin/main.
+- date: 2026-08-23
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Cycle 56's note flagged that its repo-wide model-builder-reference grep, diffed
+    against every file this task's history had named as read, was itself worth
+    re-running -- but a directory glob (components/model-builder/**) had been silently
+    treated as "covered" without any individual cycle ever naming every file inside it.
+    model-builder-manager.vue (the top-level page component) had never actually been
+    read in 56 cycles despite matching that glob. Reading it found it clean, but tracing
+    the run-lifecycle functions it orchestrates (startRun/openRun/resumeRun) surfaced a
+    real bug: three more places swap the active run for a different one the same way
+    resetRun()/resetAll() do, but never called their in-flight-singleton-clearing logic,
+    reproducing the exact stale-busy-indicator bug those two were already fixed for.
+    Lesson for future cycles: a directory-glob "already covered" check is not the same
+    as per-file coverage -- cross-check individual filenames against the cumulative note
+    history, not just the glob pattern. Also, when a file traced this way reads clean,
+    the bug may be in a function it *calls into* rather than the file itself; tracing
+    outward from a clean file is a distinct, useful search strategy from re-reading a
+    file's own body. Also confirmed: extracting a shared helper to reduce duplication
+    across the four fix sites broke two pre-existing narrow-textual-checker guards that
+    were pinned to the literal inline shape -- inlining the fix at each site (matching
+    the existing pattern) instead of refactoring was the lower-risk choice once existing
+    guards are keyed to literal text shape, not just behavior.
