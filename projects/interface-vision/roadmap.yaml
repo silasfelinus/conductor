@@ -3154,11 +3154,11 @@ tasks:
   - id: t-118
     milestone: m5
     title: "Audit kr-gallery's remaining bespoke #item consumers now that the shared renderer owns correct Cards/Heroes/Icons geometry"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    owner: null
+    owner: worker
     note: 'Kaizen from the interface-vision/t-104 shared-gallery-consistency review (2026-08-23, kind_robots#2034): kr-gallery.vue''s built-in renderer now correctly implements Cards 2:3 portrait, Heroes 16:9 landscape, and Icons square-plus-text-forward geometry with wrapping titles, and conductor-project-gallery-page.vue was the one consumer confirmed to no longer need its own #item override. A repo-wide check at kind_robots origin/main (236f0316) found 17 other components still supplying a bespoke #item template: achievement-gallery.vue, art-gallery.vue, stylist-client-gallery.vue, bot-gallery.vue, character-gallery.vue, dream-gallery.vue, dream-relationship-gallery.vue, resource-card.vue, resource-gallery.vue, reward-gallery.vue, scenario-gallery.vue, scenario-relationship-gallery.vue, checkpoint-gallery.vue, server-gallery.vue, theme-gallery.vue, ui-gallery.vue, friend-gallery.vue. Not yet read individually -- some may need a genuinely different item shape (extra actions, custom badges/metadata the shared GalleryItem contract does not cover) and should stay bespoke; others may be duplicating geometry the shared renderer already produces correctly, the same drift shape t-104 just fixed for Projects. This task is to read each #item override, classify it (genuinely custom vs. redundant with the now-correct shared renderer), and file/execute small bounded removal slices for the redundant ones -- same discipline as t-104''s prior slices, not one giant sweep.'
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-23T00:41:00Z'
+    claimed_by: claude-scheduled-20260823T0203Z-iv-t118
+    claimed_at: '2026-08-23T02:04:19Z'
+    updated: '2026-08-23T02:04:19Z'
