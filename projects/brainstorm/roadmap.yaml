@@ -621,18 +621,51 @@ tasks:
   - id: t-028
     milestone: m5
     title: Add a Brainstorm-variations entry point to Reward's detail view
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: 'Kaizen from t-027 (2026-08-21, kind_robots PR #2002): Reward is the next-cheapest
-      surface after Scenario. reward-manager.vue''s #rewards slot renders reward-interact.vue
-      directly with no gating div (unlike Character/Scenario, which each wrap their detail-only
-      controls in a v-if="...selected*" div). Add a Brainstorm variations adapter to
-      BRAINSTORM_SOURCE_ADAPTERS for reward (mirroring the scenario adapter''s shape), a
-      v-if="rewardStore.selectedReward" gating div at the manager level, and a button following
-      the same startBrainstormWith*() pattern (source=reward, sourceId, intent). Extend
-      verifyBrainstormObjectEntryLinks.mjs with a Reward assertion block.'
+    note: 'Done (conductor scheduled Agent run): registered a rewardAdapter in
+      BRAINSTORM_SOURCE_ADAPTERS (stores/helpers/brainstormSourceAdapters.ts),
+      mirroring the Scenario adapter''s shape -- resolve() via fetchRewardById,
+      search() via the same fail-closed fetchFreshSourceRows contract as
+      Character/Dream/Scenario (noted inline: fetchRewardById has no force param,
+      fine since Reward carries no canView authorization gate the way
+      Character/Scenario do). Added a v-if="rewardStore.selectedReward" gating div
+      + "Brainstorm variations" button to reward-manager.vue''s #rewards slot,
+      following the same startBrainstormWith*() -> navigateTo(source/sourceId/intent)
+      pattern as character-manager.vue/scenario-manager.vue. Extended
+      verifyBrainstormObjectEntryLinks.mjs with a Reward assertion block, and added
+      components/rewards/reward-manager.vue to the contract workflow''s path
+      triggers (it wasn''t covered before). Verified: node
+      verifyBrainstormObjectEntryLinks.mjs passes, test:brainstorm-source-adapters
+      passes, eslint/prettier clean on changed files, full-project vue-tsc --noEmit
+      exit 0, git status --porcelain scoped to exactly the 4 intended files
+      (reverted an incidental prisma generate regen diff from local provisioning
+      before committing). All 37 kind_robots CI checks green. kind_robots PR #2050
+      squash-merged d47fa82f.'
     claimed_by: claude-conductor-scheduled-20260823T1828Z-bs-t028
     claimed_at: '2026-08-23T18:30:25Z'
-    updated: '2026-08-23T18:36:54Z'
+    updated: '2026-08-23T18:43:27Z'
+    implementation_pr: 'silasfelinus/kind_robots#2050'
+
+  - id: t-029
+    milestone: m5
+    title: Add a Brainstorm-variations entry point to Bot's detail view
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-028 (2026-08-23, kind_robots PR #2050): Bot is the next
+      remaining core entity without a BrainstormSourceAdapter/CTA pair after
+      Character, Dream, Scenario, and Reward. Bot already has an interact-style
+      detail surface analogous to reward-interact.vue (bot-interact.vue, per
+      brainstorm/t-028's own reward-interact.vue reading), so the same pattern
+      should apply directly: register a botAdapter in BRAINSTORM_SOURCE_ADAPTERS
+      (mirroring rewardAdapter's shape), add a v-if="botStore.selectedBot" gating
+      div + "Brainstorm variations" button to bot-manager.vue (or wherever Bot's
+      detail panel lives) following the same startBrainstormWith*() pattern, and
+      extend verifyBrainstormObjectEntryLinks.mjs with a Bot assertion block.
+      Project is the one other entity flagged as having a natural detail-view
+      home (t-027's note) and can follow as its own task once Bot lands.
