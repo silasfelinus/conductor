@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -3001,11 +3001,10 @@ tasks:
       Silas-directed gallery consistency pass: move Cards/Heroes/Icons geometry and title behavior into shared kr-gallery, then remove the project gallery's compensating bespoke item renderer where the shared shell can own it. Timestamp advances the task's existing monotonic updated value by one second.
 
       Shared gallery consistency slice ready for review on worker/interface-vision-t-104-gallery-generic-8c2f. kr-gallery now owns canonical Cards 2:3, Heroes 16:9, and Icons square-plus-text rendering with wrapping titles. The Projects gallery no longer carries a compensating bespoke item renderer and instead supplies its status/priority/drift as shared GalleryItem badges. Gallery consistency contract now guards the built-in renderer and prevents Projects from forking it again. Three Kind Robots files changed.
-    updated: '2026-08-23T00:35:17Z'
+
+      Shared gallery consistency slice merged as silasfelinus/kind_robots#2034 at 236f03164e8a0011c922f38e30fd413a34550b19 after every exact-head workflow completed successfully. kr-gallery now owns canonical Cards 2:3, Heroes 16:9, and Icons square-plus-text rendering with wrapping titles; Projects consumes that shared renderer instead of carrying its own compensating item template. Return this non-recurring consistency umbrella to ready for the next bounded interface family.
+    updated: '2026-08-23T00:35:18Z'
     approved_by_human: true
-    owner: worker
-    claimed_by: 2026-08-23T001920Z-chatgpt-iv-t104-gallery-generic-8c2f
-    claimed_at: '2026-08-23T00:35:16Z'
 
   - id: t-105
     milestone: m6
