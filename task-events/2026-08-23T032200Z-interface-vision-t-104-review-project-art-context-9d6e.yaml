@@ -1,8 +1,0 @@
-version: 1
-project: interface-vision
-task: t-104
-operation: review
-session: 2026-08-23T031600Z-iv-t104-project-art-context-9d6e
-updated: '2026-08-23T03:22:00Z'
-note: >-
-  Compact Project artwork prompt-context bug ready for review on worker/interface-vision-t-104-project-art-context-9d6e. The shared entity-art prompt plugin previously relied on Vue DOM internals or URL/model attributes; the compact Projects workspace is selected through pageStore.workspaceCardKey, so the visible Suggest prompt button could not resolve the Project and displayed “Could not identify record”. Add a narrowly-scoped fallback only inside .project-art-compact that resolves the active Project from pageStore + projectStore and supplies the canonical Hero/Card/Icon slot metadata. The existing generic and route/DOM resolution paths remain first priority. Contract coverage now guards the workspace fallback.
