@@ -4105,8 +4105,8 @@ tasks:
   - id: t-122
     milestone: m2
     title: Fix all 4 conductor milestones' stale status fields (all read not-started despite near-total task completion)
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -4117,3 +4117,6 @@ tasks:
       of the milestone-status-staleness pattern found across all 24 active projects this audit
       cycle (kind-robots/t-058 and kapowarr/t-020 previously flagged the same class elsewhere).
       No task content changes needed — just the 4 milestone `status:` fields above.
+    claimed_by: claude-scheduled-20260823T0157Z-cond-t122
+    claimed_at: '2026-08-23T01:57:17Z'
+    updated: '2026-08-23T01:57:17Z'
