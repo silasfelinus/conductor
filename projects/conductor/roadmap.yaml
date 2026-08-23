@@ -4120,3 +4120,25 @@ tasks:
     claimed_by: claude-scheduled-20260823T0157Z-cond-t122
     claimed_at: '2026-08-23T01:57:17Z'
     updated: '2026-08-23T01:57:17Z'
+  - id: t-123
+    milestone: m2
+    title: Sweep step should check a same-day-gated recurring task's note tail before claiming it
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from the 2026-08-23 scheduled sweep (conductor#2720). A recurring task gated on
+      "at most once per Pacific calendar day" (e.g. mermaids-of-venice/t-013) sits at
+      `status: ready` between runs the same as any ordinary claimable task, so `claim_task.py`'s
+      live-status check alone can't tell "genuinely unclaimed" from "already completed today,
+      just re-armed." This session claimed t-013, found an earlier same-day session had already
+      run and recorded it, and had to release the claim with a no-op explanatory note instead of
+      doing real work — wasted a claim/PR cycle, though no roadmap state was corrupted. Add a
+      lightweight check (a helper function, or a documented convention for the sweep step) that
+      reads a same-day-gated recurring task's note tail for a matching today's-date entry before
+      calling claim_task.py, and skips straight to the next `ready` task if one is already found.
+      Scope to tasks that carry an explicit daily/progress-gated contract in their note (grep for
+      "Pacific calendar day" or a dedicated `daily_gate: true` field, whichever is less invasive)
+      rather than a general-purpose note-parser for every recurring task.
+    updated: '2026-08-23T12:35:00Z'
