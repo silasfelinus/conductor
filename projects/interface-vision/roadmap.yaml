@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -3013,11 +3013,13 @@ tasks:
       PR #2038 merged after its exact-head checks completed successfully. Release the non-recurring interface consistency umbrella so the newly reported project-art prompt context bug can be claimed as a fresh bounded slice.
 
       Compact Project artwork prompt-context bug ready for review on worker/interface-vision-t-104-project-art-context-9d6e. The shared entity-art prompt plugin previously relied on Vue DOM internals or URL/model attributes; the compact Projects workspace is selected through pageStore.workspaceCardKey, so the visible Suggest prompt button could not resolve the Project and displayed “Could not identify record”. Add a narrowly-scoped fallback only inside .project-art-compact that resolves the active Project from pageStore + projectStore and supplies the canonical Hero/Card/Icon slot metadata. The existing generic and route/DOM resolution paths remain first priority. Contract coverage now guards the workspace fallback.
-    updated: '2026-08-23T03:22:00Z'
+      Slice merged as silasfelinus/kind_robots#2039 (squash 1ff68523) from exact head 4a7418fa3f2ed8bea3b78a5c0bc62a2ec3c17d05. Fixed the project-art-prompt-context bug: entity-art-prompt-suggest.client.ts now falls back to resolving the active Project via pageStore.workspaceCardKey + projectStore.projectForSlug when the Suggest button is scoped inside .project-art-compact and no Vue/DOM/route context is available, carrying canonical Hero (1280x720) / Card (512x768) / Icon (256x256) slot metadata. Existing Vue-instance, DOM metadata, and route resolution paths remain higher priority. All 36 exact-head CI checks completed successfully (TypeScript, Contract verifiers, layout-contract, facet-catalog, and 32 Storybook/contract checks), mergeable_state clean before merge. Two files changed: plugins/entity-art-prompt-suggest.client.ts, utils/scripts/verifyEntityArtPromptSuggest.ts. Return the non-recurring consistency umbrella to ready for the next bounded slice.
+    updated: '2026-08-23T03:30:16Z'
     approved_by_human: true
     owner: worker
     claimed_by: 2026-08-23T031600Z-iv-t104-project-art-context-9d6e
     claimed_at: '2026-08-23T03:16:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#2039'
 
   - id: t-105
     milestone: m6
