@@ -1631,8 +1631,8 @@ tasks:
 - id: t-044
   milestone: m2
   title: Fix 4 stale digital-storefront milestone status fields (m2/m3/m4/m5 all lag their fully-completed task sets)
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >
@@ -1643,3 +1643,6 @@ tasks:
     tasks are done (should be `done`); m5 "DLC website unlocks" is `not-started` but both tasks
     are done (should be `done`). m1 and m6 are already correctly stamped. No task content changes
     needed — just the 4 milestone `status:` fields above.
+  claimed_by: claude-scheduled-20260823T0155Z-ds-t044
+  claimed_at: '2026-08-23T01:56:41Z'
+  updated: '2026-08-23T01:56:41Z'
