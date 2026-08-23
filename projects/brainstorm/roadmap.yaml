@@ -669,7 +669,48 @@ tasks:
       extend verifyBrainstormObjectEntryLinks.mjs with a Bot assertion block.
       Project is the one other entity flagged as having a natural detail-view
       home (t-027's note) and can follow as its own task once Bot lands.
+
+
+      Done (kind_robots#2052, merged): implemented exactly as scoped above.
+      Registered botAdapter in BRAINSTORM_SOURCE_ADAPTERS mirroring
+      rewardAdapter's shape (resolve() via botStore.loadBotById, no force param;
+      search() via botStore.fetchBots(true) with the same fail-closed
+      fresh-fetch contract as every other adapter). Added the gated CTA to
+      bot-manager.vue's #bots template and startBrainstormWithBot(), wired
+      identically to startBrainstormWithReward(). Extended
+      verifyBrainstormObjectEntryLinks.mjs with a Bot assertion block.
+      brainstorm-manager.vue's seedFromQuery() needed no changes -- already
+      source-agnostic. Verified: all 5 test:brainstorm-* contract scripts pass,
+      verifyBrainstormObjectEntryLinks.mjs passes directly, eslint/prettier
+      clean, vue-tsc clean except the same pre-existing unrelated error tracked
+      as davinci/t-026, test:layout-contract holds with no new violations.
+      Filed brainstorm/t-030 for the Project-entity follow-on this task's own
+      note named.
     claimed_by: claude-conductor-scheduled-20260823T-brainstorm-t029
     claimed_at: '2026-08-23T20:13:31Z'
     updated: '2026-08-23T20:20:35Z'
     implementation_pr: 'silasfelinus/kind_robots#2052'
+
+  - id: t-030
+    milestone: m5
+    title: Add a Brainstorm-variations entry point to Project's detail view
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-029 (2026-08-23, kind_robots PR #2052). Project is the
+      other core entity t-027's note flagged as having a natural detail-view
+      home for the same BrainstormSourceAdapter/CTA pattern already shipped
+      for Character, Dream, Scenario, Reward, and Bot. Scope: find (or
+      confirm) Project's own detail-view surface (likely
+      components/conductor/ or a project-manager.vue equivalent), register a
+      projectAdapter in BRAINSTORM_SOURCE_ADAPTERS mirroring the existing
+      adapters' shape (check projectStore for its fetch-by-id/search-list
+      methods and error field name first, per the pattern established by
+      characterAdapter/rewardAdapter/botAdapter), add a gated
+      "Brainstorm variations" CTA following the same startBrainstormWith*()
+      pattern, and extend verifyBrainstormObjectEntryLinks.mjs with a Project
+      assertion block. Once Project lands, re-check whether any further
+      natural detail-view entities remain before assuming this task type is
+      exhausted for the project.
