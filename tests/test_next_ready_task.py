@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from pathlib import Path
 
 import scripts.next_ready_task as selector
@@ -258,6 +259,69 @@ def test_continuous_project_waits_behind_any_active_ready_work(tmp_path: Path, m
     result = selector.first_ready_task(selector.load_priority_order(), selector.load_workable_overrides())
     assert result is not None
     assert result["project"] == "finite"
+
+
+def test_daily_gated_task_already_recorded_today_is_skipped(tmp_path: Path, monkeypatch) -> None:
+    # conductor/t-123: a same-day-gated recurring task (e.g. mermaids-of-venice/t-013)
+    # whose note already records today's Pacific-date outcome must not be re-surfaced --
+    # an earlier session already did the work this cycle.
+    projects_dir = configure_repo(tmp_path, monkeypatch)
+    write_yaml(projects_dir / "priority.yaml", "order:\n  - gated\n  - fallback\n")
+    write_yaml(
+        tmp_path / "project-overrides.yaml",
+        "overrides:\n  - slug: gated\n    status: active\n  - slug: fallback\n    status: active\n",
+    )
+    write_project(
+        projects_dir,
+        "gated",
+        """- id: t-013
+  title: Daily gated task
+  status: ready
+  stakes: reversible
+  note: |-
+    DAILY/PROGRESS-GATED CONTRACT: at most once per Pacific calendar day.
+    Verified no-op on 2026-08-23 Pacific: unchanged.
+""",
+    )
+    write_project(
+        projects_dir,
+        "fallback",
+        """- id: t-001
+  title: Fallback task
+  status: ready
+  stakes: reversible
+""",
+    )
+
+    now = datetime(2026, 8, 23, 15, 0, 0, tzinfo=timezone.utc)
+    result = selector.first_ready_task(selector.load_priority_order(), selector.load_workable_overrides(), now=now)
+
+    assert result is not None
+    assert result["project"] == "fallback"
+
+
+def test_daily_gated_task_not_yet_touched_today_is_claimable(tmp_path: Path, monkeypatch) -> None:
+    projects_dir = configure_repo(tmp_path, monkeypatch)
+    write_yaml(projects_dir / "priority.yaml", "order:\n  - gated\n")
+    write_yaml(tmp_path / "project-overrides.yaml", "overrides:\n  - slug: gated\n    status: active\n")
+    write_project(
+        projects_dir,
+        "gated",
+        """- id: t-013
+  title: Daily gated task
+  status: ready
+  stakes: reversible
+  note: |-
+    DAILY/PROGRESS-GATED CONTRACT: at most once per Pacific calendar day.
+    Verified no-op on 2026-08-22 Pacific: unchanged.
+""",
+    )
+
+    now = datetime(2026, 8, 23, 15, 0, 0, tzinfo=timezone.utc)
+    result = selector.first_ready_task(selector.load_priority_order(), selector.load_workable_overrides(), now=now)
+
+    assert result is not None
+    assert result["task_id"] == "t-013"
 
 
 def test_continuous_project_runs_when_active_queue_is_empty(tmp_path: Path, monkeypatch) -> None:

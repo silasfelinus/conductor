@@ -30,6 +30,7 @@ from typing import Any
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from daily_gate import already_recorded_today  # noqa: E402
 from roadmap_claims import task_is_claimable  # noqa: E402
 from roadmap_deps import dependency_satisfied  # noqa: E402
 from project_lifecycle import load_project_overrides, ordered_workable_slugs  # noqa: E402
@@ -85,7 +86,9 @@ def task_is_unblocked(task: Task, tasks_by_id: dict[str, Task]) -> bool:
     return all(dependency_satisfied(tasks_by_id.get(str(dep))) for dep in deps)
 
 
-def first_ready_task(order: list[str], active: dict[str, dict[str, Any]]) -> dict[str, Any] | None:
+def first_ready_task(
+    order: list[str], active: dict[str, dict[str, Any]], *, now: Any = None
+) -> dict[str, Any] | None:
     for slug in ordered_workable_slugs(order, active):
         roadmap = load_roadmap(slug)
         if not roadmap:
@@ -97,6 +100,12 @@ def first_ready_task(order: list[str], active: dict[str, dict[str, Any]]) -> dic
             if not task_is_claimable(task, tasks_by_id=tasks_by_id):
                 continue
             if not task_is_unblocked(task, tasks_by_id):
+                continue
+            if already_recorded_today(task, now=now):
+                # Same-day-gated recurring task (e.g. mermaids-of-venice/t-013) whose
+                # note already records today's Pacific-date outcome -- claiming it now
+                # would just repeat work an earlier session already did this cycle
+                # (conductor/t-123). Skip to the next candidate instead.
                 continue
             return {
                 "project": roadmap.get("project") or slug,
