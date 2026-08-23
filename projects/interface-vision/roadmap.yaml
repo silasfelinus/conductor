@@ -3196,10 +3196,10 @@ tasks:
   - id: t-119
     milestone: m5
     title: "Re-check the kr-panel-flat DaisyUI-conflict skip pool for now-safe hand-migration candidates"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    owner: null
+    owner: worker
     note: >
       Kaizen from t-104 slice 45 (silasfelinus/kind_robots#2040). Re-running
       utils/scripts/codemods/kr_panel_codemod.py --root . against current main found the
@@ -3217,3 +3217,6 @@ tasks:
       Tailwind's utility-over-component precedence actually makes the co-occurrence safe
       here specifically)? Do not expand the codemod's automatic allowlist without the same
       case-by-case visual-delta reasoning prior slices applied by hand.
+    claimed_by: claude-scheduled-20260823T042814Z-iv-t119
+    claimed_at: '2026-08-23T04:28:15Z'
+    updated: '2026-08-23T04:28:15Z'
