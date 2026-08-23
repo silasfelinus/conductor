@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 48
     stakes: reversible
@@ -641,10 +641,14 @@ tasks:
       Verified: `prettier --check` clean on model-builder-item-panel.vue and model-builder-batch-editor.vue; model-builder-progress-matrix.vue carries pre-existing formatting drift unrelated to this change (confirmed via `git stash` diff before editing -- five unrelated regions, none touching the edited lines), left untouched per the davinci/t-025 lesson (TALKBACK.md 2026-08-23) against running `prettier --write` on a whole file that isn't already prettier-clean. No conditionals, event handlers, or markup structure changed -- purely additive ARIA attributes on existing elements. `git status --porcelain` scoped to exactly the 3 intended files. kind_robots PR #2053 opened; merged once CI is green (see this cycle's TALKBACK entry for the final CI/merge state).
 
       Next leads for cycle 63: this cycle closes out the a11y sweep cycle 61 started for this component family. Remaining candidates: (a) the live-smoke-test path once available (t-031, currently needs-human); (b) a fresh consumer-side sweep of model-builder-recipe-selector.vue/model-builder-manager.vue specifically for the same aria-busy/aria-hidden convention now established here -- recipe-selector's own "Start build run" button has no spinner at all, similar to batch-editor's "Auto-build group," worth deciding whether adding one is in scope for a future cycle or stays a deliberate non-goal the same way this cycle treated "Auto-build group."
+
+      Cycle 63 (no-op, real investigation, conductor scheduled Agent run 2026-08-23): took cycle 62's lead (b) directly -- a fresh consumer-side sweep of model-builder-recipe-selector.vue and model-builder-manager.vue for the same aria-busy/aria-hidden convention cycle 62 established on the other three components. Read both files in full. recipe-selector.vue's "Start build run" button (:disabled="!store.canStartRun") has no spinner or loading state of its own at all -- confirmed by reading the full component: startingRun only disables the recipe chips, quantity inputs, and "Change source" button elsewhere in the same file, never renders as a spinner on the Start button itself. This is the exact same shape cycle 62 already named and deliberately left alone for batch-editor.vue's "Auto-build group" button -- adding a spinner here would be a new visual element, not an accessibility annotation on an existing one, so it stays out of scope for this cycle too, consistent with that precedent rather than a fresh judgment call. manager.vue was already fully covered before this cycle: its root <section> carries :aria-busy="resumingRun", and the "Restoring your latest build run…" state already has role="status" aria-live="polite" with aria-hidden="true" on its decorative spinner -- no gap found there either. Also ran a repo-wide grep for icon-only <button> elements across all seven components/model-builder/*.vue files (a button whose only child is an <Icon>, no visible text): none exist -- every icon-bearing button in this component family already pairs the icon with either visible text or an explicit aria-label (manager.vue's History/Reset buttons), so no aria-label gap surfaced either. No new bug found; no code change. git status --porcelain clean throughout (read-only cycle).
+
+      Cycle 62's two remaining candidates are now both closed out: (a) is still gated on model-builder/t-031 (needs-human, no live-browser fallback in this sandbox); (b) is resolved as a deliberate non-goal, matching cycle 62's own precedent rather than leaving it open as an unresolved question. With every named lead across cycles 51-63 now either fixed, ruled out, or explicitly deferred to t-031's live-smoke-test path, this task's static-reading approach against the current model-builder feature set looks fully exhausted for now. Re-armed to `ready`; a future cycle without new kind_robots commits touching model-builder or without t-031 unblocking should expect another no-op unless it finds a genuinely different lens (e.g. re-reading with fresh eyes after enough time has passed, or picking up t-031 itself once a live-browser fallback exists).
     owner: worker
     claimed_by: claude-conductor-scheduled-20260823T2326-model-builder-t029
     claimed_at: '2026-08-23T23:27:54Z'
-    updated: '2026-08-23T23:27:54Z'
+    updated: '2026-08-23T23:29:06Z'
 
   - id: t-030
     milestone: m6
