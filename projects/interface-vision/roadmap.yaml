@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: claimed
+    status: needs-human
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -3028,12 +3028,28 @@ tasks:
       The only remaining measured gap is the layout-contract `viewport-grid` rule: 209 shared-component instances of a breakpoint-gated grid-cols count (`sm:grid-cols-2` etc.) that should follow container width instead (`grid-cols-[repeat(auto-fit,minmax(...))]`). This is a materially different kind of fix from every prior slice: it is not a byte-exact class substitution, it requires per-component judgment about an intended minimum column width, and this exact category already caused two real regressions in production before (narrative-ingredient-picker, per this file's own rule-8 docstring, interface-vision t-113/t-114). This sandbox cannot visually verify a layout change -- no Vercel preview, no working headless-Chromium-through-proxy, and kindrobots.org direct-HTTPS verification only proves SSR markup exists, not that a grid renders correctly at a given width. Attempting one of these 209 blind would be guessing on exactly the failure mode this task's 47 prior slices were careful to never risk.
 
       Not treating this as a hard gate -- nothing is broken and 209 pre-existing violations are unchanged from before this session, so there is no regression to escalate. But it is a real scope fork: the mechanical byte-exact-substitution phase of this umbrella looks genuinely done for now (both known pools empty), and the only path to further ratchet the ratchet is the riskier per-component viewport-grid work. Returning to ready as usual per this task's convention, but flagging for Silas/next session: either (a) scope a small, deliberately slow viewport-grid sub-slice (1-2 components, hand-picked for an obviously-safe minmax width, verified post-merge via a Force Update + phone/tablet/desktop screenshot pass) rather than batching many at once the way container-class slices did, or (b) treat the umbrella's mechanical phase as complete and let it sit idle until a new pattern surfaces. No code change this session -- pure investigation, so no PR/CI evidence to cite beyond this note.
+
+      ---
+
+      Slice 49 re-check (conductor scheduled Agent run, 2026-08-23T10:28Z session, claude-scheduled-20260823T102817Z-iv-t104): claimed the umbrella and independently re-ran the same mx-auto+w-full+max-w-* root-element grep against current main (unchanged since slice 48's investigation earlier the same day). Same 3 files surface -- messenger.vue, project-front-page.vue, achievement-popup.vue -- and all three remain correctly excluded per prior slices' documented reasoning (messenger.vue mixes the kr-panes grid primitive with an arbitrary h-[70vh]; project-front-page.vue's match is on a nested hero <div>, not the component root; achievement-popup.vue's match is on a nested modal-content div mixing border/bg/shadow with the geometry utilities). No new candidates found. This confirms slice 48's finding rather than adding new evidence -- two independent sessions within the same day now agree the mechanical byte-exact-substitution phase is exhausted (both the hand-rolled-container pool and the kr-panel-flat pool).
+
+      Escalating to needs-human (soft) rather than looping a third session through the identical zero-candidate re-investigation, per slice 48's flagged scope fork.
+
+      FOR SILAS: interface-vision/t-104's mechanical consistency sweep (converting hand-rolled `mx-auto w-full max-w-*` divs to `kr-container`/`kr-container-wide`/`kr-panel-flat`) has now been independently re-confirmed exhausted twice today -- zero remaining safe candidates in either pool. Full slice-by-slice history (49 slices) is in this task's note field, `projects/interface-vision/roadmap.yaml` task t-104.
+
+      The only remaining measured gap is layout-contract's `viewport-grid` rule: 209 shared-component instances of a fixed breakpoint-gated grid-cols count (e.g. `sm:grid-cols-2`) that should follow container width instead (`grid-cols-[repeat(auto-fit,minmax(...))]`). This can't be done as a mechanical batch -- it needs per-component judgment about an intended minimum column width, and this exact category already caused two real production regressions before (narrative-ingredient-picker, interface-vision t-113/t-114). This sandbox can't visually verify a layout change either: no Vercel preview, no working headless-Chromium-through-proxy, and direct HTTPS against kindrobots.org only proves SSR markup exists post-deploy, not that a grid renders correctly at a given width.
+
+      TO APPROVE: pick one and add a note on this task (or open a new one) --
+      (a) scope a small, deliberately slow viewport-grid sub-slice: 1-2 components, hand-picked for an obviously-safe minmax width, verified after merge + a Force Update with a real phone/tablet/desktop screenshot pass, or
+      (b) mark this umbrella's mechanical phase complete for now (status: done, or leave as a low-priority recurring watch) until a new hand-rolled-container pattern appears in the codebase.
+      Nothing is broken either way -- the 209 viewport-grid instances are pre-existing and unchanged, so this is a scope decision, not a regression to fix urgently.
+
+      What unblocks when he decides: (a) creates a small, tightly-scoped follow-up slice task the Worker can safely execute with the extra verification step spelled out; (b) lets this umbrella task close and frees future site-auditor/worker cycles from re-checking an exhausted pool.
     updated: '2026-08-23T10:28:20Z'
     approved_by_human: true
     owner: worker
-    claimed_by: claude-scheduled-20260823T102817Z-iv-t104
-    claimed_at: '2026-08-23T10:28:20Z'
     implementation_pr: 'silasfelinus/kind_robots#2043'
+    soft_gate: true
 
   - id: t-105
     milestone: m6
