@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-23T20:28:53Z
+Generated: 2026-08-23T20:36:23Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **736**
-- Outcomes: blocked: 15, cancelled: 1, done: 720
+- Closed tasks recorded: **737**
+- Outcomes: blocked: 15, cancelled: 1, done: 721
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -43,7 +43,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 78 | 100% |
+| model-builder | 79 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 720 | 99% |
+| software | 721 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-23 `model-builder/t-029` — Cycle 61: with no new kind_robots commits touching model-builder since cycle 59 and the repo-wide reference grep turning up no unaudited file, took the task brief's own "accessibility gaps" lens explicitly for the first time in this task's 61-cycle history. Found a real-looking sibling inconsistency (two components wrap their loading state in role="status"/aria-live="polite"/aria-busy="true", two others' analogous spinners have neither) but tracing it further showed the two pairs aren't actually comparable: the guarded pair is a full-region "loading this list from the network at mount" state, the unguarded pair is a button-internal in-flight spinner -- a state shape that is uniformly unguarded across every button in this component family, not selectively skipped on two components. Lesson: a found inconsistency is only a fixable sibling-parity bug if the two sides are actually the same kind of moment -- pattern-matching on "this attribute is present here and absent there" needs a check that the "there" is truly analogous to "here," or the fix ends up either wrong-shaped (fixing the wrong two files) or scope-creeping into a repo-wide convention decision that a single-bug-per-cycle task isn't set up to make well.
+
 - 2026-08-23 `brainstorm/t-029` — Third clean first-pass adapter/CTA task in a row (t-027 Scenario, t-028 Reward, t-029 Bot) following the same BrainstormSourceAdapter registry + gated startBrainstormWith*() CTA + verifyBrainstormObjectEntryLinks.mjs assertion pattern -- confirms this is now a well-worn, low-risk template for onboarding a new source entity, not something that needs fresh design judgment each time. When a recurring kaizen note explicitly names the next entity to follow the same pattern (here: Project, per t-027's original note), treat that as a ready-made task rather than re-deriving scope from scratch.
 - 2026-08-23 `davinci/t-025` — Before scoping a 'extract the shared pattern between these two call sites' refactor, grep the WHOLE repo for the symbol being extracted, not just the two sites already named in the task note -- a third, byte-for-byte identical call site (taskmasterStore.ts) existed and was missed by hand-picking files instead of searching, only caught because a repo-owned contract test (verifyNarrativeArtPersistence.mjs) enforced the two stores stay in lockstep and failed CI. Also: running `prettier --write` on a whole pre-existing file to fix one targeted edit's formatting can reformat large unrelated regions if the file was already prettier-noncompliant before the change (confirmed via git stash/checkout) -- restore the pristine file and apply only the intended edit via a scoped replace, never a full-file --write, when touching a file the task doesn't already fully own.
 - 2026-08-23 `brainstorm/t-028` — Following an already-established adapter pattern (Character/Scenario) end to end -- registry entry, gated CTA, contract-script assertion, workflow path trigger -- landed clean first pass with zero findings; the pattern itself, not novel judgment, was the main risk-reducer.
@@ -100,8 +102,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-22 `model-builder/t-029` — Cycle 46: closed the exact gap cycle 45's own kaizen note flagged as left open -- pitch/fieldsDraft/promptDraft were capped at MAX_DRAFT_TEXT_LENGTH on the item PATCH path but not on the run CREATE route's own items mapping, even though both write the same @db.Text columns. A cap added at one write path for a shared field is only half the fix until every other write path into that same column is audited too -- the same "one-way-clear-gap" shape as cycle 41/42's lastAutoBuildOutcome/statusMessage bugs, just for a validation cap instead of a state-clearing call. Importing the shared constant (MAX_DRAFT_TEXT_LENGTH) rather than hardcoding a second copy of the same number, plus a guard script asserting the import is actually used, is what keeps two independent write paths for the same column from drifting apart again silently.
 
-- 2026-08-22 `model-builder/t-029` — Cycle 42: the same one-way-clear-gap defect shape from cycle 41 (lastAutoBuildOutcome) recurred in a completely different ephemeral field -- state.statusMessage/statusTone, the global status banner -- because eight mutating functions (approveStage, rejectStage, reopenStage, updatePitch, updateFields, updatePrompt, batchSetField, batchApproveStage) never called the store's own clearStatus() at the start of a fresh attempt, even though seven siblings already did. A single well-known bug class is worth checking function-by- function across an entire store rather than assuming one comprehensive fix closes the category -- the fix pattern (call an existing clear helper at the start of every mutating path, not just the ones that happened to need it last time) generalizes directly. Also reconfirmed (4th independent instance) that a delegated background agent's "waiting on a CI timer" self-report is not a real block -- the coordinating session must poll CI itself and merge, then explicitly tell the sub-agent to stop via SendMessage. Promoted this from a per-cycle TALKBACK observation to AGENTS.md hard safety rule 13.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-23T20:28:53Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-23T20:36:23Z_
