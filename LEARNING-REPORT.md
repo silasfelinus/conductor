@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-23T16:37:54Z
+Generated: 2026-08-23T17:01:25Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **732**
-- Outcomes: blocked: 15, cancelled: 1, done: 716
+- Closed tasks recorded: **733**
+- Outcomes: blocked: 15, cancelled: 1, done: 717
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -43,7 +43,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 77 | 100% |
+| model-builder | 78 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 716 | 99% |
+| software | 717 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-23 `model-builder/t-029` — Cycle 57's fix covered three places that swap state.run for a different run (goToStep /selectSource, openRun's two branches, resumeRun's branch) without clearing the in-flight singletons resetRun/resetAll already clear -- but only checked whether each call site clears the singletons, not whether the RESPONSE feeding that call site could itself be stale. resumeRun() has exactly one call site (a component's onMounted) yet was still racy, because unmounting a Vue component does not cancel its in-flight promises: navigating away and back before a slow resumeRun() resolves creates a second concurrent call against the same Pinia singleton, and the older call's stale response can land after the newer one already resolved and the user moved on. Lesson for future cycles: "this function's call site is singular / not button-driven" is not the same guarantee as "this function cannot run twice concurrently" -- component remounts (navigation, not just explicit user clicks) are a second, easy-to-miss source of concurrent async calls against a shared store, and any async chain writing shared state on completion needs a request-ticket guard regardless of how simple its trigger looks.
+
 - 2026-08-23 `conductor/t-123` — Kaizen from an earlier same-day session's mermaids-of-venice/t-013 wasted claim (conductor#2720). Added scripts/daily_gate.py, detecting a task whose note declares an explicit "Pacific calendar day" daily-gate contract and already records an outcome for today's Pacific date, and wired the skip into both task-selection paths -- next_ready_task.py's first_ready_task AND run_worker.py's find_ready_task. The second wiring mattered most: select_role.py's underlying "worker" recommendation (the path that actually surfaced the stale t-013 pick in the first place) calls build_queue_summary() -> find_ready_task(), not next_ready_task.py -- a fix scoped only to the connector-only picker would have left the real collision path unpatched. Lesson: when a kaizen task names "the sweep step" as the target, check which of the repo's (sometimes more than one) selection implementations that step actually calls before assuming a single shared module covers it.
 
 - 2026-08-23 `model-builder/t-029` — Cycle 56's note flagged that its repo-wide model-builder-reference grep, diffed against every file this task's history had named as read, was itself worth re-running -- but a directory glob (components/model-builder/**) had been silently treated as "covered" without any individual cycle ever naming every file inside it. model-builder-manager.vue (the top-level page component) had never actually been read in 56 cycles despite matching that glob. Reading it found it clean, but tracing the run-lifecycle functions it orchestrates (startRun/openRun/resumeRun) surfaced a real bug: three more places swap the active run for a different one the same way resetRun()/resetAll() do, but never called their in-flight-singleton-clearing logic, reproducing the exact stale-busy-indicator bug those two were already fixed for. Lesson for future cycles: a directory-glob "already covered" check is not the same as per-file coverage -- cross-check individual filenames against the cumulative note history, not just the glob pattern. Also, when a file traced this way reads clean, the bug may be in a function it *calls into* rather than the file itself; tracing outward from a clean file is a distinct, useful search strategy from re-reading a file's own body. Also confirmed: extracting a shared helper to reduce duplication across the four fix sites broke two pre-existing narrow-textual-checker guards that were pinned to the literal inline shape -- inlining the fix at each site (matching the existing pattern) instead of refactoring was the lower-risk choice once existing guards are keyed to literal text shape, not just behavior.
@@ -102,8 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-22 `ai-art-academy/t-075` — A shared coverage-contract helper generalizes cleanly across per-style (denominator = academyStyles.length) and per-nested-field (denominator = named-artist count) verifiers as long as the denominator stays a parameter rather than being hardcoded inside the helper.
 - 2026-08-22 `ai-art-academy/t-072` — A genuinely large curation task (portrait likenesses for 116 named artists across 47 styles) scoped cleanly by following t-070's precedent: ship the schema/tooling foundation plus a real, well-verified partial batch (8 artists via the Met Collection API), file an honest follow-up for the rest rather than either stalling or rushing a low-quality full pass. The coverage verifier was deliberately built as a reporting tool, not a 100%-or-exception hard gate, since partial coverage is the correct steady state here (unlike exampleWorks' full-denominator gate) -- copying a sibling verifier's hard-gate shape without checking whether the underlying task actually wants 100% coverage would have been the wrong contract. Also: an unqualified `git checkout -- <file>` used to discard one unwanted change (a full-file prettier reformat) silently discarded a second, wanted uncommitted change to the same file in the same command -- stage or copy aside real edits before reverting formatting noise in the same file, rather than trusting `git checkout --` to be selective.
 
-- 2026-08-22 `ai-art-academy/t-073` — Kaizen-sourced tooling fix (grouped error-signature breakdown for GET /api/art/queue/stats, ai-art-academy/t-069's close-out pain point) landed clean across a kind_robots + conductor companion-PR pair. Separately: a background subagent given "verify CI, merge when green" as part of its scope has no way to schedule its own wait for external CI completion and can get stuck looping "waiting for a background timer" across several turns without one ever arriving -- the parent session had to take over the final re-check-and-merge step directly. Future delegated cycles whose scope includes a merge-when-green step should either have the parent handle that step, or be told explicitly to re-check synchronously/immediately rather than attempt a multi-turn wait.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-23T16:37:54Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-23T17:01:25Z_
