@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 46
     stakes: reversible
@@ -624,9 +624,9 @@ tasks:
 
       No unread files remain from cycle 59's two named leads. Next leads for cycle 61: the recipe-selector/source-picker data-fetch angle (cycle 55) and every UI-race/store-guard angle across model-builder-item-panel.vue, model-builder-batch-editor.vue, model-builder-progress-matrix.vue, model-builder-run-history.vue, and model-builder-recipe-selector.vue/model-builder-source-picker.vue have now each had at least one dedicated full-file read plus a traced hypothesis. A future cycle without a live-browser fallback should treat this task's client-side static-reading approach as likely exhausted for new findings in the currently-implemented feature set, and consider either (a) a live smoke-test pass once one becomes possible in this sandbox (model-builder/t-031 already tracks exactly that for the async ArtJob queue path), or (b) waiting for a genuinely new feature/file to land before the next static-reading cycle, rather than re-walking the same five components a further time.
     owner: worker
-    claimed_by: claude-conductor-scheduled-20260823T-mb-t029-cycle60
-    claimed_at: '2026-08-23T17:27:57Z'
-    updated: '2026-08-23T17:31:11Z'
+    claimed_by: claude-conductor-scheduled-20260823T-model-builder-t029
+    claimed_at: '2026-08-23T20:28:16Z'
+    updated: '2026-08-23T20:28:16Z'
 
   - id: t-030
     milestone: m6
