@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 46
     stakes: reversible
@@ -606,9 +606,9 @@ tasks:
 
       Next leads: this cycle's method (checking individual files under a covered glob against the cumulative note history for ones never explicitly named, then tracing what that file orchestrates rather than assuming the file itself must contain the bug) is worth generalizing -- the bug this cycle found was not in the unaudited file itself but in functions it calls into. A future cycle could apply the same lens to model-builder-run-history.vue's own callers (openRun/fetchRuns/cancelRun) or to modelBuilderFields.ts/modelBuilderRecipes.ts's consumers, rather than re-reading those files' own bodies again. Released the claim; re-armed to `ready`.
     owner: worker
-    claimed_by: claude-conductor-20260823T-mb-t029-cycle57
-    claimed_at: '2026-08-23T14:28:47Z'
-    updated: '2026-08-23T14:53:11Z'
+    claimed_by: claude-conductor-scheduled-20260823T1626Z-mb-t029-cycle58
+    claimed_at: '2026-08-23T16:27:23Z'
+    updated: '2026-08-23T16:27:23Z'
 
   - id: t-030
     milestone: m6
