@@ -246,11 +246,11 @@ tasks:
 - id: t-013
   milestone: m3
   title: Generate progress-gated Kind Robots character reviews of edition 3
-  status: ready
+  status: claimed
   recurring: true
   passes: 0
   stakes: reversible
-  updated: '2026-08-23T08:29:20Z'
+  updated: '2026-08-23T12:29:06Z'
   note: |-
     DAILY/PROGRESS-GATED CONTRACT (Silas, 2026-08-03): watch
     `projects/mermaids-of-venice/manuscript/Mermaids of Venice v3.doc`. At most
@@ -305,5 +305,5 @@ tasks:
 
     Verified no-op on 2026-08-23 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical to state.yaml's last successful review source from 2026-08-04 (confirmed via `git hash-object` against the tracked file, matching state.yaml's recorded source_blob). Per the daily/progress-gated contract, produced no review file and no notification. Now 20 consecutive no-op days -- the underlying blocker is unchanged from 2026-08-22's note (open hard gates t-004 through t-010 awaiting Silas's editorial passes into the v3 manuscript).
   owner: worker
-  claimed_by: ''
-  claimed_at: ''
+  claimed_by: claude-scheduled-20260823T122905Z-mv-t013
+  claimed_at: '2026-08-23T12:29:06Z'
