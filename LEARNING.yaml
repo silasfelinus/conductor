@@ -10065,3 +10065,12 @@ records:
     concurrent async calls against a shared store, and any async chain writing shared
     state on completion needs a request-ticket guard regardless of how simple its trigger
     looks.
+- date: 2026-08-23
+  project: brainstorm
+  task: t-028
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Following an already-established adapter pattern (Character/Scenario) end to end -- registry entry, gated CTA, contract-script assertion, workflow path trigger -- landed clean first pass with zero findings; the pattern itself, not novel judgment, was the main risk-reducer."
