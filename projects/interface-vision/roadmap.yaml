@@ -3196,28 +3196,12 @@ tasks:
   - id: t-119
     milestone: m5
     title: "Re-check the kr-panel-flat DaisyUI-conflict skip pool for now-safe hand-migration candidates"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     owner: worker
-    note: >
-      Kaizen from t-104 slice 45 (silasfelinus/kind_robots#2040). Re-running
-      utils/scripts/codemods/kr_panel_codemod.py --root . against current main found the
-      t-116 exact-match pool fully consumed (down to 1 new candidate, migrated this slice)
-      but still lists a small skip pool of occurrences carrying a co-occurring DaisyUI
-      component-root class (components/art/art-manager.vue's modal-box, components/ui/
-      kr-stat-tile.vue's stat, components/user/chat-gallery.vue's btn btn-ghost, 4
-      occurrences across 3 files as of this slice). These were correctly skipped by the
-      codemod's allowlist (same judgment call as kr-stat-tile.vue's original slice-12
-      exclusion), but nobody has re-examined them by hand since t-115 first flagged the
-      pattern. Read each skipped occurrence's actual mount context and decide per-file,
-      the same way slices 10-14 did for the original kr-panel pool: does the co-occurring
-      DaisyUI class genuinely need the conflicting styling (leave it), or is it safe to
-      restructure (e.g. move the kr-panel-flat classes to a wrapping element, or confirm
-      Tailwind's utility-over-component precedence actually makes the co-occurrence safe
-      here specifically)? Do not expand the codemod's automatic allowlist without the same
-      case-by-case visual-delta reasoning prior slices applied by hand.
+    note: 'Merged kind_robots#2041 (art-manager.vue modal-box migrated to kr-panel-flat; kr-stat-tile.vue and chat-gallery.vue skip-pool entries verified-correct-to-skip via computed-style diffing, not just deferred). Closed via conductor#2700 (status: review) then this close-out to done.'
     claimed_by: claude-scheduled-20260823T042814Z-iv-t119
     claimed_at: '2026-08-23T04:28:15Z'
-    updated: '2026-08-23T04:35:51Z'
+    updated: '2026-08-23T05:27:33Z'
     implementation_pr: 'silasfelinus/kind_robots#2041'
