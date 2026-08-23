@@ -10074,3 +10074,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Following an already-established adapter pattern (Character/Scenario) end to end -- registry entry, gated CTA, contract-script assertion, workflow path trigger -- landed clean first pass with zero findings; the pattern itself, not novel judgment, was the main risk-reducer."
+- date: 2026-08-23
+  project: davinci
+  task: t-025
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Before scoping a 'extract the shared pattern between these two call sites' refactor, grep the WHOLE repo for the symbol being extracted, not just the two sites already named in the task note -- a third, byte-for-byte identical call site (taskmasterStore.ts) existed and was missed by hand-picking files instead of searching, only caught because a repo-owned contract test (verifyNarrativeArtPersistence.mjs) enforced the two stores stay in lockstep and failed CI. Also: running `prettier --write` on a whole pre-existing file to fix one targeted edit's formatting can reformat large unrelated regions if the file was already prettier-noncompliant before the change (confirmed via git stash/checkout) -- restore the pristine file and apply only the intended edit via a scoped replace, never a full-file --write, when touching a file the task doesn't already fully own."
