@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -3013,11 +3013,10 @@ tasks:
       PR #2038 merged after its exact-head checks completed successfully. Release the non-recurring interface consistency umbrella so the newly reported project-art prompt context bug can be claimed as a fresh bounded slice.
 
       Compact Project artwork prompt-context bug ready for review on worker/interface-vision-t-104-project-art-context-9d6e. The shared entity-art prompt plugin previously relied on Vue DOM internals or URL/model attributes; the compact Projects workspace is selected through pageStore.workspaceCardKey, so the visible Suggest prompt button could not resolve the Project and displayed “Could not identify record”. Add a narrowly-scoped fallback only inside .project-art-compact that resolves the active Project from pageStore + projectStore and supplies the canonical Hero/Card/Icon slot metadata. The existing generic and route/DOM resolution paths remain first priority. Contract coverage now guards the workspace fallback.
-    updated: '2026-08-23T03:22:00Z'
+
+      PR #2039 merged to kind_robots main as 1ff685231ceca43c139133d6d56422fd4b3b3987 after every validation workflow triggered for exact head 4a7418fa3f2ed8bea3b78a5c0bc62a2ec3c17d05 completed successfully, including Entity Art Manager Contract #170, TypeScript #5552, Contract Tests #5445, Layout #2100, Project Architecture #603, and the remaining Storybook/narrative contracts. Root cause was the generic entity-art prompt helper attaching inside the compact Projects workspace but failing to resolve the active Project because that surface is state-routed through pageStore.workspaceCardKey rather than a Project URL and the DOM enhancer cannot rely on Vue ancestry. The shared helper now has a fallback scoped to .project-art-compact that resolves workspaceCardKey through projectStore and carries canonical Hero/Card/Icon slot metadata. Vercel produced no PR preview because that deployment path is retired/non-authoritative; production visual verification still follows the self-hosted Kind Robots deploy path.
+    updated: '2026-08-23T03:30:00Z'
     approved_by_human: true
-    owner: worker
-    claimed_by: 2026-08-23T031600Z-iv-t104-project-art-context-9d6e
-    claimed_at: '2026-08-23T03:16:00Z'
 
   - id: t-105
     milestone: m6
