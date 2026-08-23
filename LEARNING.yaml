@@ -10020,3 +10020,24 @@ records:
     were pinned to the literal inline shape -- inlining the fix at each site (matching
     the existing pattern) instead of refactoring was the lower-risk choice once existing
     guards are keyed to literal text shape, not just behavior.
+- date: 2026-08-23
+  project: conductor
+  task: t-123
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Kaizen from an earlier same-day session's mermaids-of-venice/t-013 wasted claim
+    (conductor#2720). Added scripts/daily_gate.py, detecting a task whose note declares
+    an explicit "Pacific calendar day" daily-gate contract and already records an
+    outcome for today's Pacific date, and wired the skip into both task-selection
+    paths -- next_ready_task.py's first_ready_task AND run_worker.py's find_ready_task.
+    The second wiring mattered most: select_role.py's underlying "worker" recommendation
+    (the path that actually surfaced the stale t-013 pick in the first place) calls
+    build_queue_summary() -> find_ready_task(), not next_ready_task.py -- a fix scoped
+    only to the connector-only picker would have left the real collision path
+    unpatched. Lesson: when a kaizen task names "the sweep step" as the target, check
+    which of the repo's (sometimes more than one) selection implementations that step
+    actually calls before assuming a single shared module covers it.
