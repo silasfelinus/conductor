@@ -250,7 +250,7 @@ tasks:
   recurring: true
   passes: 0
   stakes: reversible
-  updated: '2026-08-23T08:29:20Z'
+  updated: '2026-08-23T12:30:02Z'
   note: |-
     DAILY/PROGRESS-GATED CONTRACT (Silas, 2026-08-03): watch
     `projects/mermaids-of-venice/manuscript/Mermaids of Venice v3.doc`. At most
@@ -304,6 +304,8 @@ tasks:
     Verified no-op on 2026-08-22 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical to state.yaml's last successful review source from 2026-08-04 (confirmed via `git hash-object` against the tracked file, matching state.yaml's recorded source_blob). Per the daily/progress-gated contract, produced no review file and no notification. This is now 19 consecutive no-op days with no manuscript change since 2026-08-04 -- likely explained by the project's own open hard needs-human gates (t-004 through t-010) waiting on Silas to write editorial notes/impressions/corrections into the v3 manuscript himself.
 
     Verified no-op on 2026-08-23 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical to state.yaml's last successful review source from 2026-08-04 (confirmed via `git hash-object` against the tracked file, matching state.yaml's recorded source_blob). Per the daily/progress-gated contract, produced no review file and no notification. Now 20 consecutive no-op days -- the underlying blocker is unchanged from 2026-08-22's note (open hard gates t-004 through t-010 awaiting Silas's editorial passes into the v3 manuscript).
-  owner: worker
-  claimed_by: ''
-  claimed_at: ''
+
+    Released claim same-day (2026-08-23 Pacific, scheduled sweep session claude-scheduled-20260823T122905Z-mv-t013): today's no-op was already verified and recorded by an earlier session this Pacific day (manuscript blob unchanged, 11d896012566c53853d935c8f7fb31387d240f25). Re-confirmed the blob is still unchanged before releasing -- not re-running the daily contract a second time in the same Pacific day. Re-armed to ready for tomorrow's check.
+  owner: null
+  claimed_by: claude-scheduled-20260823T122905Z-mv-t013
+  claimed_at: '2026-08-23T12:29:06Z'
