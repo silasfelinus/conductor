@@ -575,9 +575,9 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
-    passes: 46
+    passes: 47
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#2049'
     note: |-
@@ -623,10 +623,22 @@ tasks:
       Verified: read only, no files changed this cycle; `git status --porcelain` clean before releasing.
 
       No unread files remain from cycle 59's two named leads. Next leads for cycle 61: the recipe-selector/source-picker data-fetch angle (cycle 55) and every UI-race/store-guard angle across model-builder-item-panel.vue, model-builder-batch-editor.vue, model-builder-progress-matrix.vue, model-builder-run-history.vue, and model-builder-recipe-selector.vue/model-builder-source-picker.vue have now each had at least one dedicated full-file read plus a traced hypothesis. A future cycle without a live-browser fallback should treat this task's client-side static-reading approach as likely exhausted for new findings in the currently-implemented feature set, and consider either (a) a live smoke-test pass once one becomes possible in this sandbox (model-builder/t-031 already tracks exactly that for the async ArtJob queue path), or (b) waiting for a genuinely new feature/file to land before the next static-reading cycle, rather than re-walking the same five components a further time.
+
+      Cycle 61 (no-op, real investigation, conductor scheduled Agent run 2026-08-23): checked for new activity first (cycle 56's method) -- `git log` against every model-builder-path glob since cycle 59's own fix (#2049) shows zero commits; the "wait for a genuinely new file to land" lens named at the end of cycle 60 is still dry. Re-ran the repo-wide grep for model-builder/modelBuilder/ModelBuild references and cross-checked every hit against the cumulative read-list: no unaudited file surfaced -- the handful of new-looking hits (server/utils/mana.ts, stores/artStore.ts, stores/brainstormStore.ts, stores/buildBenchStore.ts, stores/videoStore.ts) are all just other stores' code comments citing modelBuilderStore.ts's own guard patterns as precedent for their own unrelated fixes, and stores/helpers/dashboardHelper.ts, stores/helpers/tutorialCards.ts, stores/seeds/pageBackdropArtPrompts.ts, utils/projectPlacements.ts are static nav/seed registration entries (route/tab-key wiring), not build-run logic.
+
+      Read components/model-builder/model-builder-item-panel.vue (591 lines, grown since cycle 51) end to end for the first time since its own cycle 59 fix: every Edit/Approve/Draft/Generate/Commit button's :disabled condition was cross-checked against the actual stage-status invariants server-enforced by commit.post.ts's "every other stage must be approved" gate -- confirmed each approve/draft/generate control that lacks an explicit isCommitting check is structurally unreachable while committing (COMMIT can only be in flight once every sibling stage is 'approved', at which point those controls render as their disabled-while-committing 'Edit' variant instead, not the approve/draft variant). No gap found.
+
+      Read server/api/model-builder/runs/index.ts (511 lines: assertRunAccess, assertRunWritable, normalizeText/normalizeJson/normalizeNullableId, prepareItemUpdate, diffStageStatusChanges/mergeStageStatusChanges, assertContentStageEditable) in full for the first time in this task's history as its own file rather than piecemeal via the write routes that import it -- heavily hardened already (every prior fix's defense-in-depth comments are attached inline); no new gap found. One note not worth a fix: assertContentStageEditable skips its check entirely when a stage key is absent from stageStatuses (`status !== undefined` guard) rather than treating a missing key as non-editable-by-default -- not reachable as a live bug since every item's stageStatuses is seeded with all four stage keys at creation and no code path removes one.
+
+      Took a fresh angle explicitly named in this cycle's own task brief -- accessibility gaps -- since no prior cycle's note mentions one as a dedicated lens. Grepped every components/model-builder/*.vue file for aria-live/aria-busy/role="status"/aria-label/<img> coverage: model-builder-source-picker.vue and model-builder-run-history.vue already wrap their record-list/run-list loading states in `role="status" aria-live="polite" aria-busy="true"` with `aria-hidden="true"` on the decorative spinner. model-builder-batch-editor.vue's header spinner (`v-if="batching"`) and model-builder-progress-matrix.vue's "Auto-build all" button spinner have neither -- looked like the sibling-inconsistency pattern this task's history repeatedly finds -- but tracing further shows every button-internal spinner across item-panel.vue, batch-editor.vue, and progress-matrix.vue (Auto, Draft, Generate, Commit, Auto-build all/group) uniformly omits aria-live/aria-hidden the same way; the two components that DO use the pattern apply it only to a full-region "loading this list from the network at mount" state, which batch-editor/progress-matrix never have (they render immediately from already-loaded store state). So this isn't a sibling gap between comparable moments, just an unestablished convention for a different, button-scoped kind of state -- retrofitting it would be a repo-wide style decision affecting every spinner in the store, not a scoped two-line fix, so left unflagged as a fix this cycle rather than doing a partial, inconsistent-with-itself change.
+
+      Re-confirmed model-builder-recipe-selector.vue's "Start build run" button (`:disabled="!store.canStartRun"`, no separate startingRun check) is not a gap: canStartRun's own definition (modelBuilderStore.ts:522-527) already ANDs in `!state.startingRun`.
+
+      No new bug found; no code change. `git status --porcelain` clean throughout (read-only cycle). Next leads for cycle 62: this cycle's a11y sweep found a real but repo-wide-scoped convention gap (button-internal spinners have no aria-live/aria-hidden anywhere in this component family) that's arguably out of this recurring task's normal one-bug-at-a-time scope -- worth raising as its own kaizen task if a future cycle wants to fix it deliberately across all five components at once, rather than reintroducing it lead-by-lead. Otherwise, with client-state-race, Prisma/migration-drift, cross-repo grep, and now accessibility all covered at least once with no fresh commits landing in between cycles, the next unstalled lead is likely either (a) the live-smoke-test path once available (t-031), or (b) filing the a11y kaizen task above and picking it up as real scoped work next cycle instead of continuing to search for a new angle on already-thoroughly-read files.
     owner: worker
     claimed_by: claude-conductor-scheduled-20260823T-model-builder-t029
     claimed_at: '2026-08-23T20:28:16Z'
-    updated: '2026-08-23T20:28:16Z'
+    updated: '2026-08-23T20:32:10Z'
 
   - id: t-030
     milestone: m6
