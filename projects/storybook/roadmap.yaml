@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   note: |-
@@ -146,11 +146,25 @@ tasks:
     Did not reach components/narrative/** (narrative-role-assigner.vue, kr-chat-window.vue, narrativeBeatsToTurns) this cycle -- storybook-page.vue's own remaining surface was large enough on its own to read properly rather than skim both. That shared surface (used by both Storybook and Taskmaster, per cycle 30's note) is the clear next lead for cycle 32.
 
     Released the claim without a code change; re-armed to `ready`.
-  updated: '2026-08-23T10:32:39Z'
+
+    ---
+
+    Cycle 32 (no-op, real investigation, conductor scheduled Agent run 2026-08-23, claude-scheduled-20260823T102817Z-sb-t010): the cycle 31 entry immediately above this one was already on `origin/main` by the time this session claimed the task (claimed cleanly, no ALREADY_CLAIMED conflict) -- this session's own earlier note-length grep only surfaced cycle 30's tail before claiming, so cycle 31's presence wasn't noticed until fetching fresh main to write this close-out. No work was duplicated: this cycle took the OTHER half of cycle 30's kaizen (the components/narrative/** shared surface) rather than re-reading storybook-page.vue's remaining surface cycle 31 already covered -- which happens to be exactly what cycle 31's own closing note named as "the clear next lead for cycle 32." Read components/narrative/kr-chat-window.vue, components/narrative/narrative-role-assigner.vue, components/narrative/narrative-cast-card.vue, utils/narrativeTurns.ts, and utils/narrativeRoles.ts end to end for the first time in this task's history.
+
+    Chased three concrete hypotheses, ruled out all three with reasoning:
+
+    1. kr-chat-window.vue's visibleStreamingText: traced the marker-hiding logic (`[STORY_STATE]` suffix stripping) through the no-newline-yet edge case (`lastIndexOf('\n') === -1`) and the exact-prefix-match edge case. Both resolve correctly -- the empty-string case when only a partial marker has streamed so far is intentional, not an off-by-one.
+
+    2. narrative-cast-card.vue's dual drag input (native HTML5 drag for mouse via the whole card's `draggable="true"`, custom pointer-event drag for touch/pen via the dedicated "⋮⋮" button, gated by `pointerType === 'mouse'` early-return): traced the dragend-always-fires-after-drop HTML5 spec guarantee to confirm narrative-role-assigner.vue's `@drag-cancel="cancelDrag"` firing after a SUCCESSFUL native drop (dragend fires after drop per spec) is a harmless redundant no-op, not a state-clobbering race -- dropRole() already reset draggingSlug/dragOverRole to null before dragend's own cancelDrag() call arrives, and resetting null to null is inert. Also checked whether a touch gesture could trigger both input paths simultaneously (native drag ancestor + pointer-event button) -- mainstream mobile browsers do not fire native HTML5 drag events from touch input at all, which is consistent with why this codebase built the separate pointer-drag system in the first place; not a live conflict.
+
+    3. narrativeRoles.ts's castLineWithRole(): its docstring's worked example reads differently ordered from the literal template-string concatenation at first glance, which looked like a swapped-argument bug. Traced against its own dedicated contract test (utils/scripts/verifyNarrativeRoles.ts) and the real call site (stores/storybookStore.ts:577, `castLineWithRole(ingredientDescription(member), member.title, member.roleKey)`): the `description` parameter is the FULL "Title — flavor text" line, not bare flavor text, so `${description} [${role.label}] ${title} ${role.promptDescriptor}` produces the intended "Title — flavor text [Role] Title is the role..." shape and the `lead.startsWith(AMI)` contract assertion already exercises exactly this. No bug -- my own first read misjudged the parameter's meaning before checking the call site and test together.
+
+    No new bug found this cycle. All three hypotheses were investigated and ruled out with evidence (call site + test), not just skipped -- same discipline as prior cycles' documented reasoning.
+
+    Next lead for cycle 33: this narrative/** shared-surface sweep is not yet exhaustive -- kr-choice-list.vue (referenced by kr-chat-window.vue for turn.choices rendering) and utils/narrativeIngredients.ts (the NarrativeIngredientOption shape both Storybook and Taskmaster build their pickers from) have not had a dedicated read pass in this task's history.
+  updated: '2026-08-23T10:34:51Z'
   implementation_pr: 'silasfelinus/kind_robots#2024'
   owner: worker
-  claimed_by: claude-scheduled-20260823T102817Z-sb-t010
-  claimed_at: '2026-08-23T10:32:39Z'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
