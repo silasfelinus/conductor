@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -3018,12 +3018,14 @@ tasks:
       Slice 45 merged as silasfelinus/kind_robots#2040 (squash 620c2507) from exact head d0fb0e92c22aa0e77b81b36bc2bd7950e400b96f. Re-ran the byte-exact kr_panel_codemod.py (from t-115/t-116) against current main: the previously-surfaced 47-occurrence/21-file kr-panel-flat pool from t-116 has since been fully consumed by later slices, leaving exactly one new candidate. components/pages/mermaids-page.vue's reader-reaction panel root now uses kr-panel-flat instead of hand-rolled rounded-2xl border border-base-300 bg-base-100, preserving p-5 shadow-sm; no geometry or behavior change. Verified: eslint clean, vue-tsc --noEmit clean (one pre-existing unrelated error in server/api/reactions/index.post.ts confirmed present on baseline via git stash), test:layout-contract holds (0 new violations), prettier drift on the file confirmed pre-existing via git stash. All 35 exact-head CI checks green, mergeable_state clean before merge. Return the non-recurring consistency umbrella to ready for the next bounded slice.
 
       Slice 46 merged as silasfelinus/kind_robots#2042 (squash e751adfc) from exact head 02097cde755195a5b621f4fdce7c133d25e90d06. With the kr_panel_codemod.py pool confirmed fully exhausted (0 candidates this session), widened the search back to the mx-auto+w-full+max-w-* root-element grep slices 30-32 originally used for kr-container. Found one new candidate not present in prior audits: components/brainstorm/brainstorm-manager.vue root <section> now uses kr-container-wide instead of hand-rolled mx-auto w-full max-w-7xl; no geometry or behavior change. The other six files matching the broader grep stay excluded: messenger.vue, project-front-page.vue, achievement-popup.vue per slice 31 (nested/bespoke), academy-timeline.vue, academy-styles-browser.vue, for-you-manager.vue use non-6xl/7xl custom max-widths (max-w-[1600px]/max-w-[1800px]) that kr-container/kr-container-wide do not cover. Verified: eslint clean, vue-tsc --noEmit clean (one pre-existing unrelated error in server/api/reactions/index.post.ts, confirmed via git stash), test:layout-contract holds (0 new violations; -3 viewport-grid improvement is pre-existing video-lora-picker.vue drift, confirmed via git stash), prettier drift on the file confirmed pre-existing via git stash. All 38 exact-head CI checks green, mergeable_state clean before merge. Return the non-recurring consistency umbrella to ready for the next bounded slice.
-    updated: '2026-08-23T07:31:02Z'
+
+      Slice 47 merged as silasfelinus/kind_robots#2043 (squash 2d898825) from exact head e751adfc9491d40ba9086c47abb3a3be74489134. With the kr_panel_codemod.py pool confirmed fully exhausted again this session (0 candidates), re-ran the mx-auto+w-full+max-w-* root-element grep slices 30-32/46 established. Found two new candidates not present in prior audits: pages/admin/social-drafts.vue and pages/admin/achievement-art.vue's kr-scroll scroll-body <div> both now use kr-container-wide instead of hand-rolled mx-auto w-full max-w-7xl, keeping kr-scroll and existing spacing/padding utilities as overrides; no geometry or behavior change. Of the 8 files matching the broader grep, the other six stay excluded per prior slices' documented reasoning (messenger.vue, project-front-page.vue, achievement-popup.vue: nested/bespoke; academy-timeline.vue, academy-styles-browser.vue, for-you-manager.vue: non-6xl/7xl custom max-widths kr-container/kr-container-wide don't cover). Verified: eslint clean, vue-tsc --noEmit clean, test:layout-contract holds (0 new violations; the -3 viewport-grid improvement is pre-existing baseline drift in video-lora-picker.vue, confirmed via git stash, unrelated to this change), prettier drift on achievement-art.vue confirmed pre-existing via git stash. All 36 exact-head CI checks green, mergeable_state clean before merge. Return the non-recurring consistency umbrella to ready for the next bounded slice.
+    updated: '2026-08-23T07:40:00Z'
     approved_by_human: true
     owner: worker
     claimed_by: claude-scheduled-20260823T072659Z-iv-t104-slice47
     claimed_at: '2026-08-23T07:27:33Z'
-    implementation_pr: 'silasfelinus/kind_robots#2042'
+    implementation_pr: 'silasfelinus/kind_robots#2043'
 
   - id: t-105
     milestone: m6
