@@ -4102,3 +4102,18 @@ tasks:
       reflecting live roadmap/project state again instead of the 2026-08-20T21:27Z snapshot it's
       currently stuck on. No other roadmap work is blocked by this in the meantime.
     updated: '2026-08-21T04:56:00Z'
+  - id: t-122
+    milestone: m2
+    title: Fix all 4 conductor milestones' stale status fields (all read not-started despite near-total task completion)
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from the 2026-08-23 weekly site audit. All 4 of conductor's own milestones are
+      stamped `status: not-started`, but their task counts tell a different story: m1 (8/8 tasks
+      done) should be `done`; m2 (102 done, 3 needs-human, out of 105) should be `in-progress`;
+      m3 (3/3 done) should be `done`; m4 (4/4 done) should be `done`. This is the worst instance
+      of the milestone-status-staleness pattern found across all 24 active projects this audit
+      cycle (kind-robots/t-058 and kapowarr/t-020 previously flagged the same class elsewhere).
+      No task content changes needed — just the 4 milestone `status:` fields above.

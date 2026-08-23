@@ -1627,3 +1627,19 @@ tasks:
     FOR SILAS: review the actual storefront at phone/tablet/desktop widths and confirm the agreed
     catalog is represented correctly. TO APPROVE: confirm the layout/product presentation feels
     finished or leave concrete notes. Storefront task-count exhaustion is not completion.
+
+- id: t-044
+  milestone: m2
+  title: Fix 4 stale digital-storefront milestone status fields (m2/m3/m4/m5 all lag their fully-completed task sets)
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from the 2026-08-23 weekly site audit. Four milestones' `status:` fields lag their
+    actual task completion: m2 "First sellable item live" is `in-progress` but all 4 tasks are
+    done (should be `done`); m3 "Support & donations" is `not-started` but all 6 tasks are done
+    (should be `done`); m4 "Print-on-demand & gallery coordination" is `not-started` but all 12
+    tasks are done (should be `done`); m5 "DLC website unlocks" is `not-started` but both tasks
+    are done (should be `done`). m1 and m6 are already correctly stamped. No task content changes
+    needed — just the 4 milestone `status:` fields above.
