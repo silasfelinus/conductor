@@ -604,7 +604,7 @@ tasks:
   - id: t-025
     milestone: m6
     title: "Extract narrativeArtJobsHelper's resume/cache pattern into a shared composable"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -627,6 +627,59 @@ tasks:
       composable" if a third surface arrives before this is picked up, rather than
       also doing a speculative refactor of the two existing ones as a separate
       concern.
+
+
+      Done (kind_robots#2051, merged): added stores/helpers/persistedNarrativeArtJobsHelper.ts
+      (createPersistedNarrativeArtJobsController()), wrapping
+      createNarrativeArtJobsController() with an owner-scoped best-effort localStorage
+      cache (readCache/writeCache) and a resumeEntries() loop over a keyed collection of
+      cached job states. CI on the first push caught something the initial investigation
+      missed: taskmasterStore.ts is a byte-for-byte identical third copy of
+      storybookStore.ts's resumeNarrativeArtJobs() pattern
+      (verifyNarrativeArtPersistence.mjs keeps the two stores in lockstep) -- the exact
+      "third narrative surface" this task's own note named as the trigger for doing the
+      full extraction, so it turned out to already exist. Migrated all three call sites
+      (storybookStore.ts, taskmasterStore.ts, davinci-page.vue); davinci-page.vue also
+      uses the cache read/write half since its art jobs have no server-side row until
+      done. Updated verifyDaVinciArtResumeGuard.ts's textual checks (and self-test) and
+      verifyNarrativeArtPersistence.mjs's store-contract checks to match, preserving the
+      same protected invariants. Verified: all 27 test:davinci-* + 23 test:storybook-*
+      contract scripts pass, verifyNarrativeArtPersistence.mjs passes, eslint/prettier
+      clean except two pre-existing unrelated issues confirmed present on main before
+      this change (storybookStore.ts eslint errors; taskmasterStore.ts/
+      verifyNarrativeArtPersistence.mjs prettier-noncompliance) -- kept the diff scoped to
+      exactly this task's lines rather than letting a full-file prettier --write
+      introduce unrelated reformatting. vue-tsc clean except one pre-existing unrelated
+      error (BUTTERFLY missing from a Reaction_reactionCategory map in
+      server/api/reactions/index.post.ts), filed as kaizen davinci/t-026.
+    implementation_pr: silasfelinus/kind_robots#2051
     claimed_by: claude-conductor-scheduled-20260823T-davinci-t025
     claimed_at: '2026-08-23T19:43:03Z'
-    updated: '2026-08-23T19:43:26Z'
+    updated: '2026-08-23T20:02:29Z'
+
+  - id: t-026
+    milestone: m6
+    title: Fix stale prisma/generated client missing BUTTERFLY from Reaction_reactionCategory's ExpectedTargetField map
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-025 (kind_robots#2051). vue-tsc --noEmit fails on
+      server/api/reactions/index.post.ts:220 with "Property 'BUTTERFLY' is missing in
+      type ... but required in type 'Record<Reaction_reactionCategory,
+      ExpectedTargetField>'" -- confirmed pre-existing on kind_robots main (reproduced
+      via git stash before t-025's own diff, unrelated to it). Likely cause: the
+      Butterfly-retirement commit (a09a56b, "Retire DB-driven Butterfly remnants and
+      Challenge Center reviews") removed BUTTERFLY handling from
+      server/api/reactions/index.post.ts's ExpectedTargetField map, but the checked-in
+      prisma/generated Prisma client (prisma/generated/prisma/**) still carries
+      BUTTERFLY as a Reaction_reactionCategory enum member, or vice versa -- the two are
+      out of sync. Run `npx prisma generate` and diff against the checked-in
+      prisma/generated/ files to confirm which side is stale, then either regenerate and
+      commit the client, or update the schema/reaction-category enum and its
+      migration, whichever actually matches production. Root-cause and fix
+      before the next session hits this drift again -- this repo's provisioning script
+      (provision_kind_robots_deps.sh) runs `prisma generate` fresh each session, so a
+      stale checked-in client silently diverges from what CI/local sessions
+      actually see depending on whether prisma generate ran.
