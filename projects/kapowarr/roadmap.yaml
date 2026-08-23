@@ -1569,8 +1569,8 @@ tasks:
 - id: t-069
   milestone: m4
   title: Fix 3 stale kapowarr milestone status fields (m4/m6/m9 all fully done but not stamped done)
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >
@@ -1581,4 +1581,7 @@ tasks:
     only task (t-045) is done (should be `done`). m5/m8 are already correctly `in-progress`
     (each has a genuine open needs-human task). No task content changes needed — just the 3
     milestone `status:` fields above.
+  claimed_by: claude-scheduled-20260823T0140Z-kapowarr-t069
+  claimed_at: '2026-08-23T01:45:46Z'
+  updated: '2026-08-23T01:45:46Z'
 
