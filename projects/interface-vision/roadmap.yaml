@@ -3157,11 +3157,28 @@ tasks:
   - id: t-118
     milestone: m5
     title: "Audit kr-gallery's remaining bespoke #item consumers now that the shared renderer owns correct Cards/Heroes/Icons geometry"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     owner: worker
-    note: 'Kaizen from the interface-vision/t-104 shared-gallery-consistency review (2026-08-23, kind_robots#2034): kr-gallery.vue''s built-in renderer now correctly implements Cards 2:3 portrait, Heroes 16:9 landscape, and Icons square-plus-text-forward geometry with wrapping titles, and conductor-project-gallery-page.vue was the one consumer confirmed to no longer need its own #item override. A repo-wide check at kind_robots origin/main (236f0316) found 17 other components still supplying a bespoke #item template: achievement-gallery.vue, art-gallery.vue, stylist-client-gallery.vue, bot-gallery.vue, character-gallery.vue, dream-gallery.vue, dream-relationship-gallery.vue, resource-card.vue, resource-gallery.vue, reward-gallery.vue, scenario-gallery.vue, scenario-relationship-gallery.vue, checkpoint-gallery.vue, server-gallery.vue, theme-gallery.vue, ui-gallery.vue, friend-gallery.vue. Not yet read individually -- some may need a genuinely different item shape (extra actions, custom badges/metadata the shared GalleryItem contract does not cover) and should stay bespoke; others may be duplicating geometry the shared renderer already produces correctly, the same drift shape t-104 just fixed for Projects. This task is to read each #item override, classify it (genuinely custom vs. redundant with the now-correct shared renderer), and file/execute small bounded removal slices for the redundant ones -- same discipline as t-104''s prior slices, not one giant sweep.'
+    implementation_pr: 'silasfelinus/kind_robots#2036'
+    note: >
+      Read kr-gallery.vue's full built-in-renderer contract, then all 16 remaining #item-slot
+      consumers (resource-card.vue turned out to not itself be a slot consumer -- it's the leaf
+      component resource-gallery.vue places inside its own #item slot). Classification: 15 are
+      genuinely custom and correctly stay bespoke -- every "core object" gallery (bots,
+      characters, dreams x2, rewards, scenarios x2) hands its dedicated *-card.vue through the
+      slot carrying edit/clone/delete/launch/select actions and earned-karma the shared
+      GalleryItem contract doesn't cover, and the rest (achievements, art, stylist-client,
+      resources, checkpoints, servers, themes, friends) each add their own real interaction
+      (bulk-select, primary/delete, trigger-word display, model-select, use/test, apply/edit,
+      message/collection-expand). Only ui-gallery.vue's demo item was redundant -- a
+      title/description/mode-badge stub with no image or aspect-ratio handling, not real custom
+      behavior. Fixed: silasfelinus/kind_robots#2036 removes the override so the /ui living
+      style guide's gallery demo now showcases the real shared Cards/Heroes/Icons contract
+      instead of a bespoke stand-in for it. All 35 PR checks green, mergeable_state clean,
+      merged eb2022a. No further redundant overrides found in this pass -- the other 15 stay
+      bespoke as documented above.
     claimed_by: claude-scheduled-20260823T0203Z-iv-t118
     claimed_at: '2026-08-23T02:04:19Z'
     updated: '2026-08-23T02:04:19Z'
