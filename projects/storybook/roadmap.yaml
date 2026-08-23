@@ -133,8 +133,8 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
-  passes: 0
+  status: review
+  passes: 48
   stakes: reversible
   note: |-
     Cycle 30 (no-op, re-armed): cycle 29 flagged storybook-library-page.vue (350 lines) and storybook-page.vue full template as unread. Read storybook-library-page.vue end to end and storybook-page.vue in full (template + script, 1065 lines). Chased two concrete hypotheses: (1) storybook-page.vues startAnother() (child "New story" button, header) calls store.resetSession() directly with no explicit archiveCurrent() call first, unlike storybook-library-page.vues startNewStory() (wrapper "New story" button) which calls archiveCurrent() then resetSession() -- looked like a real asymmetry where the childs button could discard an unsaved session without archiving it into the library. Traced into storybookLibraryHelper.ts and found this is NOT a bug: its own watch(() => bridge.getSession(), ...) is a deep watcher that fires on every session transition, including session -> null, and its else-branch (`else if (previous) upsert(previous)`) archives the outgoing session automatically regardless of which components button triggered the reset -- library-pages explicit archiveCurrent() call is redundant defensive code, not filling a real gap the child lacks. (2) seedFromQuery() (deep-link ingredient seeding) writes into store.setupDraft unconditionally whenever scenario/location/character/facet/reward query params are present, with no check for whether store.session is already active -- confirmed this only affects the (hidden, unrendered) setup draft while a session is active, not the live story, and strips the query params regardless; a minor, low-frequency surprise (a deep link clicked mid-story silently seeds the NEXT storys draft) rather than a correctness bug, left as a note rather than a fix. No new bug found this cycle. Releasing the claim without a code change. Two hypotheses were investigated and ruled out with reasoning (not just skipped), which is real signal that the covered surface is solid. Kaizen for cycle 31: read the remaining ~350 unread lines of storybook-page.vue (roughly 300-700 and 745-920 -- the review step, beat-weaving chat flow, and the ingredient-picker computed selectors), or move to the components/narrative/** shared surface (narrative-role-assigner.vue, kr-chat-window.vue, narrativeBeatsToTurns) that both Storybook and Taskmaster depend on but neither projects audits fully own.
@@ -195,8 +195,54 @@ tasks:
     first hypothesis) cross-checked against storybookStore.ts's actual turn-building
     code end to end, rather than another shared-primitive sweep -- the primitive
     layer (kr-choice-list + its adapters) looks exhausted for now.
-  updated: '2026-08-23T22:27:47Z'
-  implementation_pr: 'silasfelinus/kind_robots#2024'
+
+    Cycle 34: read kr-chat-window.vue's streaming-turn path cross-checked
+    against storybookStore.ts's turn-building code end to end, per cycle 33's
+    own lead. kr-chat-window.vue itself is purely presentational -- no bug.
+    narrativeBeatsToTurns() never sets turn.choices (Storybook/Taskmaster are
+    free-text, not branching -- kr-choice-list only renders for the surfaces
+    already swept in cycles 32/33), and its "empty answer treated as absent"
+    branch is confirmed dead: answerCurrentBeat() already trims and rejects an
+    empty/whitespace-only answer before it ever reaches beat.answer (t-020's
+    own audited comment covers this). No bug in either.
+
+    Found a real one in chatStore.ts instead. storybookStore.ts and
+    taskmasterStore.ts each call chatStore.generateText() from their own
+    weaveBeat(), and both derived streamingText from chatStore.pendingText --
+    a SINGLE module-level singleton (pendingChatId) shared across every
+    generateText() caller in the app, not scoped per caller. Neither store
+    cancels its in-flight weaveBeat() on navigation (no AbortController, and
+    Pinia store state outlives the unmounted page component), so a reader who
+    leaves Storybook mid-scene and answers a Taskmaster beat before
+    Storybook's call resolves can have Taskmaster's generateText() overwrite
+    the shared pendingChatId -- returning to Storybook while its own call is
+    still streaming shows Taskmaster's prose under Storybook's placeholder.
+    Worse, whichever call's finally runs first unconditionally nulls
+    pendingChatId, which can blank a still-streaming sibling call's
+    streamingText back to empty even though it has live text arriving. Traced
+    pendingChatId/pendingChat/pendingText's origin to a 2026-07-18 TALKBACK
+    entry (exposed for the old serendipityStore, now taskmasterStore after
+    the rename) -- Storybook's later reuse of the same singleton for an
+    unrelated product is what turned a single-caller convenience into a
+    cross-product race.
+
+    Fixed: added an onChatId hook to generateText(), fired synchronously with
+    the newly created chat id, and chatText(id) -- a read scoped to that
+    specific chat, independent of the singleton. Both stores now track their
+    own weavingChatId (reset to null before each call and in its finally) and
+    read streamingText through chatText() instead of pendingText. Added
+    verifyNarrativeStreamingTextIsolationGuard.mjs (+ dedicated contract
+    workflow), confirmed it fails against the old shared-singleton shape and
+    passes against the fix. kind_robots#2054.
+
+    Next lead for cycle 35: pendingChatId/pendingChat/pendingText on
+    chatStore.ts are now dead code (no remaining consumer after this cycle's
+    fix) but were deliberately left in place rather than removed -- worth a
+    fresh look at whether removing them outright is safe, or whether a third
+    future caller is likely enough to reuse chatText()'s scoped shape instead
+    if the old singleton wasn't there to reach for.
+  updated: '2026-08-23T22:36:52Z'
+  implementation_pr: 'silasfelinus/kind_robots#2054'
   owner: reviewer
   claimed_by: claude-conductor-scheduled-20260823T2227-storybook-t010
   claimed_at: '2026-08-23T22:27:47Z'
