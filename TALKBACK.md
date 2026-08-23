@@ -22323,13 +22323,26 @@ completed (~3 min total). All 36 checks passed, `mergeable_state` flipped to `cl
 
 **Close-out:** `close_task.py interface-vision t-104 ready --implementation-pr silasfelinus/kind_robots#2039`
 with the merge outcome appended to the task's existing per-slice note (the umbrella returns to `ready`
-after each bounded slice, matching every prior t-104 close-out in this file's history).
+after each bounded slice, matching every prior t-104 close-out in this file's history). Opened conductor
+PR #2698 for the roadmap edit and pushed a rebase (`git fetch origin main && git merge origin/main`)
+right before opening it -- but a `chore: process task events [skip ci]` auto-commit had already landed
+on `main` in the meantime, consuming a task-events file the original worker session (kind_robots#2039's
+author) had itself queued when it opened that PR, and closing `t-104` to `ready` with a more detailed
+note (real per-check CI names) before my own hand-written close-out PR could land. Classic rotation
+collision, same shape as conductor/t-085: resolved per AGENTS.md's guidance by taking `main`'s already-
+processed roadmap.yaml as authoritative (`git checkout --theirs`) rather than overwriting it with my
+own duplicate transition, keeping only this TALKBACK entry in #2698. Lesson for next time: check
+`task-events/` for a same-task queued/recently-consumed event *before* hand-running `close_task.py`, not
+just before hand-writing `status: done` -- the same race applies to the `review`-\>`ready` transition,
+not only `done`.
 
 **What was good:** did not merge on a still-in-progress check set just because most checks were already
 green -- confirmed all 36 completed and `mergeable_state: clean` before merging, per the "green means
-checks completed" discipline in AGENTS.md's "Reporting back to Silas" section.
+checks completed" discipline in AGENTS.md's "Reporting back to Silas" section. Caught the roadmap race
+via the PR's own `mergeable_state: dirty` signal rather than force-pushing past it.
 
-**What to improve:** none this cycle -- small, well-scoped fix; verification matched the PR's own claims.
+**What to improve:** should have checked `task-events/` for a queued event on `interface-vision/t-104`
+before running `close_task.py` -- the original worker session had already queued one.
 
 **Kaizen task:** none filed -- no new gap surfaced by this slice; the umbrella's own note already tracks
 its next-slice candidates.
