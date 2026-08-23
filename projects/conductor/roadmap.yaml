@@ -4123,7 +4123,7 @@ tasks:
   - id: t-123
     milestone: m2
     title: Sweep step should check a same-day-gated recurring task's note tail before claiming it
-    status: claimed
+    status: review
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -4141,6 +4141,6 @@ tasks:
       Scope to tasks that carry an explicit daily/progress-gated contract in their note (grep for
       "Pacific calendar day" or a dedicated `daily_gate: true` field, whichever is less invasive)
       rather than a general-purpose note-parser for every recurring task.
-    updated: '2026-08-23T15:28:44Z'
+    updated: '2026-08-23T15:33:01Z'
     claimed_by: claude-scheduled-20260823T152700Z-cd-t123
     claimed_at: '2026-08-23T15:28:44Z'
