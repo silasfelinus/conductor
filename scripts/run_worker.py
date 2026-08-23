@@ -37,6 +37,7 @@ except ImportError:
     sys.exit('PyYAML not installed — run: pip install pyyaml')
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from daily_gate import already_recorded_today  # noqa: E402
 from roadmap_claims import remaining_scope_delegate_open  # noqa: E402
 from project_lifecycle import (  # noqa: E402
     WORKABLE_PROJECT_STATUSES,
@@ -97,7 +98,9 @@ def load_roadmaps() -> list[dict[str, Any]]:
     return roadmaps
 
 
-def find_ready_task(priority_order: list[str], roadmaps: list[dict[str, Any]]) -> dict[str, Any] | None:
+def find_ready_task(
+    priority_order: list[str], roadmaps: list[dict[str, Any]], *, now: Any = None
+) -> dict[str, Any] | None:
     by_project = {roadmap.get('_project'): roadmap for roadmap in roadmaps}
     overrides = {str(slug): {'status': roadmap.get('_lifecycle', 'active')} for slug, roadmap in by_project.items()}
     for slug in ordered_workable_slugs(priority_order, overrides):
@@ -110,6 +113,12 @@ def find_ready_task(priority_order: list[str], roadmaps: list[dict[str, Any]]) -
             if task.get('status') != 'ready':
                 continue
             if remaining_scope_delegate_open(task, tasks_by_id):
+                continue
+            if already_recorded_today(task, now=now):
+                # Same-day-gated recurring task (e.g. mermaids-of-venice/t-013) whose
+                # note already records today's Pacific-date outcome -- claiming it now
+                # would just repeat work an earlier session already did this cycle
+                # (conductor/t-123). Skip to the next candidate instead.
                 continue
             return {
                 'project': roadmap.get('_project'),
