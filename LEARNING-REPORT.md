@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-23T14:29:15Z
+Generated: 2026-08-23T15:01:21Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **730**
-- Outcomes: blocked: 15, cancelled: 1, done: 714
+- Closed tasks recorded: **731**
+- Outcomes: blocked: 15, cancelled: 1, done: 715
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -43,7 +43,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kindrobots-unraid | 5 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 76 | 100% |
+| model-builder | 77 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 714 | 99% |
+| software | 715 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-23 `model-builder/t-029` — Cycle 56's note flagged that its repo-wide model-builder-reference grep, diffed against every file this task's history had named as read, was itself worth re-running -- but a directory glob (components/model-builder/**) had been silently treated as "covered" without any individual cycle ever naming every file inside it. model-builder-manager.vue (the top-level page component) had never actually been read in 56 cycles despite matching that glob. Reading it found it clean, but tracing the run-lifecycle functions it orchestrates (startRun/openRun/resumeRun) surfaced a real bug: three more places swap the active run for a different one the same way resetRun()/resetAll() do, but never called their in-flight-singleton-clearing logic, reproducing the exact stale-busy-indicator bug those two were already fixed for. Lesson for future cycles: a directory-glob "already covered" check is not the same as per-file coverage -- cross-check individual filenames against the cumulative note history, not just the glob pattern. Also, when a file traced this way reads clean, the bug may be in a function it *calls into* rather than the file itself; tracing outward from a clean file is a distinct, useful search strategy from re-reading a file's own body. Also confirmed: extracting a shared helper to reduce duplication across the four fix sites broke two pre-existing narrow-textual-checker guards that were pinned to the literal inline shape -- inlining the fix at each site (matching the existing pattern) instead of refactoring was the lower-risk choice once existing guards are keyed to literal text shape, not just behavior.
+
 - 2026-08-22 `model-builder/t-029` — A session determined its own role as `worker` via select_role.py but then ran claim_task.py with `--owner reviewer` out of habit -- Reviewer is hard-barred from claiming tasks at all, so this was a real (if quickly self-caught) process violation, not just cosmetic metadata. Fixed via a tiny follow-up PR (#2688) correcting only the owner field before any implementation work proceeded. Lesson for future cycles: double-check `--owner` matches the session's live select_role.py recommendation before calling claim_task.py, not after the push already landed on origin/main.
 
 - 2026-08-22 `appmaker/t-012` — apps.get.ts's pending-scaffold reader only ever recognized one of AppMaker's two self-serve scaffold flows' Todo titles (the monorepo flow's "Scaffold new app '...'", never the external-repo GitHub-integration flow's "Scaffold external app '...' via AppMaker GitHub integration") -- both the Prisma query's title filter and the extraction regex needed updating together, since fixing only one still silently drops the other flow's real, open Todos from the UI. Same "an endpoint reachable via direct API call, even with no front-end wired up yet, is still worth defending" precedent the prior cycle set for this exact pair of routes' slug-collision guard -- when two routes share a naming convention a downstream reader depends on, audit every reader against every writer, not just the one the current UI happens to call.
@@ -102,8 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-22 `ai-art-academy/t-070` — A finite backfill task's coverage denominator silently going stale after the thing it counts (academyStyles.ts's canonical style list) grows is a real, recurring failure mode -- historical t-013 correctly reached 21/21 for its own cohort, but nothing kept that "21" honest as the curriculum expanded to 47 styles, so 26 lessons sat with no Example Works strip for roughly a month, completely undetected. The fix that generalizes: any "N/N complete" coverage claim needs its verifier computing the denominator from the CURRENT source of truth every run (here, academyStyles.length), never from a number written down when the task closed. Pairing that with an explicit, named exceptions file (config/academy-example-work-exceptions.json) rather than just lowering the bar to "however many exist today" is what makes a real partial-coverage state distinguishable from silent drift -- every uncovered item must resolve to either real coverage or a reasoned, tracked gap, never neither. Also confirmed a sourcing pattern worth remembering: an open-access museum API returning is_public_domain: true for the WORK does not guarantee the DIGITIZATION is unrestricted -- AIC's own API returned is_public_domain: false for both american-regionalism's named artists (Grant Wood incl. American Gothic, John Steuart Curry) despite both clearing the death-date prong, matching the same rights-society-restriction pattern the historical t-013 TALKBACK already found for Kandinsky/Klee/Gris -- a green light from one open-access API is necessary but not sufficient; check the specific work, not just the artist's era. Finally, this sandbox's Cloudflare-bot-challenged access to artic.edu's own IIIF image CDN (confirmed via a direct HEAD request returning cf-mitigated: challenge, while api.artic.edu's JSON search API worked fine) explains why the file's existing AIC- sourced exampleWorks entries route through Wikimedia Commons instead of citing AIC directly -- worth checking upload.wikimedia.org reachability first for any future AIC-collection sourcing rather than re-discovering the CDN block each time.
 
-- 2026-08-22 `ai-art-academy/t-069` — A "verify current production" task is only as good as its weakest-evidence criterion -- splitting each acceptance item explicitly into LIVE (real HTTP against kindrobots.org/api responses) vs. SOURCE-traced (client-hydration-gated UI this sandbox's broken headless Chromium can't reach) kept the note honest about what was actually proven vs. inferred, per AGENTS.md's explicit "never blur verified and assumed" rule. For the one criterion needing a real render (a completed Kontext remix), KR_API_TOKEN as a Bearer token against the same server route/workflow builder the UI calls (POST /api/art/enqueue -> poll GET /api/art/queue/:id -> GET /api/art/image/:id?includeImageData=true) produced a genuine end-to-end artifact (ArtJob 9009, ArtImage 18263) that could be decoded and visually inspected, not just a "status: DONE" proxy -- this is the strongest verification shape available to a sandboxed session with no browser and is worth reusing for any future "does generation actually work in prod" task. Also worth remembering for next time: freshly-generated ArtImages in production have null path/imagePath and are delivered as inline base64 -> data: URI, not through the static /images/** bridge that lesson/starter assets use -- a future check that assumes every ArtImage has a static path will get a false negative.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-23T14:29:15Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-23T15:01:21Z_
