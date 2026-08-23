@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -3015,11 +3015,13 @@ tasks:
       Compact Project artwork prompt-context bug ready for review on worker/interface-vision-t-104-project-art-context-9d6e. The shared entity-art prompt plugin previously relied on Vue DOM internals or URL/model attributes; the compact Projects workspace is selected through pageStore.workspaceCardKey, so the visible Suggest prompt button could not resolve the Project and displayed “Could not identify record”. Add a narrowly-scoped fallback only inside .project-art-compact that resolves the active Project from pageStore + projectStore and supplies the canonical Hero/Card/Icon slot metadata. The existing generic and route/DOM resolution paths remain first priority. Contract coverage now guards the workspace fallback.
 
       PR #2039 merged to kind_robots main as 1ff685231ceca43c139133d6d56422fd4b3b3987 after every validation workflow triggered for exact head 4a7418fa3f2ed8bea3b78a5c0bc62a2ec3c17d05 completed successfully, including Entity Art Manager Contract #170, TypeScript #5552, Contract Tests #5445, Layout #2100, Project Architecture #603, and the remaining Storybook/narrative contracts. Root cause was the generic entity-art prompt helper attaching inside the compact Projects workspace but failing to resolve the active Project because that surface is state-routed through pageStore.workspaceCardKey rather than a Project URL and the DOM enhancer cannot rely on Vue ancestry. The shared helper now has a fallback scoped to .project-art-compact that resolves workspaceCardKey through projectStore and carries canonical Hero/Card/Icon slot metadata. Vercel produced no PR preview because that deployment path is retired/non-authoritative; production visual verification still follows the self-hosted Kind Robots deploy path.
-    updated: '2026-08-23T03:38:05Z'
+      Slice 45 merged as silasfelinus/kind_robots#2040 (squash 620c2507) from exact head d0fb0e92c22aa0e77b81b36bc2bd7950e400b96f. Re-ran the byte-exact kr_panel_codemod.py (from t-115/t-116) against current main: the previously-surfaced 47-occurrence/21-file kr-panel-flat pool from t-116 has since been fully consumed by later slices, leaving exactly one new candidate. components/pages/mermaids-page.vue's reader-reaction panel root now uses kr-panel-flat instead of hand-rolled rounded-2xl border border-base-300 bg-base-100, preserving p-5 shadow-sm; no geometry or behavior change. Verified: eslint clean, vue-tsc --noEmit clean (one pre-existing unrelated error in server/api/reactions/index.post.ts confirmed present on baseline via git stash), test:layout-contract holds (0 new violations), prettier drift on the file confirmed pre-existing via git stash. All 35 exact-head CI checks green, mergeable_state clean before merge. Return the non-recurring consistency umbrella to ready for the next bounded slice.
+    updated: '2026-08-23T03:47:57Z'
     approved_by_human: true
     owner: worker
     claimed_by: claude-scheduled-20260823T034200Z-iv-t104-slice45
     claimed_at: '2026-08-23T03:38:05Z'
+    implementation_pr: 'silasfelinus/kind_robots#2040'
 
   - id: t-105
     milestone: m6
@@ -3190,3 +3192,28 @@ tasks:
     claimed_by: claude-scheduled-20260823T0203Z-iv-t118
     claimed_at: '2026-08-23T02:04:19Z'
     updated: '2026-08-23T02:04:19Z'
+
+  - id: t-119
+    milestone: m5
+    title: "Re-check the kr-panel-flat DaisyUI-conflict skip pool for now-safe hand-migration candidates"
+    status: ready
+    passes: 0
+    stakes: reversible
+    owner: null
+    note: >
+      Kaizen from t-104 slice 45 (silasfelinus/kind_robots#2040). Re-running
+      utils/scripts/codemods/kr_panel_codemod.py --root . against current main found the
+      t-116 exact-match pool fully consumed (down to 1 new candidate, migrated this slice)
+      but still lists a small skip pool of occurrences carrying a co-occurring DaisyUI
+      component-root class (components/art/art-manager.vue's modal-box, components/ui/
+      kr-stat-tile.vue's stat, components/user/chat-gallery.vue's btn btn-ghost, 4
+      occurrences across 3 files as of this slice). These were correctly skipped by the
+      codemod's allowlist (same judgment call as kr-stat-tile.vue's original slice-12
+      exclusion), but nobody has re-examined them by hand since t-115 first flagged the
+      pattern. Read each skipped occurrence's actual mount context and decide per-file,
+      the same way slices 10-14 did for the original kr-panel pool: does the co-occurring
+      DaisyUI class genuinely need the conflicting styling (leave it), or is it safe to
+      restructure (e.g. move the kr-panel-flat classes to a wrapping element, or confirm
+      Tailwind's utility-over-component precedence actually makes the co-occurrence safe
+      here specifically)? Do not expand the codemod's automatic allowlist without the same
+      case-by-case visual-delta reasoning prior slices applied by hand.
