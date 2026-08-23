@@ -29,19 +29,19 @@ milestones:
 - id: m2
   title: First sellable item live — Mermaids of Venice PDF
   weight: 25
-  status: in-progress
+  status: done
 - id: m3
   title: Support & donations (subscription, mana top-ups, Against Malaria page)
   weight: 20
-  status: not-started
+  status: done
 - id: m4
   title: Print-on-demand & gallery coordination (KR logo item first)
   weight: 20
-  status: not-started
+  status: done
 - id: m5
   title: DLC website unlocks (packmaker packs purchasable)
   weight: 15
-  status: not-started
+  status: done
 - id: m6
   title: "VERIFY & POLISH — catalog completeness, Stripe E2E, responsive storefront"
   weight: 20
@@ -1631,18 +1631,19 @@ tasks:
 - id: t-044
   milestone: m2
   title: Fix 4 stale digital-storefront milestone status fields (m2/m3/m4/m5 all lag their fully-completed task sets)
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
   note: >
-    Kaizen from the 2026-08-23 weekly site audit. Four milestones' `status:` fields lag their
-    actual task completion: m2 "First sellable item live" is `in-progress` but all 4 tasks are
-    done (should be `done`); m3 "Support & donations" is `not-started` but all 6 tasks are done
-    (should be `done`); m4 "Print-on-demand & gallery coordination" is `not-started` but all 12
-    tasks are done (should be `done`); m5 "DLC website unlocks" is `not-started` but both tasks
-    are done (should be `done`). m1 and m6 are already correctly stamped. No task content changes
-    needed — just the 4 milestone `status:` fields above.
+    Kaizen from the 2026-08-23 weekly site audit. Flipped 4 milestones to `done`: m3 "Support &
+    donations" (all 6 tasks done), m4 "Print-on-demand & gallery coordination" (all 12 tasks
+    done), and m5 "DLC website unlocks" (both tasks done) were all flipped from `not-started`.
+    m2 "First sellable item live" was `in-progress` with its 4 other tasks done and only this
+    task itself outstanding under it -- now that this task is closing as `done` too, m2's own
+    task set is complete, so it's flipped to `done` in this same commit rather than left
+    `in-progress` for a separate follow-up. m1 and m6 were already correctly stamped and are
+    untouched. No other task content changed.
   claimed_by: claude-scheduled-20260823T0155Z-ds-t044
   claimed_at: '2026-08-23T01:56:41Z'
   updated: '2026-08-23T01:56:41Z'
