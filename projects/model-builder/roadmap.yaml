@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 46
     stakes: reversible
@@ -598,9 +598,9 @@ tasks:
 
       Next leads: this cycle's method (repo-wide grep for model-builder references, diffed against every file this task's history has named as read) is itself the useful artifact to carry forward -- worth running again before assuming client-state-race/Prisma/error-handling territory is the only place left to look. No other unaudited model-builder-referencing files remain from this cycle's grep (the rest were prisma/generated/** client output, unrelated dashboard/backdrop art-prompt seed keys, or this task's own verify*.ts guard scripts). Released the claim; re-armed to `ready`.
     owner: worker
-    claimed_by: claude-scheduled-20260823T132757Z-mb-t029
-    claimed_at: '2026-08-23T13:27:58Z'
-    updated: '2026-08-23T13:51:32Z'
+    claimed_by: claude-conductor-20260823T-mb-t029-cycle57
+    claimed_at: '2026-08-23T14:28:47Z'
+    updated: '2026-08-23T14:28:47Z'
 
   - id: t-030
     milestone: m6
