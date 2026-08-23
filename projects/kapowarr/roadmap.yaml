@@ -26,7 +26,7 @@ milestones:
 - id: m4
   title: MAINTAIN — respond to real usage without recurring upstream monitoring
   weight: 10
-  status: in-progress
+  status: done
 - id: m5
   title: ACQUIRE — complete the -arr-style source/indexer/client fabric
   weight: 40
@@ -34,7 +34,7 @@ milestones:
 - id: m6
   title: DISCOVER & CURATE — weekly lists, story arcs, wanted, and recommendations
   weight: 30
-  status: not-started
+  status: done
 - id: m7
   title: METADATA — reduce ComicVine dependence and preserve portable identity
   weight: 20
@@ -46,7 +46,7 @@ milestones:
 - id: m9
   title: READER FOLLOW-UPS — format completeness after aggregation priorities
   weight: 5
-  status: not-started
+  status: done
 tasks:
 - id: t-001
   milestone: m1
@@ -1569,18 +1569,18 @@ tasks:
 - id: t-069
   milestone: m4
   title: Fix 3 stale kapowarr milestone status fields (m4/m6/m9 all fully done but not stamped done)
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
   note: >
     Kaizen from the 2026-08-23 weekly site audit. Same stale-milestone-metadata pattern t-020
-    already fixed for m3, recurring elsewhere: m4 "MAINTAIN" is `in-progress` but all 3 tasks
-    (t-023, t-053, t-055) are done (should be `done`); m6 "DISCOVER & CURATE" is `not-started`
-    but all 11 tasks are done (should be `done`); m9 "READER FOLLOW-UPS" is `not-started` but its
-    only task (t-045) is done (should be `done`). m5/m8 are already correctly `in-progress`
-    (each has a genuine open needs-human task). No task content changes needed — just the 3
-    milestone `status:` fields above.
+    already fixed for m3, recurring elsewhere: m4 "MAINTAIN" was `in-progress` but all 3 tasks
+    (t-023, t-053, t-055) are done -- flipped to `done`; m6 "DISCOVER & CURATE" was `not-started`
+    but all 11 tasks are done -- flipped to `done`; m9 "READER FOLLOW-UPS" was `not-started` but
+    its only task (t-045) is done -- flipped to `done`. m5/m8 correctly stay `in-progress`
+    (each has a genuine open needs-human task). No task content changed, just the 3 milestone
+    `status:` fields.
   claimed_by: claude-scheduled-20260823T0140Z-kapowarr-t069
   claimed_at: '2026-08-23T01:45:46Z'
   updated: '2026-08-23T01:45:46Z'
