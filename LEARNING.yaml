@@ -10251,3 +10251,20 @@ records:
     Worker, since the errors were narrow, unambiguous, and confined to the task's own new
     files. Re-affirms running the repo's local typecheck before opening a PR would have
     caught this before CI did.
+- date: '2026-08-24'
+  project: conductor
+  task: t-127
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A task's note can go stale between when it's filed and when a session picks it up --
+    Silas hand-fixed the acute incident this task described (three stuck operation: note
+    events) hours before this session claimed it. Re-checking live git history and roadmap
+    state before implementing found the task was actually asking for two things bundled
+    together: the acute fix (already done, by hand) and a systemic guard (still open).
+    Scoping the PR to only the still-open half, and following the human's own stated
+    root-cause reasoning in the commit that did the acute fix, avoided both redundant work
+    and contradicting a judgment call Silas had already made.
