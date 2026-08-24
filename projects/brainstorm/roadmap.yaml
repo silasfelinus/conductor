@@ -589,7 +589,7 @@ tasks:
   - id: t-026
     milestone: m4
     title: Give promoted candidates a path to carry their art into entity-art fields
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -604,7 +604,35 @@ tasks:
       confirm there isn't yet) a "promote this candidate into an X" action anywhere in
       the app, and if one exists, wire its already-delivered art across rather than
       dropping it.
-    updated: '2026-08-24T05:28:30Z'
+
+
+      RESOLVED (2026-08-24, no kind_robots code change -- investigation-only, scope was
+      conditional on a promotion flow existing): searched the whole app
+      (components/brainstorm/, brainstorm-manager.vue's kept-candidate bulk actions,
+      server/api/brainstorm/, and a repo-wide grep for promote/convert/"turn into"/
+      createFrom) and confirmed no "promote this Brainstorm candidate into a
+      Character/Dream/Project/other entity" action exists anywhere today.
+      brainstorm-candidate-card.vue's only per-candidate actions are keep/reject/reset/
+      delete/regenerate/branch/restoreRevision/edit/feedback/toggleArtSelection; the
+      manager's only kept-candidate bulk actions are a Markdown clipboard copy and a
+      .md file export, neither of which touches meta.art.imageIds at all. The only
+      "promote" actions in the repo are unrelated (promptStore.promoteToDream /
+      dreamStore.promotePromptToDream -- Prompt to Dream, not Brainstorm; the
+      artjob-feedback-manager PROMOTE verdict; modelBuilderStore.promoteAsset;
+      conductor-page.vue's promoteFeatureToTask). The only existing Brainstorm<->entity
+      wiring runs the other direction (entity -> Brainstorm session, via
+      startBrainstormWith*() CTAs on Character/Scenario/Reward/Bot/Project, asserted by
+      verifyBrainstormObjectEntryLinks.mjs) and never touches art.
+
+      Also surfaced a real design gap for whoever builds the promotion action: entityArt.ts's
+      ENTITY_FIELDS/EntityArtType model is strictly one scalar artImageId/imagePath per
+      named slot per entity, while a candidate's meta.art.imageIds is an array -- any
+      promotion implementation needs to pick/map from possibly-many candidate images down
+      to the target entity's single primary slot (promptStore.promoteToDream's Prompt-has-
+      one-artImageId case is not a direct precedent for that reduction). Filed as t-031
+      rather than expanding this task's scope, since t-026 was conditional on a promotion
+      flow already existing and none does.
+    updated: '2026-08-24T05:40:00Z'
     claimed_by: claude-scheduled-20260824T052829Z-brainstorm-t026
     claimed_at: '2026-08-24T05:28:30Z'
 
@@ -722,3 +750,34 @@ tasks:
     claimed_at: '2026-08-24T03:29:03Z'
     updated: '2026-08-24T03:42:49Z'
     implementation_pr: 'silasfelinus/kind_robots#2058'
+
+  - id: t-031
+    milestone: m4
+    title: Add a "promote candidate into an entity" action and wire its art across
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from t-026 (2026-08-24): no "promote this Brainstorm candidate into a
+      Character/Dream/other entity" action exists anywhere in the app today (t-026
+      searched components/brainstorm/, server/api/brainstorm/, and did a repo-wide
+      grep -- see its note for the full negative-result evidence). Candidate art
+      delivered via meta.art.imageIds (an array, see types/brainstorm.ts) is
+      currently a dead end: once a candidate is "kept," the only export paths are a
+      Markdown clipboard copy and a .md file download, both of which drop the art
+      entirely. Scope: pick one natural target entity (Character is the most
+      developed entity-art consumer and the most plausible home for a Brainstorm
+      candidate's title/text) and add a real "Promote to Character" (or similarly
+      named) action on brainstorm-candidate-card.vue or brainstorm-manager.vue's
+      kept-candidate row, following promptStore.promoteToDream's shape as the closest
+      structural precedent for the general copy-fields-then-create flow. The one
+      genuinely new problem promptStore.promoteToDream doesn't already solve:
+      meta.art.imageIds is an array while entityArt.ts's ENTITY_FIELDS model is one
+      scalar artImageId/imagePath per named slot, so the implementation must pick a
+      primary image (first delivered image, or a UI affordance if multiple are kept)
+      to write into the target entity's primary art slot rather than silently
+      dropping the rest -- decide and document which. Extend
+      verifyBrainstormObjectEntryLinks.mjs (or an equivalent contract test) to assert
+      the new action actually carries meta.art.imageIds across on a successful
+      promotion.
