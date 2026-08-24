@@ -1,0 +1,8 @@
+version: 1
+project: kapowarr
+task: t-068
+operation: review
+session: 2026-08-24T020450Z-kapowarr-t-068-855eab
+updated: '2026-08-24T02:10:13Z'
+note: >-
+  Root cause narrowed to the Volumes gallery render path. The earlier batching change revealed the first 50 entries sooner but still drained every remaining volume into the DOM in background batches; Safari's setTimeout fallback makes that especially eager. Filtering to Wanted shortens that work, which matches the live report. Branch worker/kapowarr-t-068-gallery-render-budget-855eab now renders a bounded viewport runway in 16-entry batches only as the footer approaches, bulk-clears old gallery DOM, keeps Mass Edit selection in data so lazy rows preserve Select All, and updates queue badges only for volumes represented by the queue. Local syntax check passed and 4 focused frontend regression tests pass; full repository Actions will run on the PR head.
