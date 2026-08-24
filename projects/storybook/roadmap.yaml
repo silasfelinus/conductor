@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 49
   stakes: reversible
   note: |-
@@ -343,7 +343,9 @@ tasks:
     sufficient for its single mount site but not the same invariant). Worth
     checking whether Taskmaster has a mount-order race of the kind
     verifyStorybookRestoreIdempotencyGuard covers for Storybook.
-  updated: '2026-08-24T18:31:46Z'
+
+    Cycle 37 re-check (conductor scheduled Agent run, session 20260824-sched-conductor-storybook-t010-run1): picked up this task's own flagged next lead (READ-path asymmetry between storybookStore.restoreFromLocalStorage() and taskmasterStore.restoreFromLocalStorage()) and found it was already fully closed by kind_robots#2060 (storybook/t-023, merged 2026-08-23) -- that PR moved Taskmaster's getItem() inside its try and confirmed via mount-site tracing that Taskmaster's single call site makes its !session.value guard sufficient, no reachable mount-order race. No new lead surfaced this cycle from either store's persistence code. Also checked the current kind_robots main (576ad9d, includes the just-merged Aquarium persistence models and Scene Animator admin workflow, neither touching storybook/taskmaster) for any new front-end surface to polish -- nothing new found. No code change. Re-armed to ready; next cycle should look past the persistence-guard family (write path: cycle 36/#2059, read path: t-023/#2060, both closed) toward a genuinely new angle.
+  updated: '2026-08-24T18:36:09Z'
   implementation_pr: 'silasfelinus/kind_robots#2054, silasfelinus/kind_robots#2056, silasfelinus/kind_robots#2059'
   owner: worker
   claimed_by: 20260824-sched-conductor-storybook-t010-run1
