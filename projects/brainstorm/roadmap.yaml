@@ -465,12 +465,12 @@ tasks:
   - id: t-020
     milestone: m5
     title: Reconnect Conductor proposal ideation as an explicit downstream consumer
-    status: ready
+    status: claimed
     depends_on:
       - t-010
       - t-019
-    owner: null
-    updated: '2026-08-10T08:05:00Z'
+    owner: reviewer
+    updated: '2026-08-24T21:40:59Z'
     passes: 0
     stakes: reversible
     note: >-
@@ -479,6 +479,8 @@ tasks:
       explicit downstream workflow that may use Brainstorm generation but only promotes vetted
       ideas into canonical Conductor `pitches/*.md`. A normal user Brainstorm can never mutate
       roadmaps, lifecycle or coordination pitches implicitly.
+    claimed_by: 20260824T2145Z-sched-conductor-brainstorm-t020
+    claimed_at: '2026-08-24T21:40:59Z'
 
   - id: t-021
     milestone: m5
