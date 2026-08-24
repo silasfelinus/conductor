@@ -141,7 +141,13 @@ def test_entry_to_job_flux2_klein_alias_and_json_prompt():
     )
     assert job["engine"] == "COMFY"
     wf = job["payload"]["workflow"]
-    assert wf["1"]["inputs"]["unet_name"] == consumer.FLUX2_KLEIN_MODEL
+    # FLUX2_KLEIN_MODEL is a logical Resource name now, not a raw filename --
+    # resolve_model() maps it to whatever ComfyUI-relative path the registry
+    # reports (cthulhuquarium/t-034), so compare against that resolution
+    # rather than the bare constant.
+    assert wf["1"]["inputs"]["unet_name"] == consumer.resolve_model(
+        consumer.FLUX2_KLEIN_MODEL, "DIFFUSION_MODEL"
+    )
     assert wf["2"]["inputs"]["type"] == consumer.FLUX2_KLEIN_CLIP_TYPE
     assert job["payload"]["steps"] == consumer.FLUX2_KLEIN_STEPS
     # JSON structured prompt is serialized into the positive text encode
