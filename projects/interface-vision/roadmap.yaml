@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -3051,11 +3051,14 @@ tasks:
       Project-detail desktop composition is ready for review on worker/interface-vision-t-104-project-layout-f2c9. Artwork and the always-open management column now share the primary desktop row; Project Profile sits above the one-box task/comment composer on the right. Roadmap follows and is open by default. Milestones and Project Notes follow as collapsed disclosures. The same component remains stacked below xl widths, and EntityArtManager behavior is unchanged. Added contract coverage for responsive composition, ordering, and default disclosure states.
 
       MERGED kind_robots PR #2055 as 53bfaad4ed8b204b268388dd0c40132de2ec3c99. Project detail now uses host-width container queries: artwork on the left with always-open Project Profile plus Add task/comment stacked on the right when there is room; Roadmap follows and is open by default; Milestones and Project Notes follow collapsed. Exact-head TypeScript #5590, Layout #2138, Entity Art Manager #177, Contract Tests #5483, Project Architecture #641, MDC Scroll Ownership #1114, Facet Catalog #3022, and all other triggered workflows completed successfully. No production deploy was performed; live verification awaits the manual Unraid Force Update.
-    updated: '2026-08-24T00:29:22Z'
+            Slice 50 re-check (conductor scheduled Agent run, 2026-08-24T00:29Z session, claude-scheduled-20260824T002922Z-iv-t104): claimed the umbrella and independently re-ran both established mechanical pools against current kind_robots main (53bfaad, includes PR #2055's project-detail composition merge). kr_panel_codemod.py --root . found 0 safe candidates -- the same 3 occurrences across kr-stat-tile.vue (.stat DaisyUI conflict) and chat-gallery.vue (btn DaisyUI root) remain correctly skipped as unsafe extra-token matches, unchanged since slice 48. The mx-auto+w-full+max-w-(6xl|7xl) root-element grep (both literal-adjacent and same-file-all-three-tokens forms) also returned zero hits. This is the third independent confirmation in as many sessions (slices 48, 49, and this one) that both known byte-exact/mechanical pools are exhausted -- no regression, no new pattern, nothing broken. No code change; releasing the claim rather than manufacturing a slice against the pool.
+
+            Not re-opening slice 49's needs-human choice, since it was already superseded once by Silas supplying a concrete next target in-session (the Conductor project-detail composition work, merged as kind_robots#2055) -- that precedent already answers "how the umbrella proceeds when the mechanical pools are dry": it waits for a bounded, Silas-directed target rather than the Worker inventing one. Returning to `ready` (not `needs-human`) so a future session doesn't need to re-litigate this; the still-open scope fork from slice 49 (mechanical phase complete vs. explicit viewport-grid authorization) remains accurate and unresolved, and the 209 pre-existing layout-contract `viewport-grid` violations are unchanged. Moving on to other ready work this cycle rather than guessing at a next slice blind.
+    updated: '2026-08-24T00:30:47Z'
     approved_by_human: true
-    owner: worker
-    claimed_by: claude-scheduled-20260824T002922Z-iv-t104
-    claimed_at: '2026-08-24T00:29:22Z'
+    owner: null
+    claimed_by: null
+    claimed_at: null
 
   - id: t-105
     milestone: m6
