@@ -133,8 +133,8 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
-  passes: 48
+  status: ready
+  passes: 49
   stakes: reversible
   note: |-
     Cycle 30 (no-op, re-armed): cycle 29 flagged storybook-library-page.vue (350 lines) and storybook-page.vue full template as unread. Read storybook-library-page.vue end to end and storybook-page.vue in full (template + script, 1065 lines). Chased two concrete hypotheses: (1) storybook-page.vues startAnother() (child "New story" button, header) calls store.resetSession() directly with no explicit archiveCurrent() call first, unlike storybook-library-page.vues startNewStory() (wrapper "New story" button) which calls archiveCurrent() then resetSession() -- looked like a real asymmetry where the childs button could discard an unsaved session without archiving it into the library. Traced into storybookLibraryHelper.ts and found this is NOT a bug: its own watch(() => bridge.getSession(), ...) is a deep watcher that fires on every session transition, including session -> null, and its else-branch (`else if (previous) upsert(previous)`) archives the outgoing session automatically regardless of which components button triggered the reset -- library-pages explicit archiveCurrent() call is redundant defensive code, not filling a real gap the child lacks. (2) seedFromQuery() (deep-link ingredient seeding) writes into store.setupDraft unconditionally whenever scenario/location/character/facet/reward query params are present, with no check for whether store.session is already active -- confirmed this only affects the (hidden, unrendered) setup draft while a session is active, not the live story, and strips the query params regardless; a minor, low-frequency surprise (a deep link clicked mid-story silently seeds the NEXT storys draft) rather than a correctness bug, left as a note rather than a fix. No new bug found this cycle. Releasing the claim without a code change. Two hypotheses were investigated and ruled out with reasoning (not just skipped), which is real signal that the covered surface is solid. Kaizen for cycle 31: read the remaining ~350 unread lines of storybook-page.vue (roughly 300-700 and 745-920 -- the review step, beat-weaving chat flow, and the ingredient-picker computed selectors), or move to the components/narrative/** shared surface (narrative-role-assigner.vue, kr-chat-window.vue, narrativeBeatsToTurns) that both Storybook and Taskmaster depend on but neither projects audits fully own.
@@ -241,11 +241,56 @@ tasks:
     fresh look at whether removing them outright is safe, or whether a third
     future caller is likely enough to reuse chatText()'s scoped shape instead
     if the old singleton wasn't there to reach for.
-  updated: '2026-08-24T01:28:16Z'
-  implementation_pr: 'silasfelinus/kind_robots#2054'
-  owner: worker
-  claimed_by: claude-scheduled-20260824T012815Z-storybook-t010
-  claimed_at: '2026-08-24T01:28:16Z'
+
+    Cycle 35 (conductor scheduled Agent run, 2026-08-24T01:28Z session,
+    claude-scheduled-20260824T012815Z-storybook-t010): took cycle 34's own
+    lead. Repo-wide grep (no node_modules) confirmed pendingChatId/pendingChat/
+    pendingText had no remaining consumer outside chatStore.ts itself --
+    every other reference was a comment explaining the old bug the cycle 34
+    fix replaced, not a live read. Removed the ref, the two computeds, their
+    set/clear sites inside generateText(), and their three store exports;
+    updated the surrounding comments in chatStore.ts, storybookStore.ts, and
+    taskmasterStore.ts that described the now-removed singleton so they read
+    accurately instead of past-tense-describing a field that no longer
+    exists.
+
+    Verified: verifyNarrativeStreamingTextIsolationGuard.mjs passes (it only
+    asserts chatText()/weavingChatId don't delegate back to the singleton,
+    never that the singleton fields exist, so removing them doesn't weaken
+    the guard). `npm run test` (vue-tsc --noEmit) passes clean. eslint on the
+    three changed files shows the same 4 pre-existing errors present on
+    `main` before this change (2x no-empty, 1x no-useless-assignment, both
+    unrelated to this diff), none introduced.
+
+    Merged as silasfelinus/kind_robots#2056
+    (ebd2d0699a190b4d7711e70abad3236013c0f847). All 35 checks green,
+    including TypeScript, Contract verifiers, and every Storybook/Taskmaster
+    narrative contract.
+
+    Re-armed to `ready` rather than `done` -- every prior close of this task
+    (cycles 30-34) went back to `ready`, matching a de facto recurring
+    bug-hunt/polish cadence even though the task itself is not tagged
+    `recurring: true` in this roadmap (unlike its sibling model-builder/t-029,
+    which carries the tag for the same "Polish and upgrade X front-end
+    surface" task shape). Kept the established behavior rather than diverging
+    to `done` on my own reading of the metadata -- flagged in TALKBACK as a
+    metadata gap worth a human or future session's attention, not corrected
+    unilaterally here.
+
+    Next lead for cycle 36: no new leftover cleanup item from cycle 34's fix
+    remains -- this cycle closed it out. A fresh angle is needed: either
+    return to the narrative/** shared-surface sweep (cycles 32/33 covered
+    kr-chat-window.vue, narrative-role-assigner.vue, kr-choice-list.vue, and
+    their adapters; server/api routes and Pinia persistence edge cases for
+    storybookStore.ts/taskmasterStore.ts have not had a dedicated pass in
+    this task's history), or take a fresh top-level read of
+    storybook-page.vue's review/story-bible section end to end for the first
+    time since cycle 30's kaizen first named it.
+  updated: '2026-08-24T01:36:58Z'
+  implementation_pr: 'silasfelinus/kind_robots#2054, silasfelinus/kind_robots#2056'
+  owner: null
+  claimed_by: null
+  claimed_at: null
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
