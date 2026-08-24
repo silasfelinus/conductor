@@ -1558,13 +1558,14 @@ tasks:
 - id: t-068
   milestone: m8
   title: Identify which Kapowarr page is still slow after the review-holds fix
-  status: done
-  owner: null
+  status: ready
   passes: 0
   stakes: reversible
-  note: 'Resolved by silasfelinus/Kapowarr#99 ("Build the review list in batches instead of one blocking pass"), merged 2026-08-20. The slow page was the Library Import review list: a continuous import pass holds a whole folder at a time, producing several hundred held folders (thousands of rows, each with its own button) appended to the live list in one synchronous pass -- the page stopped responding until the last row landed, reading as a hang especially on tablet, recurring on every reopen. Fix batches row insertion between frames (first batch painted immediately, list scrollable while the rest fills in), guards against a stale batch appending onto a newer list via a render generation counter, and takes each batch''s Select-All state from the live selection rather than the template default. This PR was authored/merged independently of this investigation task (different session, found via a live repro rather than this task''s planned repro-then-fix path) -- reconciling status to done rather than duplicating the investigation.'
-  updated: '2026-08-21T00:29:10Z'
-  implementation_pr: 'silasfelinus/Kapowarr#99'
+  note: |-
+    Resolved by silasfelinus/Kapowarr#99 ("Build the review list in batches instead of one blocking pass"), merged 2026-08-20. The slow page was the Library Import review list: a continuous import pass holds a whole folder at a time, producing several hundred held folders (thousands of rows, each with its own button) appended to the live list in one synchronous pass -- the page stopped responding until the last row landed, reading as a hang especially on tablet, recurring on every reopen. Fix batches row insertion between frames (first batch painted immediately, list scrollable while the rest fills in), guards against a stale batch appending onto a newer list via a render generation counter, and takes each batch's Select-All state from the live selection rather than the template default. This PR was authored/merged independently of this investigation task (different session, found via a live repro rather than this task's planned repro-then-fix path) -- reconciling status to done rather than duplicating the investigation.
+
+    Reopened from live testing on 2026-08-23: the volume gallery still produces a cross-browser main-thread freeze on mobile Chrome, desktop Chrome, and Safari. Import paused versus running makes no apparent difference; Library Import itself loads in about a second. Poster view gets materially faster when filtered to Wanted, and switching to table view still stutters, pointing to library-size-dependent gallery rendering rather than the importer.
+  updated: '2026-08-24T02:04:26Z'
 
 - id: t-069
   milestone: m4
