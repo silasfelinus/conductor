@@ -1,0 +1,7 @@
+version: 1
+project: kapowarr
+task: t-068
+operation: ready
+updated: '2026-08-24T03:21:00Z'
+note: >-
+  Reopened from live testing after Kapowarr#142. The bounded-runway fix removed the browser freeze but introduced an artificial scroll cliff: the gallery stops at the end of rendered cards and waits before creating the next batch. Desired behavior is the standard large-media-gallery model: establish full library geometry immediately with lightweight placeholders/text from the existing /api/volumes metadata payload, then hydrate covers around the viewport with overscan so scrolling never waits for card construction.
