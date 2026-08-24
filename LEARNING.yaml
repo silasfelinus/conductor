@@ -10158,3 +10158,24 @@ records:
     no retry affordance) was not the one the shape of the bug suggested up front. Finally: when a
     fix restores an invariant a contract script already claims to enforce, extend that script --
     and verify the new assertion fails against the pre-fix code, or it may be vacuously true.
+- date: '2026-08-24'
+  project: brainstorm
+  task: t-026
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Task scope was explicitly conditional ("find, or confirm there isn't yet, a promote-candidate
+    action, and IF one exists, wire the art across") -- a repo-wide search (candidate card's
+    emitted events, the manager's kept-candidate bulk actions, server/api/brainstorm/, and a
+    grep for promote/convert/"turn into"/createFrom) confirmed no such action exists anywhere.
+    The honest close for a conditional investigation task with a negative finding is `done`, not
+    a forced implementation and not `needs-human` -- the literal scope asked a yes/no question
+    and got a firm no. Filed the actual feature (t-031) as new scope instead of expanding this
+    task's diff, since building an unrequested promotion UI would have been scope creep past what
+    t-026 asked for. Also worth recording for whoever picks up t-031: entityArt.ts's art-slot
+    model is one scalar id per named slot per entity, while Brainstorm's meta.art.imageIds is an
+    array -- there is no existing 1:1 precedent in the repo (promptStore.promoteToDream's Prompt
+    only ever has one artImageId) for the many-to-one reduction that promotion will need.
