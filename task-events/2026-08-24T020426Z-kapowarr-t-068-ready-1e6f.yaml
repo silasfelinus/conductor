@@ -1,0 +1,7 @@
+version: 1
+project: kapowarr
+task: t-068
+operation: ready
+updated: '2026-08-24T02:04:26Z'
+note: >-
+  Reopened from live testing on 2026-08-23: the volume gallery still produces a cross-browser main-thread freeze on mobile Chrome, desktop Chrome, and Safari. Import paused versus running makes no apparent difference; Library Import itself loads in about a second. Poster view gets materially faster when filtered to Wanted, and switching to table view still stutters, pointing to library-size-dependent gallery rendering rather than the importer.
