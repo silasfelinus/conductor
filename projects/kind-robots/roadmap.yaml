@@ -2386,3 +2386,74 @@ tasks:
     updated: '2026-08-24T10:32:36Z'
     claimed_by: claude-scheduled-20260824T102800Z-kr-t066
     claimed_at: '2026-08-24T10:28:01Z'
+
+  - id: t-067
+    milestone: m3
+    title: "conductor/overrides.post.ts rewrites project-overrides.yaml from scratch and drops every field it does not know about"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found 2026-08-24 while diagnosing why Silas's workspace-UI priority change never
+      reached Conductor. This is a DATA-LOSS BUG waiting to fire, and it has probably not
+      fired yet only because the endpoint appears never to have run successfully --
+      `git log -- project-overrides.yaml` shows no workspace-authored commit, and the file
+      still carries every comment and placement field.
+      `server/api/conductor/overrides.post.ts` does not patch the file. It rebuilds the
+      WHOLE of project-overrides.yaml from a fixed template, emitting only `slug`,
+      `status`, `priority`, and optionally `kind` per entry. Everything else in that file
+      is silently discarded on write:
+      - `liveUrl`, `channelKey`, `tabKey` -- the frontend placement fields, present on
+        roughly a dozen projects and load-bearing for the Projects board.
+      - Every inline comment, including the dated human rationale on individual entries
+        ("tabled 2026-07-26 by Silas", "lowered per Silas: we'll return to it later", the
+        kind-economy urgency note) and the file's own explanatory header, which the
+        template replaces with a shorter one.
+      So the first successful save from the workspace UI strips placement from every
+      project at once and erases the reasoning behind every status decision in the file.
+      FIX: patch, do not regenerate. Read the existing YAML, update only the fields the UI
+      actually owns for the slugs actually being changed, and write it back preserving
+      everything else -- conductor's own `scripts/intake.py` had exactly this class of bug
+      in `register_repo`/`register_art_prompts` and was fixed on the same day by switching
+      to text surgery rather than a yaml round-trip (conductor#2767); the same approach
+      applies here, or use a comment-preserving YAML library.
+      ALSO WORTH ESTABLISHING while in here: whether the workspace priority control is
+      even wired to this endpoint. Silas reported changing the priority and it not
+      reaching Conductor. If the control writes only the local Project row, the sync gap
+      is separate from this bug and both need fixing -- Conductor's `priority.yaml` order
+      is what actually drives agent pickup, and nothing in Kind Robots writes that at all.
+
+  - id: t-068
+    milestone: m3
+    title: "Project Artwork panel reports 'No hero yet' for projects whose art exists in Conductor"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Reported by Silas 2026-08-24: the Cthulhuquarium gallery card shows its hero art
+      while the project's own Artwork panel says "No hero yet" for the same project. Both
+      are correct about what they are looking at -- there are TWO independent
+      image-resolution paths and they disagree.
+      - GALLERY: `stores/helpers/conductorCards.ts` (and `conductor-page.vue`,
+        `conductor-project-gallery-page.vue`) hardcode
+        `raw.githubusercontent.com/silasfelinus/conductor/main/projects/images/{slug}-{kind}.webp`.
+        The file exists there, so the card renders.
+      - ARTWORK PANEL: `components/art/entity-art-manager.vue` resolves from the entity's
+        own DB columns only -- `artImageId`, `imagePath`, `heroPath` and siblings. Project
+        2112 has ALL of those null, because conductor's art pipeline commits files to the
+        conductor repo and never writes back to the Kind Robots Project row. So the panel
+        truthfully reports no hero.
+      Note that `components/conductor/project-front-page.vue` already does this correctly
+      at lines ~264-270: explicit override, then live `heroPath`, then local asset, then
+      the conductor raw fallback. That chain is the reference implementation.
+      FIX, pick one deliberately: (a) give entity-art-manager the same fallback chain when
+      the entity is a Project with a `conductorSlug` -- cheapest, and makes the panel agree
+      with everything else; or (b) have the conductor art pipeline PATCH the Project row's
+      heroPath/cardPath/iconPath when it commits images, so the DB is the single source and
+      the fallbacks become redundant. (b) is the better end state and the larger change;
+      (a) fixes the reported symptom today. Do not do both halfway.
+      Either way, the underlying smell is four call sites hardcoding the same raw-GitHub
+      URL. Collapse them onto `projectAssetFallback()` in
+      `components/conductor/projectFront.ts`, which already exists for exactly this.
