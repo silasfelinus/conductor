@@ -72,13 +72,16 @@ Run these during startup and before final reporting when roadmap state may have 
 ```bash
 python scripts/check_pr_merged_drift.py
 python scripts/audit_human_gates.py
+python scripts/check_project_scaffold_drift.py
 ```
 
-Both commands exclude inactive projects by default. Use `--include-inactive` only for an intentional archive sweep.
+All three commands exclude inactive projects by default. Use `--include-inactive` only for an intentional archive sweep.
 
 `check_pr_merged_drift.py` finds in-progress tasks whose referenced PR already merged.
 
 `audit_human_gates.py` finds active `needs-human` tasks and highlights structural contradictions or language suggesting a resolved gate was never closed. Its suggestions are review prompts, not authorization to bypass a genuine gate.
+
+`check_project_scaffold_drift.py` verifies the Kind-Robots-to-Conductor project handoff actually completed, in both directions: a Kind Robots Project with a `conductorSlug` set but no matching `projects/<slug>/roadmap.yaml` here (the closed-todo-but-no-scaffold bug, exit 1), and a Conductor project with no matching Kind Robots row at all (weaker, exit 3). Requires `KR_API_TOKEN`; without it the check is unresolved (exit 2), not clean.
 
 ## Final report invariant
 

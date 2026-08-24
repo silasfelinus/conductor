@@ -20,8 +20,16 @@ At the start of every session, before responding to any task, run a conductor sw
 5. Read `docs/state-reconciliation.md`, then run:
    - `python scripts/check_pr_merged_drift.py`
    - `python scripts/audit_human_gates.py`
-   Treat exit 1 from either command as a reconciliation prompt, not permission to bypass a genuine gate. Both
-   commands intentionally exclude paused, retired, and finished projects unless `--include-inactive` is supplied.
+   - `python scripts/check_project_scaffold_drift.py` — a Kind-Robots-authored project's ONLY path
+     into Conductor is the scaffold Todo `createProjectWithScaffoldTodo` writes; a closed todo alone
+     never proved the roadmap directory actually landed (conductor/t-125, filed 2026-08-24: Todo
+     #1320 was marked DONE while `projects/cthulhuquarium/` never existed). This checks both
+     directions — a Kind Robots `conductorSlug` with no matching `projects/<slug>/roadmap.yaml`
+     (the reported bug, exit 1), and a Conductor project with no matching Kind Robots row at all
+     (weaker/informational, exit 3). Needs `KR_API_TOKEN`; exits 2 (unresolved, not clean) without it.
+   Treat exit 1 (or 3) from any of these as a reconciliation prompt, not permission to bypass a genuine gate. All
+   three commands intentionally exclude paused, retired, and finished projects unless `--include-inactive` is
+   supplied.
 6. Check `TALKBACK.md` tail for any unresolved escalations or security flags
 7. Run `python scripts/build_dream_proposal.py --check --fetch`. **This is now a
    backstop, not the primary path.** `daily-digest.yml` authors the day's proposal
