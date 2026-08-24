@@ -573,10 +573,11 @@ tasks:
   - id: t-025
     milestone: m1
     title: "Settle the systems layer — slot economy, rivalry, and what a milestone is"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
+    soft_gate: true
     note: >
       SYSTEMS.md is written (Silas's 2026-08-24 design download, plus the analysis of where
       it collides with his own rules). It leaves four structural questions that the build
@@ -599,6 +600,29 @@ tasks:
       should be answered with t-023 in view.
       Do not treat these as blocking: pick the recommended option in SYSTEMS.md, write down
       the choice and the reason, and flag it for Silas rather than stalling.
+
+
+      RESOLVED (conductor scheduled Agent run, 2026-08-24T15:27Z session): wrote a recommendation
+      with reasoning for all four questions directly into SYSTEMS.md's "Open questions" section
+      (now "Open questions -- resolved"). (1) One shared slot pool for fish and set pieces --
+      the doc's own "Gate capacity, not access" section already assumed this ("a set occupies a
+      slot a fish could have used"), so a second pool would contradict an earlier paragraph.
+      (2) Both authored and emergent rivalry -- an emergent tag-based rules table (predator/prey,
+      school/anchor) plus an optional authored `rivals:` override list on the fish bible; no new
+      Prisma model needed, computed live from placed AquariumStock species. (3) One growing tank
+      per aquarium for v1 -- matches DESIGN-BRIEF's singular "their tank" MVP scope; keep
+      `Aquarium` keyed by (userId, slug) rather than a hard one-per-user constraint so a second
+      tank stays a purely additive future feature. (4) Milestones are landmark events (first full
+      tank, first evolution, first spotless tank, first rivalry resolved, bestiary breakpoints),
+      not coin thresholds, delivered via a Charlotte/Wilbur interstitial and logged as an
+      `AquariumEvent` with `kind: 'milestone'` -- no new schema needed beyond what t-007 already
+      plans. Each decision's schema implication for t-003/t-007 is spelled out in SYSTEMS.md.
+
+      This is a recommendation, not a unilateral final call -- flagged for Silas in SYSTEMS.md's
+      own new closing paragraph (soft_gate: true here for the same reason: t-026/t-027 may now
+      proceed on this basis, but Silas can reopen any of the four with a note on this task or in
+      SYSTEMS.md if a different answer fits his vision better). No code, schema, or production
+      changes -- design-doc only.
     claimed_by: claude-scheduled-20260824T1527Z-cq-t025
     claimed_at: '2026-08-24T15:33:23Z'
     updated: '2026-08-24T15:33:23Z'
