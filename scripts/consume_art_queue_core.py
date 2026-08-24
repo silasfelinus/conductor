@@ -133,12 +133,27 @@ KREA2_SCHEDULER = "simple"
 # encode; otherwise the plain prompt string is used. Flux.2 uses its OWN text
 # encoder and VAE (different from Flux.1).
 #
-# VERIFY these filenames against the Comfy-Org Flux.2 release you download.
-FLUX2_KLEIN_UNET_LOADER = "UnetLoaderGGUF"  # Klein 4B GGUF -> models/unet/
-FLUX2_KLEIN_MODEL = "flux-2-klein-4b-Q4_K_M.gguf"
-FLUX2_KLEIN_CLIP = "flux2_klein_text_encoder_fp8_scaled.safetensors"
+# These are LOGICAL NAMES resolved against the Kind Robots Resource registry at
+# build time (see resolve_model below) -- not raw filenames. The previous values
+# named a GGUF unet and an fp8 text encoder that exist in no Comfy-Org release
+# and were never on the box; the engine had never once worked (t-033).
+#
+# Pointed at the Flux 2 stack that IS registered and present:
+#   DIFFUSION_MODEL flux2_dev_fp8mixed -> diffusion_models/flux2_dev_fp8mixed.safetensors
+#   TEXT_ENCODER    mistral_3_small_flux2_bf16
+#   VAE             flux2-vae
+# The unet is a .safetensors, so the loader moves off UnetLoaderGGUF.
+#
+# NOT YET RUN END TO END: mistral_3_small_flux2_bf16 is 35.5 GB against a 12 GB
+# card. ComfyUI can offload a text encoder to CPU, but that needs a real test
+# before this engine is called fixed. If it will not fit, the answer is an fp8
+# build of the same encoder (Comfy-Org/flux2-dev ships
+# mistral_3_small_flux2_fp8) -- register it, then change the name here only.
+FLUX2_KLEIN_UNET_LOADER = "UNETLoader"
+FLUX2_KLEIN_MODEL = "flux2_dev_fp8mixed"
+FLUX2_KLEIN_CLIP = "mistral_3_small_flux2_bf16"
 FLUX2_KLEIN_CLIP_TYPE = "flux2"
-FLUX2_KLEIN_VAE = "flux2-vae.safetensors"
+FLUX2_KLEIN_VAE = "flux2-vae"
 FLUX2_KLEIN_STEPS = 4
 FLUX2_KLEIN_CFG = 1
 FLUX2_KLEIN_SAMPLER = "euler"
@@ -498,6 +513,107 @@ def _build_simple_comfy_workflow(
     return workflow
 
 
+# ---------------------------------------------------------------------------
+# Model resolution against the Kind Robots Resource registry
+# ---------------------------------------------------------------------------
+# cthulhuquarium/t-034. Every model filename below used to be a hardcoded string,
+# duplicated between this file and kind_robots
+# server/api/comfy/flux2/utils/workflow.ts, with a comment telling the reader to
+# "VERIFY these filenames against the release you download". Nobody did, and the
+# whole flux2 engine shipped naming two files that exist nowhere -- failing only
+# at render time, months later, on an unrelated task (t-033).
+#
+# Kind Robots already maintains the answer: a Resource row per model, carrying
+# resourceType, localPath, supportedServer and commercialSafe. This resolves
+# against that registry and FAILS LOUDLY when a model is not registered, so a
+# typo or a stale name is caught before a job is queued rather than after it
+# renders. The constants below are now LOGICAL NAMES (Resource.name), not paths.
+
+_RESOURCE_INDEX = None
+STRICT_MODELS = False
+
+# ComfyUI loaders want a path relative to their own models/<kind>/ directory,
+# while Resource.localPath is relative to models/ itself. For text encoders, VAEs
+# and diffusion models the leading segment IS that directory and has to come off;
+# for checkpoints the leading segment is a real subfolder (SDXL/, Flux/, Pony/)
+# that ComfyUI expects to keep.
+# One resourceType can live under more than one ComfyUI directory -- a GGUF quant
+# of a diffusion model conventionally sits in models/unet/ while its safetensors
+# sibling sits in models/diffusion_models/ -- so this is a list per type, longest
+# match first. Getting this wrong is silent: the loader is handed a path with a
+# directory still on the front and reports the model as missing.
+_LOCALPATH_PREFIXES = {
+    "TEXT_ENCODER": ("text_encoders/", "clip/"),
+    "VAE": ("vae/",),
+    "DIFFUSION_MODEL": ("diffusion_models/", "unet/"),
+}
+
+
+def _load_resource_index():
+    """{resourceType: {lowercased name or basename: comfy-relative filename}}."""
+    global _RESOURCE_INDEX
+    if _RESOURCE_INDEX is not None:
+        return _RESOURCE_INDEX
+
+    index = {}
+    status, resp = http_json("GET", f"{KR_BASE_URL}/api/resources")
+    if status != 200 or not resp:
+        raise RuntimeError(
+            f"cannot read the Resource registry at {KR_BASE_URL}/api/resources "
+            f"(HTTP {status}) -- model names cannot be verified, refusing to queue"
+        )
+    rows = resp.get("data") if isinstance(resp, dict) else resp
+    for row in rows if isinstance(rows, list) else []:
+        kind = row.get("resourceType")
+        local = (row.get("localPath") or "").strip()
+        if not kind or not local:
+            continue
+        comfy_name = local
+        for prefix in sorted(_LOCALPATH_PREFIXES.get(kind, ()), key=len, reverse=True):
+            if comfy_name.lower().startswith(prefix):
+                comfy_name = comfy_name[len(prefix):]
+                break
+        bucket = index.setdefault(kind, {})
+        for key in filter(None, (row.get("name"), row.get("slug"), local.rsplit("/", 1)[-1])):
+            bucket.setdefault(str(key).strip().lower(), comfy_name)
+    _RESOURCE_INDEX = index
+    return index
+
+
+def resolve_model(logical_name, kind):
+    """Resource name -> the filename ComfyUI's loader expects. Raises if absent.
+
+    `logical_name` may be the Resource's name, its slug, or the bare filename --
+    all three are indexed, so an existing hardcoded filename keeps working while
+    the constants migrate to logical names.
+    """
+    bucket = _load_resource_index().get(kind, {})
+    hit = bucket.get(str(logical_name).strip().lower())
+    if hit:
+        return hit
+
+    message = (
+        f"{kind} '{logical_name}' is not in the Kind Robots Resource registry. "
+        f"Either the model is not on the render box, or the name is wrong. "
+        f"Register it (resourceType={kind}, localPath=<path under models/>) or "
+        f"correct the constant -- do not guess a filename, which is exactly how "
+        f"the flux2 engine shipped broken (cthulhuquarium/t-033)."
+    )
+    if STRICT_MODELS:
+        raise RuntimeError(message)
+
+    # Warn and pass through rather than fail. The registry is currently
+    # INCOMPLETE rather than authoritative -- GGUF quants in particular are on
+    # the box and rendering fine while having no Resource row (Krea-2-Turbo and
+    # the flux1 Q8_0 quants, as of 2026-08-24). Hard-failing here would brick
+    # engines that demonstrably work, which is a worse failure than the one this
+    # guards against. The warning still surfaces drift at QUEUE time rather than
+    # at render time, which is the actual win; use --strict-models (and CI) to
+    # make it fatal once every model in use is registered.
+    print(f"  WARNING: {message}", file=sys.stderr)
+    return logical_name
+
+
 def build_krea2_workflow(prompt, negative, width, height, steps, seed, entry=None):
     """Krea 2 Turbo (Qwen-lineage) ComfyUI graph. See KREA2_* constants."""
     lora, strength = _lora_from_entry(entry or {})
@@ -512,11 +628,11 @@ def build_krea2_workflow(prompt, negative, width, height, steps, seed, entry=Non
         sampler=KREA2_SAMPLER,
         scheduler=KREA2_SCHEDULER,
         unet_loader=KREA2_UNET_LOADER,
-        unet_name=KREA2_MODEL,
+        unet_name=resolve_model(KREA2_MODEL, "DIFFUSION_MODEL"),
         unet_dtype=KREA2_MODEL_DTYPE,
-        clip_name=KREA2_CLIP,
+        clip_name=resolve_model(KREA2_CLIP, "TEXT_ENCODER"),
         clip_type=KREA2_CLIP_TYPE,
-        vae_name=KREA2_VAE,
+        vae_name=resolve_model(KREA2_VAE, "VAE"),
         filename_prefix="kindrobots_krea2",
         lora=lora,
         lora_strength=strength,
@@ -543,11 +659,11 @@ def build_flux2_klein_workflow(prompt, negative, width, height, steps, seed, ent
         sampler=FLUX2_KLEIN_SAMPLER,
         scheduler=FLUX2_KLEIN_SCHEDULER,
         unet_loader=FLUX2_KLEIN_UNET_LOADER,
-        unet_name=FLUX2_KLEIN_MODEL,
+        unet_name=resolve_model(FLUX2_KLEIN_MODEL, "DIFFUSION_MODEL"),
         unet_dtype="default",
-        clip_name=FLUX2_KLEIN_CLIP,
+        clip_name=resolve_model(FLUX2_KLEIN_CLIP, "TEXT_ENCODER"),
         clip_type=FLUX2_KLEIN_CLIP_TYPE,
-        vae_name=FLUX2_KLEIN_VAE,
+        vae_name=resolve_model(FLUX2_KLEIN_VAE, "VAE"),
         filename_prefix="kindrobots_flux2_klein",
         lora=lora,
         lora_strength=strength,
@@ -849,6 +965,11 @@ def fetch_image_b64(art_image_id):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--live", action="store_true", help="actually queue and download")
+    parser.add_argument(
+        "--strict-models",
+        action="store_true",
+        help="fail instead of warning when a model is missing from the Resource registry",
+    )
     parser.add_argument("--limit", type=int, default=0, help="max entries this run (0 = all)")
     parser.add_argument("--timeout", type=int, default=600, help="seconds to wait per job")
     parser.add_argument(
@@ -859,6 +980,9 @@ def main():
         "happens separately). Won't freeze when the relay is offline.",
     )
     args = parser.parse_args()
+
+    global STRICT_MODELS
+    STRICT_MODELS = args.strict_models
 
     entries = load_entries()
     if args.limit > 0:

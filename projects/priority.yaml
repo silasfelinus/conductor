@@ -2,7 +2,8 @@
 # Scheduled operational commitments preempt this project queue through select_role.py;
 # in particular, Daily Dream / daily-digest health is handled before ordinary worker
 # pickup because it is expected to deliver every day.
-# Among finite project work, Kapowarr is the current top priority.
+# Cthulhuquarium is the current top priority (see order[0] note below); Kapowarr is
+# pinned directly behind it.
 # Finite active projects otherwise outrank continuous projects. Paused, finished, and
 # retired projects are historical records and do not belong in the selectable queue.
 # Continuous programs are fallback work; dream-cycle's ordinary maintenance task stays
@@ -10,21 +11,22 @@
 # Kind Economy sits directly behind Kapowarr: Silas declared it a "vitally important
 # tentpole to our site and my life trajectory" in-session on 2026-08-19, and it is
 # registered `priority: urgent` in project-overrides.yaml. It is NOT placed first
-# because tests/test_project_priority_contract.py CI-enforces `order[0] == "kapowarr"`,
-# and rewriting that guard to promote a project Silas did not ask to promote would be
-# overriding an existing human priority decision rather than recording a new one. If
-# Silas wants Kind Economy at the top, that test moves with it — his call, not an
-# agent's. It is the money layer: Stripe going live, the three-way paid-usage split,
-# creator payouts, mission remittance, and the Save One Human entity decision.
+# because tests/test_project_priority_contract.py CI-enforces `order[0] ==
+# "cthulhuquarium"` / `order[1] == "kapowarr"`, and rewriting that guard to promote a
+# project Silas did not ask to promote would be overriding an existing human priority
+# decision rather than recording a new one. If Silas wants Kind Economy at the top,
+# that test moves with it — his call, not an agent's. It is the money layer: Stripe
+# going live, the three-way paid-usage split, creator payouts, mission remittance, and
+# the Save One Human entity decision.
 order:
-  - kapowarr
-  # Raised 2026-08-24 by Silas in session: "i changed the priority of this to high,
-  # i want it to be the main task worked on by agents over the next few days." Placed
-  # SECOND rather than first because tests/test_project_priority_contract.py CI-enforces
-  # order[0] == "kapowarr" -- moving it to first means moving that guard, which is
-  # Silas's call to make explicitly, not something to do on an agent's reading of
-  # "main task". Flagged to him; second is the highest slot available without it.
+  # Cthulhuquarium leads as of 2026-08-24, by Silas in session: "yes, move this project
+  # above kapowarr, that project has been very successfully scaffolded, and I'm now
+  # cleaning up lose ends, this is the new creative project for the week." Kapowarr is
+  # not demoted in importance -- it is finishing, and this is the active creative work.
+  # (Supersedes an earlier same-day instruction to place it merely second behind
+  # Kapowarr -- that instruction predated this explicit "move it above kapowarr" one.)
   - cthulhuquarium
+  - kapowarr
   - kind-economy
   - interface-vision
   - ai-art-academy
