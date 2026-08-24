@@ -925,4 +925,35 @@ tasks:
       Alexandria, then hash it across Z: from the ComfyUI box. Local passes and remote
       fails means the mount. Both fail means the file really is damaged. Do that before
       re-downloading anything -- re-downloading a file that is fine, over a mount that is
-      not, will appear to fail the same way and waste the trip.
+      not, will appear to fail the same way and waste the trip. RESOLVED TO TWO SEPARATE
+      CAUSES, 2026-08-24, after Silas listed the actual model store. The single-mount
+      hypothesis in the correction above is half wrong and is superseded here. Exact
+      filenames the workflows request, from consume_art_queue_core.py: krea2 -- unet
+      Krea-2-Turbo-Q5_K_S.gguf, clip qwen3vl_4b_fp8_scaled.safetensors, vae
+      qwen_image_vae.safetensors. flux2-klein -- unet flux-2-klein-4b-Q4_K_M.gguf, clip
+      flux2_klein_text_encoder_fp8_scaled.safetensors, vae flux2-vae.safetensors. (1)
+      FLUX2-KLEIN IS A GENUINELY MISSING FILE, not a mount or enumeration problem. Silas's
+      listing of /mnt/user/pc/ai/models/text_encoders/ has no
+      flux2_klein_text_encoder_fp8_scaled.safetensors at all. What IS present is
+      mistral_3_small_flux2_bf16.safetensors (35.5 GB), which is the Flux 2 text encoder
+      in bf16 rather than the fp8_scaled build the constant names. So either the fp8
+      variant was never downloaded, or FLUX2_KLEIN_CLIP should point at the bf16 file that
+      exists. Decide which -- the bf16 is 35.5 GB and this box is described as 12 GB VRAM,
+      so pointing at it may simply trade one failure for an OOM. Downloading the
+      fp8_scaled build is likely the right answer. (2) KREA2 IS A READ FAILURE ON A FILE
+      THAT EXISTS. qwen3vl_4b_fp8_scaled.safetensors is present at 5,242,467,968 bytes,
+      and its size is not obviously truncated (its bf16 sibling is 8,875,719,384, and
+      fp8_scaled legitimately keeps some layers at higher precision, so the ratio is
+      plausible). Present but unreadable is exactly the shape of a storage-layer problem
+      rather than a bad download. AND THE SHAPE OF THE STORE MATTERS HERE: /mnt/user/ is
+      Unraid's shfs FUSE union over disk1..disk17, and text_encoders/ exists on at least
+      eleven of them (disk3, 4, 5, 8, 10, 11, 12, 13, 14, 16, 17). So the merged directory
+      Comfy reads through is assembled across many physical disks, and a single large file
+      is served from whichever disk holds it. A spun-down, slow, or failing member disk
+      produces a read failure through the union that looks like nothing at all at the
+      directory level. THE TEST THAT SETTLES IT: locate the physical disk holding the
+      krea2 clip, then read it BOTH ways -- through /mnt/user/ and directly from
+      /mnt/diskN/. Direct read succeeding while the union read fails is conclusive for
+      shfs/member-disk trouble, and the fix is to serve the model share from the device
+      path rather than the union. Both failing means the file is damaged after all and
+      should be re-downloaded.
