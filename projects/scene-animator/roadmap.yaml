@@ -35,22 +35,18 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Build the resumable Scene Animator MVP in Kind Robots"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Implement the first useful end-to-end slice. Reuse /api/video/generate ->
-      /api/art/enqueue -> ArtJob -> kr-relay and utils/videoPresets.ts; do not create a
-      parallel render queue. Add an admin Scene Animator surface that can discover folders
-      and still images from a dedicated animation source root, choose engine/preset/duration
-      and maturity, enqueue every unprocessed source with one neutral scene-preserving motion
-      prompt, reconstruct progress from durable ArtJobs after refresh/restart, and show the
-      resulting clips as a gallery. Source identity + render settings must produce a stable
-      dedupe key so Resume never silently duplicates completed/active jobs.
+    note: |-
+      Implement the first useful end-to-end slice. Reuse /api/video/generate -> /api/art/enqueue -> ArtJob -> kr-relay and utils/videoPresets.ts; do not create a parallel render queue. Add an admin Scene Animator surface that can discover folders and still images from a dedicated animation source root, choose engine/preset/duration and maturity, enqueue every unprocessed source with one neutral scene-preserving motion prompt, reconstruct progress from durable ArtJobs after refresh/restart, and show the resulting clips as a gallery. Source identity + render settings must produce a stable dedupe key so Resume never silently duplicates completed/active jobs.
+
+
+      Implemented the first Kind Robots Scene Animator MVP on worker/scene-animator-t-001-20260824T131000Z-g56s: admin-only folder discovery and source previews, LTX/WAN preset + duration + maturity controls, fixed scene-preserving motion direction, existing /api/video/generate -> ArtJob queue reuse, deterministic source/config dedupe metadata for resume, failed-job retry, progress reconstruction, result gallery, Admin navigation placement, and ANIMATE_PATH documentation. Ready for PR CI and review.
     claimed_by: 2026-08-24T131000Z-scene-animator-t-001-g56s
     claimed_at: '2026-08-24T13:10:00Z'
-    updated: '2026-08-24T13:10:00Z'
+    updated: '2026-08-24T13:20:00Z'
 
   - id: t-002
     milestone: m1
