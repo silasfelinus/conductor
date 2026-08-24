@@ -4208,9 +4208,9 @@ tasks:
   - id: t-126
     milestone: m2
     title: "provision_kind_robots_deps.sh echoes a live DATABASE_URL into the session transcript"
-    status: ready
+    status: claimed
     gate_human: false
-    owner: null
+    owner: reviewer
     stakes: reversible
     passes: 0
     note: >
@@ -4231,7 +4231,9 @@ tasks:
       fix established so a future session cannot reintroduce it, and check the sibling
       provisioning scripts (`provision_node24.sh`, `kr_token_set.sh`) for the same shape
       while in there.
-    updated: '2026-08-24T00:00:00Z'
+    updated: '2026-08-24T12:36:20Z'
+    claimed_by: 20260824-sched-conductor-t126-agentrun1
+    claimed_at: '2026-08-24T12:36:20Z'
 
   - id: t-127
     milestone: m2
