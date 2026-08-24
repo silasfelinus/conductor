@@ -51,7 +51,18 @@ fi
 # shellcheck source=/dev/null
 source "${SCRIPT_DIR}/provision_node24.sh" >/dev/null
 
-# 2. Prisma needs a well-formed DATABASE_URL (no live DB required).
+# 2. Prisma needs a well-formed DATABASE_URL (no live DB required). Remember
+#    whether the caller already had one set *before* we fill in the dummy —
+#    the final echo below must never print a value it didn't generate itself
+#    (conductor/t-126: a real DATABASE_URL already in the environment would
+#    otherwise get echoed to stdout, leaking live production DB credentials
+#    into the session transcript/CI log — the same class of leak as t-116's
+#    KR_API_TOKEN probe, just via `${VAR:-default}` always expanding VAR when
+#    it's set rather than a broken presence check).
+_kr_deps_database_url_preset=0
+if [ -n "${DATABASE_URL:-}" ]; then
+  _kr_deps_database_url_preset=1
+fi
 export DATABASE_URL="${DATABASE_URL:-mysql://user:pass@127.0.0.1:3306/kindrobots}"
 
 # 3. Coloring-book recovery writes WebP output through Pillow. Install only when
@@ -86,6 +97,15 @@ else
   echo "kr-deps: done — node_modules, .prisma/client, and .nuxt are ready" >&2
 fi
 
-# Echo the exports so a plain (non-sourced) invocation is still usable:
-echo "export DATABASE_URL=\"${DATABASE_URL}\""
+# Echo the exports so a plain (non-sourced) invocation is still usable — but
+# only print the value when we generated the dummy ourselves. If the caller's
+# shell already had DATABASE_URL set, it's already in their environment (this
+# script running in a subshell can't change that either way), so there is
+# nothing to hand back and never anything to print.
+if [ "${_kr_deps_database_url_preset}" = "1" ]; then
+  echo "# kr-deps: DATABASE_URL was already set in the calling environment —" \
+    "kept it as-is, not printing it (may hold live credentials)." >&2
+else
+  echo "export DATABASE_URL=\"${DATABASE_URL}\""
+fi
 echo "# now: cd \"${KIND_ROBOTS_ROOT}\" && npm run test   # vue-tsc typecheck" >&2
