@@ -1,0 +1,121 @@
+project: cthuluquarium
+kind: software
+
+notes_from_silas: |
+  Long time silly project planned that I've never made happen.
+
+  My inspiration is the absolutely excellent mobile game Insaniquarium (sp?). It was
+  one of the first mobile games that actually hooked me.
+
+  I want a darkly funny variant inspired by it. We start with a web-game version.
+  It should use simple assets created with our ComfyUI pipeline: aquarium
+  backgrounds, different monstrous fish, tappable collectibles, random rare
+  experiences, memory, a leaderboard, and browsable aquariums. Each user's aquarium
+  should be viewable — they can decorate it, populate it with fish monsters, and
+  interact with a gameplay loop where random clickables give coins, which can be
+  used to buy food to feed their fish or buy upgrades. Treat this like a beginning
+  plan, not the full proposal — research both gameplay loops for idle/incremental
+  games and current features for light aquarium experiences, plus what people
+  actually want and appreciate in this genre.
+
+  The first completed version is a fully working webpage where users can load and
+  interact with their aquariums. Think idle/cookie-clicker style: they can leave it
+  running and get pickups, or actively play it and gain resources faster. A second
+  tier evolution is an iOS and Android version, and final-final would be Steam, but
+  that requires human-gated evolution of tools — don't build toward those yet.
+
+  There is no legitimate reason we can't have a prototype build from our agents with
+  proper planning and ComfyUI access (which you should have — if the agents can't
+  create assets, that gap becomes part of this workflow, since we're also testing
+  our ability to autonomously scaffold this type of project).
+
+  Kind Robots Project record already exists: id 2112, slug `cthuluquarium`,
+  conductorSlug `cthuluquarium`, status BRAINSTORM, liveUrl `/aquarium`. Do not
+  create another Project record — the next sync will link this roadmap to it via
+  conductorSlug.
+
+  The Project's `repoUrl` points at `https://github.com/silasfelinus/cthulhuquarium`,
+  a repository outside this session's current GitHub scope (conductor, kind_robots,
+  Kapowarr, humboldtscoopsolutions only). Until that repo is in scope, treat actual
+  game-client implementation as a cross-repo task per AGENTS.md's "Cross-repo tasks"
+  section: preserve patches as a conductor documentation handoff
+  (`projects/cthuluquarium/docs/`) rather than improvising a different target
+  (e.g. do not fold this into kind_robots itself unless Silas redirects it there).
+
+milestones:
+  - id: m1
+    title: "SHAPE — outline, brainstorm, design brief"
+    weight: 25
+    status: not-started
+
+  - id: m2
+    title: "BUILD — actualize, adjust, test"
+    weight: 50
+    status: not-started
+
+  - id: m3
+    title: "POLISH & SHIP — aesthetics, performance, delivery"
+    weight: 25
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Write the design brief and start building"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Take the pitch in notes_from_silas and run with it: write DESIGN-BRIEF.md
+      (what it is, who it serves, the creative direction, MVP shape — an idle/
+      incremental aquarium web game with tappable monster fish, coins, feeding,
+      and upgrades), research comparable idle/incremental and light-aquarium-sim
+      games for gameplay-loop and feature patterns worth borrowing, then create and
+      claim the first BUILD tasks (schema/data model, core tick loop, first ComfyUI
+      asset batch for backgrounds and fish). Do NOT wait for scope approval — that's
+      t-002, and it runs in parallel. Note in the brief that game-client code lands
+      in the separate `silasfelinus/cthulhuquarium` repo (see notes_from_silas) and
+      is currently out of this session's GitHub scope — until access is confirmed,
+      produce implementation-ready patches/specs as a conductor-side handoff doc per
+      AGENTS.md's cross-repo task convention instead of guessing at a substitute repo.
+
+  - id: t-002
+    milestone: m1
+    title: "Confirm scope with Silas"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    soft_gate: true
+    note: >
+      FOR SILAS: soft checkpoint, nothing is blocked on it — t-001 is already
+      building in parallel. Kind Robots Project 2112 (slug/conductorSlug
+      `cthuluquarium`) is BRAINSTORM status with liveUrl `/aquarium` and repoUrl
+      `https://github.com/silasfelinus/cthulhuquarium`. TO APPROVE: confirm the
+      MVP shape (idle/incremental aquarium web game, tappable monster fish, coins,
+      feeding, upgrades, per-user browsable aquariums, leaderboard) matches your
+      intent, and grant this session's GitHub access to the `cthulhuquarium` repo
+      (currently outside scope: conductor/kind_robots/Kapowarr/
+      humboldtscoopsolutions only) so agents can push game-client code directly
+      instead of leaving conductor-side handoff docs. What unblocks: agents fold
+      any correction into DESIGN-BRIEF.md and keep moving; repo access unblocks
+      direct implementation instead of doc handoffs.
+
+  - id: t-003
+    milestone: m1
+    title: "Generate first ComfyUI asset batch: aquarium backgrounds and monster fish"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Once DESIGN-BRIEF.md establishes the visual direction (darkly funny take on
+      Insaniquarium-style monster fish), generate a first pass of simple 2D assets
+      via the ComfyUI pipeline: a handful of aquarium background variants and
+      several tappable monster-fish designs at different rarity tiers. Generated
+      art is pre-approved per AGENTS.md — commit to `projects/images/` or the
+      project's own asset path and record prompt/model/seed metadata. Small,
+      reversible, self-contained; does not require repo access to the game-client
+      repo to complete (assets can be produced and staged before the client exists).
