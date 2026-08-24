@@ -195,18 +195,57 @@ it optional.
 
 ---
 
-## Open questions
+## Open questions — resolved (agent recommendation, t-025, 2026-08-24)
 
-1. **Do set pieces and fish share one slot pool, or two?** One pool makes every build a
-   sharp trade and is the stronger design. Two pools is gentler and easier to balance. This
-   is the single biggest structural decision left in the systems layer.
-2. **Is rivalry authored or emergent?** Hand-authored pairs ("these two never get along")
-   are funnier and controllable. Rules-based rivalry (predators vs. small fish, `anchor`
-   vs. `school`) scales better and produces surprises nobody wrote. Possibly both, with
-   authored pairs as the memorable exceptions.
-3. **Does tank size grow, or do you own several tanks?** One growing tank is simpler.
-   Several tanks lets rival species coexist in the collection and makes the arrangement
-   puzzle much richer — but multiplies the persistence and UI work.
-4. **What is a milestone?** Coin thresholds are the obvious answer and the least
-   interesting one. First time you fill every slot, first evolution, first time the tank is
-   spotless, first rivalry resolved — these are landmarks worth a character's attention.
+Per t-025's own instruction, these are decided on paper rather than left to stall the
+build. Each is a recommendation with reasoning, flagged here for Silas to confirm or
+override — none of the four blocks t-026/t-027 from proceeding on this basis.
+
+1. **Do set pieces and fish share one slot pool, or two? → One pool.** This document
+   already assumed the answer two sections up, in "Gate capacity, not access": *"a set
+   occupies a slot a fish could have used. Every build is a real trade."* A second,
+   separate set-piece pool would quietly delete that sentence's tension and make sets a
+   pure add-on instead of a real trade against fish — a strictly weaker design by this
+   doc's own stated standard. **Schema implication for t-007:** `Aquarium` carries a
+   single `slotsCap`; whatever occupies a slot (fish placement or equipped set piece)
+   is accounted against that one total, not two separate caps. `AquariumStock` (or a
+   sibling join row for set pieces) needs a `kind` discriminator so both draw from the
+   same ledger.
+2. **Is rivalry authored or emergent? → Both**, exactly as this doc's own draft
+   guessed. A small emergent rules table (`predator` vs `small`, `anchor` vs `school`)
+   scales for free as the bestiary grows past 20 species; a short authored override list
+   is where the actual jokes live ("these two specifically loathe each other," no rule
+   required). **Schema implication for t-003:** the fish bible needs (a) a couple of
+   ecological tags per species — a diet role and a schooling role are enough to drive
+   the emergent table — and (b) an optional authored `rivals: [slug, ...]` list that
+   layers on top. Rivalry does **not** need its own Prisma model or table for t-007 —
+   it is computed live, server-side, from whichever species are currently placed in an
+   `AquariumStock`, against tag/override data already seeded onto the `Character` rows
+   by t-008. This keeps rule 1 ("progress never degrades") trivially true for rivalry
+   too: it is a live rate effect with no persisted loss state to accidentally leak into
+   holdings.
+3. **Does tank size grow, or do you own several tanks? → One growing tank per aquarium
+   for v1.** DESIGN-BRIEF's MVP scope is written in the singular throughout ("load and
+   interact with **their** aquarium," "see **their** tank") and multiple tanks is the
+   costlier option on both axes this doc already flagged (persistence and UI). Ship the
+   simpler version now. **Schema implication for t-007:** key `Aquarium` by
+   `(userId, slug)` rather than a hard one-row-per-user unique constraint. That costs
+   nothing today and leaves a second tank as a purely additive future feature (a new
+   row, not a migration) if Silas wants tier-2 multi-tank play later — do not build
+   multi-tank UI or persistence now, just don't foreclose it in the schema.
+4. **What is a milestone? → A landmark event, not a coin threshold**, delivered through
+   a Charlotte (occasionally Wilbur) interstitial per "The unlock is the character
+   moment, not the number" above, and consistent with DESIGN-BRIEF's own call that the
+   leaderboard metric is species collected, not coins. Concrete v1 landmark set: first
+   full tank (every slot filled), first evolution, first spotless tank (debris fully
+   cleared after being high), first rivalry resolved (a placed pair separated), and
+   bestiary breakpoints (e.g. 5 / 10 / 15 / 20 species collected). **Schema implication
+   for t-007:** none beyond what is already planned — each landmark is one
+   `AquariumEvent` row with `kind: 'milestone'` and a `payload` naming which landmark
+   fired; that event is what a Charlotte interstitial reads to decide what to say and
+   which background to hand over. No new model needed.
+
+FOR SILAS: the four decisions above are this session's recommendation, not a unilateral
+final call — reopen any of them with a note here or on cthulhuquarium/t-025 if a
+different answer fits your vision better. t-026/t-027 (and t-007's schema) will proceed
+on this basis unless you say otherwise.
