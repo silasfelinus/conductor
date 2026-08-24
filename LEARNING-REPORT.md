@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-24T01:44:16Z
+Generated: 2026-08-24T02:28:48Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **737**
-- Outcomes: blocked: 15, cancelled: 1, done: 721
+- Closed tasks recorded: **738**
+- Outcomes: blocked: 15, cancelled: 1, done: 722
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
 | interface-vision | 83 | 100% |
-| kapowarr | 47 | 100% |
+| kapowarr | 48 | 100% |
 | kind-economy | 6 | 100% |
 | kind-robots | 50 | 98% |
 | kindrobots-unraid | 5 | 100% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 721 | 99% |
+| software | 722 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-24 `kapowarr/t-068` — Rendering in batches is not enough if the browser is still instructed to consume every batch immediately. For large galleries, cap total off-screen DOM work to a viewport runway and let user movement demand the next chunk; otherwise background batching merely turns one long freeze into sustained jank, especially on setTimeout-based fallbacks.
 - 2026-08-23 `model-builder/t-029` — Cycle 61: with no new kind_robots commits touching model-builder since cycle 59 and the repo-wide reference grep turning up no unaudited file, took the task brief's own "accessibility gaps" lens explicitly for the first time in this task's 61-cycle history. Found a real-looking sibling inconsistency (two components wrap their loading state in role="status"/aria-live="polite"/aria-busy="true", two others' analogous spinners have neither) but tracing it further showed the two pairs aren't actually comparable: the guarded pair is a full-region "loading this list from the network at mount" state, the unguarded pair is a button-internal in-flight spinner -- a state shape that is uniformly unguarded across every button in this component family, not selectively skipped on two components. Lesson: a found inconsistency is only a fixable sibling-parity bug if the two sides are actually the same kind of moment -- pattern-matching on "this attribute is present here and absent there" needs a check that the "there" is truly analogous to "here," or the fix ends up either wrong-shaped (fixing the wrong two files) or scope-creeping into a repo-wide convention decision that a single-bug-per-cycle task isn't set up to make well.
 
 - 2026-08-23 `brainstorm/t-029` — Third clean first-pass adapter/CTA task in a row (t-027 Scenario, t-028 Reward, t-029 Bot) following the same BrainstormSourceAdapter registry + gated startBrainstormWith*() CTA + verifyBrainstormObjectEntryLinks.mjs assertion pattern -- confirms this is now a well-worn, low-risk template for onboarding a new source entity, not something that needs fresh design judgment each time. When a recurring kaizen note explicitly names the next entity to follow the same pattern (here: Project, per t-027's original note), treat that as a ready-made task rather than re-deriving scope from scratch.
@@ -100,8 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-22 `appmaker/t-012` — apps.get.ts's pending-scaffold reader only ever recognized one of AppMaker's two self-serve scaffold flows' Todo titles (the monorepo flow's "Scaffold new app '...'", never the external-repo GitHub-integration flow's "Scaffold external app '...' via AppMaker GitHub integration") -- both the Prisma query's title filter and the extraction regex needed updating together, since fixing only one still silently drops the other flow's real, open Todos from the UI. Same "an endpoint reachable via direct API call, even with no front-end wired up yet, is still worth defending" precedent the prior cycle set for this exact pair of routes' slug-collision guard -- when two routes share a naming convention a downstream reader depends on, audit every reader against every writer, not just the one the current UI happens to call.
 
-- 2026-08-22 `model-builder/t-029` — Cycle 46: closed the exact gap cycle 45's own kaizen note flagged as left open -- pitch/fieldsDraft/promptDraft were capped at MAX_DRAFT_TEXT_LENGTH on the item PATCH path but not on the run CREATE route's own items mapping, even though both write the same @db.Text columns. A cap added at one write path for a shared field is only half the fix until every other write path into that same column is audited too -- the same "one-way-clear-gap" shape as cycle 41/42's lastAutoBuildOutcome/statusMessage bugs, just for a validation cap instead of a state-clearing call. Importing the shared constant (MAX_DRAFT_TEXT_LENGTH) rather than hardcoding a second copy of the same number, plus a guard script asserting the import is actually used, is what keeps two independent write paths for the same column from drifting apart again silently.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-24T01:44:16Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-24T02:28:48Z_
