@@ -730,3 +730,90 @@ tasks:
       early story beats stop mattering too. Sideways from each other, never ascending.
       Characters appear at three moments (Silas): the beginning, select screens (shop, upgrades,
       bestiary/fishopedia), and milestone interstitials.
+  - id: t-029
+    milestone: m3
+    title: "Genetics — hidden individual stats, breeding, and secret evolutions"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-025, t-026]
+    note: >
+      Silas, 2026-08-24: "if we allow fish to have secret random stats, then that could
+      include the ability to create new fish, which would be how the user can discover the
+      secret evolution fish. Then we have an entire hidden pokemon like stat system."
+      THE ARCHITECTURAL CONSEQUENCE, which changes t-007's schema and must be settled there
+      first: the bible describes SPECIES, the tank contains INDIVIDUALS. A `Character` row is
+      the species template (public Rarity stats, field note, art) shared by everyone and
+      identical for all copies. An `AquariumStock` row is one actual fish with its own hidden
+      rolled stats, nickname, hunger, and parentage. Two goldfish are the same species and
+      different animals. Every hidden stat lives on the individual, never on the species --
+      the bible stays a catalogue and never becomes a save file.
+      FOUR RULES that keep this from becoming a grind, all of which follow from decisions
+      Silas has already made:
+      (1) Breeding NEVER consumes the parents. Progress never degrades; a pairing produces a
+      new individual and leaves both parents untouched.
+      (2) Hidden stats must CONVERGE, not reroll forever. If the only path to a good fish is
+      buying a hundred, this is a slot machine. Offspring inherit toward the better parent so
+      effort compounds.
+      (3) Secret evolutions are a SECOND evolution axis, distinct from the goldfish line: one
+      evolves by growth, the other only appears through breeding. Same `evolves_to` plumbing,
+      different route -- the bible needs to distinguish them.
+      (4) Nothing hidden may be strictly REQUIRED. A player who never breeds must still be
+      able to finish the bestiary. Genetics is depth for people who want it, not a wall for
+      people who do not.
+      See SYSTEMS.md "Genetics". Scoped to m3 deliberately: this is plausibly larger than the
+      whole MVP and must not delay it.
+
+  - id: t-030
+    milestone: m3
+    title: "Rotating shop stock, selling fish back, and the individual-stat economy"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-029, t-031]
+    note: >
+      Silas, 2026-08-24: "set pieces are static bonuses, and can be bought whenever. But fish
+      will rotate through... they should be able to sell fish back to the store. usually at a
+      loss, but if they end up breeding fish with good stats, or a new evolve, it could be
+      worth more."
+      THE TRAP, and the reason this depends on t-031: rotating stock plus selling means a
+      player can sell a fish and then be unable to buy another. That is exactly the quiet
+      permanent loss the no-degradation rule exists to prevent, and it is worse than an
+      obvious one because they will not notice until they want it back.
+      THE FIX is already in Silas's own message -- the Ichthyonomicon records every species
+      ever bought or raised, including ones no longer owned. Make that record the RE-PURCHASE
+      MECHANISM, not just a trophy case. Then rotation governs DISCOVERY rather than ACCESS:
+      today's stock is what is new, cheap, or well-rolled, a reason to check in rather than a
+      gate, and anything ever owned is orderable from the book at any time. Selling becomes
+      genuinely safe and the sell button can be an ordinary part of play. This is the gating
+      philosophy applied exactly -- gate capacity, never access.
+      Selling AT A LOSS is fine; that is spending, which Silas's rule already permits. A
+      well-bred individual selling for MORE is the good version, because it turns breeding
+      into an economy rather than a collection sidebar. Price on individual stats, not species.
+      Do not ship rotation before the book can re-order, or the trap above ships with it.
+
+  - id: t-031
+    milestone: m3
+    title: "The Ichthyonomicon — the record that makes everything else safe"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-024
+    note: >
+      Silas asked for a name closer to a grimoire than an encyclopedia, and for the spelling
+      checked. Greek for fish is `ikhthus`, standard combining form `ichthyo-` (ichthyology,
+      ichthyosaur), so the parallel formation to Necronomicon is THE ICHTHYONOMICON. That is
+      its formal name; in dialogue Charlotte and Wilbur should call it something flatly
+      mundane -- "the book", "the register" -- because the gap between the cover and what the
+      staff call it is free characterisation.
+      Holds: every species ever bought or raised WHETHER OR NOT CURRENTLY OWNED (Silas's
+      explicit requirement), the field note revealed on first acquisition, the best individual
+      stats yet seen of each, and the re-order control.
+      THIS IS LOAD-BEARING, not a trophy case. t-030's rotating stock and sell-back are only
+      safe because this exists -- it is what makes rotation about discovery rather than access,
+      and what stops selling being an irreversible mistake. Build it before, or with, t-030.
+      It also absorbs t-024's bestiary-completion work: this IS the bestiary view, so treat
+      t-024 as its first half rather than building two screens.
