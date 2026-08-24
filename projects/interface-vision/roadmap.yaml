@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -3068,10 +3068,11 @@ tasks:
       Silas explicitly asked to continue finishing the Kind Robots gallery upgrade after ArtCollection authority merged. Claim the next bounded t-104 slice for a remaining- gallery sweep: identify reachable gallery/list surfaces still using bespoke pagination, eager image hydration, or inconsistent gallery composition and migrate the highest-leverage set onto the shared progressive gallery contract.
 
       Remaining-gallery sweep slice is ready for review on worker/interface-vision-t-104-gallery-finish-k4m7. All 18 live galleries were already on kr-gallery, so this slice fixes the next hidden layer instead of converting intentional non-galleries: custom slot cards now keep a complete text-first placeholder index but are not instantiated until near viewport, preventing offscreen Vue setup/watchers from eagerly hydrating data; Dream list browsing no longer defaults to 48 records, no longer truncates relationship data to three records, and no longer ships inline thumbnail blobs. A focused gallery index/hydration regression contract covers the new invariants.
-    updated: '2026-08-24 10:24:00+00:00'
+
+      Merged silasfelinus/kind_robots#2066 at 192e872 after exact-head TypeScript, Gallery Progressive Rendering, Facet Catalog, Contract Tests (all 298 verifier stages), Layout, Storybook, Narrative, and every other exact-head workflow completed successfully. Custom kr-gallery slot cards now keep a complete text-first index but stay unmounted until near viewport, and Dream browse data is complete by default without the old 48-row or three-relation truncation or inline thumbnail blobs.
+    updated: '2026-08-24 10:30:00+00:00'
     approved_by_human: true
     implementation_pr: 'silasfelinus/kind_robots#2063'
-    owner: worker
     claimed_by: 2026-08-24T100600Z-interface-vision-t-104-gallery-sweep-k4m7
     claimed_at: '2026-08-24 10:06:00+00:00'
 
