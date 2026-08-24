@@ -1,0 +1,245 @@
+# Cthulhuquarium — Economy v1 (data-driven, tunable without a deploy)
+#
+# companion to: ../ECONOMY.md (rationale) and ../SYSTEMS.md (design decisions
+# this file turns into numbers)
+#
+# This file is the single source of truth for balance constants. Nothing in
+# game code should hardcode a number that appears here — read it at runtime
+# (or seed it into a small DB config table keyed the same way) so a balance
+# pass is a data commit, not a deploy. See AquariumEvent's own schema comment
+# in prisma/schema.prisma, which already points back to this convention.
+#
+# Units: "tick" = one server-side production tick, currently defined as 60
+# real seconds (economy.tick_seconds below). All per-tick rates are additive
+# unless noted otherwise. All percentages are expressed as decimals (0.5 = 50%).
+
+schema_version: 1
+status: draft-v1 # confirm-or-tune with Silas before t-009 (server API) ships against it
+
+economy:
+  tick_seconds: 60 # how often the server recomputes accrued coins/hunger/debris
+
+# ---------------------------------------------------------------------------
+# Rarity tiers — production and cost scaling. Six tiers to match the existing
+# Character.Rarity enum (COMMON..MYTHIC) exactly; no new enum needed.
+# income_per_tick is the base coins one fish of that tier produces per tick
+# at full hunger (>=50) and clean tank (debris <20) -- see the multiplier
+# tables below for how hunger/debris scale it down.
+# unlock_cost is the one-time coin price to add that species to your tank
+# for the first time (not a per-instance cost -- see "collection, not copies"
+# note under fish).
+# ---------------------------------------------------------------------------
+rarity_tiers:
+  COMMON:
+    income_per_tick: 1
+    unlock_cost: 50
+  UNCOMMON:
+    income_per_tick: 3
+    unlock_cost: 200
+  RARE:
+    income_per_tick: 8
+    unlock_cost: 750
+  EPIC:
+    income_per_tick: 20
+    unlock_cost: 3000
+  LEGENDARY:
+    income_per_tick: 50
+    unlock_cost: 12000
+  MYTHIC:
+    income_per_tick: 120
+    unlock_cost: 50000
+
+fish:
+  # Cthulhuquarium is a collection game, not a copies-of-the-same-fish game:
+  # unlocking a species adds exactly one instance of it to your bestiary and
+  # your tank (subject to slot capacity below). There is no "buy 3 of the
+  # same anglerfish" — the thing you are collecting is the species itself.
+  collection_not_copies: true
+  base_income_source: rarity_tiers # income_per_tick above, before hunger/debris/rivalry multipliers apply
+
+# ---------------------------------------------------------------------------
+# Hunger — a rate gate only, never a loss (SYSTEMS.md rule 1 / DESIGN-BRIEF
+# decision 1). AquariumStock.hunger is already an Int 0-100 default 100 in
+# the live schema; this section is exactly the curve that reads that column.
+# ---------------------------------------------------------------------------
+hunger:
+  range: [0, 100]
+  starting_value: 100
+  decay_per_tick: 1 # -1 hunger per tick == empty in 100 ticks (100 minutes) if never fed
+  production_multiplier_by_band:
+    # band is matched top-down; first band whose "min" the hunger value
+    # meets or exceeds wins. Production never goes to zero for long --
+    # feeding is always one click away, and a hungry fish resumes the
+    # instant it's fed (no decay of what's already been earned).
+    - min: 50
+      multiplier: 1.0
+    - min: 20
+      multiplier: 0.5
+    - min: 1
+      multiplier: 0.2
+    - min: 0
+      multiplier: 0.0 # paused, not punished -- resumes at 1.0x the tick after feeding
+  feed:
+    restores_hunger_to: 100
+    # "The food is alive" (DESIGN-BRIEF decision 2) -- food cost scales with
+    # the fish's own rarity tier so feeding a MYTHIC costs more than feeding
+    # a COMMON, same shape as the unlock-cost curve. cost = round(unlock_cost * factor).
+    cost_factor_of_unlock_cost: 0.2
+
+# ---------------------------------------------------------------------------
+# Debris — throttles the tank's shared production rate, never holdings
+# (SYSTEMS.md #2). Tank-wide stat (not per-fish). Generates faster with more
+# occupants, deliberately, so a fuller tank is messier and more worth
+# visiting -- ties debris directly to the "leave it running vs. play with
+# it" split from the original pitch.
+# ---------------------------------------------------------------------------
+debris:
+  range: [0, 100]
+  starting_value: 0
+  # +accrual_per_occupant_per_tick per fish currently placed in the tank,
+  # capped at range[1]. A tank with 0 fish generates no debris.
+  accrual_per_occupant_per_tick: 0.5
+  production_multiplier_by_band:
+    - min: 80
+      multiplier: 0.25
+    - min: 50
+      multiplier: 0.5
+    - min: 20
+      multiplier: 0.8
+    - min: 0
+      multiplier: 1.0
+  clean:
+    click_clears: 5 # manual click: -5 debris, instant
+    # Three routes to clean, deliberately kept co-viable (SYSTEMS.md's own
+    # rule) -- none of these three should ever fully replace the other two:
+    debris_set_clears_per_tick: 2 # set piece (t-026), passive
+    sexton_clears_per_tick: 3 # The Sexton (glass snail, functional fish), passive, slightly stronger than the set
+
+# ---------------------------------------------------------------------------
+# Offline income — idling is rewarded, active play stays strictly faster
+# (DESIGN-BRIEF MVP point 6; SYSTEMS.md's "idle-collection set" resolution
+# generalizes to base offline income too, same rule, same reason).
+# ---------------------------------------------------------------------------
+offline_income:
+  rate_multiplier: 0.5 # accrues at 50% of what the same elapsed time would earn live
+  max_accrual_hours: 8 # beyond this, no further offline income accrues (return and it resumes)
+  # Applied using the tank's hunger/debris state AT THE MOMENT OF LOGOUT,
+  # held constant for the whole offline window -- hunger/debris do not
+  # continue decaying/accruing while offline. Keeps the offline calculation
+  # a single multiply instead of a tick-by-tick replay, and means a
+  # well-fed, clean tank at logout is rewarded for it.
+
+# ---------------------------------------------------------------------------
+# Slots — the master gate (SYSTEMS.md "Gate capacity, not access"). Fish and
+# set pieces draw from ONE shared pool (t-025 decision 1). slotsCap is not
+# yet a live Aquarium column as of t-007's initial migration -- t-009 (server
+# API) or a small follow-up migration needs to add it; this section is the
+# data that migration should seed from, not a stand-in for the migration.
+# ---------------------------------------------------------------------------
+slots:
+  starting_cap: 4
+  # Growth is entirely landmark-driven (see milestones below), never
+  # purchased with coins -- coins buy breadth, milestones buy room
+  # (SYSTEMS.md "Two economies, pacing each other").
+  cap_per_bestiary_breakpoint: 2
+
+# ---------------------------------------------------------------------------
+# Rivalry — a rate effect, never a loss (SYSTEMS.md #1 / t-025 decision 2).
+# Both authored and emergent, layered: emergent tag rules apply first, then
+# any authored `rivals:` override on a fish's bible entry stacks on top
+# (does not replace it) unless the override explicitly sets a magnitude.
+# ---------------------------------------------------------------------------
+rivalry:
+  emergent_rules:
+    # Both fields are ecological tags the fish bible (t-003) is expected to
+    # carry per species: diet_role in [predator, prey, neutral], school_role
+    # in [school, anchor, solitary]. A rule fires when both tagged fish are
+    # placed in the same tank at once.
+    - condition: "diet_role:predator + diet_role:prey"
+      production_multiplier_each: 0.7 # -30% each, the strongest emergent pairing
+    - condition: "school_role:school + school_role:anchor"
+      production_multiplier_each: 0.85 # -15% each, a gentler, more common pairing
+  authored_default_multiplier_each: 0.6 # -40% each, used when a fish's `rivals:` list names a pair with no explicit magnitude
+  recovery: instant # separating a rival pair (removing either from the tank) restores 1.0x the next tick, no cooldown
+
+# ---------------------------------------------------------------------------
+# Set pieces — bonuses key off fish properties, not flat buffs (SYSTEMS.md
+# "For synergy to be real..."). Seed list from Silas's pitch, mapped to
+# concrete effects. Full authoring (art, flavor, unlock cost) is t-026's
+# job; these are the economy-facing numbers t-026 should read rather than
+# re-derive.
+# ---------------------------------------------------------------------------
+set_pieces:
+  extra_species_slot:
+    effect: slots_cap_delta
+    value: 1 # +1 slotsCap while equipped -- the pressure valve, buys capacity with coins instead of milestones
+  feeding_bonus:
+    effect: feed_coin_rebate
+    value: 0.5 # feeding any fish refunds 50% of that feed's coin cost as a bonus payout
+  swim_speed:
+    effect: cosmetic_only
+    value: null # no economy number -- visual pacing only, explicitly out of scope for this file
+  peace_ward:
+    effect: rivalry_multiplier_override
+    value: 1.0 # rivalry penalties do not apply anywhere in the tank while equipped
+  roaming_collector:
+    effect: auto_click_collectibles
+    # Must visibly move around the tank (Silas's own note) -- a rendering/
+    # animation requirement for whichever task builds it, not an economy
+    # number, but the collection rate itself is bounded like idle_hoarder
+    # below so it can't quietly replace active clicking.
+    value: 0.5 # auto-collects 50% of drifting-collectible value per tick, does not stack with idle_hoarder
+  debris_skimmer:
+    effect: debris_clear_per_tick
+    value: 2 # matches debris.clean.debris_set_clears_per_tick above -- keep these two in sync if either changes
+  idle_hoarder:
+    effect: idle_income_bonus_fraction
+    # Additional fraction of production captured specifically while the
+    # player is actively away (distinct from offline_income.rate_multiplier,
+    # which is the baseline everyone gets) -- capped per SYSTEMS.md's hard
+    # constraint that idle collection is never total.
+    value: 0.4
+    cap_note: "never 1.0 -- full automation is explicitly disallowed (SYSTEMS.md #3)"
+  # Only one idle-collection-shaped set effect (roaming_collector or
+  # idle_hoarder) may be equipped/active at a time in a v1 tank -- they are
+  # both bounded individually, but SYSTEMS.md's "idling must stay strictly
+  # worse than playing" rule is about the tank's TOTAL passive rate, not any
+  # one set in isolation, so t-026 should enforce non-stacking explicitly
+  # rather than relying on each cap alone.
+  no_stack_idle_effects: [roaming_collector, idle_hoarder]
+
+# ---------------------------------------------------------------------------
+# Milestones — landmark events, not coin thresholds (t-025 decision 4). Each
+# fires exactly once per Aquarium, delivered as an AquariumEvent with
+# kind: 'milestone' and a payload naming which landmark fired; a Charlotte
+# (occasionally Wilbur) interstitial reads that payload to decide what to
+# say and which background/slots to hand over.
+# ---------------------------------------------------------------------------
+milestones:
+  - id: first_full_tank
+    trigger: "every owned slot is occupied at once"
+    reward: { background: true, slots_cap_delta: 0 }
+  - id: first_evolution
+    trigger: "a species reaches its first color/rarity evolution"
+    reward: { background: true, slots_cap_delta: 0 }
+  - id: first_spotless_tank
+    trigger: "debris reaches 0 after having been >= 80"
+    reward: { background: true, slots_cap_delta: 0 }
+  - id: first_rivalry_resolved
+    trigger: "a placed rival pair is separated after the rivalry penalty was active"
+    reward: { background: true, slots_cap_delta: 0 }
+  - id: bestiary_5
+    trigger: "5 distinct species collected"
+    reward: { background: true, slots_cap_delta: 2 }
+  - id: bestiary_10
+    trigger: "10 distinct species collected"
+    reward: { background: true, slots_cap_delta: 2 }
+  - id: bestiary_15
+    trigger: "15 distinct species collected"
+    reward: { background: true, slots_cap_delta: 2 }
+  - id: bestiary_20
+    trigger: "20 distinct species collected"
+    reward: { background: true, slots_cap_delta: 2 }
+  # slots_cap total across all bestiary breakpoints: starting_cap (4) + 4*2 = 12 by bestiary_20,
+  # matching Silas's 20-species MVP bar with real room to build interesting tanks, not just
+  # room to hold everything at once.

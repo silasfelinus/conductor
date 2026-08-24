@@ -10309,3 +10309,24 @@ records:
     alongside `provision_kind_robots_deps.sh`'s dummy-DATABASE_URL `prisma generate`
     path, since that path alone doesn't catch a migration.sql that doesn't actually
     match what schema.prisma implies.
+
+- date: 2026-08-24
+  project: cthulhuquarium
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    "Simulate it, don't just spec it" caught a real methodology bug before it could
+    look like a balance bug: a naive active-vs-idle coin-balance comparison showed idle
+    beating active over two hours, which would have read as a genuine MVP-requirement
+    violation (DESIGN-BRIEF's "idling rewarded but strictly worse than playing"). The
+    actual cause was comparing raw liquid balance, which conflates spending (buying a
+    fish, an investment) with losing. Switching to net worth (coins + owned-asset
+    value) and gross income earned (cumulative production before spend) reversed the
+    finding to a healthy 3-3.5x active/idle gap that widens over time via reinvestment
+    compounding. Worth generalizing: any economy simulation comparing two spending
+    strategies needs a wealth metric that survives the comparison, not a currency
+    balance that a strategy's own spending pattern can arbitrarily deflate.
