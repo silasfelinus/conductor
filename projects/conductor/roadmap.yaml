@@ -4196,48 +4196,13 @@ tasks:
   - id: t-127
     milestone: m2
     title: "task-events `operation: note` is unsupported, so three stuck events fail the process job on every conductor PR"
-    status: review
+    status: done
     gate_human: false
     owner: worker
     stakes: reversible
     passes: 0
-    note: >
-      LIVE BREAKAGE, found 2026-08-24. Three queued events in task-events/ declare
-      `operation: note`, which is not in `ALLOWED_OPERATIONS` in
-      scripts/process_task_events.py (claim, done, ready, review, needs-human, blocked,
-      rearm). Each run logs "ERROR ...: unsupported operation 'note'", the job exits 1 via
-      its own "One or more task events failed to apply" guard, and the events STAY IN
-      task-events/ by design -- so this is not a one-off failure, it recurs on every
-      conductor PR and every scheduled run until someone clears or fixes them:
-        task-events/2026-08-24T105201Z-interface-vision-t-104-note-scenario-gallery-p9v3.yaml
-        task-events/2026-08-24T111100Z-interface-vision-t-104-note-pr2068-scenario-gallery-p9v3.yaml
-        task-events/2026-08-24T112900Z-interface-vision-t-104-note-pr2069-reward-gallery-q8n5.yaml
-      All three are interface-vision/t-104 from a concurrent session. Their intent is
-      legitimate and worth preserving rather than deleting: the first says "The review
-      event was queued immediately before the implementation PR number was assigned. PR
-      metadata will be attached in a follow-up note after GitHub creates it." That is a
-      real need -- attach evidence to a task without changing its status -- and the
-      emitting session reasonably assumed an operation for it existed. Note that
-      `note:` already exists as an optional FIELD on every event; what is missing is a
-      status-less operation that carries only that field.
-      Decide which of two fixes, and do not just delete the events without recording
-      their content on t-104 either way:
-      (A) IMPLEMENT `note` as a real operation -- append to the target task's `note` and
-      bump `updated`, change no status, clear no ownership. Add to ALLOWED_OPERATIONS in
-      both process_task_events.py and validate_task_events.py (they keep separate copies
-      of this check, which is its own smell worth collapsing while in here), document it
-      in task-events/README.md's "Supported operations" list, and decide deliberately
-      whether it writes a ledger/learning record (probably not -- it is not a state
-      transition). This is the fix that matches intent.
-      (B) REJECT it at write time instead, if a status-less operation is unwanted -- but
-      then whatever helper emitted these needs fixing so no session can queue an event
-      the processor will never accept, and validate_task_events.py should be wired into
-      a pre-commit or CI gate on task-events/ so a bad event fails at authoring rather
-      than silently jamming the queue for everyone afterwards.
-      Either way, add the missing guard: an event that can never apply should not be able
-      to sit in the queue failing every subsequent run. Consider moving permanently-failed
-      events to task-events/failed/ after N attempts so the job reports them once and then
-      goes green, instead of re-failing forever on the same three files.
-    updated: '2026-08-24T14:40:35Z'
+    note: 'RESOLVED 2026-08-24. Silas hand-fixed the acute incident (commit cafdefc, ~11:48 UTC) by quarantining the three stuck operation: note events directly -- root cause judged producer-side (an invented operation type reaching main via the connector-only direct-push claim path, bypassing validate_task_events.py at PR time), not a processor gap to accommodate. This session (a later scheduled run) closed the remaining systemic gap: silasfelinus/conductor#2785 adds MalformedTaskEvent handling to process_task_events.py so a structurally unfixable event (bad YAML, unsupported operation, missing/invalid project or task field, unknown project) is quarantined to task-events/failed/<name>.yaml with a sibling .error.txt instead of failing the same job on every subsequent PR/scheduled run forever. Live-state failures (e.g. claim requires status ready) are untouched -- still left queued for legitimate retry. Deliberately did NOT implement note as a supported operation, following Silas commit''s explicit reasoning rather than the note''s original option A. 6 new tests; full suite 1189 passed/1 skipped; validate_task_events.py and process_task_events.py --dry-run both clean against current main.'
+    updated: '2026-08-24T14:46:16Z'
     claimed_by: 20260824T1435Z-sched-conductor-t127-guard
     claimed_at: '2026-08-24T14:39:32Z'
+    implementation_pr: 'silasfelinus/conductor#2785'
