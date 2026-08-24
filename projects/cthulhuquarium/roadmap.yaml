@@ -826,7 +826,7 @@ tasks:
   - id: t-032
     milestone: m2
     title: "Extend the aquarium schema for every decision made after t-007 shipped"
-    status: review
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -867,7 +867,7 @@ tasks:
       key by `(userId, slug)`; the shipped schema used a global unique instead. Move to
       `@@unique([userId, slug])`. This is a live bug the moment a second user names a tank
       anything obvious, and it is much cheaper to fix now than after real rows exist.
-    updated: '2026-08-24T22:40:20Z'
+    updated: '2026-08-24T22:51:34Z'
     implementation_pr: 'silasfelinus/kind_robots#2075'
   - id: t-033
     milestone: m1
