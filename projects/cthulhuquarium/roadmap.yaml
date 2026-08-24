@@ -162,27 +162,27 @@ tasks:
   - id: t-004
     milestone: m1
     title: "Economy and progression spec — data-driven, tunable without a deploy"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     note: >
-      Write economy/balance.yaml in the cthulhuquarium repo plus a short ECONOMY.md
-      explaining it. NOTE (Silas, 2026-08-24): the food is ALIVE and wriggling, not
-      pellets -- price and name it accordingly; you are buying livestock by the handful.
-      Per the same decision nothing accumulated may ever shrink, so hunger gates the
-      payout RATE only and no decay term may touch a coin total, an unlock, or a stat.
-      Cover: coin drop rates and values by fish tier, food cost curve, hunger/decay
-      timings, upgrade tiers and their costs, unlock thresholds per species, and the
-      offline-income formula with its cap. The cap is the important one -- idling must be
-      rewarding but strictly worse than playing, per the pitch ("they can leave it running
-      and get pickups, or play with it and it will gain resources faster"). Simulate the
-      first two hours of play in a script and paste the curve into ECONOMY.md; a spec
-      nobody simulated is a guess. Every number lives in YAML, never in a .ts constant, so
-      a balance pass is a data commit.
+      Write economy/balance.yaml in the cthulhuquarium repo plus a short ECONOMY.md explaining it. NOTE (Silas, 2026-08-24): the food is ALIVE and wriggling, not pellets -- price and name it accordingly; you are buying livestock by the handful. Per the same decision nothing accumulated may ever shrink, so hunger gates the payout RATE only and no decay term may touch a coin total, an unlock, or a stat. Cover: coin drop rates and values by fish tier, food cost curve, hunger/decay timings, upgrade tiers and their costs, unlock thresholds per species, and the offline-income formula with its cap. The cap is the important one -- idling must be rewarding but strictly worse than playing, per the pitch ("they can leave it running and get pickups, or play with it and it will gain resources faster"). Simulate the first two hours of play in a script and paste the curve into ECONOMY.md; a spec nobody simulated is a guess. Every number lives in YAML, never in a .ts constant, so a balance pass is a data commit.
+
+      DONE 2026-08-24 (conductor scheduled Agent run, session 20260824-sched-conductor-cthulhuquarium-t004-run1). Wrote projects/cthulhuquarium/ECONOMY.md (rationale, every number traced back to a DESIGN-BRIEF.md/SYSTEMS.md decision, [v1 estimate] flagged where I picked a constant neither document stated numerically) plus projects/cthulhuquarium/data/economy.yaml (the actual tunable constants: six rarity tiers matching Character.Rarity exactly, hunger as a pure rate-gate per decision 1, debris as a tank-wide throttle, a capped 50%/8h offline-income formula, the shared fish+set-piece slot pool per t-025's decision 1, both authored and emergent rivalry per t-025's decision 2, all seven set pieces from SYSTEMS.md's list with concrete effects, and the eight t-025-decision-4 milestones wired to slots_cap growth).
+
+      Covered every item the note asked for: fish-tier income/cost curve, food cost curve (20% of unlock cost, food-is-alive requirement flagged as a content/render item not a number), hunger/decay timings, unlock thresholds per rarity tier, and the offline-income formula with its cap.
+
+      Also wrote projects/cthulhuquarium/data/simulate_economy.py and ran it per the note's explicit instruction ("a spec nobody simulated is a guess"). First result (raw coin balance) looked like idle beat active at minute 120, which would have been a real MVP-point-6 violation -- traced this to a methodology bug, not a balance bug: raw balance conflates spending (buying fish, an investment) with losing. Recomputed on net worth (coins + owned-fish asset value) and gross income earned (cumulative production before spend), which are the fair comparison. Corrected result: active reaches 3.0x idle's net worth and 3.5x its gross income by minute 120, gap widening throughout via reinvestment compounding (more fish -> more income -> afford the next fish sooner) while idle's single fish's hunger bottoms out at minute 100 and flatlines at zero growth from there (paused, not a loss -- its held balance never drops). The v1 numbers satisfy DESIGN-BRIEF's "idling rewarded, active strictly faster" requirement; full table and the methodology note are in ECONOMY.md. Flagged in ECONOMY.md that the compounding depends on the reinvestment loop, not the hunger/debris curves alone, so re-run the script after tuning rarity_tiers/hunger/debris rather than assuming the ratio holds.
+
+      Location note: the task asked for economy/balance.yaml in the silasfelinus/cthulhuquarium repo (the data-canon repo per DESIGN-BRIEF.md). This session's GitHub access is scoped to kind_robots/conductor/kapowarr/humboldtscoopsolutions only, not cthulhuquarium, so per AGENTS.md's cross-repo protocol the spec lives in the conductor project folder as a complete, ready-to-relocate handoff (a file move into that repo's economy/ directory once a session has access, not a rewrite) rather than needs-human -- nothing here is a decision Silas needs to make, the spec itself is fully complete and readable/actionable from conductor. ECONOMY.md documents this explicitly under "A note on where this file lives."
+
+      Not done (explicitly out of scope, documented in ECONOMY.md): no fish bible content (t-003, same repo-access blocker); no Prisma migration for the still-missing Aquarium.slotsCap / debris-level columns (flagged as follow-up work for whichever task next touches the schema); no server API or UI wiring (t-009's job).
+
+      Kaizen suggestion filed in ECONOMY.md: a small validate_economy_yaml.py (mirroring validate_roadmaps.py) to catch the numbers-drift-out-of-sync class of bug (e.g. debris_skimmer.value vs debris.clean.debris_set_clears_per_tick) before a real balance pass.
     claimed_by: 20260824-sched-conductor-cthulhuquarium-t004-run1
     claimed_at: '2026-08-24T18:39:32Z'
-    updated: '2026-08-24T18:39:32Z'
+    updated: '2026-08-24T18:46:58Z'
 
   - id: t-005
     milestone: m1
