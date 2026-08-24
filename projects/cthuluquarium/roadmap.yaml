@@ -119,3 +119,43 @@ tasks:
       project's own asset path and record prompt/model/seed metadata. Small,
       reversible, self-contained; does not require repo access to the game-client
       repo to complete (assets can be produced and staged before the client exists).
+
+  - id: t-004
+    milestone: m2
+    title: "kind_robots: scaffold /aquarium access page and Play directory tab entry"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      From KR Todo #1321 ("infrastructure on kind robots, the access page, adding
+      it to the Play directory"). Pure routing/plumbing, not gated on the design
+      brief or ComfyUI assets — confirmed `/aquarium` does not exist yet (no
+      `content/aquarium.md`, no `pages/aquarium.vue`, no `aquarium` entry in
+      `utils/projectPlacements.ts`; it 404s today). In kind_robots:
+      1. Add `content/aquarium.md` (Recipe A per `sample/new-section.md`):
+         frontmatter with `dashboardKey`/`dashboardTab`/title/description/icon,
+         body is one line `:aquarium-manager`. For the manager component, wrap the
+         shared `components/conductor/project-front-page.vue` shell (pass
+         `slug: 'aquarium'` + a static `fallback` config) rather than building a
+         bespoke page — it merges in the live Project 2112 DB row automatically.
+      2. Add `content/channels/play/aquarium.md`: `contentType: tab`,
+         `channelKey: play`, `tabKey: aquarium`, `route: /aquarium`, label/icon/sort
+         — this alone makes it appear in the Play channel's tab list via
+         `resolveChannels()` (`stores/helpers/channelContent.ts`); adding a tab to
+         an existing channel is normal reversible work, no gate (only a brand-new
+         top-level channel needs sign-off).
+      3. Set `liveUrl`/`channelKey`/`tabKey` on the Kind Robots Project 2112 DB row
+         itself (e.g. via `PATCH /api/projects/2112` or by adding an entry to
+         `utils/projectPlacements.ts`'s `PROJECT_PLACEMENTS` and running the
+         reconciliation admin tool) — per root AGENTS.md's "Project identity and
+         source of truth" section, Kind Robots owns these presentation fields
+         directly. Do NOT treat `sample/new-section.md` step 6 ("add liveUrl/
+         channelKey/tabKey to conductor/project-overrides.yaml") as current
+         guidance — it conflicts with AGENTS.md and is stale; this conductor repo's
+         `project-overrides.yaml` entry already has `liveUrl: /aquarium` as an
+         informational mirror only, not the source of truth.
+      Dashboard-tab art (`public/images/dashboard-tabs/play/aquarium.webp`) has a
+      soft placeholder fallback — nice-to-have polish, not a blocker here.
+      Verify: the new route resolves (SSR markup, not a 404) and the tab appears
+      via `utils/scripts/verifyChannelResolver.ts` or equivalent.

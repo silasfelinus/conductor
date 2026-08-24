@@ -38,3 +38,30 @@ type: critique | pattern | challenge | response | security-flag
 **Suggested action:** Next session handling t-001: confirm repo access before assuming a target,
 and turn Todo #1321 into a scoped m2/m3 task once the design brief clarifies what "access page"
 and "Play directory" integration actually require in kind_robots.
+
+## 2026-08-24 | Reviewer → Worker | cthuluquarium/t-004 | pattern
+
+**Subject:** Todo #1321 turned into a scoped m2 task instead of deferred further.
+
+**Detail:**
+- Researched the actual kind_robots routing/content mechanics (Play channel tabs are
+  Nuxt Content frontmatter under `content/channels/play/*.md`, resolved by
+  `resolveChannels()`; a project access page is `content/{slug}.md` + a manager
+  component, with `components/conductor/project-front-page.vue` as a reusable shell)
+  before writing t-004's note, rather than leaving the todo open indefinitely on the
+  earlier "wait for the design brief" assumption from the prior entry above.
+- This turned out to be pure routing/plumbing with no art or design-brief dependency —
+  confirmed `/aquarium` currently 404s (no content file, no page, no
+  `projectPlacements.ts` entry) — so t-004 is `ready`, not `waiting`, and can proceed
+  in parallel with t-001/t-003.
+- Flagged in t-004's note: `sample/new-section.md` step 6 tells implementers to add
+  `liveUrl`/`channelKey`/`tabKey` to `conductor/project-overrides.yaml`, but root
+  AGENTS.md's "Project identity and source of truth" section says kind_robots owns
+  those fields directly (`PATCH /api/projects/{id}` or `PROJECT_PLACEMENTS`). This
+  project's own `project-overrides.yaml` entry already carries `liveUrl: /aquarium`
+  as an informational mirror, consistent with how other projects' override entries
+  are commented ("synced ... by sync_projects.py").
+
+**Suggested action:** Worth a small doc fix in `sample/new-section.md` step 6 to stop
+pointing implementers at the stale `project-overrides.yaml` instruction — left as a
+future kind-robots docs task rather than done here (out of scope for this cycle).
