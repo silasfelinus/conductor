@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -3080,9 +3080,14 @@ tasks:
       Merged silasfelinus/kind_robots#2068 as 18c9434 after every exact-head workflow completed successfully, including TypeScript, Gallery Progressive Rendering, Facet Catalog, Layout, and all 298 Contract Tests verifier stages. Scenario list Character relations now carry only browse/search/compact-cast fields while /api/scenarios/:id retains rich Character detail.
 
       Scenario gallery provider slice is complete and merged as silasfelinus/kind_robots#2068. Return the reusable front-end consistency umbrella to ready for the next bounded gallery-provider pass.
-    updated: '2026-08-24 11:25:01+00:00'
+
+      Continue the gallery-provider finish pass after kind_robots#2068. Audit and slim the Reward list provider, which currently includes full ArtImage, Character, Dream, Reaction, and User relation graphs for every gallery item, while preserving any relationship metadata live callers actually need and keeping rich detail hydration on the per-Reward endpoint.
+    updated: '2026-08-24 11:26:00+00:00'
     approved_by_human: true
     implementation_pr: 'silasfelinus/kind_robots#2068'
+    owner: worker
+    claimed_by: 2026-08-24T112600Z-interface-vision-t-104-reward-gallery-q8n5
+    claimed_at: '2026-08-24 11:26:00+00:00'
 
   - id: t-105
     milestone: m6
