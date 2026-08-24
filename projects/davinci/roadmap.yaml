@@ -513,14 +513,14 @@ tasks:
   - id: t-021
     milestone: m6
     title: "Da Vinci visual style and interaction polish pass"
-    status: review
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
     depends_on: [t-017, t-020]
     implementation_pr: 'silasfelinus/kind_robots#2074'
-    note: 'PR silasfelinus/kind_robots#2074 open: recordLifeChoice idempotency guard against duplicate-chapter submissions (async-race family, concurrent tab/session interaction lead from prior cycle). Watching CI, will merge when green and flip to done.'
-    updated: '2026-08-24T20:38:00Z'
+    note: 'Fixed a real, previously-untraced async-race gap: recordLifeChoice had no idempotency guard on (lifeRunId, chapter), so two open tabs on the same run (or a client retry after a dropped response) would each create a LifeChoice row and double-apply stat effects via the LifeStat increment upsert. Added a check-existing-choice-first guard inside the transaction, mirroring resolveCompletedLifeRun''s read-back-don''t-recompute idiom. Extended utils/scripts/verifyDaVinciPlayLoop.ts with a duplicate-submission regression case. Verified: vue-tsc --noEmit repo-wide exit 0, eslint/prettier clean on both changed files (one pre-existing unrelated eslint warning on davinci.ts confirmed present on main before this change, left untouched), exactly 2 files touched. Could not run the new live-DB test case itself in this sandbox (no live DATABASE_URL) -- flagged in the PR. Merged silasfelinus/kind_robots#2074 (squash 3794af9). Kaizen: audit production LifeChoice rows for existing (lifeRunId, chapter) duplicates, then land a DB-level @@unique([lifeRunId, chapter]) constraint to close the remaining sub-millisecond concurrent-transaction sliver the application-layer guard cannot.'
+    updated: '2026-08-24T20:41:12Z'
     claimed_by: 20260824T202905-dv-t021-scheduled
     claimed_at: '2026-08-24T20:29:06Z'
 
