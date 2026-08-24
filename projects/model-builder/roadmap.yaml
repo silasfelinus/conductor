@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 48
     stakes: reversible
@@ -645,10 +645,13 @@ tasks:
       Cycle 63 (no-op, real investigation, conductor scheduled Agent run 2026-08-23): took cycle 62's lead (b) directly -- a fresh consumer-side sweep of model-builder-recipe-selector.vue and model-builder-manager.vue for the same aria-busy/aria-hidden convention cycle 62 established on the other three components. Read both files in full. recipe-selector.vue's "Start build run" button (:disabled="!store.canStartRun") has no spinner or loading state of its own at all -- confirmed by reading the full component: startingRun only disables the recipe chips, quantity inputs, and "Change source" button elsewhere in the same file, never renders as a spinner on the Start button itself. This is the exact same shape cycle 62 already named and deliberately left alone for batch-editor.vue's "Auto-build group" button -- adding a spinner here would be a new visual element, not an accessibility annotation on an existing one, so it stays out of scope for this cycle too, consistent with that precedent rather than a fresh judgment call. manager.vue was already fully covered before this cycle: its root <section> carries :aria-busy="resumingRun", and the "Restoring your latest build run…" state already has role="status" aria-live="polite" with aria-hidden="true" on its decorative spinner -- no gap found there either. Also ran a repo-wide grep for icon-only <button> elements across all seven components/model-builder/*.vue files (a button whose only child is an <Icon>, no visible text): none exist -- every icon-bearing button in this component family already pairs the icon with either visible text or an explicit aria-label (manager.vue's History/Reset buttons), so no aria-label gap surfaced either. No new bug found; no code change. git status --porcelain clean throughout (read-only cycle).
 
       Cycle 62's two remaining candidates are now both closed out: (a) is still gated on model-builder/t-031 (needs-human, no live-browser fallback in this sandbox); (b) is resolved as a deliberate non-goal, matching cycle 62's own precedent rather than leaving it open as an unresolved question. With every named lead across cycles 51-63 now either fixed, ruled out, or explicitly deferred to t-031's live-smoke-test path, this task's static-reading approach against the current model-builder feature set looks fully exhausted for now. Re-armed to `ready`; a future cycle without new kind_robots commits touching model-builder or without t-031 unblocking should expect another no-op unless it finds a genuinely different lens (e.g. re-reading with fresh eyes after enough time has passed, or picking up t-031 itself once a live-browser fallback exists).
-    owner: worker
+            Cycle 64 (conductor scheduled Agent run, 2026-08-24T00:32Z session, claude-scheduled-20260824T003200Z-mb-t029): no new kind_robots commits touch any model-builder file since cycle 63's own PR (#2053), so per cycle 63's own prediction this cycle tried a genuinely different lens rather than re-reading already-covered ground: form-control labeling (every <input>/<select>/<textarea> across all seven components/model-builder/*.vue files) and selectable-run-history keyboard/ARIA semantics (model-builder-run-history.vue, model-builder-source-picker.vue). Every form control already has a properly paired <label :for>/id or an explicit :aria-label; every interactive control in run-history.vue and source-picker.vue is a real <button type="button"> with :aria-label covering its icon-only variants and :disabled wired to the correct in-flight state -- no bare clickable <div>/<span>, no missing keyboard semantics. No gap found; no code change. git status --porcelain clean throughout (read-only cycle).
+
+            With this fresh lens also turning up nothing, the static-reading approach against the current feature set is exhausted across every angle tried so far (cycles 51-64). Re-armed to `ready`; a future cycle should expect another no-op unless new kind_robots commits touch model-builder, model-builder/t-031's live-smoke-test path unblocks, or a genuinely new lens is found.
+    owner: null
     claimed_by: claude-scheduled-20260824T003200Z-mb-t029
     claimed_at: '2026-08-24T00:32:53Z'
-    updated: '2026-08-24T00:32:53Z'
+    updated: '2026-08-24T00:33:32Z'
 
   - id: t-030
     milestone: m6
