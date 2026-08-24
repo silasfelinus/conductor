@@ -1,0 +1,14 @@
+version: 1
+project: interface-vision
+task: t-104
+operation: claim
+owner: worker
+session: 2026-08-24T113500Z-interface-vision-t-104-character-gallery-m4k7
+updated: 2026-08-24T11:35:00+00:00
+note: >-
+  Continue the gallery-provider finish pass after kind_robots#2069. Establish a
+  real Character browse/detail boundary: the catalog should carry only card,
+  filter, ownership, and lightweight search fields, while opening info,
+  selecting for interaction, editing, and cloning hydrate the complete Character
+  from /api/characters/:id. Keep the boundary explicitly typed rather than
+  treating partial browse rows as full Prisma Character records.
