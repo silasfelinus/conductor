@@ -366,3 +366,27 @@ is genuinely useful.
 - The internal Conductor pitch generator is no longer this project's definition. If retained,
   it becomes an explicit downstream consumer of the user-facing Brainstorm engine and never
   silently turns normal Brainstorm sessions into Conductor coordination data.
+
+### cthulhuquarium  (software)
+**Direction:** A playable, darkly funny idle aquarium game live on Kind Robots at /play/aquarium,
+with persistent aquariums, a collectible monster-fish bestiary, and browsable public tanks.
+**Notes:**
+- Two repos, one project. The GAME ships inside `kind_robots` (same pattern as music-mentor and
+  davinci). `silasfelinus/cthulhuquarium` is the portable DATA CANON — fish bible YAML, balance
+  tables, lore, art prompts, and the archived 2020 p5 prototype. Never put game code in the
+  cthulhuquarium repo; never make the fish bible database-only.
+- Fish are kind_robots `Character` records in the `abyssal-bestiary` Pack, not a private table.
+  That model already carries species, backstory, quirks, slug, packId, art image ids, and six
+  `Rarity` stats. Ruler is Hooked uses the same model, which is the entire mechanism for Silas's
+  "we can have appropriate ones appear in both games" — same records, no sync layer.
+- Every economy number lives in `economy/balance.yaml` in the canon repo and is read server-side.
+  If a balance change needs a code edit, the economy leaked out of YAML and that leak is the bug.
+- Tone is Little Inferno / Limbo / Sunless Sea / Tim Burton, not cute and not grimdark. Art
+  direction is silhouette-forward specifically because silhouettes survive Comfy's inconsistency
+  where detailed consistently-colored creature art would not.
+- Hard gates that stay gates: no developer-account creation, no signing certs, no store
+  submissions, no payments. Mobile is tier 2 (prepare and checklist only); Steam is out of scope
+  for this roadmap entirely.
+- This project is also the deliberate trial run for autonomous project scaffolding. Silas: "if the
+  agents can't create assets, then that should be part of this workflow". Asset-pipeline gaps are
+  findings to fix and document (t-005), not reasons to descope.

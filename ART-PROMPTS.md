@@ -60,6 +60,7 @@ When asked for a batch, generate up to ten images in the same order as the queue
 - `ruler-hooked` — icon, card, hero → `projects/images/ruler-hooked-{type}.webp` in `silasfelinus/conductor`
 - `coloring-book` — icon, card, hero → `projects/images/coloring-book-{type}.webp` in `silasfelinus/conductor`
 - `taskmaster` — icon, card, hero → `projects/images/taskmaster-{type}.webp` in `silasfelinus/conductor`
+- `cthulhuquarium` — icon, card, hero → `projects/images/cthulhuquarium-{type}.webp` in `silasfelinus/conductor`
 
 **Inspiration images** (`projects/art-prompts.yaml` → `inspirations:`, 3 each):
 

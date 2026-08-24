@@ -1,9 +1,21 @@
-# TALKBACK.md — cthuluquarium
+# TALKBACK.md — cthulhuquarium
 
 Cross-agent critique log for this project. Both Worker (OpenAI) and Reviewer (Claude)
 append here. Never edit or delete prior entries.
 
 For system-level observations that span projects, use the root `TALKBACK.md`.
+
+> **Slug correction, 2026-08-24.** The entries below were written by a concurrent
+> scheduled session that scaffolded this project as `cthuluquarium` (missing the
+> second `h`) from Kind Robots Todo #1320, in parallel with the session Silas was
+> running live. That session's `projects/cthuluquarium/` directory was removed and
+> its Kind Robots Project row repointed to `cthulhuquarium`; these entries are
+> carried forward verbatim rather than deleted, per hard safety rule 7. Where they
+> describe the game client living in the `cthulhuquarium` repo and being out of
+> scope, Silas has since decided otherwise: the game ships in kind_robots and that
+> repo holds the data canon. Where they describe the route as `/aquarium`, it
+> shipped as `/play/aquarium`.
+
 
 **Format:**
 ```

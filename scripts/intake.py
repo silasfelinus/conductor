@@ -147,6 +147,43 @@ def _insert_list_item(text: str, item: str, before: str | None = None) -> str:
     return "".join(lines)
 
 
+def register_repo(slug: str, repo: str | None, kind: str, description: str) -> None:
+    """Append a repos.yaml entry by text surgery rather than a yaml.safe_dump
+    round-trip, so the file's header block and inline comments survive (same
+    reasoning as register_override — conductor/t-055; repos.yaml was missed by
+    that pass and lost every comment the first time this ran, 2026-08-24)."""
+    if not REPOS_FILE.exists():
+        return
+
+    text = REPOS_FILE.read_text()
+    if re.search(rf"^\s*- slug: {re.escape(slug)}\s*$", text, re.MULTILINE):
+        print(f"  (repos.yaml already has an entry for {slug})")
+        return
+
+    entry = (
+        f"  - slug: {slug}\n"
+        f"    repo: {repo if repo else 'null'}\n"
+        f"    kind: {kind}\n"
+        f"    description: {description}\n"
+    )
+
+    # `repos: []` is an empty FLOW sequence — appending a block item under it is
+    # invalid YAML, so the key has to become a block sequence first. Mirrors
+    # register_override's empty_list branch (tests/test_intake.py's fixture repo
+    # starts from exactly this shape).
+    empty_list = re.search(r"^repos:[ \t]*\[[ \t]*\][ \t]*\n?", text, re.MULTILINE)
+    if empty_list:
+        text = text[: empty_list.start()] + "repos:\n" + entry + text[empty_list.end() :]
+    elif re.search(r"^repos:[ \t]*$", text, re.MULTILINE):
+        text = text.rstrip("\n") + "\n" + entry
+    else:
+        # No `repos:` key at all — create one rather than orphaning the entry.
+        text = text.rstrip("\n") + "\n\nrepos:\n" + entry
+
+    REPOS_FILE.write_text(text)
+    print(f"✓ Added {slug} to repos.yaml")
+
+
 def register_priority(slug: str) -> None:
     if not PRIORITY_FILE.exists():
         return
@@ -206,14 +243,38 @@ def register_override(slug: str, kind: str) -> None:
 
 
 def register_art_prompts(slug: str, desc: str) -> None:
-    data = load_yaml(ART_PROMPTS_FILE)
-    images = data.setdefault("images", [])
-    data.setdefault("requests", [])
+    """Append the icon/card/hero block by text surgery instead of a yaml round-trip.
 
-    if not any(entry.get("project") == slug for entry in images if isinstance(entry, dict)):
-        images.append(default_art_entry(slug, desc))
-        write_art_prompts(data)
-        print(f"✓ Queued {slug} icon/card/hero prompts in projects/art-prompts.yaml")
+    write_art_prompts() re-emits the whole file from a parsed dict, which drops
+    every comment below the fixed ART_PROMPTS_HEADER -- including the "Prompt
+    standard" block and the Krea 2 conditional/subject-order rules that hand-written
+    prompts are supposed to follow. Same failure as register_repo's; both were found
+    on 2026-08-24 scaffolding cthulhuquarium.
+    """
+    if not ART_PROMPTS_FILE.exists():
+        return
+
+    text = ART_PROMPTS_FILE.read_text()
+    if re.search(rf"^\s*(- )?project: {re.escape(slug)}\s*$", text, re.MULTILINE):
+        print(f"  (art-prompts.yaml already has entries for {slug})")
+        return
+
+    entry = default_art_entry(slug, desc)
+    block = yaml.safe_dump(
+        [entry], sort_keys=False, allow_unicode=True, width=88, default_flow_style=False
+    )
+
+    if re.search(r"^images: *\[\] *$", text, re.MULTILINE):
+        text = re.sub(r"^images: *\[\] *$", "images:\n" + block.rstrip("\n"), text, count=1, flags=re.MULTILINE)
+    elif re.search(r"^images: *$", text, re.MULTILINE):
+        # Insert directly after the `images:` key, ahead of the existing entries.
+        text = re.sub(r"^images: *$", "images:\n" + block.rstrip("\n"), text, count=1, flags=re.MULTILINE)
+    else:
+        print("  (art-prompts.yaml has no `images:` key — skipping)")
+        return
+
+    ART_PROMPTS_FILE.write_text(text)
+    print(f"✓ Queued {slug} icon/card/hero prompts in projects/art-prompts.yaml")
 
 
 def design_brief_text(title: str, goal: str, today: str) -> str:
@@ -355,21 +416,7 @@ tasks:
     print(f"✓ Created projects/{slug}/roadmap.yaml")
     print(f"✓ Created projects/{slug}/CHANGELOG.md")
 
-    if REPOS_FILE.exists():
-        repos_data = load_yaml(REPOS_FILE)
-        repos = repos_data.get("repos", [])
-        if any(r.get("slug") == slug for r in repos):
-            print(f"  (repos.yaml already has an entry for {slug})")
-        else:
-            repos.append({
-                "slug": slug,
-                "repo": args.repo,
-                "kind": args.kind,
-                "description": desc or f"{slug} project",
-            })
-            repos_data["repos"] = repos
-            write_yaml(REPOS_FILE, repos_data)
-            print(f"✓ Added {slug} to repos.yaml")
+    register_repo(slug, args.repo, args.kind, desc or f"{slug} project")
 
     register_priority(slug)
     register_override(slug, args.kind)

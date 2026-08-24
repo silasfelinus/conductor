@@ -493,12 +493,19 @@ overrides:
     priority: urgent
     kind: software
 
-  - slug: cthuluquarium
-    status: active # scaffolded 2026-08-24 from Kind Robots Todo #1320 (Project 2112,
-    # created by Silas via the workspace UI). Darkly funny Insaniquarium-inspired
-    # idle/incremental aquarium web game. Game-client code lives in the separate
-    # `silasfelinus/cthulhuquarium` repo, currently outside this session's GitHub
-    # scope — see t-001/t-002 in projects/cthuluquarium/roadmap.yaml.
+  - slug: cthulhuquarium
+    status: active # added 2026-08-24 by Silas — long-planned silly project, finally started
     priority: normal
     kind: software
-    liveUrl: /aquarium
+    # Frontend placement — synced to the kind_robots Project row (id 2112) by
+    # sync_kind_robots_projection.py. Values match the canonical PROJECT_PLACEMENTS
+    # entry for 'cthulhuquarium' in kind_robots utils/projectPlacements.ts.
+    liveUrl: /play/aquarium
+    channelKey: play
+    tabKey: aquarium
+
+  # NOTE 2026-08-24: a concurrent scheduled session scaffolded this project under the
+  # misspelled slug `cthuluquarium` (conductor#2765/#2766) while this session was
+  # working. Silas confirmed the correct spelling in-session, the Kind Robots Project
+  # 2112 row was repointed (slug + conductorSlug -> cthulhuquarium), and the
+  # misspelled project/override were removed. Do not reintroduce `cthuluquarium`.

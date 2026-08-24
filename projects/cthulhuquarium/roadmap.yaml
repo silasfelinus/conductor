@@ -1,0 +1,477 @@
+project: cthulhuquarium
+kind: software
+
+goal: >
+  A playable, darkly funny idle aquarium game live on Kind Robots at
+  /play/aquarium: persistent tanks, a collectible monster-fish bestiary shared
+  with Ruler is Hooked, offline income, and browsable public aquariums.
+
+notes_from_silas: |
+  From Silas's pitch (kind_robots Project 2112, 2026-08-24), lightly organized:
+
+  "Long time silly project planned that I've never made happen. My inspiration is
+  the absolutely excellent mobile game insaniquarium. It was one of the first mobile
+  games that actually hooked me. I want a darkly funny variant inspired by it."
+
+  Aesthetic vibe, in his words: darkly humorous, in the vein of Little Inferno,
+  mixed with Inside, Limbo, Tim Burton films, Sunless Sea/Skies, combined with the
+  collectibility and unique character designs of Pokemon and the gameplay loop of
+  games like Cookie Clicker and obviously Insaniquarium.
+
+  Scope, in his words: "We start with a webgame version. That should use simple
+  assets that will be created with our comfy. It needs aquarium backgrounds,
+  different monsterous fish, tappable collectibles, random rare experiences, memory,
+  leaderboard, and browsable aquariums. Each user should be viewable. they can
+  decorate it, populate it with fish monsters, and interact with a gameplay loop
+  where random clickables give coins which can be used to purchase food to feed
+  their fish, or buy upgrades... Think idle cookie clicker type experiences, they
+  can leave it running and get pickups, or play with it and it will gain resources
+  faster."
+
+  Definition of done for v1, in his words: "The first completed version is a fully
+  working webpage where users can load and interact with their aquariums."
+
+  Stated goal field on the Project row: "A fully working Cthulhuquarium game that is
+  playable in the browser, with auto-save, browsable galleries, multiple backgrounds,
+  at least 20 unique fish designs with color rarity evolutions and various styles,
+  animations, designable aquarium items, and some progress on ios and android app
+  development (this will be evolved later as more progress is made)."
+
+  Later tiers: "a second tier evolution will be an ios and android version, and final
+  final would be steam, but that will require human gated evolution of tools."
+
+  On agent autonomy — this project is a deliberate trial run: "there is no legitimate
+  reason we can't have a prototype build from our agents with the proper planning and
+  comfy access (Which you should have, if the agents can't create assets, then that
+  should be part of this workflow as we will be testing our ability to autonomously
+  scaffold these types of projects."
+
+  On the shared bestiary (session 2026-08-24): "This has some shades of similarity to
+  our Ruler is Hooked project... In that pitch, the ruler's choices would effect the
+  ecosystem of the lake they fished in, and the 'evil' scenario would result in dark
+  and twisted fish that could be caught... there are lots of fish that should be
+  planned out, and we can have appropriate ones appear in both games."
+
+  Also flagged by Silas, tracked separately: ruler-hooked is currently marked 100%
+  complete in Conductor (15/15 tasks, all milestones done) and that is wrong -- "there
+  is lots of work left". Do not treat that project as finished. Reopening it properly
+  is its own session with Silas, not a side effect of this one.
+
+  Slug history, so nobody reintroduces it: the Kind Robots Project row was created as
+  `cthuluquarium` (missing the second `h`), and a concurrent scheduled session scaffolded
+  a matching `projects/cthuluquarium/` from Todo #1320 (conductor#2765/#2766) while this
+  session was running. Silas confirmed the correct spelling in-session; Project 2112's
+  slug and conductorSlug were repointed to `cthulhuquarium` and the misspelled project
+  directory was removed. That session's TALKBACK entries are carried forward verbatim in
+  this project's TALKBACK.md rather than deleted. Its Todo #1321 task (the kind_robots
+  access page and Play directory entry) is done -- see t-010, which shipped it at
+  /play/aquarium rather than the /aquarium that session assumed.
+
+  Repo split (decided with Silas, 2026-08-24): the GAME ships inside kind_robots,
+  same pattern as music-mentor and davinci. The silasfelinus/cthulhuquarium repo is
+  the portable DATA CANON -- fish bible YAML, balance tables, lore, art prompts, plus
+  the archived 2020 p5 prototype. Never put game code in the cthulhuquarium repo and
+  never make the fish bible database-only.
+
+milestones:
+  - id: m1
+    title: "SHAPE — bestiary canon, economy spec, asset pipeline proof"
+    weight: 25
+    status: in-progress
+
+  - id: m2
+    title: "BUILD — persistence, play loop, and a real tank at /play/aquarium"
+    weight: 50
+    status: not-started
+
+  - id: m3
+    title: "POLISH & SHIP — events, decoration, leaderboard, balance, mobile groundwork"
+    weight: 25
+    status: not-started
+
+tasks:
+  # ---------------------------------------------------------------- m1 SHAPE
+  - id: t-001
+    milestone: m1
+    title: "Write the design brief"
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: 2026-08-24
+    note: >
+      DONE 2026-08-24, written in-session with Silas directly from his pitch.
+      projects/cthulhuquarium/DESIGN-BRIEF.md covers the tone reference stack,
+      the silhouette-forward art direction (chosen because silhouettes survive
+      Comfy's inconsistency where detailed creature art would not), the shared
+      Character-model bestiary, the eight-point MVP bar, what is explicitly
+      deferred, the guardrails, and four open questions for Silas.
+
+  - id: t-002
+    milestone: m1
+    title: "Confirm scope with Silas"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    note: >
+      FOR SILAS: soft checkpoint, nothing is blocked on it -- build tasks are
+      already ready and agents should not wait. Read DESIGN-BRIEF.md and confirm
+      or redirect. The four questions that would actually change the build:
+      (1) Do fish die when neglected, or just get sad and stop producing? Current
+      assumption is they do not die while you are away. (2) Is there an end state,
+      or does the tank deepen forever? (3) How weird is too weird for the bestiary?
+      (4) Does the aquarium have a narrator voice -- a previous owner's notes, the
+      shop keeper -- or is it silent? Answer any subset; each one that stays open
+      just means agents pick the conservative option and note it.
+
+  - id: t-003
+    milestone: m1
+    title: "Fish bible v1 — the canonical species catalog"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Grow the seeded bestiary in the cthulhuquarium repo (fish/*.yaml, schema in
+      fish/SCHEMA.md) from its starter set to at least 20 shipping species plus
+      designed rarity evolutions. Each fish needs: slug, display name, one-line
+      museum-placard field note in the established dry register, tier, rarity, the
+      six Character Rarity stats, coin/feed economy numbers, an art prompt written
+      for silhouette-forward generation, and a games list naming which of
+      cthulhuquarium / ruler-hooked it belongs to. Validate with
+      scripts/validate_fish.py before committing. Do NOT invent a second schema --
+      every field must map onto a kind_robots Character column, because t-008 seeds
+      these straight into Character rows.
+
+  - id: t-004
+    milestone: m1
+    title: "Economy and progression spec — data-driven, tunable without a deploy"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Write economy/balance.yaml in the cthulhuquarium repo plus a short ECONOMY.md
+      explaining it. Cover: coin drop rates and values by fish tier, food cost curve,
+      hunger/decay timings, upgrade tiers and their costs, unlock thresholds per
+      species, and the offline-income formula with its cap. The cap is the important
+      one -- idling must be rewarding but strictly worse than playing, per the pitch
+      ("they can leave it running and get pickups, or play with it and it will gain
+      resources faster"). Simulate the first two hours of play in a script and paste
+      the curve into ECONOMY.md; a spec nobody simulated is a guess. Every number
+      lives in YAML, never in a .ts constant, so a balance pass is a data commit.
+
+  - id: t-005
+    milestone: m1
+    title: "Prove the Comfy asset pipeline end-to-end for game art"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      This is the trial-run task Silas called out explicitly -- if agents cannot
+      generate their own game assets, fixing that is in scope, not an excuse. Take
+      three fish art prompts and one tank background from the bible, run them through
+      the kind_robots art pipeline (POST /api/comfy/flux/generate, or
+      /api/art/generate; see conductor docs/art-api.md), and land the results as
+      ArtImage records linked to the fish's Character rows. Then write
+      docs/asset-pipeline.md recording what actually worked: endpoint, auth token
+      type, model, prompt shape, negative prompt, seed handling, dimensions, cost
+      per image, wall-clock per image, and every failure mode hit. If silhouette
+      style proves unreliable at volume, say so plainly and propose the fallback --
+      that finding is more valuable than four pretty images.
+
+  - id: t-006
+    milestone: m1
+    title: "Genre research — what idle/aquarium players actually want"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Silas asked for this in the pitch: "Look into both gameplay loops, current
+      features for light aquarium experiences, and what kind of features people want
+      and appreciated." Survey Insaniquarium, Cookie Clicker, Universal Paperclips,
+      Melvor Idle, Abyssrium, and current web aquarium/idle games. Produce
+      RESEARCH.md answering: what makes an idle loop retain past day 3, what
+      collection systems reward without grinding, which idle-game conventions players
+      complain about (fake difficulty, ad gates, prestige walls), and which three
+      features we should steal outright. End with a concrete recommendation list, not
+      a survey -- each item marked adopt / adapt / reject with a reason.
+
+  # ---------------------------------------------------------------- m2 BUILD
+  - id: t-007
+    milestone: m2
+    title: "Prisma schema and migration for aquarium persistence"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Add the Aquarium model family to kind_robots prisma/schema.prisma, following
+      the Life* / davinci precedent for a per-game model group. Expected shape:
+      Aquarium (userId, slug, title, coins, backgroundKey, isPublic, lastTickAt),
+      AquariumStock (aquariumId, characterId, nickname, hunger, mood, placedAt),
+      and AquariumEvent (aquariumId, kind, payload, occurredAt) for the audit trail
+      that later feeds rare events and the leaderboard. Fish species are Character
+      rows -- AquariumStock references them, it does not duplicate them. Ship a
+      forward migration only; per hard safety rule 10, never reset and never edit an
+      applied migration. Run npx prisma generate and commit the regenerated client in
+      the same PR (davinci/t-026 was filed for exactly that omission).
+
+  - id: t-008
+    milestone: m2
+    title: "Seed the bestiary — fish YAML into Character rows"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-003
+    note: >
+      Write the idempotent seed script that reads fish/*.yaml from the cthulhuquarium
+      repo and upserts kind_robots Character rows keyed on slug, all grouped under a
+      Pack with slug abyssal-bestiary. Map fields per the bible schema: species,
+      class, backstory (the field note), quirks, alignment, and the six Rarity stats.
+      Idempotent means re-running after a bible edit updates rows rather than
+      duplicating them -- match on Character.slug, which is unique. Fish tagged for
+      ruler-hooked get seeded too; that is the entire shared-bestiary mechanism and it
+      costs nothing extra here. Never delete a Character the script does not recognize
+      -- a fish removed from the bible gets isActive false, not a DELETE.
+
+  - id: t-009
+    milestone: m2
+    title: "Server API — tank state, tick, feed, purchase, browse"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-004, t-007]
+    note: >
+      Build server/api/aquarium/* in kind_robots following the davinci runs API for
+      shape and auth. Endpoints: GET my tank (create on first visit), POST tick
+      (settle offline income against lastTickAt, server-authoritative and capped per
+      the balance spec), POST feed, POST purchase (food, upgrade, or species unlock),
+      GET a public tank by slug, GET the public tank index. All economy math runs
+      server-side reading balance.yaml -- the client proposes, the server disposes.
+      A client that says "I earned 900000 coins" gets told what it actually earned.
+      Public tank responses expose display name and tank contents only, never email
+      or user id.
+
+  - id: t-010
+    milestone: m2
+    title: "Front-end shell — the /play/aquarium page and its Play tab"
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: 2026-08-24
+    note: >
+      DONE 2026-08-24 in the scaffolding session. Registered cthulhuquarium in
+      kind_robots utils/projectPlacements.ts (play / aquarium / /play/aquarium),
+      added content/channels/play/aquarium.md for the Play directory tab, added
+      content/play/aquarium.md mounting the page component, and shipped
+      components/conductor/aquarium-page.vue as a playable client-only prototype
+      (canvas fish, drifting collectibles, coins, food, hunger decay, localStorage
+      save). The prototype is intentionally standalone so the tab is never an empty
+      shell; t-011 replaces its internals with the real server-backed loop and keeps
+      the route, tab, and placement exactly as they are.
+
+  - id: t-011
+    milestone: m2
+    title: "The real play loop — canvas rendering, fish behavior, food, collectibles"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-008, t-009]
+    note: >
+      Replace the t-010 prototype's local state with the server-backed game. Fish
+      render from their seeded Character art with per-species swim behavior (drift,
+      dart, lurk -- behavior is a bible field, not a hardcoded switch). Food falls
+      with simple physics and fish path toward it. Collectibles drift up and pay coins
+      on click. Hunger decays on a server-settled clock, not a client timer, so a
+      backgrounded tab cannot starve or enrich a tank. Keep the canvas at a fixed
+      logical resolution and scale to fit -- it has to survive the responsive layout
+      contract at phone width. Target 60fps with 20 fish on screen; if that needs
+      sprite batching, do it now rather than after the art pass triples the draw calls.
+
+  - id: t-012
+    milestone: m2
+    title: "Economy wiring — coins, food, upgrades, species unlocks"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-011
+    note: >
+      Wire the shop to the real economy: buy food, buy upgrades (better food, faster
+      collectible drops, more tank slots), unlock and place a new species. Every price
+      and threshold reads from balance.yaml through the server -- no numbers in the
+      component. Unlocking a species the player has never seen should feel like the
+      point of the game, so give it a real beat: the field note reveals on first
+      unlock, not before.
+
+  - id: t-013
+    milestone: m2
+    title: "Offline income and autosave"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-012
+    note: >
+      Settle earnings on load from lastTickAt, capped per the balance spec, and show
+      the player what they earned while away in one clear panel -- the "welcome back"
+      moment is the whole idle-game hook and it should read as slightly ominous rather
+      than congratulatory. Autosave on meaningful state change plus a periodic
+      heartbeat, debounced so a click spree does not become a write storm. The client
+      never writes coin totals directly; it reports actions and the server recomputes.
+
+  - id: t-014
+    milestone: m2
+    title: "Browsable public aquariums"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-013
+    note: >
+      An index of public tanks and a read-only view of any one of them -- Silas's
+      "Each user should be viewable". Read-only means read-only: no feeding, no
+      clicking someone else's collectibles, no writes of any kind from a visitor
+      session. Show display name and tank only. Respect Aquarium.isPublic, and default
+      new tanks to public per the pitch while making the toggle obvious and one click.
+
+  - id: t-015
+    milestone: m2
+    title: "Full art pass — 20 fish plus tank backgrounds"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-005, t-008]
+    note: >
+      Generate and land art for all 20 shipping species plus at least three tank
+      backgrounds, using the pipeline recipe proven in t-005. Covered by the standing
+      2026-07-06 generated-image rule -- no per-image approval needed -- but preserve
+      prompt, model, seed, and destination metadata on every ArtImage so any fish can
+      be regenerated or traced. Consistency across the set matters more than any single
+      image being great: a bestiary where six fish share a visual language and fourteen
+      do not looks broken. If a species will not generate consistently, redesign the
+      species rather than shipping the outlier.
+
+  # ------------------------------------------------------- m3 POLISH & SHIP
+  - id: t-016
+    milestone: m3
+    title: "Rare random experiences"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-013
+    note: >
+      The "random rare experiences" from the pitch, and the retention hook. Rare
+      timed visitors, a collectible that pays far too much, something that eats a fish,
+      a tank that goes briefly wrong. Drive them from AquariumEvent rows so they are
+      auditable and replayable, with rates in balance.yaml. Tone check against the
+      brief: unsettling and dry, never jump-scare, never punishing enough to make
+      someone stop leaving the tab open.
+
+  - id: t-017
+    milestone: m3
+    title: "Tank decoration and layout editing"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-014
+    note: >
+      Silas's "they can decorate it" -- deferred from MVP because the core loop has to
+      be fun before the dressing matters. Purchasable decor objects, drag to place,
+      persisted per tank, visible to visitors browsing that tank.
+
+  - id: t-018
+    milestone: m3
+    title: "Leaderboard"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-014
+    note: >
+      Deferred from MVP on purpose: a leaderboard needs a metric worth ranking, and we
+      will not know what that is until the economy is tuned. Once t-019 has run, pick
+      the metric (species collected is likely healthier than raw coins -- coins reward
+      whoever left the tab open longest) and build it. Ranks show display names only.
+
+  - id: t-019
+    milestone: m3
+    title: "Balance pass on real play data"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-016
+    note: >
+      Play it, instrument it, and retune balance.yaml against what actually happens
+      rather than what the t-004 simulation predicted. Specifically check: is the
+      first 10 minutes engaging with zero upgrades, does the mid-game stall, and is
+      offline income tuned so a day away feels rewarding but not better than playing.
+      Data commit only -- if this pass needs a code change, the economy leaked out of
+      YAML somewhere and that leak is the actual bug.
+
+  - id: t-020
+    milestone: m3
+    title: "Performance, responsive layout, and the layout contract"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-015
+    note: >
+      Make it hold up at phone, tablet, and desktop widths against kind_robots'
+      test:layout-contract and the responsive-layout-audit workflow. Canvas scaling,
+      touch targets sized for thumbs, no horizontal overflow, and a frame budget that
+      survives a full tank on a mid-range phone. Note the verification limits from
+      AGENTS.md: no PR previews exist, so pre-merge verification is vue-tsc, eslint,
+      unit tests, and the layout contract; real pixels come from the audit workflow
+      against production after a Force Update.
+
+  - id: t-021
+    milestone: m3
+    title: "Mobile packaging groundwork — research and prepare only"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    depends_on: t-020
+    gate_human: true
+    note: >
+      Silas's tier 2. Agents may evaluate Capacitor vs PWA vs a native shell, prototype
+      the wrapper locally, fix whatever in the web build blocks packaging, and write the
+      full submission checklist. Agents may NOT create developer accounts, generate or
+      handle signing certificates, pay fees, or submit anything to any store -- those
+      are hard human gates and stay that way regardless of how routine they look. Ends
+      at needs-human with a checklist Silas can execute. Steam is explicitly not in
+      scope for this task or this roadmap.
+
+  - id: t-022
+    milestone: m3
+    title: "Shared bestiary handshake with Ruler is Hooked"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-008
+    note: >
+      Close the loop Silas asked for: "we can have appropriate ones appear in both
+      games." Confirm the ruler-hooked-tagged fish seed correctly into the shared
+      abyssal-bestiary Pack, document the contract in the cthulhuquarium repo's
+      fish/SCHEMA.md, and write the handoff note that ruler-hooked's own reopening
+      session will need -- which fish are tagged for it, what its dark-ecosystem branch
+      should query, and what it must never mutate (a shared Character is not one game's
+      property). Do NOT reopen or edit the ruler-hooked roadmap from this task; that
+      project's false "100% complete" state is Silas's to correct with a real scope
+      conversation, and this task only prepares for it.
