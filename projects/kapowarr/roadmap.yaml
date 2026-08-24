@@ -1558,7 +1558,7 @@ tasks:
 - id: t-068
   milestone: m8
   title: Identify which Kapowarr page is still slow after the review-holds fix
-  status: review
+  status: done
   passes: 0
   stakes: reversible
   note: |-
@@ -1579,8 +1579,9 @@ tasks:
     Reopened for a user-supplied production log follow-up. The log shows three Continuous Library Import task crashes where a ComicVine 420 rate limit is incorrectly converted into a Metron no-crosslink error, bypassing the importer's existing cooldown/retry handler, plus one real Update All sqlite3 database-is-locked failure while it overlaps the continuous import. Scope this follow-up to preserving transient ComicVine semantics through fallback and preventing those two heavyweight library writers from running concurrently.
 
     Candidate fix is ready on worker/kapowarr-t-068-log-error-semantics-91af. fetch_volume_with_fallback now preserves the original ComicVine rate-limit/API-key exception when configured Metron cannot rescue the CV-linked volume, so Continuous Library Import reaches its existing cooldown/retry handler instead of a generic task ERROR. Update All now shares the continuous_import writer lane, preventing the production-observed concurrent volume_files SQLite write while unrelated default-lane work remains concurrent. Added regressions for the CV-rate-limit/Metron-miss case, unexpected fallback bugs, and Update All queueing behind continuous import. Branch is four intended files and 0 commits behind main; full Actions will run on the PR head.
-  updated: '2026-08-24T09:41:00Z'
-  owner: worker
+
+    Merged silasfelinus/Kapowarr#144 as c6566aea52507ec887608728ed33700d52aac866. Production-log follow-up fixed two distinct failures: ComicVine 420 throttling now keeps its original CVRateLimitReached signal when Metron fallback cannot rescue a CV-linked volume, allowing Continuous Library Import's existing cooldown/retry path instead of a task ERROR; Update All now shares the continuous_import writer lane so it cannot overlap the importer on heavyweight SQLite library writes. Exact PR head d55067a661599c40359647cf375611d92551f974 passed Tests on Python 3.8, 3.9, 3.10, 3.11 and 3.12, with frontend tests passing on 3.12; docs and container build also passed. Unexpected fallback exceptions remain fatal. Main is at the squash merge commit.
+  updated: '2026-08-24T09:48:00Z'
   claimed_by: 2026-08-24T093800Z-kapowarr-t068-logfollowup-91af
   claimed_at: '2026-08-24T09:38:00Z'
 
