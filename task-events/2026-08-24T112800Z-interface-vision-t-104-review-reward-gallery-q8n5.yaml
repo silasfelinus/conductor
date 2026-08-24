@@ -1,0 +1,13 @@
+version: 1
+project: interface-vision
+task: t-104
+operation: review
+owner: worker
+session: 2026-08-24T112600Z-interface-vision-t-104-reward-gallery-q8n5
+updated: 2026-08-24T11:28:00+00:00
+note: >-
+  Reward gallery provider slice is ready for review. The net implementation
+  removes catalog-wide Reward relation hydration from GET /api/rewards while
+  preserving every Reward scalar, existing visibility/order behavior, lazy
+  ArtImage-by-id card hydration, and the rich relation graph on GET
+  /api/rewards/:id. Regression coverage now locks those browse/detail seams.
