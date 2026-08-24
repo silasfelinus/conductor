@@ -57,7 +57,18 @@ API_VERSION = "2023-06-01"
 # prompts for all of them. Set DREAM_AUTHOR_MODEL=claude-opus-5 if the bundles
 # come out flat and the cost is worth it.
 MODEL = os.environ.get("DREAM_AUTHOR_MODEL", "claude-sonnet-5")
-MAX_TOKENS = 4000
+# Bumped from 4000 (conductor scheduled Agent run, 2026-08-24): the 2026-08-24
+# daily-digest run failed both attempts with "no JSON object in the completion"
+# -- parse_json_object() raises this specifically when the completion has no
+# closing brace at all, which is what a mid-JSON max_tokens cutoff produces
+# (as opposed to a JSONDecodeError, which the same except-block would report
+# differently). A six-asset bundle's prose (idea + vibe + one location + one
+# character + two rewards + one scenario, each with several sentence-length
+# fields) plus JSON structure overhead can run close to 4000 tokens on a
+# verbose day; nothing here changes the one-retry budget or the "hollow
+# proposal is worse than a missing one" refusal contract, this just gives a
+# normal-length completion more headroom before it gets cut off mid-object.
+MAX_TOKENS = 6000
 # One retry, fed the parser/validator's own complaints. The validator returns
 # precise, actionable messages ("scenario setup must name the location: X"),
 # which is exactly the shape a model can fix — but a second failure means
