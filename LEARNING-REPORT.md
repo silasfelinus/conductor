@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-24T06:44:08Z
+Generated: 2026-08-24T06:48:56Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **740**
-- Outcomes: blocked: 15, cancelled: 1, done: 724
+- Closed tasks recorded: **741**
+- Outcomes: blocked: 15, cancelled: 1, done: 725
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -52,7 +52,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | ruler-hooked | 4 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
-| storybook | 15 | 100% |
+| storybook | 16 | 100% |
 | storymaker | 1 | 100% |
 | superkate-hairstyle-ai | 18 | 100% |
 | superkate-services-calculator | 12 | 100% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 724 | 99% |
+| software | 725 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-24 `storybook/t-023` — Task scope (audit taskmasterStore's localStorage read path against storybookStore's restore guards) required tracing every real caller before deciding whether the missing `restoredFromStorage`-style guard was a bug: content/taskmaster.md mounts `:taskmaster-page` as the only call site, with no wrapper double-mounting it the way storybook-library-page.vue wraps StorybookPage, so no reachable race exists and the guard was correctly out of scope -- the parity gap alone was not sufficient, matching the cycle-36 lesson this task was scoped from. Fixed the unambiguous half (move `getItem()` inside the try) and left the caller-tracing result as an in-code comment. Also worth recording: a full-file `prettier --write` on a file with pre-existing prettier-version drift silently reformats unrelated lines far beyond the actual diff -- caught via `git diff --stat` before committing; the safe pattern is formatting only the new/changed region and verifying it in isolation, never running `--write` on the whole file when the rest carries known drift. Separately, this cycle hit a second occurrence of the documented conductor/t-124 "Python test suite" check-run reporting-lag pattern (job logs showed it passed and finished cleanup ~11 minutes before the check-run API reported completion) -- confirmed via job logs rather than assumed, and merged once confirmed rather than re-running blind.
+
 - 2026-08-24 `brainstorm/t-026` — Task scope was explicitly conditional ("find, or confirm there isn't yet, a promote-candidate action, and IF one exists, wire the art across") -- a repo-wide search (candidate card's emitted events, the manager's kept-candidate bulk actions, server/api/brainstorm/, and a grep for promote/convert/"turn into"/createFrom) confirmed no such action exists anywhere. The honest close for a conditional investigation task with a negative finding is `done`, not a forced implementation and not `needs-human` -- the literal scope asked a yes/no question and got a firm no. Filed the actual feature (t-031) as new scope instead of expanding this task's diff, since building an unrequested promotion UI would have been scope creep past what t-026 asked for. Also worth recording for whoever picks up t-031: entityArt.ts's art-slot model is one scalar id per named slot per entity, while Brainstorm's meta.art.imageIds is an array -- there is no existing 1:1 precedent in the repo (promptStore.promoteToDream's Prompt only ever has one artImageId) for the many-to-one reduction that promotion will need.
 
 - 2026-08-24 `storybook/t-010` — Cycle 36: after five consecutive cycles that either found a shrinking-returns polish item or no-op'd, the fresh angle that produced a real correctness bug was the one the PREVIOUS cycle had already written down and not taken -- "Pinia persistence edge cases have not had a dedicated pass in this task's history." The bug was a sibling-parity gap of exactly the shape a shared-helper family invites: taskmasterStore.ts's saveToLocalStorage() was the one localStorage writer of four in the narrative family with no try/catch, while its three siblings each carried an explicit private-browsing/quota comment explaining why they had one. Two lessons. First, a recurring bug-hunt task's own "next lead" note is a real work queue, not a formality -- reading it before inventing a new lens is cheaper than re-deriving one, and a lead that survives a cycle unclaimed is more likely to be untouched ground than a lens the task has already swept. Second, and the inverse of cycle 61's model-builder lesson: a found inconsistency IS a fixable sibling-parity bug when the two sides are genuinely the same kind of moment, and here the codebase said so itself -- the shared helper's own header asserted the two stores were "byte-for-byte the same shape," so the asymmetry was a documented invariant being violated rather than a pattern-match on surface similarity. Confirming the impact still required tracing all ten call sites individually: the sharpest one (updateBeatArt() running as an uncaught `void poll(...)` callback, where a throw both became an unhandled rejection and killed the art poll loop, stranding the illustration with no retry affordance) was not the one the shape of the bug suggested up front. Finally: when a fix restores an invariant a contract script already claims to enforce, extend that script -- and verify the new assertion fails against the pre-fix code, or it may be vacuously true.
@@ -99,8 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-23 `conductor/t-123` — Kaizen from an earlier same-day session's mermaids-of-venice/t-013 wasted claim (conductor#2720). Added scripts/daily_gate.py, detecting a task whose note declares an explicit "Pacific calendar day" daily-gate contract and already records an outcome for today's Pacific date, and wired the skip into both task-selection paths -- next_ready_task.py's first_ready_task AND run_worker.py's find_ready_task. The second wiring mattered most: select_role.py's underlying "worker" recommendation (the path that actually surfaced the stale t-013 pick in the first place) calls build_queue_summary() -> find_ready_task(), not next_ready_task.py -- a fix scoped only to the connector-only picker would have left the real collision path unpatched. Lesson: when a kaizen task names "the sweep step" as the target, check which of the repo's (sometimes more than one) selection implementations that step actually calls before assuming a single shared module covers it.
 
-- 2026-08-23 `model-builder/t-029` — Cycle 56's note flagged that its repo-wide model-builder-reference grep, diffed against every file this task's history had named as read, was itself worth re-running -- but a directory glob (components/model-builder/**) had been silently treated as "covered" without any individual cycle ever naming every file inside it. model-builder-manager.vue (the top-level page component) had never actually been read in 56 cycles despite matching that glob. Reading it found it clean, but tracing the run-lifecycle functions it orchestrates (startRun/openRun/resumeRun) surfaced a real bug: three more places swap the active run for a different one the same way resetRun()/resetAll() do, but never called their in-flight-singleton-clearing logic, reproducing the exact stale-busy-indicator bug those two were already fixed for. Lesson for future cycles: a directory-glob "already covered" check is not the same as per-file coverage -- cross-check individual filenames against the cumulative note history, not just the glob pattern. Also, when a file traced this way reads clean, the bug may be in a function it *calls into* rather than the file itself; tracing outward from a clean file is a distinct, useful search strategy from re-reading a file's own body. Also confirmed: extracting a shared helper to reduce duplication across the four fix sites broke two pre-existing narrow-textual-checker guards that were pinned to the literal inline shape -- inlining the fix at each site (matching the existing pattern) instead of refactoring was the lower-risk choice once existing guards are keyed to literal text shape, not just behavior.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-24T06:44:08Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-24T06:48:56Z_
