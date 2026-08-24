@@ -545,7 +545,7 @@ tasks:
 - id: t-023
   milestone: m4
   title: Audit taskmasterStore's localStorage READ path against Storybook's restore guards
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   owner: worker
@@ -566,3 +566,6 @@ tasks:
     is only a bug when the two sides are genuinely the same kind of moment); move the getItem
     inside the try regardless, since that one is unambiguous; and extend the contract assertion
     to cover the read path if a real invariant is established. Small, reversible, self-contained.
+  claimed_by: claude-scheduled-20260824-storybook-t023
+  claimed_at: '2026-08-24T06:29:36Z'
+  updated: '2026-08-24T06:29:36Z'
