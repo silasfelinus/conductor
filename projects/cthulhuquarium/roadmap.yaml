@@ -1013,4 +1013,74 @@ tasks:
       guess. For a 12 GB card, qwen_3_8b_fp8mixed is the plausible choice if 8B is
       correct. So flux2-klein needs BOTH a config fix and a download, and the config fix
       should land first -- otherwise a correct download still fails against a wrong
-      filename.
+      filename. CORRECTED AGAIN 2026-08-24, and this supersedes the "download qwen_3_8b"
+      advice above. Silas asked whether any of this was checked against the Resource
+      registry and the art generator's engine presets. It was not, and doing so changes
+      the answer completely: NOTHING NEEDS DOWNLOADING. A COMPLETE, REGISTERED FLUX 2
+      STACK ALREADY EXISTS. Queried live from /api/resources: DIFFUSION_MODEL
+      `flux2_dev_fp8mixed` -> diffusion_models/flux2_dev_fp8mixed.safetensors
+      (supportedServer FLUX); TEXT_ENCODER `mistral_3_small_flux2_bf16` ->
+      text_encoders/mistral_3_small_flux2_bf16.safetensors; VAE `flux2-vae` ->
+      vae/flux2-vae.safetensors. There is also a CHECKPOINT row
+      `bigLove_klein2_fp8_pruned` -> Flux/bigLove_klein2_fp8_pruned.safetensors (FLUX),
+      i.e. a Klein 2 checkpoint already on the box. Silas: "I don't really care as long as
+      we have some representation of flux klein. obviously whatever fits our server is
+      best." SO THE FIX IS A CONFIG FIX ONLY. Of the three files the flux2 config names,
+      exactly one (flux2-vae.safetensors) is real. The unet flux-2-klein-4b-Q4_K_M.gguf
+      and the encoder flux2_klein_text_encoder_fp8_scaled.safetensors are in neither the
+      Resource registry nor the model store. Point the config at the registered trio
+      instead, and note the unet is a .safetensors so the loader must move from
+      UnetLoaderGGUF to UNETLoader. THE SAME FICTIONAL NAMES LIVE IN BOTH REPOS, which is
+      how this survived: kind_robots server/api/comfy/flux2/utils/workflow.ts declares
+      FLUX2_KLEIN_MODEL, FLUX2_KLEIN_TEXT_ENCODER and FLUX2_KLEIN_VAE with the same
+      invented values, and conductor's consume_art_queue_core.py mirrors them. Fixing one
+      without the other leaves the bug live on the other path. kind_robots also carries
+      ENGINE_PRESETS in server/api/comfy/utils/engineWorkflow.ts mapping
+      klein/flux2-klein/flux2 -> 'flux2', so the preset layer is fine; it is only the
+      model filenames underneath that are wrong. ONE REAL CAVEAT before anyone flips it:
+      mistral_3_small_flux2_bf16 is 35.5 GB against a 12 GB card. ComfyUI can offload a
+      text encoder to CPU, but this needs an actual test rather than an assumption, and an
+      fp8 build of the same encoder would be the better long-term answer if one is ever
+      pulled -- that IS worth a download, unlike the klein encoder that started this. THE
+      STRUCTURAL LESSON, worth more than the fix: conductor hardcodes model filenames as
+      Python constants while Kind Robots maintains a Resource registry with localPath,
+      supportedServer and commercialSafe for every model. Nothing validates one against
+      the other, so an invented filename ships silently and only fails at render time. See
+      t-034.
+  - id: t-034
+    milestone: m2
+    title: "Validate engine model filenames against the Resource registry instead of hardcoding them twice"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Root cause behind t-033's flux2 failure, and it will recur on the next engine added
+      unless it is fixed. Model filenames are hardcoded as constants in TWO places --
+      kind_robots server/api/comfy/flux2/utils/workflow.ts (FLUX2_KLEIN_MODEL,
+      FLUX2_KLEIN_TEXT_ENCODER, FLUX2_KLEIN_VAE) and conductor
+      scripts/consume_art_queue_core.py (the FLUX2_KLEIN_*/KREA2_*/FLUX_MODELS blocks) --
+      while Kind Robots separately maintains a Resource registry that already knows every
+      model on the box, with resourceType (CHECKPOINT, TEXT_ENCODER, VAE,
+      DIFFUSION_MODEL), localPath, supportedServer, and commercialSafe.
+      Nothing validates the constants against the registry. The flux2 config names three
+      files of which exactly one exists; the other two were invented and shipped in both
+      repos, and only failed at render time, months later, on someone else's task. The
+      constant blocks even carry a comment telling the reader to "VERIFY these filenames
+      against the release you download" -- which is a comment doing a test's job.
+      Do the cheap version first and the good version second.
+      CHEAP: a check that reads every hardcoded model constant, queries
+      /api/resources?resourceType=..., and fails when a named file has no matching
+      Resource row. Run it in CI on both repos. This alone would have caught flux2 the day
+      it was written, and it is a small script.
+      GOOD: stop hardcoding. Resolve engine models from the registry at submit time --
+      look up by Resource name or slug, read localPath, and let the registry be the single
+      source of truth it already almost is. That also makes `commercialSafe` enforceable at
+      the point of generation rather than as a separate audit, and makes adding a model a
+      data change rather than a code change in two repos.
+      Either way, fix the flux2 constants in BOTH repos in the same pass -- correcting one
+      leaves the bug live on the other path. The registered trio to point at is
+      flux2_dev_fp8mixed.safetensors, mistral_3_small_flux2_bf16.safetensors and
+      flux2-vae.safetensors, and the unet is a .safetensors so the loader moves from
+      UnetLoaderGGUF to UNETLoader. Test the 35.5 GB encoder against the 12 GB card before
+      declaring it done.
