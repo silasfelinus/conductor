@@ -877,30 +877,52 @@ tasks:
     passes: 0
     stakes: reversible
     note: >
-      Found 2026-08-24 while doing t-005's end-to-end proof, and worth separating from t-005
-      because the conclusion is not about this project: THE CONDUCTOR SIDE OF THE ART
-      PIPELINE WORKS. Submitting through `POST /api/art/queue` with KR_API_TOKEN
-      authenticated, queued, was picked up by the home-box relay, and polled correctly. Two
-      of three engines then failed inside ComfyUI on model files.
-      MEASURED, one entry each, same prompt and size (1024x1024):
-      - `krea2` -- job 9179 queued, then FAILED: "node 3 (CLIPTextEncode):
-        hostbuf_file_reader_read failed". The model is present enough to be selected but
-        cannot be read. Reads like a corrupted or partially-downloaded file, or a
-        memory-mapping failure on the box. THIS IS THE DEFAULT ENGINE for most of this
-        repo's art, so this is the one that matters most.
-      - `flux2-klein` -- job 9181 queued, then FAILED fast and informatively: "ComfyUI has
-        no matching file for: CLIPLoader.clip_name='flux2_klein_text_encoder_fp8_scaled
-        .safetensors'. Not in the live model list at http://127.0.0.1:8188". Simply not
-        installed.
-      - `flux` (schnell variant) -- ran long rather than failing fast, which is the
-        signature of an actual render. Result not yet confirmed; re-run to establish whether
-        it is the working fallback.
-      FOR SILAS: this needs the home box, which no agent can reach. Concretely: re-download
-      or verify the krea2 text encoder (a checksum would confirm the corruption hypothesis),
-      and install `flux2_klein_text_encoder_fp8_scaled.safetensors` or accept that engine as
+      Found 2026-08-24 while doing t-005's end-to-end proof, and worth separating from
+      t-005 because the conclusion is not about this project: THE CONDUCTOR SIDE OF THE
+      ART PIPELINE WORKS. Submitting through `POST /api/art/queue` with KR_API_TOKEN
+      authenticated, queued, was picked up by the home-box relay, and polled correctly.
+      Two of three engines then failed inside ComfyUI on model files. MEASURED, one entry
+      each, same prompt and size (1024x1024): - `krea2` -- job 9179 queued, then FAILED:
+      "node 3 (CLIPTextEncode): hostbuf_file_reader_read failed". The model is present
+      enough to be selected but cannot be read. Reads like a corrupted or partially-
+      downloaded file, or a memory-mapping failure on the box. THIS IS THE DEFAULT ENGINE
+      for most of this repo's art, so this is the one that matters most. - `flux2-klein`
+      -- job 9181 queued, then FAILED fast and informatively: "ComfyUI has no matching
+      file for: CLIPLoader.clip_name='flux2_klein_text_encoder_fp8_scaled .safetensors'.
+      Not in the live model list at http://127.0.0.1:8188". Simply not installed. - `flux`
+      (schnell variant) -- ran long rather than failing fast, which is the signature of an
+      actual render. Result not yet confirmed; re-run to establish whether it is the
+      working fallback. FOR SILAS: this needs the home box, which no agent can reach.
+      Concretely: re-download or verify the krea2 text encoder (a checksum would confirm
+      the corruption hypothesis), and install
+      `flux2_klein_text_encoder_fp8_scaled.safetensors` or accept that engine as
       unavailable. Until then, agents should queue art on whichever engine is confirmed
-      working rather than the krea2 default.
-      Soft gate: it blocks the ART for this project, not the project. Every other ready task
-      proceeds, and the queue entries can be written now and drained once the box is healthy.
-      Filed separately from t-005 so t-005 can still close on the pipeline recipe it was
-      actually asked for.
+      working rather than the krea2 default. Soft gate: it blocks the ART for this
+      project, not the project. Every other ready task proceeds, and the queue entries can
+      be written now and drained once the box is healthy. Filed separately from t-005 so
+      t-005 can still close on the pipeline recipe it was actually asked for. CORRECTION
+      2026-08-24, and it changes the leading hypothesis: Silas reports the models do NOT
+      live on the render box. Alexandria hosts them at /mnt/user/pc/ai/models/..., and the
+      ComfyUI box reaches them over a network mount at Z:/ai/models/.... That reframes
+      both failures as most likely ONE root cause -- the mount -- rather than two damaged
+      files. Why the mount fits the evidence better than corruption: (a)
+      `hostbuf_file_reader_read failed` is a host-buffer READ failure, which is what a
+      short or failed read over SMB looks like, and large safetensors are typically
+      memory-mapped, which is exactly the access pattern that is unreliable over a network
+      share; (b) the one engine that WORKED, flux/schnell, uses a quantised GGUF
+      (flux1-schnell-Q8_0.gguf) -- smaller, and GGUF loaders commonly stream sequentially
+      rather than mmap the whole tensor, so it is the case least likely to trip a flaky
+      mount; (c) flux2-klein's "no matching file... not in the live model list" may not
+      mean the file is absent at all -- if the share fails to enumerate, ComfyUI's scan
+      simply does not see it, which is indistinguishable from missing; and (d) five
+      unrelated jobs (9177, 9178, 9180, 9182, 9183) failed in the same window, which
+      points at shared infrastructure rather than per-model damage. Also relevant and
+      Unraid-specific: /mnt/user/ is the FUSE (shfs) layer, which is a well-known source
+      of trouble for large sequential reads. Reading from the underlying device path
+      instead (/mnt/cache/... or /mnt/diskN/...) bypasses shfs entirely and is both faster
+      and more reliable -- worth testing as a fix, not just a diagnostic. THE DECISIVE
+      TEST is a full-read checksum of the same file from both sides: hash it locally on
+      Alexandria, then hash it across Z: from the ComfyUI box. Local passes and remote
+      fails means the mount. Both fail means the file really is damaged. Do that before
+      re-downloading anything -- re-downloading a file that is fine, over a mount that is
+      not, will appear to fail the same way and waste the trip.
