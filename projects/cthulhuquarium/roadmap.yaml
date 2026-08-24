@@ -730,3 +730,177 @@ tasks:
       early story beats stop mattering too. Sideways from each other, never ascending.
       Characters appear at three moments (Silas): the beginning, select screens (shop, upgrades,
       bestiary/fishopedia), and milestone interstitials.
+  - id: t-029
+    milestone: m3
+    title: "Genetics — hidden individual stats, breeding, and secret evolutions"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-025, t-026]
+    note: >
+      Silas, 2026-08-24: "if we allow fish to have secret random stats, then that could
+      include the ability to create new fish, which would be how the user can discover the
+      secret evolution fish. Then we have an entire hidden pokemon like stat system." THE
+      ARCHITECTURAL CONSEQUENCE, which changes t-007's schema and must be settled there
+      first: the bible describes SPECIES, the tank contains INDIVIDUALS. A `Character` row
+      is the species template (public Rarity stats, field note, art) shared by everyone
+      and identical for all copies. An `AquariumStock` row is one actual fish with its own
+      hidden rolled stats, nickname, hunger, and parentage. Two goldfish are the same
+      species and different animals. Every hidden stat lives on the individual, never on
+      the species -- the bible stays a catalogue and never becomes a save file. FOUR RULES
+      that keep this from becoming a grind, all of which follow from decisions Silas has
+      already made: (1) Breeding NEVER consumes the parents. Progress never degrades; a
+      pairing produces a new individual and leaves both parents untouched. (2) Hidden
+      stats must CONVERGE, not reroll forever. If the only path to a good fish is buying a
+      hundred, this is a slot machine. Offspring inherit toward the better parent so
+      effort compounds. (3) Secret evolutions are a SECOND evolution axis, distinct from
+      the goldfish line: one evolves by growth, the other only appears through breeding.
+      Same `evolves_to` plumbing, different route -- the bible needs to distinguish them.
+      (4) Nothing hidden may be strictly REQUIRED. A player who never breeds must still be
+      able to finish the bestiary. Genetics is depth for people who want it, not a wall
+      for people who do not. See SYSTEMS.md "Genetics". Scoped to m3 deliberately: this is
+      plausibly larger than the whole MVP and must not delay it. SCHEMA: t-032 adds the
+      columns this needs to the already-shipped t-007 family as an additive migration. Do
+      not add them ad hoc here -- check t-032 landed first, and extend it rather than
+      opening a second migration path into the same tables.
+
+  - id: t-030
+    milestone: m3
+    title: "Rotating shop stock, selling fish back, and the individual-stat economy"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-029, t-031]
+    note: >
+      Silas, 2026-08-24: "set pieces are static bonuses, and can be bought whenever. But
+      fish will rotate through... they should be able to sell fish back to the store.
+      usually at a loss, but if they end up breeding fish with good stats, or a new
+      evolve, it could be worth more." THE TRAP, and the reason this depends on t-031:
+      rotating stock plus selling means a player can sell a fish and then be unable to buy
+      another. That is exactly the quiet permanent loss the no-degradation rule exists to
+      prevent, and it is worse than an obvious one because they will not notice until they
+      want it back. THE FIX is already in Silas's own message -- the Ichthyonomicon
+      records every species ever bought or raised, including ones no longer owned. Make
+      that record the RE-PURCHASE MECHANISM, not just a trophy case. Then rotation governs
+      DISCOVERY rather than ACCESS: today's stock is what is new, cheap, or well-rolled, a
+      reason to check in rather than a gate, and anything ever owned is orderable from the
+      book at any time. Selling becomes genuinely safe and the sell button can be an
+      ordinary part of play. This is the gating philosophy applied exactly -- gate
+      capacity, never access. Selling AT A LOSS is fine; that is spending, which Silas's
+      rule already permits. A well-bred individual selling for MORE is the good version,
+      because it turns breeding into an economy rather than a collection sidebar. Price on
+      individual stats, not species. Do not ship rotation before the book can re-order, or
+      the trap above ships with it. SCHEMA: t-032 adds the columns this needs to the
+      already-shipped t-007 family as an additive migration. Do not add them ad hoc here
+      -- check t-032 landed first, and extend it rather than opening a second migration
+      path into the same tables.
+
+  - id: t-031
+    milestone: m3
+    title: "The Ichthyonomicon — the record that makes everything else safe"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-024
+    note: >
+      Silas asked for a name closer to a grimoire than an encyclopedia, and for the
+      spelling checked. Greek for fish is `ikhthus`, standard combining form `ichthyo-`
+      (ichthyology, ichthyosaur), so the parallel formation to Necronomicon is THE
+      ICHTHYONOMICON. That is its formal name; in dialogue Charlotte and Wilbur should
+      call it something flatly mundane -- "the book", "the register" -- because the gap
+      between the cover and what the staff call it is free characterisation. Holds: every
+      species ever bought or raised WHETHER OR NOT CURRENTLY OWNED (Silas's explicit
+      requirement), the field note revealed on first acquisition, the best individual
+      stats yet seen of each, and the re-order control. THIS IS LOAD-BEARING, not a trophy
+      case. t-030's rotating stock and sell-back are only safe because this exists -- it
+      is what makes rotation about discovery rather than access, and what stops selling
+      being an irreversible mistake. Build it before, or with, t-030. It also absorbs
+      t-024's bestiary-completion work: this IS the bestiary view, so treat t-024 as its
+      first half rather than building two screens. SCHEMA: t-032 adds the columns this
+      needs to the already-shipped t-007 family as an additive migration. Do not add them
+      ad hoc here -- check t-032 landed first, and extend it rather than opening a second
+      migration path into the same tables.
+  - id: t-032
+    milestone: m2
+    title: "Extend the aquarium schema for every decision made after t-007 shipped"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      t-007 shipped the Aquarium/AquariumStock/AquariumEvent family (kind_robots#2073,
+      migration 20260824180000_add_aquarium_persistence) BEFORE Silas made the capacity,
+      genetics, shop-rotation, and Ichthyonomicon decisions. It is a sound foundation and
+      the species/individual split is already structurally right -- AquariumStock
+      references a Character rather than copying it -- but it is missing everything those
+      decisions require. Silas, 2026-08-24: "Creating the MVP should involve these
+      principles, but fine tuning it is the later step." Architecture goes in now because
+      retrofitting a shape is a migration; tuning waits for t-019.
+      ADDITIVE forward migration only. Do not edit 20260824180000 -- it is applied. Do not
+      reset. Regenerate and commit the Prisma client in the same PR (davinci/t-026 was
+      filed for exactly that omission).
+      WHAT IS MISSING:
+      (1) CAPACITY. Aquarium has no capacity concept at all. Add TWO caps per the decided
+      model: a counted `setSlotsCap` (default 3) and a weighed `sizeCap` measured in tank
+      units against each species' new `size` field. A tank upgrade raises both. Do NOT use
+      the single-slotsCap-plus-kind-discriminator shape recommended in SYSTEMS.md's t-025
+      section -- Silas superseded that; the correction is recorded in the same section.
+      (2) INDIVIDUAL GENETICS. AquariumStock carries hunger/mood/nickname but no rolled
+      stats and no parentage, so every fish of a species is currently identical. Add the
+      hidden per-individual stat columns and nullable parent references (self-relations to
+      AquariumStock). Nothing has to READ them yet -- an unused nullable column costs
+      nothing and a missing one costs a migration.
+      (3) SET PIECES. No model exists. Sets are a separate counted pool, so they need their
+      own join (AquariumSet or similar) against setSlotsCap, not a row in AquariumStock.
+      (4) THE ICHTHYONOMICON RECORD. AquariumStock is CURRENT holdings only, so selling a
+      fish deletes the row and the record with it. That is t-030's trap live in the schema
+      today. Add the append-only "species ever owned" record now, keyed on user + character,
+      holding first-acquired timestamp and best individual stats seen. t-031 builds the view;
+      this is the table under it, and it must exist BEFORE any sell or rotation path ships.
+      (5) DEBRIS. t-027 needs a per-aquarium debris level and a last-cleaned timestamp,
+      settled server-side like hunger.
+      ALSO FIX WHILE IN HERE: `Aquarium.slug` is globally `@unique`, so two users cannot
+      both name a tank "my-tank" -- the second collides. t-025's own recommendation was to
+      key by `(userId, slug)`; the shipped schema used a global unique instead. Move to
+      `@@unique([userId, slug])`. This is a live bug the moment a second user names a tank
+      anything obvious, and it is much cheaper to fix now than after real rows exist.
+  - id: t-033
+    milestone: m1
+    title: "Render box cannot load two of three text encoders — art generation is blocked at ComfyUI, not at the queue"
+    status: needs-human
+    gate_human: false
+    soft_gate: true
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found 2026-08-24 while doing t-005's end-to-end proof, and worth separating from t-005
+      because the conclusion is not about this project: THE CONDUCTOR SIDE OF THE ART
+      PIPELINE WORKS. Submitting through `POST /api/art/queue` with KR_API_TOKEN
+      authenticated, queued, was picked up by the home-box relay, and polled correctly. Two
+      of three engines then failed inside ComfyUI on model files.
+      MEASURED, one entry each, same prompt and size (1024x1024):
+      - `krea2` -- job 9179 queued, then FAILED: "node 3 (CLIPTextEncode):
+        hostbuf_file_reader_read failed". The model is present enough to be selected but
+        cannot be read. Reads like a corrupted or partially-downloaded file, or a
+        memory-mapping failure on the box. THIS IS THE DEFAULT ENGINE for most of this
+        repo's art, so this is the one that matters most.
+      - `flux2-klein` -- job 9181 queued, then FAILED fast and informatively: "ComfyUI has
+        no matching file for: CLIPLoader.clip_name='flux2_klein_text_encoder_fp8_scaled
+        .safetensors'. Not in the live model list at http://127.0.0.1:8188". Simply not
+        installed.
+      - `flux` (schnell variant) -- ran long rather than failing fast, which is the
+        signature of an actual render. Result not yet confirmed; re-run to establish whether
+        it is the working fallback.
+      FOR SILAS: this needs the home box, which no agent can reach. Concretely: re-download
+      or verify the krea2 text encoder (a checksum would confirm the corruption hypothesis),
+      and install `flux2_klein_text_encoder_fp8_scaled.safetensors` or accept that engine as
+      unavailable. Until then, agents should queue art on whichever engine is confirmed
+      working rather than the krea2 default.
+      Soft gate: it blocks the ART for this project, not the project. Every other ready task
+      proceeds, and the queue entries can be written now and drained once the box is healthy.
+      Filed separately from t-005 so t-005 can still close on the pipeline recipe it was
+      actually asked for.

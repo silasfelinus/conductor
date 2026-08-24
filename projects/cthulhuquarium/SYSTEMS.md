@@ -35,9 +35,21 @@ discover during implementation.
 
 If a fight can kill, injure, or remove a fish, that is degradation and it is out.
 
-**Resolution: rivalry is a rate effect, never a loss.** Two rival species in the same
-tank both produce less while co-located. Nothing dies, nothing leaves, nothing you own
-stops being owned. The moment you separate them, both recover fully.
+**Resolution: rivalry is a rate effect, never a loss.** Silas's own framing, and it is
+cleaner than the abstract version: *"fish fighting with each other would not be eating,
+thus not generating resources."* A squabbling fish is a fish that stopped eating. The
+mechanic is already in the game — it is hunger, arrived at socially instead of by neglect.
+
+Refinements from Silas, 2026-08-24:
+
+- **Fish can fight their own species.** Territory pressure, not just cross-species dislike.
+  Two of the same fish in a cramped tank is a real consideration, which makes the size and
+  slot systems below matter more.
+- **A squabble can briefly incapacitate one fish.** Short, recoverable, self-clearing. This
+  stays inside the rule: an incapacitated fish produces nothing for a moment, and then it
+  does again. Nothing is lost, only paused.
+
+Nothing dies, nothing leaves, nothing you own stops being owned.
 
 This is strictly better than the punishing version, because it turns rivalry into a
 **puzzle the player solves by arranging their tank** rather than a tax they pay for not
@@ -67,12 +79,24 @@ This one points directly at the rule that idling must be **strictly worse** than
 A set that fully automates collection erases the active channel's advantage, and the game
 quietly becomes a spreadsheet.
 
-**Resolution: idle-collection sets collect a fraction, or up to a cap, never everything.**
-Something like "collects 40% of what drops while you are away" removes the tedium of
-missing an entire night without removing the reason to be present. The auto-collector set
-that *moves around* (Silas's own note that it should) can be the better one precisely
-because you can watch it work — it earns its keep as a thing to look at, not only as a
-multiplier.
+**Resolution, and Silas gave it a testable form:**
+
+> *"an active player should always be able to evolve faster than someone idling with
+> equivalent upgrades."*
+
+Treat that as **the invariant the whole economy is balanced against.** It is the single
+most useful sentence in the systems layer, because it is falsifiable: take two identical
+save states, idle one and play the other, and measure. Any set, upgrade, or background
+that breaks it is mis-tuned by definition, and t-019's balance pass should assert it
+directly rather than eyeballing it.
+
+Within that, idle collection is free to be generous — Silas: *"idle collection can still
+pick up slower than an active user. A set item can have an effect that it just affects the
+rate."* So idle sets scale the rate rather than being capped arbitrarily, which is a better
+mechanism than a hard ceiling: it stays meaningful at every tier instead of hitting a wall.
+
+The auto-collector that *moves around* (Silas's note that it should) earns its keep partly
+as a thing to watch, not only as a multiplier.
 
 ---
 
@@ -201,16 +225,25 @@ Per t-025's own instruction, these are decided on paper rather than left to stal
 build. Each is a recommendation with reasoning, flagged here for Silas to confirm or
 override — none of the four blocks t-026/t-027 from proceeding on this basis.
 
-1. **Do set pieces and fish share one slot pool, or two? → One pool.** This document
-   already assumed the answer two sections up, in "Gate capacity, not access": *"a set
-   occupies a slot a fish could have used. Every build is a real trade."* A second,
-   separate set-piece pool would quietly delete that sentence's tension and make sets a
-   pure add-on instead of a real trade against fish — a strictly weaker design by this
-   doc's own stated standard. **Schema implication for t-007:** `Aquarium` carries a
-   single `slotsCap`; whatever occupies a slot (fish placement or equipped set piece)
-   is accounted against that one total, not two separate caps. `AquariumStock` (or a
-   sibling join row for set pieces) needs a `kind` discriminator so both draw from the
-   same ledger.
+1. ~~Do set pieces and fish share one slot pool, or two? → One pool.~~
+   **SUPERSEDED BY SILAS, 2026-08-24: two distinct pools, measured differently.** This
+   session recommended one shared pool and reasoned it well from this document's own
+   "a set occupies a slot a fish could have used" line — but Silas had the opposite
+   instinct first and kept it: *"I definitely thought originally that they would be
+   different pools, as it would be easier to fit locations when accommodating for
+   sizes... For now, let's say that the pools are distinct, but I like the idea and will
+   consider it in playtesting."* The shared-pool idea is parked, not rejected.
+   The shipped model, and the asymmetry is deliberate: **set slots are counted** (start
+   with three, buy up to about five), **fish capacity is weighed** by total `size` rather
+   than by count. Counted set slots stay easy to hold in your head; weighed fish capacity
+   turns stocking into a packing problem. See "Capacity: two pools, two units" below.
+   **Schema implication for t-007, replacing the one above:** `Aquarium` carries TWO
+   caps — a counted `setSlotsCap` and a weighed `sizeCap` — and a tank upgrade raises
+   both. Do NOT build the single-`slotsCap`-plus-`kind`-discriminator shape recommended
+   above; it models the wrong thing now. Keep both capacity checks in ONE place, though,
+   because Silas may swap to a shared pool after playtesting and that should be a rule
+   change rather than a refactor.
+
 2. **Is rivalry authored or emergent? → Both**, exactly as this doc's own draft
    guessed. A small emergent rules table (`predator` vs `small`, `anchor` vs `school`)
    scales for free as the bestiary grows past 20 species; a short authored override list
@@ -224,6 +257,13 @@ override — none of the four blocks t-026/t-027 from proceeding on this basis.
    by t-008. This keeps rule 1 ("progress never degrades") trivially true for rivalry
    too: it is a live rate effect with no persisted loss state to accidentally leak into
    holdings.
+   **Extended by Silas, 2026-08-24**, in ways the emergent table above does not yet
+   cover: fish can fight **their own species** over territory, so the rules table needs a
+   same-species crowding term rather than only cross-species pairs; and a squabble may
+   **briefly incapacitate** one fish. Incapacitation is short, self-clearing, and stays
+   inside the rule — it is a live rate effect like the rest, and must not be persisted as
+   damage. Silas's framing is also the cleanest statement of the whole mechanic: a
+   fighting fish *is not eating*, so rivalry is hunger arrived at socially.
 3. **Does tank size grow, or do you own several tanks? → One growing tank per aquarium
    for v1.** DESIGN-BRIEF's MVP scope is written in the singular throughout ("load and
    interact with **their** aquarium," "see **their** tank") and multiple tanks is the
@@ -249,3 +289,158 @@ FOR SILAS: the four decisions above are this session's recommendation, not a uni
 final call — reopen any of them with a note here or on cthulhuquarium/t-025 if a
 different answer fits your vision better. t-026/t-027 (and t-007's schema) will proceed
 on this basis unless you say otherwise.
+
+## Capacity: two pools, two units
+
+Decided 2026-08-24. The pools are distinct and they are **measured differently**, which is
+the part worth getting right:
+
+- **Set slots are counted.** Start with three; buy more; cap somewhere around five. A
+  small, legible number the player holds in their head.
+- **Fish capacity is measured by size.** Fish have a `size`, and a tank holds a total, not
+  a count. Silas: *"fish could be say different sizes and an aquarium can accommodate more
+  or less."*
+
+That asymmetry is doing real work. Counted set slots make builds easy to reason about;
+size-weighted fish capacity makes stocking a **packing problem** — six small fish or one
+enormous one — which is a far better decision than "pick six." It also gives the tier-5
+monsters a cost beyond price: The Long Patience should eat most of a tank.
+
+`size` is therefore a new required field on every species in the bible.
+
+**Tank upgrades raise both**, which keeps the milestone reward legible: a bigger tank means
+more room *and* more sets, so an interstitial that hands you a new tank always visibly
+changes what you can do.
+
+## Genetics: hidden stats, breeding, and secret evolutions
+
+Silas, 2026-08-24, and this is the largest single addition to the design so far:
+
+> *"whether fish can mate. if we allow fish to have secret random stats, then that could
+> include the ability to create new fish, which would be how the user can discover the
+> secret evolution fish. Then we have an entire hidden pokemon like stat system."*
+
+### The species/individual split this forces
+
+This is the architectural consequence and it needs stating plainly, because it changes
+t-007's schema: **the bible describes species; your tank contains individuals.**
+
+- A `Character` row is the **species template** — the six public `Rarity` stats, the field
+  note, the art. Shared by everyone, identical for all copies.
+- An `AquariumStock` row is **one actual fish** — its own hidden rolled stats, its
+  nickname, its hunger, its parents. Yours alone.
+
+Two goldfish are the same species and different animals. Every hidden stat lives on the
+individual, never on the species, and the bible stays a catalogue rather than becoming a
+save file.
+
+### Rules that keep it from becoming a grind
+
+- **Breeding never consumes the parents.** Progress never degrades; a pairing produces a
+  new individual and leaves both parents exactly as they were.
+- **Hidden stats are discovered, not rolled-for-forever.** If the only path to a good fish
+  is re-buying a hundred of them, the game becomes a slot machine. Breeding should
+  *converge* — offspring should inherit toward the better parent — so effort compounds
+  instead of resetting.
+- **Secret evolutions are the payoff**, and they are a second, separate evolution axis from
+  the goldfish line: one evolves by growth, the other only appears through breeding. Both
+  use the same `evolves_to` plumbing; the difference is how you get there.
+- **Nothing hidden may be strictly required.** A player who never touches breeding should
+  still finish the bestiary. Genetics is depth for the people who want it, not a wall for
+  the people who do not.
+
+## The shop rotates; the book is forever
+
+Silas: *"set pieces are static bonuses, and can be bought whenever. But fish will rotate
+through."* Plus selling fish back — *"usually at a loss, but if they end up breeding fish
+with good stats, or a new evolve, it could be worth more."*
+
+**These two ideas create a problem and then solve it, which is worth spelling out.**
+
+The problem: rotating stock plus selling means a player can sell a fish and then be unable
+to buy another. That is exactly the kind of quiet, permanent loss the no-degradation rule
+exists to prevent — and it is worse than an obvious one, because the player will not notice
+until they want it back.
+
+The solution is already in Silas's own message: **the Ichthyonomicon records every species
+you have ever bought or raised, including ones you no longer own.** Make that record the
+**re-purchase mechanism**, not just a trophy case. Then:
+
+- **Rotation governs discovery, not access.** Today's stock is what is *new, cheap, or
+  well-rolled* — a reason to check in, not a gate. Anything you have ever owned is orderable
+  from the book at any time.
+- **Selling becomes genuinely safe**, so the sell button can be an ordinary part of play
+  rather than a decision the player has to be protected from.
+- **It matches the gating philosophy exactly.** Gate capacity, never access. The shop is a
+  rotating window onto a catalogue that never closes.
+
+**Selling at a loss is fine** — that is spending, which Silas's rule already permits — but a
+well-bred individual selling for *more* is the good version, because it makes breeding an
+economy rather than a collection sidebar.
+
+## The Ichthyonomicon
+
+Silas asked for a name closer to a grimoire than an encyclopedia, and asked for the spelling
+checked. The Greek for fish is *ikhthús*, and the standard combining form is **ichthyo-**
+(as in ichthyology, ichthyosaur). The parallel formation to *Necronomicon* is therefore:
+
+> **The Ichthyonomicon**
+
+Its formal name. In dialogue, Charlotte and Wilbur should call it something flatly mundane —
+"the book", "the register" — because the gap between what it is called on the cover and what
+the staff call it is free characterisation.
+
+What it holds: every species ever bought or raised, whether or not it is currently owned;
+the field note, revealed on first acquisition; the best individual stats seen of each; and
+the re-order button that makes rotation safe.
+
+## Scope: principles in the MVP, tuning after
+
+Silas, 2026-08-24, overriding an earlier "designed now, built later" framing in this
+document:
+
+> *"I really have no worries about this level of scope. We have a lot of agent token
+> processing power. Creating the MVP should involve these principles, but fine tuning it
+> is the later step so it becomes fun."*
+
+The distinction that makes this actionable — and it is not "everything ships at once":
+
+**Architecture is expensive to retrofit, so it goes in from the start.** The
+species/individual split, two capacity caps, parentage, and a record of everything ever
+owned are all *shapes*. Adding a shape later is a migration and a rewrite of everything
+built on the old one. These belong in the schema and the API on day one even if nothing
+reads them yet — an unused nullable column costs nothing; a missing one costs a migration.
+
+**Tuning is cheap to change, so it comes after.** How fast stats converge, how often stock
+rotates, how many secret evolutions exist, what a background's single bonus is worth —
+every one of these is a number in `balance.yaml` or a row in the bible. They should be
+*wrong on purpose* at first and fixed once the game is playable enough to feel, which is
+exactly what t-019's balance pass is for.
+
+So the MVP builds the principles and ships them under-tuned. It does not ship a system
+whose shape is a guess.
+
+**This has already cost something once.** t-007 shipped the Aquarium schema before the
+genetics, capacity, and Ichthyonomicon decisions existed, so it is missing all of them —
+see t-032, which extends it additively. That is the exact failure mode this section exists
+to prevent, caught early and cheaply because the migration is still additive rather than
+destructive.
+
+## Open questions
+
+The original four are answered above in **"Open questions — resolved"** — three by a
+concurrent session's t-025 pass, and the slot-pool one by Silas directly, overriding that
+session's recommendation. This list is kept empty deliberately rather than deleted: it is
+where the next round goes.
+
+Currently open, raised by the genetics and shop sections above:
+
+1. **Does breeding need a dedicated space, or do fish pair in the tank?** A breeding tank
+   is a second capacity sink and another thing to buy; pairing in place is simpler but
+   makes crowding do double duty as both rivalry pressure and breeding pressure.
+2. **Do hidden stats show once discovered, or stay hidden forever?** Revealing them after
+   the fact makes breeding legible and plannable. Keeping them hidden preserves mystique
+   but risks the player never understanding why one fish outperforms another — and a
+   system nobody can perceive is a system nobody enjoys.
+3. **How many secret evolutions exist?** One would confirm the mechanic. A dozen would be
+   the spine of the late game. This is a content-budget question as much as a design one.

@@ -18,6 +18,13 @@
 # creator payouts, mission remittance, and the Save One Human entity decision.
 order:
   - kapowarr
+  # Raised 2026-08-24 by Silas in session: "i changed the priority of this to high,
+  # i want it to be the main task worked on by agents over the next few days." Placed
+  # SECOND rather than first because tests/test_project_priority_contract.py CI-enforces
+  # order[0] == "kapowarr" -- moving it to first means moving that guard, which is
+  # Silas's call to make explicitly, not something to do on an agent's reading of
+  # "main task". Flagged to him; second is the highest slot available without it.
+  - cthulhuquarium
   - kind-economy
   - interface-vision
   - ai-art-academy
@@ -41,7 +48,6 @@ order:
   - conductor-app
   - appmaker
   - media-watchlist
-  - cthulhuquarium
   - brainstorm
   - wishmaster
   - ruler-hooked
