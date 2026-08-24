@@ -10369,3 +10369,24 @@ records:
     the sandbox couldn't execute the new live-DB regression case, saying so
     explicitly in the PR (rather than claiming full verification) kept the
     Verified section honest.
+- date: 2026-08-24
+  project: cthulhuquarium
+  task: t-003
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    The task note assumed a starter fish bible already existed ("grow the seeded
+    bestiary... from its starter set") but neither fish/SCHEMA.md, fish/*.yaml,
+    nor validate_fish.py existed anywhere -- ECONOMY.md's own text had already
+    flagged this exact gap. Cross-referencing every candidate field against the
+    project's already-committed design docs (SYSTEMS.md's rivalry tag vocabulary,
+    ECONOMY.md's rarity_tiers table, the Prisma schema's actual Character/
+    AquariumStock columns) before authoring anything resolved a real ambiguity
+    the task note left open (tier and rarity read as two separate fields in the
+    note, but the schema and economy docs establish they are the same axis) as
+    a documented judgment call rather than an invented field with nowhere to
+    land -- worth doing before writing bible content on any task whose note
+    references a schema/starter-set that a plain repo search doesn't confirm.
