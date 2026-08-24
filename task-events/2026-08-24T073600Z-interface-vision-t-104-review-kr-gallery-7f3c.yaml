@@ -1,9 +1,0 @@
-version: 1
-project: interface-vision
-task: t-104
-operation: review
-owner: worker
-session: 2026-08-24T070900Z-interface-vision-t-104-kr-gallery-7f3c
-note: >-
-  Progressive gallery slice ready for implementation review on worker/interface-vision-t-104-kr-gallery-7f3c. The shared gallery now renders the full lightweight filtered index without pagination, uses content-visibility containment, and defers image src assignment through a pooled viewport observer. Shared entity art, Resources, Facets, and the bespoke Art Gallery adopt the same path; Art Gallery removes its second pager and hydrates heavy ArtImage records only near the viewport. Added a focused CI contract preventing pagination/eager-hydration regression.
-updated: '2026-08-24T07:36:00Z'
