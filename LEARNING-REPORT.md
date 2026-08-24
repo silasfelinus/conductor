@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-24T13:10:47Z
+Generated: 2026-08-24T13:42:53Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **742**
-- Outcomes: blocked: 15, cancelled: 1, done: 726
+- Closed tasks recorded: **743**
+- Outcomes: blocked: 15, cancelled: 1, done: 727
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -50,6 +50,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | newsfeed | 20 | 100% |
 | packmaker | 10 | 100% |
 | ruler-hooked | 4 | 100% |
+| scene-animator | 1 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
 | storybook | 16 | 100% |
@@ -64,7 +65,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 726 | 99% |
+| software | 727 | 99% |
 
 ## Failure categories
 
@@ -72,7 +73,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 |---|---|
 | quality | 14 |
 | actionable | 10 |
-| transient | 9 |
+| transient | 10 |
 | scope | 2 |
 
 ## Kaizen targets
@@ -81,9 +82,11 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - kind `content` — 44% success over 16 closed tasks; aim the next kaizen task here
 - failure category `quality` — 14 occurrences; look for the shared cause across its records
 - failure category `actionable` — 10 occurrences; look for the shared cause across its records
-- failure category `transient` — 9 occurrences; look for the shared cause across its records
+- failure category `transient` — 10 occurrences; look for the shared cause across its records
 
 ## Recent lessons
+
+- 2026-08-24 `scene-animator/t-001` — The PR (kind_robots#2072) opened with a red TypeScript check: an ArtJob.include of a non-existent ArtImage Prisma relation (ArtJob only carries a plain artImageId int column), Content-Length passed as a stringified value where h3's typed header wants a number, and a Pinia ref (durationSeconds) that inferred a narrow literal union from an `as const satisfies`-typed presets catalog instead of number. All six errors were mechanical and caught deterministically by `npm run test` (vue-tsc); none needed a design change. Fixed and pushed as the Reviewer rather than rejecting back to the Worker, since the errors were narrow, unambiguous, and confined to the task's own new files. Re-affirms running the repo's local typecheck before opening a PR would have caught this before CI did.
 
 - 2026-08-24 `brainstorm/t-031` — Task scope (add a real "promote candidate into an entity" action, carrying its art across) explicitly flagged its own hardest design question -- meta.art.imageIds is an array, the target entity's art model (entityArt.ts) is one scalar id per slot -- rather than leaving it implicit; tracing the array's one mutation site to confirm it was append-only (so "last entry" unambiguously means "most recent delivery") turned a could-have-been-a-guess into an evidence-based, one-line design decision. Also: before implementing, re-verified the prior task's (t-026) negative "no such action exists" finding rather than trusting it blind -- doing so surfaced the one precedent that DOES exist (promptStore.promoteToDream / dreamStore.promotePromptToDream) but is dead code, called from nowhere, which shaped which store to add the new function to and confirmed this was genuinely the first promotion pattern with a live caller. A UI wiring change that adds a new busy/loading state needs to check what the busy prop passed to the child component actually depends on, not just add the new emit -- isCandidateBusy here only checked state that regenerate/branch's shared runGeneration() call sets, so the new promote action's spinner would have silently never appeared without also folding pendingCandidateAction into that check. Third occurrence this session of the over-broad `prettier --write` trap (storybook/t-023, then here) -- worth normalizing as a standing habit: check `git diff --stat` immediately after any `prettier --write`, before staging, on any file with pre-existing formatting drift.
 
@@ -99,8 +102,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-23 `brainstorm/t-029` — Third clean first-pass adapter/CTA task in a row (t-027 Scenario, t-028 Reward, t-029 Bot) following the same BrainstormSourceAdapter registry + gated startBrainstormWith*() CTA + verifyBrainstormObjectEntryLinks.mjs assertion pattern -- confirms this is now a well-worn, low-risk template for onboarding a new source entity, not something that needs fresh design judgment each time. When a recurring kaizen note explicitly names the next entity to follow the same pattern (here: Project, per t-027's original note), treat that as a ready-made task rather than re-deriving scope from scratch.
 - 2026-08-23 `davinci/t-025` — Before scoping a 'extract the shared pattern between these two call sites' refactor, grep the WHOLE repo for the symbol being extracted, not just the two sites already named in the task note -- a third, byte-for-byte identical call site (taskmasterStore.ts) existed and was missed by hand-picking files instead of searching, only caught because a repo-owned contract test (verifyNarrativeArtPersistence.mjs) enforced the two stores stay in lockstep and failed CI. Also: running `prettier --write` on a whole pre-existing file to fix one targeted edit's formatting can reformat large unrelated regions if the file was already prettier-noncompliant before the change (confirmed via git stash/checkout) -- restore the pristine file and apply only the intended edit via a scoped replace, never a full-file --write, when touching a file the task doesn't already fully own.
 - 2026-08-23 `brainstorm/t-028` — Following an already-established adapter pattern (Character/Scenario) end to end -- registry entry, gated CTA, contract-script assertion, workflow path trigger -- landed clean first pass with zero findings; the pattern itself, not novel judgment, was the main risk-reducer.
-- 2026-08-23 `model-builder/t-029` — Cycle 57's fix covered three places that swap state.run for a different run (goToStep /selectSource, openRun's two branches, resumeRun's branch) without clearing the in-flight singletons resetRun/resetAll already clear -- but only checked whether each call site clears the singletons, not whether the RESPONSE feeding that call site could itself be stale. resumeRun() has exactly one call site (a component's onMounted) yet was still racy, because unmounting a Vue component does not cancel its in-flight promises: navigating away and back before a slow resumeRun() resolves creates a second concurrent call against the same Pinia singleton, and the older call's stale response can land after the newer one already resolved and the user moved on. Lesson for future cycles: "this function's call site is singular / not button-driven" is not the same guarantee as "this function cannot run twice concurrently" -- component remounts (navigation, not just explicit user clicks) are a second, easy-to-miss source of concurrent async calls against a shared store, and any async chain writing shared state on completion needs a request-ticket guard regardless of how simple its trigger looks.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-24T13:10:47Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-24T13:42:53Z_
