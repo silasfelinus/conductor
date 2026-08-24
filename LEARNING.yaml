@@ -10287,3 +10287,25 @@ records:
     recommendation with reasoning, flagged (soft_gate: true) rather than hard-gated,
     so the answer could unblock downstream tasks (t-026/t-027) same-session instead of
     stalling on a human reply.
+- date: '2026-08-24'
+  project: cthulhuquarium
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A live-DB migration doesn't have to stay unverifiable in a sandbox with no docker
+    daemon: `apt-get install mariadb-server`, running `mariadbd` directly (no systemd)
+    under the `mysql` user, and connecting via the local socket to create the app user
+    took under a minute and gave a real MySQL-compatible target to run `prisma migrate
+    deploy` against. Running it through the FULL existing migration history (62
+    migrations), not just the new one in isolation, is what actually proves the new
+    migration composes cleanly with everything before it -- and `prisma migrate
+    status` reporting zero drift afterward is stronger evidence than `prisma validate`
+    alone, which only checks the schema file's own internal consistency. Worth adding
+    to AGENTS.md's cross-repo/kind_robots verification section as a documented option
+    alongside `provision_kind_robots_deps.sh`'s dummy-DATABASE_URL `prisma generate`
+    path, since that path alone doesn't catch a migration.sql that doesn't actually
+    match what schema.prisma implies.
