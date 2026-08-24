@@ -1558,7 +1558,7 @@ tasks:
 - id: t-068
   milestone: m8
   title: Identify which Kapowarr page is still slow after the review-holds fix
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   note: |-
@@ -1571,7 +1571,9 @@ tasks:
     Merged silasfelinus/Kapowarr#142 at 9a89574d0daaa708bebaab45b1e06691484b1395. The remaining freeze was the Volumes gallery: the previous first-batch optimization still drained the entire filtered library into poster/table DOM in background batches, so work still scaled with total volume count and switching views started a second full drain. The merged fix keeps a bounded 16-entry, 1200px render runway, bulk-clears stale DOM, preserves Mass Edit selection independently of lazy row existence, and scopes queue badge refreshes to queue-bearing volumes. PR checks were fully green: Tests run 32682206854 passed on Python 3.8, 3.9, 3.10, 3.11, and 3.12, with the frontend suite passing in 3.12; Build docs run 32682206814 and Build and publish container run 32682206782 also passed. Main now points to the merge commit.
 
     Reopened from live testing after Kapowarr#142. The bounded-runway fix removed the browser freeze but introduced an artificial scroll cliff: the gallery stops at the end of rendered cards and waits before creating the next batch. Desired behavior is the standard large-media-gallery model: establish full library geometry immediately with lightweight placeholders/text from the existing /api/volumes metadata payload, then hydrate covers around the viewport with overscan so scrolling never waits for card construction.
-  updated: '2026-08-24T03:21:30Z'
+
+    Follow-up implementation is ready on worker/kapowarr-t-068-skeleton-gallery-a91c. Poster view now materializes the complete lightweight metadata index in one DocumentFragment so the browser gets full gallery geometry and titles immediately, while cover <img> elements remain source-less placeholders until an IntersectionObserver brings them within 1800px of the viewport. Visible covers receive high fetch priority, near-viewport overscan low priority, and the existing native lazy-loading flag remains as fallback. content-visibility/contain-intrinsic-size let supporting browsers skip off-screen paint work. The existing /api/volumes payload remains the only metadata index; no duplicate endpoint was added. Table view keeps the bounded renderer from #142. Diff audit caught and repaired one accidentally truncated CSS tail before review; current compare is scoped to 5 intended files and 0 commits behind main. Full repository Actions will run on the PR head.
+  updated: '2026-08-24T03:30:00Z'
   owner: worker
   claimed_by: 2026-08-24T032130Z-kapowarr-t-068-skeleton-a91c
   claimed_at: '2026-08-24T03:21:30Z'

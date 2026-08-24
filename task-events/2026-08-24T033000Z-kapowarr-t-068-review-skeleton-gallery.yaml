@@ -1,8 +1,0 @@
-version: 1
-project: kapowarr
-task: t-068
-operation: review
-session: 2026-08-24T032130Z-kapowarr-t-068-skeleton-a91c
-updated: '2026-08-24T03:30:00Z'
-note: >-
-  Follow-up implementation is ready on worker/kapowarr-t-068-skeleton-gallery-a91c. Poster view now materializes the complete lightweight metadata index in one DocumentFragment so the browser gets full gallery geometry and titles immediately, while cover <img> elements remain source-less placeholders until an IntersectionObserver brings them within 1800px of the viewport. Visible covers receive high fetch priority, near-viewport overscan low priority, and the existing native lazy-loading flag remains as fallback. content-visibility/contain-intrinsic-size let supporting browsers skip off-screen paint work. The existing /api/volumes payload remains the only metadata index; no duplicate endpoint was added. Table view keeps the bounded renderer from #142. Diff audit caught and repaired one accidentally truncated CSS tail before review; current compare is scoped to 5 intended files and 0 commits behind main. Full repository Actions will run on the PR head.
