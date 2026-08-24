@@ -4168,44 +4168,16 @@ tasks:
   - id: t-125
     milestone: m2
     title: "Kind Robots -> Conductor project handoff has no verification, and a closed scaffold todo proves nothing"
-    status: claimed
+    status: done
     gate_human: false
     owner: reviewer
     stakes: reversible
     passes: 0
-    note: >
-      Found 2026-08-24 while scaffolding cthulhuquarium, which was the first project
-      Silas started from the Kind Robots side rather than from `intake.py`. The sync is
-      one-way by design -- `sync_kind_robots_projection.py` pushes Conductor to Kind
-      Robots and never reads back -- so the ONLY path a Kind-Robots-authored project has
-      into Conductor is the scaffold Todo that `createProjectWithScaffoldTodo` writes in
-      `server/api/projects/index.post.ts`, picked up by `fetch_todos.py` at the start of
-      a Worker cycle. That path has two holes.
-      (1) FIXED THIS SESSION, in kind_robots: the todo carried only the slug -- not the
-      title, description, goal, pitch, or repo -- so an agent claiming it knew a project
-      existed but not what it was for. `projectScaffoldTodoContent` now carries the pitch
-      fields and the exact `intake.py` command, and says not to close the todo until the
-      project directory exists on conductor's main.
-      (2) STILL OPEN, and this task: nothing verifies the handoff actually happened. Todo
-      #1320, "Scaffold conductor project for cthuluquarium", was marked DONE while
-      `projects/cthulhuquarium/` did not exist in this repo and never had. A closed todo
-      is currently indistinguishable from a completed scaffold, so a dropped project goes
-      silently missing -- exactly the failure Silas suspected when he said "we never fully
-      vetted how to sync a kind robots project to conductor".
-      Build the check. Suggested shape, matching the existing reconciliation scripts: a
-      `scripts/check_project_scaffold_drift.py` that lists Kind Robots Projects with a
-      `conductorSlug` set (GET /api/projects, KR_API_TOKEN), asserts a matching
-      `projects/<slug>/roadmap.yaml` exists here, and exits 1 naming any that do not.
-      Wire it into the CLAUDE.md session-start sweep next to
-      `check_pr_merged_drift.py`/`audit_human_gates.py`, and consider having it also flag
-      the reverse -- a Conductor project with no Kind Robots Project row -- since the
-      projection sync creates those and a 409 slug collision would leave one behind.
-      Also worth deciding while in here: whether an agent closing a scaffold todo should
-      have to name the commit that created the directory, the way `close_task.py` takes
-      `--implementation-pr`.
-    updated: '2026-08-24T12:39:03Z'
+    note: 'Built scripts/check_project_scaffold_drift.py per this task''s suggested shape: checks GET /api/projects (KR_API_TOKEN) for every conductorSlug and asserts a matching projects/<slug>/roadmap.yaml exists here (the forward direction, the reported bug), plus the reverse direction this task also flagged as worth checking (a Conductor project with no matching Kind Robots row -- a stuck 409 slug collision would leave exactly this shape). Wired into CLAUDE.md''s session-start sweep and docs/state-reconciliation.md''s Required audits, next to check_pr_merged_drift.py/audit_human_gates.py. Live run against the real KR API during development reproduced the exact historical Todo #1320 bug this task was filed from (KR Project #2113, conductorSlug=''cthuluquarium'', has no matching roadmap here -- the real project is the correctly-spelled projects/cthulhuquarium/). Did not fix that live KR row as part of this task -- reconciling one already-known instance is separate from building the check; flagging it here for Silas or a future session to correct via a PATCH to that Project''s conductorSlug (or otherwise). Left the optional close-out-naming-the-commit idea from this task''s note unimplemented, as the note itself framed it as worth deciding rather than required. Verified: full pytest suite (1183 passed, 1 skipped) plus 8 new tests for the script, py_compile clean, and a live run against the real kind_robots API. Merged as silasfelinus/conductor#2780.'
+    updated: '2026-08-24T12:46:21Z'
     claimed_by: 20260824-sched-conductor-t125-agentrun1
     claimed_at: '2026-08-24T12:39:03Z'
+    implementation_pr: 'silasfelinus/conductor#2780'
 
   - id: t-126
     milestone: m2
