@@ -10232,3 +10232,22 @@ records:
     `prettier --write` trap (storybook/t-023, then here) -- worth normalizing as a standing
     habit: check `git diff --stat` immediately after any `prettier --write`, before staging,
     on any file with pre-existing formatting drift.
+- date: '2026-08-24'
+  project: scene-animator
+  task: t-001
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: transient
+  lesson: >
+    The PR (kind_robots#2072) opened with a red TypeScript check: an ArtJob.include of a
+    non-existent ArtImage Prisma relation (ArtJob only carries a plain artImageId int
+    column), Content-Length passed as a stringified value where h3's typed header wants a
+    number, and a Pinia ref (durationSeconds) that inferred a narrow literal union from an
+    `as const satisfies`-typed presets catalog instead of number. All six errors were
+    mechanical and caught deterministically by `npm run test` (vue-tsc); none needed a
+    design change. Fixed and pushed as the Reviewer rather than rejecting back to the
+    Worker, since the errors were narrow, unambiguous, and confined to the task's own new
+    files. Re-affirms running the repo's local typecheck before opening a PR would have
+    caught this before CI did.

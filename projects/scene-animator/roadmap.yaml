@@ -35,18 +35,15 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Build the resumable Scene Animator MVP in Kind Robots"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: |-
-      Implement the first useful end-to-end slice. Reuse /api/video/generate -> /api/art/enqueue -> ArtJob -> kr-relay and utils/videoPresets.ts; do not create a parallel render queue. Add an admin Scene Animator surface that can discover folders and still images from a dedicated animation source root, choose engine/preset/duration and maturity, enqueue every unprocessed source with one neutral scene-preserving motion prompt, reconstruct progress from durable ArtJobs after refresh/restart, and show the resulting clips as a gallery. Source identity + render settings must produce a stable dedupe key so Resume never silently duplicates completed/active jobs.
-
-
-      Implemented the first Kind Robots Scene Animator MVP on worker/scene-animator-t-001-20260824T131000Z-g56s: admin-only folder discovery and source previews, LTX/WAN preset + duration + maturity controls, fixed scene-preserving motion direction, existing /api/video/generate -> ArtJob queue reuse, deterministic source/config dedupe metadata for resume, failed-job retry, progress reconstruction, result gallery, Admin navigation placement, and ANIMATE_PATH documentation. Ready for PR CI and review.
+    note: 'Merged silasfelinus/kind_robots#2072 (squash 0e823d3). Reviewer fixed 6 TypeScript errors the PR CI caught before merging: server/api/scene-animator/index.get.ts included a non-existent ArtJob->ArtImage Prisma relation (ArtJob only has a plain artImageId int column, no declared relation) -- replaced with a batch findMany by id; server/api/scene-animator/source.get.ts passed Content-Length as a string where h9s typed header expects number; stores/sceneAnimatorStore.ts durationSeconds ref was inferred as the literal union from the readonly VIDEO_PRESETS array instead of number, and the first-folder lookup was not guarded against an empty array. All 39 CI checks green after the fix, mergeable_state clean, merged via squash.'
     claimed_by: 2026-08-24T131000Z-scene-animator-t-001-g56s
     claimed_at: '2026-08-24T13:10:00Z'
-    updated: '2026-08-24T13:20:00Z'
+    updated: '2026-08-24T13:38:19Z'
+    implementation_pr: 'silasfelinus/kind_robots#2072'
 
   - id: t-002
     milestone: m1
