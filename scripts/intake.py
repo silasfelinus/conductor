@@ -161,12 +161,26 @@ def register_repo(slug: str, repo: str | None, kind: str, description: str) -> N
         return
 
     entry = (
-        f"\n  - slug: {slug}\n"
+        f"  - slug: {slug}\n"
         f"    repo: {repo if repo else 'null'}\n"
         f"    kind: {kind}\n"
         f"    description: {description}\n"
     )
-    REPOS_FILE.write_text(text.rstrip("\n") + "\n" + entry)
+
+    # `repos: []` is an empty FLOW sequence — appending a block item under it is
+    # invalid YAML, so the key has to become a block sequence first. Mirrors
+    # register_override's empty_list branch (tests/test_intake.py's fixture repo
+    # starts from exactly this shape).
+    empty_list = re.search(r"^repos:[ \t]*\[[ \t]*\][ \t]*\n?", text, re.MULTILINE)
+    if empty_list:
+        text = text[: empty_list.start()] + "repos:\n" + entry + text[empty_list.end() :]
+    elif re.search(r"^repos:[ \t]*$", text, re.MULTILINE):
+        text = text.rstrip("\n") + "\n" + entry
+    else:
+        # No `repos:` key at all — create one rather than orphaning the entry.
+        text = text.rstrip("\n") + "\n\nrepos:\n" + entry
+
+    REPOS_FILE.write_text(text)
     print(f"✓ Added {slug} to repos.yaml")
 
 
