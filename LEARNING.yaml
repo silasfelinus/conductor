@@ -10268,3 +10268,22 @@ records:
     Scoping the PR to only the still-open half, and following the human's own stated
     root-cause reasoning in the commit that did the acute fix, avoided both redundant work
     and contradicting a judgment call Silas had already made.
+- date: '2026-08-24'
+  project: cthulhuquarium
+  task: t-025
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A recurring umbrella task at the top of priority.yaml's ready queue
+    (interface-vision/t-104) had already been independently re-confirmed exhausted by
+    three sessions the same day; spot-checking the one new upstream commit since the
+    last check (rather than re-running the full sweep) confirmed nothing changed, and
+    the session moved on to real work further down the priority order instead of
+    manufacturing a fifth identical no-op. cthulhuquarium/t-025 was a clean fit: a
+    self-contained design-decision task whose own note explicitly authorized an agent
+    recommendation with reasoning, flagged (soft_gate: true) rather than hard-gated,
+    so the answer could unblock downstream tasks (t-026/t-027) same-session instead of
+    stalling on a human reply.
