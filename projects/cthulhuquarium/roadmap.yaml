@@ -570,3 +570,117 @@ tasks:
       cannot be un-collected and completion cannot be reset. If a later build retires a
       species from the bible, an already-collected one stays collected (the seed script's
       isActive=false path exists for exactly this).
+  - id: t-025
+    milestone: m1
+    title: "Settle the systems layer — slot economy, rivalry, and what a milestone is"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      SYSTEMS.md is written (Silas's 2026-08-24 design download, plus the analysis of where
+      it collides with his own rules). It leaves four structural questions that the build
+      cannot resolve by guessing, and every one of them changes t-007's schema. Settle them
+      on paper, in SYSTEMS.md, before t-026 or t-027 start.
+      (1) DO SET PIECES AND FISH SHARE ONE SLOT POOL? One pool makes every build a sharp
+      trade and is the stronger design; two pools is gentler and easier to balance. This is
+      the biggest structural decision left in the systems layer and it propagates into the
+      Aquarium schema, the shop UI, and every set's value.
+      (2) IS RIVALRY AUTHORED OR EMERGENT? Hand-authored pairs are funnier and controllable;
+      rules-based rivalry (predator vs small, anchor vs school) scales and surprises. Likely
+      both, with authored pairs as memorable exceptions -- but decide, because authored pairs
+      need a bible field and emergent rivalry needs a rules table.
+      (3) DOES TANK SIZE GROW, OR DO YOU OWN SEVERAL TANKS? One growing tank is simpler.
+      Several tanks let rival species coexist in the collection and make the arrangement
+      puzzle much richer, at the cost of multiplying persistence and UI work.
+      (4) WHAT IS A MILESTONE? Coin thresholds are the obvious and least interesting answer.
+      First full tank, first evolution, first spotless tank, first rivalry resolved -- these
+      are landmarks worth a character's attention. This one is nearly a writing question and
+      should be answered with t-023 in view.
+      Do not treat these as blocking: pick the recommended option in SYSTEMS.md, write down
+      the choice and the reason, and flag it for Silas rather than stalling.
+
+  - id: t-026
+    milestone: m2
+    title: "Set pieces — the build layer and its synergies"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-012, t-025]
+    note: >
+      Silas, 2026-08-24: "The user should be able to choose from a select number of fish and
+      set items, which provide certain bonuses, which allows for synergies and surprise combos
+      and interactions." Sets are what provide VARIATION; fish provide colour and income.
+      Seed list from Silas, all of which need authoring as data in the cthulhuquarium repo
+      (a `sets/` directory alongside `fish/`, same one-file-per-entry shape): allows an extra
+      species; more currency when food is eaten; fish swim faster; fish don't fight; auto-
+      collects coins AND MOVES AROUND (his note, and it matters -- it should be a thing you
+      can watch working); picks up debris; collects currency while idle.
+      THE SYNERGY RULE, and the reason this is not just a buff list: set bonuses must key off
+      FISH PROPERTIES -- behavior, class, tier -- not be flat percentages. A set that boosts
+      `school` fish rewards building a shoal tank; one that boosts `anchor` species rewards a
+      still tank. That is what produces archetypes, and archetypes are what produce the
+      surprise combos Silas is after. A flat +10% produces arithmetic, not discovery.
+      HARD CONSTRAINT on the idle-collection set: it collects a FRACTION or up to a cap, never
+      everything. Full automation erases the active-play advantage that the whole economy rests
+      on (see SYSTEMS.md). Same file, same rule as the offline income cap.
+      Sets occupy slots per t-025's answer -- do not start before that lands.
+
+  - id: t-027
+    milestone: m2
+    title: "Debris and cleaning — the active-play channel"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-011, t-025]
+    note: >
+      Silas, 2026-08-24: "cleaning a fish tank is a reasonable task for users for a clicking
+      game." Debris accumulates over time and is cleared by clicking.
+      THE RULE IT MUST OBEY: debris throttles the production RATE, never holdings. A filthy
+      tank earns slowly; a clean one earns fully; no total ever decreases and nothing is lost.
+      Same shape as hunger, same reason (progress never degrades).
+      WHY IT IS WORTH BUILDING rather than merely permitted: it is the strongest active-play
+      channel in the game. Debris generates while you are away, so the longer the absence the
+      more there is to click on return -- the reward for coming back becomes SOMETHING TO DO
+      rather than a number that went up. That is exactly the "leave it running and get pickups,
+      or play with it and gain faster" split from the original pitch, expressed as an activity.
+      THREE ROUTES TO CLEAN, deliberately kept viable: manual clicking, the debris set (t-026),
+      and The Sexton (the glass snail, already in the bible). Keeping all three worthwhile is
+      what stops any of them becoming mandatory -- the moment one is strictly best, the choice
+      dies. Balance them as alternatives, not as a ladder.
+
+  - id: t-028
+    milestone: m3
+    title: "Milestones, interstitials, and backgrounds as the gating layer"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-023, t-025]
+    note: >
+      This is the answer to what Silas named his hardest problem as a game creator: "I just
+      want to let the user fill a tank with every fish and option they want. but a good game
+      gates those options through experience and play, with flavor text and character moments
+      interspersed to mark as landmarks." Full reasoning in SYSTEMS.md; the build shape:
+      GATE CAPACITY, NOT ACCESS. Tank slots are the master gate; nearly everything is
+      purchasable reasonably early. "You can have every fish" stays literally true -- just not
+      all at once. That converts withholding into CHOOSING, which is the fun part, and it is
+      the only gate that never has to say no, which matters for a game whose promise is that
+      it never takes anything away.
+      THE UNLOCK IS THE CHARACTER MOMENT. A milestone does not unlock a background; a
+      milestone causes CHARLOTTE TO APPEAR, and she gives you the background. The reward for
+      progress is a scene and the mechanical unlock rides along inside it -- Little Inferno's
+      letters exactly. Pacing becomes authored rather than computed, the gate has a face so it
+      reads as story rather than a lock, and every gate becomes an opportunity to be funny.
+      TWO ECONOMIES pacing each other: coins buy breadth (fish, sets, food, upgrades),
+      milestones grant room (tanks, backgrounds, capacity). Coins accumulate faster than
+      milestones arrive, so the player permanently owns more than they have room for. That
+      sustains the choosing tension forever without the catalogue ever closing.
+      BACKGROUNDS carry ONE bonus each, and it must be QUALITATIVE rather than a percentage --
+      something it ENABLES. A +15% background is obsolete the moment a +20% exists, and since
+      backgrounds arrive by milestone rather than purchase, obsoleting the early ones means the
+      early story beats stop mattering too. Sideways from each other, never ascending.
+      Characters appear at three moments (Silas): the beginning, select screens (shop, upgrades,
+      bestiary/fishopedia), and milestone interstitials.
