@@ -10348,3 +10348,24 @@ records:
     docs (DESIGN-BRIEF/SYSTEMS/ECONOMY) before writing anything down kept the
     output as confirmation-plus-authoring-guidance for named downstream tasks
     rather than a survey that risked relitigating settled decisions.
+- date: 2026-08-24
+  project: davinci
+  task: t-021
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Chasing a prior cycle's own flagged next-lead ("concurrent tab/session
+    interaction with the same run was not traced") rather than re-running an
+    already-exhausted static-reading pass found a genuine correctness gap: the
+    front end's "exactly one choice per chapter" invariant (chapterIndex derived
+    from playedCount, only advanced on success) was never enforced server-side,
+    so two open tabs or a client retry could double-apply LifeChoice effects.
+    Fixing it by reusing the file's own existing idempotency idiom
+    (resolveCompletedLifeRun's read-back-don't-recompute pattern) kept the change
+    minimal and consistent rather than introducing a parallel guard shape. Where
+    the sandbox couldn't execute the new live-DB regression case, saying so
+    explicitly in the PR (rather than claiming full verification) kept the
+    Verified section honest.
