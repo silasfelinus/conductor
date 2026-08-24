@@ -394,16 +394,37 @@ What it holds: every species ever bought or raised, whether or not it is current
 the field note, revealed on first acquisition; the best individual stats seen of each; and
 the re-order button that makes rotation safe.
 
-## Scope note, offered honestly
+## Scope: principles in the MVP, tuning after
 
-Breeding, hidden stats, rotating stock, selling, and the Ichthyonomicon are a substantial
-systems layer — plausibly larger than the entire MVP Silas defined ("a fully working webpage
-where users can load and interact with their aquariums").
+Silas, 2026-08-24, overriding an earlier "designed now, built later" framing in this
+document:
 
-They are **designed now and built later**: captured here in full, tracked as m3 tasks, and
-deliberately not folded into the m2 tasks that get the game playable. The MVP still ships on
-its original eight points. Nothing above is descoped — it is sequenced, and the design work
-is done while it is fresh rather than reconstructed later.
+> *"I really have no worries about this level of scope. We have a lot of agent token
+> processing power. Creating the MVP should involve these principles, but fine tuning it
+> is the later step so it becomes fun."*
+
+The distinction that makes this actionable — and it is not "everything ships at once":
+
+**Architecture is expensive to retrofit, so it goes in from the start.** The
+species/individual split, two capacity caps, parentage, and a record of everything ever
+owned are all *shapes*. Adding a shape later is a migration and a rewrite of everything
+built on the old one. These belong in the schema and the API on day one even if nothing
+reads them yet — an unused nullable column costs nothing; a missing one costs a migration.
+
+**Tuning is cheap to change, so it comes after.** How fast stats converge, how often stock
+rotates, how many secret evolutions exist, what a background's single bonus is worth —
+every one of these is a number in `balance.yaml` or a row in the bible. They should be
+*wrong on purpose* at first and fixed once the game is playable enough to feel, which is
+exactly what t-019's balance pass is for.
+
+So the MVP builds the principles and ships them under-tuned. It does not ship a system
+whose shape is a guess.
+
+**This has already cost something once.** t-007 shipped the Aquarium schema before the
+genetics, capacity, and Ichthyonomicon decisions existed, so it is missing all of them —
+see t-032, which extends it additively. That is the exact failure mode this section exists
+to prevent, caught early and cheaply because the migration is still additive rather than
+destructive.
 
 ## Open questions
 
