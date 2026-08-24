@@ -1,6 +1,322 @@
-generated_by: scripts/queue_missing_project_art.py
-mode: dry-run
-description: Concrete project image requests ready for generation; active retries are preserved until
-  the consumer marks them complete.
+# Cthulhuquarium full asset queue — cthulhuquarium/t-005 + t-015.
+# engine: flux/schnell explicitly on every entry — krea2 is the repo default and is
+# currently broken on the render box (t-033), so an entry without an explicit engine
+# fails. Fish prompts are the CARD register straight from the bible; in-tank sprites
+# need a second pass with different lighting (see cthulhuquarium docs/asset-pipeline.md).
 batch:
-  entries: []
+  entries:
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-bailiff-eel.webp
+    prompt: a long dark silhouetted eel coiling through black water, narrow head lit along one edge
+      by a single amber light, ribbon body trailing into shadow, cold teal water with one warm accent,
+      heavy particulate, unpeopled frame, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-brine-courtiers.webp
+    prompt: a cluster of tiny translucent brine shrimp silhouettes arranged in a deliberate formation,
+      each with a fine crown-like crest and trailing forked tail, held in tiers like a small court,
+      dark teal water lit by one cold light from above, fine particulate, unpeopled frame, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-chandelier-lion.webp
+    prompt: an ornate lionfish silhouette hanging motionless in black water, long banded venomous
+      spines fanned wide like a chandelier frame, striped body backlit so the spines glow at their
+      edges, dark teal water, one warm amber light behind it, heavy particulate, unpeopled frame,
+      no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-choirfish.webp
+    prompt: three slender silhouetted fish drifting in close vertical formation, translucent fins
+      edged in pale blue light, mouths open, dark teal water, single cold light source above, particulate
+      water, unpeopled frame, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-drowned-carp.webp
+    prompt: a large pale bloated silhouetted carp drifting slightly tilted in dark green water, ragged
+      fins, clouded eye catching one pale light from above, dust and sediment suspended around it,
+      cold rim light, unpeopled frame, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-fractal-bloom.webp
+    prompt: a sea anemone silhouette on a dark rock, hundreds of long tapering tentacles that each
+      split into smaller tapering spines and split again, symmetrical radiating crown, translucent
+      tips lit violet from within, dark teal water, cold backlight, heavy particulate, unpeopled frame,
+      no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-glass-weaver.webp
+    prompt: a long-legged sea spider silhouette suspended in a fine glassy web strung between two
+      dark rocks, eight impossibly thin jointed legs, tiny compact body, the web catching one pale
+      cold light so its threads read as bright lines, dark teal water, unpeopled frame, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-gutter-minnow.webp
+    prompt: a small silver-grey silhouetted minnow in profile, thin body and forked tail, dark teal
+      water, one pale green light source above, strong rim light along the spine, particulate water,
+      unpeopled frame, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-lamplight-angler.webp
+    prompt: a heavy-bodied silhouetted anglerfish hanging motionless in black water, a single sickly
+      green bioluminescent lure glowing on a stalk above its head, oversized jaw faintly lit from
+      below, cold rim light, thick particulate water fading to black, unpeopled frame, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-ledger-crab.webp
+    prompt: a broad flat crab silhouette on dark gravel, one claw raised mid-tap, carapace marked
+      with fine parallel scratches like tally lines, stalked eyes turned toward the viewer, dark teal
+      water, one cold light from above, particulate, unpeopled frame, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-moebius-crab.webp
+    prompt: a hermit crab silhouette carrying a smooth pale shell twisted into a single continuous
+      looping band with one surface, the spiral turning back through itself, small legs beneath, dark
+      teal water, one violet light behind the shell so the loop reads clearly, particulate water,
+      unpeopled frame, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-parlour-goldfish.webp
+    prompt: a small plain round-bodied goldfish silhouette in profile, flowing double tail, modest
+      and unremarkable, dark teal water, one warm light from above, gentle particulate, unpeopled
+      frame, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-sea-camel.webp
+    prompt: a tall upright seahorse-shaped silhouette with a heavy laden hump along its back, long
+      curled prehensile tail, narrow tubular snout, ridged armoured plating, hanging motionless in
+      dark green water, one pale light from above, particulate water, unpeopled frame, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-sump-blob.webp
+    prompt: a pale slumped gelatinous fish silhouette sagging under its own weight, drooping brow
+      and downturned mouth, soft featureless body, dark teal water, one cold light from above catching
+      the wet upper surface, heavy particulate water, unpeopled frame, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-the-hold.webp
+    prompt: a large slack dark bag hanging motionless in black water, loose folded skin gathered at
+      a narrow top, a wide seam across the lower third parted slightly, no eyes, dark teal water,
+      one pale green light from above catching the upper folds, thick particulate, unpeopled frame,
+      no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-the-long-consideration.webp
+    prompt: a tall many-jointed silhouetted shape standing upright in black water, folded like a closed
+      instrument, far too many thin segmented limbs held close to a narrow body, one pale violet light
+      behind it throwing a clean readable outline, no visible face, dark teal water thick with sediment,
+      cold rim light, unpeopled frame, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-the-long-patience.webp
+    prompt: an enormous serpentine fish silhouette filling the frame end to end, heavy armoured head
+      and small dark eye, the same flowing double tail as a goldfish trailing far behind it, dark
+      teal water going black at the edges, one warm light catching the length of its back, thick particulate,
+      unpeopled frame, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-the-pleasant-island.webp
+    prompt: a small sunlit tropical island floating at the waterline with two palms and pale sand,
+      seen from below the surface so an enormous dark shelled body and long trailing limbs are visible
+      beneath it, bright warm light above the waterline and cold black water below, heavy particulate,
+      unpeopled frame, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-the-quire.webp
+    prompt: a folded paper form suspended in dark water, sharp geometric creases and flat planes catching
+      light at hard angles, part crane and part polyhedron, no eyes and no biological detail, dark
+      teal water, one cold light throwing crisp facet shadows, particulate, unpeopled frame, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-the-sexton.webp
+    prompt: a dark ridged snail silhouette pressed flat against the inside of a glass pane seen from
+      outside the tank, broad muscular foot spread against the surface, spiral shell turned slightly,
+      a clean swept arc trailing behind it through the algae, dark green water beyond the glass, one
+      cold light from above, unpeopled frame, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-the-understone.webp
+    prompt: a lumpen encrusted rock resting on dark gravel, its underside opening into a wide toothed
+      mouth, pitted stone texture continuous with the tank floor, one small wet eye catching a pale
+      light from above, dark teal water, cold rim light along the upper ridge, unpeopled frame, no
+      text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-the-understudy.webp
+    prompt: a violet-black silhouetted fish with blurred indistinct edges as though photographed mid-movement,
+      body shape half-resolved into the surrounding water, one clear bright eye, dark teal tank, cold
+      backlighting, heavy particulate water, unpeopled frame, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-tithe-shoal.webp
+    prompt: a dense shoal of small identical silver fish silhouettes turning together as one mass,
+      the whole school reading as a single larger shape, one fish near the centre facing the opposite
+      direction, dark teal water, cold light from above, heavy particulate, unpeopled frame, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 768x1024
+    image_path: projects/process/cthulhuquarium-char-charlotte-fishmonger.webp
+    prompt: a woman standing in the dim back room of an aquarium supply house, immaculate and entirely
+      at ease, wearing a clean pressed apron over practical Victorian workwear, hair pinned neatly,
+      hands folded and unmarked, a warm open unbothered smile, tall dark water tanks glowing faintly
+      green behind her, one warm lamp above and cold tank light behind, spindly gothic storybook illustration,
+      cold teal palette with one amber accent, half-length portrait, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 768x1024
+    image_path: projects/process/cthulhuquarium-char-wilbur-stint.webp
+    prompt: a young man standing beside a dark aquarium tank, bespectacled, thinning shoulder-length
+      hair unevenly cut, a rumpled work apron over rolled sleeves, forearms scratched and bandaged,
+      several fingers missing from both hands, holding a long net carefully, earnest tired expression
+      looking slightly off camera, one cold green tank light on his face and one warm lamp behind,
+      spindly gothic storybook illustration, cold teal palette with one amber accent, half-length
+      portrait, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1344x768
+    image_path: projects/process/cthulhuquarium-bg-parlour.webp
+    prompt: an empty aquarium interior seen head on, dark green water, pale gravel floor, a few sunken
+      brass ornaments, one cold light shaft from above, thick particulate water fading to black at
+      the edges, no creatures, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1344x768
+    image_path: projects/process/cthulhuquarium-bg-shipwreck.webp
+    prompt: an empty aquarium interior seen head on, the ribbed hull of a small sunken boat resting
+      on dark gravel, trailing weed, dark teal water, one pale green light from above, heavy particulate,
+      no creatures, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1344x768
+    image_path: projects/process/cthulhuquarium-bg-cathedral.webp
+    prompt: an empty aquarium interior seen head on, tall pale stone arches half buried in dark gravel,
+      drowned columns receding into black water, one cold shaft of light between them, heavy particulate,
+      no creatures, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1344x768
+    image_path: projects/process/cthulhuquarium-bg-abyssal.webp
+    prompt: an empty aquarium interior seen head on, almost entirely black water with a faint pale
+      floor at the bottom edge, a single distant point of green light far back, extremely sparse,
+      heavy particulate, no creatures, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-set-extra-shelf.webp
+    prompt: a heavy brass and dark wood aquarium shelf bracket standing alone on a plain dark background,
+      ornate Victorian ironwork, cold rim light along its edges, product-style isolated object, no
+      background scene, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-set-richer-silt.webp
+    prompt: a small ornate brass canister spilling dark glittering silt onto a plain dark surface,
+      isolated object on a plain dark background, cold rim light, no background scene, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-set-heavier-feed.webp
+    prompt: a dented tin feed scoop heaped with dark wriggling matter, isolated object on a plain
+      dark background, cold rim light picking out the rim, faintly wet, no background scene, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-set-restless-water.webp
+    prompt: a small brass mechanical paddle wheel aerator, ornate Victorian engineering, isolated
+      object on a plain dark background, cold rim light, no background scene, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-set-coin-collector.webp
+    prompt: a small brass clockwork crab-shaped automaton with a coin slot in its back, ornate Victorian
+      mechanism, isolated object on a plain dark background, cold rim light, no background scene,
+      no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-set-glass-brush.webp
+    prompt: a long handled brass and bristle aquarium glass scraper, worn wooden grip, isolated object
+      on a plain dark background, cold rim light, no background scene, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-ichthyonomicon.webp
+    prompt: a heavy leather bound ledger lying closed on a dark wooden desk, brass corner fittings
+      and a tarnished clasp, cracked spine, faint waterstain across the cover, one warm lamp from
+      the upper left and cold green tank light from the right, spindly gothic storybook illustration,
+      no readable text or lettering anywhere
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1344x768
+    image_path: projects/process/cthulhuquarium-screen-shop.webp
+    prompt: the interior of a dim Victorian aquarium supply shop seen head on, wooden shelves of small
+      glowing tanks and brass instruments receding into shadow, one warm lamp, empty foreground counter,
+      no people, no text
+  - project: cthulhuquarium
+    engine: flux
+    flux_variant: schnell
+    size: 1344x768
+    image_path: projects/process/cthulhuquarium-screen-bestiary.webp
+    prompt: a dim study wall covered in framed specimen plates and pinned handwritten cards, dark
+      wood panelling, one warm lamp, empty desk surface in the foreground, no people, no readable
+      text

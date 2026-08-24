@@ -991,4 +991,26 @@ tasks:
       Alexandria being down, which is independently valuable given how much depends on
       this render path. SEPARATELY AND STILL TRUE: flux2-klein's encoder really is absent
       from the store, so it needs downloading (or repointing) no matter what happens to
-      the mount.
+      the mount. FLUX2-KLEIN'S CONFIGURED FILENAME IS NOT REAL, checked against the actual
+      Comfy-Org releases 2026-08-24. FLUX2_KLEIN_CLIP is set to
+      `flux2_klein_text_encoder_fp8_scaled.safetensors`, which does not exist in any
+      Comfy-Org Flux.2 repository -- it appears to have been guessed rather than verified,
+      and the constant block's own comment says "VERIFY these filenames against the Comfy-
+      Org Flux.2 release you download." Nobody did. What actually exists: Comfy-
+      Org/flux2-dev ships
+      split_files/text_encoders/mistral_3_small_flux2_{bf16,fp8,fp4_mixed}.safetensors,
+      and Comfy-Org/vae-text-encorder-for-flux-klein-9b ships
+      split_files/text_encoders/qwen_3_8b{,_fp8mixed,_fp4mixed}.safetensors (16.4 GB /
+      8.66 GB / 6.8 GB). Klein pairs with a QWEN3 encoder, not the Mistral one that
+      flux2-dev uses -- which also means the 35.5 GB
+      mistral_3_small_flux2_bf16.safetensors already on Alexandria is the flux2-DEV
+      encoder and is not what klein wants. Unresolved and worth checking rather than
+      guessing: our model constant is klein 4B (flux-2-klein-4b-Q4_K_M.gguf) while the
+      encoder repo above is published for klein 9B. Whether 4B pairs with qwen_3_8b or
+      with a 4B encoder is not established here; note that Alexandria already has
+      qwen_3_4b.safetensors (8.04 GB), which may be the intended partner. Confirm against
+      the ComfyUI Flux.2 docs for the specific klein build before downloading 8.66 GB on a
+      guess. For a 12 GB card, qwen_3_8b_fp8mixed is the plausible choice if 8B is
+      correct. So flux2-klein needs BOTH a config fix and a download, and the config fix
+      should land first -- otherwise a correct download still fails against a wrong
+      filename.
