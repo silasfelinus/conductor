@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-24T07:12:39Z
+Generated: 2026-08-24T07:13:31Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **741**
-- Outcomes: blocked: 15, cancelled: 1, done: 725
+- Closed tasks recorded: **742**
+- Outcomes: blocked: 15, cancelled: 1, done: 726
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -22,7 +22,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | appmaker | 9 | 100% |
 | approval-portal | 2 | 0% |
 | art-generator-connect | 3 | 100% |
-| brainstorm | 24 | 96% |
+| brainstorm | 25 | 96% |
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 25 | 100% |
@@ -64,7 +64,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 725 | 99% |
+| software | 726 | 99% |
 
 ## Failure categories
 
@@ -85,6 +85,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-24 `brainstorm/t-031` — Task scope (add a real "promote candidate into an entity" action, carrying its art across) explicitly flagged its own hardest design question -- meta.art.imageIds is an array, the target entity's art model (entityArt.ts) is one scalar id per slot -- rather than leaving it implicit; tracing the array's one mutation site to confirm it was append-only (so "last entry" unambiguously means "most recent delivery") turned a could-have-been-a-guess into an evidence-based, one-line design decision. Also: before implementing, re-verified the prior task's (t-026) negative "no such action exists" finding rather than trusting it blind -- doing so surfaced the one precedent that DOES exist (promptStore.promoteToDream / dreamStore.promotePromptToDream) but is dead code, called from nowhere, which shaped which store to add the new function to and confirmed this was genuinely the first promotion pattern with a live caller. A UI wiring change that adds a new busy/loading state needs to check what the busy prop passed to the child component actually depends on, not just add the new emit -- isCandidateBusy here only checked state that regenerate/branch's shared runGeneration() call sets, so the new promote action's spinner would have silently never appeared without also folding pendingCandidateAction into that check. Third occurrence this session of the over-broad `prettier --write` trap (storybook/t-023, then here) -- worth normalizing as a standing habit: check `git diff --stat` immediately after any `prettier --write`, before staging, on any file with pre-existing formatting drift.
+
 - 2026-08-24 `storybook/t-023` — Task scope (audit taskmasterStore's localStorage read path against storybookStore's restore guards) required tracing every real caller before deciding whether the missing `restoredFromStorage`-style guard was a bug: content/taskmaster.md mounts `:taskmaster-page` as the only call site, with no wrapper double-mounting it the way storybook-library-page.vue wraps StorybookPage, so no reachable race exists and the guard was correctly out of scope -- the parity gap alone was not sufficient, matching the cycle-36 lesson this task was scoped from. Fixed the unambiguous half (move `getItem()` inside the try) and left the caller-tracing result as an in-code comment. Also worth recording: a full-file `prettier --write` on a file with pre-existing prettier-version drift silently reformats unrelated lines far beyond the actual diff -- caught via `git diff --stat` before committing; the safe pattern is formatting only the new/changed region and verifying it in isolation, never running `--write` on the whole file when the rest carries known drift. Separately, this cycle hit a second occurrence of the documented conductor/t-124 "Python test suite" check-run reporting-lag pattern (job logs showed it passed and finished cleanup ~11 minutes before the check-run API reported completion) -- confirmed via job logs rather than assumed, and merged once confirmed rather than re-running blind.
 
 - 2026-08-24 `brainstorm/t-026` — Task scope was explicitly conditional ("find, or confirm there isn't yet, a promote-candidate action, and IF one exists, wire the art across") -- a repo-wide search (candidate card's emitted events, the manager's kept-candidate bulk actions, server/api/brainstorm/, and a grep for promote/convert/"turn into"/createFrom) confirmed no such action exists anywhere. The honest close for a conditional investigation task with a negative finding is `done`, not a forced implementation and not `needs-human` -- the literal scope asked a yes/no question and got a firm no. Filed the actual feature (t-031) as new scope instead of expanding this task's diff, since building an unrequested promotion UI would have been scope creep past what t-026 asked for. Also worth recording for whoever picks up t-031: entityArt.ts's art-slot model is one scalar id per named slot per entity, while Brainstorm's meta.art.imageIds is an array -- there is no existing 1:1 precedent in the repo (promptStore.promoteToDream's Prompt only ever has one artImageId) for the many-to-one reduction that promotion will need.
@@ -99,8 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-23 `brainstorm/t-028` — Following an already-established adapter pattern (Character/Scenario) end to end -- registry entry, gated CTA, contract-script assertion, workflow path trigger -- landed clean first pass with zero findings; the pattern itself, not novel judgment, was the main risk-reducer.
 - 2026-08-23 `model-builder/t-029` — Cycle 57's fix covered three places that swap state.run for a different run (goToStep /selectSource, openRun's two branches, resumeRun's branch) without clearing the in-flight singletons resetRun/resetAll already clear -- but only checked whether each call site clears the singletons, not whether the RESPONSE feeding that call site could itself be stale. resumeRun() has exactly one call site (a component's onMounted) yet was still racy, because unmounting a Vue component does not cancel its in-flight promises: navigating away and back before a slow resumeRun() resolves creates a second concurrent call against the same Pinia singleton, and the older call's stale response can land after the newer one already resolved and the user moved on. Lesson for future cycles: "this function's call site is singular / not button-driven" is not the same guarantee as "this function cannot run twice concurrently" -- component remounts (navigation, not just explicit user clicks) are a second, easy-to-miss source of concurrent async calls against a shared store, and any async chain writing shared state on completion needs a request-ticket guard regardless of how simple its trigger looks.
 
-- 2026-08-23 `conductor/t-123` — Kaizen from an earlier same-day session's mermaids-of-venice/t-013 wasted claim (conductor#2720). Added scripts/daily_gate.py, detecting a task whose note declares an explicit "Pacific calendar day" daily-gate contract and already records an outcome for today's Pacific date, and wired the skip into both task-selection paths -- next_ready_task.py's first_ready_task AND run_worker.py's find_ready_task. The second wiring mattered most: select_role.py's underlying "worker" recommendation (the path that actually surfaced the stale t-013 pick in the first place) calls build_queue_summary() -> find_ready_task(), not next_ready_task.py -- a fix scoped only to the connector-only picker would have left the real collision path unpatched. Lesson: when a kaizen task names "the sweep step" as the target, check which of the repo's (sometimes more than one) selection implementations that step actually calls before assuming a single shared module covers it.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-24T07:12:39Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-24T07:13:31Z_
