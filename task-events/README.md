@@ -80,7 +80,30 @@ Use one event per state change. Do not create a replacement event after a workfl
 
 ## Failure behavior
 
-Invalid events are not deleted. The workflow fails visibly and leaves the event in place for diagnosis. A failed event is a soft blocker unless its underlying action is itself hard-gated or makes all remaining work unsafe.
+Two different kinds of invalid event are handled differently (conductor/t-127):
+
+- **Live-state failures** (the task isn't in the status a transition requires, a
+  claim lost a race, the event is stale against newer roadmap state, a `verify_pr`
+  reference isn't merged yet, a GitHub API call failed) can become valid on a later
+  run, or are already handled as a benign consumed result (collision, staleness).
+  These events are left queued (or consumed with no roadmap mutation) exactly as
+  before. The workflow fails visibly on a genuine unresolved failure so it doesn't
+  go unnoticed, and the event stays in place for diagnosis.
+- **Malformed events** (invalid YAML, an unsupported `operation`, a missing/invalid
+  `project`/`task` field, or a project with no `roadmap.yaml`) can never become
+  valid no matter how many times the processor retries them — normally
+  `validate_task_events.py` rejects these at PR time, but an event can also reach
+  `main` directly via the Atomic claim protocol's connector-only path below,
+  bypassing that gate. The processor now moves an event like this straight to
+  `task-events/failed/<name>.yaml` with a sibling `<name>.yaml.error.txt`
+  recording why and when, instead of leaving it to fail the same job on every
+  subsequent PR and scheduled run forever (the exact incident that motivated this:
+  three `operation: note` events reached `main` directly on 2026-08-24 and jammed
+  every run until Silas quarantined them by hand). The run that does the
+  quarantining still fails visibly once — after that, the file is out of the
+  active queue and stops recurring. Recover a quarantined event's content from
+  `task-events/failed/` if it's still worth applying; nothing there is ever
+  auto-deleted.
 
 ## Surgical, byte-preserving writes
 
