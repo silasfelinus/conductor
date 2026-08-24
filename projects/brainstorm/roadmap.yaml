@@ -465,13 +465,13 @@ tasks:
   - id: t-020
     milestone: m5
     title: Reconnect Conductor proposal ideation as an explicit downstream consumer
-    status: claimed
+    status: review
     depends_on:
       - t-010
       - t-019
     owner: reviewer
-    updated: '2026-08-24T21:40:59Z'
-    passes: 0
+    updated: '2026-08-24T21:50:00Z'
+    passes: 1
     stakes: reversible
     note: >-
       Preserve the genuinely useful part of the old Conductor brainstorm project: generating
@@ -479,6 +479,57 @@ tasks:
       explicit downstream workflow that may use Brainstorm generation but only promotes vetted
       ideas into canonical Conductor `pitches/*.md`. A normal user Brainstorm can never mutate
       roadmaps, lifecycle or coordination pitches implicitly.
+
+
+      IMPLEMENTED 2026-08-24 (scheduled Reviewer session,
+      20260824T2145Z-sched-conductor-brainstorm-t020): added
+      scripts/generate_conductor_pitch_candidates.py, the "request candidate ideas"
+      half of DESIGN-BRIEF.md's Conductor-as-downstream-consumer contract. It calls
+      the live POST /api/brainstorm/generate endpoint (the same one the public
+      /brainstorm product uses) with a premise scoped to small/medium Kind-Robots-
+      ecosystem project ideas, picks a usable text server via GET /api/server
+      (preferring a backend-keyed OpenAI/Anthropic server, since those bypass the
+      brainstorm backend's public/official/default visibility gate per
+      generate.post.ts's assertBackendProviderAccess), and scores every returned
+      candidate for novelty via a local Jaccard-similarity heuristic against every
+      existing pitches/*.md title and every known project's slug + roadmap goal
+      (100 corpus entries as of this run). It deliberately does not write
+      pitches/*.md itself -- promoting a candidate into a canonical pitch stays a
+      human/agent policy decision (existing-work check, fuller narrative,
+      dedup judgment), matching the design brief's explicit source-of-truth
+      boundary ("Conductor decides whether something becomes a coordination
+      pitch/task").
+
+
+      Proved the pipeline end-to-end for real, not just against fixtures: ran it
+      live against kindrobots.org with KR_API_TOKEN, using server id=108 ("OpenAI
+      Text"). It returned 6 candidates, mana charged=0 (balance unaffected), and
+      the novelty heuristic scored all 6 as clearly non-duplicate (similarity
+      0.03-0.05, well under the 0.35 flag threshold). Agent judgment on the actual
+      6 candidates from this run ("AI Memory Keeper", "Sentiment Karaoke", "Role
+      Reversal Stories", "Crafty Conversations", "Time Capsule Projector", "Mundane
+      Magic"): none promoted to pitches/*.md this cycle -- they read as generic
+      family-activity-app ideas rather than fitting Kind Robots' established
+      playful/weird voice or filling a concrete gap in the existing product family,
+      which is a legitimate "no genuine candidate this round" outcome per this
+      project's own quality bar (see DESIGN-BRIEF.md and the existing pitches/
+      README's vetting expectation), not a pipeline failure. A future run may want
+      a sharper premise/return-type mix if this genericness recurs.
+
+
+      13 new unit tests (tests/test_generate_conductor_pitch_candidates.py) cover
+      the pure logic (tokenize/jaccard/score_novelty/pick_text_server) without any
+      network calls. Full suite: 1202 passed, 1 skipped. py_compile clean.
+      validate_roadmaps.py clean. t-020's own depends_on (t-010, t-019) were
+      already done before this claim.
+
+
+      Left for a follow-up cycle rather than this task: actually running the
+      script again with a tuned premise/return-type mix to try to surface a
+      promotable candidate, and (optional, smaller) wiring this into a recurring
+      roadmap task the way animation-manager/t-006 and dream-cycle/t-006 already
+      do for their own idea-generation loops, so Conductor pitch ideation via
+      Brainstorm becomes a standing cadence rather than a one-off proof run.
     claimed_by: 20260824T2145Z-sched-conductor-brainstorm-t020
     claimed_at: '2026-08-24T21:40:59Z'
 
