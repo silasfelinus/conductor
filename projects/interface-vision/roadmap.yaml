@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -3056,11 +3056,14 @@ tasks:
             Not re-opening slice 49's needs-human choice, since it was already superseded once by Silas supplying a concrete next target in-session (the Conductor project-detail composition work, merged as kind_robots#2055) -- that precedent already answers "how the umbrella proceeds when the mechanical pools are dry": it waits for a bounded, Silas-directed target rather than the Worker inventing one. Returning to `ready` (not `needs-human`) so a future session doesn't need to re-litigate this; the still-open scope fork from slice 49 (mechanical phase complete vs. explicit viewport-grid authorization) remains accurate and unresolved, and the 209 pre-existing layout-contract `viewport-grid` violations are unchanged. Moving on to other ready work this cycle rather than guessing at a next slice blind.
 
       Progressive gallery slice ready for implementation review on worker/interface-vision-t-104-kr-gallery-7f3c. The shared gallery now renders the full lightweight filtered index without pagination, uses content-visibility containment, and defers image src assignment through a pooled viewport observer. Shared entity art, Resources, Facets, and the bespoke Art Gallery adopt the same path; Art Gallery removes its second pager and hydrates heavy ArtImage records only near the viewport. Added a focused CI contract preventing pagination/eager-hydration regression.
-    updated: '2026-08-24T07:36:00Z'
+
+      Slice merged as silasfelinus/kind_robots#2062 (squash f46fb1708dbcd635f85d2d65b4b68828bcd297a8). The progressive-gallery refactor described above landed: kr-gallery renders the full lightweight filtered index with no pager, content-visibility containment establishes cheap scroll geometry for thousands of shells, and a pooled viewport observer defers image src assignment (kr-deferred-image) and heavy ArtImage/authenticated-blob hydration until near-viewport across shared entity art, Resources, Checkpoints, Facets, Stylist client galleries, and the bespoke Art Gallery. A focused Gallery Progressive Rendering CI contract now fails on any pagination/eager-hydration regression. Caught and fixed one real vue-tsc failure during review (itemVisibilityStyle's inferred contentVisibility widened to string instead of the CSS literal union) -- the Worker session pushed the identical typed-CSSProperties fix concurrently before this session's own redundant commit could land, so no duplicate commit was pushed. All 40 exact-head PR checks completed successfully (TypeScript, Progressive rendering, layout-contract, facet-catalog, Contract verifiers, and the full Storybook/Narrative contract suite), mergeable_state clean. No schema, migration, production data, billing, secrets, or deployment changes. Return the non-recurring consistency umbrella to ready for the next bounded slice, per this task's established convention.
+    updated: '2026-08-24T07:38:47Z'
     approved_by_human: true
     owner: worker
     claimed_by: 2026-08-24T070900Z-interface-vision-t-104-kr-gallery-7f3c
     claimed_at: '2026-08-24T07:09:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#2062'
 
   - id: t-105
     milestone: m6
