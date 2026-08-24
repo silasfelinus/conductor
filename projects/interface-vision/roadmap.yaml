@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -3066,7 +3066,9 @@ tasks:
       ArtCollection-authority slice is complete and merged as silasfelinus/kind_robots#2063. Return the multi-slice interface consistency umbrella to ready for the next bounded pass, preserving the established t-104 slice convention.
 
       Silas explicitly asked to continue finishing the Kind Robots gallery upgrade after ArtCollection authority merged. Claim the next bounded t-104 slice for a remaining- gallery sweep: identify reachable gallery/list surfaces still using bespoke pagination, eager image hydration, or inconsistent gallery composition and migrate the highest-leverage set onto the shared progressive gallery contract.
-    updated: '2026-08-24 10:06:00+00:00'
+
+      Remaining-gallery sweep slice is ready for review on worker/interface-vision-t-104-gallery-finish-k4m7. All 18 live galleries were already on kr-gallery, so this slice fixes the next hidden layer instead of converting intentional non-galleries: custom slot cards now keep a complete text-first placeholder index but are not instantiated until near viewport, preventing offscreen Vue setup/watchers from eagerly hydrating data; Dream list browsing no longer defaults to 48 records, no longer truncates relationship data to three records, and no longer ships inline thumbnail blobs. A focused gallery index/hydration regression contract covers the new invariants.
+    updated: '2026-08-24 10:24:00+00:00'
     approved_by_human: true
     implementation_pr: 'silasfelinus/kind_robots#2063'
     owner: worker
