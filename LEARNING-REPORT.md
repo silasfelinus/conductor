@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-24T19:42:55Z
+Generated: 2026-08-24T19:55:11Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **747**
-- Outcomes: blocked: 15, cancelled: 1, done: 731
+- Closed tasks recorded: **748**
+- Outcomes: blocked: 15, cancelled: 1, done: 732
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 80 | 100% |
 | conductor-app | 4 | 100% |
-| cthulhuquarium | 3 | 100% |
+| cthulhuquarium | 4 | 100% |
 | davinci | 7 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
@@ -66,7 +66,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 731 | 99% |
+| software | 732 | 99% |
 
 ## Failure categories
 
@@ -87,6 +87,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-24 `cthulhuquarium/t-006` — A research task benefits from live web search over training-data recall alone, even for well-established reference games: search surfaced AbyssRium's specific documented failure mode (hidden/undocumented unlock triggers requiring a wiki) and current retention-benchmark figures that made the adopt/adapt/reject list's reasoning concrete and sourced rather than generic genre-savvy assertion. Cross- referencing every finding against the project's own already-committed design docs (DESIGN-BRIEF/SYSTEMS/ECONOMY) before writing anything down kept the output as confirmation-plus-authoring-guidance for named downstream tasks rather than a survey that risked relitigating settled decisions.
+
 - 2026-08-24 `cthulhuquarium/t-004` — "Simulate it, don't just spec it" caught a real methodology bug before it could look like a balance bug: a naive active-vs-idle coin-balance comparison showed idle beating active over two hours, which would have read as a genuine MVP-requirement violation (DESIGN-BRIEF's "idling rewarded but strictly worse than playing"). The actual cause was comparing raw liquid balance, which conflates spending (buying a fish, an investment) with losing. Switching to net worth (coins + owned-asset value) and gross income earned (cumulative production before spend) reversed the finding to a healthy 3-3.5x active/idle gap that widens over time via reinvestment compounding. Worth generalizing: any economy simulation comparing two spending strategies needs a wealth metric that survives the comparison, not a currency balance that a strategy's own spending pattern can arbitrarily deflate.
 
 - 2026-08-24 `cthulhuquarium/t-007` — A live-DB migration doesn't have to stay unverifiable in a sandbox with no docker daemon: `apt-get install mariadb-server`, running `mariadbd` directly (no systemd) under the `mysql` user, and connecting via the local socket to create the app user took under a minute and gave a real MySQL-compatible target to run `prisma migrate deploy` against. Running it through the FULL existing migration history (62 migrations), not just the new one in isolation, is what actually proves the new migration composes cleanly with everything before it -- and `prisma migrate status` reporting zero drift afterward is stronger evidence than `prisma validate` alone, which only checks the schema file's own internal consistency. Worth adding to AGENTS.md's cross-repo/kind_robots verification section as a documented option alongside `provision_kind_robots_deps.sh`'s dummy-DATABASE_URL `prisma generate` path, since that path alone doesn't catch a migration.sql that doesn't actually match what schema.prisma implies.
@@ -105,7 +107,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-24 `storybook/t-010` — Cycle 36: after five consecutive cycles that either found a shrinking-returns polish item or no-op'd, the fresh angle that produced a real correctness bug was the one the PREVIOUS cycle had already written down and not taken -- "Pinia persistence edge cases have not had a dedicated pass in this task's history." The bug was a sibling-parity gap of exactly the shape a shared-helper family invites: taskmasterStore.ts's saveToLocalStorage() was the one localStorage writer of four in the narrative family with no try/catch, while its three siblings each carried an explicit private-browsing/quota comment explaining why they had one. Two lessons. First, a recurring bug-hunt task's own "next lead" note is a real work queue, not a formality -- reading it before inventing a new lens is cheaper than re-deriving one, and a lead that survives a cycle unclaimed is more likely to be untouched ground than a lens the task has already swept. Second, and the inverse of cycle 61's model-builder lesson: a found inconsistency IS a fixable sibling-parity bug when the two sides are genuinely the same kind of moment, and here the codebase said so itself -- the shared helper's own header asserted the two stores were "byte-for-byte the same shape," so the asymmetry was a documented invariant being violated rather than a pattern-match on surface similarity. Confirming the impact still required tracing all ten call sites individually: the sharpest one (updateBeatArt() running as an uncaught `void poll(...)` callback, where a throw both became an unhandled rejection and killed the art poll loop, stranding the illustration with no retry affordance) was not the one the shape of the bug suggested up front. Finally: when a fix restores an invariant a contract script already claims to enforce, extend that script -- and verify the new assertion fails against the pre-fix code, or it may be vacuously true.
 
-- 2026-08-24 `kapowarr/t-068` — Rendering in batches is not enough if the browser is still instructed to consume every batch immediately. For large galleries, cap total off-screen DOM work to a viewport runway and let user movement demand the next chunk; otherwise background batching merely turns one long freeze into sustained jank, especially on setTimeout-based fallbacks.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-24T19:42:55Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-24T19:55:11Z_
