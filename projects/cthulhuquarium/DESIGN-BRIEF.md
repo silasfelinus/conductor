@@ -121,15 +121,64 @@ number is from Silas's stated goal and it is the difference between a demo and a
 - Public tank browsing shows a display name and a tank, never an email or a user id.
 - The economy must be tunable from data, not code, so balance passes don't need a deploy.
 
-## Open questions for Silas
+## Decided (Silas, 2026-08-24, in session)
 
-1. **Do fish die?** Insaniquarium's tension came from starvation. A darkly funny game
-   arguably *needs* loss — but an idle game that punishes you for closing the tab is a
-   game people close permanently. Current assumption: fish get hungry, sad, and stop
-   producing, but do not die while you're away. Worth overriding if you want teeth.
-2. **Is there an end state**, or does the tank just deepen forever? Sunless Sea has an
-   ending. Cookie Clicker doesn't.
-3. **How weird is too weird?** The bestiary can go from "unsettling anglerfish" to
-   "clearly not a fish." Where's your line?
-4. **Does the aquarium talk back?** A narrator voice (a previous owner's notes, the
-   shop keeper) is very on-tone but is new scope.
+All four open questions are answered. These are decisions, not assumptions — build to
+them, and reopen only with Silas.
+
+**1. Fish do not die. Progress never degrades.** Verbatim: *"fish do not die. it's an
+incremental clicker game, progress should never degrade, other than spending currency
+for upgrades."* Nothing you have earned is ever taken away — coins, unlocks, upgrades,
+and collected species all persist unconditionally. There is no starvation loss, no
+decay of holdings, and no punishment for closing the tab.
+
+Hunger survives as a **rate gate only**: a hungry occupant stops paying out and resumes
+the instant it is fed. That is the one sanctioned exception and it is not a loss —
+income pauses, holdings don't shrink. Anything that would reduce an accumulated total
+is out of bounds, which specifically rules out a prestige reset, decay timers, and
+losing a species you have already unlocked.
+
+**2. The food is alive.** Silas, same session: *"fish food should be alive. i guess in
+that sense, something will die, but that's just because our fish food should be
+wriggling."* Feeding means buying something that squirms and dropping it in. This is the
+tonal keystone of the whole economy — the game never takes anything from *you*, and the
+cost it does have is one you pay to something else, cheerfully, by the handful. Pellets
+are wrong; it wriggles on the way down and stops when eaten. Do not soften this into
+generic flakes, and do not escalate it into gore.
+
+**3. Endless, but the bestiary completes.** No ending screen and no prestige reset. The
+"win" is filling the collection — the last species is the credits roll. This makes the
+bestiary the actual progression spine rather than a side board, so the leaderboard
+metric is species collected, not coins (coins only rank whoever left a tab open longest).
+
+**4. The ceiling is clearly-not-a-fish.** The bestiary may escalate past "recognizably a
+fish, but wrong" into things that only resemble fish — too many joints, mostly eye,
+something wearing a fish. Two constraints hold: it stays unsettling rather than
+gross-out, and it still has to read as a legible silhouette, so escalation belongs in the
+rare and higher tiers where a strange shape is the reward. The common tiers stay
+recognizable; the restraint downstairs is what makes the escalation upstairs land.
+
+**5. The shopkeeper talks to you, and is not alone.** Silas: *"shopkeeper should be
+added as a Character in kind robots, and as a Bot narrator. include a helpful assistant
+as well, so there is variety of voices. One of them should have many missing fingers."*
+
+Each voice is a **pair of existing records** — a `Character` carrying identity
+(personality, voice, sampleResponse, art) and a `Bot` carrying the narrator behavior that
+speaks as it. Same reuse move the bestiary makes, and for the same reason: those columns
+already exist, and going through both models means these two are available to any other
+Kind Robots surface that wants them.
+
+Two voices minimum, and they must not sound alike. The **shopkeeper** is the one who sold
+you the tank — present tense, reacting, in the dry register that never quite tells you
+everything. The **assistant** is the counterweight: genuinely, uncomplicatedly helpful,
+which in this setting becomes its own kind of unsettling. The assistant is not a second
+ironist; the contrast is the point.
+
+**One of them has many missing fingers.** A detail to honor rather than explain — it
+belongs in the Character record and the art prompt, and is never accounted for in
+dialogue. Which one carries it is a real choice; the assistant is the funnier and more
+unsettling answer, since it is the one whose cheerfulness has to survive it.
+
+Field notes stay as they are — a third, separate register. Authored text only: nothing in
+this game makes a live model call at runtime, same offline constraint Ruler is Hooked
+holds. Tracked as t-023.

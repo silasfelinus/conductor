@@ -110,22 +110,31 @@ tasks:
   - id: t-002
     milestone: m1
     title: "Confirm scope with Silas"
-    status: needs-human
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     gate_human: true
     soft_gate: true
+    approved_by_human: true
+    updated: 2026-08-24
     note: >
-      FOR SILAS: soft checkpoint, nothing is blocked on it -- build tasks are
-      already ready and agents should not wait. Read DESIGN-BRIEF.md and confirm
-      or redirect. The four questions that would actually change the build:
-      (1) Do fish die when neglected, or just get sad and stop producing? Current
-      assumption is they do not die while you are away. (2) Is there an end state,
-      or does the tank deepen forever? (3) How weird is too weird for the bestiary?
-      (4) Does the aquarium have a narrator voice -- a previous owner's notes, the
-      shop keeper -- or is it silent? Answer any subset; each one that stays open
-      just means agents pick the conservative option and note it.
+      DONE 2026-08-24 -- Silas confirmed scope in session and answered all four open
+      questions, then added two more decisions unprompted. Recorded in full in DESIGN-
+      BRIEF.md's "Decided" section; the short form, because these constrain every
+      downstream task. (1) FISH DO NOT DIE and progress never degrades -- "it's an
+      incremental clicker game, progress should never degrade, other than spending
+      currency for upgrades." Hunger survives as a rate gate only (a hungry fish stops
+      paying, resumes when fed); nothing accumulated ever shrinks. Rules out prestige
+      resets, decay of holdings, and losing an unlocked species. (2) THE FOOD IS ALIVE --
+      "fish food should be alive. i guess in that sense, something will die, but that's
+      just because our fish food should be wriggling." Not pellets; it squirms on the way
+      down. (3) ENDLESS, BUT THE BESTIARY COMPLETES -- no ending screen, no prestige. The
+      collection is the win state, which makes species-collected the leaderboard metric.
+      (4) CEILING IS CLEARLY-NOT-A-FISH -- the bestiary may escalate past "recognizably a
+      fish, but wrong" in the rare and higher tiers; common tiers stay recognizable. (5)
+      THE SHOPKEEPER TALKS TO YOU, and is not alone -- multiple voices built on the
+      existing Character and Bot models. Tracked as t-023.
 
   - id: t-003
     milestone: m1
@@ -136,15 +145,19 @@ tasks:
     stakes: reversible
     note: >
       Grow the seeded bestiary in the cthulhuquarium repo (fish/*.yaml, schema in
-      fish/SCHEMA.md) from its starter set to at least 20 shipping species plus
-      designed rarity evolutions. Each fish needs: slug, display name, one-line
-      museum-placard field note in the established dry register, tier, rarity, the
-      six Character Rarity stats, coin/feed economy numbers, an art prompt written
-      for silhouette-forward generation, and a games list naming which of
-      cthulhuquarium / ruler-hooked it belongs to. Validate with
-      scripts/validate_fish.py before committing. Do NOT invent a second schema --
-      every field must map onto a kind_robots Character column, because t-008 seeds
-      these straight into Character rows.
+      fish/SCHEMA.md) from its starter set to at least 20 shipping species plus designed
+      rarity evolutions. Each fish needs: slug, display name, one-line museum-placard
+      field note in the established dry register, tier, rarity, the six Character Rarity
+      stats, coin/feed economy numbers, an art prompt written for silhouette-forward
+      generation, and a games list naming which of cthulhuquarium / ruler-hooked it
+      belongs to. The weirdness ceiling is CLEARLY-NOT-A-FISH (Silas, 2026-08-24): rare
+      and higher tiers may be things that only resemble fish -- too many joints, mostly
+      eye, something wearing a fish -- while common tiers stay recognizable, because the
+      restraint downstairs is what makes the escalation upstairs land. Unsettling, never
+      gross-out, always a legible silhouette. Validate with scripts/validate_fish.py
+      before committing. Do NOT invent a second schema -- every field must map onto a
+      kind_robots Character column, because t-008 seeds these straight into Character
+      rows.
 
   - id: t-004
     milestone: m1
@@ -155,14 +168,18 @@ tasks:
     stakes: reversible
     note: >
       Write economy/balance.yaml in the cthulhuquarium repo plus a short ECONOMY.md
-      explaining it. Cover: coin drop rates and values by fish tier, food cost curve,
-      hunger/decay timings, upgrade tiers and their costs, unlock thresholds per
-      species, and the offline-income formula with its cap. The cap is the important
-      one -- idling must be rewarding but strictly worse than playing, per the pitch
-      ("they can leave it running and get pickups, or play with it and it will gain
-      resources faster"). Simulate the first two hours of play in a script and paste
-      the curve into ECONOMY.md; a spec nobody simulated is a guess. Every number
-      lives in YAML, never in a .ts constant, so a balance pass is a data commit.
+      explaining it. NOTE (Silas, 2026-08-24): the food is ALIVE and wriggling, not
+      pellets -- price and name it accordingly; you are buying livestock by the handful.
+      Per the same decision nothing accumulated may ever shrink, so hunger gates the
+      payout RATE only and no decay term may touch a coin total, an unlock, or a stat.
+      Cover: coin drop rates and values by fish tier, food cost curve, hunger/decay
+      timings, upgrade tiers and their costs, unlock thresholds per species, and the
+      offline-income formula with its cap. The cap is the important one -- idling must be
+      rewarding but strictly worse than playing, per the pitch ("they can leave it running
+      and get pickups, or play with it and it will gain resources faster"). Simulate the
+      first two hours of play in a script and paste the curve into ECONOMY.md; a spec
+      nobody simulated is a guess. Every number lives in YAML, never in a .ts constant, so
+      a balance pass is a data commit.
 
   - id: t-005
     milestone: m1
@@ -288,15 +305,16 @@ tasks:
     stakes: reversible
     depends_on: [t-008, t-009]
     note: >
-      Replace the t-010 prototype's local state with the server-backed game. Fish
-      render from their seeded Character art with per-species swim behavior (drift,
-      dart, lurk -- behavior is a bible field, not a hardcoded switch). Food falls
-      with simple physics and fish path toward it. Collectibles drift up and pay coins
-      on click. Hunger decays on a server-settled clock, not a client timer, so a
-      backgrounded tab cannot starve or enrich a tank. Keep the canvas at a fixed
-      logical resolution and scale to fit -- it has to survive the responsive layout
-      contract at phone width. Target 60fps with 20 fish on screen; if that needs
-      sprite batching, do it now rather than after the art pass triples the draw calls.
+      Replace the t-010 prototype's local state with the server-backed game. Fish render
+      from their seeded Character art with per-species swim behavior (drift, dart, lurk --
+      behavior is a bible field, not a hardcoded switch). Food is ALIVE (Silas,
+      2026-08-24) -- it wriggles on the way down and stops when eaten, and fish path
+      toward it. Not a falling pellet. Collectibles drift up and pay coins on click.
+      Hunger decays on a server-settled clock, not a client timer, so a backgrounded tab
+      cannot starve or enrich a tank. Keep the canvas at a fixed logical resolution and
+      scale to fit -- it has to survive the responsive layout contract at phone width.
+      Target 60fps with 20 fish on screen; if that needs sprite batching, do it now rather
+      than after the art pass triples the draw calls.
 
   - id: t-012
     milestone: m2
@@ -373,12 +391,14 @@ tasks:
     stakes: reversible
     depends_on: t-013
     note: >
-      The "random rare experiences" from the pitch, and the retention hook. Rare
-      timed visitors, a collectible that pays far too much, something that eats a fish,
-      a tank that goes briefly wrong. Drive them from AquariumEvent rows so they are
-      auditable and replayable, with rates in balance.yaml. Tone check against the
-      brief: unsettling and dry, never jump-scare, never punishing enough to make
-      someone stop leaving the tab open.
+      The "random rare experiences" from the pitch, and the retention hook. Rare timed
+      visitors, a collectible that pays far too much, a tank that goes briefly wrong.
+      Drive them from AquariumEvent rows so they are auditable and replayable, with rates
+      in balance.yaml. HARD CONSTRAINT (Silas, 2026-08-24): no event may take anything
+      away -- not a fish, not coins, not an unlock. "Something that eats a fish" was in
+      this note and is now specifically OUT; progress never degrades. An event may pause
+      or redirect income briefly and may be alarming, but the player is never poorer after
+      it than before. Tone: unsettling and dry, never jump-scare.
 
   - id: t-017
     milestone: m3
@@ -402,10 +422,11 @@ tasks:
     stakes: reversible
     depends_on: t-014
     note: >
-      Deferred from MVP on purpose: a leaderboard needs a metric worth ranking, and we
-      will not know what that is until the economy is tuned. Once t-019 has run, pick
-      the metric (species collected is likely healthier than raw coins -- coins reward
-      whoever left the tab open longest) and build it. Ranks show display names only.
+      Deferred from MVP on purpose, but the metric is no longer open: Silas decided
+      2026-08-24 that the game is endless with the BESTIARY AS THE WIN STATE, so rank on
+      species collected. Do not rank on coins -- with no prestige and no decay, a coin
+      leaderboard ranks whoever left a tab open longest and nothing else. Ranks show
+      display names only.
 
   - id: t-019
     milestone: m3
@@ -476,3 +497,63 @@ tasks:
       property). Do NOT reopen or edit the ruler-hooked roadmap from this task; that
       project's false "100% complete" state is Silas's to correct with a real scope
       conversation, and this task only prepares for it.
+  - id: t-023
+    milestone: m3
+    title: "The voices — shopkeeper, assistant, and the Character/Bot records behind them"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-013
+    note: >
+      Silas, 2026-08-24: "shopkeeper should be added as a Character in kind robots, and
+      as a Bot narrator. include a helpful assistant as well, so there is variety of
+      voices. One of them should have many missing fingers."
+      Build each voice as a PAIR of existing kind_robots records, the same reuse move the
+      bestiary makes: a `Character` row carrying identity (name, backstory, quirks,
+      personality, voice, art) and a `Bot` row carrying the narrator behavior that speaks
+      as it. Do not invent a Cthulhuquarium-private narrator table -- Character already
+      has `personality`, `sampleResponse`, and `voice` columns, Bot already has the
+      narrator wiring, and going through both means these two can be reused by any other
+      Kind Robots surface that wants them.
+      TWO VOICES MINIMUM, and they must not sound alike -- variety is the stated point.
+      The shopkeeper is the one who sold you the tank: present tense, reacting to what you
+      do with it, and in the established dry register that never quite tells you
+      everything. The helpful assistant is the counterweight -- genuinely, uncomplicatedly
+      helpful, which in this setting reads as its own kind of unsettling. Play them off
+      each other rather than making the assistant a second ironist.
+      ONE OF THEM HAS MANY MISSING FINGERS. Silas's line, and it is a detail to honor
+      rather than explain: it belongs in the Character record and the art prompt, and it
+      should never be accounted for in dialogue. Which one has them is a real choice --
+      the assistant is the funnier and more unsettling answer, since it is the one whose
+      cheerfulness would have to survive it, but that is the implementer's call to make
+      deliberately and note.
+      Authored text only. Nothing in this game makes a live model call at runtime (same
+      offline constraint ruler-hooked holds), so the reaction system is authored lines
+      selected by game state, not generation. Scope this before writing: a voice that
+      speaks too often stops being a voice and becomes a tooltip.
+      Generated art for both follows the standing 2026-07-06 rule -- no per-image approval
+      needed, preserve prompt/model/seed metadata.
+
+  - id: t-024
+    milestone: m3
+    title: "Bestiary completion — make the collection the win state it was decided to be"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-015
+    note: >
+      Follows from Silas's 2026-08-24 decision that the game is ENDLESS BUT THE BESTIARY
+      COMPLETES -- no ending screen, no prestige reset, and the last species is the
+      credits roll. That makes the collection the actual progression spine rather than a
+      side board, and right now nothing in the build treats it that way.
+      Deliver: a bestiary view worth returning to (every species, its field note revealed
+      on first unlock, its art, and the silhouette of what you have not found yet), a
+      visible completion count, and a real beat when the set closes. The completion beat
+      is the closest thing this game has to an ending, so it deserves more than a toast --
+      but it must not end the session or lock anything, because the tank keeps running.
+      Constraints from the same decision: nothing here may ever decrease, so a species
+      cannot be un-collected and completion cannot be reset. If a later build retires a
+      species from the bible, an already-collected one stays collected (the seed script's
+      isActive=false path exists for exactly this).
