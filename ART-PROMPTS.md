@@ -61,6 +61,7 @@ When asked for a batch, generate up to ten images in the same order as the queue
 - `coloring-book` — icon, card, hero → `projects/images/coloring-book-{type}.webp` in `silasfelinus/conductor`
 - `taskmaster` — icon, card, hero → `projects/images/taskmaster-{type}.webp` in `silasfelinus/conductor`
 - `cthulhuquarium` — icon, card, hero → `projects/images/cthulhuquarium-{type}.webp` in `silasfelinus/conductor`
+- `scene-animator` — icon, card, hero → `projects/images/scene-animator-{type}.webp` in `silasfelinus/conductor`
 
 **Inspiration images** (`projects/art-prompts.yaml` → `inspirations:`, 3 each):
 
@@ -238,3 +239,8 @@ These are not automatically queued for legacy projects. Generate them manually w
 - `text-generation-icon.webp` (256×256): premium app icon for Text Generation, a compact home server cube feeding one luminous ribbon of words into a clean speech bubble, private local compute meeting conversation, crisp readable silhouette at small sizes, polished Kind Robots product icon, square composition, no readable text, no logo, no watermark, no collage
 - `text-generation-card.webp` (512×768): portrait key art for Text Generation, a cozy self-hosted AI desk with a small server rack, laptop, and several glowing language streams converging through one secure routing hub into a single finished page, tactile technical detail, approachable maker-lab atmosphere, professional product illustration, 2:3 portrait composition, no readable text, no logo, no watermark, no collage
 - `text-generation-hero.webp` (1280×720): wide cinematic hero for Text Generation, a private home server on one side and distant cloud compute on the other connected through a calm central Kind Robots routing node, flowing speech and document-shaped light trails showing chat and long-form generation choosing either path, secure interoperable AI infrastructure with warm human-scale technology, 16:9 landscape composition, no readable text, no logo, no watermark, no collage
+
+## scene-animator (added 2026-08-24)
+- `scene-animator-icon.webp` (256×256): premium app icon for Scene Animator, a single framed still image whose lower edge unfurls into three luminous motion frames, tiny film-strip rhythm without readable UI, crisp silhouette, polished Kind Robots production-tool icon, square composition, no readable text, no logo, no watermark, no collage
+- `scene-animator-card.webp` (512×768): portrait key art for Scene Animator, a calm admin production desk where a folder of still scene cards feeds into one glowing local video engine and emerges as subtly moving cinematic clips, tactile home-studio technology, clear source-to-motion flow, professional product illustration, 2:3 portrait composition, no readable text, no logo, no watermark, no collage
+- `scene-animator-hero.webp` (1280×720): wide cinematic hero for Scene Animator, shelves of still illustrated scenes on the left flowing through a luminous Kind Robots Comfy rendering chamber in the center and emerging as living video moments on the right, gentle motion trails and coherent preserved characters, premium creative automation key art, 16:9 landscape composition, no readable text, no logo, no watermark, no collage

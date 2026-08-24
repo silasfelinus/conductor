@@ -1,0 +1,91 @@
+project: scene-animator
+kind: software
+
+goal: >
+  An admin-only Kind Robots workflow that turns folders of still scene images into short
+  generated videos automatically using the existing Comfy video pipeline, with durable
+  progress, safe resume/deduplication, maturity controls, presets, and a browsable result
+  gallery.
+
+notes_from_silas: |
+  Give the tool a folder of still images and make each scene alive without writing a unique
+  motion prompt for every image. Reuse Kind Robots' general video generation infrastructure
+  and presets. The operator chooses the source folder, desired clip duration, and maturity
+  setting; the system remembers progress and exposes a gallery. This belongs on an admin
+  surface in Kind Robots. Source stills may live on the existing media server in a dedicated
+  sibling tree such as kindrobots/animate rather than kindrobots/images.
+
+milestones:
+  - id: m1
+    title: "SHAPE — source contract and automation design"
+    weight: 20
+    status: in-progress
+
+  - id: m2
+    title: "BUILD — durable folder-to-video pipeline"
+    weight: 50
+    status: not-started
+
+  - id: m3
+    title: "POLISH & SHIP — gallery, recovery, and operator UX"
+    weight: 30
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Build the resumable Scene Animator MVP in Kind Robots"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Implement the first useful end-to-end slice. Reuse /api/video/generate ->
+      /api/art/enqueue -> ArtJob -> kr-relay and utils/videoPresets.ts; do not create a
+      parallel render queue. Add an admin Scene Animator surface that can discover folders
+      and still images from a dedicated animation source root, choose engine/preset/duration
+      and maturity, enqueue every unprocessed source with one neutral scene-preserving motion
+      prompt, reconstruct progress from durable ArtJobs after refresh/restart, and show the
+      resulting clips as a gallery. Source identity + render settings must produce a stable
+      dedupe key so Resume never silently duplicates completed/active jobs.
+
+  - id: t-002
+    milestone: m1
+    title: "Confirm the Scene Animator scope with Silas"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    soft_gate: true
+    note: >
+      FOR SILAS: soft checkpoint only; development is not blocked. Review DESIGN-BRIEF.md
+      after the MVP lands and redirect naming, defaults, or workflow if desired. The project
+      is intentionally scoped to internal/admin batch animation, not public publishing.
+
+  - id: t-003
+    milestone: m2
+    title: "Harden media-root deployment and source-folder operations"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      After the MVP establishes the code contract, verify the self-hosted app and media
+      container expose the dedicated kindrobots/animate source tree safely. Prefer a single
+      ANIMATE_PATH/ANIMATE_MEDIA_ORIGIN contract with traversal protection and clear health
+      diagnostics. Any physical mount/container-template change remains an operator step;
+      code and docs should make the required mapping explicit.
+
+  - id: t-004
+    milestone: m3
+    title: "Polish batch recovery, filtering, and gallery ergonomics"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Add operator-quality recovery controls after real batches exercise the MVP: failed-job
+      retry, source/result filters, clearer runtime estimates, per-folder completion summary,
+      and responsive gallery polish without replacing the underlying ArtJob ledger.
