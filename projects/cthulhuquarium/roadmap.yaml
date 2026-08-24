@@ -956,4 +956,39 @@ tasks:
       /mnt/diskN/. Direct read succeeding while the union read fails is conclusive for
       shfs/member-disk trouble, and the fix is to serve the model share from the device
       path rather than the union. Both failing means the file is damaged after all and
-      should be re-downloaded.
+      should be re-downloaded. ROOT CAUSE FOUND, 2026-08-24, from the ComfyUI box's SMB
+      client event log. Not shfs, not a member disk, not a corrupt file. THE SMB LINK TO
+      ALEXANDRIA IS DROPPING ABOUT ONCE A MINUTE. Microsoft-Windows-SMBClient/Connectivity
+      shows a repeating 30804 (network connection disconnected) -> 30805 (client lost its
+      session) -> 30806 (re-established) cycle at 11:30:56, 11:32:01, 11:33:09, 11:34:15,
+      11:35:21, 11:36:27 and 11:37:34 -- seven drops in seven minutes, roughly one per 60
+      seconds -- preceded by two 30803 "Failed to establish a network connection: {Device
+      Timeout}" at 11:28:07 and 11:29:12. Still happening later: 30808 re-established
+      events on three shares at 14:00:28. That fully explains the split between engines
+      without needing any other theory. krea2's text encoder is
+      qwen3vl_4b_fp8_scaled.safetensors at 5.24 GB; a read that large cannot survive a
+      mount that resets every ~60 seconds, and a torn read is precisely what
+      `hostbuf_file_reader_read failed` reports. flux/schnell succeeded because
+      flux1-schnell-Q8_0.gguf is far smaller and fits inside a stable window (or was
+      already in page cache). Nothing is wrong with the file, the disk, or the union
+      mount. AND THE LIKELY WHY: the server address in every one of those events is
+      100.89.251.10, which is in 100.64.0.0/10 -- CGNAT space, i.e. a TAILSCALE address.
+      The ComfyUI box is mounting Z: over the Tailscale tunnel rather than the LAN. Multi-
+      gigabyte SMB reads over WireGuard are already marginal; if the tailnet is falling
+      back to a DERP relay rather than a direct path, sustained large reads are hopeless
+      and periodic renegotiation matches the ~60s cadence exactly. The log also shows SMB-
+      over-QUIC being attempted on :443 and failing on certificate mapping (30827) before
+      falling back to TCP 445, which is extra churn on an already unstable link. FIX, in
+      order of expected impact: (1) if both machines are on the same LAN, remount the
+      share on Alexandria's LAN address instead of its 100.x tailnet address -- this is
+      the whole fix if it applies; (2) otherwise check whether the tailnet path is direct
+      or relayed (`tailscale status`, `tailscale ping alexandria`) and get it direct; (3)
+      stop the QUIC attempts so the client is not renegotiating transports mid-read; (4)
+      only if the link genuinely cannot be stabilised, cache the handful of models the
+      render box actually needs on local disk -- roughly 5 GB for krea2 -- and point
+      ComfyUI at the local copies, which removes the network from the hot path entirely
+      and is arguably right regardless. NOTE that fix (4) also makes the box resilient to
+      Alexandria being down, which is independently valuable given how much depends on
+      this render path. SEPARATELY AND STILL TRUE: flux2-klein's encoder really is absent
+      from the store, so it needs downloading (or repointing) no matter what happens to
+      the mount.
