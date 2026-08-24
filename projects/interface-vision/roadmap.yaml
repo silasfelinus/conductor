@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -3076,12 +3076,13 @@ tasks:
       Continue Silas's requested gallery-upgrade finish pass after kind_robots#2066. Claim the next bounded provider slice: make Scenario Gallery consume a complete lightweight Scenario index instead of full Character/backstory/detail payloads, and hydrate rich Scenario detail only when a scenario is selected/opened.
 
       Scenario gallery provider slice is ready for review. The net implementation narrows nested Character data on GET /api/scenarios to card/search fields while preserving the complete Scenario scalar shape, Dream/Facet relationships, and rich Character biography/prompt/stat hydration on GET /api/scenarios/:id.
-    updated: '2026-08-24 10:52:00+00:00'
+
+      Merged silasfelinus/kind_robots#2068 as 18c9434 after every exact-head workflow completed successfully, including TypeScript, Gallery Progressive Rendering, Facet Catalog, Layout, and all 298 Contract Tests verifier stages. Scenario list Character relations now carry only browse/search/compact-cast fields while /api/scenarios/:id retains rich Character detail.
+
+      Scenario gallery provider slice is complete and merged as silasfelinus/kind_robots#2068. Return the reusable front-end consistency umbrella to ready for the next bounded gallery-provider pass.
+    updated: '2026-08-24 11:25:01+00:00'
     approved_by_human: true
-    implementation_pr: 'silasfelinus/kind_robots#2066'
-    owner: worker
-    claimed_by: 2026-08-24T103200Z-interface-vision-t-104-scenario-gallery-p9v3
-    claimed_at: '2026-08-24 10:32:00+00:00'
+    implementation_pr: 'silasfelinus/kind_robots#2068'
 
   - id: t-105
     milestone: m6
