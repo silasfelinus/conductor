@@ -10128,3 +10128,33 @@ records:
     immediately. For large galleries, cap total off-screen DOM work to a viewport runway and let user
     movement demand the next chunk; otherwise background batching merely turns one long freeze into sustained
     jank, especially on setTimeout-based fallbacks.
+- date: '2026-08-24'
+  project: storybook
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 49
+  outcome: done
+  failure_category: null
+  lesson: >
+    Cycle 36: after five consecutive cycles that either found a shrinking-returns polish item or
+    no-op'd, the fresh angle that produced a real correctness bug was the one the PREVIOUS cycle
+    had already written down and not taken -- "Pinia persistence edge cases have not had a
+    dedicated pass in this task's history." The bug was a sibling-parity gap of exactly the shape
+    a shared-helper family invites: taskmasterStore.ts's saveToLocalStorage() was the one
+    localStorage writer of four in the narrative family with no try/catch, while its three
+    siblings each carried an explicit private-browsing/quota comment explaining why they had one.
+    Two lessons. First, a recurring bug-hunt task's own "next lead" note is a real work queue, not
+    a formality -- reading it before inventing a new lens is cheaper than re-deriving one, and a
+    lead that survives a cycle unclaimed is more likely to be untouched ground than a lens the
+    task has already swept. Second, and the inverse of cycle 61's model-builder lesson: a
+    found inconsistency IS a fixable sibling-parity bug when the two sides are genuinely the same
+    kind of moment, and here the codebase said so itself -- the shared helper's own header
+    asserted the two stores were "byte-for-byte the same shape," so the asymmetry was a
+    documented invariant being violated rather than a pattern-match on surface similarity.
+    Confirming the impact still required tracing all ten call sites individually: the sharpest
+    one (updateBeatArt() running as an uncaught `void poll(...)` callback, where a throw both
+    became an unhandled rejection and killed the art poll loop, stranding the illustration with
+    no retry affordance) was not the one the shape of the bug suggested up front. Finally: when a
+    fix restores an invariant a contract script already claims to enforce, extend that script --
+    and verify the new assertion fails against the pre-fix code, or it may be vacuously true.
