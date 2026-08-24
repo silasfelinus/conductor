@@ -1558,7 +1558,7 @@ tasks:
 - id: t-068
   milestone: m8
   title: Identify which Kapowarr page is still slow after the review-holds fix
-  status: done
+  status: ready
   passes: 0
   stakes: reversible
   note: |-
@@ -1575,9 +1575,9 @@ tasks:
     Follow-up implementation is ready on worker/kapowarr-t-068-skeleton-gallery-a91c. Poster view now materializes the complete lightweight metadata index in one DocumentFragment so the browser gets full gallery geometry and titles immediately, while cover <img> elements remain source-less placeholders until an IntersectionObserver brings them within 1800px of the viewport. Visible covers receive high fetch priority, near-viewport overscan low priority, and the existing native lazy-loading flag remains as fallback. content-visibility/contain-intrinsic-size let supporting browsers skip off-screen paint work. The existing /api/volumes payload remains the only metadata index; no duplicate endpoint was added. Table view keeps the bounded renderer from #142. Diff audit caught and repaired one accidentally truncated CSS tail before review; current compare is scoped to 5 intended files and 0 commits behind main. Full repository Actions will run on the PR head.
 
     Final close after merged PR #143. Poster view now has complete lightweight gallery geometry and viewport-prioritized cover hydration; all PR checks passed and main is at 7924631f3b4dd13b9d0e2702988702f3d3fa5fb9.
-  updated: '2026-08-24T03:31:00Z'
-  claimed_by: 2026-08-24T032130Z-kapowarr-t-068-skeleton-a91c
-  claimed_at: '2026-08-24T03:21:30Z'
+
+    Reopened for a user-supplied production log follow-up. The log shows three Continuous Library Import task crashes where a ComicVine 420 rate limit is incorrectly converted into a Metron no-crosslink error, bypassing the importer's existing cooldown/retry handler, plus one real Update All sqlite3 database-is-locked failure while it overlaps the continuous import. Scope this follow-up to preserving transient ComicVine semantics through fallback and preventing those two heavyweight library writers from running concurrently.
+  updated: '2026-08-24T09:37:00Z'
 
 - id: t-069
   milestone: m4

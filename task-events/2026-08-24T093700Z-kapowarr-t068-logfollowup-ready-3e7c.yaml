@@ -1,7 +1,0 @@
-version: 1
-project: kapowarr
-task: t-068
-operation: ready
-updated: '2026-08-24T09:37:00Z'
-note: >-
-  Reopened for a user-supplied production log follow-up. The log shows three Continuous Library Import task crashes where a ComicVine 420 rate limit is incorrectly converted into a Metron no-crosslink error, bypassing the importer's existing cooldown/retry handler, plus one real Update All sqlite3 database-is-locked failure while it overlaps the continuous import. Scope this follow-up to preserving transient ComicVine semantics through fallback and preventing those two heavyweight library writers from running concurrently.
