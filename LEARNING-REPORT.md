@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-24T18:40:04Z
+Generated: 2026-08-24T18:55:19Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **746**
-- Outcomes: blocked: 15, cancelled: 1, done: 730
+- Closed tasks recorded: **747**
+- Outcomes: blocked: 15, cancelled: 1, done: 731
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 80 | 100% |
 | conductor-app | 4 | 100% |
-| cthulhuquarium | 2 | 100% |
+| cthulhuquarium | 3 | 100% |
 | davinci | 7 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
@@ -66,7 +66,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 730 | 99% |
+| software | 731 | 99% |
 
 ## Failure categories
 
@@ -87,6 +87,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-24 `cthulhuquarium/t-004` — "Simulate it, don't just spec it" caught a real methodology bug before it could look like a balance bug: a naive active-vs-idle coin-balance comparison showed idle beating active over two hours, which would have read as a genuine MVP-requirement violation (DESIGN-BRIEF's "idling rewarded but strictly worse than playing"). The actual cause was comparing raw liquid balance, which conflates spending (buying a fish, an investment) with losing. Switching to net worth (coins + owned-asset value) and gross income earned (cumulative production before spend) reversed the finding to a healthy 3-3.5x active/idle gap that widens over time via reinvestment compounding. Worth generalizing: any economy simulation comparing two spending strategies needs a wealth metric that survives the comparison, not a currency balance that a strategy's own spending pattern can arbitrarily deflate.
+
 - 2026-08-24 `cthulhuquarium/t-007` — A live-DB migration doesn't have to stay unverifiable in a sandbox with no docker daemon: `apt-get install mariadb-server`, running `mariadbd` directly (no systemd) under the `mysql` user, and connecting via the local socket to create the app user took under a minute and gave a real MySQL-compatible target to run `prisma migrate deploy` against. Running it through the FULL existing migration history (62 migrations), not just the new one in isolation, is what actually proves the new migration composes cleanly with everything before it -- and `prisma migrate status` reporting zero drift afterward is stronger evidence than `prisma validate` alone, which only checks the schema file's own internal consistency. Worth adding to AGENTS.md's cross-repo/kind_robots verification section as a documented option alongside `provision_kind_robots_deps.sh`'s dummy-DATABASE_URL `prisma generate` path, since that path alone doesn't catch a migration.sql that doesn't actually match what schema.prisma implies.
 
 - 2026-08-24 `cthulhuquarium/t-025` — A recurring umbrella task at the top of priority.yaml's ready queue (interface-vision/t-104) had already been independently re-confirmed exhausted by three sessions the same day; spot-checking the one new upstream commit since the last check (rather than re-running the full sweep) confirmed nothing changed, and the session moved on to real work further down the priority order instead of manufacturing a fifth identical no-op. cthulhuquarium/t-025 was a clean fit: a self-contained design-decision task whose own note explicitly authorized an agent recommendation with reasoning, flagged (soft_gate: true) rather than hard-gated, so the answer could unblock downstream tasks (t-026/t-027) same-session instead of stalling on a human reply.
@@ -104,8 +106,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-24 `storybook/t-010` — Cycle 36: after five consecutive cycles that either found a shrinking-returns polish item or no-op'd, the fresh angle that produced a real correctness bug was the one the PREVIOUS cycle had already written down and not taken -- "Pinia persistence edge cases have not had a dedicated pass in this task's history." The bug was a sibling-parity gap of exactly the shape a shared-helper family invites: taskmasterStore.ts's saveToLocalStorage() was the one localStorage writer of four in the narrative family with no try/catch, while its three siblings each carried an explicit private-browsing/quota comment explaining why they had one. Two lessons. First, a recurring bug-hunt task's own "next lead" note is a real work queue, not a formality -- reading it before inventing a new lens is cheaper than re-deriving one, and a lead that survives a cycle unclaimed is more likely to be untouched ground than a lens the task has already swept. Second, and the inverse of cycle 61's model-builder lesson: a found inconsistency IS a fixable sibling-parity bug when the two sides are genuinely the same kind of moment, and here the codebase said so itself -- the shared helper's own header asserted the two stores were "byte-for-byte the same shape," so the asymmetry was a documented invariant being violated rather than a pattern-match on surface similarity. Confirming the impact still required tracing all ten call sites individually: the sharpest one (updateBeatArt() running as an uncaught `void poll(...)` callback, where a throw both became an unhandled rejection and killed the art poll loop, stranding the illustration with no retry affordance) was not the one the shape of the bug suggested up front. Finally: when a fix restores an invariant a contract script already claims to enforce, extend that script -- and verify the new assertion fails against the pre-fix code, or it may be vacuously true.
 
 - 2026-08-24 `kapowarr/t-068` — Rendering in batches is not enough if the browser is still instructed to consume every batch immediately. For large galleries, cap total off-screen DOM work to a viewport runway and let user movement demand the next chunk; otherwise background batching merely turns one long freeze into sustained jank, especially on setTimeout-based fallbacks.
-- 2026-08-23 `model-builder/t-029` — Cycle 61: with no new kind_robots commits touching model-builder since cycle 59 and the repo-wide reference grep turning up no unaudited file, took the task brief's own "accessibility gaps" lens explicitly for the first time in this task's 61-cycle history. Found a real-looking sibling inconsistency (two components wrap their loading state in role="status"/aria-live="polite"/aria-busy="true", two others' analogous spinners have neither) but tracing it further showed the two pairs aren't actually comparable: the guarded pair is a full-region "loading this list from the network at mount" state, the unguarded pair is a button-internal in-flight spinner -- a state shape that is uniformly unguarded across every button in this component family, not selectively skipped on two components. Lesson: a found inconsistency is only a fixable sibling-parity bug if the two sides are actually the same kind of moment -- pattern-matching on "this attribute is present here and absent there" needs a check that the "there" is truly analogous to "here," or the fix ends up either wrong-shaped (fixing the wrong two files) or scope-creeping into a repo-wide convention decision that a single-bug-per-cycle task isn't set up to make well.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-24T18:40:04Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-24T18:55:19Z_
