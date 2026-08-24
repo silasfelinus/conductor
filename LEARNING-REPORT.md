@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-24T15:39:47Z
+Generated: 2026-08-24T15:47:25Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **744**
-- Outcomes: blocked: 15, cancelled: 1, done: 728
+- Closed tasks recorded: **745**
+- Outcomes: blocked: 15, cancelled: 1, done: 729
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -28,6 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 80 | 100% |
 | conductor-app | 4 | 100% |
+| cthulhuquarium | 1 | 100% |
 | davinci | 7 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
@@ -65,7 +66,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 728 | 99% |
+| software | 729 | 99% |
 
 ## Failure categories
 
@@ -86,6 +87,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-24 `cthulhuquarium/t-025` — A recurring umbrella task at the top of priority.yaml's ready queue (interface-vision/t-104) had already been independently re-confirmed exhausted by three sessions the same day; spot-checking the one new upstream commit since the last check (rather than re-running the full sweep) confirmed nothing changed, and the session moved on to real work further down the priority order instead of manufacturing a fifth identical no-op. cthulhuquarium/t-025 was a clean fit: a self-contained design-decision task whose own note explicitly authorized an agent recommendation with reasoning, flagged (soft_gate: true) rather than hard-gated, so the answer could unblock downstream tasks (t-026/t-027) same-session instead of stalling on a human reply.
+
 - 2026-08-24 `conductor/t-127` — A task's note can go stale between when it's filed and when a session picks it up -- Silas hand-fixed the acute incident this task described (three stuck operation: note events) hours before this session claimed it. Re-checking live git history and roadmap state before implementing found the task was actually asking for two things bundled together: the acute fix (already done, by hand) and a systemic guard (still open). Scoping the PR to only the still-open half, and following the human's own stated root-cause reasoning in the commit that did the acute fix, avoided both redundant work and contradicting a judgment call Silas had already made.
 
 - 2026-08-24 `scene-animator/t-001` — The PR (kind_robots#2072) opened with a red TypeScript check: an ArtJob.include of a non-existent ArtImage Prisma relation (ArtJob only carries a plain artImageId int column), Content-Length passed as a stringified value where h3's typed header wants a number, and a Pinia ref (durationSeconds) that inferred a narrow literal union from an `as const satisfies`-typed presets catalog instead of number. All six errors were mechanical and caught deterministically by `npm run test` (vue-tsc); none needed a design change. Fixed and pushed as the Reviewer rather than rejecting back to the Worker, since the errors were narrow, unambiguous, and confined to the task's own new files. Re-affirms running the repo's local typecheck before opening a PR would have caught this before CI did.
@@ -102,7 +105,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-23 `model-builder/t-029` — Cycle 61: with no new kind_robots commits touching model-builder since cycle 59 and the repo-wide reference grep turning up no unaudited file, took the task brief's own "accessibility gaps" lens explicitly for the first time in this task's 61-cycle history. Found a real-looking sibling inconsistency (two components wrap their loading state in role="status"/aria-live="polite"/aria-busy="true", two others' analogous spinners have neither) but tracing it further showed the two pairs aren't actually comparable: the guarded pair is a full-region "loading this list from the network at mount" state, the unguarded pair is a button-internal in-flight spinner -- a state shape that is uniformly unguarded across every button in this component family, not selectively skipped on two components. Lesson: a found inconsistency is only a fixable sibling-parity bug if the two sides are actually the same kind of moment -- pattern-matching on "this attribute is present here and absent there" needs a check that the "there" is truly analogous to "here," or the fix ends up either wrong-shaped (fixing the wrong two files) or scope-creeping into a repo-wide convention decision that a single-bug-per-cycle task isn't set up to make well.
 
 - 2026-08-23 `brainstorm/t-029` — Third clean first-pass adapter/CTA task in a row (t-027 Scenario, t-028 Reward, t-029 Bot) following the same BrainstormSourceAdapter registry + gated startBrainstormWith*() CTA + verifyBrainstormObjectEntryLinks.mjs assertion pattern -- confirms this is now a well-worn, low-risk template for onboarding a new source entity, not something that needs fresh design judgment each time. When a recurring kaizen note explicitly names the next entity to follow the same pattern (here: Project, per t-027's original note), treat that as a ready-made task rather than re-deriving scope from scratch.
-- 2026-08-23 `davinci/t-025` — Before scoping a 'extract the shared pattern between these two call sites' refactor, grep the WHOLE repo for the symbol being extracted, not just the two sites already named in the task note -- a third, byte-for-byte identical call site (taskmasterStore.ts) existed and was missed by hand-picking files instead of searching, only caught because a repo-owned contract test (verifyNarrativeArtPersistence.mjs) enforced the two stores stay in lockstep and failed CI. Also: running `prettier --write` on a whole pre-existing file to fix one targeted edit's formatting can reformat large unrelated regions if the file was already prettier-noncompliant before the change (confirmed via git stash/checkout) -- restore the pristine file and apply only the intended edit via a scoped replace, never a full-file --write, when touching a file the task doesn't already fully own.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-24T15:39:47Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-24T15:47:25Z_
