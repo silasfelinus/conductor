@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 48
     stakes: reversible
@@ -648,10 +648,10 @@ tasks:
             Cycle 64 (conductor scheduled Agent run, 2026-08-24T00:32Z session, claude-scheduled-20260824T003200Z-mb-t029): no new kind_robots commits touch any model-builder file since cycle 63's own PR (#2053), so per cycle 63's own prediction this cycle tried a genuinely different lens rather than re-reading already-covered ground: form-control labeling (every <input>/<select>/<textarea> across all seven components/model-builder/*.vue files) and selectable-run-history keyboard/ARIA semantics (model-builder-run-history.vue, model-builder-source-picker.vue). Every form control already has a properly paired <label :for>/id or an explicit :aria-label; every interactive control in run-history.vue and source-picker.vue is a real <button type="button"> with :aria-label covering its icon-only variants and :disabled wired to the correct in-flight state -- no bare clickable <div>/<span>, no missing keyboard semantics. No gap found; no code change. git status --porcelain clean throughout (read-only cycle).
 
             With this fresh lens also turning up nothing, the static-reading approach against the current feature set is exhausted across every angle tried so far (cycles 51-64). Re-armed to `ready`; a future cycle should expect another no-op unless new kind_robots commits touch model-builder, model-builder/t-031's live-smoke-test path unblocks, or a genuinely new lens is found.
-    owner: null
-    claimed_by: claude-scheduled-20260824T003200Z-mb-t029
-    claimed_at: '2026-08-24T00:32:53Z'
-    updated: '2026-08-24T00:33:32Z'
+    owner: worker
+    claimed_by: 20260824T112831Z-mb-t029-cycle53
+    claimed_at: '2026-08-24T11:28:32Z'
+    updated: '2026-08-24T11:28:32Z'
 
   - id: t-030
     milestone: m6
