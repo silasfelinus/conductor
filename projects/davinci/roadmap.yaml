@@ -660,8 +660,8 @@ tasks:
   - id: t-026
     milestone: m6
     title: Fix stale prisma/generated client missing BUTTERFLY from Reaction_reactionCategory's ExpectedTargetField map
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -683,3 +683,6 @@ tasks:
       (provision_kind_robots_deps.sh) runs `prisma generate` fresh each session, so a
       stale checked-in client silently diverges from what CI/local sessions
       actually see depending on whether prisma generate ran.
+    claimed_by: claude-scheduled-20260824T022816Z-davinci-t026
+    claimed_at: '2026-08-24T02:28:21Z'
+    updated: '2026-08-24T02:28:21Z'
