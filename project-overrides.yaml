@@ -503,3 +503,9 @@ overrides:
     liveUrl: /play/aquarium
     channelKey: play
     tabKey: aquarium
+
+  # NOTE 2026-08-24: a concurrent scheduled session scaffolded this project under the
+  # misspelled slug `cthuluquarium` (conductor#2765/#2766) while this session was
+  # working. Silas confirmed the correct spelling in-session, the Kind Robots Project
+  # 2112 row was repointed (slug + conductorSlug -> cthulhuquarium), and the
+  # misspelled project/override were removed. Do not reintroduce `cthuluquarium`.

@@ -2341,3 +2341,32 @@ tasks:
     claimed_at: '2026-08-16T02:38:52Z'
     updated: '2026-08-16T02:38:52Z'
 
+
+  - id: t-066
+    milestone: m3
+    title: "sample/new-section.md step 6 points implementers at the wrong source of truth for liveUrl/channelKey/tabKey"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Surfaced 2026-08-24 by a scheduled session researching how to add a Play-channel
+      tab (its finding is preserved verbatim in projects/cthulhuquarium/TALKBACK.md).
+      `sample/new-section.md` step 6 tells implementers to add `liveUrl`, `channelKey`,
+      and `tabKey` to conductor's `project-overrides.yaml`. Root AGENTS.md's "Project
+      identity and source of truth" section says Kind Robots owns those presentation
+      fields directly -- via `PATCH /api/projects/{id}` or the canonical
+      `PROJECT_PLACEMENTS` map in `utils/projectPlacements.ts` -- and
+      `sync_kind_robots_projection.py`'s own docstring is explicit that the projection
+      never imports presentation metadata back into Conductor. So step 6 sends people to
+      edit a mirror and expect it to take effect.
+      Fix the doc: step 6 should say to add the `PROJECT_PLACEMENTS` entry and PATCH the
+      Project row, and note that a conductor `project-overrides.yaml` entry carrying
+      those fields is an informational mirror kept in sync by hand, not the source of
+      truth. While in there, check whether any sibling doc (`ecosystem-map/
+      TAB-INTEGRATION.md` in conductor, and the comment blocks in
+      `project-overrides.yaml` itself) carries the same stale instruction -- several
+      override entries are commented "synced ... by sync_projects.py", which was true
+      before that script became a one-way projection sender and is now misleading in the
+      same direction.
+    updated: '2026-08-24T00:00:00Z'

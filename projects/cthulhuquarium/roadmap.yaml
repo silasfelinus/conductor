@@ -57,6 +57,16 @@ notes_from_silas: |
   is lots of work left". Do not treat that project as finished. Reopening it properly
   is its own session with Silas, not a side effect of this one.
 
+  Slug history, so nobody reintroduces it: the Kind Robots Project row was created as
+  `cthuluquarium` (missing the second `h`), and a concurrent scheduled session scaffolded
+  a matching `projects/cthuluquarium/` from Todo #1320 (conductor#2765/#2766) while this
+  session was running. Silas confirmed the correct spelling in-session; Project 2112's
+  slug and conductorSlug were repointed to `cthulhuquarium` and the misspelled project
+  directory was removed. That session's TALKBACK entries are carried forward verbatim in
+  this project's TALKBACK.md rather than deleted. Its Todo #1321 task (the kind_robots
+  access page and Play directory entry) is done -- see t-010, which shipped it at
+  /play/aquarium rather than the /aquarium that session assumed.
+
   Repo split (decided with Silas, 2026-08-24): the GAME ships inside kind_robots,
   same pattern as music-mentor and davinci. The silasfelinus/cthulhuquarium repo is
   the portable DATA CANON -- fish bible YAML, balance tables, lore, art prompts, plus
