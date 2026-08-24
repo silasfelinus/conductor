@@ -4164,3 +4164,71 @@ tasks:
 
       This is now three occurrences across two different days, both times on a doc/roadmap-only diff that touches no test files -- strengthens the runner-level/GitHub-side-congestion hypothesis over a genuinely hanging test, since the PRs' actual content keeps varying while the failure signature does not.
     updated: '2026-08-23T22:44:10Z'
+
+  - id: t-125
+    milestone: m2
+    title: "Kind Robots -> Conductor project handoff has no verification, and a closed scaffold todo proves nothing"
+    status: ready
+    gate_human: false
+    owner: null
+    stakes: reversible
+    passes: 0
+    note: >
+      Found 2026-08-24 while scaffolding cthulhuquarium, which was the first project
+      Silas started from the Kind Robots side rather than from `intake.py`. The sync is
+      one-way by design -- `sync_kind_robots_projection.py` pushes Conductor to Kind
+      Robots and never reads back -- so the ONLY path a Kind-Robots-authored project has
+      into Conductor is the scaffold Todo that `createProjectWithScaffoldTodo` writes in
+      `server/api/projects/index.post.ts`, picked up by `fetch_todos.py` at the start of
+      a Worker cycle. That path has two holes.
+      (1) FIXED THIS SESSION, in kind_robots: the todo carried only the slug -- not the
+      title, description, goal, pitch, or repo -- so an agent claiming it knew a project
+      existed but not what it was for. `projectScaffoldTodoContent` now carries the pitch
+      fields and the exact `intake.py` command, and says not to close the todo until the
+      project directory exists on conductor's main.
+      (2) STILL OPEN, and this task: nothing verifies the handoff actually happened. Todo
+      #1320, "Scaffold conductor project for cthuluquarium", was marked DONE while
+      `projects/cthulhuquarium/` did not exist in this repo and never had. A closed todo
+      is currently indistinguishable from a completed scaffold, so a dropped project goes
+      silently missing -- exactly the failure Silas suspected when he said "we never fully
+      vetted how to sync a kind robots project to conductor".
+      Build the check. Suggested shape, matching the existing reconciliation scripts: a
+      `scripts/check_project_scaffold_drift.py` that lists Kind Robots Projects with a
+      `conductorSlug` set (GET /api/projects, KR_API_TOKEN), asserts a matching
+      `projects/<slug>/roadmap.yaml` exists here, and exits 1 naming any that do not.
+      Wire it into the CLAUDE.md session-start sweep next to
+      `check_pr_merged_drift.py`/`audit_human_gates.py`, and consider having it also flag
+      the reverse -- a Conductor project with no Kind Robots Project row -- since the
+      projection sync creates those and a 409 slug collision would leave one behind.
+      Also worth deciding while in here: whether an agent closing a scaffold todo should
+      have to name the commit that created the directory, the way `close_task.py` takes
+      `--implementation-pr`.
+    updated: '2026-08-24T00:00:00Z'
+
+  - id: t-126
+    milestone: m2
+    title: "provision_kind_robots_deps.sh echoes a live DATABASE_URL into the session transcript"
+    status: ready
+    gate_human: false
+    owner: null
+    stakes: reversible
+    passes: 0
+    note: >
+      Same class of leak as conductor/t-116 (the `${VAR:-no}` KR_API_TOKEN probe), in a
+      different script, and hit live on 2026-08-24. `scripts/provision_kind_robots_deps.sh`
+      ends with `echo "export DATABASE_URL=\"${DATABASE_URL}\""` -- deliberate, so a
+      non-sourced invocation is still usable -- but when the environment already carries a
+      real DATABASE_URL rather than the script's dummy fallback, that line prints live
+      production database credentials (user, password, host, port, database) to stdout,
+      where they land in the session transcript and in any CI log that runs the script
+      unsourced. The header comment's own `source scripts/... ` usage does not avoid it
+      either: sourcing still runs the echo.
+      Fix without breaking the non-sourced usage the echo exists for. Options worth
+      weighing: print the export line only when the script actually SET the dummy value
+      (i.e. `DATABASE_URL` was unset on entry); print a redacted form plus a note that the
+      caller's existing value was kept; or write the export to a file the caller can
+      `source` and print only its path. Whichever is chosen, add the same guard the t-116
+      fix established so a future session cannot reintroduce it, and check the sibling
+      provisioning scripts (`provision_node24.sh`, `kr_token_set.sh`) for the same shape
+      while in there.
+    updated: '2026-08-24T00:00:00Z'
