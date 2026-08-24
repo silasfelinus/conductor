@@ -1,8 +1,7 @@
 version: 1
 project: interface-vision
 task: t-104
-operation: status
-status: review
+operation: review
 session: 2026-08-24T081500Z-interface-vision-t-104-art-collections-b7q2
 note: >-
   ArtCollection-authority follow-up is ready for review on worker/interface-vision-t-104-art-collection-authority-b7q2. Art Gallery no longer enumerates or materializes filesystem folders during normal browsing. The first layer loads DB ArtCollection summaries with one preview and authoritative counts; opening a saved collection fetches only that collection's lightweight ArtImages; Unsorted is derived directly from ArtImages with no ArtCollection relation while reusing normal art visibility/maturity policy. Folder sync remains available in collectionStore as maintenance/import tooling. Existing generation save flow already connects selected ArtCollection membership atomically with ArtImage metadata. No schema or production-data changes.
