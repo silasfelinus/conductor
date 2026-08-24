@@ -1,0 +1,10 @@
+version: 1
+project: kapowarr
+task: t-068
+operation: done
+session: 2026-08-24T020450Z-kapowarr-t-068-855eab
+updated: '2026-08-24T02:13:48Z'
+note: >-
+  Merged silasfelinus/Kapowarr#142 at 9a89574d0daaa708bebaab45b1e06691484b1395. The remaining freeze was the Volumes gallery: the previous first-batch optimization still drained the entire filtered library into poster/table DOM in background batches, so work still scaled with total volume count and switching views started a second full drain. The merged fix keeps a bounded 16-entry, 1200px render runway, bulk-clears stale DOM, preserves Mass Edit selection independently of lazy row existence, and scopes queue badge refreshes to queue-bearing volumes. PR checks were fully green: Tests run 32682206854 passed on Python 3.8, 3.9, 3.10, 3.11, and 3.12, with the frontend suite passing in 3.12; Build docs run 32682206814 and Build and publish container run 32682206782 also passed. Main now points to the merge commit.
+learning: >-
+  Rendering in batches is not enough if the browser is still instructed to consume every batch immediately. For large galleries, cap total off-screen DOM work to a viewport runway and let user movement demand the next chunk; otherwise background batching merely turns one long freeze into sustained jank, especially on setTimeout-based fallbacks.
