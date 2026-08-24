@@ -4210,32 +4210,16 @@ tasks:
   - id: t-126
     milestone: m2
     title: "provision_kind_robots_deps.sh echoes a live DATABASE_URL into the session transcript"
-    status: claimed
+    status: done
     gate_human: false
     owner: reviewer
     stakes: reversible
     passes: 0
-    note: >
-      Same class of leak as conductor/t-116 (the `${VAR:-no}` KR_API_TOKEN probe), in a
-      different script, and hit live on 2026-08-24. `scripts/provision_kind_robots_deps.sh`
-      ends with `echo "export DATABASE_URL=\"${DATABASE_URL}\""` -- deliberate, so a
-      non-sourced invocation is still usable -- but when the environment already carries a
-      real DATABASE_URL rather than the script's dummy fallback, that line prints live
-      production database credentials (user, password, host, port, database) to stdout,
-      where they land in the session transcript and in any CI log that runs the script
-      unsourced. The header comment's own `source scripts/... ` usage does not avoid it
-      either: sourcing still runs the echo.
-      Fix without breaking the non-sourced usage the echo exists for. Options worth
-      weighing: print the export line only when the script actually SET the dummy value
-      (i.e. `DATABASE_URL` was unset on entry); print a redacted form plus a note that the
-      caller's existing value was kept; or write the export to a file the caller can
-      `source` and print only its path. Whichever is chosen, add the same guard the t-116
-      fix established so a future session cannot reintroduce it, and check the sibling
-      provisioning scripts (`provision_node24.sh`, `kr_token_set.sh`) for the same shape
-      while in there.
-    updated: '2026-08-24T12:36:20Z'
+    note: 'Fixed: provision_kind_robots_deps.sh no longer echoes a preset DATABASE_URL. The final export line now only prints when the script generated the dummy value itself (DATABASE_URL was unset on entry); when the caller already had one set, it stays in their environment untouched and nothing is printed. Verified both paths manually (unset -> dummy exported as before; preset to a fake secret -> never appears in stdout/stderr). Checked the sibling provisioning scripts per the task note: provision_node24.sh only ever echoes a PATH export (no secret material), and kr_token_set.sh already uses the correct -n/-z presence check (fixed earlier for the identical KR_API_TOKEN class of leak, t-116) -- neither needed a change. Merged as silasfelinus/conductor#2778.'
+    updated: '2026-08-24T12:45:14Z'
     claimed_by: 20260824-sched-conductor-t126-agentrun1
     claimed_at: '2026-08-24T12:36:20Z'
+    implementation_pr: 'silasfelinus/conductor#2778'
 
   - id: t-127
     milestone: m2
