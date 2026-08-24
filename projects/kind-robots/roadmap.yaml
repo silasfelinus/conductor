@@ -2457,3 +2457,62 @@ tasks:
       Either way, the underlying smell is four call sites hardcoding the same raw-GitHub
       URL. Collapse them onto `projectAssetFallback()` in
       `components/conductor/projectFront.ts`, which already exists for exactly this.
+
+  - id: t-069
+    milestone: m3
+    title: "LTX text-encoder LoRAs have nowhere to load — both LTX LoRA nodes are LoraLoaderModelOnly"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found 2026-08-24 while placing a file Silas downloaded:
+      gemma-3-12b-it-abliterated_lora_rank64_bf16.safetensors, a rank-64 LoRA for the
+      GEMMA TEXT ENCODER that LTX uses (LTX_TEXT_ENCODER is
+      gemma_3_12B_it_fp4_mixed.safetensors in
+      server/api/comfy/ltx/utils/imageToVideoWorkflow.ts). It is registered as a Resource
+      but there is currently no way for the LTX graph to apply it.
+      Both LoRA nodes in that workflow are `LoraLoaderModelOnly` -- the distilled LTX
+      LoRA at the fixed node and the optional style LoRA at `video_lora` -- and
+      model-only loaders have no CLIP/text-encoder input by construction. So a text
+      encoder LoRA silently has no effect if someone selects it through
+      video-lora-picker, which is worse than refusing it.
+      TWO THINGS TO DECIDE:
+      (1) Wire a text-encoder LoRA path -- a loader with a clip input applied to the
+      LTXAVTextEncoderLoader output rather than to the model. Then abliteration is a
+      LoRA on top of the standard encoder instead of swapping in a whole separate
+      encoder, which matters because the alternative already registered
+      (gemma-3-12b-it-abliterated-sikaworld-high-fidelity-edition) is a 14.1 GB file
+      against a 12 GB card while the LoRA is small.
+      (2) Until then, make video-lora-picker refuse or visibly mark text-encoder LoRAs
+      rather than listing them alongside model LoRAs, so nobody picks one and wonders
+      why nothing changed. A silent no-op is the actual bug here.
+      Worth checking while in there whether MAX_LORAS_PER_JOB and the picker's filtering
+      distinguish LoRA target at all, or only by engine.
+
+  - id: t-070
+    milestone: m3
+    title: "ResourceType has no value for upscalers, so latent upscale models are filed as CHECKPOINT"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Small but it will keep biting. The ResourceType enum is CHECKPOINT, EMBEDDING,
+      LORA, LYCORIS, HYPERNETWORK, SAMPLER, CONTROLNET, URL, API, VAE, TEXT_ENCODER,
+      DIFFUSION_MODEL. There is no value for an upscaler of any kind, so
+      ltx-2.3-spatial-upscaler-x2-1.1 -- a LATENT upscale model loaded by
+      LatentUpscaleModelLoader from models/latent_upscale_models/ -- had to be registered
+      as CHECKPOINT on 2026-08-24, which is simply wrong and is flagged as a stopgap in
+      its own description.
+      This matters more now that conductor resolves engine models FROM the registry
+      (cthulhuquarium/t-034): resolution is keyed on resourceType, so a model filed under
+      the wrong type cannot be looked up correctly, and the localPath prefix-stripping
+      table is also keyed by type. A CHECKPOINT-typed row keeps its leading directory
+      while a DIFFUSION_MODEL-typed one has it stripped -- so the wrong type produces a
+      wrong path, silently.
+      Add LATENT_UPSCALER and UPSCALER (they are genuinely different things -- one
+      operates on latents and loads from models/latent_upscale_models/, the other on
+      pixels from models/upscale_models/), migrate the existing rows, and add the
+      matching prefix entries to conductor's _LOCALPATH_PREFIXES. The array already has
+      both directories on disk, so both kinds exist in practice.
