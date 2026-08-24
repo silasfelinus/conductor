@@ -1271,10 +1271,10 @@ tasks:
 - id: t-055
   milestone: m4
   title: Make Review Holds imports resumable and actionable
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  updated: '2026-08-24T22:08:30Z'
+  updated: '2026-08-24T22:15:00Z'
   note: |-
     User-reported live failure on 2026-08-19. Continuous Library Import resumes a saved job with hundreds
     of Review Holds, but clicking Import aborts the selected batch with a generic InternalError. Trace and
@@ -1290,6 +1290,9 @@ tasks:
     mypy and JavaScript syntax; Python 3.8-3.12, docs, PR container and post-merge publication all passed.
 
     Reopened from user-reported live testing on 2026-08-24. Editing a weak Library Import Review Hold opens the match-search modal, but submitting a title can leave the dialog blank with no results, no loading/error state, and enough repeated requests to make the tab appear frozen. Diagnose the metadata-provider search/edit path, preserve provider-neutral identities, make the search visibly terminal on success/empty/error, and prevent duplicate in-flight searches.
+  owner: worker
+  claimed_by: 20260824T2215Z-editmatch-7c4f
+  claimed_at: '2026-08-24T22:15:00Z'
 - id: t-056
   milestone: m7
   title: Make Metron a fully native metadata identity
