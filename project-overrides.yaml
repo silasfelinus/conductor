@@ -4,6 +4,16 @@
 # status:   active | continuous | paused | retired | finished
 # priority: low | normal | high | urgent
 # kind:     software | content | proposal | brainstorm (overrides roadmap kind for UI)
+#
+# liveUrl/channelKey/tabKey below (where present) are an informational mirror
+# only, kept in sync by hand. Kind Robots owns these presentation fields
+# directly via utils/projectPlacements.ts's PROJECT_PLACEMENTS map + PATCH
+# /api/projects/{id}. scripts/sync_projects.py (now a compatibility shim over
+# sync_kind_robots_projection.py) is a one-way, commit-stamped projection
+# sender for coordination state and does NOT push these three fields back to
+# kind_robots, despite older per-entry comments below saying otherwise (kind-
+# robots/t-066, 2026-08-24; see the coat-dance entry's own note for the same
+# correction made in-place there).
 
 overrides:
   - slug: kapowarr

@@ -2345,7 +2345,7 @@ tasks:
   - id: t-066
     milestone: m3
     title: "sample/new-section.md step 6 points implementers at the wrong source of truth for liveUrl/channelKey/tabKey"
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -2369,6 +2369,20 @@ tasks:
       override entries are commented "synced ... by sync_projects.py", which was true
       before that script became a one-way projection sender and is now misleading in the
       same direction.
-    updated: '2026-08-24T10:28:01Z'
+
+      DONE 2026-08-24: fixed `sample/new-section.md` step 6 in kind_robots
+      (silasfelinus/kind_robots#2067) to point at `PROJECT_PLACEMENTS` in
+      `utils/projectPlacements.ts` + `PATCH /api/projects/{id}` as the source of
+      truth, with `project-overrides.yaml` noted as an informational mirror only.
+      Fixed the same stale instruction (step 7 + completion checklist) in
+      `projects/ecosystem-map/TAB-INTEGRATION.md` here. For the ~25 per-project
+      "synced ... by sync_projects.py" comment blocks in `project-overrides.yaml`
+      itself: rather than hand-editing every entry (high conflict risk against the
+      concurrent sessions actively touching this file today), added one clarifying
+      preamble note at the top of the file stating the true current behavior and
+      cross-referencing this task, following the precedent already set in-place on
+      the coat-dance entry. Individual entry comments remain as historical text but
+      the preamble now supersedes them.
+    updated: '2026-08-24T10:32:36Z'
     claimed_by: claude-scheduled-20260824T102800Z-kr-t066
     claimed_at: '2026-08-24T10:28:01Z'
