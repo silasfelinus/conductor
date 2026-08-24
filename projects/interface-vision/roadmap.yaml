@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -3064,9 +3064,14 @@ tasks:
       Merged silasfelinus/kind_robots#2063 at b9c07071 after exact-head TypeScript, Gallery Progressive Rendering, Contract Tests, Entity Art Manager, ArtJob Provenance, access, layout, facet, narrative, and all other workflows completed successfully. Art Gallery is now DB-ArtCollection-first, generated art has canonical Generated Art membership, explicit ArtJob collection intent persists through completion, and Daily Dream/entity art inherits owned DB collection context.
 
       ArtCollection-authority slice is complete and merged as silasfelinus/kind_robots#2063. Return the multi-slice interface consistency umbrella to ready for the next bounded pass, preserving the established t-104 slice convention.
-    updated: '2026-08-24T09:24:23+00:00'
+
+      Silas explicitly asked to continue finishing the Kind Robots gallery upgrade after ArtCollection authority merged. Claim the next bounded t-104 slice for a remaining- gallery sweep: identify reachable gallery/list surfaces still using bespoke pagination, eager image hydration, or inconsistent gallery composition and migrate the highest-leverage set onto the shared progressive gallery contract.
+    updated: '2026-08-24 10:06:00+00:00'
     approved_by_human: true
     implementation_pr: 'silasfelinus/kind_robots#2063'
+    owner: worker
+    claimed_by: 2026-08-24T100600Z-interface-vision-t-104-gallery-sweep-k4m7
+    claimed_at: '2026-08-24 10:06:00+00:00'
 
   - id: t-105
     milestone: m6
