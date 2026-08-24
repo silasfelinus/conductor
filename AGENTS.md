@@ -394,7 +394,17 @@ value itself**, run `scripts/kr_token_set.sh` (or `source` it) rather than hand-
 probe: `${VAR:-no}` looks like a safe fallback but actually substitutes the live value
 once the variable is set, so a hand-rolled check can leak the token straight into a
 session's own tool-output transcript (root `TALKBACK.md`, 2026-08-12 and 2026-08-13, two
-independent sessions hit exactly this — conductor/t-116).
+independent sessions hit exactly this — conductor/t-116; a **third** independent
+recurrence, 2026-08-24, is logged in root `TALKBACK.md` and conductor/t-128 — that session
+had just finished reading this exact warning and reproduced it anyway seconds later in an
+unrelated ad hoc diagnostic one-liner, so treat "I already know the rule" as insufficient:
+literally never type `${SOME_SECRET_VAR:-...}` by hand for any secret-shaped variable, not
+just `KR_API_TOKEN`, not even in a quick debugging aside — always route through `-n`/`-z`
+or a script like this one). Relatedly: in this sandbox, shell environment variables do
+**not** persist between separate Bash tool invocations (each call starts a fresh shell
+from profile) — `source scripts/kr_token_set.sh` in one call has no effect on a later
+call's environment, so check presence in the *same* invocation that uses the token, not a
+prior one.
 
 **Visually verifying a front-end change: kind_robots production is self-hosted at
 `kindrobots.org`, not Vercel.** As of 2026-08-12 kind_robots migrated off Vercel

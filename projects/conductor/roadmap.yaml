@@ -4203,3 +4203,14 @@ tasks:
     claimed_by: 20260824T1435Z-sched-conductor-t127-guard
     claimed_at: '2026-08-24T14:39:32Z'
     implementation_pr: 'silasfelinus/conductor#2785'
+
+  - id: t-128
+    milestone: m2
+    title: "Third recurrence of the KR_API_TOKEN hand-probe leak -- strengthen AGENTS.md's warning"
+    status: done
+    gate_human: false
+    owner: reviewer
+    stakes: reversible
+    passes: 0
+    note: 'RESOLVED 2026-08-24 (same scheduled session that caused it). A session hand-typed `${KR_API_TOKEN:+SET}${KR_API_TOKEN:-UNSET}` as an ad hoc diagnostic one-liner -- immediately after reading scripts/kr_token_set.sh''s own header comment warning against exactly this pattern -- and leaked the live JWT into this session''s own Bash tool-output transcript. Sandbox-only, not committed to git, not transmitted externally, but a real leak into a place it does not need to be, per the same framing conductor/t-116 already used for the first two occurrences (2026-08-12, 2026-08-13). Logged in full in root TALKBACK.md 2026-08-24. Since a strongly-worded comment on the script itself did not prevent a third recurrence by an agent that had just read it, strengthened AGENTS.md''s own reference (not just the script) to be explicit that this rule covers any secret-shaped variable in any context, including throwaway debugging, and documented the actual proximate cause of why this session reached for a hand probe in the first place: this sandbox does not persist shell env vars between separate Bash tool calls, so an earlier `source scripts/kr_token_set.sh` call silently had no effect on a later call, inviting exactly this kind of improvised recheck. Recommended action for Silas (open, not this task''s to resolve): rotate KR_API_TOKEN out of caution given a live JWT sat in a session transcript, even though scope is sandbox-only. No code change beyond documentation; no roadmap/task-state mutation needed elsewhere.'
+    updated: '2026-08-24T21:45:00Z'
