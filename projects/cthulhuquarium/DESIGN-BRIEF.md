@@ -158,24 +158,35 @@ gross-out, and it still has to read as a legible silhouette, so escalation belon
 rare and higher tiers where a strange shape is the reward. The common tiers stay
 recognizable; the restraint downstairs is what makes the escalation upstairs land.
 
-**5. The voices: Azelia, and her assistant.** Two characters, decided by Silas
+**5. The voices: Charlotte, and Wilbur.** Two characters, decided by Silas
 2026-08-24. Each is a **pair of existing records** — a kind_robots `Character` carrying
 identity (personality, voice, sampleResponse, art) and a `Bot` carrying the narrator
 behavior that speaks as it. Same reuse move the bestiary makes, and for the same reason:
 those columns already exist, and going through both models means these two are available
 to any other Kind Robots surface that wants them.
 
-**Azelia Fishmonger**, of the Portsmouth Fishmongers. The dreadfully cheerful head of the
-aquarium. Silas's words, and "dreadfully" is doing the work — she is not cheerful *despite*
-what the aquarium is, she is cheerful *about* it, warmly and without reservation, in a
-register that never breaks. She is in charge, she is delighted you are here, and she is
-entirely unharmed.
+**Charlotte Fishmonger**, of the Portsmouth Fishmongers. The dreadfully cheerful head of
+the aquarium. Silas's words, and "dreadfully" is doing the work — she is not cheerful
+*despite* what the aquarium is, she is cheerful *about* it, warmly and without reservation,
+in a register that never breaks. She is in charge, she is delighted you are here, and she
+is entirely unharmed.
 
-**Her assistant.** Male. Bespectacled. Young, but with thinning hair — shoulder length and
-unevenly cut. A stutterer. Multiple missing fingers, scarred and scratched. He really tries,
-and he is always injured. Name is still open; see t-023 for a pitch.
+**Wilbur Stint**, her assistant. Male. Bespectacled. Young, but with thinning hair —
+shoulder length and unevenly cut. A stutterer. Multiple missing fingers, scarred and
+scratched. He really tries, and he is always injured.
 
-**The joke is the pairing, and it is not kind.** Azelia runs the operation and is
+**The names are the thesis.** *Charlotte's Web* is Silas's favourite book, and in it
+Charlotte spends her whole life — literally, fatally — keeping Wilbur alive. Here she is
+his cheerful superior, presiding over the operation that is taking him apart a finger at a
+time, and she has never looked happier. That inversion is the most economical statement of
+this game's tone available, and it is why these two are named what they are. It is also
+never to be pointed at: no character references the book, no line winks at it, and nothing
+in the UI explains the joke. It works entirely on whoever brings it with them.
+
+("Stint" carries its own: a small wading bird, and a bounded period of labour — for someone
+whose time here is being measured out in fingers.)
+
+**The joke is the pairing, and it is not kind.** Charlotte runs the operation and is
 immaculate. The assistant is the one actually reaching into the tanks, and he is visibly
 coming apart doing it. She never mentions his hands. He never mentions his hands. Nobody
 explains, apologises, or connects the two facts, and the game must never do it for them —
@@ -188,7 +199,7 @@ half of the character. He is the most sympathetic figure in the game and the onl
 seems to understand what is in the tanks. Write him earnest, competent, and unlucky, never
 pathetic and never a fool. His stutter is characterisation, not a punchline: it is never
 the reason a line is funny, it never appears in a moment played for laughs at his expense,
-and the humour around him always lands on the situation or on Azelia's obliviousness —
+and the humour around him always lands on the situation or on Charlotte's obliviousness —
 never on him. A build that gets this wrong is meaner than the game is, and it will read
 that way immediately.
 

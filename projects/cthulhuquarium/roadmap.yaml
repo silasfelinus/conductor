@@ -506,45 +506,47 @@ tasks:
     stakes: reversible
     depends_on: t-013
     note: >
-      Two characters, specified by Silas 2026-08-24. Full direction in DESIGN-BRIEF.md
-      decision 5; this note carries what an implementer needs. AZELIA FISHMONGER, of the
-      Portsmouth Fishmongers -- "The dreadfully cheerful head of the aquarium." Silas's
-      words. "Dreadfully" is load-bearing: she is not cheerful despite what the aquarium
-      is, she is cheerful about it, warmly, in a register that never breaks. She runs the
-      place, she is delighted you are here, and she is entirely unharmed. HER ASSISTANT --
-      male, bespectacled, young but with thinning hair, shoulder length and unevenly cut,
-      a stutterer, multiple missing fingers, scarred and scratched. "really tries but
-      always injured." THE PAIRING IS THE JOKE, and it is not kind. She is immaculate and
-      in charge; he is the one actually reaching into the tanks and is visibly coming
-      apart doing it. Neither ever mentions his hands, nobody connects the two facts, and
-      NOTHING IN THE GAME MAY EXPLAIN IT. The moment any line acknowledges it out loud the
-      joke dies and takes the tone with it. HE HAS DIGNITY -- hard rule, and the easiest
-      thing in this task to get wrong. "Really tries" is the load-bearing half of him:
-      write him earnest, competent, and unlucky, never pathetic and never a fool. He is
-      the most sympathetic figure in the game and the only one who seems to understand
-      what is in the tanks. His stutter is characterisation, not a punchline -- it is
-      never the reason a line is funny, never appears in a beat played for laughs at his
-      expense, and the humour around him lands on the situation or on Azelia's
-      obliviousness, never on him. A build that gets this wrong is meaner than the game is
-      and will read that way immediately. If a line is only funny because of how he talks,
-      cut it. NAME still open. Agent pitch for Silas to take or override in one word:
-      WILBUR STINT -- a stint is both a small wading bird and a bounded period of labour,
-      which is quietly grim for someone whose time here is visibly being measured out in
-      fingers. Do not ship a Character record under a pitched name without Silas
-      confirming it; ask, or use a working name and flag it. BUILD SHAPE: each voice is a
-      `Character` row (identity: personality, voice, sampleResponse, backstory, quirks,
-      art) PAIRED with a `Bot` row (narrator behavior that speaks as it). Do not invent a
-      Cthulhuquarium-private narrator table -- those columns already exist, Bot already
-      has the narrator wiring, and going through both means these two are reusable by any
-      other Kind Robots surface. The missing fingers belong in the Character record and
-      the art prompt; they are never accounted for in dialogue. Authored text only.
-      Nothing in this game makes a live model call at runtime (same offline constraint
-      ruler-hooked holds), so the reaction system is authored lines selected by game
-      state, not generation. Scope it before writing: a voice that speaks too often stops
-      being a voice and becomes a tooltip. Field notes stay a third, unattributed register
-      -- do not retro-assign them to either character without asking. Generated art for
-      both follows the standing 2026-07-06 rule: no per-image approval needed, preserve
-      prompt/model/seed metadata.
+      Two characters, NAMED AND SETTLED by Silas 2026-08-24. Full direction in DESIGN-
+      BRIEF.md decision 5; this note carries what an implementer needs. CHARLOTTE
+      FISHMONGER, of the Portsmouth Fishmongers -- "the dreadfully cheerful head of the
+      aquarium." "Dreadfully" is load-bearing: she is not cheerful despite what the
+      aquarium is, she is cheerful about it, warmly, in a register that never breaks. She
+      runs the institution -- the Portsmouth Fishmongers is a real concern and the
+      player's tank is one of its holdings, so she is the player's cheerful superior
+      rather than someone who sold them a thing once (Silas confirmed "head of aquarium"
+      over "shopkeeper"). She is entirely unharmed. WILBUR STINT, her assistant -- male,
+      bespectacled, young but with thinning hair, shoulder length and unevenly cut, a
+      stutterer, multiple missing fingers, scarred and scratched. "really tries but always
+      injured." THE NAMES ARE THE THESIS. Charlotte's Web is Silas's favourite book; in it
+      Charlotte spends her life keeping Wilbur alive. Here she is his cheerful superior,
+      presiding over the operation taking him apart a finger at a time. NEVER POINT AT IT:
+      no character references the book, no line winks at it, nothing in the UI explains
+      it. It works entirely on whoever brings it with them, and explaining it destroys it.
+      THE PAIRING IS THE JOKE, and it is not kind. She is immaculate and in charge; he is
+      the one actually reaching into the tanks and is visibly coming apart doing it.
+      Neither ever mentions his hands, nobody connects the two facts, and NOTHING IN THE
+      GAME MAY EXPLAIN IT. WILBUR HAS DIGNITY -- hard rule, and the easiest thing in this
+      task to get wrong. "Really tries" is the load-bearing half of him: write him
+      earnest, competent, and unlucky, never pathetic and never a fool. He is the most
+      sympathetic figure in the game and the only one who seems to understand what is in
+      the tanks. His stutter is characterisation, not a punchline -- never the reason a
+      line is funny, never in a beat played for laughs at his expense, and the humour
+      around him lands on the situation or on Charlotte's obliviousness, never on him. If
+      a line is only funny because of how he talks, cut it. A build that gets this wrong
+      is meaner than the game is and will read that way immediately. BUILD SHAPE: each
+      voice is a `Character` row (identity: personality, voice, sampleResponse, backstory,
+      quirks, art) PAIRED with a `Bot` row (narrator behavior that speaks as it). Do not
+      invent a Cthulhuquarium-private narrator table -- those columns already exist, Bot
+      already has the narrator wiring, and going through both means these two are reusable
+      by any other Kind Robots surface. Wilbur's missing fingers belong in the Character
+      record and the art prompt; they are never accounted for in dialogue. Authored text
+      only. Nothing in this game makes a live model call at runtime (same offline
+      constraint ruler-hooked holds), so the reaction system is authored lines selected by
+      game state, not generation. Scope it before writing: a voice that speaks too often
+      stops being a voice and becomes a tooltip. Field notes stay a third, unattributed
+      register -- do not retro-assign them to either character without asking. Generated
+      art for both follows the standing 2026-07-06 rule: no per-image approval needed,
+      preserve prompt/model/seed metadata.
 
   - id: t-024
     milestone: m3
