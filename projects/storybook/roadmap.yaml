@@ -286,8 +286,65 @@ tasks:
     this task's history), or take a fresh top-level read of
     storybook-page.vue's review/story-bible section end to end for the first
     time since cycle 30's kaizen first named it.
+
+    Cycle 36 (real fix; conductor scheduled Agent run, session
+    claude-scheduled-20260824T042631Z-storybook-t010): took cycle 35's own
+    stated lead -- "Pinia persistence edge cases for
+    storybookStore.ts/taskmasterStore.ts have not had a dedicated pass in this
+    task's history" -- and found a real correctness-class bug rather than
+    another no-op. taskmasterStore.ts's saveToLocalStorage() was the ONE
+    unguarded localStorage writer left in the narrative family:
+    storybookStore.ts's persist(), storybookLibraryHelper.ts's
+    persistLibrary(), and persistedNarrativeArtJobsHelper.ts's
+    writeLocalStorage() all already swallow a failed write with an explicit
+    private-browsing/quota comment, and verifyNarrativeArtPersistence.mjs's own
+    header calls the two stores "byte-for-byte the same shape."
+
+    A setItem throwing QuotaExceededError -- routine once a long quest's beats
+    have grown the serialized session, immediate in a Safari private window --
+    propagated out of all ten call sites. Traced each rather than asserting the
+    class: (a) updateBeatArt() is the art-job update callback invoked from
+    narrativeArtJobsHelper's `void poll(...)`/`void submit(...)`, neither of
+    which catches, so the throw both became an unhandled rejection AND killed
+    that beat's poll loop -- the illustration then never resolved and never
+    reached 'failed', so NarrativeArtStatus (retry only renders on 'failed')
+    offered no retry affordance; this is the sharpest one. (b)
+    answerCurrentBeat(), prepareQuest(), startQuest() and resetSession() are all
+    reached from taskmaster-page.vue with no .catch(), so the throw surfaced as
+    an unhandled rejection instead of the store's own errorMessage. (c)
+    weaveBeat()'s call IS inside its own try/catch -- but only reached after
+    active.beats.push(beat) had already committed the beat in memory, so it
+    returned false and showed a raw browser quota string for a beat that had in
+    fact been woven, and skipped that beat's requestBeatArt().
+
+    Fixed by wrapping saveToLocalStorage()'s body in try/catch, mirroring
+    persist()'s shape exactly. Also added the matching lockstep assertion over
+    BOTH stores' writers to verifyNarrativeArtPersistence.mjs so neither can
+    silently drift back to unguarded -- narrative-art-persistence-contract.yml
+    runs on every PR with no path filter, so it is CI-enforced. Verified the new
+    assertion actually catches the regression (it fails against the pre-fix
+    taskmasterStore.ts and passes after) rather than being vacuously true.
+
+    Verified: node utils/scripts/verifyNarrativeArtPersistence.mjs passes; npm
+    run test (vue-tsc --noEmit) repo-wide exit 0; npm run test:storybook all 22
+    contracts pass; eslint clean on both changed files; both new blocks
+    byte-identical to prettier's own output (the two files' remaining --check
+    warnings are pre-existing drift present on main unchanged, re-confirmed with
+    the change stashed); git status --porcelain scoped to exactly 2 files.
+    Merged as silasfelinus/kind_robots#2059 (squash
+    5cbd97cca07b409045b661b06d811c575e01703f), all 36 checks green.
+
+    Re-armed to `ready`, same convention as cycles 30-35. Next lead for cycle
+    37: this pass covered the localStorage WRITE path; the READ path still
+    differs between the two stores -- storybookStore.restoreFromLocalStorage()
+    reads getItem inside its try, taskmasterStore.restoreFromLocalStorage()
+    reads it outside, and Taskmaster has no equivalent of Storybook's
+    restoredFromStorage one-time guard (it guards on session.value instead,
+    sufficient for its single mount site but not the same invariant). Worth
+    checking whether Taskmaster has a mount-order race of the kind
+    verifyStorybookRestoreIdempotencyGuard covers for Storybook.
   updated: '2026-08-24T04:42:15Z'
-  implementation_pr: 'silasfelinus/kind_robots#2054, silasfelinus/kind_robots#2056'
+  implementation_pr: 'silasfelinus/kind_robots#2054, silasfelinus/kind_robots#2056, silasfelinus/kind_robots#2059'
   owner: worker
   claimed_by: claude-scheduled-20260824T042631Z-storybook-t010
   claimed_at: '2026-08-24T04:28:18Z'
@@ -485,3 +542,27 @@ tasks:
   claimed_at: '2026-08-15T07:32:56Z'
   updated: '2026-08-15T07:49:33Z'
   implementation_pr: 'silasfelinus/kind_robots#1894'
+- id: t-023
+  milestone: m4
+  title: Audit taskmasterStore's localStorage READ path against Storybook's restore guards
+  status: ready
+  passes: 0
+  stakes: reversible
+  owner: worker
+  note: >
+    Kaizen from t-010 cycle 36 (kind_robots PR #2059). That cycle guarded the WRITE path --
+    taskmasterStore.ts's saveToLocalStorage() was the one unguarded localStorage writer in the
+    narrative family -- and added a lockstep assertion so neither store's writer can drift back.
+    The READ path was left un-audited and still differs between the two stores in two concrete
+    ways: (1) storybookStore.restoreFromLocalStorage() reads getItem INSIDE its try, while
+    taskmasterStore.restoreFromLocalStorage() reads it outside, so a throwing getItem escapes
+    into taskmaster-page.vue's onMounted; (2) Storybook carries a restoredFromStorage one-time
+    flag (added in cycle 28 for a real parent/child double-mount overwrite, covered by
+    verifyStorybookRestoreIdempotencyGuard), while Taskmaster guards on session.value instead --
+    sufficient for its single mount site today, but not the same invariant, and it would not
+    survive a second component mounting the page the way storybook-library-page.vue wraps
+    storybook-page.vue. Scope: determine whether Taskmaster actually has a reachable mount-order
+    race (do not assume from the asymmetry alone -- cycle 36's own lesson is that a parity gap
+    is only a bug when the two sides are genuinely the same kind of moment); move the getItem
+    inside the try regardless, since that one is unambiguous; and extend the contract assertion
+    to cover the read path if a real invariant is established. Small, reversible, self-contained.
