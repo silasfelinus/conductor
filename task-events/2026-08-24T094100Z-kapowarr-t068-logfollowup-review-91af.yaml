@@ -1,0 +1,8 @@
+version: 1
+project: kapowarr
+task: t-068
+operation: review
+session: 2026-08-24T093800Z-kapowarr-t068-logfollowup-91af
+updated: '2026-08-24T09:41:00Z'
+note: >-
+  Candidate fix is ready on worker/kapowarr-t-068-log-error-semantics-91af. fetch_volume_with_fallback now preserves the original ComicVine rate-limit/API-key exception when configured Metron cannot rescue the CV-linked volume, so Continuous Library Import reaches its existing cooldown/retry handler instead of a generic task ERROR. Update All now shares the continuous_import writer lane, preventing the production-observed concurrent volume_files SQLite write while unrelated default-lane work remains concurrent. Added regressions for the CV-rate-limit/Metron-miss case, unexpected fallback bugs, and Update All queueing behind continuous import. Branch is four intended files and 0 commits behind main; full Actions will run on the PR head.
