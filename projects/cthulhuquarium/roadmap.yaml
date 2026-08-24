@@ -826,7 +826,7 @@ tasks:
   - id: t-032
     milestone: m2
     title: "Extend the aquarium schema for every decision made after t-007 shipped"
-    status: ready
+    status: review
     owner: null
     passes: 0
     stakes: reversible
@@ -867,6 +867,8 @@ tasks:
       key by `(userId, slug)`; the shipped schema used a global unique instead. Move to
       `@@unique([userId, slug])`. This is a live bug the moment a second user names a tank
       anything obvious, and it is much cheaper to fix now than after real rows exist.
+    updated: '2026-08-24T22:40:20Z'
+    implementation_pr: 'silasfelinus/kind_robots#2075'
   - id: t-033
     milestone: m1
     title: "Render box cannot load two of three text encoders — art generation is blocked at ComfyUI, not at the queue"
