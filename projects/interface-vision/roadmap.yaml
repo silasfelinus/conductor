@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -3060,9 +3060,10 @@ tasks:
       Slice merged as silasfelinus/kind_robots#2062 (squash f46fb1708dbcd635f85d2d65b4b68828bcd297a8). The progressive-gallery refactor described above landed: kr-gallery renders the full lightweight filtered index with no pager, content-visibility containment establishes cheap scroll geometry for thousands of shells, and a pooled viewport observer defers image src assignment (kr-deferred-image) and heavy ArtImage/authenticated-blob hydration until near-viewport across shared entity art, Resources, Checkpoints, Facets, Stylist client galleries, and the bespoke Art Gallery. A focused Gallery Progressive Rendering CI contract now fails on any pagination/eager-hydration regression. Caught and fixed one real vue-tsc failure during review (itemVisibilityStyle's inferred contentVisibility widened to string instead of the CSS literal union) -- the Worker session pushed the identical typed-CSSProperties fix concurrently before this session's own redundant commit could land, so no duplicate commit was pushed. All 40 exact-head PR checks completed successfully (TypeScript, Progressive rendering, layout-contract, facet-catalog, Contract verifiers, and the full Storybook/Narrative contract suite), mergeable_state clean. No schema, migration, production data, billing, secrets, or deployment changes. Return the non-recurring consistency umbrella to ready for the next bounded slice, per this task's established convention.
 
       ArtCollection-authority follow-up is ready for review on worker/interface-vision-t-104-art-collection-authority-b7q2. Art Gallery no longer enumerates or materializes filesystem folders during normal browsing. The first layer loads DB ArtCollection summaries with one preview and authoritative counts; opening a saved collection fetches only that collection's lightweight ArtImages; Unsorted is derived directly from ArtImages with no ArtCollection relation while reusing normal art visibility/maturity policy. Folder sync remains available in collectionStore as maintenance/import tooling. Existing generation save flow already connects selected ArtCollection membership atomically with ArtImage metadata. No schema or production-data changes.
-    updated: '2026-08-24T08:23:00Z'
+
+      Merged silasfelinus/kind_robots#2063 at b9c07071 after exact-head TypeScript, Gallery Progressive Rendering, Contract Tests, Entity Art Manager, ArtJob Provenance, access, layout, facet, narrative, and all other workflows completed successfully. Art Gallery is now DB-ArtCollection-first, generated art has canonical Generated Art membership, explicit ArtJob collection intent persists through completion, and Daily Dream/entity art inherits owned DB collection context.
+    updated: '2026-08-24T09:23:15+00:00'
     approved_by_human: true
-    owner: worker
     claimed_by: 2026-08-24T081500Z-interface-vision-t-104-art-collections-b7q2
     claimed_at: '2026-08-24T08:15:00Z'
     implementation_pr: 'silasfelinus/kind_robots#2062'
@@ -3070,7 +3071,7 @@ tasks:
   - id: t-105
     milestone: m6
     title: "Polish every reachable Kind Robots surface page-by-page"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
