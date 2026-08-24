@@ -46,6 +46,7 @@ jobs:
           git sparse-checkout set --no-cone \
             '/projects/*/roadmap.yaml' \
             '/task-events/*.yaml' \
+            '/task-events/failed/*' \
             '/scripts/*.py' \
             '/LEARNING.yaml'
           git fetch --quiet --filter=blob:none --depth=2 origin main

@@ -1101,6 +1101,102 @@ class TaskEventProcessorTests(unittest.TestCase):
         self.assertTrue(event.exists())
         self.assertEqual(self.roadmap()["tasks"][0]["status"], "review")
 
+    def test_unsupported_operation_is_quarantined_not_left_stuck(self):
+        # conductor/t-127: an event whose operation the processor has never
+        # supported can never become valid by retrying -- it must be moved out
+        # of the active queue, not left to fail this same job forever.
+        path = self.write_event(
+            "bad-op.yaml",
+            {"version": 1, "project": "demo", "task": "t-001", "operation": "note"},
+        )
+        result = MODULE.process(path, dry_run=False)
+        self.assertIn("QUARANTINED", result)
+        self.assertFalse(path.exists())
+        target = self.root / "task-events" / "failed" / "bad-op.yaml"
+        self.assertTrue(target.exists())
+        error_note = target.parent / "bad-op.yaml.error.txt"
+        self.assertIn("unsupported operation", error_note.read_text(encoding="utf-8"))
+        # The active queue no longer sees it, so a later run won't re-fail on it.
+        self.assertNotIn(path, MODULE.event_files())
+        task = self.roadmap()["tasks"][0]
+        self.assertEqual(task["status"], "ready", "malformed event must not mutate the roadmap")
+
+    def test_invalid_yaml_is_quarantined(self):
+        path = self.root / "task-events" / "broken.yaml"
+        path.write_text("project: [unterminated", encoding="utf-8")
+        result = MODULE.process(path, dry_run=False)
+        self.assertIn("QUARANTINED", result)
+        self.assertFalse(path.exists())
+        self.assertTrue((self.root / "task-events" / "failed" / "broken.yaml").exists())
+
+    def test_unknown_project_is_quarantined(self):
+        path = self.write_event(
+            "bad-project.yaml",
+            {"version": 1, "project": "nonexistent-project", "task": "t-001", "operation": "claim"},
+        )
+        result = MODULE.process(path, dry_run=False)
+        self.assertIn("QUARANTINED", result)
+        self.assertTrue((self.root / "task-events" / "failed" / "bad-project.yaml").exists())
+
+    def test_quarantine_dry_run_leaves_event_in_place(self):
+        path = self.write_event(
+            "bad-op.yaml",
+            {"version": 1, "project": "demo", "task": "t-001", "operation": "note"},
+        )
+        result = MODULE.process(path, dry_run=True)
+        self.assertIn("WOULD QUARANTINE", result)
+        self.assertTrue(path.exists())
+        self.assertFalse((self.root / "task-events" / "failed").exists())
+
+    def test_live_state_failure_is_not_quarantined(self):
+        # "claim requires status ready" is a live-state failure -- it can become
+        # valid later (e.g. once the task rearm/rejects back to ready) and must
+        # stay in the active queue, unlike a structurally malformed event.
+        path = self.write_event(
+            "not-ready.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-002",  # status: waiting in setUp, not claimed/ready
+                "operation": "claim",
+                "session": "sess-new",
+            },
+        )
+        with self.assertRaises(ValueError):
+            MODULE.process(path, dry_run=False)
+        self.assertTrue(path.exists(), "live-state failures stay queued for retry")
+        self.assertFalse((self.root / "task-events" / "failed").exists())
+
+    def test_main_reports_error_and_continues_after_quarantining(self):
+        bad = self.write_event(
+            "bad-op.yaml",
+            {"version": 1, "project": "demo", "task": "t-001", "operation": "note"},
+        )
+        good = self.write_event(
+            "good-claim.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "claim",
+                "session": "sess-A",
+            },
+        )
+        original_resolver = MODULE.run_resolver
+        original_argv = sys.argv
+        MODULE.run_resolver = lambda dry_run: None
+        sys.argv = ["process_task_events.py"]
+        try:
+            exit_code = MODULE.main()
+        finally:
+            MODULE.run_resolver = original_resolver
+            sys.argv = original_argv
+
+        self.assertEqual(exit_code, 1, "the run that quarantines still fails visibly once")
+        self.assertFalse(bad.exists())
+        self.assertTrue((self.root / "task-events" / "failed" / "bad-op.yaml").exists())
+        self.assertFalse(good.exists(), "a sibling valid event still applies in the same run")
+
     def test_main_applies_valid_events_even_when_an_earlier_one_fails(self):
         # "bad-claim" sorts before "good-claim" alphabetically, reproducing the
         # queue-head-of-line-blocking bug: a single unresolvable event must not

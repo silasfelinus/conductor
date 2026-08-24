@@ -63,6 +63,24 @@ class TaskEventCollision(Exception):
     """
 
 
+class MalformedTaskEvent(ValueError):
+    """An event whose fixed shape can never apply -- no roadmap state, retry, or
+    passage of time will fix bad YAML, an unsupported operation, or a missing
+    project/task/operation field. Distinct from a plain ValueError raised later
+    against *live* roadmap state (e.g. "claim requires status ready"), which can
+    become valid on a later run and must stay queued for that.
+
+    conductor/t-127: validate_task_events.py normally catches exactly this class
+    of defect at PR time, but an event can also reach `main` directly (the Atomic
+    claim protocol's connector-only direct-push path in task-events/README.md),
+    bypassing that gate entirely. Three `operation: note` events did exactly this
+    on 2026-08-24 and jammed the process job on every subsequent conductor PR and
+    scheduled run until Silas quarantined them by hand (commit cafdefc). process()
+    catches this exception and moves the offending file to task-events/failed/
+    instead of leaving it to fail forever in the active queue.
+    """
+
+
 def load_yaml(path: Path) -> dict[str, Any]:
     data = yaml.safe_load(path.read_text(encoding="utf-8"))
     if not isinstance(data, dict):
@@ -484,22 +502,69 @@ def write_learning_record(record: dict[str, Any]) -> None:
         path.write_text("records:\n" + fragment, encoding="utf-8")
 
 
-def process(path: Path, dry_run: bool) -> str:
-    event = load_yaml(path)
-    version = event.get("version", 1)
-    if version != 1:
-        raise ValueError(f"unsupported event version {version!r}")
+def parse_event_shape(path: Path) -> tuple[dict[str, Any], str, str, str]:
+    """Load `path` and validate the fixed shape every event must have, returning
+    `(event, project, task_id, operation)`.
 
-    project = require_string(event, "project", PROJECT_RE)
-    task_id = require_string(event, "task", TASK_RE)
-    operation = require_string(event, "operation")
-    if operation not in ALLOWED_OPERATIONS:
-        raise ValueError(f"unsupported operation {operation!r}")
+    Raises MalformedTaskEvent for any defect no amount of retrying could ever
+    resolve: invalid YAML, an unsupported version, a missing/invalid
+    project/task/operation field, an operation this processor has never heard
+    of, or a project with no roadmap.yaml. These are the same checks
+    validate_task_events.py runs at PR time -- this is the last-resort net for
+    an event that reached `main` some other way (see MalformedTaskEvent).
+    """
+    try:
+        event = load_yaml(path)
+    except (ValueError, yaml.YAMLError) as error:
+        raise MalformedTaskEvent(f"cannot load event: {error}") from error
+
+    try:
+        version = event.get("version", 1)
+        if version != 1:
+            raise ValueError(f"unsupported event version {version!r}")
+
+        project = require_string(event, "project", PROJECT_RE)
+        task_id = require_string(event, "task", TASK_RE)
+        operation = require_string(event, "operation")
+        if operation not in ALLOWED_OPERATIONS:
+            raise ValueError(f"unsupported operation {operation!r}")
+
+        roadmap_path = ROOT / "projects" / project / "roadmap.yaml"
+        if not roadmap_path.is_file():
+            raise ValueError(f"unknown project roadmap: {roadmap_path.relative_to(ROOT)}")
+    except ValueError as error:
+        raise MalformedTaskEvent(str(error)) from error
+
+    return event, project, task_id, operation
+
+
+def quarantine_event(path: Path, reason: str) -> Path:
+    """Move a permanently-malformed event out of the active queue into
+    task-events/failed/, so it stops failing every subsequent processor run,
+    without silently discarding it -- a sibling `<name>.error.txt` records why
+    and when, so Silas or a later session can recover the original file's
+    content if it's worth reapplying by hand. Returns the new path.
+    """
+    failed_dir = EVENT_DIR / "failed"
+    failed_dir.mkdir(parents=True, exist_ok=True)
+    target = failed_dir / path.name
+    stamp = dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat()
+    path.rename(target)
+    error_path = target.parent / f"{target.name}.error.txt"
+    error_path.write_text(f"QUARANTINED {stamp}\n{reason}\n", encoding="utf-8")
+    return target
+
+
+def process(path: Path, dry_run: bool) -> str:
+    try:
+        event, project, task_id, operation = parse_event_shape(path)
+    except MalformedTaskEvent as error:
+        if dry_run:
+            return f"{path.name}: WOULD QUARANTINE (malformed, never applicable) -- {error}"
+        quarantine_event(path, str(error))
+        return f"{path.name}: QUARANTINED (malformed, moved to task-events/failed/) -- {error}"
 
     roadmap_path = ROOT / "projects" / project / "roadmap.yaml"
-    if not roadmap_path.is_file():
-        raise ValueError(f"unknown project roadmap: {roadmap_path.relative_to(ROOT)}")
-
     roadmap_text = roadmap_path.read_text(encoding="utf-8")
     roadmap = yaml.safe_load(roadmap_text)
     if not isinstance(roadmap, dict):
@@ -626,7 +691,13 @@ def main() -> int:
     had_error = False
     for path in files:
         try:
-            print(process(path, args.dry_run))
+            result = process(path, args.dry_run)
+            print(result)
+            if "QUARANTINED" in result:
+                # Surface it loudly this one run (README's documented "workflow
+                # fails visibly" contract) -- but the file is now out of
+                # event_files()'s glob, so it will not fail every run after this.
+                had_error = True
         except Exception as error:
             had_error = True
             print(f"ERROR {path.relative_to(ROOT)}: {error}", file=sys.stderr)

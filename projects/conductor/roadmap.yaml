@@ -4196,7 +4196,7 @@ tasks:
   - id: t-127
     milestone: m2
     title: "task-events `operation: note` is unsupported, so three stuck events fail the process job on every conductor PR"
-    status: claimed
+    status: review
     gate_human: false
     owner: worker
     stakes: reversible
@@ -4238,6 +4238,6 @@ tasks:
       to sit in the queue failing every subsequent run. Consider moving permanently-failed
       events to task-events/failed/ after N attempts so the job reports them once and then
       goes green, instead of re-failing forever on the same three files.
-    updated: '2026-08-24T14:39:32Z'
+    updated: '2026-08-24T14:40:35Z'
     claimed_by: 20260824T1435Z-sched-conductor-t127-guard
     claimed_at: '2026-08-24T14:39:32Z'
