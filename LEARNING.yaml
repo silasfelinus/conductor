@@ -10204,3 +10204,31 @@ records:
     logs showed it passed and finished cleanup ~11 minutes before the check-run API reported
     completion) -- confirmed via job logs rather than assumed, and merged once confirmed rather
     than re-running blind.
+- date: '2026-08-24'
+  project: brainstorm
+  task: t-031
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Task scope (add a real "promote candidate into an entity" action, carrying its art
+    across) explicitly flagged its own hardest design question -- meta.art.imageIds is an
+    array, the target entity's art model (entityArt.ts) is one scalar id per slot -- rather
+    than leaving it implicit; tracing the array's one mutation site to confirm it was
+    append-only (so "last entry" unambiguously means "most recent delivery") turned a
+    could-have-been-a-guess into an evidence-based, one-line design decision. Also: before
+    implementing, re-verified the prior task's (t-026) negative "no such action exists"
+    finding rather than trusting it blind -- doing so surfaced the one precedent that DOES
+    exist (promptStore.promoteToDream / dreamStore.promotePromptToDream) but is dead code,
+    called from nowhere, which shaped which store to add the new function to and confirmed
+    this was genuinely the first promotion pattern with a live caller. A UI wiring change
+    that adds a new busy/loading state needs to check what the busy prop passed to the child
+    component actually depends on, not just add the new emit -- isCandidateBusy here only
+    checked state that regenerate/branch's shared runGeneration() call sets, so the new
+    promote action's spinner would have silently never appeared without also folding
+    pendingCandidateAction into that check. Third occurrence this session of the over-broad
+    `prettier --write` trap (storybook/t-023, then here) -- worth normalizing as a standing
+    habit: check `git diff --stat` immediately after any `prettier --write`, before staging,
+    on any file with pre-existing formatting drift.
