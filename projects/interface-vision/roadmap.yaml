@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-103
@@ -3084,12 +3084,13 @@ tasks:
       Continue the gallery-provider finish pass after kind_robots#2068. Audit and slim the Reward list provider, which currently includes full ArtImage, Character, Dream, Reaction, and User relation graphs for every gallery item, while preserving any relationship metadata live callers actually need and keeping rich detail hydration on the per-Reward endpoint.
 
       Reward gallery provider slice is ready for review. The net implementation removes catalog-wide Reward relation hydration from GET /api/rewards while preserving every Reward scalar, existing visibility/order behavior, lazy ArtImage-by-id card hydration, and the rich relation graph on GET /api/rewards/:id. Regression coverage now locks those browse/detail seams.
-    updated: '2026-08-24 11:28:00+00:00'
+
+      Merged silasfelinus/kind_robots#2069 as 620c006 after every exact-head workflow completed successfully, including TypeScript, Gallery Progressive Rendering, Layout, Facet Catalog, and all 298 Contract Tests verifier stages. Reward catalog rows now avoid ArtImage, Character, Dream, Reaction, and User relation graphs while rich by-id detail and lazy near-viewport art remain.
+
+      Reward gallery provider slice is complete and merged as silasfelinus/kind_robots#2069. Return the reusable front-end consistency umbrella to ready for the next bounded gallery-provider pass.
+    updated: '2026-08-24 11:32:01+00:00'
     approved_by_human: true
-    implementation_pr: 'silasfelinus/kind_robots#2068'
-    owner: worker
-    claimed_by: 2026-08-24T112600Z-interface-vision-t-104-reward-gallery-q8n5
-    claimed_at: '2026-08-24 11:26:00+00:00'
+    implementation_pr: 'silasfelinus/kind_robots#2069'
 
   - id: t-105
     milestone: m6
