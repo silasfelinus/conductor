@@ -1558,7 +1558,7 @@ tasks:
 - id: t-068
   milestone: m8
   title: Identify which Kapowarr page is still slow after the review-holds fix
-  status: done
+  status: ready
   passes: 0
   stakes: reversible
   note: |-
@@ -1569,9 +1569,9 @@ tasks:
     Root cause narrowed to the Volumes gallery render path. The earlier batching change revealed the first 50 entries sooner but still drained every remaining volume into the DOM in background batches; Safari's setTimeout fallback makes that especially eager. Filtering to Wanted shortens that work, which matches the live report. Branch worker/kapowarr-t-068-gallery-render-budget-855eab now renders a bounded viewport runway in 16-entry batches only as the footer approaches, bulk-clears old gallery DOM, keeps Mass Edit selection in data so lazy rows preserve Select All, and updates queue badges only for volumes represented by the queue. Local syntax check passed and 4 focused frontend regression tests pass; full repository Actions will run on the PR head.
 
     Merged silasfelinus/Kapowarr#142 at 9a89574d0daaa708bebaab45b1e06691484b1395. The remaining freeze was the Volumes gallery: the previous first-batch optimization still drained the entire filtered library into poster/table DOM in background batches, so work still scaled with total volume count and switching views started a second full drain. The merged fix keeps a bounded 16-entry, 1200px render runway, bulk-clears stale DOM, preserves Mass Edit selection independently of lazy row existence, and scopes queue badge refreshes to queue-bearing volumes. PR checks were fully green: Tests run 32682206854 passed on Python 3.8, 3.9, 3.10, 3.11, and 3.12, with the frontend suite passing in 3.12; Build docs run 32682206814 and Build and publish container run 32682206782 also passed. Main now points to the merge commit.
-  updated: '2026-08-24T02:13:48Z'
-  claimed_by: 2026-08-24T020450Z-kapowarr-t-068-855eab
-  claimed_at: '2026-08-24T02:04:50Z'
+
+    Reopened from live testing after Kapowarr#142. The bounded-runway fix removed the browser freeze but introduced an artificial scroll cliff: the gallery stops at the end of rendered cards and waits before creating the next batch. Desired behavior is the standard large-media-gallery model: establish full library geometry immediately with lightweight placeholders/text from the existing /api/volumes metadata payload, then hydrate covers around the viewport with overscan so scrolling never waits for card construction.
+  updated: '2026-08-24T03:21:00Z'
 
 - id: t-069
   milestone: m4
