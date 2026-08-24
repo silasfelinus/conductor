@@ -207,7 +207,7 @@ tasks:
   - id: t-006
     milestone: m1
     title: "Genre research — what idle/aquarium players actually want"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -221,6 +221,25 @@ tasks:
       complain about (fake difficulty, ad gates, prestige walls), and which three
       features we should steal outright. End with a concrete recommendation list, not
       a survey -- each item marked adopt / adapt / reject with a reason.
+
+      DONE 2026-08-24 (conductor scheduled Agent run). Wrote
+      projects/cthulhuquarium/RESEARCH.md: surveyed all six named references (live
+      web search this session, not just training-data recall -- sources linked
+      inline and listed at the end) plus a short note on the current 2026 web/mobile
+      aquarium-idle landscape (thin: mostly AbyssRium clones, no browser-first
+      no-account competitor in Cthulhuquarium's own niche). Answered all four asked
+      questions (day-3 retention drivers, grinding-free collection design, genre
+      complaints, adopt/adapt/reject list of 8 items) and cross-referenced every
+      finding against DESIGN-BRIEF.md/SYSTEMS.md/ECONOMY.md's already-committed
+      decisions rather than proposing changes to them -- this is confirmation and
+      concrete authoring guidance for downstream tasks (flagged inline for t-012,
+      t-016, t-024, t-026, t-028), not a re-litigation of settled design. Two
+      reject-outright items recorded explicitly since nothing in the existing docs
+      ruled them out in writing: hidden/undocumented unlock triggers (AbyssRium's
+      specific failure mode) and ad-gated progress. No code, schema, or production
+      changes -- research-doc only, no cthulhuquarium-repo access needed for this
+      task since the deliverable lives in the conductor project folder like
+      DESIGN-BRIEF.md/SYSTEMS.md/ECONOMY.md before it.
 
   # ---------------------------------------------------------------- m2 BUILD
     claimed_by: claude-scheduled-20260824T192848Z-cq-t006
