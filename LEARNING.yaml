@@ -10116,3 +10116,15 @@ records:
     a check that the "there" is truly analogous to "here," or the fix ends up either
     wrong-shaped (fixing the wrong two files) or scope-creeping into a repo-wide
     convention decision that a single-bug-per-cycle task isn't set up to make well.
+- date: '2026-08-24'
+  project: kapowarr
+  task: t-068
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Rendering in batches is not enough if the browser is still instructed to consume every batch
+    immediately. For large galleries, cap total off-screen DOM work to a viewport runway and let user
+    movement demand the next chunk; otherwise background batching merely turns one long freeze into sustained
+    jank, especially on setTimeout-based fallbacks.
