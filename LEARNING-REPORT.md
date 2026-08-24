@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-24T20:29:43Z
+Generated: 2026-08-24T20:47:44Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **748**
-- Outcomes: blocked: 15, cancelled: 1, done: 732
+- Closed tasks recorded: **749**
+- Outcomes: blocked: 15, cancelled: 1, done: 733
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -29,7 +29,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | conductor | 80 | 100% |
 | conductor-app | 4 | 100% |
 | cthulhuquarium | 4 | 100% |
-| davinci | 7 | 100% |
+| davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
 | ecosystem-map | 5 | 100% |
@@ -66,7 +66,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 732 | 99% |
+| software | 733 | 99% |
 
 ## Failure categories
 
@@ -87,6 +87,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-24 `davinci/t-021` — Chasing a prior cycle's own flagged next-lead ("concurrent tab/session interaction with the same run was not traced") rather than re-running an already-exhausted static-reading pass found a genuine correctness gap: the front end's "exactly one choice per chapter" invariant (chapterIndex derived from playedCount, only advanced on success) was never enforced server-side, so two open tabs or a client retry could double-apply LifeChoice effects. Fixing it by reusing the file's own existing idempotency idiom (resolveCompletedLifeRun's read-back-don't-recompute pattern) kept the change minimal and consistent rather than introducing a parallel guard shape. Where the sandbox couldn't execute the new live-DB regression case, saying so explicitly in the PR (rather than claiming full verification) kept the Verified section honest.
+
 - 2026-08-24 `cthulhuquarium/t-006` — A research task benefits from live web search over training-data recall alone, even for well-established reference games: search surfaced AbyssRium's specific documented failure mode (hidden/undocumented unlock triggers requiring a wiki) and current retention-benchmark figures that made the adopt/adapt/reject list's reasoning concrete and sourced rather than generic genre-savvy assertion. Cross- referencing every finding against the project's own already-committed design docs (DESIGN-BRIEF/SYSTEMS/ECONOMY) before writing anything down kept the output as confirmation-plus-authoring-guidance for named downstream tasks rather than a survey that risked relitigating settled decisions.
 
 - 2026-08-24 `cthulhuquarium/t-004` — "Simulate it, don't just spec it" caught a real methodology bug before it could look like a balance bug: a naive active-vs-idle coin-balance comparison showed idle beating active over two hours, which would have read as a genuine MVP-requirement violation (DESIGN-BRIEF's "idling rewarded but strictly worse than playing"). The actual cause was comparing raw liquid balance, which conflates spending (buying a fish, an investment) with losing. Switching to net worth (coins + owned-asset value) and gross income earned (cumulative production before spend) reversed the finding to a healthy 3-3.5x active/idle gap that widens over time via reinvestment compounding. Worth generalizing: any economy simulation comparing two spending strategies needs a wealth metric that survives the comparison, not a currency balance that a strategy's own spending pattern can arbitrarily deflate.
@@ -105,8 +107,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-24 `brainstorm/t-026` — Task scope was explicitly conditional ("find, or confirm there isn't yet, a promote-candidate action, and IF one exists, wire the art across") -- a repo-wide search (candidate card's emitted events, the manager's kept-candidate bulk actions, server/api/brainstorm/, and a grep for promote/convert/"turn into"/createFrom) confirmed no such action exists anywhere. The honest close for a conditional investigation task with a negative finding is `done`, not a forced implementation and not `needs-human` -- the literal scope asked a yes/no question and got a firm no. Filed the actual feature (t-031) as new scope instead of expanding this task's diff, since building an unrequested promotion UI would have been scope creep past what t-026 asked for. Also worth recording for whoever picks up t-031: entityArt.ts's art-slot model is one scalar id per named slot per entity, while Brainstorm's meta.art.imageIds is an array -- there is no existing 1:1 precedent in the repo (promptStore.promoteToDream's Prompt only ever has one artImageId) for the many-to-one reduction that promotion will need.
 
-- 2026-08-24 `storybook/t-010` — Cycle 36: after five consecutive cycles that either found a shrinking-returns polish item or no-op'd, the fresh angle that produced a real correctness bug was the one the PREVIOUS cycle had already written down and not taken -- "Pinia persistence edge cases have not had a dedicated pass in this task's history." The bug was a sibling-parity gap of exactly the shape a shared-helper family invites: taskmasterStore.ts's saveToLocalStorage() was the one localStorage writer of four in the narrative family with no try/catch, while its three siblings each carried an explicit private-browsing/quota comment explaining why they had one. Two lessons. First, a recurring bug-hunt task's own "next lead" note is a real work queue, not a formality -- reading it before inventing a new lens is cheaper than re-deriving one, and a lead that survives a cycle unclaimed is more likely to be untouched ground than a lens the task has already swept. Second, and the inverse of cycle 61's model-builder lesson: a found inconsistency IS a fixable sibling-parity bug when the two sides are genuinely the same kind of moment, and here the codebase said so itself -- the shared helper's own header asserted the two stores were "byte-for-byte the same shape," so the asymmetry was a documented invariant being violated rather than a pattern-match on surface similarity. Confirming the impact still required tracing all ten call sites individually: the sharpest one (updateBeatArt() running as an uncaught `void poll(...)` callback, where a throw both became an unhandled rejection and killed the art poll loop, stranding the illustration with no retry affordance) was not the one the shape of the bug suggested up front. Finally: when a fix restores an invariant a contract script already claims to enforce, extend that script -- and verify the new assertion fails against the pre-fix code, or it may be vacuously true.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-24T20:29:43Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-24T20:47:44Z_
