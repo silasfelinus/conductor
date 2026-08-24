@@ -1,0 +1,13 @@
+version: 1
+project: interface-vision
+task: t-104
+operation: claim
+owner: worker
+session: 2026-08-24T112600Z-interface-vision-t-104-reward-gallery-q8n5
+updated: 2026-08-24T11:26:00+00:00
+note: >-
+  Continue the gallery-provider finish pass after kind_robots#2068. Audit and
+  slim the Reward list provider, which currently includes full ArtImage,
+  Character, Dream, Reaction, and User relation graphs for every gallery item,
+  while preserving any relationship metadata live callers actually need and
+  keeping rich detail hydration on the per-Reward endpoint.
