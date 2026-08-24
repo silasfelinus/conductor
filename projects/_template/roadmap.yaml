@@ -46,6 +46,11 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
+    # AGENTS.md, "Hard vs soft needs-human": scope gates on NEW projects are soft
+    # (Silas, 2026-07-04) -- the whole point of this task is that it runs in
+    # parallel and blocks nothing. Without soft_gate, audit_human_gates.py
+    # classifies it `[hard]` and it reports to Silas as a blocker every session.
+    soft_gate: true
     note: >
       FOR SILAS: soft checkpoint, nothing is blocked on it. Read DESIGN-BRIEF.md
       and confirm or redirect the scope. Development is already underway; if you
