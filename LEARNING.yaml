@@ -10179,3 +10179,28 @@ records:
     model is one scalar id per named slot per entity, while Brainstorm's meta.art.imageIds is an
     array -- there is no existing 1:1 precedent in the repo (promptStore.promoteToDream's Prompt
     only ever has one artImageId) for the many-to-one reduction that promotion will need.
+- date: '2026-08-24'
+  project: storybook
+  task: t-023
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Task scope (audit taskmasterStore's localStorage read path against storybookStore's restore
+    guards) required tracing every real caller before deciding whether the missing
+    `restoredFromStorage`-style guard was a bug: content/taskmaster.md mounts `:taskmaster-page`
+    as the only call site, with no wrapper double-mounting it the way storybook-library-page.vue
+    wraps StorybookPage, so no reachable race exists and the guard was correctly out of scope --
+    the parity gap alone was not sufficient, matching the cycle-36 lesson this task was scoped
+    from. Fixed the unambiguous half (move `getItem()` inside the try) and left the caller-tracing
+    result as an in-code comment. Also worth recording: a full-file `prettier --write` on a file
+    with pre-existing prettier-version drift silently reformats unrelated lines far beyond the
+    actual diff -- caught via `git diff --stat` before committing; the safe pattern is formatting
+    only the new/changed region and verifying it in isolation, never running `--write` on the
+    whole file when the rest carries known drift. Separately, this cycle hit a second occurrence
+    of the documented conductor/t-124 "Python test suite" check-run reporting-lag pattern (job
+    logs showed it passed and finished cleanup ~11 minutes before the check-run API reported
+    completion) -- confirmed via job logs rather than assumed, and merged once confirmed rather
+    than re-running blind.
