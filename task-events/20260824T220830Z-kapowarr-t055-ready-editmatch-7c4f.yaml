@@ -1,7 +1,0 @@
-version: 1
-project: kapowarr
-task: t-055
-operation: ready
-updated: '2026-08-24T22:08:30Z'
-note: >-
-  Reopened from user-reported live testing on 2026-08-24. Editing a weak Library Import Review Hold opens the match-search modal, but submitting a title can leave the dialog blank with no results, no loading/error state, and enough repeated requests to make the tab appear frozen. Diagnose the metadata-provider search/edit path, preserve provider-neutral identities, make the search visibly terminal on success/empty/error, and prevent duplicate in-flight searches.
