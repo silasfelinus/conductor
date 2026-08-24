@@ -867,3 +867,40 @@ tasks:
       key by `(userId, slug)`; the shipped schema used a global unique instead. Move to
       `@@unique([userId, slug])`. This is a live bug the moment a second user names a tank
       anything obvious, and it is much cheaper to fix now than after real rows exist.
+  - id: t-033
+    milestone: m1
+    title: "Render box cannot load two of three text encoders — art generation is blocked at ComfyUI, not at the queue"
+    status: needs-human
+    gate_human: false
+    soft_gate: true
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found 2026-08-24 while doing t-005's end-to-end proof, and worth separating from t-005
+      because the conclusion is not about this project: THE CONDUCTOR SIDE OF THE ART
+      PIPELINE WORKS. Submitting through `POST /api/art/queue` with KR_API_TOKEN
+      authenticated, queued, was picked up by the home-box relay, and polled correctly. Two
+      of three engines then failed inside ComfyUI on model files.
+      MEASURED, one entry each, same prompt and size (1024x1024):
+      - `krea2` -- job 9179 queued, then FAILED: "node 3 (CLIPTextEncode):
+        hostbuf_file_reader_read failed". The model is present enough to be selected but
+        cannot be read. Reads like a corrupted or partially-downloaded file, or a
+        memory-mapping failure on the box. THIS IS THE DEFAULT ENGINE for most of this
+        repo's art, so this is the one that matters most.
+      - `flux2-klein` -- job 9181 queued, then FAILED fast and informatively: "ComfyUI has
+        no matching file for: CLIPLoader.clip_name='flux2_klein_text_encoder_fp8_scaled
+        .safetensors'. Not in the live model list at http://127.0.0.1:8188". Simply not
+        installed.
+      - `flux` (schnell variant) -- ran long rather than failing fast, which is the
+        signature of an actual render. Result not yet confirmed; re-run to establish whether
+        it is the working fallback.
+      FOR SILAS: this needs the home box, which no agent can reach. Concretely: re-download
+      or verify the krea2 text encoder (a checksum would confirm the corruption hypothesis),
+      and install `flux2_klein_text_encoder_fp8_scaled.safetensors` or accept that engine as
+      unavailable. Until then, agents should queue art on whichever engine is confirmed
+      working rather than the krea2 default.
+      Soft gate: it blocks the ART for this project, not the project. Every other ready task
+      proceeds, and the queue entries can be written now and drained once the box is healthy.
+      Filed separately from t-005 so t-005 can still close on the pipeline recipe it was
+      actually asked for.
