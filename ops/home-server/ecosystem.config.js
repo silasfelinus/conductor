@@ -13,7 +13,28 @@
 const COMFY_DIR = 'D:/comfy/comfy-fast'
 const SD_DIR = 'D:/code/sd-webui-forge-neo'
 const LOG_DIR = `${__dirname}/logs`
-const KR_MEDIA_IMAGES_DIR = 'Z:/kindrobots/images'
+
+// The SMB share on alexandria, reached from this box. Every model path below is
+// derived from these two, so moving the share is one edit (or one env var), not
+// eight.
+//
+// PREFER A UNC PATH OVER A DRIVE LETTER. A mapped drive letter belongs to one
+// Windows logon session: a service, an elevated shell, and a desktop shell can
+// each see a different Z: -- or none. That is not theoretical here. On
+// 2026-08-25 renders failed for ~15 hours with
+//   [WinError 1117] ... I/O device error: 'Z:\ai\models\unet'
+// from ComfyUI (a dead connection object the process still held), degraded into
+// ComfyUI reporting registered models as "no matching file" (folder_paths
+// re-enumerated a half-readable share into a short list), while an interactive
+// `dir Z:\ai\models\unet` in the same hour answered "The system cannot find
+// the path specified" -- three different views of one share. A UNC path has no
+// per-session mapping to lose:
+//   setx KR_SHARE_ROOT "//alexandria/<share>"
+// then restart pm2 from a NEW shell so it inherits the variable.
+const KR_SHARE_ROOT = process.env.KR_SHARE_ROOT || 'Z:'
+const KR_MODEL_ROOT = process.env.KR_MODEL_ROOT || `${KR_SHARE_ROOT}/ai/models`
+const KR_MEDIA_IMAGES_DIR =
+  process.env.KR_MEDIA_IMAGES_DIR || `${KR_SHARE_ROOT}/kindrobots/images`
 // ----------------------------------------------------------------------------
 
 module.exports = {
@@ -62,15 +83,15 @@ module.exports = {
         '--listen',
         '--cuda-malloc',
         '--ckpt-dir',
-        'Z:/ai/models/Stable-diffusion',
+        `${KR_MODEL_ROOT}/Stable-diffusion`,
         '--cors-allow-origins',
         'https://kindrobots.org,http://localhost:3000,http://localhost:3001',
         '--lora-dir',
-        'Z:/ai/models/Lora',
+        `${KR_MODEL_ROOT}/Lora`,
         '--vae-dir',
-        'Z:/ai/models/vae',
+        `${KR_MODEL_ROOT}/vae`,
         '--controlnet-dir',
-        'Z:/ai/models/controlnet',
+        `${KR_MODEL_ROOT}/controlnet`,
         '--xformers',
         '--skip-python-version-check',
         '--reserve-vram',
@@ -169,9 +190,9 @@ module.exports = {
         // for accepted jobs that are still producing no final output yet.
         GEN_TIMEOUT: process.env.GEN_TIMEOUT || '7200',
         // LoRA auto-import watcher (embedded thread). Unset LORA_ROOT to disable.
-        LORA_ROOT: process.env.LORA_ROOT || 'Z:/ai/models/Lora',
+        LORA_ROOT: process.env.LORA_ROOT || `${KR_MODEL_ROOT}/Lora`,
         LORA_IMPORT_DIR:
-          process.env.LORA_IMPORT_DIR || 'Z:/ai/models/Lora/import',
+          process.env.LORA_IMPORT_DIR || `${KR_MODEL_ROOT}/Lora/import`,
         CIVITAI_TOKEN: process.env.CIVITAI_TOKEN || '',
         LORA_POLL_SECONDS: process.env.LORA_POLL_SECONDS || '20',
         // SCAN_SCRIPT/IMPORT_SCRIPT are intentionally NOT set here: the agent
@@ -221,9 +242,9 @@ module.exports = {
       env: {
         KR_RELAY_TOKEN: process.env.KR_RELAY_TOKEN || '',
         KR_BASE_URL: 'https://kindrobots.org',
-        KR_LORA_DIR: process.env.KR_LORA_DIR || 'Z:/ai/models/Lora',
+        KR_LORA_DIR: process.env.KR_LORA_DIR || `${KR_MODEL_ROOT}/Lora`,
         KR_CHECKPOINT_DIR:
-          process.env.KR_CHECKPOINT_DIR || 'Z:/ai/models/Stable-diffusion',
+          process.env.KR_CHECKPOINT_DIR || `${KR_MODEL_ROOT}/Stable-diffusion`,
         // Windows picks stdout's encoding from the console codepage (cp1252)
         // whenever stdout is a pipe -- which it always is under pm2. Any
         // non-cp1252 character in a log line then raises UnicodeEncodeError

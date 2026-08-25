@@ -258,6 +258,68 @@ round-tripping base64 through the API. Skipped for now — the API path is
 simpler and works from anywhere — but the option is recorded in
 art-generator-connect/t-012's note if generation volume ever makes it worth it.
 
+### Triage: every render fails and the errors blame the model files (2026-08-25 incident)
+
+Symptom, in the order it actually appeared over ~15 hours — all three are **one
+broken `Z:` mount**, and none of them is a prompt problem:
+
+1. `ComfyUI POST /prompt failed ... [WinError 1117] The request could not be
+   performed because of an I/O device error: 'Z:\ai\models\unet'`. Raised from
+   `folder_paths.get_filename_list()` inside `INPUT_TYPES()`, which enumerates
+   the models the box *has* — it runs before ComfyUI looks at anything in the
+   submitted graph. WinError 1117 is `ERROR_IO_DEVICE`: the connection object
+   exists and its transport is dead.
+2. `ComfyUI has no matching file for: CLIPLoader.clip_name='qwen3vl_4b_fp8_scaled
+   .safetensors'` for models that are registered and were rendering an hour
+   earlier. `folder_paths` re-enumerated a half-readable share and cached a short
+   list. The relay now prints how many files ComfyUI listed for that input —
+   a name missing from a healthy list is a misnaming; the same name missing from
+   a list that has shrunk is a lost mount.
+3. `dir Z:\ai\models\unet` → `The system cannot find the path specified`
+   (`ERROR_PATH_NOT_FOUND`), i.e. the mapping is simply gone.
+
+**Diagnose in this order:**
+
+```
+net use                      REM what is Z: mapped to, and is it "Disconnected"?
+dir Z:\                      REM does the root list at all? is `ai\` under it?
+dir \\alexandria\<share>\ai\models\unet   REM does the UNC path work when Z: doesn't?
+```
+
+If the UNC path works and `Z:` doesn't, that is the whole bug.
+
+**Why it recurs: a mapped drive letter belongs to one Windows logon session.**
+A pm2 service, an elevated shell, and your desktop shell can each see a
+different `Z:` — or none. That is exactly the split above: ComfyUI held a dead
+handle while an interactive `dir` said the path did not exist. Re-running
+`net use Z: ...` in your own shell does not fix what the service sees.
+
+**The durable fix is to stop using the letter.** Every model path in
+`ecosystem.config.js` derives from `KR_SHARE_ROOT` (default `Z:`), so:
+
+```
+setx KR_SHARE_ROOT "//alexandria/<share>"
+```
+
+then open a **new** shell (setx only affects new processes) and
+`pm2 restart ecosystem.config.js --update-env`. Override `KR_MODEL_ROOT`
+instead if the models and the media share live in different places.
+
+ComfyUI's own model paths are **not** in this repo — they are in
+`extra_model_paths.yaml` under `D:\comfy\comfy-fast`. Point that at the UNC
+path too, and restart ComfyUI so `folder_paths` rebuilds its cached filename
+lists; a restart is required either way, because those caches survive the mount
+coming back.
+
+**Then requeue the backlog** from the conductor checkout:
+
+```
+python scripts/drain_failed_art_backlog.py --live
+```
+
+It renders a canary batch first and refuses to drain if the host is still
+broken, so it is safe to run before you are sure the mount is fixed.
+
 ## Notes & gotchas
 
 - **A1111 must run with `--api`** or the kind_robots handshake
