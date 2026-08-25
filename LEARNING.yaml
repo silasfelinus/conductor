@@ -10491,3 +10491,21 @@ records:
     with no reconciliation checkpoint following. Reviewer sweeps should run check_pr_merged_drift.py
     every session, not only when a task looks stuck -- this one merged and sat 10+ minutes before
     the drift script caught it.
+- date: '2026-08-25'
+  project: conductor
+  task: t-129
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    close_task.py's --set note=... silently replaced a task's whole note instead of
+    appending, which is how cthulhuquarium/t-033 and t-034 lost 199 lines of diagnostic
+    history in one routine status flip. set_task_field_text() now refuses to replace a
+    substantial note with a value that doesn't still contain it unless force=True, and
+    close_task.py gained --append-note. Before widening a shared roadmap-editing
+    primitive's default behavior, grep every caller (roadmap_text_patch.py's
+    apply_task_field_ops feeds the automated task-events processor) -- one existing test
+    was exercising the exact destructive pattern the guard now catches, not representative
+    of the real caller's already-safe append-then-set convention.
