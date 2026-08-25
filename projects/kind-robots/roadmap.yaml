@@ -2504,8 +2504,8 @@ tasks:
   - id: t-070
     milestone: m3
     title: "ResourceType has no value for upscalers, so latent upscale models are filed as CHECKPOINT"
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
     note: >
@@ -2527,6 +2527,9 @@ tasks:
       pixels from models/upscale_models/), migrate the existing rows, and add the
       matching prefix entries to conductor's _LOCALPATH_PREFIXES. The array already has
       both directories on disk, so both kinds exist in practice.
+    claimed_by: claude-kr070-20260825T174500Z
+    claimed_at: '2026-08-25T17:43:08Z'
+    updated: '2026-08-25T17:43:08Z'
 
   - id: t-071
     milestone: m3
