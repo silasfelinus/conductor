@@ -2717,8 +2717,8 @@ tasks:
   - id: t-074
     milestone: m3
     title: "Nothing in the frontend calls POST /api/conductor/overrides -- the workspace priority/status control isn't wired to it"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -2742,6 +2742,9 @@ tasks:
       superuser security finding) already claims t-073 in its own diff. Re-run
       scripts/next_free_task_id.py before claiming if that PR has since merged and this
       note is stale.
+    claimed_by: claude-scheduled-20260825T1233Z-kr-t074
+    claimed_at: '2026-08-25T12:35:15Z'
+    updated: '2026-08-25T12:35:15Z'
 
   - id: t-075
     milestone: m3
