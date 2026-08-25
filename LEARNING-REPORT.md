@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-25T21:34:59Z
+Generated: 2026-08-25T21:39:15Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **762**
-- Outcomes: blocked: 15, cancelled: 1, done: 746
+- Closed tasks recorded: **763**
+- Outcomes: blocked: 15, cancelled: 1, done: 747
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
-| interface-vision | 83 | 100% |
+| interface-vision | 84 | 100% |
 | kapowarr | 48 | 100% |
 | kind-economy | 6 | 100% |
 | kind-robots | 52 | 98% |
@@ -68,7 +68,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 746 | 99% |
+| software | 747 | 99% |
 
 ## Failure categories
 
@@ -89,6 +89,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-25 `interface-vision/t-120` — A recurring-in-practice roadmap task (return-to-ready documented only in prose inside every slice's note) gives close_task.py's `recurring: true` guard nothing to key on, so a `done` close-out slips through silently -- this nearly happened to interface-vision/t-105 earlier the same day (conductor#2884 -> #2887). Setting the `recurring` field explicitly the moment a task's actual operating convention is "always returns to ready" -- not waiting for a mistaken done close-out to force the fix -- turns a 40+-paragraph prose convention into a mechanical refusal the next session can't miss.
+
 - 2026-08-25 `mandarin-tutor/t-014` — GitHub serves raw .json files from raw.githubusercontent.com with Content-Type: text/plain, not application/json -- ofetch's default JSON auto-parsing keys off that header, so a $fetch call against such a URL with no explicit parseResponse/responseType override silently returns the raw response text instead of a parsed value. Confirmed directly against the live pinned source rather than assuming from the error message: without an override the response was a raw string, with `parseResponse: (t) => JSON.parse(t)` it parsed correctly. Any future $fetch against a raw.githubusercontent.com JSON file should pass an explicit parseResponse rather than relying on content-type sniffing -- checked the rest of server/ for the same pattern and found none left unguarded (mandarinCharacterData.ts already used responseType: 'text' with manual per-line JSON.parse for its NDJSON source, so it was never exposed).
 
 - 2026-08-25 `scene-animator/t-004` — Batch-level retryFailed already existed server-side (enqueue.post.ts) and client-side (store.enqueue(true)) before this task -- the task's "failed-job retry" ask was really about per-source (single-card) retry, a narrower gap. Adding an optional sourceFile filter to the existing enqueue loop reused all its dedupe/reuse logic for free rather than duplicating it. For "per-folder completion summary," computing it from the ArtJob rows already fetched for the index endpoint (grouped by each job's own sourceFolder/sourceFile) was far cheaper than the literal reading -- re-hashing every source file's bytes across every folder would have multiplied an already per-file-read+sha256 cost by folder count for a feature that only needs a rough count.
@@ -104,8 +106,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-25 `mandarin-tutor/t-001` — Keep ASR transcript and acoustic pronunciation evidence separate. Reusing the existing YIN pitch detector avoided a second speech-analysis stack. Kind Robots shared components must use container-responsive grid sizing, and Nitro $fetch calls with dynamic route strings must pin both generics.
 - 2026-08-25 `cthulhuquarium/t-009` — close_task.py's --set note=... substitutes the roadmap note field rather than extending it, which silently discarded t-009's original task-spec note the same way it discarded t-033/t-034's investigative history minutes earlier (fixed by hand in kind_robots-adjacent conductor PR #2816). Caught and fixed before this close-out PR opened by re-adding the original note ahead of the DONE summary. The script itself is still unfixed -- every future close-out with `--set note=` is one keystroke away from repeating this. Worth a dedicated follow-up task (append-by-default or an explicit --append-note flag) rather than relying on every future session to catch it by hand, as this one and the #2816 session did.
 
-- 2026-08-25 `cthulhuquarium/t-034` — Hardcoding model filenames as constants in two repos (kind_robots and conductor) with no validation against the Resource registry let an invented filename ship silently in both places and only fail at render time, months later, on an unrelated task. The fix (consume_art_queue_core.py resolving constants through the registry) deliberately warns-and-passes-through rather than hard-failing, because the registry is still incomplete (GGUF quants render fine with no Resource row) -- failing closed on an incomplete source of truth would have broken engines that demonstrably work. When migrating hardcoded config to a registry/source-of-truth lookup, ship the lenient version first and gate the strict version behind an opt-in flag until the source of truth is actually complete.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-25T21:34:59Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-25T21:39:15Z_
