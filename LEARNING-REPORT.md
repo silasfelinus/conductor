@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-25T17:48:46Z
+Generated: 2026-08-25T18:05:37Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **759**
-- Outcomes: blocked: 15, cancelled: 1, done: 743
+- Closed tasks recorded: **760**
+- Outcomes: blocked: 15, cancelled: 1, done: 744
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -53,7 +53,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | newsfeed | 20 | 100% |
 | packmaker | 10 | 100% |
 | ruler-hooked | 4 | 100% |
-| scene-animator | 1 | 100% |
+| scene-animator | 2 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
 | storybook | 16 | 100% |
@@ -68,7 +68,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 743 | 99% |
+| software | 744 | 99% |
 
 ## Failure categories
 
@@ -89,6 +89,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-25 `scene-animator/t-004` — Batch-level retryFailed already existed server-side (enqueue.post.ts) and client-side (store.enqueue(true)) before this task -- the task's "failed-job retry" ask was really about per-source (single-card) retry, a narrower gap. Adding an optional sourceFile filter to the existing enqueue loop reused all its dedupe/reuse logic for free rather than duplicating it. For "per-folder completion summary," computing it from the ArtJob rows already fetched for the index endpoint (grouped by each job's own sourceFolder/sourceFile) was far cheaper than the literal reading -- re-hashing every source file's bytes across every folder would have multiplied an already per-file-read+sha256 cost by folder count for a feature that only needs a rough count.
+
 - 2026-08-25 `kind-robots/t-074` — t-074 was filed on an incomplete diagnosis: "nothing calls POST /api/conductor/overrides" was true but not the actual bug -- a separate, already-wired path (updateProject -> updateLifecycle -> POST /api/conductor/project-state) already synced status/priority to project-overrides.yaml; the real gap was that no UI control ever called it, only read-only badges existed. Also found conductor-manager.vue always routes a project slug to ProjectDetail, never ConductorPage, making ConductorPage's own parallel project-detail rendering path permanently dead code. When a task's note says "nothing calls endpoint X", grep for a second endpoint achieving the same effect before assuming X itself is the fix -- and check the actual component-routing logic, not just which components exist, before deciding where a new control belongs.
 
 - 2026-08-25 `conductor/t-129` — close_task.py's --set note=... silently replaced a task's whole note instead of appending, which is how cthulhuquarium/t-033 and t-034 lost 199 lines of diagnostic history in one routine status flip. set_task_field_text() now refuses to replace a substantial note with a value that doesn't still contain it unless force=True, and close_task.py gained --append-note. Before widening a shared roadmap-editing primitive's default behavior, grep every caller (roadmap_text_patch.py's apply_task_field_ops feeds the automated task-events processor) -- one existing test was exercising the exact destructive pattern the guard now catches, not representative of the real caller's already-safe append-then-set convention.
@@ -103,8 +105,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-25 `cthulhuquarium/t-033` — A read failure reported at the application layer (ComfyUI's hostbuf_file_reader_read failed) said almost nothing about which layer actually failed -- three diagnoses (corrupt file, shfs member disk, relayed tailnet path) were tried and disproved before the SMB client event log on the render box showed the real cause: the mount to Alexandria was dropping about once a minute. The transport-layer logs were available the whole time; reasoning forward from the application error alone cost three wrong turns. Next time a large-file read fails intermittently over a network mount, check the client-side connectivity event log before hypothesizing about the file or the storage layer underneath it.
 
 - 2026-08-25 `lora-ingestion/t-008` — Disposable admin cleanup workflows can keep resumable review state in a dedicated localStorage-backed store while writing only canonical Resource fields through existing APIs, avoiding temporary schema or endpoint surface.
-- 2026-08-24 `cthulhuquarium/t-003` — The task note assumed a starter fish bible already existed ("grow the seeded bestiary... from its starter set") but neither fish/SCHEMA.md, fish/*.yaml, nor validate_fish.py existed anywhere -- ECONOMY.md's own text had already flagged this exact gap. Cross-referencing every candidate field against the project's already-committed design docs (SYSTEMS.md's rivalry tag vocabulary, ECONOMY.md's rarity_tiers table, the Prisma schema's actual Character/ AquariumStock columns) before authoring anything resolved a real ambiguity the task note left open (tier and rarity read as two separate fields in the note, but the schema and economy docs establish they are the same axis) as a documented judgment call rather than an invented field with nowhere to land -- worth doing before writing bible content on any task whose note references a schema/starter-set that a plain repo search doesn't confirm.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-25T17:48:46Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-25T18:05:37Z_
