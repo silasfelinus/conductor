@@ -10,14 +10,24 @@
 # flux/schnell on the same prompt was decisively better for this project's look.
 # Explicit anyway, so a future default change cannot silently swap the house style.
 #
-# ART DIRECTION, corrected 2026-08-25. The first batch of ten came back as
-# competent deep-sea nature photography -- Silas: "they almost all look like real
-# animals, not misshapen horrors from the deep with a cartoonish playfulness... I
-# want creative, colorful, and vibrant monster fish and backgrounds." The cause was
+# ART DIRECTION, corrected twice on 2026-08-25.
+#
+# First correction: the opening batch of ten came back as competent deep-sea
+# nature photography -- Silas: "they almost all look like real animals, not
+# misshapen horrors from the deep with a cartoonish playfulness." The cause was
 # the prompts, not the seeds: dark, low-detail, rim-lit language reads to krea2 as
-# "underwater photograph". Every prompt below now leads with saturated cartoon
-# illustration and carries an explicit negative against photorealism, because
-# neither engine drops the photographic reading unless told to.
+# "underwater photograph".
+#
+# Second correction, and the one that holds: the fix for that was a shared style
+# suffix ending "NOT photorealistic, not a photograph", which is worse than
+# useless. Krea 2 has no instruction-following layer and its negative prompt is
+# inert at cfg 1, so that clause was a POSITIVE prompt containing the word
+# "photograph" -- and a single style block repeated across every asset is exactly
+# the uniformity that reads as machine-made. Prompts now name a MEDIUM WITH A
+# HISTORY instead: a lithograph plate, a trade-catalogue engraving, a hand-tinted
+# carte-de-visite. A medium cannot come out as a photograph and nothing has to say
+# so, and eight different lineages across the set do not average into one look.
+# The lineages and the reasoning are in the cthulhuquarium repo's ART-DIRECTION.md.
 
 batch:
   entries:
@@ -25,573 +35,716 @@ batch:
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-bailiff-eel.webp
-    prompt: a long cartoon eel wearing a stiff white collar, narrow disapproving eyes and a thin
-      frown, deep crimson and black banding down its ribbon body, vibrant saturated cartoon
-      creature illustration, thick confident outlines, exaggerated asymmetric anatomy, glossy
-      wet highlights, playful macabre storybook monster, bold colour, dark water behind it, NOT
-      photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: a long eel wearing a stiff collar, narrow disapproving eyes and a thin frown, banding down
+      its ribbon body, scraperboard illustration, white line scratched out of solid black ink
+      with a blade, pure black and pure white only, every tone built from line density, form
+      built entirely from cut hatching, stark and linear, unpeopled frame, the board around it
+      left solid uncut black
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-brine-courtiers.webp
-    prompt: a cluster of tiny cartoon brine shrimp each wearing a small crown, arranged in neat tiers
-      like a court, translucent pink and gold, forked tails, vibrant saturated cartoon creature
-      illustration, thick confident outlines, exaggerated asymmetric anatomy, glossy wet
-      highlights, playful macabre storybook monster, bold colour, dark water behind it, NOT
-      photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: a cluster of tiny brine shrimp each wearing a small crown, arranged in neat tiers like a
+      court, translucent, forked tails, gyotaku fish rubbing, sumi ink pressed directly from the
+      body onto fibrous washi paper, flat black, coverage uneven, the ink thin and skipping
+      where the body lifted away, fins printing as fine radiating lines, one wet painted eye
+      added afterward by hand, unpeopled frame, the rest of the sheet bare
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-catfish-common.webp
-    prompt: a broad flat cartoon catfish sprawled along the gravel, four droopy whiskers curling like
+    prompt: a broad flat catfish sprawled along the gravel, four droopy whiskers curling like
       moustaches, olive and mustard mottling, heavy lidded eyes, mouth turned down in permanent
-      complaint, vibrant saturated cartoon creature illustration, thick confident outlines,
-      exaggerated asymmetric anatomy, glossy wet highlights, playful macabre storybook monster,
-      bold colour, dark water behind it, NOT photorealistic, not a nature photograph, unpeopled
-      frame, no text
+      complaint, hand-coloured lithograph plate from an 1850s natural history book, fine
+      engraved line under flat hand-laid watercolour washes, Prussian blue and madder and
+      gamboge, visible plate mark, foxed paper, the wash running slightly outside the line,
+      unpeopled frame, the caption space beneath the image left empty
+  - project: cthulhuquarium
+    engine: krea2
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-cellar-newt.webp
+    prompt: a small dark newt with a bright acid-green belly and stubby splayed toes, half in shadow
+      under a ledge, one eye catching the light, hand-coloured lithograph plate from an 1850s
+      natural history book, fine engraved line under flat hand-laid watercolour washes, Prussian
+      blue and madder and gamboge, visible plate mark, foxed paper, the wash running slightly
+      outside the line, unpeopled frame, the caption space beneath the image left empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-chandelier-lion.webp
-    prompt: a flamboyant cartoon lionfish with an absurd wide fan of candy-striped venomous spines,
-      hot pink, tangerine and gold, preening, vibrant saturated cartoon creature illustration,
-      thick confident outlines, exaggerated asymmetric anatomy, glossy wet highlights, playful
-      macabre storybook monster, bold colour, dark water behind it, NOT photorealistic, not a
-      nature photograph, unpeopled frame, no text
+    prompt: a flamboyant lionfish with an absurd wide fan of candy-striped venomous spines, hot pink,
+      tangerine and gold, preening, chromolithograph cigarette card from around 1900, small
+      format with a printed ornamental border and a blank name banner, four-colour stone
+      printing, visible misregistration and dot rosettes, slightly garish cheap inks, corners
+      worn round, unpeopled frame, the name banner empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-choirfish.webp
-    prompt: three slender cartoon fish with wide open singing mouths and long translucent ribbon fins,
-      glowing cyan throat-lights, arranged in a rising row like a choir, vibrant saturated
-      cartoon creature illustration, thick confident outlines, exaggerated asymmetric anatomy,
-      glossy wet highlights, playful macabre storybook monster, bold colour, dark water behind
-      it, NOT photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: three slender fish with wide open singing mouths and long translucent ribbon fins, glowing
+      cyan throat-lights, arranged in a rising row like a choir, lampworked glass model on a
+      thin wire mount, transparent hollow body, light passing through the glass and pooling
+      where it thickens, colour suspended in the glass itself, museum specimen on a small wooden
+      base, faint dust, unpeopled frame, a bare unwritten label on the wooden base
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-crawdad-common.webp
-    prompt: a stumpy cartoon crawdad with wildly mismatched claws, one absurdly larger than the other,
+    prompt: a stumpy crawdad with wildly mismatched claws, one absurdly larger than the other,
       rust-red and tangerine carapace, tiny furious eyes on crooked stalks, both claws raised at
-      nothing, vibrant saturated cartoon creature illustration, thick confident outlines,
-      exaggerated asymmetric anatomy, glossy wet highlights, playful macabre storybook monster,
-      bold colour, dark water behind it, NOT photorealistic, not a nature photograph, unpeopled
-      frame, no text
+      nothing, chromolithograph cigarette card from around 1900, small format with a printed
+      ornamental border and a blank name banner, four-colour stone printing, visible
+      misregistration and dot rosettes, slightly garish cheap inks, corners worn round,
+      unpeopled frame, the name banner empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-culvert-eel.webp
-    prompt: a cartoon eel leaning out of a rusted pipe mouth, only head and forebody showing,
-      acid-green and charcoal banding, a great many small teeth arranged in a flat unimpressed
-      line, vibrant saturated cartoon creature illustration, thick confident outlines,
-      exaggerated asymmetric anatomy, glossy wet highlights, playful macabre storybook monster,
-      bold colour, dark water behind it, NOT photorealistic, not a nature photograph, unpeopled
-      frame, no text
+    prompt: a eel leaning out of a rusted pipe mouth, only head and forebody showing, banding, a great
+      many small teeth arranged in a flat unimpressed line, scraperboard illustration, white
+      line scratched out of solid black ink with a blade, pure black and pure white only, every
+      tone built from line density, form built entirely from cut hatching, stark and linear,
+      unpeopled frame, the board around it left solid uncut black
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-drifting-bell.webp
-    prompt: a translucent cartoon jellyfish glowing lilac and electric blue from within, domed bell
-      squashed slightly off-centre, a tangle of ribbon tendrils trailing far below in loose
-      curls, vibrant saturated cartoon creature illustration, thick confident outlines,
-      exaggerated asymmetric anatomy, glossy wet highlights, playful macabre storybook monster,
-      bold colour, dark water behind it, NOT photorealistic, not a nature photograph, unpeopled
-      frame, no text
+    prompt: a translucent jellyfish glowing lilac and electric blue from within, domed bell squashed
+      slightly off-centre, a tangle of ribbon tendrils trailing far below in loose curls,
+      lampworked glass model on a thin wire mount, transparent hollow body, light passing
+      through the glass and pooling where it thickens, colour suspended in the glass itself,
+      museum specimen on a small wooden base, faint dust, unpeopled frame, a bare unwritten
+      label on the wooden base
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-drowned-carp.webp
-    prompt: a bloated cheerful cartoon carp, ghostly pale blue-white and faintly translucent, ragged
-      tattered fins, crossed-out eyes but still contentedly chewing, tufts of weed caught on its
-      back, vibrant saturated cartoon creature illustration, thick confident outlines,
-      exaggerated asymmetric anatomy, glossy wet highlights, playful macabre storybook monster,
-      bold colour, dark water behind it, NOT photorealistic, not a nature photograph, unpeopled
-      frame, no text
+    prompt: a bloated cheerful carp, ghostly pale blue-white and faintly translucent, ragged tattered
+      fins, crossed-out eyes but still contentedly chewing, tufts of weed caught on its back,
+      hand-coloured lithograph plate from an 1850s natural history book, fine engraved line
+      under flat hand-laid watercolour washes, Prussian blue and madder and gamboge, visible
+      plate mark, foxed paper, the wash running slightly outside the line, unpeopled frame, the
+      caption space beneath the image left empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-elder-rustfish.webp
-    prompt: a heavy overgrown cartoon rustfish, deep rust and bone, trailing an absurdly long
-      ceremonial tail far bigger than it needs, expression of total unbothered composure,
-      vibrant saturated cartoon creature illustration, thick confident outlines, exaggerated
-      asymmetric anatomy, glossy wet highlights, playful macabre storybook monster, bold colour,
-      dark water behind it, NOT photorealistic, not a nature photograph, unpeopled frame, no
-      text
+    prompt: a heavy overgrown rustfish, deep rust and bone, trailing an absurdly long ceremonial tail
+      far bigger than it needs, expression of total unbothered composure, hand-coloured
+      lithograph plate from an 1850s natural history book, fine engraved line under flat
+      hand-laid watercolour washes, Prussian blue and madder and gamboge, visible plate mark,
+      foxed paper, the wash running slightly outside the line, unpeopled frame, the caption
+      space beneath the image left empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-folding-fry.webp
-    prompt: a small cartoon fish made of sharply folded paper planes in cobalt and white, hard creases
-      and flat facets instead of curves, caught mid-turn at an angle no real fish holds, vibrant
-      saturated cartoon creature illustration, thick confident outlines, exaggerated asymmetric
-      anatomy, glossy wet highlights, playful macabre storybook monster, bold colour, dark water
-      behind it, NOT photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: a small fish made of sharply folded paper planes, hard creases and flat facets throughout,
+      caught mid-turn at an impossible twisted angle, gyotaku fish rubbing, sumi ink pressed
+      directly from the body onto fibrous washi paper, flat black, coverage uneven, the ink thin
+      and skipping where the body lifted away, fins printing as fine radiating lines, one wet
+      painted eye added afterward by hand, unpeopled frame, the rest of the sheet bare
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-fractal-bloom.webp
-    prompt: a cartoon sea anemone whose fat spines each split into smaller spines and split again,
-      electric magenta tips over a coral-orange base, radiating crown, vibrant saturated cartoon
-      creature illustration, thick confident outlines, exaggerated asymmetric anatomy, glossy
-      wet highlights, playful macabre storybook monster, bold colour, dark water behind it, NOT
-      photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: a sea anemone whose fat spines each split into smaller spines and split again, electric
+      magenta tips over a coral-orange base, radiating crown, ornamental natural history plate,
+      obsessive radial symmetry, the organism arranged as design to fill the sheet, fine line
+      and restrained colour, ruled ornamental border, unpeopled frame, the plate's caption strip
+      empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-glass-shrimp.webp
-    prompt: a wholly transparent cartoon shrimp drawn in thin bright outline only, with one vivid
-      magenta lump of half-digested something suspended clearly inside its middle, vibrant
-      saturated cartoon creature illustration, thick confident outlines, exaggerated asymmetric
-      anatomy, glossy wet highlights, playful macabre storybook monster, bold colour, dark water
-      behind it, NOT photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: a wholly transparent shrimp drawn in thin bright outline only, with one vivid magenta lump
+      of half-digested something suspended clearly inside its middle, lampworked glass model on
+      a thin wire mount, transparent hollow body, light passing through the glass and pooling
+      where it thickens, colour suspended in the glass itself, museum specimen on a small wooden
+      base, faint dust, unpeopled frame, a bare unwritten label on the wooden base
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-glass-weaver.webp
-    prompt: a spindly cartoon sea spider with far too many long segmented legs and a tiny body,
-      iridescent blue-green, perched in a delicate glowing web, vibrant saturated cartoon
-      creature illustration, thick confident outlines, exaggerated asymmetric anatomy, glossy
-      wet highlights, playful macabre storybook monster, bold colour, dark water behind it, NOT
-      photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: a spindly sea spider with far too many long segmented legs and a tiny body, iridescent
+      blue-green, perched in a delicate glowing web, ornamental natural history plate, obsessive
+      radial symmetry, the organism arranged as design to fill the sheet, fine line and
+      restrained colour, ruled ornamental border, unpeopled frame, the plate's caption strip
+      empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-guppy-common.webp
-    prompt: a tiny cartoon guppy almost entirely fan tail, hot pink and violet ribbons streaming
-      behind a body the size of a thumbnail, cheerful vacant expression, vibrant saturated
-      cartoon creature illustration, thick confident outlines, exaggerated asymmetric anatomy,
-      glossy wet highlights, playful macabre storybook monster, bold colour, dark water behind
-      it, NOT photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: a tiny guppy almost entirely fan tail, hot pink and violet ribbons streaming behind a body
+      the size of a thumbnail, cheerful vacant expression, hand-coloured lithograph plate from
+      an 1850s natural history book, fine engraved line under flat hand-laid watercolour washes,
+      Prussian blue and madder and gamboge, visible plate mark, foxed paper, the wash running
+      slightly outside the line, unpeopled frame, the caption space beneath the image left empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-gutter-minnow.webp
-    prompt: a scrappy little cartoon minnow with a head far too big for its body and three mismatched
-      eyes at different heights, dented tin-can sheen, acid green and rust orange, vibrant
-      saturated cartoon creature illustration, thick confident outlines, exaggerated asymmetric
-      anatomy, glossy wet highlights, playful macabre storybook monster, bold colour, dark water
-      behind it, NOT photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: a scrappy little minnow with a head far too big for its body and three mismatched eyes at
+      different heights, dented tin-can sheen, acid green and rust orange, hand-coloured
+      lithograph plate from an 1850s natural history book, fine engraved line under flat
+      hand-laid watercolour washes, Prussian blue and madder and gamboge, visible plate mark,
+      foxed paper, the wash running slightly outside the line, unpeopled frame, the caption
+      space beneath the image left empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-lamplight-angler.webp
-    prompt: a rotund cartoon anglerfish with an enormous grinning underbite of crooked mismatched
-      teeth, a fat glowing lantern bulb drooping on a bent stalk over its brow, hot lime-green
-      glow against a deep plum body, vibrant saturated cartoon creature illustration, thick
-      confident outlines, exaggerated asymmetric anatomy, glossy wet highlights, playful macabre
-      storybook monster, bold colour, dark water behind it, NOT photorealistic, not a nature
-      photograph, unpeopled frame, no text
+    prompt: a rotund anglerfish with an enormous grinning underbite of crooked mismatched teeth, a fat
+      glowing lantern bulb drooping on a bent stalk over its brow, hot lime-green glow against a
+      deep plum body, chromolithograph cigarette card from around 1900, small format with a
+      printed ornamental border and a blank name banner, four-colour stone printing, visible
+      misregistration and dot rosettes, slightly garish cheap inks, corners worn round,
+      unpeopled frame, the name banner empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-ledger-crab.webp
-    prompt: a broad cartoon crab with tally-mark scratches carved across its shell, one claw raised
-      mid-count, brick red and cream, stalked eyes fixed forward, vibrant saturated cartoon
-      creature illustration, thick confident outlines, exaggerated asymmetric anatomy, glossy
-      wet highlights, playful macabre storybook monster, bold colour, dark water behind it, NOT
-      photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: a broad crab with tally-mark scratches carved across its shell, one claw raised mid-
+      count, brick red and cream, stalked eyes fixed forward, chromolithograph cigarette card
+      from around 1900, small format with a printed ornamental border and a blank name banner,
+      four-colour stone printing, visible misregistration and dot rosettes, slightly garish
+      cheap inks, corners worn round, unpeopled frame, the name banner empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-marsh-sovereign-crawdad.webp
-    prompt: a huge armoured cartoon crawdad on a heap of silt, two enormous scarlet claws held wide
-      like a crown, crooked spines along its back, small darting shapes fleeing at the edges of
-      the frame, vibrant saturated cartoon creature illustration, thick confident outlines,
-      exaggerated asymmetric anatomy, glossy wet highlights, playful macabre storybook monster,
-      bold colour, dark water behind it, NOT photorealistic, not a nature photograph, unpeopled
-      frame, no text
+    prompt: a huge armoured crawdad on a heap of silt, two enormous scarlet claws held wide like a
+      crown, crooked spines along its back, small darting shapes fleeing at the edges of the
+      frame, chromolithograph cigarette card from around 1900, small format with a printed
+      ornamental border and a blank name banner, four-colour stone printing, visible
+      misregistration and dot rosettes, slightly garish cheap inks, corners worn round,
+      unpeopled frame, the name banner empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-moebius-crab.webp
-    prompt: a cartoon hermit crab carrying a shell twisted into one continuous looping band that
-      passes through itself, swirled purple and gold, small legs beneath, vibrant saturated
-      cartoon creature illustration, thick confident outlines, exaggerated asymmetric anatomy,
-      glossy wet highlights, playful macabre storybook monster, bold colour, dark water behind
-      it, NOT photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: a hermit crab carrying a shell twisted into one continuous looping band that passes
+      through itself, swirled purple and gold, small legs beneath, ornamental natural history
+      plate, obsessive radial symmetry, the organism arranged as design to fill the sheet, fine
+      line and restrained colour, ruled ornamental border, unpeopled frame, the plate's caption
+      strip empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-old-catfish.webp
-    prompt: an immense cartoon catfish whose whiskers fill the whole frame, dozens of them coiling and
-      looping in gold and deep green, the body itself small and half-hidden behind its own
-      moustache, vibrant saturated cartoon creature illustration, thick confident outlines,
-      exaggerated asymmetric anatomy, glossy wet highlights, playful macabre storybook monster,
-      bold colour, dark water behind it, NOT photorealistic, not a nature photograph, unpeopled
-      frame, no text
+    prompt: an immense catfish whose whiskers fill the whole frame, dozens of them coiling and looping
+      in gold and deep green, the body itself small and half-hidden behind its own moustache,
+      hand-coloured lithograph plate from an 1850s natural history book, fine engraved line
+      under flat hand-laid watercolour washes, Prussian blue and madder and gamboge, visible
+      plate mark, foxed paper, the wash running slightly outside the line, unpeopled frame, the
+      caption space beneath the image left empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-pane-limpet.webp
-    prompt: a small cartoon limpet clamped flat to glass seen head on, low conical shell striped teal
-      and cream, a rim of frilled foot squeezed out all round it, entirely immovable and pleased
-      about it, vibrant saturated cartoon creature illustration, thick confident outlines,
-      exaggerated asymmetric anatomy, glossy wet highlights, playful macabre storybook monster,
-      bold colour, dark water behind it, NOT photorealistic, not a nature photograph, unpeopled
-      frame, no text
+    prompt: a small limpet clamped flat to glass seen head on, low conical shell striped teal and
+      cream, a rim of frilled foot squeezed out all round it, entirely immovable and pleased
+      about it, chromolithograph cigarette card from around 1900, small format with a printed
+      ornamental border and a blank name banner, four-colour stone printing, visible
+      misregistration and dot rosettes, slightly garish cheap inks, corners worn round,
+      unpeopled frame, the name banner empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-parlour-rustfish.webp
-    prompt: a plain cheerful cartoon rustfish with a flowing double tail, rust-orange with a dull
-      copper sheen, entirely unremarkable and rather pleased about it, vibrant saturated cartoon
-      creature illustration, thick confident outlines, exaggerated asymmetric anatomy, glossy
-      wet highlights, playful macabre storybook monster, bold colour, dark water behind it, NOT
-      photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: a plain cheerful rustfish with a flowing double tail, rust-orange with a dull copper
+      sheen, entirely unremarkable and rather pleased about it, hand-coloured lithograph plate
+      from an 1850s natural history book, fine engraved line under flat hand-laid watercolour
+      washes, Prussian blue and madder and gamboge, visible plate mark, foxed paper, the wash
+      running slightly outside the line, unpeopled frame, the caption space beneath the image
+      left empty
+  - project: cthulhuquarium
+    engine: krea2
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-pier-blenny.webp
+    prompt: a stubby blenny jammed head-out of a narrow crevice, mustard and olive with two frilled
+      eyebrow tufts, expression of total indignation, only its face and one fin visible,
+      hand-coloured lithograph plate from an 1850s natural history book, fine engraved line
+      under flat hand-laid watercolour washes, Prussian blue and madder and gamboge, visible
+      plate mark, foxed paper, the wash running slightly outside the line, unpeopled frame, the
+      caption space beneath the image left empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-portsmouth-bitterling.webp
-    prompt: a small round cartoon fish in iridescent rose and violet nosing hopefully into the opening
-      of a much larger occupied shell, entirely unbothered by the occupant, vibrant saturated
-      cartoon creature illustration, thick confident outlines, exaggerated asymmetric anatomy,
-      glossy wet highlights, playful macabre storybook monster, bold colour, dark water behind
-      it, NOT photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: a small round fish in iridescent rose and violet nosing hopefully into the opening of a
+      much larger occupied shell, entirely unbothered by the occupant, hand-coloured lithograph
+      plate from an 1850s natural history book, fine engraved line under flat hand-laid
+      watercolour washes, Prussian blue and madder and gamboge, visible plate mark, foxed paper,
+      the wash running slightly outside the line, unpeopled frame, the caption space beneath the
+      image left empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-rainbow-nudibranch.webp
-    prompt: a small gorgeous cartoon sea slug on the glass, banded in every colour at once with a
-      crown of frilled gills and two blunt horns, luminous and immaculate, doing absolutely
-      nothing, vibrant saturated cartoon creature illustration, thick confident outlines,
-      exaggerated asymmetric anatomy, glossy wet highlights, playful macabre storybook monster,
-      bold colour, dark water behind it, NOT photorealistic, not a nature photograph, unpeopled
-      frame, no text
+    prompt: a small gorgeous sea slug on the glass, banded in every colour at once with a crown of
+      frilled gills and two blunt horns, luminous and immaculate, doing absolutely nothing,
+      ornamental natural history plate, obsessive radial symmetry, the organism arranged as
+      design to fill the sheet, fine line and restrained colour, ruled ornamental border,
+      unpeopled frame, the plate's caption strip empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-sardine-common.webp
-    prompt: a small cartoon sardine with one enormous mirror-bright eye, sleek silver-blue torpedo
-      body, a dozen identical siblings blurred behind it all facing the same direction, vibrant
-      saturated cartoon creature illustration, thick confident outlines, exaggerated asymmetric
-      anatomy, glossy wet highlights, playful macabre storybook monster, bold colour, dark water
-      behind it, NOT photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: a small sardine with one enormous mirror-bright eye, sleek silver-blue torpedo body, a
+      dozen identical siblings blurred behind it all facing the same direction, hand- coloured
+      lithograph plate from an 1850s natural history book, fine engraved line under flat
+      hand-laid watercolour washes, Prussian blue and madder and gamboge, visible plate mark,
+      foxed paper, the wash running slightly outside the line, unpeopled frame, the caption
+      space beneath the image left empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-sea-camel.webp
-    prompt: an upright cartoon seahorse-camel with a heavy lumpy hump on its back, ridged armour
-      plating and a long tubular snout, sandy gold and teal, tail curled, vibrant saturated
-      cartoon creature illustration, thick confident outlines, exaggerated asymmetric anatomy,
-      glossy wet highlights, playful macabre storybook monster, bold colour, dark water behind
-      it, NOT photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: an upright seahorse-camel with a heavy lumpy hump on its back, ridged armour plating and a
+      long tubular snout, sandy gold and teal, tail curled, chromolithograph cigarette card from
+      around 1900, small format with a printed ornamental border and a blank name banner,
+      four-colour stone printing, visible misregistration and dot rosettes, slightly garish
+      cheap inks, corners worn round, unpeopled frame, the name banner empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-silt-loach.webp
-    prompt: a long sludge-brown cartoon loach half buried in gravel with only its head and one eye
-      showing, ochre and umber, a small pile of displaced grit heaped where it went in, vibrant
-      saturated cartoon creature illustration, thick confident outlines, exaggerated asymmetric
-      anatomy, glossy wet highlights, playful macabre storybook monster, bold colour, dark water
-      behind it, NOT photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: a long sludge-brown loach half buried in gravel with only its head and one eye showing,
+      ochre and umber, a small pile of displaced grit heaped where it went in, hand-coloured
+      lithograph plate from an 1850s natural history book, fine engraved line under flat
+      hand-laid watercolour washes, Prussian blue and madder and gamboge, visible plate mark,
+      foxed paper, the wash running slightly outside the line, unpeopled frame, the caption
+      space beneath the image left empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-skimmer-fry.webp
-    prompt: a tiny cartoon fish riding the underside of the water surface, upturned mouth breaking
-      through, silver-mint body with an oversized worried eye, the bright meniscus line cutting
-      across the top of the frame, vibrant saturated cartoon creature illustration, thick
-      confident outlines, exaggerated asymmetric anatomy, glossy wet highlights, playful macabre
-      storybook monster, bold colour, dark water behind it, NOT photorealistic, not a nature
-      photograph, unpeopled frame, no text
+    prompt: a tiny fish riding the underside of the water surface, upturned mouth breaking through,
+      body with an oversized worried eye, the bright meniscus line cutting across the top of the
+      frame, gyotaku fish rubbing, sumi ink pressed directly from the body onto fibrous washi
+      paper, flat black, coverage uneven, the ink thin and skipping where the body lifted away,
+      fins printing as fine radiating lines, one wet painted eye added afterward by hand,
+      unpeopled frame, the rest of the sheet bare
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-sump-blob.webp
-    prompt: a droopy cartoon blobfish with an enormous sad nose and sagging jowls, bubblegum pink and
-      grey, slumping under its own weight, vibrant saturated cartoon creature illustration,
-      thick confident outlines, exaggerated asymmetric anatomy, glossy wet highlights, playful
-      macabre storybook monster, bold colour, dark water behind it, NOT photorealistic, not a
-      nature photograph, unpeopled frame, no text
+    prompt: a droopy blobfish with an enormous sad nose and sagging jowls, bubblegum pink and grey,
+      slumping under its own weight, lampworked glass model on a thin wire mount, transparent
+      hollow body, light passing through the glass and pooling where it thickens, colour
+      suspended in the glass itself, museum specimen on a small wooden base, faint dust,
+      unpeopled frame, a bare unwritten label on the wooden base
+  - project: cthulhuquarium
+    engine: krea2
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-the-accumulation.webp
+    prompt: a swollen blob of translucent magenta jelly with dozens of small objects suspended visibly
+      inside it, a spoon, a key, a fish bone, all drifting slowly through its body, lampworked
+      glass model on a thin wire mount, transparent hollow body, light passing through the glass
+      and pooling where it thickens, colour suspended in the glass itself, museum specimen on a
+      small wooden base, faint dust, unpeopled frame, a bare unwritten label on the wooden base
+  - project: cthulhuquarium
+    engine: krea2
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-the-almoner.webp
+    prompt: a small pale crab in cream and gold holding several identical portions of food out on its
+      claws, arranged in a neat fan, all exactly the same size, chromolithograph cigarette card
+      from around 1900, small format with a printed ornamental border and a blank name banner,
+      four-colour stone printing, visible misregistration and dot rosettes, slightly garish
+      cheap inks, corners worn round, unpeopled frame, the name banner empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-annexation.webp
-    prompt: a colossal cartoon crawdad seated on a ridge of gravel arranged into neat borders, scarlet
-      and burnt orange plating, four raised claws of different sizes, tiny crown- like spines
-      along its back, vibrant saturated cartoon creature illustration, thick confident outlines,
-      exaggerated asymmetric anatomy, glossy wet highlights, playful macabre storybook monster,
-      bold colour, dark water behind it, NOT photorealistic, not a nature photograph, unpeopled
-      frame, no text
+    prompt: a colossal crawdad seated on a ridge of gravel arranged into neat borders, plating, four
+      raised claws of different sizes, tiny crown- like spines along its back, scraperboard
+      illustration, white line scratched out of solid black ink with a blade, pure black and
+      pure white only, every tone built from line density, form built entirely from cut
+      hatching, stark and linear, unpeopled frame, the board around it left solid uncut black
+  - project: cthulhuquarium
+    engine: krea2
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-the-antiphon.webp
+    prompt: a fish with a wide open round mouth and a throat lit from inside, cobalt and pale gold,
+      faint concentric rings of sound drawn radiating from it toward something outside the
+      frame, ornamental natural history plate, obsessive radial symmetry, the organism arranged
+      as design to fill the sheet, fine line and restrained colour, ruled ornamental border,
+      unpeopled frame, the plate's caption strip empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-auditor.webp
-    prompt: a severe upright cartoon creature with a stack of flat plate-like fins down its spine like
-      bound ledgers, oxblood and brass, one narrow unblinking eye, held perfectly level, vibrant
-      saturated cartoon creature illustration, thick confident outlines, exaggerated asymmetric
-      anatomy, glossy wet highlights, playful macabre storybook monster, bold colour, dark water
-      behind it, NOT photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: a severe upright creature with a stack of flat plate-like fins down its spine like bound
+      ledgers, one narrow unblinking eye, held perfectly level, scraperboard illustration, white
+      line scratched out of solid black ink with a blade, pure black and pure white only, every
+      tone built from line density, form built entirely from cut hatching, stark and linear,
+      unpeopled frame, the board around it left solid uncut black
+  - project: cthulhuquarium
+    engine: krea2
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-the-backlog.webp
+    prompt: a huge mass of deep pink jelly with its contents sorted into neat labelled rows inside it,
+      hundreds of small objects in tidy ranks, glowing faintly from within, wet specimen
+      preserved in a sealed glass jar of fluid, formalin yellow, colours leached toward
+      parchment, the glass refracting the body where it presses against it, a handwritten paper
+      label tied on with string, unpeopled frame, the label's handwriting worn to illegible
+      loops
+  - project: cthulhuquarium
+    engine: krea2
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-the-clerestory.webp
+    prompt: a vast creature made of leaded coloured glass panels arranged like a high cathedral
+      window, turquoise and gold, light pouring through it from its own direction, crosswise to
+      the light in the water, ornamental natural history plate, obsessive radial symmetry, the
+      organism arranged as design to fill the sheet, fine line and restrained colour, ruled
+      ornamental border, unpeopled frame, the plate's caption strip empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-committee.webp
-    prompt: a thick coiled cartoon eel body branching into a bouquet of small identical heads,
-      acid-green and charcoal, every head wearing the same expression and angled very slightly
-      differently, vibrant saturated cartoon creature illustration, thick confident outlines,
-      exaggerated asymmetric anatomy, glossy wet highlights, playful macabre storybook monster,
-      bold colour, dark water behind it, NOT photorealistic, not a nature photograph, unpeopled
-      frame, no text
+    prompt: a thick coiled eel body branching into a bouquet of small identical heads, acid-green and
+      charcoal, every head wearing the same expression and angled very slightly differently,
+      ornamental natural history plate, obsessive radial symmetry, the organism arranged as
+      design to fill the sheet, fine line and restrained colour, ruled ornamental border,
+      unpeopled frame, the plate's caption strip empty
+  - project: cthulhuquarium
+    engine: krea2
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-the-double-entry.webp
+    prompt: a crab with two perfectly identical mirrored halves in rust , a matching claw on each side
+      held at the same angle, a faint second outline shadowing every limb, scraperboard
+      illustration, white line scratched out of solid black ink with a blade, pure black and
+      pure white only, every tone built from line density, form built entirely from cut
+      hatching, stark and linear, unpeopled frame, the board around it left solid uncut black
+  - project: cthulhuquarium
+    engine: krea2
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-the-efflorescence.webp
+    prompt: an enormous anemone opened completely flat like a struck bell, hundreds of magenta and
+      orange tendrils splayed in perfect radial symmetry, a dark still centre that reflects
+      nothing, ornamental natural history plate, obsessive radial symmetry, the organism
+      arranged as design to fill the sheet, fine line and restrained colour, ruled ornamental
+      border, unpeopled frame, the plate's caption strip empty
+  - project: cthulhuquarium
+    engine: krea2
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-the-first-demand.webp
+    prompt: an angular creature built from a few crisp folded paper sheets in bone white and cold
+      blue, edges still sharp and uncreased, leaning very slightly forward, a blank folded sheet
+      for a head, the paper unmarked, wet specimen preserved in a sealed glass jar of fluid,
+      formalin yellow, colours leached toward parchment, the glass refracting the body where it
+      presses against it, a handwritten paper label tied on with string, unpeopled frame, the
+      label's handwriting worn to illegible loops
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-founding-rustfish.webp
-    prompt: an enormous ornate cartoon rustfish in corroded gold and deep rust, fins like heavy
-      drapery, ringed by a faint halo of smaller rustfish-shaped afterimages that do not quite
-      line up with it, vibrant saturated cartoon creature illustration, thick confident
-      outlines, exaggerated asymmetric anatomy, glossy wet highlights, playful macabre storybook
-      monster, bold colour, dark water behind it, NOT photorealistic, not a nature photograph,
-      unpeopled frame, no text
+    prompt: an enormous ornate rustfish in corroded gold and deep rust, fins like heavy drapery,
+      ringed by a faint halo of smaller rustfish-shaped afterimages offset a little to one side
+      of it, wet specimen preserved in a sealed glass jar of fluid, formalin yellow, colours
+      leached toward parchment, the glass refracting the body where it presses against it, a
+      handwritten paper label tied on with string, unpeopled frame, the label's handwriting worn
+      to illegible loops
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-foyer.webp
-    prompt: a vast cartoon creature shaped like an archway made of ribs and fins, gold and deep teal,
-      warm chandelier light spilling from somewhere inside it, the dark gap at its centre
-      unmistakably a doorway, vibrant saturated cartoon creature illustration, thick confident
-      outlines, exaggerated asymmetric anatomy, glossy wet highlights, playful macabre storybook
-      monster, bold colour, dark water behind it, NOT photorealistic, not a nature photograph,
-      unpeopled frame, no text
+    prompt: a vast creature shaped like an archway made of ribs and fins, warm chandelier light
+      spilling from somewhere inside it, the dark gap at its centre unmistakably a doorway,
+      risograph print in two fluorescent spot inks on cheap absorbent paper, deliberate
+      misregistration, the inks overprinting to a third colour where they cross, flat unblended
+      areas, paper showing through, unpeopled frame, wide bare margins
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-freeholder.webp
-    prompt: an enormous cartoon limpet covering most of the glass, shell built up in uneven ridged
-      storeys like a squat tower, teal and brass, a clear ring of bare pane around it that
-      nothing else occupies, vibrant saturated cartoon creature illustration, thick confident
-      outlines, exaggerated asymmetric anatomy, glossy wet highlights, playful macabre storybook
-      monster, bold colour, dark water behind it, NOT photorealistic, not a nature photograph,
-      unpeopled frame, no text
+    prompt: an enormous limpet covering most of the glass, shell built up in uneven ridged storeys
+      like a squat tower, a clear ring of bare pane around it that nothing else occupies,
+      scraperboard illustration, white line scratched out of solid black ink with a blade, pure
+      black and pure white only, every tone built from line density, form built entirely from
+      cut hatching, stark and linear, unpeopled frame, the board around it left solid uncut
+      black
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-harbors-due.webp
-    prompt: a towering cartoon creature built from overlapping rectangular paper-like fins stacked
-      askew, bone-white and cold blue, leaning slightly forward, no face anywhere on it, vibrant
-      saturated cartoon creature illustration, thick confident outlines, exaggerated asymmetric
-      anatomy, glossy wet highlights, playful macabre storybook monster, bold colour, dark water
-      behind it, NOT photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: a towering creature built from overlapping rectangular paper-like fins stacked askew,
+      bone-white and cold blue, leaning slightly forward, blank unmarked paper over its whole
+      surface, top to bottom, wet specimen preserved in a sealed glass jar of fluid, formalin
+      yellow, colours leached toward parchment, the glass refracting the body where it presses
+      against it, a handwritten paper label tied on with string, unpeopled frame, the label's
+      handwriting worn to illegible loops
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-hold.webp
-    prompt: a big slack cartoon bag-creature hanging still, no eyes anywhere, a wide seam across its
-      lower half parted into a grin, deep indigo with a sickly green interior glow, vibrant
-      saturated cartoon creature illustration, thick confident outlines, exaggerated asymmetric
-      anatomy, glossy wet highlights, playful macabre storybook monster, bold colour, dark water
-      behind it, NOT photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: a big slack bag-creature hanging still, smooth blank skin across the whole upper half, a
+      wide seam across its lower half parted into a grin, deep indigo with a sickly green
+      interior glow, wet specimen preserved in a sealed glass jar of fluid, formalin yellow,
+      colours leached toward parchment, the glass refracting the body where it presses against
+      it, a handwritten paper label tied on with string, unpeopled frame, the label's
+      handwriting worn to illegible loops
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-inquiry.webp
-    prompt: a vast tangle of cartoon catfish whiskers filling the frame in gold and olive, hundreds of
-      them coiling and probing, a small blunt body barely visible somewhere in the middle of its
-      own moustache, vibrant saturated cartoon creature illustration, thick confident outlines,
-      exaggerated asymmetric anatomy, glossy wet highlights, playful macabre storybook monster,
-      bold colour, dark water behind it, NOT photorealistic, not a nature photograph, unpeopled
-      frame, no text
+    prompt: a vast tangle of catfish whiskers filling the frame hundreds of them coiling and probing,
+      a small blunt body barely visible somewhere in the middle of its own moustache,
+      scraperboard illustration, white line scratched out of solid black ink with a blade, pure
+      black and pure white only, every tone built from line density, form built entirely from
+      cut hatching, stark and linear, unpeopled frame, the board around it left solid uncut
+      black
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-long-consideration.webp
-    prompt: a tall folded cartoon creature made of far too many thin jointed limbs held close, no face
-      at all, deep violet body with acid yellow joints, vibrant saturated cartoon creature
-      illustration, thick confident outlines, exaggerated asymmetric anatomy, glossy wet
-      highlights, playful macabre storybook monster, bold colour, dark water behind it, NOT
-      photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: a tall folded creature made of far too many thin jointed limbs held close, a smooth blank
+      head, unbroken skin where a face would be, deep violet body with acid yellow joints, wet
+      specimen preserved in a sealed glass jar of fluid, formalin yellow, colours leached toward
+      parchment, the glass refracting the body where it presses against it, a handwritten paper
+      label tied on with string, unpeopled frame, the label's handwriting worn to illegible
+      loops
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-long-patience.webp
-    prompt: an enormous cartoon sea serpent filling the whole frame, armoured rust-red scales, a huge
-      toothy jaw and a tiny incongruous rustfish tail trailing far behind, vibrant saturated
-      cartoon creature illustration, thick confident outlines, exaggerated asymmetric anatomy,
-      glossy wet highlights, playful macabre storybook monster, bold colour, dark water behind
-      it, NOT photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: an enormous sea serpent filling the whole frame, armoured scales, a huge toothy jaw and a
+      tiny incongruous rustfish tail trailing far behind, scraperboard illustration, white line
+      scratched out of solid black ink with a blade, pure black and pure white only, every tone
+      built from line density, form built entirely from cut hatching, stark and linear,
+      unpeopled frame, the board around it left solid uncut black
+  - project: cthulhuquarium
+    engine: krea2
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-the-manifest.webp
+    prompt: a towering creature shaped like an unrolled ledger scroll standing on end, old paper, its
+      surface covered in glowing rows of entries receding upward out of frame, a single wide eye
+      set into, risograph print in two fluorescent spot inks on cheap absorbent paper,
+      deliberate misregistration, the inks overprinting to a third colour where they cross, flat
+      unblended areas, paper showing through, unpeopled frame, wide bare margins
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-marginalia.webp
-    prompt: a glowing cartoon jellyfish whose violet bell carries two distinct kinds of luminous
-      handwriting, one sprawling and one small and precise in the gaps, magenta and cyan, ribbon
-      tendrils curling below, vibrant saturated cartoon creature illustration, thick confident
-      outlines, exaggerated asymmetric anatomy, glossy wet highlights, playful macabre storybook
-      monster, bold colour, dark water behind it, NOT photorealistic, not a nature photograph,
-      unpeopled frame, no text
+    prompt: a glowing jellyfish whose violet bell carries two distinct kinds of luminous handwriting,
+      one sprawling and one small and precise in the gaps, magenta and cyan, ribbon tendrils
+      curling below, lampworked glass model on a thin wire mount, transparent hollow body, light
+      passing through the glass and pooling where it thickens, colour suspended in the glass
+      itself, museum specimen on a small wooden base, faint dust, unpeopled frame, a bare
+      unwritten label on the wooden base
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-pleasant-island.webp
-    prompt: a cheerful little cartoon tropical island with two palm trees and bright sand above the
-      waterline, and directly beneath it an enormous grinning shelled monster with long trailing
-      limbs, warm sunny colours above and lurid green below, vibrant saturated cartoon creature
-      illustration, thick confident outlines, exaggerated asymmetric anatomy, glossy wet
-      highlights, playful macabre storybook monster, bold colour, dark water behind it, NOT
-      photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: a cheerful little tropical island with two palm trees and bright sand above the waterline,
+      directly beneath it an enormous grinning shelled monster with long trailing limbs, warm
+      sunny colours above and lurid below, risograph print in two fluorescent spot inks on cheap
+      absorbent paper, deliberate misregistration, the inks overprinting to a third colour where
+      they cross, flat unblended areas, paper showing through, unpeopled frame, wide bare
+      margins
+  - project: cthulhuquarium
+    engine: krea2
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-the-principal.webp
+    prompt: a fish caught mid-flourish in violet and gold, fins spread like a costume, its face
+      confident and slightly too symmetrical, a faint second fainter fish-shape trailing just
+      behind where it used to be, wet specimen preserved in a sealed glass jar of fluid,
+      formalin yellow, colours leached toward parchment, the glass refracting the body where it
+      presses against it, a handwritten paper label tied on with string, unpeopled frame, the
+      label's handwriting worn to illegible loops
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-quire.webp
-    prompt: a folded paper cartoon creature of sharp geometric planes, part crane and part polyhedron,
-      bright origami colours, crisp creases, vibrant saturated cartoon creature illustration,
-      thick confident outlines, exaggerated asymmetric anatomy, glossy wet highlights, playful
-      macabre storybook monster, bold colour, dark water behind it, NOT photorealistic, not a
-      nature photograph, unpeopled frame, no text
+    prompt: a folded paper creature of sharp geometric planes, part crane and part polyhedron, bright
+      origami colours, crisp creases, gyotaku fish rubbing, sumi ink pressed directly from the
+      body onto fibrous washi paper, flat black, coverage uneven, the ink thin and skipping
+      where the body lifted away, fins printing as fine radiating lines, one wet painted eye
+      added afterward by hand, unpeopled frame, the rest of the sheet bare
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-reading-bell.webp
-    prompt: a glowing cartoon jellyfish whose violet bell is covered in looping luminous script- like
-      marks that are not any alphabet, magenta and cyan, long ribbon tendrils curling below,
-      vibrant saturated cartoon creature illustration, thick confident outlines, exaggerated
-      asymmetric anatomy, glossy wet highlights, playful macabre storybook monster, bold colour,
-      dark water behind it, NOT photorealistic, not a nature photograph, unpeopled frame, no
-      text
+    prompt: a glowing jellyfish whose violet bell is covered in looping luminous script-like marks in
+      an invented alphabet, magenta and cyan, long ribbon tendrils curling below, lampworked
+      glass model on a thin wire mount, transparent hollow body, light passing through the glass
+      and pooling where it thickens, colour suspended in the glass itself, museum specimen on a
+      small wooden base, faint dust, unpeopled frame, a bare unwritten label on the wooden base
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-receiving-line.webp
-    prompt: a row of cartoon archway-creatures in perfect alignment receding into the dark, gold and
-      teal, each one smaller than the last, warm light dimming with distance, the furthest
-      barely a glow, vibrant saturated cartoon creature illustration, thick confident outlines,
-      exaggerated asymmetric anatomy, glossy wet highlights, playful macabre storybook monster,
-      bold colour, dark water behind it, NOT photorealistic, not a nature photograph, unpeopled
-      frame, no text
+    prompt: a row of archway-creatures in perfect alignment receding into the dark, each one smaller
+      than the last, warm light dimming with distance, the furthest barely a glow, risograph
+      print in two fluorescent spot inks on cheap absorbent paper, deliberate misregistration,
+      the inks overprinting to a third colour where they cross, flat unblended areas, paper
+      showing through, unpeopled frame, wide bare margins
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-reconciliation.webp
-    prompt: two overlapping cartoon Auditor-shapes merging into one perfectly symmetrical creature,
-      brass and white-gold, the seam between them blazing with light, both halves finally
-      identical, vibrant saturated cartoon creature illustration, thick confident outlines,
-      exaggerated asymmetric anatomy, glossy wet highlights, playful macabre storybook monster,
-      bold colour, dark water behind it, NOT photorealistic, not a nature photograph, unpeopled
-      frame, no text
+    prompt: two overlapping Auditor-shapes merging into one perfectly symmetrical creature, the seam
+      between them blazing with light, both halves finally identical, risograph print in two
+      fluorescent spot inks on cheap absorbent paper, deliberate misregistration, the inks
+      overprinting to a third colour where they cross, flat unblended areas, paper showing
+      through, unpeopled frame, wide bare margins
+  - project: cthulhuquarium
+    engine: krea2
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-the-sconce.webp
+    prompt: a small lionfish with a modest fan of candy-striped spines and one steady flame- coloured
+      light held out on a single stalk, tangerine and cream, absolutely motionless,
+      chromolithograph cigarette card from around 1900, small format with a printed ornamental
+      border and a blank name banner, four-colour stone printing, visible misregistration and
+      dot rosettes, slightly garish cheap inks, corners worn round, unpeopled frame, the name
+      banner empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-seven-lights.webp
-    prompt: a bulbous cartoon anglerfish crowned with seven glowing bulbs on bent brass stalks
-      arranged like a chandelier, hot lime and gold light pouring off them, an enormous crooked
-      grin of mismatched teeth below, vibrant saturated cartoon creature illustration, thick
-      confident outlines, exaggerated asymmetric anatomy, glossy wet highlights, playful macabre
-      storybook monster, bold colour, dark water behind it, NOT photorealistic, not a nature
-      photograph, unpeopled frame, no text
+    prompt: a bulbous anglerfish crowned with seven glowing bulbs on bent brass stalks arranged like a
+      chandelier, hot lime and gold light pouring off them, an enormous crooked grin of
+      mismatched teeth below, chromolithograph cigarette card from around 1900, small format
+      with a printed ornamental border and a blank name banner, four-colour stone printing,
+      visible misregistration and dot rosettes, slightly garish cheap inks, corners worn round,
+      unpeopled frame, the name banner empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-sexton.webp
-    prompt: a cartoon snail pressed flat against glass seen from the front, spiral shell swirled black
-      and gold, broad muscular foot spread wide, a clean swept arc trailing behind it, vibrant
-      saturated cartoon creature illustration, thick confident outlines, exaggerated asymmetric
-      anatomy, glossy wet highlights, playful macabre storybook monster, bold colour, dark water
-      behind it, NOT photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: a snail pressed flat against glass seen from the front, spiral shell swirled black and
+      gold, broad muscular foot spread wide, a clean swept arc trailing behind it,
+      chromolithograph cigarette card from around 1900, small format with a printed ornamental
+      border and a blank name banner, four-colour stone printing, visible misregistration and
+      dot rosettes, slightly garish cheap inks, corners worn round, unpeopled frame, the name
+      banner empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-single-fish.webp
-    prompt: one enormous cartoon fish whose entire body is made of hundreds of tiny silver sardines
-      packed tight, seams visible where they meet, one single eye formed by a gap in the crowd,
-      electric blue and mercury, vibrant saturated cartoon creature illustration, thick
-      confident outlines, exaggerated asymmetric anatomy, glossy wet highlights, playful macabre
-      storybook monster, bold colour, dark water behind it, NOT photorealistic, not a nature
-      photograph, unpeopled frame, no text
+    prompt: one enormous fish whose entire body is made of hundreds of tiny sardines packed tight,
+      seams visible where they meet, one single eye formed by a gap in the crowd, mercury,
+      gyotaku fish rubbing, sumi ink pressed directly from the body onto fibrous washi paper,
+      flat black, coverage uneven, the ink thin and skipping where the body lifted away, fins
+      printing as fine radiating lines, one wet painted eye added afterward by hand, unpeopled
+      frame, the rest of the sheet bare
+  - project: cthulhuquarium
+    engine: krea2
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-the-summons.webp
+    prompt: a lean eel with a stiff pale collar just behind its head, mouth set in a thin line,
+      holding itself unnaturally straight in the water, scraperboard illustration, white line
+      scratched out of solid black ink with a blade, pure black and pure white only, every tone
+      built from line density, form built entirely from cut hatching, stark and linear,
+      unpeopled frame, the board around it left solid uncut black
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-tenant.webp
-    prompt: a broad cartoon limpet spread across a pane, shell grown lopsided and patched in
-      mismatched teal and rust as though extended in stages, frilled margin creeping outward at
-      one corner, vibrant saturated cartoon creature illustration, thick confident outlines,
-      exaggerated asymmetric anatomy, glossy wet highlights, playful macabre storybook monster,
-      bold colour, dark water behind it, NOT photorealistic, not a nature photograph, unpeopled
-      frame, no text
+    prompt: a broad limpet spread across a pane, shell grown lopsided and patched in mismatched teal
+      and rust as though extended in stages, frilled margin creeping outward at one corner,
+      chromolithograph cigarette card from around 1900, small format with a printed ornamental
+      border and a blank name banner, four-colour stone printing, visible misregistration and
+      dot rosettes, slightly garish cheap inks, corners worn round, unpeopled frame, the name
+      banner empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-testimony.webp
-    prompt: a cartoon eel with two identical heads on one neck, acid-green and charcoal, both wearing
-      the same flat expression and facing the same way, coiling out of a rusted pipe, vibrant
-      saturated cartoon creature illustration, thick confident outlines, exaggerated asymmetric
-      anatomy, glossy wet highlights, playful macabre storybook monster, bold colour, dark water
-      behind it, NOT photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: a eel with two identical heads on one neck, both wearing the same flat expression and
+      facing the same way, coiling out of a rusted pipe, scraperboard illustration, white line
+      scratched out of solid black ink with a blade, pure black and pure white only, every tone
+      built from line density, form built entirely from cut hatching, stark and linear,
+      unpeopled frame, the board around it left solid uncut black
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-understone.webp
-    prompt: a lumpy cartoon rock that has split open into a huge hinged grin of jagged teeth, mossy
-      green and barnacle white, two tiny googly eyes near the top, vibrant saturated cartoon
-      creature illustration, thick confident outlines, exaggerated asymmetric anatomy, glossy
-      wet highlights, playful macabre storybook monster, bold colour, dark water behind it, NOT
-      photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: a lumpy rock that has split open into a huge hinged grin of jagged teeth, mossy and
+      barnacle, two tiny googly eyes near the top, scraperboard illustration, white line
+      scratched out of solid black ink with a blade, pure black and pure white only, every tone
+      built from line density, form built entirely from cut hatching, stark and linear,
+      unpeopled frame, the board around it left solid uncut black
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-understudy.webp
-    prompt: a cartoon fish only half finished, one side crisply drawn and the other smearing away into
-      loose brushstrokes, a single enormous mismatched eye, shifting magenta and violet, vibrant
-      saturated cartoon creature illustration, thick confident outlines, exaggerated asymmetric
-      anatomy, glossy wet highlights, playful macabre storybook monster, bold colour, dark water
-      behind it, NOT photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: a fish only half finished, one side crisply drawn and the other smearing away into loose
+      brushstrokes, a single enormous mismatched eye, shifting magenta and violet, wet specimen
+      preserved in a sealed glass jar of fluid, formalin yellow, colours leached toward
+      parchment, the glass refracting the body where it presses against it, a handwritten paper
+      label tied on with string, unpeopled frame, the label's handwriting worn to illegible
+      loops
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-unlidded-rustfish.webp
-    prompt: an oversized cartoon rustfish in hot rust-orange and bone with extra eyes opening along
-      its flank and tail, each one a different size, all of them wide awake, the original two
-      half-closed, vibrant saturated cartoon creature illustration, thick confident outlines,
-      exaggerated asymmetric anatomy, glossy wet highlights, playful macabre storybook monster,
-      bold colour, dark water behind it, NOT photorealistic, not a nature photograph, unpeopled
-      frame, no text
+    prompt: an oversized rustfish in hot rust-orange and bone with extra eyes opening along its flank
+      and tail, each one a different size, all of them wide awake, the original two half-closed,
+      wet specimen preserved in a sealed glass jar of fluid, formalin yellow, colours leached
+      toward parchment, the glass refracting the body where it presses against it, a handwritten
+      paper label tied on with string, unpeopled frame, the label's handwriting worn to
+      illegible loops
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-usher.webp
-    prompt: a narrow upright cartoon fish with a stiff high collar of fins and a long sombre face,
-      oxblood and charcoal, one fin extended sideways as though indicating a direction, vibrant
-      saturated cartoon creature illustration, thick confident outlines, exaggerated asymmetric
-      anatomy, glossy wet highlights, playful macabre storybook monster, bold colour, dark water
-      behind it, NOT photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: a narrow upright fish with a stiff high collar of fins and a long sombre face, one fin
+      extended sideways as though indicating a direction, scraperboard illustration, white line
+      scratched out of solid black ink with a blade, pure black and pure white only, every tone
+      built from line density, form built entirely from cut hatching, stark and linear,
+      unpeopled frame, the board around it left solid uncut black
+  - project: cthulhuquarium
+    engine: krea2
+    size: 1024x1024
+    image_path: projects/process/cthulhuquarium-fish-the-verger.webp
+    prompt: a large snail on the glass with an ornate -and- spiral shell grown into small tower- like
+      whorls, a ornament balanced deliberately on its back, scraperboard illustration, white
+      line scratched out of solid black ink with a blade, pure black and pure white only, every
+      tone built from line density, form built entirely from cut hatching, stark and linear,
+      unpeopled frame, the board around it left solid uncut black
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-the-waterline.webp
-    prompt: an unbroken ribbon of hundreds of tiny cartoon fish packed shoulder to shoulder along the
-      water surface, mint and silver, running the full width of the frame at perfectly even
-      thickness, vibrant saturated cartoon creature illustration, thick confident outlines,
-      exaggerated asymmetric anatomy, glossy wet highlights, playful macabre storybook monster,
-      bold colour, dark water behind it, NOT photorealistic, not a nature photograph, unpeopled
-      frame, no text
+    prompt: an unbroken ribbon of hundreds of tiny fish packed shoulder to shoulder along the water
+      surface, running the full width of the frame at perfectly even thickness, gyotaku fish
+      rubbing, sumi ink pressed directly from the body onto fibrous washi paper, flat black,
+      coverage uneven, the ink thin and skipping where the body lifted away, fins printing as
+      fine radiating lines, one wet painted eye added afterward by hand, unpeopled frame, the
+      rest of the sheet bare
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-thumbnail-dace.webp
-    prompt: a minute cartoon fish barely larger than its own eye, mint and pewter, fins flared
-      mid-panic, the blurred suggestion of a dozen more scattering behind it, vibrant saturated
-      cartoon creature illustration, thick confident outlines, exaggerated asymmetric anatomy,
-      glossy wet highlights, playful macabre storybook monster, bold colour, dark water behind
-      it, NOT photorealistic, not a nature photograph, unpeopled frame, no text
+    prompt: a minute fish barely larger than its own eye, mint and pewter, fins flared mid-panic, the
+      blurred suggestion of a dozen more scattering behind it, hand-coloured lithograph plate
+      from an 1850s natural history book, fine engraved line under flat hand-laid watercolour
+      washes, Prussian blue and madder and gamboge, visible plate mark, foxed paper, the wash
+      running slightly outside the line, unpeopled frame, the caption space beneath the image
+      left empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-fish-tithe-shoal.webp
-    prompt: a dense shoal of tiny identical cartoon fish swimming so tightly they form the outline of
-      one much larger fish, silver and electric blue, one single fish near the middle facing the
-      wrong way, vibrant saturated cartoon creature illustration, thick confident outlines,
-      exaggerated asymmetric anatomy, glossy wet highlights, playful macabre storybook monster,
-      bold colour, dark water behind it, NOT photorealistic, not a nature photograph, unpeopled
-      frame, no text
+    prompt: a dense shoal of tiny identical fish swimming so tightly they form the outline of one much
+      larger fish, one single fish near the middle facing the wrong way, gyotaku fish rubbing,
+      sumi ink pressed directly from the body onto fibrous washi paper, flat black, coverage
+      uneven, the ink thin and skipping where the body lifted away, fins printing as fine
+      radiating lines, one wet painted eye added afterward by hand, unpeopled frame, the rest of
+      the sheet bare
   - project: cthulhuquarium
     engine: krea2
     size: 768x1024
     image_path: projects/process/cthulhuquarium-char-charlotte-fishmonger.webp
     prompt: a cheerful Victorian aquarium proprietress standing in a bright cluttered back room,
       immaculate pressed apron over practical workwear, hair pinned neatly, hands folded and
-      unmarked, a wide unbothered smile that does not quite reach the eyes, tall tanks of
-      luminous green and magenta water glowing behind her, warm gold lamplight, vibrant
-      saturated cartoon character illustration, thick confident outlines, expressive exaggerated
-      features, bold colour, glossy highlights, playful macabre storybook, half-length portrait,
-      NOT photorealistic, not a photograph, no text
+      unmarked, a wide unbothered smile above flat still eyes, tall tanks of luminous green and
+      magenta water glowing behind her, warm gold lamplight, hand-tinted carte-de-visite studio
+      photograph on albumen paper mounted to card, the sitter posed against a painted studio
+      backdrop, tinting applied by hand to the cheeks and lips only and left off everywhere
+      else, the long exposure holding them very still, card mount showing at the edges
   - project: cthulhuquarium
     engine: krea2
     size: 768x1024
@@ -600,126 +753,120 @@ batch:
       shoulder-length hair unevenly cut, rumpled apron over rolled sleeves, forearms scratched
       and wrapped in mismatched bandages, several fingers missing from both hands, clutching a
       long net, earnest exhausted expression looking slightly off camera, teal and magenta tank
-      glow against warm gold lamplight, vibrant saturated cartoon character illustration, thick
-      confident outlines, expressive exaggerated features, bold colour, glossy highlights,
-      playful macabre storybook, half-length portrait, NOT photorealistic, not a photograph, no
-      text
+      glow against warm gold lamplight, hand-tinted carte-de-visite studio photograph on albumen
+      paper mounted to card, the sitter posed against a painted studio backdrop, tinting applied
+      by hand to the cheeks and lips only and left off everywhere else, the long exposure
+      holding them very still, card mount showing at the edges
   - project: cthulhuquarium
     engine: krea2
     size: 1344x768
     image_path: projects/process/cthulhuquarium-bg-parlour.webp
     prompt: an empty aquarium interior seen head on, luminous jade-green water, bright pale gravel
       floor, a few sunken brass ornaments in warm gold, shafts of turquoise light from above,
-      vibrant saturated cartoon illustration, thick confident outlines, bold flat colour with
-      glossy highlights, playful macabre storybook, NOT photorealistic, not a photograph, no
-      creatures, no text
+      hand-coloured lithograph plate from an 1850s natural history book, fine engraved line
+      under flat hand-laid watercolour washes, period pigments, visible plate mark, foxed paper,
+      unpeopled frame, the caption space beneath the image left empty
   - project: cthulhuquarium
     engine: krea2
     size: 1344x768
     image_path: projects/process/cthulhuquarium-bg-shipwreck.webp
     prompt: an empty aquarium interior seen head on, the ribbed hull of a small sunken boat resting on
       bright gravel, trailing ribbons of acid-green weed, saturated teal water, warm amber light
-      raking across the timbers, vibrant saturated cartoon illustration, thick confident
-      outlines, bold flat colour with glossy highlights, playful macabre storybook, NOT
-      photorealistic, not a photograph, no creatures, no text
+      raking across the timbers, hand-coloured lithograph plate from an 1850s natural history
+      book, fine engraved line under flat hand-laid watercolour washes, period pigments, visible
+      plate mark, foxed paper, unpeopled frame, the caption space beneath the image left empty
   - project: cthulhuquarium
     engine: krea2
     size: 1344x768
     image_path: projects/process/cthulhuquarium-bg-cathedral.webp
     prompt: an empty aquarium interior seen head on, tall pale stone arches half buried in bright
       gravel, drowned columns receding in ranks, saturated violet and teal water, a bright
-      turquoise shaft of light between the columns, vibrant saturated cartoon illustration,
-      thick confident outlines, bold flat colour with glossy highlights, playful macabre
-      storybook, NOT photorealistic, not a photograph, no creatures, no text
+      turquoise shaft of light between the columns, hand-coloured lithograph plate from an 1850s
+      natural history book, fine engraved line under flat hand-laid watercolour washes, period
+      pigments, visible plate mark, foxed paper, unpeopled frame, the caption space beneath the
+      image left empty
   - project: cthulhuquarium
     engine: krea2
     size: 1344x768
     image_path: projects/process/cthulhuquarium-bg-abyssal.webp
     prompt: an empty aquarium interior seen head on, deep indigo and violet water, a faintly glowing
       pale floor along the bottom edge, a single vivid lime point of light far back in the dark,
-      very sparse and open, vibrant saturated cartoon illustration, thick confident outlines,
-      bold flat colour with glossy highlights, playful macabre storybook, NOT photorealistic,
-      not a photograph, no creatures, no text
+      very sparse and open, hand-coloured lithograph plate from an 1850s natural history book,
+      fine engraved line under flat hand-laid watercolour washes, period pigments, visible plate
+      mark, foxed paper, unpeopled frame, the caption space beneath the image left empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-set-extra-shelf.webp
     prompt: a heavy ornate brass and dark wood aquarium shelf bracket, curling Victorian ironwork,
-      warm gold metal against a flat teal background, vibrant saturated cartoon object
-      illustration, thick confident outlines, bold colour, glossy highlights, playful macabre
-      storybook, isolated object centred on a plain flat background, no background scene, NOT
-      photorealistic, not a photograph, no text
+      Victorian trade-catalogue engraving of a single product, line engraving with fine hatched
+      shading, the object alone on bare white paper, drawn to be sold from a supplier's list,
+      the caption space beneath left empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-set-richer-silt.webp
-    prompt: a small ornate brass canister tipped over and spilling glittering violet silt in a bright
-      arc, warm gold metal against a flat teal background, vibrant saturated cartoon object
-      illustration, thick confident outlines, bold colour, glossy highlights, playful macabre
-      storybook, isolated object centred on a plain flat background, no background scene, NOT
-      photorealistic, not a photograph, no text
+    prompt: a small ornate brass canister tipped over and spilling a fine glittering silt in an arc,
+      Victorian trade-catalogue engraving of a single product, line engraving with fine hatched
+      shading, the object alone on bare white paper, drawn to be sold from a supplier's list,
+      the caption space beneath left empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-set-heavier-feed.webp
     prompt: a dented tin scoop heaped with fat wriggling grubs, each one glossy and squirming and
-      faintly smiling, warm gold metal against a flat teal background, vibrant saturated cartoon
-      object illustration, thick confident outlines, bold colour, glossy highlights, playful
-      macabre storybook, isolated object centred on a plain flat background, no background
-      scene, NOT photorealistic, not a photograph, no text
+      faintly smiling, Victorian trade-catalogue engraving of a single product, line engraving
+      with fine hatched shading, the object alone on bare white paper, drawn to be sold from a
+      supplier's list, the caption space beneath left empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-set-restless-water.webp
     prompt: a small brass mechanical paddle-wheel aerator mid-turn, ornate Victorian engineering with
-      visible gears, throwing bright turquoise bubbles, warm gold metal against a flat teal
-      background, vibrant saturated cartoon object illustration, thick confident outlines, bold
-      colour, glossy highlights, playful macabre storybook, isolated object centred on a plain
-      flat background, no background scene, NOT photorealistic, not a photograph, no text
+      visible gears, throwing a spray of bubbles, Victorian trade-catalogue engraving of a
+      single product, line engraving with fine hatched shading, the object alone on bare white
+      paper, drawn to be sold from a supplier's list, the caption space beneath left empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-set-coin-collector.webp
     prompt: a brass clockwork crab automaton with a coin slot in its back and stubby articulated legs,
-      ornate Victorian mechanism, one googly glass eye larger than the other, warm gold metal
-      against a flat teal background, vibrant saturated cartoon object illustration, thick
-      confident outlines, bold colour, glossy highlights, playful macabre storybook, isolated
-      object centred on a plain flat background, no background scene, NOT photorealistic, not a
-      photograph, no text
+      ornate Victorian mechanism, one googly glass eye larger than the other, Victorian
+      trade-catalogue engraving of a single product, line engraving with fine hatched shading,
+      the object alone on bare white paper, drawn to be sold from a supplier's list, the caption
+      space beneath left empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-set-glass-brush.webp
-    prompt: a long-handled brass and bristle aquarium scraper with a worn wooden grip, warm gold metal
-      against a flat teal background, vibrant saturated cartoon object illustration, thick
-      confident outlines, bold colour, glossy highlights, playful macabre storybook, isolated
-      object centred on a plain flat background, no background scene, NOT photorealistic, not a
-      photograph, no text
+    prompt: a long-handled brass and bristle aquarium scraper with a worn wooden grip, bristles
+      splayed from use, Victorian trade-catalogue engraving of a single product, line engraving
+      with fine hatched shading, the object alone on bare white paper, drawn to be sold from a
+      supplier's list, the caption space beneath left empty
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/process/cthulhuquarium-ichthyonomicon.webp
     prompt: a fat leather-bound ledger lying closed on a wooden desk, tarnished brass corner fittings
       and a heavy clasp, cracked spine, a lurid green waterstain blooming across the cover, warm
-      gold lamplight from the upper left and vivid green tank glow from the right, vibrant
-      saturated cartoon illustration, thick confident outlines, bold colour, glossy highlights,
-      playful macabre storybook, NOT photorealistic, not a photograph, no readable text or
-      lettering anywhere
+      gold lamplight from the upper left, hand-tinted carte-de-visite studio photograph on
+      albumen paper mounted to card, tinting applied by hand to the waterstain alone and left
+      off everywhere else, the tooling on the cover worn to illegible loops
   - project: cthulhuquarium
     engine: krea2
     size: 1344x768
     image_path: projects/process/cthulhuquarium-screen-shop.webp
     prompt: the interior of a cluttered Victorian aquarium supply shop seen head on, wooden shelves
       crowded with small tanks glowing green and magenta and brass instruments, warm gold
-      lamplight, an empty counter across the foreground, no people, vibrant saturated cartoon
-      illustration, thick confident outlines, bold flat colour with glossy highlights, playful
-      macabre storybook, NOT photorealistic, not a photograph, no creatures, no text
+      lamplight, an empty counter across the foreground, unpeopled, interior view on a wide
+      plate camera, albumen print, long exposure with everything held perfectly still, slightly
+      converging verticals, the far corners sunk in flat unlit shadow, mounted to card
   - project: cthulhuquarium
     engine: krea2
     size: 1344x768
     image_path: projects/process/cthulhuquarium-screen-bestiary.webp
     prompt: a study wall covered edge to edge in framed specimen plates and pinned cards, dark wood
-      panelling, warm gold lamplight, an empty desk surface across the foreground, no people, no
-      readable text, vibrant saturated cartoon illustration, thick confident outlines, bold flat
-      colour with glossy highlights, playful macabre storybook, NOT photorealistic, not a
-      photograph, no creatures, no text
+      panelling, warm gold lamplight, an empty desk surface across the foreground, unpeopled,
+      the pinned cards' handwriting worn to illegible loops, interior view on a wide plate
+      camera, albumen print, long exposure with everything held perfectly still, slightly
+      converging verticals, the far corners sunk in flat unlit shadow, mounted to card

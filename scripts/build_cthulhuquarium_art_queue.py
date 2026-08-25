@@ -62,35 +62,74 @@ HEADER = """\
 # flux/schnell on the same prompt was decisively better for this project's look.
 # Explicit anyway, so a future default change cannot silently swap the house style.
 #
-# ART DIRECTION, corrected 2026-08-25. The first batch of ten came back as
-# competent deep-sea nature photography -- Silas: "they almost all look like real
-# animals, not misshapen horrors from the deep with a cartoonish playfulness... I
-# want creative, colorful, and vibrant monster fish and backgrounds." The cause was
+# ART DIRECTION, corrected twice on 2026-08-25.
+#
+# First correction: the opening batch of ten came back as competent deep-sea
+# nature photography -- Silas: "they almost all look like real animals, not
+# misshapen horrors from the deep with a cartoonish playfulness." The cause was
 # the prompts, not the seeds: dark, low-detail, rim-lit language reads to krea2 as
-# "underwater photograph". Every prompt below now leads with saturated cartoon
-# illustration and carries an explicit negative against photorealism, because
-# neither engine drops the photographic reading unless told to.
+# "underwater photograph".
+#
+# Second correction, and the one that holds: the fix for that was a shared style
+# suffix ending "NOT photorealistic, not a photograph", which is worse than
+# useless. Krea 2 has no instruction-following layer and its negative prompt is
+# inert at cfg 1, so that clause was a POSITIVE prompt containing the word
+# "photograph" -- and a single style block repeated across every asset is exactly
+# the uniformity that reads as machine-made. Prompts now name a MEDIUM WITH A
+# HISTORY instead: a lithograph plate, a trade-catalogue engraving, a hand-tinted
+# carte-de-visite. A medium cannot come out as a photograph and nothing has to say
+# so, and eight different lineages across the set do not average into one look.
+# The lineages and the reasoning are in the cthulhuquarium repo's ART-DIRECTION.md.
 """
 
-# Backgrounds are what fish are composited ON TOP OF, so they stay readable and
-# uncluttered -- but "readable" was previously written as "dark", which is what
-# made them photographic. Saturated and empty, not dim and empty.
+# NON-FISH LINEAGES. Species carry a `plate` field in the bible; these do not,
+# because they are not specimens -- but they follow the same principle, and for
+# the same reason. See the cthulhuquarium repo's ART-DIRECTION.md.
+#
+# The rule that produced these: name a MEDIUM WITH A HISTORY, never a style
+# adjective, and never a negation. Krea 2 has no instruction-following layer and
+# its negative prompt is inert at cfg 1 (conductor/ART-PROMPTS.md), so the old
+# "NOT photorealistic, not a photograph" tail on every one of these was a positive
+# prompt containing the word "photograph". A trade-catalogue engraving cannot come
+# out as a photograph and nothing has to say so.
+
+# Backgrounds take the PLAINEST lineage on purpose. They are the one surface every
+# plate sits against, and a background with a strong medium of its own would fight
+# seventy-four different foregrounds. Matches the bible's `gosse` plate, which is
+# apt: the domestic tank is the thing Gosse's readers were building.
 BG_STYLE = (
-    "vibrant saturated cartoon illustration, thick confident outlines, bold "
-    "flat colour with glossy highlights, playful macabre storybook, "
-    "NOT photorealistic, not a photograph, no creatures, no text"
+    "hand-coloured lithograph plate from an 1850s natural history book, fine "
+    "engraved line under flat hand-laid watercolour washes, period pigments, "
+    "visible plate mark, foxed paper, unpeopled frame, the caption space beneath "
+    "the image left empty"
 )
+
+# Set pieces are things you BUY, so they are drawn the way things you buy were
+# drawn: a product plate from a Victorian supplier's catalogue, isolated on white,
+# made to sell rather than to describe.
 SET_STYLE = (
-    "vibrant saturated cartoon object illustration, thick confident outlines, "
-    "bold colour, glossy highlights, playful macabre storybook, isolated object "
-    "centred on a plain flat background, no background scene, "
-    "NOT photorealistic, not a photograph, no text"
+    "Victorian trade-catalogue engraving of a single product, line engraving with "
+    "fine hatched shading, the object alone on bare white paper, drawn to be sold "
+    "from a supplier's list, the caption space beneath left empty"
 )
+
+# The one photographic lineage in the whole project, and deliberately so. Every
+# creature is DRAWN, because specimens were recorded by hand by people who could
+# not photograph them. Charlotte and Wilbur could be photographed. Nobody needs to
+# notice this.
 CHAR_STYLE = (
-    "vibrant saturated cartoon character illustration, thick confident outlines, "
-    "expressive exaggerated features, bold colour, glossy highlights, playful "
-    "macabre storybook, half-length portrait, "
-    "NOT photorealistic, not a photograph, no text"
+    "hand-tinted carte-de-visite studio photograph on albumen paper mounted to "
+    "card, the sitter posed against a painted studio backdrop, tinting applied by "
+    "hand to the cheeks and lips only and left off everywhere else, the long "
+    "exposure holding them very still, card mount showing at the edges"
+)
+
+# Screens are the same photographic stock as an interior view: a wide plate camera,
+# a long exposure, slightly wrong verticals, everything still because it had to be.
+SCREEN_STYLE = (
+    "interior view on a wide plate camera, albumen print, long exposure with "
+    "everything held perfectly still, slightly converging verticals, the far "
+    "corners sunk in flat unlit shadow, mounted to card"
 )
 
 # (slug-suffix, size, prompt). Order is the order they render in.
@@ -98,8 +137,8 @@ NON_FISH = [
     ("char-charlotte-fishmonger", PORTRAIT,
      "a cheerful Victorian aquarium proprietress standing in a bright cluttered "
      "back room, immaculate pressed apron over practical workwear, hair pinned "
-     "neatly, hands folded and unmarked, a wide unbothered smile that does not "
-     "quite reach the eyes, tall tanks of luminous green and magenta water "
+     "neatly, hands folded and unmarked, a wide unbothered smile above flat "
+     "still eyes, tall tanks of luminous green and magenta water "
      "glowing behind her, warm gold lamplight, " + CHAR_STYLE),
     ("char-wilbur-stint", PORTRAIT,
      "a young Victorian aquarium assistant beside a glowing tank, bespectacled, "
@@ -128,44 +167,42 @@ NON_FISH = [
 
     ("set-extra-shelf", SQUARE,
      "a heavy ornate brass and dark wood aquarium shelf bracket, curling "
-     "Victorian ironwork, warm gold metal against a flat teal background, " + SET_STYLE),
+     "Victorian ironwork, " + SET_STYLE),
     ("set-richer-silt", SQUARE,
-     "a small ornate brass canister tipped over and spilling glittering violet "
-     "silt in a bright arc, warm gold metal against a flat teal background, " + SET_STYLE),
+     "a small ornate brass canister tipped over and spilling a fine glittering "
+     "silt in an arc, " + SET_STYLE),
     ("set-heavier-feed", SQUARE,
      "a dented tin scoop heaped with fat wriggling grubs, each one glossy and "
-     "squirming and faintly smiling, warm gold metal against a flat teal "
-     "background, " + SET_STYLE),
+     "squirming and faintly smiling, " + SET_STYLE),
     ("set-restless-water", SQUARE,
      "a small brass mechanical paddle-wheel aerator mid-turn, ornate Victorian "
-     "engineering with visible gears, throwing bright turquoise bubbles, warm "
-     "gold metal against a flat teal background, " + SET_STYLE),
+     "engineering with visible gears, throwing a spray of bubbles, " + SET_STYLE),
     ("set-coin-collector", SQUARE,
      "a brass clockwork crab automaton with a coin slot in its back and stubby "
      "articulated legs, ornate Victorian mechanism, one googly glass eye larger "
-     "than the other, warm gold metal against a flat teal background, " + SET_STYLE),
+     "than the other, " + SET_STYLE),
     ("set-glass-brush", SQUARE,
      "a long-handled brass and bristle aquarium scraper with a worn wooden grip, "
-     "warm gold metal against a flat teal background, " + SET_STYLE),
+     "bristles splayed from use, " + SET_STYLE),
 
     ("ichthyonomicon", SQUARE,
      "a fat leather-bound ledger lying closed on a wooden desk, tarnished brass "
      "corner fittings and a heavy clasp, cracked spine, a lurid green waterstain "
-     "blooming across the cover, warm gold lamplight from the upper left and "
-     "vivid green tank glow from the right, vibrant saturated cartoon "
-     "illustration, thick confident outlines, bold colour, glossy highlights, "
-     "playful macabre storybook, NOT photorealistic, not a photograph, "
-     "no readable text or lettering anywhere"),
+     "blooming across the cover, warm gold lamplight from the upper left, "
+     "hand-tinted carte-de-visite studio photograph on albumen paper mounted to "
+     "card, tinting applied by hand to the waterstain alone and left off "
+     "everywhere else, the tooling on the cover worn to illegible loops"),
 
     ("screen-shop", WIDE,
      "the interior of a cluttered Victorian aquarium supply shop seen head on, "
      "wooden shelves crowded with small tanks glowing green and magenta and brass "
      "instruments, warm gold lamplight, an empty counter across the foreground, "
-     "no people, " + BG_STYLE),
+     "unpeopled, " + SCREEN_STYLE),
     ("screen-bestiary", WIDE,
      "a study wall covered edge to edge in framed specimen plates and pinned "
      "cards, dark wood panelling, warm gold lamplight, an empty desk surface "
-     "across the foreground, no people, no readable text, " + BG_STYLE),
+     "across the foreground, unpeopled, the pinned cards' handwriting worn to "
+     "illegible loops, " + SCREEN_STYLE),
 ]
 
 
@@ -234,19 +271,45 @@ def main():
     # "silhouetted" name the rejected style; a shoal that forms "the silhouette
     # of one much larger fish" is a composition and perfectly fine, so the first
     # draft of this check (any use of the word) was a false positive on
-    # tithe-shoal. What actually matters is that every prompt carries the
-    # anti-photoreal negative, since that is the single line standing between
-    # this queue and another batch of nature photography.
+    # tithe-shoal. The two checks that matter now are below: no negations at all,
+    # and a named medium on every single prompt.
     for e in doc["batch"]["entries"]:
         assert e["prompt"].strip(), e["image_path"]
         assert not re.search(r"silhouette-forward|silhouetted", e["prompt"], re.I), (
             f"{e['image_path']} asks for the silhouette-forward style -- that is the "
             f"direction that produced the rejected photorealistic batch"
         )
-        assert re.search(r"not\s+photorealistic", e["prompt"], re.I), (
-            f"{e['image_path']} has no anti-photorealism negative. krea2 defaults to "
-            f"nature photography for anything creature-shaped; without this line it "
-            f"will hand back exactly what Silas rejected on 2026-08-25."
+        # REVERSED 2026-08-25, then widened the same day. This assertion used to
+        # REQUIRE "not photorealistic" on every prompt, which was backwards:
+        # conductor/ART-PROMPTS.md is explicit that Krea 2 has no instruction-
+        # following layer and its negative prompt is inert at cfg 1, so the clause
+        # was a positive prompt containing the word "photorealistic" -- a fair
+        # explanation for the first batch coming back as nature photography.
+        #
+        # The reversal was first written to ban only negations of STYLE words, and
+        # that was still too narrow: it let "no face at all" and "no midtones and no
+        # wash" through the fish bible untouched (27 files). Krea renders the nouns
+        # and drops the negation, so "no face" is how you order a face. There is
+        # nothing worth saying in a prompt with a negation -- say what IS there.
+        # Matches cthulhuquarium/scripts/validate_fish.py, deliberately.
+        neg = re.search(r"\b(?:not|no|without|avoid|never|nor|none|neither|"
+                        r"instead\s+of|rather\s+than|lacking|devoid\s+of|free\s+of|"
+                        r"absent)\b", e["prompt"], re.I)
+        assert not neg, (
+            f"{e['image_path']} contains a negation ({neg.group(0)!r}). Krea 2 renders "
+            f"the nouns and drops the negation, so this asks for the thing you meant "
+            f"to exclude. Describe what IS there -- a medium, an unpeopled frame, an "
+            f"empty caption strip (ART-DIRECTION.md rule 2)."
+        )
+        # One marker per plate lineage, plus the three non-fish media. `haeckel`
+        # is matched on "ornamental" -- it was the one this guard caught on its
+        # first run, which is the guard doing its job.
+        assert re.search(r"lithograph|engraving|carte-de-visite|albumen|rubbing|"
+                         r"cigarette card|scraperboard|risograph|glass model|"
+                         r"specimen|ornamental",
+                         e["prompt"], re.I), (
+            f"{e['image_path']} names no medium. Every prompt must carry a lineage "
+            f"(ART-DIRECTION.md), not a style adjective."
         )
 
     if args.check:
