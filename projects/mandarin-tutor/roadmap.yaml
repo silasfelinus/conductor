@@ -181,8 +181,7 @@ tasks:
   - id: t-006
     milestone: m1
     title: "Build broad beginner categories and custom study sets"
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-001
@@ -191,15 +190,17 @@ tasks:
 
 
       Expanded the learner-facing beginner deck taxonomy across people, body/health, home, school, work, travel/transport, places, weather/seasons, directions, clothing, shopping/money, descriptions/adjectives, and broader practical vocabulary while preserving shared canonical cards across sets. Added a persisted Pinia rename action and compact inline rename controls for custom decks so names can change without changing deck identity or duplicating lexical facts. Implementation branch is worker/mandarin-t006-categories-sk88.
+
+      Broad beginner categories and persisted custom-deck renaming shipped in kind_robots PR #2097, squash merge 513ee2d3950bb5ae9761988211315092d997eef6. The final head passed TypeScript, Layout Contract, Schema Migration Parity, Project Architecture, Contract Tests including the channel artwork audit, and all other head workflows. Cards remain canonical shared records across sets; renaming changes only the stable custom deck's display name.
     claimed_by: 2026-08-25T092600Z-mandarin-tutor-t-006-sk88
     claimed_at: '2026-08-25T09:26:00Z'
-    updated: '2026-08-25T09:29:30Z'
+    updated: '2026-08-25T09:35:00Z'
 
   - id: t-007
     milestone: m3
     title: "Create a practical gambling and casino Mandarin study set"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-001
@@ -209,6 +210,9 @@ tasks:
       payouts, wins/losses/ties, limits, buy-ins/cash-outs, common table instructions, polite
       customer-facing phrases, and number/money expressions. Include usage notes where casino
       Mandarin differs from literal dictionary translations.
+    claimed_by: 2026-08-25T093501Z-mandarin-tutor-t-007-sk89
+    claimed_at: '2026-08-25T09:35:01Z'
+    updated: '2026-08-25T09:35:01Z'
 
   - id: t-008
     milestone: m3
