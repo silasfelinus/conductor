@@ -1807,5 +1807,33 @@ tasks:
       AHEAD OF THE MECHANIC ON PURPOSE, and safely: the six egg plates depend only on the
       appearance ramp above, which holds however decisions 2 and 3 land, so they cannot be
       wasted by a later change to hatching or hiding. They are in projects/art-generate.yaml
-      as egg-common through egg-mythic.
+      as egg-common through egg-mythic. DECISION 3 SETTLED by Silas, 2026-08-25: "an egg
+      should be consumed. it isn't technically against my rules, as it evolves into another
+      Monster of that size." The egg IS consumed on hatching, and it is the ONLY base form in
+      the game that is -- SCHEMA.md's evolution section says flatly that the base form is not
+      consumed, so the exception is now written in there rather than left as an apparent
+      violation a future agent would be right to revert. TWO REASONS IT IS NOT A LOSS, the
+      first of them Silas's own. SIZE IS CONSERVED: N tank units of egg become at most N units
+      of Monster, so the player's holdings transform rather than diminish, which is the same
+      conservation the size rule at the top of this task already relies on. And THE RECORD
+      SURVIVES: what the player collects is the entry, not the object, which is exactly the
+      job t-031 gives the Ichthyonomicon -- "the record that makes everything else safe" turns
+      out to be load-bearing rather than a decorative subtitle, and this is the first mechanic
+      that actually leans on it. TWO CONSEQUENCES THAT BIND THE IMPLEMENTATION. (1) THE HATCH
+      MUST BE SHOWN, NEVER SILENT. The difference between "my egg became a fish" and "my egg
+      vanished" is entirely presentation, and only the first is the no-degradation rule being
+      honoured rather than merely argued. A silent swap satisfies the letter of Silas's
+      reasoning and breaks its spirit completely. (2) AN EGG IS AN ITEM, NOT A BESTIARY
+      SPECIES. Silas's phrasing -- "it evolves into another Monster" -- invites modelling the
+      egg as a Monster row carrying evolves_to, and that CANNOT work: evolves_to is single-
+      valued and validated (target must exist, be a higher tier, and declare the reciprocal
+      evolves_from) while an egg resolves to one of a pool of dozens. Modelling eggs as
+      species would also take the bestiary from 151 to 157, and 151 was deliberate. Eggs
+      follow the set-piece precedent instead: a thing you buy that is not a creature, already
+      sharing the set pieces' trade-catalogue art lineage. Flagged rather than asked, because
+      "another Monster" is as likely loose phrasing as a modelling instruction and the no-loss
+      argument holds identically either way -- but if Silas did mean eggs to be bestiary
+      species, this is the paragraph to overturn, and the 151 count is what it costs. DECISION
+      2 IS NOW THE ONLY ONE OPEN: whether the egg OPTION is itself concealed until something
+      is discovered. Everything else about eggs is settled.
 
