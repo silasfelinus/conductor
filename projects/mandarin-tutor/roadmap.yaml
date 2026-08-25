@@ -1,0 +1,217 @@
+project: mandarin-tutor
+kind: software
+
+goal: >
+  A visual Mandarin learning system in Kind Robots that teaches vocabulary, pronunciation,
+  character structure, and trustworthy character history together: image-backed flashcards,
+  component-aware explanations, audio, curated study sets, custom/requested words, durable
+  art generation, and measurable progression toward official Mandarin proficiency tests.
+
+notes_from_silas: |
+  Mandarin learning has been very slow with available resources. The most useful teaching
+  pattern is seeing the pieces that make up characters and what those pieces contribute,
+  then expanding outward into the whole word. Build an image-based flashcard trainer under
+  Play > Mandarin. Each word/card should show simplified Hanzi, pronunciation, translation,
+  optional character/component breakdown, and the history of how the written form developed.
+  Requested words should create a translation card and an appropriate Krea 2 image request.
+  Provide useful built-in sets, user-created sets, and at least 500 word or word-segment cards.
+  Every lexical card needs a pronunciation guide and audio. Beginner categories such as
+  numbers, animals, family, food, colors, time, places, and common actions should be covered
+  broadly. Include a dedicated gambling/casino vocabulary set for Silas's work. Future scope
+  should map the curriculum against official Mandarin proficiency tests and support iOS and
+  Android clients after the web product is established.
+
+milestones:
+  - id: m1
+    title: "FOUNDATION — trustworthy lexicon and first study loop"
+    weight: 35
+    status: in-progress
+
+  - id: m2
+    title: "DEPTH — components, origins, audio, and generated art"
+    weight: 35
+    status: not-started
+
+  - id: m3
+    title: "CURRICULUM — mastery, test alignment, and specialist sets"
+    weight: 20
+    status: not-started
+
+  - id: m4
+    title: "EXPANSION — mobile clients and portable learning state"
+    weight: 10
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Build the Mandarin Tutor web MVP with 500+ beginner cards"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Ship the Play > Mandarin route, Pinia-owned study state, searchable/catalog study sets,
+      a flashcard interaction that can reveal Hanzi, pinyin, meaning, components, and history,
+      and a versioned starter catalog of at least 500 useful beginner lexical or component
+      cards. Keep lexicon facts separate from learner state and generated-media state so the
+      same curriculum can later back native clients.
+
+  - id: t-002
+    milestone: m1
+    title: "Confirm Mandarin Tutor learning priorities with Silas"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    soft_gate: true
+    note: >
+      FOR SILAS: soft checkpoint only; implementation is not blocked. Redirect the balance
+      among reading, speaking, handwriting, character history, or test preparation after the
+      first study loop is usable. Current scope deliberately prioritizes recognition,
+      pronunciation, decomposition, etymology, and practical vocabulary.
+
+  - id: t-003
+    milestone: m2
+    title: "Integrate source-backed character decomposition and historical forms"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Add licensed/open character data that distinguishes semantic components, phonetic
+      components, radicals/indexing forms, and uncertain analyses. Historical notes must carry
+      source/provenance and confidence instead of presenting folk etymology as fact. Where
+      useful, show traditional forms and earlier graphic stages without pretending every
+      modern component contributes meaning.
+
+  - id: t-004
+    milestone: m2
+    title: "Add pronunciation playback and durable per-word audio"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Every lexical card requires tone-marked pinyin and playable Mandarin audio. Reuse an
+      existing Kind Robots speech path if one is suitable; otherwise establish a cached audio
+      asset contract with deterministic identity so repeated study does not repeatedly incur
+      synthesis work. Preserve text/pinyin as the source of truth for future native clients.
+
+  - id: t-005
+    milestone: m2
+    title: "Connect requested words and missing illustrations to durable Krea 2 ArtJobs"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      A requested word should become a structured translation/learning card and enqueue one
+      appropriate image through the existing /api/art/enqueue Krea 2 path. Tag jobs with
+      deterministic Mandarin-card provenance, dedupe retries, and attach completed ArtImages
+      back to cards without browser-owned rendering. Abstract components may intentionally
+      remain text/glyph-only where an illustration would add noise.
+
+  - id: t-006
+    milestone: m1
+    title: "Build broad beginner categories and custom study sets"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Cover the ordinary beginner flashcard universe: numbers, colors, animals, family,
+      people, body, food/drink, home, school, work, travel/transport, places, weather, time,
+      dates, directions, clothing, shopping/money, common verbs, adjectives, question words,
+      greetings, and high-frequency function words. Cards may belong to multiple sets. Users
+      can create, rename, and study custom sets without duplicating lexical facts.
+
+  - id: t-007
+    milestone: m3
+    title: "Create a practical gambling and casino Mandarin study set"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Build a substantial specialist set for casino work: bets/wagers, chips, cash, table and
+      card vocabulary, suits/ranks, dealer/player roles, shuffle/cut/deal actions, odds and
+      payouts, wins/losses/ties, limits, buy-ins/cash-outs, common table instructions, polite
+      customer-facing phrases, and number/money expressions. Include usage notes where casino
+      Mandarin differs from literal dictionary translations.
+
+  - id: t-008
+    milestone: m3
+    title: "Map the curriculum to official Mandarin proficiency tests"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Track source/version-specific proficiency metadata rather than baking one exam revision
+      into the product. Build coverage reports for the currently applicable HSK/Chinese
+      proficiency standards: vocabulary, characters, pronunciation/listening, reading, and
+      other tested competencies. Make gaps measurable so future roadmap work can target an
+      actual proficiency level instead of an arbitrary card count.
+
+  - id: t-009
+    milestone: m3
+    title: "Add spaced repetition, mastery history, and study diagnostics"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Record card exposure and recall outcomes, schedule review with a simple inspectable
+      spaced-repetition model, and distinguish recognition of meaning, Hanzi, and
+      pronunciation when useful. Preserve exportable learner state so a later mobile client
+      can share progress rather than starting over.
+
+  - id: t-010
+    milestone: m2
+    title: "Reach and audit Krea 2 illustration coverage across the core catalog"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-005
+    note: >
+      Queue missing concrete-concept illustrations in controlled batches, monitor durable
+      ArtJobs through completion, and report rendered/delivered/verified coverage separately.
+      The target is useful imagery for every card where imagery aids recall, not 500 noisy
+      pictures generated merely to satisfy a counter.
+
+  - id: t-011
+    milestone: m3
+    title: "Add linguistic provenance and content-quality audits"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-003
+    note: >
+      Make source licensing and provenance inspectable for dictionary meanings,
+      pronunciations, decomposition, historical notes, and curriculum tags. Add automated
+      checks for duplicate Hanzi, malformed pinyin, missing audio contracts, orphan set
+      membership, unsupported etymology claims, and accidental adult/irrelevant meanings in
+      beginner-facing decks.
+
+  - id: t-012
+    milestone: m4
+    title: "Prepare the Mandarin Tutor domain for iOS and Android clients"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-009
+    note: >
+      Once the web learning loop is stable, document and expose a portable API/domain
+      boundary for catalog, sets, media, and learner progress. Evaluate PWA/native packaging
+      and native iOS/Android clients without forking curriculum logic or media identities.
