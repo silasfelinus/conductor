@@ -17,8 +17,20 @@
 > 2. **Lead with the physical subject.** Material, shape, scale, framing, and
 >    light, before any statement of what the thing means or does. An abstract
 >    subject clause loses to a concrete style tail every time.
+> 3. **Never write a negation — any negation, not just style ones.** Added
+>    2026-08-25. Krea 2 renders the nouns and drops the word holding them off, so
+>    `NOT photorealistic` is a prompt containing *photorealistic* and **`no face`
+>    is how you commission a face**. Note that the "Hard rules for every
+>    generation" line further down this file — *no readable text, no logos, no
+>    watermarks* — is written for **ChatGPT**, which does follow instructions.
+>    Copying it into a Krea 2 prompt orders lettering. Say what the surface IS
+>    instead: "the caption space beneath the image left empty", "a bare unwritten
+>    label", "handwriting worn to illegible loops". Cthulhuquarium learned this
+>    across 74 prompts; its `scripts/validate_fish.py` and Conductor's
+>    `scripts/build_cthulhuquarium_art_queue.py` both now reject any negation
+>    outright, and that guard is the model to copy for a new Krea 2 queue.
 >
-> The daily-dream pipeline enforces both automatically in
+> The daily-dream pipeline enforces the first two automatically in
 > `scripts/dream_art_prompts.py`. Hand-written prompts in this file should follow
 > the same shape. The inclusive-casting direction below still applies — but only
 > to images that actually contain people.
