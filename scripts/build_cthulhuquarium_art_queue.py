@@ -228,11 +228,44 @@ NON_FISH = [
      "card, tinting applied by hand to the waterstain alone and left off "
      "everywhere else, the tooling on the cover worn to illegible loops"),
 
+    # THE LAST AQUARIUM -- cthulhuquarium/t-039. A set piece, because it is a
+    # thing you buy, and the most expensive one in the game. Same
+    # trade-catalogue engraving as every other purchasable: Charlotte sells it
+    # cheerfully and without comment, and the shop plate must not wink.
+    ("set-last-aquarium", SQUARE,
+     "an enormous ornate aquarium tank with a heavy moulded brass frame and "
+     "bevelled glass, scrollwork at every corner, standing empty on a plinth, "
+     "far larger than the plate can comfortably hold, " + SET_STYLE),
+
     ("screen-shop", WIDE,
      "the interior of a cluttered Victorian aquarium supply shop seen head on, "
      "wooden shelves crowded with small tanks glowing green and magenta and brass "
      "instruments, warm gold lamplight, an empty counter across the foreground, "
      "unpeopled, " + SCREEN_STYLE),
+    # THE FINALE -- cthulhuquarium/t-039. Deliberately the SAME albumen interior
+    # stock as screen-shop and screen-bestiary. That is the whole trick: the
+    # medium does not change, the vantage does. The player has spent the game
+    # looking at rooms photographed exactly like this one, and t-014's browsable
+    # public aquariums already had them "looking in someone's window" from day
+    # one. The finale is realising the view goes both ways, so it must not be
+    # signalled by a change of register.
+    #
+    # The eye MOVES rather than stares -- it drifts past and pauses the way you
+    # pause at a tank you have already seen today, and moves on. Being stared at
+    # is frightening; being unremarkable is worse, and that is the note this
+    # whole game has been playing. Hence "mid-drift" and "incurious" in the
+    # prompt: a fixed staring eye is the wrong image and the easy one.
+    #
+    # The window is NOT the door. The door stays closed all game and is never
+    # opened, because it was never the way out.
+    ("screen-finale", WIDE,
+     "the same cluttered Victorian aquarium shop interior seen from further "
+     "back and slightly below, its wooden shelves and glowing tanks small in "
+     "the middle distance, a broad pane of glass across the whole foreground "
+     "with a soft bloom of light on it, and beyond the pane an enormous eye "
+     "mid-drift and incurious, filling the upper frame, warm gold lamplight "
+     "inside and cooler light outside, unpeopled, " + SCREEN_STYLE),
+
     ("screen-bestiary", WIDE,
      "a study wall covered edge to edge in framed specimen plates and pinned "
      "cards, dark wood panelling, warm gold lamplight, an empty desk surface "

@@ -243,3 +243,48 @@ milestones:
   # slots_cap total across all bestiary breakpoints: starting_cap (4) + 4*2 = 12 by bestiary_20,
   # matching Silas's 20-species MVP bar with real room to build interesting tanks, not just
   # room to hold everything at once.
+
+# ---------------------------------------------------------------------------
+# The last aquarium — t-039's terminal purchase, and the ONLY thing coins buy
+# that is not capability.
+#
+# Silas settled the design question this was blocked on: "I like there being a
+# final tank and what you get is functionally the same or minorly larger, but
+# cosmetically it re-evaluates everything." That resolution matters more than
+# it looks. The obvious version of "buy the last and largest aquarium" would
+# have broken SYSTEMS.md's "Two economies, pacing each other" -- coins buy
+# breadth, milestones buy room -- by making one purchase grant capacity.
+# Granting +0 means the rule survives intact rather than being excepted, and
+# the ending is safe to gate on: no power spike, nothing for t-019 to tune
+# around.
+#
+# It is deliberately the most expensive item in the game by a wide margin. The
+# price IS the payoff's setup: you spend the whole game paying for a bigger
+# enclosure, and the reward for the biggest one is finding out it is an
+# enclosure.
+# ---------------------------------------------------------------------------
+last_aquarium:
+  id: the_last_aquarium
+  cost: 250000
+  # +0. Not "a small amount" -- zero, so the milestone rule has no exception at
+  # all. If playtesting wants it to feel slightly roomier, +1 is the ceiling
+  # Silas named ("functionally the same or minorly larger") and it is a t-019
+  # call, not a design one.
+  slots_cap_delta: 0
+  effect: cosmetic_reframe
+  # NOT new assets. Same fish, same set pieces, same room -- re-lit, re-framed,
+  # seen from a step further back. Cheaper to build than new content and far
+  # stronger, because the player is not shown something new: they are shown
+  # THEIR OWN TANK, the one they spent hours arranging, and understand it
+  # differently. Nothing has changed except what it means.
+  reframe_scope: existing_tank_contents
+  unlocks_finale: true
+  # THE RISK, and it is the only real one: an enormous purchase that does
+  # nothing reads as a bad shop item rather than a payoff. The entire
+  # mitigation is the size of the cosmetic moment. If the last tank looks like
+  # "a slightly nicer tank" this fails. Charlotte still sells it cheerfully and
+  # without comment, so the shop copy cannot carry it -- the art has to.
+  note: >-
+    The only cosmetic purchase in the game. Backgrounds are milestone rewards
+    and everything else coins buy is capability, which is part of why this
+    stands out on the shelf at all.
