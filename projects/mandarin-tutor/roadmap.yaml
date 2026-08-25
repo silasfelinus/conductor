@@ -123,17 +123,19 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Connect requested words and missing illustrations to durable Krea 2 ArtJobs"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-001
-    note: >
-      A requested word should become a structured translation/learning card and enqueue one
-      appropriate image through the existing /api/art/enqueue Krea 2 path. Tag jobs with
-      deterministic Mandarin-card provenance, dedupe retries, and attach completed ArtImages
-      back to cards without browser-owned rendering. Abstract components may intentionally
-      remain text/glyph-only where an illustration would add noise.
+    note: |-
+      A requested word should become a structured translation/learning card and enqueue one appropriate image through the existing /api/art/enqueue Krea 2 path. Tag jobs with deterministic Mandarin-card provenance, dedupe retries, and attach completed ArtImages back to cards without browser-owned rendering. Abstract components may intentionally remain text/glyph-only where an illustration would add noise.
+
+
+      Build durable requested-word cards using the shared Kind Robots text-provider service, keep generated linguistic fields explicitly marked as generated, reuse existing Mandarin character enrichment when available, enqueue missing concept art through /api/art/enqueue Krea2 with deterministic provenance/dedupe, and persist card-to-ArtImage linkage server-side rather than in browser-only state.
+    claimed_by: 2026-08-25T052500Z-mandarin-tutor-t-005-sk7y
+    claimed_at: '2026-08-25T05:25:07+00:00'
+    updated: '2026-08-25T05:25:07+00:00'
 
   - id: t-006
     milestone: m1
