@@ -1177,11 +1177,46 @@ tasks:
   - id: t-035
     milestone: m2
     title: "Give monsters their own model — Character is for people you can talk to"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
+    claimed_by: claude-scheduled-20260825-cthulhuquarium-t035
+    updated: '2026-08-25'
+    implementation_pr: 'silasfelinus/kind_robots#2080'
     note: >
+      DONE 2026-08-25 -- built the `Creature` model in kind_robots exactly as this note's
+      BUILD list specified: slug, name, species, class, fieldNote, quirks, alignment,
+      tier (the canonical rarity field aquariumEconomy.ts's deriveFishRarityTier was
+      waiting on), the six Rarity stats, size, yieldPerTick/tickIntervalSeconds/unlockCost
+      (nullable per-species overrides of the tier defaults), behavior, hue, games
+      (comma-separated shared-game slugs -- the actual sharing mechanism, per this note's
+      own "sharing survives unchanged"), artPrompt, evolutionKind/evolvesTo self-relation,
+      and the full art-image-relation set every visual entity here carries. Name: went
+      with `Creature` -- this note's own proposal, and already in live use by the time
+      this session started (t-008's title, aquariumEconomy.ts's own comment, and t-037's
+      art-generate.yaml entries all already said "Creature" before this task built the
+      table), so no one-word override was actually pending.
+      SCOPE CUT, deliberately: only the CREATE TABLE landed. AquariumStock.characterId,
+      AquariumCodexEntry.characterId, and Character.size are all untouched -- this note's
+      own three-item "THEN, IN ORDER" list (repoint AquariumStock, repoint the seed
+      script/task notes, drop Character.size) is NOT fully done. Filed as t-038, not
+      bundled in here: production is mid-incident on kind-robots/t-071 right now (the same
+      DB this migration also touches), and this note itself says the drop specifically
+      waits on t-071 resolving -- the same caution reasonably extends to touching
+      AquariumStock's FK on the very table t-071 is currently unhappy about, even though
+      that repoint would only ADD a column (creatureId), not drop characterId. t-008 (seed
+      the bestiary) needs only the Creature table to exist, not the AquariumStock repoint,
+      and t-011 (the real play loop, the first thing that would actually write a
+      real AquariumStock row) hasn't started either -- so nothing is blocked by this cut.
+      t-003/t-011/t-015/t-029/t-030/t-031 already said "Creature table" in their own
+      titles/notes before this task ran (a prior session evidently anticipated the rename)
+      -- nothing left to repoint there.
+      Verification: prisma format/validate/generate clean, vue-tsc --noEmit clean,
+      verifyAquariumEconomy.test.ts (15 assertions) and verifyMigrationDriftCheck.ts both
+      pass. Migration SQL hand-authored (no MIGRATION_DATABASE_URL/shadow DB in this
+      sandbox by design) and cross-checked column-for-column against the squashed
+      baseline's existing Rarity-enum/String/Boolean-default column shapes.
       ARCHITECTURAL CORRECTION, Silas 2026-08-25: "why do our characters have size? These
       monsters are not meant to be added as characters. characters are our website's
       chattable personalities and npcs for story based games. the monsters are something
@@ -1359,3 +1394,45 @@ tasks:
       NOT IN SCOPE HERE: seeding (t-008, which is blocked on t-035's Creature model
       anyway), and balance. Every new species needs plausible economy numbers in its tier
       band, but tuning them is t-019's job -- do not stall a batch arguing about a yield.
+
+  - id: t-038
+    milestone: m2
+    title: "Repoint AquariumStock/AquariumCodexEntry at Creature, drop Character.size"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-035
+    note: >
+      Fast-follow t-035 deliberately cut from that task's own scope (see its completion
+      note): t-035 built the `Creature` model as a pure CREATE TABLE, and left
+      AquariumStock.characterId, AquariumCodexEntry.characterId, and Character.size
+      untouched on purpose so that migration stayed safe to apply regardless of
+      kind-robots/t-071's state.
+      DO NOT DROP `Character.size` UNTIL kind-robots/t-071 IS RESOLVED AND PRODUCTION IS
+      HEALTHY AGAIN -- t-035's note is explicit about this and it still applies. Converging
+      the database to the shipped client comes first; correcting the model comes second.
+      THE REPOINT ITSELF (AquariumStock/AquariumCodexEntry -> Creature) does not
+      technically require t-071 to be resolved first -- it is a different table -- but
+      touch it carefully anyway: as of 2026-08-25 there is no confirmed way to verify
+      AquariumStock's actual production row count from this sandbox (no DB access), and
+      the honest evidence is only circumstantial-but-strong that it is empty: t-008
+      (seeding) and t-011 (the real play loop, the first thing that would write a
+      meaningful row via a real purchase) are both still `waiting`/unclaimed, and
+      aquariumEconomy.ts's own comment describes the whole economy layer as running on a
+      placeholder derivation specifically BECAUSE no canonical tier field existed until
+      t-035. Confirm row counts (or get explicit sign-off that zero rows is a safe
+      assumption) before choosing between a same-migration rename (`characterId` ->
+      `creatureId`, repointing the FK) and an add-then-drop approach (add `creatureId`
+      nullable now, backfill/cut over, drop `characterId` in a later migration once
+      nothing reads it) -- the same add-then-drop discipline t-035's note applied to
+      Character.size and the 20260824223600 migration.
+      ALSO IN SCOPE: once AquariumStock/AquariumCodexEntry read Creature, swap
+      `server/utils/aquarium.ts`, `server/api/aquarium/purchase.post.ts`, and
+      `server/utils/aquariumEconomy.ts`'s `deriveFishRarityTier` call site over from
+      Character to Creature (that function itself can stay as a fallback/reference but its
+      call site should read `creature.tier` directly once Creature is the source of
+      truth -- see that function's own 2026-08-25 update comment). Then, only once nothing
+      reads `Character.size`, drop it in a NEW forward migration -- do not edit
+      20260824223600 in place, it is merged and may already be applied in a dev database.
+
