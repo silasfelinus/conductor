@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-25T12:51:55Z
+Generated: 2026-08-25T12:55:48Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **758**
-- Outcomes: blocked: 15, cancelled: 1, done: 742
+- Closed tasks recorded: **759**
+- Outcomes: blocked: 15, cancelled: 1, done: 743
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -40,7 +40,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | interface-vision | 83 | 100% |
 | kapowarr | 48 | 100% |
 | kind-economy | 6 | 100% |
-| kind-robots | 50 | 98% |
+| kind-robots | 51 | 98% |
 | kindrobots-unraid | 5 | 100% |
 | lora-ingestion | 1 | 100% |
 | mandarin-tutor | 3 | 100% |
@@ -68,7 +68,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 742 | 99% |
+| software | 743 | 99% |
 
 ## Failure categories
 
@@ -89,6 +89,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-25 `kind-robots/t-074` — t-074 was filed on an incomplete diagnosis: "nothing calls POST /api/conductor/overrides" was true but not the actual bug -- a separate, already-wired path (updateProject -> updateLifecycle -> POST /api/conductor/project-state) already synced status/priority to project-overrides.yaml; the real gap was that no UI control ever called it, only read-only badges existed. Also found conductor-manager.vue always routes a project slug to ProjectDetail, never ConductorPage, making ConductorPage's own parallel project-detail rendering path permanently dead code. When a task's note says "nothing calls endpoint X", grep for a second endpoint achieving the same effect before assuming X itself is the fix -- and check the actual component-routing logic, not just which components exist, before deciding where a new control belongs.
+
 - 2026-08-25 `conductor/t-129` — close_task.py's --set note=... silently replaced a task's whole note instead of appending, which is how cthulhuquarium/t-033 and t-034 lost 199 lines of diagnostic history in one routine status flip. set_task_field_text() now refuses to replace a substantial note with a value that doesn't still contain it unless force=True, and close_task.py gained --append-note. Before widening a shared roadmap-editing primitive's default behavior, grep every caller (roadmap_text_patch.py's apply_task_field_ops feeds the automated task-events processor) -- one existing test was exercising the exact destructive pattern the guard now catches, not representative of the real caller's already-safe append-then-set convention.
 
 - 2026-08-25 `mandarin-tutor/t-010` — A task's first implementation slice can merge (kind_robots PR) cleanly at status:review with no reconciliation checkpoint following. Reviewer sweeps should run check_pr_merged_drift.py every session, not only when a task looks stuck -- this one merged and sat 10+ minutes before the drift script caught it.
@@ -103,8 +105,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-25 `lora-ingestion/t-008` — Disposable admin cleanup workflows can keep resumable review state in a dedicated localStorage-backed store while writing only canonical Resource fields through existing APIs, avoiding temporary schema or endpoint surface.
 - 2026-08-24 `cthulhuquarium/t-003` — The task note assumed a starter fish bible already existed ("grow the seeded bestiary... from its starter set") but neither fish/SCHEMA.md, fish/*.yaml, nor validate_fish.py existed anywhere -- ECONOMY.md's own text had already flagged this exact gap. Cross-referencing every candidate field against the project's already-committed design docs (SYSTEMS.md's rivalry tag vocabulary, ECONOMY.md's rarity_tiers table, the Prisma schema's actual Character/ AquariumStock columns) before authoring anything resolved a real ambiguity the task note left open (tier and rarity read as two separate fields in the note, but the schema and economy docs establish they are the same axis) as a documented judgment call rather than an invented field with nowhere to land -- worth doing before writing bible content on any task whose note references a schema/starter-set that a plain repo search doesn't confirm.
 
-- 2026-08-24 `davinci/t-021` — Chasing a prior cycle's own flagged next-lead ("concurrent tab/session interaction with the same run was not traced") rather than re-running an already-exhausted static-reading pass found a genuine correctness gap: the front end's "exactly one choice per chapter" invariant (chapterIndex derived from playedCount, only advanced on success) was never enforced server-side, so two open tabs or a client retry could double-apply LifeChoice effects. Fixing it by reusing the file's own existing idempotency idiom (resolveCompletedLifeRun's read-back-don't-recompute pattern) kept the change minimal and consistent rather than introducing a parallel guard shape. Where the sandbox couldn't execute the new live-DB regression case, saying so explicitly in the PR (rather than claiming full verification) kept the Verified section honest.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-25T12:51:55Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-25T12:55:48Z_
