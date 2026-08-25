@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-25T01:49:16Z
+Generated: 2026-08-25T01:58:03Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **753**
-- Outcomes: blocked: 15, cancelled: 1, done: 737
+- Closed tasks recorded: **754**
+- Outcomes: blocked: 15, cancelled: 1, done: 738
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 80 | 100% |
 | conductor-app | 4 | 100% |
-| cthulhuquarium | 7 | 100% |
+| cthulhuquarium | 8 | 100% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
@@ -67,7 +67,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 737 | 99% |
+| software | 738 | 99% |
 
 ## Failure categories
 
@@ -88,6 +88,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-25 `cthulhuquarium/t-009` — close_task.py's --set note=... substitutes the roadmap note field rather than extending it, which silently discarded t-009's original task-spec note the same way it discarded t-033/t-034's investigative history minutes earlier (fixed by hand in kind_robots-adjacent conductor PR #2816). Caught and fixed before this close-out PR opened by re-adding the original note ahead of the DONE summary. The script itself is still unfixed -- every future close-out with `--set note=` is one keystroke away from repeating this. Worth a dedicated follow-up task (append-by-default or an explicit --append-note flag) rather than relying on every future session to catch it by hand, as this one and the #2816 session did.
+
 - 2026-08-25 `cthulhuquarium/t-034` — Hardcoding model filenames as constants in two repos (kind_robots and conductor) with no validation against the Resource registry let an invented filename ship silently in both places and only fail at render time, months later, on an unrelated task. The fix (consume_art_queue_core.py resolving constants through the registry) deliberately warns-and-passes-through rather than hard-failing, because the registry is still incomplete (GGUF quants render fine with no Resource row) -- failing closed on an incomplete source of truth would have broken engines that demonstrably work. When migrating hardcoded config to a registry/source-of-truth lookup, ship the lenient version first and gate the strict version behind an opt-in flag until the source of truth is actually complete.
 
 - 2026-08-25 `cthulhuquarium/t-033` — A read failure reported at the application layer (ComfyUI's hostbuf_file_reader_read failed) said almost nothing about which layer actually failed -- three diagnoses (corrupt file, shfs member disk, relayed tailnet path) were tried and disproved before the SMB client event log on the render box showed the real cause: the mount to Alexandria was dropping about once a minute. The transport-layer logs were available the whole time; reasoning forward from the application error alone cost three wrong turns. Next time a large-file read fails intermittently over a network mount, check the client-side connectivity event log before hypothesizing about the file or the storage layer underneath it.
@@ -105,8 +107,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-24 `cthulhuquarium/t-025` — A recurring umbrella task at the top of priority.yaml's ready queue (interface-vision/t-104) had already been independently re-confirmed exhausted by three sessions the same day; spot-checking the one new upstream commit since the last check (rather than re-running the full sweep) confirmed nothing changed, and the session moved on to real work further down the priority order instead of manufacturing a fifth identical no-op. cthulhuquarium/t-025 was a clean fit: a self-contained design-decision task whose own note explicitly authorized an agent recommendation with reasoning, flagged (soft_gate: true) rather than hard-gated, so the answer could unblock downstream tasks (t-026/t-027) same-session instead of stalling on a human reply.
 
-- 2026-08-24 `conductor/t-127` — A task's note can go stale between when it's filed and when a session picks it up -- Silas hand-fixed the acute incident this task described (three stuck operation: note events) hours before this session claimed it. Re-checking live git history and roadmap state before implementing found the task was actually asking for two things bundled together: the acute fix (already done, by hand) and a systemic guard (still open). Scoping the PR to only the still-open half, and following the human's own stated root-cause reasoning in the commit that did the acute fix, avoided both redundant work and contradicting a judgment call Silas had already made.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-25T01:49:16Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-25T01:58:03Z_
