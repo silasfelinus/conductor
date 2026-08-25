@@ -146,20 +146,20 @@ jobs:
           LIMIT="${{ github.event.inputs.limit }}"
           python scripts/queue_missing_project_art.py --limit "${LIMIT:-500}"
 
-      - name: Stage Mandarin Tutor illustration batch
+      - name: Stage complete Mandarin Tutor v2 corpus
         id: stage_mandarin
         if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
         working-directory: conductor
-        run: python scripts/queue_mandarin_tutor_art.py --batch-size 40
+        run: python scripts/queue_mandarin_tutor_art.py --batch-size 1000
 
-      - name: Submit Mandarin Tutor ArtJobs
+      - name: Submit complete Mandarin Tutor v2 ArtJob corpus
         id: submit_mandarin
         if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
         continue-on-error: true
         working-directory: conductor
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
-        run: python scripts/submit_mandarin_tutor_artjobs.py --limit 40
+        run: python scripts/submit_mandarin_tutor_artjobs.py --limit 1000
 
       # Time-sensitive request lanes go first. Daily Dream requests are already
       # priority 200 once they become ArtJobs; Mandarin curriculum art is staged
@@ -195,6 +195,7 @@ jobs:
             --timeout ${{ github.event.inputs.timeout || '300' }}
 
       - name: Route downloaded conductor and fallback images
+        continue-on-error: true
         working-directory: conductor
         run: python scripts/distribute_images.py
 
@@ -223,8 +224,8 @@ jobs:
         run: |
           echo "Kind Robots API health: ${{ steps.krhealth.outputs.up || 'skipped' }}"
           echo "failed-job repair: ${{ steps.repair_failed.outcome }}"
-          echo "Mandarin manifest staging: ${{ steps.stage_mandarin.outcome }}"
-          echo "Mandarin bulk submission: ${{ steps.submit_mandarin.outcome }}"
+          echo "Mandarin v2 manifest staging: ${{ steps.stage_mandarin.outcome }}"
+          echo "Mandarin v2 bulk submission: ${{ steps.submit_mandarin.outcome }}"
           if [ "${{ steps.boxhealth.outputs.up }}" = "true" ] && [ "${{ steps.krhealth.outputs.up }}" != "true" ]; then
             echo "::warning::ArtJob repair/submission was skipped because the Kind Robots API is unavailable; queued work was preserved."
           fi

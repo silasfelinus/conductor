@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
-"""Submit a staged Mandarin Tutor batch to Kind Robots without waiting for renders.
+"""Submit staged Mandarin Tutor v2 requests as durable Kind Robots ArtJobs.
 
-The shared request consumer normally enqueues one request and waits for its media
-before moving to the next. Mandarin coverage is intentionally batched, so this
-small producer submits the whole bounded batch first. The normal consumer still
-runs afterward and performs the existing wait/download/media-verification path.
-Stable request ids become ArtJob idempotency keys, making the second enqueue a
-safe lookup/dedupe rather than a distinct render.
+v2 is a full visual reset. Every pending v2 illustration request is submitted,
+regardless of v1 coverage. The home renderer still controls actual throughput;
+this producer only makes the work durable up front so the corpus cannot depend
+on repeated manual batch starts.
 """
 
 from __future__ import annotations
@@ -21,13 +19,18 @@ except ImportError:
     import consume_art_queue as consumer
     import consume_art_requests as requests
 
-ID_PREFIX = "mandarin-tutor-v1-"
-DEFAULT_LIMIT = 40
+ID_PREFIX = "mandarin-tutor-v2-"
+DEFAULT_LIMIT = 1000
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--limit", type=int, default=DEFAULT_LIMIT)
+    parser.add_argument(
+        "--limit",
+        type=int,
+        default=DEFAULT_LIMIT,
+        help=f"maximum pending v2 requests to submit (default {DEFAULT_LIMIT}, enough for the full core corpus)",
+    )
     args = parser.parse_args(argv)
     if args.limit < 1:
         parser.error("--limit must be >= 1")
@@ -41,11 +44,12 @@ def main(argv: list[str] | None = None) -> int:
         ID_PREFIX,
     )
     safe = [entry for entry in candidates if not requests.weak_prompt_reason(entry)]
+    blocked = len(candidates) - len(safe)
     todo = safe[: args.limit]
     requests.apply_default_steps(todo, requests.FILLER_STEPS)
 
     if not todo:
-        print("No pending Mandarin Tutor art requests to submit.")
+        print("No pending Mandarin Tutor v2 art requests to submit.")
         return 0
 
     submitted = 0
@@ -56,11 +60,14 @@ def main(argv: list[str] | None = None) -> int:
             requests.record_submitted_job(entry.get("id"), job_id)
             submitted += 1
             print(f"  submitted ArtJob {job_id}: {entry.get('id')} -> {entry.get('image_path')}")
-        except Exception as error:  # noqa: BLE001 - submit the rest of the batch
+        except Exception as error:  # noqa: BLE001 - submit the rest of the corpus
             failures += 1
             print(f"  FAILED {entry.get('id')}: {error}", file=sys.stderr)
 
-    print(f"Mandarin ArtJobs submitted: {submitted}/{len(todo)} ({failures} failure(s)).")
+    print(
+        f"Mandarin v2 ArtJobs submitted: {submitted}/{len(todo)} "
+        f"({failures} failure(s), {blocked} prompt-blocked)."
+    )
     return 1 if failures else 0
 
 

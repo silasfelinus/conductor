@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Stage deterministic Mandarin Tutor illustration requests for the shared art lane.
+"""Stage deterministic Mandarin Tutor v2 illustration requests for the shared art lane.
 
 The Kind Robots Mandarin catalog remains the vocabulary source of truth. This
 script fetches its derived /api/mandarin/art-manifest, writes an auditable local
-snapshot, and appends only missing `illustrate` requests to projects/art-prompts.yaml.
+snapshot, and appends every missing v2 `illustrate` request to projects/art-prompts.yaml.
 
-It intentionally queues a bounded batch per invocation. The existing Auto Art
-Generate workflow runs repeatedly, so the catalog drains without dropping 500+
-new renders on the home box in one burst.
+v2 is a deliberate full art-direction reset. Existing v1 assets or requests do
+not satisfy a v2 card. The durable ArtJob queue can absorb the complete corpus
+while the home renderer drains it at its own pace.
 """
 
 from __future__ import annotations
@@ -29,7 +29,9 @@ ART_PROMPTS = ROOT / "projects" / "art-prompts.yaml"
 SNAPSHOT = ROOT / "projects" / "mandarin-tutor" / "art-manifest.json"
 KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kindrobots.org").rstrip("/")
 MANIFEST_URL = f"{KR_BASE_URL}/api/mandarin/art-manifest"
-DEFAULT_BATCH_SIZE = 40
+EXPECTED_RECIPE_VERSION = "v2"
+EXPECTED_ART_DIRECTION_ID = "modern-chinese-picturebook-v2"
+DEFAULT_BATCH_SIZE = 1000
 MANDARIN_PRIORITY = 80
 TOP_LEVEL_KEY = re.compile(r"^[A-Za-z0-9_-]+:\s*(?:#.*)?$")
 
@@ -38,7 +40,7 @@ def fetch_manifest(timeout: int = 30) -> dict[str, Any]:
     request = urllib.request.Request(
         MANIFEST_URL,
         method="GET",
-        headers={"Accept": "application/json", "User-Agent": "conductor-mandarin-art/1"},
+        headers={"Accept": "application/json", "User-Agent": "conductor-mandarin-art/2"},
     )
     try:
         with urllib.request.urlopen(request, timeout=timeout) as response:
@@ -55,10 +57,26 @@ def fetch_manifest(timeout: int = 30) -> dict[str, Any]:
 
 
 def validate_manifest(manifest: dict[str, Any]) -> list[dict[str, Any]]:
+    recipe_version = str(manifest.get("recipeVersion") or "").strip()
+    if recipe_version != EXPECTED_RECIPE_VERSION:
+        raise RuntimeError(
+            f"Expected Mandarin art recipe {EXPECTED_RECIPE_VERSION}, got {recipe_version or 'none'}."
+        )
+    art_direction = manifest.get("artDirection")
+    art_direction_id = (
+        str(art_direction.get("id") or "").strip() if isinstance(art_direction, dict) else ""
+    )
+    if art_direction_id != EXPECTED_ART_DIRECTION_ID:
+        raise RuntimeError(
+            f"Expected Mandarin art direction {EXPECTED_ART_DIRECTION_ID}, got {art_direction_id or 'none'}."
+        )
+
     entries = manifest.get("entries")
     if not isinstance(entries, list):
         raise RuntimeError("Manifest entries must be a list.")
 
+    expected_prefix = f"mandarin-tutor-{EXPECTED_RECIPE_VERSION}-"
+    expected_path = f"public/images/mandarin-tutor/cards/{EXPECTED_RECIPE_VERSION}/"
     seen_ids: set[str] = set()
     seen_paths: set[str] = set()
     valid: list[dict[str, Any]] = []
@@ -69,10 +87,12 @@ def validate_manifest(manifest: dict[str, Any]) -> list[dict[str, Any]]:
         image_path = str(raw.get("imagePath") or "").strip()
         strategy = str(raw.get("strategy") or "").strip()
         prompt = raw.get("prompt")
-        if not request_id.startswith("mandarin-tutor-v1-"):
-            raise RuntimeError(f"Manifest entry {index} has an invalid requestId.")
-        if not image_path.startswith("public/images/mandarin-tutor/cards/v1/"):
-            raise RuntimeError(f"Manifest entry {request_id} has an invalid imagePath.")
+        if not request_id.startswith(expected_prefix):
+            raise RuntimeError(f"Manifest entry {index} has an invalid v2 requestId.")
+        if not image_path.startswith(expected_path):
+            raise RuntimeError(f"Manifest entry {request_id} has an invalid v2 imagePath.")
+        if str(raw.get("artDirectionId") or "").strip() != EXPECTED_ART_DIRECTION_ID:
+            raise RuntimeError(f"Manifest entry {request_id} has the wrong art direction.")
         if strategy not in {"illustrate", "glyph-only"}:
             raise RuntimeError(f"Manifest entry {request_id} has an invalid strategy.")
         if strategy == "illustrate" and not str(prompt or "").strip():
@@ -130,6 +150,8 @@ def request_entry(raw: dict[str, Any]) -> dict[str, Any]:
         "priority": MANDARIN_PRIORITY,
         "target_repo": "silasfelinus/kind_robots",
         "project_slug": "mandarin-tutor",
+        "recipe_version": EXPECTED_RECIPE_VERSION,
+        "art_direction_id": EXPECTED_ART_DIRECTION_ID,
         "image_path": image_path,
         "source_url": f"https://media.acrocatranch.com{image_url}" if image_url.startswith("/") else image_url,
         "page_url": "https://kindrobots.org/play/mandarin",
@@ -142,7 +164,6 @@ def request_entry(raw: dict[str, Any]) -> dict[str, Any]:
 
 
 def render_request(entry: dict[str, Any]) -> str:
-    # Dump one list item so indentation matches the existing requests ledger.
     return yaml.safe_dump(
         [entry],
         allow_unicode=True,
@@ -177,8 +198,7 @@ def append_request_blocks(blocks: list[str]) -> None:
             insert_at = index
             break
 
-    payload = "".join(blocks)
-    lines.insert(insert_at, payload)
+    lines.insert(insert_at, "".join(blocks))
     ART_PROMPTS.write_text("".join(lines), encoding="utf-8")
 
 
@@ -211,12 +231,12 @@ def main(argv: list[str] | None = None) -> int:
         "--batch-size",
         type=int,
         default=DEFAULT_BATCH_SIZE,
-        help=f"maximum new Mandarin requests to append (default {DEFAULT_BATCH_SIZE})",
+        help=f"maximum new Mandarin v2 requests to append (default {DEFAULT_BATCH_SIZE}, enough for the full core corpus)",
     )
     parser.add_argument(
         "--strict",
         action="store_true",
-        help="fail when the public manifest cannot be fetched instead of preserving the existing queue",
+        help="fail when the public v2 manifest cannot be fetched instead of preserving the existing queue",
     )
     args = parser.parse_args(argv)
     if args.batch_size < 0:
@@ -235,12 +255,12 @@ def main(argv: list[str] | None = None) -> int:
     snapshot_changed = write_snapshot(manifest)
     summary = queue_batch(manifest, args.batch_size)
     print(
-        "Mandarin art manifest: "
+        "Mandarin v2 art manifest: "
         f"{summary['total']} core cards, {summary['illustrated']} illustrated, "
         f"{summary['glyph_only']} glyph-only."
     )
     print(
-        "Queue state: "
+        "v2 queue state: "
         f"{summary['already_staged']} already staged, {summary['missing']} still missing, "
         f"{summary['queued']} appended this run."
     )
