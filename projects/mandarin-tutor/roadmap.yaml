@@ -143,7 +143,7 @@ tasks:
   - id: t-013
     milestone: m1
     title: "Build a Mandarin catalog curation admin"
-    status: claimed
+    status: review
     owner: worker
     passes: 1
     stakes: reversible
@@ -155,9 +155,11 @@ tasks:
       Build the high-priority Mandarin catalog curation admin inside the existing Curation Studio. Keep source data immutable, use one global override per canonical card plus append-only audit history, and deliberately avoid an edition/version proliferation model.
 
       Re-claim the Mandarin catalog curation admin after pass 1 was returned for the layout-contract failure. The implementation branch now replaces viewport grid breakpoints with container-responsive auto-fit grids; TypeScript, Layout, Schema Migration Parity, and all 298 Contract Tests steps are green on the corrected PR head.
+
+      Corrected admin pass is ready for review on kind_robots PR #2092. The viewport-grid violation was replaced with container-responsive auto-fit layouts. The corrected head has TypeScript, Layout Contract, Schema Migration Parity, and all 298 Contract Tests steps green. Keep the implementation PR open until the code-only Mandarin v2 art image has been rolled onto Alexandria; #2092 adds MandarinCatalogOverride/MandarinCatalogChange migrations and should be deployed as a separate migration-bearing release rather than accidentally coupling schema changes to the art-manifest rollout.
     claimed_by: 2026-08-25T090700Z-mandarin-tutor-t-013-sk86
     claimed_at: '2026-08-25T09:07:00Z'
-    updated: '2026-08-25T09:07:00Z'
+    updated: '2026-08-25T09:17:00Z'
     implementation_pr: 'silasfelinus/kind_robots#2092'
     retry_context: >
       pass 1 failed (quality): PR #2092 (worker/mandarin-curation-admin-sk83) failed the
