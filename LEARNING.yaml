@@ -10564,3 +10564,24 @@ records:
     sourceFolder/sourceFile) was far cheaper than the literal reading -- re-hashing every
     source file's bytes across every folder would have multiplied an already
     per-file-read+sha256 cost by folder count for a feature that only needs a rough count.
+- date: 2026-08-25
+  project: mandarin-tutor
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    GitHub serves raw .json files from raw.githubusercontent.com with
+    Content-Type: text/plain, not application/json -- ofetch's default JSON
+    auto-parsing keys off that header, so a $fetch call against such a URL with no
+    explicit parseResponse/responseType override silently returns the raw response
+    text instead of a parsed value. Confirmed directly against the live pinned
+    source rather than assuming from the error message: without an override the
+    response was a raw string, with `parseResponse: (t) => JSON.parse(t)` it parsed
+    correctly. Any future $fetch against a raw.githubusercontent.com JSON file
+    should pass an explicit parseResponse rather than relying on content-type
+    sniffing -- checked the rest of server/ for the same pattern and found none
+    left unguarded (mandarinCharacterData.ts already used responseType: 'text' with
+    manual per-line JSON.parse for its NDJSON source, so it was never exposed).
