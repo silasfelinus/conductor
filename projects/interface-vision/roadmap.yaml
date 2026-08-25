@@ -3320,11 +3320,12 @@ tasks:
   - id: t-120
     milestone: m6
     title: "Kaizen: set recurring: true on t-104 and t-105 so close_task.py's guard catches a mistaken 'done' close-out mechanically"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     owner: worker
     note: "Both t-104 and t-105 document their own return-to-ready convention only in prose inside every slice's note (\"return the reusable ... umbrella to ready for the next ... slice\"), not via the recurring: true roadmap field. close_task.py's own docstring says it refuses (exit 1, unless --force) a done transition on a task with recurring: true -- but neither task sets that field, so the guard never fires. This nearly bit the t-105 slice that closed as conductor#2884-2887 on 2026-08-25 (session claude-scheduled-20260825T203214Z-iv-t105): close_task.py ... done landed and merged as PR #2886 before the note history was checked, and had to be corrected with a second PR (#2887, status: ready + full slice note) on the same branch. Set recurring: true on both t-104 and t-105 (verify neither script/CI path treats interface-vision's recurring tasks differently before flipping the field -- check for any recurring: true special-casing elsewhere in this repo's tooling first) so the next session that fat-fingers `done` on either task gets a hard refusal instead of a silent wrong transition that has to be caught by re-reading 40+ note paragraphs."
     claimed_by: claude-scheduled-20260825T212756Z-iv-t120
     claimed_at: '2026-08-25T21:27:57Z'
-    updated: '2026-08-25T21:31:15Z'
+    updated: '2026-08-25T21:34:39Z'
+    implementation_pr: 'silasfelinus/conductor#2889'

@@ -10585,3 +10585,20 @@ records:
     sniffing -- checked the rest of server/ for the same pattern and found none
     left unguarded (mandarinCharacterData.ts already used responseType: 'text' with
     manual per-line JSON.parse for its NDJSON source, so it was never exposed).
+- date: '2026-08-25'
+  project: interface-vision
+  task: t-120
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A recurring-in-practice roadmap task (return-to-ready documented only in prose
+    inside every slice's note) gives close_task.py's `recurring: true` guard nothing
+    to key on, so a `done` close-out slips through silently -- this nearly happened
+    to interface-vision/t-105 earlier the same day (conductor#2884 -> #2887). Setting
+    the `recurring` field explicitly the moment a task's actual operating convention
+    is "always returns to ready" -- not waiting for a mistaken done close-out to
+    force the fix -- turns a 40+-paragraph prose convention into a mechanical
+    refusal the next session can't miss.
