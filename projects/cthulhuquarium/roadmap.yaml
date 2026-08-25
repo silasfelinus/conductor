@@ -1778,5 +1778,34 @@ tasks:
       DEPENDS ON t-029, which settles the SPECIES versus INDIVIDUAL distinction -- an egg
       hatches an individual, so the schema question lands there first. Overlaps t-030 (shop
       stock and selling back) and t-016 (rare random experiences), and its pricing belongs to
-      t-019.
+      t-019. DECISION 1 SETTLED by Silas, 2026-08-25: "ok with your idea of rarity tied to
+      appearance." Rarity describes the LINE the egg seeds, and it is READ OFF THE EGG rather
+      than off what hatches. That second half closes the one real hole in the recommendation,
+      which Silas spotted and this note had missed: under rarity-of-line every egg hatches a
+      plain common fish, so the hatchling tells the player nothing. Buy a MYTHIC egg, get a
+      Penny Bream, and there is no way to know what you have until the line has run for hours.
+      Putting the grade on the shell fixes it outright. THE MEDIUM ALREADY DECIDES HOW. Eggs
+      are things you BUY, so under ART-DIRECTION.md they take the set-piece lineage --
+      Victorian trade-catalogue engraving, the object alone on bare white paper, drawn to be
+      sold from a supplier's list. That medium's entire vocabulary is LINE DENSITY AND
+      ORNAMENT, which is exactly the right dial: COMMON is a plain smooth ovoid with a few
+      contour lines and mostly bare shell; UNCOMMON gains simple banding; RARE is finely
+      speckled with a ruled seam pole to pole; EPIC is worked all over with ornamental whorls;
+      LEGENDARY is elaborate scrollwork with a raised collar; MYTHIC is engraved so densely
+      the shell reads as solid black with the form picked out in reserved white line. WHY THAT
+      PARTICULAR DIAL, rather than colour or size: it is a single monotonic ramp, so a row of
+      eggs in the shop sorts itself at a glance; it survives 256px, which SCHEMA.md requires
+      of every silhouette; it needs no colour, so it works in the one lineage eggs should be
+      drawn in; and crucially it is TEXTURE rather than SCALE, which keeps rarity and size the
+      independent dials this task already requires. A small MYTHIC egg and a large COMMON egg
+      are both instantly legible, and that pair is the most interesting thing the shop can
+      offer. IT ALSO NARROWS DECISION 2. If the grade is on the shell, the mystery is WHICH
+      SPECIES rather than HOW GOOD -- you know what you are paying for and you do not know
+      what you are getting. That is a decision rather than a gamble, which is the same job the
+      size rule is already doing, and it is the better mystery. Whether the egg OPTION is
+      itself concealed until discovered is still open and still Silas's call. ART IS QUEUED
+      AHEAD OF THE MECHANIC ON PURPOSE, and safely: the six egg plates depend only on the
+      appearance ramp above, which holds however decisions 2 and 3 land, so they cannot be
+      wasted by a later change to hatching or hiding. They are in projects/art-generate.yaml
+      as egg-common through egg-mythic.
 
