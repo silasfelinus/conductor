@@ -10509,3 +10509,22 @@ records:
     apply_task_field_ops feeds the automated task-events processor) -- one existing test
     was exercising the exact destructive pattern the guard now catches, not representative
     of the real caller's already-safe append-then-set convention.
+- date: '2026-08-25'
+  project: kind-robots
+  task: t-074
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    t-074 was filed on an incomplete diagnosis: "nothing calls POST /api/conductor/overrides"
+    was true but not the actual bug -- a separate, already-wired path
+    (updateProject -> updateLifecycle -> POST /api/conductor/project-state) already synced
+    status/priority to project-overrides.yaml; the real gap was that no UI control ever
+    called it, only read-only badges existed. Also found conductor-manager.vue always routes
+    a project slug to ProjectDetail, never ConductorPage, making ConductorPage's own
+    parallel project-detail rendering path permanently dead code. When a task's note says
+    "nothing calls endpoint X", grep for a second endpoint achieving the same effect before
+    assuming X itself is the fix -- and check the actual component-routing logic, not just
+    which components exist, before deciding where a new control belongs.
