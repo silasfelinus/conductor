@@ -2576,6 +2576,24 @@ tasks:
       breaks production at the next Force Update until a human remembers. Filed as the
       follow-up in t-072 rather than buried here, because the one-command fix and the
       systemic fix have different urgencies.
+      UPSTREAM CAUSE, added 2026-08-25 after Silas corrected the architecture:
+      `Character.size` SHOULD NOT EXIST. It was added only because an earlier design
+      decision in this session made aquarium fish into Character records, and fish need a
+      capacity weight. Silas: "why do our characters have size? These monsters are not
+      meant to be added as characters. characters are our website's chattable
+      personalities and npcs for story based games. the monsters are something new." He is
+      right, and that makes this outage the downstream cost of a bad architectural call
+      rather than only a deploy-order mistake.
+      THE IMMEDIATE FIX IS UNCHANGED -- still `npx prisma migrate deploy` with
+      MIGRATION_DATABASE_URL. Do that first regardless of the architecture. The same
+      migration also carries the Aquarium capacity/genetics/codex work, which IS wanted,
+      so reverting the migration wholesale would take that with it. Converge the database
+      to the client first, then correct the model deliberately in a follow-up migration.
+      DO NOT edit or revert 20260824223600 in place -- it is merged and may already be
+      applied in a dev database. `Character.size` comes out via a NEW forward migration,
+      once the replacement model exists, so the sequence on every environment is
+      add-then-drop and no history is rewritten. See cthulhuquarium/t-035 for the model
+      correction that has to land before that drop.
 
   - id: t-072
     milestone: m3
