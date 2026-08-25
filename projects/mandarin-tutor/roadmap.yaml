@@ -219,20 +219,25 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Map the curriculum to official Mandarin proficiency tests"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-001
-    note: >
+    note: >-
       Track source/version-specific proficiency metadata rather than baking one exam revision
       into the product. Build coverage reports for the currently applicable HSK/Chinese
       proficiency standards: vocabulary, characters, pronunciation/listening, reading, and
       other tested competencies. Make gaps measurable so future roadmap work can target an
       actual proficiency level instead of an arbitrary card count.
+
+      PR opened: silasfelinus/kind_robots#2117 -- HSK 3.0 coverage report (proficiency
+      standard metadata + pure coverage module + CLI audit script). Live run against
+      production: only HSK levels 1-2 of 7 sourced; levels 3-7 available upstream and named in
+      nextTargets. Watching CI.
     claimed_by: claude-scheduled-20260825-mandarin-t008
     claimed_at: '2026-08-25T23:28:26Z'
-    updated: '2026-08-25T23:28:26Z'
+    updated: '2026-08-25T23:38:35Z'
 
   - id: t-009
     milestone: m3
