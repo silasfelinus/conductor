@@ -1,0 +1,106 @@
+# Mandarin Tutor Art Direction v2
+
+## Decision
+
+v2 is a full visual reset for Mandarin Tutor, not a selective cleanup of v1.
+
+Every core card whose manifest policy is `illustrate` should receive a new v2 render even if a v1 image already exists. Grammar/function/component entries may remain `glyph-only` when a decorative picture would teach the wrong thing. v1 assets remain historical and do not satisfy v2 coverage.
+
+Canonical implementation lives in Kind Robots (`docs/mandarin-tutor-art-direction.md` and `server/utils/mandarinIllustrationManifest.ts`). This Conductor document records the coordination and rollout contract so autonomous art work does not drift back to the older generic style.
+
+## House style
+
+Art direction id: `modern-chinese-picturebook-v2`
+
+Target character:
+
+- modern Chinese educational picture-book illustration;
+- hand-painted gouache with gentle watercolor and restrained ink-wash influence;
+- matte pigments and subtle paper grain;
+- clean silhouettes, deliberate simplification, limited detail, and generous negative space;
+- natural asymmetry and quiet, believable lighting;
+- one strong memory anchor or one compact scene.
+
+The purpose is pedagogical clarity plus a distinctive authored visual identity. Avoid the highly polished, globally generic rendering habits that make generated images immediately read as interchangeable AI art.
+
+## Chinese cultural grounding
+
+Chinese flavor comes from believable lived detail when relevant: ceramics, foodways, kitchens, homes, markets, neighborhood streets, transit, textiles, bamboo and wood objects, furnishings, games, working environments, gardens, farms, and landscape.
+
+Do not use cultural symbols as wallpaper. Pagodas, lantern walls, dragons, Great Wall imagery, calligraphy, red-and-gold festival dressing, or historical costume belong only when they are genuinely part of the vocabulary concept. Contemporary people should look like ordinary people in ordinary situations rather than costume-like ethnic shorthand.
+
+Casino vocabulary should resemble a working table-game environment: plausible felt, chips, cards or tiles, payouts, cash handling, dealer gestures, and player interaction. It should not default to fantasy luxury or invented branded table text.
+
+## Anti-synthetic-image rules
+
+Prefer deliberate illustration decisions over maximal rendering. Avoid:
+
+- photorealism and glossy CGI surfaces;
+- plastic-looking skin;
+- indiscriminate micro-detail;
+- mechanically perfect symmetry;
+- cinematic rim light, lens flare, bokeh, or neon glow used as filler;
+- decorative clutter and impossible background objects;
+- elaborate hand poses when a simpler pose teaches better;
+- uncanny facial close-ups;
+- impossible anatomy or object relationships.
+
+A successful card should look as though an illustrator chose what not to paint.
+
+## Text policy
+
+Generated art contains no Hanzi, pinyin, English, Latin letters, numerals, pseudo-writing, labels, captions, readable signage, speech bubbles, logos, or watermarks. The tutor UI owns all written language.
+
+## Durable identities
+
+- recipe version: `v2`
+- request prefix: `mandarin-tutor-v2-`
+- canonical media root: `/images/mandarin-tutor/cards/v2/`
+- engine: `krea2`
+- size: `768x768`
+
+Conductor validates the live manifest recipe and art-direction id before staging. v1 request ids and v1 media paths never suppress v2 requests.
+
+## Submission policy
+
+Once the self-hosted Kind Robots runtime exposes the v2 manifest, Conductor should stage every missing `illustrate` entry and submit the complete v2 corpus as durable ArtJobs up front. The home relay may render those jobs at its own safe pace. Submission should not require a human to return every forty cards and restart the queue.
+
+Daily Dream remains higher scheduling priority. Mandarin curriculum art has priority 80 and should stay ahead of ordinary priority-0 repair/backfill traffic without starving truly time-sensitive work.
+
+## Tutor behavior
+
+The tutor loads only a manifest that reports recipe `v2` and art direction `modern-chinese-picturebook-v2`. For sourced cards it probes only the currently viewed deterministic v2 media path, displays the image when present, and otherwise keeps the Hanzi fallback. Manual core-card retries use the exact canonical v2 prompt from the server manifest; there is no generic browser-side prompt fallback.
+
+Requested cards use the same v2 prompt builder. Existing requested cards with old art hide stale v1 image/job linkage; the next art action upgrades their stored prompt/version and submits a fresh v2 job.
+
+## Quality rubric
+
+A rendered card is acceptable only if:
+
+1. the intended vocabulary meaning is obvious quickly;
+2. it belongs visibly to the Mandarin Tutor house style;
+3. its Chinese cultural grounding feels lived-in rather than decorative or stereotyped;
+4. it avoids conspicuous synthetic-image tells;
+5. it belongs comfortably beside hundreds of other cards in the same deck.
+
+A failure is a regeneration candidate. It does not create another vocabulary edition.
+
+## Current rollout state — 2026-08-25
+
+- Kind Robots PR #2095 merged: canonical v2 prompt recipe and house-style documentation.
+- Conductor PR #2848 merged: full-corpus v2 staging and durable bulk ArtJob submission.
+- Kind Robots PR #2096 merged: canonical v2 media appears automatically in the tutor; requested-card art upgrades to v2.
+- The code-only production image containing the v2 manifest recipe has been successfully published to `ghcr.io/silasfelinus/kind_robots:latest`.
+- Production is self-hosted on Alexandria/Unraid. The live `KindRobots` container must be updated to the code-only v2 image before Conductor can fetch `/api/mandarin/art-manifest` and submit the corpus.
+- Keep schema-bearing Mandarin admin PR #2092 separate from this rollout. Its `MandarinCatalogOverride` / `MandarinCatalogChange` migrations should be deployed later as an explicit migration-bearing release, not accidentally bundled into the art-only update.
+
+## Evidence required before calling v2 art launched
+
+Do not infer success from a green fail-open workflow step. Record all of the following:
+
+1. the live self-hosted manifest returns recipe `v2` and the expected art-direction id;
+2. the committed Conductor snapshot records total, `illustrate`, and `glyph-only` counts;
+3. bulk-submission logs report the actual number of v2 ArtJobs submitted and their job ids;
+4. self-hosted media begins appearing under `/images/mandarin-tutor/cards/v2/`;
+5. the tutor displays rendered v2 media without manual refresh;
+6. a representative visual QA sample across several categories passes the rubric above.
