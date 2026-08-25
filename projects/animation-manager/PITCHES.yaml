@@ -1,4 +1,4 @@
-updated: "2026-08-21T01:35:00+00:00"
+updated: "2026-08-25T11:39:54+00:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -895,3 +895,76 @@ pitches:
       - the rake-sweep erase-and-restart cycle completes within the design's target duration and never leaves the bed permanently fully traced or permanently blank
       - pointer nudge perturbation and click-triggered forced sweeps never block underlying page input, and the forced sweep is rate-limited
       - traced-segment buffer size and rake sweep cost stay fixed regardless of viewport size or elapsed session time
+
+  - id: cairn-balancing
+    title: Cairn Balancing
+    status: pitched
+    priority: 24
+    surprise: >
+      A small clearing of flat river stones sits empty. One at a time, an unseen hand sets a
+      new stone atop the growing stack, each one a slightly different silhouette than the
+      last, settling with a small physical wobble before it holds. The stack rises, leaning
+      further off-center with every addition, until one stone finally overbalances it: the
+      whole cairn tips and the stones tumble and scatter across the clearing, coming to rest
+      where they land. After a pause, the clearing is swept clear and a fresh cairn begins
+      from the ground up with a new sequence of stone shapes.
+    passive_loop: >
+      A small fixed pool of pre-shaped stone silhouettes (5-9 per cycle, reused across cycles
+      rather than allocated fresh) is placed one at a time onto a simple 2D rigid-body stack:
+      each new stone spawns just above the current stack top, falls a short distance under
+      gravity, and settles via a handful of constraint-solver iterations (the same fixed-
+      iteration-budget discipline as strandbeest-migration's linkage solve) that resolve
+      contact with the stone below and clamp resting rotation. Each successful placement
+      nudges the stack's cumulative center-of-mass offset further from the base; once that
+      offset crosses a threshold (or an unlucky stone shape pushes it over early), gravity +
+      the existing lean is allowed to actually topple the stack instead of being resolved, and
+      the constraint solver runs the stones through a short scatter-and-settle fall onto the
+      ground plane. A brief pause once every stone is at rest, then the ground layer fades the
+      scattered stones out and a new stack begins with a freshly shuffled order from the same
+      stone pool.
+    optional_interaction: >
+      Pointer proximity to the stack applies a small continuous horizontal force scaled by
+      distance, as if a breeze were nudging it -- visibly increasing wobble and pulling the
+      topple threshold closer without forcing an instant collapse. A click on an already-
+      standing stack forces an immediate topple, rate-limited so a click spam cannot restart
+      the cycle faster than one topple-and-rebuild pass.
+    technique: >
+      Canvas 2D. Stone silhouettes are a small fixed set of pre-defined convex polygon
+      outlines (not per-frame procedural geometry), so contact resolution stays cheap. Physics
+      is a minimal position-based-dynamics step: gravity integration plus a fixed small number
+      of constraint-solver iterations per frame for contact/penetration resolution, same
+      bounded-iteration approach as strandbeest-migration's leg-linkage solve rather than a
+      general physics engine. Only the handful of stones currently in play are ever simulated;
+      scattered stones past a settle-velocity threshold freeze into static sprites so the
+      solver's per-frame cost never grows with cycle count.
+    reduced_motion: >
+      A single static frame of a complete, stable five-stone cairn at rest in the clearing,
+      with no placement, wobble, or topple animation -- only a very slow, subtle ambient
+      shadow drift to confirm the piece is alive.
+    performance_risk: >
+      An unbounded constraint-solver iteration count, or a topple that never actually settles
+      (stones jittering indefinitely near a rest threshold), would leave the simulation
+      running forever. Cap solver iterations per frame regardless of stack height, force-
+      freeze any stone below a velocity/rotation-delta threshold for N consecutive frames into
+      a static sprite, and cap the total stones in play at the fixed per-cycle pool size so
+      cost never scales with how many cycles have run this session.
+    novelty: >
+      The core loop is discrete, one-at-a-time rigid-body stacking of a small fixed pool of
+      distinct stone shapes, building toward a genuine catastrophic collapse that scatters the
+      pieces before a full rebuild -- distinct from every existing pitch. Celestial-mobile is
+      continuous suspended-arm equilibrium under a rigid-body solver, never adding or removing
+      pieces and never fully collapsing. Marble-run-contraption moves discrete objects along a
+      fixed pre-built track, not building and toppling the structure itself. Geode-bloom and
+      frost-window-etching both grow a single connected structure outward from a
+      nucleation/edge seed via continuous accretion, not discrete separate rigid bodies
+      stacking then scattering apart. Hourglass-cascade and candlelit-reliquary both
+      accumulate many small particles into a height-map via gravity, never a small number of
+      individually shaped, individually resting rigid bodies. Harmonograph-sand-table traces a
+      single continuous parametric curve rather than placing discrete objects. No existing
+      pitch uses discrete rigid-body stacking toward an intentional catastrophic-collapse
+      event.
+    acceptance:
+      - each stone placement visibly falls, contacts, and settles with a small physical wobble before the next stone is added, and no two cycles place stones in the same order
+      - the stack's lean visibly increases as it grows, and the eventual topple reads as a genuine physical failure rather than an instant swap to a "scattered" state
+      - the scatter-and-settle phase brings every stone to a full stop before the clearing fade-and-rebuild begins, and pointer-nudge/click-triggered topples never block underlying page input
+      - solver iteration count, stone pool size, and per-frame simulation cost stay fixed regardless of viewport size or how many topple cycles have run this session
