@@ -2615,3 +2615,32 @@ tasks:
       docs/runbooks/migration-credential-boundary.md's existing "Running a migration by
       hand" section, or something else). Once decided, flip this back to `ready` with the
       decision recorded in this note (or implement it yourself, then set `done`).
+
+  - id: t-074
+    milestone: m3
+    title: "Nothing in the frontend calls POST /api/conductor/overrides -- the workspace priority/status control isn't wired to it"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found 2026-08-25 while fixing t-067 (overrides.post.ts regenerating
+      project-overrides.yaml instead of patching it). The task note also asked to check
+      whether Silas's report -- changing a project's priority in the workspace UI not
+      reaching Conductor -- traced back to this endpoint. It does: there is no caller of
+      `POST /api/conductor/overrides` anywhere in the current kind_robots frontend
+      (checked components/pages/conductor-*.vue, components/conductor/*.vue, and a repo-
+      wide grep for the route string). The endpoint itself is now correct (t-067), but
+      nothing invokes it, so a workspace priority/status/kind edit still does not reach
+      conductor's project-overrides.yaml.
+      FIX: find or build the workspace UI control Silas used (likely on a
+      conductor/project-management surface) and wire its save action to
+      `POST /api/conductor/overrides` with the changed slug(s). Confirm end-to-end: edit a
+      project's priority in the UI, verify the resulting request patches
+      project-overrides.yaml correctly (t-067's patch-not-regenerate behavior already
+      covers the write side).
+      Note: this task id was chosen as t-074 rather than the otherwise-next-free t-073
+      because PR silasfelinus/conductor#2835 (open at filing time, unrelated -- a DB
+      superuser security finding) already claims t-073 in its own diff. Re-run
+      scripts/next_free_task_id.py before claiming if that PR has since merged and this
+      note is stale.
