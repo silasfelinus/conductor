@@ -1251,6 +1251,27 @@ tasks:
       healthy again. Converging the database to the shipped client comes first; correcting
       the model comes second. Doing both at once makes an outage harder to reason about,
       not easier.
+      NAME SETTLED 2026-08-25: MONSTER, not Creature. Silas: "I like monster. It sets a
+      tone and I love monsters. I'd rather we expand the idea of monster to include a
+      boring rainbow nudibranch that does nothing than rely on creature as a catch all."
+      The proposal in this note argued for Creature on the grounds that not everything in
+      the table is monstrous (the Parlour Rustfish is not). That reasoning was defensive
+      and wrong for this game: Cthulhuquarium is a monster-collecting game, the word is
+      doing tone work, and a bestiary that calls a placid nudibranch a monster is funnier
+      and more committed than one that hedges. A catch-all noun costs nothing to adopt and
+      says nothing.
+      IMPLEMENTED. A scheduled session built the model as `Creature` in kind_robots#2080
+      (migration 20260825120000) before the name was settled; kind_robots#2082 renames it
+      to `Monster` via a forward RENAME TABLE rather than by editing #2080 in place. #2080
+      has almost certainly not been applied anywhere, but "almost certainly" is not
+      "certainly" -- a database that HAD run it would hold a Creature table plus a
+      checksum mismatch against a file no longer describing what it did. The two
+      migrations can be collapsed into one CREATE TABLE `Monster` if it is ever confirmed
+      nothing applied the first; that is tidiness, not correctness.
+      STILL OUTSTANDING and unchanged by the rename: AquariumStock.characterId and
+      AquariumCodexEntry.characterId still point at Character, and Character.size still
+      exists. Repointing them is the next step; the drop stays gated on kind-robots/t-071,
+      so the sequence on every environment is add-then-drop and no history is rewritten.
     claimed_by: claude-scheduled-20260825-cthulhuquarium-t035
     claimed_at: '2026-08-25T02:29:59Z'
     updated: '2026-08-25T02:29:59Z'
