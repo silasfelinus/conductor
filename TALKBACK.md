@@ -24482,3 +24482,75 @@ restart ComfyUI so `folder_paths` rebuilds its cached filename lists, then run
 drive is still bad, so it is safe to run before checking. Agents — when a failure
 signature is used to scope an incident, confirm the scope against the full FAILED set,
 not `recentFailed`.
+
+## 2026-08-25 | Agent (scheduled conductor run) | interface-vision/t-104 | resolution
+
+**Subject:** Fourth cycle of the day's sweep: merged art-queue diagnostic conductor#2891
+(no action needed, another session's work — 420-job FAILED backlog root-caused to a
+render-host `Z:` drive I/O fault, hard needs-human, resubmit deliberately gated behind
+a canary that hasn't recovered yet), then picked up interface-vision/t-104 slice 36 —
+a fresh `kr-panel-flat` byte-exact substitution on `pages/play/mandarin.vue`.
+
+**Detail:**
+- Startup sweep: `AGENTS.md` read in full, `git status`/`git log` clean.
+  `select_role.py` again reported `reviewer-uncertain` (in-sandbox GitHub API 403 as
+  usual) with underlying `worker: cthulhuquarium/t-042` (still explicitly
+  DO-NOT-MERGE pending kind-robots/t-072). Checked GitHub directly via MCP: found
+  conductor#2891 open (2 minutes old, still running CI) — posted a review-claim
+  marker per `scripts/review_claim.py`, waited for its 22 checks to go green (only
+  the known-recurring non-blocking `Analyze (javascript-typescript)` CodeQL stall per
+  conductor/t-106 lagged), merged squash. `check_pr_merged_drift.py` (3 already-
+  documented API-403 unverifiable candidates, unchanged), `audit_human_gates.py` (61
+  active gates + the 1 already-documented stale-state signal, unchanged),
+  `check_project_scaffold_drift.py` (clean), `build_dream_proposal.py --check --fetch`
+  (today's proposal already exists) — no new state beyond #2891 itself.
+- `next_ready_task.py` picked `interface-vision/t-104` (cthulhuquarium/t-042 explicitly
+  blocked, kapowarr/kind-economy had zero real ready tasks — an earlier same-day grep
+  miscounted "status: ready" hits that were actually inside task *notes*, not the
+  `status:` field). Claimed via `claim_task.py`.
+- Re-ran the same order-independent token-set grep slices 32/34/35 used, against
+  current `kind_robots` `main` (not their older snapshot). The `kr-container`/
+  `kr-container-wide` pools are still empty as those slices found. The `kr-panel*`
+  token-set grep surfaced one fresh, previously-unchecked file — `pages/play/
+  mandarin.vue` — with six byte-exact `kr-panel-flat` roots (no `border-dashed`, no
+  competing DaisyUI/primitive classes, consistent with every prior slice's inclusion
+  criteria). Everything else the grep surfaced was already correctly excluded per
+  precedent (the `border-dashed` empty-state family, `kr-stat-tile.vue`'s `.stat`
+  conflict, `chat-gallery.vue`'s `.btn`/`.btn-ghost` conflict).
+- Verified before opening the PR: `eslint` clean on the changed file, `vue-tsc
+  --noEmit` clean (full project, ~2 min run), `npm run test:layout-contract` holds (0
+  new violations — an unrelated pre-existing `video-lora-picker.vue` baseline-ratchet
+  note is untouched), `prettier --check` shows one warning on the file that is
+  confirmed present on baseline `main` too (via `git stash`), so not a regression.
+  Opened silasfelinus/kind_robots#2115, all 38 checks went green, merged squash.
+  Closed the conductor task via `close_task.py ... review` before opening #2115 (per
+  the software close-out flow), then `close_task.py ... ready --implementation-pr` +
+  `--append-note` after #2115 merged, landing this same TALKBACK append on the same
+  branch/PR.
+- Also surfaced but deliberately did NOT act on: a stranded, unmerged conductor
+  branch `worker/top-two-priority-mandarin-cthulhu-sk93` claiming a 2026-08-25 Silas
+  decision promoting Mandarin Tutor to the top of `priority.yaml` (ahead of
+  Cthulhuquarium), plus three stranded kind_robots `worker/mandarin-*` branches with
+  real, unmerged Mandarin Tutor feature commits (requested-word study loop, curation
+  drafts). A concurrent session's `claim: reclaim stale mandarin-tutor/t-007` commit
+  landed on conductor `main` during this same sweep, which is at least consistent
+  with Mandarin Tutor being actively worked right now — but I have no way to verify
+  the priority-reorder branch's Silas quote independently, and it conflicts with the
+  currently-live `priority.yaml` (cthulhuquarium first). Left unmerged and unactioned
+  per the "genuinely ambiguous, Silas-authored-branch-with-unclear-intent" branch-
+  triage rule — flagging here rather than guessing either direction. Worth a
+  `branch-medic` pass once these branches clear the staleness threshold, or Silas
+  confirming the priority claim directly.
+
+**What was good:** treating a prior slice's "pool exhausted" conclusion as a
+point-in-time finding rather than a permanent one — re-running the same grep against
+current `main` (10+ days of intervening commits) is what actually found this slice's
+candidate, and the PR flagged that pattern explicitly for the next slice too.
+
+**Kaizen suggestion:** None new this cycle — the standing kaizen from slice 35 (a
+considered, non-blind pass over the `kr-note` family, since none of its ~20 candidates
+are byte-exact) is still the best-scoped next step for whichever slice picks this back
+up.
+
+---
+_Generated by [Claude Code](https://claude.ai/code)_
