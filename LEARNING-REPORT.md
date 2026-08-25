@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-25T01:31:56Z
+Generated: 2026-08-25T01:33:37Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **751**
-- Outcomes: blocked: 15, cancelled: 1, done: 735
+- Closed tasks recorded: **753**
+- Outcomes: blocked: 15, cancelled: 1, done: 737
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 80 | 100% |
 | conductor-app | 4 | 100% |
-| cthulhuquarium | 5 | 100% |
+| cthulhuquarium | 7 | 100% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
@@ -67,7 +67,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 735 | 99% |
+| software | 737 | 99% |
 
 ## Failure categories
 
@@ -88,6 +88,10 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-25 `cthulhuquarium/t-034` — Hardcoding model filenames as constants in two repos (kind_robots and conductor) with no validation against the Resource registry let an invented filename ship silently in both places and only fail at render time, months later, on an unrelated task. The fix (consume_art_queue_core.py resolving constants through the registry) deliberately warns-and-passes-through rather than hard-failing, because the registry is still incomplete (GGUF quants render fine with no Resource row) -- failing closed on an incomplete source of truth would have broken engines that demonstrably work. When migrating hardcoded config to a registry/source-of-truth lookup, ship the lenient version first and gate the strict version behind an opt-in flag until the source of truth is actually complete.
+
+- 2026-08-25 `cthulhuquarium/t-033` — A read failure reported at the application layer (ComfyUI's hostbuf_file_reader_read failed) said almost nothing about which layer actually failed -- three diagnoses (corrupt file, shfs member disk, relayed tailnet path) were tried and disproved before the SMB client event log on the render box showed the real cause: the mount to Alexandria was dropping about once a minute. The transport-layer logs were available the whole time; reasoning forward from the application error alone cost three wrong turns. Next time a large-file read fails intermittently over a network mount, check the client-side connectivity event log before hypothesizing about the file or the storage layer underneath it.
+
 - 2026-08-25 `lora-ingestion/t-008` — Disposable admin cleanup workflows can keep resumable review state in a dedicated localStorage-backed store while writing only canonical Resource fields through existing APIs, avoiding temporary schema or endpoint surface.
 - 2026-08-24 `cthulhuquarium/t-003` — The task note assumed a starter fish bible already existed ("grow the seeded bestiary... from its starter set") but neither fish/SCHEMA.md, fish/*.yaml, nor validate_fish.py existed anywhere -- ECONOMY.md's own text had already flagged this exact gap. Cross-referencing every candidate field against the project's already-committed design docs (SYSTEMS.md's rivalry tag vocabulary, ECONOMY.md's rarity_tiers table, the Prisma schema's actual Character/ AquariumStock columns) before authoring anything resolved a real ambiguity the task note left open (tier and rarity read as two separate fields in the note, but the schema and economy docs establish they are the same axis) as a documented judgment call rather than an invented field with nowhere to land -- worth doing before writing bible content on any task whose note references a schema/starter-set that a plain repo search doesn't confirm.
 
@@ -103,10 +107,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-24 `conductor/t-127` — A task's note can go stale between when it's filed and when a session picks it up -- Silas hand-fixed the acute incident this task described (three stuck operation: note events) hours before this session claimed it. Re-checking live git history and roadmap state before implementing found the task was actually asking for two things bundled together: the acute fix (already done, by hand) and a systemic guard (still open). Scoping the PR to only the still-open half, and following the human's own stated root-cause reasoning in the commit that did the acute fix, avoided both redundant work and contradicting a judgment call Silas had already made.
 
-- 2026-08-24 `scene-animator/t-001` — The PR (kind_robots#2072) opened with a red TypeScript check: an ArtJob.include of a non-existent ArtImage Prisma relation (ArtJob only carries a plain artImageId int column), Content-Length passed as a stringified value where h3's typed header wants a number, and a Pinia ref (durationSeconds) that inferred a narrow literal union from an `as const satisfies`-typed presets catalog instead of number. All six errors were mechanical and caught deterministically by `npm run test` (vue-tsc); none needed a design change. Fixed and pushed as the Reviewer rather than rejecting back to the Worker, since the errors were narrow, unambiguous, and confined to the task's own new files. Re-affirms running the repo's local typecheck before opening a PR would have caught this before CI did.
-
-- 2026-08-24 `brainstorm/t-031` — Task scope (add a real "promote candidate into an entity" action, carrying its art across) explicitly flagged its own hardest design question -- meta.art.imageIds is an array, the target entity's art model (entityArt.ts) is one scalar id per slot -- rather than leaving it implicit; tracing the array's one mutation site to confirm it was append-only (so "last entry" unambiguously means "most recent delivery") turned a could-have-been-a-guess into an evidence-based, one-line design decision. Also: before implementing, re-verified the prior task's (t-026) negative "no such action exists" finding rather than trusting it blind -- doing so surfaced the one precedent that DOES exist (promptStore.promoteToDream / dreamStore.promotePromptToDream) but is dead code, called from nowhere, which shaped which store to add the new function to and confirmed this was genuinely the first promotion pattern with a live caller. A UI wiring change that adds a new busy/loading state needs to check what the busy prop passed to the child component actually depends on, not just add the new emit -- isCandidateBusy here only checked state that regenerate/branch's shared runGeneration() call sets, so the new promote action's spinner would have silently never appeared without also folding pendingCandidateAction into that check. Third occurrence this session of the over-broad `prettier --write` trap (storybook/t-023, then here) -- worth normalizing as a standing habit: check `git diff --stat` immediately after any `prettier --write`, before staging, on any file with pre-existing formatting drift.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-25T01:31:56Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-25T01:33:37Z_
