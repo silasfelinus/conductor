@@ -3114,7 +3114,7 @@ tasks:
     passes: 0
     stakes: reversible
     depends_on: t-104
-    note: |-
+    note: >-
       This is the deliberately subjective third phase that prior work mostly skipped. Apply the chosen Storybook design language where appropriate: clean hierarchy, generous useful art, friendly controls, minimal container nesting, calm spacing, readable narrative/text areas, and intentional empty/loading/error states. Produce reviewable screenshots rather than closing from source inspection alone.
 
 
@@ -3125,8 +3125,16 @@ tasks:
       Merged silasfelinus/kind_robots#2091 as 75eb077e0d423528b4470808f1a41b6aa546409c from exact head c79bb189bc4e2c2abc3570cfc31cc4d023771f7d after every returned exact-head workflow completed successfully, including TypeScript, Layout Contract, Facet Catalog, Schema Migration Parity, and all 298 Contract Tests stages. Coloring Book curation now uses the full workspace width and presents Color and B&W candidates as equal 17:22 comparison peers with object-contain.
 
       Screenshot-driven Coloring Book curation polish is complete and merged as silasfelinus/kind_robots#2091. Return the reusable page-polish task to ready for the next visual review slice.
-    updated: '2026-08-25 07:20:01+00:00'
-    implementation_pr: 'silasfelinus/kind_robots#2091'
+
+      Slice: polished Build Bench (/build-bench, admin-only A/B image-generation build comparison tool). Prior state was hand-rolled relative to established precedent: an emoji h1 with no header hierarchy, an ad-hoc kr-note-warning missing the base kr-note class, and a corner-radius scale drifting between rounded-3xl/2xl/xl/lg across sibling elements with no visual reason; the idle result slot was bare 50%-opacity text with no visual weight.
+
+      Changes (components/art/build-bench.vue only, template/classes, no script/store changes): adopted the icon-badge + title/subtitle header pattern already established on serendipity-page.vue (kind-icon:server badge, 2xl bold title, 60%-opacity subtitle) in place of the emoji h1; switched the page-level error banner and each side's failed-render notice to canonical kr-note kr-note-warning; settled side panels on rounded-2xl and moved the notes/save bar and saved-matchups list to kr-panel-flat; removed redundant rounded-xl/rounded-lg overrides on daisyUI btn/input/select/textarea controls (the direct cause of the drifting radius scale) so they use their consistent default radius; gave the idle result slot a kind-icon:image icon alongside 'No render yet' instead of bare dim text, matching the intentional-empty-state bar used elsewhere (e.g. serendipity-page.vue's message-feed/active-animations states); calmer outer spacing (p-4 md:p-6, gap-4) matching the same precedent page.
+
+      Verification: npx eslint on both touched files clean; vue-tsc --noEmit clean; npm run test:layout-contract holds, zero new violations (an unrelated pre-existing video-lora-picker.vue viewport-grid baseline improvement was observed and left untouched, out of scope); npx prettier --check flags pre-existing drift on build-bench.vue confirmed via git stash to predate this change, left alone rather than reformatting unrelated lines. Honest limit on visual verification: this sandbox has no reachable database (booted JWT_SECRET=dev npx nuxt dev --port 3000 locally and confirmed /build-bench 500s with 'DATABASE_URL is missing' before rendering), and kind_robots has had no PR-preview infrastructure since the Vercel migration (conductor AGENTS.md's 'Visually verifying a front-end change' section) -- kindrobots.org itself is live and healthy but production has no auto-deploy-on-merge, so no rendered pre-merge or immediate post-merge screenshots were possible. What was actually verified is class-level and structural: the same header/note/panel classes already render correctly elsewhere in production, template type-checking via vue-tsc, and the layout contract. Recommend a manual responsive-layout-audit.yml workflow_dispatch run against kindrobots.org for /build-bench once the next Force Update deploys this merge, the same way this task's prior slice deferred real pixel verification.
+
+      Merged as silasfelinus/kind_robots#2109 (squash 3bf3ac9) with all 37 PR checks green (TypeScript, Contract verifiers, layout-contract, facet-catalog, GitGuardian, verify x3, and the full Storybook/Narrative contract suite) and mergeable_state clean before merge. Return the reusable page-polish task to ready for the next visual review slice.
+    updated: '2026-08-25T15:45:51Z'
+    implementation_pr: 'silasfelinus/kind_robots#2109'
 
   - id: t-106
     milestone: m6
