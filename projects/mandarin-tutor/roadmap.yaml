@@ -142,22 +142,19 @@ tasks:
   - id: t-013
     milestone: m1
     title: "Build a Mandarin catalog curation admin"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-001
-    note: >
-      HIGH INTERNAL PRIORITY: take this immediately after the active tutor-facing requested-word
-      work. Add Mandarin to the existing Admin Curation Studio beside Cthulhuquarium and Coloring
-      Book. Admins need a dense browse/search view of canonical cards, sorting/filtering by Hanzi,
-      pinyin, English meaning, HSK/source, category, media coverage, and override state; category
-      editing; source/provenance inspection; and a straightforward submit-change form for meaning,
-      pinyin, traditional form, usage note, and categories. Source datasets remain immutable. Apply
-      changes through one canonical global override per card plus an append-only audit/change trail.
-      Do not create Coloring Book-style editions or parallel copies of the same lexical card merely
-      because it has been corrected. Generated/requested cards may be surfaced for inspection later,
-      but v1 curation should not silently promote user-specific generated facts into the sourced core.
+    note: |-
+      HIGH INTERNAL PRIORITY: take this immediately after the active tutor-facing requested-word work. Add Mandarin to the existing Admin Curation Studio beside Cthulhuquarium and Coloring Book. Admins need a dense browse/search view of canonical cards, sorting/filtering by Hanzi, pinyin, English meaning, HSK/source, category, media coverage, and override state; category editing; source/provenance inspection; and a straightforward submit-change form for meaning, pinyin, traditional form, usage note, and categories. Source datasets remain immutable. Apply changes through one canonical global override per card plus an append-only audit/change trail. Do not create Coloring Book-style editions or parallel copies of the same lexical card merely because it has been corrected. Generated/requested cards may be surfaced for inspection later, but v1 curation should not silently promote user-specific generated facts into the sourced core.
+
+
+      Build the high-priority Mandarin catalog curation admin inside the existing Curation Studio. Keep source data immutable, use one global override per canonical card plus append-only audit history, and deliberately avoid an edition/version proliferation model.
+    claimed_by: 2026-08-25T060500Z-mandarin-tutor-t-013-sk83
+    claimed_at: '2026-08-25T06:05:00Z'
+    updated: '2026-08-25T06:05:00Z'
 
   - id: t-006
     milestone: m1
