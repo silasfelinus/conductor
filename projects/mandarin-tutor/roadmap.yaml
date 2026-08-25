@@ -234,16 +234,19 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Add spaced repetition, mastery history, and study diagnostics"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-001
-    note: >
-      Record card exposure and recall outcomes, schedule review with a simple inspectable
-      spaced-repetition model, and distinguish recognition of meaning, Hanzi, and
-      pronunciation when useful. Preserve exportable learner state so a later mobile client
-      can share progress rather than starting over.
+    note: |-
+      Record card exposure and recall outcomes, schedule review with a simple inspectable spaced-repetition model, and distinguish recognition of meaning, Hanzi, and pronunciation when useful. Preserve exportable learner state so a later mobile client can share progress rather than starting over.
+
+
+      Claim t-009 with an interaction-first sequence based on Silas's approved UX assessment. Establish explicit Study vs Explore modes before persisting SRS/mastery. Study becomes a deliberate recall loop (challenge -> reveal -> pronunciation -> self-rating -> next) with answer-bearing pinyin, art, and history hidden before reveal. Explore keeps search, requested words, decomposition/history, provenance, and deck curation. SRS/mastery history will attach to Study outcomes rather than cementing the current all-purpose page.
+    claimed_by: 2026-08-25T225500Z-mandarin-tutor-t-009-sk95
+    claimed_at: '2026-08-25 22:58:00+00:00'
+    updated: '2026-08-25 22:58:00+00:00'
 
   - id: t-010
     milestone: m2
