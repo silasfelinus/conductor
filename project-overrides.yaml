@@ -521,6 +521,15 @@ overrides:
   # working. Silas confirmed the correct spelling in-session, the Kind Robots Project
   # 2112 row was repointed (slug + conductorSlug -> cthulhuquarium), and the
   # misspelled project/override were removed. Do not reintroduce `cthuluquarium`.
+  #
+  # UPDATE 2026-08-25: the leftover duplicate KR Project row from that mixup (id
+  # 2113, title/slug "cthuluquarium", conductorSlug "cthuluquarium") was still live
+  # and kept tripping check_project_scaffold_drift.py's forward check, since no
+  # `projects/cthuluquarium/roadmap.yaml` was ever supposed to exist (conductor/t-125
+  # flagged this exact row and deferred the fix). Archived it (isActive: false,
+  # status: ARCHIVED via DELETE /api/projects/2113) and cleared its conductorSlug
+  # (PATCH) so it no longer claims a scaffold. check_project_scaffold_drift.py now
+  # passes clean. Project 2112 (the real one) is untouched.
 
   - slug: scene-animator
     status: active # added 2026-08-24 by Silas — admin folder-to-video automation
