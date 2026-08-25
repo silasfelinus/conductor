@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-25T04:32:04Z
+Generated: 2026-08-25T05:36:48Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **754**
-- Outcomes: blocked: 15, cancelled: 1, done: 738
+- Closed tasks recorded: **755**
+- Outcomes: blocked: 15, cancelled: 1, done: 739
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -43,6 +43,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kind-robots | 50 | 98% |
 | kindrobots-unraid | 5 | 100% |
 | lora-ingestion | 1 | 100% |
+| mandarin-tutor | 1 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
 | model-builder | 79 | 100% |
@@ -67,7 +68,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 738 | 99% |
+| software | 739 | 99% |
 
 ## Failure categories
 
@@ -88,6 +89,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-25 `mandarin-tutor/t-001` — Keep ASR transcript and acoustic pronunciation evidence separate. Reusing the existing YIN pitch detector avoided a second speech-analysis stack. Kind Robots shared components must use container-responsive grid sizing, and Nitro $fetch calls with dynamic route strings must pin both generics.
 - 2026-08-25 `cthulhuquarium/t-009` — close_task.py's --set note=... substitutes the roadmap note field rather than extending it, which silently discarded t-009's original task-spec note the same way it discarded t-033/t-034's investigative history minutes earlier (fixed by hand in kind_robots-adjacent conductor PR #2816). Caught and fixed before this close-out PR opened by re-adding the original note ahead of the DONE summary. The script itself is still unfixed -- every future close-out with `--set note=` is one keystroke away from repeating this. Worth a dedicated follow-up task (append-by-default or an explicit --append-note flag) rather than relying on every future session to catch it by hand, as this one and the #2816 session did.
 
 - 2026-08-25 `cthulhuquarium/t-034` — Hardcoding model filenames as constants in two repos (kind_robots and conductor) with no validation against the Resource registry let an invented filename ship silently in both places and only fail at render time, months later, on an unrelated task. The fix (consume_art_queue_core.py resolving constants through the registry) deliberately warns-and-passes-through rather than hard-failing, because the registry is still incomplete (GGUF quants render fine with no Resource row) -- failing closed on an incomplete source of truth would have broken engines that demonstrably work. When migrating hardcoded config to a registry/source-of-truth lookup, ship the lenient version first and gate the strict version behind an opt-in flag until the source of truth is actually complete.
@@ -105,8 +107,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-24 `cthulhuquarium/t-007` — A live-DB migration doesn't have to stay unverifiable in a sandbox with no docker daemon: `apt-get install mariadb-server`, running `mariadbd` directly (no systemd) under the `mysql` user, and connecting via the local socket to create the app user took under a minute and gave a real MySQL-compatible target to run `prisma migrate deploy` against. Running it through the FULL existing migration history (62 migrations), not just the new one in isolation, is what actually proves the new migration composes cleanly with everything before it -- and `prisma migrate status` reporting zero drift afterward is stronger evidence than `prisma validate` alone, which only checks the schema file's own internal consistency. Worth adding to AGENTS.md's cross-repo/kind_robots verification section as a documented option alongside `provision_kind_robots_deps.sh`'s dummy-DATABASE_URL `prisma generate` path, since that path alone doesn't catch a migration.sql that doesn't actually match what schema.prisma implies.
 
-- 2026-08-24 `cthulhuquarium/t-025` — A recurring umbrella task at the top of priority.yaml's ready queue (interface-vision/t-104) had already been independently re-confirmed exhausted by three sessions the same day; spot-checking the one new upstream commit since the last check (rather than re-running the full sweep) confirmed nothing changed, and the session moved on to real work further down the priority order instead of manufacturing a fifth identical no-op. cthulhuquarium/t-025 was a clean fit: a self-contained design-decision task whose own note explicitly authorized an agent recommendation with reasoning, flagged (soft_gate: true) rather than hard-gated, so the answer could unblock downstream tasks (t-026/t-027) same-session instead of stalling on a human reply.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-25T04:32:04Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-25T05:36:48Z_
