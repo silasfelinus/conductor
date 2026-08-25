@@ -793,7 +793,7 @@ tasks:
       (t-035's `Creature`, formerly and wrongly `Character`) is the species template
       (public Rarity stats, field note, art) shared by everyone and identical for all
       copies. An `AquariumStock` row is one actual fish with its own
-      hidden rolled stats, nickname, hunger, and parentage. Two goldfish are the same
+      hidden rolled stats, nickname, hunger, and parentage. Two rustfish are the same
       species and different animals. Every hidden stat lives on the individual, never on
       the species -- the bible stays a catalogue and never becomes a save file. FOUR RULES
       that keep this from becoming a grind, all of which follow from decisions Silas has
@@ -802,7 +802,7 @@ tasks:
       stats must CONVERGE, not reroll forever. If the only path to a good fish is buying a
       hundred, this is a slot machine. Offspring inherit toward the better parent so
       effort compounds. (3) Secret evolutions are a SECOND evolution axis, distinct from
-      the goldfish line: one evolves by growth, the other only appears through breeding.
+      the rustfish line: one evolves by growth, the other only appears through breeding.
       Same `evolves_to` plumbing, different route -- the bible needs to distinguish them.
       (4) Nothing hidden may be strictly REQUIRED. A player who never breeds must still be
       able to finish the bestiary. Genetics is depth for people who want it, not a wall
@@ -1235,7 +1235,7 @@ tasks:
       stats, tier, size, yield, interval, unlockCost, behavior, hue, games, artPrompt,
       evolvesTo/evolvesFrom, plus the art image relations every visual entity here has.
       Name is a proposal: `Creature` because not everything in the table is monstrous (the
-      Parlour Goldfish is not) and because Ruler is Hooked shares it. `Monster` is the
+      Parlour Rustfish is not) and because Ruler is Hooked shares it. `Monster` is the
       obvious alternative -- Silas overrides in one word, so confirm before generating a
       migration.
       SHARING SURVIVES UNCHANGED. The `games` list was always the sharing mechanism, not
@@ -1346,6 +1346,20 @@ tasks:
       full duplicate authoring pass; next time it could cost a duplicate implementation.
       TARGET IS NOW 151 (Silas: "a real game should have at least 100 fish, but I think
       151 is the right number for...reasons :)"). 107 to go, tracked as t-037.
+      RENAMED AFTER THE FACT, 2026-08-25: the goldfish line named above is now the
+      RUSTFISH line -- Silas, "goldfish is a terrible terrible name. Brassfish or rustfish
+      is much better." Parlour Rustfish -> Elder Rustfish -> The Unlidded Rustfish -> The
+      Founding Rustfish -> The Long Patience. Rustfish over Brassfish because brass is
+      already the aquarium's fitting material and spending it on the starter fish wastes a
+      distinctive word on the least distinctive creature. The slugs above are left as
+      written because they are a record of what the two bibles contained at merge time,
+      not a description of the bible today.
+      AND THE 151 IS NOW EXPLAINED rather than winked at, in fish/SCHEMA.md. It is the
+      original Pokemon count, Mew included. Silas: "Make it explicit. The joke was for you,
+      not for me to read ten days from now that each agent communicates they refused to
+      examine why we are committing to 151 monsters as instructed." A magic number that
+      every future reader is instructed not to question is a documentation failure however
+      good the joke was.
 
   - id: t-037
     milestone: m3

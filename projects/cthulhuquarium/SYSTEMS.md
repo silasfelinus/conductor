@@ -330,7 +330,7 @@ t-007's schema: **the bible describes species; your tank contains individuals.**
 - An `AquariumStock` row is **one actual fish** — its own hidden rolled stats, its
   nickname, its hunger, its parents. Yours alone.
 
-Two goldfish are the same species and different animals. Every hidden stat lives on the
+Two rustfish are the same species and different animals. Every hidden stat lives on the
 individual, never on the species, and the bible stays a catalogue rather than becoming a
 save file.
 
@@ -343,7 +343,7 @@ save file.
   *converge* — offspring should inherit toward the better parent — so effort compounds
   instead of resetting.
 - **Secret evolutions are the payoff**, and they are a second, separate evolution axis from
-  the goldfish line: one evolves by growth, the other only appears through breeding. Both
+  the rustfish line: one evolves by growth, the other only appears through breeding. Both
   use the same `evolves_to` plumbing; the difference is how you get there.
 - **Nothing hidden may be strictly required.** A player who never touches breeding should
   still finish the bestiary. Genetics is depth for the people who want it, not a wall for
