@@ -145,8 +145,8 @@ tasks:
   - id: t-003
     milestone: m1
     title: "Fish bible v1 — the canonical species catalog"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -170,6 +170,10 @@ tasks:
       standalone `Rarity` enum either way, so nothing in the bible's shape changes; only
       the table it lands in does. If t-035 has not merged when you pick this up, write
       the bible anyway -- it is YAML, it does not depend on the table existing.
+    claimed_by: claude-scheduled-20260824T234500Z-cthulhuquarium-t003
+    claimed_at: '2026-08-24T23:43:39Z'
+    updated: '2026-08-24T23:55:24Z'
+    implementation_pr: 'silasfelinus/conductor#2807'
 
   - id: t-004
     milestone: m1
@@ -199,25 +203,14 @@ tasks:
   - id: t-005
     milestone: m1
     title: "Prove the Comfy asset pipeline end-to-end for game art"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      This is the trial-run task Silas called out explicitly -- if agents cannot
-      generate their own game assets, fixing that is in scope, not an excuse. Take
-      three fish art prompts and one tank background from the bible, run them through
-      the kind_robots art pipeline (POST /api/comfy/flux/generate, or
-      /api/art/generate; see conductor docs/art-api.md), and land the results as
-      ArtImage records linked to the fish's bestiary rows (the t-035 model, working
-      name `Creature` -- NOT Character; see t-035). If t-035 has not merged yet, land
-      the ArtImages unlinked and record their slugs, then link them in the seed pass
-      rather than borrowing Character to hold them in the meantime. Then write
-      docs/asset-pipeline.md recording what actually worked: endpoint, auth token
-      type, model, prompt shape, negative prompt, seed handling, dimensions, cost
-      per image, wall-clock per image, and every failure mode hit. If silhouette
-      style proves unreliable at volume, say so plainly and propose the fallback --
-      that finding is more valuable than four pretty images.
+    note: 'DONE (conductor scheduled Agent run, 2026-08-25). Proved the pipeline end-to-end: the two endpoints this task named (/api/comfy/flux/generate, /api/art/generate) are dead ends from outside the home tailnet / have no A1111 server registered -- the real, current path is POST /api/art/enqueue (engine: flux) -> poll GET /api/art/queue/:id -> GET /api/art/image/:id, documented in full in projects/cthulhuquarium/docs/asset-pipeline.md. Enqueued 3 fish (goldfish-common, sardine-common, crawdad-common) + 1 tank background via the real bible art_prompt text; all 4 completed with zero errors on first attempt (ArtImage 18466-18469). Relay agent (Silas-PC) is alive and claims serially, one job at a time; first job after idle cost an 11-minute model-load warm-up, subsequent jobs rendered in 36-45s each -- budget accordingly. Two real gaps flagged plainly rather than papered over: (1) style -- plain-prompt Flux-schnell does not deliver the flat-silhouette game-asset look the bible describes, and dropped the sardines multi-subject schooling composition entirely; a LoRA/checkpoint suited to flat silhouette or a background-removal post-process should be tested before a full ~150-fish production pass. (2) ArtImage.imagePath/path land null on every completed job -- bytes only reachable via imageData base64, matching relay_agent.py doc comments that job completion creates a staging ArtImage with nothing that promotes it to a servable path automatically; confirmed not a slow-async artifact (KR Project 2113s day-old leftover ArtImage shows the identical shape). Could not literally link the ArtImage records to fish Character rows as the task note asked -- no Character rows exist yet, cthulhuquarium/t-008 (seed the bestiary) is still ready, not done; recorded the slug-to-artImageId mapping in the doc for t-008 to wire up once it runs. Separately this session: archived stray leftover KR Project 2113 (duplicate cthuluquarium row from the 2026-08-24 slug-typo mixup) which was tripping check_project_scaffold_drift.py; documented in project-overrides.yaml. Verified: check_project_scaffold_drift.py clean, check_pr_merged_drift.py/audit_human_gates.py re-run, no new findings.'
+    claimed_by: scheduled-20260825T003026Z-t005
+    claimed_at: '2026-08-25T00:30:27Z'
+    updated: '2026-08-25T00:51:45Z'
 
   - id: t-006
     milestone: m1
@@ -302,7 +295,7 @@ tasks:
   - id: t-009
     milestone: m2
     title: "Server API — tank state, tick, feed, purchase, browse"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -854,7 +847,7 @@ tasks:
   - id: t-032
     milestone: m2
     title: "Extend the aquarium schema for every decision made after t-007 shipped"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -897,6 +890,8 @@ tasks:
       key by `(userId, slug)`; the shipped schema used a global unique instead. Move to
       `@@unique([userId, slug])`. This is a live bug the moment a second user names a tank
       anything obvious, and it is much cheaper to fix now than after real rows exist.
+    updated: '2026-08-24T22:51:34Z'
+    implementation_pr: 'silasfelinus/kind_robots#2075'
   - id: t-033
     milestone: m1
     title: "Render box cannot load two of three text encoders — art generation is blocked at ComfyUI, not at the queue"

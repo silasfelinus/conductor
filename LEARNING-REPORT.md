@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-24T21:41:26Z
+Generated: 2026-08-25T01:02:53Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **749**
-- Outcomes: blocked: 15, cancelled: 1, done: 733
+- Closed tasks recorded: **751**
+- Outcomes: blocked: 15, cancelled: 1, done: 735
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 80 | 100% |
 | conductor-app | 4 | 100% |
-| cthulhuquarium | 4 | 100% |
+| cthulhuquarium | 5 | 100% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
@@ -42,6 +42,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kind-economy | 6 | 100% |
 | kind-robots | 50 | 98% |
 | kindrobots-unraid | 5 | 100% |
+| lora-ingestion | 1 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
 | model-builder | 79 | 100% |
@@ -66,7 +67,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 733 | 99% |
+| software | 735 | 99% |
 
 ## Failure categories
 
@@ -87,6 +88,9 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-25 `lora-ingestion/t-008` — Disposable admin cleanup workflows can keep resumable review state in a dedicated localStorage-backed store while writing only canonical Resource fields through existing APIs, avoiding temporary schema or endpoint surface.
+- 2026-08-24 `cthulhuquarium/t-003` — The task note assumed a starter fish bible already existed ("grow the seeded bestiary... from its starter set") but neither fish/SCHEMA.md, fish/*.yaml, nor validate_fish.py existed anywhere -- ECONOMY.md's own text had already flagged this exact gap. Cross-referencing every candidate field against the project's already-committed design docs (SYSTEMS.md's rivalry tag vocabulary, ECONOMY.md's rarity_tiers table, the Prisma schema's actual Character/ AquariumStock columns) before authoring anything resolved a real ambiguity the task note left open (tier and rarity read as two separate fields in the note, but the schema and economy docs establish they are the same axis) as a documented judgment call rather than an invented field with nowhere to land -- worth doing before writing bible content on any task whose note references a schema/starter-set that a plain repo search doesn't confirm.
+
 - 2026-08-24 `davinci/t-021` — Chasing a prior cycle's own flagged next-lead ("concurrent tab/session interaction with the same run was not traced") rather than re-running an already-exhausted static-reading pass found a genuine correctness gap: the front end's "exactly one choice per chapter" invariant (chapterIndex derived from playedCount, only advanced on success) was never enforced server-side, so two open tabs or a client retry could double-apply LifeChoice effects. Fixing it by reusing the file's own existing idempotency idiom (resolveCompletedLifeRun's read-back-don't-recompute pattern) kept the change minimal and consistent rather than introducing a parallel guard shape. Where the sandbox couldn't execute the new live-DB regression case, saying so explicitly in the PR (rather than claiming full verification) kept the Verified section honest.
 
 - 2026-08-24 `cthulhuquarium/t-006` — A research task benefits from live web search over training-data recall alone, even for well-established reference games: search surfaced AbyssRium's specific documented failure mode (hidden/undocumented unlock triggers requiring a wiki) and current retention-benchmark figures that made the adopt/adapt/reject list's reasoning concrete and sourced rather than generic genre-savvy assertion. Cross- referencing every finding against the project's own already-committed design docs (DESIGN-BRIEF/SYSTEMS/ECONOMY) before writing anything down kept the output as confirmation-plus-authoring-guidance for named downstream tasks rather than a survey that risked relitigating settled decisions.
@@ -103,10 +107,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-24 `brainstorm/t-031` — Task scope (add a real "promote candidate into an entity" action, carrying its art across) explicitly flagged its own hardest design question -- meta.art.imageIds is an array, the target entity's art model (entityArt.ts) is one scalar id per slot -- rather than leaving it implicit; tracing the array's one mutation site to confirm it was append-only (so "last entry" unambiguously means "most recent delivery") turned a could-have-been-a-guess into an evidence-based, one-line design decision. Also: before implementing, re-verified the prior task's (t-026) negative "no such action exists" finding rather than trusting it blind -- doing so surfaced the one precedent that DOES exist (promptStore.promoteToDream / dreamStore.promotePromptToDream) but is dead code, called from nowhere, which shaped which store to add the new function to and confirmed this was genuinely the first promotion pattern with a live caller. A UI wiring change that adds a new busy/loading state needs to check what the busy prop passed to the child component actually depends on, not just add the new emit -- isCandidateBusy here only checked state that regenerate/branch's shared runGeneration() call sets, so the new promote action's spinner would have silently never appeared without also folding pendingCandidateAction into that check. Third occurrence this session of the over-broad `prettier --write` trap (storybook/t-023, then here) -- worth normalizing as a standing habit: check `git diff --stat` immediately after any `prettier --write`, before staging, on any file with pre-existing formatting drift.
 
-- 2026-08-24 `storybook/t-023` — Task scope (audit taskmasterStore's localStorage read path against storybookStore's restore guards) required tracing every real caller before deciding whether the missing `restoredFromStorage`-style guard was a bug: content/taskmaster.md mounts `:taskmaster-page` as the only call site, with no wrapper double-mounting it the way storybook-library-page.vue wraps StorybookPage, so no reachable race exists and the guard was correctly out of scope -- the parity gap alone was not sufficient, matching the cycle-36 lesson this task was scoped from. Fixed the unambiguous half (move `getItem()` inside the try) and left the caller-tracing result as an in-code comment. Also worth recording: a full-file `prettier --write` on a file with pre-existing prettier-version drift silently reformats unrelated lines far beyond the actual diff -- caught via `git diff --stat` before committing; the safe pattern is formatting only the new/changed region and verifying it in isolation, never running `--write` on the whole file when the rest carries known drift. Separately, this cycle hit a second occurrence of the documented conductor/t-124 "Python test suite" check-run reporting-lag pattern (job logs showed it passed and finished cleanup ~11 minutes before the check-run API reported completion) -- confirmed via job logs rather than assumed, and merged once confirmed rather than re-running blind.
-
-- 2026-08-24 `brainstorm/t-026` — Task scope was explicitly conditional ("find, or confirm there isn't yet, a promote-candidate action, and IF one exists, wire the art across") -- a repo-wide search (candidate card's emitted events, the manager's kept-candidate bulk actions, server/api/brainstorm/, and a grep for promote/convert/"turn into"/createFrom) confirmed no such action exists anywhere. The honest close for a conditional investigation task with a negative finding is `done`, not a forced implementation and not `needs-human` -- the literal scope asked a yes/no question and got a firm no. Filed the actual feature (t-031) as new scope instead of expanding this task's diff, since building an unrequested promotion UI would have been scope creep past what t-026 asked for. Also worth recording for whoever picks up t-031: entityArt.ts's art-slot model is one scalar id per named slot per entity, while Brainstorm's meta.art.imageIds is an array -- there is no existing 1:1 precedent in the repo (promptStore.promoteToDream's Prompt only ever has one artImageId) for the many-to-one reduction that promotion will need.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-24T21:41:26Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-25T01:02:53Z_

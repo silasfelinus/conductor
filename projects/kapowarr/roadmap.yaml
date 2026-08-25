@@ -1272,12 +1272,9 @@ tasks:
   milestone: m4
   title: Make Review Holds imports resumable and actionable
   status: done
-  owner: worker
   passes: 0
   stakes: reversible
-  claimed_by: 2026-08-19T033800Z-kapowarr-t055-import
-  claimed_at: '2026-08-19T03:38:00Z'
-  updated: '2026-08-19T03:38:00Z'
+  updated: '2026-08-24T22:25:00Z'
   note: |-
     User-reported live failure on 2026-08-19. Continuous Library Import resumes a saved job with hundreds
     of Review Holds, but clicking Import aborts the selected batch with a generic InternalError. Trace and
@@ -1291,6 +1288,12 @@ tasks:
     rows disappear while attention rows remain selected with a concise reason. Background retry semantics,
     saved checkpoints, and existing review decisions remain unchanged. Local verification passed 383 tests,
     mypy and JavaScript syntax; Python 3.8-3.12, docs, PR container and post-merge publication all passed.
+
+    Reopened from user-reported live testing on 2026-08-24. Editing a weak Library Import Review Hold opens the match-search modal, but submitting a title can leave the dialog blank with no results, no loading/error state, and enough repeated requests to make the tab appear frozen. Diagnose the metadata-provider search/edit path, preserve provider-neutral identities, make the search visibly terminal on success/empty/error, and prevent duplicate in-flight searches.
+
+    Live weak-match edit regression fixed and merged in silasfelinus/Kapowarr#145 (squash 6dbdeabb9ced29629645d4bb30c27c09d71934f7). Root cause on the UI path was a blank, manual-only ComicVine-era search modal: opening Edit Match cleared the query and results; search had no loading, empty, or error state; repeated submits could stack identical provider fan-outs; and selecting a native Metron/GCD result lost provider-neutral identity because the Review Holds importer only retained comicvine_id. Edit Match now immediately searches the current proposed title (falling back to the held file title), keeps the field editable for a fuzzier retry when zero matches return, reports searching/empty/error/success states, coalesces duplicate in-flight submits, and imports selected matches with provider_id + external_id. The modal copy now says metadata rather than ComicVine. PR head 7bb48ed8faaeab3440630f979273e8b126ab73ce passed Tests on Python 3.8, 3.9, 3.10, 3.11 and 3.12, including the frontend suite on 3.12, plus Build docs and Build/publish container. Branch janitor removed the merged worker branch; main is the only remaining implementation line.
+  claimed_by: 20260824T2215Z-editmatch-7c4f
+  claimed_at: '2026-08-24T22:15:00Z'
 - id: t-056
   milestone: m7
   title: Make Metron a fully native metadata identity
