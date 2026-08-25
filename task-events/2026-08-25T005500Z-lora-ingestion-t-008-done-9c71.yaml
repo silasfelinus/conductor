@@ -1,0 +1,10 @@
+version: 1
+project: lora-ingestion
+task: t-008
+operation: done
+session: 2026-08-25T003700Z-lora-ingestion-t-008-9c71
+updated: '2026-08-25T00:55:00Z'
+note: >-
+  Merged Kind Robots PR #2077. Added temporary /admin/lora-triage and a dedicated localStorage-backed triage store; batch SFW/NSFW decisions, hide-confirmed progress, filtering/pagination, and changed-only Resource.isMature saves now use the existing PATCH path. Final PR head passed TypeScript, Layout Contract, Contract Tests, architecture/scroll/API/facet and all other PR workflows.
+learning: >-
+  Disposable admin cleanup workflows can keep resumable review state in a dedicated localStorage-backed store while writing only canonical Resource fields through existing APIs, avoiding temporary schema or endpoint surface.
