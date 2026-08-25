@@ -2772,12 +2772,12 @@ tasks:
   - id: t-075
     milestone: m3
     title: "Drop Character.size — and it needs the REVERSE deploy order from an add"
-    status: review
+    status: needs-human
     gate_human: false
     owner: worker
     passes: 0
     stakes: irreversible
-    note: >
+    note: >-
       `Character.size` is dead weight as of cthulhuquarium/t-038
       (kind_robots#2093): nothing reads it any more, the aquarium tables point at
       Monster, and Monster carries its own `size`. It exists only because fish were
@@ -2812,6 +2812,51 @@ tasks:
       noting when t-072 is designed: a guard that only checks "client ahead of schema"
       would NOT catch this case, where the SCHEMA is ahead of the client. The drop
       direction is the one nobody thinks about, and it is the one that is about to happen.
+
+      BLOCKED 2026-08-25 (agent): Step 1 (schema.prisma edit removing Character.size,
+      no migration in this PR, per this task's own sequencing) is implemented and
+      pushed as silasfelinus/kind_robots#2110, but its required "Schema Migration
+      Parity" check (schema-migration-parity-contract.yml, the second half of
+      kind-robots/t-072's fix for the class of bug that broke production in t-071)
+      fails it unconditionally: verifySchemaMigrationParity.ts / schemaMigrationParity.ts
+      has no escape hatch -- it fails any structural prisma/schema.prisma diff that
+      doesn't add a matching prisma/migrations/* file, full stop. There is no
+      annotation, label, or config flag to mark a schema change as "migration
+      intentionally deferred."
+
+      FOR SILAS: This is a genuine, real conflict between two pieces of safety
+      guidance that both exist for good reason and both trace back to production
+      incidents:
+        - t-075's own note: DROP needs deploy-then-migrate (opposite of ADD), so
+          landing the migration in this PR would risk reproducing t-071 in reverse.
+        - t-072's parity check: every schema diff needs a matching migration file,
+          to prevent the *original* t-071 failure mode (schema and migrations
+          silently drifting apart).
+      Both are correct in the case they were built for; neither currently
+      represents "this schema change is real, but its migration is deliberately
+      staged for later, after a Force Update."
+
+      TO APPROVE / UNBLOCK, pick one:
+        (a) Extend the parity check with an explicit, narrow escape hatch (e.g. a
+            trailer in the PR/commit body like "Schema-Migration-Deferred: <reason>"
+            that the check accepts as satisfying parity, so it can't be used to
+            quietly skip an ordinary forgotten migration) -- I can implement this
+            as its own small, reviewable PR if you want that shape.
+        (b) Silas merges silasfelinus/kind_robots#2110 directly, overriding the one
+            failing required check (the check is doing exactly its job here; this
+            would be a conscious, informed override rather than a bug).
+        (c) Land the migration file now after all, accepting the reverse-order risk
+            and handling the Force Update timing manually and carefully outside
+            the normal migrate-first habit (not recommended -- this is the exact
+            trap the task's own note warns about).
+      Whichever you pick, steps 2 (Force Update, verify GET /api/characters/<id>)
+      and 3 (the DROP COLUMN migration) still need you regardless, since they
+      require Unraid-console access this sandbox doesn't have.
+
+      PR open, unmerged: silasfelinus/kind_robots#2110. Not merging past a failing
+      required check.
     claimed_by: claude-t075-20260825T162946Z
     claimed_at: '2026-08-25T16:29:48Z'
-    updated: '2026-08-25T16:34:34Z'
+    updated: '2026-08-25T16:49:09Z'
+    soft_gate: true
+    implementation_pr: 'silasfelinus/kind_robots#2110'
