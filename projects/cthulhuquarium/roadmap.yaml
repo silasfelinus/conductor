@@ -162,7 +162,7 @@ tasks:
       restraint downstairs is what makes the escalation upstairs land. Unsettling, never
       gross-out, always a legible silhouette. Validate with scripts/validate_fish.py
       before committing. Do NOT invent a second schema -- every field must map onto a
-      column of the bestiary model t-035 lands (working name `Creature`), because t-008
+      column of the bestiary model t-035 landed, `Monster`, because t-008
       seeds these straight into it. CORRECTED 2026-08-25: this previously said
       `Character`. It is not Character -- Character is the chattable-personality table
       for people like Charlotte and Wilbur, and pushing fish through it is what put a
@@ -268,7 +268,7 @@ tasks:
 
   - id: t-008
     milestone: m2
-    title: "Seed the bestiary — fish YAML into the Creature table"
+    title: "Seed the bestiary — fish YAML into the Monster table"
     status: ready
     owner: null
     passes: 0
@@ -276,7 +276,7 @@ tasks:
     depends_on: [t-003, t-035, t-036]
     note: >
       Write the idempotent seed script that reads fish/*.yaml from the cthulhuquarium
-      repo and upserts rows in the bestiary table t-035 lands (working name `Creature`),
+      repo and upserts rows in the bestiary table t-035 landed, `Monster`,
       keyed on slug. Map fields per the bible schema: species, class, backstory (the
       field note), quirks, alignment, and the six `Rarity` stats. Idempotent means
       re-running after a bible edit updates rows rather than duplicating them -- match
@@ -790,7 +790,7 @@ tasks:
       secret evolution fish. Then we have an entire hidden pokemon like stat system." THE
       ARCHITECTURAL CONSEQUENCE, which changes t-007's schema and must be settled there
       first: the bible describes SPECIES, the tank contains INDIVIDUALS. A bestiary row
-      (t-035's `Creature`, formerly and wrongly `Character`) is the species template
+      (t-035's `Monster`, formerly and wrongly `Character`) is the species template
       (public Rarity stats, field note, art) shared by everyone and identical for all
       copies. An `AquariumStock` row is one actual fish with its own
       hidden rolled stats, nickname, hunger, and parentage. Two rustfish are the same
@@ -1429,7 +1429,7 @@ tasks:
       regenerates from the bible via scripts/build_cthulhuquarium_art_queue.py, so each
       merged batch adds its own queue entries with no further work. Run the generator in
       the same PR and commit the result, or `--check` fails on the next one.
-      NOT IN SCOPE HERE: seeding (t-008, which is blocked on t-035's Creature model
+      NOT IN SCOPE HERE: seeding (t-008, which is blocked on t-035's Monster model
       anyway), and balance. Every new species needs plausible economy numbers in its tier
       band, but tuning them is t-019's job -- do not stall a batch arguing about a yield.
       BATCH 1 LANDED 2026-08-25: 15 species, 44 -> 59 of 151. 92 to go, so this stays
@@ -1476,7 +1476,7 @@ tasks:
 
   - id: t-038
     milestone: m2
-    title: "Repoint AquariumStock/AquariumCodexEntry at Creature, drop Character.size"
+    title: "Repoint AquariumStock/AquariumCodexEntry at Monster, drop Character.size"
     status: ready
     owner: null
     passes: 0
@@ -1484,14 +1484,14 @@ tasks:
     depends_on: t-035
     note: >
       Fast-follow t-035 deliberately cut from that task's own scope (see its completion
-      note): t-035 built the `Creature` model as a pure CREATE TABLE, and left
+      note): t-035 built the `Monster` model as a pure CREATE TABLE, and left
       AquariumStock.characterId, AquariumCodexEntry.characterId, and Character.size
       untouched on purpose so that migration stayed safe to apply regardless of
       kind-robots/t-071's state.
       DO NOT DROP `Character.size` UNTIL kind-robots/t-071 IS RESOLVED AND PRODUCTION IS
       HEALTHY AGAIN -- t-035's note is explicit about this and it still applies. Converging
       the database to the shipped client comes first; correcting the model comes second.
-      THE REPOINT ITSELF (AquariumStock/AquariumCodexEntry -> Creature) does not
+      THE REPOINT ITSELF (AquariumStock/AquariumCodexEntry -> Monster) does not
       technically require t-071 to be resolved first -- it is a different table -- but
       touch it carefully anyway: as of 2026-08-25 there is no confirmed way to verify
       AquariumStock's actual production row count from this sandbox (no DB access), and
@@ -1506,11 +1506,11 @@ tasks:
       nullable now, backfill/cut over, drop `characterId` in a later migration once
       nothing reads it) -- the same add-then-drop discipline t-035's note applied to
       Character.size and the 20260824223600 migration.
-      ALSO IN SCOPE: once AquariumStock/AquariumCodexEntry read Creature, swap
+      ALSO IN SCOPE: once AquariumStock/AquariumCodexEntry read Monster, swap
       `server/utils/aquarium.ts`, `server/api/aquarium/purchase.post.ts`, and
       `server/utils/aquariumEconomy.ts`'s `deriveFishRarityTier` call site over from
-      Character to Creature (that function itself can stay as a fallback/reference but its
-      call site should read `creature.tier` directly once Creature is the source of
+      Character to Monster (that function itself can stay as a fallback/reference but its
+      call site should read `monster.tier` directly once Monster is the source of
       truth -- see that function's own 2026-08-25 update comment). Then, only once nothing
       reads `Character.size`, drop it in a NEW forward migration -- do not edit
       20260824223600 in place, it is merged and may already be applied in a dev database.
