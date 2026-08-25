@@ -10528,3 +10528,21 @@ records:
     "nothing calls endpoint X", grep for a second endpoint achieving the same effect before
     assuming X itself is the fix -- and check the actual component-routing logic, not just
     which components exist, before deciding where a new control belongs.
+- date: 2026-08-25
+  project: scene-animator
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Batch-level retryFailed already existed server-side (enqueue.post.ts) and client-side
+    (store.enqueue(true)) before this task -- the task's "failed-job retry" ask was really
+    about per-source (single-card) retry, a narrower gap. Adding an optional sourceFile
+    filter to the existing enqueue loop reused all its dedupe/reuse logic for free rather
+    than duplicating it. For "per-folder completion summary," computing it from the ArtJob
+    rows already fetched for the index endpoint (grouped by each job's own
+    sourceFolder/sourceFile) was far cheaper than the literal reading -- re-hashing every
+    source file's bytes across every folder would have multiplied an already
+    per-file-read+sha256 cost by folder count for a feature that only needs a rough count.
