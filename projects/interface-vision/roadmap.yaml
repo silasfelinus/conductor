@@ -3110,7 +3110,7 @@ tasks:
   - id: t-105
     milestone: m6
     title: "Polish every reachable Kind Robots surface page-by-page"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-104
@@ -3133,7 +3133,7 @@ tasks:
       Verification: npx eslint on both touched files clean; vue-tsc --noEmit clean; npm run test:layout-contract holds, zero new violations (an unrelated pre-existing video-lora-picker.vue viewport-grid baseline improvement was observed and left untouched, out of scope); npx prettier --check flags pre-existing drift on build-bench.vue confirmed via git stash to predate this change, left alone rather than reformatting unrelated lines. Honest limit on visual verification: this sandbox has no reachable database (booted JWT_SECRET=dev npx nuxt dev --port 3000 locally and confirmed /build-bench 500s with 'DATABASE_URL is missing' before rendering), and kind_robots has had no PR-preview infrastructure since the Vercel migration (conductor AGENTS.md's 'Visually verifying a front-end change' section) -- kindrobots.org itself is live and healthy but production has no auto-deploy-on-merge, so no rendered pre-merge or immediate post-merge screenshots were possible. What was actually verified is class-level and structural: the same header/note/panel classes already render correctly elsewhere in production, template type-checking via vue-tsc, and the layout contract. Recommend a manual responsive-layout-audit.yml workflow_dispatch run against kindrobots.org for /build-bench once the next Force Update deploys this merge, the same way this task's prior slice deferred real pixel verification.
 
       Merged as silasfelinus/kind_robots#2109 (squash 3bf3ac9) with all 37 PR checks green (TypeScript, Contract verifiers, layout-contract, facet-catalog, GitGuardian, verify x3, and the full Storybook/Narrative contract suite) and mergeable_state clean before merge. Return the reusable page-polish task to ready for the next visual review slice.
-    updated: '2026-08-25T20:32:44Z'
+    updated: '2026-08-25T20:38:20Z'
     implementation_pr: 'silasfelinus/kind_robots#2114'
     owner: worker
     claimed_by: claude-scheduled-20260825T203214Z-iv-t105
