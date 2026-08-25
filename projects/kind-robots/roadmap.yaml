@@ -2512,7 +2512,7 @@ tasks:
   - id: t-071
     milestone: m3
     title: "PRODUCTION: Character.size migration merged and deployed but never applied — every findUnique on Character 500s"
-    status: needs-human
+    status: done
     gate_human: true
     owner: null
     passes: 0
@@ -2570,6 +2570,31 @@ tasks:
       once the replacement model exists, so the sequence on every environment is
       add-then-drop and no history is rewritten. See cthulhuquarium/t-035 for the model
       correction that has to land before that drop.
+      RESOLVED 2026-08-25. Silas ran the documented deploy from
+      /mnt/user/appdata/kind_robots after recreating the lost credential handoff file
+      with scripts/provision-migrate-db-lane.sh --apply. Verified from outside: GET
+      /api/characters/238 returns 200 (it returned 500 for the whole incident), and
+      /api/health/database returns 200. `Character.size` now exists in the database and
+      character-linked ArtJob completion is unblocked.
+      ONLY ONE MIGRATION ACTUALLY APPLIED (20260825050500_add_mandarin_audio_asset), out
+      of 67 found. The other four this task was waiting on -- add_aquarium_persistence,
+      extend_aquarium_capacity_genetics_codex, add_upscaler_resource_types and
+      add_creature_model/rename_creature_to_monster -- were already present in
+      kindblank_fresh by the time the deploy ran. So the Monster table and Character.size
+      are both live, and cthulhuquarium/t-038 (repoint AquariumStock/AquariumCodexEntry,
+      then drop Character.size) is unblocked.
+      TWO REAL BUGS WERE FOUND AND FIXED ON THE WAY, both of which made this outage last
+      longer than the one-command fix implied. (1) MIGRATION_DATABASE_URL was not
+      quote-stripped, so a value coming from --env-file died at `new URL()` several steps
+      AFTER the CA had loaded and printed, reading as a TLS fault (kind_robots#2086).
+      (2) The handoff file had been lost in the /mnt/user/pc -> .secrets move, and
+      `. ./.secrets/<file>` prints one line and CARRIES ON when the file is missing, so
+      the credential silently fell through from .env instead of failing (kind_robots#2087,
+      AGENTS.md hard rule 14).
+      THE FAR MORE SERIOUS FINDING IS FILED SEPARATELY AS t-073: the .env fallback that
+      caused (2) was pointed at `kindrobot`, the application account, not
+      `kindrobot_migrate` -- and `kindrobot` turns out to hold ALL PRIVILEGES ON *.* WITH
+      GRANT OPTION. Do not treat this task closing as the end of the incident.
 
   - id: t-072
     milestone: m3
@@ -2615,6 +2640,62 @@ tasks:
       docs/runbooks/migration-credential-boundary.md's existing "Running a migration by
       hand" section, or something else). Once decided, flip this back to `ready` with the
       decision recorded in this note (or implement it yourself, then set `done`).
+
+  - id: t-073
+    milestone: m3
+    title: "SECURITY: the application database account holds ALL PRIVILEGES ON *.* WITH GRANT OPTION"
+    status: needs-human
+    gate_human: true
+    owner: null
+    passes: 0
+    stakes: irreversible
+    note: >
+      Found 2026-08-25 while diagnosing t-071, from a grant dump Silas ran on the
+      MariaDB container. Verbatim first line:
+      "GRANT ALL PRIVILEGES ON *.* TO `kindrobot`@`%` IDENTIFIED BY PASSWORD '<hash>'
+      WITH GRANT OPTION", followed by four further ALL PRIVILEGES grants on kindrobots,
+      kindblank, kindblank_fresh and kindblank_shadow.
+      `kindrobot` IS THE APPLICATION ACCOUNT. Its credential is DATABASE_URL, which sits
+      in /mnt/user/appdata/kind_robots/.env and is loaded into the long-running web
+      container via `env_file:`. So the permanently-running Nuxt process holds full
+      superuser on every database on the server, plus GRANT OPTION, which means it can
+      escalate itself or anything else at will.
+      THIS MAKES THE ENTIRE TWO-LANE DESIGN DECORATIVE. docs/runbooks/migration-credential-
+      boundary.md, prisma.config.ts refusing DATABASE_URL for migrate commands,
+      prisma-migrate-deploy.mjs refusing it again, verifyMigrateOnDeploy.ts warning that
+      moving MIGRATION_DATABASE_URL into the app service "would hand a permanently-running
+      web process the ability to drop tables" -- all of it was carefully preventing
+      something the app account could already do. The boundary is real in the code and
+      absent in the database.
+      IMMEDIATE, AND ONLY SILAS CAN DO IT: rotate the `kindrobot` password. It was
+      disclosed twice in an agent session transcript on 2026-08-25 -- once in plaintext
+      from the .env line that was being removed, and once as the mysql_native_password
+      hash in the grant output, which is itself sufficient to authenticate with some
+      clients. Same class as t-116 and t-128, except this account is a server-wide
+      superuser rather than an API token. Treat the transcript as untrusted storage.
+      THEN NARROW THE ACCOUNT, which is the actual fix and is NOT a quick one. The app
+      lane should hold DML only on the database it serves -- roughly SELECT, INSERT,
+      UPDATE, DELETE on kindblank_fresh -- with no CREATE/ALTER/DROP, no *.* grant, and
+      no GRANT OPTION. Sequence carefully rather than revoking in one step: (1) enumerate
+      what the app actually executes, because something may quietly depend on a privilege
+      it should not have -- `prisma db pull`, any raw DDL in a seed or admin route, and
+      the ProxySQL query rules are all worth checking first; (2) create the narrowed
+      grant and verify the app runs against it in a non-production context; (3) revoke,
+      with the old grant recorded so it can be restored inside a minute if something
+      breaks. A wrong revoke here takes the site down, which is why this is filed as
+      irreversible rather than reversible.
+      WORTH CHECKING AT THE SAME TIME: `kindrobot` also holds ALL PRIVILEGES on
+      kindblank_shadow, which is a Prisma shadow database. A shadow DB is created and
+      dropped by tooling and is a reasonable thing for a MIGRATION account to reach; it
+      is not obviously something the web process needs.
+      ALSO OBSERVED, lower severity: .env is mode 0640 owned silasfelinus:users, so any
+      process running as group `users` can read the superuser credential; and the .env
+      line carried `sslaccept=accept_invalid_certs`, meaning the application lane
+      connects without verifying the ProxySQL certificate. Neither is the headline, both
+      are cheap to fix while in here.
+      NOT BLOCKING ANY CURRENT WORK. Production is healthy, t-071 is closed, and
+      cthulhuquarium is unaffected. This is filed at this severity because the gap is
+      long-standing and invisible rather than because something is currently failing.
 
   - id: t-074
     milestone: m3
