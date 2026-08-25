@@ -1477,7 +1477,7 @@ tasks:
   - id: t-038
     milestone: m2
     title: "Repoint AquariumStock/AquariumCodexEntry at Monster, drop Character.size"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -1514,6 +1514,37 @@ tasks:
       truth -- see that function's own 2026-08-25 update comment). Then, only once nothing
       reads `Character.size`, drop it in a NEW forward migration -- do not edit
       20260824223600 in place, it is merged and may already be applied in a dev database.
+      DONE 2026-08-25, merged as silasfelinus/kind_robots#2093. AquariumStock.monsterId
+      and AquariumCodexEntry.monsterId now reference Monster, with their indexes, the
+      (userId, monsterId) unique key, and every read in server/utils/aquarium.ts and the
+      purchase endpoint moved across. Character lost its two aquarium back-relations
+      entirely -- it no longer knows the aquarium exists, which was the point of t-035.
+      SAFE BECAUSE BOTH TABLES ARE EMPTY: the feature has never shipped (t-009 built the
+      API, t-011 is still waiting, t-010's prototype is client-only localStorage that
+      never calls it). The migration RENAMES the column rather than add/copy/drop, so a
+      row that somehow existed would keep its value and be caught by the new foreign key
+      instead of silently zeroed.
+      `Character.size` IS STILL THERE, DELIBERATELY, and this task is closed anyway
+      because the remaining half is a deploy-ordering problem rather than a schema one. A
+      DROP needs the REVERSE order from an ADD: the container serving production runs a
+      client that still selects `size`, so dropping the column before that image is
+      replaced reproduces kind-robots/t-071 exactly, in reverse. Deploy a client that has
+      stopped selecting it FIRST, then drop. Filed as its own follow-up rather than left
+      implicit in a closed task.
+      FOUND AND FIXED ON THE WAY: `RENAME TABLE Creature TO Monster` (kind_robots#2082,
+      shipped earlier the same day) renames the table and NOTHING ELSE, so all eight
+      indexes and all four foreign keys were still named `Creature_*` while Prisma's model
+      expected `Monster_*`. Twelve statements of standing schema drift -- the kind of
+      permanent noise that hides a real difference in the next person's migrate diff.
+      Caught only by installing MariaDB in the sandbox, applying the full 68-migration
+      history to a throwaway database and diffing the result against schema.prisma. Static
+      review would never have found it: the rename SQL is correct and does exactly what it
+      says.
+      MEASURED AGAINST A CONTROL rather than asserted: a second database built from
+      origin/main's migrations showed 30 drift statements; this branch leaves 6. All six
+      (FacetProfile's FK, four updatedAt defaults, Reaction's enum) are pre-existing on
+      main and none were introduced here. Reported rather than fixed, since quietly
+      widening a migration PR is how the previous one got hard to review.
 
   - id: t-039
     milestone: m3

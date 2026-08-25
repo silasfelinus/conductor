@@ -2725,3 +2725,47 @@ tasks:
       superuser security finding) already claims t-073 in its own diff. Re-run
       scripts/next_free_task_id.py before claiming if that PR has since merged and this
       note is stale.
+
+  - id: t-075
+    milestone: m3
+    title: "Drop Character.size — and it needs the REVERSE deploy order from an add"
+    status: ready
+    gate_human: false
+    owner: null
+    passes: 0
+    stakes: irreversible
+    note: >
+      `Character.size` is dead weight as of cthulhuquarium/t-038
+      (kind_robots#2093): nothing reads it any more, the aquarium tables point at
+      Monster, and Monster carries its own `size`. It exists only because fish were
+      briefly going to be Character records, and it is the column that took production
+      down in t-071.
+      THE REASON THIS IS ITS OWN TASK IS THE DEPLOY ORDER, WHICH IS BACKWARDS FROM EVERY
+      OTHER MIGRATION THIS PROJECT HAS RUN. An ADD is migrate-then-deploy: the new client
+      needs the column to exist, so the schema goes first. A DROP is the opposite --
+      deploy-then-migrate -- because the OLD client still selects the column and will 500
+      on every unselected findUnique the moment it disappears. Running `migrate deploy`
+      before the container is replaced reproduces t-071 exactly, in reverse, on the same
+      table, with the same symptom.
+      The documented Alexandria procedure is migrate first, then Force Update
+      (docs/runbooks/migration-credential-boundary.md), and that procedure is CORRECT for
+      everything else. Following it for this change is what breaks it. That is a genuinely
+      easy trap: the runbook is right, the habit is right, and the outcome is an outage.
+      SEQUENCE:
+      (1) Remove `size` from the Character model in schema.prisma, regenerate the client,
+      merge. Do NOT write the migration in the same PR -- the whole point is that the
+      image ships first.
+      (2) Force Update the container so production serves a client that no longer selects
+      the column. Verify GET /api/characters/<id> returns 200.
+      (3) Only then land a migration containing `ALTER TABLE Character DROP COLUMN size`
+      and run it.
+      Steps 1 and 3 are separate PRs on purpose. Combining them recreates the window this
+      task exists to avoid.
+      DO NOT EDIT 20260824223600 to remove the ADD. It is merged and applied; the column
+      comes out via a new forward migration, so the sequence on every environment is
+      add-then-drop and no history is rewritten.
+      RELATED: t-072 is the systemic fix (nothing applies pending migrations on deploy,
+      and nothing refuses to start a container whose client is ahead of the schema). Worth
+      noting when t-072 is designed: a guard that only checks "client ahead of schema"
+      would NOT catch this case, where the SCHEMA is ahead of the client. The drop
+      direction is the one nobody thinks about, and it is the one that is about to happen.
