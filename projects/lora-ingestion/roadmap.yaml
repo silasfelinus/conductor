@@ -157,8 +157,7 @@ tasks:
 - id: t-008
   milestone: m4
   title: Add temporary admin LoRA maturity triage page with local review progress
-  status: review
-  owner: worker
+  status: done
   passes: 0
   stakes: reversible
   note: |-
@@ -166,6 +165,8 @@ tasks:
 
 
     Implemented the temporary Kind Robots /admin/lora-triage page and dedicated localStorage-backed Pinia store on the worker branch. The page batch-stages SFW/NSFW decisions, hides confirmed rows, paginates the catalog, and saves only changed Resource.isMature values through the existing Resource PATCH path.
+
+    Merged Kind Robots PR #2077. Added temporary /admin/lora-triage and a dedicated localStorage-backed triage store; batch SFW/NSFW decisions, hide-confirmed progress, filtering/pagination, and changed-only Resource.isMature saves now use the existing PATCH path. Final PR head passed TypeScript, Layout Contract, Contract Tests, architecture/scroll/API/facet and all other PR workflows.
   claimed_by: 2026-08-25T003700Z-lora-ingestion-t-008-9c71
   claimed_at: '2026-08-25T00:37:00Z'
-  updated: '2026-08-25T00:45:00Z'
+  updated: '2026-08-25T00:55:00Z'
