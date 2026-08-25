@@ -1602,3 +1602,58 @@ tasks:
       is implementation, and it depends on t-032 (a terminal entry in the capacity
       progression), t-028 (the interstitial surface) and t-017 (a tank renderer that can
       put a window in it once).
+  - id: t-040
+    milestone: m1
+    title: "Eight plate lineages, and no negations anywhere in an art prompt"
+    status: done
+    gate_human: false
+    approved_by_human: null
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: 'Silas, 2026-08-25: "There is a lot of pushback about ai generated text and art these days,
+      mostly involving tells. I want us to do our best to avoid that critique, not because I intend to
+      hide our development, I believe 100% in transparency, but because I want this to feel free and
+      unique... our art needs to have some touches that are creative...and by that, I mean pulling from
+      inspirations that are unconventional and will produce art that is new and unique." Then: "my thought
+      is we need to pull inspiration from styles that arent expected." Then: "ok, do what you think best."
+      THE DIAGNOSIS, and the biggest tell was ours rather than the models. All 74 prompts ended in the
+      SAME 40-word style block. Whatever the creature, the surface was identical -- and uniformity across
+      a set is exactly what reads as machine-made. No amount of rewriting that one block fixes a problem
+      caused by there being one block. THE FIX: eight named plate lineages with real histories, recorded
+      per species in a new `plate` field, so the medium is a property of the creature like its tier rather
+      than something chosen at render time. gosse (hand-coloured lithograph, 1850s), blaschka (lampworked
+      glass model on a wire mount), gyotaku (direct ink rubbing pressed from the animal), trade-card (chromolithograph
+      cigarette card c.1900), scraperboard (white line scratched out of black), haeckel (ornamental plate,
+      radial symmetry), moulage (wet specimen in a jar), riso (two or three spot inks on cheap paper).
+      Palette follows the plate, not the prompt -- which is what lets the bestiary cohere while looking
+      varied. The framing that makes eight lineages one artifact rather than eight: the Ichthyonomicon
+      is a SCRAPBOOK, not a catalogue. Somebody collected these plates over decades from whatever source
+      would part with one. All of it in ART-DIRECTION.md. The 15 non-fish assets got four more lineages
+      in Conductor (#2849): backgrounds take the plainest one on purpose since they sit behind 74 foregrounds,
+      set pieces are Victorian trade-catalogue engravings because they are things you buy, and Charlotte
+      and Wilbur are hand-tinted cartes-de-visite -- the only photographic lineage in the project, because
+      they are the only people in it. THE SECOND HALF WAS WORSE AND NEARLY GOT MISSED. Every prompt also
+      ended "NOT photorealistic, not a photograph". Krea 2 has no instruction-following layer and its negative
+      prompt is inert at cfg 1, so that clause was a POSITIVE prompt containing the word photograph -- a
+      fair explanation for the first render batch coming back as competent nature photography. Worse, the
+      art queues own assertion REQUIRED that clause on every prompt, so the guard was enforcing the bug.
+      Reversing it was not enough: the first reversal only banned negations attached to a STYLE word, and
+      27 files sailed through carrying "no face at all", "no eyes anywhere", "no midtones and no wash",
+      and "coverage uneven where the body did not touch". `no face` is how you commission a face. The narrow
+      rule needed a new noun bolted on every time somebody found a new way to say no; the rule that holds
+      is that there is nothing worth saying in one of these prompts with a negation, because every one
+      of those had a positive form that was also a better prompt. "a smooth blank head, unbroken skin where
+      a face would be" tells the model where to put paint. All 27 rewritten, before/after table in ART-DIRECTION.md
+      rule 2. ENFORCED, not just documented: scripts/validate_fish.py and Conductors build_cthulhuquarium_art_queue.py
+      both reject any negation outright, and the guard was confirmed to fire by injecting one rather than
+      assumed to. Conductors ART-PROMPTS.md gained this as its third Krea 2 rule, including the specific
+      trap that caused it -- that files own "Hard rules for every generation: no readable text, no logos,
+      no watermarks" line is addressed to ChatGPT, which follows instructions, and copying it into a Krea
+      2 prompt orders lettering. That is exactly how "no lettering" ended up on all 74 fish prompts. RESULT:
+      89 queue entries, 89 unique prompts, zero negations, every one naming a medium. NOTHING HERE IS ABOUT
+      DISGUISE -- the development is public and the art is generated, and both stay true. It is about using
+      references narrow enough to produce something specific. The critique that actually lands is not "a
+      machine made it", it is "it looks like everything else".
+
+      '
