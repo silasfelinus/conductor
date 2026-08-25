@@ -1206,6 +1206,36 @@ Silas approval is required for the image generation itself.
     purpose — a dozen TALKBACK entries reference "hard rule 12" meaning worktree
     isolation, and renumbering would silently invalidate all of them.
 
+15. ANY COMMAND YOU HAND A HUMAN TO RUN MUST BE INCAPABLE OF PRINTING A SECRET.
+    The existing `KR_API_TOKEN` guidance above covers probes an agent runs in its own
+    shell. It does not cover the far easier mistake: writing a command for the operator,
+    who runs it and pastes the output back into the transcript. Their paste is not the
+    leak — **your command is**. Silas, 2026-08-25: *"If I copied my password, that's on
+    me. If you ask me to send you back a response and the password is included but could
+    have been obfuscated, that's on you."*
+    This happened twice in one session, both times from commands an agent wrote:
+    `grep -n '^MIGRATION_DATABASE_URL=' .env` printed a live production password in
+    plaintext, and `SHOW GRANTS FOR 'kindrobot'@'%'` printed the account's
+    `IDENTIFIED BY PASSWORD '<hash>'`. The same session had already written the redacted
+    form of the first command one message later, and had cited conductor/t-116 and t-128
+    — the three prior secret-in-transcript incidents — in its own commit messages while
+    authoring the unredacted one. Knowing the rule is demonstrably not enough; the
+    command has to be built so the mistake is impossible.
+    WRITE IT REDACTED THE FIRST TIME, not the second:
+    - Presence, not value: `grep -c '^KEY=' file`, `[ -n "$VAR" ]`, or a `case` that
+      matches a prefix and echoes only OK/STOP. Never `echo "$VAR"`, never a bare `grep`
+      of a line that has a credential on it.
+    - Reading a config line: append `| sed 's/=.*/=<redacted>/'`.
+    - `SHOW GRANTS`: append `| sed "s/ IDENTIFIED BY PASSWORD '[^']*'//"` — the grant
+      shape is the answer; the hash is not, and for `mysql_native_password` the hash is
+      itself sufficient to authenticate.
+    - Anything writing a secret to a file the operator may later paste (backups,
+      snapshots, `.env.bak`): say so at the time, and say when to shred it.
+    If a value genuinely must be inspected, tell them to look at it themselves and
+    explicitly tell them NOT to paste it back. Assume every command you write will have
+    its full output pasted into the transcript, because that is the normal and helpful
+    thing for someone to do.
+
 **Reviewer batch-merge note (companion to rule 9):** `refresh-status.yml` lands a
 `chore: refresh STATUS.md and workspace.html` commit on `main` within seconds of every
 merge. When clearing several backlogged PRs in one sweep, expect each merge after the
