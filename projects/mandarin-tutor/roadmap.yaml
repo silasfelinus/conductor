@@ -143,9 +143,9 @@ tasks:
   - id: t-013
     milestone: m1
     title: "Build a Mandarin catalog curation admin"
-    status: claimed
-    owner: worker
-    passes: 0
+    status: ready
+    owner: null
+    passes: 1
     stakes: reversible
     depends_on: t-001
     note: |-
@@ -155,7 +155,23 @@ tasks:
       Build the high-priority Mandarin catalog curation admin inside the existing Curation Studio. Keep source data immutable, use one global override per canonical card plus append-only audit history, and deliberately avoid an edition/version proliferation model.
     claimed_by: 2026-08-25T060500Z-mandarin-tutor-t-013-sk83
     claimed_at: '2026-08-25T06:05:00Z'
-    updated: '2026-08-25T06:05:00Z'
+    updated: '2026-08-25T08:31:43Z'
+    implementation_pr: 'silasfelinus/kind_robots#2092'
+    retry_context: >
+      pass 1 failed (quality): PR #2092 (worker/mandarin-curation-admin-sk83) failed the
+      layout-contract CI check -- components/curation/mandarin-curation.vue (a shared,
+      non-page component embedded in Admin Curation Studio) gates its grid-cols count
+      behind md:/xl: viewport breakpoints instead of container width, violating
+      verifyLayoutContract.ts rule 8 (viewport-grid). Do differently: replace
+      md:grid-cols-2 / xl:grid-cols-[...] with grid-cols-[repeat(auto-fit,minmax(...))]
+      (or an explicit @container query per components/conductor/project-detail.vue) so
+      the grid follows its host container's width, matching the established pattern in
+      components/narrative/narrative-ingredient-picker.vue,
+      components/facets/facet-profile.vue, and components/brainstorm/brainstorm-manager.vue.
+      Re-run `npm run test:layout-contract` locally before reopening the PR. See PR #2092
+      review comment for the exact violation output. Everything else in the PR (the
+      additive MandarinCatalogOverride/MandarinCatalogChange migration, curation contract,
+      all other 39 checks) was solid -- this is the only blocker.
 
   - id: t-006
     milestone: m1
