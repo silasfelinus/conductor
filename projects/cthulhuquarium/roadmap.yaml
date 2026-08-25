@@ -269,28 +269,51 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Seed the bestiary — fish YAML into the Monster table"
-    status: ready
+    status: review
     owner: null
     passes: 0
     stakes: reversible
     depends_on: [t-003, t-035, t-036]
     note: >
-      Write the idempotent seed script that reads fish/*.yaml from the cthulhuquarium
-      repo and upserts rows in the bestiary table t-035 landed, `Monster`,
-      keyed on slug. Map fields per the bible schema: species, class, backstory (the
-      field note), quirks, alignment, and the six `Rarity` stats. Idempotent means
-      re-running after a bible edit updates rows rather than duplicating them -- match
-      on the unique slug. Fish tagged for ruler-hooked get seeded too; that is the
-      entire shared-bestiary mechanism and it costs nothing extra here -- sharing is the
-      `games` list on the row, not membership in a table. Never delete a row the script
-      does not recognize -- a fish removed from the bible gets isActive false, not a
-      DELETE.
-      CORRECTED 2026-08-25 (Silas): this task previously said Character rows grouped
-      under a Pack with slug abyssal-bestiary. Both halves are gone. Fish are not
-      Characters -- Character is the chattable-personality table -- and a Pack was only
-      ever the grouping mechanism BECAUSE they were Characters. A dedicated table needs
-      no Pack to separate it from unrelated rows. Depends on t-035 now, because there is
-      nothing to seed into until that model exists.
+      Write the idempotent seed script that reads fish/*.yaml from the cthulhuquarium repo and
+      upserts rows in the bestiary table t-035 landed, `Monster`, keyed on slug. Map fields
+      per the bible schema: species, class, backstory (the field note), quirks, alignment, and
+      the six `Rarity` stats. Idempotent means re-running after a bible edit updates rows
+      rather than duplicating them -- match on the unique slug. Fish tagged for ruler-hooked
+      get seeded too; that is the entire shared-bestiary mechanism and it costs nothing extra
+      here -- sharing is the `games` list on the row, not membership in a table. Never delete
+      a row the script does not recognize -- a fish removed from the bible gets isActive
+      false, not a DELETE. CORRECTED 2026-08-25 (Silas): this task previously said Character
+      rows grouped under a Pack with slug abyssal-bestiary. Both halves are gone. Fish are not
+      Characters -- Character is the chattable-personality table -- and a Pack was only ever
+      the grouping mechanism BECAUSE they were Characters. A dedicated table needs no Pack to
+      separate it from unrelated rows. Depends on t-035 now, because there is nothing to seed
+      into until that model exists. IMPLEMENTED 2026-08-25 in silasfelinus/kind_robots,
+      scripts/seed_bestiary.ts, with utils/scripts/verifyBestiarySeedMapping.ts and three npm
+      scripts (seed:bestiary, :write, :verify). Dry run by default and --write to apply,
+      matching seed_achievements.ts. Two passes, because evolvesToId is an FK and a chain
+      target can sort after its source. Never deletes: a creature dropped from the bible gets
+      isActive false. SAFETY RAIL worth knowing about -- deactivation is the one destructive-
+      ish thing the script does, and the way it goes wrong is a bible that failed to load,
+      since zero species parsed makes every row look dropped and switches off the whole
+      bestiary in a single run. A floor of 100 species makes that unreachable; an empty
+      directory, a 3-species directory and a bad path were each confirmed to exit 1 BEFORE the
+      Prisma client is even constructed. VERIFIED OFFLINE across all 151: every stat lands in
+      a legal Rarity, no value overruns its VarChar (the widths are asserted from the schema's
+      own numbers, which is where a seed like this actually fails -- invisible until the
+      insert hits production, by which point it has half-applied), all 92 evolution edges
+      resolve, 14 shared with ruler-hooked. LEFT AT review RATHER THAN done, deliberately: the
+      live dry run has not happened. This sandbox cannot reach the database host -- DNS
+      resolves, TCP to the port times out -- so the attempt got as far as proving the retry
+      wrapper correctly classifies a pool timeout as transient and backs off three times,
+      which is a real check of that integration and nothing more. NOTHING HAS BEEN SEEDED.
+      Closing this needs two things on the box: `npm run seed:bestiary` (read-only) to confirm
+      151 to create and 92 edges, then `npm run seed:bestiary:write`. FOUR SCHEMA GAPS FOUND
+      while mapping the fields, filed as t-042 rather than fixed here because every one is a
+      migration and kind-robots/t-072 means a merged migration sits unapplied -- the exact
+      shape that caused the t-071 outage. The seed works against the schema as it stands and
+      loses only the one `secret` evolution kind.
+    updated: '2026-08-25T10:15:42Z'
 
   - id: t-009
     milestone: m2
@@ -1836,4 +1859,55 @@ tasks:
       species, this is the paragraph to overturn, and the 151 count is what it costs. DECISION
       2 IS NOW THE ONLY ONE OPEN: whether the egg OPTION is itself concealed until something
       is discovered. Everything else about eggs is settled.
+  - id: t-042
+    milestone: m2
+    title: "Monster is missing four bible fields, and documents one column as the wrong axis"
+    status: ready
+    gate_human: false
+    approved_by_human: null
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-008
+    note: >
+      Found 2026-08-25 while writing the t-008 seed script -- i.e. by actually mapping all 151
+      species onto the columns rather than by reading the model and assuming. FOUR BIBLE
+      FIELDS HAVE NOWHERE TO LAND, and one column is documented as holding something it should
+      not. (1) EvolutionKind IS MISSING "SECRET". The bible allows growth | breeding | secret
+      and the enum has only GROWTH and BREEDING. Exactly one species uses it today -- the-
+      proprietor -> the-concern -- and mapping secret onto BREEDING would be a lie, since
+      SCHEMA.md defines breeding as requiring two parents and secret as a hidden individual-
+      stat roll. They are different mechanics and t-029 will implement them differently. The
+      seed script therefore writes the evolvesToId edge and leaves evolutionKind null with a
+      loud warning; adding the enum value and re-running fills it in for free, because the
+      seed is idempotent. This is the only one of the four that currently loses information a
+      player would notice. (2) Monster.behavior IS DOCUMENTED AS THE WRONG AXIS. Its doc
+      comment reads "free-form ecological role tag (the fish bible's diet_role/school_role ...
+      predator/prey, school/anchor/solitary)". Those school/anchor/solitary values are the
+      PRE-MERGE school_role vocabulary, which SCHEMA.md renamed to shoaling | solitary |
+      territorial precisely because it collided with behavior's own school and anchor values
+      and invited exactly this confusion. The bible's `behavior` is the MOVEMENT MODE the
+      renderer reads -- drift, dart, lurk, school, anchor, surface, hover, tumble, cling --
+      and the column name matches it exactly, so t-008 seeds movement mode there and the doc
+      comment needs correcting. (3) diet_role AND school_role HAVE NO COLUMNS AT ALL. 151
+      species carry both; they feed t-025's rivalry rules and t-027's feeding. Two nullable
+      VarChar columns, dietRole and schoolRole, named for the bible fields so the next person
+      cannot repeat mistake (2). (4) THE BIBLE'S OWN `tier` (1-5, "roughly how deep into the
+      game it appears") HAS NO COLUMN, because Monster.tier is taken by the Rarity enum. It is
+      real design data -- 32/41/36/25/17 across the five values -- and it wants a name that
+      cannot be confused with rarity. `depth` or `stage` rather than a second `tier`. Lowest
+      priority of the four; nothing reads it yet. DELIBERATELY NOT FILED HERE: `plate` (the
+      art lineage) and `rivals`. Plate belongs to the bible and the art queue, which both
+      already read it, and nothing in the game needs it at runtime. Rivals is six species and
+      wants a join table rather than a column, which is t-030's call when it builds rivalry.
+      Adding columns nothing reads is how a schema rots. WHY THIS IS ITS OWN TASK AND NOT PART
+      OF t-008. Every item here is a MIGRATION, and this repo is currently living with kind-
+      robots/t-072 -- nothing applies pending Prisma migrations on deploy, so a merged
+      migration sits unapplied and the schema silently diverges from the client. kind-
+      robots/t-071 was a production outage caused by exactly that shape. The seed script works
+      correctly against the schema as it stands today and loses only the one `secret` kind, so
+      the safe split was to land the seed and gate the migration. All four changes are
+      ADDITIVE -- new nullable columns and a new enum value, no drops, no renames -- so the
+      migration itself is the low-risk kind; it is the APPLYING that needs a human at the
+      keyboard.
 
