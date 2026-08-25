@@ -20,6 +20,12 @@ notes_from_silas: |
   broadly. Include a dedicated gambling/casino vocabulary set for Silas's work. Future scope
   should map the curriculum against official Mandarin proficiency tests and support iOS and
   Android clients after the web product is established.
+  The catalog also needs an admin curation surface in the same spirit as Coloring Book and
+  Cthulhuquarium: browse/search words, sort and filter categories, inspect provenance/media,
+  and submit corrections. Keep this deliberately simpler than Coloring Book's edition model:
+  one canonical card identity, source data left immutable underneath, and admin overrides plus
+  an audit trail rather than multiplying editions of the same word. Treat this as the next
+  high-priority Mandarin slice immediately after the tutor-facing requested-word loop.
 
 milestones:
   - id: m1
@@ -130,6 +136,26 @@ tasks:
     claimed_by: 2026-08-25T052500Z-mandarin-tutor-t-005-sk7y
     claimed_at: '2026-08-25T05:25:07+00:00'
     updated: '2026-08-25T05:25:07+00:00'
+
+  - id: t-013
+    milestone: m1
+    title: "Build a Mandarin catalog curation admin"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      HIGH INTERNAL PRIORITY: take this immediately after the active tutor-facing requested-word
+      work. Add Mandarin to the existing Admin Curation Studio beside Cthulhuquarium and Coloring
+      Book. Admins need a dense browse/search view of canonical cards, sorting/filtering by Hanzi,
+      pinyin, English meaning, HSK/source, category, media coverage, and override state; category
+      editing; source/provenance inspection; and a straightforward submit-change form for meaning,
+      pinyin, traditional form, usage note, and categories. Source datasets remain immutable. Apply
+      changes through one canonical global override per card plus an append-only audit/change trail.
+      Do not create Coloring Book-style editions or parallel copies of the same lexical card merely
+      because it has been corrected. Generated/requested cards may be surfaced for inspection later,
+      but v1 curation should not silently promote user-specific generated facts into the sourced core.
 
   - id: t-006
     milestone: m1
