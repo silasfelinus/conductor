@@ -234,13 +234,16 @@ def run_canary(job_ids, timeout_seconds=CANARY_TIMEOUT_SECONDS, sleep=time.sleep
     if not queued:
         print(f"  canary requeue failed for {sorted(failed)}", file=sys.stderr)
         return False
-    print(f"  canary requeued {queued}; waiting for a terminal state…")
+    print(f"  canary requeued {queued}; waiting for a terminal state…", flush=True)
 
     deadline = time.monotonic() + timeout_seconds
     seen = {}
     while time.monotonic() < deadline:
         seen = {job_id: job_status(job_id) for job_id in queued}
-        print("    " + "  ".join(f"{k}={v}" for k, v in seen.items()))
+        # flush: this loop can run for 25 minutes, and a caller redirecting the
+        # output to a file or a CI log should see the canary tick, not a silent
+        # process followed by one burst at the end.
+        print("    " + "  ".join(f"{k}={v}" for k, v in seen.items()), flush=True)
         if all(status in TERMINAL_STATUSES for status in seen.values()):
             break
         sleep(CANARY_POLL_SECONDS)
