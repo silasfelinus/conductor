@@ -131,3 +131,71 @@ def test_canary_times_out_rather_than_draining_on_a_stuck_job(monkeypatch):
 
 def test_chunks_splits_without_dropping_ids():
     assert list(drain.chunks([1, 2, 3, 4, 5], 2)) == [[1, 2], [3, 4], [5]]
+
+
+# 2026-08-25T22:25Z, 30 jobs. Both files are registered in Kind Robots and both
+# were used by every job that rendered fine at 07:20Z the same morning. The
+# names did not change; the box's answer about which files exist did.
+VANISHED_MODEL_ERROR = (
+    "ComfyUI has no matching file for: "
+    "CLIPLoader.clip_name='qwen3vl_4b_fp8_scaled.safetensors'; "
+    "VAELoader.vae_name='qwen_image_vae.safetensors'. Not in the live model "
+    "list at http://127.0.0.1:8188 (missing, misnamed, or an ambiguous "
+    "basename). Failing fast instead of submitting a prompt ComfyUI would "
+    "reject."
+)
+
+REGISTERED = {
+    "qwen3vl_4b_fp8_scaled.safetensors",
+    "qwen_image_vae.safetensors",
+    "Krea-2-Turbo-Q5_K_S.gguf",
+}
+
+
+def test_missing_asset_names_reads_every_named_file():
+    assert drain.missing_asset_names(VANISHED_MODEL_ERROR) == [
+        "qwen3vl_4b_fp8_scaled.safetensors",
+        "qwen_image_vae.safetensors",
+    ]
+
+
+def test_missing_asset_names_stops_at_the_live_list_sentence():
+    # The trailing prose contains a URL and parentheses; nothing there should be
+    # mistaken for a filename.
+    assert "8188" not in "".join(drain.missing_asset_names(VANISHED_MODEL_ERROR))
+
+
+def test_registered_models_that_vanished_are_retryable():
+    job = {"id": 9542, "error": VANISHED_MODEL_ERROR}
+    failure_class = drain.classify_failure(job, registered=REGISTERED)
+    assert failure_class == "render-host-model-vanished"
+    assert drain.is_retryable(failure_class)
+
+
+def test_an_unregistered_model_stays_a_payload_fault():
+    # ArtJob 9181: this filename was invented and never existed anywhere.
+    job = {"id": 9181, "error": MISSING_MODEL_ERROR}
+    failure_class = drain.classify_failure(job, registered=REGISTERED)
+    assert failure_class == "payload-model-missing"
+    assert not drain.is_retryable(failure_class)
+
+
+def test_a_partly_registered_rejection_is_held_back():
+    error = (
+        "ComfyUI has no matching file for: "
+        "CLIPLoader.clip_name='qwen3vl_4b_fp8_scaled.safetensors'; "
+        "VAELoader.vae_name='never_existed.safetensors'. Not in the live model "
+        "list at http://127.0.0.1:8188."
+    )
+    assert (
+        drain.classify_failure({"error": error}, registered=REGISTERED)
+        == "payload-model-missing"
+    )
+
+
+def test_an_unreadable_registry_holds_missing_models_back():
+    # Can't tell "lost" from "misnamed" without the registry, so don't guess in
+    # the direction that resubmits 400 jobs.
+    job = {"id": 9542, "error": VANISHED_MODEL_ERROR}
+    assert drain.classify_failure(job, registered=None) == "payload-model-missing"
+    assert drain.classify_failure(job, registered=set()) == "payload-model-missing"

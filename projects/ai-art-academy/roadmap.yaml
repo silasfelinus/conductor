@@ -2246,8 +2246,47 @@ tasks:
     gate_human: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-25T22:20:00Z'
+    updated: '2026-08-25T22:40:00Z'
     note: |-
+      SECOND PRESENTATION, SAME DRIVE (2026-08-25T22:25Z). Silas read the kr-relay log and
+      reasonably concluded "this looks like we're sending bad prompts". The relay's own wording is
+      what makes that the natural read, and it is wrong twice over -- both messages have now been
+      fixed at the source (see below).
+
+      (1) The WinError 1117 rejection arrives as `ComfyUI POST /prompt failed ... No accepted
+      prompt ... appeared within 120.0s`, which reads like a prompt rejection. It is not: the
+      traceback ends at `class_inputs = obj_class.INPUT_TYPES()`, a classmethod taking no
+      arguments, called to enumerate the models the box *has*. It runs before ComfyUI compares a
+      single value from the submitted graph. Proof from the data rather than the traceback: all
+      420 failures share exactly ONE graph shape, and it is byte-identical in node classes and
+      model names to ArtJob 9252, which rendered at 07:20Z the same morning on attempt 1. Only
+      the prompt text and the seed differ.
+
+      (2) Then, around 22:25Z, the fault changed presentation: 30 NEW jobs (ids 9513-9542) began
+      failing with `ComfyUI has no matching file for: CLIPLoader.clip_name=
+      'qwen3vl_4b_fp8_scaled.safetensors'; VAELoader.vae_name='qwen_image_vae.safetensors'`.
+      Both files are in the Kind Robots Resource registry and both were used by every job that
+      rendered fine at 07:20Z. The unet on the same graph still resolved. That is a partially
+      readable model share -- `folder_paths` re-enumerated `text_encoders`/`vae` and got a short
+      list -- not a naming error. From the relay's side alone the two are indistinguishable,
+      which is exactly why it reported registered, working models as missing.
+
+      Fixes landed this session:
+        * relay_agent.host_fault_in_node_errors(): an OSError inside `node_errors` is now
+          reported as "ComfyUI cannot read its own model files", naming the node and the path,
+          instead of as a failed prompt submission.
+        * unresolved_asset_error() now reports how many files ComfyUI listed for the input that
+          failed to match. The count is the diagnosis: a name missing from a healthy list is a
+          misnaming; the same name missing from a list that has shrunk is a lost mount.
+        * scripts/drain_failed_art_backlog.py cross-checks any missing-model rejection against
+          the Resource registry, so a registered file the box has lost classifies as a
+          retryable host fault rather than an unrecoverable payload. Without that check it would
+          have stranded these 30 jobs permanently.
+
+      Current tally: 446 retryable, 1 genuinely bad payload (ArtJob 9181, the invented
+      `flux2_klein_text_encoder_fp8_scaled.safetensors` from t-033, which is not registered and
+      never existed).
+
       ROOT CAUSE FOUND (Silas-directed session, 2026-08-25T22:00Z). This is not a
       facet-catalog problem and it is not the text encoder specifically. It is the render box's
       `Z:` model drive failing I/O. Evidence: the queue held 420 FAILED ArtJobs, 100% COMFY,

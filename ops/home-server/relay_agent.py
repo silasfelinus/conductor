@@ -20,6 +20,7 @@ import hashlib
 import io
 import json
 import os
+import re
 import signal
 import socket
 import subprocess
@@ -587,6 +588,7 @@ def resolve_workflow_asset_names(workflow, object_info):
     left as-is."""
     remaps = []
     unresolved = []
+    _unresolved_candidate_counts.clear()
     if not isinstance(object_info, dict):
         return remaps, unresolved
 
@@ -616,6 +618,9 @@ def resolve_workflow_asset_names(workflow, object_info):
             match = _resolve_against_candidates(value, candidates)
             if match is None:
                 unresolved.append((class_type, input_name, value))
+                _unresolved_candidate_counts[f"{class_type}.{input_name}"] = len(
+                    candidates
+                )
             elif match != value:
                 inputs[input_name] = match
                 remaps.append((class_type, input_name, value, match))
@@ -707,6 +712,16 @@ def _fetch_object_info_locked(now):
     return stale
 
 
+# How many values ComfyUI offered for each input a name failed to match on, from
+# the last resolution pass. `unresolved_asset_error` reports it because the count
+# is what separates the two very different faults that reach that error:
+# a genuinely misnamed file (the list is healthy and the name simply is not in
+# it) and a model directory the box has half-lost (the list is a fraction of its
+# usual size). Both otherwise read as "misnamed", which is how 30 jobs naming two
+# registered, working models got reported as bad prompts on 2026-08-25.
+_unresolved_candidate_counts = {}
+
+
 # What the last call to align_workflow_asset_names actually did. Read only by
 # run_comfy, to stamp the outcome onto a submission failure.
 #
@@ -778,6 +793,70 @@ def last_resolution_note():
     )
 
 
+# ComfyUI reports a node's *validation crash* inside `node_errors`, the same
+# place it reports a rejected input value, and answers both with HTTP 400 from
+# POST /prompt. So a render box that cannot read its own model directory
+# arrives at the relay looking exactly like a bad prompt. It is not one.
+#
+# The 2026-08-25 backlog is the worked example: 414 jobs failed with
+#
+#   [WinError 1117] The request could not be performed because of an I/O
+#   device error: 'Z:\\ai\\models\\unet'
+#
+# raised from ComfyUI-GGUF's `INPUT_TYPES()` -> `folder_paths.get_filename_list`
+# -> `os.stat()`. `INPUT_TYPES()` is a classmethod taking no arguments: it runs
+# to build the list of *available* models, before ComfyUI compares a single
+# value from the submitted graph. No prompt can cause it and no edit to a prompt
+# can fix it -- but the relay's own message led with "POST /prompt failed", and
+# that is what the logs showed for 414 jobs across three unrelated projects.
+HOST_FAULT_EXCEPTION_TYPES = frozenset(
+    {
+        "OSError",
+        "IOError",
+        "PermissionError",
+        "FileNotFoundError",
+        "NotADirectoryError",
+    }
+)
+# Fallback for a ComfyUI build that doesn't forward `exception_type`.
+HOST_FAULT_MESSAGE = re.compile(r"\[WinError \d+\]|\[Errno \d+\]")
+
+
+def host_fault_in_node_errors(node_errors):
+    """One-line description of an OS-level fault inside `node_errors`, or None.
+
+    Distinguishes "ComfyUI could not read its own files" from "ComfyUI rejected
+    a value in the graph". Only the second is a prompt problem, and only the
+    second is worth retrying or repairing.
+    """
+    if not isinstance(node_errors, dict):
+        return None
+    for node_id, node in node_errors.items():
+        if not isinstance(node, dict):
+            continue
+        class_type = str(node.get("class_type") or "unknown node")
+        for error in node.get("errors") or []:
+            if not isinstance(error, dict):
+                continue
+            extra = error.get("extra_info")
+            extra = extra if isinstance(extra, dict) else {}
+            exception_type = str(extra.get("exception_type") or "").strip()
+            detail = " ".join(
+                str(
+                    extra.get("exception_message")
+                    or error.get("details")
+                    or error.get("message")
+                    or ""
+                ).split()
+            )
+            if exception_type in HOST_FAULT_EXCEPTION_TYPES or (
+                detail and HOST_FAULT_MESSAGE.search(detail)
+            ):
+                label = exception_type or "OS error"
+                return f"{class_type} (node {node_id}): {label} -- {detail}"
+    return None
+
+
 def unresolved_asset_error(unresolved):
     """The fail-fast raised when a name cannot match ComfyUI's live list.
 
@@ -791,11 +870,17 @@ def unresolved_asset_error(unresolved):
     """
     details = "; ".join(
         f"{class_type}.{input_name}={value!r}"
+        f" (ComfyUI listed"
+        f" {_unresolved_candidate_counts.get(f'{class_type}.{input_name}', '?')}"
+        f" file(s) for that input)"
         for class_type, input_name, value in unresolved
     )
     return RuntimeError(
         f"ComfyUI has no matching file for: {details}. Not in the live model "
-        f"list at {COMFY_URL} (missing, misnamed, or an ambiguous basename). "
+        f"list at {COMFY_URL}. A name that used to work, against a list that "
+        "has shrunk, means the render host lost sight of the file -- check the "
+        "model directory is mounted and readable before treating this as a "
+        "misnamed or missing model. "
         "Failing fast instead of submitting a prompt ComfyUI would reject."
     )
 
@@ -929,9 +1014,22 @@ def run_comfy(payload):
         # genuinely disagree beyond slash/case/basename; the same rejection with
         # "skipped" means the relay never got to look, and the fix is the box,
         # not the name.
+        node_errors = response and response.get("node_errors")
+        host_fault = host_fault_in_node_errors(node_errors)
+        if host_fault:
+            raise RuntimeError(
+                f"ComfyUI cannot read its own model files at {COMFY_URL}: "
+                f"{host_fault}. This is the render host, not the submitted "
+                "prompt -- ComfyUI raised it from INPUT_TYPES() while listing "
+                "the models it has, before comparing any value in the graph, so "
+                "no retry or prompt edit can clear it. Check that the model "
+                "directory is mounted and readable, then restart ComfyUI so "
+                "folder_paths rebuilds its cached filename lists. "
+                f"{last_resolution_note()}"
+            )
         raise RuntimeError(
             f"ComfyUI /prompt returned HTTP {status} at {COMFY_URL}: "
-            f"{response and response.get('node_errors')} "
+            f"{node_errors} "
             f"{last_resolution_note()}"
         )
 

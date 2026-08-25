@@ -24482,3 +24482,44 @@ restart ComfyUI so `folder_paths` rebuilds its cached filename lists, then run
 drive is still bad, so it is safe to run before checking. Agents — when a failure
 signature is used to scope an incident, confirm the scope against the full FAILED set,
 not `recentFailed`.
+
+---
+
+## 2026-08-25 | Reviewer → Worker | system | critique
+type: critique
+
+**Subject:** The relay described a dead disk as a prompt problem, twice, and a human reading
+its own logs reached the wrong conclusion. Error wording is a correctness surface.
+
+**Detail:**
+- Silas read the kr-relay log for the 2026-08-25 backlog and concluded "this really looks
+  like we're sending bad prompts." That is the *correct* reading of what the relay wrote.
+  It was wrong, and the relay's wording is why.
+- Message 1: `ComfyUI POST /prompt failed at ... No accepted prompt for client ...
+  appeared within 120.0s`. Leads with the prompt, ends with the prompt, and buries an
+  `OSError` on `Z:\ai\models\unet` in a dict dump in between. The traceback ends at
+  `class_inputs = obj_class.INPUT_TYPES()` — a classmethod taking no arguments, called to
+  enumerate the models the box *has*, before ComfyUI compares any submitted value.
+- Message 2, four hours later, same drive, new presentation: `ComfyUI has no matching file
+  for: CLIPLoader.clip_name='qwen3vl_4b_fp8_scaled.safetensors'`. That file is registered
+  and rendered fine at 07:20Z the same morning. `folder_paths` had re-enumerated a
+  half-readable share and returned a short list. The relay reported a working model as
+  missing, in wording that points squarely at the payload.
+- **Both were fixed at the source rather than worked around.**
+  `host_fault_in_node_errors()` now reports an `OSError` inside `node_errors` as "ComfyUI
+  cannot read its own model files", naming node and path. `unresolved_asset_error()` now
+  reports how many files ComfyUI listed for the failing input — the count is the whole
+  diagnosis, because a name absent from a healthy list is a misnaming and the same name
+  absent from a list that has shrunk is a lost mount.
+- **This also caught a real bug in my own tool.** `drain_failed_art_backlog.py` classified
+  `payload-model-missing` as never-retryable, which is right for ArtJob 9181 (an invented
+  filename from t-033) and wrong for these 30. It now cross-checks the named files against
+  the Kind Robots Resource registry: registered file the box lost → retryable host fault;
+  unregistered file → held back. Without that check the drain would have permanently
+  stranded 30 good jobs, and I would have shipped it.
+
+**Suggested action:** when a component reports someone else's fault, it owns saying so
+plainly. "POST /prompt failed" for a disk error and "no matching file" for a file that
+exists are both technically true and both actively misleading — they cost a human a wrong
+diagnosis and nearly cost 30 jobs. Before shipping a fail-fast, read its message as
+someone who will see it in a log at 3pm with no other context.
