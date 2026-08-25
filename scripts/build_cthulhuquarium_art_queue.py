@@ -185,6 +185,41 @@ NON_FISH = [
      "a long-handled brass and bristle aquarium scraper with a worn wooden grip, "
      "bristles splayed from use, " + SET_STYLE),
 
+    # SIX EGG PLATES -- cthulhuquarium/t-041. An egg is a thing you BUY, so it takes
+    # the set-piece lineage rather than a plate of its own. Rarity is carried by
+    # ENGRAVED ORNAMENT DENSITY and nothing else: one monotonic ramp from bare shell
+    # to solid worked black, so a row of them in the shop sorts itself at a glance,
+    # it survives 256px, it needs no colour (which a trade-catalogue engraving does
+    # not have), and it is TEXTURE rather than SCALE -- which is what keeps rarity
+    # and size the independent dials t-041 requires. A small MYTHIC egg and a large
+    # COMMON egg both have to read instantly, and that pair is the whole shop.
+    # The wire stand is deliberately identical across all six: it is a product line
+    # in a supplier's catalogue, so consistent presentation is the correct answer.
+    ("egg-common", SQUARE,
+     "a single plain smooth ovoid egg standing upright in a small plain wire stand, a "
+     "few light contour lines following its curve and large areas of shell left bare, "
+     + SET_STYLE),
+    ("egg-uncommon", SQUARE,
+     "a single ovoid egg standing upright in a small plain wire stand, three simple "
+     "engraved bands running around its width, the shell between the bands left bare, "
+     + SET_STYLE),
+    ("egg-rare", SQUARE,
+     "a single ovoid egg standing upright in a small plain wire stand, the shell "
+     "covered in fine dense speckling with one ruled seam running pole to pole, "
+     + SET_STYLE),
+    ("egg-epic", SQUARE,
+     "a single ovoid egg standing upright in a small plain wire stand, the whole shell "
+     "worked with engraved ornamental whorls spiralling from the base to the tip, "
+     + SET_STYLE),
+    ("egg-legendary", SQUARE,
+     "a single ovoid egg standing upright in a small plain wire stand, its entire "
+     "surface cut into elaborate engraved scrollwork, a raised ornamental collar "
+     "around its base, " + SET_STYLE),
+    ("egg-mythic", SQUARE,
+     "a single ovoid egg standing upright in a small plain wire stand, engraved so "
+     "densely that the shell reads as solid black, its form picked out in fine "
+     "reserved white line, " + SET_STYLE),
+
     ("ichthyonomicon", SQUARE,
      "a fat leather-bound ledger lying closed on a wooden desk, tarnished brass "
      "corner fittings and a heavy clasp, cracked spine, a lurid green waterstain "
