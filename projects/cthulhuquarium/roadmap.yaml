@@ -295,8 +295,8 @@ tasks:
   - id: t-009
     milestone: m2
     title: "Server API — tank state, tick, feed, purchase, browse"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-004, t-007]
@@ -310,6 +310,9 @@ tasks:
       A client that says "I earned 900000 coins" gets told what it actually earned.
       Public tank responses expose display name and tank contents only, never email
       or user id.
+    claimed_by: claude-scheduled-20260825T0130Z-cq-t009
+    claimed_at: '2026-08-25T01:31:30Z'
+    updated: '2026-08-25T01:31:30Z'
 
   - id: t-010
     milestone: m2
