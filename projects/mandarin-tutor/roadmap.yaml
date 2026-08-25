@@ -46,7 +46,7 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Build the Mandarin Tutor web MVP with 500+ beginner cards"
-    status: claimed
+    status: review
     owner: worker
     passes: 1
     stakes: reversible
@@ -62,14 +62,12 @@ tasks:
       cause as (1). Everything else in the PR (40 other check runs, the diff's scope and
       provenance handling) looked solid. See review comment:
       https://github.com/silasfelinus/kind_robots/pull/2083#pullrequestreview-5014952422
-    note: >
-      Ship the Play > Mandarin route, Pinia-owned study state, searchable/catalog study sets,
-      a flashcard interaction that can reveal Hanzi, pinyin, meaning, components, and history,
-      and a versioned starter catalog of at least 500 useful beginner lexical or component
-      cards. Keep lexicon facts separate from learner state and generated-media state so the
-      same curriculum can later back native clients. PR #2083 already covers this scope --
-      fix the two failing checks above and repush rather than starting over.
-    updated: '2026-08-25T04:46:00Z'
+    note: |-
+      Ship the Play > Mandarin route, Pinia-owned study state, searchable/catalog study sets, a flashcard interaction that can reveal Hanzi, pinyin, meaning, components, and history, and a versioned starter catalog of at least 500 useful beginner lexical or component cards. Keep lexicon facts separate from learner state and generated-media state so the same curriculum can later back native clients. PR #2083 already covers this scope -- fix the two failing checks above and repush rather than starting over.
+
+
+      kind_robots PR #2083 final head 8cde56a6b14f0c29e50191cbdaa9650d287bf0bd fixes the fetch/typecheck root cause, adds the requested record -> unbiased Mandarin transcription -> target comparison -> local YIN tone-coach loop, and fixes the shared-component container-width layout contract. TypeScript, Layout Contract, Contract Tests (all 298 steps), and every other final-head workflow completed successfully; PR is mergeable with no unresolved review threads.
+    updated: '2026-08-25T04:57:00Z'
     claimed_by: 2026-08-25T044600Z-mandarin-tutor-t-001-sk7v
     claimed_at: '2026-08-25T04:46:00Z'
 
