@@ -257,10 +257,168 @@ def test_verify_result_rejects_swallowed_field():
         stf.verify_result(corrupted, "t-001", "approved_by_human")
 
 
+LONG_NOTE_ROADMAP = """\
+project: demo
+kind: software
+tasks:
+- id: t-010
+  milestone: m1
+  title: Task with a long quoted note
+  status: ready
+  passes: 0
+  note: 'CORRECTION 2026-08-01: first theory was wrong, evidence was X.
+
+    RESOLVED TO TWO SEPARATE CAUSES: root cause A affects the claim path, root
+    cause B affects the close-out path, found via git log -p over roadmap.yaml.
+
+    ROOT CAUSE FOUND: A is the actual bug, B is a red herring from a stale
+    checkout in the reproduction session.'
+- id: t-011
+  milestone: m1
+  title: Task with a short note
+  status: ready
+  passes: 0
+  note: 'Short note, well under the guard threshold.'
+- id: t-012
+  milestone: m1
+  title: Task with no note
+  status: ready
+  passes: 0
+"""
+
+
+def test_set_note_guard_blocks_destructive_replace():
+    # conductor/t-129: a --set note=... that would delete substantial existing
+    # note content is refused by default.
+    with pytest.raises(stf.TaskFieldError, match="Refusing to replace"):
+        stf.set_task_field_text(LONG_NOTE_ROADMAP, "t-010", "note", "RESOLVED, short summary.")
+
+
+def test_set_note_guard_names_append_note_and_force_in_error():
+    with pytest.raises(stf.TaskFieldError, match="append_note_text.*--append-note"):
+        stf.set_task_field_text(LONG_NOTE_ROADMAP, "t-010", "note", "RESOLVED, short summary.")
+    with pytest.raises(stf.TaskFieldError, match="force=True"):
+        stf.set_task_field_text(LONG_NOTE_ROADMAP, "t-010", "note", "RESOLVED, short summary.")
+
+
+def test_set_note_guard_force_allows_replace():
+    out = stf.set_task_field_text(
+        LONG_NOTE_ROADMAP, "t-010", "note", "RESOLVED, short summary.", force=True
+    )
+    tasks = parse_tasks(out)
+    assert tasks["t-010"]["note"] == "RESOLVED, short summary."
+
+
+def test_set_note_guard_does_not_fire_under_threshold():
+    # t-011's note is short -- no guard, no force needed.
+    out = stf.set_task_field_text(LONG_NOTE_ROADMAP, "t-011", "note", "Replaced short note.")
+    tasks = parse_tasks(out)
+    assert tasks["t-011"]["note"] == "Replaced short note."
+
+
+def test_set_note_guard_does_not_fire_when_new_value_still_contains_existing():
+    # The guard compares the *input* value against the existing raw text, before
+    # any flattening set_task_field_text applies on write -- a superset edit like
+    # this (existing note plus more) must not raise, even without force.
+    existing = stf.get_task_field_value(LONG_NOTE_ROADMAP, "t-010", "note")
+    new_value = existing + "\n\nADDENDUM: one more paragraph."
+    out = stf.set_task_field_text(LONG_NOTE_ROADMAP, "t-010", "note", new_value)
+    tasks = parse_tasks(out)
+    assert "ADDENDUM: one more paragraph." in tasks["t-010"]["note"]
+    assert "ROOT CAUSE FOUND" in tasks["t-010"]["note"]
+
+
+def test_set_note_guard_does_not_apply_to_non_note_fields():
+    # A long value on any other allowed field is unaffected by the note guard.
+    out = stf.set_task_field_text(LONG_NOTE_ROADMAP, "t-010", "status", "done")
+    tasks = parse_tasks(out)
+    assert tasks["t-010"]["status"] == "done"
+
+
+def test_get_task_field_value_decodes_quoted_and_missing():
+    assert stf.get_task_field_value(LONG_NOTE_ROADMAP, "t-011", "note") == (
+        "Short note, well under the guard threshold."
+    )
+    assert stf.get_task_field_value(LONG_NOTE_ROADMAP, "t-012", "note") is None
+
+
+def test_get_task_field_value_decodes_block_style():
+    # Reuses the folded-note fixture from ROADMAP (t-002).
+    value = stf.get_task_field_value(ROADMAP, "t-002", "note")
+    assert value == "Folded note line one.\nFolded note line two."
+
+
+def test_append_note_text_appends_as_new_paragraph_in_block_style():
+    out = stf.append_note_text(LONG_NOTE_ROADMAP, "t-011", "New finding: it was a race.")
+    tasks = parse_tasks(out)
+    # One blank line in the file's folded block == one newline once folded/decoded
+    # (YAML folded-scalar semantics), not two -- the file itself still shows a
+    # blank line between paragraphs, matching the repo's existing note convention.
+    assert tasks["t-011"]["note"] == (
+        "Short note, well under the guard threshold.\nNew finding: it was a race."
+    )
+    block = task_block(out, "t-011")
+    assert "note: >" in block
+    # Prior content is fully preserved, not truncated, and the file shows the two
+    # paragraphs separated by a blank line.
+    assert "Short note, well under the guard threshold.\n\n    New finding" in block
+
+
+def test_append_note_text_on_task_with_no_prior_note():
+    out = stf.append_note_text(LONG_NOTE_ROADMAP, "t-012", "First note ever on this task.")
+    tasks = parse_tasks(out)
+    assert tasks["t-012"]["note"] == "First note ever on this task."
+
+
+def test_append_note_text_wraps_long_single_line_addition():
+    long_addition = "word " * 40  # far past the default width, all one line
+    out = stf.append_note_text(LONG_NOTE_ROADMAP, "t-012", long_addition, width=40)
+    tasks = parse_tasks(out)
+    # Wrapping collapses back to the same words when re-parsed.
+    assert tasks["t-012"]["note"].split() == long_addition.split()
+    block = task_block(out, "t-012")
+    # Actually wrapped onto multiple physical lines in the file.
+    content_lines = [
+        line for line in block.splitlines() if line.strip() and "note:" not in line
+    ]
+    assert len(content_lines) > 1
+
+
+def test_append_note_text_rejects_empty_addition():
+    with pytest.raises(stf.TaskFieldError, match="empty"):
+        stf.append_note_text(LONG_NOTE_ROADMAP, "t-011", "   ")
+
+
+def test_append_note_text_never_needs_force_despite_long_existing_note():
+    # t-010's note is well over the guard threshold, but append_note_text's
+    # combined value always contains it verbatim, so no force is needed.
+    out = stf.append_note_text(LONG_NOTE_ROADMAP, "t-010", "One more paragraph.")
+    tasks = parse_tasks(out)
+    assert tasks["t-010"]["note"].startswith("CORRECTION 2026-08-01")
+    assert tasks["t-010"]["note"].endswith("One more paragraph.")
+
+
+def test_cli_force_flag_bypasses_note_guard(tmp_path: Path):
+    roadmap = tmp_path / "projects" / "demo" / "roadmap.yaml"
+    roadmap.parent.mkdir(parents=True)
+    roadmap.write_text(LONG_NOTE_ROADMAP, encoding="utf-8")
+
+    blocked = run_cli(tmp_path, "demo", "t-010", "note", "Replaced.")
+    assert blocked.returncode == 1
+    assert "Refusing to replace" in blocked.stderr
+    assert roadmap.read_text() == LONG_NOTE_ROADMAP
+
+    forced = run_cli(tmp_path, "demo", "t-010", "note", "Replaced.", "--force")
+    assert forced.returncode == 0, forced.stderr
+    assert parse_tasks(roadmap.read_text())["t-010"]["note"] == "Replaced."
+
+
 def test_real_conductor_roadmap_roundtrip():
-    # Exercise against the actual repo roadmap this tool exists to edit.
+    # Exercise against the actual repo roadmap this tool exists to edit. t-016's note
+    # is well over NOTE_REPLACE_GUARD_CHARS, so this outright replacement needs
+    # force=True -- see the destructive-note-replace guard tests below.
     real = (Path(__file__).resolve().parent.parent / "projects" / "conductor" / "roadmap.yaml").read_text()
-    out = stf.set_task_field_text(real, "t-016", "note", "Replaced for test purposes")
+    out = stf.set_task_field_text(real, "t-016", "note", "Replaced for test purposes", force=True)
     data = yaml.safe_load(out)
     t016 = [t for t in data["tasks"] if t["id"] == "t-016"][0]
     assert t016["note"] == "Replaced for test purposes"

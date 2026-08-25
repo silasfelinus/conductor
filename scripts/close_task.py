@@ -20,7 +20,8 @@ verify, merge) is what actually lands the change.
 
 Usage:
     python scripts/close_task.py <project> <task-id> <status> --session <id> \\
-        [--branch <name>] [--set field=value ...] [--implementation-pr OWNER/REPO#N] [--dry-run]
+        [--branch <name>] [--set field=value ...] [--append-note TEXT] \\
+        [--implementation-pr OWNER/REPO#N] [--force] [--dry-run]
 
     python scripts/close_task.py model-builder t-029 done --session claude-20260728T2200Z-mb-t029
     python scripts/close_task.py media-watchlist t-016 needs-human \\
@@ -28,6 +29,18 @@ Usage:
         --set note='blocked on X, see task note'
     python scripts/close_task.py newsfeed t-020 done --session claude-20260805T0900Z-nf-t020 \\
         --implementation-pr silasfelinus/kind_robots#1464
+    python scripts/close_task.py cthulhuquarium t-033 needs-human \\
+        --session claude-20260825T0900Z-cq-t033 --append-note 'RESOLVED: root cause was X.'
+
+Destructive note replacement (conductor/t-129): `note:` is an append-only diagnostic log
+in practice across this repo's roadmaps, not a scalar to overwrite. Closing
+cthulhuquarium/t-033 and t-034 with `--set note='RESOLVED ...'` once deleted 199 lines
+of diagnostic record between them (repaired in #2816). `set_task_field_text` now refuses
+a `--set note=...` that would replace a substantial existing note with a value that
+doesn't still contain it, unless `--force` is passed. Use `--append-note TEXT` instead
+to add a new paragraph without touching what's already there -- it appends against the
+current `origin/<branch or main>` note on every retry attempt, same as every other field
+here, and is mutually exclusive with `--set note=...`.
 
 `--implementation-pr` (conductor/t-099) records the PR that actually implemented the
 task on a dedicated `implementation_pr` roadmap field (e.g.
@@ -84,7 +97,7 @@ from pathlib import Path
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from set_task_field import set_task_field_text, TaskFieldError  # noqa: E402
+from set_task_field import append_note_text, set_task_field_text, TaskFieldError  # noqa: E402
 from git_plumbing import (  # noqa: E402
     GitError,
     commit_file_on_ref,
@@ -135,11 +148,24 @@ def load_task_at_ref(ref: str, project: str, task_id: str) -> tuple[str, dict]:
     return text, task
 
 
-def apply_close(text: str, task_id: str, status: str, extra_fields: dict[str, str]) -> str:
+def apply_close(
+    text: str,
+    task_id: str,
+    status: str,
+    extra_fields: dict[str, str],
+    append_note: str | None = None,
+    force: bool = False,
+) -> str:
+    if append_note:
+        try:
+            text = append_note_text(text, task_id, append_note)
+        except TaskFieldError as exc:
+            raise CloseError(f"ERROR: could not append note: {exc}", code=1)
+
     fields = {"status": status, "updated": "now", **extra_fields}
     for field, value in fields.items():
         try:
-            text = set_task_field_text(text, task_id, field, value)
+            text = set_task_field_text(text, task_id, field, value, force=force)
         except TaskFieldError as exc:
             raise CloseError(f"ERROR: could not apply close field {field}: {exc}", code=1)
     return text
@@ -154,6 +180,7 @@ def close(
     extra_fields: dict[str, str],
     dry_run: bool,
     force: bool = False,
+    append_note: str | None = None,
 ) -> None:
     run_git(ROOT, "fetch", "origin", "main", "-q")
     path = roadmap_relpath(project)
@@ -189,7 +216,7 @@ def close(
         before = read_file_at_ref(ROOT, base_ref, path)
         if before is None:
             raise CloseError(f"ERROR: {path} not found on {base_ref}", code=1)
-        after = apply_close(before, task_id, status, extra_fields)
+        after = apply_close(before, task_id, status, extra_fields, append_note, force)
 
         if dry_run:
             print(f"[dry-run] would close {project}/{task_id} -> status={status} on top of {base_ref}@{parent_sha[:12]}")
@@ -250,7 +277,26 @@ def main() -> int:
             "on it directly instead of a title-text search (conductor/t-099)."
         ),
     )
-    parser.add_argument("--force", action="store_true", help="Allow closing a task already at the target status")
+    parser.add_argument(
+        "--append-note",
+        metavar="TEXT",
+        help=(
+            "Append TEXT as a new paragraph on the task's existing note instead of "
+            "replacing it (conductor/t-129) -- the append-only-log convention most "
+            "roadmap notes already follow. Mutually exclusive with --set note=...; "
+            "always wins over --force's note-guard bypass since it never deletes "
+            "prior content."
+        ),
+    )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help=(
+            "Allow closing a task already at the target status, AND allow --set "
+            "note=... to replace a substantial existing note outright (bypasses the "
+            "conductor/t-129 destructive-note-replace guard)."
+        ),
+    )
     parser.add_argument("--dry-run", action="store_true", help="Check state and print intent; push nothing")
     args = parser.parse_args()
 
@@ -267,6 +313,12 @@ def main() -> int:
 
     try:
         extra_fields = parse_set_args(args.set)
+        if args.append_note and "note" in extra_fields:
+            raise CloseError(
+                "ERROR: cannot combine --append-note with --set note=... -- pick one "
+                "(--append-note adds a paragraph, --set note=... replaces the field outright)",
+                code=1,
+            )
         if args.implementation_pr:
             extra_fields["implementation_pr"] = args.implementation_pr
         close(
@@ -278,6 +330,7 @@ def main() -> int:
             extra_fields,
             args.dry_run,
             force=args.force,
+            append_note=args.append_note,
         )
     except CloseError as exc:
         print(str(exc), file=sys.stderr)

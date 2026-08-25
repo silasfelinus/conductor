@@ -86,11 +86,19 @@ def test_claim_event_leaves_every_other_task_byte_identical():
 
 
 def test_done_event_note_preserves_unicode_literally_not_escaped():
-    note = "Closed — confirmed the arrows (→) render fine end to end."
+    # process_task_events.py never passes a bare replacement note -- it always
+    # prepends the task's existing note first (see its own `new_note = f"{existing}\n\n
+    # {note.strip()}"` logic), which is also what keeps this below the conductor/t-129
+    # destructive-note-replace guard in set_task_field_text: the "set" value here must
+    # still contain the existing note, exactly like the real caller's value does.
+    existing = parse_tasks(FIXTURE)["t-020"]["note"]
+    addition = "Closed — confirmed the arrows (→) render fine end to end."
+    note = f"{existing}\n\n{addition}"
     out = apply_task_field_ops(FIXTURE, "t-020", [("set", "status", "done"), ("set", "note", note)])
 
     tasks = parse_tasks(out)
     assert tasks["t-020"]["note"] == note
+    assert tasks["t-020"]["note"].endswith(addition)
 
     # The fixture's *other* fields already contain legacy \u-escaped text from a
     # prior yaml.safe_dump -- scope the "not escaped" assertion to the new note
@@ -98,6 +106,18 @@ def test_done_event_note_preserves_unicode_literally_not_escaped():
     note_line = next(line for line in out.splitlines() if "Closed" in line)
     assert "—" in note_line and "→" in note_line
     assert "\\u2014" not in note_line and "\\u2192" not in note_line
+
+
+def test_bare_short_note_replacement_is_blocked_by_the_t129_guard():
+    # apply_task_field_ops delegates single-line "set"/"note" ops straight to
+    # set_task_field_text, so it inherits the conductor/t-129 destructive-note-
+    # replace guard: a "set" note op whose value does NOT still contain the
+    # existing note is refused. process_task_events.py never hits this in
+    # practice (see the previous test) because it always prepends the existing
+    # note first -- this documents that the underlying primitive still protects
+    # any other/future caller that doesn't do that.
+    with pytest.raises(stf.TaskFieldError, match="Refusing to replace"):
+        apply_task_field_ops(FIXTURE, "t-020", [("set", "note", "Short bare replacement.")])
 
 
 def test_multiline_note_keeps_paragraph_breaks_as_literal_block():
