@@ -2938,6 +2938,7 @@ tasks:
     status: ready
     passes: 0
     stakes: reversible
+    recurring: true
     depends_on: t-103
     note: |-
       Slice 30 merged as silasfelinus/kind_robots#1684 (squash 7ec6874e5f3030f146cbc01858f6f14b371b2a59) from exact head e416faa1851edf9c90bb677e6d25db4e89aa29d5. components/user/password-reset.vue root now uses kr-container max-w-md flex flex-col gap-5 p-6 instead of hand-rolled mx-auto flex w-full max-w-md flex-col gap-5 p-6; no geometry or behavior change. All 13 exact-head PR workflows completed successfully: TypeScript #31336053633, Contract Tests #31336053669, Storybook Session Library #31336053660, Storybook Studio #31336053689, MDC Scroll Ownership #31336053676, Layout Contract #31336053675, Taskmaster #31336053690, Storybook Branch State #31336053704, Narrative Primitives #31336053672, Narrative Art Milestone #31336053649, Facet Catalog #31336053671, API Client Follow-ups #31336053653, Narrative Art Persistence #31336053670. Return the non-recurring consistency umbrella to ready for the next bounded slice.
@@ -3113,6 +3114,7 @@ tasks:
     status: ready
     passes: 0
     stakes: reversible
+    recurring: true
     depends_on: t-104
     note: >-
       This is the deliberately subjective third phase that prior work mostly skipped. Apply the chosen Storybook design language where appropriate: clean hierarchy, generous useful art, friendly controls, minimal container nesting, calm spacing, readable narrative/text areas, and intentional empty/loading/error states. Produce reviewable screenshots rather than closing from source inspection alone.
@@ -3318,11 +3320,11 @@ tasks:
   - id: t-120
     milestone: m6
     title: "Kaizen: set recurring: true on t-104 and t-105 so close_task.py's guard catches a mistaken 'done' close-out mechanically"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     owner: worker
     note: "Both t-104 and t-105 document their own return-to-ready convention only in prose inside every slice's note (\"return the reusable ... umbrella to ready for the next ... slice\"), not via the recurring: true roadmap field. close_task.py's own docstring says it refuses (exit 1, unless --force) a done transition on a task with recurring: true -- but neither task sets that field, so the guard never fires. This nearly bit the t-105 slice that closed as conductor#2884-2887 on 2026-08-25 (session claude-scheduled-20260825T203214Z-iv-t105): close_task.py ... done landed and merged as PR #2886 before the note history was checked, and had to be corrected with a second PR (#2887, status: ready + full slice note) on the same branch. Set recurring: true on both t-104 and t-105 (verify neither script/CI path treats interface-vision's recurring tasks differently before flipping the field -- check for any recurring: true special-casing elsewhere in this repo's tooling first) so the next session that fat-fingers `done` on either task gets a hard refusal instead of a silent wrong transition that has to be caught by re-reading 40+ note paragraphs."
     claimed_by: claude-scheduled-20260825T212756Z-iv-t120
     claimed_at: '2026-08-25T21:27:57Z'
-    updated: '2026-08-25T21:27:57Z'
+    updated: '2026-08-25T21:31:15Z'
