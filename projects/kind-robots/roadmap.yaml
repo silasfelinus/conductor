@@ -2390,42 +2390,15 @@ tasks:
   - id: t-067
     milestone: m3
     title: "conductor/overrides.post.ts rewrites project-overrides.yaml from scratch and drops every field it does not know about"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Found 2026-08-24 while diagnosing why Silas's workspace-UI priority change never
-      reached Conductor. This is a DATA-LOSS BUG waiting to fire, and it has probably not
-      fired yet only because the endpoint appears never to have run successfully --
-      `git log -- project-overrides.yaml` shows no workspace-authored commit, and the file
-      still carries every comment and placement field.
-      `server/api/conductor/overrides.post.ts` does not patch the file. It rebuilds the
-      WHOLE of project-overrides.yaml from a fixed template, emitting only `slug`,
-      `status`, `priority`, and optionally `kind` per entry. Everything else in that file
-      is silently discarded on write:
-      - `liveUrl`, `channelKey`, `tabKey` -- the frontend placement fields, present on
-        roughly a dozen projects and load-bearing for the Projects board.
-      - Every inline comment, including the dated human rationale on individual entries
-        ("tabled 2026-07-26 by Silas", "lowered per Silas: we'll return to it later", the
-        kind-economy urgency note) and the file's own explanatory header, which the
-        template replaces with a shorter one.
-      So the first successful save from the workspace UI strips placement from every
-      project at once and erases the reasoning behind every status decision in the file.
-      FIX: patch, do not regenerate. Read the existing YAML, update only the fields the UI
-      actually owns for the slugs actually being changed, and write it back preserving
-      everything else -- conductor's own `scripts/intake.py` had exactly this class of bug
-      in `register_repo`/`register_art_prompts` and was fixed on the same day by switching
-      to text surgery rather than a yaml round-trip (conductor#2767); the same approach
-      applies here, or use a comment-preserving YAML library.
-      ALSO WORTH ESTABLISHING while in here: whether the workspace priority control is
-      even wired to this endpoint. Silas reported changing the priority and it not
-      reaching Conductor. If the control writes only the local Project row, the sync gap
-      is separate from this bug and both need fixing -- Conductor's `priority.yaml` order
-      is what actually drives agent pickup, and nothing in Kind Robots writes that at all.
+    note: 'RESOLVED 2026-08-25. Patched server/api/conductor/overrides.post.ts to do targeted text surgery per changed slug (status/priority/kind only) instead of regenerating the whole file, preserving liveUrl/channelKey/tabKey and inline comments. Verified against the real 52-entry project-overrides.yaml before porting the logic into the endpoint. Also investigated the priority-control-wiring question from the task note: confirmed no frontend caller of POST /api/conductor/overrides exists anywhere in the current kind_robots codebase, so the sync gap Silas reported is real and separate -- worth its own follow-up task rather than folding into this bugfix. Merged silasfelinus/kind_robots#2090.'
     claimed_by: claude-scheduled-20260825T063109Z-kind-robots-t067
     claimed_at: '2026-08-25T06:31:10Z'
-    updated: '2026-08-25T06:36:15Z'
+    updated: '2026-08-25T06:41:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#2090'
 
   - id: t-068
     milestone: m3
@@ -2723,3 +2696,32 @@ tasks:
       NOT BLOCKING ANY CURRENT WORK. Production is healthy, t-071 is closed, and
       cthulhuquarium is unaffected. This is filed at this severity because the gap is
       long-standing and invisible rather than because something is currently failing.
+
+  - id: t-074
+    milestone: m3
+    title: "Nothing in the frontend calls POST /api/conductor/overrides -- the workspace priority/status control isn't wired to it"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found 2026-08-25 while fixing t-067 (overrides.post.ts regenerating
+      project-overrides.yaml instead of patching it). The task note also asked to check
+      whether Silas's report -- changing a project's priority in the workspace UI not
+      reaching Conductor -- traced back to this endpoint. It does: there is no caller of
+      `POST /api/conductor/overrides` anywhere in the current kind_robots frontend
+      (checked components/pages/conductor-*.vue, components/conductor/*.vue, and a repo-
+      wide grep for the route string). The endpoint itself is now correct (t-067), but
+      nothing invokes it, so a workspace priority/status/kind edit still does not reach
+      conductor's project-overrides.yaml.
+      FIX: find or build the workspace UI control Silas used (likely on a
+      conductor/project-management surface) and wire its save action to
+      `POST /api/conductor/overrides` with the changed slug(s). Confirm end-to-end: edit a
+      project's priority in the UI, verify the resulting request patches
+      project-overrides.yaml correctly (t-067's patch-not-regenerate behavior already
+      covers the write side).
+      Note: this task id was chosen as t-074 rather than the otherwise-next-free t-073
+      because PR silasfelinus/conductor#2835 (open at filing time, unrelated -- a DB
+      superuser security finding) already claims t-073 in its own diff. Re-run
+      scripts/next_free_task_id.py before claiming if that PR has since merged and this
+      note is stale.
