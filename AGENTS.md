@@ -1182,6 +1182,30 @@ Silas approval is required for the image generation itself.
     `SendMessage` to the same agent, never a fresh `Agent` call — see rule 11's sibling
     guidance) to avoid both sides racing to merge or re-push the same PR.
 
+14. SECRETS AND CREDENTIALS ON THE UNRAID HOST LIVE IN `<checkout>/.secrets/` — in
+    practice `/mnt/user/appdata/kind_robots/.secrets/` — and **never** on
+    `/mnt/user/pc`. Silas, 2026-08-25: *"We should only be using that directory, and
+    never ever using pc as a root unless very explicitly told otherwise (but likely
+    never)."* `/mnt/user/pc` is a general-access share and a primary thoroughfare for
+    ordinary folders, which makes it exactly the wrong home for a mode-600 file. Do not
+    write there, read credentials from there, or point `SECRETS_DIR` at a path under it,
+    and do not treat it as a root for config or application state.
+    This is not hypothetical bookkeeping. The agent DB lane was moved off
+    `/mnt/user/pc/kindrobots-db-agent/` on 2026-08-21 for exactly this reason; the
+    migrate lane's handoff file was supposed to move with it and did not survive, and its
+    absence broke a production migration on 2026-08-25 — **silently**, because
+    `. ./.secrets/<file>` prints one line and carries on when the file is missing, so the
+    credential fell through from `.env` with its quotes attached and failed four steps
+    later as what looked like a TLS error.
+    NOT A BAN ON THE SHARE ITSELF: `/mnt/user/pc` remains the correct, established home
+    for bulk non-secret data — `kindrobots/images`, `kindrobots/animate`, and the model
+    store at `ai/models`. The rule is about credentials and config roots, not storage.
+    Enforced by `utils/scripts/verifyMigrationCredentialBoundary.mjs` in kind_robots,
+    which fails if either provisioner stops defaulting to `<repo>/.secrets` or names a
+    `/mnt/user/pc` path outside a comment. Numbered 14 rather than inserted mid-list on
+    purpose — a dozen TALKBACK entries reference "hard rule 12" meaning worktree
+    isolation, and renumbering would silently invalidate all of them.
+
 **Reviewer batch-merge note (companion to rule 9):** `refresh-status.yml` lands a
 `chore: refresh STATUS.md and workspace.html` commit on `main` within seconds of every
 merge. When clearing several backlogged PRs in one sweep, expect each merge after the
