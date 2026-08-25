@@ -1862,10 +1862,10 @@ tasks:
   - id: t-042
     milestone: m2
     title: "Monster is missing four bible fields, and documents one column as the wrong axis"
-    status: ready
+    status: claimed
     gate_human: false
     approved_by_human: null
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-008
@@ -1910,4 +1910,7 @@ tasks:
       ADDITIVE -- new nullable columns and a new enum value, no drops, no renames -- so the
       migration itself is the low-risk kind; it is the APPLYING that needs a human at the
       keyboard.
+    claimed_by: 20260825T103026-cthulhuquarium-t042-sched
+    claimed_at: '2026-08-25T10:30:26Z'
+    updated: '2026-08-25T10:30:26Z'
 
