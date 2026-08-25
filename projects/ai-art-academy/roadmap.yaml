@@ -2246,85 +2246,55 @@ tasks:
     gate_human: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-15T03:29:28Z'
-    note: >
-      NOTE (ai-art-academy/t-073, 2026-08-22): the manual "query /api/art/queue/stats raw
-      because recheck_render_queue.py's bucketed summary collapses this into a generic
-      'workflow error' catch-all" dance every RECHECK below had to do by hand is no longer
-      necessary. kind_robots PR #2015 added a `failuresBySignature` field to
-      GET /api/art/queue/stats (grouped by normalized error signature, including this task's
-      own hostbuf_file_reader_read specifically, then by projectSlug) and
-      recheck_render_queue.py's own summarize_failures() now reads it directly instead of the
-      old "workflow error" substring match that used to swallow this exact signature into a
-      generic bucket. A future recheck can read that field/summary line directly rather than
-      re-fetching and eyeballing raw recentFailed. Status/gate unchanged -- this is a
-      tooling note only, not a new diagnosis of the underlying ComfyUI incident.
+    updated: '2026-08-25T22:20:00Z'
+    note: |-
+      ROOT CAUSE FOUND (Silas-directed session, 2026-08-25T22:00Z). This is not a
+      facet-catalog problem and it is not the text encoder specifically. It is the render box's
+      `Z:` model drive failing I/O. Evidence: the queue held 420 FAILED ArtJobs, 100% COMFY,
+      100% at attempts=3, split across two bursts -- 157 on 2026-08-21 (all facet-catalog, all
+      this task's `node 4 (CLIPTextEncode): hostbuf_file_reader_read failed`) and 263 on
+      2026-08-25 (cthulhuquarium + dream-cycle). The 2026-08-25 burst carries BOTH signatures at
+      once from the same box in the same hours: 224 `hostbuf_file_reader_read` on node 3, and 30
+      that name the fault outright --
+      `[WinError 1117] The request could not be performed because of an I/O device error:
+      'Z:\ai\models\unet'`, raised from `folder_paths.get_filename_list("unet_gguf")` ->
+      `os.stat()`. Same drive, different node: `UnetLoaderGGUF` reads `Z:/ai/models/unet` and
+      `CLIPTextEncode` reads `Z:/ai/models/text_encoders`, so an unreadable `Z:` surfaces as
+      WinError 1117 on one path and `hostbuf_file_reader_read failed` on the other. That the
+      same burst spans three unrelated projects also retires the "isolated to facet-catalog"
+      read from 2026-08-15: facet-catalog was simply the only project queueing work when the
+      drive first flaked.
 
-      RECHECK (conductor scheduled Agent run, 2026-08-15T03:29Z, logged in RENDER-BACKLOG.md):
-      root cause unchanged, but a new secondary observation worth flagging. Queried
-      /api/art/queue/stats raw (not just recheck_render_queue.py's bucketed summary, which
-      collapses this into "generic workflow error" since it substring-matches "workflow error"
-      before the free-text fallback) directly: all 25 recentFailed entries are still byte-for-byte
-      the same "ComfyUI reported a workflow error: node 3 (CLIPTextEncode): hostbuf_file_reader_read
-      failed" signature, still 100% projectSlug facet-catalog, same job ids 8935-8959 as the
-      01:28Z/02:30Z checks -- their updatedAt timestamps are frozen at ~01:00-01:04Z, i.e.
-      unchanged since the burst's initial window. queueDepth now shows PENDING=0/RUNNING=0/
-      oldestPending=none (the ~377-then-141-job backlog from the last two checks has fully
-      drained -- either processed through or the pipeline stopped submitting new facet-catalog
-      work after ~01:04Z). Yet all-time FAILED climbed again, 423 -> 564 (+141) in this ~1h
-      window, with zero new entries appearing in recentFailed's top-25 sample. That combination
-      (aggregate FAILED counter still climbing, but the "last 25 failed" sample frozen on
-      hour-old ids) doesn't fit either "still actively failing the same way" or "resolved" --
-      it's consistent with either (a) a batch of previously-PENDING jobs finally reaching a
-      terminal FAILED state late, stamped with an earlier attempt timestamp, or (b) the
-      recentFailed sample itself being stale/cached server-side. Not enough visibility from this
-      sandbox to tell which; flagging rather than guessing. Not re-notifying Silas -- same
-      isolated root cause as already pushed, this is a state nuance not a new incident.
-      gate_human: true / soft_gate unchanged, still needs ComfyUI-host eyes this sandbox cannot
-      reach.
+      Ruled out this session, so nobody re-checks them: (a) model *naming* is fine -- every
+      krea2 and flux2-klein constant in conductor `consume_art_queue_core.py` and kind_robots
+      `server/api/comfy/flux2/utils/workflow.ts` resolves against the live Resource registry
+      (`Krea-2-Turbo-Q5_K_S`, `qwen3vl_4b_fp8_scaled`, `qwen_image_vae`, `flux2_dev_fp8mixed`,
+      `mistral_3_small_flux2_bf16`, `flux2-vae` all present); (b) the relay is alive and
+      claiming -- `GET /api/art/queue/relay-status` shows agent `Silas-PC` heartbeating within
+      the minute, engines A1111+COMFY; (c) the `Character.size` failure on ArtJob 9004 is stale
+      -- that migration IS deployed now (`GET /api/characters/238` returns `size: 1`), so that
+      job is safely retryable.
 
-      RECHECK (conductor scheduled Agent run, 2026-08-15T02:29Z, logged in RENDER-BACKLOG.md):
-      still active and still growing. A fresh authenticated /api/art/queue/stats call confirms
-      all 25 recentFailed entries remain 100% projectSlug facet-catalog with the identical
-      "ComfyUI reported a workflow error: node 3 (CLIPTextEncode): hostbuf_file_reader_read
-      failed" signature. 24h windowThroughput FAILED climbed from 186 (prior check, 01:28Z) to
-      417 (~1h later), all-time FAILED 186->423, PENDING backlog still growing (oldest now
-      ~23.1h old, id 8772, still facet-catalog). No qualitative change -- same isolated root
-      cause, no spread to other projects, worker itself still alive (DONE still climbing
-      normally, 4411 all-time). Not re-notifying Silas since the prior cycle already flagged
-      this by push notification with the full diagnosis; this recheck is a state update only.
-      gate_human: true / soft_gate unchanged, still needs ComfyUI-host eyes this sandbox cannot
-      reach.
+      STILL BROKEN AS OF 22:16Z: requeued three jobs (9511/9512/9513) as a live canary. 9511 was
+      claimed by Silas-PC within a minute and reproduced WinError 1117 on `Z:\ai\models\unet`
+      on its very first attempt. The drive is failing right now, so the 416 retryable jobs were
+      deliberately NOT resubmitted -- doing so would burn ~1250 render attempts and overwrite
+      every original error string with the same one, destroying the evidence above.
 
-      FOR SILAS: a fresh recheck_render_queue.py probe (this session, 2026-08-15T01:28:20Z)
-      found a new, distinct, and actively-growing failure pattern -- not t-044's own LoRA-naming
-      blocker and not t-067's worker-stall pattern (both unaffected). 24h FAILED count jumped
-      from 1 (prior 2026-08-14T16:01:09Z check) to 186, all-time DONE still climbing normally
-      (4350->4411), and PENDING is 377 with the oldest item ~22h old (id 8517, created
-      2026-08-14T~03:22Z) -- so the worker itself is alive and processing, but a large and
-      growing share of one project's jobs are failing outright.
+      FOR SILAS: this needs the render box, which no agent can reach. `Z:` is a mapped/network
+      drive on the Windows ComfyUI host (`D:\comfy\comfy-fast`, models on `Z:\ai\models`).
+      Check that the share is mounted and readable (`dir Z:\ai\models\unet`), reconnect it,
+      and restart ComfyUI so `folder_paths`' cached filename lists rebuild. Then run
+      `python scripts/drain_failed_art_backlog.py --live` (added this session) -- it canaries
+      the host first and refuses to drain if the drive is still bad, so it is safe to run
+      speculatively.
 
-      Every one of the last 25 recentFailed entries (fetched directly via GET
-      /api/art/queue/stats, ids 8935-8959, all within the last ~25 minutes of this check) is
-      `projectSlug: "facet-catalog"` with the identical error: "ComfyUI reported a workflow
-      error: node 3 (CLIPTextEncode): hostbuf_file_reader_read failed" after 3 attempts each.
-      100% failure rate on facet-catalog specifically, 0/25 from any other project -- this
-      looks like a missing or corrupted file the facet-catalog workflow's CLIPTextEncode node
-      depends on (e.g. a referenced embedding/textual-inversion or a locked/deleted file on the
-      ComfyUI host), not a general worker problem. oldestPending is also facet-catalog, so the
-      backlog for this one project is growing unbounced while everything else drains normally.
-
-      TO APPROVE / DIAGNOSE: this needs eyes on the actual ComfyUI machine (Silas-PC / the
-      Tailscale-connected worker) that this sandbox cannot reach -- check the ComfyUI server
-      console/log around 2026-08-15T01:00-01:04Z for the specific file path node 3 tried and
-      failed to read, and check whether the facet-catalog workflow template references a file
-      that recently moved, was deleted, or is being held open/locked by another process.
-      86%+ of this window's facet-catalog jobs have now failed and the backlog keeps growing
-      (377 pending), so this is actively degrading Facet-catalog art production (which the
-      Daily Dream Facet-seeding pipeline depends on) -- not a one-off blip. Once the missing/
-      locked file is identified and fixed (or ruled out), set status: done with a note, or
-      leave at needs-human with an update if still inconclusive. Distinct root cause from t-044
-      (LoRA naming) and t-067 (worker stall, recovered 2026-08-13) -- do not conflate.
+      NOTE (ai-art-academy/t-073, 2026-08-22): the manual "query /api/art/queue/stats raw because recheck_render_queue.py's bucketed summary collapses this into a generic 'workflow error' catch-all" dance every RECHECK below had to do by hand is no longer necessary. kind_robots PR #2015 added a `failuresBySignature` field to GET /api/art/queue/stats (grouped by normalized error signature, including this task's own hostbuf_file_reader_read specifically, then by projectSlug) and recheck_render_queue.py's own summarize_failures() now reads it directly instead of the old "workflow error" substring match that used to swallow this exact signature into a generic bucket. A future recheck can read that field/summary line directly rather than re-fetching and eyeballing raw recentFailed. Status/gate unchanged -- this is a tooling note only, not a new diagnosis of the underlying ComfyUI incident.
+      RECHECK (conductor scheduled Agent run, 2026-08-15T03:29Z, logged in RENDER-BACKLOG.md): root cause unchanged, but a new secondary observation worth flagging. Queried /api/art/queue/stats raw (not just recheck_render_queue.py's bucketed summary, which collapses this into "generic workflow error" since it substring-matches "workflow error" before the free-text fallback) directly: all 25 recentFailed entries are still byte-for-byte the same "ComfyUI reported a workflow error: node 3 (CLIPTextEncode): hostbuf_file_reader_read failed" signature, still 100% projectSlug facet-catalog, same job ids 8935-8959 as the 01:28Z/02:30Z checks -- their updatedAt timestamps are frozen at ~01:00-01:04Z, i.e. unchanged since the burst's initial window. queueDepth now shows PENDING=0/RUNNING=0/ oldestPending=none (the ~377-then-141-job backlog from the last two checks has fully drained -- either processed through or the pipeline stopped submitting new facet-catalog work after ~01:04Z). Yet all-time FAILED climbed again, 423 -> 564 (+141) in this ~1h window, with zero new entries appearing in recentFailed's top-25 sample. That combination (aggregate FAILED counter still climbing, but the "last 25 failed" sample frozen on hour-old ids) doesn't fit either "still actively failing the same way" or "resolved" -- it's consistent with either (a) a batch of previously-PENDING jobs finally reaching a terminal FAILED state late, stamped with an earlier attempt timestamp, or (b) the recentFailed sample itself being stale/cached server-side. Not enough visibility from this sandbox to tell which; flagging rather than guessing. Not re-notifying Silas -- same isolated root cause as already pushed, this is a state nuance not a new incident. gate_human: true / soft_gate unchanged, still needs ComfyUI-host eyes this sandbox cannot reach.
+      RECHECK (conductor scheduled Agent run, 2026-08-15T02:29Z, logged in RENDER-BACKLOG.md): still active and still growing. A fresh authenticated /api/art/queue/stats call confirms all 25 recentFailed entries remain 100% projectSlug facet-catalog with the identical "ComfyUI reported a workflow error: node 3 (CLIPTextEncode): hostbuf_file_reader_read failed" signature. 24h windowThroughput FAILED climbed from 186 (prior check, 01:28Z) to 417 (~1h later), all-time FAILED 186->423, PENDING backlog still growing (oldest now ~23.1h old, id 8772, still facet-catalog). No qualitative change -- same isolated root cause, no spread to other projects, worker itself still alive (DONE still climbing normally, 4411 all-time). Not re-notifying Silas since the prior cycle already flagged this by push notification with the full diagnosis; this recheck is a state update only. gate_human: true / soft_gate unchanged, still needs ComfyUI-host eyes this sandbox cannot reach.
+      FOR SILAS: a fresh recheck_render_queue.py probe (this session, 2026-08-15T01:28:20Z) found a new, distinct, and actively-growing failure pattern -- not t-044's own LoRA-naming blocker and not t-067's worker-stall pattern (both unaffected). 24h FAILED count jumped from 1 (prior 2026-08-14T16:01:09Z check) to 186, all-time DONE still climbing normally (4350->4411), and PENDING is 377 with the oldest item ~22h old (id 8517, created 2026-08-14T~03:22Z) -- so the worker itself is alive and processing, but a large and growing share of one project's jobs are failing outright.
+      Every one of the last 25 recentFailed entries (fetched directly via GET /api/art/queue/stats, ids 8935-8959, all within the last ~25 minutes of this check) is `projectSlug: "facet-catalog"` with the identical error: "ComfyUI reported a workflow error: node 3 (CLIPTextEncode): hostbuf_file_reader_read failed" after 3 attempts each. 100% failure rate on facet-catalog specifically, 0/25 from any other project -- this looks like a missing or corrupted file the facet-catalog workflow's CLIPTextEncode node depends on (e.g. a referenced embedding/textual-inversion or a locked/deleted file on the ComfyUI host), not a general worker problem. oldestPending is also facet-catalog, so the backlog for this one project is growing unbounced while everything else drains normally.
+      TO APPROVE / DIAGNOSE: this needs eyes on the actual ComfyUI machine (Silas-PC / the Tailscale-connected worker) that this sandbox cannot reach -- check the ComfyUI server console/log around 2026-08-15T01:00-01:04Z for the specific file path node 3 tried and failed to read, and check whether the facet-catalog workflow template references a file that recently moved, was deleted, or is being held open/locked by another process. 86%+ of this window's facet-catalog jobs have now failed and the backlog keeps growing (377 pending), so this is actively degrading Facet-catalog art production (which the Daily Dream Facet-seeding pipeline depends on) -- not a one-off blip. Once the missing/ locked file is identified and fixed (or ruled out), set status: done with a note, or leave at needs-human with an update if still inconclusive. Distinct root cause from t-044 (LoRA naming) and t-067 (worker stall, recovered 2026-08-13) -- do not conflate.
     approved_by_human: false
 
   - id: t-069

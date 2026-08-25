@@ -556,3 +556,6 @@ queueDepth: DONE=4411, FAILED=564, CANCELLED=3179 (all-time). oldestPending: non
 
 ## 2026-08-15T16:47:04Z | ai-art-academy/t-044 | draining
 queueDepth: PENDING=513, RUNNING=1, DONE=4467, CANCELLED=3179 (all-time). oldestPending: id=7283, age=918955s (~255.3h), engine=COMFY. windowThroughput (24h): DONE=6. recentFailed: none.
+
+## 2026-08-25T22:17:58Z | ai-art-academy/t-068 | draining
+queueDepth: PENDING=3, RUNNING=1, DONE=5070, FAILED=418, CANCELLED=3188 (all-time). oldestPending: id=9513, age=3775s (~1.0h), engine=COMFY. windowThroughput (24h): PENDING=3, RUNNING=1, DONE=69, FAILED=259. recentFailed (last 25): 25/25 = ComfyUI POST /prompt failed at http://#.0.0.1:# (ComfyUI /prompt returned HTTP # at http://#.0.0.1:#: {<name>: {<name>:  [cthulhuquarium=25].
