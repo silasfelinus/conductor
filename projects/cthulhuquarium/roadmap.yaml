@@ -1599,13 +1599,14 @@ tasks:
   - id: t-039
     milestone: m3
     title: "The finale — the eye at the window, and the last tank that has to exist first"
-    status: ready
+    status: waiting
     gate_human: true
     approved_by_human: true
     soft_gate: true
     owner: null
     passes: 0
     stakes: reversible
+    depends_on: [t-032, t-028, t-017]
     note: >
       SETTING AND ENDING, Silas 2026-08-25, both now written up in full in DESIGN-BRIEF.md
       ("The setting -- you came in out of it" and "The finale -- you are also in an
@@ -1683,6 +1684,13 @@ tasks:
       is implementation, and it depends on t-032 (a terminal entry in the capacity
       progression), t-028 (the interstitial surface) and t-017 (a tank renderer that can
       put a window in it once).
+      RECLASSIFIED 2026-08-25 (conductor sweep): this task was showing status: ready with
+      no formal depends_on field, so select_role.py/next_ready_task.py surfaced it as the
+      top pickable task even though t-017 and t-028 are both still status: waiting
+      themselves (t-032 is done). Set depends_on: [t-032, t-028, t-017] and status:
+      waiting so it stops surfacing as workable until its actual prerequisites land;
+      resolve_deps.py will flip it back to ready automatically once t-017 and t-028 both
+      reach status: done. No design content changed.
   - id: t-040
     milestone: m1
     title: "Eight plate lineages, and no negations anywhere in an art prompt"
