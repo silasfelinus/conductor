@@ -61,20 +61,29 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Harden media-root deployment and source-folder operations"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-001
-    note: >
+    note: >-
       After the MVP establishes the code contract, verify the self-hosted app and media
       container expose the dedicated kindrobots/animate source tree safely. Prefer a single
       ANIMATE_PATH/ANIMATE_MEDIA_ORIGIN contract with traversal protection and clear health
       diagnostics. Any physical mount/container-template change remains an operator step;
       code and docs should make the required mapping explicit.
+
+      RESOLVED: Merged silasfelinus/kind_robots#2108 (squash 6e02168). Admin-only GET
+      /api/scene-animator/health reports which source (ANIMATE_PATH / IMAGES_PATH-derived
+      sibling / local /animate fallback) is in effect plus folder/image counts, or a specific
+      unavailable reason; GET /api/scene-animator no longer hardcodes rootAvailable: true;
+      sceneAnimatorStore surfaces the specific reason through its error banner. Traversal
+      protection was already solid and untouched. 41/41 CI checks green, mergeable_state
+      clean, merged via squash.
     claimed_by: claude-scheduled-20260825T143104Z-scn3
     claimed_at: '2026-08-25T14:31:05Z'
-    updated: '2026-08-25T14:39:57Z'
+    updated: '2026-08-25T15:28:08Z'
+    implementation_pr: 'silasfelinus/kind_robots#2108'
 
   - id: t-004
     milestone: m3
