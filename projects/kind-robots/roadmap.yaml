@@ -2390,8 +2390,8 @@ tasks:
   - id: t-067
     milestone: m3
     title: "conductor/overrides.post.ts rewrites project-overrides.yaml from scratch and drops every field it does not know about"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -2423,6 +2423,9 @@ tasks:
       reaching Conductor. If the control writes only the local Project row, the sync gap
       is separate from this bug and both need fixing -- Conductor's `priority.yaml` order
       is what actually drives agent pickup, and nothing in Kind Robots writes that at all.
+    claimed_by: claude-scheduled-20260825T063109Z-kind-robots-t067
+    claimed_at: '2026-08-25T06:31:10Z'
+    updated: '2026-08-25T06:31:10Z'
 
   - id: t-068
     milestone: m3
