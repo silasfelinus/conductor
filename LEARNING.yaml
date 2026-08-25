@@ -10401,3 +10401,41 @@ records:
   lesson: Disposable admin cleanup workflows can keep resumable review state in a dedicated localStorage-backed
     store while writing only canonical Resource fields through existing APIs, avoiding temporary schema
     or endpoint surface.
+- date: 2026-08-25
+  project: cthulhuquarium
+  task: t-033
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A read failure reported at the application layer (ComfyUI's
+    hostbuf_file_reader_read failed) said almost nothing about which layer actually
+    failed -- three diagnoses (corrupt file, shfs member disk, relayed tailnet path)
+    were tried and disproved before the SMB client event log on the render box showed
+    the real cause: the mount to Alexandria was dropping about once a minute. The
+    transport-layer logs were available the whole time; reasoning forward from the
+    application error alone cost three wrong turns. Next time a large-file read fails
+    intermittently over a network mount, check the client-side connectivity event log
+    before hypothesizing about the file or the storage layer underneath it.
+- date: 2026-08-25
+  project: cthulhuquarium
+  task: t-034
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Hardcoding model filenames as constants in two repos (kind_robots and conductor)
+    with no validation against the Resource registry let an invented filename ship
+    silently in both places and only fail at render time, months later, on an
+    unrelated task. The fix (consume_art_queue_core.py resolving constants through
+    the registry) deliberately warns-and-passes-through rather than hard-failing,
+    because the registry is still incomplete (GGUF quants render fine with no
+    Resource row) -- failing closed on an incomplete source of truth would have
+    broken engines that demonstrably work. When migrating hardcoded config to a
+    registry/source-of-truth lookup, ship the lenient version first and gate the
+    strict version behind an opt-in flag until the source of truth is actually
+    complete.
