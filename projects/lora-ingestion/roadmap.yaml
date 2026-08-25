@@ -157,17 +157,15 @@ tasks:
 - id: t-008
   milestone: m4
   title: Add temporary admin LoRA maturity triage page with local review progress
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
-  note: >
-    Silas-directed 2026-08-24 cleanup tool. Add a disposable Kind Robots admin page that
-    loads canonical LoRA/LyCORIS Resource records, stages SFW/NSFW classifications in
-    localStorage, supports batch classification and hiding already-confirmed rows, and
-    saves only changed Resource.isMature values through the existing Resource update API.
-    Keep the implementation self-contained so the page/store can be deleted after the
-    catalog cleanup is complete.
+  note: |-
+    Silas-directed 2026-08-24 cleanup tool. Add a disposable Kind Robots admin page that loads canonical LoRA/LyCORIS Resource records, stages SFW/NSFW classifications in localStorage, supports batch classification and hiding already-confirmed rows, and saves only changed Resource.isMature values through the existing Resource update API. Keep the implementation self-contained so the page/store can be deleted after the catalog cleanup is complete.
+
+
+    Implemented the temporary Kind Robots /admin/lora-triage page and dedicated localStorage-backed Pinia store on the worker branch. The page batch-stages SFW/NSFW decisions, hides confirmed rows, paginates the catalog, and saves only changed Resource.isMature values through the existing Resource PATCH path.
   claimed_by: 2026-08-25T003700Z-lora-ingestion-t-008-9c71
   claimed_at: '2026-08-25T00:37:00Z'
-  updated: '2026-08-25T00:37:00Z'
+  updated: '2026-08-25T00:45:00Z'
