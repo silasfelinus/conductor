@@ -2532,3 +2532,78 @@ tasks:
       pixels from models/upscale_models/), migrate the existing rows, and add the
       matching prefix entries to conductor's _LOCALPATH_PREFIXES. The array already has
       both directories on disk, so both kinds exist in practice.
+
+  - id: t-071
+    milestone: m3
+    title: "PRODUCTION: Character.size migration merged and deployed but never applied — every findUnique on Character 500s"
+    status: needs-human
+    gate_human: true
+    owner: null
+    passes: 0
+    stakes: irreversible
+    note: >
+      LIVE PRODUCTION BREAKAGE, reported by Silas 2026-08-25 and reproduced from this
+      session. FOR SILAS: this needs one command from someone holding
+      MIGRATION_DATABASE_URL, and no agent can run it -- prisma.config.ts deliberately
+      refuses migration commands when only DATABASE_URL is present, which is the correct
+      guard and is why this is a hard gate rather than an agent fix.
+      WHAT IS BROKEN: `prisma.character.findUnique()` fails with "The column
+      `Character.size` does not exist in the current database." Reproduced live:
+      GET /api/characters/238 and /api/characters/1 both return HTTP 500.
+      BLAST RADIUS is narrower than it first looks, and worth stating precisely so nobody
+      over- or under-reacts. Prisma only requests the missing column when a query returns
+      the full scalar set, so: queries with an explicit narrowing `select` STILL WORK --
+      GET /api/characters (browse), /api/bots, /api/rewards, /api/resources and
+      /api/health/database all returned 200 during the same probe -- while any
+      findUnique/findFirst without a select is dead. That includes the ArtJob completion
+      path: Silas saw `complete(9004) failed: HTTP 500` on a character-portrait job, so
+      CHARACTER-LINKED ART CANNOT COMPLETE. Project-linked art is unaffected, which is why
+      the Cthulhuquarium queue kept rendering through it.
+      CAUSE IS DEPLOY ORDER, NOT A BAD MIGRATION. The migration is correct and merged:
+      prisma/migrations/20260824223600_extend_aquarium_capacity_genetics_codex/migration.sql
+      line 32, `ALTER TABLE Character ADD COLUMN size INTEGER NOT NULL DEFAULT 1`, shipped
+      in kind_robots#2075. The regenerated Prisma client went out with the container while
+      the migration never ran against the database, so the client asks for a column the DB
+      does not have.
+      THE FIX: `npx prisma migrate deploy` with MIGRATION_DATABASE_URL set. Additive and
+      safe -- ADD COLUMN with a NOT NULL DEFAULT rewrites no existing data, and MariaDB
+      does this INSTANT for most cases. Check `prisma migrate status` first: #2073
+      (add_aquarium_persistence) may also be unapplied, in which case the Aquarium tables
+      do not exist either and the same deploy fixes both.
+      THE REAL BUG IS THAT THIS CAN HAPPEN AT ALL. kind_robots deploys by a manual Unraid
+      Force Update, and nothing in that path runs pending migrations or refuses to start a
+      container whose client is ahead of the schema. So ANY merged migration silently
+      breaks production at the next Force Update until a human remembers. Filed as the
+      follow-up in t-072 rather than buried here, because the one-command fix and the
+      systemic fix have different urgencies.
+
+  - id: t-072
+    milestone: m3
+    title: "Nothing applies pending Prisma migrations on deploy, so any merged migration breaks production silently"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Systemic cause behind t-071, filed separately because that one is a one-command
+      emergency and this is the thing that stops it recurring. It has now happened once
+      and will happen again on the next schema change.
+      kind_robots deploys when Silas runs a manual Force Update on the Unraid container.
+      That path ships a regenerated Prisma client but runs no migrations, and nothing
+      checks whether the client is ahead of the database. The failure is silent at deploy
+      time and only surfaces later as a 500 on whichever query first requests a
+      not-yet-existing column -- in t-071's case, hours later, on an ArtJob retry.
+      Worth fixing in two layers, cheapest first:
+      (1) A STARTUP CHECK that compares applied migrations against the ones in the image
+      and refuses to serve (or logs loudly at ERROR) when the client is ahead. A container
+      that will not start is a far better failure than one that half-works -- the current
+      mode broke findUnique while leaving every `select`-narrowed query fine, which is
+      exactly the sort of partial breakage that hides for hours.
+      (2) RUN `prisma migrate deploy` AS PART OF THE DEPLOY, before the app starts. This
+      is the actual fix. It needs MIGRATION_DATABASE_URL available to the deploy step,
+      which is a credential-boundary decision for Silas (see
+      docs/runbooks/migration-credential-boundary.md) -- the guard that refuses
+      DATABASE_URL for schema writes is deliberate and should stay.
+      Also worth adding: a CI check that fails a PR whose schema.prisma diff has no
+      corresponding migration file. That catches the other half of this class -- a schema
+      edit with the client regenerated and no migration written at all.
