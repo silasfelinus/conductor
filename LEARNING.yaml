@@ -10390,3 +10390,14 @@ records:
     a documented judgment call rather than an invented field with nowhere to
     land -- worth doing before writing bible content on any task whose note
     references a schema/starter-set that a plain repo search doesn't confirm.
+- date: '2026-08-25'
+  project: lora-ingestion
+  task: t-008
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Disposable admin cleanup workflows can keep resumable review state in a dedicated localStorage-backed
+    store while writing only canonical Resource fields through existing APIs, avoiding temporary schema
+    or endpoint surface.
