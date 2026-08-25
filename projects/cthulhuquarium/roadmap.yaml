@@ -1515,3 +1515,90 @@ tasks:
       reads `Character.size`, drop it in a NEW forward migration -- do not edit
       20260824223600 in place, it is merged and may already be applied in a dev database.
 
+  - id: t-039
+    milestone: m3
+    title: "The finale — the eye at the window, and the last tank that has to exist first"
+    status: ready
+    gate_human: true
+    approved_by_human: true
+    soft_gate: true
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      SETTING AND ENDING, Silas 2026-08-25, both now written up in full in DESIGN-BRIEF.md
+      ("The setting -- you came in out of it" and "The finale -- you are also in an
+      aquarium"). Setting: "You are welcomed after stumbling into the aquarium store.
+      Things are *oof* outside, but they are welcoming you, and maybe it will be better if
+      you distract yourself. After all, everything out is in, or so they tell you..."
+      Ending: "finale moment is the realization that you are also in an aquarium...
+      discovered after buying the last and largest aquarium, when you get to see a giant
+      eye moving around and watching you from a window."
+      THE ONE THING THAT BLOCKS IT: there is no purchasable tank in this design. Capacity
+      is `slots_cap`, an abstract integer, and every point of it comes from MILESTONES
+      keyed to bestiary breakpoints (economy.yaml slots.cap_per_bestiary_breakpoint,
+      milestones bestiary_5/10/15/20). ECONOMY.md states the principle explicitly, citing
+      SYSTEMS.md "Two economies, pacing each other": coins buy breadth, milestones buy
+      room. So "buying the last and largest aquarium" does not merely lack an
+      implementation -- it contradicts a decided rule. That is a call for Silas, not
+      something to reinterpret quietly into "unlocking" and hope nobody notices the
+      difference.
+      RECOMMENDATION, offered because someone should: keep the rule for the whole game and
+      break it exactly once, at the end. Every slot up to the last comes from milestones as
+      designed; the final tank is the one thing you buy, it costs more than anything else
+      in the game, and it is the only purchase that grants room. That is mechanically
+      coherent (one deliberate exception, at the point where the game stops), it preserves
+      the pacing rule everywhere it matters, and it is thematically exact -- you spend the
+      entire game paying for a bigger enclosure and the reward for the biggest one is
+      finding out it is an enclosure. The alternative reading, that the last tank is simply
+      the terminal milestone reward, is cleaner mechanically and weaker thematically,
+      because "buying" is the part that implicates the player.
+      EITHER WAY THE CURVE MUST TERMINATE. An idle game that never stops selling a bigger
+      tank has no final purchase to hang an ending on. Today the ladder stops at
+      bestiary_20 (12 slots) only because that was the MVP bar, not because it was designed
+      as an end.
+      CRAFT NOTES, so they survive into implementation: the eye MOVES AROUND rather than
+      staring -- it drifts past, pauses the way you pause at a tank you have already seen
+      today, and moves on. Being stared at is frightening; being unremarkable is worse, and
+      it is the note this whole game has been playing. Render it in the same vibrant
+      cartoon register as everything else, because a horror-styled eye lets the player file
+      it under "spooky bit" and a cheerful one does not give them anywhere to put it. The
+      window is not the door -- the door stays closed all game and is never opened, because
+      it was never the way out.
+      DO NOT ADD FORESHADOWING. It is already built: t-014's browsable public aquariums,
+      described in DESIGN-BRIEF.md from day one as "you visit someone's aquarium the way
+      you'd look in someone's window". Every player has spent the whole game looking into
+      other people's tanks; the finale is realising the view goes both ways. Charlotte and
+      Wilbur do not hint and are not in on it.
+      DEPENDS ON: a terminal tank existing (t-032 capacity work / ECONOMY.md), t-028 for
+      the interstitial surface, t-017 for a tank renderer that can put a window in it once.
+      None of those need changing until this is answered.
+      SETTLED 2026-08-25, and the conflict dissolved rather than being excepted. Silas:
+      "I like there being a final tank and what you get is functionally the same or
+      minorly larger, but cosmetically it re-evaluates everything."
+      SO ECONOMY.md's RULE SURVIVES INTACT. The final tank grants slots_cap +0 or +1, so
+      it does not buy room, so "coins buy breadth, milestones buy room" needs no
+      exception. The recommendation in this note -- keep the rule all game and break it
+      once at the end -- is superseded by something cleaner: there is nothing to break.
+      Capacity growth stays entirely milestone-driven exactly as economy.yaml already
+      specifies it.
+      WHAT TO BUILD: one terminal purchasable tank, the most expensive item in the game,
+      granting no meaningful capacity. It is the only cosmetic anything coins can buy --
+      backgrounds are milestone rewards and everything else coins buy is capability --
+      which is itself part of why it stands out. It is also now safe to gate the ending
+      on: no power spike, no balance implication, nothing for t-019 to tune around.
+      "COSMETICALLY RE-EVALUATES EVERYTHING" MEANS RE-RENDER WHAT EXISTS, NOT ADD ASSETS.
+      Same fish, same set pieces, same room -- re-lit, re-framed, seen from a step
+      further back. Cheaper to build than new content and far stronger, because the
+      player is not shown something new, they are shown THEIR OWN TANK, the one they
+      spent hours arranging, and understand it differently. Nothing has changed except
+      what it means.
+      THE RISK, and it is the only real one: an enormous purchase that does nothing can
+      read as a bad shop item rather than a payoff. The entire mitigation is the size of
+      the cosmetic moment. If the last tank looks like "a slightly nicer tank" this
+      fails. Charlotte still sells it cheerfully and without comment, so the shop copy
+      cannot carry it -- the art has to.
+      STATUS: no longer needs-human. The question that gated it is answered; what remains
+      is implementation, and it depends on t-032 (a terminal entry in the capacity
+      progression), t-028 (the interstitial surface) and t-017 (a tank renderer that can
+      put a window in it once).
