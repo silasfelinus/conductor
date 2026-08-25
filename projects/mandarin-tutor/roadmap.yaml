@@ -143,9 +143,9 @@ tasks:
   - id: t-013
     milestone: m1
     title: "Build a Mandarin catalog curation admin"
-    status: claimed
-    owner: worker
-    passes: 0
+    status: ready
+    owner: null
+    passes: 1
     stakes: reversible
     depends_on: t-001
     note: |-
@@ -155,7 +155,8 @@ tasks:
       Build the high-priority Mandarin catalog curation admin inside the existing Curation Studio. Keep source data immutable, use one global override per canonical card plus append-only audit history, and deliberately avoid an edition/version proliferation model.
     claimed_by: 2026-08-25T060500Z-mandarin-tutor-t-013-sk83
     claimed_at: '2026-08-25T06:05:00Z'
-    updated: '2026-08-25T06:05:00Z'
+    updated: '2026-08-25T08:31:43Z'
+    implementation_pr: 'silasfelinus/kind_robots#2092'
 
   - id: t-006
     milestone: m1
