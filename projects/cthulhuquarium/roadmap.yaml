@@ -1220,8 +1220,9 @@ tasks:
   - id: t-036
     milestone: m1
     title: "TWO fish bibles exist and they share no species — Silas picks the canon"
-    status: needs-human
+    status: done
     gate_human: true
+    approved_by_human: true
     owner: null
     passes: 0
     stakes: reversible
@@ -1270,3 +1271,91 @@ tasks:
       checking whether the canonical artifact already exists (or is claimed) in its home
       repo before writing a parallel copy, and should name the copy something that cannot
       be mistaken for canon.
+      RESOLVED 2026-08-25 by Silas, who answered the question by rejecting its premise:
+      "Let's merge those two bibles then." Neither was discarded. Done in
+      silasfelinus/cthulhuquarium (branch claude/cthulhuquarium-setup-0kp3v1).
+      WHAT WON, AND IT WAS NOT ALL ONE SIDE. This repo's format won -- per-species files
+      in the cthulhuquarium repo, because every other document points there, it is
+      validated, and it carries the economy fields the game actually needs. The OTHER
+      bible's STRUCTURE won, which was genuinely the better half of it: it was built as
+      evolution lines running COMMON to MYTHIC, and that backbone is now the bible's. The
+      recommendation this task carried (keep A, harvest B) was half wrong -- it treated B
+      as a source of spare parts when B's organising idea was the thing worth taking.
+      THREE SPECIES DROPPED AS DUPLICATES, not as rejects: goldfish-common is
+      parlour-goldfish, minnow-common is gutter-minnow, and lure-bearer is
+      lamplight-angler. ONE RENAMED: B's "The Chandelier" collided with this bible's
+      chandelier-lion at the same rarity, and became The Seven Lights -- a name its own
+      field note had already handed us.
+      THREE LINES SPLICED rather than run in parallel, because both bibles had
+      independently invented them. The goldfish line now runs all five tiers using A's
+      base and terminus with B's two middle stages, which is the first time Silas's
+      magikarp-to-gyarados has been a real climb rather than a two-step. Same for the
+      angler and sardine lines. Splicing kept every distinct creature and produced longer
+      chains than either bible had alone.
+      FOUR FIELDS ADOPTED from B -- diet_role, school_role, rivals, evolution_kind, the
+      t-025 rivalry and diet systems A had no representation for -- and backfilled onto
+      all 23 originals. school_role was renamed from B's `school | solitary | anchor` to
+      `shoaling | solitary | territorial` because the original collided with `behavior`'s
+      own `school` and `anchor` values; they are different axes and the old names invited
+      exactly the wrong reading.
+      RESULT: 44 species, eight evolution lines, 156 tank units to stock one of
+      everything. The conductor-side copy is deleted, so there is one bible again. The
+      art queue regenerated to 59 entries without being touched, which is the generator
+      from #2810 doing its job.
+      THE RECURRENCE FIX IS STILL UNFILED and still worth doing: the cross-repo handoff
+      protocol needs a step requiring a check of whether the canonical artifact already
+      exists or is claimed in its home repo before writing a parallel copy. This cost a
+      full duplicate authoring pass; next time it could cost a duplicate implementation.
+      TARGET IS NOW 151 (Silas: "a real game should have at least 100 fish, but I think
+      151 is the right number for...reasons :)"). 107 to go, tracked as t-037.
+
+  - id: t-037
+    milestone: m3
+    title: "The road to 151 — author 107 more species without diluting the bible"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-036
+    note: >
+      Silas, 2026-08-25: "a real game should have at least 100 fish, but I think 151 is
+      the right number for...reasons :)" The reasons are not in dispute. The merge
+      (t-036) landed 44; this task is the remaining 107.
+      THIS IS A CONTENT TASK WITH A QUALITY CEILING, which is the whole difficulty. 107
+      species is easy to produce badly and the failure is not obvious per-species -- it
+      shows up as a bestiary where nothing is memorable because everything is a variation
+      on a drifting anomaly. Every batch is judged on whether the bible is BETTER at 60
+      than it was at 44, not on whether 16 files appeared.
+      WORK IN BATCHES OF ROUGHLY 15, each one a PR, each one validated by
+      scripts/validate_fish.py before it opens. Do not attempt this in one pass -- a
+      single 107-species commit is unreviewable, and the tone drift that makes this fail
+      is only visible when someone reads a batch end to end.
+      PER-BATCH RULES, all of them from gaps the merge exposed and recorded in
+      fish/SCHEMA.md:
+      (1) ROUGHLY TWO THIRDS OF NEW SPECIES SHOULD LAND IN A LINE. Only 20 of 44 do now.
+      Extending an existing chain beats inventing a standalone creature when both fill
+      the same slot -- three chains are still two stages long and want a third. A line is
+      also cheaper to author WELL, because "and then what happens to it" is a far better
+      prompt than a blank page.
+      (2) HOLD THE WEIRDNESS CEILING AT EVERY BATCH. COMMON stays recognisably a fish.
+      Authoring at volume is exactly the pressure that pushes every new common toward
+      being strange, and a bible whose bottom tier is all anomalies has already spent the
+      escalation it needs upstairs. If a batch's commons are getting weird, write more
+      boring fish, not fewer.
+      (3) SPEND BUDGET ON THE THIN MOVEMENT MODES. `tumble`, `surface` and `cling` have
+      one specimen each. Three motions with a single user apiece read as one-offs rather
+      than a vocabulary. Adding a fourth drifter is the lazy move.
+      (4) FIX THE FOOD CHAIN. 7 prey against 22 predators. t-025's rivalry system has
+      almost nothing to work with at the bottom, and prey species are mostly small
+      recognisable fish -- which is what tier 1 wants more of anyway, so this and rule 2
+      solve each other.
+      (5) RARITY SHAPE, as a target rather than a quota: COMMON ~32, UNCOMMON ~40, RARE
+      ~36, EPIC ~26, LEGENDARY ~13, MYTHIC ~4. Batches that all pile into RARE because
+      rare is more fun to write are the predictable failure.
+      ART IS NOT BLOCKED ON THIS AND SHOULD NOT WAIT FOR IT. projects/art-generate.yaml
+      regenerates from the bible via scripts/build_cthulhuquarium_art_queue.py, so each
+      merged batch adds its own queue entries with no further work. Run the generator in
+      the same PR and commit the result, or `--check` fails on the next one.
+      NOT IN SCOPE HERE: seeding (t-008, which is blocked on t-035's Creature model
+      anyway), and balance. Every new species needs plausible economy numbers in its tier
+      band, but tuning them is t-019's job -- do not stall a batch arguing about a yield.

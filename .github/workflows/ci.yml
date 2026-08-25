@@ -188,21 +188,6 @@ jobs:
       - name: Check ruler-hooked docs vocabulary + art-prompts inspirations
         run: python scripts/check_ruler_hooked_docs.py
 
-  fish-bible-guards:
-    name: Cthulhuquarium fish bible guards
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install PyYAML
-        run: pip install pyyaml
-
-      - name: Validate fish bible schema (cthulhuquarium/t-003)
-        run: python scripts/validate_fish.py --require-20
 
   build-ts-projects:
     name: Build changed TypeScript projects
