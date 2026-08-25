@@ -104,8 +104,14 @@ tasks:
       projects/cthulhuquarium/DESIGN-BRIEF.md covers the tone reference stack,
       the silhouette-forward art direction (chosen because silhouettes survive
       Comfy's inconsistency where detailed creature art would not), the shared
-      Character-model bestiary, the eight-point MVP bar, what is explicitly
-      deferred, the guardrails, and four open questions for Silas.
+      bestiary, the eight-point MVP bar, what is explicitly deferred, the
+      guardrails, and four open questions for Silas. AMENDED 2026-08-25: the
+      brief originally specified that bestiary as Character rows. Silas
+      overturned that -- "these monsters are not meant to be added as
+      characters" -- and DESIGN-BRIEF.md now carries the corrected section plus
+      a postmortem. t-035 owns the model. Left here as written-then-corrected
+      rather than silently rewritten, because the wrong call cost a production
+      outage and the record should show it.
 
   - id: t-002
     milestone: m1
@@ -147,7 +153,7 @@ tasks:
       Grow the seeded bestiary in the cthulhuquarium repo (fish/*.yaml, schema in
       fish/SCHEMA.md) from its starter set to at least 20 shipping species plus designed
       rarity evolutions. Each fish needs: slug, display name, one-line museum-placard
-      field note in the established dry register, tier, rarity, the six Character Rarity
+      field note in the established dry register, tier, rarity, the six `Rarity`-enum
       stats, coin/feed economy numbers, an art prompt written for silhouette-forward
       generation, and a games list naming which of cthulhuquarium / ruler-hooked it
       belongs to. The weirdness ceiling is CLEARLY-NOT-A-FISH (Silas, 2026-08-24): rare
@@ -156,8 +162,14 @@ tasks:
       restraint downstairs is what makes the escalation upstairs land. Unsettling, never
       gross-out, always a legible silhouette. Validate with scripts/validate_fish.py
       before committing. Do NOT invent a second schema -- every field must map onto a
-      kind_robots Character column, because t-008 seeds these straight into Character
-      rows.
+      column of the bestiary model t-035 lands (working name `Creature`), because t-008
+      seeds these straight into it. CORRECTED 2026-08-25: this previously said
+      `Character`. It is not Character -- Character is the chattable-personality table
+      for people like Charlotte and Wilbur, and pushing fish through it is what put a
+      `size` column on Character and took production down. The six stats stay on the
+      standalone `Rarity` enum either way, so nothing in the bible's shape changes; only
+      the table it lands in does. If t-035 has not merged when you pick this up, write
+      the bible anyway -- it is YAML, it does not depend on the table existing.
     claimed_by: claude-scheduled-20260824T234500Z-cthulhuquarium-t003
     claimed_at: '2026-08-24T23:43:39Z'
     updated: '2026-08-24T23:55:24Z'
@@ -256,22 +268,29 @@ tasks:
 
   - id: t-008
     milestone: m2
-    title: "Seed the bestiary — fish YAML into Character rows"
-    status: ready
+    title: "Seed the bestiary — fish YAML into the Creature table"
+    status: waiting
     owner: null
     passes: 0
     stakes: reversible
-    depends_on: t-003
+    depends_on: [t-003, t-035, t-036]
     note: >
       Write the idempotent seed script that reads fish/*.yaml from the cthulhuquarium
-      repo and upserts kind_robots Character rows keyed on slug, all grouped under a
-      Pack with slug abyssal-bestiary. Map fields per the bible schema: species,
-      class, backstory (the field note), quirks, alignment, and the six Rarity stats.
-      Idempotent means re-running after a bible edit updates rows rather than
-      duplicating them -- match on Character.slug, which is unique. Fish tagged for
-      ruler-hooked get seeded too; that is the entire shared-bestiary mechanism and it
-      costs nothing extra here. Never delete a Character the script does not recognize
-      -- a fish removed from the bible gets isActive false, not a DELETE.
+      repo and upserts rows in the bestiary table t-035 lands (working name `Creature`),
+      keyed on slug. Map fields per the bible schema: species, class, backstory (the
+      field note), quirks, alignment, and the six `Rarity` stats. Idempotent means
+      re-running after a bible edit updates rows rather than duplicating them -- match
+      on the unique slug. Fish tagged for ruler-hooked get seeded too; that is the
+      entire shared-bestiary mechanism and it costs nothing extra here -- sharing is the
+      `games` list on the row, not membership in a table. Never delete a row the script
+      does not recognize -- a fish removed from the bible gets isActive false, not a
+      DELETE.
+      CORRECTED 2026-08-25 (Silas): this task previously said Character rows grouped
+      under a Pack with slug abyssal-bestiary. Both halves are gone. Fish are not
+      Characters -- Character is the chattable-personality table -- and a Pack was only
+      ever the grouping mechanism BECAUSE they were Characters. A dedicated table needs
+      no Pack to separate it from unrelated rows. Depends on t-035 now, because there is
+      nothing to seed into until that model exists.
 
   - id: t-009
     milestone: m2
@@ -321,7 +340,8 @@ tasks:
     depends_on: [t-008, t-009]
     note: >
       Replace the t-010 prototype's local state with the server-backed game. Fish render
-      from their seeded Character art with per-species swim behavior (drift, dart, lurk --
+      from their seeded bestiary art (t-035's model, not Character) with per-species swim
+      behavior (drift, dart, lurk --
       behavior is a bible field, not a hardcoded switch). Food is ALIVE (Silas,
       2026-08-24) -- it wriggles on the way down and stops when eaten, and fish path
       toward it. Not a falling pellet. Collectibles drift up and pay coins on click.
@@ -508,8 +528,12 @@ tasks:
       abyssal-bestiary Pack, document the contract in the cthulhuquarium repo's
       fish/SCHEMA.md, and write the handoff note that ruler-hooked's own reopening
       session will need -- which fish are tagged for it, what its dark-ecosystem branch
-      should query, and what it must never mutate (a shared Character is not one game's
-      property). Do NOT reopen or edit the ruler-hooked roadmap from this task; that
+      should query, and what it must never mutate (a shared bestiary row is not one
+      game's property). NOTE 2026-08-25: the sharing mechanism is the `games` list on
+      each row, unchanged by t-035's move off Character -- a creature tagged
+      [cthulhuquarium, ruler-hooked] is read by both games exactly as designed. Ruler is
+      Hooked keeps Character for its ACTUAL characters; only its fish move. Do NOT reopen
+      or edit the ruler-hooked roadmap from this task; that
       project's false "100% complete" state is Silas's to correct with a real scope
       conversation, and this task only prepares for it.
   - id: t-023
@@ -739,9 +763,10 @@ tasks:
       include the ability to create new fish, which would be how the user can discover the
       secret evolution fish. Then we have an entire hidden pokemon like stat system." THE
       ARCHITECTURAL CONSEQUENCE, which changes t-007's schema and must be settled there
-      first: the bible describes SPECIES, the tank contains INDIVIDUALS. A `Character` row
-      is the species template (public Rarity stats, field note, art) shared by everyone
-      and identical for all copies. An `AquariumStock` row is one actual fish with its own
+      first: the bible describes SPECIES, the tank contains INDIVIDUALS. A bestiary row
+      (t-035's `Creature`, formerly and wrongly `Character`) is the species template
+      (public Rarity stats, field note, art) shared by everyone and identical for all
+      copies. An `AquariumStock` row is one actual fish with its own
       hidden rolled stats, nickname, hunger, and parentage. Two goldfish are the same
       species and different animals. Every hidden stat lives on the individual, never on
       the species -- the bible stays a catalogue and never becomes a save file. FOUR RULES
@@ -831,8 +856,9 @@ tasks:
       migration 20260824180000_add_aquarium_persistence) BEFORE Silas made the capacity,
       genetics, shop-rotation, and Ichthyonomicon decisions. It is a sound foundation and
       the species/individual split is already structurally right -- AquariumStock
-      references a Character rather than copying it -- but it is missing everything those
-      decisions require. Silas, 2026-08-24: "Creating the MVP should involve these
+      references a species row rather than copying it -- but it is missing everything
+      those decisions require. (That reference is `characterId` today; t-035 repoints it
+      at the new bestiary table. The split is right, the table it points at is not.) Silas, 2026-08-24: "Creating the MVP should involve these
       principles, but fine tuning it is the later step." Architecture goes in now because
       retrofitting a shape is a migration; tuning waits for t-019.
       ADDITIVE forward migration only. Do not edit 20260824180000 -- it is applied. Do not
@@ -853,7 +879,8 @@ tasks:
       own join (AquariumSet or similar) against setSlotsCap, not a row in AquariumStock.
       (4) THE ICHTHYONOMICON RECORD. AquariumStock is CURRENT holdings only, so selling a
       fish deletes the row and the record with it. That is t-030's trap live in the schema
-      today. Add the append-only "species ever owned" record now, keyed on user + character,
+      today. Add the append-only "species ever owned" record now, keyed on user +
+      species row (the t-035 table, not Character),
       holding first-acquired timestamp and best individual stats seen. t-031 builds the view;
       this is the table under it, and it must exist BEFORE any sell or rotation path ships.
       (5) DEBRIS. t-027 needs a per-aquarium debris level and a last-cleaned timestamp,
@@ -1082,3 +1109,99 @@ tasks:
       flux2-vae.safetensors, and the unet is a .safetensors so the loader moves from
       UnetLoaderGGUF to UNETLoader. Test the 35.5 GB encoder against the 12 GB card before
       declaring it done.
+  - id: t-035
+    milestone: m2
+    title: "Give monsters their own model — Character is for people you can talk to"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      ARCHITECTURAL CORRECTION, Silas 2026-08-25: "why do our characters have size? These
+      monsters are not meant to be added as characters. characters are our website's
+      chattable personalities and npcs for story based games. the monsters are something
+      new." He is right and this supersedes the original decision in DESIGN-BRIEF.md that
+      fish would be Character records.
+      WHY THE ORIGINAL CALL WAS WRONG: it reused Character because its COLUMNS fit --
+      species, class, backstory, quirks, slug, packId, six Rarity stats. That ignored what
+      the model MEANS. Character is the chattable-personality table the rest of the site
+      depends on; aquarium fish have no dialogue, no personality and no chat surface. The
+      concrete cost is already paid: fish needed a capacity weight, `Character.size` was
+      added for them, and when that migration shipped unapplied it returned HTTP 500 from
+      every `prisma.character.findUnique()` on production, taking character-linked art
+      generation down with it (kind-robots/t-071).
+      BUILD: a new `Creature` model in kind_robots carrying what the bible actually needs
+      -- slug, name, species, class, fieldNote, quirks, alignment, rarity, the six rarity
+      stats, tier, size, yield, interval, unlockCost, behavior, hue, games, artPrompt,
+      evolvesTo/evolvesFrom, plus the art image relations every visual entity here has.
+      Name is a proposal: `Creature` because not everything in the table is monstrous (the
+      Parlour Goldfish is not) and because Ruler is Hooked shares it. `Monster` is the
+      obvious alternative -- Silas overrides in one word, so confirm before generating a
+      migration.
+      SHARING SURVIVES UNCHANGED. The `games` list was always the sharing mechanism, not
+      Character. A Creature tagged [cthulhuquarium, ruler-hooked] is read by both games
+      exactly as designed. Ruler is Hooked keeps Character for its actual characters -- the
+      ruler, the warlock, the druids -- which is what its own brief meant.
+      THEN, IN ORDER: repoint AquariumStock.characterId at the new table; repoint the seed
+      script (t-008) and every task that says "Character rows" for fish (t-003, t-011,
+      t-015, t-029, t-030, t-031); and only once nothing reads it, drop `Character.size` in
+      a NEW forward migration. Do not edit 20260824223600 in place -- it is merged and may
+      be applied in a dev database, so the sequence everywhere must be add-then-drop.
+      DO NOT START THE DROP until kind-robots/t-071 has been resolved and production is
+      healthy again. Converging the database to the shipped client comes first; correcting
+      the model comes second. Doing both at once makes an outage harder to reason about,
+      not easier.
+
+  - id: t-036
+    milestone: m1
+    title: "TWO fish bibles exist and they share no species — Silas picks the canon"
+    status: needs-human
+    gate_human: true
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found 2026-08-25 while merging two sessions that both worked t-003 in parallel.
+      There are now two complete, internally consistent fish bibles with ZERO slugs in
+      common, and both were written against the same task.
+      (A) silasfelinus/cthulhuquarium, fish/*.yaml -- 23 species, one file per species,
+      validated by that repo's scripts/validate_fish.py, art prompts already rewritten to
+      the corrected cartoon direction. Slugs: parlour-goldfish, gutter-minnow,
+      lamplight-angler, the-sexton, the-long-patience and so on. DESIGN-BRIEF.md and
+      fish/SCHEMA.md both name this repo as the canonical source of truth, and the
+      generated art queue reads from it.
+      (B) conductor, projects/cthulhuquarium/fish/{common,uncommon,rare,epic,legendary,
+      mythic}.yaml -- 24 species grouped by rarity tier, with its own fish/SCHEMA.md.
+      Slugs: goldfish-common, sardine-common, crawdad-common, the-unlidded-goldfish-rare,
+      the-founding-goldfish-legendary and so on. Carries fields (A) does not:
+      `diet_role`, `school_role`, `rivals`, `evolution_kind` -- the rivalry and diet
+      systems from t-025, which (A) has no representation for. Its art prompts are still
+      the silhouette-forward ones Silas rejected.
+      HOW THIS HAPPENED, and it is not either session being careless: the scheduled
+      session's GitHub access was scoped without the cthulhuquarium repo, and AGENTS.md's
+      cross-repo protocol says to land the work in the conductor project folder as a
+      ready-to-relocate handoff rather than stall. t-004 did exactly that for ECONOMY.md
+      and it worked fine, because nothing else was writing ECONOMY.md. t-003 had another
+      session writing the same artifact in the repo the protocol was routing around. The
+      protocol has no step for "check whether the canonical location is already being
+      written", so both were correct locally and the canon forked.
+      WHAT IS AND IS NOT AT STAKE: this is not a merge conflict and must not be resolved
+      by picking whichever file a tool touched last. It is roughly 24 species of authored
+      creature writing on one side and 23 on the other, in two different registers.
+      NEITHER HAS BEEN DELETED -- both are committed and readable, so nothing is lost
+      while this sits.
+      FOR SILAS, and this is a taste call rather than a technical one: read a few field
+      notes from each and say which register is the game. The recommendation, offered only
+      because someone should: keep (A) as the canon -- it is where every other document
+      already points, it is validated, and its prompts already match the corrected art
+      direction -- then port (B)'s rivalry/diet/school fields into fish/SCHEMA.md and
+      harvest any of its 24 species worth keeping as new entries. That treats (B) as a
+      second authoring pass rather than a discard. If Silas prefers (B)'s register
+      instead, the port runs the other way and the art prompts need the cartoon rewrite.
+      DO NOT let t-008 seed either bible until this is answered -- seeding the wrong one
+      writes 20-odd rows that then need unpicking.
+      PREVENTING THE RECURRENCE is a separate and smaller fix, worth filing against
+      conductor once this is settled: the cross-repo handoff protocol should require
+      checking whether the canonical artifact already exists (or is claimed) in its home
+      repo before writing a parallel copy, and should name the copy something that cannot
+      be mistaken for canon.

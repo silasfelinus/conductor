@@ -54,28 +54,57 @@ punchlines; the humor is in the understatement.
 **Anti-goals.** Not gross-out horror. Not grimdark. Not a bullet-sponge numbers game
 with reskinned assets. If a fish is not fun to look at, it does not ship.
 
-## The shared bestiary
+## The bestiary is its own model — corrected 2026-08-25
 
-Fish are **`Character` records in the kind_robots database**, not a
-Cthulhuquarium-private table. This is the single most important architectural call in
-the brief and it is deliberate:
+**This section previously said fish were `Character` records. That was wrong, and it did
+real damage — see the postmortem at the end.**
 
-- `Character` already carries `species`, `class`, `backstory`, `quirks`, `alignment`,
-  `slug`, `packId`, and six `Rarity` stats (`charm`, `empathy`, `grace`, `luck`,
-  `might`, `wits` — `COMMON` → `MYTHIC`). That is a bestiary schema already.
-- It already has `artImageId` / `cardArtImageId` / `heroArtImageId` / `artPrompt`, so
-  fish plug straight into the existing Comfy art pipeline with zero new plumbing.
-- **Ruler is Hooked already uses `Character`.** Its brief commits to the same model and
-  its "evil" ecosystem branch produces dark, twisted, catchable fish. Same model means
-  the twisted lake fish and the aquarium monsters are literally the same records —
-  catch it in one game, find it in the other, no sync layer, no duplicate art.
-- A `Pack` (`abyssal-bestiary`) groups them, so either game can query its own subset
-  without either game owning the others' fish.
+Silas: *"why do our characters have size? These monsters are not meant to be added as
+characters. characters are our website's chattable personalities and npcs for story based
+games. the monsters are something new."*
 
-The canonical source of truth is `fish/` in the **cthulhuquarium repo** — plain YAML,
-one file per fish, human-editable, diffable, portable. A seed script reads that YAML
-into `Character` rows. The repo stays authoritative so the bestiary survives a database
-migration, an offline build, or a future Steam port that has no Kind Robots behind it.
+`Character` is for **people you can talk to** — chattable personalities and story-game
+NPCs. Charlotte Fishmonger and Wilbur Stint are Characters, correctly, because they speak.
+The things in the tank are not. They have no dialogue, no personality, no chat surface;
+they have a field note, a size, a payout rate and a swim behavior. Putting them in
+`Character` meant every aquarium concern leaked into a model the rest of the site relies
+on for something else entirely.
+
+**Monsters get their own model.** Proposed name `Creature` — broad enough that not
+everything in it has to be monstrous (the Parlour Goldfish isn't) and reusable by Ruler is
+Hooked, which is the point. `Monster` is the obvious alternative; Silas overrides in a
+word. It carries what the bible actually needs: slug, name, species, class, field note,
+quirks, rarity, the six rarity stats, tier, size, yield, interval, unlock cost, behavior,
+hue, games, art prompt, evolution links.
+
+**Sharing with Ruler is Hooked survives intact.** That was the real argument for reusing
+`Character`, and it does not depend on `Character` at all — it depends on there being ONE
+shared table with a `games` list. A `Creature` row tagged `[cthulhuquarium, ruler-hooked]`
+is read by both games exactly as planned. Ruler is Hooked keeps using `Character` for its
+actual characters — the ruler, the warlock, the druids — which is what its brief meant.
+
+**The canon stays in this repo either way.** `fish/*.yaml` remains the source of truth and
+the seed script targets `Creature` instead of `Character`. Nothing about the YAML shape
+changes except that its fields no longer have to contort to fit someone else's columns —
+which was always a constraint on the bible rather than a feature of it.
+
+### Postmortem: what the wrong call cost
+
+The original reasoning was that `Character` already had `species`, `class`, `backstory`,
+`quirks`, `slug`, `packId` and six `Rarity` stats, so a bestiary was "a schema already".
+That is true and it is not a good enough reason. Reusing a model because its *columns* fit
+ignores what the model *means*, and meaning is what every other consumer of it depends on.
+
+The concrete cost: fish needed a capacity weight, so `Character.size` was added. That
+column shipped in kind_robots#2075, its migration was never applied to production, and
+every `prisma.character.findUnique()` on the live site began returning HTTP 500 —
+including the ArtJob completion path, which broke character-linked art generation
+entirely. A field that should never have existed took down an unrelated feature.
+
+The rule worth keeping: **shared models are shared because of what they mean, not because
+their columns happen to line up.** If the new thing does not belong to the same concept,
+it gets its own table, and the sharing you actually wanted is arranged deliberately rather
+than inherited by accident.
 
 ## MVP scope — "the first completed version"
 

@@ -1,7 +1,47 @@
 import base64
 from pathlib import Path
 
+import pytest
+
 import scripts.consume_art_queue as consumer
+
+
+# The engine builders resolve their model constants through the Kind Robots
+# Resource registry (consume_art_queue_core.resolve_model), which means an
+# unstubbed entry_to_job() call reaches out to the live production API. That is
+# wrong twice over: the suite should not need the network, and an assertion
+# about a workflow's model name should not silently change meaning when someone
+# edits a Resource row. Pin the index to a fixture covering exactly the models
+# the engine constants name. Registering a new engine model means adding it
+# here too -- if you do not, resolve_model warns and passes the logical name
+# through, and the test sees a name ComfyUI would reject.
+FAKE_RESOURCE_INDEX = {
+    "DIFFUSION_MODEL": {
+        "flux2_dev_fp8mixed": "flux2_dev_fp8mixed.safetensors",
+        "krea2-turbo": "Krea-2-Turbo-Q5_K_S.gguf",
+    },
+    "TEXT_ENCODER": {
+        "mistral_3_small_flux2_bf16": "mistral_3_small_flux2_bf16.safetensors",
+        "qwen_3_8b": "qwen_3_8b.safetensors",
+    },
+    "VAE": {
+        "flux2-vae": "flux2-vae.safetensors",
+        "krea2-vae": "krea2_vae.safetensors",
+    },
+}
+
+
+@pytest.fixture(autouse=True)
+def _stub_resource_registry(monkeypatch):
+    # `scripts/consume_art_queue.py` ends with `sys.modules[__name__] = _core`,
+    # so `consumer` IS the core module and this patches the real global.
+    monkeypatch.setattr(consumer, "_RESOURCE_INDEX", dict(FAKE_RESOURCE_INDEX))
+    yield
+
+
+def _resolved(logical, kind):
+    """What the workflow should carry: the registry filename, not the constant."""
+    return FAKE_RESOURCE_INDEX[kind][logical.lower()]
 
 
 def test_parse_size():
@@ -141,11 +181,8 @@ def test_entry_to_job_flux2_klein_alias_and_json_prompt():
     )
     assert job["engine"] == "COMFY"
     wf = job["payload"]["workflow"]
-    # FLUX2_KLEIN_MODEL is a logical Resource name now, not a raw filename --
-    # resolve_model() maps it to whatever ComfyUI-relative path the registry
-    # reports (cthulhuquarium/t-034), so compare against that resolution
-    # rather than the bare constant.
-    assert wf["1"]["inputs"]["unet_name"] == consumer.resolve_model(
+    # the RESOLVED filename, not the logical registry name the constant holds
+    assert wf["1"]["inputs"]["unet_name"] == _resolved(
         consumer.FLUX2_KLEIN_MODEL, "DIFFUSION_MODEL"
     )
     assert wf["2"]["inputs"]["type"] == consumer.FLUX2_KLEIN_CLIP_TYPE

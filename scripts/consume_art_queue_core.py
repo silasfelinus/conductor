@@ -546,6 +546,12 @@ _LOCALPATH_PREFIXES = {
     "TEXT_ENCODER": ("text_encoders/", "clip/"),
     "VAE": ("vae/",),
     "DIFFUSION_MODEL": ("diffusion_models/", "unet/"),
+    # kind-robots/t-070 added these two. They are separate types because the
+    # loaders and directories differ: a LATENT_UPSCALER loads from
+    # models/latent_upscale_models/ via LatentUpscaleModelLoader and acts on
+    # latents; an UPSCALER loads from models/upscale_models/ and acts on pixels.
+    "LATENT_UPSCALER": ("latent_upscale_models/",),
+    "UPSCALER": ("upscale_models/",),
 }
 
 
