@@ -1385,94 +1385,121 @@ tasks:
   - id: t-037
     milestone: m3
     title: "The road to 151 — author 107 more species without diluting the bible"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     depends_on: t-036
     note: >
-      Silas, 2026-08-25: "a real game should have at least 100 fish, but I think 151 is
-      the right number for...reasons :)" The reasons are not in dispute. The merge
-      (t-036) landed 44; this task is the remaining 107.
-      THIS IS A CONTENT TASK WITH A QUALITY CEILING, which is the whole difficulty. 107
-      species is easy to produce badly and the failure is not obvious per-species -- it
-      shows up as a bestiary where nothing is memorable because everything is a variation
-      on a drifting anomaly. Every batch is judged on whether the bible is BETTER at 60
-      than it was at 44, not on whether 16 files appeared.
-      WORK IN BATCHES OF ROUGHLY 15, each one a PR, each one validated by
-      scripts/validate_fish.py before it opens. Do not attempt this in one pass -- a
-      single 107-species commit is unreviewable, and the tone drift that makes this fail
-      is only visible when someone reads a batch end to end.
-      PER-BATCH RULES, all of them from gaps the merge exposed and recorded in
-      fish/SCHEMA.md:
-      (1) ROUGHLY TWO THIRDS OF NEW SPECIES SHOULD LAND IN A LINE. Only 20 of 44 do now.
-      Extending an existing chain beats inventing a standalone creature when both fill
-      the same slot -- three chains are still two stages long and want a third. A line is
-      also cheaper to author WELL, because "and then what happens to it" is a far better
-      prompt than a blank page.
-      (2) HOLD THE WEIRDNESS CEILING AT EVERY BATCH. COMMON stays recognisably a fish.
-      Authoring at volume is exactly the pressure that pushes every new common toward
-      being strange, and a bible whose bottom tier is all anomalies has already spent the
-      escalation it needs upstairs. If a batch's commons are getting weird, write more
-      boring fish, not fewer.
-      (3) SPEND BUDGET ON THE THIN MOVEMENT MODES. `tumble`, `surface` and `cling` have
-      one specimen each. Three motions with a single user apiece read as one-offs rather
-      than a vocabulary. Adding a fourth drifter is the lazy move.
-      (4) FIX THE FOOD CHAIN. 7 prey against 22 predators. t-025's rivalry system has
+      Silas, 2026-08-25: "a real game should have at least 100 fish, but I think 151 is the
+      right number for...reasons :)" The reasons are not in dispute. The merge (t-036) landed
+      44; this task is the remaining 107. THIS IS A CONTENT TASK WITH A QUALITY CEILING, which
+      is the whole difficulty. 107 species is easy to produce badly and the failure is not
+      obvious per-species -- it shows up as a bestiary where nothing is memorable because
+      everything is a variation on a drifting anomaly. Every batch is judged on whether the
+      bible is BETTER at 60 than it was at 44, not on whether 16 files appeared. WORK IN
+      BATCHES OF ROUGHLY 15, each one a PR, each one validated by scripts/validate_fish.py
+      before it opens. Do not attempt this in one pass -- a single 107-species commit is
+      unreviewable, and the tone drift that makes this fail is only visible when someone reads
+      a batch end to end. PER-BATCH RULES, all of them from gaps the merge exposed and
+      recorded in fish/SCHEMA.md: (1) ROUGHLY TWO THIRDS OF NEW SPECIES SHOULD LAND IN A LINE.
+      Only 20 of 44 do now. Extending an existing chain beats inventing a standalone creature
+      when both fill the same slot -- three chains are still two stages long and want a third.
+      A line is also cheaper to author WELL, because "and then what happens to it" is a far
+      better prompt than a blank page. (2) HOLD THE WEIRDNESS CEILING AT EVERY BATCH. COMMON
+      stays recognisably a fish. Authoring at volume is exactly the pressure that pushes every
+      new common toward being strange, and a bible whose bottom tier is all anomalies has
+      already spent the escalation it needs upstairs. If a batch's commons are getting weird,
+      write more boring fish, not fewer. (3) SPEND BUDGET ON THE THIN MOVEMENT MODES.
+      `tumble`, `surface` and `cling` have one specimen each. Three motions with a single user
+      apiece read as one-offs rather than a vocabulary. Adding a fourth drifter is the lazy
+      move. (4) FIX THE FOOD CHAIN. 7 prey against 22 predators. t-025's rivalry system has
       almost nothing to work with at the bottom, and prey species are mostly small
-      recognisable fish -- which is what tier 1 wants more of anyway, so this and rule 2
-      solve each other.
-      (5) RARITY SHAPE, as a target rather than a quota: COMMON ~32, UNCOMMON ~40, RARE
-      ~36, EPIC ~26, LEGENDARY ~13, MYTHIC ~4. Batches that all pile into RARE because
-      rare is more fun to write are the predictable failure.
-      ART IS NOT BLOCKED ON THIS AND SHOULD NOT WAIT FOR IT. projects/art-generate.yaml
-      regenerates from the bible via scripts/build_cthulhuquarium_art_queue.py, so each
-      merged batch adds its own queue entries with no further work. Run the generator in
-      the same PR and commit the result, or `--check` fails on the next one.
-      NOT IN SCOPE HERE: seeding (t-008, which is blocked on t-035's Monster model
-      anyway), and balance. Every new species needs plausible economy numbers in its tier
-      band, but tuning them is t-019's job -- do not stall a batch arguing about a yield.
-      BATCH 1 LANDED 2026-08-25: 15 species, 44 -> 59 of 151. 92 to go, so this stays
-      `ready` rather than done -- roughly six more batches. Delivered as a CROSS-REPO
-      HANDOFF, not as a direct commit: the bible lives in silasfelinus/cthulhuquarium and
-      this session's connector and git proxy are both scoped without it (clone works,
-      push is 403). The batch was therefore authored and validated INSIDE a clone of the
-      real bible at c551b77 -- `scripts/validate_fish.py` reports 59 valid -- and the
-      files ship as
-      projects/cthulhuquarium/docs/t-037-batch1-thin-modes.md, with a verified extractor
-      and a `git apply --check`-clean diff for the four one-line edits to existing
-      species. It is deliberately NOT written into conductor/projects/cthulhuquarium/fish/,
-      which conductor#2819 retired: recreating that directory is exactly the two-bibles
-      failure t-036 documents.
-      AGAINST THE FIVE RULES: (1) 11/15 in a line (73%); bible 52% -> 58%; all three
-      two-stage chains named in SCHEMA.md now run three stages (catfish, crawdad, bell)
-      and four new two-stage lines were authored base-and-payoff in one pass. (2) all six
-      commons are ordinary fish, five of six `class: minnow`, no anomaly/construct/colony
-      below RARE. (3) the thin modes were the batch's main job -- cling 1 -> 6, surface
-      1 -> 6, tumble 1 -> 4, and drift stayed at 10. (4) prey 7 -> 15 against predator
-      22 -> 27, from 1:3.1 to 1:1.8. (5) COMMON 8 -> 14, UNCOMMON 11 -> 16, RARE 10 -> 13,
-      EPIC 9 -> 10, LEGENDARY and MYTHIC untouched -- deliberately bottom-weighted because
-      the merged 44 were top-heavy against target.
-      ART QUEUE NOT REGENERATED, deliberately, and this is the one instruction above that
-      was not followed literally. The queue is generated FROM the bible; until the handoff
-      is applied the canon bible still holds 44, so committing 74 entries now would make
-      `--check` fail permanently against the real bible -- the same drift the generator
-      exists to prevent, pointed the other way. Verified rather than assumed: `--check`
-      passes against canon today and reports stale against the modified clone, and the
-      regeneration is purely additive (+15, no existing entry moves). The single command
-      to run once the batch is on cthulhuquarium/main is in the handoff doc. No CI
-      workflow runs `--check`, so nothing is red in the meantime.
-      NEXT BATCH SHOULD PRIORITISE, in order: LEGENDARY and MYTHIC (4/13 and 2/4, the two
-      furthest-behind tiers, untouched here -- and each should terminate a line that
-      already exists rather than stand alone); UNCOMMON and RARE, the largest absolute
-      gaps at 24 and 23; `hover` (6) and `dart` (5), now the thinnest modes, with still no
-      fourteenth drifter; third stages for the four new two-stage lines; and the `bloom`
-      (1) and `angler` (2) classes, since `anomaly` is 12 and rising and is the class a
-      lazy batch will drift into. Also pending: SCHEMA.md's counts are now stale, and its
-      "89 tank units to stock one of everything" was already stale before this batch --
-      the validator reports 156 at c551b77 and 194 after. That number is load-bearing for
-      tank sizing, so it is flagged for t-019 rather than quietly rewritten.
-    updated: '2026-08-25T03:43:18Z'
+      recognisable fish -- which is what tier 1 wants more of anyway, so this and rule 2 solve
+      each other. (5) RARITY SHAPE, as a target rather than a quota: COMMON ~32, UNCOMMON ~40,
+      RARE ~36, EPIC ~26, LEGENDARY ~13, MYTHIC ~4. Batches that all pile into RARE because
+      rare is more fun to write are the predictable failure. ART IS NOT BLOCKED ON THIS AND
+      SHOULD NOT WAIT FOR IT. projects/art-generate.yaml regenerates from the bible via
+      scripts/build_cthulhuquarium_art_queue.py, so each merged batch adds its own queue
+      entries with no further work. Run the generator in the same PR and commit the result, or
+      `--check` fails on the next one. NOT IN SCOPE HERE: seeding (t-008, which is blocked on
+      t-035's Monster model anyway), and balance. Every new species needs plausible economy
+      numbers in its tier band, but tuning them is t-019's job -- do not stall a batch arguing
+      about a yield. BATCH 1 LANDED 2026-08-25: 15 species, 44 -> 59 of 151. 92 to go, so this
+      stays `ready` rather than done -- roughly six more batches. Delivered as a CROSS-REPO
+      HANDOFF, not as a direct commit: the bible lives in silasfelinus/cthulhuquarium and this
+      session's connector and git proxy are both scoped without it (clone works, push is 403).
+      The batch was therefore authored and validated INSIDE a clone of the real bible at
+      c551b77 -- `scripts/validate_fish.py` reports 59 valid -- and the files ship as
+      projects/cthulhuquarium/docs/t-037-batch1-thin-modes.md, with a verified extractor and a
+      `git apply --check`-clean diff for the four one-line edits to existing species. It is
+      deliberately NOT written into conductor/projects/cthulhuquarium/fish/, which
+      conductor#2819 retired: recreating that directory is exactly the two-bibles failure
+      t-036 documents. AGAINST THE FIVE RULES: (1) 11/15 in a line (73%); bible 52% -> 58%;
+      all three two-stage chains named in SCHEMA.md now run three stages (catfish, crawdad,
+      bell) and four new two-stage lines were authored base-and-payoff in one pass. (2) all
+      six commons are ordinary fish, five of six `class: minnow`, no anomaly/construct/colony
+      below RARE. (3) the thin modes were the batch's main job -- cling 1 -> 6, surface 1 ->
+      6, tumble 1 -> 4, and drift stayed at 10. (4) prey 7 -> 15 against predator 22 -> 27,
+      from 1:3.1 to 1:1.8. (5) COMMON 8 -> 14, UNCOMMON 11 -> 16, RARE 10 -> 13, EPIC 9 -> 10,
+      LEGENDARY and MYTHIC untouched -- deliberately bottom-weighted because the merged 44
+      were top-heavy against target. ART QUEUE NOT REGENERATED, deliberately, and this is the
+      one instruction above that was not followed literally. The queue is generated FROM the
+      bible; until the handoff is applied the canon bible still holds 44, so committing 74
+      entries now would make `--check` fail permanently against the real bible -- the same
+      drift the generator exists to prevent, pointed the other way. Verified rather than
+      assumed: `--check` passes against canon today and reports stale against the modified
+      clone, and the regeneration is purely additive (+15, no existing entry moves). The
+      single command to run once the batch is on cthulhuquarium/main is in the handoff doc. No
+      CI workflow runs `--check`, so nothing is red in the meantime. NEXT BATCH SHOULD
+      PRIORITISE, in order: LEGENDARY and MYTHIC (4/13 and 2/4, the two furthest-behind tiers,
+      untouched here -- and each should terminate a line that already exists rather than stand
+      alone); UNCOMMON and RARE, the largest absolute gaps at 24 and 23; `hover` (6) and
+      `dart` (5), now the thinnest modes, with still no fourteenth drifter; third stages for
+      the four new two-stage lines; and the `bloom` (1) and `angler` (2) classes, since
+      `anomaly` is 12 and rising and is the class a lazy batch will drift into. Also pending:
+      SCHEMA.md's counts are now stale, and its "89 tank units to stock one of everything" was
+      already stale before this batch -- the validator reports 156 at c551b77 and 194 after.
+      That number is load-bearing for tank sizing, so it is flagged for t-019 rather than
+      quietly rewritten. CLOSED 2026-08-25 by batch 3, which authored the remaining 77 in one
+      pass rather than the four or five batches this note projected. Silas: "we can do
+      hundreds in a day. just submit them all." EVERY RARITY TARGET HIT EXACTLY --
+      32/40/36/26/13/4 against 32/40/36/26/13/4. The 77 split 19 / 42 / 16: nineteen next-
+      stages for existing STANDALONES, which pulled 14 of the 16 remaining standalones into
+      lines and confirmed batch 2's finding that a new stage converts two species for the
+      price of one; forty-two across fifteen new COMMON-headed lines; sixteen across seven
+      high lines starting at RARE or EPIC, so nothing in the tier where hurried authoring
+      shows most is bolted onto a common. THE COMMONS WERE WRITTEN FIRST AND ARE DELIBERATELY
+      DULL -- a limpet, a roach, a bream, a stickleback, a shop snail, a sole, a goby clamped
+      to a brass tack -- because authoring at volume is the exact pressure that makes every
+      new common strange, and the escalation upstairs only lands if the bottom stays boring.
+      TWO CORRECTIONS THE VALIDATOR FORCED. (1) MYTHIC is reached from a tier-4 EPIC in this
+      bible and never from a LEGENDARY -- the two are PARALLEL tier-5 endpoints rather than
+      sequential, which every existing MYTHIC already demonstrated. The Proprietor was
+      authored as a tier-5 LEGENDARY evolving into The Concern, could not be expressed, and
+      dropped to EPIC; The Catchment was promoted to keep LEGENDARY at 13. (2) One prompt read
+      "warm light coming from the far side of it and none from the near side" -- none is a
+      negation, so it was ordering the light it meant to withhold. Caught by the absolute
+      negation guard widened the same day under t-040, which is that guard earning its keep on
+      the very next batch. THREE STALE THINGS IN SCHEMA.md FIXED WHILE THERE, none introduced
+      by this batch: its art-prompt rule 2 still described the narrow negation check; it
+      called the rustfish line the only one running all five tiers when the sump line has run
+      t1-t5 since batch 2; and 89 tank units to stock one of everything was the figure at 44
+      species, now 524 -- which this note had already flagged as load-bearing, and which is
+      now corrected to say a tank progression should be designed against a REPRESENTATIVE tank
+      rather than the whole collection. FLAGGED RATHER THAN HIDDEN, and the thing to judge
+      this batch on later: LINE COVERAGE OVERSHOT. 147 of 151 sit in a line -- 97% against a
+      two-thirds FLOOR. Twenty-eight of the 55 lines are only two stages so the per-line
+      commitment is modest, but SCHEMA.md's own warning was that forcing a chain onto every
+      creature is as mechanical as having none, and this came close to testing it. Recorded in
+      SCHEMA.md as an open item for a balance pass, with the explicit note that 97% is NOT the
+      new floor and that un-chaining a handful beats adding more lines. Also thin: angler at 3
+      and tumble at 5, both a vocabulary rather than a one-off, and both where a rebalance
+      should start. The art queue regenerated to 166 entries, no negations, every prompt
+      naming its plate's medium. 151 species valid, 55 lines, 524 tank units. THE TARGET IS
+      MET AND IS NOT A CAP: going past 151 needs a reason rather than momentum.
+
+    updated: '2026-08-25T09:30:46Z'
 
   - id: t-038
     milestone: m2
