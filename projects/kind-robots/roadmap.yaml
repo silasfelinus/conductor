@@ -2504,11 +2504,11 @@ tasks:
   - id: t-070
     milestone: m3
     title: "ResourceType has no value for upscalers, so latent upscale models are filed as CHECKPOINT"
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
-    note: >
+    note: >-
       Small but it will keep biting. The ResourceType enum is CHECKPOINT, EMBEDDING,
       LORA, LYCORIS, HYPERNETWORK, SAMPLER, CONTROLNET, URL, API, VAE, TEXT_ENCODER,
       DIFFUSION_MODEL. There is no value for an upscaler of any kind, so
@@ -2527,9 +2527,23 @@ tasks:
       pixels from models/upscale_models/), migrate the existing rows, and add the
       matching prefix entries to conductor's _LOCALPATH_PREFIXES. The array already has
       both directories on disk, so both kinds exist in practice.
+
+      DONE 2026-08-25 (reconciliation, no new PR): the schema half (LATENT_UPSCALER/UPSCALER
+      enum values, migration 20260825000000_add_upscaler_resource_types) and the conductor
+      localPath-prefix-table half (_LOCALPATH_PREFIXES in scripts/consume_art_queue_core.py)
+      were already merged to main by an earlier session today -- confirmed via git log/diff,
+      both clean on main with no local changes needed. The one remaining piece -- the live-DB
+      row that was mistyped as CHECKPOINT before these values existed -- was corrected this
+      session: queried GET https://kindrobots.org/api/resources?resourceType=CHECKPOINT, found
+      Resource id=4564 (ltx-2.3-spatial-upscaler-x2-1.1,
+      localPath=latent_upscale_models/ltx-2.3-spatial-upscaler-x2-1.1.safetensors), and
+      PATCHed it to resourceType=LATENT_UPSCALER via the authenticated app API (PATCH
+      /api/resources/4564, ordinary reversible app-level data correction, not a raw DB
+      command). Verified 200 response with the corrected resourceType in the returned row. No
+      other CHECKPOINT-typed rows matched an upscaler-shaped name/path.
     claimed_by: claude-kr070-20260825T174500Z
     claimed_at: '2026-08-25T17:43:08Z'
-    updated: '2026-08-25T17:43:08Z'
+    updated: '2026-08-25T17:43:18Z'
 
   - id: t-071
     milestone: m3
