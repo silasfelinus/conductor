@@ -273,7 +273,7 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    depends_on: [t-003, t-035]
+    depends_on: [t-003, t-035, t-036]
     note: >
       Write the idempotent seed script that reads fish/*.yaml from the cthulhuquarium
       repo and upserts rows in the bestiary table t-035 lands (working name `Creature`),
@@ -1151,3 +1151,57 @@ tasks:
       healthy again. Converging the database to the shipped client comes first; correcting
       the model comes second. Doing both at once makes an outage harder to reason about,
       not easier.
+
+  - id: t-036
+    milestone: m1
+    title: "TWO fish bibles exist and they share no species — Silas picks the canon"
+    status: needs-human
+    gate_human: true
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found 2026-08-25 while merging two sessions that both worked t-003 in parallel.
+      There are now two complete, internally consistent fish bibles with ZERO slugs in
+      common, and both were written against the same task.
+      (A) silasfelinus/cthulhuquarium, fish/*.yaml -- 23 species, one file per species,
+      validated by that repo's scripts/validate_fish.py, art prompts already rewritten to
+      the corrected cartoon direction. Slugs: parlour-goldfish, gutter-minnow,
+      lamplight-angler, the-sexton, the-long-patience and so on. DESIGN-BRIEF.md and
+      fish/SCHEMA.md both name this repo as the canonical source of truth, and the
+      generated art queue reads from it.
+      (B) conductor, projects/cthulhuquarium/fish/{common,uncommon,rare,epic,legendary,
+      mythic}.yaml -- 24 species grouped by rarity tier, with its own fish/SCHEMA.md.
+      Slugs: goldfish-common, sardine-common, crawdad-common, the-unlidded-goldfish-rare,
+      the-founding-goldfish-legendary and so on. Carries fields (A) does not:
+      `diet_role`, `school_role`, `rivals`, `evolution_kind` -- the rivalry and diet
+      systems from t-025, which (A) has no representation for. Its art prompts are still
+      the silhouette-forward ones Silas rejected.
+      HOW THIS HAPPENED, and it is not either session being careless: the scheduled
+      session's GitHub access was scoped without the cthulhuquarium repo, and AGENTS.md's
+      cross-repo protocol says to land the work in the conductor project folder as a
+      ready-to-relocate handoff rather than stall. t-004 did exactly that for ECONOMY.md
+      and it worked fine, because nothing else was writing ECONOMY.md. t-003 had another
+      session writing the same artifact in the repo the protocol was routing around. The
+      protocol has no step for "check whether the canonical location is already being
+      written", so both were correct locally and the canon forked.
+      WHAT IS AND IS NOT AT STAKE: this is not a merge conflict and must not be resolved
+      by picking whichever file a tool touched last. It is roughly 24 species of authored
+      creature writing on one side and 23 on the other, in two different registers.
+      NEITHER HAS BEEN DELETED -- both are committed and readable, so nothing is lost
+      while this sits.
+      FOR SILAS, and this is a taste call rather than a technical one: read a few field
+      notes from each and say which register is the game. The recommendation, offered only
+      because someone should: keep (A) as the canon -- it is where every other document
+      already points, it is validated, and its prompts already match the corrected art
+      direction -- then port (B)'s rivalry/diet/school fields into fish/SCHEMA.md and
+      harvest any of its 24 species worth keeping as new entries. That treats (B) as a
+      second authoring pass rather than a discard. If Silas prefers (B)'s register
+      instead, the port runs the other way and the art prompts need the cartoon rewrite.
+      DO NOT let t-008 seed either bible until this is answered -- seeding the wrong one
+      writes 20-odd rows that then need unpicking.
+      PREVENTING THE RECURRENCE is a separate and smaller fix, worth filing against
+      conductor once this is settled: the cross-repo handoff protocol should require
+      checking whether the canonical artifact already exists (or is claimed) in its home
+      repo before writing a parallel copy, and should name the copy something that cannot
+      be mistaken for canon.
