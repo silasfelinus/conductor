@@ -89,17 +89,19 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Integrate source-backed character decomposition and historical forms"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-001
-    note: >
-      Add licensed/open character data that distinguishes semantic components, phonetic
-      components, radicals/indexing forms, and uncertain analyses. Historical notes must carry
-      source/provenance and confidence instead of presenting folk etymology as fact. Where
-      useful, show traditional forms and earlier graphic stages without pretending every
-      modern component contributes meaning.
+    note: |-
+      Add licensed/open character data that distinguishes semantic components, phonetic components, radicals/indexing forms, and uncertain analyses. Historical notes must carry source/provenance and confidence instead of presenting folk etymology as fact. Where useful, show traditional forms and earlier graphic stages without pretending every modern component contributes meaning.
+
+
+      Integrate pinned Make Me a Hanzi dictionary data for per-character decomposition and sourced etymology, preserving uncertainty and keeping dictionary radicals distinct from semantic/phonetic roles. Use dictionary.txt only for this task; do not pull in differently licensed graphics/stroke assets.
+    claimed_by: 2026-08-25T051900Z-mandarin-tutor-t-003-sk7x
+    claimed_at: '2026-08-25T05:19:29+00:00'
+    updated: '2026-08-25T05:19:29+00:00'
 
   - id: t-004
     milestone: m2
