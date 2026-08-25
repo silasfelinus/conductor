@@ -10528,3 +10528,21 @@ records:
     "nothing calls endpoint X", grep for a second endpoint achieving the same effect before
     assuming X itself is the fix -- and check the actual component-routing logic, not just
     which components exist, before deciding where a new control belongs.
+- date: '2026-08-25'
+  project: kind-robots
+  task: t-070
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Both code halves of t-070 (the ResourceType enum values and conductor's
+    localPath-prefix-table entries) had already been merged by an earlier session
+    the same day -- re-check `git log`/`git diff` for the actual claimed scope before
+    assuming a `ready` roadmap task still needs code work; it can be a stale status
+    with only an operational follow-up left. That follow-up (one live-DB row mistyped
+    before the new enum values existed) didn't need DB access at all: the app's own
+    authenticated PATCH /api/resources/{id} endpoint made the correction in one call,
+    which is worth reaching for before assuming a live-DB data fix is out of a
+    sandboxed session's reach.
