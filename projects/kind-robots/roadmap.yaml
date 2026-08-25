@@ -2403,11 +2403,11 @@ tasks:
   - id: t-068
     milestone: m3
     title: "Project Artwork panel reports 'No hero yet' for projects whose art exists in Conductor"
-    status: ready
+    status: review
     owner: null
     passes: 0
     stakes: reversible
-    note: >
+    note: >-
       Reported by Silas 2026-08-24: the Cthulhuquarium gallery card shows its hero art
       while the project's own Artwork panel says "No hero yet" for the same project. Both
       are correct about what they are looking at -- there are TWO independent
@@ -2433,6 +2433,15 @@ tasks:
       Either way, the underlying smell is four call sites hardcoding the same raw-GitHub
       URL. Collapse them onto `projectAssetFallback()` in
       `components/conductor/projectFront.ts`, which already exists for exactly this.
+
+      PR opened: silasfelinus/kind_robots#2105 -- entity-art-manager.vue now falls back to
+      projectAssetFallback() (conductor raw URL) keyed by conductorSlug for project entities
+      when the DB column (heroPath/cardPath/imagePath) is empty, matching project-front-
+      page.vue's existing chain. vue-tsc clean; eslint's 3 errors on the file are pre-
+      existing/unrelated (confirmed via git stash diff). CI in progress; will merge when
+      green.
+    updated: '2026-08-25T11:37:25Z'
+    implementation_pr: 'silasfelinus/kind_robots#2105'
 
   - id: t-069
     milestone: m3
