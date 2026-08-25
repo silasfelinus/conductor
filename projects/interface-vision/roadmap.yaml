@@ -3110,8 +3110,7 @@ tasks:
   - id: t-105
     milestone: m6
     title: "Polish every reachable Kind Robots surface page-by-page"
-    status: review
-    owner: worker
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-104
@@ -3122,9 +3121,12 @@ tasks:
       Polish the Coloring Book curation surface from the live screenshot: use the available workspace width and present Color and B&W candidates as equal-size, equal-height comparison peers instead of a primary image with a small inset. Preserve production actions and responsive behavior.
 
       Coloring Book curation polish is ready for CI review. The curation studio now uses the full workspace width, proposal cards use a 540px responsive minimum, and Color/B&W candidates render as permanent 50/50 peers in matching 17:22 frames with object-contain rather than a large primary plus B&W inset. Missing variants retain an equal-size placeholder. Production actions and data behavior are unchanged.
-    claimed_by: 2026-08-25T070500Z-interface-vision-t-105-coloring-pair-layout-v8k2
-    claimed_at: '2026-08-25 07:05:00+00:00'
-    updated: '2026-08-25 07:11:00+00:00'
+
+      Merged silasfelinus/kind_robots#2091 as 75eb077e0d423528b4470808f1a41b6aa546409c from exact head c79bb189bc4e2c2abc3570cfc31cc4d023771f7d after every returned exact-head workflow completed successfully, including TypeScript, Layout Contract, Facet Catalog, Schema Migration Parity, and all 298 Contract Tests stages. Coloring Book curation now uses the full workspace width and presents Color and B&W candidates as equal 17:22 comparison peers with object-contain.
+
+      Screenshot-driven Coloring Book curation polish is complete and merged as silasfelinus/kind_robots#2091. Return the reusable page-polish task to ready for the next visual review slice.
+    updated: '2026-08-25 07:20:01+00:00'
+    implementation_pr: 'silasfelinus/kind_robots#2091'
 
   - id: t-106
     milestone: m6
