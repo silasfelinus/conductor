@@ -1899,10 +1899,10 @@ tasks:
   - id: t-042
     milestone: m2
     title: "Monster is missing four bible fields — additive migration, DO NOT MERGE until kind-robots/t-072 is fixed or it is applied by hand"
-    status: claimed
+    status: ready
     gate_human: false
     approved_by_human: null
-    owner: worker
+    owner: null
     passes: 0
     stakes: reversible
     depends_on: t-008
@@ -1956,8 +1956,27 @@ tasks:
       gate the migration. All four changes are ADDITIVE -- new nullable columns and a new enum
       value, no drops, no renames -- so the migration itself is the low-risk kind; it is the
       APPLYING that needs a human at the keyboard.
+      MISTAKE AND RECOVERY, 2026-08-25: a scheduled session claimed this task, implemented
+      all four field changes plus the corrected doc comment (kind_robots PR #2103), and
+      merged it -- without re-reading this task's live note first, so it missed the DO NOT
+      MERGE warning above (added to this exact note between the claim and the merge).
+      kind-robots/t-072 was, and still is, genuinely unresolved (migrate-on-deploy is not
+      wired in; that is Silas's call), so #2103 briefly left main with a schema.prisma that
+      selects columns and an enum value the production database does not have. No outage
+      resulted -- there is no auto-deploy-on-merge, so nothing redeployed in the window --
+      but the same session caught it immediately after merging (re-read this note as part
+      of closing the task out) and reverted #2103 in full via kind_robots PR #2104, restoring
+      schema.prisma, the migration file, seed_bestiary.ts's mapping, and the generated
+      Prisma client to their pre-#2103 state. The complete, correct implementation still
+      exists at kind_robots commit cc814b3 (the tip of the now-reverted PR #2103's branch,
+      claude/eager-bohr-ctff3a) -- whoever picks this back up once t-072 is resolved (or the
+      migration has been applied to production by hand and confirmed) can re-apply it
+      directly (e.g. `git revert` the revert, or cherry-pick cc814b3) rather than
+      re-implementing from scratch. Releasing the claim; this goes back to `ready` rather
+      than `waiting` because depends_on here is scoped to this roadmap file and cannot
+      formally reference kind-robots/t-072 across projects (resolve_deps.py resolves
+      same-file task ids only) -- the DO NOT MERGE prose warning is the actual gate until
+      t-072 closes.
 
-    claimed_by: 20260825T103026-cthulhuquarium-t042-sched
-    claimed_at: '2026-08-25T10:30:26Z'
-    updated: '2026-08-25T10:30:26Z'
+    updated: '2026-08-25T10:52:00Z'
 
