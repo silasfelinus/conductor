@@ -19,6 +19,8 @@ on:
       - ".github/workflows/auto-art-generate.yml"
       - "projects/art-prompts.yaml"
       - "scripts/consume_art_requests_to_media.py"
+      - "scripts/queue_mandarin_tutor_art.py"
+      - "scripts/submit_mandarin_tutor_artjobs.py"
       - "scripts/repair_art_request_defaults.py"
       - "scripts/repair_failed_kindrobots_artjobs.py"
   schedule:
@@ -144,10 +146,24 @@ jobs:
           LIMIT="${{ github.event.inputs.limit }}"
           python scripts/queue_missing_project_art.py --limit "${LIMIT:-500}"
 
+      - name: Stage Mandarin Tutor illustration batch
+        id: stage_mandarin
+        if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
+        working-directory: conductor
+        run: python scripts/queue_mandarin_tutor_art.py --batch-size 40
+
+      - name: Submit Mandarin Tutor ArtJobs
+        id: submit_mandarin
+        if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: python scripts/submit_mandarin_tutor_artjobs.py --limit 40
+
       # Time-sensitive request lanes go first. Daily Dream requests are already
-      # priority 200 once they become ArtJobs; the media wrapper mirrors that
-      # priority before submission so they cannot starve behind the broad repair
-      # and project-art backlogs on the way into Kind Robots.
+      # priority 200 once they become ArtJobs; Mandarin curriculum art is staged
+      # at priority 80; ordinary repair/missing-image requests remain priority 0.
       - name: Submit + wait + verify art requests
         id: consume_requests
         if: ${{ steps.boxhealth.outputs.up == 'true' && steps.krhealth.outputs.up == 'true' }}
@@ -188,6 +204,9 @@ jobs:
           git config user.name "conductor-bot"
           git config user.email "conductor-bot@users.noreply.github.com"
           git add projects/images/ projects/process/ projects/art-generate.yaml projects/art-prompts.yaml ops/home-server/RENDER-BOX-STATUS
+          if [ -f projects/mandarin-tutor/art-manifest.json ]; then
+            git add projects/mandarin-tutor/art-manifest.json
+          fi
           if git diff --staged --quiet; then
             echo "No conductor-side changes."
           else
@@ -204,6 +223,8 @@ jobs:
         run: |
           echo "Kind Robots API health: ${{ steps.krhealth.outputs.up || 'skipped' }}"
           echo "failed-job repair: ${{ steps.repair_failed.outcome }}"
+          echo "Mandarin manifest staging: ${{ steps.stage_mandarin.outcome }}"
+          echo "Mandarin bulk submission: ${{ steps.submit_mandarin.outcome }}"
           if [ "${{ steps.boxhealth.outputs.up }}" = "true" ] && [ "${{ steps.krhealth.outputs.up }}" != "true" ]; then
             echo "::warning::ArtJob repair/submission was skipped because the Kind Robots API is unavailable; queued work was preserved."
           fi
