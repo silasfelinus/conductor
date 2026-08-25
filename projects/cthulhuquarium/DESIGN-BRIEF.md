@@ -132,6 +132,44 @@ field note in the same dry placard register the player has been reading for hour
 without once asking whose voice it is — two sentences, faintly concerned, explaining
 nothing. But the eye does the work alone. If the text is doing the lifting, cut it.
 
+### The last tank
+
+Silas, 2026-08-25: *"I like there being a final tank and what you get is functionally the
+same or minorly larger, but cosmetically it re-evaluates everything."*
+
+**It grants nothing, or nearly nothing.** `slots_cap` +0 or +1. It is the most expensive
+thing in the game and it is not an upgrade. Everything it gives you is cosmetic.
+
+This dissolves the design conflict rather than making an exception for it. ECONOMY.md's
+rule — coins buy breadth, milestones buy room — **survives completely intact**, because
+the final purchase does not buy room. An earlier draft of this section recommended
+breaking that rule once at the end; this is better, and it is superseded.
+
+**Three things fall out of it, all good:**
+
+- *It is safe to gate the ending on.* No power spike, so no balance implications, no
+  must-buy pressure during play, nothing for t-019 to tune around. Buying it is purely a
+  want.
+- *"Buying" still implicates you.* Nobody makes you. You buy the biggest tank because you
+  wanted the biggest tank, and that is the entire moral position the game has been
+  quietly putting you in since the first fish.
+- *It is the only cosmetic you purchase.* Backgrounds are milestone rewards; everything
+  else coins buy is capability. The one thing you spend a fortune on for looks is the one
+  that shows you the window.
+
+**"Cosmetically re-evaluates everything" means re-render what is already there, not add
+new content.** Same fish, same set pieces, same room — re-lit, re-framed, seen from a
+step further back. That is far cheaper to build than new assets and far stronger, because
+the player is not being shown something new; they are being shown *their own tank*, the
+one they spent hours arranging, and understanding it differently. Nothing has changed
+except what it means. That is the ending in one sentence.
+
+**The risk, stated plainly:** a player can feel cheated by an enormous purchase that does
+nothing. The mitigation is entirely in how big the cosmetic payoff is. If the last tank
+looks like "a slightly nicer tank", this fails and reads as a bad shop item. It has to be
+the moment everything they have been looking at gets re-lit. Charlotte still sells it
+without comment — see rule 6 — so the copy cannot do this work. The art has to.
+
 **Rules, and they matter more than the idea:**
 
 1. **Earned, never announced.** The player should get there a beat before the game says
@@ -157,13 +195,12 @@ nothing. But the eye does the work alone. If the text is doing the lifting, cut 
 
 **Tasks this touches.** None need to change now; they need to know this is coming.
 
-- **t-039 — THE TRIGGER DOES NOT CURRENTLY EXIST**, and this is the only item here that
-  is a real problem rather than a note. There is no purchasable tank in the design at
-  all: capacity is `slots_cap`, an abstract number, and it grows from *milestones* keyed
-  to bestiary breakpoints. ECONOMY.md states the principle outright — *"coins buy
-  breadth, milestones buy room"* — so "buying the last and largest aquarium" contradicts
-  a decided rule rather than merely lacking an implementation. Filed as t-039 with the
-  tension stated and a recommendation; it needs Silas, not a quiet reinterpretation.
+- **t-039 — the last tank, SETTLED by Silas 2026-08-25.** There was no purchasable tank
+  in the design at all, and "buying the last and largest aquarium" looked like it
+  contradicted ECONOMY.md's decided rule that *"coins buy breadth, milestones buy room"*.
+  Silas dissolved it rather than making an exception: *"I like there being a final tank
+  and what you get is functionally the same or minorly larger, but cosmetically it
+  re-evaluates everything."* See **The last tank** below.
 - **t-014 (public tanks)** — the foreshadowing, already shipped. Nobody optimises the
   window framing out for being flavourless.
 - **t-028 (milestones and interstitials)** — the delivery surface for the eye.

@@ -1518,8 +1518,9 @@ tasks:
   - id: t-039
     milestone: m3
     title: "The finale — the eye at the window, and the last tank that has to exist first"
-    status: needs-human
+    status: ready
     gate_human: true
+    approved_by_human: true
     soft_gate: true
     owner: null
     passes: 0
@@ -1572,3 +1573,32 @@ tasks:
       DEPENDS ON: a terminal tank existing (t-032 capacity work / ECONOMY.md), t-028 for
       the interstitial surface, t-017 for a tank renderer that can put a window in it once.
       None of those need changing until this is answered.
+      SETTLED 2026-08-25, and the conflict dissolved rather than being excepted. Silas:
+      "I like there being a final tank and what you get is functionally the same or
+      minorly larger, but cosmetically it re-evaluates everything."
+      SO ECONOMY.md's RULE SURVIVES INTACT. The final tank grants slots_cap +0 or +1, so
+      it does not buy room, so "coins buy breadth, milestones buy room" needs no
+      exception. The recommendation in this note -- keep the rule all game and break it
+      once at the end -- is superseded by something cleaner: there is nothing to break.
+      Capacity growth stays entirely milestone-driven exactly as economy.yaml already
+      specifies it.
+      WHAT TO BUILD: one terminal purchasable tank, the most expensive item in the game,
+      granting no meaningful capacity. It is the only cosmetic anything coins can buy --
+      backgrounds are milestone rewards and everything else coins buy is capability --
+      which is itself part of why it stands out. It is also now safe to gate the ending
+      on: no power spike, no balance implication, nothing for t-019 to tune around.
+      "COSMETICALLY RE-EVALUATES EVERYTHING" MEANS RE-RENDER WHAT EXISTS, NOT ADD ASSETS.
+      Same fish, same set pieces, same room -- re-lit, re-framed, seen from a step
+      further back. Cheaper to build than new content and far stronger, because the
+      player is not shown something new, they are shown THEIR OWN TANK, the one they
+      spent hours arranging, and understand it differently. Nothing has changed except
+      what it means.
+      THE RISK, and it is the only real one: an enormous purchase that does nothing can
+      read as a bad shop item rather than a payoff. The entire mitigation is the size of
+      the cosmetic moment. If the last tank looks like "a slightly nicer tank" this
+      fails. Charlotte still sells it cheerfully and without comment, so the shop copy
+      cannot carry it -- the art has to.
+      STATUS: no longer needs-human. The question that gated it is answered; what remains
+      is implementation, and it depends on t-032 (a terminal entry in the capacity
+      progression), t-028 (the interstitial surface) and t-017 (a tank renderer that can
+      put a window in it once).
