@@ -71,7 +71,7 @@ they have a field note, a size, a payout rate and a swim behavior. Putting them 
 on for something else entirely.
 
 **Monsters get their own model.** Proposed name `Creature` — broad enough that not
-everything in it has to be monstrous (the Parlour Goldfish isn't) and reusable by Ruler is
+everything in it has to be monstrous (the Parlour Rustfish isn't) and reusable by Ruler is
 Hooked, which is the point. `Monster` is the obvious alternative; Silas overrides in a
 word. It carries what the bible actually needs: slug, name, species, class, field note,
 quirks, rarity, the six rarity stats, tier, size, yield, interval, unlock cost, behavior,
