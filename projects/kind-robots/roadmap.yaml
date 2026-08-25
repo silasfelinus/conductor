@@ -2466,29 +2466,45 @@ tasks:
     passes: 0
     stakes: reversible
     note: >
-      Found 2026-08-24 while placing a file Silas downloaded:
-      gemma-3-12b-it-abliterated_lora_rank64_bf16.safetensors, a rank-64 LoRA for the
-      GEMMA TEXT ENCODER that LTX uses (LTX_TEXT_ENCODER is
-      gemma_3_12B_it_fp4_mixed.safetensors in
+      Found 2026-08-24 while placing a file Silas downloaded: gemma-3-12b-it-
+      abliterated_lora_rank64_bf16.safetensors, a rank-64 LoRA for the GEMMA TEXT ENCODER
+      that LTX uses (LTX_TEXT_ENCODER is gemma_3_12B_it_fp4_mixed.safetensors in
       server/api/comfy/ltx/utils/imageToVideoWorkflow.ts). It is registered as a Resource
-      but there is currently no way for the LTX graph to apply it.
-      Both LoRA nodes in that workflow are `LoraLoaderModelOnly` -- the distilled LTX
-      LoRA at the fixed node and the optional style LoRA at `video_lora` -- and
-      model-only loaders have no CLIP/text-encoder input by construction. So a text
-      encoder LoRA silently has no effect if someone selects it through
-      video-lora-picker, which is worse than refusing it.
-      TWO THINGS TO DECIDE:
-      (1) Wire a text-encoder LoRA path -- a loader with a clip input applied to the
-      LTXAVTextEncoderLoader output rather than to the model. Then abliteration is a
-      LoRA on top of the standard encoder instead of swapping in a whole separate
-      encoder, which matters because the alternative already registered
+      but there is currently no way for the LTX graph to apply it. Both LoRA nodes in that
+      workflow are `LoraLoaderModelOnly` -- the distilled LTX LoRA at the fixed node and
+      the optional style LoRA at `video_lora` -- and model-only loaders have no CLIP/text-
+      encoder input by construction. So a text encoder LoRA silently has no effect if
+      someone selects it through video-lora-picker, which is worse than refusing it. TWO
+      THINGS TO DECIDE: (1) Wire a text-encoder LoRA path -- a loader with a clip input
+      applied to the LTXAVTextEncoderLoader output rather than to the model. Then
+      abliteration is a LoRA on top of the standard encoder instead of swapping in a whole
+      separate encoder, which matters because the alternative already registered
       (gemma-3-12b-it-abliterated-sikaworld-high-fidelity-edition) is a 14.1 GB file
-      against a 12 GB card while the LoRA is small.
-      (2) Until then, make video-lora-picker refuse or visibly mark text-encoder LoRAs
-      rather than listing them alongside model LoRAs, so nobody picks one and wonders
-      why nothing changed. A silent no-op is the actual bug here.
-      Worth checking while in there whether MAX_LORAS_PER_JOB and the picker's filtering
-      distinguish LoRA target at all, or only by engine.
+      against a 12 GB card while the LoRA is small. (2) Until then, make video-lora-picker
+      refuse or visibly mark text-encoder LoRAs rather than listing them alongside model
+      LoRAs, so nobody picks one and wonders why nothing changed. A silent no-op is the
+      actual bug here. Worth checking while in there whether MAX_LORAS_PER_JOB and the
+      picker's filtering distinguish LoRA target at all, or only by engine. SHARPENED
+      2026-08-24 after reading server/api/comfy/utils/loraChain.ts, which makes this
+      smaller than it first looked but names a real prerequisite. THE WIRING IS MOSTLY
+      THERE. loraChain.ts already implements BOTH chain shapes and documents why:
+      `LoraLoader` takes model + clip and returns model + clip (used on the SDXL lanes
+      where CheckpointLoaderSimple supplies both), and `LoraLoaderModelOnly` takes model
+      only (used by krea2, flux2, kontext and LTX, where CLIP comes from a separate loader
+      and "must not be re-routed"). So applying a LoRA to a text encoder is a matter of
+      routing the LTXAVTextEncoderLoader output through the model+clip shape, not of
+      building new machinery. THE ACTUAL BLOCKER IS THAT NOTHING KNOWS A LORA'S TARGET.
+      Resource carries resourceType: LORA and nothing finer -- no field distinguishing a
+      unet LoRA from a text encoder LoRA. Without that, neither the picker nor the enqueue
+      path can refuse or re-route one, and any guard would have to sniff the filename,
+      which is exactly the kind of guessing that produced the flux2 bug. So the ORDER is:
+      add a nullable target discriminator to Resource first (a `loraTarget` enum of MODEL
+      | TEXT_ENCODER | BOTH, null meaning legacy/unknown = MODEL), backfill the one known
+      text-encoder LoRA, and only then build the guard and the routing on top of it. NOT
+      ATTEMPTED IN THIS PASS, deliberately: changing the LTX graph structure needs a real
+      render to validate, and there is no ComfyUI access from an agent session to confirm
+      a rewired graph actually samples. This is the half that wants a human at a render
+      button.
 
   - id: t-070
     milestone: m3
