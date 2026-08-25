@@ -1715,3 +1715,68 @@ tasks:
       machine made it", it is "it looks like everything else".
 
       '
+  - id: t-041
+    milestone: m3
+    title: "Hidden egg purchases — rarity, and the size rule that keeps them housable"
+    status: waiting
+    gate_human: true
+    approved_by_human: null
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-029
+    note: >
+      Silas, 2026-08-25: "a hidden egg purchase in the store, with different rarity. The
+      challenge is that it should hatch something that fits in the aquarium, so it cannot
+      hatch something beyond its own size." THE CONSTRAINT IS THE DESIGN, and it is the good
+      part. Capacity in this game is WEIGHED rather than counted (SCHEMA.md, 2026-08-24), so a
+      random reward can hand the player a creature they have no room for -- the failure mode
+      every mystery-box mechanic in a capacity-limited game hits. Silas's own sentence carries
+      the fix. RECOMMENDED MECHANISM: the egg occupies its own size in the tank from the
+      moment it is bought, and hatches something of size <= that. Capacity is then checked
+      ONCE, at purchase, by the ordinary rule, with no new capacity logic anywhere; hatching
+      can never overflow, because the space was reserved before the creature existed; the
+      player sees the cost before committing, which keeps it a decision rather than a gamble
+      with a hidden bill; and a hatchling smaller than its egg hands back space, which is a
+      free pleasant surprise. This also subsumes the looser reading of the sentence -- if the
+      egg fit, the fish fits. TWO DIALS, NOT ONE. Egg rarity should govern the RARITY of what
+      hatches and egg size the SIZE, kept independent. Collapsing them makes a MYTHIC egg
+      necessarily enormous, which the bible contradicts: The Conservatory is LEGENDARY at size
+      10 while The Reconciliation is MYTHIC and small. Two dials give a small expensive high-
+      rarity egg and a big cheap ordinary one, which is a more interesting shop than one dial.
+      EGGS HATCH EXISTING SPECIES. The bible closed at 151 under t-037 and SCHEMA.md now says
+      the target is met and is NOT a cap -- going past it needs a reason rather than momentum.
+      An egg system that mints new species would blow through 151 by accident. The egg is an
+      alternate acquisition route into the existing 151, never a species generator. THE
+      BLOCKING FINDING, measured against the finished bible rather than assumed. The obvious
+      filter is "species of rarity R, size <= N, unlock_cost > 0", where the last clause keeps
+      an egg from handing out an evolution terminus and devaluing every chain the bestiary is
+      built on. Only 56 of the 151 species are purchasable at all, and the pools that filter
+      leaves are: COMMON 29, UNCOMMON 12, RARE 3, EPIC 10, LEGENDARY 2, MYTHIC 0. A MYTHIC egg
+      is IMPOSSIBLE and a RARE egg has a pool of three. The system would be broken at exactly
+      the tiers that make it worth having, so "no evolution termini" and "eggs have
+      interesting rarities" are in direct conflict and one of them has to give. THE
+      RECOMMENDATION, and it is a better feature than the thing it replaces: make the rarity
+      dial describe the LINE the egg seeds rather than the hatchling. A MYTHIC egg hatches a
+      plain common fish that is the base of a line ending in a MYTHIC. The egg is a PROMISE
+      rather than a prize, which is precisely Silas's magikarp-to-gyarados framing and
+      precisely why this bible spent batch 3 building 55 lines instead of 151 standalones. It
+      resolves the conflict completely -- every line base is purchasable and small, so every
+      pool is healthy and every hatchling trivially fits its egg. It also makes the size rule
+      do more work: the hatchling fits today, and keeping room for what it BECOMES is the
+      player's problem, exactly as it already is for every chain in the game. DECISIONS FOR
+      SILAS: (1) rarity-of-hatchling or rarity-of-line, per above -- this one gates
+      implementation. (2) What "hidden" means. Three different features hide in the phrase: a
+      mystery box whose contents are unknown but which is plainly on sale; a purchase option
+      that is itself concealed until something is discovered; or both. The phrasing leans to
+      the second. (3) Whether the egg is consumed on hatching. SCHEMA.md's "nothing is ever
+      taken from the player" is a game rule, and an egg carried for a while will feel
+      collected even though it is an item rather than a species. ONE THING THAT MUST NOT
+      HAPPEN: an egg must never be eaten. `diet_role: predator` exists on 57 species and live
+      food is already a mechanic, so a predator treating an egg as feed is the most obvious
+      emergent bug this feature can produce, and it violates the no-degradation rule outright.
+      DEPENDS ON t-029, which settles the SPECIES versus INDIVIDUAL distinction -- an egg
+      hatches an individual, so the schema question lands there first. Overlaps t-030 (shop
+      stock and selling back) and t-016 (rare random experiences), and its pricing belongs to
+      t-019.
+
