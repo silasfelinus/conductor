@@ -2246,8 +2246,42 @@ tasks:
     gate_human: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-25T22:40:00Z'
+    updated: '2026-08-25T23:15:00Z'
     note: |-
+      CONFIRMED ROOT CAUSE: A FAILING DISK IN THE ALEXANDRIA ARRAY (Silas, 2026-08-25T23:15Z).
+      Silas checked the NAS and confirmed a faulty disk. That closes four days of misdiagnosis in
+      this task and resolves every signature it has logged since 2026-08-21:
+
+        * `WinError 1117` is ERROR_IO_DEVICE -- the disk telling the OS a read physically failed.
+          It was never a naming, prompt, or mount-configuration error.
+        * `hostbuf_file_reader_read failed` (the signature this task was opened for) is the same
+          disk, surfacing through a different ComfyUI node -- CLIPTextEncode reading
+          text_encoders/ where UnetLoaderGGUF reads unet/.
+        * `ComfyUI has no matching file for: <registered model>` is `folder_paths` enumerating a
+          partially-readable directory into a short list.
+        * Renders succeeding at 07:20Z and failing by 13:00Z the same day is intermittent
+          read failure, not a configuration change.
+
+      Two things that looked like causes and were not, recorded so they are not re-chased:
+        * The Z: SMB remount (Silas rebuilt it 2026-08-24 on another agent's advice) treated a
+          symptom. Credentials had to be re-saved after that rebuild -- `cmdkey /list` was empty
+          and all four alexandria mappings showed Unavailable -- which is a real second problem
+          but not this one.
+        * A `net use` listing showing every share Unavailable was read here as "the array is
+          down". It was a terminal-session artifact: that listing came from Terminus, a different
+          Windows logon session from the console, and mapped drives are per-logon-session. The
+          console session's mappings were fine. Windows drive letters are not a reliable signal
+          about share health when read from the wrong session.
+
+      OPERATIONAL: do NOT drain the 722-job FAILED backlog until the array is healthy. Every
+      render reads multi-GB model files off the array; sustained reads against a degraded array
+      raise the chance of a second failure during a parity rebuild, which on single parity means
+      data loss. `scripts/drain_failed_art_backlog.py` already refuses to drain without a
+      canary that renders, and `scripts/check_render_box.py` now reports DOWN on
+      failures-with-no-completions rather than on HTTP reachability alone, so neither the manual
+      path nor the auto-art-generate cron will feed the array while this holds. The backlog is
+      preserved and drains in one command once the disk is replaced.
+
       SECOND PRESENTATION, SAME DRIVE (2026-08-25T22:25Z). Silas read the kr-relay log and
       reasonably concluded "this looks like we're sending bad prompts". The relay's own wording is
       what makes that the natural read, and it is wrong twice over -- both messages have now been
