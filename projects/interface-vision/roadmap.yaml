@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     recurring: true
@@ -3101,7 +3101,7 @@ tasks:
       Character gallery provider slice is complete and merged as silasfelinus/kind_robots#2071. The gallery-provider finish pass found no remaining current provider defect large enough to justify another slice; return the reusable front-end consistency umbrella to ready.
 
       Slice 51 re-check (conductor scheduled Agent run, 2026-08-24T~12:40Z session, 20260824-sched-conductor-t104-agentrun1): claimed the umbrella and re-checked the mechanical pools against current kind_robots main (f9b61ca, includes the just-merged Character gallery-provider slice #2071 and its .vue template changes across characters/storybook/stage). The mx-auto+w-full+max-w-(6xl|7xl) root-element grep (literal-adjacent and loose same-file forms) returned zero genuine candidates -- same two documented false positives (pages/play/video-generator.vue, pages/play/challenges/[slug].vue), unchanged since slices 48-50. Could not re-run the exact kr_panel_codemod.py byte-match this session -- the script referenced by t-115/t-116 and slices 45-50 is not present in this conductor checkout (searched scripts/ and repo root, no match); a loose substring grep for the kr-panel-flat shape returns ~29 files but is known unreliable without the codemod's precise stylesheet-source-order token matching (slice 12's documented risk), so not trusted as evidence either way. This is the fourth independent same-day confirmation that the mx-auto/w-full/max-w container pool is exhausted; the kr-panel-flat pool's exact-match status is unverified this slice due to tooling absence rather than re-confirmed clean -- worth noting for whichever session next has the codemod script available. No code change. Not re-litigating slice 49's needs-human scope fork (viewport-grid sub-slice vs. mark mechanical phase complete) -- still open, still Silas's call. Moving on to other ready work this cycle rather than manufacturing a slice against an exhausted/unverifiable pool.
-    updated: '2026-08-25T22:29:33Z'
+    updated: '2026-08-25T22:36:13Z'
     approved_by_human: true
     implementation_pr: 'silasfelinus/kind_robots#2071'
     owner: worker
