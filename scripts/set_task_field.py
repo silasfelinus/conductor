@@ -36,6 +36,18 @@ preserving the hand-maintained per-paragraph-per-line convention used by long-ru
 
 If PyYAML is importable, the result is re-parsed after the edit and the write is refused
 unless the document is valid YAML and the target task actually carries the field.
+
+Destructive `note` replacement guard (conductor/t-129): `note:` is an append-only log in
+practice across this repo's roadmaps -- a chain of `CORRECTION` / `RESOLVED` / `RAN <date>`
+paragraphs, each preserving what it superseded. `--set field=value` substituting the whole
+value is the right default for `status`, `owner`, and every other scalar field, but it is
+the wrong default for `note`: doing `--set note='...'` on a task with substantial existing
+note content silently deletes that history (conductor/t-033 lost 199 lines of diagnostic
+record this way -- repaired in #2816, but the sharp edge was still live). If the existing
+`note` exceeds `NOTE_REPLACE_GUARD_CHARS` and the new value does not still contain it,
+`set_task_field_text`/the CLI refuse unless `force=True` / `--force` is passed. Use
+`append_note_text()` (CLI: `close_task.py --append-note`) to add to the note instead of
+replacing it outright.
 """
 
 from __future__ import annotations
@@ -45,7 +57,13 @@ import difflib
 import pathlib
 import re
 import sys
+import textwrap
 from datetime import datetime, timezone
+
+# `note:` fields longer than this are treated as substantial history -- replacing one
+# outright (rather than appending) requires --force. See "Destructive `note` replacement
+# guard" above.
+NOTE_REPLACE_GUARD_CHARS = 300
 
 
 PROJECTS_DIR = pathlib.Path("projects")
@@ -208,7 +226,115 @@ def render_block_scalar(field: str, style: str, value: str, field_indent: int) -
     return rendered
 
 
-def set_task_field_text(text: str, task_id: str, field: str, value: str) -> str:
+def _decode_scalar(raw: str) -> str:
+    """Best-effort decode of a single-line flow scalar back to plain text.
+
+    Handles the single-quoted form `normalize_scalar` writes ('' -> ') and, for
+    robustness against hand-edited roadmaps, basic double-quoted escapes. A bare
+    (unquoted) scalar is returned as-is.
+    """
+    raw = raw.strip()
+    if len(raw) >= 2 and raw[0] == raw[-1] == "'":
+        return raw[1:-1].replace("''", "'")
+    if len(raw) >= 2 and raw[0] == raw[-1] == '"':
+        return raw[1:-1].replace('\\"', '"').replace("\\\\", "\\")
+    return raw
+
+
+def _field_raw_value(lines: list[str], key_idx: int, value_end: int, field_indent: int) -> str:
+    """Decode the current value of the field at `key_idx` back to plain text.
+
+    Dedents and joins a block scalar's content lines (preserving blank-line
+    paragraph breaks). A flow scalar (quoted or bare) can itself span several
+    physical lines -- e.g. a single-quoted note with a blank line inside it --
+    so this decodes the whole `key_idx:value_end` chunk with PyYAML when it's
+    importable (dedented and re-keyed so it parses standalone), falling back to
+    `_decode_scalar` on just the key line when PyYAML isn't available or the
+    chunk doesn't parse.
+    """
+    style = existing_block_style(lines, key_idx)
+    if style is not None:
+        content_indent = field_indent + 2
+        body: list[str] = []
+        for line in lines[key_idx + 1 : value_end]:
+            if line.strip() == "":
+                body.append("")
+            else:
+                body.append(line[content_indent:].rstrip("\n"))
+        return "\n".join(body).strip("\n")
+
+    match = KEY_RE.match(lines[key_idx])
+    key = match.group("key") if match else None
+
+    if value_end > key_idx + 1 and key is not None:
+        # A flow scalar spilling onto continuation lines -- dedent by field_indent
+        # so the chunk parses as a standalone one-key mapping, then let PyYAML do
+        # the actual folding/escape decoding rather than reimplementing it.
+        chunk = "".join(
+            line[field_indent:] if line.startswith(" " * field_indent) else line
+            for line in lines[key_idx:value_end]
+        )
+        try:
+            import yaml
+
+            parsed = yaml.safe_load(chunk)
+        except Exception:
+            parsed = None
+        if isinstance(parsed, dict) and key in parsed and isinstance(parsed[key], str):
+            return parsed[key]
+
+    rest = match.group("rest") if match else ""
+    return _decode_scalar(rest)
+
+
+def get_task_field_value(text: str, task_id: str, field: str) -> str | None:
+    """Return the current decoded value of `field` on `task_id`, or None if absent."""
+    lines = text.splitlines(keepends=True)
+    start, end, field_indent = find_task_block(lines, task_id)
+    for idx in range(start + 1, end):
+        match = KEY_RE.match(lines[idx])
+        if not match:
+            continue
+        if len(match.group("indent")) != field_indent or match.group("key") != field:
+            continue
+        value_end = field_value_end(lines, idx, end, field_indent)
+        return _field_raw_value(lines, idx, value_end, field_indent)
+    return None
+
+
+def append_note_text(text: str, task_id: str, addition: str, *, width: int = 88) -> str:
+    """Append `addition` as a new paragraph on `task_id`'s `note`, instead of
+    replacing it (conductor/t-129). Always renders the result as a `note: >-`
+    folded block (chomping indicator `-` so re-parsing doesn't pick up a stray
+    trailing newline), regardless of the note's prior style, since an
+    append-only log is the point.
+    """
+    addition = addition.strip()
+    if not addition:
+        raise TaskFieldError("Cannot append an empty note")
+
+    existing = get_task_field_value(text, task_id, "note")
+    wrapped = addition if "\n" in addition else textwrap.fill(addition, width=width)
+    if existing and existing.strip():
+        combined = f"{existing.rstrip(chr(10))}\n\n{wrapped}"
+    else:
+        combined = wrapped
+
+    # combined always contains the prior note as a prefix, so the destructive-
+    # replace guard below would never fire here anyway -- force=True just skips
+    # the (redundant) substring check.
+    return set_task_field_text(text, task_id, "note", combined, force=True, force_block=">-")
+
+
+def set_task_field_text(
+    text: str,
+    task_id: str,
+    field: str,
+    value: str,
+    *,
+    force: bool = False,
+    force_block: str | None = None,
+) -> str:
     if field not in ALLOWED_FIELDS:
         allowed = ", ".join(sorted(ALLOWED_FIELDS))
         raise TaskFieldError(f"Field {field!r} is not allowed. Allowed fields: {allowed}")
@@ -230,8 +356,23 @@ def set_task_field_text(text: str, task_id: str, field: str, value: str) -> str:
             found_field_idx = idx
             break
 
+    if field == "note" and found_field_idx is not None and not force:
+        value_end = field_value_end(lines, found_field_idx, end, field_indent)
+        existing_raw = _field_raw_value(lines, found_field_idx, value_end, field_indent).strip()
+        if len(existing_raw) > NOTE_REPLACE_GUARD_CHARS and existing_raw not in value:
+            raise TaskFieldError(
+                f"Refusing to replace {task_id}'s existing note ({len(existing_raw)} chars) with "
+                "a value that does not contain it -- this looks like a silent note deletion "
+                "(conductor/t-129: --set note=... on a substantial note lost 199 lines of "
+                "diagnostic history this way). Use append_note_text() / close_task.py's "
+                "--append-note to add to the note instead, or pass force=True / --force if this "
+                "replacement is intentional."
+            )
+
     if found_field_idx is not None:
         block_style = existing_block_style(lines, found_field_idx) if "\n" in value else None
+        if force_block and "\n" in value:
+            block_style = force_block
         if block_style is not None:
             replacement_lines = render_block_scalar(field, block_style, value, field_indent)
         else:
@@ -241,7 +382,10 @@ def set_task_field_text(text: str, task_id: str, field: str, value: str) -> str:
         value_end = field_value_end(lines, found_field_idx, end, field_indent)
         lines[found_field_idx:value_end] = replacement_lines
     else:
-        replacement = f"{' ' * field_indent}{field}: {normalize_scalar(value)}\n"
+        if force_block and "\n" in value:
+            replacement_lines = render_block_scalar(field, force_block, value, field_indent)
+        else:
+            replacement_lines = [f"{' ' * field_indent}{field}: {normalize_scalar(value)}\n"]
         # Insert at the end of the task block (before trailing blank separators)
         # so the new line can never split another field's multiline value.
         insert_at = end
@@ -249,7 +393,7 @@ def set_task_field_text(text: str, task_id: str, field: str, value: str) -> str:
             insert_at -= 1
         if not lines[insert_at - 1].endswith("\n"):
             lines[insert_at - 1] += "\n"
-        lines.insert(insert_at, replacement)
+        lines[insert_at:insert_at] = replacement_lines
 
     return "".join(lines)
 
@@ -314,6 +458,15 @@ def main() -> int:
     parser.add_argument("field", help="Task field to set, such as status, owner, updated")
     parser.add_argument("value", help="New scalar value. Use now, null, true, false, numbers, or a string.")
     parser.add_argument("--dry-run", action="store_true", help="Print the diff without writing")
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help=(
+            "Allow replacing a substantial existing `note` outright instead of appending "
+            "(bypasses the conductor/t-129 destructive-note-replace guard). Has no effect "
+            "on any other field."
+        ),
+    )
     args = parser.parse_args()
 
     path = roadmap_path(args.project)
@@ -323,7 +476,7 @@ def main() -> int:
 
     before = path.read_text()
     try:
-        after = set_task_field_text(before, args.task_id, args.field, args.value)
+        after = set_task_field_text(before, args.task_id, args.field, args.value, force=args.force)
         if before != after:
             verified = verify_result(after, args.task_id, args.field)
             if verified is None:

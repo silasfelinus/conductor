@@ -275,6 +275,157 @@ def test_extra_set_fields_are_applied_alongside_status(demo_repo):
     assert task["soft_gate"] is True
 
 
+NOTED_ROADMAP = """\
+project: demo
+kind: software
+tasks:
+- id: t-001
+  title: Demo task
+  status: review
+  owner: worker
+  note: 'CORRECTION 2026-08-01: first theory was wrong, evidence was X.
+
+    RESOLVED TO TWO SEPARATE CAUSES: root cause A affects the claim path, root
+    cause B affects the close-out path, found via git log -p over roadmap.yaml.
+
+    ROOT CAUSE FOUND: A is the actual bug, B is a red herring from a stale
+    checkout in the reproduction session.'
+"""
+
+
+@pytest.fixture
+def noted_repo(tmp_path, monkeypatch):
+    clone = make_remote_and_clone(tmp_path, NOTED_ROADMAP)
+    monkeypatch.setattr(ct, "ROOT", clone)
+    monkeypatch.setattr(ct, "PROJECTS_DIR", clone / "projects")
+    return clone
+
+
+def test_append_note_preserves_prior_note_content(noted_repo):
+    ct.close(
+        "demo",
+        "t-001",
+        "needs-human",
+        "session-b",
+        "close/demo-t-001-session-b",
+        {},
+        dry_run=False,
+        append_note="RESOLVED: root cause A fixed in #2816.",
+    )
+
+    run(["git", "fetch", "-q", "origin"], cwd=noted_repo)
+    doc = yaml.safe_load(
+        run(
+            ["git", "show", "origin/close/demo-t-001-session-b:projects/demo/roadmap.yaml"],
+            cwd=noted_repo,
+        )
+    )
+    task = doc["tasks"][0]
+    assert task["status"] == "needs-human"
+    assert "CORRECTION 2026-08-01" in task["note"]
+    assert "ROOT CAUSE FOUND" in task["note"]
+    assert task["note"].endswith("RESOLVED: root cause A fixed in #2816.")
+
+
+def test_set_note_without_force_refuses_to_delete_substantial_note(noted_repo):
+    with pytest.raises(ct.CloseError) as excinfo:
+        ct.close(
+            "demo",
+            "t-001",
+            "needs-human",
+            "session-b",
+            "close/demo-t-001-session-b",
+            {"note": "Short replacement."},
+            dry_run=False,
+        )
+    assert "Refusing to replace" in str(excinfo.value)
+
+    # Nothing was pushed.
+    run(["git", "fetch", "-q", "origin"], cwd=noted_repo)
+    branches = run(["git", "branch", "-r"], cwd=noted_repo)
+    assert "close/" not in branches
+
+
+def test_set_note_with_force_allows_replacing_note(noted_repo):
+    ct.close(
+        "demo",
+        "t-001",
+        "needs-human",
+        "session-b",
+        "close/demo-t-001-session-b",
+        {"note": "Short replacement."},
+        dry_run=False,
+        force=True,
+    )
+
+    run(["git", "fetch", "-q", "origin"], cwd=noted_repo)
+    doc = yaml.safe_load(
+        run(
+            ["git", "show", "origin/close/demo-t-001-session-b:projects/demo/roadmap.yaml"],
+            cwd=noted_repo,
+        )
+    )
+    assert doc["tasks"][0]["note"] == "Short replacement."
+
+
+def test_main_append_note_end_to_end(noted_repo, monkeypatch):
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "close_task.py",
+            "demo",
+            "t-001",
+            "needs-human",
+            "--session",
+            "session-b",
+            "--branch",
+            "close/demo-t-001-session-b",
+            "--append-note",
+            "RESOLVED: root cause A fixed in #2816.",
+        ],
+    )
+    exit_code = ct.main()
+    assert exit_code == 0
+
+    run(["git", "fetch", "-q", "origin"], cwd=noted_repo)
+    doc = yaml.safe_load(
+        run(
+            ["git", "show", "origin/close/demo-t-001-session-b:projects/demo/roadmap.yaml"],
+            cwd=noted_repo,
+        )
+    )
+    task = doc["tasks"][0]
+    assert "CORRECTION 2026-08-01" in task["note"]
+    assert task["note"].endswith("RESOLVED: root cause A fixed in #2816.")
+
+
+def test_main_rejects_append_note_combined_with_set_note(noted_repo, monkeypatch, capsys):
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "close_task.py",
+            "demo",
+            "t-001",
+            "needs-human",
+            "--session",
+            "session-b",
+            "--append-note",
+            "RESOLVED.",
+            "--set",
+            "note=Something else",
+        ],
+    )
+    exit_code = ct.main()
+    assert exit_code == 1
+    assert "cannot combine --append-note with --set note=" in capsys.readouterr().err
+
+    run(["git", "fetch", "-q", "origin"], cwd=noted_repo)
+    branches = run(["git", "branch", "-r"], cwd=noted_repo)
+    assert "close/" not in branches
+
+
 RECURRING_ROADMAP = """\
 project: demo
 kind: software
