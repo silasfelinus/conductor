@@ -295,7 +295,7 @@ tasks:
   - id: t-009
     milestone: m2
     title: "Server API — tank state, tick, feed, purchase, browse"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -310,9 +310,32 @@ tasks:
       A client that says "I earned 900000 coins" gets told what it actually earned.
       Public tank responses expose display name and tank contents only, never email
       or user id.
+
+      DONE 2026-08-25. Merged silasfelinus/kind_robots#2078: server/api/aquarium/**
+      (GET tank -- creates on first visit, POST tick -- server-authoritative
+      offline-income settlement against lastTickAt with economy.yaml's rate/cap, POST
+      feed, POST purchase for species unlocks, GET browse index, GET
+      browse/[username]/[slug] for one public tank). Economy math lives in
+      server/utils/aquariumEconomy.ts, a pure dependency-free TS transcription of
+      economy.yaml (no runtime YAML read from a deployed function). Scope decisions
+      worth knowing: browse is addressed by (username, slug) since Aquarium.slug is
+      unique per-owner, not globally; purchase implements only
+      type=species -- food purchase already IS the feed endpoint (economy.yaml
+      bundles buy+consume) and upgrade/capacity growth is milestone-driven per
+      economy.yaml, never coin-purchased, so both other purchase types 400 with an
+      explanation rather than inventing a price; deriveFishRarityTier() uses the
+      highest of Character's six Rarity stat fields as a documented no-migration
+      proxy pending a real per-species rarity column; settleTick floors (never
+      rounds) coins/debris to close a chunked-tick-call rounding exploit, caught by
+      its own property test. No prisma/schema.prisma changes -- built entirely
+      against t-007's existing schema. Verified: npm run test:aquarium-economy (new
+      pure-logic + 5000-iteration property test, all pass), vue-tsc --noEmit clean
+      (full repo), eslint/prettier clean, all 40 kind_robots PR checks green before
+      merge. Frontend/UI wiring is separate scope, not built here.
     claimed_by: claude-scheduled-20260825T0130Z-cq-t009
     claimed_at: '2026-08-25T01:31:30Z'
-    updated: '2026-08-25T01:31:30Z'
+    updated: '2026-08-25T01:56:56Z'
+    implementation_pr: 'silasfelinus/kind_robots#2078'
 
   - id: t-010
     milestone: m2

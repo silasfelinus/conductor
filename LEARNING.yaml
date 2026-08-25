@@ -10439,3 +10439,21 @@ records:
     registry/source-of-truth lookup, ship the lenient version first and gate the
     strict version behind an opt-in flag until the source of truth is actually
     complete.
+- date: 2026-08-25
+  project: cthulhuquarium
+  task: t-009
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    close_task.py's --set note=... substitutes the roadmap note field rather than
+    extending it, which silently discarded t-009's original task-spec note the same
+    way it discarded t-033/t-034's investigative history minutes earlier (fixed by
+    hand in kind_robots-adjacent conductor PR #2816). Caught and fixed before this
+    close-out PR opened by re-adding the original note ahead of the DONE summary.
+    The script itself is still unfixed -- every future close-out with `--set note=`
+    is one keystroke away from repeating this. Worth a dedicated follow-up task
+    (append-by-default or an explicit --append-note flag) rather than relying on
+    every future session to catch it by hand, as this one and the #2816 session did.
