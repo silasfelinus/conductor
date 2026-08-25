@@ -2454,8 +2454,8 @@ tasks:
   - id: t-069
     milestone: m3
     title: "LTX text-encoder LoRAs have nowhere to load — both LTX LoRA nodes are LoraLoaderModelOnly"
-    status: ready
-    owner: null
+    status: review
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -2498,6 +2498,8 @@ tasks:
       render to validate, and there is no ComfyUI access from an agent session to confirm
       a rewired graph actually samples. This is the half that wants a human at a render
       button.
+    updated: '2026-08-25T13:46:57Z'
+    implementation_pr: 'silasfelinus/kind_robots#2107'
 
   - id: t-070
     milestone: m3
