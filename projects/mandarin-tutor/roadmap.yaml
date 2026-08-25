@@ -104,16 +104,19 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Add pronunciation playback and durable per-word audio"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-001
-    note: >
-      Every lexical card requires tone-marked pinyin and playable Mandarin audio. Reuse an
-      existing Kind Robots speech path if one is suitable; otherwise establish a cached audio
-      asset contract with deterministic identity so repeated study does not repeatedly incur
-      synthesis work. Preserve text/pinyin as the source of truth for future native clients.
+    note: |-
+      Every lexical card requires tone-marked pinyin and playable Mandarin audio. Reuse an existing Kind Robots speech path if one is suitable; otherwise establish a cached audio asset contract with deterministic identity so repeated study does not repeatedly incur synthesis work. Preserve text/pinyin as the source of truth for future native clients.
+
+
+      Implement deterministic reusable Mandarin reference audio for every lexical card, generated on demand and persisted centrally so web and future mobile clients share the same clip instead of repeatedly synthesizing it. Preserve browser SpeechSynthesis only as a fallback.
+    claimed_by: 2026-08-25T050000Z-mandarin-tutor-t-004-sk7w
+    claimed_at: '2026-08-25T05:00:00Z'
+    updated: '2026-08-25T05:00:00Z'
 
   - id: t-005
     milestone: m2
