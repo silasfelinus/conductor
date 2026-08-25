@@ -4214,3 +4214,44 @@ tasks:
     passes: 0
     note: 'RESOLVED 2026-08-24 (same scheduled session that caused it). A session hand-typed `${KR_API_TOKEN:+SET}${KR_API_TOKEN:-UNSET}` as an ad hoc diagnostic one-liner -- immediately after reading scripts/kr_token_set.sh''s own header comment warning against exactly this pattern -- and leaked the live JWT into this session''s own Bash tool-output transcript. Sandbox-only, not committed to git, not transmitted externally, but a real leak into a place it does not need to be, per the same framing conductor/t-116 already used for the first two occurrences (2026-08-12, 2026-08-13). Logged in full in root TALKBACK.md 2026-08-24. Since a strongly-worded comment on the script itself did not prevent a third recurrence by an agent that had just read it, strengthened AGENTS.md''s own reference (not just the script) to be explicit that this rule covers any secret-shaped variable in any context, including throwaway debugging, and documented the actual proximate cause of why this session reached for a hand probe in the first place: this sandbox does not persist shell env vars between separate Bash tool calls, so an earlier `source scripts/kr_token_set.sh` call silently had no effect on a later call, inviting exactly this kind of improvised recheck. Recommended action for Silas (open, not this task''s to resolve): rotate KR_API_TOKEN out of caution given a live JWT sat in a session transcript, even though scope is sandbox-only. No code change beyond documentation; no roadmap/task-state mutation needed elsewhere.'
     updated: '2026-08-24T21:45:00Z'
+
+  - id: t-129
+    milestone: m2
+    title: "close_task.py's --set note= silently REPLACES an investigative note instead of appending to it"
+    status: ready
+    gate_human: false
+    owner: null
+    stakes: reversible
+    passes: 0
+    note: >
+      Found 2026-08-25 by causing it. Closing cthulhuquarium/t-033 and t-034 with
+      `--set note='RESOLVED ...'` deleted 199 lines of diagnostic record between them and
+      left only the closing summary. Repaired in conductor#2816, but the sharp edge is
+      still there and every project's close-outs run through this script.
+      WHY THIS IS THE WRONG DEFAULT HERE. `--set field=value` substituting is correct for
+      `status`, `owner`, `soft_gate` and every other scalar field. `note` is not a scalar
+      in practice -- it is an append-only log. t-033's own note is a chain of CORRECTION /
+      RESOLVED TO TWO SEPARATE CAUSES / ROOT CAUSE FOUND blocks, each preserving what it
+      superseded, and that convention holds across the repo. On t-033 specifically the
+      superseded reasoning WAS most of the value: three of four diagnoses were wrong, and
+      a future recurrence is far better served by seeing which theories were eliminated
+      and on what evidence than by a summary asserting the right answer.
+      THE FIX, roughly in order of value:
+      (1) Add `--append-note TEXT`, which reads the current note off `origin/main` and
+      writes back `<existing>\n<wrapped new text>` using the same line-oriented editor
+      `set_task_field.py` already uses -- never yaml.safe_dump, so comments and field
+      order survive. Wrap to the file's prevailing width and emit a block scalar (`note:
+      >`), because the current path emits a single-quoted one-line scalar that makes a
+      long note unreadable in a diff and unreviewable in a PR.
+      (2) Make `--set note=` on a task whose existing note exceeds some threshold (a few
+      hundred characters, say) REFUSE unless `--force`, naming `--append-note` in the
+      error. A silent 199-line deletion inside an otherwise-routine status flip is
+      exactly the failure that should be loud.
+      (3) Consider whether the same guard belongs in `set_task_field.py` itself, since
+      close_task.py delegates to it and other callers can hit this the same way.
+      WORTH CHECKING WHILE IN THERE: how many past close-outs already did this. A
+      `git log -p --follow` over projects/*/roadmap.yaml looking for commits whose diff
+      deletes a `note: >` block and adds a short quoted one would find them. Anything
+      found is recoverable from history the same way #2816 recovered these two, and is
+      worth recovering -- a lost diagnostic record costs nothing until the day the
+      problem recurs.
