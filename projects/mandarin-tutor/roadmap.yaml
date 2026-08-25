@@ -290,3 +290,33 @@ tasks:
       Once the web learning loop is stable, document and expose a portable API/domain
       boundary for catalog, sets, media, and learner progress. Evaluate PWA/native packaging
       and native iOS/Android clients without forking curriculum logic or media identities.
+
+  - id: t-014
+    milestone: m3
+    title: "PRODUCTION: GET /api/mandarin is 400ing -- the whole catalog is unservable"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found while implementing t-011 (2026-08-25 sweep): `curl https://kindrobots.org/api/mandarin`
+      returns `{"success":false,"statusCode":400,"message":"HSK level 1 source was not an array.","data":null}`,
+      reproduced 4 times over several minutes (not a one-off flake). This is
+      server/utils/mandarinCatalog.ts's `fetchLevel()` failing on the pinned HSK source
+      (raw.githubusercontent.com/jelleverheyen/hsk-vocabulary@a66fd30/wordlists/inclusive/new/1.min.json).
+      The source itself is fine -- fetching that exact URL directly from this sandbox returns valid
+      JSON (a real array) every time. Likely root cause: GitHub serves raw file content with
+      `content-type: text/plain; charset=utf-8` even for a `.json` path (confirmed via `curl -I`),
+      and `fetchLevel()` calls `$fetch<SourceEntry[], string>(url, { retry: 2, timeout: 20_000 })`
+      with no explicit `responseType`/parse override -- if ofetch's content-type sniffing on the
+      production box's ofetch/ nitro version resolves that as text rather than attempting a JSON
+      parse, `$fetch` would return a raw string, `Array.isArray(string)` is false, and that is
+      exactly the error message thrown. Not proven yet -- didn't have a way to reproduce the
+      literal $fetch call outside the Nuxt/Nitro runtime from this sandbox (no live DATABASE_URL,
+      and $fetch is a Nuxt auto-import, not callable from a plain tsx script) -- but it is the
+      leading theory and cheap to test: force `responseType: 'json'` (or parse `response.text()`
+      with `JSON.parse` manually) in `fetchLevel()` and `loadDictionary()` (mandarinCharacterData.ts
+      has the identical pattern against a different raw.githubusercontent.com source and would have
+      the same exposure) and confirm against a live deploy. Until fixed, the Mandarin Tutor page is
+      fully broken for every user -- getMandarinCatalog()/getMandarinSourceCatalog() throw before
+      building sets, cards, or serving anything.
