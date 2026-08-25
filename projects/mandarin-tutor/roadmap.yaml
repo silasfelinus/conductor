@@ -123,8 +123,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Connect requested words and missing illustrations to durable Krea 2 ArtJobs"
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-001
@@ -135,9 +134,11 @@ tasks:
       Build durable requested-word cards using the shared Kind Robots text-provider service, keep generated linguistic fields explicitly marked as generated, reuse existing Mandarin character enrichment when available, enqueue missing concept art through /api/art/enqueue Krea2 with deterministic provenance/dedupe, and persist card-to-ArtImage linkage server-side rather than in browser-only state.
 
       Requested-word implementation is complete on a fresh current-main branch: durable user-owned generated cards with provider/model provenance, sourced character enrichment, reusable Mandarin audio, Krea2 ArtJobs with server-side reconciliation/retry, and a learner-facing create-from-search flow. Preparing the implementation PR for full CI review.
+
+      Merged kind_robots PR #2089 as cecacf722bdda79234029c4ff7e3bf05cbd0f1a2 after TypeScript, the full Contract Tests suite, schema parity, and the production-container build all passed. Requested Mandarin words are now durable user-owned cards with generated-field provenance, sourced character enrichment, durable reference audio, Krea2 ArtJobs, retry/reconciliation, and the learner-facing create-from-search flow.
     claimed_by: 2026-08-25T052500Z-mandarin-tutor-t-005-sk7y
     claimed_at: '2026-08-25T05:25:07+00:00'
-    updated: '2026-08-25T05:56:00Z'
+    updated: '2026-08-25T08:18:30Z'
 
   - id: t-013
     milestone: m1
