@@ -1182,7 +1182,6 @@ Silas approval is required for the image generation itself.
     `SendMessage` to the same agent, never a fresh `Agent` call — see rule 11's sibling
     guidance) to avoid both sides racing to merge or re-push the same PR.
 
-<<<<<<< Updated upstream
 14. SECRETS AND CREDENTIALS ON THE UNRAID HOST LIVE IN `<checkout>/.secrets/` — in
     practice `/mnt/user/appdata/kind_robots/.secrets/` — and **never** on
     `/mnt/user/pc`. Silas, 2026-08-25: *"We should only be using that directory, and
@@ -1206,7 +1205,7 @@ Silas approval is required for the image generation itself.
     `/mnt/user/pc` path outside a comment. Numbered 14 rather than inserted mid-list on
     purpose — a dozen TALKBACK entries reference "hard rule 12" meaning worktree
     isolation, and renumbering would silently invalidate all of them.
-=======
+
 15. ANY COMMAND YOU HAND A HUMAN TO RUN MUST BE INCAPABLE OF PRINTING A SECRET.
     The existing `KR_API_TOKEN` guidance above covers probes an agent runs in its own
     shell. It does not cover the far easier mistake: writing a command for the operator,
@@ -1236,7 +1235,6 @@ Silas approval is required for the image generation itself.
     explicitly tell them NOT to paste it back. Assume every command you write will have
     its full output pasted into the transcript, because that is the normal and helpful
     thing for someone to do.
->>>>>>> Stashed changes
 
 **Reviewer batch-merge note (companion to rule 9):** `refresh-status.yml` lands a
 `chore: refresh STATUS.md and workspace.html` commit on `main` within seconds of every
