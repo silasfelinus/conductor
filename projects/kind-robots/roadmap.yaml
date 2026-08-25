@@ -2403,7 +2403,7 @@ tasks:
   - id: t-068
     milestone: m3
     title: "Project Artwork panel reports 'No hero yet' for projects whose art exists in Conductor"
-    status: review
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -2440,7 +2440,15 @@ tasks:
       page.vue's existing chain. vue-tsc clean; eslint's 3 errors on the file are pre-
       existing/unrelated (confirmed via git stash diff). CI in progress; will merge when
       green.
-    updated: '2026-08-25T11:37:25Z'
+
+      MERGED silasfelinus/kind_robots#2105 (squash 195ac6c). All 38 exact-head PR checks
+      completed successfully, including TypeScript, layout-contract, Contract Tests, and the
+      full Storybook/Narrative contract suite. entity-art-manager.vue's Artwork panel now
+      falls back to projectAssetFallback() (conductor raw URL) keyed by conductorSlug for
+      project entities when the DB column is empty. Live confirmation that a real project
+      (e.g. Cthulhuquarium) now shows its hero in the panel awaits the next manual Unraid
+      Force Update -- kind_robots has no auto-deploy-on-merge.
+    updated: '2026-08-25T11:41:48Z'
     implementation_pr: 'silasfelinus/kind_robots#2105'
 
   - id: t-069
