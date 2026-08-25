@@ -1889,7 +1889,7 @@ tasks:
       is discovered. Everything else about eggs is settled.
   - id: t-042
     milestone: m2
-    title: "Monster is missing four bible fields, and documents one column as the wrong axis"
+    title: "Monster is missing four bible fields — additive migration, DO NOT MERGE until kind-robots/t-072 is fixed or it is applied by hand"
     status: claimed
     gate_human: false
     approved_by_human: null
@@ -1898,46 +1898,56 @@ tasks:
     stakes: reversible
     depends_on: t-008
     note: >
-      Found 2026-08-25 while writing the t-008 seed script -- i.e. by actually mapping all 151
-      species onto the columns rather than by reading the model and assuming. FOUR BIBLE
-      FIELDS HAVE NOWHERE TO LAND, and one column is documented as holding something it should
-      not. (1) EvolutionKind IS MISSING "SECRET". The bible allows growth | breeding | secret
-      and the enum has only GROWTH and BREEDING. Exactly one species uses it today -- the-
-      proprietor -> the-concern -- and mapping secret onto BREEDING would be a lie, since
-      SCHEMA.md defines breeding as requiring two parents and secret as a hidden individual-
-      stat roll. They are different mechanics and t-029 will implement them differently. The
-      seed script therefore writes the evolvesToId edge and leaves evolutionKind null with a
-      loud warning; adding the enum value and re-running fills it in for free, because the
-      seed is idempotent. This is the only one of the four that currently loses information a
-      player would notice. (2) Monster.behavior IS DOCUMENTED AS THE WRONG AXIS. Its doc
-      comment reads "free-form ecological role tag (the fish bible's diet_role/school_role ...
-      predator/prey, school/anchor/solitary)". Those school/anchor/solitary values are the
-      PRE-MERGE school_role vocabulary, which SCHEMA.md renamed to shoaling | solitary |
-      territorial precisely because it collided with behavior's own school and anchor values
-      and invited exactly this confusion. The bible's `behavior` is the MOVEMENT MODE the
-      renderer reads -- drift, dart, lurk, school, anchor, surface, hover, tumble, cling --
-      and the column name matches it exactly, so t-008 seeds movement mode there and the doc
-      comment needs correcting. (3) diet_role AND school_role HAVE NO COLUMNS AT ALL. 151
-      species carry both; they feed t-025's rivalry rules and t-027's feeding. Two nullable
-      VarChar columns, dietRole and schoolRole, named for the bible fields so the next person
-      cannot repeat mistake (2). (4) THE BIBLE'S OWN `tier` (1-5, "roughly how deep into the
-      game it appears") HAS NO COLUMN, because Monster.tier is taken by the Rarity enum. It is
-      real design data -- 32/41/36/25/17 across the five values -- and it wants a name that
-      cannot be confused with rarity. `depth` or `stage` rather than a second `tier`. Lowest
-      priority of the four; nothing reads it yet. DELIBERATELY NOT FILED HERE: `plate` (the
-      art lineage) and `rivals`. Plate belongs to the bible and the art queue, which both
-      already read it, and nothing in the game needs it at runtime. Rivals is six species and
-      wants a join table rather than a column, which is t-030's call when it builds rivalry.
-      Adding columns nothing reads is how a schema rots. WHY THIS IS ITS OWN TASK AND NOT PART
-      OF t-008. Every item here is a MIGRATION, and this repo is currently living with kind-
-      robots/t-072 -- nothing applies pending Prisma migrations on deploy, so a merged
-      migration sits unapplied and the schema silently diverges from the client. kind-
-      robots/t-071 was a production outage caused by exactly that shape. The seed script works
-      correctly against the schema as it stands today and loses only the one `secret` kind, so
-      the safe split was to land the seed and gate the migration. All four changes are
-      ADDITIVE -- new nullable columns and a new enum value, no drops, no renames -- so the
-      migration itself is the low-risk kind; it is the APPLYING that needs a human at the
-      keyboard.
+      READ THIS FIRST. Every item below is a Prisma migration, and kind-robots/t-072 means
+      nothing applies pending migrations on deploy -- so merging this ships a client that
+      selects columns the database does not have. That is precisely the shape of kind-
+      robots/t-071, which 500'd every prisma.character.findUnique() in production for days.
+      The additive-only nature of these changes does NOT protect against it: a nullable column
+      the client asks for and the database lacks is just as fatal as a required one. Implement
+      freely; do not merge until t-072 is fixed or the migration has been applied by hand and
+      confirmed. The repo's own CI guard (#2081) only checks that a schema diff HAS a
+      migration -- it cannot check that the migration was applied, which is the half that
+      matters here. Found 2026-08-25 while writing the t-008 seed script -- i.e. by actually
+      mapping all 151 species onto the columns rather than by reading the model and assuming.
+      FOUR BIBLE FIELDS HAVE NOWHERE TO LAND, and one column is documented as holding
+      something it should not. (1) EvolutionKind IS MISSING "SECRET". The bible allows growth
+      | breeding | secret and the enum has only GROWTH and BREEDING. Exactly one species uses
+      it today -- the- proprietor -> the-concern -- and mapping secret onto BREEDING would be
+      a lie, since SCHEMA.md defines breeding as requiring two parents and secret as a hidden
+      individual- stat roll. They are different mechanics and t-029 will implement them
+      differently. The seed script therefore writes the evolvesToId edge and leaves
+      evolutionKind null with a loud warning; adding the enum value and re-running fills it in
+      for free, because the seed is idempotent. This is the only one of the four that
+      currently loses information a player would notice. (2) Monster.behavior IS DOCUMENTED AS
+      THE WRONG AXIS. Its doc comment reads "free-form ecological role tag (the fish bible's
+      diet_role/school_role ... predator/prey, school/anchor/solitary)". Those
+      school/anchor/solitary values are the PRE-MERGE school_role vocabulary, which SCHEMA.md
+      renamed to shoaling | solitary | territorial precisely because it collided with
+      behavior's own school and anchor values and invited exactly this confusion. The bible's
+      `behavior` is the MOVEMENT MODE the renderer reads -- drift, dart, lurk, school, anchor,
+      surface, hover, tumble, cling -- and the column name matches it exactly, so t-008 seeds
+      movement mode there and the doc comment needs correcting. (3) diet_role AND school_role
+      HAVE NO COLUMNS AT ALL. 151 species carry both; they feed t-025's rivalry rules and
+      t-027's feeding. Two nullable VarChar columns, dietRole and schoolRole, named for the
+      bible fields so the next person cannot repeat mistake (2). (4) THE BIBLE'S OWN `tier`
+      (1-5, "roughly how deep into the game it appears") HAS NO COLUMN, because Monster.tier
+      is taken by the Rarity enum. It is real design data -- 32/41/36/25/17 across the five
+      values -- and it wants a name that cannot be confused with rarity. `depth` or `stage`
+      rather than a second `tier`. Lowest priority of the four; nothing reads it yet.
+      DELIBERATELY NOT FILED HERE: `plate` (the art lineage) and `rivals`. Plate belongs to
+      the bible and the art queue, which both already read it, and nothing in the game needs
+      it at runtime. Rivals is six species and wants a join table rather than a column, which
+      is t-030's call when it builds rivalry. Adding columns nothing reads is how a schema
+      rots. WHY THIS IS ITS OWN TASK AND NOT PART OF t-008. Every item here is a MIGRATION,
+      and this repo is currently living with kind- robots/t-072 -- nothing applies pending
+      Prisma migrations on deploy, so a merged migration sits unapplied and the schema
+      silently diverges from the client. kind- robots/t-071 was a production outage caused by
+      exactly that shape. The seed script works correctly against the schema as it stands
+      today and loses only the one `secret` kind, so the safe split was to land the seed and
+      gate the migration. All four changes are ADDITIVE -- new nullable columns and a new enum
+      value, no drops, no renames -- so the migration itself is the low-risk kind; it is the
+      APPLYING that needs a human at the keyboard.
+
     claimed_by: 20260825T103026-cthulhuquarium-t042-sched
     claimed_at: '2026-08-25T10:30:26Z'
     updated: '2026-08-25T10:30:26Z'
