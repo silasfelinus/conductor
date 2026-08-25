@@ -219,19 +219,16 @@ tasks:
   - id: t-010
     milestone: m2
     title: "Reach and audit Krea 2 illustration coverage across the core catalog"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-005
-    note: |-
-      Queue missing concrete-concept illustrations in controlled batches, monitor durable ArtJobs through completion, and report rendered/delivered/verified coverage separately. The target is useful imagery for every card where imagery aids recall, not 500 noisy pictures generated merely to satisfy a counter.
-
-
-      First t-010 implementation slice is ready for CI: a deterministic server-side illustration manifest derives directly from Starter 500 plus Casino, assigns stable Krea2 request/media identities, emits category-aware no-text prompts for visual concepts, and explicitly marks function words/components glyph-only where a picture would misteach. This manifest is the source Conductor will use to submit controlled art batches without duplicating the vocabulary catalog.
+    note: 'DONE 2026-08-25 (reconciled by conductor sweep). kind_robots PR #2094 (''feat: add Mandarin illustration manifest'') merged c4b37e0a..4669500a9182f51388e69ccb09ac8aa8443b2ebf-equivalent -- all 39 checks green, merged by silasfelinus. Deterministic server-side illustration manifest derives from Starter 500 + Casino, assigns stable Krea2 request/media identities under /images/mandarin-tutor/cards/v1/, generates category-aware no-text flashcard prompts, and marks primarily grammatical/function entries glyph-only. /api/mandarin/art-manifest is the source Conductor uses to submit controlled durable art batches. Task sat at status:review post-merge with no reconciliation checkpoint -- caught by check_pr_merged_drift.py.'
     claimed_by: 2026-08-25T081930Z-mandarin-tutor-t-010-sk84
     claimed_at: '2026-08-25T08:19:30Z'
-    updated: '2026-08-25T08:21:30Z'
+    updated: '2026-08-25T08:33:23Z'
+    implementation_pr: 'silasfelinus/kind_robots#2094'
 
   - id: t-011
     milestone: m3
