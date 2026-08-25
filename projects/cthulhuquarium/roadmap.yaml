@@ -191,25 +191,14 @@ tasks:
   - id: t-005
     milestone: m1
     title: "Prove the Comfy asset pipeline end-to-end for game art"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      This is the trial-run task Silas called out explicitly -- if agents cannot
-      generate their own game assets, fixing that is in scope, not an excuse. Take
-      three fish art prompts and one tank background from the bible, run them through
-      the kind_robots art pipeline (POST /api/comfy/flux/generate, or
-      /api/art/generate; see conductor docs/art-api.md), and land the results as
-      ArtImage records linked to the fish's Character rows. Then write
-      docs/asset-pipeline.md recording what actually worked: endpoint, auth token
-      type, model, prompt shape, negative prompt, seed handling, dimensions, cost
-      per image, wall-clock per image, and every failure mode hit. If silhouette
-      style proves unreliable at volume, say so plainly and propose the fallback --
-      that finding is more valuable than four pretty images.
+    note: 'DONE (conductor scheduled Agent run, 2026-08-25). Proved the pipeline end-to-end: the two endpoints this task named (/api/comfy/flux/generate, /api/art/generate) are dead ends from outside the home tailnet / have no A1111 server registered -- the real, current path is POST /api/art/enqueue (engine: flux) -> poll GET /api/art/queue/:id -> GET /api/art/image/:id, documented in full in projects/cthulhuquarium/docs/asset-pipeline.md. Enqueued 3 fish (goldfish-common, sardine-common, crawdad-common) + 1 tank background via the real bible art_prompt text; all 4 completed with zero errors on first attempt (ArtImage 18466-18469). Relay agent (Silas-PC) is alive and claims serially, one job at a time; first job after idle cost an 11-minute model-load warm-up, subsequent jobs rendered in 36-45s each -- budget accordingly. Two real gaps flagged plainly rather than papered over: (1) style -- plain-prompt Flux-schnell does not deliver the flat-silhouette game-asset look the bible describes, and dropped the sardines multi-subject schooling composition entirely; a LoRA/checkpoint suited to flat silhouette or a background-removal post-process should be tested before a full ~150-fish production pass. (2) ArtImage.imagePath/path land null on every completed job -- bytes only reachable via imageData base64, matching relay_agent.py doc comments that job completion creates a staging ArtImage with nothing that promotes it to a servable path automatically; confirmed not a slow-async artifact (KR Project 2113s day-old leftover ArtImage shows the identical shape). Could not literally link the ArtImage records to fish Character rows as the task note asked -- no Character rows exist yet, cthulhuquarium/t-008 (seed the bestiary) is still ready, not done; recorded the slug-to-artImageId mapping in the doc for t-008 to wire up once it runs. Separately this session: archived stray leftover KR Project 2113 (duplicate cthuluquarium row from the 2026-08-24 slug-typo mixup) which was tripping check_project_scaffold_drift.py; documented in project-overrides.yaml. Verified: check_project_scaffold_drift.py clean, check_pr_merged_drift.py/audit_human_gates.py re-run, no new findings.'
     claimed_by: scheduled-20260825T003026Z-t005
     claimed_at: '2026-08-25T00:30:27Z'
-    updated: '2026-08-25T00:30:27Z'
+    updated: '2026-08-25T00:51:45Z'
 
   - id: t-006
     milestone: m1
