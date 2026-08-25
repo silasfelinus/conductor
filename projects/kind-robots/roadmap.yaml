@@ -2717,11 +2717,11 @@ tasks:
   - id: t-074
     milestone: m3
     title: "Nothing in the frontend calls POST /api/conductor/overrides -- the workspace priority/status control isn't wired to it"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
+    note: >-
       Found 2026-08-25 while fixing t-067 (overrides.post.ts regenerating
       project-overrides.yaml instead of patching it). The task note also asked to check
       whether Silas's report -- changing a project's priority in the workspace UI not
@@ -2742,9 +2742,30 @@ tasks:
       superuser security finding) already claims t-073 in its own diff. Re-run
       scripts/next_free_task_id.py before claiming if that PR has since merged and this
       note is stale.
+
+      IMPLEMENTED 2026-08-25 in silasfelinus/kind_robots, merged as PR #2106. Root cause was
+      more specific than originally filed: nothing calls POST /api/conductor/overrides
+      (confirmed, that endpoint is dead code), but a separate already-working path exists --
+      projectStore.updateProject() routes status/priority through updateLifecycle() -> POST
+      /api/conductor/project-state, which updates the Project row AND patches project-
+      overrides.yaml via updateConductorProjectOverride() whenever the project carries a
+      conductorSlug. That machinery already worked; nothing in the UI ever called it with
+      status/priority because no editable control existed. conductor-manager.vue always routes
+      a project slug to ProjectDetail (never ConductorPage), so ProjectDetail is the sole live
+      project-view surface. Added admin-gated Status/Priority select fields to its existing
+      Project Profile panel, wired through the same patchProject()/updateProject() path
+      already used by the isPublic/isMature/allowReviews toggles in that component. vue-tsc
+      clean, eslint clean, test:layout-contract holds (new fields use the panels existing
+      container-query grid, not a viewport breakpoint). NOT verified end-to-end against
+      production (no live admin session/DB access from this sandbox to confirm an edit
+      produces a project-overrides.yaml commit) -- the code path exercised is not new, it
+      already drives the toggles a few lines above. Kaizen filed in the PR: conductor-page.vue
+      still carries an unreachable duplicate of the old read-only badge display, dead code per
+      the same routing, worth a follow-up cleanup.
     claimed_by: claude-scheduled-20260825T1233Z-kr-t074
     claimed_at: '2026-08-25T12:35:15Z'
-    updated: '2026-08-25T12:44:17Z'
+    updated: '2026-08-25T12:51:31Z'
+    implementation_pr: 'silasfelinus/kind_robots#2106'
 
   - id: t-075
     milestone: m3
