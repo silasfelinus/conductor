@@ -219,7 +219,7 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Map the curriculum to official Mandarin proficiency tests"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -235,9 +235,19 @@ tasks:
       standard metadata + pure coverage module + CLI audit script). Live run against
       production: only HSK levels 1-2 of 7 sourced; levels 3-7 available upstream and named in
       nextTargets. Watching CI.
+
+      DONE: silasfelinus/kind_robots#2117 merged (squash d0354264). Added
+      utils/mandarinProficiencyStandards.ts (HSK 3.0 metadata, 7 official cumulative levels +
+      reference vocabulary sizes) and utils/mandarinProficiencyCoverage.ts (pure coverage
+      computation, sourced-status derived from live cards so it can't drift). CLI wrapper
+      utils/scripts/auditMandarinProficiencyCoverage.ts with a self-test wired into contract-
+      tests.yml and a live mode. Live finding: only HSK levels 1-2 of 7 sourced (1,256 cards);
+      levels 3-7 fully available upstream (2,225/3,197/4,258/5,384/10,993 cumulative entries)
+      and not yet ingested -- concrete next targets for future roadmap work, replacing the
+      arbitrary card-count framing. All 40 kind_robots checks green before merge.
     claimed_by: claude-scheduled-20260825-mandarin-t008
     claimed_at: '2026-08-25T23:28:26Z'
-    updated: '2026-08-25T23:38:35Z'
+    updated: '2026-08-25T23:47:17Z'
 
   - id: t-009
     milestone: m3
