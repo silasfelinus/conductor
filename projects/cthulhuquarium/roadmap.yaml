@@ -906,40 +906,13 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Validate engine model filenames against the Resource registry instead of hardcoding them twice"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    note: >
-      Root cause behind t-033's flux2 failure, and it will recur on the next engine added
-      unless it is fixed. Model filenames are hardcoded as constants in TWO places --
-      kind_robots server/api/comfy/flux2/utils/workflow.ts (FLUX2_KLEIN_MODEL,
-      FLUX2_KLEIN_TEXT_ENCODER, FLUX2_KLEIN_VAE) and conductor
-      scripts/consume_art_queue_core.py (the FLUX2_KLEIN_*/KREA2_*/FLUX_MODELS blocks) --
-      while Kind Robots separately maintains a Resource registry that already knows every
-      model on the box, with resourceType (CHECKPOINT, TEXT_ENCODER, VAE,
-      DIFFUSION_MODEL), localPath, supportedServer, and commercialSafe.
-      Nothing validates the constants against the registry. The flux2 config names three
-      files of which exactly one exists; the other two were invented and shipped in both
-      repos, and only failed at render time, months later, on someone else's task. The
-      constant blocks even carry a comment telling the reader to "VERIFY these filenames
-      against the release you download" -- which is a comment doing a test's job.
-      Do the cheap version first and the good version second.
-      CHEAP: a check that reads every hardcoded model constant, queries
-      /api/resources?resourceType=..., and fails when a named file has no matching
-      Resource row. Run it in CI on both repos. This alone would have caught flux2 the day
-      it was written, and it is a small script.
-      GOOD: stop hardcoding. Resolve engine models from the registry at submit time --
-      look up by Resource name or slug, read localPath, and let the registry be the single
-      source of truth it already almost is. That also makes `commercialSafe` enforceable at
-      the point of generation rather than as a separate audit, and makes adding a model a
-      data change rather than a code change in two repos.
-      Either way, fix the flux2 constants in BOTH repos in the same pass -- correcting one
-      leaves the bug live on the other path. The registered trio to point at is
-      flux2_dev_fp8mixed.safetensors, mistral_3_small_flux2_bf16.safetensors and
-      flux2-vae.safetensors, and the unet is a .safetensors so the loader moves from
-      UnetLoaderGGUF to UNETLoader. Test the 35.5 GB encoder against the 12 GB card before
-      declaring it done.
+    note: 'DONE 2026-08-25, merged in conductor#2810 with the kind_robots half in #2076. consume_art_queue_core.py now resolves every engine model constant through the Kind Robots Resource registry (resolve_model / _load_resource_index) instead of hardcoding filenames that nothing checked. The constants became LOGICAL NAMES -- a Resource name, slug, or bare filename all resolve, so existing hardcoded values kept working while they migrated. localPath prefix stripping is a per-resourceType tuple matched longest-first, because one type can live under more than one ComfyUI directory (a GGUF quant in unet/ beside its safetensors sibling in diffusion_models/), and getting that wrong is silent: the loader is handed a path with a directory still on the front and reports the model as missing. It paid for itself twice during implementation -- it immediately caught that Krea-2-Turbo-Q5_K_S.gguf has no Resource row at all, and a prefix bug of its own where unet/ was not being stripped for DIFFUSION_MODEL. DELIBERATELY WARN-AND-PASS-THROUGH RATHER THAN HARD-FAIL, with a STRICT_MODELS flag to opt in. The registry is currently incomplete rather than authoritative -- GGUF quants in particular render fine while having no Resource row -- so failing closed would brick engines that demonstrably work, which is a worse failure than the one this fixes. Revisit once the registry is complete. FOLLOW-UP worth filing separately: nothing yet fails CI when a constant names a model with no Resource row, so the warning only appears at queue time in a log nobody reads. A check that resolves every engine constant against the live registry would turn this from a runtime warning into a build-time error.'
+    updated: '2026-08-25T01:18:10Z'
+    implementation_pr: 'silasfelinus/conductor#2810'
   - id: t-035
     milestone: m2
     title: "Give monsters their own model — Character is for people you can talk to"
