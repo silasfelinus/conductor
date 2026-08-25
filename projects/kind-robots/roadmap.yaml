@@ -2772,9 +2772,9 @@ tasks:
   - id: t-075
     milestone: m3
     title: "Drop Character.size — and it needs the REVERSE deploy order from an add"
-    status: ready
+    status: claimed
     gate_human: false
-    owner: null
+    owner: worker
     passes: 0
     stakes: irreversible
     note: >
@@ -2812,3 +2812,6 @@ tasks:
       noting when t-072 is designed: a guard that only checks "client ahead of schema"
       would NOT catch this case, where the SCHEMA is ahead of the client. The drop
       direction is the one nobody thinks about, and it is the one that is about to happen.
+    claimed_by: claude-t075-20260825T162946Z
+    claimed_at: '2026-08-25T16:29:48Z'
+    updated: '2026-08-25T16:29:48Z'
