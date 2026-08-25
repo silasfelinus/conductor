@@ -8,9 +8,9 @@ author: Reviewer (Claude), from Silas's pitch on kind_robots Project 2112
 
 ## What it is
 
-A darkly funny idle aquarium game. You inherit a tank that was already in the back
-of the curiosity shop before you got there. Things live in it. You feed them. They
-grow. Some of them are grateful.
+A darkly funny idle aquarium game. You come in out of whatever is happening
+outside, and they are so pleased to see you. There is a tank. Things live in it.
+You feed them. They grow. Some of them are grateful.
 
 Mechanically it is Insaniquarium's loop — click for coins, buy food, feed fish,
 fish drop more coins, buy upgrades, unlock stranger fish — with a cookie-clicker
@@ -25,6 +25,152 @@ game is fond of them. So are you, eventually.
 **The one-line pitch:** *It sits there, in the back of the curiosity shop. Why can't
 I find any of these fish on Wikipedia? But this is my aquarium, and it is mine.*
 (Lifted from Silas's own 2020 index.html copy — the tone was right six years ago.)
+
+## The setting — you came in out of it
+
+Silas, 2026-08-25, and this is the frame the whole game hangs off:
+
+> *"You are welcomed after stumbling into the aquarium store. Things are* oof *outside,
+> but they are welcoming you, and maybe it will be better if you distract yourself.
+> After all, everything out is in, or so they tell you..."*
+
+**The opening.** You stumble in. The door closes behind you. It is warm, and green-lit,
+and someone is genuinely delighted you came. Nobody asks what it is like out there.
+Charlotte offers you something to feed.
+
+**Outside is never shown, named, dated, or explained.** This is a hard rule, not a
+tease. There is no establishing shot, no broadcast, no survivor with news, no flashback,
+no dropped hint that a clever player assembles into a timeline. *Oof* is the entire
+specification and it is enough. The dread is not in what happened; it is in the fact
+that a cheerful woman in a clean apron will not mention it, and neither will you.
+
+Anything that explains outside destroys this. If a future task proposes lore, a prologue,
+or a "what happened" reveal, the answer is no, and this paragraph is why.
+
+**"Everything out is in, or so they tell you."** Three readings, all true at once, and
+none of them ever confirmed:
+
+- *Reassurance.* Everything out there is also in here — catalogued, fed, behind glass.
+  Nothing new can arrive. You are safe because the world is already inventoried.
+- *Inventory.* The aquarium is what's left. The tanks are not a collection of the world,
+  they are the collection *of the world*.
+- *Threat.* The things outside are the things inside. You have been feeding them.
+
+**This makes the bestiary the win state for a real reason.** Completing the
+Ichthyonomicon was already the goal; now it is an inventory of everything that exists.
+The last empty page is not a completionist's itch. It is the question of whether the
+list ends.
+
+**Distraction is the mechanic, diegetically.** Charlotte does not ask you to save
+anything. She asks whether you would like to feed something. The idle loop *is* the
+coping — and that is why FISH DO NOT DIE and progress never degrades. A refuge that took
+things away from you would not be a refuge. The no-degradation rule stops being a genre
+convention and becomes the promise the building is making.
+
+**It also explains the staff.** Charlotte's dreadful cheerfulness is not a quirk, it is
+the coping mechanism wearing an apron. Wilbur's missing fingers and fresh bandages are
+what keeping the place running actually costs, and he will not say so, and she will not
+either. Neither of them is lying to you. They are doing the same thing you came in to do.
+
+**The door.** There is a door. It stays closed, and it is never opened, because the
+door is not the way out and by the end you will understand why.
+
+## The finale — you are also in an aquarium
+
+Silas, 2026-08-25: *"finale moment is the realization that you are also in an
+aquarium."*
+
+That is the whole ending, and it closes "everything out is in" on itself. The shop is a
+tank. The warm green light is tank light. The one lit place in the world is lit the way
+an exhibit is lit. Somebody is on the other side of the glass, and has been the whole
+time, and is fond of you.
+
+**IT IS ALREADY FORESHADOWED BY A SHIPPING MECHANIC, which is why it will land.**
+Browsable public aquariums (t-014) were in the MVP from day one, described in this very
+document as *"you visit someone's aquarium the way you'd look in someone's window."*
+Every player has spent the entire game looking into other people's tanks. The finale is
+the realisation that the view goes both ways. Do not add hints; the hint has been the
+core loop.
+
+Everything else already points at it too, and none of it was designed to:
+
+- **Fish do not die and progress never degrades.** You are being kept, and kept well.
+- **The food is alive.** So is yours.
+- **The leaderboard** ranks specimens.
+- **The Ichthyonomicon** is an append-only record of every species ever held. Somewhere
+  there is one with you in it.
+- **The idle loop** means the tank is observed while you are away.
+
+**HOW IT LANDS, Silas 2026-08-25:** *"discovered after buying the last and largest
+aquarium, when you get to see a giant eye moving around and watching you from a window."*
+
+**The trigger is the tank, not the bestiary.** Every upgrade you have ever bought made
+your enclosure bigger. The last and largest one is big enough to see out of. You spend
+the whole game paying for a better tank and the reward is finding out it is a tank.
+(An earlier draft of this section gated the ending on completing the Ichthyonomicon.
+That was wrong and is superseded: the collection is what makes the world feel
+inventoried, but the *upgrade path* is what has been quietly building the enclosure, and
+the payoff belongs to the thing that set it up.)
+
+**The eye is moving around, and that is the entire craft of it.** It is not staring. It
+is not a jump scare. It drifts past the window, pauses the way you pause at a tank you
+have already seen today, and goes on with whatever it was doing. It looks at you the way
+you have been looking at your fish for hours: fondly, distractedly, in passing. Being
+*stared at* is frightening. Being **unremarkable** is worse, and it is the note this
+whole game has been playing.
+
+Render it in the same vibrant cartoon register as everything else — glossy, saturated,
+almost friendly. A horror-styled eye would let the player file it under "spooky bit". A
+cheerful one does not give them anywhere to put it.
+
+**The window, not the door.** The door has stayed closed all game and is never opened;
+it was never the way out. The window is not an exit either. It is the viewing pane, and
+it has always been on the other side.
+
+**Words are optional and probably unnecessary.** If anything is written, it is one more
+field note in the same dry placard register the player has been reading for hours
+without once asking whose voice it is — two sentences, faintly concerned, explaining
+nothing. But the eye does the work alone. If the text is doing the lifting, cut it.
+
+**Rules, and they matter more than the idea:**
+
+1. **Earned, never announced.** The player should get there a beat before the game says
+   it. If the text has to spell it out, the foreshadowing failed and the fix is upstream,
+   not a longer paragraph.
+2. **Once.** No callbacks, no winking afterward, no achievement named after it. A joke
+   repeated is a joke explained.
+3. **The game continues.** This is the hard one. Afterwards you go back to feeding, and
+   nothing has changed, and nothing is taken away — because progress never degrades and
+   that rule does not get suspended for a mood. The horror is that it is still nice here.
+4. **Still never explained.** This is not a reveal of what happened outside. It is a
+   reveal of *where you are*. The "outside is never explained" rule survives the ending
+   completely intact; if anything the ending is why it had to.
+5. **Gate it on the last and largest aquarium, not the clock and not the bestiary.**
+   It belongs to whoever finished paying for the enclosure. That also means the terminal
+   tank upgrade must actually exist as a purchasable end of the line rather than an
+   open-ended capacity curve — an idle game that never stops selling you a bigger tank
+   has no final purchase to hang this on. See t-032's capacity work and ECONOMY.md's
+   slots_cap progression.
+6. **Do not let it be spoiled by the shop.** Whatever the last tank is called, its name
+   and its store copy must not gesture at the ending. Charlotte sells it the way she
+   sells everything: cheerfully, and without comment.
+
+**Tasks this touches.** None need to change now; they need to know this is coming.
+
+- **t-039 — THE TRIGGER DOES NOT CURRENTLY EXIST**, and this is the only item here that
+  is a real problem rather than a note. There is no purchasable tank in the design at
+  all: capacity is `slots_cap`, an abstract number, and it grows from *milestones* keyed
+  to bestiary breakpoints. ECONOMY.md states the principle outright — *"coins buy
+  breadth, milestones buy room"* — so "buying the last and largest aquarium" contradicts
+  a decided rule rather than merely lacking an implementation. Filed as t-039 with the
+  tension stated and a recommendation; it needs Silas, not a quiet reinterpretation.
+- **t-014 (public tanks)** — the foreshadowing, already shipped. Nobody optimises the
+  window framing out for being flavourless.
+- **t-028 (milestones and interstitials)** — the delivery surface for the eye.
+- **t-017 (tank decoration and layout)** — whatever renders the tank has to be able to
+  render a window in it, once.
+- **t-031 (Ichthyonomicon)** — where the optional final placard would live.
+- **t-018 (leaderboard)** — ranks specimens. Leave it alone; it is funnier untouched.
 
 ## Who it serves
 
@@ -41,11 +187,22 @@ excuse to descope. Every asset pipeline gap this surfaces is a finding, not a bl
 
 ## Creative direction
 
-**Visual.** Silhouette-forward. Dark water, strong backlighting, fish read as shapes
-before they read as anatomy. Limited palette per tank — one sickly light source, one
-accent. Fish get expressive eyes; everything else can stay murky. This is deliberately
-chosen to be *generatable*: silhouettes and rim-light survive Comfy's inconsistency far
-better than detailed, consistently-colored creature art would.
+**Visual — corrected 2026-08-25.** Vibrant saturated cartoon creature illustration.
+Thick confident outlines, exaggerated asymmetric anatomy, glossy wet highlights, bold
+colour, playful macabre storybook monsters against dark water.
+
+This replaces the silhouette-forward direction this section carried until 2026-08-25.
+Silhouettes were chosen on the theory that they would survive Comfy's inconsistency
+better than detailed creature art. The first real batch disproved it — Silas, on ten
+returned renders: *"they almost all look like real animals, not misshapen horrors from
+the deep with a cartoonish playfulness... I want creative, colorful, and vibrant monster
+fish and backgrounds."* A dark, low-detail, rim-lit prompt reads to the model as
+*underwater photograph*, so restraint in the prompt bought realism, which is the one
+thing this bestiary cannot be. Every prompt now carries an explicit negative against
+photorealism. Full rules in the bible's `fish/SCHEMA.md`.
+
+The warmth matters more than it looks. The interior is the only lit place in the world
+the game will show you, and it should feel like somewhere you would want to stay.
 
 **Written.** Every fish has a one-line field note written like a museum placard by
 someone who is not telling you everything. Dry, short, faintly concerned. No jokes with
@@ -149,6 +306,21 @@ number is from Silas's stated goal and it is the difference between a demo and a
   Anything that would need a maturity flag doesn't belong in the bestiary.
 - Public tank browsing shows a display name and a tank, never an email or a user id.
 - The economy must be tunable from data, not code, so balance passes don't need a deploy.
+- **Outside is never shown, named, dated, or explained.** No prologue, no broadcast, no
+  survivor with news, no flashback, no assemblable timeline. This is a hard creative
+  gate in the same class as the ones above: a task that proposes lore gets refused, not
+  negotiated. It is the single easiest thing to erode, because every individual addition
+  will look like harmless texture and each one costs a little of the ending.
+- **Nobody says the finale out loud before the finale.** Charlotte and Wilbur do not
+  hint, do not wink, and are not in on it. Neither is the UI. The foreshadowing is the
+  core loop — you have been looking into other people's tanks all game — and that is
+  enough. A line of dialogue that gestures at the glass is worth less than the mechanic
+  and costs the whole payoff.
+- **`t-014`'s window framing is load-bearing, not flavour.** "You visit someone's
+  aquarium the way you'd look in someone's window" is the finale's entire setup. If a
+  later pass wants to make public tanks feel more like a leaderboard and less like
+  looking in a window, that trade is a creative decision about the ending, not a UX
+  tweak, and it comes back here first.
 
 ## Decided (Silas, 2026-08-24, in session)
 
