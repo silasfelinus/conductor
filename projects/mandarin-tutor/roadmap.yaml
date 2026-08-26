@@ -237,19 +237,31 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Add spaced repetition, mastery history, and study diagnostics"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-001
-    note: |-
+    note: >-
       Record card exposure and recall outcomes, schedule review with a simple inspectable spaced-repetition model, and distinguish recognition of meaning, Hanzi, and pronunciation when useful. Preserve exportable learner state so a later mobile client can share progress rather than starting over.
 
 
       Claim t-009 with an interaction-first sequence based on Silas's approved UX assessment. Establish explicit Study vs Explore modes before persisting SRS/mastery. Study becomes a deliberate recall loop (challenge -> reveal -> pronunciation -> self-rating -> next) with answer-bearing pinyin, art, and history hidden before reveal. Explore keeps search, requested words, decomposition/history, provenance, and deck curation. SRS/mastery history will attach to Study outcomes rather than cementing the current all-purpose page.
+
+      IMPLEMENTED 2026-08-26 (conductor scheduled Agent run): established explicit Study vs
+      Explore modes per this note's own sequencing ("modes before persisting SRS/mastery").
+      Study is a deliberate recall loop (challenge -> reveal -> pronunciation via the existing
+      MandarinVoiceCoach -> self-rating Again/Hard/Good/Easy -> next), with
+      pinyin/illustration/meaning hidden until reveal. Explore is the prior all-purpose page,
+      unchanged. Self-ratings are logged client-side only (studySessionLog, in-memory, not
+      persisted server-side) -- durable SRS scheduling and mastery-history persistence is
+      filed as its own follow-up, t-015, since it is genuinely separable scope this note
+      itself called out. See silasfelinus/kind_robots#2118 for the full diff and verification
+      (eslint, vue-tsc, layout-contract, existing mandarin self-tests all clean).
     claimed_by: claude-scheduled-20260826T002900Z-mandarin-t009
     claimed_at: '2026-08-26T00:30:28Z'
-    updated: '2026-08-26T00:30:28Z'
+    updated: '2026-08-26T00:38:37Z'
+    implementation_pr: 'silasfelinus/kind_robots#2118'
 
   - id: t-010
     milestone: m2
