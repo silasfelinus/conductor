@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-26T23:30:12Z
+Generated: 2026-08-26T23:34:29Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **767**
-- Outcomes: blocked: 15, cancelled: 1, done: 751
+- Closed tasks recorded: **768**
+- Outcomes: blocked: 15, cancelled: 1, done: 752
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -26,7 +26,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 25 | 100% |
-| conductor | 81 | 100% |
+| conductor | 82 | 100% |
 | conductor-app | 4 | 100% |
 | cthulhuquarium | 8 | 100% |
 | davinci | 8 | 100% |
@@ -68,7 +68,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 751 | 99% |
+| software | 752 | 99% |
 
 ## Failure categories
 
@@ -89,6 +89,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-26 `conductor/t-130` — check_render_box.py's render_throughput_verdict short-circuited on "any completion in the window is healthy," hiding a stale RUNNING claim with a PENDING backlog behind older completions -- the distinguishing signal (staleRunningCount, queueDepth.PENDING) was already in the same stats payload the caller fetches and just wasn't being read. When a health-check function ignores fields already present in its input, check whether the unused fields are exactly the signal needed before reaching for a new API call or backend change.
+
 - 2026-08-26 `interface-vision/t-104` — Slice 52: before searching fresh, checked slice 39's flagged runner-up candidate (user-manager.vue's managerError/"Unknown user tab" notices) against the roadmap note history first and found slice 40 had already closed it -- avoided a wasted duplicate-work search. The actual fix this slice (watchlist-browse.vue's errorMessage banner missing font-semibold) was found by grepping for the exact hand-rolled kr-note shape and then confirming a genuine live sibling inconsistency via a second, narrower grep for the same errorMessage variable/aria-live wrapper pattern already converted elsewhere (newsfeed-feed.vue) -- cheap to check and turns a plausible-looking candidate into a documented, not-blind substitution matching the standing "same element rendering two different ways across sibling components" rule.
 
 - 2026-08-26 `mandarin-tutor/t-017` — A Pinia store method entangled with Nuxt/user-store runtime (loadCloudState) can still get real regression coverage without a mock framework: extracting its merge decision (server-authoritative, local-only entries kept and re-pushed) into two pure functions in a plain utils module, then having the store call them, made the logic testable with node:assert alone -- same pattern as server/utils/mandarinSrs.ts. No behavior changed; the store's call sites shrank from inline set-difference logic to two function calls.
@@ -107,8 +109,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-25 `kind-robots/t-074` — t-074 was filed on an incomplete diagnosis: "nothing calls POST /api/conductor/overrides" was true but not the actual bug -- a separate, already-wired path (updateProject -> updateLifecycle -> POST /api/conductor/project-state) already synced status/priority to project-overrides.yaml; the real gap was that no UI control ever called it, only read-only badges existed. Also found conductor-manager.vue always routes a project slug to ProjectDetail, never ConductorPage, making ConductorPage's own parallel project-detail rendering path permanently dead code. When a task's note says "nothing calls endpoint X", grep for a second endpoint achieving the same effect before assuming X itself is the fix -- and check the actual component-routing logic, not just which components exist, before deciding where a new control belongs.
 
-- 2026-08-25 `conductor/t-129` — close_task.py's --set note=... silently replaced a task's whole note instead of appending, which is how cthulhuquarium/t-033 and t-034 lost 199 lines of diagnostic history in one routine status flip. set_task_field_text() now refuses to replace a substantial note with a value that doesn't still contain it unless force=True, and close_task.py gained --append-note. Before widening a shared roadmap-editing primitive's default behavior, grep every caller (roadmap_text_patch.py's apply_task_field_ops feeds the automated task-events processor) -- one existing test was exercising the exact destructive pattern the guard now catches, not representative of the real caller's already-safe append-then-set convention.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-26T23:30:12Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-26T23:34:29Z_
