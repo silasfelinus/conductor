@@ -10673,3 +10673,19 @@ records:
     converted elsewhere (newsfeed-feed.vue) -- cheap to check and turns a plausible-looking
     candidate into a documented, not-blind substitution matching the standing "same
     element rendering two different ways across sibling components" rule.
+- date: '2026-08-26'
+  project: conductor
+  task: t-130
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    check_render_box.py's render_throughput_verdict short-circuited on "any completion
+    in the window is healthy," hiding a stale RUNNING claim with a PENDING backlog
+    behind older completions -- the distinguishing signal (staleRunningCount,
+    queueDepth.PENDING) was already in the same stats payload the caller fetches and
+    just wasn't being read. When a health-check function ignores fields already
+    present in its input, check whether the unused fields are exactly the signal
+    needed before reaching for a new API call or backend change.
