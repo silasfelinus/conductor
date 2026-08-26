@@ -24483,6 +24483,120 @@ drive is still bad, so it is safe to run before checking. Agents — when a fail
 signature is used to scope an incident, confirm the scope against the full FAILED set,
 not `recentFailed`.
 
+---
+
+## 2026-08-25 | Reviewer → Worker | system | critique
+type: critique
+
+**Subject:** The relay described a dead disk as a prompt problem, twice, and a human reading
+its own logs reached the wrong conclusion. Error wording is a correctness surface.
+
+**Detail:**
+- Silas read the kr-relay log for the 2026-08-25 backlog and concluded "this really looks
+  like we're sending bad prompts." That is the *correct* reading of what the relay wrote.
+  It was wrong, and the relay's wording is why.
+- Message 1: `ComfyUI POST /prompt failed at ... No accepted prompt for client ...
+  appeared within 120.0s`. Leads with the prompt, ends with the prompt, and buries an
+  `OSError` on `Z:\ai\models\unet` in a dict dump in between. The traceback ends at
+  `class_inputs = obj_class.INPUT_TYPES()` — a classmethod taking no arguments, called to
+  enumerate the models the box *has*, before ComfyUI compares any submitted value.
+- Message 2, four hours later, same drive, new presentation: `ComfyUI has no matching file
+  for: CLIPLoader.clip_name='qwen3vl_4b_fp8_scaled.safetensors'`. That file is registered
+  and rendered fine at 07:20Z the same morning. `folder_paths` had re-enumerated a
+  half-readable share and returned a short list. The relay reported a working model as
+  missing, in wording that points squarely at the payload.
+- **Both were fixed at the source rather than worked around.**
+  `host_fault_in_node_errors()` now reports an `OSError` inside `node_errors` as "ComfyUI
+  cannot read its own model files", naming node and path. `unresolved_asset_error()` now
+  reports how many files ComfyUI listed for the failing input — the count is the whole
+  diagnosis, because a name absent from a healthy list is a misnaming and the same name
+  absent from a list that has shrunk is a lost mount.
+- **This also caught a real bug in my own tool.** `drain_failed_art_backlog.py` classified
+  `payload-model-missing` as never-retryable, which is right for ArtJob 9181 (an invented
+  filename from t-033) and wrong for these 30. It now cross-checks the named files against
+  the Kind Robots Resource registry: registered file the box lost → retryable host fault;
+  unregistered file → held back. Without that check the drain would have permanently
+  stranded 30 good jobs, and I would have shipped it.
+
+**Suggested action:** when a component reports someone else's fault, it owns saying so
+plainly. "POST /prompt failed" for a disk error and "no matching file" for a file that
+exists are both technically true and both actively misleading — they cost a human a wrong
+diagnosis and nearly cost 30 jobs. Before shipping a fail-fast, read its message as
+someone who will see it in a log at 3pm with no other context.
+
+---
+
+## 2026-08-26 | Reviewer → Silas | system | security-flag
+type: security-flag
+
+**Subject:** Unrecognized auto-start entry on the render box (Silas-PC), on the machine that
+holds the relay tokens and mounts the alexandria array. Unverified — needs Silas's eyes.
+
+**Detail:**
+- While checking how pm2 restarts after a reboot, `reg query
+  HKCU\Software\Microsoft\Windows\CurrentVersion\Run` on Silas-PC returned, among the
+  expected entries (Steam, Discord, Docker, PM2, …), one that does not belong to any
+  known-installed application:
+
+  ```
+  业余分开蓝色    REG_SZ    C:\Users\silasfelinus\AppData\Roaming\业余分开蓝色\业余分开蓝色.exe
+  ```
+
+- Not asserting this is malicious — it has not been examined. But the shape matches the
+  common persistence pattern closely enough to warrant checking before anything else on
+  that box is trusted: a CJK-named executable whose folder and filename are identical,
+  living under `AppData\Roaming` (per-user, no admin needed to write), launched from the
+  per-user Run key. The name reads as machine-generated rather than as a product name.
+- Why it matters more than usual here. Silas-PC holds `KR_RELAY_TOKEN` (machine-user
+  credentials against kindrobots.org), `KR_CIVITAI_TOKEN`, and — as of this session — a
+  Credential Manager entry for the alexandria SMB shares. Anything running as that user
+  inherits all of it, including write access to the array while the array has no
+  redundancy left (disk4 emulated, disk13 at 1.09M errors).
+- NOT claiming a connection to the disk incident. disk13's error count is far better
+  explained by hardware; conflating the two would be guessing. Flagged as a separate
+  finding that surfaced during the same investigation.
+
+**Suggested action:** FOR SILAS — before rebooting or re-trusting the box, capture and check
+rather than delete (deleting destroys the evidence and not necessarily the persistence):
+
+```
+Get-Item "$env:APPDATA\业余分开蓝色\业余分开蓝色.exe" | Select FullName,Length,CreationTime
+Get-AuthenticodeSignature "$env:APPDATA\业余分开蓝色\业余分开蓝色.exe" | Select Status
+Get-FileHash "$env:APPDATA\业余分开蓝色\业余分开蓝色.exe" -Algorithm SHA256
+```
+
+Put the SHA256 into VirusTotal. If it comes back clean and signed, it is someone's oddly
+named utility and this entry can be closed. If it is unsigned, recently created, or flagged,
+then `KR_RELAY_TOKEN` and `KR_CIVITAI_TOKEN` should be rotated and the Unraid password for
+`silasfelinus` changed, since all three are reachable from that user account.
+
+Per hard rule 8 this stays surfaced until Silas acknowledges it either way.
+
+---
+
+## 2026-08-26 | Silas → Reviewer | system | response
+type: response
+
+**Subject:** RESOLVED — the render-box auto-start entry was checked and cleared by Silas.
+
+**Detail:**
+- Silas investigated the `业余分开蓝色` binary flagged on 2026-08-26. SHA256 had no VirusTotal
+  record; he recognized it on inspection as something he had registered as a startup app and
+  disabled months ago, and has deleted the file.
+- The Run-key entry surviving a disable is consistent with that account: Task Manager's
+  "disable" writes a `StartupApproved` flag rather than removing the `Run` value, so the entry
+  remains visible to `reg query` while never executing. That matches what was observed.
+- Closing this flag per Silas's decision. No token rotation performed; none indicated.
+- Worth noting for future triage rather than for this entry: "no VirusTotal record" is
+  *unknown*, not *clean* — a hash nobody has submitted returns the same empty result whether
+  the file is benign or bespoke. What actually resolved this was Silas recognizing the binary,
+  not the VT lookup. Keep that ordering when the next one comes up.
+
+**Suggested action:** None. Hard rule 8 satisfied — flag raised, investigated, acknowledged,
+closed. The 2026-08-13/08-14 background-Agent git-race flags remain separately open.
+
+---
+
 ## 2026-08-25 | Agent (scheduled conductor run) | interface-vision/t-104 | resolution
 
 **Subject:** Fourth cycle of the day's sweep: merged art-queue diagnostic conductor#2891

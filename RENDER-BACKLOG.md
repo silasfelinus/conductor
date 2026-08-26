@@ -559,3 +559,6 @@ queueDepth: PENDING=513, RUNNING=1, DONE=4467, CANCELLED=3179 (all-time). oldest
 
 ## 2026-08-25T22:17:58Z | ai-art-academy/t-068 | draining
 queueDepth: PENDING=3, RUNNING=1, DONE=5070, FAILED=418, CANCELLED=3188 (all-time). oldestPending: id=9513, age=3775s (~1.0h), engine=COMFY. windowThroughput (24h): PENDING=3, RUNNING=1, DONE=69, FAILED=259. recentFailed (last 25): 25/25 = ComfyUI POST /prompt failed at http://#.0.0.1:# (ComfyUI /prompt returned HTTP # at http://#.0.0.1:#: {<name>: {<name>:  [cthulhuquarium=25].
+
+## 2026-08-25T22:32:32Z | ai-art-academy/t-068 | healthy
+queueDepth: RUNNING=1, DONE=5070, FAILED=448, CANCELLED=3188 (all-time). oldestPending: none. windowThroughput (24h): RUNNING=1, DONE=68, FAILED=289. recentFailed (last 25): 25/25 = ComfyUI has no matching file for: CLIPLoader.clip_name=<name>; VAELoader.vae_name=<name>. Not in the live model list at  [cthulhuquarium=25].

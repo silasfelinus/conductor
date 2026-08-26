@@ -85,8 +85,11 @@ FAILURE_PATTERNS = (
     (
         "render-host-io",
         re.compile(
-            r"WinError 1117|I/O device error|hostbuf_file_reader_read"
-            r"|Errno 5|Input/output error",
+            r"WinError \d+|I/O device error|hostbuf_file_reader_read"
+            r"|Errno \d+|Input/output error"
+            # relay_agent.host_fault_in_node_errors' rewritten message, which
+            # leads with the host rather than with "POST /prompt failed".
+            r"|cannot read its own model files",
             re.IGNORECASE,
         ),
     ),
@@ -116,15 +119,79 @@ FAILURE_PATTERNS = (
 RETRYABLE_CLASSES = frozenset(
     {
         "render-host-io",
+        "render-host-model-vanished",
         "render-host-unreachable",
         "relay-stalled",
         "kr-api-error",
     }
 )
 
+# "ComfyUI has no matching file for: CLIPLoader.clip_name='qwen3vl_4b...'"
+MISSING_ASSET_RE = re.compile(r"(\w+)\.(\w+)='([^']*)'")
 
-def classify_failure(job):
+
+def missing_asset_names(error):
+    """The model filenames a `has no matching file for:` error names."""
+    text = str(error or "")
+    head = text.split(". Not in the live model list", 1)[0]
+    return [value for _cls, _input, value in MISSING_ASSET_RE.findall(head) if value]
+
+
+def registered_model_basenames():
+    """Every model filename Kind Robots' Resource registry knows about.
+
+    Returns None if the registry can't be read, so a caller can tell "not
+    registered" from "could not check" and decline to guess either way.
+    """
+    status, response = consumer.http_json(
+        "GET", f"{consumer.KR_BASE_URL}/api/resources?pageSize=500"
+    )
+    if status != 200 or not response or not response.get("success"):
+        return None
+    data = response.get("data")
+    rows = data if isinstance(data, list) else (data or {}).get("resources") or []
+    names = set()
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        for field in ("name", "localPath"):
+            value = str(row.get(field) or "").strip().replace("\\", "/")
+            if value:
+                names.add(value.rsplit("/", 1)[-1])
+    return names or None
+
+
+def refine_missing_model(job, registered):
+    """Split "you named a file that never existed" from "the box lost a file".
+
+    ComfyUI answers both with the same thing -- the name is absent from its live
+    list -- and the relay can only repeat that. The Resource registry is what
+    breaks the tie: a file Kind Robots has registered, and that rendered earlier
+    the same day, has not been misnamed. The box stopped being able to see it,
+    which is a host fault and retryable.
+
+    Observed 2026-08-25T22:25Z: 30 jobs rejected for
+    `qwen3vl_4b_fp8_scaled.safetensors` and `qwen_image_vae.safetensors`, both
+    registered, both used by every job that rendered fine at 07:20Z the same
+    morning, while the unet on the same graph still resolved. A partially
+    readable model share, not a payload.
+    """
+    if not registered:
+        return "payload-model-missing"
+    named = missing_asset_names((job or {}).get("error"))
+    if not named:
+        return "payload-model-missing"
+    if all(name in registered for name in named):
+        return "render-host-model-vanished"
+    return "payload-model-missing"
+
+
+def classify_failure(job, registered=None):
     """Return the failure class for one FAILED ArtJob row.
+
+    `registered` is the set of model filenames Kind Robots knows about, used
+    only to refine a missing-model rejection (see refine_missing_model). Pass
+    None to classify on the error text alone.
 
     Unrecognized errors classify as "unknown" and are NOT retried. Defaulting to
     deny keeps a brand-new failure mode out of a 400-job blind resubmit; it shows
@@ -135,6 +202,8 @@ def classify_failure(job):
         return "unknown"
     for name, pattern in FAILURE_PATTERNS:
         if pattern.search(error):
+            if name == "payload-model-missing":
+                return refine_missing_model(job, registered)
             return name
     return "unknown"
 
@@ -303,7 +372,15 @@ def main() -> int:
         print("KR_API_TOKEN is required for --live.", file=sys.stderr)
         return 1
 
-    classified = [(classify_failure(job), job) for job in failed_jobs()]
+    registered = registered_model_basenames()
+    if registered is None:
+        print(
+            "WARNING: could not read the Resource registry — a model the box "
+            "has lost cannot be told apart from one that was misnamed, so both "
+            "will be held back.",
+            file=sys.stderr,
+        )
+    classified = [(classify_failure(job, registered), job) for job in failed_jobs()]
     if not classified:
         print("No FAILED ArtJobs.")
         return 0

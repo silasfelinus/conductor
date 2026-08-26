@@ -2242,12 +2242,109 @@ tasks:
   - id: t-068
     milestone: m2
     title: "Facet-catalog render burst: ComfyUI CLIPTextEncode 'hostbuf_file_reader_read failed' on nearly every job, 24h FAILED count 1->186"
-    status: needs-human
+    status: done
     gate_human: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-25T22:20:00Z'
+    updated: '2026-08-26T02:50:00Z'
     note: |-
+      CLOSED (Silas-directed session, 2026-08-26T02:50Z). Root cause was a failing SATA cable on
+      alexandria's disk13. Silas swapped it; disk13 went from 1,092,997 errors to 0 and has held there.
+      Every signature this task tracked since 2026-08-21 traced to that one cable:
+      `hostbuf_file_reader_read` (text encoder read), `WinError 1117` (unet directory stat),
+      `no matching file` for registered models (fuse returning a partial merged listing), and the
+      "missing" qwen_image_vae.safetensors, which was never missing -- it lives on disk13 and simply
+      could not be enumerated.
+
+      Collateral, all repaired: disk13 dropping out mid-write left disk4's XFS log stale, so disk4 had
+      been unmountable (metadata LSN 23:1268 ahead of log 23:1036). `xfs_repair -L` cleared it in 82
+      seconds -- five corrupt directory blocks, two directories junked (`movies`, `Lumberjanes`, both
+      media), 173 inodes reconnected to lost+found. Separately, the Windows SMB credentials had been
+      wiped and were restored via cmdkey, with all four mappings normalized onto one server name so
+      there is a single credential to lose next time.
+
+      Verified end to end: ArtJob 9838 rendered DONE on attempts=1 (11m15s, cold model load, matching
+      cthulhuquarium/t-005's measured first-render cost), then 9835/9836/9837 rendered as the drain's
+      canary. `drain_failed_art_backlog.py --live` then resubmitted 740/740 with zero requeue failures.
+      Queue went FAILED 744 -> 1; the one remaining is ArtJob 9181, t-033's flux2 probe naming a model
+      that never existed, correctly classified as a payload fault and held back.
+
+      approved_by_human: Silas drove the hardware fix in this session and confirmed the disk13 error
+      count reset. gate_human satisfied.
+
+      CONFIRMED ROOT CAUSE: A FAILING DISK IN THE ALEXANDRIA ARRAY (Silas, 2026-08-25T23:15Z).
+      Silas checked the NAS and confirmed a faulty disk. That closes four days of misdiagnosis in
+      this task and resolves every signature it has logged since 2026-08-21:
+
+        * `WinError 1117` is ERROR_IO_DEVICE -- the disk telling the OS a read physically failed.
+          It was never a naming, prompt, or mount-configuration error.
+        * `hostbuf_file_reader_read failed` (the signature this task was opened for) is the same
+          disk, surfacing through a different ComfyUI node -- CLIPTextEncode reading
+          text_encoders/ where UnetLoaderGGUF reads unet/.
+        * `ComfyUI has no matching file for: <registered model>` is `folder_paths` enumerating a
+          partially-readable directory into a short list.
+        * Renders succeeding at 07:20Z and failing by 13:00Z the same day is intermittent
+          read failure, not a configuration change.
+
+      Two things that looked like causes and were not, recorded so they are not re-chased:
+        * The Z: SMB remount (Silas rebuilt it 2026-08-24 on another agent's advice) treated a
+          symptom. Credentials had to be re-saved after that rebuild -- `cmdkey /list` was empty
+          and all four alexandria mappings showed Unavailable -- which is a real second problem
+          but not this one.
+        * A `net use` listing showing every share Unavailable was read here as "the array is
+          down". It was a terminal-session artifact: that listing came from Terminus, a different
+          Windows logon session from the console, and mapped drives are per-logon-session. The
+          console session's mappings were fine. Windows drive letters are not a reliable signal
+          about share health when read from the wrong session.
+
+      OPERATIONAL: do NOT drain the 722-job FAILED backlog until the array is healthy. Every
+      render reads multi-GB model files off the array; sustained reads against a degraded array
+      raise the chance of a second failure during a parity rebuild, which on single parity means
+      data loss. `scripts/drain_failed_art_backlog.py` already refuses to drain without a
+      canary that renders, and `scripts/check_render_box.py` now reports DOWN on
+      failures-with-no-completions rather than on HTTP reachability alone, so neither the manual
+      path nor the auto-art-generate cron will feed the array while this holds. The backlog is
+      preserved and drains in one command once the disk is replaced.
+
+      SECOND PRESENTATION, SAME DRIVE (2026-08-25T22:25Z). Silas read the kr-relay log and
+      reasonably concluded "this looks like we're sending bad prompts". The relay's own wording is
+      what makes that the natural read, and it is wrong twice over -- both messages have now been
+      fixed at the source (see below).
+
+      (1) The WinError 1117 rejection arrives as `ComfyUI POST /prompt failed ... No accepted
+      prompt ... appeared within 120.0s`, which reads like a prompt rejection. It is not: the
+      traceback ends at `class_inputs = obj_class.INPUT_TYPES()`, a classmethod taking no
+      arguments, called to enumerate the models the box *has*. It runs before ComfyUI compares a
+      single value from the submitted graph. Proof from the data rather than the traceback: all
+      420 failures share exactly ONE graph shape, and it is byte-identical in node classes and
+      model names to ArtJob 9252, which rendered at 07:20Z the same morning on attempt 1. Only
+      the prompt text and the seed differ.
+
+      (2) Then, around 22:25Z, the fault changed presentation: 30 NEW jobs (ids 9513-9542) began
+      failing with `ComfyUI has no matching file for: CLIPLoader.clip_name=
+      'qwen3vl_4b_fp8_scaled.safetensors'; VAELoader.vae_name='qwen_image_vae.safetensors'`.
+      Both files are in the Kind Robots Resource registry and both were used by every job that
+      rendered fine at 07:20Z. The unet on the same graph still resolved. That is a partially
+      readable model share -- `folder_paths` re-enumerated `text_encoders`/`vae` and got a short
+      list -- not a naming error. From the relay's side alone the two are indistinguishable,
+      which is exactly why it reported registered, working models as missing.
+
+      Fixes landed this session:
+        * relay_agent.host_fault_in_node_errors(): an OSError inside `node_errors` is now
+          reported as "ComfyUI cannot read its own model files", naming the node and the path,
+          instead of as a failed prompt submission.
+        * unresolved_asset_error() now reports how many files ComfyUI listed for the input that
+          failed to match. The count is the diagnosis: a name missing from a healthy list is a
+          misnaming; the same name missing from a list that has shrunk is a lost mount.
+        * scripts/drain_failed_art_backlog.py cross-checks any missing-model rejection against
+          the Resource registry, so a registered file the box has lost classifies as a
+          retryable host fault rather than an unrecoverable payload. Without that check it would
+          have stranded these 30 jobs permanently.
+
+      Current tally: 446 retryable, 1 genuinely bad payload (ArtJob 9181, the invented
+      `flux2_klein_text_encoder_fp8_scaled.safetensors` from t-033, which is not registered and
+      never existed).
+
       ROOT CAUSE FOUND (Silas-directed session, 2026-08-25T22:00Z). This is not a
       facet-catalog problem and it is not the text encoder specifically. It is the render box's
       `Z:` model drive failing I/O. Evidence: the queue held 420 FAILED ArtJobs, 100% COMFY,
@@ -2295,7 +2392,7 @@ tasks:
       FOR SILAS: a fresh recheck_render_queue.py probe (this session, 2026-08-15T01:28:20Z) found a new, distinct, and actively-growing failure pattern -- not t-044's own LoRA-naming blocker and not t-067's worker-stall pattern (both unaffected). 24h FAILED count jumped from 1 (prior 2026-08-14T16:01:09Z check) to 186, all-time DONE still climbing normally (4350->4411), and PENDING is 377 with the oldest item ~22h old (id 8517, created 2026-08-14T~03:22Z) -- so the worker itself is alive and processing, but a large and growing share of one project's jobs are failing outright.
       Every one of the last 25 recentFailed entries (fetched directly via GET /api/art/queue/stats, ids 8935-8959, all within the last ~25 minutes of this check) is `projectSlug: "facet-catalog"` with the identical error: "ComfyUI reported a workflow error: node 3 (CLIPTextEncode): hostbuf_file_reader_read failed" after 3 attempts each. 100% failure rate on facet-catalog specifically, 0/25 from any other project -- this looks like a missing or corrupted file the facet-catalog workflow's CLIPTextEncode node depends on (e.g. a referenced embedding/textual-inversion or a locked/deleted file on the ComfyUI host), not a general worker problem. oldestPending is also facet-catalog, so the backlog for this one project is growing unbounced while everything else drains normally.
       TO APPROVE / DIAGNOSE: this needs eyes on the actual ComfyUI machine (Silas-PC / the Tailscale-connected worker) that this sandbox cannot reach -- check the ComfyUI server console/log around 2026-08-15T01:00-01:04Z for the specific file path node 3 tried and failed to read, and check whether the facet-catalog workflow template references a file that recently moved, was deleted, or is being held open/locked by another process. 86%+ of this window's facet-catalog jobs have now failed and the backlog keeps growing (377 pending), so this is actively degrading Facet-catalog art production (which the Daily Dream Facet-seeding pipeline depends on) -- not a one-off blip. Once the missing/ locked file is identified and fixed (or ruled out), set status: done with a note, or leave at needs-human with an update if still inconclusive. Distinct root cause from t-044 (LoRA naming) and t-067 (worker stall, recovered 2026-08-13) -- do not conflate.
-    approved_by_human: false
+    approved_by_human: true
 
   - id: t-069
     milestone: m7
