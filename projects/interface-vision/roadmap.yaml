@@ -3206,7 +3206,7 @@ tasks:
   - id: t-105
     milestone: m6
     title: "Polish every reachable Kind Robots surface page-by-page"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     recurring: true
@@ -3238,8 +3238,26 @@ tasks:
       Verification: eslint on the changed file clean; vue-tsc --noEmit clean; npm run test:layout-contract holds, zero new violations (same pre-existing video-lora-picker.vue viewport-grid baseline improvement noted in the prior slice was observed again and left untouched, out of scope); prettier --check clean. Honest limit on visual verification: same sandbox constraints as every prior slice (no reachable database, no PR-preview infrastructure) -- only class-level/structural verification was possible.
 
       Merged as silasfelinus/kind_robots#2114 with all 37 PR checks green (TypeScript, Contract verifiers, layout-contract, facet-catalog, GitGuardian, verify x3, and the full Storybook/Narrative contract suite) and mergeable_state clean before merge. Return the reusable page-polish task to ready for the next visual review slice.
-    updated: '2026-08-26T06:39:10Z'
-    implementation_pr: 'silasfelinus/kind_robots#2114'
+
+      Slice: polished /creator-earnings (Creator Earnings). Prior state had no page header at
+      all -- guests saw a bare sign-in prompt, signed-in users saw a plain intro paragraph
+      with no visual hierarchy. Adopted the established icon-badge + title/subtitle header
+      pattern (kind-icon:coin badge, 2xl bold title, 60%-opacity subtitle) already used on
+      serendipity-page.vue/build-bench.vue/mission-accrual-page.vue; the existing intro text
+      is folded into the subtitle rather than duplicated. Template/classes only,
+      components/pages/creator-earnings-page.vue. Verified: eslint clean, vue-tsc --noEmit
+      clean, test:layout-contract holds (0 new violations), prettier --check clean. Opened
+      silasfelinus/kind_robots#2127. BLOCKED ON INFRA, not this PR's diff: the required
+      Contract verifiers check fails on utils/scripts/verifyAcademyStarterManifest.ts fetching
+      the self-hosted media origin -- confirmed via scripts/check_render_box.py that
+      media.acrocatranch.com (the render/media box) is currently down (Connection reset by
+      peer), independently corroborated by the identical failure on the unrelated open PR
+      #2126 at the same time. Re-ran the failed job three times over ~12 minutes, same result
+      each time -- this is a real current outage, not a flake, and nothing in this PR can fix
+      it. Left status: review with the PR open; next session (or this one later in the cycle)
+      should re-check scripts/check_render_box.py and merge once it reports up.
+    updated: '2026-08-26T07:01:44Z'
+    implementation_pr: 'silasfelinus/kind_robots#2127'
     owner: worker
     claimed_by: scheduled-20260826T063909Z-interface-vision-t105-slice
     claimed_at: '2026-08-26T06:39:10Z'
