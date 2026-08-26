@@ -4259,3 +4259,48 @@ tasks:
     claimed_at: '2026-08-25T09:43:11Z'
     updated: '2026-08-25T09:47:30Z'
     implementation_pr: 'silasfelinus/conductor#2850'
+  - id: t-130
+    milestone: null
+    title: check_render_box reports UP for a stalled box whose queue is backed up
+    status: ready
+    passes: 0
+    stakes: reversible
+    owner: null
+    claimed_by: null
+    claimed_at: null
+    note: >
+      scripts/check_render_box.py exists because an HTTP probe alone cannot tell a
+      rendering box from a dead one -- its own docstring cites 2026-08-25, when the
+      model share stopped authenticating, media.acrocatranch.com kept answering 404,
+      and auto-art-generate kept enqueuing into a box that could not read a single
+      model file. The throughput half was added to close that. It does not close
+      this variant.
+
+      `render_throughput_verdict` short-circuits on `if done: return True` -- ANY
+      completion inside the 6h window is treated as proof of health, no matter how
+      long ago it happened or what the queue looks like right now. Observed
+      2026-08-26 during the ruler-hooked art batch (conductor PRs #2945/#2947): 40
+      ArtJobs submitted into a queue that had been genuinely empty, first job claimed
+      by the relay at 21:52 and then RUNNING with no updatedAt movement and no error
+      for 35+ minutes, nothing else started, DONE frozen at 5376. The probe reported
+      "render box UP: 42 render(s) completed in the last 6h" throughout -- all 42
+      of which predated the batch. Nothing failed, so the FAILED >= 5 branch never
+      fired either. A stalled box therefore reports healthy and auto-art-generate's
+      gate lets the drain steps run.
+
+      The signal needed is already in the same payload the function's caller fetches
+      and is currently ignored: `staleRunningCount` (a RUNNING job whose claim is
+      older than kind_robots' STALE_CLAIM_MINUTES = 15, per
+      server/api/art/queue/stats.get.ts). A queue with pending work and a stale claim
+      is not idle, it is stalled, and that is distinguishable from both "healthy" and
+      "merely idle" without guessing.
+
+      Suggested shape: pass the whole stats `data` block rather than just
+      `windowThroughput`, and report DOWN when `staleRunningCount > 0` AND
+      `queueDepth.PENDING > 0` AND nothing has completed since the oldest stale claim
+      was made. Keep the existing conservatism -- an idle queue and an unreadable
+      stats payload must still be "no opinion", since a false DOWN pauses the whole
+      art pipeline. Extend tests/ alongside; the existing verdict function is already
+      pure and directly testable.
+
+      Filed rather than fixed inline to keep the art-batch PR scoped (hard rule 6).

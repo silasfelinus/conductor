@@ -562,3 +562,6 @@ queueDepth: PENDING=3, RUNNING=1, DONE=5070, FAILED=418, CANCELLED=3188 (all-tim
 
 ## 2026-08-25T22:32:32Z | ai-art-academy/t-068 | healthy
 queueDepth: RUNNING=1, DONE=5070, FAILED=448, CANCELLED=3188 (all-time). oldestPending: none. windowThroughput (24h): RUNNING=1, DONE=68, FAILED=289. recentFailed (last 25): 25/25 = ComfyUI has no matching file for: CLIPLoader.clip_name=<name>; VAELoader.vae_name=<name>. Not in the live model list at  [cthulhuquarium=25].
+
+## 2026-08-26T22:11:37Z | ruler-hooked/t-016 | draining
+queueDepth: PENDING=39, RUNNING=1, DONE=5376, CANCELLED=3698 (all-time). oldestPending: id=9911, age=1156s (~0.3h), engine=COMFY. windowThroughput (24h): PENDING=39, RUNNING=1, DONE=59, CANCELLED=337. recentFailed: none.
