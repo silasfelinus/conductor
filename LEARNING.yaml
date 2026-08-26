@@ -10638,3 +10638,19 @@ records:
     for simplicity but risks a second device's unsynced local mutation clobbering a
     set the first device already pushed -- upserting one item at a time by its
     client-generated id sidesteps that without needing real conflict resolution.
+- date: '2026-08-26'
+  project: mandarin-tutor
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A Pinia store method entangled with Nuxt/user-store runtime (loadCloudState)
+    can still get real regression coverage without a mock framework: extracting
+    its merge decision (server-authoritative, local-only entries kept and
+    re-pushed) into two pure functions in a plain utils module, then having the
+    store call them, made the logic testable with node:assert alone -- same
+    pattern as server/utils/mandarinSrs.ts. No behavior changed; the store's
+    call sites shrank from inline set-difference logic to two function calls.
