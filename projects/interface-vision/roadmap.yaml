@@ -3171,7 +3171,7 @@ tasks:
   - id: t-105
     milestone: m6
     title: "Polish every reachable Kind Robots surface page-by-page"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     recurring: true
@@ -3203,11 +3203,11 @@ tasks:
       Verification: eslint on the changed file clean; vue-tsc --noEmit clean; npm run test:layout-contract holds, zero new violations (same pre-existing video-lora-picker.vue viewport-grid baseline improvement noted in the prior slice was observed again and left untouched, out of scope); prettier --check clean. Honest limit on visual verification: same sandbox constraints as every prior slice (no reachable database, no PR-preview infrastructure) -- only class-level/structural verification was possible.
 
       Merged as silasfelinus/kind_robots#2114 with all 37 PR checks green (TypeScript, Contract verifiers, layout-contract, facet-catalog, GitGuardian, verify x3, and the full Storybook/Narrative contract suite) and mergeable_state clean before merge. Return the reusable page-polish task to ready for the next visual review slice.
-    updated: '2026-08-25T20:38:52Z'
+    updated: '2026-08-26T06:39:10Z'
     implementation_pr: 'silasfelinus/kind_robots#2114'
     owner: worker
-    claimed_by: claude-scheduled-20260825T203214Z-iv-t105
-    claimed_at: '2026-08-25T20:32:15Z'
+    claimed_by: scheduled-20260826T063909Z-interface-vision-t105-slice
+    claimed_at: '2026-08-26T06:39:10Z'
 
   - id: t-106
     milestone: m6
