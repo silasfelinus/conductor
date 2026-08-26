@@ -1,0 +1,9 @@
+version: 1
+project: kapowarr
+task: t-055
+operation: done
+session: 20260826T075334Z-kapowarr-t055-review-holds-rescan-split-6c4d81
+owner: worker
+updated: '2026-08-26T08:04:55Z'
+note: >-
+  Merged silasfelinus/Kapowarr#149 as 04fc78ed5f29eaeb563cf1f1f6d11bf3af324e4b. The misleading Reset & Re-evaluate All Holds path was a whole-library untracked rescan, so a roughly 68-folder review backlog could become an 867-folder pass. Reset & Re-evaluate Holds now stages only live outstanding Review Holds; Rescan Untracked Library is the explicit full current-untracked scan. Both maintenance paths serialize in the Continuous Import write lane so a cooperative stop reaches a safe folder boundary before snapshot replacement. Exact-head PR CI completed green: Tests across Python 3.8-3.12 with frontend Node tests on 3.12, Build docs, and Build and publish container.
