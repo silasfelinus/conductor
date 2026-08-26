@@ -43,6 +43,9 @@ MEDIA_ROOT_ENV_HINT = "KR_MEDIA_IMAGES_DIR (or KR_LOCAL_IMAGES_DIR)"
 IMAGE_EXTENSIONS = {".webp", ".png", ".jpg", ".jpeg", ".gif", ".svg"}
 GENERATED_IMAGE_EXTENSIONS = {".webp", ".png", ".jpg", ".jpeg", ".gif"}
 VIDEO_EXTENSIONS = {".mp4", ".webm", ".mov", ".mkv", ".webp"}
+LORA_WATCHER_RESTART_SECONDS = float(
+    os.environ.get("LORA_WATCHER_RESTART_SECONDS", "60") or 60
+)
 COMFY_PROMPT_TIMEOUT = float(os.environ.get("COMFY_PROMPT_TIMEOUT", "180"))
 COMFY_RECOVERY_SECONDS = float(os.environ.get("COMFY_RECOVERY_SECONDS", "45"))
 COMFY_COMPLETION_GRACE_SECONDS = float(
@@ -508,7 +511,41 @@ def start_lora_watcher():
         relay.log(f"lora-import watcher disabled (missing {', '.join(missing)})")
         return
     relay.log("lora-import watcher starting (embedded thread in kr-relay)")
-    threading.Thread(target=lora.watch_loop, name="lora-import", daemon=True).start()
+    threading.Thread(
+        target=_supervised_lora_watch, name="lora-import", daemon=True
+    ).start()
+
+
+def _supervised_lora_watch():
+    """Run lora.watch_loop forever, restarting it if it ever escapes.
+
+    watch_loop guards its own poll body, so anything arriving here escaped the
+    loop entirely. On 2026-08-26 that was os.makedirs() against a Z: share an
+    alexandria reboot had taken away:
+
+        FileNotFoundError: [WinError 67] The network name cannot be found: 'Z:/'
+
+    Python kills only the offending thread, so kr-relay kept claiming and
+    rendering while the importer was simply gone -- no log line, no heartbeat
+    change, nothing to notice until someone read the stderr traceback hours
+    later. The makedirs itself now lives inside watch_loop's try, but the class
+    of bug (one unguarded call at the top of a long-lived thread) deserves a
+    net rather than another point fix: a dead watcher should be loud and
+    temporary, never silent and permanent.
+    """
+    while True:
+        try:
+            lora.watch_loop()
+            relay.log(
+                f"{relay.WARN} lora-import watcher returned on its own "
+                "(watch_loop is supposed to run forever)"
+            )
+        except Exception as error:  # noqa: BLE001 - the net is the point
+            relay.log(f"{relay.WARN} lora-import watcher crashed: {error!r}")
+        relay.log(
+            f"lora-import watcher restarting in {LORA_WATCHER_RESTART_SECONDS:g}s"
+        )
+        time.sleep(LORA_WATCHER_RESTART_SECONDS)
 
 
 def log_media_roots():

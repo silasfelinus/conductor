@@ -48,6 +48,22 @@ RELAY_VERSION = os.environ.get(
     "KR_RELAY_VERSION", "conductor-relay-completion-proof-v1"
 ).strip()
 
+# The model tree ComfyUI loads weights from, as this box sees it. The relay
+# never opens these files itself -- it hands ComfyUI a workflow and ComfyUI
+# does the reading -- but a render is *guaranteed* to fail when the mount is
+# gone, so claiming a job in that state only burns its retry budget.
+#
+# 2026-08-26: alexandria rebooted, Silas-PC's SMB mappings went Unavailable,
+# and the relay cheerfully claimed and failed 71 jobs at ~5/min against a
+# ComfyUI that still believed (from folder_paths' cached filename lists) that
+# it had the models. PENDING drained straight into FAILED while every health
+# signal -- relay heartbeat, /system_stats, pm2 status -- stayed green.
+#
+# Unset KR_SHARE_PROBE_PATH to disable the gate; the relay then behaves exactly
+# as it did before this existed.
+KR_SHARE_PROBE_PATH = os.environ.get("KR_SHARE_PROBE_PATH", "").strip()
+SHARE_PROBE_SECONDS = float(os.environ.get("KR_SHARE_PROBE_SECONDS", "30") or 30)
+
 def detect_relay_build():
     """Identify the code actually running, without needing anyone to set an env var.
 
@@ -947,6 +963,72 @@ def install_shutdown_handler():
             pass
 
 
+# Probe state, kept between polls so a 2s poll loop is not stat()ing an SMB
+# share every two seconds -- and so the log records transitions, not a wall of
+# identical lines. `reported` is the last state we logged: None until the first
+# transition, then True/False.
+_share_state = {"checked_at": 0.0, "ok": True, "detail": "", "reported": None}
+
+
+def probe_share(path):
+    """Read `path` as a directory. Return (ok, detail).
+
+    A listing rather than a bare isdir(): a stale SMB handle can satisfy
+    os.path.isdir() and still fail every read, which is the exact shape of the
+    2026-08-25 failure (an interactive `dir` said "cannot find the path" while
+    the process holding the mount saw something else). Reading one entry costs
+    nothing and proves the mount answers.
+    """
+    try:
+        with os.scandir(path) as entries:
+            next(entries, None)
+        return True, ""
+    except StopIteration:  # pragma: no cover - scandir yields via next() above
+        return True, ""
+    except OSError as error:
+        return False, f"{type(error).__name__}: {error}"
+
+
+def share_available(now=None):
+    """False only when a configured model share fails a directory read.
+
+    Returns True when KR_SHARE_PROBE_PATH is unset -- the gate is opt-in, and a
+    relay without one keeps its previous behaviour exactly. Result is cached for
+    SHARE_PROBE_SECONDS so the poll loop stays cheap.
+    """
+    if not KR_SHARE_PROBE_PATH:
+        return True
+
+    moment = time.time() if now is None else now
+    if moment - _share_state["checked_at"] < SHARE_PROBE_SECONDS:
+        return _share_state["ok"]
+
+    ok, detail = probe_share(KR_SHARE_PROBE_PATH)
+    _share_state["checked_at"] = moment
+    _share_state["ok"] = ok
+    _share_state["detail"] = detail
+
+    # Log the edges only. A NAS reboot is otherwise a line every poll.
+    if _share_state["reported"] is not ok:
+        if ok:
+            log(
+                f"model share {KR_SHARE_PROBE_PATH} is readable again - "
+                "resuming claims. If ComfyUI was running throughout, restart "
+                "it too: folder_paths caches its filename lists and will keep "
+                "failing reads against the names it cached while the share was "
+                "down."
+            )
+        else:
+            log(
+                f"{WARN} model share {KR_SHARE_PROBE_PATH} is unreachable "
+                f"({detail}) - NOT claiming jobs until it returns. Renders "
+                "would fail on model load and burn their retry budget. Check "
+                "the mount on this box (net use), not the queue."
+            )
+        _share_state["reported"] = ok
+    return ok
+
+
 def warm_object_info_async():
     """Warm the object_info cache WITHOUT blocking startup.
 
@@ -1235,6 +1317,16 @@ def main():
         f"agent {AGENT_ID} ({RELAY_VERSION}) polling {KR_BASE_URL} "
         f"every {POLL_SECONDS}s"
     )
+    if KR_SHARE_PROBE_PATH:
+        log(
+            f"share gate armed on {KR_SHARE_PROBE_PATH} "
+            f"(re-probed every {SHARE_PROBE_SECONDS:g}s)"
+        )
+    else:
+        log(
+            "share gate disabled (KR_SHARE_PROBE_PATH unset) - jobs will be "
+            "claimed even if the model mount is down"
+        )
     last_heartbeat = 0.0
     while True:
         job = None
@@ -1245,6 +1337,13 @@ def main():
             ):
                 send_heartbeats()
                 last_heartbeat = time.time()
+
+            # Do not claim what this box cannot render. A dead model
+            # mount fails every job at the first model load, and the queue
+            # counts that as an attempt -- see share_available().
+            if not share_available():
+                time.sleep(POLL_SECONDS)
+                continue
 
             job = claim_job()
             if job:

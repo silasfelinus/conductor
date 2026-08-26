@@ -343,12 +343,22 @@ def watch_loop():
     """The poll loop. Runs forever. Safe to call on its own thread (e.g. embedded
     in kr-relay) or as the standalone process entrypoint. Assumes config is
     present — callers should check missing_config() first."""
-    os.makedirs(LORA_IMPORT_DIR, exist_ok=True)
     log(f"watching {LORA_IMPORT_DIR} -> {LORA_ROOT}  (poll {LORA_POLL_SECONDS}s, {KR_BASE_URL})")
 
     seen = {}  # path -> stat signature from the previous poll
     while True:
         try:
+            # Inside the loop on purpose. LORA_IMPORT_DIR normally lives on the
+            # SMB share, which disappears whenever the NAS reboots. Running this
+            # once *before* the loop meant a share that was down at start time
+            # raised out of watch_loop and killed the thread outright --
+            # kr-relay kept running with no importer and nothing said so:
+            #   FileNotFoundError: [WinError 67] The network name cannot be
+            #   found: 'Z:/'   (2026-08-26, alexandria reboot)
+            # A thread that dies here stays dead until the whole relay is
+            # restarted, so the retry has to live where the handler can see it.
+            os.makedirs(LORA_IMPORT_DIR, exist_ok=True)
+
             # Pull one queued front-end download (if any) into the import folder;
             # the stability check below catalogs it on a later cycle.
             claim_and_download()

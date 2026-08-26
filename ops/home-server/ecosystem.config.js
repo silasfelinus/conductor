@@ -182,6 +182,12 @@ module.exports = {
         KR_MEDIA_IMAGES_DIR:
           process.env.KR_MEDIA_IMAGES_DIR || KR_MEDIA_IMAGES_DIR,
         KR_LOCAL_IMAGES_DIR: process.env.KR_LOCAL_IMAGES_DIR || '',
+        // Refuse to claim jobs while the model mount is down. Without this the
+        // relay claims, ComfyUI fails at model load, the queue counts an
+        // attempt, and PENDING drains into FAILED at ~5/min -- 71 jobs on
+        // 2026-08-26 while every health signal stayed green. Unset to disable.
+        KR_SHARE_PROBE_PATH: process.env.KR_SHARE_PROBE_PATH || KR_MODEL_ROOT,
+        KR_SHARE_PROBE_SECONDS: process.env.KR_SHARE_PROBE_SECONDS || '30',
         COMFY_PROMPT_TIMEOUT: process.env.COMFY_PROMPT_TIMEOUT || '180',
         COMFY_RECOVERY_SECONDS: process.env.COMFY_RECOVERY_SECONDS || '45',
         // LTX 2.3 22B video renders at 1280x720 can legitimately outlive the
