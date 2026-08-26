@@ -1,7 +1,0 @@
-version: 1
-project: kapowarr
-task: t-055
-operation: ready
-updated: '2026-08-26T07:50:20Z'
-note: >-
-  Reopened from user-reported live testing on 2026-08-26. Reset & Re-evaluate All Holds currently discards the saved pass and rescans every current unimported folder, so a roughly 68-folder review backlog can unexpectedly become an 867-folder whole-library pass. Split the semantics: re-evaluate only live Review Holds by default, and expose whole-library discovery separately as Rescan Untracked Library. Preserve safe stop/resume behavior and add regression coverage for both paths.
