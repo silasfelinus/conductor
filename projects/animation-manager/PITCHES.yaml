@@ -398,7 +398,7 @@ pitches:
 
   - id: marble-run-contraption
     title: Marble Run Contraption
-    status: pitched
+    status: candidate
     priority: 14
     surprise: >
       A perpetual Rube Goldberg machine of wooden chutes, tiny bells, seesaws, and
@@ -428,6 +428,20 @@ pitches:
       - at least one full marble circuit (drop to elevator return) is visible within thirty seconds
       - contact-triggered flourishes (bell/pinwheel/seesaw) never desync from the marble that caused them
       - underlying page clicks remain functional through the click interaction
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/marble-run-contraption.vue
+        pull_request: silasfelinus/kind_robots#2135
+        commit: 029e604b006404144ac8a621116cbc78ccf861c9
+        verification:
+          - eslint
+          - prettier
+          - vue-tsc (full project)
+          - test:animation-catalog
+          - test:animation-component-attempts
+        deferred:
+          - 'sandbox-access-gap (see SPEC.md "Sandbox verification gap")'
 
   - id: strandbeest-migration
     title: Strandbeest Migration
