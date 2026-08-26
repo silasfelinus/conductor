@@ -24523,3 +24523,51 @@ plainly. "POST /prompt failed" for a disk error and "no matching file" for a fil
 exists are both technically true and both actively misleading — they cost a human a wrong
 diagnosis and nearly cost 30 jobs. Before shipping a fail-fast, read its message as
 someone who will see it in a log at 3pm with no other context.
+
+---
+
+## 2026-08-26 | Reviewer → Silas | system | security-flag
+type: security-flag
+
+**Subject:** Unrecognized auto-start entry on the render box (Silas-PC), on the machine that
+holds the relay tokens and mounts the alexandria array. Unverified — needs Silas's eyes.
+
+**Detail:**
+- While checking how pm2 restarts after a reboot, `reg query
+  HKCU\Software\Microsoft\Windows\CurrentVersion\Run` on Silas-PC returned, among the
+  expected entries (Steam, Discord, Docker, PM2, …), one that does not belong to any
+  known-installed application:
+
+  ```
+  业余分开蓝色    REG_SZ    C:\Users\silasfelinus\AppData\Roaming\业余分开蓝色\业余分开蓝色.exe
+  ```
+
+- Not asserting this is malicious — it has not been examined. But the shape matches the
+  common persistence pattern closely enough to warrant checking before anything else on
+  that box is trusted: a CJK-named executable whose folder and filename are identical,
+  living under `AppData\Roaming` (per-user, no admin needed to write), launched from the
+  per-user Run key. The name reads as machine-generated rather than as a product name.
+- Why it matters more than usual here. Silas-PC holds `KR_RELAY_TOKEN` (machine-user
+  credentials against kindrobots.org), `KR_CIVITAI_TOKEN`, and — as of this session — a
+  Credential Manager entry for the alexandria SMB shares. Anything running as that user
+  inherits all of it, including write access to the array while the array has no
+  redundancy left (disk4 emulated, disk13 at 1.09M errors).
+- NOT claiming a connection to the disk incident. disk13's error count is far better
+  explained by hardware; conflating the two would be guessing. Flagged as a separate
+  finding that surfaced during the same investigation.
+
+**Suggested action:** FOR SILAS — before rebooting or re-trusting the box, capture and check
+rather than delete (deleting destroys the evidence and not necessarily the persistence):
+
+```
+Get-Item "$env:APPDATA\业余分开蓝色\业余分开蓝色.exe" | Select FullName,Length,CreationTime
+Get-AuthenticodeSignature "$env:APPDATA\业余分开蓝色\业余分开蓝色.exe" | Select Status
+Get-FileHash "$env:APPDATA\业余分开蓝色\业余分开蓝色.exe" -Algorithm SHA256
+```
+
+Put the SHA256 into VirusTotal. If it comes back clean and signed, it is someone's oddly
+named utility and this entry can be closed. If it is unsigned, recently created, or flagged,
+then `KR_RELAY_TOKEN` and `KR_CIVITAI_TOKEN` should be rotated and the Unraid password for
+`silasfelinus` changed, since all three are reachable from that user account.
+
+Per hard rule 8 this stays surfaced until Silas acknowledges it either way.
