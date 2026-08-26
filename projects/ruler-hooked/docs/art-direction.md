@@ -218,3 +218,67 @@ day/night proving the time matrix.
 
 None block generation: the templates (§4) + first pack (§5) are enough to start the
 pipeline whenever `KR_API_TOKEN` is available and Silas green-lights a batch.
+
+---
+
+## 8. CORRECTION ADDENDUM (2026-08-26, art-production cycle)
+
+Appended, not edited: §1–§7 above remain the authoritative statement of the
+*look*. Two things learned while actually running the first batch change how
+prompts must be written and leave one open question the spec cannot settle by
+itself.
+
+### 8.1 The layer-transparency rule in §2 is not what shipped
+
+§2 binds every region layer to "everything-but-their-band transparent at full
+play-screen resolution", and §4.1's `STYLE_TAIL` encodes that as "single
+horizontal depth band with the rest of the frame fully transparent, full-scene
+registration". The component that actually shipped,
+`components/ruler-hooked/ruler-hooked-stage.vue`, does not composite that way: it
+renders each region as its own `flex-1` band inside an `h-72 sm:h-96` column
+(eight bands, so roughly a 20:1 strip) and draws the layer image `object-cover`
+inside that strip. A full-frame transparent layer put through that component is
+cropped to a thin slice of its own middle.
+
+Neither side is obviously wrong — but one rendered file cannot satisfy both, and
+37 renders against the loser is 37 wasted renders. Filed as **ruler-hooked/t-017**
+with the two options and a recommendation. **Do not render the environment matrix
+until t-017 lands.** The concept batch (§8.3) is unaffected: concept pieces are
+full-frame key art with no compositing contract at all, which is part of why
+starting there was right.
+
+### 8.2 The "always avoid text/logos/watermarks" rule now bounces at enqueue
+
+§2's closing line ("no readable text, logos, watermarks, contact sheets, or
+collages") and the matching line in `projects/art-prompts.yaml`'s prompt standard
+were written for an engine whose negative prompt does something. Krea 2 is
+distilled for cfg 1, where ComfyUI never applies a negative prompt at all, so
+every one of those words lands in **positive** conditioning — on a Qwen-Image
+lineage model, the strongest open text renderer there is. kind_robots now rejects
+this at the enqueue boundary (`server/utils/artPromptContract.ts`, rule
+`text-exclusion-pile`, more than four text-nouns-after-"no"). The first submission
+of this project's concept batch returned HTTP 422 on all 25 jobs for exactly this.
+
+Write the wanted result instead of piling exclusions: "every surface smooth and
+unmarked, no lettering anywhere" passes and works. The same contract also rejects
+conditional instructions ("only when the scene calls for it") and format
+vocabulary ("card illustration", "book cover") — a request for a card renders a
+card, title bar and invented text included, which is why §8.3's UI concepts
+describe the artwork and its blank surfaces rather than the object.
+
+`scripts/build_ruler_hooked_art_queue.py` mirrors the contract locally and refuses
+to stage a prompt that would 422, so this is caught at build time from here on.
+
+### 8.3 Prompts are generated, not hand-typed
+
+Every prompt for this project is produced by
+`scripts/build_ruler_hooked_art_queue.py`. The cast is read from kind_robots'
+`utils/rulerHooked/content.ts` and the region matrix from the same file's regions
+manifest, so a character or region state added upstream cannot silently miss its
+art — the same drift protection `build_cthulhuquarium_art_queue.py` gives the fish
+bible. `STYLE_TAIL`, `TIME_MOD`, and the `REGION_BASE` strings in that script are
+this document's §4–§5 in executable form.
+
+A style correction is therefore one edit in one place plus a re-run, at any batch
+size. That is the property that makes "hundreds of art pieces" tractable; it is
+worth preserving over the convenience of hand-editing a queue entry.
