@@ -364,8 +364,8 @@ tasks:
   - id: t-015
     milestone: m3
     title: "Persist study ratings into real spaced-repetition scheduling and mastery history"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-009
@@ -384,3 +384,6 @@ tasks:
       so a later mobile client (t-012) can share progress rather than starting over. Needs a schema
       decision (new Prisma model(s) for review history / scheduling state) -- treat that as part of
       this task's own scope, not a separate gate, per normal additive-migration rules.
+    claimed_by: claude-scheduled-20260826T0130Z-mandarin-t015
+    claimed_at: '2026-08-26T01:29:16Z'
+    updated: '2026-08-26T01:29:16Z'
