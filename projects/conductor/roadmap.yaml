@@ -4262,12 +4262,12 @@ tasks:
   - id: t-130
     milestone: null
     title: check_render_box reports UP for a stalled box whose queue is backed up
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    owner: null
-    claimed_by: null
-    claimed_at: null
+    owner: reviewer
+    claimed_by: sched-conductor-t130-20260826T222912Z
+    claimed_at: '2026-08-26T22:29:13Z'
     note: >
       scripts/check_render_box.py exists because an HTTP probe alone cannot tell a
       rendering box from a dead one -- its own docstring cites 2026-08-25, when the
@@ -4304,3 +4304,4 @@ tasks:
       pure and directly testable.
 
       Filed rather than fixed inline to keep the art-batch PR scoped (hard rule 6).
+    updated: '2026-08-26T22:29:13Z'
