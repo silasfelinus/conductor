@@ -24571,3 +24571,26 @@ then `KR_RELAY_TOKEN` and `KR_CIVITAI_TOKEN` should be rotated and the Unraid pa
 `silasfelinus` changed, since all three are reachable from that user account.
 
 Per hard rule 8 this stays surfaced until Silas acknowledges it either way.
+
+---
+
+## 2026-08-26 | Silas → Reviewer | system | response
+type: response
+
+**Subject:** RESOLVED — the render-box auto-start entry was checked and cleared by Silas.
+
+**Detail:**
+- Silas investigated the `业余分开蓝色` binary flagged on 2026-08-26. SHA256 had no VirusTotal
+  record; he recognized it on inspection as something he had registered as a startup app and
+  disabled months ago, and has deleted the file.
+- The Run-key entry surviving a disable is consistent with that account: Task Manager's
+  "disable" writes a `StartupApproved` flag rather than removing the `Run` value, so the entry
+  remains visible to `reg query` while never executing. That matches what was observed.
+- Closing this flag per Silas's decision. No token rotation performed; none indicated.
+- Worth noting for future triage rather than for this entry: "no VirusTotal record" is
+  *unknown*, not *clean* — a hash nobody has submitted returns the same empty result whether
+  the file is benign or bespoke. What actually resolved this was Silas recognizing the binary,
+  not the VT lookup. Keep that ordering when the next one comes up.
+
+**Suggested action:** None. Hard rule 8 satisfied — flag raised, investigated, acknowledged,
+closed. The 2026-08-13/08-14 background-Agent git-race flags remain separately open.
