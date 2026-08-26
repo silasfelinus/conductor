@@ -164,6 +164,72 @@ def test_kind_robots_target_retained_not_pruned(tmp_path, monkeypatch):
     assert "kind-robots-academy-style-preview-test-style" in art_prompts.read_text()
 
 
+def test_self_referential_image_path_does_not_crash_the_batch(tmp_path, monkeypatch):
+    """A queue entry whose image_path is the projects/process/ staging path
+    itself (target_repo: null, image_path pointing at its own current
+    location -- seen from queue_missing_project_art.py-generated
+    cthulhuquarium fish entries, conductor/t-015 sweep 2026-08-26) makes
+    resolve_abs_path() return the same path as the source file.
+    shutil.copy2(src, dest) raises SameFileError on that and used to crash
+    the whole run, silently blocking every other file queued behind it
+    alphabetically. It must instead be routed to unmatched/ so the rest of
+    the batch still processes."""
+    process_dir = tmp_path / "conductor" / "projects" / "process"
+    process_dir.mkdir(parents=True)
+    bogus = process_dir / "cthulhuquarium-fish-bailiff-eel.webp"
+    bogus.write_bytes(b"fake-image-bytes")
+    # A normal, well-formed entry queued alongside it must still land.
+    good_src = process_dir / "goodproject-icon.webp"
+    good_src.write_bytes(b"fake-icon-bytes")
+
+    art_generate = tmp_path / "conductor" / "projects" / "art-generate.yaml"
+    art_generate.write_text(
+        "batch:\n"
+        "  entries:\n"
+        "  - project: cthulhuquarium\n"
+        "    engine: krea2\n"
+        "    size: 1024x1024\n"
+        "    image_path: projects/process/cthulhuquarium-fish-bailiff-eel.webp\n"
+        "    status: done\n"
+        "    prompt: 'a bogus self-referential entry'\n"
+        "  - project: goodproject\n"
+        "    engine: krea2\n"
+        "    size: 1024x1024\n"
+        "    image_path: projects/images/goodproject-icon.webp\n"
+        "    target_repo: silasfelinus/conductor\n"
+        "    status: done\n"
+        "    prompt: 'a normal well-formed entry'\n"
+    )
+
+    art_prompts = tmp_path / "conductor" / "projects" / "art-prompts.yaml"
+    art_prompts.write_text("images: []\nrequests: []\n")
+
+    kr = tmp_path / "kind_robots"
+    (kr / "public" / "images").mkdir(parents=True)
+
+    monkeypatch.setattr(di, "REPO_ROOT", tmp_path / "conductor")
+    monkeypatch.setattr(di, "PROCESS_DIR", process_dir)
+    monkeypatch.setattr(di, "UNMATCHED_DIR", process_dir / "unmatched")
+    monkeypatch.setattr(di, "ART_GENERATE_FILE", art_generate)
+    monkeypatch.setattr(di, "ART_PROMPTS_FILE", art_prompts)
+    monkeypatch.setattr(di, "KIND_ROBOTS_ROOT", kr)
+    monkeypatch.setattr(
+        di, "PROJECT_ART_MANIFEST", tmp_path / "conductor" / "projects" / "images" / "manifest.json"
+    )
+    monkeypatch.setattr(di, "DRY_RUN", False)
+
+    di.distribute()  # must not raise shutil.SameFileError
+
+    # The bogus entry is moved aside for a human to sort out, not left in
+    # place and not silently deleted.
+    assert not bogus.exists()
+    assert (process_dir / "unmatched" / "cthulhuquarium-fish-bailiff-eel.webp").exists()
+
+    # The rest of the batch still processed normally.
+    assert not good_src.exists()
+    assert (tmp_path / "conductor" / "projects" / "images" / "goodproject-icon.webp").exists()
+
+
 def test_record_project_art_provenance_writes_manifest(tmp_path, monkeypatch):
     manifest_path = tmp_path / "conductor" / "projects" / "images" / "manifest.json"
     monkeypatch.setattr(di, "REPO_ROOT", tmp_path / "conductor")
