@@ -565,7 +565,7 @@ tasks:
   - id: t-022
     milestone: m6
     title: Run accessibility, responsive, failure-state, and preview verification pass
-    status: ready
+    status: claimed
     depends_on:
       - t-007
       - t-011
@@ -573,8 +573,8 @@ tasks:
       - t-017
       - t-018
       - t-021
-    owner: null
-    updated: '2026-08-10T08:05:00Z'
+    owner: worker
+    updated: '2026-08-26T08:35:03Z'
     passes: 0
     stakes: reversible
     note: >-
@@ -583,6 +583,8 @@ tasks:
       regeneration, object-context and ArtJob states. Check keyboard focus/actions, touch target
       sizes, long candidate text, 1-result and max-result batches, and slow generation. Run
       typecheck and relevant tests. Fix findings rather than only documenting them.
+    claimed_by: scheduled-20260826T-brainstorm-t022-sk1
+    claimed_at: '2026-08-26T08:35:03Z'
 
   - id: t-023
     milestone: m6
