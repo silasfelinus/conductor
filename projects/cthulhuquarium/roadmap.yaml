@@ -404,8 +404,8 @@ tasks:
   - id: t-011
     milestone: m2
     title: "The real play loop — canvas rendering, fish behavior, food, collectibles"
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
     depends_on: [t-008, t-009]
@@ -421,6 +421,9 @@ tasks:
       scale to fit -- it has to survive the responsive layout contract at phone width.
       Target 60fps with 20 fish on screen; if that needs sprite batching, do it now rather
       than after the art pass triples the draw calls.
+    claimed_by: claude-scheduled-20260826T1435-cq-t011
+    claimed_at: '2026-08-26T14:43:42Z'
+    updated: '2026-08-26T14:43:42Z'
 
   - id: t-012
     milestone: m2
