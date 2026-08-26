@@ -1271,10 +1271,10 @@ tasks:
 - id: t-055
   milestone: m4
   title: Make Review Holds imports resumable and actionable
-  status: review
+  status: done
   passes: 0
   stakes: reversible
-  updated: '2026-08-26T08:02:05Z'
+  updated: '2026-08-26T08:04:55Z'
   note: |-
     User-reported live failure on 2026-08-19. Continuous Library Import resumes a saved job with hundreds
     of Review Holds, but clicking Import aborts the selected batch with a generic InternalError. Trace and
@@ -1298,7 +1298,8 @@ tasks:
     Implement the approved split between re-evaluating only live Review Holds and deliberately rescanning the full set of current untracked library folders.
 
     Implementation is ready for PR review: Review Holds re-evaluation now snapshots only live held folders, a separate Rescan Untracked Library action deliberately rebuilds from every current unimported folder, both maintenance actions serialize behind the continuous-import lane, and backend/frontend regressions plus docs cover the split.
-  owner: worker
+
+    Merged silasfelinus/Kapowarr#149 as 04fc78ed5f29eaeb563cf1f1f6d11bf3af324e4b. The misleading Reset & Re-evaluate All Holds path was a whole-library untracked rescan, so a roughly 68-folder review backlog could become an 867-folder pass. Reset & Re-evaluate Holds now stages only live outstanding Review Holds; Rescan Untracked Library is the explicit full current-untracked scan. Both maintenance paths serialize in the Continuous Import write lane so a cooperative stop reaches a safe folder boundary before snapshot replacement. Exact-head PR CI completed green: Tests across Python 3.8-3.12 with frontend Node tests on 3.12, Build docs, and Build and publish container.
   claimed_by: 20260826T075334Z-kapowarr-t055-review-holds-rescan-split-6c4d81
   claimed_at: '2026-08-26T07:53:34Z'
 - id: t-056
