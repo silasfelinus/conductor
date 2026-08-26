@@ -3206,7 +3206,7 @@ tasks:
   - id: t-105
     milestone: m6
     title: "Polish every reachable Kind Robots surface page-by-page"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     recurring: true
@@ -3256,7 +3256,14 @@ tasks:
       each time -- this is a real current outage, not a flake, and nothing in this PR can fix
       it. Left status: review with the PR open; next session (or this one later in the cycle)
       should re-check scripts/check_render_box.py and merge once it reports up.
-    updated: '2026-08-26T07:01:44Z'
+
+      Render box (media.acrocatranch.com) confirmed back up (scripts/check_render_box.py: HTTP
+      404, no longer connection-reset). Re-ran the failed Contract verifiers check via the
+      GitHub MCP actions_run_trigger rerun_failed_jobs on run 32939676934 -- it passed cleanly
+      this time (verifyAcademyStarterManifest.ts's fetch succeeded). All 37 checks green,
+      mergeable_state clean. Merged silasfelinus/kind_robots#2127 (squash 198b2aa4). Returned
+      to ready for the next visual-review slice.
+    updated: '2026-08-26T07:36:19Z'
     implementation_pr: 'silasfelinus/kind_robots#2127'
     owner: worker
     claimed_by: scheduled-20260826T063909Z-interface-vision-t105-slice
