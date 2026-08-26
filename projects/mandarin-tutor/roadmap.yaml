@@ -252,7 +252,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Add spaced repetition, mastery history, and study diagnostics"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -273,9 +273,15 @@ tasks:
       filed as its own follow-up, t-015, since it is genuinely separable scope this note
       itself called out. See silasfelinus/kind_robots#2118 for the full diff and verification
       (eslint, vue-tsc, layout-contract, existing mandarin self-tests all clean).
+
+      RECONCILED (conductor scheduled Agent run, 2026-08-26): implementation PR
+      silasfelinus/kind_robots#2118 merged (Study/Explore mode split, self-rating loop, all CI
+      green). Follow-up conductor PR #2896 (roadmap status -> review, filed t-015 for durable
+      SRS/mastery persistence) also merged. Flipping to done -- t-009s own scope (modes before
+      persistence) is fully delivered; t-015 tracks the deferred persistence half.
     claimed_by: claude-scheduled-20260826T002900Z-mandarin-t009
     claimed_at: '2026-08-26T00:30:28Z'
-    updated: '2026-08-26T00:38:37Z'
+    updated: '2026-08-26T01:28:45Z'
     implementation_pr: 'silasfelinus/kind_robots#2118'
 
   - id: t-010
