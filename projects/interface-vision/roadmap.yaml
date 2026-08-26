@@ -3206,7 +3206,7 @@ tasks:
   - id: t-105
     milestone: m6
     title: "Polish every reachable Kind Robots surface page-by-page"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     recurring: true
@@ -3296,9 +3296,32 @@ tasks:
       change. Merged as silasfelinus/kind_robots#2132 (squash 40dba95) with mergeable_state
       clean before merge. Return the reusable page-polish task to ready for the next visual
       review slice.
-    updated: '2026-08-26T16:40:29Z'
-    implementation_pr: 'silasfelinus/kind_robots#2132'
-    owner: reviewer
+
+      Slice: polished AppMaker (/appmaker). Prior state had a bare text-2xl font-bold title
+      with no icon/hierarchy, inconsistent with the established icon-badge + title/subtitle
+      header pattern used by wallet-page.vue, build-bench.vue, click-leaderboard.vue, and
+      other precedent pages. Note: an earlier same-day t-105 slice (this roadmap note, click-
+      leaderboard entry) surveyed appmaker-page.vue and left it alone, judging its existing
+      title/subtitle + action-button header "already... well-designed" -- this slice revisits
+      that call: unlike the four pages that session correctly excluded for structural reasons
+      (conductor-manager.vue is a pure router, privacy-page.vue is a static legal page,
+      memory-dungeon.vue/rebel-button.vue are games with purpose-built HUDs), appmaker-
+      page.vue is a plain content page with no structural reason to differ from every other
+      polished page, and it was the one candidate left as the sole holdout without the icon
+      badge. Added the kind-icon:toolbox badge (already AppMakers assigned icon in
+      stores/helpers/conductorCards.ts CONDUCTOR_CARDS), normalized title to font-black
+      tracking-tight and subtitle to text-base-content/60. Action buttons and script/store
+      logic unchanged. Verified: eslint clean, vue-tsc --noEmit clean, npm run test:layout-
+      contract holds (0 new violations, same pre-existing video-lora-picker.vue baseline note
+      as every prior slice), prettier --check clean. Opened kind_robots#2134; CI (ci.yml) had
+      not dispatched jobs beyond GitGuardian ~10 minutes after push -- consistent with the
+      already-documented conductor/t-106 and t-124 CI-dispatch-stall pattern. Setting status:
+      review while CI settles; will flip to done and re-set to ready for the next slice once
+      merged. Correcting this claims owner field to worker (the implementing role) -- the
+      initial claim_task.py call mistakenly passed --owner reviewer.
+    updated: '2026-08-26T16:41:15Z'
+    implementation_pr: 'silasfelinus/kind_robots#2134'
+    owner: worker
     claimed_by: claude-scheduled-20260826T164028Z-iv-t105-appmaker
     claimed_at: '2026-08-26T16:40:29Z'
 
