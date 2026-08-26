@@ -3206,7 +3206,7 @@ tasks:
   - id: t-105
     milestone: m6
     title: "Polish every reachable Kind Robots surface page-by-page"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     recurring: true
@@ -3283,8 +3283,21 @@ tasks:
       silasfelinus/kind_robots#2131 (squash e763a78) with 37/37 PR checks green and
       mergeable_state clean before merge. Return the reusable page-polish task to ready for
       the next visual review slice.
-    updated: '2026-08-26T13:36:25Z'
-    implementation_pr: 'silasfelinus/kind_robots#2131'
+
+      Slice: fixed Wallet's double heading (kaizen follow-up flagged by the prior slice,
+      #2129). mana-wallet.vue's own bare 'Mana Wallet' h1 duplicated wallet-page.vue's top-
+      level header when nested there. Added a showHeader prop (default true) to mana-
+      wallet.vue, gated its own header behind it, and passed :show-header="false" from wallet-
+      page.vue. giftshop-manager.vue's mana tab (the component's other consumer, with no
+      header of its own) is unaffected and keeps the built-in header by default. Verified:
+      eslint clean, vue-tsc --noEmit clean, npm run test:layout-contract holds (0 new
+      violations, including the contract's own :show-header-declared check), prettier --check
+      flags pre-existing drift on wallet-page.vue confirmed via git stash to predate this
+      change. Merged as silasfelinus/kind_robots#2132 (squash 40dba95) with mergeable_state
+      clean before merge. Return the reusable page-polish task to ready for the next visual
+      review slice.
+    updated: '2026-08-26T13:42:23Z'
+    implementation_pr: 'silasfelinus/kind_robots#2132'
     owner: worker
     claimed_by: claude-scheduled-20260826T140000Z-iv-t105-slice3
     claimed_at: '2026-08-26T13:31:59Z'
