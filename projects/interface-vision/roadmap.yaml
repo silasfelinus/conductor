@@ -3206,7 +3206,7 @@ tasks:
   - id: t-105
     milestone: m6
     title: "Polish every reachable Kind Robots surface page-by-page"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     recurring: true
@@ -3319,7 +3319,12 @@ tasks:
       review while CI settles; will flip to done and re-set to ready for the next slice once
       merged. Correcting this claims owner field to worker (the implementing role) -- the
       initial claim_task.py call mistakenly passed --owner reviewer.
-    updated: '2026-08-26T16:41:15Z'
+
+      Merged silasfelinus/kind_robots#2134 (squash e849950b) -- CI dispatch had been blocked
+      by a GitHub-wide Actions platform outage in the prior session; the outage cleared and
+      all 37 checks passed (Contract Tests, TypeScript, layout-contract, facet-catalog, etc).
+      Re-arming to ready for the next t-105 slice.
+    updated: '2026-08-26T17:28:00Z'
     implementation_pr: 'silasfelinus/kind_robots#2134'
     owner: worker
     claimed_by: claude-scheduled-20260826T164028Z-iv-t105-appmaker
