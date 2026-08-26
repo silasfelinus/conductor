@@ -3206,7 +3206,7 @@ tasks:
   - id: t-105
     milestone: m6
     title: "Polish every reachable Kind Robots surface page-by-page"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     recurring: true
@@ -3271,8 +3271,20 @@ tasks:
       Verification: eslint clean; vue-tsc --noEmit clean; npm run test:layout-contract holds, 0 new violations (same pre-existing video-lora-picker.vue viewport-grid baseline improvement noted in prior slices observed again, left untouched, out of scope); prettier --check flags pre-existing drift on this file confirmed via git stash to predate this change, left alone. Honest limit on visual verification: no reachable database, no PR-preview infra -- only class-level/structural verification was possible (same header classes already render correctly in production on precedent pages, template type-checking, layout contract).
 
       Merged as silasfelinus/kind_robots#2129 (squash a123a0a4) with all 37 PR checks green (TypeScript, Contract verifiers, layout-contract, facet-catalog, GitGuardian, verify x3, full Storybook/Narrative contract suite) and mergeable_state clean before merge. Kaizen note for a future slice: nested mana-wallet.vue has its own bare "Mana Wallet" h1 that now sits below this new top-level header -- a minor double-heading, out of scope here. Return the reusable page-polish task to ready for the next visual-review slice.
-    updated: '2026-08-26T13:01:30Z'
-    implementation_pr: 'silasfelinus/kind_robots#2129'
+
+      Slice: polished Global Leaderboard (/click-leaderboard, weird-tab). Prior state was a
+      bare text-xl font-bold label with no icon, hierarchy, or subtitle. Added the icon-badge
+      + title/subtitle header pattern (kind-icon:trophy badge, 2xl bold title, 60%-opacity
+      subtitle) matching serendipity-page.vue/build-bench.vue/mission-accrual-page.vue/wallet-
+      page.vue precedent. Verification: eslint clean; vue-tsc --noEmit clean; npm run
+      test:layout-contract holds, zero new violations (same pre-existing video-lora-picker.vue
+      viewport-grid baseline improvement noted by prior slices observed again and left
+      untouched, out of scope); prettier --check clean. Merged as
+      silasfelinus/kind_robots#2131 (squash e763a78) with 37/37 PR checks green and
+      mergeable_state clean before merge. Return the reusable page-polish task to ready for
+      the next visual review slice.
+    updated: '2026-08-26T13:06:06Z'
+    implementation_pr: 'silasfelinus/kind_robots#2131'
     owner: worker
     claimed_by: claude-scheduled-20260826T130000Z-iv-t105-slice2
     claimed_at: '2026-08-26T12:57:49Z'
