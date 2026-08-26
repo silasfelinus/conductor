@@ -429,8 +429,8 @@ tasks:
   - id: t-016
     milestone: m4
     title: "Move custom study sets and queued art-job bookkeeping off localStorage-only state"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-012
@@ -451,3 +451,6 @@ tasks:
       per user/cardKey. This is the concrete blocker for m4's "portable learning state"
       milestone, not auth, media, or curriculum logic (all three already confirmed
       portable in t-012's audit).
+    claimed_by: claude-scheduled-20260826T0700Z-mandarin-t016
+    claimed_at: '2026-08-26T03:28:33Z'
+    updated: '2026-08-26T03:28:33Z'
