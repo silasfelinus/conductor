@@ -1,0 +1,370 @@
+version: 1
+project: ruler-hooked
+purpose: >
+  First playable fish roster for the full-game vertical slice. Every entry must be
+  visually distinct, fantastical, mechanically legible, and tied to kingdom state or
+  authored choices strongly enough that the catch roster becomes a record of the reign.
+
+rarity_order: [COMMON, UNCOMMON, RARE, EPIC, LEGENDARY, MYTHIC]
+affinities: [GOOD, NEUTRAL, EVIL]
+canonical_axes: [nature, prosperity, treasury, joy, order]
+
+fish:
+  - slug: choirfish
+    name: Choirfish
+    source: cthulhuquarium
+    affinity: GOOD
+    rarity: RARE
+    habitats: [village_edge, near_bank]
+    silhouette: three slender ribbon-finned fish moving as one ascending chord
+    distinction: >
+      The catch is a tiny three-fish choir rather than one specimen. Their throats glow
+      in different notes and the line itself hums before they surface.
+    unlock:
+      all:
+        - sliders: { joy: { gte: 65 }, nature: { gte: 50 } }
+        - counters: { festivals: { gte: 1 } }
+    catch_behavior: >
+      The bobber rings like a tuning fork. Three bites arrive in sequence; completing
+      the short three-beat reel pattern lands the whole choir as one Fishopedia species.
+    fishopedia_note: >
+      Sings only when the shore is quiet enough to hear it. Three specimens have never
+      been recorded disagreeing on the key.
+    consequence_reveal: >
+      Appeared after the kingdom became joyful enough to keep celebrating without
+      stripping the living shoreline around it.
+
+  - slug: sunspoke-koi
+    name: Sunspoke Koi
+    source: ruler-hooked
+    affinity: GOOD
+    rarity: UNCOMMON
+    habitats: [near_bank, lake]
+    silhouette: deep-bodied koi with six long translucent fins radiating like sunbeams
+    distinction: >
+      Its fins refract daylight into moving bands of color under the water; reeds touched
+      by the bands seem greener for a moment after it passes.
+    unlock:
+      all:
+        - sliders: { nature: { gte: 65 } }
+        - flags: [treelineSanctuarySettled]
+    catch_behavior: >
+      Circles the lure without biting until the player stops reeling. Patience rather
+      than force triggers the strike.
+    fishopedia_note: >
+      The fins contain no pigment. The color belongs to whatever light the kingdom has
+      managed to leave it.
+    consequence_reveal: >
+      Returned once protected land and healthier water made bright shallows reliable again.
+
+  - slug: orchardjaw-perch
+    name: Orchardjaw Perch
+    source: ruler-hooked
+    affinity: GOOD
+    rarity: COMMON
+    habitats: [village_edge, near_bank]
+    silhouette: chunky green perch with a mossy back carrying tiny flowering fruit trees
+    distinction: >
+      Seeds lodge in the moss along its spine and sprout into miniature orchard growth.
+      Different specimens may carry blossom, green fruit, or absurdly tiny ripe fruit.
+    unlock:
+      all:
+        - flags: [newlywedsGarden]
+        - sliders: { joy: { gte: 55 }, nature: { gte: 50 } }
+    catch_behavior: >
+      Prefers fruit scraps and bread. A ripe specimen gives a harmless little shower of
+      fruit when lifted from the water.
+    fishopedia_note: >
+      Carries an orchard because the shore once carried one first. The fish insists it
+      discovered the arrangement independently.
+    consequence_reveal: >
+      Appeared after Robin and Ash were given a garden beside the lake and the shore was
+      allowed to become productive without becoming industrial.
+
+  - slug: bridgeback-sturgeon
+    name: Bridgeback Sturgeon
+    source: ruler-hooked
+    affinity: GOOD
+    rarity: EPIC
+    habitats: [far_shore, lake]
+    silhouette: enormous silver sturgeon with broad flat stone-like scutes forming a stepped back
+    distinction: >
+      Small waterfowl and frogs use its back as a moving causeway. The creature is imposing
+      but visibly serves as habitat for smaller life.
+    unlock:
+      all:
+        - flags: [heededNix]
+        - sliders: { nature: { gte: 70 }, order: { gte: 45 } }
+    catch_behavior: >
+      Heavy tension makes it settle to the bottom. A steady low-tension reel persuades it
+      upstream, reversing the usual instinct to pull harder on a large fish.
+    fishopedia_note: >
+      Smaller creatures cross on its back. None appear to know where it is going, which
+      has not reduced traffic.
+    consequence_reveal: >
+      Recorded after the ruler listened to the lake's warning and restored enough order
+      to leave migration routes alone.
+
+  - slug: crown-of-reeds-pike
+    name: Crown-of-Reeds Pike
+    source: ruler-hooked
+    affinity: GOOD
+    rarity: LEGENDARY
+    habitats: [lake, far_shore]
+    silhouette: immense pale pike crowned by branching living reeds and water lilies
+    distinction: >
+      Its crown is a living wetland carrying insects, flowers, and tiny nesting birds.
+      The whole lake appears briefly healthier around it.
+    unlock:
+      all:
+        - flags: [treelineSanctuarySettled, bogBloomed]
+        - sliders: { nature: { gte: 85 }, joy: { gte: 60 } }
+    catch_behavior: >
+      A long multi-stage fight alternates powerful runs with complete stillness. During
+      the still phases the player must release tension or damage the living reed crown.
+    fishopedia_note: >
+      Old accounts call the crown a sign of royal favor. The pike appears not to have
+      been consulted about the monarchy.
+    consequence_reveal: >
+      Appeared only in a run where protected woods and the strange bog were both allowed
+      to flourish into connected habitat.
+
+  - slug: parlour-rustfish
+    name: Parlour Rustfish
+    source: cthulhuquarium
+    affinity: NEUTRAL
+    rarity: COMMON
+    habitats: [near_bank, lake]
+    silhouette: small cheerful rust-orange fish with a flowing double tail
+    distinction: >
+      The baseline oddball: recognizable, friendly, and wrong in exactly one way. Its
+      dull copper sheen oxidizes while out of water and clears again when released.
+    unlock:
+      any:
+        - min_turn: 0
+    catch_behavior: >
+      Straightforward beginner catch with a forgiving reel window. It teaches the normal
+      fishing rhythm before stranger species begin breaking it.
+    fishopedia_note: >
+      Ornamental and harmless. Grows to the size of its container. The ocean is a container.
+    consequence_reveal: >
+      Native to almost every version of the lake; policy mostly changes what appears beside it.
+
+  - slug: errand-guppy
+    name: Errand Guppy
+    source: cthulhuquarium
+    affinity: NEUTRAL
+    rarity: COMMON
+    habitats: [village_edge, near_bank]
+    silhouette: tiny bright guppy carrying one improbable object in its mouth
+    distinction: >
+      Every specimen is visibly transporting something: a pebble, button, seal fragment,
+      tiny key, or scrap of ribbon. None of the cargo is useful to the fish.
+    unlock:
+      all:
+        - flags: [envoyTreatySigned]
+        - sliders: { prosperity: { gte: 55 } }
+    catch_behavior: >
+      Darts laterally in short bursts. The carried object is logged as flavor in the catch
+      record, creating a tiny collectible-within-a-collectible without affecting balance.
+    fishopedia_note: >
+      Carries small objects from one end of the lake to the other and back. Neither end
+      has requested this.
+    consequence_reveal: >
+      Appeared when the generous trade accord made the kingdom busier moving messages and goods.
+
+  - slug: moebius-crab
+    name: Moebius Crab
+    source: cthulhuquarium
+    affinity: NEUTRAL
+    rarity: EPIC
+    habitats: [castle_grounds, lake]
+    silhouette: hermit crab carrying a shell that forms one impossible continuous loop
+    distinction: >
+      Its shell has one side. Looking at it long enough makes the line appear to pass
+      behind and in front of itself at the same time.
+    unlock:
+      all:
+        - flags: [mossyHexAccepted]
+        - sliders: { nature: { gte: 45 } }
+    catch_behavior: >
+      The reel direction reverses once during the fight and the tension meter wraps from
+      maximum back to minimum. A future Knotless Line may suppress the reversal but is
+      not required to land it.
+    fishopedia_note: >
+      Its shell has one surface. It has been trying to get out for some time.
+    consequence_reveal: >
+      Appeared after the ruler accepted Mossy's hex, a choice whose ecological meaning
+      remains considerably less clear than its consequences.
+
+  - slug: masquerade-ray
+    name: Masquerade Ray
+    source: ruler-hooked
+    affinity: NEUTRAL
+    rarity: RARE
+    habitats: [lake, castle_grounds]
+    silhouette: broad manta-like ray whose back forms a theatrical mask with ribbon fins
+    distinction: >
+      Its face-pattern changes to imitate court fashion. The same species can therefore
+      receive cosmetic run-specific variants without becoming a different species.
+    unlock:
+      all:
+        - rewards: [bards-ballad]
+        - sliders: { joy: { gte: 55 } }
+    catch_behavior: >
+      Glides in huge slow arcs and rarely pulls hard, but changes direction whenever a
+      kingdom-event card interrupts the cast.
+    fishopedia_note: >
+      Has never attended court. This has not prevented it from being dressed for the occasion.
+    consequence_reveal: >
+      Appeared once performance and spectacle became important enough for even the lake
+      to start dressing for an audience.
+
+  - slug: tollbell-sturgeon
+    name: Tollbell Sturgeon
+    source: ruler-hooked
+    affinity: NEUTRAL
+    rarity: UNCOMMON
+    habitats: [far_shore, village_edge]
+    silhouette: long bronze-grey sturgeon with hollow bell-shaped scutes down both flanks
+    distinction: >
+      Crossing an invisible territorial boundary rings one of its scutes. A school sounds
+      like a distant checkpoint operating underwater.
+    unlock:
+      all:
+        - flags: [envoyTreatyHard]
+        - sliders: { treasury: { gte: 60 } }
+    catch_behavior: >
+      Its bells reveal which way it is running before the body turns, giving an audio cue
+      that makes the otherwise erratic fight learnable.
+    fishopedia_note: >
+      Rings whenever it crosses a boundary. The lake has declined to publish the boundaries.
+    consequence_reveal: >
+      Appeared after the crown negotiated borders and tariffs hard enough for the lake to notice.
+
+  - slug: drowned-carp
+    name: Drowned Carp
+    source: cthulhuquarium
+    affinity: EVIL
+    rarity: COMMON
+    habitats: [far_shore, lake]
+    silhouette: bloated pale translucent carp with ragged fins and crossed-out eyes
+    distinction: >
+      It is unmistakably dead and equally unmistakably still hungry. It occasionally
+      sinks motionless during the fight, then resumes chewing the bait.
+    unlock:
+      all:
+        - flags: [metWarlock]
+        - sliders: { nature: { lte: 40 } }
+    catch_behavior: >
+      Periodically goes completely slack. Reeling during the dead phase loses progress;
+      waiting for the line to twitch resumes the fight.
+    fishopedia_note: >
+      Died some time ago. Continues to feed, and continues to be hungry.
+    consequence_reveal: >
+      Appeared once development had pushed the lake far enough from healthy that death
+      stopped being a meaningful ecological boundary.
+
+  - slug: lamplight-angler
+    name: Lamplight Angler
+    source: cthulhuquarium
+    affinity: EVIL
+    rarity: UNCOMMON
+    habitats: [far_shore, lake]
+    silhouette: rotund dark angler with an enormous underbite and a bright drooping lamp
+    distinction: >
+      Its lure resembles the kingdom's own work lamps after industrial development,
+      turning civic infrastructure into bait.
+    unlock:
+      all:
+        - flags: [farShoreFleetSettled]
+        - sliders: { nature: { lte: 45 } }
+    catch_behavior: >
+      The visible glowing lure moves independently of the body. Striking too early hooks
+      the false light and loses the cast; the actual fish must emerge first.
+    fishopedia_note: >
+      The light is not for you. It has never been for you.
+    consequence_reveal: >
+      Appeared when deep development and artificial light gave the lake's hunters
+      something new to imitate.
+
+  - slug: ashbelly-gar
+    name: Ashbelly Gar
+    source: ruler-hooked
+    affinity: EVIL
+    rarity: RARE
+    habitats: [far_shore, lake]
+    silhouette: long armored black gar with a glowing furnace-orange belly and chimney gills
+    distinction: >
+      Soot plates its scales while ember-light pulses under the armor. Each breath releases
+      a neat smoke ring from the gills.
+    unlock:
+      all:
+        - flags: [farShoreFleetSettled]
+        - sliders: { nature: { lte: 30 }, prosperity: { gte: 60 } }
+    catch_behavior: >
+      Makes powerful straight-line runs and briefly heats the line. The player must give
+      slack during orange heat pulses or risk snapping it.
+    fishopedia_note: >
+      Filters ash with remarkable efficiency. The report praising this fact does not say
+      where the ash came from.
+    consequence_reveal: >
+      Appeared when industrial success made pollution reliable enough to become habitat.
+
+  - slug: tithe-lamprey
+    name: Tithe Lamprey
+    source: ruler-hooked
+    affinity: EVIL
+    rarity: EPIC
+    habitats: [castle_grounds, village_edge]
+    silhouette: thick black-gold lamprey with a circular mouth ringed by coin-shaped teeth
+    distinction: >
+      It swells with bright metallic scales stolen from other fish, becoming more golden
+      and less mobile the richer it gets.
+    unlock:
+      all:
+        - counters: { taxHikes: { gte: 2 } }
+        - sliders: { joy: { lte: 40 }, treasury: { gte: 60 } }
+    catch_behavior: >
+      Begins attached to another hooked fish. The player can land the lamprey for its rare
+      entry or shake it loose and save the ordinary fish for a better specimen score.
+    fishopedia_note: >
+      Takes a modest portion from anything larger than itself. It has not defined modest.
+    consequence_reveal: >
+      Appeared once repeated levies turned extraction from an emergency into a habitat.
+
+  - slug: the-pleasant-island
+    name: The Pleasant Island
+    source: cthulhuquarium
+    affinity: EVIL
+    rarity: LEGENDARY
+    habitats: [far_shore, lake]
+    silhouette: cheerful tiny tropical island above water attached to an enormous monster below
+    distinction: >
+      The biggest visual fake-out in the slice. What first reads as new scenery is the
+      creature itself; the palms, sand, and warm shallows are part of its body.
+    unlock:
+      all:
+        - flags: [farShoreFleetSettled]
+        - sliders: { nature: { lte: 30 }, prosperity: { gte: 70 }, treasury: { gte: 60 } }
+    catch_behavior: >
+      Begins as apparently ordinary scenery. Casting near it wakes the submerged body and
+      starts a legendary encounter that uses the entire lake stage rather than a normal fish lane.
+    fishopedia_note: >
+      Presents as a small warm island. Visitors are encouraged to remain on the island.
+    consequence_reveal: >
+      Appeared after the far shore became valuable enough that nobody asked what the new
+      shoreline attraction was standing on.
+
+slice_acceptance:
+  counts: { total: 15, GOOD: 5, NEUTRAL: 5, EVIL: 5 }
+  shared_cthulhuquarium_species: 7
+  ruler_only_species: 8
+  requirements:
+    - Two meaningfully different kingdom runs expose visibly different catch rosters.
+    - Every fish has a readable silhouette at small card size.
+    - Every fish has a catch behavior distinct from every other fish in this slice.
+    - Every fish has a visual/conceptual hook that can be identified without reading its name.
+    - Shared Cthulhuquarium species keep canonical slug, name, rarity, and core identity.
+    - Exact unlock conditions stay hidden until discovery; Fishopedia hints may foreshadow them.
+    - Catch resolution remains deterministic under the run seed and sequence of player actions.
