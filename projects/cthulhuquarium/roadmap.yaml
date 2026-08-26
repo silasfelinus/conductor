@@ -269,7 +269,7 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Seed the bestiary — fish YAML into the Monster table"
-    status: review
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -312,8 +312,29 @@ tasks:
       while mapping the fields, filed as t-042 rather than fixed here because every one is a
       migration and kind-robots/t-072 means a merged migration sits unapplied -- the exact
       shape that caused the t-071 outage. The seed works against the schema as it stands and
-      loses only the one `secret` evolution kind.
-    updated: '2026-08-25T10:15:42Z'
+      loses only the one `secret` evolution kind. SEEDED 2026-08-26 01:45 by Silas, from his
+      WSL checkout at /mnt/d/code/kind_robots, which is where the reachability actually was --
+      the remote session could never reach the database host (DNS resolved, TCP to the port
+      timed out) and two of the three places he tried failed for unrelated reasons (netcat
+      absent on alexandria, `git pull` in a directory that was not a repo on the Windows
+      side). VERBATIM RESULT: "bible: /mnt/d/code/cthulhuquarium/fish (151 species) / applied:
+      151 to create, 0 to update, 92 evolution edges". 0-to-update confirms these were fresh
+      rows rather than a re-run over existing ones, and 92 edges matches the bible exactly.
+      The dry run was executed first and reported the same numbers, which is the sequence the
+      script is built around. THE RUN PICKED UP MORE THAN THIS TASK ORIGINALLY SCOPED, because
+      t-042 landed in between: EvolutionKind now has SECRET, so the-proprietor -> the-concern
+      seeded with its real kind instead of a null and a warning, and `depth`, `dietRole` and
+      `schoolRole` were populated from the bible in the same pass. All four gaps t-042
+      recorded are closed in the data, not just in the schema. THE T-042 GATE WORKED, and is
+      worth recording because it was tested rather than theoretical: #2103 merged the
+      migration against the DO-NOT-MERGE gate this task's sibling had put in t-042's title,
+      Silas reverted it within the hour (#2104, citing the gate by name), and the work was
+      then redone in the correct order -- #2124 pre-expanded the schema against the database,
+      #2126 restored the client wiring afterwards. Expand-then-ship, which is the exact
+      ordering kind-robots/t-071 was an outage for want of. NOTHING FURTHER IS NEEDED HERE.
+      The seed is idempotent, so a bible edit is now a re-run rather than a migration.
+
+    updated: '2026-08-26T08:45:52Z'
     implementation_pr: 'silasfelinus/kind_robots#2101'
 
   - id: t-009
