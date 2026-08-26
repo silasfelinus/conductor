@@ -10620,3 +10620,21 @@ records:
     artJobs still localStorage-only) precisely, and let the task close as documentation
     plus one correctly-scoped follow-up (t-016) instead of either over-building or
     guessing at what was missing.
+- date: '2026-08-26'
+  project: mandarin-tutor
+  task: t-016
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Mirroring an already-established pattern exactly (MandarinCardProgress's
+    userId-scalar-ownership, house JSON-as-serialized-text convention, upsert-by-
+    client-generated-id) made a full-stack task (migration + 3 endpoints + store
+    wiring) verifiable and mergeable in one pass with zero CI churn. The one design
+    call worth flagging for future similar tasks: syncing a whole client-owned
+    collection (customSets) as a full-array replace-on-every-mutation is tempting
+    for simplicity but risks a second device's unsynced local mutation clobbering a
+    set the first device already pushed -- upserting one item at a time by its
+    client-generated id sidesteps that without needing real conflict resolution.
