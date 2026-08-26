@@ -10602,3 +10602,74 @@ records:
     is "always returns to ready" -- not waiting for a mistaken done close-out to
     force the fix -- turns a 40+-paragraph prose convention into a mechanical
     refusal the next session can't miss.
+- date: '2026-08-26'
+  project: mandarin-tutor
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    "Prepare the domain for mobile clients" turned out to be an audit task, not a
+    build task -- the portable pieces (header-token auth via requireApiUser, durable
+    hash-keyed media identity, 100% server-side curriculum/SRS logic) were already in
+    place from earlier tasks (t-004, t-009, t-015) without anyone framing them as
+    "mobile-ready." Reading the actual auth guard and store persistence code before
+    assuming a scoping task needs new architecture found the one real gap (customSets/
+    artJobs still localStorage-only) precisely, and let the task close as documentation
+    plus one correctly-scoped follow-up (t-016) instead of either over-building or
+    guessing at what was missing.
+- date: '2026-08-26'
+  project: mandarin-tutor
+  task: t-016
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Mirroring an already-established pattern exactly (MandarinCardProgress's
+    userId-scalar-ownership, house JSON-as-serialized-text convention, upsert-by-
+    client-generated-id) made a full-stack task (migration + 3 endpoints + store
+    wiring) verifiable and mergeable in one pass with zero CI churn. The one design
+    call worth flagging for future similar tasks: syncing a whole client-owned
+    collection (customSets) as a full-array replace-on-every-mutation is tempting
+    for simplicity but risks a second device's unsynced local mutation clobbering a
+    set the first device already pushed -- upserting one item at a time by its
+    client-generated id sidesteps that without needing real conflict resolution.
+- date: '2026-08-26'
+  project: mandarin-tutor
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A Pinia store method entangled with Nuxt/user-store runtime (loadCloudState)
+    can still get real regression coverage without a mock framework: extracting
+    its merge decision (server-authoritative, local-only entries kept and
+    re-pushed) into two pure functions in a plain utils module, then having the
+    store call them, made the logic testable with node:assert alone -- same
+    pattern as server/utils/mandarinSrs.ts. No behavior changed; the store's
+    call sites shrank from inline set-difference logic to two function calls.
+- date: '2026-08-26'
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Slice 52: before searching fresh, checked slice 39's flagged runner-up candidate
+    (user-manager.vue's managerError/"Unknown user tab" notices) against the roadmap
+    note history first and found slice 40 had already closed it -- avoided a wasted
+    duplicate-work search. The actual fix this slice (watchlist-browse.vue's errorMessage
+    banner missing font-semibold) was found by grepping for the exact hand-rolled
+    kr-note shape and then confirming a genuine live sibling inconsistency via a second,
+    narrower grep for the same errorMessage variable/aria-live wrapper pattern already
+    converted elsewhere (newsfeed-feed.vue) -- cheap to check and turns a plausible-looking
+    candidate into a documented, not-blind substitution matching the standing "same
+    element rendering two different ways across sibling components" rule.

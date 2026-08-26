@@ -24594,3 +24594,412 @@ type: response
 
 **Suggested action:** None. Hard rule 8 satisfied — flag raised, investigated, acknowledged,
 closed. The 2026-08-13/08-14 background-Agent git-race flags remain separately open.
+
+---
+
+## 2026-08-25 | Agent (scheduled conductor run) | interface-vision/t-104 | resolution
+
+**Subject:** Fourth cycle of the day's sweep: merged art-queue diagnostic conductor#2891
+(no action needed, another session's work — 420-job FAILED backlog root-caused to a
+render-host `Z:` drive I/O fault, hard needs-human, resubmit deliberately gated behind
+a canary that hasn't recovered yet), then picked up interface-vision/t-104 slice 36 —
+a fresh `kr-panel-flat` byte-exact substitution on `pages/play/mandarin.vue`.
+
+**Detail:**
+- Startup sweep: `AGENTS.md` read in full, `git status`/`git log` clean.
+  `select_role.py` again reported `reviewer-uncertain` (in-sandbox GitHub API 403 as
+  usual) with underlying `worker: cthulhuquarium/t-042` (still explicitly
+  DO-NOT-MERGE pending kind-robots/t-072). Checked GitHub directly via MCP: found
+  conductor#2891 open (2 minutes old, still running CI) — posted a review-claim
+  marker per `scripts/review_claim.py`, waited for its 22 checks to go green (only
+  the known-recurring non-blocking `Analyze (javascript-typescript)` CodeQL stall per
+  conductor/t-106 lagged), merged squash. `check_pr_merged_drift.py` (3 already-
+  documented API-403 unverifiable candidates, unchanged), `audit_human_gates.py` (61
+  active gates + the 1 already-documented stale-state signal, unchanged),
+  `check_project_scaffold_drift.py` (clean), `build_dream_proposal.py --check --fetch`
+  (today's proposal already exists) — no new state beyond #2891 itself.
+- `next_ready_task.py` picked `interface-vision/t-104` (cthulhuquarium/t-042 explicitly
+  blocked, kapowarr/kind-economy had zero real ready tasks — an earlier same-day grep
+  miscounted "status: ready" hits that were actually inside task *notes*, not the
+  `status:` field). Claimed via `claim_task.py`.
+- Re-ran the same order-independent token-set grep slices 32/34/35 used, against
+  current `kind_robots` `main` (not their older snapshot). The `kr-container`/
+  `kr-container-wide` pools are still empty as those slices found. The `kr-panel*`
+  token-set grep surfaced one fresh, previously-unchecked file — `pages/play/
+  mandarin.vue` — with six byte-exact `kr-panel-flat` roots (no `border-dashed`, no
+  competing DaisyUI/primitive classes, consistent with every prior slice's inclusion
+  criteria). Everything else the grep surfaced was already correctly excluded per
+  precedent (the `border-dashed` empty-state family, `kr-stat-tile.vue`'s `.stat`
+  conflict, `chat-gallery.vue`'s `.btn`/`.btn-ghost` conflict).
+- Verified before opening the PR: `eslint` clean on the changed file, `vue-tsc
+  --noEmit` clean (full project, ~2 min run), `npm run test:layout-contract` holds (0
+  new violations — an unrelated pre-existing `video-lora-picker.vue` baseline-ratchet
+  note is untouched), `prettier --check` shows one warning on the file that is
+  confirmed present on baseline `main` too (via `git stash`), so not a regression.
+  Opened silasfelinus/kind_robots#2115, all 38 checks went green, merged squash.
+  Closed the conductor task via `close_task.py ... review` before opening #2115 (per
+  the software close-out flow), then `close_task.py ... ready --implementation-pr` +
+  `--append-note` after #2115 merged, landing this same TALKBACK append on the same
+  branch/PR.
+- Also surfaced but deliberately did NOT act on: a stranded, unmerged conductor
+  branch `worker/top-two-priority-mandarin-cthulhu-sk93` claiming a 2026-08-25 Silas
+  decision promoting Mandarin Tutor to the top of `priority.yaml` (ahead of
+  Cthulhuquarium), plus three stranded kind_robots `worker/mandarin-*` branches with
+  real, unmerged Mandarin Tutor feature commits (requested-word study loop, curation
+  drafts). A concurrent session's `claim: reclaim stale mandarin-tutor/t-007` commit
+  landed on conductor `main` during this same sweep, which is at least consistent
+  with Mandarin Tutor being actively worked right now — but I have no way to verify
+  the priority-reorder branch's Silas quote independently, and it conflicts with the
+  currently-live `priority.yaml` (cthulhuquarium first). Left unmerged and unactioned
+  per the "genuinely ambiguous, Silas-authored-branch-with-unclear-intent" branch-
+  triage rule — flagging here rather than guessing either direction. Worth a
+  `branch-medic` pass once these branches clear the staleness threshold, or Silas
+  confirming the priority claim directly.
+
+**What was good:** treating a prior slice's "pool exhausted" conclusion as a
+point-in-time finding rather than a permanent one — re-running the same grep against
+current `main` (10+ days of intervening commits) is what actually found this slice's
+candidate, and the PR flagged that pattern explicitly for the next slice too.
+
+**Kaizen suggestion:** None new this cycle — the standing kaizen from slice 35 (a
+considered, non-blind pass over the `kr-note` family, since none of its ~20 candidates
+are byte-exact) is still the best-scoped next step for whichever slice picks this back
+up.
+
+---
+_Generated by [Claude Code](https://claude.ai/code)_
+
+## 2026-08-26 | Agent (scheduled conductor run) | mandarin-tutor/t-009, t-015 | resolution
+
+**Subject:** Startup sweep, then closed out mandarin-tutor/t-009 (already implemented by a
+concurrent session, PR merged, roadmap not yet reconciled) and implemented + shipped
+mandarin-tutor/t-015 (persist Study-loop self-ratings into real SM-2-lite spaced repetition)
+end to end.
+
+**Detail:**
+- Startup sweep: `AGENTS.md` read in full, `git status`/`git log` clean.
+  `check_pr_merged_drift.py` flagged 3 unverifiable candidates (sandbox GitHub API 403s,
+  as usual); checked each via GitHub MCP directly. cthulhuquarium/t-008 and
+  brainstorm/t-025 were false positives/deliberately-not-done (both already explained in
+  their own task notes). mandarin-tutor/t-009 was real drift: its implementation PR
+  (kind_robots#2118) and the bookkeeping PR that set `status: review` (conductor#2896)
+  had both already merged by a concurrent scheduled session, but nothing had flipped the
+  roadmap to `done`. Merged #2896 (all 22 checks green), then closed t-009 to `done` via
+  `close_task.py` + a small PR (conductor#2897).
+- `audit_human_gates.py` showed 61 active gates + 1 stale-state signal (t-009 itself,
+  resolved above); `check_project_scaffold_drift.py` clean; today's (2026-08-25 Pacific)
+  dream proposal already exists.
+- Picked up mandarin-tutor/t-015 (`depends_on: t-009`, already filed `ready` by the
+  concurrent session, claimed here) as the next task per `priority.yaml` (mandarin-tutor
+  leads). Implemented in kind_robots: `MandarinCardProgress` + `MandarinReviewEvent`
+  (additive-only migration `20260826013500_add_mandarin_srs`), a standard SM-2 scheduler
+  (`server/utils/mandarinSrs.ts`, pure functions, self-tested at
+  `utils/scripts/verifyMandarinSrs.test.ts`), two endpoints
+  (`POST /api/mandarin/study/rate`, `GET /api/mandarin/study/progress`), and store/UI
+  wiring (a live due-count/retention badge in Study mode, replacing the old "not yet
+  scheduled" disclaimer). The `dimension` column (always `'overall'` this pass) is
+  deliberate forward-compat groundwork for the task's "distinguish meaning/Hanzi/
+  pronunciation" ask, without bundling a second UX redesign into this PR.
+- Verified before opening the PR: installed a local MariaDB in the sandbox
+  (`apt-get install mariadb-server`, no Docker daemon available) and ran
+  `prisma migrate deploy` through the full 63-migration history — clean, no drift.
+  `npm run test:mandarin-srs-selftest` (new), `eslint`, `vue-tsc --noEmit` (full repo),
+  `npm run test:layout-contract`, and `prettier --check` (clean on new files; two
+  pre-existing files carry pre-existing warnings confirmed present on baseline `main`
+  too, not a regression). Opened silasfelinus/kind_robots#2119.
+- CI stall: `Build production image` (the Docker publish workflow) sat `in_progress` for
+  40+ minutes while all other 42 checks went green. This matches the shape already
+  documented in conductor/t-106 (CodeQL javascript-typescript stall) and conductor/t-124
+  (Python test suite stall) — confirmed the same way t-124's fourth occurrence did:
+  `mergeable_state` read `unstable`, not `blocked`, meaning the check is not required by
+  branch protection. Merged past it. The conductor close-out PR for t-015 (#2898) then
+  independently hit the *documented* Python-test-suite variant of the same stall pattern
+  (though this one resolved on its own after ~5 minutes once the apparent CI runner
+  backlog cleared, rather than truly hanging) — same treatment would have applied.
+- Reconciled: closed t-015 to `done` via `close_task.py` + conductor PR #2898 (merged).
+  Re-ran `check_pr_merged_drift.py` (down to 2 already-explained non-issues) and
+  `audit_human_gates.py` (61 gates, 0 new stale-state signals) post-merge. Both
+  conductor and kind_robots working trees are clean on `main` with no stray branches or
+  open PRs from this session.
+- Did not pick up further work (mandarin-tutor/t-012, cthulhuquarium) this cycle —
+  cthulhuquarium's only ready task (t-042) is explicitly gated DO-NOT-MERGE pending
+  kind-robots/t-072, and t-012 (iOS/Android domain prep) is a substantial scoping task
+  better started fresh than squeezed in at the end of an already-long cycle.
+
+**What was good:** confirming the CI-stall-past-merge judgment call the same
+evidence-based way (`mergeable_state: unstable`, not just elapsed time) that earlier
+sessions established for the Python-test-suite/CodeQL variants, rather than either
+waiting indefinitely or merging on a hunch.
+
+**Kaizen suggestion:** `Build production image` (kind_robots' Docker publish workflow)
+stalling at 40+ minutes with no logs available until completion is worth its own
+diagnosis task, the same way t-106/t-124 were filed for their respective jobs — filing
+this now as a light kaizen note rather than a full task, since it's only been observed
+once so far.
+
+---
+_Generated by [Claude Code](https://claude.ai/code)_
+
+## 2026-08-26 | Agent (scheduled conductor run) | mandarin-tutor/t-012 | resolution
+
+**Subject:** Startup sweep (no drift found beyond the two already-explained
+`check_pr_merged_drift.py` false positives), then picked up mandarin-tutor/t-012
+(deferred by the prior same-day session as "better started fresh") and closed it.
+
+**Detail:**
+- Startup sweep: `AGENTS.md` read in full, working tree clean on `claude/blissful-curie-2vbyr1`.
+  `select_role.py` could not verify PR/branch state directly (sandbox `api.github.com` 403s,
+  as usual) but its underlying recommendation was `worker` with mandarin-tutor/t-012 ready
+  (mandarin-tutor leads `priority.yaml`). Verified live state via GitHub MCP instead: no open
+  conductor PRs; two open kind_robots PRs (#2110, #2102) neither of which are this session's
+  scope — #2102 is explicitly "do not merge on my say-so" security-sensitive (kind-robots/t-073,
+  already tracked as a hard gate), #2110 is a separately-tracked soft-gated 3-step migration
+  (kind-robots/t-075, already correctly `needs-human` in the roadmap). `check_pr_merged_drift.py`
+  flagged cthulhuquarium/t-008 and brainstorm/t-025 again; both already reconciled/explained by
+  the prior session's TALKBACK entry (t-008 is deliberately `review`, pending box access this
+  sandbox also cannot reach; t-025 is a normal in-progress claim). `audit_human_gates.py`: 61
+  gates, 1 stale-state signal (the same t-008, not a new one). `check_project_scaffold_drift.py`
+  clean. Today's (2026-08-25 Pacific) dream proposal already exists. cthulhuquarium's only ready
+  task (t-042) is still correctly gated DO-NOT-MERGE pending kind-robots/t-072.
+- Claimed mandarin-tutor/t-012 ("prepare the domain for iOS/Android clients"). Read it as an
+  audit/documentation task rather than a build task per its own wording ("document and expose...
+  Evaluate PWA/native packaging"), and read the actual code before assuming anything was
+  missing: `server/utils/authGuard.ts` (JWT/API-key header auth, not cookie-only — already
+  portable), every `/api/mandarin/*` handler's auth guard, `MandarinAudioAsset`'s hash-keyed
+  identity (already durable/shared), and `mandarinTutorStore.ts` (curriculum/SRS logic is
+  100% server-side; `customSets`/`artJobs` are the one piece still `localStorage`-only, per the
+  store's own deferred-follow-up comment). Wrote `docs/mandarin-tutor-mobile-domain.md`
+  (kind_robots PR #2120, docs-only, no code changed) covering the endpoint catalog, the auth/
+  media/curriculum portability findings, the PWA evaluation (already installable site-wide via
+  `@vite-pwa/nuxt` at zero extra cost), and the native-packaging recommendation (thin shell over
+  the existing API, not a parallel native rewrite, per the task's own no-fork constraint). Filed
+  mandarin-tutor/t-016 for the one real gap found.
+- Both companion PRs (kind_robots#2120, conductor#2900) went fully green — 36 and 22 checks
+  respectively, no stalls this cycle — and merged in dependency order (kind_robots first).
+  Closed t-012 to `done` via `close_task.py` + conductor PR (reusing the same close branch for
+  the review→done pair per convention) and appended the `LEARNING.yaml` record below.
+- Verified post-merge: `main` clean on both repos, no stray branches, no open PRs from this
+  session.
+
+**What was good:** treating "prepare the domain" as an audit-first task and actually reading
+the auth guard and store code rather than assuming a scoping task implies new infrastructure —
+this found that auth, media identity, and curriculum logic were already portable from earlier
+tasks (t-004/t-009/t-015) and let the real gap (customSets/artJobs) get filed precisely instead
+of guessed at.
+
+**Kaizen suggestion:** mandarin-tutor/t-016 (filed) — move `customSets`/`artJobs` off
+`localStorage`-only state into the authenticated backend, the same treatment
+`MandarinCardProgress` got in t-015. This is the direct next step toward m4's "portable
+learning state" milestone.
+
+---
+_Generated by [Claude Code](https://claude.ai/code)_
+
+## 2026-08-26 | Agent (scheduled conductor run) | mandarin-tutor/t-016 | resolution
+
+**Subject:** Picked up mandarin-tutor/t-016 (filed as a kaizen by the prior same-day
+t-012 session), implemented + merged end to end, and closed it.
+
+**Detail:**
+- Startup sweep repeated the same clean state the prior two same-day sessions found:
+  `check_pr_merged_drift.py` flagged the same two already-explained non-issues
+  (cthulhuquarium/t-008, brainstorm/t-025), `audit_human_gates.py` unchanged at 61
+  gates/0 new stale-state signals, `check_project_scaffold_drift.py` clean, today's
+  (2026-08-25 Pacific) dream proposal already exists. Two open kind_robots PRs (#2110,
+  #2102) were both out of scope and already correctly tracked as gates.
+- Claimed mandarin-tutor/t-016 (`depends_on: t-012`, already `ready`, mandarin-tutor
+  leads `priority.yaml`). Implemented in kind_robots: `MandarinCustomSet` +
+  `MandarinArtJobLink` (additive migration `20260826070000_add_mandarin_custom_sets`,
+  cardKeys stored as serialized JSON per house convention — see
+  `verifyNoPrismaJsonCast.ts`), `GET/POST /api/mandarin/sets`, and
+  `POST /api/mandarin/sets/art-jobs`. Store wiring: `loadCloudState()` on
+  `initialize()` treats the server as authoritative but keeps and re-pushes any
+  local-only set/link the server doesn't have yet, so an offline-created set is never
+  silently dropped; every existing local mutation (`createCustomSet`,
+  `renameCustomSet`, `toggleCardInCustomSet`, `queueIllustration`) now fires a
+  best-effort persist alongside its existing `saveLocalState()` call.
+- Verified before opening the PR: installed a local MariaDB in the sandbox and ran
+  `prisma migrate deploy` through the full 74-migration history (clean, no drift on
+  either new table — confirmed with a follow-up `prisma migrate diff` showing zero
+  residual diff for them specifically, distinct from known pre-existing unrelated
+  schema/migration-history drift on other tables that this task correctly left alone).
+  `vue-tsc --noEmit` (full repo), `eslint`, `prettier --check` all clean on changed
+  files. `npm run test:layout-contract` holds. Opened silasfelinus/kind_robots#2121.
+- All 38 required checks went green within ~4 minutes; only the already-documented
+  non-required "Build production image" stall (conductor/t-106, t-124, and this same
+  day's earlier t-015 TALKBACK entry) was still `in_progress` at merge time, confirmed
+  safe via `mergeable_state: unstable` (not `blocked`). Merged (squash, f985143).
+- Reconciled: closed t-016 to `done` via `close_task.py` (review + done sharing one
+  close branch), filed kaizen t-017 (self-test coverage for `loadCloudState`'s merge
+  logic, since `mandarinTutorStore` has none today unlike `mandarinSrs.ts`), and
+  appended the `LEARNING.yaml` record below.
+
+**What was good:** treating the task's own design hint ("or a lighter sibling table")
+literally — `MandarinArtJobLink` as its own small table rather than overloading
+`MandarinCustomSet` kept both models simple and let the GET endpoint return both in one
+round trip without an awkward join.
+
+**Kaizen suggestion:** t-017 (filed) — self-test coverage for `loadCloudState`'s merge
+semantics (server-authoritative, local-only entries preserved and re-pushed), the one
+piece of this task's logic that isn't covered by `vue-tsc`/`eslint` and could regress
+silently in a future refactor.
+
+---
+_Generated by [Claude Code](https://claude.ai/code)_
+
+## 2026-08-26 | Agent (scheduled conductor run) | mandarin-tutor/t-017 | resolution
+
+**Subject:** Picked up mandarin-tutor/t-017 (filed as kaizen by the same-day t-016
+session), implemented + merged, and closed it.
+
+**Detail:**
+- Startup sweep repeated the same clean state prior same-day sessions found:
+  `check_pr_merged_drift.py` flagged the same two already-explained non-issues
+  (cthulhuquarium/t-008 — PR silasfelinus/kind_robots#2101 confirmed merged via
+  GitHub MCP, task correctly stays at `review` per its own note pending a live
+  seed dry-run this sandbox cannot reach the DB for; brainstorm/t-025 — claim is
+  ~48h stale with no PR, self-expires via `CLAIM_TTL_MINUTES` rather than needing
+  a manual fix), `audit_human_gates.py` at 61 gates/1 stale-recurring signal
+  (animation-manager/t-007, unrelated), `check_project_scaffold_drift.py` clean,
+  today's (2026-08-25 Pacific) dream proposal already exists.
+- Two open kind_robots PRs (#2110 kind-robots/t-075, #2102 kind-robots/t-073) were
+  re-verified directly against their roadmap tasks rather than assumed: both diffs
+  showed large apparent deletions of unrelated mandarin/scene-animator files, which
+  turned out to be pure base-drift (both branches predate several since-merged
+  commits) rather than real regressions — merging `origin/main` into a scratch
+  worktree of kind-robots/t-075 confirmed a single trivial conflict (a generated
+  Prisma file) and restored all the "deleted" content. Neither PR's CI failure is
+  actionable: t-075's `schema-migration-parity` failure is the task's own explicit
+  design (schema-only PR before a Force Update, migration added in a later PR by
+  intent — see the task note), and t-073 is `gate_human: true`/irreversible
+  (credential rotation only Silas can do), so its TypeScript failure isn't chased
+  further this cycle. Both remain correctly parked at `needs-human` — no fix
+  needed from either.
+- Claimed mandarin-tutor/t-017. Extracted `loadCloudState`'s merge rules
+  (server-authoritative, local-only customSet/artJob entries preserved and
+  re-pushed) into pure functions in `utils/mandarinCloudMerge.ts`
+  (`mergeCustomSets`, `mergeArtJobs`); the store now calls them instead of doing
+  the merge inline. Added `utils/scripts/verifyMandarinCloudMerge.test.ts`
+  (matches `verifyMandarinSrs.test.ts`'s no-DB pure-function pattern) covering
+  server-only pass-through, local-only preserve-and-re-push, both-sides-prefer-
+  server, and a mixed case, for both customSets and artJobs.
+- Verified before opening the PR: `npx tsx` on the new test (all assertions
+  pass), full `npm run test` (`vue-tsc --noEmit`, whole repo — one real TS error
+  from `noUncheckedIndexedAccess` on an array index, fixed with `?.` before
+  re-running clean), `eslint`/`prettier --check` on changed files, and
+  `test:no-promise-in-store-state` still holds (105 stores). Opened
+  silasfelinus/kind_robots#2122; wired the new selftest into `contract-tests.yml`
+  so it runs on every PR going forward.
+- All required checks passed (`Contract verifiers`'s 302-step sequential job
+  included, ~3.5 minutes, zero failures); only the already-documented
+  non-required "Build production image" stall (conductor/t-106, t-124) was still
+  running at merge time — confirmed safe via `mergeable_state: unstable`, not
+  `blocked`. Merged (squash, 909e5ac). Closed t-017 to `done` and appended the
+  `LEARNING.yaml` record below.
+
+**What was good:** re-verifying the two open kind_robots PRs directly (fetching
+branches, diffing against fresh `main`, reading each task's own note) instead of
+trusting the prior session's TALKBACK summary at face value — confirmed the same
+conclusion independently rather than propagating an unverified claim forward.
+
+**Kaizen suggestion:** `server/utils/mandarinCatalog.ts`'s cache-invalidation
+logic has no dedicated self-test today; worth the same pure-extraction treatment
+if a future task touches it. (Deferred rather than filed as a new task — no
+concrete bug or upcoming change motivates it yet.)
+
+---
+_Generated by [Claude Code](https://claude.ai/code)_
+
+## 2026-08-26 | Agent (scheduled conductor run) | interface-vision/t-104 + t-105 | resolution
+
+**Subject:** Full startup sweep, re-confirmed t-104's mechanical pools exhausted (fifth
+time, released claim), shipped a t-105 page-polish slice, and found + independently
+confirmed the home render/media box (`media.acrocatranch.com`) is down, blocking every
+kind_robots merge that touches the required `Contract verifiers` check.
+
+**Detail:**
+- Startup sweep: `AGENTS.md` read in full, `git status`/`git log` clean.
+  `check_pr_merged_drift.py` (3 already-documented API-403 unverifiable candidates,
+  unchanged), `audit_human_gates.py` (61 gates/1 already-documented stale signal),
+  `check_project_scaffold_drift.py` clean, today's (2026-08-25 Pacific) dream proposal
+  already exists. `priority.yaml` order: mandarin-tutor and cthulhuquarium both had zero
+  actual `status: ready` tasks (cthulhuquarium/t-042 was claimed/in-review by a concurrent
+  "chatgpt" session — respected its `REVIEWING:` marker on kind_robots#2126 and left it
+  alone), kapowarr's "ready" grep hits were all inside `TO APPROVE:` prose, not real ready
+  tasks. `next_ready_task.py` correctly fell through to `interface-vision/t-104`.
+- **t-104 slice 53**: claimed, re-ran both established mechanical pools
+  (`kr_panel_codemod.py`, the `mx-auto+w-full+max-w-*` root grep) against current
+  kind_robots `main` (`b032af3`) — both still exhausted, fifth independent same-day-ish
+  confirmation. Also checked the `kr-note-*` pool per slice 52's own widen suggestion: no
+  new byte-exact match; the one close candidate (`theme-gallery.vue`'s `p-3` variant vs.
+  `kr-note`'s `p-4`) is a real padding step this sandbox can't visually verify, left
+  untouched per this task's established risk tolerance. No code change — released the
+  claim back to `ready` via conductor#2906 (merged; required `Python test suite` check
+  failed twice with the identical `ConnectionRefusedError`/`URLError` signature on 15
+  unrelated art-queue tests — this is the already-tracked `conductor/t-124` flake, not
+  required for merge, confirmed by successfully merging past it).
+- **t-105 slice**: `/creator-earnings` (Creator Earnings) had no page header at all —
+  guests saw a bare sign-in prompt, signed-in users a plain intro paragraph. Added the
+  established icon-badge + title/subtitle header pattern (`kind-icon:coin`, 2xl bold
+  title, 60%-opacity subtitle) matching `serendipity-page.vue`/`build-bench.vue`/
+  `mission-accrual-page.vue`; folded the existing intro text into the subtitle rather than
+  duplicating it. `components/pages/creator-earnings-page.vue` only, template/classes.
+  Verified: `eslint` clean, `vue-tsc --noEmit` clean, `test:layout-contract` holds (0 new
+  violations), `prettier --check` clean (fixed formatting drift my own edit introduced,
+  confirmed pre-edit baseline was clean via `git stash`). Opened kind_robots#2127.
+- **Found and independently confirmed a real infra outage**: kind_robots#2127's required
+  `Contract verifiers` check failed on `utils/scripts/verifyAcademyStarterManifest.ts`
+  with a bare `fetch failed` against the external media origin. Ruled out the diff as
+  cause (one Vue template file, nothing to do with Academy manifests) by checking the
+  concurrently-open, unrelated PR #2126 — identical `Contract verifiers` failure there
+  too, same time window. Re-ran the job three times over ~12 minutes (once as the
+  standard flake-confirmation re-run, twice more after real waits to rule out a
+  transient blip) — identical failure every time. Root-caused directly: conductor's own
+  `scripts/check_render_box.py` reports `render box DOWN:
+  https://media.acrocatranch.com unreachable ([Errno 104] Connection reset by peer)`
+  right now. This is Silas's home render/media box (per that script's own docstring),
+  not a CI-side flake — nothing in any PR can fix it. Left kind_robots#2127 open and
+  documented (comments explain the root cause and that it'll be retried once the box is
+  back), and reconciled the conductor side to `status: review` with
+  `implementation_pr: silasfelinus/kind_robots#2127` (conductor#2907, merged) instead of
+  releasing the claim, so the next session finds "done, just blocked on infra" rather
+  than re-implementing.
+- Sent a proactive notification to Silas about the render-box outage since it blocks all
+  kind_robots merges site-wide and is time-sensitive infra, not a routine CI note.
+- State reconciliation re-run after all merges: `check_pr_merged_drift.py` still shows
+  the same 4 API-403-unverifiable candidates (the new one, `interface-vision/t-105` ->
+  kind_robots#2127, is correctly unresolved — the PR is genuinely still open, not
+  merged), `audit_human_gates.py` unchanged (61/1, same known signal). No new drift.
+
+**What was good:** didn't stop at "CI failed, not my diff, move on" — cross-checked
+against a second unrelated PR failing the identical way at the identical step, then
+root-caused with the repo's own existing reachability probe instead of guessing. That
+turned an ambiguous "flaky check" into a concrete, actionable finding worth surfacing.
+
+**Kaizen suggestion:** none filed — `check_render_box.py` and `RENDER-BOX-STATUS`
+already exist for exactly this signal; the gap is that nothing currently propagates
+"render box down" into a human-facing alert outside `auto-art-generate.yml`'s own
+silent skip-and-continue. Worth a future task if this recurs, not urgent enough to file
+blind from one incident.
+
+---
+_Generated by [Claude Code](https://claude.ai/code)_
+
+## 2026-08-26 | Agent (scheduled conductor run) | interface-vision/t-105 render-box recovery + dream proposal | resolution
+
+**Subject:** Render box came back up mid-sweep; re-ran and merged the two kind_robots PRs it was blocking, closed out interface-vision/t-105's slice, and authored the missing 2026-08-26 dream proposal.
+
+**Detail:**
+- Startup sweep: `AGENTS.md` re-read, `git status`/`git log` clean, `check_pr_merged_drift.py` (4 known API-403-unverifiable candidates, unchanged from the prior session's read), `audit_human_gates.py` (61 gates/1 stale-recurring signal, both already documented), `check_project_scaffold_drift.py` clean. No open conductor PRs; kind_robots had 4 open (#2127 interface-vision/t-105, #2126 cthulhuquarium/t-042, #2110 kind-robots/t-075, #2102 kind-robots/t-073 — the latter two both correctly parked at hard `needs-human`, gated/irreversible, unchanged).
+- Ran `scripts/check_render_box.py` directly: `media.acrocatranch.com` now answers (HTTP 404, i.e. reachable — no longer `Connection reset by peer`). This was the exact outage the immediately-prior session's TALKBACK entry (same date, above) had root-caused as blocking #2127's and #2126's required `Contract verifiers` check.
+- Re-ran the failed jobs via GitHub MCP `actions_run_trigger` (`rerun_failed_jobs`) on the specific runs: #2127's `Contract verifiers` (run 32939676934) passed clean this time; #2126's `Contract verifiers` (run 32938717021) and `comment-contract` (run 32938716652) also both passed. Posted a follow-up comment on #2127 documenting the root-cause confirmation and re-run result (the prior session's comment had already flagged the outage but not the recovery).
+- **#2127** (interface-vision/t-105, one-file template/class change, already reviewed by the prior session): mergeable_state clean, 37/37 checks green — merged (squash `198b2aa4`). Closed the conductor task back to `status: ready` via `close_task.py` (this branch/PR) with `implementation_pr` recorded and a note documenting the render-box recovery and merge, per the task's own recurring-slice convention.
+- **#2126** (cthulhuquarium/t-042, Prisma schema/client wiring for an already-separately-applied production migration): left alone despite its `REVIEWING: ...chatgpt-cthulhu-t042...` marker having technically aged past the 20-minute TTL — the PR's own body describes a two-step production migration rollout (already-applied Alexandria migration + this client-wiring half) with infra-state claims ("Alexandria Force Update after migration: completed") this sandbox cannot independently verify, and a concurrent session had clearly been actively working it within the last hour. Reviewing/merging a production-migration-adjacent PR blind, on a stale-but-recent claim, seemed like the wrong tradeoff versus the review-claim protocol's own "advisory, not a hard lock" framing — left for that session or a later sweep instead of risking a duplicate/colliding merge on higher-stakes work.
+- **Dream proposal**: `build_dream_proposal.py --check --fetch` showed no 2026-08-26 proposal yet (the automated `daily-digest.yml` step hadn't produced one this run). Per the documented backstop path: pulled the day's `--brief` (Facets: Low Fantasy + Magical Girl genres, Sea Cucumber creature, Amazonian Scout occupation wildcard, Demonic Bone material, Serious personality, plus per-asset extra genres), authored one coherent six-asset bundle (`tide-ledger-miracles` — a coastal magical-girl scouting agency, bureaucratic low-fantasy tone, sea-cucumber-inspired defensive ability, a commune revolt scenario tying in every assigned Facet), validated with `--dry-run` first, then wrote it with `--from-json --date 2026-08-26`. `seed_facets` preserved unchanged from the live-catalog brief.
+
+**What was good:** treating the "someone else might be reviewing this" marker as informative rather than absolute — the render-box recovery and the simple one-file PR were unambiguously safe to act on immediately, while the higher-stakes migration-adjacent PR with an active recent claim and unverifiable infra claims was correctly left alone rather than merged just because the TTL technically lapsed.
+
+**Kaizen suggestion:** none filed this cycle — the immediately-prior session's already-filed observation (no human-facing alert path for a render-box recovery, only the outage) still stands and doesn't need a second entry.
+
+---
+_Generated by [Claude Code](https://claude.ai/code)_

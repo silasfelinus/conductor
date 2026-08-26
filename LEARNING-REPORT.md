@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-25T21:39:15Z
+Generated: 2026-08-26T07:39:16Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **763**
-- Outcomes: blocked: 15, cancelled: 1, done: 747
+- Closed tasks recorded: **767**
+- Outcomes: blocked: 15, cancelled: 1, done: 751
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -37,13 +37,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
-| interface-vision | 84 | 100% |
+| interface-vision | 85 | 100% |
 | kapowarr | 48 | 100% |
 | kind-economy | 6 | 100% |
 | kind-robots | 52 | 98% |
 | kindrobots-unraid | 5 | 100% |
 | lora-ingestion | 1 | 100% |
-| mandarin-tutor | 4 | 100% |
+| mandarin-tutor | 7 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
 | model-builder | 79 | 100% |
@@ -68,7 +68,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 747 | 99% |
+| software | 751 | 99% |
 
 ## Failure categories
 
@@ -89,6 +89,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-26 `interface-vision/t-104` — Slice 52: before searching fresh, checked slice 39's flagged runner-up candidate (user-manager.vue's managerError/"Unknown user tab" notices) against the roadmap note history first and found slice 40 had already closed it -- avoided a wasted duplicate-work search. The actual fix this slice (watchlist-browse.vue's errorMessage banner missing font-semibold) was found by grepping for the exact hand-rolled kr-note shape and then confirming a genuine live sibling inconsistency via a second, narrower grep for the same errorMessage variable/aria-live wrapper pattern already converted elsewhere (newsfeed-feed.vue) -- cheap to check and turns a plausible-looking candidate into a documented, not-blind substitution matching the standing "same element rendering two different ways across sibling components" rule.
+
+- 2026-08-26 `mandarin-tutor/t-017` — A Pinia store method entangled with Nuxt/user-store runtime (loadCloudState) can still get real regression coverage without a mock framework: extracting its merge decision (server-authoritative, local-only entries kept and re-pushed) into two pure functions in a plain utils module, then having the store call them, made the logic testable with node:assert alone -- same pattern as server/utils/mandarinSrs.ts. No behavior changed; the store's call sites shrank from inline set-difference logic to two function calls.
+
+- 2026-08-26 `mandarin-tutor/t-016` — Mirroring an already-established pattern exactly (MandarinCardProgress's userId-scalar-ownership, house JSON-as-serialized-text convention, upsert-by- client-generated-id) made a full-stack task (migration + 3 endpoints + store wiring) verifiable and mergeable in one pass with zero CI churn. The one design call worth flagging for future similar tasks: syncing a whole client-owned collection (customSets) as a full-array replace-on-every-mutation is tempting for simplicity but risks a second device's unsynced local mutation clobbering a set the first device already pushed -- upserting one item at a time by its client-generated id sidesteps that without needing real conflict resolution.
+
+- 2026-08-26 `mandarin-tutor/t-012` — "Prepare the domain for mobile clients" turned out to be an audit task, not a build task -- the portable pieces (header-token auth via requireApiUser, durable hash-keyed media identity, 100% server-side curriculum/SRS logic) were already in place from earlier tasks (t-004, t-009, t-015) without anyone framing them as "mobile-ready." Reading the actual auth guard and store persistence code before assuming a scoping task needs new architecture found the one real gap (customSets/ artJobs still localStorage-only) precisely, and let the task close as documentation plus one correctly-scoped follow-up (t-016) instead of either over-building or guessing at what was missing.
+
 - 2026-08-25 `interface-vision/t-120` — A recurring-in-practice roadmap task (return-to-ready documented only in prose inside every slice's note) gives close_task.py's `recurring: true` guard nothing to key on, so a `done` close-out slips through silently -- this nearly happened to interface-vision/t-105 earlier the same day (conductor#2884 -> #2887). Setting the `recurring` field explicitly the moment a task's actual operating convention is "always returns to ready" -- not waiting for a mistaken done close-out to force the fix -- turns a 40+-paragraph prose convention into a mechanical refusal the next session can't miss.
 
 - 2026-08-25 `mandarin-tutor/t-014` — GitHub serves raw .json files from raw.githubusercontent.com with Content-Type: text/plain, not application/json -- ofetch's default JSON auto-parsing keys off that header, so a $fetch call against such a URL with no explicit parseResponse/responseType override silently returns the raw response text instead of a parsed value. Confirmed directly against the live pinned source rather than assuming from the error message: without an override the response was a raw string, with `parseResponse: (t) => JSON.parse(t)` it parsed correctly. Any future $fetch against a raw.githubusercontent.com JSON file should pass an explicit parseResponse rather than relying on content-type sniffing -- checked the rest of server/ for the same pattern and found none left unguarded (mandarinCharacterData.ts already used responseType: 'text' with manual per-line JSON.parse for its NDJSON source, so it was never exposed).
@@ -101,11 +109,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-25 `conductor/t-129` — close_task.py's --set note=... silently replaced a task's whole note instead of appending, which is how cthulhuquarium/t-033 and t-034 lost 199 lines of diagnostic history in one routine status flip. set_task_field_text() now refuses to replace a substantial note with a value that doesn't still contain it unless force=True, and close_task.py gained --append-note. Before widening a shared roadmap-editing primitive's default behavior, grep every caller (roadmap_text_patch.py's apply_task_field_ops feeds the automated task-events processor) -- one existing test was exercising the exact destructive pattern the guard now catches, not representative of the real caller's already-safe append-then-set convention.
 
-- 2026-08-25 `mandarin-tutor/t-010` — A task's first implementation slice can merge (kind_robots PR) cleanly at status:review with no reconciliation checkpoint following. Reviewer sweeps should run check_pr_merged_drift.py every session, not only when a task looks stuck -- this one merged and sat 10+ minutes before the drift script caught it.
-- 2026-08-25 `mandarin-tutor/t-005` — Keep target-blind speech recognition separate from reference-aware pronunciation feedback, and keep generated lexical facts visibly distinct from pinned dictionary/source data. Durable media identity belongs server-side so requested cards survive reloads and future native clients.
-- 2026-08-25 `mandarin-tutor/t-001` — Keep ASR transcript and acoustic pronunciation evidence separate. Reusing the existing YIN pitch detector avoided a second speech-analysis stack. Kind Robots shared components must use container-responsive grid sizing, and Nitro $fetch calls with dynamic route strings must pin both generics.
-- 2026-08-25 `cthulhuquarium/t-009` — close_task.py's --set note=... substitutes the roadmap note field rather than extending it, which silently discarded t-009's original task-spec note the same way it discarded t-033/t-034's investigative history minutes earlier (fixed by hand in kind_robots-adjacent conductor PR #2816). Caught and fixed before this close-out PR opened by re-adding the original note ahead of the DONE summary. The script itself is still unfixed -- every future close-out with `--set note=` is one keystroke away from repeating this. Worth a dedicated follow-up task (append-by-default or an explicit --append-note flag) rather than relying on every future session to catch it by hand, as this one and the #2816 session did.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-25T21:39:15Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-26T07:39:16Z_

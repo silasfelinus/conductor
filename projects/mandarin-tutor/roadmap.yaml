@@ -199,49 +199,90 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Create a practical gambling and casino Mandarin study set"
-    status: claimed
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-001
-    note: >
-      Build a substantial specialist set for casino work: bets/wagers, chips, cash, table and
-      card vocabulary, suits/ranks, dealer/player roles, shuffle/cut/deal actions, odds and
-      payouts, wins/losses/ties, limits, buy-ins/cash-outs, common table instructions, polite
-      customer-facing phrases, and number/money expressions. Include usage notes where casino
-      Mandarin differs from literal dictionary translations.
-    claimed_by: 2026-08-25T093501Z-mandarin-tutor-t-007-sk89
-    claimed_at: '2026-08-25T09:35:01Z'
-    updated: '2026-08-25T09:35:01Z'
+    note: |-
+      Build a substantial specialist set for casino work: bets/wagers, chips, cash, table and card vocabulary, suits/ranks, dealer/player roles, shuffle/cut/deal actions, odds and payouts, wins/losses/ties, limits, buy-ins/cash-outs, common table instructions, polite customer-facing phrases, and number/money expressions. Include usage notes where casino Mandarin differs from literal dictionary translations.
+
+
+      Reclaiming the abandoned t-007 lease after independently verifying its 2026-08-25T09:35:01Z claimed_at is far beyond Conductor's 90-minute stale-claim TTL. Continue the research-backed practical casino Mandarin curriculum without colliding with a live session.
+
+      Practical casino Mandarin curriculum is implemented in kind_robots PR
+
+      DONE. Practical casino Mandarin shipped in kind_robots PR
+    claimed_by: 2026-08-25T223600Z-mandarin-tutor-t-007-sk94
+    claimed_at: '2026-08-25 22:36:00+00:00'
+    updated: '2026-08-25 22:53:00+00:00'
 
   - id: t-008
     milestone: m3
     title: "Map the curriculum to official Mandarin proficiency tests"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-001
-    note: >
+    note: >-
       Track source/version-specific proficiency metadata rather than baking one exam revision
       into the product. Build coverage reports for the currently applicable HSK/Chinese
       proficiency standards: vocabulary, characters, pronunciation/listening, reading, and
       other tested competencies. Make gaps measurable so future roadmap work can target an
       actual proficiency level instead of an arbitrary card count.
 
+      PR opened: silasfelinus/kind_robots#2117 -- HSK 3.0 coverage report (proficiency
+      standard metadata + pure coverage module + CLI audit script). Live run against
+      production: only HSK levels 1-2 of 7 sourced; levels 3-7 available upstream and named in
+      nextTargets. Watching CI.
+
+      DONE: silasfelinus/kind_robots#2117 merged (squash d0354264). Added
+      utils/mandarinProficiencyStandards.ts (HSK 3.0 metadata, 7 official cumulative levels +
+      reference vocabulary sizes) and utils/mandarinProficiencyCoverage.ts (pure coverage
+      computation, sourced-status derived from live cards so it can't drift). CLI wrapper
+      utils/scripts/auditMandarinProficiencyCoverage.ts with a self-test wired into contract-
+      tests.yml and a live mode. Live finding: only HSK levels 1-2 of 7 sourced (1,256 cards);
+      levels 3-7 fully available upstream (2,225/3,197/4,258/5,384/10,993 cumulative entries)
+      and not yet ingested -- concrete next targets for future roadmap work, replacing the
+      arbitrary card-count framing. All 40 kind_robots checks green before merge.
+    claimed_by: claude-scheduled-20260825-mandarin-t008
+    claimed_at: '2026-08-25T23:28:26Z'
+    updated: '2026-08-25T23:47:17Z'
+
   - id: t-009
     milestone: m3
     title: "Add spaced repetition, mastery history, and study diagnostics"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-001
-    note: >
-      Record card exposure and recall outcomes, schedule review with a simple inspectable
-      spaced-repetition model, and distinguish recognition of meaning, Hanzi, and
-      pronunciation when useful. Preserve exportable learner state so a later mobile client
-      can share progress rather than starting over.
+    note: >-
+      Record card exposure and recall outcomes, schedule review with a simple inspectable spaced-repetition model, and distinguish recognition of meaning, Hanzi, and pronunciation when useful. Preserve exportable learner state so a later mobile client can share progress rather than starting over.
+
+
+      Claim t-009 with an interaction-first sequence based on Silas's approved UX assessment. Establish explicit Study vs Explore modes before persisting SRS/mastery. Study becomes a deliberate recall loop (challenge -> reveal -> pronunciation -> self-rating -> next) with answer-bearing pinyin, art, and history hidden before reveal. Explore keeps search, requested words, decomposition/history, provenance, and deck curation. SRS/mastery history will attach to Study outcomes rather than cementing the current all-purpose page.
+
+      IMPLEMENTED 2026-08-26 (conductor scheduled Agent run): established explicit Study vs
+      Explore modes per this note's own sequencing ("modes before persisting SRS/mastery").
+      Study is a deliberate recall loop (challenge -> reveal -> pronunciation via the existing
+      MandarinVoiceCoach -> self-rating Again/Hard/Good/Easy -> next), with
+      pinyin/illustration/meaning hidden until reveal. Explore is the prior all-purpose page,
+      unchanged. Self-ratings are logged client-side only (studySessionLog, in-memory, not
+      persisted server-side) -- durable SRS scheduling and mastery-history persistence is
+      filed as its own follow-up, t-015, since it is genuinely separable scope this note
+      itself called out. See silasfelinus/kind_robots#2118 for the full diff and verification
+      (eslint, vue-tsc, layout-contract, existing mandarin self-tests all clean).
+
+      RECONCILED (conductor scheduled Agent run, 2026-08-26): implementation PR
+      silasfelinus/kind_robots#2118 merged (Study/Explore mode split, self-rating loop, all CI
+      green). Follow-up conductor PR #2896 (roadmap status -> review, filed t-015 for durable
+      SRS/mastery persistence) also merged. Flipping to done -- t-009s own scope (modes before
+      persistence) is fully delivered; t-015 tracks the deferred persistence half.
+    claimed_by: claude-scheduled-20260826T002900Z-mandarin-t009
+    claimed_at: '2026-08-26T00:30:28Z'
+    updated: '2026-08-26T01:28:45Z'
+    implementation_pr: 'silasfelinus/kind_robots#2118'
 
   - id: t-010
     milestone: m2
@@ -282,8 +323,8 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Prepare the Mandarin Tutor domain for iOS and Android clients"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-009
@@ -291,6 +332,24 @@ tasks:
       Once the web learning loop is stable, document and expose a portable API/domain
       boundary for catalog, sets, media, and learner progress. Evaluate PWA/native packaging
       and native iOS/Android clients without forking curriculum logic or media identities.
+
+      DOCUMENTED 2026-08-26 in silasfelinus/kind_robots, docs/mandarin-tutor-mobile-domain.md
+      (PR #2120). Audited every /api/mandarin/* endpoint against its auth guard: auth is
+      already portable (requireApiUser resolves JWT bearer/API-key headers, not cookie-only,
+      so a native client authenticates exactly like the web app). Pronunciation audio is
+      already durable and shared (deterministic hash-keyed MandarinAudioAsset served by
+      stable id -- no per-platform re-synthesis). Curriculum/SRS logic (getMandarinCatalog,
+      mandarinSrs.ts) is 100% server-side, so any client is a thin renderer -- no fork risk.
+      One real gap found: customSets and artJobs in mandarinTutorStore are still
+      localStorage-only per the store's own deferred-follow-up comment, so a learner's
+      custom decks/queued art would not follow them to a second device or a native client.
+      Filed t-016 to close it. PWA: already installable site-wide via @vite-pwa/nuxt at zero
+      extra cost for /play/mandarin. Native: recommended path is a thin shell over the
+      existing JSON API, not a parallel Swift/Kotlin rewrite (which would violate the task's
+      own no-fork constraint).
+    claimed_by: claude-scheduled-20260826T0230Z-mandarin-t012
+    claimed_at: '2026-08-26T02:29:06Z'
+    updated: '2026-08-26T02:38:01Z'
 
   - id: t-014
     milestone: m3
@@ -325,3 +384,116 @@ tasks:
     claimed_at: '2026-08-25T19:28:31Z'
     updated: '2026-08-25T19:40:22Z'
     implementation_pr: 'silasfelinus/kind_robots#2113'
+
+  - id: t-015
+    milestone: m3
+    title: "Persist study ratings into real spaced-repetition scheduling and mastery history"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    depends_on: t-009
+    note: >-
+      Follow-up split from t-009 (2026-08-26 conductor scheduled Agent run, silasfelinus/kind_robots#2118):
+      t-009 established explicit Study vs Explore modes and a deliberate recall loop (challenge ->
+      reveal -> pronunciation -> self-rating Again/Hard/Good/Easy -> next), but self-ratings only
+      land in a client-only, in-memory `studySessionLog` on `mandarinTutorStore` -- nothing is
+      persisted server-side and nothing schedules a card's next review. This task is the deferred
+      second half the original note called out ("Establish explicit Study vs Explore modes before
+      persisting SRS/mastery"): design and land the actual spaced-repetition schedule (a simple,
+      inspectable model per t-009's original description -- e.g. Leitner or a basic SM-2 variant,
+      not a black box), a durable mastery-history record per card/user distinguishing recognition
+      of meaning, Hanzi, and pronunciation, and study diagnostics surfaced back to the learner
+      (retention over time, weak cards, due-for-review counts). Preserve exportable learner state
+      so a later mobile client (t-012) can share progress rather than starting over. Needs a schema
+      decision (new Prisma model(s) for review history / scheduling state) -- treat that as part of
+      this task's own scope, not a separate gate, per normal additive-migration rules.
+
+      RECONCILED (conductor scheduled Agent run, 2026-08-26): implementation PR
+      silasfelinus/kind_robots#2119 merged. Added MandarinCardProgress + MandarinReviewEvent
+      (additive-only migration 20260826013500_add_mandarin_srs), a standard SM-2 scheduler
+      (server/utils/mandarinSrs.ts, self-tested), POST /api/mandarin/study/rate + GET
+      /api/mandarin/study/progress, and store/UI wiring (due-count/retention badge in Study
+      mode). Migration verified end-to-end against a local MariaDB through the full
+      63-migration history. The dimension column (always overall this pass) is forward-compat
+      groundwork for decomposed meaning/Hanzi/pronunciation ratings, deliberately not built
+      this pass -- that remains a separate future UX task if wanted. All CI green except Build
+      production image, which was still in_progress after 40+ minutes with every other of 42
+      checks green; PR mergeable_state read unstable (not blocked), confirming per the
+      t-106/t-124 precedent that this check is not required -- merged past it.
+    claimed_by: claude-scheduled-20260826T0130Z-mandarin-t015
+    claimed_at: '2026-08-26T01:29:16Z'
+    updated: '2026-08-26T01:42:51Z'
+    implementation_pr: 'silasfelinus/kind_robots#2119'
+
+  - id: t-016
+    milestone: m4
+    title: "Move custom study sets and queued art-job bookkeeping off localStorage-only state"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    depends_on: t-012
+    note: >
+      Found while auditing t-012's mobile domain boundary (docs/mandarin-tutor-mobile-domain.md,
+      kind_robots PR #2120). `mandarinTutorStore`'s `customSets` (user-created study-set
+      membership/names) and `artJobs` (queued illustration job IDs) persist to
+      `localStorage` only -- the store's own comment already flags this as deliberately
+      deferred. Everything else a learner accumulates (SRS/mastery state via t-015,
+      requested cards via GET/POST /api/mandarin/requests) is already server-side and
+      follows them across devices; these two do not, and would show up empty on a
+      reinstalled PWA, a second device, or a future native client. Give customSets the
+      same authenticated-backend treatment MandarinCardProgress got in t-015: an additive
+      migration for a MandarinCustomSet-shaped table keyed on userId, GET/POST endpoints
+      under /api/mandarin/sets, and store wiring that treats localStorage as first-load
+      cache/offline fallback rather than the record of truth. artJobs can ride the same
+      migration and endpoints or a lighter sibling table -- small integer job-id map keyed
+      per user/cardKey. This is the concrete blocker for m4's "portable learning state"
+      milestone, not auth, media, or curriculum logic (all three already confirmed
+      portable in t-012's audit). DONE 2026-08-26. Merged silasfelinus/kind_robots#2121
+      (squash f985143): additive migration 20260826070000_add_mandarin_custom_sets adding
+      MandarinCustomSet (userId+clientId unique, name, cardKeys as serialized JSON per
+      house convention) and MandarinArtJobLink (userId+cardKey unique, jobId), GET/POST
+      /api/mandarin/sets (load, upsert-one-set-by-clientId) and POST
+      /api/mandarin/sets/art-jobs (upsert one card's queued ArtJob id). Store wiring:
+      loadCloudState() runs on initialize(), treats the server as authoritative but keeps
+      and re-pushes any local-only set/link the server doesn't have yet so offline-created
+      data is never silently dropped; createCustomSet/renameCustomSet/
+      toggleCardInCustomSet/queueIllustration each fire a best-effort persist alongside
+      the existing saveLocalState() call. Verified: installed a local MariaDB and ran
+      `prisma migrate deploy` through the full 74-migration history (clean, no drift for
+      either new table); vue-tsc --noEmit, eslint, prettier --check all clean;
+      test:layout-contract holds; verifyNoPrismaJsonCast passed. All 38 required PR
+      checks green (only the known-flaky non-required "Build production image" job was
+      still in_progress at merge time -- same documented stall pattern as conductor/t-106,
+      t-124, and today's earlier t-015 note; mergeable_state read `unstable`, not
+      `blocked`). m4's "portable learning state" milestone blocker is now resolved --
+      auth, media, curriculum, SRS/mastery, and customSets/artJobs are all confirmed
+      server-side and cross-device.
+    claimed_by: claude-scheduled-20260826T0700Z-mandarin-t016
+    claimed_at: '2026-08-26T03:28:33Z'
+    updated: '2026-08-26T03:45:30Z'
+    implementation_pr: 'silasfelinus/kind_robots#2121'
+
+  - id: t-017
+    milestone: m4
+    title: "Add self-test coverage for mandarinTutorStore's cloud-state merge logic"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-016 (2026-08-26, kind_robots PR #2121): `mandarinTutorStore` has no
+      automated test coverage today, unlike `server/utils/mandarinSrs.ts`'s self-test.
+      `loadCloudState`'s merge behavior (server state is authoritative, but any local-only
+      customSet/artJob the server doesn't know about yet is kept and re-pushed rather than
+      dropped) is exactly the kind of logic a future refactor could silently break without
+      a real backend to catch it. Add a lightweight self-test (matching the
+      `verifyMandarinSrs.test.ts` pattern -- pure-function/mockable, no DB needed) covering
+      at minimum: server-only sets/links pass through untouched, local-only entries are
+      preserved and trigger a re-push, and entries present on both sides prefer the
+      server's value.
+    claimed_by: claude-scheduled-20260826-mandarin-t017
+    claimed_at: '2026-08-26T04:30:34Z'
+    updated: '2026-08-26T04:42:43Z'
+    implementation_pr: 'silasfelinus/kind_robots#2122'
