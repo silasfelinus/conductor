@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     recurring: true
@@ -3125,9 +3125,45 @@ tasks:
       Standing kaizen from slice 35 (a considered, non-blind pass over the kr-note family) is
       still the best-scoped next step. Return the non-recurring consistency umbrella to ready
       for the next bounded slice.
-    updated: '2026-08-26T05:29:22Z'
+
+      Slice 52 (session 20260826T052920Z-interface-vision-t104-slice52): first checked slice
+      39's flagged runner-up candidate (components/user/user-manager.vue's
+      managerError/"Unknown user tab" notices vs. academy-manager.vue) and confirmed it was
+      already fixed by slice 40 (kind_robots#1767) -- not a live candidate. Ran a fresh
+      targeted grep for the same hand-rolled rounded-2xl border border-{status}/40
+      bg-{status}/10 p-4 text-{status} shape across current kind_robots main (50880fa) and
+      found components/watchlist/watchlist-browse.vue's results v-if="errorMessage" banner:
+      rounded-2xl border border-error/40 bg-error/10 p-4 text-sm text-error, missing only
+      font-semibold from kr-note-error's canonical shape. components/newsfeed/newsfeed-
+      feed.vue renders the identical structural pattern -- same errorMessage variable name,
+      same aria-live="polite" aria-atomic="true" wrapper, same v-if="errorMessage" div -- via
+      class="kr-note kr-note-error" (bold). Same kind of inline error notice rendering at two
+      different font weights depending on which component displayed it: a real, live visual
+      inconsistency, not blind dedup. Swapped watchlist-browse.vue to class="kr-note kr-note-
+      error". Other p-4 hits from the same grep were correctly out of scope: kr-manager.vue's
+      warning box mixes flex/items-center/justify-center/text-center (a structural centered
+      empty-state, not a plain notice, same exclusion class as bot-gallery.vue/character-
+      gallery.vue/dream-gallery.vue) and pages/admin/scene-animator.vue's p-4 box has no
+      text-{status} color class at all (different shape). Merged as
+      silasfelinus/kind_robots#2125 (squash b032af3b2a7cfcd6341319b6d8f748f94d1d6c67) from
+      exact head 72153ea99b82ae266c09b9519fd8f29150b43cb7. All 37 exact-head PR checks green
+      (TypeScript, Contract verifiers -- the ~3-minute 300-step full matrix including the slow
+      Channel artwork audit step, GitGuardian, facet-catalog, layout-contract, verify x3,
+      Taskmaster checkpoint contract, Storybook fictional state/session library/studio
+      contracts and the rest of the Storybook suite, Shared narrative UI contract, Narrative
+      art persistence/milestone contracts, Facet/Reward->Storybook object-entry contract),
+      mergeable_state clean before merge. Verified before merge: eslint clean, vue-tsc
+      --noEmit clean (full project), prettier --check clean, npm run test:layout-contract
+      holds (0 new violations; an unrelated pre-existing 3-entry viewport-grid baseline
+      improvement on components/video-lora-picker.vue was observed but left untouched, out of
+      scope). git diff --stat confirmed exactly 1 file changed, net -3 lines. Return the
+      umbrella to ready for the next bounded interface slice; a future slice should widen the
+      search per slice 43's standing note (p-3-padded variants, or components using
+      text-{status} alone with no border/bg at all, e.g. watchlist-entry-detail.vue's <p
+      class="text-xs text-error">).
+    updated: '2026-08-26T05:38:19Z'
     approved_by_human: true
-    implementation_pr: 'silasfelinus/kind_robots#2115'
+    implementation_pr: 'silasfelinus/kind_robots#2125'
     owner: worker
     claimed_by: 20260826T052920Z-interface-vision-t104-slice52
     claimed_at: '2026-08-26T05:29:22Z'
