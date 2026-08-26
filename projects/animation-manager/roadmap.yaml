@@ -230,11 +230,11 @@ tasks:
       - t-003
       - t-004
     note: 'Reconciliation (conductor scheduled sweep, state-reconciliation duty): task was left at status: review (claimed 2026-08-12T17:30:11Z by 20260812T1727-am-t007) even though kind_robots PR #1821 (Ant Farm Excavation screen FX) merged over 6 hours ago -- merged_at 2026-08-12T20:58:06Z, verified via GitHub MCP, all CI green. Rearmed to ready per recurring-task convention -- t-007 never reaches done; no code change, bookkeeping only.'
-    status: ready
-    updated: '2026-08-13T03:31:49Z'
-    claimed_by: null
-    claimed_at: null
-    owner: null
+    status: claimed
+    updated: '2026-08-26T20:28:43Z'
+    claimed_by: 20260826T-scheduled-am-t007
+    claimed_at: '2026-08-26T20:28:43Z'
+    owner: worker
     implementation_pr: 'silasfelinus/kind_robots#1821'
 
   - id: t-008
