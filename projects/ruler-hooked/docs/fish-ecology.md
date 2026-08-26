@@ -78,7 +78,7 @@ Ruler Hooked should keep a data-only roster keyed by Creature slug. Suggested sh
 ```yaml
 - creature: parlour-rustfish
   affinity: NEUTRAL
-  habitats: [near-bank, village-edge]
+  habitats: [near_bank, village_edge]
   base_weight: 30
   unlock:
     any:
@@ -87,7 +87,7 @@ Ruler Hooked should keep a data-only roster keyed by Creature slug. Suggested sh
 
 - creature: drowned-carp
   affinity: EVIL
-  habitats: [far-shore, deep-lake]
+  habitats: [far_shore, lake]
   base_weight: 8
   unlock:
     any:
