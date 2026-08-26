@@ -559,6 +559,26 @@ def distribute():
 
         dest = resolve_abs_path(match["image_path"], match["target_repo"])
 
+        if dest.resolve() == src.resolve():
+            # A queue entry whose own image_path is the projects/process/
+            # staging path itself (no real final destination was ever set --
+            # seen from queue_missing_project_art.py-generated cthulhuquarium
+            # fish entries with target_repo: null, conductor/t-015 sweep
+            # 2026-08-26). shutil.copy2 raises SameFileError on this and used
+            # to crash the whole batch, silently blocking every other file
+            # queued behind it alphabetically. Route it to unmatched/ instead
+            # so a human can decide the real destination without losing the
+            # file or the rest of the run.
+            UNMATCHED_DIR.mkdir(parents=True, exist_ok=True)
+            unmatched_dest = UNMATCHED_DIR / fname
+            if DRY_RUN:
+                print(f"  would move (bogus self-referential image_path)  {fname}  →  projects/process/unmatched/")
+            else:
+                shutil.move(str(src), unmatched_dest)
+                print(f"  bogus self-referential image_path  {fname}  →  projects/process/unmatched/")
+            unmatched.append(fname)
+            continue
+
         if match["target_repo"] == "silasfelinus/kind_robots":
             # kind_robots' /public/images/** is git-ignored (see .gitignore) and
             # ArtJobs targeting it now ship via the home relay's direct
