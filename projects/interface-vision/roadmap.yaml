@@ -3206,7 +3206,7 @@ tasks:
   - id: t-105
     milestone: m6
     title: "Polish every reachable Kind Robots surface page-by-page"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     recurring: true
@@ -3263,8 +3263,16 @@ tasks:
       this time (verifyAcademyStarterManifest.ts's fetch succeeded). All 37 checks green,
       mergeable_state clean. Merged silasfelinus/kind_robots#2127 (squash 198b2aa4). Returned
       to ready for the next visual-review slice.
-    updated: '2026-08-26T11:32:24Z'
-    implementation_pr: 'silasfelinus/kind_robots#2127'
+
+      Slice: polished Wallet (/wallet). Prior state had no header at all -- the guest sign-up card or karma balance section led straight into content, with the nested mana-wallet.vue component's own bare h1 the only heading on the page.
+
+      Changes (components/pages/wallet-page.vue only, template/classes, no script/store changes): adopted the established icon-badge + title/subtitle header pattern (kind-icon:money badge, 2xl bold title "Wallet", 60%-opacity subtitle) matching serendipity-page.vue/build-bench.vue/mission-accrual-page.vue/creator-earnings-page.vue precedent.
+
+      Verification: eslint clean; vue-tsc --noEmit clean; npm run test:layout-contract holds, 0 new violations (same pre-existing video-lora-picker.vue viewport-grid baseline improvement noted in prior slices observed again, left untouched, out of scope); prettier --check flags pre-existing drift on this file confirmed via git stash to predate this change, left alone. Honest limit on visual verification: no reachable database, no PR-preview infra -- only class-level/structural verification was possible (same header classes already render correctly in production on precedent pages, template type-checking, layout contract).
+
+      Merged as silasfelinus/kind_robots#2129 (squash a123a0a4) with all 37 PR checks green (TypeScript, Contract verifiers, layout-contract, facet-catalog, GitGuardian, verify x3, full Storybook/Narrative contract suite) and mergeable_state clean before merge. Kaizen note for a future slice: nested mana-wallet.vue has its own bare "Mana Wallet" h1 that now sits below this new top-level header -- a minor double-heading, out of scope here. Return the reusable page-polish task to ready for the next visual-review slice.
+    updated: '2026-08-26T11:41:27Z'
+    implementation_pr: 'silasfelinus/kind_robots#2129'
     owner: worker
     claimed_by: scheduled-20260826T113224Z-iv-t105-slice
     claimed_at: '2026-08-26T11:32:24Z'
