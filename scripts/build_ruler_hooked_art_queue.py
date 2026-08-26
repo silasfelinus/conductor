@@ -14,6 +14,12 @@ Two lanes, deliberately separated:
   concept  -- full-frame key art and cast portraits. No compositing contract
               applies, so these are unblocked and are what Silas asked for
               first: pieces that pin the look before production scales.
+  fish     -- one species design per entry in projects/ruler-hooked/fish/
+              vertical-slice.yaml, at <slug>/bestiary.webp per the art key
+              convention in docs/fish-ecology.md. Prompts are built from the
+              roster's own `silhouette` and `distinction` fields, so the roster
+              stays the single source and later presentation variants
+              (catch card, lake context, silhouette) derive from one design.
   layer    -- the 37-cell (region, state, time) environment matrix from the
               live regions manifest in kind_robots utils/rulerHooked/content.ts.
               Emitted only with --include-layers, and INTENTIONALLY NOT staged
@@ -54,6 +60,8 @@ ART_PROMPTS = REPO / "projects" / "art-prompts.yaml"
 
 # The content bundle lives in a sibling checkout whose location differs between a
 # local clone and a session container, so look in both rather than guessing one.
+FISH_ROSTER = REPO / "projects" / "ruler-hooked" / "fish" / "vertical-slice.yaml"
+
 CONTENT_CANDIDATES = (
     REPO.parent / "kind_robots" / "utils" / "rulerHooked" / "content.ts",
     Path.home() / "kind_robots" / "utils" / "rulerHooked" / "content.ts",
@@ -567,6 +575,53 @@ def concept_entries(cast: list[dict[str, str]]) -> list[dict]:
     return entries
 
 
+# Ruler Hooked and Cthulhuquarium share a creature catalog, and docs/fish-ecology.md
+# is explicit that a shared species keeps one recognizable design across both games
+# while each game may need its own presentation variant. These are the `bestiary`
+# variant: the species design itself, which every later variant (catch card, lake
+# context, silhouette) is derived from. Getting the design right once, first, is
+# what stops the two games drifting into near-duplicate species.
+FISH_FRAME = (
+    "a single fish specimen study, the whole creature clearly visible in profile "
+    "against soft open water, nothing else competing for attention in the frame"
+)
+
+
+def fish_entries() -> list[dict]:
+    """Species designs for the vertical-slice roster, read from the roster file."""
+    if not FISH_ROSTER.is_file():
+        raise SystemExit(f"fish roster not found at {FISH_ROSTER}")
+    roster = yaml.safe_load(FISH_ROSTER.read_text(encoding="utf-8")) or {}
+    fish = roster.get("fish") or []
+    if not fish:
+        raise SystemExit(f"{FISH_ROSTER} parsed to zero fish")
+
+    entries: list[dict] = []
+    for species in fish:
+        slug = str(species["slug"])
+        # `silhouette` and `distinction` are already written as visual direction --
+        # use them verbatim rather than paraphrasing, so the roster stays the single
+        # source and an edit there reaches the art without passing through a person.
+        body = (
+            f"{species['name']}, a fantastical freshwater fish in a comedic fantasy "
+            f"kingdom: {species['silhouette']}. "
+            f"{' '.join(str(species['distinction']).split())} "
+            f"{FISH_FRAME}"
+        )
+        entries.append(
+            make_entry(
+                request_id=f"ruler-hooked-fish-{slug}",
+                image_path=f"public/images/ruler-hooked/fish/{slug}/bestiary.webp",
+                label=f"Ruler Hooked fish: {species['name']} ({species['affinity']}, {species['rarity']})",
+                size=WIDE,
+                prompt=f"{body}. {STYLE_TAIL}. {NO_TEXT}",
+                priority=CONCEPT_PRIORITY,
+                lane="fish",
+            )
+        )
+    return entries
+
+
 def layer_entries(regions: dict[str, dict[str, list[str]]]) -> list[dict]:
     """The (region, state, time) matrix, named exactly as assetCandidates() resolves."""
     entries: list[dict] = []
@@ -744,7 +799,7 @@ def main() -> int:
     args = parser.parse_args()
 
     content_ts = find_content_bundle()
-    entries = concept_entries(read_cast(content_ts))
+    entries = concept_entries(read_cast(content_ts)) + fish_entries()
     if args.include_layers:
         entries += layer_entries(read_regions(content_ts))
     assert_contract(entries)

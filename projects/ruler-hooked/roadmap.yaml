@@ -534,3 +534,41 @@ tasks:
       t-016 (is the look right?) and t-017 (what shape is a layer file?). When both
       clear, this is one command plus a submit run, and the count self-updates if a
       region or state is added upstream.
+
+  - id: t-019
+    milestone: m5
+    title: Generate species designs for the 15-fish vertical-slice roster
+    status: needs-human
+    soft_gate: true
+    passes: 0
+    stakes: reversible
+    owner: worker
+    gate_human: true
+    note: >
+      FOR SILAS: 15 fish species designs are rendering (ArtJobs 9935-9949), one per
+      entry in projects/ruler-hooked/fish/vertical-slice.yaml, landing at
+      https://media.acrocatranch.com/images/ruler-hooked/fish/<slug>/bestiary.webp.
+      Same batch and same look as t-016's concept art -- the roster merged (PR #2944)
+      about twenty minutes before the art pipeline was staged, so it went out on the
+      same rails rather than waiting for a cycle.
+
+      Each prompt is built from that fish's own `silhouette` and `distinction`
+      fields, used verbatim, so the roster stays the single source: editing a
+      species' description there and re-running regenerates its art with no prompt
+      rewriting. The path follows docs/fish-ecology.md's art key convention
+      (<creature-slug>/<variant>), and `bestiary` is deliberately the first variant
+      -- it is the species design that every later presentation variant
+      (ruler-catch-card, ruler-silhouette, lake context) derives from, and it is the
+      one Cthulhuquarium shares.
+
+      TO APPROVE: look at the five shared-with-Cthulhuquarium species first
+      (choirfish, parlour-rustfish, errand-guppy, moebius-crab, lamplight-angler,
+      the-pleasant-island) and say whether each still reads as the same creature
+      as its Ichthyonomicon version. That shared identity is the thing a
+      regeneration is most likely to lose. Then set approved_by_human: true and
+      status: done, or note what to change.
+
+      Soft gate, same as t-016: a look call, not a safety gate.
+    claimed_by: 2026-08-26T22-claude-ruler-hooked-art
+    claimed_at: '2026-08-26T22:10:00Z'
+    updated: '2026-08-26T22:20:00Z'
