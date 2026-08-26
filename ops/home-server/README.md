@@ -311,6 +311,63 @@ path too, and restart ComfyUI so `folder_paths` rebuilds its cached filename
 lists; a restart is required either way, because those caches survive the mount
 coming back.
 
+### The 2026-08-26 recurrence, and the guard that now stops it
+
+Same root cause, one day later, with a new consequence. alexandria was rebooted
+several times while replacing a failed array disk. Each reboot dropped all four
+of Silas-PC's SMB mappings:
+
+```
+Unavailable  Z:  \\192.168.7.172\pc
+```
+
+kr-relay kept polling, kept claiming, and every job died at
+`node 3 (CLIPTextEncode): hostbuf_file_reader_read failed` — a *read* failure,
+not a not-found: ComfyUI resolved the path from `folder_paths`' cached filename
+list and then could not pull bytes through a dead session. **PENDING drained
+straight into FAILED at ~5 jobs/min** (7 → 71 in fifteen minutes) while every
+health signal stayed green: relay heartbeat checking in, `/system_stats`
+answering, `pm2 status` all `online`.
+
+Two guards now exist, both on by default:
+
+**1. The relay will not claim what the box cannot render.** `KR_SHARE_PROBE_PATH`
+(defaulted to `KR_MODEL_ROOT` in `ecosystem.config.js`) is read as a directory
+before each claim, cached for `KR_SHARE_PROBE_SECONDS` (30). While it fails, the
+relay logs once and idles instead of burning the queue:
+
+```
+⚠ model share Z:/ai/models is unreachable (OSError: ...) - NOT claiming jobs
+  until it returns. Renders would fail on model load and burn their retry
+  budget. Check the mount on this box (net use), not the queue.
+```
+
+It is a `scandir`, not an `isdir`: a stale SMB handle can satisfy `isdir()` and
+still fail every read, which is precisely the 2026-08-25 split above. Unset
+`KR_SHARE_PROBE_PATH` to disable the gate entirely.
+
+**2. The LoRA import watcher survives a dead share.** It used to call
+`os.makedirs(LORA_IMPORT_DIR)` *above* its poll loop, outside the `except` that
+guards every cycle, so a share that was down at startup killed the thread:
+
+```
+FileNotFoundError: [WinError 67] The network name cannot be found: 'Z:/'
+```
+
+Python kills only that thread, so kr-relay carried on rendering with no importer
+and nothing said so. The `makedirs` moved inside the guarded body, and the
+thread now runs under a supervisor (`_supervised_lora_watch`) that logs and
+restarts anything that escapes.
+
+**Neither guard removes the need to restart ComfyUI once the mount is back.**
+`folder_paths` caches its filename lists and does not re-enumerate just because
+the share returned — the recovery log line says so on purpose. Order is: fix
+the mount → `pm2 restart comfyui` → `pm2 start kr-relay`.
+
+**The mount fix itself is still the `setx KR_SHARE_ROOT` UNC change above.** The
+guards convert a NAS reboot from a silent backlog into a visible pause; they do
+not stop the mapping from being lost.
+
 **Then requeue the backlog** from the conductor checkout:
 
 ```
