@@ -2,9 +2,13 @@ project: ruler-hooked
 kind: software
 
 goal: >
-  Playable slideshow fishing/kingdom-management PoC on the web: fish at the lake
-  while kingdom event-cards prompt choices that move kingdom-health sliders and
-  visibly recomposite the landscape, with multiple named save slots — offline-playable.
+  A full offline-playable slideshow fishing/kingdom-management game. The PROOF OF
+  CONCEPT half is complete (m1–m3, 2026-08-18): fish at the lake while kingdom
+  event-cards prompt choices that move kingdom-health sliders and visibly
+  recomposite the landscape, with multiple named save slots, shipped as an
+  installable PWA. The GAME half is not — see FULL-GAME-GAP-AUDIT.md (2026-08-26)
+  for what "PoC complete" does and does not mean. Reserve "finished" for the
+  product, not the task count.
 
 notes_from_silas: |
   "The Ruler is Hooked" — fishing/kingdom management simulator, told in
@@ -37,6 +41,15 @@ milestones:
     title: "POLISH & SHIP — content depth, app packaging, Steam/Unreal research"
     weight: 25
     status: done
+  # m4 (full-game vertical slice: fishing domain model, Fishopedia, character
+  # parity, encounter authoring pipeline, progression/economy) is specified in
+  # FULL-GAME-GAP-AUDIT.md and deliberately not filed as tasks yet — the audit's
+  # own recommendation is to prove the loop before scaling production. m5 is open
+  # first because Silas asked for art on 2026-08-26 and the render box was idle.
+  - id: m5
+    title: "ART & CONTENT PRODUCTION — pin the look, then render the asset matrix"
+    weight: 50
+    status: in-progress
 
 tasks:
   - id: t-001
@@ -418,3 +431,106 @@ tasks:
     claimed_at: '2026-08-18T18:28:19Z'
     updated: '2026-08-18T19:06:35Z'
     implementation_pr: 'silasfelinus/kind_robots#1939'
+
+  - id: t-016
+    milestone: m5
+    title: Generate the concept-art batch that pins the look for full-game production
+    status: needs-human
+    soft_gate: true
+    passes: 0
+    stakes: reversible
+    owner: worker
+    gate_human: true
+    note: >
+      FOR SILAS: 25 concept pieces are rendering right now on the home box
+      (ArtJobs 9910-9934) and will appear at
+      https://media.acrocatranch.com/images/ruler-hooked/ — 14 under concept/
+      and 11 under characters/. This is the batch you asked for on 2026-08-26
+      ("start as concept pieces... our art generator is unused").
+
+      What it contains: four full lakeside vistas of the same monarch fishing at
+      day / golden hour / night / dawn, so you can see the time-of-day cycle read
+      as one place; three kingdom poles showing the nature-vs-development hue axis
+      end to end (preserved, prosperous, developed-by-warlock); four story beats
+      (the courier interrupting a cast, the Vex-vs-Sela standoff, landing an absurd
+      fish, sneaking past the courtiers); three UI concepts (event-card scene,
+      Fishopedia specimen plate, title screen); and a portrait of all eleven cast
+      members from the shipped content bundle, archetype-then-twist per
+      docs/art-direction.md.
+
+      TO APPROVE: look at the batch and say whether the house look is right. If it
+      is, set approved_by_human: true and status: done — that unblocks t-018 (the
+      37-piece environment matrix) and every production batch after it. If it is
+      not, say what is wrong in a note and the prompts get corrected in one place:
+      STYLE_TAIL / CAST_LOOK / SCENE_CONCEPTS in
+      scripts/build_ruler_hooked_art_queue.py, which is the single source these
+      prompts are generated from. Nothing is hand-typed, so a style correction is
+      one edit and a re-run, not 25 rewrites.
+
+      This is a soft gate: it is a subjective look call, not a safety gate, and
+      other work continues while it is open.
+    claimed_by: 2026-08-26T21-claude-ruler-hooked-art
+    claimed_at: '2026-08-26T21:45:00Z'
+    updated: '2026-08-26T22:00:00Z'
+
+  - id: t-017
+    milestone: m5
+    title: Resolve the region-layer format contract before rendering the environment matrix
+    status: ready
+    passes: 0
+    stakes: reversible
+    owner: null
+    claimed_by: null
+    claimed_at: null
+    note: >
+      Two shipped specs disagree about what a region layer file actually is, and
+      they cannot both be satisfied by one rendered image. docs/art-direction.md
+      §2 (t-008) specifies every layer as a full-play-screen image with everything
+      outside its own depth band transparent, registered so layers stack into one
+      frame. What actually shipped in kind_robots
+      components/ruler-hooked/ruler-hooked-stage.vue renders each region as its own
+      `flex-1` band inside an `h-72 sm:h-96` column — eight bands, so roughly a
+      20:1 strip — with the layer image as `object-cover` inside that strip. A
+      full-frame transparent layer sent through that component is cropped to a thin
+      slice of its own middle; a strip authored for the component cannot be
+      generated at 20:1 by any image model.
+
+      Pick one and make the other follow: either (a) change the stage to absolutely
+      position full-frame layers over one shared canvas, which is what the
+      compositing spec assumed and what makes the art direction's registration and
+      shared-key-light rules mean anything, or (b) keep banded rendering and respec
+      the art direction to per-band crops with a generatable aspect ratio and a
+      documented crop rectangle per region. (a) is the recommendation — it is what
+      docs/compositing.md already describes and it does not require re-deriving the
+      art direction — but the call is a real one, not a formality.
+
+      Blocks t-018. Found 2026-08-26 while staging the art queue; 37 renders against
+      the wrong contract is 37 wasted renders, which is why the matrix was staged
+      behind a flag rather than submitted.
+
+  - id: t-018
+    milestone: m5
+    title: Render the 37-piece region/state/time environment matrix
+    status: waiting
+    passes: 0
+    stakes: reversible
+    owner: null
+    depends_on:
+      - t-016
+      - t-017
+    claimed_by: null
+    claimed_at: null
+    note: >
+      The full environment layer matrix implied by the live regions manifest in
+      kind_robots utils/rulerHooked/content.ts: sky 1x3, far_shore 3x2, treeline
+      4x3, village_edge 3x2, castle_grounds 3x2, lake 1x2, near_bank 1, ruler 1 =
+      37 assets, named exactly as compositor.ts assetCandidates() resolves them
+      ({region}-{state}[-{time}].webp under /images/ruler-hooked/).
+
+      Already implemented and verified end to end — `python
+      scripts/build_ruler_hooked_art_queue.py --include-layers` builds all 37 from
+      the manifest plus the docs/art-direction.md BASE strings, and its prompt
+      contract self-check passes on every one. Deliberately not staged: it waits on
+      t-016 (is the look right?) and t-017 (what shape is a layer file?). When both
+      clear, this is one command plus a submit run, and the count self-updates if a
+      region or state is added upstream.

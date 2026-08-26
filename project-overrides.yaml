@@ -446,7 +446,17 @@ overrides:
     kind: software
 
   - slug: ruler-hooked
-    status: finished # flipped 2026-08-18 (conductor scheduled Agent run) -- all 15 tasks
+    status: active # REOPENED 2026-08-26 (Silas, in session: "We should start generating
+    # art for The Ruler is Hooked... We have hundreds of art pieces we'll need for this
+    # project"). The `finished` value below was accurate for the PoC milestone and
+    # misleading for the product: FULL-GAME-GAP-AUDIT.md (2026-08-26) verified that
+    # fishing is still a placeholder 50%-chance counter, no Fishopedia exists, no
+    # gameplay art has landed at all, and the region manifest alone implies 37 layer
+    # assets before any card/character/fish art. Full-game work (m5 art production is
+    # open now; the m4 vertical slice is specified in the audit and not yet filed) is
+    # tracked on the roadmap again rather than hidden behind a completed task count.
+    # PRIOR RATIONALE, kept for the record -- flipped 2026-08-18 (conductor scheduled
+    # Agent run) -- all 15 tasks
     # done, nothing open. Goal ("playable slideshow fishing/kingdom-management PoC,
     # offline-playable") is met: m1/m2 shipped the PoC (t-001..t-013), t-014 expanded
     # content depth (6->25 cards, 1->3 arcs, 2->4 endings), t-009 covered the Steam/Unreal

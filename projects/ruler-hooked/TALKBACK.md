@@ -114,3 +114,43 @@ gap is a session not using it, which retry_context addresses directly.
 **Kaizen task:** none this cycle — m2's remaining ready task (t-010, the open-ended
 "polish and upgrade" pass) already covers ongoing front-end improvement; no new gap
 found worth a separate task.
+
+## 2026-08-26 | Reviewer → Worker | ruler-hooked/t-016 | pattern
+type: pattern
+
+**Subject:** The first real art batch found two spec bugs that only surface when
+you actually render, and both were cheap to catch and expensive to ignore.
+
+**Detail:**
+- **t-008 shipped a prompt pack that had never been enqueued.** Its own status line
+  says "PROMPTS ONLY, no art generated (KR_API_TOKEN unset)", and its §6 claims the
+  first-pack entries "are added to `projects/art-prompts.yaml`". They are not in that
+  file today — zero `ruler-hooked` entries existed before this cycle, against 572
+  pending mandarin-tutor rows. A spec that has never been executed is a hypothesis.
+  Six weeks passed with the token available and the render box healthy, and nobody
+  noticed the queue entries were gone, because nothing checks that a documented queue
+  entry still exists. `build_ruler_hooked_art_queue.py --check` now fails if any
+  entry this project expects is missing, which is the general fix.
+- **The layer-transparency rule contradicts the component that shipped.**
+  art-direction.md §2 authors every region layer full-frame with everything outside
+  its depth band transparent; `ruler-hooked-stage.vue` draws each region as a
+  `flex-1` band with `object-cover`, roughly 20:1, which crops a full-frame layer to
+  a slice of its own middle. Both specs are internally coherent and they cannot both
+  be satisfied by one file. Caught before submitting, so it cost nothing; submitting
+  first would have cost 37 renders and looked like an art-quality problem rather than
+  a contract problem. Filed as t-017, and t-018 waits on it.
+- **The house style's own "always avoid text/logos/watermarks" line is now a hard
+  422.** kind_robots' `artPromptContract.ts` rejects more than four
+  text-nouns-after-"no" on an engine whose negative prompt is inert. Krea 2 runs at
+  cfg 1, so it is inert, so those words land in positive conditioning on a
+  text-specialist model. All 25 submissions bounced on the first attempt. The rule
+  is right and the doc predates it; §8.2 records the correction and the builder now
+  mirrors the contract locally so it fails at build time instead of at enqueue.
+
+**Suggested action:** When a spec-only task writes prompts it cannot run, say so in
+the roadmap task's *status*, not only in the doc's prose — t-008 closed `done` while
+its actual deliverable (queued entries) was never verified to exist. A `--check`
+mode that a later session can run is worth more than a paragraph asserting the
+entries were added. Generally: prefer generating prompts from a script that reads the
+upstream data over writing them into a queue file once, so drift is impossible rather
+than merely discouraged.

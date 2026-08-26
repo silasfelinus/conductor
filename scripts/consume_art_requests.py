@@ -359,6 +359,18 @@ def main():
         default=None,
         help="only process requests whose id starts with this prefix (scope a run to one source/batch)",
     )
+    parser.add_argument(
+        "--submit-only",
+        action="store_true",
+        help=(
+            "enqueue each request and record its ArtJob id, then stop -- do not "
+            "wait for the render or download the result. Use when a batch is far "
+            "larger than one session/job can sit on: the relay renders in its own "
+            "time and a later run marks the rows done once the media path is live "
+            "(same handoff shape as scripts/submit_daily_dream_art.py). "
+            "Requests keep status: pending so that later pass can find them."
+        ),
+    )
     args = parser.parse_args()
 
     pending = filter_by_id_prefix(
@@ -431,6 +443,9 @@ def main():
         try:
             job_id = consumer.enqueue(consumer.entry_to_job(request))
             record_submitted_job(request.get("id"), job_id)
+            if args.submit_only:
+                print(f"  queued job {job_id} for {name} - handed off to the relay")
+                continue
             print(f"  queued job {job_id} for {name} - waiting...")
             job = consumer.wait_for_job(job_id, args.timeout)
             image_b64 = consumer.fetch_image_b64(job["artImageId"])
@@ -445,6 +460,13 @@ def main():
         except Exception as error:  # noqa: BLE001 - keep draining the batch
             failures += 1
             print(f"  FAILED {name}: {error}", file=sys.stderr)
+
+    if args.submit_only:
+        print(
+            f"\n{len(todo) - failures}/{len(todo)} submitted; ArtJob ids recorded on "
+            "each request. They stay pending until a later run finds the media path live."
+        )
+        return 1 if failures else 0
 
     marked = mark_done(done_ids)
     print(
