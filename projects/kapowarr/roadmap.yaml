@@ -1271,10 +1271,10 @@ tasks:
 - id: t-055
   milestone: m4
   title: Make Review Holds imports resumable and actionable
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
-  updated: '2026-08-26T07:53:34Z'
+  updated: '2026-08-26T08:02:05Z'
   note: |-
     User-reported live failure on 2026-08-19. Continuous Library Import resumes a saved job with hundreds
     of Review Holds, but clicking Import aborts the selected batch with a generic InternalError. Trace and
@@ -1296,6 +1296,8 @@ tasks:
     Reopened from user-reported live testing on 2026-08-26. Reset & Re-evaluate All Holds currently discards the saved pass and rescans every current unimported folder, so a roughly 68-folder review backlog can unexpectedly become an 867-folder whole-library pass. Split the semantics: re-evaluate only live Review Holds by default, and expose whole-library discovery separately as Rescan Untracked Library. Preserve safe stop/resume behavior and add regression coverage for both paths.
 
     Implement the approved split between re-evaluating only live Review Holds and deliberately rescanning the full set of current untracked library folders.
+
+    Implementation is ready for PR review: Review Holds re-evaluation now snapshots only live held folders, a separate Rescan Untracked Library action deliberately rebuilds from every current unimported folder, both maintenance actions serialize behind the continuous-import lane, and backend/frontend regressions plus docs cover the split.
   owner: worker
   claimed_by: 20260826T075334Z-kapowarr-t055-review-holds-rescan-split-6c4d81
   claimed_at: '2026-08-26T07:53:34Z'
