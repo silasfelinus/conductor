@@ -590,10 +590,10 @@ tasks:
   - id: t-023
     milestone: m6
     title: Silas playtest and finite-project exit reconciliation
-    status: ready
+    status: needs-human
     depends_on: t-022
     owner: null
-    updated: '2026-08-10T08:05:00Z'
+    updated: '2026-08-26T18:34:09Z'
     passes: 0
     stakes: reversible
     gate_human: true
@@ -605,6 +605,16 @@ tasks:
       the right utility and personality, set `approved_by_human: true` and `status: done`; if not,
       leave concrete notes and return the project to active refinement. This gate controls only
       declaring the finite revival project finished, not routine reversible development.
+
+      STATUS CORRECTED (conductor scheduled sweep, 2026-08-26): this task carries gate_human:
+      true and its note is a complete FOR SILAS playtest gate with no further agent-actionable
+      work -- it should never sit at status: ready (which implies agent pickup) once its
+      dependency t-022 clears. t-022 completed today (2026-08-26T09:28:38Z) and
+      resolve_deps.py correctly flipped this task's status from waiting to ready, but a
+      gate_human:true task with no agent work component belongs at needs-human from the moment
+      it unblocks, not ready. Moving it there now so it surfaces in audit_human_gates.py's
+      report. No content change to the FOR SILAS instructions themselves.
+    soft_gate: false
 
   - id: t-024
     milestone: m5
