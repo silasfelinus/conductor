@@ -404,7 +404,7 @@ tasks:
   - id: t-011
     milestone: m2
     title: "The real play loop — canvas rendering, fish behavior, food, collectibles"
-    status: review
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -430,9 +430,16 @@ tasks:
       path). vue-tsc/eslint/prettier/layout-contract/aquarium-economy tests all verified
       locally; no live DB from this sandbox so the API round trip is verified by code
       inspection.
+
+      Implementation PR silasfelinus/kind_robots#2133 reviewed and merged (29cb995) — server-
+      backed tank store, feed/unlock wired to the real aquarium API, new GET
+      /api/aquarium/catalog for the unlock panel, behavior-driven swim profiles, click-to-coin
+      motes changed to a visual reveal of already-settled tick income per the design call
+      flagged in the PR (economy.yaml has no click income path). All 39 kind_robots checks
+      green, mergeable clean.
     claimed_by: claude-scheduled-20260826T1435-cq-t011
     claimed_at: '2026-08-26T14:43:42Z'
-    updated: '2026-08-26T14:43:58Z'
+    updated: '2026-08-26T15:29:04Z'
     implementation_pr: 'silasfelinus/kind_robots#2133'
 
   - id: t-012
