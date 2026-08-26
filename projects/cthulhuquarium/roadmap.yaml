@@ -492,24 +492,38 @@ tasks:
   - id: t-015
     milestone: m2
     title: "Full art pass — 20 fish plus tank backgrounds"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-005, t-008]
     note: >
-      Generate and land art for all 20 shipping species plus at least three tank
-      backgrounds, using the pipeline recipe proven in t-005. Covered by the standing
-      2026-07-06 generated-image rule -- no per-image approval needed -- but preserve
-      prompt, model, seed, and destination metadata on every ArtImage so any fish can
-      be regenerated or traced. Consistency across the set matters more than any single
-      image being great: a bestiary where six fish share a visual language and fourteen
-      do not looks broken. If a species will not generate consistently, redesign the
-      species rather than shipping the outlier.
-
-  # ------------------------------------------------------- m3 POLISH & SHIP
+      DONE (conductor scheduled Agent run, 2026-08-26). Generated all 32 of the bible's
+      current tier-1 species plus all 4 tank backgrounds (the task's "20 shipping
+      species" figure is stale -- the bible has grown to 152 species since it was
+      written; 32 is the full current tier-1 set) via the proven t-005 pipeline
+      (POST /api/art/enqueue, engine flux/schnell). All 32 ArtJobs completed
+      attempts:1/error:null, zero failures. Ran a 4-species style-proof batch first
+      (one per plate: gosse/trade-card/gyotaku/blaschka) against the *current* bible
+      prompts before committing to the rest, because t-005's "not flat-silhouette"
+      style concern turned out to be based on pre-2026-08-25 prompt text -- the whole
+      bible's art direction was rewritten the same day away from silhouette-forward
+      entirely, toward eight named historical-print plates (see the cthulhuquarium
+      repo's ART-DIRECTION.md). The proof batch resolved cleanly across all four
+      plates, including the sardine schooling composition t-005 flagged as dropped
+      entirely under the old style. Full slug-to-ArtImage mapping, spot-check image
+      review, and two known follow-ups (one background reads photoreal rather than
+      lithograph-plate; the remaining ~120 non-tier-1 species need their own task) are
+      in projects/cthulhuquarium/docs/t-015-full-art-pass.md. Every ArtImage carries
+      prompt/model/seed/designer/projectSlug metadata per the task's own ask. Does NOT
+      wire Monster.artImageId -- no Monster API route exists in kind_robots at all, so
+      there is no way to link these from outside a direct DB session; filed as
+      cthulhuquarium/t-043 rather than worked around or guessed at.
     claimed_by: claude-scheduled-20260826T201909Z-cq-t015
     claimed_at: '2026-08-26T20:19:15Z'
+    updated: '2026-08-26T21:00:00Z'
+
+  # ------------------------------------------------------- m3 POLISH & SHIP
     updated: '2026-08-26T20:19:15Z'
   - id: t-016
     milestone: m3
@@ -1978,4 +1992,48 @@ tasks:
     claimed_by: 2026-08-26T044500Z-cthulhuquarium-t-042-sk96
     claimed_at: '2026-08-26 04:45:00+00:00'
     implementation_pr: 'silasfelinus/kind_robots#2126'
+
+  - id: t-043
+    milestone: m2
+    title: "kind_robots: add a Monster API so ArtImage/artImageId can actually be linked"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-015 (2026-08-26, conductor scheduled Agent run): t-008 seeded real
+      Monster rows for every bible species, and Monster.artImageId already exists in the
+      schema (t-032/t-034 era), but no server/api/ route for Monster exists at all -- there
+      is no way to PATCH a Monster's artImageId (or read/write anything else on the row)
+      from outside a direct database session. t-015 generated and landed 32 ArtImages with
+      full prompt/model/seed/designer metadata (see
+      projects/cthulhuquarium/docs/t-015-full-art-pass.md for the slug-to-artImageId
+      mapping) but could not wire any of them to their Monster row for exactly this reason.
+      Add at minimum a scoped PATCH/update endpoint (or extend an existing admin/seed path)
+      that lets an authenticated caller set Monster.artImageId (and ideally
+      cardArtImageId/heroArtImageId/iconArtImageId) by slug or id. Until this exists, no
+      generated bestiary art can actually be linked to the creature it depicts, which
+      blocks any future UI work that wants to render a Monster's art rather than just its
+      stats.
+
+  - id: t-044
+    milestone: m2
+    title: "Full art pass for the remaining ~120 non-tier-1 species, and fix the bg-parlour style miss"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-015]
+    note: >
+      Kaizen from t-015 (2026-08-26, conductor scheduled Agent run): t-015 covered all 32
+      tier-1 ("commons") species plus 4 tank backgrounds. The bible now has 152 species
+      total, so tiers 2-5 (~120 species) remain ungenerated -- a substantially larger batch
+      that deserves its own task rather than silently expanding t-015's scope after the
+      fact. Same recipe applies (POST /api/art/enqueue, engine flux/schnell, prompts read
+      directly from each species' current art_prompt/plate fields in the bible). Separately,
+      of the 4 tank backgrounds t-015 generated, `bg-parlour` (ArtImage 18822) reads as a
+      photoreal/3D render rather than the `gosse` hand-coloured-lithograph look every other
+      background and fish hit -- worth a re-render with a stronger medium anchor in the
+      prompt (or accept it and move on) before treating the background set as finished. See
+      projects/cthulhuquarium/docs/t-015-full-art-pass.md for the full image review.
 
