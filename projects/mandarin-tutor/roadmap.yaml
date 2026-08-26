@@ -450,7 +450,46 @@ tasks:
       migration and endpoints or a lighter sibling table -- small integer job-id map keyed
       per user/cardKey. This is the concrete blocker for m4's "portable learning state"
       milestone, not auth, media, or curriculum logic (all three already confirmed
-      portable in t-012's audit).
+      portable in t-012's audit). DONE 2026-08-26. Merged silasfelinus/kind_robots#2121
+      (squash f985143): additive migration 20260826070000_add_mandarin_custom_sets adding
+      MandarinCustomSet (userId+clientId unique, name, cardKeys as serialized JSON per
+      house convention) and MandarinArtJobLink (userId+cardKey unique, jobId), GET/POST
+      /api/mandarin/sets (load, upsert-one-set-by-clientId) and POST
+      /api/mandarin/sets/art-jobs (upsert one card's queued ArtJob id). Store wiring:
+      loadCloudState() runs on initialize(), treats the server as authoritative but keeps
+      and re-pushes any local-only set/link the server doesn't have yet so offline-created
+      data is never silently dropped; createCustomSet/renameCustomSet/
+      toggleCardInCustomSet/queueIllustration each fire a best-effort persist alongside
+      the existing saveLocalState() call. Verified: installed a local MariaDB and ran
+      `prisma migrate deploy` through the full 74-migration history (clean, no drift for
+      either new table); vue-tsc --noEmit, eslint, prettier --check all clean;
+      test:layout-contract holds; verifyNoPrismaJsonCast passed. All 38 required PR
+      checks green (only the known-flaky non-required "Build production image" job was
+      still in_progress at merge time -- same documented stall pattern as conductor/t-106,
+      t-124, and today's earlier t-015 note; mergeable_state read `unstable`, not
+      `blocked`). m4's "portable learning state" milestone blocker is now resolved --
+      auth, media, curriculum, SRS/mastery, and customSets/artJobs are all confirmed
+      server-side and cross-device.
     claimed_by: claude-scheduled-20260826T0700Z-mandarin-t016
     claimed_at: '2026-08-26T03:28:33Z'
     updated: '2026-08-26T03:45:30Z'
+    implementation_pr: 'silasfelinus/kind_robots#2121'
+
+  - id: t-017
+    milestone: m4
+    title: "Add self-test coverage for mandarinTutorStore's cloud-state merge logic"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-016 (2026-08-26, kind_robots PR #2121): `mandarinTutorStore` has no
+      automated test coverage today, unlike `server/utils/mandarinSrs.ts`'s self-test.
+      `loadCloudState`'s merge behavior (server state is authoritative, but any local-only
+      customSet/artJob the server doesn't know about yet is kept and re-pushed rather than
+      dropped) is exactly the kind of logic a future refactor could silently break without
+      a real backend to catch it. Add a lightweight self-test (matching the
+      `verifyMandarinSrs.test.ts` pattern -- pure-function/mockable, no DB needed) covering
+      at minimum: server-only sets/links pass through untouched, local-only entries are
+      preserved and trigger a re-push, and entries present on both sides prefer the
+      server's value.
