@@ -229,9 +229,14 @@ tasks:
     depends_on:
       - t-003
       - t-004
-    note: 'Reconciliation (conductor scheduled sweep, state-reconciliation duty): task was left at status: review (claimed 2026-08-12T17:30:11Z by 20260812T1727-am-t007) even though kind_robots PR #1821 (Ant Farm Excavation screen FX) merged over 6 hours ago -- merged_at 2026-08-12T20:58:06Z, verified via GitHub MCP, all CI green. Rearmed to ready per recurring-task convention -- t-007 never reaches done; no code change, bookkeeping only.'
-    status: review
-    updated: '2026-08-26T20:39:34Z'
+    note: >-
+      Reconciliation (conductor scheduled sweep, state-reconciliation duty): task was left at status: review (claimed 2026-08-12T17:30:11Z by 20260812T1727-am-t007) even though kind_robots PR #1821 (Ant Farm Excavation screen FX) merged over 6 hours ago -- merged_at 2026-08-12T20:58:06Z, verified via GitHub MCP, all CI green. Rearmed to ready per recurring-task convention -- t-007 never reaches done; no code change, bookkeeping only.
+
+      kind_robots#2135 merged (squash 2b49dc5) -- Marble Run Contraption shipped. All CI green
+      (37/37 checks including Contract verifiers, TypeScript, layout-contract). Re-armed to
+      ready per recurring-task convention.
+    status: ready
+    updated: '2026-08-26T20:43:04Z'
     claimed_by: 20260826T-scheduled-am-t007
     claimed_at: '2026-08-26T20:28:43Z'
     owner: worker
