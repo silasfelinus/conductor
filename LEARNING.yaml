@@ -10654,3 +10654,22 @@ records:
     store call them, made the logic testable with node:assert alone -- same
     pattern as server/utils/mandarinSrs.ts. No behavior changed; the store's
     call sites shrank from inline set-difference logic to two function calls.
+- date: '2026-08-26'
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Slice 52: before searching fresh, checked slice 39's flagged runner-up candidate
+    (user-manager.vue's managerError/"Unknown user tab" notices) against the roadmap
+    note history first and found slice 40 had already closed it -- avoided a wasted
+    duplicate-work search. The actual fix this slice (watchlist-browse.vue's errorMessage
+    banner missing font-semibold) was found by grepping for the exact hand-rolled
+    kr-note shape and then confirming a genuine live sibling inconsistency via a second,
+    narrower grep for the same errorMessage variable/aria-live wrapper pattern already
+    converted elsewhere (newsfeed-feed.vue) -- cheap to check and turns a plausible-looking
+    candidate into a documented, not-blind substitution matching the standing "same
+    element rendering two different ways across sibling components" rule.
