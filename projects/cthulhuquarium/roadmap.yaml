@@ -404,12 +404,12 @@ tasks:
   - id: t-011
     milestone: m2
     title: "The real play loop — canvas rendering, fish behavior, food, collectibles"
-    status: claimed
+    status: review
     owner: reviewer
     passes: 0
     stakes: reversible
     depends_on: [t-008, t-009]
-    note: >
+    note: >-
       Replace the t-010 prototype's local state with the server-backed game. Fish render
       from their seeded bestiary art (t-035's model, not Character) with per-species swim
       behavior (drift, dart, lurk --
@@ -421,9 +421,19 @@ tasks:
       scale to fit -- it has to survive the responsive layout contract at phone width.
       Target 60fps with 20 fish on screen; if that needs sprite batching, do it now rather
       than after the art pass triples the draw calls.
+
+      PR open: kind_robots#2133. Server-backed tank store + game component wired to the real
+      aquarium API (tank/tick/feed/purchase), new GET /api/aquarium/catalog for the unlock
+      panel, tier/behavior/hue added to the stock select. Design call flagged in the PR:
+      click-for-coins collectibles are implemented as a visual reveal of already-settled tick
+      income, not a new server-authoritative click economy (economy.yaml has no click income
+      path). vue-tsc/eslint/prettier/layout-contract/aquarium-economy tests all verified
+      locally; no live DB from this sandbox so the API round trip is verified by code
+      inspection.
     claimed_by: claude-scheduled-20260826T1435-cq-t011
     claimed_at: '2026-08-26T14:43:42Z'
-    updated: '2026-08-26T14:43:42Z'
+    updated: '2026-08-26T14:43:58Z'
+    implementation_pr: 'silasfelinus/kind_robots#2133'
 
   - id: t-012
     milestone: m2
