@@ -332,6 +332,21 @@ tasks:
       Once the web learning loop is stable, document and expose a portable API/domain
       boundary for catalog, sets, media, and learner progress. Evaluate PWA/native packaging
       and native iOS/Android clients without forking curriculum logic or media identities.
+
+      DOCUMENTED 2026-08-26 in silasfelinus/kind_robots, docs/mandarin-tutor-mobile-domain.md
+      (PR #2120). Audited every /api/mandarin/* endpoint against its auth guard: auth is
+      already portable (requireApiUser resolves JWT bearer/API-key headers, not cookie-only,
+      so a native client authenticates exactly like the web app). Pronunciation audio is
+      already durable and shared (deterministic hash-keyed MandarinAudioAsset served by
+      stable id -- no per-platform re-synthesis). Curriculum/SRS logic (getMandarinCatalog,
+      mandarinSrs.ts) is 100% server-side, so any client is a thin renderer -- no fork risk.
+      One real gap found: customSets and artJobs in mandarinTutorStore are still
+      localStorage-only per the store's own deferred-follow-up comment, so a learner's
+      custom decks/queued art would not follow them to a second device or a native client.
+      Filed t-016 to close it. PWA: already installable site-wide via @vite-pwa/nuxt at zero
+      extra cost for /play/mandarin. Native: recommended path is a thin shell over the
+      existing JSON API, not a parallel Swift/Kotlin rewrite (which would violate the task's
+      own no-fork constraint).
     claimed_by: claude-scheduled-20260826T0230Z-mandarin-t012
     claimed_at: '2026-08-26T02:29:06Z'
     updated: '2026-08-26T02:31:30Z'
@@ -410,3 +425,29 @@ tasks:
     claimed_at: '2026-08-26T01:29:16Z'
     updated: '2026-08-26T01:42:51Z'
     implementation_pr: 'silasfelinus/kind_robots#2119'
+
+  - id: t-016
+    milestone: m4
+    title: "Move custom study sets and queued art-job bookkeeping off localStorage-only state"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-012
+    note: >
+      Found while auditing t-012's mobile domain boundary (docs/mandarin-tutor-mobile-domain.md,
+      kind_robots PR #2120). `mandarinTutorStore`'s `customSets` (user-created study-set
+      membership/names) and `artJobs` (queued illustration job IDs) persist to
+      `localStorage` only -- the store's own comment already flags this as deliberately
+      deferred. Everything else a learner accumulates (SRS/mastery state via t-015,
+      requested cards via GET/POST /api/mandarin/requests) is already server-side and
+      follows them across devices; these two do not, and would show up empty on a
+      reinstalled PWA, a second device, or a future native client. Give customSets the
+      same authenticated-backend treatment MandarinCardProgress got in t-015: an additive
+      migration for a MandarinCustomSet-shaped table keyed on userId, GET/POST endpoints
+      under /api/mandarin/sets, and store wiring that treats localStorage as first-load
+      cache/offline fallback rather than the record of truth. artJobs can ride the same
+      migration and endpoints or a lighter sibling table -- small integer job-id map keyed
+      per user/cardKey. This is the concrete blocker for m4's "portable learning state"
+      milestone, not auth, media, or curriculum logic (all three already confirmed
+      portable in t-012's audit).
