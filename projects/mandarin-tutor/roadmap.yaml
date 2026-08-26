@@ -370,12 +370,12 @@ tasks:
   - id: t-015
     milestone: m3
     title: "Persist study ratings into real spaced-repetition scheduling and mastery history"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-009
-    note: >
+    note: >-
       Follow-up split from t-009 (2026-08-26 conductor scheduled Agent run, silasfelinus/kind_robots#2118):
       t-009 established explicit Study vs Explore modes and a deliberate recall loop (challenge ->
       reveal -> pronunciation -> self-rating Again/Hard/Good/Easy -> next), but self-ratings only
@@ -390,6 +390,20 @@ tasks:
       so a later mobile client (t-012) can share progress rather than starting over. Needs a schema
       decision (new Prisma model(s) for review history / scheduling state) -- treat that as part of
       this task's own scope, not a separate gate, per normal additive-migration rules.
+
+      RECONCILED (conductor scheduled Agent run, 2026-08-26): implementation PR
+      silasfelinus/kind_robots#2119 merged. Added MandarinCardProgress + MandarinReviewEvent
+      (additive-only migration 20260826013500_add_mandarin_srs), a standard SM-2 scheduler
+      (server/utils/mandarinSrs.ts, self-tested), POST /api/mandarin/study/rate + GET
+      /api/mandarin/study/progress, and store/UI wiring (due-count/retention badge in Study
+      mode). Migration verified end-to-end against a local MariaDB through the full
+      63-migration history. The dimension column (always overall this pass) is forward-compat
+      groundwork for decomposed meaning/Hanzi/pronunciation ratings, deliberately not built
+      this pass -- that remains a separate future UX task if wanted. All CI green except Build
+      production image, which was still in_progress after 40+ minutes with every other of 42
+      checks green; PR mergeable_state read unstable (not blocked), confirming per the
+      t-106/t-124 precedent that this check is not required -- merged past it.
     claimed_by: claude-scheduled-20260826T0130Z-mandarin-t015
     claimed_at: '2026-08-26T01:29:16Z'
-    updated: '2026-08-26T01:29:16Z'
+    updated: '2026-08-26T01:42:51Z'
+    implementation_pr: 'silasfelinus/kind_robots#2119'
