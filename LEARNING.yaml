@@ -11060,3 +11060,28 @@ records:
     carry a new relation is often enough to satisfy a "visible to visitors" style
     requirement with zero new routes -- check whether the read path already flows
     through a shared select before assuming a new endpoint is needed.
+- date: 2026-08-27
+  project: cthulhuquarium
+  task: t-018
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A "leave it alone; it is funnier untouched" design note doesn't mean skip
+    the feature -- it means build the plain, understated version and resist
+    adding flourish, foreshadowing, or extra UI weight around it. Read against
+    SYSTEMS.md/DESIGN-BRIEF.md's finale-foreshadowing section before starting
+    confirmed the task's own note (rank by species collected, display names
+    only) was the complete spec, with the "leave it alone" line steering tone
+    (no finale hints near it) rather than scope.
+
+    Consent boundaries for public-facing player data aren't one flag: a
+    sibling feature's own opt-in (Aquarium.isPublic, from the dependency this
+    task built on) is the right gate for "will this player's data appear
+    here," not a same-purpose-sounding but different flag from an unrelated
+    feature (the friend-finder directory's listInDirectory). Checking which
+    existing feature the new one actually depends on for consent semantics --
+    not just grepping for the first consent-shaped flag in the schema -- kept
+    the leaderboard consistent with the browse page it extends.

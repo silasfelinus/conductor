@@ -2369,3 +2369,21 @@ tasks:
       problem (visual clutter, canvas draw cost at scale) worth a
       decorSlotsCap column -- or whether "purely cosmetic and unlimited" is
       simply fine and this task should close as a no-op.
+
+  - id: t-052
+    milestone: m3
+    title: Filter isRestricted users out of the public tank browse list
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-014
+    note: >-
+      Kaizen from t-018 (leaderboard). listPublicTanks (t-014) filters public
+      tanks on Aquarium.isPublic only -- it has no isRestricted check, unlike
+      the leaderboard (t-018) and server/api/users/directory.get.ts, both of
+      which exclude restricted/moderated accounts from public listings. A
+      restricted user's public tank can still appear in /play/aquarium/browse
+      today even though it's excluded from the leaderboard. Add the same
+      `User: { isRestricted: false }` filter to listPublicTanks'
+      publicAquariumSummarySelect query for consistency.
