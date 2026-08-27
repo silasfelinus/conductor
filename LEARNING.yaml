@@ -11118,3 +11118,42 @@ records:
     the task genuinely reversible and let the existing aquarium-economy and
     aquarium-touch test suites stand as sufficient verification without a
     live browser.
+- date: "2026-08-27"
+  project: cthulhuquarium
+  task: t-051
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A balance-pass task that explicitly allows a no-op exit does not need
+    real play data to close well -- reviewing DECOR_CATALOG's six costs
+    against the existing RARITY_TIERS anchor (already the established
+    convention SET_PIECE_CATALOG uses) surfaced a deliberate taper, not a
+    guess, and was enough to confirm the pricing rather than requiring
+    telemetry this sandbox cannot produce. Worth distinguishing from t-019
+    in the same session: a task is only genuinely blocked on real data when
+    its own note requires *feel* (does the pacing feel right) rather than
+    *consistency* (does this number follow the pattern the rest of the file
+    already sets).
+- date: "2026-08-27"
+  project: cthulhuquarium
+  task: t-019
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: blocked
+  failure_category: actionable
+  lesson: >-
+    "Retune against real play data" cannot be satisfied by a sandboxed agent
+    session when no telemetry/analytics path exists yet and the session has
+    no way to generate a real multi-session player history itself -- this is
+    an actionable failure (missing access to the core input the task needs),
+    not a quality failure, so it does not burn a pass. A prior session
+    (2026-08-25) had already flagged the milestone-ladder half of this task
+    as needing play data specifically to avoid a naive fix (linear breakpoint
+    extension) that would silently undermine an intentional design constraint
+    (the tank-packing problem) -- worth trusting that prior judgment rather
+    than re-deriving new numbers from design docs alone and asserting they're
+    tuned, when they would actually just be another guess.
