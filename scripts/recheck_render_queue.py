@@ -25,11 +25,7 @@ from __future__ import annotations
 
 import argparse
 import collections
-import json
-import os
 import sys
-import urllib.error
-import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -37,37 +33,8 @@ REPO_ROOT = Path(__file__).parent.parent
 LEDGER_FILE = REPO_ROOT / "RENDER-BACKLOG.md"
 LOG_MARKER = "## Log"
 
-KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kindrobots.org").rstrip("/")
-KR_API_TOKEN = os.environ.get("KR_API_TOKEN", "").strip()
-
-
-def fetch_queue_stats(window_hours: int = 24, timeout: float = 20.0) -> dict:
-    """Fetch and return the `data` object from GET /api/art/queue/stats.
-
-    Raises RuntimeError with a descriptive message on any failure (missing
-    token, network error, non-2xx response, unexpected payload shape) so the
-    caller can surface a clear error instead of a bare traceback.
-    """
-    if not KR_API_TOKEN:
-        raise RuntimeError("KR_API_TOKEN is required to query the render queue.")
-
-    url = f"{KR_BASE_URL}/api/art/queue/stats?window={window_hours}"
-    req = urllib.request.Request(url, method="GET")
-    req.add_header("Authorization", f"Bearer {KR_API_TOKEN}")
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
-            payload = json.loads(resp.read().decode() or "null")
-    except urllib.error.HTTPError as e:
-        raise RuntimeError(f"queue/stats returned HTTP {e.code}: {e.reason}") from e
-    except urllib.error.URLError as e:
-        raise RuntimeError(f"queue/stats unreachable: {e.reason}") from e
-
-    if not isinstance(payload, dict) or not payload.get("success"):
-        raise RuntimeError(f"queue/stats returned an unsuccessful payload: {payload}")
-    data = payload.get("data")
-    if not isinstance(data, dict):
-        raise RuntimeError(f"queue/stats payload missing 'data': {payload}")
-    return data
+sys.path.insert(0, str(Path(__file__).parent))
+from consume_art_queue_core import fetch_queue_stats  # noqa: E402
 
 
 # Mirrors kind_robots' server/utils/artFailureSignature.ts (ai-art-academy/

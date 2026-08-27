@@ -276,6 +276,38 @@ def http_json(method, url, body=None, timeout=60):
         return e.code, payload
 
 
+def fetch_queue_stats(window_hours=24, timeout=20.0):
+    """Fetch and return the `data` object from GET /api/art/queue/stats.
+
+    Shared by check_render_box.py (a "must never raise" health probe, which
+    wraps this in its own try/except and treats any RuntimeError as "no
+    opinion") and recheck_render_queue.py (a ledger tool that wants the
+    descriptive failure surfaced directly) -- previously each re-derived the
+    same URL/window-param plumbing over http_json independently (kaizen from
+    conductor/t-130, 2026-08-26 PR #2949).
+
+    Raises RuntimeError with a descriptive message on any failure (missing
+    token, network error, non-2xx response, unexpected payload shape) so a
+    caller that wants the detail gets it; a caller that wants a quiet probe
+    catches RuntimeError itself.
+    """
+    if not KR_API_TOKEN:
+        raise RuntimeError("KR_API_TOKEN is required to query the render queue.")
+
+    url = f"{KR_BASE_URL}/api/art/queue/stats?window={window_hours}"
+    try:
+        status, payload = http_json("GET", url, timeout=timeout)
+    except urllib.error.URLError as e:
+        raise RuntimeError(f"queue/stats unreachable: {e.reason}") from e
+
+    if status != 200 or not isinstance(payload, dict) or not payload.get("success"):
+        raise RuntimeError(f"queue/stats returned an unsuccessful payload (HTTP {status}): {payload}")
+    data = payload.get("data")
+    if not isinstance(data, dict):
+        raise RuntimeError(f"queue/stats payload missing 'data': {payload}")
+    return data
+
+
 def parse_size(size, default=(1024, 1024)):
     """'1280x720' -> (1280, 720); tolerates junk by falling back."""
     m = re.match(r"^\s*(\d+)\s*[xX]\s*(\d+)\s*$", str(size or ""))
