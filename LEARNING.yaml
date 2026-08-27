@@ -10963,3 +10963,23 @@ records:
     + reasoning about the extracted control flow rather than a new
     automated test, since no test harness for this component's mount
     lifecycle existed to extend.
+- date: 2026-08-27
+  project: cthulhuquarium
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A task whose server API already shipped under an earlier task (t-009
+    built the browse/[username]/[slug] endpoints "frontend/UI wiring is
+    separate scope, not built here") is real remaining work, not a
+    duplicate -- reading that prior task's completion note up front
+    correctly scoped this one to default-visibility + a one-click toggle +
+    the two frontend pages, instead of re-deriving or re-building the
+    already-shipped server side. The layout contract's one-header rule
+    caught both new pages rendering their own <h1> on the first
+    test:layout-contract run; switching to <h2> (matching the existing
+    pages/play/challenges/* convention, since these are plain Nuxt pages
+    with no content-frontmatter shell) fixed it in one pass.
