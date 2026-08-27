@@ -92,14 +92,43 @@ LAYER_PRIORITY = 100
 # scene calls for it" as the dense noun phrase "include X", which is how an
 # earlier casting clause turned inanimate subjects into crowds of people
 # (see scripts/repair_art_request_defaults.py's header).
+# TWO WORDS WERE DOING REAL DAMAGE HERE, both the same mistake in different
+# clothes: vocabulary that means something to a person and something else
+# entirely to a diffusion model, which has no notion of "craft term" and simply
+# paints the densest noun phrase it is handed.
+#
+# 1. "strong readable silhouettes" -- a composition note to an illustrator, a
+#    SUBJECT to Krea 2. The reward batch came back as literal black cut-out
+#    silhouettes on painted backdrops (ArtJob 9958, druid-charm, and others).
+#    The word appeared twice, here and in the reward frame, which only made it
+#    louder. Say the wanted result -- shapes that read at a glance -- and never
+#    the word.
+#
+# 2. The named reference points. docs/art-direction.md Section 1 lists Monkey
+#    Island, Bakshi, Treasure Planet, Steven Universe and She-Ra as shorthand
+#    FOR HUMANS about what the look should feel like. Pasted verbatim into a
+#    prompt they stop being shorthand and start being instructions to reproduce
+#    those properties -- and when a subject name collides with a character from
+#    one of them, you get the character. `nix-pearl` ("Nix's Pearl") plus
+#    "Steven Universe" returned a direct likeness of that show's Pearl. That is
+#    both an obvious quality failure and an IP one, and it was entirely
+#    predictable in hindsight.
+#
+# The fix is to say what those names were shorthand for. Every quality below is
+# one of the five, translated: comedic staging and clear read (Monkey Island),
+# loose characterful line (Bakshi), painterly depth and warm cinematic light
+# (Treasure Planet), soft rounded shapes and emotionally legible faces (Steven
+# Universe), bold clean colour blocking and heroic-goofy fantasy (She-Ra). The
+# doc keeps the names, because the doc is read by people. The prompt does not.
 STYLE_TAIL = (
     "cartoony goofy storybook illustration, soft confident hand-drawn linework, "
-    "rounded generous shape language, warm saturated slightly-faded storybook palette, "
-    "painterly depth and warm cinematic light, exaggerated expressive character acting, "
-    "strong readable silhouettes, charming and wry, "
-    "in the spirit of Monkey Island, Ralph Bakshi, Treasure Planet, Steven Universe, "
-    "and She-Ra Princess of Power. Hand-drawn animation cel and gouache painting, "
-    "visibly illustrated by a person"
+    "loose characterful line quality, rounded generous shape language, "
+    "emotionally legible faces, bold clean colour blocking, "
+    "warm saturated slightly-faded storybook palette, "
+    "painterly depth and warm cinematic light, exaggerated expressive acting, "
+    "clearly staged so the shapes read instantly at a glance, "
+    "heroic and goofy and wry, charming, "
+    "hand-drawn animation cel and gouache painting, visibly illustrated by a person"
 )
 
 # Stated as the wanted RESULT, not as a pile of exclusions. kind_robots'
@@ -109,9 +138,15 @@ STYLE_TAIL = (
 # POSITIVE conditioning and produces the very text it was meant to forbid. An
 # earlier draft of this file named text five times and every one of the 25
 # submissions came back 422. One mention, plus the positive phrasing, is the fix.
+# Every negation removed, not just trimmed below the contract threshold. Krea 2
+# runs at cfg 1 where ComfyUI never applies a negative prompt, so "no lettering
+# anywhere" is the word "lettering" in POSITIVE conditioning on a text-specialist
+# model -- and the reward batch proved it: `smugglers-map` came back as a scroll
+# covered in garbled pseudo-writing that was visibly trying to spell out the
+# prompt's own sentences. State the wanted result and nothing else.
 NO_TEXT = (
-    "every surface smooth and unmarked, no lettering anywhere, "
-    "no collage, no contact sheet, no border"
+    "every surface left bare and unmarked, blank clean untouched surfaces, "
+    "one single uncropped image filling the frame"
 )
 
 # krea2 is distilled for cfg 1, so the ComfyUI negative prompt never runs and this
@@ -360,7 +395,7 @@ SCENE_CONCEPTS = [
         "a breathless courier bursts through the reeds brandishing an enormous "
         "unrolled scroll, boot deep in mud, utterly urgent. The monarch does not "
         "look away from the water. Staged like a comic adventure game screen, the "
-        "two figures reading instantly by silhouette alone",
+        "two figures posed so clearly that a glance tells the whole joke",
     ),
     (
         "beat-the-standoff",
@@ -844,8 +879,38 @@ def alt_vista_entries() -> list[dict]:
 
 REWARD_FRAME = (
     "a single object presented alone and centered against a simple soft painted "
-    "backdrop, clear readable silhouette, nothing else in the frame"
+    "backdrop, lit so its shape reads instantly, nothing else in the frame"
 )
+
+# Per-slug visual direction, because a reward's name and its mechanical effect
+# are not a description of what the thing LOOKS like -- and four of these nine
+# are objects that carry writing in real life, which is exactly how the first
+# batch produced a chart covered in garbled pseudo-text. Each of those is given
+# abstract marks to draw instead, positively, rather than being told not to
+# write.
+REWARD_LOOK = {
+    "druid-charm": "a small woven charm of braided river reeds and green twine, "
+    "a polished acorn and a single blue feather bound into it",
+    "gilded-lure": "an ornate gold fishing lure shaped like a fat little fish, "
+    "jewelled eye, three barbed hooks, far too fancy for its job",
+    "buildpermit-scroll": "a stiff official scroll half unrolled, its face "
+    "covered in neat abstract ruled boxes, inked squiggles and a heavy blob of "
+    "purple wax seal, patterned marks instead of writing",
+    "treaty-seal": "a heavy wax seal disc on a trailing ribbon, an abstract "
+    "crest of two clasped hands pressed into the wax, no lettering in the stamp",
+    "smugglers-map": "a creased weathered chart, its face covered in wandering "
+    "ink coastlines, dotted route lines, tiny drawn coves and small crosses, "
+    "abstract cartographic marks instead of writing",
+    "mossy-hex": "a knobbly clay bottle stoppered with cork and moss, wrapped in "
+    "trade beads and dried herbs, something faintly glowing inside",
+    "captains-pin": "a dented brass military pin shaped like a lake perch "
+    "crossed with a spear, its enamel chipped and lovingly polished",
+    "bards-ballad": "a rolled sheet of song parchment tied with red string, its "
+    "face covered in abstract inked staves and dots and swirling flourishes, "
+    "decorative marks instead of writing",
+    "nix-pearl": "a single enormous iridescent freshwater pearl resting in an "
+    "open oyster shell, faint silt and tiny old coins caught in its lustre",
+}
 
 
 def reward_entries(content_ts: Path) -> list[dict]:
@@ -868,13 +933,25 @@ def reward_entries(content_ts: Path) -> list[dict]:
     entries: list[dict] = []
     for reward in rewards:
         name = reward["name"].replace("\u2019", "'")
-        effect = reward["effect"].replace("\u2019", "'")
-        # SKILL rewards have no physical form of their own, so they are rendered as
-        # the token or charm that represents them rather than as an abstract glow.
+        look = REWARD_LOOK.get(reward["slug"])
+        if not look:
+            raise SystemExit(
+                f"reward {reward['slug']!r} is in the content bundle but has no "
+                "REWARD_LOOK entry; add its visual direction to this script"
+            )
+        # The bundle's `effect` line is deliberately NOT in the prompt. It is
+        # mechanics prose ("unlocks the sunken-cache choices"), not a description
+        # of what the object looks like, and handing a text-specialist model a
+        # sentence about an object that carries writing is how the first batch
+        # produced a chart covered in garbled pseudo-text trying to spell it out.
+        # What the thing DOES belongs on the card in the game; what it LOOKS like
+        # is REWARD_LOOK, and that is all the renderer gets.
+        rarity = reward["rarity"].lower()
+        article = "an" if rarity[0] in "aeiou" else "a"
         body = (
-            f"{name}, a {reward['rarity'].lower()} keepsake from a comedic fantasy "
-            f"fishing kingdom. What it does: {effect} Render it as one tangible "
-            f"hand-made object a person could pick up. {REWARD_FRAME}"
+            f"{name}, {article} {rarity} keepsake from a comedic fantasy fishing "
+            f"kingdom: {look}. One tangible hand-made object a person could pick "
+            f"up. {REWARD_FRAME}"
         )
         entries.append(
             make_entry(
@@ -1026,6 +1103,40 @@ VAGUE_BRAND_STYLE = (
 )
 
 
+# Tokens this project has already been burned by. Both classes are the same
+# mistake: a word that means one thing to an illustrator and another to a
+# diffusion model, which renders whatever noun it is given.
+#
+#   silhouette  -- a composition note to a person, a subject to the model. The
+#                  first reward batch came back as literal black cut-outs.
+#   named IP    -- reference points belong in docs/art-direction.md for humans.
+#                  In a prompt they reproduce the reference, and a subject name
+#                  that collides with a character from it returns the character
+#                  ("Nix's Pearl" + "Steven Universe" -> that show's Pearl).
+BANNED_PROMPT_TOKENS = {
+    "silhouette": "renders as a literal black cut-out; say the shape reads at a glance",
+    "silhouettes": "renders as literal black cut-outs; say the shapes read at a glance",
+    "monkey island": "named reference; describe the quality instead",
+    "bakshi": "named reference; describe the quality instead",
+    "treasure planet": "named reference; describe the quality instead",
+    "steven universe": "named reference; returned that show's Pearl for nix-pearl",
+    "she-ra": "named reference; describe the quality instead",
+    "princess of power": "named reference; describe the quality instead",
+    "studio ghibli": "named reference; describe the quality instead",
+    "disney": "named reference; describe the quality instead",
+    "pixar": "named reference; describe the quality instead",
+}
+
+
+def banned_tokens(prompt: str) -> list[str]:
+    low = prompt.lower()
+    return [
+        f"{token!r}: {why}"
+        for token, why in sorted(BANNED_PROMPT_TOKENS.items())
+        if re.search(rf"(?<![a-z]){re.escape(token)}(?![a-z])", low)
+    ]
+
+
 def contract_violations(prompt: str) -> list[str]:
     """Every reason kind_robots' enqueue endpoint would 422 this prompt."""
     found: list[str] = []
@@ -1056,6 +1167,10 @@ def contract_violations(prompt: str) -> list[str]:
     ]
     if len(piles) > MAX_TEXT_EXCLUSIONS:
         found.append(f"text-exclusion-pile: {len(piles)} ({', '.join(piles)})")
+
+    # Local-only, stricter than the server contract: these render wrong rather
+    # than getting rejected, so nothing upstream would ever catch them.
+    found.extend(f"banned-token {b}" for b in banned_tokens(prompt))
 
     return found
 

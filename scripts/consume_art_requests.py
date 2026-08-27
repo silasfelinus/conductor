@@ -360,6 +360,17 @@ def main():
         help="only process requests whose id starts with this prefix (scope a run to one source/batch)",
     )
     parser.add_argument(
+        "--force",
+        action="store_true",
+        help=(
+            "re-submit even when the target image already exists. The default "
+            "skip-if-present behaviour is right for resumed batches, but it makes "
+            "a bad render permanent: once the file is on media the entry is marked "
+            "done and no prompt fix can ever reach it. Use after correcting a "
+            "prompt, scoped with --id-prefix."
+        ),
+    )
+    parser.add_argument(
         "--submit-only",
         action="store_true",
         help=(
@@ -396,7 +407,8 @@ def main():
     satisfied = []
     todo = []
     for request in requests:
-        (satisfied if already_satisfied(request) else todo).append(request)
+        present = already_satisfied(request) and not args.force
+        (satisfied if present else todo).append(request)
     if args.limit > 0:
         todo = todo[: args.limit]
 
