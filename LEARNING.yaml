@@ -10673,3 +10673,12 @@ records:
     converted elsewhere (newsfeed-feed.vue) -- cheap to check and turns a plausible-looking
     candidate into a documented, not-blind substitution matching the standing "same
     element rendering two different ways across sibling components" rule.
+- date: 2026-08-26
+  project: ruler-hooked
+  task: t-016
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Pinning one character as a constant for cross-piece consistency silently makes that character the product's default; parameterize the cast and name the hero instead."

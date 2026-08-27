@@ -145,14 +145,97 @@ TIME_MOD = {
 }
 
 # The player character is cosmetic-only and fully customizable (data-model.md
-# ruler.cosmetics), but the concept batch has to show *a* ruler, and showing the
-# same one across the vista pieces is what makes them read as one game. One
-# specific, warm, deliberately non-default monarch, per the art-prompts casting
-# standard (vary gender, race, age, body size, presentation across a cast).
-THE_RULER = (
-    "a plump contented middle-aged monarch with deep brown skin and grey-streaked "
-    "locs, a slightly-too-large crown sitting askew, robes hitched up over bare "
-    "feet, a battered fishing rod held with total unearned confidence"
+# `ruler.cosmetics` + `honorific`), so there is no canonical ruler and the art must
+# not imply one.
+#
+# The first concept batch got this wrong. It pinned ONE monarch across every vista
+# so the four time-of-day pieces would read as the same person in the same place --
+# consistency worth having -- but bought that consistency by making the ruler a
+# specific man, and every hero mockup of the game then showed a king. Silas,
+# 2026-08-26: "the ruler should absolutely not always be male in our mockups, and
+# we will need to add a character creator element that lets the user pick body
+# shapes, skin color, and ruler title, etc."
+#
+# The fix is to stop treating the ruler as a constant. These presets are the range
+# the character creator has to cover -- gender presentation, body shape and size,
+# skin, age, species, and honorific all vary deliberately, per the art-prompts
+# casting standard. They are rendered at the `ruler` region layer's own framing, so
+# each one is simultaneously: a swappable game asset, the reference sheet the
+# character creator is built against, and the thing that keeps any future
+# ruler-bearing mockup from defaulting to one body.
+RULER_PRESETS = [
+    {
+        "id": "king-osric",
+        "title": "King",
+        "look": "a plump contented middle-aged monarch with deep brown skin and "
+        "grey-streaked locs, a slightly-too-large crown sitting askew, robes "
+        "hitched up over bare feet",
+    },
+    {
+        "id": "queen-mabel",
+        "title": "Queen",
+        "look": "a tall broad-shouldered monarch in her fifties, warm brown skin, "
+        "close-cropped silver hair under a slim gold circlet, an embroidered "
+        "fishing coat thrown over her royal robes, sleeves rolled to the elbow",
+    },
+    {
+        "id": "sovereign-wren",
+        "title": "Sovereign",
+        "look": "a lanky young androgynous monarch, pale freckled skin, dark hair "
+        "shaved at the sides, the circlet worn loose around the throat instead of "
+        "the head, patched waders under a half-cape",
+    },
+    {
+        "id": "regent-halvard",
+        "title": "Regent",
+        "look": "a very old wiry monarch, deep-set eyes and a long white beard "
+        "tucked into a belt, olive skin, swimming in robes several sizes too big, "
+        "a folding stool and a thermos",
+    },
+    {
+        "id": "matriarch-oshun",
+        "title": "Matriarch",
+        "look": "a short and gloriously round monarch, rich dark skin, an enormous "
+        "coiled crown of braided hair with the actual crown perched on top of it, "
+        "beaded rings on every finger",
+    },
+    {
+        "id": "chieftain-brakka",
+        "title": "Chieftain",
+        "look": "a powerfully built orcish monarch, moss-green skin, small proud "
+        "tusks, a crown of shed antlers, forearms like tree roots, a rod that looks "
+        "like a toothpick in one huge hand",
+    },
+    {
+        "id": "heron-queen-sedge",
+        "title": "Queen",
+        "look": "a tall heron-folk monarch, soft grey-blue plumage and a long "
+        "elegant neck, the crown balanced carefully between two head plumes, "
+        "standing on one leg out of sheer habit",
+    },
+    {
+        "id": "little-monarch-pip",
+        "title": "Monarch",
+        "look": "a tiny mouse-folk monarch barely taller than a boot, round ears, "
+        "warm tan fur, an enormous crown resting on both ears at once, seated on a "
+        "stack of unread royal ledgers, holding a rod three times their length",
+    },
+]
+RULER_BY_ID = {preset["id"]: preset for preset in RULER_PRESETS}
+
+# The four time-of-day vistas are a matched set: one ruler across all of them is
+# what makes the cycle read as one place. Named rather than inlined so the already
+# rendered and approved pieces stay reproducible, and so swapping the hero is one
+# edit. The alternate vistas below carry the range instead.
+HERO_RULER_ID = "king-osric"
+THE_RULER = RULER_BY_ID[HERO_RULER_ID]["look"] + (
+    ", a battered fishing rod held with total unearned confidence"
+)
+
+RULER_FRAME = (
+    "seated in profile on a worn wooden fishing perch at the edge of a lake, rod "
+    "out over the water, entirely at peace, full figure visible against a simple "
+    "soft painted backdrop, character sheet framing, consistent side-on pose"
 )
 
 LAKESIDE = (
@@ -272,6 +355,16 @@ SCENE_CONCEPTS = [
     ),
 ]
 
+# Alternate hero vistas. The four key-art pieces above deliberately share one
+# ruler; these carry the range into the mockups themselves, so "what this game
+# looks like" is never a single body. Different preset, different time, same place.
+ALT_HERO_VISTAS = [
+    ("queen-mabel", "golden", "Alternate key art: the Queen at golden hour"),
+    ("sovereign-wren", "night", "Alternate key art: the Sovereign at night"),
+    ("chieftain-brakka", "day", "Alternate key art: the Chieftain by day"),
+    ("little-monarch-pip", "dawn", "Alternate key art: the little Monarch at dawn"),
+]
+
 UI_CONCEPTS = [
     (
         "ui-event-card",
@@ -379,6 +472,36 @@ PORTRAIT_FRAME = (
 )
 
 
+def expect_all(parsed, block_text, label, source, key="slug"):
+    """Fail when a regex matched only SOME of a block's entries.
+
+    A parser that silently returns a subset is worse here than one that crashes:
+    the batch still stages, still renders, still looks successful, and the missing
+    assets are only discovered when something reaches for one. That is the exact
+    drift this whole script exists to prevent, so it must be loud.
+
+    Caught this on the rewards block: three of nine entries had `effect:` wrapped
+    onto its own line by prettier, the same-line regex skipped them, and the run
+    reported a cheerful "6 entries" with no indication anything was missing.
+    """
+    declared = len(re.findall(rf"^\s*{key}: '", block_text, re.M))
+    if not parsed:
+        raise SystemExit(f"{label}: block in {source} parsed to zero entries")
+    if len(parsed) != declared:
+        got = {entry.get(key) or entry.get("key") for entry in parsed}
+        missing = [
+            m.group(1)
+            for m in re.finditer(rf"^\s*{key}: '([^']+)'", block_text, re.M)
+            if m.group(1) not in got
+        ]
+        raise SystemExit(
+            f"{label}: {source} declares {declared} entr(ies) but the parser matched "
+            f"{len(parsed)}. Unmatched: {', '.join(missing)}. The upstream formatting "
+            f"changed -- fix the pattern rather than shipping a partial batch."
+        )
+    return parsed
+
+
 def find_content_bundle() -> Path:
     for candidate in CONTENT_CANDIDATES:
         if candidate.is_file():
@@ -408,8 +531,7 @@ def read_cast(content_ts: Path) -> list[dict[str, str]]:
     if not block:
         raise SystemExit(f"no characters: [...] block found in {content_ts}")
     cast = [m.groupdict() for m in CHARACTER_RE.finditer(block.group(1))]
-    if not cast:
-        raise SystemExit(f"characters: block in {content_ts} parsed to zero entries")
+    expect_all(cast, block.group(1), "characters", content_ts)
     return cast
 
 
@@ -622,6 +744,150 @@ def fish_entries() -> list[dict]:
     return entries
 
 
+def ruler_entries() -> list[dict]:
+    """One piece per ruler preset, at the `ruler` layer's own framing.
+
+    Three jobs at once: the swappable ruler asset, the reference sheet the
+    character creator is built against, and the guarantee that the range exists
+    as art rather than only as an intention in a design doc.
+    """
+    entries: list[dict] = []
+    for preset in RULER_PRESETS:
+        body = (
+            f"The player-character ruler of a comedic fantasy kingdom, who would "
+            f"rather fish than rule: {preset['look']}, holding a battered fishing "
+            f"rod with total unearned confidence. {RULER_FRAME}"
+        )
+        entries.append(
+            make_entry(
+                request_id=f"ruler-hooked-ruler-{preset['id']}",
+                image_path=f"public/images/ruler-hooked/ruler/{preset['id']}.webp",
+                label=f"Ruler Hooked ruler preset: {preset['title']} ({preset['id']})",
+                size=PORTRAIT,
+                prompt=f"{body}. {STYLE_TAIL}. {NO_TEXT}",
+                priority=CONCEPT_PRIORITY,
+                lane="ruler",
+            )
+        )
+    return entries
+
+
+def alt_vista_entries() -> list[dict]:
+    """Key-art vistas featuring rulers other than the hero preset."""
+    entries: list[dict] = []
+    for preset_id, time, label in ALT_HERO_VISTAS:
+        preset = RULER_BY_ID[preset_id]
+        body = (
+            f"The core promise of the game in one frame: {preset['look']}, holding "
+            f"a battered fishing rod, sitting alone at the edge of {LAKESIDE}, line "
+            f"in the water, blissfully ignoring the kingdom behind them. "
+            f"{TIME_MOD[time]}"
+        )
+        entries.append(
+            make_entry(
+                request_id=f"ruler-hooked-concept-key-art-{preset_id}",
+                image_path=f"public/images/ruler-hooked/concept/key-art-{preset_id}.webp",
+                label=f"Ruler Hooked concept: {label}",
+                size=WIDE,
+                prompt=f"{body}. {STYLE_TAIL}. {NO_TEXT}",
+                priority=CONCEPT_PRIORITY,
+                lane="concept",
+            )
+        )
+    return entries
+
+
+REWARD_FRAME = (
+    "a single object presented alone and centered against a simple soft painted "
+    "backdrop, clear readable silhouette, nothing else in the frame"
+)
+
+
+def reward_entries(content_ts: Path) -> list[dict]:
+    """One object study per Reward in the content bundle, read from the bundle."""
+    text = content_ts.read_text(encoding="utf-8")
+    block = re.search(r"\n  rewards: \[(.*?)\n  \],\n", text, re.S)
+    if not block:
+        raise SystemExit(f"no rewards: [...] block found in {content_ts}")
+    pattern = re.compile(
+        r"\{\s*slug: '(?P<slug>[^']+)',\s*"
+        r"name: '(?P<name>[^']+)',\s*"
+        r"rewardType: '(?P<kind>[^']+)',\s*"
+        r"rarity: '(?P<rarity>[^']+)',\s*"
+        r"effect:\s*'(?P<effect>[^']+)',",
+        re.S,
+    )
+    rewards = [m.groupdict() for m in pattern.finditer(block.group(1))]
+    expect_all(rewards, block.group(1), "rewards", content_ts)
+
+    entries: list[dict] = []
+    for reward in rewards:
+        name = reward["name"].replace("\u2019", "'")
+        effect = reward["effect"].replace("\u2019", "'")
+        # SKILL rewards have no physical form of their own, so they are rendered as
+        # the token or charm that represents them rather than as an abstract glow.
+        body = (
+            f"{name}, a {reward['rarity'].lower()} keepsake from a comedic fantasy "
+            f"fishing kingdom. What it does: {effect} Render it as one tangible "
+            f"hand-made object a person could pick up. {REWARD_FRAME}"
+        )
+        entries.append(
+            make_entry(
+                request_id=f"ruler-hooked-reward-{reward['slug']}",
+                image_path=f"public/images/ruler-hooked/rewards/{reward['slug']}.webp",
+                label=f"Ruler Hooked reward: {name} ({reward['kind']}, {reward['rarity']})",
+                size=SQUARE,
+                prompt=f"{body}. {STYLE_TAIL}. {NO_TEXT}",
+                priority=CONCEPT_PRIORITY,
+                lane="reward",
+            )
+        )
+    return entries
+
+
+def ending_entries(content_ts: Path) -> list[dict]:
+    """One closing illustration per authored ending, read from the bundle.
+
+    The ending's own `body` line is the art direction: it is already one vivid
+    sentence about what the kingdom became, which is exactly what the picture is.
+    """
+    text = content_ts.read_text(encoding="utf-8")
+    block = re.search(r"\n  endings: \[(.*?)\n  \],\n\}", text, re.S)
+    if not block:
+        raise SystemExit(f"no endings: [...] block found in {content_ts}")
+    pattern = re.compile(
+        r"outcomeKey: '(?P<key>[^']+)',\s*"
+        r"victoryType: '(?P<victory>[^']+)',\s*"
+        r"title: '(?P<title>[^']+)',\s*"
+        r"body: '(?P<body>[^']+)',",
+        re.S,
+    )
+    endings = [m.groupdict() for m in pattern.finditer(block.group(1))]
+    expect_all(endings, block.group(1), "endings", content_ts, key="outcomeKey")
+
+    entries: list[dict] = []
+    for ending in endings:
+        title = ending["title"].replace("\u2019", "'")
+        line = ending["body"].replace("\u2019", "'").replace("\u2026", "...")
+        body = (
+            f"The closing image of a comedic fantasy fishing kingdom, titled "
+            f"{title}: {line} Show the kingdom and its lake as that sentence leaves "
+            f"them, wide and final and a little wistful"
+        )
+        entries.append(
+            make_entry(
+                request_id=f"ruler-hooked-ending-{ending['key']}",
+                image_path=f"public/images/ruler-hooked/endings/{ending['key']}.webp",
+                label=f"Ruler Hooked ending: {title} ({ending['victory']})",
+                size=WIDE,
+                prompt=f"{body}. {STYLE_TAIL}. {NO_TEXT}",
+                priority=CONCEPT_PRIORITY,
+                lane="ending",
+            )
+        )
+    return entries
+
+
 def layer_entries(regions: dict[str, dict[str, list[str]]]) -> list[dict]:
     """The (region, state, time) matrix, named exactly as assetCandidates() resolves."""
     entries: list[dict] = []
@@ -799,7 +1065,14 @@ def main() -> int:
     args = parser.parse_args()
 
     content_ts = find_content_bundle()
-    entries = concept_entries(read_cast(content_ts)) + fish_entries()
+    entries = (
+        concept_entries(read_cast(content_ts))
+        + alt_vista_entries()
+        + ruler_entries()
+        + fish_entries()
+        + reward_entries(content_ts)
+        + ending_entries(content_ts)
+    )
     if args.include_layers:
         entries += layer_entries(read_regions(content_ts))
     assert_contract(entries)
