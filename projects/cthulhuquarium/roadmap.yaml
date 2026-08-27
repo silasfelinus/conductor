@@ -773,47 +773,23 @@ tasks:
     stakes: reversible
     depends_on: t-013
     note: >
-      Two characters, NAMED AND SETTLED by Silas 2026-08-24. Full direction in DESIGN-
-      BRIEF.md decision 5; this note carries what an implementer needs. CHARLOTTE
-      FISHMONGER, of the Portsmouth Fishmongers -- "the dreadfully cheerful head of the
-      aquarium." "Dreadfully" is load-bearing: she is not cheerful despite what the
-      aquarium is, she is cheerful about it, warmly, in a register that never breaks. She
-      runs the institution -- the Portsmouth Fishmongers is a real concern and the
-      player's tank is one of its holdings, so she is the player's cheerful superior
-      rather than someone who sold them a thing once (Silas confirmed "head of aquarium"
-      over "shopkeeper"). She is entirely unharmed. WILBUR STINT, her assistant -- male,
-      bespectacled, young but with thinning hair, shoulder length and unevenly cut, a
-      stutterer, multiple missing fingers, scarred and scratched. "really tries but always
-      injured." THE NAMES ARE THE THESIS. Charlotte's Web is Silas's favourite book; in it
-      Charlotte spends her life keeping Wilbur alive. Here she is his cheerful superior,
-      presiding over the operation taking him apart a finger at a time. NEVER POINT AT IT:
-      no character references the book, no line winks at it, nothing in the UI explains
-      it. It works entirely on whoever brings it with them, and explaining it destroys it.
-      THE PAIRING IS THE JOKE, and it is not kind. She is immaculate and in charge; he is
-      the one actually reaching into the tanks and is visibly coming apart doing it.
-      Neither ever mentions his hands, nobody connects the two facts, and NOTHING IN THE
-      GAME MAY EXPLAIN IT. WILBUR HAS DIGNITY -- hard rule, and the easiest thing in this
-      task to get wrong. "Really tries" is the load-bearing half of him: write him
-      earnest, competent, and unlucky, never pathetic and never a fool. He is the most
-      sympathetic figure in the game and the only one who seems to understand what is in
-      the tanks. His stutter is characterisation, not a punchline -- never the reason a
-      line is funny, never in a beat played for laughs at his expense, and the humour
-      around him lands on the situation or on Charlotte's obliviousness, never on him. If
-      a line is only funny because of how he talks, cut it. A build that gets this wrong
-      is meaner than the game is and will read that way immediately. BUILD SHAPE: each
-      voice is a `Character` row (identity: personality, voice, sampleResponse, backstory,
-      quirks, art) PAIRED with a `Bot` row (narrator behavior that speaks as it). Do not
-      invent a Cthulhuquarium-private narrator table -- those columns already exist, Bot
-      already has the narrator wiring, and going through both means these two are reusable
-      by any other Kind Robots surface. Wilbur's missing fingers belong in the Character
-      record and the art prompt; they are never accounted for in dialogue. Authored text
-      only. Nothing in this game makes a live model call at runtime (same offline
-      constraint ruler-hooked holds), so the reaction system is authored lines selected by
-      game state, not generation. Scope it before writing: a voice that speaks too often
-      stops being a voice and becomes a tooltip. Field notes stay a third, unattributed
-      register -- do not retro-assign them to either character without asking. Generated
-      art for both follows the standing 2026-07-06 rule: no per-image approval needed,
-      preserve prompt/model/seed metadata.
+      DONE (scheduled conductor run, 2026-08-27). Authored and shipped Charlotte Fishmonger
+      and Wilbur Stint as paired Character+Bot records per DESIGN-BRIEF.md decision 5 --
+      personality, voice, sampleResponse, backstory, quirks, drive, artPrompt for both, plus
+      a paired NARRATOR-type Bot for each (no private Cthulhuquarium narrator table; both
+      reuse the existing Character/Bot models per the BUILD SHAPE note). Live in production:
+      Character #3305 (Charlotte) / #3306 (Wilbur), Bot #1836 (Charlotte) / #1837 (Wilbur).
+      Created via a new idempotent script, scripts/seed_cthulhuquarium_voices.mjs
+      (kind_robots#2156, merged, 37/37 CI green). No UI wiring in this pass -- the task's own
+      note scopes that out ("a voice that speaks too often stops being a voice and becomes a
+      tooltip") and no other task currently requests it; left for a future task if wanted.
+      ART GAP: portrait art was queued (scripts/queue_cthulhuquarium_voice_art.mjs) but all 4
+      jobs failed with the same ComfyUI `CLIPTextEncode: hostbuf_file_reader_read failed`
+      signature ai-art-academy/t-068 tracked and closed 2026-08-26 as a disk13 cable fault --
+      now apparently recurred (25/25 recentFailed sharing that signature, ~47% 24h failure
+      rate). Filed ai-art-academy/t-077 (needs-human, hardware) rather than blocking this task
+      on it. Once t-077 is resolved, re-run the art queue script (idempotent) to retry the 4
+      portraits.
     claimed_by: scheduled-conductor-cq-t023-20260827T173045Z
     claimed_at: '2026-08-27T17:30:46Z'
     updated: '2026-08-27T17:43:47Z'
