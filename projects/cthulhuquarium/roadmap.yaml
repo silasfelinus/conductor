@@ -2060,7 +2060,7 @@ tasks:
     passes: 0
     stakes: reversible
     depends_on: [t-015]
-    note: >
+    note: >-
       UPDATED 2026-08-27 (conductor scheduled Agent run): queue committed, NOT rendered
       yet. Ran scripts/build_cthulhuquarium_art_queue.py (reads prompts straight from the
       bible, silasfelinus/cthulhuquarium fish/*.yaml, via a read-only anonymous clone --
@@ -2087,6 +2087,19 @@ tasks:
       (not left at `claimed`) since the remaining work -- verify-and-close -- is a fresh
       pickup for whichever session next has time to check the scheduled workflow's
       results, not a continuation of this session's own in-progress state.
+
+      UPDATE 2026-08-27T01:40Z (conductor scheduled Agent run): auto-art-generate.yml push-
+      trigger paths list projects/art-prompts.yaml but not art-generate.yaml -- committing the
+      138-entry queue there last session did NOT fire a push-triggered drain as its own note
+      assumed; only the 6h cron would have picked it up, and the next tick was still ~an hour
+      out. Manually dispatched the workflow via workflow_dispatch with refresh_queue=false
+      (consume the committed, already-t-015-filtered queue as-is; the default
+      refresh_queue=true would rebuild art-generate.yaml from scratch and risk losing that
+      filtering). Did not babysit to completion this session -- prior note already sized the
+      drain at 1.5-2+ hours. NEXT SESSION: check the auto-art-generate.yml run history for
+      this dispatch, confirm it drained/rendered the 138 entries, spot-check results
+      (especially the bg-parlour re-render) the way t-015 did, requeue only failures/misses,
+      then close done.
     prior_note: >
       Kaizen from t-015 (2026-08-26, conductor scheduled Agent run): t-015 covered all 32
       tier-1 ("commons") species plus 4 tank backgrounds. The bible now has 152 species
@@ -2101,5 +2114,5 @@ tasks:
       projects/cthulhuquarium/docs/t-015-full-art-pass.md for the full image review.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-27T00:50:00Z'
+    updated: '2026-08-27T01:33:16Z'
 
