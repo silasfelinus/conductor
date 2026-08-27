@@ -1058,8 +1058,8 @@ tasks:
   - id: t-029
     milestone: m3
     title: "Genetics — hidden individual stats, breeding, and secret evolutions"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-025, t-026]
@@ -1090,6 +1090,9 @@ tasks:
       columns this needs to the already-shipped t-007 family as an additive migration. Do
       not add them ad hoc here -- check t-032 landed first, and extend it rather than
       opening a second migration path into the same tables.
+    claimed_by: 2026-08-27T233500Z-cq-t029-genetics
+    claimed_at: '2026-08-27T23:29:05Z'
+    updated: '2026-08-27T23:29:05Z'
 
   - id: t-030
     milestone: m3
