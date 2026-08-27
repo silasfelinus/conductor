@@ -2136,40 +2136,26 @@ tasks:
   - id: t-045
     milestone: m2
     title: "Link generated bestiary ArtImages to their Monster rows via the t-043 API"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-043]
     note: >-
-      Filed 2026-08-27 closing out t-044. t-043 (kind_robots#2138, merged) added a
-      Monster API route so Monster.artImageId can finally be PATCHed from outside a
-      direct DB session -- but nothing has actually called it yet. Two batches of
-      real ArtImages exist with no Monster row pointing at them:
-
-      - t-015's 32 tier-1 species + 4 backgrounds: slug-to-artImageId mapping
-        already recorded in projects/cthulhuquarium/docs/t-015-full-art-pass.md.
-
-      - t-044's 138 species/background/screen/character/set/egg entries: rendered
-        via consume_art_queue_core.py's POST {KR}/api/art/queue path (same
-        mechanism as t-015, so real ArtImage rows do exist), but this batch ran
-        through the git-file queue + scheduled workflow rather than a live
-        session watching each job, so no slug-to-artImageId mapping was ever
-        recorded anywhere. Extracting it means reading the job logs of Auto Art
-        Generate run #329
-        (https://github.com/silasfelinus/conductor/actions/runs/33030379982) --
-        `consume_art_queue_core.py` prints `DONE {name} -> {path} (ArtImage
-        {artImageId})` per entry -- or, if the DB is reachable, matching
-        ArtImage rows by createdAt window + prompt substring instead.
-
-      For each: resolve the Monster row by species slug (Monster.slug or a name
-      match against the bible), PATCH artImageId (and cardArtImageId/
-      heroArtImageId/iconArtImageId if a variant applies) via the t-043 route,
-      and record the mapping in a doc under projects/cthulhuquarium/docs/ the way
-      t-015's batch already does, so a future batch doesn't repeat this gap.
+      Done 2026-08-27. Recovered t-044's slug-to-ArtImage mapping from Auto Art
+      Generate run #329's job logs (119 species) and combined it with t-015's own
+      documented mapping (32 species) -- 151 total, verified against a fresh
+      read-only clone of the bible to be every current species with zero missing
+      and zero extra. PATCHed Monster.artImageId for all 151 via the t-043 API
+      (PATCH /api/monsters/{slug}, body {artImageId}): 151/151 succeeded on the
+      first attempt, spot-verified 5 live afterward via GET. Non-fish t-044
+      entries (characters/backgrounds/set pieces/eggs/screens, 18 of them) have
+      no Monster row and are out of scope for this task -- noted as open follow-on
+      scope, not silently dropped. Full methodology, mapping table, and what's
+      still open: projects/cthulhuquarium/docs/t-045-monster-art-linking.md.
     claimed_by: claude-20260827T044500-t045
     claimed_at: '2026-08-27T04:39:13Z'
-    updated: '2026-08-27T04:39:13Z'
+    updated: '2026-08-27T04:46:00Z'
 
   - id: t-046
     milestone: m2
