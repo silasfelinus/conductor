@@ -15,19 +15,20 @@ produces no-ops (documented case: the Reviewer trigger fired 48+ times with
 zero worker/* PRs to review). The trigger schedule itself is a platform-level
 setting outside this repo — this script is the repo-side half of the fix.
 
-Cross-repo (Silas, 2026-07-25/26): pr-medic and branch-medic cover BOTH
-silasfelinus/conductor and silasfelinus/kind_robots — "it's a conductor
-agent doing it" but the repos it watches aren't limited to its own. The
-conductor repo (this script's own checkout) uses fast local git commands
-(via branch_janitor.py, no API calls); kind_robots has no local checkout
-guaranteed to exist in every session/job that runs this script, so it's
-checked via the GitHub REST API instead (list branches, per-branch commit
-date, and the compare API to determine merge state) — same information,
-different transport. `worker`/`reviewer` stay conductor-only: `worker/*`
-branch naming and roadmap-tracked ready tasks are conductor-repo concepts by
-this system's own architecture (kind_robots work is tracked as a conductor
-roadmap task that names a kind_robots PR, not as its own independent
-Worker/Reviewer cycle) — see AGENTS.md's "Cross-repo tasks" section.
+Cross-repo (Silas, 2026-07-25/26, widened 2026-08-27): pr-medic and branch-medic
+cover the actively maintained code repos by default: silasfelinus/conductor,
+silasfelinus/kind_robots, silasfelinus/Kapowarr, and
+silasfelinus/cthulhuquarium. The conductor repo (this script's own checkout)
+uses fast local git commands (via branch_janitor.py, no API calls); the other
+repos have no local checkout guaranteed to exist in every session/job that
+runs this script, so they're checked via the GitHub REST API instead (list
+branches, per-branch commit date, and the compare API to determine merge
+state) — same information, different transport. `worker`/`reviewer` stay
+conductor-only: `worker/*` branch naming and roadmap-tracked ready tasks are
+conductor-repo concepts by this system's own architecture (target-repo work is
+tracked as a conductor roadmap task that names the target PR, not as its own
+independent Worker/Reviewer cycle) — see AGENTS.md's "Cross-repo tasks"
+section.
 
 Eight roles, each backed by an existing piece of tooling this script composes
 rather than duplicates:
@@ -47,10 +48,10 @@ rather than duplicates:
                     conclusion — a scheduled workflow failing loudly on every
                     run but with nothing surfacing that beyond the raw
                     Actions log (conductor/t-102, widened in t-104)
-  - pr-medic      — open PRs, across every repo in --repos, whose CI is red
-                    AND stale (no push in --pr-stale-hours despite failing) —
-                    an error nobody is actively fixing, as opposed to a PR
-                    mid-iteration
+  - pr-medic      — non-draft open PRs, across every repo in --repos, whose CI
+                    is red AND stale (no push in --pr-stale-hours despite
+                    failing) — an error nobody is actively fixing, as opposed
+                    to a PR mid-fix or a deliberately parked human-gated draft
   - branch-medic  — the STRANDED tier (unique unmerged commits, older than
                     --branch-stale-hours) across every repo in --repos — for
                     conductor this is literally branch_janitor.py's own
@@ -142,7 +143,7 @@ apart from "couldn't check GitHub, treated it as nothing" before trusting a
 
 Usage:
   python scripts/select_role.py [--dry-run]
-  python scripts/select_role.py --repos silasfelinus/conductor,silasfelinus/kind_robots
+  python scripts/select_role.py --repos silasfelinus/conductor,silasfelinus/kind_robots,silasfelinus/Kapowarr,silasfelinus/cthulhuquarium
   python scripts/select_role.py --pr-stale-hours 6 --branch-stale-hours 24
 
 Env:
@@ -194,7 +195,15 @@ def _reset_github_reachability_tracking() -> None:
 # local-git commands (git branch -r, git log) actually reach. Any other repo
 # in DEFAULT_REPOS is checked via the GitHub API instead (see module docstring).
 LOCAL_REPO = 'silasfelinus/conductor'
-DEFAULT_REPOS = ('silasfelinus/conductor', 'silasfelinus/kind_robots')
+DEFAULT_REPOS = (
+    'silasfelinus/conductor',
+    'silasfelinus/kind_robots',
+    'silasfelinus/Kapowarr',
+    'silasfelinus/cthulhuquarium',
+)
+# Only cthulhuquarium still uses a non-main default. Keep this explicit so
+# branch-medic's compare call doesn't silently 404 and skip every stale branch.
+REPO_BASE_BRANCHES = {'silasfelinus/cthulhuquarium': 'master'}
 
 DEFAULT_PR_STALE_HOURS = 3.0
 # Grace period before a green, open claude/* PR is considered reviewable --
@@ -309,16 +318,19 @@ def find_red_stale_prs_in_repo(
     stale_hours: float = DEFAULT_PR_STALE_HOURS,
     now: datetime | None = None,
 ) -> list[dict]:
-    """Open PRs in `repo` whose latest commit's combined CI status is
-    failure/error AND hasn't been pushed to in `stale_hours` — i.e. broken and
-    NOT currently being iterated on, as opposed to a PR mid-fix with fresh
-    red CI."""
+    """Non-draft open PRs in `repo` whose latest commit's combined CI status
+    is failure/error AND hasn't been pushed to in `stale_hours` — i.e. broken
+    and NOT currently being iterated on. Draft is the explicit parking signal
+    for intentionally human-gated or otherwise non-actionable PRs, so drafts
+    never monopolize pr-medic while routine branch cleanup waits behind them."""
     if not token:
         return []
 
     now = now or datetime.now(timezone.utc)
     flagged: list[dict] = []
     for pr in list_open_prs(repo, token):
+        if pr.get('draft'):
+            continue
         head = pr.get('head') or {}
         sha = head.get('sha')
         updated_at = pr.get('updated_at')
@@ -449,11 +461,14 @@ def find_reviewable_claude_prs(
     grace_minutes: float = DEFAULT_PR_GRACE_MINUTES,
     now: datetime | None = None,
 ) -> list[dict]:
-    """Open PRs in `repo` whose head branch is NOT `worker/*` (those are
-    already covered by run_reviewer.remote_worker_branches()'s fast local-git
-    check), whose latest commit's combined CI status is green, and that have
-    sat untouched for at least `grace_minutes` -- long enough that its own
-    author is unlikely to still be actively pushing to it.
+    """Non-draft open PRs in `repo` whose head branch is NOT `worker/*`
+    (those are already covered by run_reviewer.remote_worker_branches()'s fast
+    local-git check), whose latest commit's combined CI status is green, and
+    that have sat untouched for at least `grace_minutes` -- long enough that
+    its own author is unlikely to still be actively pushing to it.
+
+    Draft PRs are intentionally parked and are therefore not reviewer work
+    until their author marks them ready again.
 
     Fixes conductor/t-083: a fully-green, reversible, bookkeeping-only PR
     opened from a `claude/*` branch sat open on conductor for roughly an hour
@@ -468,6 +483,8 @@ def find_reviewable_claude_prs(
     now = now or datetime.now(timezone.utc)
     flagged: list[dict] = []
     for pr in list_open_prs(repo, token):
+        if pr.get('draft'):
+            continue
         head = pr.get('head') or {}
         ref = head.get('ref') or ''
         sha = head.get('sha')
@@ -559,14 +576,16 @@ def find_stranded_branches_remote(
     now: datetime | None = None,
 ) -> list[dict]:
     """API-driven equivalent of branch_janitor.py's STRANDED tier, for a repo
-    with no guaranteed local checkout (e.g. kind_robots from a conductor
-    session). Same precedence as branch_janitor.classify(): merged or
-    undetermined branches are never flagged; only branches confirmed to have
-    unique commits AND old enough are STRANDED."""
+    with no guaranteed local checkout. Same precedence as
+    branch_janitor.classify(): merged or undetermined branches are never
+    flagged; only branches confirmed to have unique commits AND old enough are
+    STRANDED. The compare base follows REPO_BASE_BRANCHES for repos whose
+    default branch is not `main` (currently cthulhuquarium -> `master`)."""
     if not token:
         return []
 
     now = now or datetime.now(timezone.utc)
+    base = REPO_BASE_BRANCHES.get(repo, 'main')
     stranded: list[dict] = []
     for branch in list_branches_api(repo, token, prefixes):
         name = branch.get('name')
@@ -574,7 +593,7 @@ def find_stranded_branches_remote(
         if not name or not sha:
             continue
 
-        merged = is_branch_merged_api(repo, name, token)
+        merged = is_branch_merged_api(repo, name, token, base=base)
         if merged in (True, None):
             continue  # merged, or undetermined -- never flag on an unknown
 
