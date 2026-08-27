@@ -620,12 +620,12 @@ tasks:
   - id: t-019
     milestone: m3
     title: "Balance pass on real play data"
-    status: claimed
-    owner: worker
+    status: needs-human
+    owner: null
     passes: 0
     stakes: reversible
     depends_on: t-016
-    note: >
+    note: >-
       Play it, instrument it, and retune balance.yaml against what actually happens rather
       than what the t-004 simulation predicted. Specifically check: is the first 10 minutes
       engaging with zero upgrades, does the mid-game stall, and is offline income tuned so a
@@ -645,9 +645,30 @@ tasks:
       paying in something other than room -- backgrounds already exist as a non-capacity
       reward and every milestone in the file already grants one. Left for this task rather
       than guessed at, because it is exactly the kind of number that wants play data.
+
+      FOR SILAS: t-019 (balance pass on real play data) is blocked in this sandboxed session
+      -- no live DB access, no aquarium telemetry/analytics endpoint exists yet, and the
+      sandbox cannot itself generate real player sessions to observe. What it contains: the
+      task asks for two things -- (1) tune hunger/debris/offline-income feel against real
+      player behavior (first-10-minutes engagement, mid-game stall, offline reward feel),
+      which needs an actual play session to judge; (2) extend the bestiary-breakpoint
+      milestone ladder past bestiary_20 (20/151 species currently covered) -- a prior session
+      (2026-08-25, recorded in economy.yaml and roadmap.yaml t-032) deliberately deferred this
+      specifically to real play data, because a naive linear extension (20 more breakpoints at
+      +2 each) would push slots_cap past 50 and trivialize the tank-packing design the game is
+      built around. TO APPROVE, pick one: (a) play the aquarium yourself for a stretch and
+      tell the next session how it actually feels plus what final slots_cap the milestone
+      ladder should land on (the note in economy.yaml already sketches the shape: decelerating
+      breakpoints, terminates well below 151 species, later breakpoints pay in backgrounds
+      rather than room) -- the next session then applies it as a straight data commit; or (b)
+      explicitly say you want an agent to estimate defensible numbers from the design docs
+      alone, clearly labeled as an un-playtested estimate rather than tuned-from-real-data.
+      Set status back to ready with your answer (or the numbers themselves) in the note and it
+      unblocks immediately -- nothing else is gating it.
     claimed_by: scheduled-20260827T215500Z-t019
     claimed_at: '2026-08-27T21:27:39Z'
-    updated: '2026-08-27T21:27:39Z'
+    updated: '2026-08-27T21:30:54Z'
+    soft_gate: true
 
   - id: t-020
     milestone: m3
