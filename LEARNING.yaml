@@ -11100,3 +11100,21 @@ records:
     needed, just apply the established pattern and verify with the existing
     aquarium test suites. Worth favoring these small, precisely-scoped kaizen
     followups when a session needs to pick one task with minimal ambiguity.
+- date: "2026-08-27"
+  project: cthulhuquarium
+  task: t-049
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Adding a purely cosmetic canvas sprite (roaming collector automaton) went
+    fastest by mirroring an existing sibling pattern in the same file --
+    SWIM_SPEED_SET_KIND's equipped-set-piece read, and the swimmer/mote
+    step+render split -- rather than inventing a new structure. Keeping the
+    change client-rendering-only (no economy/API touch, since settleTick
+    already owns the real roaming_collector income bonus server-side) kept
+    the task genuinely reversible and let the existing aquarium-economy and
+    aquarium-touch test suites stand as sufficient verification without a
+    live browser.
