@@ -435,8 +435,8 @@ tasks:
   - id: t-016
     milestone: m5
     title: Generate the concept-art batch that pins the look for full-game production
-    status: needs-human
-    soft_gate: true
+    status: done
+    approved_by_human: true
     passes: 0
     stakes: reversible
     owner: worker
@@ -467,8 +467,21 @@ tasks:
       prompts are generated from. Nothing is hand-typed, so a style correction is
       one edit and a re-run, not 25 rewrites.
 
-      This is a soft gate: it is a subjective look call, not a safety gate, and
-      other work continues while it is open.
+      APPROVED (Silas, in session 2026-08-26, verbatim): "I really love the art
+      assets created, they hit the intended vibe perfectly." All 25 pieces rendered
+      and are live under https://media.acrocatranch.com/images/ruler-hooked/. The
+      house look defined in docs/art-direction.md is now settled and every
+      subsequent batch inherits it, so later art batches do not each need their own
+      look gate.
+
+      ONE CRITIQUE, carried forward, verbatim: "My only critique is that the ruler
+      should absolutely not always be male in our mockups, and we will need to add a
+      character creator element that lets the user pick body shapes, skin color, and
+      ruler title, etc." Correct, and self-inflicted: this batch pinned a single
+      monarch across all four time-of-day vistas so the cycle would read as one
+      person in one place, and paid for that consistency by making every hero mockup
+      a king. Split into t-020 (the art fix, plus ruler cosmetic presets) and t-021
+      (the character creator itself).
     claimed_by: 2026-08-26T21-claude-ruler-hooked-art
     claimed_at: '2026-08-26T21:45:00Z'
     updated: '2026-08-26T22:00:00Z'
@@ -476,12 +489,14 @@ tasks:
   - id: t-017
     milestone: m5
     title: Resolve the region-layer format contract before rendering the environment matrix
-    status: ready
+    status: review
     passes: 0
     stakes: reversible
-    owner: null
-    claimed_by: null
-    claimed_at: null
+    owner: worker
+    claimed_by: 2026-08-26T23-claude-ruler-hooked-art
+    claimed_at: '2026-08-26T23:20:00Z'
+    updated: '2026-08-26T23:40:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#2139'
     note: >
       Two shipped specs disagree about what a region layer file actually is, and
       they cannot both be satisfied by one rendered image. docs/art-direction.md
@@ -504,22 +519,36 @@ tasks:
       docs/compositing.md already describes and it does not require re-deriving the
       art direction — but the call is a real one, not a formality.
 
-      Blocks t-018. Found 2026-08-26 while staging the art queue; 37 renders against
-      the wrong contract is 37 wasted renders, which is why the matrix was staged
-      behind a flag rather than submitted.
+      RESOLVED (kind_robots PR #2139) in favour of (a), the compositing spec.
+      ruler-hooked-stage.vue now composites full-frame layers in z-order over one
+      canvas, keeping the banded gradients underneath as the placeholder floor so
+      the artless state and the graceful degradation are unchanged. Verified:
+      vue-tsc exit 0, eslint clean, prettier clean, both headless self-tests ALL
+      PASS, test:layout-contract holds. Not verified: real pixels -- no browser in
+      this sandbox, and no layer art existed yet at the time.
+
+      Storage turned out to need no change, which was not obvious: the pipeline
+      writes to self-hosted media while the compositor asks for a relative
+      /images/ruler-hooked/... path, and those are the same store -- kind_robots'
+      own images route serves /images/** from IMAGES_PATH, which in production is
+      the mounted media root. Confirmed live rather than assumed (key-art-day.webp
+      and characters/warlock-vex.webp both 200, byte-identical to the media origin).
+
+      Flip to done when #2139 merges. Unblocks t-018.
 
   - id: t-018
     milestone: m5
     title: Render the 37-piece region/state/time environment matrix
-    status: waiting
+    status: review
     passes: 0
     stakes: reversible
-    owner: null
+    owner: worker
     depends_on:
       - t-016
       - t-017
-    claimed_by: null
-    claimed_at: null
+    claimed_by: 2026-08-26T23-claude-ruler-hooked-art
+    claimed_at: '2026-08-26T23:30:00Z'
+    updated: '2026-08-26T23:40:00Z'
     note: >
       The full environment layer matrix implied by the live regions manifest in
       kind_robots utils/rulerHooked/content.ts: sky 1x3, far_shore 3x2, treeline
@@ -572,3 +601,179 @@ tasks:
     claimed_by: 2026-08-26T22-claude-ruler-hooked-art
     claimed_at: '2026-08-26T22:10:00Z'
     updated: '2026-08-26T22:20:00Z'
+
+  - id: t-020
+    milestone: m5
+    title: Stop the ruler defaulting to one body; ship ruler cosmetic presets as art
+    status: done
+    approved_by_human: true
+    passes: 0
+    stakes: reversible
+    owner: worker
+    gate_human: true
+    note: >
+      FOR SILAS: fixes your t-016 critique. Twelve pieces are rendering (ArtJobs
+      9950-9957 and 9971-9974): eight ruler cosmetic presets at
+      https://media.acrocatranch.com/images/ruler-hooked/ruler/<id>.webp, plus four
+      alternate key-art vistas so the hero mockups themselves are not one body.
+
+      The eight presets deliberately span everything the character creator has to
+      cover -- King Osric (the one already rendered, kept so the approved art stays
+      canonical), Queen Mabel (broad-shouldered, fifties, silver crop), Sovereign
+      Wren (young, androgynous, circlet worn at the throat), Regent Halvard (very
+      old, wiry, robes too big), Matriarch Oshun (short, round, braided crown),
+      Chieftain Brakka (orcish, antler crown), Queen Sedge (heron-folk), and Pip
+      (mouse-folk, barely taller than a boot). Gender presentation, body shape and
+      size, skin, age, species, and honorific all vary. All eight share one side-on
+      seated pose and framing, so they read as one set and swap cleanly.
+
+      CORRECTION to how this was first written up: these are the PRESET REFERENCE
+      SHEET, not drop-in composited layer files. They came back with painted
+      lakeside backdrops, as portraits do, so a preset cannot be dropped into the
+      `ruler` region layer as-is -- the composited layer needs the figure alone
+      over an empty frame. `ruler-fishing.webp` (t-018, ArtJob 10011) is the actual
+      layer, and it renders only the hero preset. Producing a per-preset layer is
+      part of t-021's compositor work, either by rendering each preset again under
+      LAYER_TAIL or by matting these; the pose and framing are already consistent
+      enough that either path works. Flagged because the first version of this note
+      claimed one file did both jobs, and it does not.
+
+      Root cause worth keeping: the builder treated the ruler as a CONSTANT
+      (`THE_RULER`) because a single monarch is what makes four time-of-day vistas
+      read as one place. That is a real constraint, and the wrong solution to it.
+      It is now `RULER_PRESETS` with a named `HERO_RULER_ID` for the matched set,
+      so the consistency survives and the default does not.
+
+      APPROVED (Silas, in session 2026-08-26): "those rulers are better than my
+      suggestions, no reason to stick with speciesism" -- the nonhuman presets stay,
+      and the range is endorsed as the basis for t-021.
+
+      EXTENDED to twelve on the same message. Silas's first instinct was "six
+      different rulers... little boy and girl, middle aged, and old", and although
+      he then preferred the existing eight, that message identified a real gap the
+      eight did not cover: they ran young-adult to elderly with no ruler who is
+      actually a CHILD. That is the most on-theme age the premise has -- a kid who
+      would rather fish than rule is not shirking, so the joke lands differently and
+      better. Added boy-king-tobin (~8), girl-queen-marisol (~9), cub-prince-bramble
+      (bear-cub-folk child) and elder-tortoise-yew (fills elderly x nonhuman), as
+      ArtJobs 10012-10015. Deliberately a spread rather than a boy/girl pair: Silas
+      flagged the binary himself ("I hate to be binary") in the same breath as
+      asking for both, so the set answers the ask and keeps going past it.
+
+      Twelve presets now span child to centuries-old, five species, and every
+      presentation across them. Adding a thirteenth is one dict entry plus one
+      render, so the count is not a design commitment.
+
+      STILL OPEN, moved to t-021 rather than held here: Silas's "Not sure if that is
+      better than doing customized overlays." That is an architecture question about
+      how the creator composes a ruler, not about this art, and t-021 carries the
+      recommendation.
+    claimed_by: 2026-08-26T23-claude-ruler-hooked-art
+    claimed_at: '2026-08-26T23:00:00Z'
+    updated: '2026-08-26T23:05:00Z'
+
+  - id: t-021
+    milestone: m5
+    title: Build the ruler character creator (body, skin, honorific, species)
+    status: ready
+    passes: 0
+    stakes: reversible
+    owner: null
+    claimed_by: null
+    claimed_at: null
+    note: >
+      Silas, 2026-08-26: "we will need to add a character creator element that lets
+      the user pick body shapes, skin color, and ruler title, etc." Cross-repo: the
+      code lands in kind_robots, this task holds the state.
+
+      The data model already anticipates this and is not yet wired to anything.
+      docs/data-model.md defines `ruler.honorific` (King|Queen|other, a cosmetic
+      label) and `ruler.cosmetics` (currently `{ outfit, crownTilt }`), and
+      newGame.ts sets defaults nobody can change. Nothing in the UI reads or writes
+      either, and the compositor's asset scheme has no cosmetic axis at all --
+      `assetCandidates()` resolves `{region}-{state}[-{time}]`, so there is
+      currently no path shape that can address "the ruler layer, but Pip".
+
+      Three pieces of work, in order:
+      (1) Widen `ruler.cosmetics` to carry the axes Silas named -- body, skin,
+          species, plus the existing outfit/crownTilt -- and widen `honorific` past
+          the King|Queen|other trio to the set t-020 settles. Save-format change:
+          bump `contentVersion` and make old saves load with defaults rather than
+          breaking, per the brief's multiple-named-saves guarantee.
+      (2) Give the compositor a cosmetic axis for the `ruler` region so a preset
+          resolves to its own file, with the same graceful fallback ladder the time
+          variants already use -- a missing cosmetic degrades to the base ruler
+          layer, never a hole.
+      (3) A creation screen at new-game time, and the ability to change cosmetics
+          later (they are cosmetic-only by design, so there is no reason to lock
+          them at creation).
+
+      t-020's twelve presets are the art this builds against, at
+      public/images/ruler-hooked/ruler/<id>.webp. Read the list as data; do not
+      hardcode ids, since adding a preset is one dict entry plus one render.
+
+      PRESETS OR OVERLAYS -- Silas, 2026-08-26: "Not sure if that is better than
+      doing customized overlays." Recommendation: presets for the figure, free text
+      for the words, and overlays only where registration is genuinely free.
+
+      A composable overlay creator (pick a body, then a skin, then a crown) needs
+      every part drawn to a shared skeleton with consistent anchor points. Diffusion
+      models do not produce registered separable parts -- each render reinvents the
+      proportions, so a crown generated against one body sits wrong on the next.
+      Getting real overlays means a deliberately drawn paper-doll set, which is an
+      illustration commission rather than a pipeline run. That is a legitimate thing
+      to want, and it should be chosen knowingly, not arrived at by discovering the
+      generator cannot do it.
+
+      Presets do not have that problem, and Silas's own "art is cheap" is the reason
+      they win: a coherent new ruler costs one dict entry and one render, the
+      compositor already swaps whole files by key so no new compositing axis is
+      needed, and every preset is guaranteed internally consistent because one
+      render drew all of it. The cost is combinatorial range -- twelve fixed figures
+      instead of a body x skin x crown product.
+
+      Two axes are free either way and should be free-form regardless: `honorific`
+      and the ruler's name are pure data, no art, and they are the customisation
+      that reads as most personal. Widen `honorific` past King|Queen|other to free
+      text with the twelve titles as suggestions.
+
+      If the combinatorial range turns out to matter more than the coherence, the
+      upgrade path is additive: keep presets as base figures and add a small set of
+      overlays that do not need tight registration (a held item, a colour tint on
+      the robes), rather than rebuilding the figure as parts.
+
+  - id: t-022
+    milestone: m5
+    title: Reward and ending illustrations from the content bundle
+    status: review
+    passes: 0
+    stakes: reversible
+    owner: worker
+    note: >
+      Thirteen pieces submitted (ArtJobs 9958-9970): one object study per Reward
+      (9 -- druid-charm, gilded-lure, buildpermit-scroll, treaty-seal,
+      smugglers-map, mossy-hex, captains-pin, bards-ballad, nix-pearl) and one
+      closing illustration per ending (4 -- druid-utopia, warlock-metropolis,
+      thistlewood-empire, fishers-peace), at
+      public/images/ruler-hooked/rewards/<slug>.webp and
+      public/images/ruler-hooked/endings/<outcomeKey>.webp.
+
+      Prompts are built from the bundle's own fields -- a reward's `effect` line and
+      an ending's `body` line are already one vivid sentence about the thing, so
+      they are used as the art direction rather than paraphrased. No new look gate:
+      t-016 settled the house style and these inherit it.
+
+      Found while writing the reward parser, and worth keeping: three of the nine
+      rewards had `effect:` wrapped onto its own line by prettier, so a same-line
+      regex silently matched only six and the run reported a cheerful "6 entries".
+      A parser that returns a subset is worse than one that crashes -- the batch
+      still stages, still renders, still looks successful, and the gap only surfaces
+      when something reaches for a missing asset. `expect_all()` now compares the
+      match count against the declared entry count and names what it missed, for
+      every block this script reads.
+
+      Flip to done once the media paths are live; the ArtJob ids are recorded on
+      each request row in projects/art-prompts.yaml.
+    claimed_by: 2026-08-26T23-claude-ruler-hooked-art
+    claimed_at: '2026-08-26T23:00:00Z'
+    updated: '2026-08-26T23:05:00Z'
