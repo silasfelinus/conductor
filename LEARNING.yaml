@@ -10761,3 +10761,34 @@ records:
     root cause is open, treat the next batch that touches the same code path as
     a live suspect before assuming a downstream "unmatched"/"no-op" result is
     unrelated.
+- date: 2026-08-27
+  project: cthulhuquarium
+  task: t-046
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A generator bug that was already root-caused and fixed (t-044's
+    self-referential image_path) still had zero regression coverage until this
+    task -- verifying a fix by hand once is not the same as making it
+    impossible to reintroduce silently. Confirming a new test actually fails
+    against the pre-fix code (not just passes against the post-fix code) is
+    what makes a regression test trustworthy rather than a tautology.
+- date: 2026-08-27
+  project: cthulhuquarium
+  task: t-045
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A slug-to-artImageId mapping that "only exists in job logs" is still fully
+    recoverable, not a hard gap -- get_job_logs with a generous tail_lines
+    covered the whole relevant step, and simple regex extraction over the
+    consume_art_queue_core.py's own printed "DONE ... (ArtImage {id})" lines
+    reconstructed the batch's mapping completely. Worth defaulting to log
+    recovery before treating an unrecorded mapping as lost, since the
+    generating script already prints exactly what's needed.
