@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-27T01:32:34Z
+Generated: 2026-08-27T03:28:20Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **771**
-- Outcomes: blocked: 15, cancelled: 1, done: 755
+- Closed tasks recorded: **773**
+- Outcomes: blocked: 15, cancelled: 1, done: 757
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 82 | 100% |
 | conductor-app | 4 | 100% |
-| cthulhuquarium | 9 | 100% |
+| cthulhuquarium | 10 | 100% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
@@ -52,7 +52,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | music-mentor | 1 | 100% |
 | newsfeed | 20 | 100% |
 | packmaker | 10 | 100% |
-| ruler-hooked | 6 | 100% |
+| ruler-hooked | 7 | 100% |
 | scene-animator | 2 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
@@ -68,14 +68,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 755 | 99% |
+| software | 757 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
 | quality | 14 |
-| actionable | 10 |
+| actionable | 11 |
 | transient | 10 |
 | scope | 2 |
 
@@ -84,11 +84,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - project `coat-dance` — 11% success over 9 closed tasks; aim the next kaizen task here
 - kind `content` — 44% success over 16 closed tasks; aim the next kaizen task here
 - failure category `quality` — 14 occurrences; look for the shared cause across its records
-- failure category `actionable` — 10 occurrences; look for the shared cause across its records
+- failure category `actionable` — 11 occurrences; look for the shared cause across its records
 - failure category `transient` — 10 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-08-27 `cthulhuquarium/t-044` — A batch generator that writes image_path == the staging directory consume_art_queue_core.py itself renders into is a self-referential destination for every entry it will ever produce, not an occasional edge case -- distribute_images.py's own self-referential-path guard (added the day before to stop a crash) had already surfaced this exact shape once and the root cause was deferred as "still open"; it recurred immediately on the very next batch through the same generator. When a bug's fix note says the root cause is open, treat the next batch that touches the same code path as a live suspect before assuming a downstream "unmatched"/"no-op" result is unrelated.
+
+- 2026-08-27 `ruler-hooked/t-017` — The task's own note already named its exact done condition ('flip to done when #2139 merges') -- reconciling status after a companion cross-repo PR merges is a one-line check against that condition, not a re-review of the work.
 - 2026-08-26 `ruler-hooked/t-020` — A rejected suggestion can still contain a real finding: Silas preferred the existing presets over his own six-ruler proposal, but that proposal named the age gap (no child ruler) the presets actually had.
 - 2026-08-26 `ruler-hooked/t-016` — Pinning one character as a constant for cross-piece consistency silently makes that character the product's default; parameterize the cast and name the hero instead.
 - 2026-08-26 `cthulhuquarium/t-043` — An existing generic pattern (server/utils/entityArt.ts, already wired for Character/Scenario/Reward/etc.) doesn't have to be extended to cover every entity with art fields -- Monster's fields are shaped identically but the actual need (link an already-generated ArtImage id directly, admin-only, no owner concept) was narrower than that system's generate/upload/history workflow. A small dedicated route was less code and easier to review than threading a new case through six switch statements in a shared file built for a different job.
@@ -103,10 +106,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-26 `mandarin-tutor/t-012` — "Prepare the domain for mobile clients" turned out to be an audit task, not a build task -- the portable pieces (header-token auth via requireApiUser, durable hash-keyed media identity, 100% server-side curriculum/SRS logic) were already in place from earlier tasks (t-004, t-009, t-015) without anyone framing them as "mobile-ready." Reading the actual auth guard and store persistence code before assuming a scoping task needs new architecture found the one real gap (customSets/ artJobs still localStorage-only) precisely, and let the task close as documentation plus one correctly-scoped follow-up (t-016) instead of either over-building or guessing at what was missing.
 
-- 2026-08-25 `interface-vision/t-120` — A recurring-in-practice roadmap task (return-to-ready documented only in prose inside every slice's note) gives close_task.py's `recurring: true` guard nothing to key on, so a `done` close-out slips through silently -- this nearly happened to interface-vision/t-105 earlier the same day (conductor#2884 -> #2887). Setting the `recurring` field explicitly the moment a task's actual operating convention is "always returns to ready" -- not waiting for a mistaken done close-out to force the fix -- turns a 40+-paragraph prose convention into a mechanical refusal the next session can't miss.
-
-- 2026-08-25 `mandarin-tutor/t-014` — GitHub serves raw .json files from raw.githubusercontent.com with Content-Type: text/plain, not application/json -- ofetch's default JSON auto-parsing keys off that header, so a $fetch call against such a URL with no explicit parseResponse/responseType override silently returns the raw response text instead of a parsed value. Confirmed directly against the live pinned source rather than assuming from the error message: without an override the response was a raw string, with `parseResponse: (t) => JSON.parse(t)` it parsed correctly. Any future $fetch against a raw.githubusercontent.com JSON file should pass an explicit parseResponse rather than relying on content-type sniffing -- checked the rest of server/ for the same pattern and found none left unguarded (mandarinCharacterData.ts already used responseType: 'text' with manual per-line JSON.parse for its NDJSON source, so it was never exposed).
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-27T01:32:34Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-27T03:28:20Z_

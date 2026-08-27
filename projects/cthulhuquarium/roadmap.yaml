@@ -2055,38 +2055,68 @@ tasks:
   - id: t-044
     milestone: m2
     title: "Full art pass for the remaining ~120 non-tier-1 species, and fix the bg-parlour style miss"
-    status: ready
-    owner: null
+    status: done
+    owner: claude-scheduled-20260827T0226Z-cq-t044-close
     passes: 0
     stakes: reversible
     depends_on: [t-015]
-    note: >
-      UPDATED 2026-08-27 (conductor scheduled Agent run): queue committed, NOT rendered
-      yet. Ran scripts/build_cthulhuquarium_art_queue.py (reads prompts straight from the
-      bible, silasfelinus/cthulhuquarium fish/*.yaml, via a read-only anonymous clone --
-      this session's GitHub grant excludes that repo but read-only HTTPS clone works) and
-      filtered its raw 174-entry output against t-015's own completed list before
-      committing, to avoid re-queuing the 32 tier-1 species + 3 backgrounds already
-      rendered and approved. Committed projects/art-generate.yaml with 138 pending
-      entries: 119 remaining fish species, the bg-parlour re-render, and 18 previously-
-      unqueued non-fish assets (characters/set pieces/egg icons/UI screens). Did NOT
-      manually POST/poll each job the way t-015 did -- 138 jobs is 1.5-2+ hours of
-      sequential polling at krea2's ~40s/image steady state (worse with its ~25min cold
-      start), which doesn't fit one scheduled sweep alongside everything else it has to
-      cover. Committing the queue lets the already-scheduled auto-art-generate.yml
-      workflow (cron 0 */6 * * *, timeout-minutes: 150) drain it without live babysitting
-      -- that IS the intended mechanism for a batch this size, confirmed by reading
-      consume_art_queue_core.py (krea2 is its DEFAULT_ENGINE) rather than assumed.
-      NEXT SESSION MUST: confirm auto-art-generate.yml actually drained the queue (check
-      its run history / the ArtJob rows), spot-check results for medium consistency the
-      way t-015 did (especially bg-parlour's re-render), requeue only any failures/misses,
-      then close this task done. Full detail, including the one entry a filtering parse
-      edge case may have dropped (139 expected vs. 138 committed -- file re-validated
-      clean, just possibly one species short) in
-      projects/cthulhuquarium/docs/t-044-full-art-pass-batch2.md. Status reset to `ready`
-      (not left at `claimed`) since the remaining work -- verify-and-close -- is a fresh
-      pickup for whichever session next has time to check the scheduled workflow's
-      results, not a continuation of this session's own in-progress state.
+    note: >-
+      CLOSED 2026-08-27 (conductor scheduled Agent run). The prior session's manual
+      workflow_dispatch (Auto Art Generate run #329,
+      https://github.com/silasfelinus/conductor/actions/runs/33030379982, concluded
+      success) DID drain the full 138-entry queue -- confirmed all 138 entries read
+      `status: done` with real krea2 renders (not a partial/placeholder run: two
+      spot-checks, bg-parlour and fish-the-catacomb, are distinct, on-prompt,
+      on-medium images -- bg-parlour in particular now reads as the intended
+      hand-tinted watercolour tank rather than the photoreal/3D miss t-015 flagged).
+
+      BUT none of the 138 ever reached a real destination. Root-caused rather than
+      re-requeued blind: scripts/build_cthulhuquarium_art_queue.py wrote every
+      entry's `image_path` as `projects/process/cthulhuquarium-{name}.webp` --
+      exactly the staging path consume_art_queue_core.py itself writes the
+      rendered file to before distribute_images.py ever runs. A destination equal
+      to its own source is indistinguishable from the self-referential-path bug
+      the prior day's distribute-images crash-fix (PR #2937) already guards
+      against, so every single one of the 138 files got silently parked in
+      projects/process/unmatched/ instead of delivered -- this task's whole
+      batch was the "still open" root cause that fix's own commit message
+      flagged and deferred.
+
+      Fixed at the source: build_cthulhuquarium_art_queue.py now points new
+      entries at projects/cthulhuquarium/art/cthulhuquarium-{name}.webp, a
+      destination that isn't the staging directory. Rewrote this batch's 138
+      already-committed art-generate.yaml entries to the corrected path, moved
+      the 138 files back out of projects/process/unmatched/ into
+      projects/process/ root, and ran scripts/distribute_images.py for real (dry
+      run first) -- all 138 resolved and moved cleanly to
+      projects/cthulhuquarium/art/, 0 unmatched, 0 skipped, and the queue
+      entries were pruned. The same run also cleared an unrelated backlog of 11
+      already-pending files for other projects (model-builder, mural-design,
+      newsfeed, etc.) that had piled up since distribute-images.yml's own last
+      run (2026-08-26T20:24Z) because push events don't currently trigger it for
+      art-generate.yaml either (see kaizen below) -- pure side effect of running
+      the script, not scope creep on this task.
+
+      NOT touched: 37 stray cthulhuquarium-*.webp files already sitting in
+      projects/process/ before this session started (bg-abyssal/cathedral/
+      shipwreck, ~32 tier-1 fish names matching t-015's own roster, one
+      `krea2-retest`, one `screen-bestiary`). These look like orphaned local
+      copies from t-015's run (which delivered via a live POST /api/art/enqueue
+      + ArtImage flow, not this git queue, so a stray file would never have had
+      a queue entry to match against). They have no art-generate.yaml or
+      art-prompts.yaml entry, are very likely pure duplicates of already-live
+      ArtImages, and deleting or rerouting them on a guess felt like the wrong
+      call mid-sweep -- left in place, flagged in TALKBACK for whoever next
+      touches this project to confirm and clear.
+
+      REMAINING GAP, filed as t-045 rather than blocking this task further:
+      consume_art_queue_core.py's save_result() does create a real ArtImage row
+      per rendered entry via POST {KR}/api/art/queue (same mechanism t-015 used
+      for its 32), but nothing in this batch recorded the resulting
+      slug-to-artImageId mapping the way t-015's own docs file did, and now that
+      t-043 (kind_robots Monster API, kind_robots#2138) is merged, wiring
+      Monster.artImageId is possible but still undone for BOTH t-015's 32 and
+      this task's 138.
     prior_note: >
       Kaizen from t-015 (2026-08-26, conductor scheduled Agent run): t-015 covered all 32
       tier-1 ("commons") species plus 4 tank backgrounds. The bible now has 152 species
@@ -2101,5 +2131,43 @@ tasks:
       projects/cthulhuquarium/docs/t-015-full-art-pass.md for the full image review.
     claimed_by: null
     claimed_at: null
-    updated: '2026-08-27T00:50:00Z'
+    updated: '2026-08-27T02:50:00Z'
+
+  - id: t-045
+    milestone: m2
+    title: "Link generated bestiary ArtImages to their Monster rows via the t-043 API"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-043]
+    note: >-
+      Filed 2026-08-27 closing out t-044. t-043 (kind_robots#2138, merged) added a
+      Monster API route so Monster.artImageId can finally be PATCHed from outside a
+      direct DB session -- but nothing has actually called it yet. Two batches of
+      real ArtImages exist with no Monster row pointing at them:
+
+      - t-015's 32 tier-1 species + 4 backgrounds: slug-to-artImageId mapping
+        already recorded in projects/cthulhuquarium/docs/t-015-full-art-pass.md.
+
+      - t-044's 138 species/background/screen/character/set/egg entries: rendered
+        via consume_art_queue_core.py's POST {KR}/api/art/queue path (same
+        mechanism as t-015, so real ArtImage rows do exist), but this batch ran
+        through the git-file queue + scheduled workflow rather than a live
+        session watching each job, so no slug-to-artImageId mapping was ever
+        recorded anywhere. Extracting it means reading the job logs of Auto Art
+        Generate run #329
+        (https://github.com/silasfelinus/conductor/actions/runs/33030379982) --
+        `consume_art_queue_core.py` prints `DONE {name} -> {path} (ArtImage
+        {artImageId})` per entry -- or, if the DB is reachable, matching
+        ArtImage rows by createdAt window + prompt substring instead.
+
+      For each: resolve the Monster row by species slug (Monster.slug or a name
+      match against the bible), PATCH artImageId (and cardArtImageId/
+      heroArtImageId/iconArtImageId if a variant applies) via the t-043 route,
+      and record the mapping in a doc under projects/cthulhuquarium/docs/ the way
+      t-015's batch already does, so a future batch doesn't repeat this gap.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-27T02:50:00Z'
 

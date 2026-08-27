@@ -10733,3 +10733,31 @@ records:
   outcome: done
   failure_category: null
   lesson: "Two coherent specs in different repos can contradict each other indefinitely when nothing connects them; the art direction said layers are full-frame and transparent outside their band while the component cropped each to a 20:1 strip, and only generating against it surfaced the conflict."
+- date: 2026-08-27
+  project: ruler-hooked
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The task's own note already named its exact done condition ('flip to done when #2139 merges') -- reconciling status after a companion cross-repo PR merges is a one-line check against that condition, not a re-review of the work."
+- date: 2026-08-27
+  project: cthulhuquarium
+  task: t-044
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: actionable
+  lesson: >
+    A batch generator that writes image_path == the staging directory
+    consume_art_queue_core.py itself renders into is a self-referential
+    destination for every entry it will ever produce, not an occasional edge
+    case -- distribute_images.py's own self-referential-path guard (added the
+    day before to stop a crash) had already surfaced this exact shape once and
+    the root cause was deferred as "still open"; it recurred immediately on the
+    very next batch through the same generator. When a bug's fix note says the
+    root cause is open, treat the next batch that touches the same code path as
+    a live suspect before assuming a downstream "unmatched"/"no-op" result is
+    unrelated.

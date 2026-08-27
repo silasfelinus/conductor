@@ -315,7 +315,20 @@ def render(fish, non_fish):
         out.append("  - project: cthulhuquarium")
         out.append(f"    engine: {ENGINE}")
         out.append(f"    size: {size}")
-        out.append(f"    image_path: projects/process/cthulhuquarium-{name}.webp")
+        # Destination must NOT be projects/process/ -- that is the staging dir
+        # consume_art_queue_core.py writes the rendered file to before
+        # distribute_images.py ever runs. A destination equal to the staging
+        # path makes resolve_abs_path() return the same file as its own
+        # source, which distribute_images.py can only recognize as a bogus
+        # self-referential match and park in projects/process/unmatched/ --
+        # never delivered anywhere real. Every entry this generator has ever
+        # produced hit this (conductor/t-044, 2026-08-27): all 138 rendered
+        # fish/background/screen images landed in unmatched/ instead of a
+        # real destination. cthulhuquarium has no dedicated art/inspiration
+        # folder convention yet, so give it one under the project directory,
+        # the same shape projects/{slug}/inspirations/ already uses for
+        # kind_robots-target mirrors.
+        out.append(f"    image_path: projects/cthulhuquarium/art/cthulhuquarium-{name}.webp")
         lines = wrap(prompt, "      ")
         out.append(f"    prompt: {lines[0]}")
         for line in lines[1:]:

@@ -13,12 +13,24 @@ name: Distribute Images
 # Loop safety: the conductor commit is pushed with the default GITHUB_TOKEN,
 # which does not trigger workflows. Even if re-triggered, an empty
 # projects/process/ makes the run a no-op.
+#
+# Because of that same loop-safety exclusion, Auto Art Generate's own commits
+# to projects/process/ (every 6h, cron "0 */6 * * *") never fire this
+# workflow's push trigger -- only a human/PAT push or workflow_dispatch does.
+# Before the schedule trigger below, that meant a batch could sit undelivered
+# for days with nothing noticing (conductor/t-044, 2026-08-27: 138 rendered
+# images sat in projects/process/ for hours before a session happened to run
+# this by hand; the same gap let ~175 files pile up 2026-08-24 after an
+# unrelated crash). Scheduled 15 minutes after Auto Art Generate's own cron so
+# each 6h render cycle gets picked up and delivered automatically.
 
 on:
   push:
     branches: [main]
     paths:
       - "projects/process/**"
+  schedule:
+    - cron: "15 */6 * * *"
   workflow_dispatch:
 
 jobs:

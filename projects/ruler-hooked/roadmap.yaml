@@ -495,9 +495,9 @@ tasks:
     owner: worker
     claimed_by: 2026-08-26T23-claude-ruler-hooked-art
     claimed_at: '2026-08-26T23:20:00Z'
-    updated: '2026-08-26T23:40:00Z'
+    updated: '2026-08-27T01:34:18Z'
     implementation_pr: 'silasfelinus/kind_robots#2139'
-    note: >
+    note: >-
       Two shipped specs disagree about what a region layer file actually is, and
       they cannot both be satisfied by one rendered image. docs/art-direction.md
       §2 (t-008) specifies every layer as a full-play-screen image with everything
@@ -536,6 +536,11 @@ tasks:
 
       DONE: kind_robots PR #2139 squash-merged 2026-08-26 (f36f87b), all 38 checks
       green. Unblocked t-018, whose 37 renders went out the same session.
+
+      RECONCILED 2026-08-27 (conductor scheduled Agent run): kind_robots#2139 confirmed merged
+      (merged_by silasfelinus). Task's own note says 'Flip to done when #2139 merges' -- doing
+      so. Unblocks t-018 (already submitted, still status: review pending its own art-render
+      verification).
 
   - id: t-018
     milestone: m5
