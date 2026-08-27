@@ -638,12 +638,41 @@ tasks:
   - id: t-022
     milestone: m3
     title: "Shared bestiary handshake with Ruler is Hooked"
-    status: claimed
+    status: needs-human
+    soft_gate: true
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-008
     note: >
+      UPDATED 2026-08-27 (conductor scheduled Agent run). Documentation half of this
+      task is DONE: fish/SCHEMA.md and the new fish/CROSS-GAME-SHARING.md in
+      silasfelinus/cthulhuquarium already state the full contract (merged PR #14,
+      worker/ruler-hooked-shared-fish-20260826, 2026-08-26 14:43 PT) -- confirmed via a
+      read-only anonymous git clone (this session's GitHub grant excludes
+      silasfelinus/cthulhuquarium, but read-only HTTPS clone works, same finding
+      t-015's TALKBACK entry recorded). 18 species are tagged
+      games: [cthulhuquarium, ruler-hooked] in the bible: bailiff-eel, chandelier-lion,
+      choirfish, drowned-carp, errand-guppy, gutter-minnow, lamplight-angler,
+      ledger-crab, moebius-crab, parlour-rustfish, sea-camel, sump-blob, the-hold,
+      the-long-patience, the-pleasant-island, the-sexton, the-understone, tithe-shoal.
+      FOR SILAS: the seed-freshness half is NOT confirmed and is likely stale -- t-008's
+      own note timestamps the last production seed run at 01:45 PT on 2026-08-26, about
+      13 hours BEFORE the PR that tagged these 18 species merged (14:43 PT same day). No
+      later reseed is recorded anywhere. This sandbox cannot reach the database (same
+      DNS-resolves/TCP-times-out gap t-008 hit) and no public API exposes Monster.games
+      for an outside check. TO CONFIRM/CLOSE: from a machine that can reach the DB (per
+      t-008, that was your own WSL checkout, not this sandbox), run
+      `npm run seed:bestiary` (dry run) in kind_robots -- if it reports 0 pending
+      changes, the reseed already happened and this can go straight to done; if it
+      reports the 18 slugs above changing, run `npm run seed:bestiary:write` and then
+      flip this task to done. Full species table, exact query/never-mutate rules for
+      Ruler is Hooked's dark-ecosystem branch, and why this session couldn't verify the
+      live DB directly are all in
+      projects/cthulhuquarium/docs/t-022-shared-bestiary-handshake.md. Soft gate --
+      other cthulhuquarium/ruler-hooked work may continue in parallel; this only blocks
+      Ruler is Hooked's own dark-ecosystem branch from safely reading real data.
+    prior_note: >
       Close the loop Silas asked for: "we can have appropriate ones appear in both
       games." Confirm the ruler-hooked-tagged fish seed correctly into the shared
       abyssal-bestiary Pack, document the contract in the cthulhuquarium repo's
@@ -659,7 +688,7 @@ tasks:
       conversation, and this task only prepares for it.
     claimed_by: claude-scheduled-20260827T003036Z-cq-t022
     claimed_at: '2026-08-27T00:30:37Z'
-    updated: '2026-08-27T00:30:37Z'
+    updated: '2026-08-27T00:45:00Z'
   - id: t-023
     milestone: m3
     title: "The voices — shopkeeper, assistant, and the Character/Bot records behind them"
