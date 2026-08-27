@@ -2287,8 +2287,8 @@ tasks:
   - id: t-048
     milestone: m3
     title: "Pause the tank's 20s poll/render loop when the tab is hidden"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -2302,6 +2302,9 @@ tasks:
       ever ships inside a native Capacitor wrapper. Small, independently reversible:
       gate both loops on document.hidden / a visibilitychange listener, resume cleanly
       on foreground.
+    claimed_by: claude-scheduled-20260827T154937Z-cq-t048
+    claimed_at: '2026-08-27T15:49:37Z'
+    updated: '2026-08-27T15:49:37Z'
 
   - id: t-049
     milestone: m2
