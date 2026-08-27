@@ -275,7 +275,7 @@ DEFAULT_WORKFLOW_FAIL_THRESHOLDS: dict[str, int] = {
 # projects/global-ui/SITE-AUDIT-AGENT.md's weekly report drop -- this repo's
 # own local checkout, no API needed, same as branch_janitor.py's local checks.
 AUDIT_REPORTS_DIR = _REPO_ROOT / 'projects' / 'global-ui'
-AUDIT_REPORT_RE = re.compile(r'^(AUDIT-REPORT-(\d{4}-\d{2}-\d{2})\.md)$')
+AUDIT_REPORT_RE = re.compile(r'^AUDIT-REPORT-(\d{4}-\d{2}-\d{2})\.md$')
 DEFAULT_AUDIT_STALE_DAYS = 7.0
 
 
@@ -647,7 +647,7 @@ def find_last_audit_report(reports_dir: Path = AUDIT_REPORTS_DIR) -> tuple[str, 
     for path in reports_dir.iterdir():
         match = AUDIT_REPORT_RE.match(path.name)
         if match:
-            found.append((path.name, date.fromisoformat(match.group(2))))
+            found.append((path.name, date.fromisoformat(match.group(1))))
 
     if not found:
         return None
