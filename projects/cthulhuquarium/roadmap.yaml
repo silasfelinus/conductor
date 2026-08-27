@@ -2026,12 +2026,39 @@ tasks:
   - id: t-044
     milestone: m2
     title: "Full art pass for the remaining ~120 non-tier-1 species, and fix the bg-parlour style miss"
-    status: claimed
-    owner: worker
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
     depends_on: [t-015]
     note: >
+      UPDATED 2026-08-27 (conductor scheduled Agent run): queue committed, NOT rendered
+      yet. Ran scripts/build_cthulhuquarium_art_queue.py (reads prompts straight from the
+      bible, silasfelinus/cthulhuquarium fish/*.yaml, via a read-only anonymous clone --
+      this session's GitHub grant excludes that repo but read-only HTTPS clone works) and
+      filtered its raw 174-entry output against t-015's own completed list before
+      committing, to avoid re-queuing the 32 tier-1 species + 3 backgrounds already
+      rendered and approved. Committed projects/art-generate.yaml with 138 pending
+      entries: 119 remaining fish species, the bg-parlour re-render, and 18 previously-
+      unqueued non-fish assets (characters/set pieces/egg icons/UI screens). Did NOT
+      manually POST/poll each job the way t-015 did -- 138 jobs is 1.5-2+ hours of
+      sequential polling at krea2's ~40s/image steady state (worse with its ~25min cold
+      start), which doesn't fit one scheduled sweep alongside everything else it has to
+      cover. Committing the queue lets the already-scheduled auto-art-generate.yml
+      workflow (cron 0 */6 * * *, timeout-minutes: 150) drain it without live babysitting
+      -- that IS the intended mechanism for a batch this size, confirmed by reading
+      consume_art_queue_core.py (krea2 is its DEFAULT_ENGINE) rather than assumed.
+      NEXT SESSION MUST: confirm auto-art-generate.yml actually drained the queue (check
+      its run history / the ArtJob rows), spot-check results for medium consistency the
+      way t-015 did (especially bg-parlour's re-render), requeue only any failures/misses,
+      then close this task done. Full detail, including the one entry a filtering parse
+      edge case may have dropped (139 expected vs. 138 committed -- file re-validated
+      clean, just possibly one species short) in
+      projects/cthulhuquarium/docs/t-044-full-art-pass-batch2.md. Status reset to `ready`
+      (not left at `claimed`) since the remaining work -- verify-and-close -- is a fresh
+      pickup for whichever session next has time to check the scheduled workflow's
+      results, not a continuation of this session's own in-progress state.
+    prior_note: >
       Kaizen from t-015 (2026-08-26, conductor scheduled Agent run): t-015 covered all 32
       tier-1 ("commons") species plus 4 tank backgrounds. The bible now has 152 species
       total, so tiers 2-5 (~120 species) remain ungenerated -- a substantially larger batch
@@ -2043,7 +2070,7 @@ tasks:
       background and fish hit -- worth a re-render with a stronger medium anchor in the
       prompt (or accept it and move on) before treating the background set as finished. See
       projects/cthulhuquarium/docs/t-015-full-art-pass.md for the full image review.
-    claimed_by: claude-scheduled-20260827T003036Z-cq-t044
-    claimed_at: '2026-08-27T00:37:52Z'
-    updated: '2026-08-27T00:37:52Z'
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-27T00:50:00Z'
 
