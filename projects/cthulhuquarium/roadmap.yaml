@@ -618,8 +618,8 @@ tasks:
   - id: t-020
     milestone: m3
     title: "Performance, responsive layout, and the layout contract"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-015
@@ -631,6 +631,9 @@ tasks:
       AGENTS.md: no PR previews exist, so pre-merge verification is vue-tsc, eslint,
       unit tests, and the layout contract; real pixels come from the audit workflow
       against production after a Force Update.
+    claimed_by: claude-scheduled-20260827T0926Z-cq-t020
+    claimed_at: '2026-08-27T09:27:04Z'
+    updated: '2026-08-27T09:27:04Z'
 
   - id: t-021
     milestone: m3
