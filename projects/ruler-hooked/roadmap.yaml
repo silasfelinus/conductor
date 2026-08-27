@@ -707,13 +707,13 @@ tasks:
   - id: t-021
     milestone: m5
     title: Build the ruler character creator (body, skin, honorific, species)
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     owner: worker
     claimed_by: claude-scheduled-20260827T0830Z-rh-t021
     claimed_at: '2026-08-27T07:33:19Z'
-    note: >
+    note: >-
       Silas, 2026-08-26: "we will need to add a character creator element that lets
       the user pick body shapes, skin color, and ruler title, etc." Cross-repo: the
       code lands in kind_robots, this task holds the state.
@@ -810,7 +810,40 @@ tasks:
       narrows it. If he meant something else -- a request queue that generates a
       new preset for him during development, say -- that is a different and simpler
       task, and this section should be corrected rather than built around.
-    updated: '2026-08-27T07:33:19Z'
+
+      COLLISION NOTE + close-out (this session, 2026-08-27 ~07:50 UTC): implemented and merged
+      the full task before noticing a different concurrent session (claude-
+      scheduled-20260827T0830Z-rh-t021) had also claimed this task in the roadmap at 07:33:19Z
+      -- this session had already been working the kind_robots side since well before that
+      timestamp (started ~07:22 UTC per its own PR's first commit) and had no visibility into
+      the roadmap claim happening concurrently, since the kind_robots implementation itself
+      needed no roadmap edit until this close-out. Implemented all three pieces the note
+      specifies, in order: (1) widened ruler.cosmetics to a typed RulerCosmetics
+      (presetId/customPortraitId/reserved body-skin-species-outfit-crownTilt), bumped
+      SAVE_SCHEMA_VERSION 4->5, migrateSave() defaults old saves to the hero preset; (2) gave
+      the compositor a real cosmetic axis for the ruler region (resolveScene special-cases it
+      to save.ruler.cosmetics.presetId; assetCandidates gained a fallbackState param so any
+      preset lacking its own rendered layer gracefully degrades to the existing ruler-
+      fishing.webp hero layer, never a hole); (3) built the creation-time picker (free-text
+      honorific with the twelve preset titles as suggestions, a preset grid read entirely from
+      data, and a 'use my own picture instead' file input backed by a new IndexedDB
+      portraitStore with downscale-on-import) plus a separate in-play 'change appearance'
+      panel, since cosmetics are cosmetic-only by design and were never meant to lock at
+      creation. Also fixed one real gap found along the way:
+      utils/rulerHooked/engine.selftest.ts existed but was never wired into
+      .github/workflows/ruler-hooked.yml, so added it as a third CI step (verified it actually
+      runs in CI on this PR). Full verification: vue-tsc clean, eslint clean, layout-contract
+      clean (fixed one new viewport-breakpoint grid violation along the way), all three
+      selftest scripts pass including new coverage for the cosmetic axis/fallback
+      ladder/migration defaults, all 38 kind_robots PR checks green. Merged
+      silasfelinus/kind_robots#2142 (squash 4cf157b). Per-preset ruler layer ART
+      (ruler-<id>.webp) is explicitly NOT part of this task -- that is the separate async
+      ArtJob pipeline (t-020's own note flags it as follow-up); everything here degrades
+      gracefully until that art lands. If claude-scheduled-20260827T0830Z-rh-t021 is still
+      active: please check main before doing further work here -- this task is genuinely done
+      and duplicate implementation would be wasted effort.
+    updated: '2026-08-27T07:48:53Z'
+    implementation_pr: 'silasfelinus/kind_robots#2142'
 
   - id: t-022
     milestone: m5
