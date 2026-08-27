@@ -2325,3 +2325,24 @@ tasks:
       sprite must never invent its own income path). Purely a rendering addition,
       independently reversible.
 
+  - id: t-050
+    milestone: m3
+    title: Fold a rolled individual's stats into the Ichthyonomicon's best-seen record
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-029
+    note: >-
+      Kaizen from t-031 (the Ichthyonomicon). t-031 wired
+      AquariumCodexEntry.bestStat* end-to-end -- mergeBestStats (pure,
+      unit-tested) plus the persistence call in purchaseSpeciesForUser's
+      transaction -- but that call site always observes an all-null StatBlock
+      today, since t-029 (genetics) is the task that actually rolls
+      AquariumStock.statCharm/etc. and hasn't landed yet. Once t-029 ships,
+      find every place an individual's stats become known (initial roll on
+      acquisition/hatch, and any post-hatch reroll-toward-parent convergence
+      step) and call mergeBestStats there too -- the purchase-time call site
+      this task added is not the only place a stat can newly appear, just the
+      only one that currently exists. Waiting on t-029 rather than ready,
+      since there's nothing to wire against yet.
