@@ -10824,3 +10824,22 @@ records:
     that script alone. The task's own note already named the exact completion
     check (media paths live) -- reading that note before assuming "review" means
     "needs a PR" avoided treating genuinely-finished async delivery as stuck.
+- date: 2026-08-27
+  project: interface-vision
+  task: t-121
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: transient
+  lesson: >
+    A trivial, verified-clean 2-file markup diff took 6 attempts and ~50 minutes
+    of retries for kind_robots' required Contract verifiers check to actually
+    complete, stalling at a different step nearly every time (install, several
+    individual per-file contracts, and 3 of 6 times specifically at the
+    full-repo ESLint ratchet step) despite the exact same script finishing in
+    seconds locally against the identical diff -- pure CI-infra flakiness, not
+    a code problem. Confirming the script itself is clean locally before
+    assuming a hung required check reflects a real diff issue saved real time;
+    filed conductor/t-132 to track the pattern (esp. the ESLint-ratchet-specific
+    recurrence) for future diagnosis rather than re-deriving it next time.
