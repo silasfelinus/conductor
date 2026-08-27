@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-27T13:15:11Z
+Generated: 2026-08-27T13:20:29Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **781**
-- Outcomes: blocked: 15, cancelled: 1, done: 765
+- Closed tasks recorded: **782**
+- Outcomes: blocked: 15, cancelled: 1, done: 766
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 83 | 100% |
 | conductor-app | 4 | 100% |
-| cthulhuquarium | 13 | 100% |
+| cthulhuquarium | 14 | 100% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
@@ -68,7 +68,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 765 | 99% |
+| software | 766 | 99% |
 
 ## Failure categories
 
@@ -89,6 +89,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-27 `cthulhuquarium/t-013` — An "offline income" task can be mostly already shipped by an earlier task with a different name -- t-009/t-011 had already built the full server-authoritative settleTick/lastTickAt settlement (8h cap, 0.5x multiplier, coins only ever server-incremented) before this task was ever picked up. Reading the existing store/component flow end-to-end before writing anything found the real remaining gap was narrower and different from what the title suggests: the "welcome back" moment was an easy-to-miss inline banner instead of "one clear panel," and the Clean button (a different task's, t-027's, active-play channel) fired one write per click with no batching. Claimed the conductor task before starting the cross-repo kind_robots implementation this time, per the lesson recorded in this same day's ruler-hooked/t-021 collision.
 - 2026-08-27 `cthulhuquarium/t-012` — Before implementing a "wire the shop" task, read what the prior task already shipped -- t-011 had already wired buy-food and species-unlock end-to-end (including auto-placement), so the real remaining gap was a design-intent violation already visible in the diff (the field note was rendered pre-unlock, contradicting the task's own "reveals on first unlock, not before" note), not a missing feature. Checking sibling tasks' depends_on graph (t-026 depends_on t-012, status: waiting) also confirmed "buy upgrades" from this task's note was intentionally deferred, not a gap in this task.
 - 2026-08-27 `ruler-hooked/t-021` — A heavier cross-repo implementation task (kind_robots code, ~800 lines, three distinct pieces) was claimed and implemented start-to-finish before ever touching the conductor roadmap, since the code work itself needed no roadmap edit until close-out. A different concurrent session claimed the same task in the roadmap mid-implementation with no way to see this session was already deep into it. No work was lost -- this session's implementation was complete and merged first, so the close-out simply documented the collision and pointed the other session at main -- but the gap was real: claiming the conductor task BEFORE starting the cross-repo code (not only recording it after), even though the roadmap edit itself isn't needed until later, would have surfaced the collision to the other session immediately instead of after both sides had sunk effort in.
 
@@ -105,7 +106,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-27 `cthulhuquarium/t-044` — A batch generator that writes image_path == the staging directory consume_art_queue_core.py itself renders into is a self-referential destination for every entry it will ever produce, not an occasional edge case -- distribute_images.py's own self-referential-path guard (added the day before to stop a crash) had already surfaced this exact shape once and the root cause was deferred as "still open"; it recurred immediately on the very next batch through the same generator. When a bug's fix note says the root cause is open, treat the next batch that touches the same code path as a live suspect before assuming a downstream "unmatched"/"no-op" result is unrelated.
 
 - 2026-08-27 `ruler-hooked/t-017` — The task's own note already named its exact done condition ('flip to done when #2139 merges') -- reconciling status after a companion cross-repo PR merges is a one-line check against that condition, not a re-review of the work.
-- 2026-08-26 `ruler-hooked/t-017` — Two coherent specs in different repos can contradict each other indefinitely when nothing connects them; the art direction said layers are full-frame and transparent outside their band while the component cropped each to a 20:1 strip, and only generating against it surfaced the conflict.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-27T13:15:11Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-27T13:20:29Z_
