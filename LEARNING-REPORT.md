@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-27T17:36:55Z
+Generated: 2026-08-27T17:47:05Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **787**
-- Outcomes: blocked: 15, cancelled: 1, done: 771
+- Closed tasks recorded: **788**
+- Outcomes: blocked: 15, cancelled: 1, done: 772
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 83 | 100% |
 | conductor-app | 4 | 100% |
-| cthulhuquarium | 19 | 100% |
+| cthulhuquarium | 20 | 100% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
@@ -68,7 +68,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 771 | 99% |
+| software | 772 | 99% |
 
 ## Failure categories
 
@@ -89,6 +89,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-27 `cthulhuquarium/t-023` — A task whose deliverable is content (two authored Character/Bot voice pairs) can be fully "done" even when a downstream, standard-rule step (generated portrait art) is stalled by unrelated infra -- don't conflate "the content is complete" with "everything the task mentions has happened." Splitting them (ship the records now, file the infra fault as its own needs-human task, note the exact idempotent retry command in both the roadmap note and the PR) kept the real deliverable from being held hostage by a render-box hardware problem outside this task's control.
+Cross-check any ComfyUI failure signature against `GET /api/art/queue/stats` and TALKBACK before assuming it's novel -- this exact `CLIPTextEncode hostbuf_file_reader_read` string was already diagnosed and closed once (ai-art-academy/t-068, disk13 cable) less than 24 hours earlier, so the right move was flagging a likely recurrence with full context, not re-diagnosing from scratch.
 - 2026-08-27 `cthulhuquarium/t-016` — A task note's "may pause or redirect income briefly" is a soft option, not a requirement -- reading the HARD CONSTRAINT amendment in full ("no event may take anything away") before designing anything showed that every event kind could be built as a coin bonus or a zero-effect cosmetic beat, sidestepping the real complexity of an actual accounted income pause for a barely-noticeable player-facing difference. Explicit scope-decision comments (in the YAML, the TS, and the PR body) on why the pause was skipped make that a documented choice a reviewer can challenge, not a silent gap they'd have to notice on their own.
 Operational note for future sessions: `git reset --hard origin/<branch>` silently discards ANY uncommitted local change in the working tree, not just changes on the branch you're resetting -- including an edit to a file the session made earlier in the SAME repo checkout for unrelated reasons (here: an economy.yaml edit made before claiming the task, lost by a later `git checkout main && git reset --hard origin/main` done purely to refresh state after a different PR's merge). Caught by grepping for the expected content immediately after the reset rather than assuming the working tree still held it; redone from scratch. The safer sequence when a local edit must survive a state refresh: check `git status` for uncommitted changes before any `reset --hard`, or commit/stash first.
 - 2026-08-27 `cthulhuquarium/t-014` — A task whose server API already shipped under an earlier task (t-009 built the browse/[username]/[slug] endpoints "frontend/UI wiring is separate scope, not built here") is real remaining work, not a duplicate -- reading that prior task's completion note up front correctly scoped this one to default-visibility + a one-click toggle + the two frontend pages, instead of re-deriving or re-building the already-shipped server side. The layout contract's one-header rule caught both new pages rendering their own <h1> on the first test:layout-contract run; switching to <h2> (matching the existing pages/play/challenges/* convention, since these are plain Nuxt pages with no content-frontmatter shell) fixed it in one pass.
@@ -101,8 +103,6 @@ Operational note for future sessions: `git reset --hard origin/<branch>` silentl
 
 - 2026-08-27 `interface-vision/t-121` — A trivial, verified-clean 2-file markup diff took 6 attempts and ~50 minutes of retries for kind_robots' required Contract verifiers check to actually complete, stalling at a different step nearly every time (install, several individual per-file contracts, and 3 of 6 times specifically at the full-repo ESLint ratchet step) despite the exact same script finishing in seconds locally against the identical diff -- pure CI-infra flakiness, not a code problem. Confirming the script itself is clean locally before assuming a hung required check reflects a real diff issue saved real time; filed conductor/t-132 to track the pattern (esp. the ESLint-ratchet-specific recurrence) for future diagnosis rather than re-deriving it next time.
 
-- 2026-08-27 `ruler-hooked/t-022` — An asset-generation task's "review" status can mean "ArtJobs submitted, awaiting delivery confirmation" rather than "PR open awaiting human review" -- check_pr_merged_drift.py's PR-shaped heuristic can't verify this kind of task at all (no PR ever existed), so it correctly surfaces as unresolvable via that script alone. The task's own note already named the exact completion check (media paths live) -- reading that note before assuming "review" means "needs a PR" avoided treating genuinely-finished async delivery as stuck.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-27T17:36:55Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-27T17:47:05Z_
