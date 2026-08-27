@@ -10733,3 +10733,173 @@ records:
   outcome: done
   failure_category: null
   lesson: "Two coherent specs in different repos can contradict each other indefinitely when nothing connects them; the art direction said layers are full-frame and transparent outside their band while the component cropped each to a 20:1 strip, and only generating against it surfaced the conflict."
+- date: 2026-08-27
+  project: ruler-hooked
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The task's own note already named its exact done condition ('flip to done when #2139 merges') -- reconciling status after a companion cross-repo PR merges is a one-line check against that condition, not a re-review of the work."
+- date: 2026-08-27
+  project: cthulhuquarium
+  task: t-044
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: actionable
+  lesson: >
+    A batch generator that writes image_path == the staging directory
+    consume_art_queue_core.py itself renders into is a self-referential
+    destination for every entry it will ever produce, not an occasional edge
+    case -- distribute_images.py's own self-referential-path guard (added the
+    day before to stop a crash) had already surfaced this exact shape once and
+    the root cause was deferred as "still open"; it recurred immediately on the
+    very next batch through the same generator. When a bug's fix note says the
+    root cause is open, treat the next batch that touches the same code path as
+    a live suspect before assuming a downstream "unmatched"/"no-op" result is
+    unrelated.
+- date: 2026-08-27
+  project: cthulhuquarium
+  task: t-046
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A generator bug that was already root-caused and fixed (t-044's
+    self-referential image_path) still had zero regression coverage until this
+    task -- verifying a fix by hand once is not the same as making it
+    impossible to reintroduce silently. Confirming a new test actually fails
+    against the pre-fix code (not just passes against the post-fix code) is
+    what makes a regression test trustworthy rather than a tautology.
+- date: 2026-08-27
+  project: cthulhuquarium
+  task: t-045
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A slug-to-artImageId mapping that "only exists in job logs" is still fully
+    recoverable, not a hard gap -- get_job_logs with a generous tail_lines
+    covered the whole relevant step, and simple regex extraction over the
+    consume_art_queue_core.py's own printed "DONE ... (ArtImage {id})" lines
+    reconstructed the batch's mapping completely. Worth defaulting to log
+    recovery before treating an unrecorded mapping as lost, since the
+    generating script already prints exactly what's needed.
+- date: 2026-08-27
+  project: conductor
+  task: t-131
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A "shared helper" kaizen suggestion is easy to under-scope by only reading
+    the two callers' surface signatures. Reading both fetch_queue_stats
+    implementations closely first showed one call site (check_render_box.py)
+    needed a swallow-all-exceptions probe contract and the other
+    (recheck_render_queue.py) needed the raised RuntimeError itself, so the
+    shared helper had to raise and let each caller decide -- a naive merge that
+    picked either behavior would have silently broken the other caller.
+- date: 2026-08-27
+  project: ruler-hooked
+  task: t-022
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    An asset-generation task's "review" status can mean "ArtJobs submitted,
+    awaiting delivery confirmation" rather than "PR open awaiting human review" --
+    check_pr_merged_drift.py's PR-shaped heuristic can't verify this kind of task
+    at all (no PR ever existed), so it correctly surfaces as unresolvable via
+    that script alone. The task's own note already named the exact completion
+    check (media paths live) -- reading that note before assuming "review" means
+    "needs a PR" avoided treating genuinely-finished async delivery as stuck.
+- date: 2026-08-27
+  project: interface-vision
+  task: t-121
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: transient
+  lesson: >
+    A trivial, verified-clean 2-file markup diff took 6 attempts and ~50 minutes
+    of retries for kind_robots' required Contract verifiers check to actually
+    complete, stalling at a different step nearly every time (install, several
+    individual per-file contracts, and 3 of 6 times specifically at the
+    full-repo ESLint ratchet step) despite the exact same script finishing in
+    seconds locally against the identical diff -- pure CI-infra flakiness, not
+    a code problem. Confirming the script itself is clean locally before
+    assuming a hung required check reflects a real diff issue saved real time;
+    filed conductor/t-132 to track the pattern (esp. the ESLint-ratchet-specific
+    recurrence) for future diagnosis rather than re-deriving it next time.
+- date: 2026-08-27
+  project: ruler-hooked
+  task: t-021
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A heavier cross-repo implementation task (kind_robots code, ~800 lines,
+    three distinct pieces) was claimed and implemented start-to-finish before
+    ever touching the conductor roadmap, since the code work itself needed no
+    roadmap edit until close-out. A different concurrent session claimed the
+    same task in the roadmap mid-implementation with no way to see this
+    session was already deep into it. No work was lost -- this session's
+    implementation was complete and merged first, so the close-out simply
+    documented the collision and pointed the other session at main -- but the
+    gap was real: claiming the conductor task BEFORE starting the cross-repo
+    code (not only recording it after), even though the roadmap edit itself
+    isn't needed until later, would have surfaced the collision to the other
+    session immediately instead of after both sides had sunk effort in.
+- date: 2026-08-27
+  project: cthulhuquarium
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Before implementing a "wire the shop" task, read what the prior task
+    already shipped -- t-011 had already wired buy-food and species-unlock
+    end-to-end (including auto-placement), so the real remaining gap was a
+    design-intent violation already visible in the diff (the field note was
+    rendered pre-unlock, contradicting the task's own "reveals on first
+    unlock, not before" note), not a missing feature. Checking sibling tasks'
+    depends_on graph (t-026 depends_on t-012, status: waiting) also confirmed
+    "buy upgrades" from this task's note was intentionally deferred, not a
+    gap in this task.
+- date: 2026-08-27
+  project: cthulhuquarium
+  task: t-013
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    An "offline income" task can be mostly already shipped by an earlier
+    task with a different name -- t-009/t-011 had already built the full
+    server-authoritative settleTick/lastTickAt settlement (8h cap, 0.5x
+    multiplier, coins only ever server-incremented) before this task was
+    ever picked up. Reading the existing store/component flow end-to-end
+    before writing anything found the real remaining gap was narrower and
+    different from what the title suggests: the "welcome back" moment was
+    an easy-to-miss inline banner instead of "one clear panel," and the
+    Clean button (a different task's, t-027's, active-play channel) fired
+    one write per click with no batching. Claimed the conductor task before
+    starting the cross-repo kind_robots implementation this time, per the
+    lesson recorded in this same day's ruler-hooked/t-021 collision.

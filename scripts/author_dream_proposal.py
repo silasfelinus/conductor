@@ -1,37 +1,18 @@
 #!/usr/bin/env python3
+"""Author the day's canonical six-asset Daily Dream proposal.
+
+The scheduled Daily Dream loop must make a genuinely new world, not merely a new
+set of names attached to the same story machinery. This module therefore keeps
+three independent history-aware variation layers:
+
+* names and title construction,
+* narrative premise / conflict engine,
+* visible world ontology and art direction.
+
+The actual rendered media style is selected later by dream_art_prompts.py so all
+six assets from a world stay coherent while different worlds can look radically
+different.
 """
-author_dream_proposal.py — write the day's daily-dream proposal without waiting
-for a human-triggered session to notice it is missing.
-
-Silas, 2026-08-09: "I'm not sure why the next dreams aren't written the turn the
-digest is sent, or a step later if there isn't enough process. As progress goes,
-that's very high on automated tasks or should be."
-
-He is right, and the reason was mundane: every piece existed except the glue.
-`build_dream_proposal.py --brief` produces the deterministic Facet seed plan and
-`--from-json` validates and writes the finished bundle, but the step in between —
-actually authoring the six assets — lived only in CLAUDE.md's session-startup
-checklist. So a proposal appeared when a session happened to run and happened to
-notice, and on a day with no session, no dream. daily-digest.yml sent the email
-and stopped.
-
-This closes that. It runs the brief, asks Claude for the six assets as JSON,
-merges the seed plan back in unchanged, and hands the result to the same
-validator a human-authored proposal goes through. Nothing about the contract is
-relaxed for being automated: same required fields, same "exactly one ITEM and one
-SKILL", same rule that the scenario names the vibe, location, and character.
-
-    python scripts/author_dream_proposal.py                # today, Pacific
-    python scripts/author_dream_proposal.py --dry-run      # print, write nothing
-    python scripts/author_dream_proposal.py --date 2026-08-09
-
-Exit codes: 0 wrote (or a proposal already existed — this is idempotent and safe
-to run on every digest), 1 could not author one. Requires ANTHROPIC_API_KEY, the
-same secret hourly-conductor.yml already uses for build_conductor_summary.py.
-Without it the script says so and exits 1 rather than writing a stub: a hollow
-proposal is worse than a missing one, because the missing one still gets noticed.
-"""
-
 from __future__ import annotations
 
 import argparse
@@ -50,30 +31,8 @@ import build_dream_proposal as dreams  # noqa: E402
 
 API_URL = "https://api.anthropic.com/v1/messages"
 API_VERSION = "2023-06-01"
-# Sonnet by default, not Opus. This is scheduled daily spend, and the guard in
-# tests/test_no_unreviewed_model_spend.py exists because unattended model calls
-# compound quietly. Sonnet is a real step up from the Haiku the hourly summary
-# uses, which matters here — the output becomes six database objects and the art
-# prompts for all of them. Set DREAM_AUTHOR_MODEL=claude-opus-5 if the bundles
-# come out flat and the cost is worth it.
 MODEL = os.environ.get("DREAM_AUTHOR_MODEL", "claude-sonnet-5")
-# Bumped from 4000 (conductor scheduled Agent run, 2026-08-24): the 2026-08-24
-# daily-digest run failed both attempts with "no JSON object in the completion"
-# -- parse_json_object() raises this specifically when the completion has no
-# closing brace at all, which is what a mid-JSON max_tokens cutoff produces
-# (as opposed to a JSONDecodeError, which the same except-block would report
-# differently). A six-asset bundle's prose (idea + vibe + one location + one
-# character + two rewards + one scenario, each with several sentence-length
-# fields) plus JSON structure overhead can run close to 4000 tokens on a
-# verbose day; nothing here changes the one-retry budget or the "hollow
-# proposal is worse than a missing one" refusal contract, this just gives a
-# normal-length completion more headroom before it gets cut off mid-object.
 MAX_TOKENS = 6000
-# One retry, fed the parser/validator's own complaints. The validator returns
-# precise, actionable messages ("scenario setup must name the location: X"),
-# which is exactly the shape a model can fix — but a second failure means
-# something is wrong with the prompt or the model, and looping burns tokens to
-# no purpose.
 MAX_ATTEMPTS = 2
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -81,6 +40,8 @@ DREAM_BACKLOG_DIR = REPO_ROOT / "projects" / "dream-cycle" / "backlog"
 HISTORY_CATEGORIES = ("dreams", "locations", "characters", "rewards", "scenarios")
 HISTORY_PROPOSAL_LIMIT = 45
 HISTORY_PROMPT_LIMIT = 20
+PREMISE_HISTORY_LIMIT = 12
+PREMISE_PROMPT_LIMIT = 8
 
 NAMING_DIRECTIONS = (
     "Use a grounded two-part name with an ordinary, non-compound family name; "
@@ -95,9 +56,60 @@ NAMING_DIRECTIONS = (
     "species, occupation, personality, or magic in the name.",
 )
 
-SYSTEM_PROMPT = """You are the creative generator for Kind Robots' daily dream \
-cycle. You write one coherent six-asset bundle per day: a dream vibe, a dream \
-location, a Character, an ITEM Reward, a SKILL Reward, and a Scenario.
+# These are story engines, not genres. Facets still decide genre and creature.
+# Rotation prevents the model from finding one comfortable plot machine and
+# applying it to every new Facet combination.
+STORY_DIRECTIONS = (
+    "Kinetic pressure: center a rescue, confrontation, chase, escape, or public crisis. "
+    "Something visible must be changing while the character acts.",
+    "Discovery pressure: center exploration of a place, organism, machine, portal, or "
+    "phenomenon whose rules are learned through direct encounter rather than records.",
+    "Relationship pressure: center an intimate promise, rivalry, family bond, friendship, "
+    "betrayal, or act of care whose choice visibly changes the world around it.",
+    "Caper pressure: center a theft, con, performance, infiltration, jailbreak, sabotage, "
+    "or audacious trick with moving pieces and a concrete target.",
+    "Survival pressure: center adaptation, transformation, weather, hunger, pursuit, "
+    "containment, or environmental danger where bodies and terrain matter.",
+    "Mythic pressure: center prophecy, monster, god, impossible scale, cosmic bargain, "
+    "or reality-changing event. Let awe or dread be structurally important.",
+    "Mystery pressure: center physical clues, testimony, behavior, landscape, or impossible "
+    "evidence. Solve through encounters, not paperwork, archives, ledgers, or permits.",
+    "Competition pressure: center a race, tournament, audition, ritual contest, festival, "
+    "hunt, election, or game whose rules create visible action and reversals.",
+    "Journey pressure: force travel across meaningfully changing terrain or social worlds; "
+    "each leg should expose a new rule or danger rather than another desk to visit.",
+    "Collective pressure: center a neighborhood, crew, pack, colony, team, rebellion, or "
+    "crowd responding to change through coordinated action rather than administration.",
+)
+
+# A deliberately narrow guard for the rut visible in August 2026. These are not
+# permanently forbidden concepts. They are rejected when the day's Facets did
+# not actually ask for bureaucracy/record-keeping, so a future bureaucracy Facet
+# can still produce one intentionally.
+BUREAUCRACY_MARKERS = {
+    "ledger", "ledgers", "filing", "file", "files", "archive", "archives",
+    "archivist", "permit", "permits", "registry", "register", "quota", "quotas",
+    "charter", "requisition", "requisitions", "clerk", "clerks", "bureau",
+    "paperwork", "accounting", "bookkeeping", "tally", "office",
+}
+BUREAUCRACY_FACET_MARKERS = BUREAUCRACY_MARKERS | {
+    "bureaucracy", "bureaucratic", "administration", "administrative",
+}
+
+# Common words do not constitute a repeated premise. We care about distinctive
+# nouns/verbs that make two worlds feel built from the same kit.
+PREMISE_STOPWORDS = {
+    "about", "after", "again", "against", "along", "another", "around", "because",
+    "before", "being", "between", "character", "could", "dream", "during", "every",
+    "first", "from", "grants", "known", "location", "moment", "people", "place",
+    "reward", "scenario", "someone", "something", "their", "there", "these", "thing",
+    "through", "under", "until", "where", "while", "whose", "world", "would",
+}
+
+SYSTEM_PROMPT = """You are the creative generator for Kind Robots' Daily Dream cycle.
+Each day is a portal into a different universe in a multidimensional storytelling
+app. Write one coherent six-asset bundle: a dream vibe, a dream location, a
+Character, an ITEM Reward, a SKILL Reward, and a Scenario.
 
 Return ONLY a JSON object. No prose, no markdown fence, no commentary.
 
@@ -114,41 +126,56 @@ Shape:
   "scenarios": [{"title","setup"}]
 }
 
-Exactly one location, one character, two rewards (one ITEM, one SKILL), one \
+Exactly one location, one character, two rewards (one ITEM, one SKILL), one
 scenario. No narrator. rarity is one of COMMON, UNCOMMON, RARE, EPIC, LEGENDARY.
 
-Naming is part of the creative variation, not decorative filler. Recent names \
-are supplied in the user prompt; treat their distinctive words, roots, sounds, \
-and constructions as spent vocabulary, not as a palette to remix. In particular, \
-do not default to a clipped fantasy first name plus a whimsical compound surname. \
-If a recent character was named "Vex Thistlewick", then "Vexa Thistlemaw" is \
-not a fresh name. Vary register and structure across days: ordinary names, \
-mononyms, callsigns, multi-part names, and genuinely setting-native speculative \
-names can all belong here. Do not manufacture pseudo-ethnic names by vaguely \
-imitating a real culture; if using a real-world naming tradition, use a plausible \
-name rather than syllable salad. Names should fit the character without simply \
-spelling out their species, job, personality, material, or genre Facets.
+VARIETY IS A PRIMARY REQUIREMENT, NOT A POLISH STEP.
+The Facets must change the ontology and story machinery of the world, not merely
+redecorate a familiar magical civic institution. A superhero combination can
+produce powers, costumes, public stakes, collateral damage, secret identities or
+superhuman institutions. Cosmic horror can produce impossible scale, alien
+causality, body/space unease, forbidden perception, or existential stakes.
+Anthropomorphic animals should be embodied animals whose anatomy, habitat,
+senses, social behavior, scale, tools, or movement matter, not ordinary humans
+with animal nouns pasted onto them. Other genres deserve the same commitment.
 
-The same anti-echo rule applies to dream, location, reward, and scenario titles. \
-A new title may share ordinary glue words, but should not recycle the distinctive \
+Do not default to whimsical bureaucracy. Unless today's Facets specifically ask
+for administration or records, avoid ledgers, filing, archives, permit offices,
+registries, quotas, charters, clerks, requisitions, accounting, and stories whose
+main action is obtaining, filing, auditing, cataloguing, transferring, or balancing
+paperwork. Recent premises are supplied in the user prompt. Treat their settings,
+conflict mechanisms, institutions, signature objects, and narrative tricks as
+spent material, not a palette to remix.
+
+Naming is also part of variation. Recent names are supplied in the user prompt;
+treat their distinctive words, roots, sounds, and constructions as spent
+vocabulary. Do not default to a clipped fantasy first name plus a whimsical
+compound surname. Vary register and structure across days: ordinary names,
+mononyms, callsigns, multi-part names, and genuinely setting-native speculative
+names can all belong here. Do not manufacture pseudo-ethnic names by vaguely
+imitating a real culture. Names should fit the character without simply spelling
+out species, job, personality, material, or genre Facets.
+
+The same anti-echo rule applies to dream, location, reward, and scenario titles.
+A new title may share ordinary glue words but should not recycle the distinctive
 noun pair or signature construction of a recent title.
 
-Every `look` and `art_direction` string is fed straight to an image model. Write \
-what is physically visible — material, shape, scale, colour, wear, how light \
-falls — not what the thing does. "A dented tin ladle the length of a forearm, \
-its bowl worn to mirror-bright, handle wrapped in salt-stiffened cord" is \
-usable; "it surfaces the hidden fortune buried in a person" is not. A Reward's \
-`look` describes an object or a visible effect, never a person: a Reward whose \
-look described what it did once rendered as a crowd of strangers and no object.
+Every `look` and `art_direction` string is fed straight to an image model. Write
+what is physically visible: material, shape, scale, colour, wear, anatomy,
+architecture, atmosphere, and how light behaves. Describe the unique physical
+world, not a generic house style. The renderer supplies a deliberately varied
+visual medium later, so do not force everything into "western animation" or any
+other universal style. A Reward's `look` describes an object or visible effect,
+never a person.
 
-Do not write conditional instructions an image model cannot evaluate ("include \
-robots only when the scene calls for them", "when any figures appear..."). \
-Decide, and state one outcome. Do not name a physical format — no "trading card \
-illustration", "book cover", "comic panel" — you are describing a scene, not a \
-printed object. Do not pile up text exclusions; say nothing about text at all.
+Do not write conditional instructions an image model cannot evaluate. Decide and
+state one outcome. Do not request a literal printed object such as a trading card,
+book cover, or comic page; visual media language is fine, but the subject should
+remain the world/object/character rather than a page layout. Do not pile up text
+exclusions; say nothing about text at all.
 
-Author the scenario LAST, and its `setup` must name the vibe title, the location \
-title, and the character name literally."""
+Author the scenario LAST, and its `setup` must name the vibe title, location title,
+and character name literally."""
 
 
 def _proposal_data(text: str) -> dict:
@@ -171,7 +198,6 @@ def _append_unique(values: list[str], value) -> None:
 
 
 def _names_from_proposal(text: str) -> dict[str, list[str]]:
-    """Collect the names the digest can surface from one proposal file."""
     out = {category: [] for category in HISTORY_CATEGORIES}
     data = _proposal_data(text)
 
@@ -179,7 +205,6 @@ def _names_from_proposal(text: str) -> dict[str, list[str]]:
     vibe = data.get("vibe")
     if isinstance(vibe, dict):
         _append_unique(out["dreams"], vibe.get("title"))
-
     for row in data.get("locations") or []:
         if isinstance(row, dict):
             _append_unique(out["locations"], row.get("title"))
@@ -193,8 +218,6 @@ def _names_from_proposal(text: str) -> dict[str, list[str]]:
         if isinstance(row, dict):
             _append_unique(out["scenarios"], row.get("title"))
 
-    # Older daily proposals may predate proposal-data. Preserve character memory
-    # anyway because character-name recurrence is the costly failure mode here.
     if not out["characters"]:
         match = re.search(
             r"^## Character \(1\)\s*\n-\s+\*\*(.+?)\*\*\s+[—-]",
@@ -211,12 +234,6 @@ def recent_name_history(
     proposal_limit: int = HISTORY_PROPOSAL_LIMIT,
     backlog_dir: Path | str | None = None,
 ) -> dict[str, list[str]]:
-    """Read names from recent proposals before `day`, newest names last.
-
-    The backlog is already the durable source behind the digest, so this adds no
-    database or provider dependency. Missing or malformed history degrades to an
-    empty list rather than blocking the day's proposal.
-    """
     root = Path(backlog_dir) if backlog_dir is not None else DREAM_BACKLOG_DIR
     history = {category: [] for category in HISTORY_CATEGORIES}
     if not root.exists():
@@ -227,7 +244,6 @@ def recent_name_history(
         for path in sorted(root.glob("20??-??-??-*.md"))
         if path.name[:10] < day
     ][-proposal_limit:]
-
     for path in paths:
         try:
             names = _names_from_proposal(path.read_text(encoding="utf-8"))
@@ -239,13 +255,78 @@ def recent_name_history(
     return history
 
 
+def _flatten_creative_values(data: dict) -> list[str]:
+    """Pull story-bearing prose from one proposal without seed/facet boilerplate."""
+    values: list[str] = []
+    for key in ("title", "idea"):
+        _append_unique(values, data.get(key))
+    vibe = data.get("vibe")
+    if isinstance(vibe, dict):
+        for key in ("title", "line"):
+            _append_unique(values, vibe.get(key))
+    for row in data.get("locations") or []:
+        if isinstance(row, dict):
+            for key in ("title", "known_for", "local_rule", "best_scene"):
+                _append_unique(values, row.get(key))
+    for row in data.get("characters") or []:
+        if isinstance(row, dict):
+            for key in ("role_drive", "carries", "complication"):
+                _append_unique(values, row.get(key))
+    for row in data.get("rewards") or []:
+        if isinstance(row, dict):
+            for key in ("name", "grants", "best_used_when", "catch"):
+                _append_unique(values, row.get(key))
+    for row in data.get("scenarios") or []:
+        if isinstance(row, dict):
+            for key in ("title", "setup"):
+                _append_unique(values, row.get(key))
+    return values
+
+
+def recent_premise_history(
+    day: str,
+    proposal_limit: int = PREMISE_HISTORY_LIMIT,
+    backlog_dir: Path | str | None = None,
+) -> list[str]:
+    """Return recent story summaries as anti-inspiration for the next authoring call."""
+    root = Path(backlog_dir) if backlog_dir is not None else DREAM_BACKLOG_DIR
+    if not root.exists():
+        return []
+    paths = [
+        path
+        for path in sorted(root.glob("20??-??-??-*.md"))
+        if path.name[:10] < day
+    ][-proposal_limit:]
+    history: list[str] = []
+    for path in paths:
+        try:
+            text = path.read_text(encoding="utf-8")
+        except OSError:
+            continue
+        data = _proposal_data(text)
+        values = _flatten_creative_values(data) if data else []
+        if values:
+            summary = " | ".join(values)
+        else:
+            summary = path.stem[11:].replace("-", " ")
+        history.append(summary[:1200])
+    return history
+
+
 def naming_direction(day: str) -> str:
-    """Rotate name structure deterministically instead of finding one new rut."""
     try:
         ordinal = datetime.date.fromisoformat(day).toordinal()
     except ValueError:
         ordinal = sum(ord(char) for char in day)
     return NAMING_DIRECTIONS[ordinal % len(NAMING_DIRECTIONS)]
+
+
+def story_direction(day: str) -> str:
+    try:
+        ordinal = datetime.date.fromisoformat(day).toordinal()
+    except ValueError:
+        ordinal = sum(ord(char) for char in day)
+    return STORY_DIRECTIONS[ordinal % len(STORY_DIRECTIONS)]
 
 
 def _name_words(name: str) -> list[str]:
@@ -292,16 +373,9 @@ def _common_prefix_length(left: str, right: str) -> int:
 
 
 def name_diversity_complaints(name: str, recent_names: list[str]) -> list[str]:
-    """Reject the high-signal repeats a prompt alone is bad at noticing.
-
-    This intentionally does not attempt to score whether a name is "creative".
-    It catches concrete archive echoes: exact names, reused/near-reused given
-    names, and distinctive long surname roots such as Thistlewick/Thistlemaw.
-    """
     words = _name_words(name)
     if not words:
         return []
-
     normalized = " ".join(words)
     first = words[0]
     last = words[-1] if len(words) > 1 else ""
@@ -312,18 +386,14 @@ def name_diversity_complaints(name: str, recent_names: list[str]) -> list[str]:
         if not recent_words:
             continue
         if normalized == " ".join(recent_words):
-            complaints.append(
+            return [
                 f"character name {name!r} exactly repeats recent name {recent!r}; "
                 "choose a genuinely different name"
-            )
-            return complaints
+            ]
 
     for recent in recent_names:
         recent_words = _name_words(recent)
-        if not recent_words:
-            continue
-        recent_first = recent_words[0]
-        if _near_word(first, recent_first):
+        if recent_words and _near_word(first, recent_words[0]):
             complaints.append(
                 f"character given name {first!r} repeats or nearly repeats recent "
                 f"name {recent!r}; choose a different given-name root"
@@ -336,19 +406,70 @@ def name_diversity_complaints(name: str, recent_names: list[str]) -> list[str]:
             if len(recent_words) < 2:
                 continue
             recent_last = recent_words[-1]
-            if (
-                min(len(last), len(recent_last)) >= 6
-                and _common_prefix_length(last, recent_last) >= 6
-            ):
+            if min(len(last), len(recent_last)) >= 6 and _common_prefix_length(last, recent_last) >= 6:
                 complaints.append(
-                    f"character surname {last!r} echoes the distinctive root of "
-                    f"recent name {recent!r}; choose a different surname construction"
+                    f"character surname {last!r} echoes the distinctive root of recent "
+                    f"name {recent!r}; choose a different surname construction"
                 )
                 break
     return complaints
 
 
-def _brief_prompt(brief: dict, history: dict[str, list[str]] | None = None) -> str:
+def _word_set(text: str) -> set[str]:
+    return {
+        word
+        for word in re.findall(r"[a-z]{5,}", str(text).casefold())
+        if word not in PREMISE_STOPWORDS
+    }
+
+
+def _proposal_creative_text(proposal: dict) -> str:
+    return " ".join(_flatten_creative_values(proposal))
+
+
+def story_diversity_complaints(
+    proposal: dict,
+    recent_premises: list[str],
+    seed_facets: dict | None = None,
+) -> list[str]:
+    """Reject high-signal premise ruts so the model gets one corrective retry."""
+    creative_text = _proposal_creative_text(proposal).casefold()
+    facet_text = json.dumps(seed_facets or {}, ensure_ascii=False).casefold()
+    creative_words = set(re.findall(r"[a-z]+", creative_text))
+    facet_words = set(re.findall(r"[a-z]+", facet_text))
+    complaints: list[str] = []
+
+    bureaucratic_hits = creative_words & BUREAUCRACY_MARKERS
+    facets_request_bureaucracy = bool(facet_words & BUREAUCRACY_FACET_MARKERS)
+    if bureaucratic_hits and not facets_request_bureaucracy:
+        examples = ", ".join(sorted(bureaucratic_hits)[:5])
+        complaints.append(
+            "story falls back into the overused bureaucracy/record-keeping motif "
+            f"({examples}) even though today's Facets do not request it; replace the "
+            "institution, conflict engine, and signature objects with a different kind of story"
+        )
+
+    candidate_terms = _word_set(creative_text)
+    for recent in recent_premises[-PREMISE_HISTORY_LIMIT:]:
+        recent_terms = _word_set(recent)
+        overlap = candidate_terms & recent_terms
+        distinctive = {word for word in overlap if len(word) >= 7}
+        if len(distinctive) >= 5:
+            examples = ", ".join(sorted(distinctive)[:6])
+            complaints.append(
+                "story substantially echoes a recent premise through distinctive vocabulary "
+                f"({examples}); change the setting machinery, conflict, and key objects rather "
+                "than paraphrasing the prior world"
+            )
+            break
+    return complaints
+
+
+def _brief_prompt(
+    brief: dict,
+    history: dict[str, list[str]] | None = None,
+    premise_history: list[str] | None = None,
+) -> str:
     facets = json.dumps(brief["seed_facets"], ensure_ascii=False, indent=2)
     rules = "\n".join(f"- {line}" for line in brief.get("instructions", []))
     history = history or {category: [] for category in HISTORY_CATEGORIES}
@@ -360,22 +481,30 @@ def _brief_prompt(brief: dict, history: dict[str, list[str]] | None = None) -> s
                 f"- {category.title()}: " + "; ".join(values[-HISTORY_PROMPT_LIMIT:])
             )
     history_text = "\n".join(history_lines) or "- No recent naming history available."
-    direction = naming_direction(str(brief["proposal_date"]))
+
+    premises = premise_history or []
+    premise_lines = [f"- {value}" for value in premises[-PREMISE_PROMPT_LIMIT:]]
+    premise_text = "\n".join(premise_lines) or "- No recent premise history available."
 
     return (
-        f"Compose the daily dream bundle for {brief['proposal_date']}.\n\n"
-        f"These Facets are the creative constraints. The umbrella genres and "
-        f"creature govern the whole bundle; each element's own Facet list "
-        f"governs that element. Use them — do not ignore one because it is "
-        f"awkward, that friction is the point.\n\n{facets}\n\n"
+        f"Compose the Daily Dream bundle for {brief['proposal_date']}.\n\n"
+        "These Facets are the creative constraints. The umbrella genres and creature "
+        "govern the whole bundle; each element's own Facet list governs that element. "
+        "Use them all. Awkward combinations are creative fuel, not permission to retreat "
+        f"to a familiar setting.\n\n{facets}\n\n"
         f"House rules:\n{rules}\n\n"
-        "Recent naming history, oldest to newest. These are spent vocabulary and "
-        "construction patterns, not inspiration to remix:\n"
-        f"{history_text}\n\n"
-        f"Character naming direction for today: {direction}\n"
-        "This direction is deliberately rotated by date. Follow its structural "
-        "shape while still fitting the character and setting.\n\n"
-        f"Return the JSON object only."
+        "Recent naming history, oldest to newest. This is spent vocabulary and construction, "
+        f"not inspiration to remix:\n{history_text}\n\n"
+        "Recent premise history, oldest to newest. Treat settings, institutions, conflict "
+        "mechanisms, signature objects, jobs, rituals, and narrative tricks here as spent. "
+        f"Do not reskin them with today's Facets:\n{premise_text}\n\n"
+        f"Character naming direction for today: {naming_direction(str(brief['proposal_date']))}\n"
+        "Follow its structural shape while fitting the character and world.\n\n"
+        f"Narrative engine for today: {story_direction(str(brief['proposal_date']))}\n"
+        "Use this to push plot structure away from recent days without overriding the Facets.\n\n"
+        "Before returning JSON, ask yourself whether this could plausibly be a screenshot from "
+        "one of the recent worlds with nouns swapped. If yes, rebuild it more radically.\n\n"
+        "Return the JSON object only."
     )
 
 
@@ -395,29 +524,29 @@ def call_claude(prompt: str, system: str, api_key: str, timeout: float = 120.0) 
     with urllib.request.urlopen(request, timeout=timeout) as response:
         payload = json.loads(response.read().decode())
     blocks = payload.get("content") or []
-    text = "".join(b.get("text", "") for b in blocks if isinstance(b, dict))
+    text = "".join(block.get("text", "") for block in blocks if isinstance(block, dict))
     if not text.strip():
         raise RuntimeError("Claude returned an empty completion.")
     return text
 
 
 def parse_json_object(text: str) -> dict:
-    """Tolerate a fenced or chatty reply without accepting a truncated one."""
     cleaned = text.strip()
     if cleaned.startswith("```"):
         cleaned = cleaned.split("\n", 1)[-1]
         if cleaned.rstrip().endswith("```"):
-            cleaned = cleaned.rstrip()[: -3]
+            cleaned = cleaned.rstrip()[:-3]
     start, end = cleaned.find("{"), cleaned.rfind("}")
     if start < 0 or end <= start:
         raise ValueError("no JSON object in the completion")
-    return json.loads(cleaned[start : end + 1])
+    return json.loads(cleaned[start:end + 1])
 
 
 def author(day: str, api_key: str, verbose: bool = True) -> dict:
     brief = dreams.build_brief(day)
     history = recent_name_history(day)
-    prompt = _brief_prompt(brief, history)
+    premise_history = recent_premise_history(day)
+    prompt = _brief_prompt(brief, history, premise_history)
     complaints: list[str] = []
 
     for attempt in range(1, MAX_ATTEMPTS + 1):
@@ -425,7 +554,7 @@ def author(day: str, api_key: str, verbose: bool = True) -> dict:
         if complaints:
             ask += (
                 "\n\nYour previous attempt failed validation:\n"
-                + "\n".join(f"- {c}" for c in complaints)
+                + "\n".join(f"- {complaint}" for complaint in complaints)
                 + "\n\nReturn a corrected JSON object addressing every point."
             )
         if verbose:
@@ -439,10 +568,6 @@ def author(day: str, api_key: str, verbose: bool = True) -> dict:
                 print("  rejected: " + complaints[0], file=sys.stderr)
             continue
 
-        # The seed plan is ours, not the model's — it is validated against the
-        # live Facet catalog and must survive verbatim. Overwrite rather than
-        # trust: a model that helpfully "tidied" the Facets would pass its own
-        # bundle while silently detaching it from the catalog.
         proposal["seed_facets"] = brief["seed_facets"]
         proposal.pop("narrator", None)
 
@@ -455,13 +580,13 @@ def author(day: str, api_key: str, verbose: bool = True) -> dict:
                     characters[0].get("name", ""), history.get("characters", [])
                 )
             )
+        complaints.extend(
+            story_diversity_complaints(proposal, premise_history, brief["seed_facets"])
+        )
         if not complaints:
             return proposal
         if verbose:
-            print(
-                "  rejected: " + "; ".join(complaints[:5]),
-                file=sys.stderr,
-            )
+            print("  rejected: " + "; ".join(complaints[:5]), file=sys.stderr)
 
     raise RuntimeError(
         "Could not author a valid proposal after "
@@ -472,28 +597,12 @@ def author(day: str, api_key: str, verbose: bool = True) -> dict:
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--date", help="Pacific date override (YYYY-MM-DD)")
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="print the rendered markdown without writing it",
-    )
-    parser.add_argument(
-        "--force",
-        action="store_true",
-        help="author even if the date already has a proposal",
-    )
-    parser.add_argument(
-        "--no-fetch",
-        action="store_true",
-        help="skip the origin/main duplicate check",
-    )
+    parser.add_argument("--dry-run", action="store_true", help="print rendered markdown without writing")
+    parser.add_argument("--force", action="store_true", help="author even if the date already has a proposal")
+    parser.add_argument("--no-fetch", action="store_true", help="skip the origin/main duplicate check")
     args = parser.parse_args(argv)
 
     day = args.date or dreams._target_date()
-
-    # Idempotent by design: this runs on every digest, and most of the time the
-    # honest answer is "already done". Exit 0 so a scheduled caller does not
-    # treat a healthy day as a failure.
     if not args.force:
         exists = dreams.proposal_exists_for(day)
         if not exists and not args.no_fetch and dreams.fetch_main():
@@ -505,21 +614,15 @@ def main(argv=None) -> int:
     api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
     if not api_key:
         print(
-            "ANTHROPIC_API_KEY is required to author a dream proposal. "
-            "Refusing to write a placeholder — a hollow proposal reads as done "
-            "and stops anyone noticing the real one is missing.",
+            "ANTHROPIC_API_KEY is required to author a dream proposal. Refusing to write a "
+            "placeholder because a hollow proposal can hide the missing real one.",
             file=sys.stderr,
         )
         return 1
 
     try:
         proposal = author(day, api_key)
-    except (
-        urllib.error.URLError,
-        RuntimeError,
-        ValueError,
-        json.JSONDecodeError,
-    ) as error:
+    except (urllib.error.URLError, RuntimeError, ValueError, json.JSONDecodeError) as error:
         print(f"Could not author the {day} proposal: {error}", file=sys.stderr)
         return 1
 

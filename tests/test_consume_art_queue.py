@@ -516,3 +516,89 @@ def test_flux_cfg_metadata_matches_the_graph():
     )
     assert job["payload"]["cfg"] == 1
     assert job["payload"]["workflow"]["52"]["inputs"]["cfg"] == 1
+
+
+# fetch_queue_stats (conductor/t-131): the shared GET /api/art/queue/stats
+# helper lives here in consume_art_queue_core, reused by both
+# check_render_box.py (a probe that never raises) and recheck_render_queue.py
+# (a ledger tool that wants the descriptive failure). These cases moved from
+# test_recheck_render_queue.py when that script stopped carrying its own copy.
+
+SAMPLE_QUEUE_STATS = {
+    "windowHours": 24,
+    "queueDepth": {"PENDING": 135, "RUNNING": 1, "DONE": 1546, "FAILED": 62},
+    "windowThroughput": {"PENDING": 133, "RUNNING": 1, "DONE": 37, "FAILED": 43},
+}
+
+
+def test_fetch_queue_stats_requires_token(monkeypatch):
+    monkeypatch.setattr(consumer, "KR_API_TOKEN", "")
+    with pytest.raises(RuntimeError, match="KR_API_TOKEN"):
+        consumer.fetch_queue_stats()
+
+
+def test_fetch_queue_stats_returns_data(monkeypatch):
+    monkeypatch.setattr(consumer, "KR_API_TOKEN", "fake-token")
+    monkeypatch.setattr(
+        consumer,
+        "http_json",
+        lambda method, url, timeout=None: (200, {"success": True, "data": SAMPLE_QUEUE_STATS}),
+    )
+    assert consumer.fetch_queue_stats() == SAMPLE_QUEUE_STATS
+
+
+def test_fetch_queue_stats_raises_on_unsuccessful_payload(monkeypatch):
+    monkeypatch.setattr(consumer, "KR_API_TOKEN", "fake-token")
+    monkeypatch.setattr(
+        consumer,
+        "http_json",
+        lambda method, url, timeout=None: (200, {"success": False, "message": "nope"}),
+    )
+    with pytest.raises(RuntimeError, match="unsuccessful payload"):
+        consumer.fetch_queue_stats()
+
+
+def test_fetch_queue_stats_raises_on_http_error_status(monkeypatch):
+    monkeypatch.setattr(consumer, "KR_API_TOKEN", "fake-token")
+    monkeypatch.setattr(
+        consumer,
+        "http_json",
+        lambda method, url, timeout=None: (403, {"success": False, "message": "Forbidden"}),
+    )
+    with pytest.raises(RuntimeError, match="unsuccessful payload \\(HTTP 403\\)"):
+        consumer.fetch_queue_stats()
+
+
+def test_fetch_queue_stats_raises_on_unreachable(monkeypatch):
+    monkeypatch.setattr(consumer, "KR_API_TOKEN", "fake-token")
+
+    def boom(method, url, timeout=None):
+        raise consumer.urllib.error.URLError("Connection refused")
+
+    monkeypatch.setattr(consumer, "http_json", boom)
+    with pytest.raises(RuntimeError, match="unreachable"):
+        consumer.fetch_queue_stats()
+
+
+def test_fetch_queue_stats_raises_on_missing_data(monkeypatch):
+    monkeypatch.setattr(consumer, "KR_API_TOKEN", "fake-token")
+    monkeypatch.setattr(
+        consumer,
+        "http_json",
+        lambda method, url, timeout=None: (200, {"success": True}),
+    )
+    with pytest.raises(RuntimeError, match="missing 'data'"):
+        consumer.fetch_queue_stats()
+
+
+def test_fetch_queue_stats_passes_window_hours_through(monkeypatch):
+    monkeypatch.setattr(consumer, "KR_API_TOKEN", "fake-token")
+    seen_urls = []
+
+    def fake_http_json(method, url, timeout=None):
+        seen_urls.append(url)
+        return 200, {"success": True, "data": SAMPLE_QUEUE_STATS}
+
+    monkeypatch.setattr(consumer, "http_json", fake_http_json)
+    consumer.fetch_queue_stats(window_hours=6)
+    assert seen_urls == [f"{consumer.KR_BASE_URL}/api/art/queue/stats?window=6"]

@@ -1,4 +1,4 @@
-updated: "2026-08-25T11:39:54+00:00"
+updated: "2026-08-27T07:20:00+00:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -982,3 +982,75 @@ pitches:
       - the stack's lean visibly increases as it grows, and the eventual topple reads as a genuine physical failure rather than an instant swap to a "scattered" state
       - the scatter-and-settle phase brings every stone to a full stop before the clearing fade-and-rebuild begins, and pointer-nudge/click-triggered topples never block underlying page input
       - solver iteration count, stone pool size, and per-frame simulation cost stay fixed regardless of viewport size or how many topple cycles have run this session
+  - id: zoetrope-lantern-drum
+    title: Zoetrope Lantern Drum
+    status: pitched
+    priority: 25
+    surprise: >
+      A squat cylindrical drum of vertical slats slowly turns in place, warm light glowing
+      from within. Through the passing gaps a tiny figure inside appears to walk, or wing-beat,
+      or juggle -- a genuine persistence-of-vision illusion built from a short strip of still
+      poses, not a single sprite sliding across the screen. Every few full turns the drum
+      briefly dims, its interior strip swaps for a different figure and a different loop of
+      motion, and the light and turning resume.
+    passive_loop: >
+      A fixed ring of N evenly spaced opaque slats rotates at a slow constant angular velocity
+      around a lit interior. The interior holds a short ordered strip of pose frames (a walk
+      cycle, a wingbeat, a juggling loop -- 6-10 poses) for the current figure. Each slat gap,
+      as it sweeps past the viewer-facing arc, samples and displays exactly one pose from the
+      strip, advancing to the next pose in sequence on each successive gap; because the drum
+      turns slowly and steadily rather than strobing at high frequency, the sampled sequence
+      reads as a continuous, unhurried figure in motion rather than a flicker. After a set
+      number of full rotations the drum's glow dims to embers over roughly a second, the pose
+      strip swaps to the next figure in a small fixed rotation of figures, and the glow and
+      turn resume from the top of a fresh cycle.
+    optional_interaction: >
+      Pointer proximity along the drum's rim applies a small tangential drag that speeds or
+      slows the rotation without ever reversing it or exceeding a capped rate, as if brushing
+      the rim by hand. A click forces an immediate dim-and-swap to the next figure in the
+      rotation, rate-limited so repeated clicks cannot cycle figures faster than the natural
+      dim transition allows.
+    technique: >
+      Canvas 2D. The drum is drawn as a fixed ring of slat polygons at a constant angular
+      velocity (simple rotation-matrix placement, no physics solver). Each figure's pose strip
+      is a small set of pre-authored silhouette frames (not per-frame procedural geometry or
+      a video/sprite-sheet asset); the currently visible pose is chosen by mapping each
+      viewer-facing slat gap's instantaneous angle to a pose index, so the illusion is driven
+      entirely by rotation angle rather than a wall-clock frame timer -- pausing or resuming
+      the animation loop (e.g. tab backgrounding) cannot desync the apparent motion. Only the
+      1-3 slat gaps currently within the viewer-facing arc are ever composited per frame.
+    reduced_motion: >
+      The drum stops turning and shows a single held pose from the current figure's strip
+      (mid-cycle, not the neutral/rest pose) through the interior gaps, with only a very slow
+      ember-glow breathing pulse -- no rotation, no slat-driven pose stepping, no strobe-like
+      sampling of any kind.
+    performance_risk: >
+      Naively redrawing every slat every frame regardless of visibility, or resampling a pose
+      on every animation frame instead of only on angle-driven gap transitions, would waste
+      cycles and risk a rapid-looking flicker on very small viewports. Composite only the
+      handful of gaps currently in the viewer-facing arc, advance the sampled pose strictly
+      on angle thresholds (never on a frame-rate-dependent timer), and enforce a minimum
+      rotation period floor so the rig can never be sped up (via pointer drag) into an actual
+      high-frequency strobe.
+    novelty: >
+      The core loop is a persistence-of-vision illusion: a slow-turning slotted drum samples
+      one still pose per slat gap from a short pre-authored pose strip, so a walking/flying/
+      juggling figure emerges from angle-driven frame-stepping rather than any continuous
+      procedural simulation -- distinct from every existing pitch. Marble-run-contraption and
+      cairn-balancing move or place discrete rigid objects under simulated physics; this rig
+      has no physics at all, only fixed poses sampled by rotation angle. Strandbeest-migration
+      and celestial-mobile both animate continuous-motion linkages/rigid bodies frame by frame
+      rather than stepping between discrete pre-authored poses. Shadow-puppet-theater is the
+      closest in spirit (backlit figures, joint-driven blocking) but drives its figures with a
+      continuous joint-animation timeline behind a static backlight, never a rotating physical
+      occluder sampling discrete poses, and never swaps its entire figure identity mid-cycle.
+      Clockwork-greenhouse and geode-bloom both grow one persistent structure via a state
+      machine; here nothing grows or accretes, the drum simply resamples a fixed strip. No
+      existing pitch uses a rotating slotted occluder to build motion from discrete pose
+      sampling, or swaps its subject's identity entirely between cycles rather than resetting
+      the same subject.
+    acceptance:
+      - the interior figure's motion reads as a continuous walk/wingbeat/juggle cycle through the passing slats, not a visible flicker or strobe, at the rig's normal rotation speed
+      - pointer-drag speed changes and click-triggered figure swaps never block underlying page input, and drag can never reverse or exceed the capped rotation rate
+      - the dim-and-swap transition between figures completes fully (old figure fully dimmed) before the next figure's first pose is ever sampled
+      - pose sampling is driven by rotation angle, not a frame-rate timer, so backgrounding and resuming the tab cannot desync or accelerate the apparent walk cycle

@@ -1,10 +1,4 @@
-"""Regression tests for the Krea 2 daily-dream prompt builder.
-
-The bug these guard against (2026-08-08): a Reward named "Tidefortune Ladle"
-rendered as a crowd of fifteen people. Every prompt carried an unconditional
-"cast characters naturally across many species, ages, body sizes..." clause,
-which Krea 2 reads as subject matter rather than guidance.
-"""
+"""Regression tests for the Krea 2 Daily Dream prompt builder."""
 import importlib.util
 import pathlib
 import sys
@@ -17,7 +11,6 @@ spec = importlib.util.spec_from_file_location(
     "dream_art_prompts", SCRIPTS / "dream_art_prompts.py")
 dap = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(dap)
-
 
 LADLE = dict(
     name="Tidefortune Ladle",
@@ -43,9 +36,7 @@ SEASONING = dict(
 
 def test_item_prompt_leads_with_the_object_not_its_function():
     prompt = dap.reward_prompt(**LADLE)
-    # The subject must be the first thing Krea 2 reads.
     assert prompt.startswith("a single Tidefortune Ladle, one object alone in frame")
-    # Physical description arrives before the abstract effect.
     assert prompt.index("dented tin ladle") < prompt.index("hidden fortune")
 
 
@@ -69,19 +60,17 @@ def test_skill_prompt_makes_the_effect_the_subject_and_bans_full_figures():
 
 def test_skill_prompt_survives_a_legacy_proposal_with_no_look_field():
     prompt = dap.reward_prompt(**{**SEASONING, "look": ""})
-    # Without `look` the builder must still anchor on the effect, never a person.
     assert "the visible signature of the technique in mid-use" in prompt
     assert dap.CAST_DIRECTION not in prompt
 
 
-def test_character_prompt_is_the_one_reward_free_case_that_wants_a_single_figure():
+def test_character_prompt_is_single_figure_without_cast_injection():
     prompt = dap.character_prompt(
         "Perrin Voss", "a bog-punk chorister in a patched oilcloth cassock",
         "translate a hymnal that keeps rewriting itself", "a warped brass tuning fork",
         "Choir of the Drowned Kingdom", "Ancient sea-gods drift like slow leviathans.")
     assert prompt.startswith("character portrait of Perrin Voss")
     assert "single figure" in prompt
-    # A portrait is one person; a diversity cast clause here would add a crowd.
     assert dap.CAST_DIRECTION not in prompt
 
 
@@ -119,22 +108,52 @@ def test_location_prompt_keeps_figures_incidental_to_the_architecture():
     assert dap.CAST_DIRECTION not in prompt
 
 
-def test_no_builder_emits_the_phrase_that_triggered_the_house_substitution():
-    """`replaceVagueArtDirection` in kind_robots swaps this phrase for a block
-    containing the casting instruction. No prompt may contain it."""
-    prompts = [
-        dap.reward_prompt(**LADLE),
-        dap.reward_prompt(**SEASONING),
-        dap.character_prompt("A", "b", "c", "d", "W", "v"),
-        dap.location_prompt("A", "b", "c", "d", "W", "v"),
-        dap.scenario_prompt("A", "b", "c", "W", "v"),
-        dap.world_prompt("W", "i", "v", "a"),
+def _all_prompt_kinds(world_title="Choir of the Drowned Kingdom"):
+    vibe = "Sea-gods sing."
+    return [
+        dap.reward_prompt(**{**LADLE, "world_title": world_title, "vibe_line": vibe}),
+        dap.reward_prompt(**{**SEASONING, "world_title": world_title, "vibe_line": vibe}),
+        dap.character_prompt("A", "b", "c", "d", world_title, vibe),
+        dap.location_prompt("A", "b", "c", "d", world_title, vibe),
+        dap.scenario_prompt("A", "b", "c", world_title, vibe),
+        dap.world_prompt(world_title, "i", vibe, "a"),
     ]
-    for prompt in prompts:
+
+
+def test_no_builder_emits_the_phrase_that_triggered_house_substitution():
+    for prompt in _all_prompt_kinds():
         assert "Kind Robots" not in prompt
-        assert dap.STYLE in prompt
         assert dap.NO_TEXT in prompt
         assert len(prompt) <= dap.MAX_PROMPT_CHARS
+
+
+def test_every_asset_in_one_world_uses_the_same_selected_style():
+    world = "Choir of the Drowned Kingdom"
+    selected = dap.style_for_world(world)
+    assert selected in dap.STYLE_DIRECTIONS
+    for prompt in _all_prompt_kinds(world):
+        assert selected in prompt
+        assert sum(style in prompt for style in dap.STYLE_DIRECTIONS) == 1
+
+
+def test_world_style_selection_is_stable_across_rebuilds():
+    assert dap.style_for_world("A City Made of Thunder") == dap.style_for_world("A City Made of Thunder")
+
+
+def test_many_worlds_actually_span_the_style_bank():
+    styles = {
+        dap.style_for_world(f"Portal World {index}: {index * 7919}")
+        for index in range(64)
+    }
+    assert len(styles) >= 8
+
+
+def test_style_bank_contains_materially_different_media_not_one_house_style():
+    joined = " ".join(dap.STYLE_DIRECTIONS).lower()
+    for medium in ("superhero-comic", "charcoal", "gouache", "stop-motion", "risograph",
+                   "photorealism", "stained-glass", "paper-cut"):
+        assert medium in joined
+    assert len(dap.STYLE_DIRECTIONS) >= 10
 
 
 def test_prompts_are_capped_at_a_clause_boundary():
@@ -144,31 +163,24 @@ def test_prompts_are_capped_at_a_clause_boundary():
 
 
 def test_item_prompt_does_not_double_the_article_on_a_the_name():
-    """"a single The Corsair's Encore" reads as noise to a caption-trained encoder."""
     prompt = dap.reward_prompt(**{**LADLE, "name": "The Corsair's Encore"})
     assert prompt.startswith("The Corsair's Encore, one object alone in frame")
     assert "a single The" not in prompt
 
 
-@pytest.mark.parametrize("prompt_fn,args", [
-    (lambda: dap.reward_prompt(**LADLE), None),
-    (lambda: dap.reward_prompt(**SEASONING), None),
-    (lambda: dap.character_prompt("A", "b", "c", "d", "W", "v"), None),
-    (lambda: dap.location_prompt("A", "b", "c", "d", "W", "v"), None),
-    (lambda: dap.scenario_prompt("A", "b", "c", "W", "v"), None),
-    (lambda: dap.world_prompt("W", "i", "v", "a"), None),
+@pytest.mark.parametrize("prompt_fn", [
+    lambda: dap.reward_prompt(**LADLE),
+    lambda: dap.reward_prompt(**SEASONING),
+    lambda: dap.character_prompt("A", "b", "c", "d", "W", "v"),
+    lambda: dap.location_prompt("A", "b", "c", "d", "W", "v"),
+    lambda: dap.scenario_prompt("A", "b", "c", "W", "v"),
+    lambda: dap.world_prompt("W", "i", "v", "a"),
 ], ids=["item", "skill", "character", "location", "scenario", "world"])
-def test_no_builder_asks_for_a_card(prompt_fn, args):
-    """"treasure card illustration" / "2:3 portrait card composition" made Krea 2
-    render a literal trading card — title bar, type line, and a rules box full of
-    invented text (rewards 2688/2616/2551, 2026-08-08)."""
-    prompt = prompt_fn().lower()
-    assert "card" not in prompt
+def test_no_builder_asks_for_a_card(prompt_fn):
+    assert "card" not in prompt_fn().lower()
 
 
 def test_text_exclusion_is_one_short_clause_not_a_noun_list():
-    """At cfg 1 the negative prompt is inert, so these words land in positive
-    conditioning on a text-specialist model. Name text once, not five times."""
     for banned in ("lettering", "logos", "watermark", "signature"):
         assert banned not in dap.NO_TEXT
     assert dap.NO_TEXT.lower().count("text") == 1

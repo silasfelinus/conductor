@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-27T01:32:34Z
+Generated: 2026-08-27T13:20:29Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **771**
-- Outcomes: blocked: 15, cancelled: 1, done: 755
+- Closed tasks recorded: **782**
+- Outcomes: blocked: 15, cancelled: 1, done: 766
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -26,9 +26,9 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 25 | 100% |
-| conductor | 82 | 100% |
+| conductor | 83 | 100% |
 | conductor-app | 4 | 100% |
-| cthulhuquarium | 9 | 100% |
+| cthulhuquarium | 14 | 100% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
-| interface-vision | 85 | 100% |
+| interface-vision | 86 | 100% |
 | kapowarr | 48 | 100% |
 | kind-economy | 6 | 100% |
 | kind-robots | 52 | 98% |
@@ -52,7 +52,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | music-mentor | 1 | 100% |
 | newsfeed | 20 | 100% |
 | packmaker | 10 | 100% |
-| ruler-hooked | 6 | 100% |
+| ruler-hooked | 10 | 100% |
 | scene-animator | 2 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
@@ -68,15 +68,15 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 755 | 99% |
+| software | 766 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
 | quality | 14 |
-| actionable | 10 |
-| transient | 10 |
+| actionable | 11 |
+| transient | 11 |
 | scope | 2 |
 
 ## Kaizen targets
@@ -84,29 +84,28 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - project `coat-dance` — 11% success over 9 closed tasks; aim the next kaizen task here
 - kind `content` — 44% success over 16 closed tasks; aim the next kaizen task here
 - failure category `quality` — 14 occurrences; look for the shared cause across its records
-- failure category `actionable` — 10 occurrences; look for the shared cause across its records
-- failure category `transient` — 10 occurrences; look for the shared cause across its records
+- failure category `actionable` — 11 occurrences; look for the shared cause across its records
+- failure category `transient` — 11 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
-- 2026-08-26 `ruler-hooked/t-020` — A rejected suggestion can still contain a real finding: Silas preferred the existing presets over his own six-ruler proposal, but that proposal named the age gap (no child ruler) the presets actually had.
-- 2026-08-26 `ruler-hooked/t-016` — Pinning one character as a constant for cross-piece consistency silently makes that character the product's default; parameterize the cast and name the hero instead.
-- 2026-08-26 `cthulhuquarium/t-043` — An existing generic pattern (server/utils/entityArt.ts, already wired for Character/Scenario/Reward/etc.) doesn't have to be extended to cover every entity with art fields -- Monster's fields are shaped identically but the actual need (link an already-generated ArtImage id directly, admin-only, no owner concept) was narrower than that system's generate/upload/history workflow. A small dedicated route was less code and easier to review than threading a new case through six switch statements in a shared file built for a different job.
+- 2026-08-27 `cthulhuquarium/t-013` — An "offline income" task can be mostly already shipped by an earlier task with a different name -- t-009/t-011 had already built the full server-authoritative settleTick/lastTickAt settlement (8h cap, 0.5x multiplier, coins only ever server-incremented) before this task was ever picked up. Reading the existing store/component flow end-to-end before writing anything found the real remaining gap was narrower and different from what the title suggests: the "welcome back" moment was an easy-to-miss inline banner instead of "one clear panel," and the Clean button (a different task's, t-027's, active-play channel) fired one write per click with no batching. Claimed the conductor task before starting the cross-repo kind_robots implementation this time, per the lesson recorded in this same day's ruler-hooked/t-021 collision.
+- 2026-08-27 `cthulhuquarium/t-012` — Before implementing a "wire the shop" task, read what the prior task already shipped -- t-011 had already wired buy-food and species-unlock end-to-end (including auto-placement), so the real remaining gap was a design-intent violation already visible in the diff (the field note was rendered pre-unlock, contradicting the task's own "reveals on first unlock, not before" note), not a missing feature. Checking sibling tasks' depends_on graph (t-026 depends_on t-012, status: waiting) also confirmed "buy upgrades" from this task's note was intentionally deferred, not a gap in this task.
+- 2026-08-27 `ruler-hooked/t-021` — A heavier cross-repo implementation task (kind_robots code, ~800 lines, three distinct pieces) was claimed and implemented start-to-finish before ever touching the conductor roadmap, since the code work itself needed no roadmap edit until close-out. A different concurrent session claimed the same task in the roadmap mid-implementation with no way to see this session was already deep into it. No work was lost -- this session's implementation was complete and merged first, so the close-out simply documented the collision and pointed the other session at main -- but the gap was real: claiming the conductor task BEFORE starting the cross-repo code (not only recording it after), even though the roadmap edit itself isn't needed until later, would have surfaced the collision to the other session immediately instead of after both sides had sunk effort in.
 
-- 2026-08-26 `conductor/t-130` — check_render_box.py's render_throughput_verdict short-circuited on "any completion in the window is healthy," hiding a stale RUNNING claim with a PENDING backlog behind older completions -- the distinguishing signal (staleRunningCount, queueDepth.PENDING) was already in the same stats payload the caller fetches and just wasn't being read. When a health-check function ignores fields already present in its input, check whether the unused fields are exactly the signal needed before reaching for a new API call or backend change.
+- 2026-08-27 `interface-vision/t-121` — A trivial, verified-clean 2-file markup diff took 6 attempts and ~50 minutes of retries for kind_robots' required Contract verifiers check to actually complete, stalling at a different step nearly every time (install, several individual per-file contracts, and 3 of 6 times specifically at the full-repo ESLint ratchet step) despite the exact same script finishing in seconds locally against the identical diff -- pure CI-infra flakiness, not a code problem. Confirming the script itself is clean locally before assuming a hung required check reflects a real diff issue saved real time; filed conductor/t-132 to track the pattern (esp. the ESLint-ratchet-specific recurrence) for future diagnosis rather than re-deriving it next time.
 
-- 2026-08-26 `interface-vision/t-104` — Slice 52: before searching fresh, checked slice 39's flagged runner-up candidate (user-manager.vue's managerError/"Unknown user tab" notices) against the roadmap note history first and found slice 40 had already closed it -- avoided a wasted duplicate-work search. The actual fix this slice (watchlist-browse.vue's errorMessage banner missing font-semibold) was found by grepping for the exact hand-rolled kr-note shape and then confirming a genuine live sibling inconsistency via a second, narrower grep for the same errorMessage variable/aria-live wrapper pattern already converted elsewhere (newsfeed-feed.vue) -- cheap to check and turns a plausible-looking candidate into a documented, not-blind substitution matching the standing "same element rendering two different ways across sibling components" rule.
+- 2026-08-27 `ruler-hooked/t-022` — An asset-generation task's "review" status can mean "ArtJobs submitted, awaiting delivery confirmation" rather than "PR open awaiting human review" -- check_pr_merged_drift.py's PR-shaped heuristic can't verify this kind of task at all (no PR ever existed), so it correctly surfaces as unresolvable via that script alone. The task's own note already named the exact completion check (media paths live) -- reading that note before assuming "review" means "needs a PR" avoided treating genuinely-finished async delivery as stuck.
 
-- 2026-08-26 `mandarin-tutor/t-017` — A Pinia store method entangled with Nuxt/user-store runtime (loadCloudState) can still get real regression coverage without a mock framework: extracting its merge decision (server-authoritative, local-only entries kept and re-pushed) into two pure functions in a plain utils module, then having the store call them, made the logic testable with node:assert alone -- same pattern as server/utils/mandarinSrs.ts. No behavior changed; the store's call sites shrank from inline set-difference logic to two function calls.
+- 2026-08-27 `conductor/t-131` — A "shared helper" kaizen suggestion is easy to under-scope by only reading the two callers' surface signatures. Reading both fetch_queue_stats implementations closely first showed one call site (check_render_box.py) needed a swallow-all-exceptions probe contract and the other (recheck_render_queue.py) needed the raised RuntimeError itself, so the shared helper had to raise and let each caller decide -- a naive merge that picked either behavior would have silently broken the other caller.
 
-- 2026-08-26 `mandarin-tutor/t-016` — Mirroring an already-established pattern exactly (MandarinCardProgress's userId-scalar-ownership, house JSON-as-serialized-text convention, upsert-by- client-generated-id) made a full-stack task (migration + 3 endpoints + store wiring) verifiable and mergeable in one pass with zero CI churn. The one design call worth flagging for future similar tasks: syncing a whole client-owned collection (customSets) as a full-array replace-on-every-mutation is tempting for simplicity but risks a second device's unsynced local mutation clobbering a set the first device already pushed -- upserting one item at a time by its client-generated id sidesteps that without needing real conflict resolution.
+- 2026-08-27 `cthulhuquarium/t-045` — A slug-to-artImageId mapping that "only exists in job logs" is still fully recoverable, not a hard gap -- get_job_logs with a generous tail_lines covered the whole relevant step, and simple regex extraction over the consume_art_queue_core.py's own printed "DONE ... (ArtImage {id})" lines reconstructed the batch's mapping completely. Worth defaulting to log recovery before treating an unrecorded mapping as lost, since the generating script already prints exactly what's needed.
 
-- 2026-08-26 `mandarin-tutor/t-012` — "Prepare the domain for mobile clients" turned out to be an audit task, not a build task -- the portable pieces (header-token auth via requireApiUser, durable hash-keyed media identity, 100% server-side curriculum/SRS logic) were already in place from earlier tasks (t-004, t-009, t-015) without anyone framing them as "mobile-ready." Reading the actual auth guard and store persistence code before assuming a scoping task needs new architecture found the one real gap (customSets/ artJobs still localStorage-only) precisely, and let the task close as documentation plus one correctly-scoped follow-up (t-016) instead of either over-building or guessing at what was missing.
+- 2026-08-27 `cthulhuquarium/t-046` — A generator bug that was already root-caused and fixed (t-044's self-referential image_path) still had zero regression coverage until this task -- verifying a fix by hand once is not the same as making it impossible to reintroduce silently. Confirming a new test actually fails against the pre-fix code (not just passes against the post-fix code) is what makes a regression test trustworthy rather than a tautology.
 
-- 2026-08-25 `interface-vision/t-120` — A recurring-in-practice roadmap task (return-to-ready documented only in prose inside every slice's note) gives close_task.py's `recurring: true` guard nothing to key on, so a `done` close-out slips through silently -- this nearly happened to interface-vision/t-105 earlier the same day (conductor#2884 -> #2887). Setting the `recurring` field explicitly the moment a task's actual operating convention is "always returns to ready" -- not waiting for a mistaken done close-out to force the fix -- turns a 40+-paragraph prose convention into a mechanical refusal the next session can't miss.
+- 2026-08-27 `cthulhuquarium/t-044` — A batch generator that writes image_path == the staging directory consume_art_queue_core.py itself renders into is a self-referential destination for every entry it will ever produce, not an occasional edge case -- distribute_images.py's own self-referential-path guard (added the day before to stop a crash) had already surfaced this exact shape once and the root cause was deferred as "still open"; it recurred immediately on the very next batch through the same generator. When a bug's fix note says the root cause is open, treat the next batch that touches the same code path as a live suspect before assuming a downstream "unmatched"/"no-op" result is unrelated.
 
-- 2026-08-25 `mandarin-tutor/t-014` — GitHub serves raw .json files from raw.githubusercontent.com with Content-Type: text/plain, not application/json -- ofetch's default JSON auto-parsing keys off that header, so a $fetch call against such a URL with no explicit parseResponse/responseType override silently returns the raw response text instead of a parsed value. Confirmed directly against the live pinned source rather than assuming from the error message: without an override the response was a raw string, with `parseResponse: (t) => JSON.parse(t)` it parsed correctly. Any future $fetch against a raw.githubusercontent.com JSON file should pass an explicit parseResponse rather than relying on content-type sniffing -- checked the rest of server/ for the same pattern and found none left unguarded (mandarinCharacterData.ts already used responseType: 'text' with manual per-line JSON.parse for its NDJSON source, so it was never exposed).
-
+- 2026-08-27 `ruler-hooked/t-017` — The task's own note already named its exact done condition ('flip to done when #2139 merges') -- reconciling status after a companion cross-repo PR merges is a one-line check against that condition, not a re-review of the work.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-27T01:32:34Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-27T13:20:29Z_
