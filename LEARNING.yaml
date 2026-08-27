@@ -10924,3 +10924,23 @@ records:
     in -- anchoring those to RARITY_TIERS rather than inventing unrelated
     numbers kept the new values traceable the same way every other price in
     the file already is.
+- date: 2026-08-27
+  project: cthulhuquarium
+  task: t-031
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A record's schema and its consumers can land in different tasks without
+    a gap: t-032 already added AquariumCodexEntry.bestStat* columns and
+    t-024 already built the collected/fieldNote codex view, so t-031 was
+    "wire the already-decided record's remaining two features into the
+    existing view" rather than a new screen. Both new features
+    (best-individual-stats, re-order) are provable no-ops today because
+    their upstream dependencies (t-029 genetics, t-030 sell-back) haven't
+    landed -- writing unit tests for the pure merge function
+    (mergeBestStats) that assert the both-null case explicitly, rather than
+    skipping coverage for "nothing to test yet," is what makes that
+    correctly-inert-for-now claim verifiable instead of just asserted.
