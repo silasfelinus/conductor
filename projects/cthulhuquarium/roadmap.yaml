@@ -976,7 +976,7 @@ tasks:
     passes: 0
     stakes: reversible
     depends_on: [t-023, t-025]
-    note: >
+    note: >-
       This is the answer to what Silas named his hardest problem as a game creator: "I just
       want to let the user fill a tank with every fish and option they want. but a good game
       gates those options through experience and play, with flavor text and character moments
@@ -1001,6 +1001,36 @@ tasks:
       early story beats stop mattering too. Sideways from each other, never ascending.
       Characters appear at three moments (Silas): the beginning, select screens (shop, upgrades,
       bestiary/fishopedia), and milestone interstitials.
+
+      RESEARCHED-NOT-IMPLEMENTED 2026-08-27 (conductor scheduled session): scoped this out
+      before writing code and found it is not landable as one pass -- releasing the claim
+      rather than shipping a rushed or design-inconsistent diff. Concrete findings for whoever
+      picks this up next: (1) TWO of the eight v1 landmarks (first_evolution,
+      first_rivalry_resolved) have no detectable signal yet -- searched
+      server/utils/aquarium.ts and aquariumEconomy.ts in kind_robots and neither an evolution-
+      progression system nor a live rivalry computation exists server-side at all (only the
+      rivalry_multiplier_override *set-piece* constant is defined, no rivalry detection).
+      Those two milestones cannot fire until their own subsystems land -- this task should
+      either wire the other six now and leave these two defined-but-dormant, or explicitly
+      wait on the (currently unscoped) evolution/rivalry tasks. (2) first_full_tank and
+      first_spotless_tank both need a "full"/"was-ever-high" semantics decision the two-pool
+      capacity split (t-032) never settled: SYSTEMS.md's "every owned slot occupied" and
+      economy.yaml's milestone list both predate setSlotsCap/sizeCap being split into two
+      distinct pools, so "full tank" needs a call on whether it means sizeCap alone,
+      setSlotsCap alone, or both -- and first_spotless_tank needs a "debris was >=80 at some
+      point" flag that nothing currently persists (would need a small new tracked field or to
+      be derived from event history). (3) No background art exists yet for any of the eight
+      milestone rewards -- backgroundKey is read/selected in queries but nothing populates it
+      and no art plates are queued in ART-PROMPTS.md; the UI can fall back to a placeholder
+      same as project cards do, so this does not block shipping code, but the eight background
+      images and Charlotte/Wilbur dialogue lines for eight distinct interstitials are real
+      authored-content work, not incidental. Recommend the next attempt scope itself to the
+      five landmarks that ARE fully computable today (bestiary_5/10/15/20 plus one of
+      first_full_tank/first_spotless_tank once its semantics is picked) rather than all eight
+      at once.
+    claimed_by: scheduled-20260827T215500Z-t028
+    claimed_at: '2026-08-27T21:32:33Z'
+    updated: '2026-08-27T21:35:34Z'
   - id: t-029
     milestone: m3
     title: "Genetics — hidden individual stats, breeding, and secret evolutions"
