@@ -2467,3 +2467,26 @@ tasks:
     claimed_by: scheduled-20260827T202736Z-t052
     claimed_at: '2026-08-27T20:27:37Z'
     updated: '2026-08-27T20:35:16Z'
+
+  - id: t-053
+    milestone: m3
+    title: Generic milestone/bestiary-completion toast (frontend surface for t-018/t-028's backend signals)
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-028
+    note: >-
+      Kaizen from t-028 (bestiary-breakpoint milestones). Two purchase-response
+      signals now exist server-side with zero frontend consumer: t-024/t-018's
+      `justCompletedBestiary` and t-028's `firedMilestones` (bestiary_5/10/15/20,
+      each already applied to setSlotsCap by the time the response arrives). A
+      full Charlotte/Wilbur interstitial with authored dialogue and background
+      art is real content work and explicitly out of scope for this task -- see
+      t-028's note. This task is narrower: a generic, art-agnostic toast/modal
+      triggered by POST /api/aquarium/purchase's response (read
+      justCompletedBestiary and firedMilestones off PurchaseSpeciesResult),
+      naming what was reached (e.g. "5 species collected -- +2 tank slots") with
+      a placeholder/no-art presentation. Makes the mechanical gate playtestable
+      now, ahead of the authored-content pass that replaces it with a real
+      Charlotte interstitial + background reveal later.
