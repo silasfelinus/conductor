@@ -10792,3 +10792,19 @@ records:
     reconstructed the batch's mapping completely. Worth defaulting to log
     recovery before treating an unrecorded mapping as lost, since the
     generating script already prints exactly what's needed.
+- date: 2026-08-27
+  project: conductor
+  task: t-131
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A "shared helper" kaizen suggestion is easy to under-scope by only reading
+    the two callers' surface signatures. Reading both fetch_queue_stats
+    implementations closely first showed one call site (check_render_box.py)
+    needed a swallow-all-exceptions probe contract and the other
+    (recheck_render_queue.py) needed the raised RuntimeError itself, so the
+    shared helper had to raise and let each caller decide -- a naive merge that
+    picked either behavior would have silently broken the other caller.
