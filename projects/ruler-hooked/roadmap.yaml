@@ -489,12 +489,14 @@ tasks:
   - id: t-017
     milestone: m5
     title: Resolve the region-layer format contract before rendering the environment matrix
-    status: ready
+    status: review
     passes: 0
     stakes: reversible
-    owner: null
-    claimed_by: null
-    claimed_at: null
+    owner: worker
+    claimed_by: 2026-08-26T23-claude-ruler-hooked-art
+    claimed_at: '2026-08-26T23:20:00Z'
+    updated: '2026-08-26T23:40:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#2139'
     note: >
       Two shipped specs disagree about what a region layer file actually is, and
       they cannot both be satisfied by one rendered image. docs/art-direction.md
@@ -517,22 +519,36 @@ tasks:
       docs/compositing.md already describes and it does not require re-deriving the
       art direction — but the call is a real one, not a formality.
 
-      Blocks t-018. Found 2026-08-26 while staging the art queue; 37 renders against
-      the wrong contract is 37 wasted renders, which is why the matrix was staged
-      behind a flag rather than submitted.
+      RESOLVED (kind_robots PR #2139) in favour of (a), the compositing spec.
+      ruler-hooked-stage.vue now composites full-frame layers in z-order over one
+      canvas, keeping the banded gradients underneath as the placeholder floor so
+      the artless state and the graceful degradation are unchanged. Verified:
+      vue-tsc exit 0, eslint clean, prettier clean, both headless self-tests ALL
+      PASS, test:layout-contract holds. Not verified: real pixels -- no browser in
+      this sandbox, and no layer art existed yet at the time.
+
+      Storage turned out to need no change, which was not obvious: the pipeline
+      writes to self-hosted media while the compositor asks for a relative
+      /images/ruler-hooked/... path, and those are the same store -- kind_robots'
+      own images route serves /images/** from IMAGES_PATH, which in production is
+      the mounted media root. Confirmed live rather than assumed (key-art-day.webp
+      and characters/warlock-vex.webp both 200, byte-identical to the media origin).
+
+      Flip to done when #2139 merges. Unblocks t-018.
 
   - id: t-018
     milestone: m5
     title: Render the 37-piece region/state/time environment matrix
-    status: waiting
+    status: review
     passes: 0
     stakes: reversible
-    owner: null
+    owner: worker
     depends_on:
       - t-016
       - t-017
-    claimed_by: null
-    claimed_at: null
+    claimed_by: 2026-08-26T23-claude-ruler-hooked-art
+    claimed_at: '2026-08-26T23:30:00Z'
+    updated: '2026-08-26T23:40:00Z'
     note: >
       The full environment layer matrix implied by the live regions manifest in
       kind_robots utils/rulerHooked/content.ts: sky 1x3, far_shore 3x2, treeline

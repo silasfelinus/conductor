@@ -22,18 +22,19 @@ Two lanes, deliberately separated:
               (catch card, lake context, silhouette) derive from one design.
   layer    -- the 37-cell (region, state, time) environment matrix from the
               live regions manifest in kind_robots utils/rulerHooked/content.ts.
-              Emitted only with --include-layers, and INTENTIONALLY NOT staged
-              by default: see the LAYER FORMAT CONFLICT note below.
+              Emitted with --include-layers. Unblocked 2026-08-26 once the
+              format contract was settled -- see LAYER FORMAT, below.
 
-LAYER FORMAT CONFLICT (found 2026-08-26, filed as ruler-hooked/t-017).
-docs/art-direction.md Section 2 specifies each region layer as a full-play-screen
-image with everything outside its depth band transparent. The component that
-actually shipped, components/ruler-hooked/ruler-hooked-stage.vue, renders each
-region as its own flex-1 band with `object-cover` -- roughly a 20:1 strip of the
-viewport -- so a full-frame transparent layer would be cropped to a thin slice of
-its own middle. The two specs cannot both be satisfied by one rendered file, and
-37 renders against the wrong one is 37 wasted renders. Resolve the contract
-first, then run with --include-layers.
+LAYER FORMAT (settled 2026-08-26, ruler-hooked/t-017, kind_robots PR #2139).
+A layer is a FULL-PLAY-SCREEN image, transparent everywhere outside its own depth
+band, registered so the layers stack into one frame -- what docs/art-direction.md
+Section 2 always specified. The shipped component had been drawing each region
+inside its own flex-1 band with `object-cover` (roughly a 20:1 strip), which would
+have cropped a correctly-authored layer to a slice of its own middle; it now
+composites full-frame in z-order over one canvas, with the banded gradients kept
+underneath as the placeholder floor. Staging the matrix was deliberately held
+until that landed, because 37 renders against the losing contract is 37 wasted
+renders.
 
 The cast is read from kind_robots' content bundle so a character added there
 cannot silently miss its portrait. Scene/UI concepts have no upstream source, so
@@ -645,9 +646,16 @@ REGION_BASE = {
     ),
 }
 
+# Per art-direction.md Section 2 and the contract t-017 settled: the layer occupies
+# its own horizontal depth band and the rest of the frame is empty, so the layers
+# register against one another on one canvas. Stated as the wanted result ("the
+# rest of the frame empty") rather than as an exclusion pile, per the prompt
+# contract -- and "transparent" is deliberately avoided as a prompt word, since a
+# diffusion model renders a checkerboard when asked for transparency.
 LAYER_TAIL = (
-    "single horizontal depth band filling the frame edge to edge, flat-ish banded "
-    "depth, no characters other than tiny ambient background figures"
+    "a single horizontal depth band of scenery running edge to edge across the "
+    "frame, the rest of the frame empty flat open sky, flat-ish banded depth, "
+    "scenery only, at most a few tiny ambient background figures"
 )
 
 
