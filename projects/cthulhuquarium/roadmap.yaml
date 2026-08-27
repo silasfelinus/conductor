@@ -2378,7 +2378,7 @@ tasks:
   - id: t-051
     milestone: m3
     title: Balance-pass decor pricing and decide whether a placement cap is needed
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -2397,6 +2397,25 @@ tasks:
       problem (visual clutter, canvas draw cost at scale) worth a
       decorSlotsCap column -- or whether "purely cosmetic and unlimited" is
       simply fine and this task should close as a no-op.
+
+      RESOLVED as no-op, 2026-08-27: reviewed all six DECOR_CATALOG costs
+      (server/utils/aquariumEconomy.ts) against the RARITY_TIERS anchor -- pebble_bed 10 (0.2x
+      COMMON), driftwood 20 (0.4x COMMON), coral_spire 50 (1.0x COMMON), glow_kelp 100 (0.5x
+      UNCOMMON), sunken_chest 200 (1.0x UNCOMMON), ceramic_ruin 750 (1.0x RARE). The curve is
+      internally consistent: item density tapers as rarity rises (3 COMMON-fraction items, 2
+      UNCOMMON-fraction items, 1 RARE flagship item), matching the same anchor-against-rarity-
+      tier convention SET_PIECE_CATALOG already uses -- not an arbitrary guess, a deliberate
+      taper. Decor is purely cosmetic (DecorConfig has no economy-multiplier field, unlike
+      fish or set pieces), so a mispriced item is a coin-sink imbalance at worst, not an
+      exploit or a blocked progression path -- low stakes either way. Placement cap: leaving
+      it uncapped for v1. No design doc (SYSTEMS.md/ECONOMY.md/DESIGN-BRIEF.md) calls for one,
+      decor does not feed slots_cap or any production multiplier, and the two real risks a cap
+      would address -- visual clutter and canvas draw cost at scale -- are rendering/UX
+      concerns best judged by watching actual usage, not by guessing a placement number now
+      with no data to anchor it to (same real-play-data gap t-019 hit). Closing as a straight
+      no-op rather than leaving this open on a hypothetical, per the tasks own explicitly
+      allowed exit. Revisit only if real usage surfaces an actual clutter/perf complaint.
+    updated: '2026-08-27T21:31:15Z'
 
   - id: t-052
     milestone: m3
