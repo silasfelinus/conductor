@@ -620,12 +620,12 @@ tasks:
   - id: t-019
     milestone: m3
     title: "Balance pass on real play data"
-    status: claimed
-    owner: worker
+    status: needs-human
+    owner: null
     passes: 0
     stakes: reversible
     depends_on: t-016
-    note: >
+    note: >-
       Play it, instrument it, and retune balance.yaml against what actually happens rather
       than what the t-004 simulation predicted. Specifically check: is the first 10 minutes
       engaging with zero upgrades, does the mid-game stall, and is offline income tuned so a
@@ -645,9 +645,30 @@ tasks:
       paying in something other than room -- backgrounds already exist as a non-capacity
       reward and every milestone in the file already grants one. Left for this task rather
       than guessed at, because it is exactly the kind of number that wants play data.
+
+      FOR SILAS: t-019 (balance pass on real play data) is blocked in this sandboxed session
+      -- no live DB access, no aquarium telemetry/analytics endpoint exists yet, and the
+      sandbox cannot itself generate real player sessions to observe. What it contains: the
+      task asks for two things -- (1) tune hunger/debris/offline-income feel against real
+      player behavior (first-10-minutes engagement, mid-game stall, offline reward feel),
+      which needs an actual play session to judge; (2) extend the bestiary-breakpoint
+      milestone ladder past bestiary_20 (20/151 species currently covered) -- a prior session
+      (2026-08-25, recorded in economy.yaml and roadmap.yaml t-032) deliberately deferred this
+      specifically to real play data, because a naive linear extension (20 more breakpoints at
+      +2 each) would push slots_cap past 50 and trivialize the tank-packing design the game is
+      built around. TO APPROVE, pick one: (a) play the aquarium yourself for a stretch and
+      tell the next session how it actually feels plus what final slots_cap the milestone
+      ladder should land on (the note in economy.yaml already sketches the shape: decelerating
+      breakpoints, terminates well below 151 species, later breakpoints pay in backgrounds
+      rather than room) -- the next session then applies it as a straight data commit; or (b)
+      explicitly say you want an agent to estimate defensible numbers from the design docs
+      alone, clearly labeled as an un-playtested estimate rather than tuned-from-real-data.
+      Set status back to ready with your answer (or the numbers themselves) in the note and it
+      unblocks immediately -- nothing else is gating it.
     claimed_by: scheduled-20260827T215500Z-t019
     claimed_at: '2026-08-27T21:27:39Z'
-    updated: '2026-08-27T21:27:39Z'
+    updated: '2026-08-27T21:30:54Z'
+    soft_gate: true
 
   - id: t-020
     milestone: m3
@@ -2387,8 +2408,8 @@ tasks:
   - id: t-051
     milestone: m3
     title: Balance-pass decor pricing and decide whether a placement cap is needed
-    status: claimed
-    owner: worker
+    status: done
+    owner: null
     passes: 0
     stakes: reversible
     depends_on: t-017
@@ -2406,9 +2427,25 @@ tasks:
       problem (visual clutter, canvas draw cost at scale) worth a
       decorSlotsCap column -- or whether "purely cosmetic and unlimited" is
       simply fine and this task should close as a no-op.
-    claimed_by: scheduled-20260827T215500Z-t051
-    claimed_at: '2026-08-27T21:31:00Z'
-    updated: '2026-08-27T21:31:00Z'
+
+      RESOLVED as no-op, 2026-08-27: reviewed all six DECOR_CATALOG costs
+      (server/utils/aquariumEconomy.ts) against the RARITY_TIERS anchor -- pebble_bed 10 (0.2x
+      COMMON), driftwood 20 (0.4x COMMON), coral_spire 50 (1.0x COMMON), glow_kelp 100 (0.5x
+      UNCOMMON), sunken_chest 200 (1.0x UNCOMMON), ceramic_ruin 750 (1.0x RARE). The curve is
+      internally consistent: item density tapers as rarity rises (3 COMMON-fraction items, 2
+      UNCOMMON-fraction items, 1 RARE flagship item), matching the same anchor-against-rarity-
+      tier convention SET_PIECE_CATALOG already uses -- not an arbitrary guess, a deliberate
+      taper. Decor is purely cosmetic (DecorConfig has no economy-multiplier field, unlike
+      fish or set pieces), so a mispriced item is a coin-sink imbalance at worst, not an
+      exploit or a blocked progression path -- low stakes either way. Placement cap: leaving
+      it uncapped for v1. No design doc (SYSTEMS.md/ECONOMY.md/DESIGN-BRIEF.md) calls for one,
+      decor does not feed slots_cap or any production multiplier, and the two real risks a cap
+      would address -- visual clutter and canvas draw cost at scale -- are rendering/UX
+      concerns best judged by watching actual usage, not by guessing a placement number now
+      with no data to anchor it to (same real-play-data gap t-019 hit). Closing as a straight
+      no-op rather than leaving this open on a hypothetical, per the tasks own explicitly
+      allowed exit. Revisit only if real usage surfaces an actual clutter/perf complaint.
+    updated: '2026-08-27T21:31:15Z'
 
   - id: t-052
     milestone: m3
