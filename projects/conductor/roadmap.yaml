@@ -4309,7 +4309,7 @@ tasks:
   - id: t-131
     milestone: null
     title: Give consume_art_queue.py a shared "GET queue stats" helper for callers of /api/art/queue/stats
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     owner: worker
@@ -4322,6 +4322,13 @@ tasks:
       that endpoint reuse one implementation instead of a third copy appearing next
       time. Small, reversible, self-contained -- no behavior change to either
       existing caller.
+
+      Merged as silasfelinus/conductor#2970 (squash a634bfe). Moved fetch_queue_stats into
+      consume_art_queue_core.py; check_render_box.py and recheck_render_queue.py both now
+      reuse it instead of each carrying their own copy of the URL/window-param/http_json
+      plumbing. Full pytest suite green (1291 passed, 1 skipped, 35 subtests); verified both
+      callers' real runtime output unchanged against live kindrobots.org after the refactor.
     claimed_by: claude-scheduled-20260827T060306Z-c-t131
     claimed_at: '2026-08-27T06:03:11Z'
-    updated: '2026-08-27T06:04:08Z'
+    updated: '2026-08-27T06:07:43Z'
+    implementation_pr: 'silasfelinus/conductor#2970'
