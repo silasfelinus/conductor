@@ -4,7 +4,7 @@ ledger tool (conductor/t-081). No real network calls: fetch_queue_stats is
 monkeypatched or urlopen is monkeypatched at the urllib layer.
 """
 
-import json
+import sys
 from pathlib import Path
 
 import pytest
@@ -206,56 +206,25 @@ def test_append_entry_missing_log_marker_raises(tmp_path):
         recheck.append_entry(None, "growing", "x", ledger_path=ledger)
 
 
-def test_fetch_queue_stats_requires_token(monkeypatch):
-    monkeypatch.setattr(recheck, "KR_API_TOKEN", "")
+def test_fetch_queue_stats_is_the_shared_core_helper():
+    """recheck_render_queue no longer carries its own GET /api/art/queue/stats
+    plumbing -- it imports consume_art_queue_core's fetch_queue_stats, the same
+    helper check_render_box.py's probe wraps (conductor/t-131). The full
+    token/success/error-handling behavior of that helper is covered by
+    tests/test_consume_art_queue.py; this just guards against a local
+    redefinition quietly reintroducing a second copy here. (Module identity
+    can't be asserted directly: recheck_render_queue imports it unqualified
+    off a sys.path insert, so it lands in sys.modules as a separate
+    "consume_art_queue_core" entry from the "scripts.consume_art_queue_core"
+    one this test suite imports -- same source, two module objects.)"""
+    assert recheck.fetch_queue_stats.__module__ == "consume_art_queue_core"
+
+
+def test_fetch_queue_stats_requires_token_via_recheck(monkeypatch):
+    monkeypatch.setattr(
+        sys.modules[recheck.fetch_queue_stats.__module__], "KR_API_TOKEN", ""
+    )
     with pytest.raises(RuntimeError, match="KR_API_TOKEN"):
-        recheck.fetch_queue_stats()
-
-
-def test_fetch_queue_stats_returns_data(monkeypatch):
-    monkeypatch.setattr(recheck, "KR_API_TOKEN", "fake-token")
-
-    class FakeResp:
-        def read(self):
-            return json.dumps({"success": True, "data": SAMPLE_DATA}).encode()
-
-        def __enter__(self):
-            return self
-
-        def __exit__(self, *exc):
-            return False
-
-    monkeypatch.setattr(recheck.urllib.request, "urlopen", lambda req, timeout=None: FakeResp())
-    data = recheck.fetch_queue_stats()
-    assert data == SAMPLE_DATA
-
-
-def test_fetch_queue_stats_raises_on_unsuccessful_payload(monkeypatch):
-    monkeypatch.setattr(recheck, "KR_API_TOKEN", "fake-token")
-
-    class FakeResp:
-        def read(self):
-            return json.dumps({"success": False, "message": "nope"}).encode()
-
-        def __enter__(self):
-            return self
-
-        def __exit__(self, *exc):
-            return False
-
-    monkeypatch.setattr(recheck.urllib.request, "urlopen", lambda req, timeout=None: FakeResp())
-    with pytest.raises(RuntimeError, match="unsuccessful payload"):
-        recheck.fetch_queue_stats()
-
-
-def test_fetch_queue_stats_raises_on_http_error(monkeypatch):
-    monkeypatch.setattr(recheck, "KR_API_TOKEN", "fake-token")
-
-    def raise_http_error(req, timeout=None):
-        raise recheck.urllib.error.HTTPError(req.full_url, 403, "Forbidden", {}, None)
-
-    monkeypatch.setattr(recheck.urllib.request, "urlopen", raise_http_error)
-    with pytest.raises(RuntimeError, match="HTTP 403"):
         recheck.fetch_queue_stats()
 
 

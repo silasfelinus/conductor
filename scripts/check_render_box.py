@@ -125,24 +125,21 @@ def render_throughput_verdict(data):
 
 
 def fetch_queue_stats():
-    """The full queue stats `data` block, or None."""
+    """The full queue stats `data` block, or None.
+
+    Delegates to consume_art_queue_core's shared fetch_queue_stats (conductor/
+    t-131) -- this is the "must never raise" probe side of that helper, so any
+    failure (missing token, unreachable, bad payload) just means "no opinion"
+    rather than a hard stop.
+    """
     try:
         import consume_art_queue as consumer
     except ImportError:
         return None
-    if not consumer.KR_API_TOKEN:
-        return None
     try:
-        status, response = consumer.http_json(
-            "GET",
-            f"{consumer.KR_BASE_URL}/api/art/queue/stats"
-            f"?window={THROUGHPUT_WINDOW_HOURS}",
-        )
+        return consumer.fetch_queue_stats(window_hours=THROUGHPUT_WINDOW_HOURS)
     except Exception:  # noqa: BLE001 - a probe must never raise
         return None
-    if status != 200 or not response or not response.get("success"):
-        return None
-    return response.get("data")
 
 
 def main():
