@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-27T18:48:12Z
+Generated: 2026-08-27T19:01:19Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **788**
-- Outcomes: blocked: 15, cancelled: 1, done: 772
+- Closed tasks recorded: **789**
+- Outcomes: blocked: 15, cancelled: 1, done: 773
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 83 | 100% |
 | conductor-app | 4 | 100% |
-| cthulhuquarium | 20 | 100% |
+| cthulhuquarium | 21 | 100% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
@@ -68,7 +68,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 772 | 99% |
+| software | 773 | 99% |
 
 ## Failure categories
 
@@ -89,6 +89,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-27 `cthulhuquarium/t-017` — A genuinely novel feature with no prior in-repo precedent (no decor code, no established real drag-and-drop convention) is worth a research-only Explore pass before writing any implementation code -- confirmed via grep across the whole repo that the only `draggable` attribute anywhere was unwired dead code in stage-manager.vue, which settled the design decision (native Pointer Events over introducing a DnD dependency) before any code was written instead of discovering it mid-implementation.
+Extending an existing shared Prisma select (publicAquariumDetailSelect) to carry a new relation is often enough to satisfy a "visible to visitors" style requirement with zero new routes -- check whether the read path already flows through a shared select before assuming a new endpoint is needed.
 - 2026-08-27 `cthulhuquarium/t-023` — A task whose deliverable is content (two authored Character/Bot voice pairs) can be fully "done" even when a downstream, standard-rule step (generated portrait art) is stalled by unrelated infra -- don't conflate "the content is complete" with "everything the task mentions has happened." Splitting them (ship the records now, file the infra fault as its own needs-human task, note the exact idempotent retry command in both the roadmap note and the PR) kept the real deliverable from being held hostage by a render-box hardware problem outside this task's control.
 Cross-check any ComfyUI failure signature against `GET /api/art/queue/stats` and TALKBACK before assuming it's novel -- this exact `CLIPTextEncode hostbuf_file_reader_read` string was already diagnosed and closed once (ai-art-academy/t-068, disk13 cable) less than 24 hours earlier, so the right move was flagging a likely recurrence with full context, not re-diagnosing from scratch.
 - 2026-08-27 `cthulhuquarium/t-016` — A task note's "may pause or redirect income briefly" is a soft option, not a requirement -- reading the HARD CONSTRAINT amendment in full ("no event may take anything away") before designing anything showed that every event kind could be built as a coin bonus or a zero-effect cosmetic beat, sidestepping the real complexity of an actual accounted income pause for a barely-noticeable player-facing difference. Explicit scope-decision comments (in the YAML, the TS, and the PR body) on why the pause was skipped make that a documented choice a reviewer can challenge, not a silent gap they'd have to notice on their own.
@@ -101,8 +103,6 @@ Operational note for future sessions: `git reset --hard origin/<branch>` silentl
 - 2026-08-27 `cthulhuquarium/t-012` — Before implementing a "wire the shop" task, read what the prior task already shipped -- t-011 had already wired buy-food and species-unlock end-to-end (including auto-placement), so the real remaining gap was a design-intent violation already visible in the diff (the field note was rendered pre-unlock, contradicting the task's own "reveals on first unlock, not before" note), not a missing feature. Checking sibling tasks' depends_on graph (t-026 depends_on t-012, status: waiting) also confirmed "buy upgrades" from this task's note was intentionally deferred, not a gap in this task.
 - 2026-08-27 `ruler-hooked/t-021` — A heavier cross-repo implementation task (kind_robots code, ~800 lines, three distinct pieces) was claimed and implemented start-to-finish before ever touching the conductor roadmap, since the code work itself needed no roadmap edit until close-out. A different concurrent session claimed the same task in the roadmap mid-implementation with no way to see this session was already deep into it. No work was lost -- this session's implementation was complete and merged first, so the close-out simply documented the collision and pointed the other session at main -- but the gap was real: claiming the conductor task BEFORE starting the cross-repo code (not only recording it after), even though the roadmap edit itself isn't needed until later, would have surfaced the collision to the other session immediately instead of after both sides had sunk effort in.
 
-- 2026-08-27 `interface-vision/t-121` — A trivial, verified-clean 2-file markup diff took 6 attempts and ~50 minutes of retries for kind_robots' required Contract verifiers check to actually complete, stalling at a different step nearly every time (install, several individual per-file contracts, and 3 of 6 times specifically at the full-repo ESLint ratchet step) despite the exact same script finishing in seconds locally against the identical diff -- pure CI-infra flakiness, not a code problem. Confirming the script itself is clean locally before assuming a hung required check reflects a real diff issue saved real time; filed conductor/t-132 to track the pattern (esp. the ESLint-ratchet-specific recurrence) for future diagnosis rather than re-deriving it next time.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-27T18:48:12Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-27T19:01:19Z_
