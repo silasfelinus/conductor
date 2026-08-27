@@ -3206,7 +3206,7 @@ tasks:
   - id: t-105
     milestone: m6
     title: "Polish every reachable Kind Robots surface page-by-page"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     recurring: true
@@ -3324,7 +3324,29 @@ tasks:
       by a GitHub-wide Actions platform outage in the prior session; the outage cleared and
       all 37 checks passed (Contract Tests, TypeScript, layout-contract, facet-catalog, etc).
       Re-arming to ready for the next t-105 slice.
-    updated: '2026-08-27T05:49:01Z'
+
+      Slice: polished the Projects overview header (components/pages/conductor-project-
+      gallery-page.vue). Prior state had no page-level header at all -- it opened straight
+      into the create-project form / drift-detection panels / project list, the one gap among
+      the sibling views (AppmakerPage, PortosPage, ConductorPitchManager) reachable through
+      the same conductor-manager.vue workspace switch, all of which already carry the icon-
+      badge + title/subtitle header pattern. Added the established header (kind-icon:gallery
+      badge -- matching the icon already assigned to the project object's gallery view in
+      utils/scripts/coreObjectRoutes.ts -- 2xl bold title 'Projects', 60%-opacity subtitle)
+      matching portos-page.vue's closest-sibling shape (same embedded-default-view role, no
+      back button since this page IS the overview). Template/classes only, no script or store
+      changes. Verified: eslint clean, vue-tsc --noEmit clean, npm run test:layout-contract
+      holds (0 new violations, same pre-existing video-lora-picker.vue viewport-grid baseline
+      note as every prior slice), prettier --check flags pre-existing drift on this file
+      confirmed via git stash to predate this change, left alone. Merged as
+      silasfelinus/kind_robots#2140 (squash 5a6649f) with all 37 PR checks green (TypeScript,
+      Contract verifiers, layout-contract, facet-catalog, GitGuardian, verify x3, full
+      Storybook/Narrative contract suite) and mergeable_state clean before merge. Kaizen
+      suggestion for the next slice: re-survey pages/music-mentor.vue and pages/coloring-
+      page.vue, both of which use an emoji + bare bold text instead of the icon-badge
+      container. Return the reusable page-polish task to ready for the next visual-review
+      slice.
+    updated: '2026-08-27T05:55:52Z'
     implementation_pr: 'silasfelinus/kind_robots#2140'
     owner: worker
     claimed_by: claude-scheduled-20260827T052904Z-iv-t105
