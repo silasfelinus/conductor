@@ -4309,10 +4309,10 @@ tasks:
   - id: t-131
     milestone: null
     title: Give consume_art_queue.py a shared "GET queue stats" helper for callers of /api/art/queue/stats
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    owner: null
+    owner: worker
     note: >-
       Kaizen from t-130 (2026-08-26, conductor PR #2949): check_render_box.py's
       fetch_queue_stats() and recheck_render_queue.py's own fetch_queue_stats() each
@@ -4322,3 +4322,6 @@ tasks:
       that endpoint reuse one implementation instead of a third copy appearing next
       time. Small, reversible, self-contained -- no behavior change to either
       existing caller.
+    claimed_by: claude-scheduled-20260827T060306Z-c-t131
+    claimed_at: '2026-08-27T06:03:11Z'
+    updated: '2026-08-27T06:03:11Z'
