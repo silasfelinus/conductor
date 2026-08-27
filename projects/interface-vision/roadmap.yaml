@@ -3536,11 +3536,12 @@ tasks:
   - id: t-121
     milestone: m6
     title: "Kaizen: polish pages/music-mentor.vue and pages/coloring-page.vue headers to the icon-badge pattern"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     owner: worker
     note: "Kaizen from the t-105 slice that polished conductor-project-gallery-page.vue (2026-08-27, kind_robots PR #2140). Two top-level route pages still use an emoji + bare bold text instead of the established icon-badge + title/subtitle header pattern: pages/music-mentor.vue (a plain <p class=\"text-2xl font-bold\">🎤 Music Mentor</p>, though it does already have a subtitle paragraph) and pages/coloring-page.vue (a <span> emoji plus a text-2xl font-black title and a 'New' badge, but no icon-badge container). Both are real, reachable, non-router, non-legal, non-custom-HUD pages -- straightforward next candidates for the same treatment t-105's other slices have applied. Small, reversible, self-contained; do one or both in a single slice depending on scope."
     claimed_by: claude-scheduled-20260827T063115Z-iv-t121
     claimed_at: '2026-08-27T06:31:16Z'
-    updated: '2026-08-27T06:38:26Z'
+    updated: '2026-08-27T06:53:06Z'
+    implementation_pr: 'silasfelinus/kind_robots#2141'
