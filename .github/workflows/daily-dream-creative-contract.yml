@@ -4,16 +4,22 @@ on:
   pull_request:
     paths:
       - "projects/dream-cycle/backlog/**"
+      - "projects/dream-cycle/revisions/*-request.json"
       - "scripts/author_dream_proposal.py"
       - "scripts/build_dream_proposal.py"
+      - "scripts/apply_dream_revision.py"
+      - "scripts/preflight_dream_revisions.py"
       - "scripts/check_dream_creative_contract.py"
   push:
     branches:
       - main
     paths:
       - "projects/dream-cycle/backlog/**"
+      - "projects/dream-cycle/revisions/*-request.json"
       - "scripts/author_dream_proposal.py"
       - "scripts/build_dream_proposal.py"
+      - "scripts/apply_dream_revision.py"
+      - "scripts/preflight_dream_revisions.py"
       - "scripts/check_dream_creative_contract.py"
   workflow_dispatch:
 
@@ -34,7 +40,8 @@ jobs:
 
       - run: pip install pyyaml
 
-      - name: Check changed steering proposals
+      - name: Resolve comparison base
+        id: compare
         shell: bash
         env:
           EVENT_NAME: ${{ github.event_name }}
@@ -48,9 +55,24 @@ jobs:
           else
             base="HEAD^"
           fi
-          mapfile -t files < <(git diff --name-only "$base" HEAD -- 'projects/dream-cycle/backlog/*.md')
+          echo "base=$base" >> "$GITHUB_OUTPUT"
+
+      - name: Check changed steering proposals
+        shell: bash
+        run: |
+          mapfile -t files < <(git diff --name-only "${{ steps.compare.outputs.base }}" HEAD -- 'projects/dream-cycle/backlog/*.md')
           if (( ${#files[@]} == 0 )); then
             echo "No changed Daily Dream proposals."
-            exit 0
+          else
+            python scripts/check_dream_creative_contract.py "${files[@]}"
           fi
-          python scripts/check_dream_creative_contract.py "${files[@]}"
+
+      - name: Preflight changed creative-reset requests
+        shell: bash
+        run: |
+          mapfile -t files < <(git diff --name-only "${{ steps.compare.outputs.base }}" HEAD -- 'projects/dream-cycle/revisions/*-request.json')
+          if (( ${#files[@]} == 0 )); then
+            echo "No changed Daily Dream creative-reset requests."
+          else
+            python scripts/preflight_dream_revisions.py "${files[@]}"
+          fi
