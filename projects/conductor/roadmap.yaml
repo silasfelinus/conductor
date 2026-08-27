@@ -4382,4 +4382,28 @@ tasks:
       verifies. kind_robots#2141 was left open through this, eventually merged once
       attempt 6 (or later) actually completed green -- this task tracks the underlying
       CI-health question, not that PR's own outcome.
-    updated: '2026-08-27T07:06:00Z'
+
+      Second occurrence, same day (2026-08-27, later, scheduled conductor sweep session):
+      kind_robots#2161 (cthulhuquarium/t-028, a small 3-file additive backend change).
+      First attempt (job 98695620393, run 33123396419 attempt 1) sat `in_progress` for
+      24+ minutes with zero step progress visible via the Actions API (no per-step detail
+      surfaced for that attempt before it was cancelled -- unlike attempt 2 below, this
+      confirms the job can hang somewhere the check-runs summary alone doesn't show
+      step-level detail for an in-progress run, worth remembering when triaging future
+      occurrences). Cancelled and reran once via `rerun_failed_jobs`, per AGENTS.md's
+      "re-run at most once" rule. Attempt 2 (job 98696592310, started 22:44:35) initially
+      progressed completely normally -- all steps 1-70 completed within ~2 minutes,
+      including `ESLint ratchet` (step 32) finishing in 50s, well within its usual range --
+      then stalled at step 71, "Capture-group guard checker self-test", sitting
+      `in_progress` with zero further step progress for 5+ minutes and counting as of this
+      note. This is the first occurrence where the hang step was neither "ESLint ratchet"
+      nor an early dispatch/install step, and the first where a *rerun* also stalled (all
+      four prior stalls referenced above were first-attempt hangs) -- both data points
+      argue harder for genuine platform-level Actions runner flakiness (a wedged runner
+      process, not anything about this specific step's own logic) over a repo-content or
+      single-step-specific cause. Per the "re-run at most once" rule this session did not
+      attempt a third try; kind_robots#2161 was left open, unmerged, for a later session or
+      Silas to just re-check CI and merge once green -- the PR's actual content was already
+      fully verified locally (vue-tsc, eslint, prettier, and the relevant unit test suite
+      all clean) before this stall, same as every prior occurrence's PR.
+    updated: '2026-08-27T22:52:00Z'
