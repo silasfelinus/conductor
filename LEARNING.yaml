@@ -11039,3 +11039,24 @@ records:
     diagnosed and closed once (ai-art-academy/t-068, disk13 cable) less
     than 24 hours earlier, so the right move was flagging a likely
     recurrence with full context, not re-diagnosing from scratch.
+- date: 2026-08-27
+  project: cthulhuquarium
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A genuinely novel feature with no prior in-repo precedent (no decor code, no
+    established real drag-and-drop convention) is worth a research-only Explore
+    pass before writing any implementation code -- confirmed via grep across the
+    whole repo that the only `draggable` attribute anywhere was unwired dead code
+    in stage-manager.vue, which settled the design decision (native Pointer Events
+    over introducing a DnD dependency) before any code was written instead of
+    discovering it mid-implementation.
+
+    Extending an existing shared Prisma select (publicAquariumDetailSelect) to
+    carry a new relation is often enough to satisfy a "visible to visitors" style
+    requirement with zero new routes -- check whether the read path already flows
+    through a shared select before assuming a new endpoint is needed.

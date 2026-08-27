@@ -584,7 +584,7 @@ tasks:
   - id: t-017
     milestone: m3
     title: "Tank decoration and layout editing"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -595,7 +595,7 @@ tasks:
       persisted per tank, visible to visitors browsing that tank.
     claimed_by: scheduled-20260827T182736Z-t017
     claimed_at: '2026-08-27T18:27:39Z'
-    updated: '2026-08-27T18:42:17Z'
+    updated: '2026-08-27T18:53:57Z'
     implementation_pr: 'silasfelinus/kind_robots#2157'
 
   - id: t-018
@@ -2342,3 +2342,26 @@ tasks:
       this task added is not the only place a stat can newly appear, just the
       only one that currently exists. Waiting on t-029 rather than ready,
       since there's nothing to wire against yet.
+
+  - id: t-051
+    milestone: m3
+    title: Balance-pass decor pricing and decide whether a placement cap is needed
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-017
+    note: >-
+      Kaizen from t-017 (tank decoration). DECOR_CATALOG's six costs are a
+      genuine guess priced against RARITY_TIERS as an anchor -- economy.yaml
+      has no decor-pricing section to draw from, same "flagged for a future
+      balance pass" gap SET_PIECE_CATALOG's own costs started with. Also
+      uncapped in v1 (no per-tank limit on placed decor count, unlike
+      setSlotsCap/sizeCap's two counted pools) since nothing in the design
+      docs called for one and it's purely cosmetic. Once there's real play
+      data (or even just a gut-check after living with it), revisit both:
+      whether the six costs feel right relative to what a coin actually buys
+      elsewhere, and whether an uncapped decor count ever becomes a real
+      problem (visual clutter, canvas draw cost at scale) worth a
+      decorSlotsCap column -- or whether "purely cosmetic and unlimited" is
+      simply fine and this task should close as a no-op.
