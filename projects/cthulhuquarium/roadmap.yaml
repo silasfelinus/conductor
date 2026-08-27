@@ -2299,3 +2299,25 @@ tasks:
       gate both loops on document.hidden / a visibilitychange listener, resume cleanly
       on foreground.
 
+  - id: t-049
+    milestone: m2
+    title: "Roaming Collector set piece: a distinct moving automaton sprite"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-026
+    note: >-
+      Kaizen from t-026 (set pieces). economy.yaml's own roaming_collector entry calls
+      for it to "visibly move around the tank" (Silas's own note that it should move --
+      "it is a thing to watch"), distinct from idle_hoarder which is a pure stat.
+      t-026 implemented both as economically identical (a settleTick income-bonus
+      fraction, non-stacking with idle_hoarder) but did not add a distinct visual --
+      there is no existing "drifting collectible" sprite class for it to animate
+      picking up. This task adds a small automaton sprite to
+      cthulhuquarium-game.vue's canvas renderer, active only while roaming_collector is
+      equipped, that visibly drifts the tank and periodically "collects" a passing
+      mote (cosmetic only -- the actual coin credit still comes from settleTick, this
+      sprite must never invent its own income path). Purely a rendering addition,
+      independently reversible.
+
