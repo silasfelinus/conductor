@@ -761,8 +761,8 @@ tasks:
   - id: t-024
     milestone: m3
     title: "Bestiary completion — make the collection the win state it was decided to be"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-015
@@ -780,6 +780,9 @@ tasks:
       cannot be un-collected and completion cannot be reset. If a later build retires a
       species from the bible, an already-collected one stays collected (the seed script's
       isActive=false path exists for exactly this).
+    claimed_by: 20260827T1132Z-cq-t024
+    claimed_at: '2026-08-27T11:33:00Z'
+    updated: '2026-08-27T11:33:00Z'
   - id: t-025
     milestone: m1
     title: "Settle the systems layer — slot economy, rivalry, and what a milestone is"
