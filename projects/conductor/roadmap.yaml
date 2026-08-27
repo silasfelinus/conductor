@@ -4332,3 +4332,54 @@ tasks:
     claimed_at: '2026-08-27T06:03:11Z'
     updated: '2026-08-27T06:07:43Z'
     implementation_pr: 'silasfelinus/conductor#2970'
+
+  - id: t-132
+    milestone: m2
+    title: "kind_robots' required 'Contract verifiers' check's 'ESLint ratchet' step repeatedly hangs mid-run"
+    status: needs-human
+    gate_human: false
+    soft_gate: true
+    owner: null
+    stakes: reversible
+    passes: 0
+    note: >
+      Observed 2026-08-27 on silasfelinus/kind_robots#2141 (interface-vision/t-121, a
+      trivial 2-file template-only header polish -- pages/music-mentor.vue and
+      pages/coloring-page.vue). `Contract verifiers` is a required check on kind_robots
+      (unlike conductor's own non-required `Python test suite`/`Analyze
+      (javascript-typescript)` stalls documented in t-124/t-106 -- this one cannot be
+      merged past). Across 6 consecutive attempts (initial run + 5 cancel/rerun cycles,
+      each waited 5-15+ minutes with zero step progress before retrying), the job hung
+      at a DIFFERENT step nearly every time -- Install dependencies (twice), Route
+      gallery contract, the very first Set up job step, and the "ESLint ratchet" step
+      specifically 3 of the 6 times (steps 5-31, the ~300-step job's normal per-step
+      contracts, always completed in 1-2s each when the job was moving at all; only
+      "ESLint ratchet" itself, a full-repo `npx eslint` run via
+      `utils/scripts/verifyLintRatchet.ts` / `npm run test:lint-ratchet`, ever sat
+      in_progress for 10-20+ minutes with the job otherwise idle). Ran the exact same
+      script locally against the same branch/diff: completed in a few seconds
+      (`ESLint ratchet: 335 problem(s) across 24 rule(s) (-57)`, ratchet holds) --
+      confirms this is not the diff's content or the script's own logic, and not
+      something a local `timeout 120s` run reproduces. githubstatus.com showed a string
+      of real Actions incidents in the prior 24-48h (job queue saturation Aug 26 15:02-
+      15:45 UTC, start delays from a node disk failure Aug 24, an Actions/PRs
+      degradation resolved the morning of Aug 27) -- consistent with, but not
+      conclusively proving, platform-level flakiness rather than a kind_robots-repo-
+      specific cause. The step recurring 3/6 times specifically (vs. the other stalls
+      being one-offs at varied steps) is the one data point that doesn't fully fit
+      "purely random dispatch noise" -- worth checking whether ESLint's cache/memory
+      footprint on a fresh `npm ci` install (no warm `.eslintcache`) is disproportionately
+      likely to hit a resource-constrained runner's ceiling compared to the job's other,
+      much smaller per-file/per-manifest contract checks. Investigate: (a) whether this
+      reproduces on other kind_robots PRs/days going forward, and whether it's always
+      "ESLint ratchet" specifically when the job does stall mid-run (vs. earlier-step
+      dispatch stalls, which look like ordinary runner-provisioning flakiness); (b)
+      whether `contract-tests.yml`'s `ESLint ratchet` step (or the whole `Contract
+      verifiers` job) needs an explicit `timeout-minutes` so a genuine hang fails loud
+      instead of silently blocking a required check indefinitely with no signal; (c)
+      whether enabling ESLint's cache (`--cache`) in `test:lint-ratchet`/CI specifically
+      would reduce memory/CPU pressure on that one step without changing what it
+      verifies. kind_robots#2141 was left open through this, eventually merged once
+      attempt 6 (or later) actually completed green -- this task tracks the underlying
+      CI-health question, not that PR's own outcome.
+    updated: '2026-08-27T07:06:00Z'
