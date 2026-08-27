@@ -1052,8 +1052,8 @@ tasks:
   - id: t-031
     milestone: m3
     title: "The Ichthyonomicon — the record that makes everything else safe"
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
     depends_on: t-024
@@ -1075,6 +1075,9 @@ tasks:
       needs to the already-shipped t-007 family as an additive migration. Do not add them
       ad hoc here -- check t-032 landed first, and extend it rather than opening a second
       migration path into the same tables.
+    claimed_by: claude-scheduled-20260827T152745Z-cq-t031
+    claimed_at: '2026-08-27T15:27:46Z'
+    updated: '2026-08-27T15:27:46Z'
   - id: t-032
     milestone: m2
     title: "Extend the aquarium schema for every decision made after t-007 shipped"
