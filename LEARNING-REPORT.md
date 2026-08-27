@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-27T04:39:58Z
+Generated: 2026-08-27T04:50:31Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **774**
-- Outcomes: blocked: 15, cancelled: 1, done: 758
+- Closed tasks recorded: **776**
+- Outcomes: blocked: 15, cancelled: 1, done: 760
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 82 | 100% |
 | conductor-app | 4 | 100% |
-| cthulhuquarium | 10 | 100% |
+| cthulhuquarium | 12 | 100% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
@@ -68,7 +68,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 758 | 99% |
+| software | 760 | 99% |
 
 ## Failure categories
 
@@ -89,6 +89,10 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-27 `cthulhuquarium/t-045` — A slug-to-artImageId mapping that "only exists in job logs" is still fully recoverable, not a hard gap -- get_job_logs with a generous tail_lines covered the whole relevant step, and simple regex extraction over the consume_art_queue_core.py's own printed "DONE ... (ArtImage {id})" lines reconstructed the batch's mapping completely. Worth defaulting to log recovery before treating an unrecorded mapping as lost, since the generating script already prints exactly what's needed.
+
+- 2026-08-27 `cthulhuquarium/t-046` — A generator bug that was already root-caused and fixed (t-044's self-referential image_path) still had zero regression coverage until this task -- verifying a fix by hand once is not the same as making it impossible to reintroduce silently. Confirming a new test actually fails against the pre-fix code (not just passes against the post-fix code) is what makes a regression test trustworthy rather than a tautology.
+
 - 2026-08-27 `cthulhuquarium/t-044` — A batch generator that writes image_path == the staging directory consume_art_queue_core.py itself renders into is a self-referential destination for every entry it will ever produce, not an occasional edge case -- distribute_images.py's own self-referential-path guard (added the day before to stop a crash) had already surfaced this exact shape once and the root cause was deferred as "still open"; it recurred immediately on the very next batch through the same generator. When a bug's fix note says the root cause is open, treat the next batch that touches the same code path as a live suspect before assuming a downstream "unmatched"/"no-op" result is unrelated.
 
 - 2026-08-27 `ruler-hooked/t-017` — The task's own note already named its exact done condition ('flip to done when #2139 merges') -- reconciling status after a companion cross-repo PR merges is a one-line check against that condition, not a re-review of the work.
@@ -101,10 +105,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-26 `interface-vision/t-104` — Slice 52: before searching fresh, checked slice 39's flagged runner-up candidate (user-manager.vue's managerError/"Unknown user tab" notices) against the roadmap note history first and found slice 40 had already closed it -- avoided a wasted duplicate-work search. The actual fix this slice (watchlist-browse.vue's errorMessage banner missing font-semibold) was found by grepping for the exact hand-rolled kr-note shape and then confirming a genuine live sibling inconsistency via a second, narrower grep for the same errorMessage variable/aria-live wrapper pattern already converted elsewhere (newsfeed-feed.vue) -- cheap to check and turns a plausible-looking candidate into a documented, not-blind substitution matching the standing "same element rendering two different ways across sibling components" rule.
 
-- 2026-08-26 `mandarin-tutor/t-017` — A Pinia store method entangled with Nuxt/user-store runtime (loadCloudState) can still get real regression coverage without a mock framework: extracting its merge decision (server-authoritative, local-only entries kept and re-pushed) into two pure functions in a plain utils module, then having the store call them, made the logic testable with node:assert alone -- same pattern as server/utils/mandarinSrs.ts. No behavior changed; the store's call sites shrank from inline set-difference logic to two function calls.
-
-- 2026-08-26 `mandarin-tutor/t-016` — Mirroring an already-established pattern exactly (MandarinCardProgress's userId-scalar-ownership, house JSON-as-serialized-text convention, upsert-by- client-generated-id) made a full-stack task (migration + 3 endpoints + store wiring) verifiable and mergeable in one pass with zero CI churn. The one design call worth flagging for future similar tasks: syncing a whole client-owned collection (customSets) as a full-array replace-on-every-mutation is tempting for simplicity but risks a second device's unsynced local mutation clobbering a set the first device already pushed -- upserting one item at a time by its client-generated id sidesteps that without needing real conflict resolution.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-27T04:39:58Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-27T04:50:31Z_
