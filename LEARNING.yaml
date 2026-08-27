@@ -10882,3 +10882,24 @@ records:
     depends_on graph (t-026 depends_on t-012, status: waiting) also confirmed
     "buy upgrades" from this task's note was intentionally deferred, not a
     gap in this task.
+- date: 2026-08-27
+  project: cthulhuquarium
+  task: t-013
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    An "offline income" task can be mostly already shipped by an earlier
+    task with a different name -- t-009/t-011 had already built the full
+    server-authoritative settleTick/lastTickAt settlement (8h cap, 0.5x
+    multiplier, coins only ever server-incremented) before this task was
+    ever picked up. Reading the existing store/component flow end-to-end
+    before writing anything found the real remaining gap was narrower and
+    different from what the title suggests: the "welcome back" moment was
+    an easy-to-miss inline banner instead of "one clear panel," and the
+    Clean button (a different task's, t-027's, active-play channel) fired
+    one write per click with no batching. Claimed the conductor task before
+    starting the cross-repo kind_robots implementation this time, per the
+    lesson recorded in this same day's ruler-hooked/t-021 collision.
