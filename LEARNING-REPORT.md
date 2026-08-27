@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-27T21:39:26Z
+Generated: 2026-08-27T21:47:39Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **792**
-- Outcomes: blocked: 15, cancelled: 1, done: 776
+- Closed tasks recorded: **794**
+- Outcomes: blocked: 16, cancelled: 1, done: 777
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 83 | 100% |
 | conductor-app | 4 | 100% |
-| cthulhuquarium | 24 | 100% |
+| cthulhuquarium | 26 | 96% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
@@ -68,14 +68,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 776 | 99% |
+| software | 778 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
 | quality | 14 |
-| actionable | 11 |
+| actionable | 12 |
 | transient | 11 |
 | scope | 2 |
 
@@ -84,11 +84,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - project `coat-dance` — 11% success over 9 closed tasks; aim the next kaizen task here
 - kind `content` — 44% success over 16 closed tasks; aim the next kaizen task here
 - failure category `quality` — 14 occurrences; look for the shared cause across its records
-- failure category `actionable` — 11 occurrences; look for the shared cause across its records
+- failure category `actionable` — 12 occurrences; look for the shared cause across its records
 - failure category `transient` — 11 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-08-27 `cthulhuquarium/t-019` — "Retune against real play data" cannot be satisfied by a sandboxed agent session when no telemetry/analytics path exists yet and the session has no way to generate a real multi-session player history itself -- this is an actionable failure (missing access to the core input the task needs), not a quality failure, so it does not burn a pass. A prior session (2026-08-25) had already flagged the milestone-ladder half of this task as needing play data specifically to avoid a naive fix (linear breakpoint extension) that would silently undermine an intentional design constraint (the tank-packing problem) -- worth trusting that prior judgment rather than re-deriving new numbers from design docs alone and asserting they're tuned, when they would actually just be another guess.
+- 2026-08-27 `cthulhuquarium/t-051` — A balance-pass task that explicitly allows a no-op exit does not need real play data to close well -- reviewing DECOR_CATALOG's six costs against the existing RARITY_TIERS anchor (already the established convention SET_PIECE_CATALOG uses) surfaced a deliberate taper, not a guess, and was enough to confirm the pricing rather than requiring telemetry this sandbox cannot produce. Worth distinguishing from t-019 in the same session: a task is only genuinely blocked on real data when its own note requires *feel* (does the pacing feel right) rather than *consistency* (does this number follow the pattern the rest of the file already sets).
 - 2026-08-27 `cthulhuquarium/t-049` — Adding a purely cosmetic canvas sprite (roaming collector automaton) went fastest by mirroring an existing sibling pattern in the same file -- SWIM_SPEED_SET_KIND's equipped-set-piece read, and the swimmer/mote step+render split -- rather than inventing a new structure. Keeping the change client-rendering-only (no economy/API touch, since settleTick already owns the real roaming_collector income bonus server-side) kept the task genuinely reversible and let the existing aquarium-economy and aquarium-touch test suites stand as sufficient verification without a live browser.
 - 2026-08-27 `cthulhuquarium/t-052` — A kaizen task that names the exact fix (add User: { isRestricted: false } to listPublicTanks, matching the leaderboard's already-shipped filter) is a fast, low-risk pickup for a scheduled sweep -- no design judgment needed, just apply the established pattern and verify with the existing aquarium test suites. Worth favoring these small, precisely-scoped kaizen followups when a session needs to pick one task with minimal ambiguity.
 - 2026-08-27 `cthulhuquarium/t-018` — A "leave it alone; it is funnier untouched" design note doesn't mean skip the feature -- it means build the plain, understated version and resist adding flourish, foreshadowing, or extra UI weight around it. Read against SYSTEMS.md/DESIGN-BRIEF.md's finale-foreshadowing section before starting confirmed the task's own note (rank by species collected, display names only) was the complete spec, with the "leave it alone" line steering tone (no finale hints near it) rather than scope.
@@ -101,8 +103,6 @@ Cross-check any ComfyUI failure signature against `GET /api/art/queue/stats` and
 Operational note for future sessions: `git reset --hard origin/<branch>` silently discards ANY uncommitted local change in the working tree, not just changes on the branch you're resetting -- including an edit to a file the session made earlier in the SAME repo checkout for unrelated reasons (here: an economy.yaml edit made before claiming the task, lost by a later `git checkout main && git reset --hard origin/main` done purely to refresh state after a different PR's merge). Caught by grepping for the expected content immediately after the reset rather than assuming the working tree still held it; redone from scratch. The safer sequence when a local edit must survive a state refresh: check `git status` for uncommitted changes before any `reset --hard`, or commit/stash first.
 - 2026-08-27 `cthulhuquarium/t-014` — A task whose server API already shipped under an earlier task (t-009 built the browse/[username]/[slug] endpoints "frontend/UI wiring is separate scope, not built here") is real remaining work, not a duplicate -- reading that prior task's completion note up front correctly scoped this one to default-visibility + a one-click toggle + the two frontend pages, instead of re-deriving or re-building the already-shipped server side. The layout contract's one-header rule caught both new pages rendering their own <h1> on the first test:layout-contract run; switching to <h2> (matching the existing pages/play/challenges/* convention, since these are plain Nuxt pages with no content-frontmatter shell) fixed it in one pass.
 - 2026-08-27 `cthulhuquarium/t-048` — A kaizen task with no depends_on and a well-scoped note (pause two named loops on visibilitychange, resume the same way they started) is often genuinely a single-session, single-file change -- extracting startLoops()/stopLoops() from the existing onMounted/onBeforeUnmount bodies with zero behavior change on mount/unmount, then wiring a visibilitychange listener around them, needed no schema, no new test infra, and no design decisions left open. Verified by type-check + lint + reasoning about the extracted control flow rather than a new automated test, since no test harness for this component's mount lifecycle existed to extend.
-- 2026-08-27 `cthulhuquarium/t-031` — A record's schema and its consumers can land in different tasks without a gap: t-032 already added AquariumCodexEntry.bestStat* columns and t-024 already built the collected/fieldNote codex view, so t-031 was "wire the already-decided record's remaining two features into the existing view" rather than a new screen. Both new features (best-individual-stats, re-order) are provable no-ops today because their upstream dependencies (t-029 genetics, t-030 sell-back) haven't landed -- writing unit tests for the pure merge function (mergeBestStats) that assert the both-null case explicitly, rather than skipping coverage for "nothing to test yet," is what makes that correctly-inert-for-now claim verifiable instead of just asserted.
-- 2026-08-27 `cthulhuquarium/t-026` — A task's own economy.yaml section can already contain the full balance spec before any code exists -- set_pieces (all seven kinds, exact effect values) was fully authored in a prior session's economy.yaml edit, so this task was really "wire an already-decided spec into code" rather than "design set pieces from scratch." Reading the data file's own comments (no_stack_idle_effects, the debris_skimmer/click_clears sync note) surfaced constraints that would otherwise have needed a second pass to discover. The one real design gap economy.yaml left open was equip pricing, which it explicitly named as this task's job to fill in -- anchoring those to RARITY_TIERS rather than inventing unrelated numbers kept the new values traceable the same way every other price in the file already is.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-27T21:39:26Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-27T21:47:39Z_
