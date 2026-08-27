@@ -1,0 +1,78 @@
+name: Daily Dream Creative Contract
+
+on:
+  pull_request:
+    paths:
+      - "projects/dream-cycle/backlog/**"
+      - "projects/dream-cycle/revisions/*-request.json"
+      - "scripts/author_dream_proposal.py"
+      - "scripts/build_dream_proposal.py"
+      - "scripts/apply_dream_revision.py"
+      - "scripts/preflight_dream_revisions.py"
+      - "scripts/check_dream_creative_contract.py"
+  push:
+    branches:
+      - main
+    paths:
+      - "projects/dream-cycle/backlog/**"
+      - "projects/dream-cycle/revisions/*-request.json"
+      - "scripts/author_dream_proposal.py"
+      - "scripts/build_dream_proposal.py"
+      - "scripts/apply_dream_revision.py"
+      - "scripts/preflight_dream_revisions.py"
+      - "scripts/check_dream_creative_contract.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  creative-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install pyyaml
+
+      - name: Resolve comparison base
+        id: compare
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PUSH_BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          if [[ "$EVENT_NAME" == "pull_request" && -n "$PR_BASE_SHA" ]]; then
+            base="$PR_BASE_SHA"
+          elif [[ "$EVENT_NAME" == "push" && -n "$PUSH_BEFORE_SHA" && "$PUSH_BEFORE_SHA" != "0000000000000000000000000000000000000000" ]]; then
+            base="$PUSH_BEFORE_SHA"
+          else
+            base="HEAD^"
+          fi
+          echo "base=$base" >> "$GITHUB_OUTPUT"
+
+      - name: Check changed steering proposals
+        shell: bash
+        run: |
+          mapfile -t files < <(git diff --name-only "${{ steps.compare.outputs.base }}" HEAD -- 'projects/dream-cycle/backlog/*.md')
+          if (( ${#files[@]} == 0 )); then
+            echo "No changed Daily Dream proposals."
+          else
+            python scripts/check_dream_creative_contract.py "${files[@]}"
+          fi
+
+      - name: Preflight changed creative-reset requests
+        shell: bash
+        run: |
+          mapfile -t files < <(git diff --name-only "${{ steps.compare.outputs.base }}" HEAD -- 'projects/dream-cycle/revisions/*-request.json')
+          if (( ${#files[@]} == 0 )); then
+            echo "No changed Daily Dream creative-reset requests."
+          else
+            python scripts/preflight_dream_revisions.py "${files[@]}"
+          fi
