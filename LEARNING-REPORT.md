@@ -1,15 +1,15 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-27T00:43:30Z
+Generated: 2026-08-27T01:32:34Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **769**
-- Outcomes: blocked: 15, cancelled: 1, done: 753
+- Closed tasks recorded: **771**
+- Outcomes: blocked: 15, cancelled: 1, done: 755
 - Success rate: **98%**
-- Average passes on successful tasks: **0.2**
+- Average passes on successful tasks: **0.1**
 
 ## By project
 
@@ -52,7 +52,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | music-mentor | 1 | 100% |
 | newsfeed | 20 | 100% |
 | packmaker | 10 | 100% |
-| ruler-hooked | 4 | 100% |
+| ruler-hooked | 6 | 100% |
 | scene-animator | 2 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
@@ -68,7 +68,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 753 | 99% |
+| software | 755 | 99% |
 
 ## Failure categories
 
@@ -89,6 +89,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-26 `ruler-hooked/t-020` — A rejected suggestion can still contain a real finding: Silas preferred the existing presets over his own six-ruler proposal, but that proposal named the age gap (no child ruler) the presets actually had.
+- 2026-08-26 `ruler-hooked/t-016` — Pinning one character as a constant for cross-piece consistency silently makes that character the product's default; parameterize the cast and name the hero instead.
 - 2026-08-26 `cthulhuquarium/t-043` — An existing generic pattern (server/utils/entityArt.ts, already wired for Character/Scenario/Reward/etc.) doesn't have to be extended to cover every entity with art fields -- Monster's fields are shaped identically but the actual need (link an already-generated ArtImage id directly, admin-only, no owner concept) was narrower than that system's generate/upload/history workflow. A small dedicated route was less code and easier to review than threading a new case through six switch statements in a shared file built for a different job.
 
 - 2026-08-26 `conductor/t-130` — check_render_box.py's render_throughput_verdict short-circuited on "any completion in the window is healthy," hiding a stale RUNNING claim with a PENDING backlog behind older completions -- the distinguishing signal (staleRunningCount, queueDepth.PENDING) was already in the same stats payload the caller fetches and just wasn't being read. When a health-check function ignores fields already present in its input, check whether the unused fields are exactly the signal needed before reaching for a new API call or backend change.
@@ -105,10 +107,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-25 `mandarin-tutor/t-014` — GitHub serves raw .json files from raw.githubusercontent.com with Content-Type: text/plain, not application/json -- ofetch's default JSON auto-parsing keys off that header, so a $fetch call against such a URL with no explicit parseResponse/responseType override silently returns the raw response text instead of a parsed value. Confirmed directly against the live pinned source rather than assuming from the error message: without an override the response was a raw string, with `parseResponse: (t) => JSON.parse(t)` it parsed correctly. Any future $fetch against a raw.githubusercontent.com JSON file should pass an explicit parseResponse rather than relying on content-type sniffing -- checked the rest of server/ for the same pattern and found none left unguarded (mandarinCharacterData.ts already used responseType: 'text' with manual per-line JSON.parse for its NDJSON source, so it was never exposed).
 
-- 2026-08-25 `scene-animator/t-004` — Batch-level retryFailed already existed server-side (enqueue.post.ts) and client-side (store.enqueue(true)) before this task -- the task's "failed-job retry" ask was really about per-source (single-card) retry, a narrower gap. Adding an optional sourceFile filter to the existing enqueue loop reused all its dedupe/reuse logic for free rather than duplicating it. For "per-folder completion summary," computing it from the ArtJob rows already fetched for the index endpoint (grouped by each job's own sourceFolder/sourceFile) was far cheaper than the literal reading -- re-hashing every source file's bytes across every folder would have multiplied an already per-file-read+sha256 cost by folder count for a feature that only needs a rough count.
-
-- 2026-08-25 `kind-robots/t-070` — Both code halves of t-070 (the ResourceType enum values and conductor's localPath-prefix-table entries) had already been merged by an earlier session the same day -- re-check `git log`/`git diff` for the actual claimed scope before assuming a `ready` roadmap task still needs code work; it can be a stale status with only an operational follow-up left. That follow-up (one live-DB row mistyped before the new enum values existed) didn't need DB access at all: the app's own authenticated PATCH /api/resources/{id} endpoint made the correction in one call, which is worth reaching for before assuming a live-DB data fix is out of a sandboxed session's reach.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-27T00:43:30Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-27T01:32:34Z_
