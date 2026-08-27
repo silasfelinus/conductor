@@ -11085,3 +11085,18 @@ records:
     existing feature the new one actually depends on for consent semantics --
     not just grepping for the first consent-shaped flag in the schema -- kept
     the leaderboard consistent with the browse page it extends.
+- date: "2026-08-27"
+  project: cthulhuquarium
+  task: t-052
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A kaizen task that names the exact fix (add User: { isRestricted: false }
+    to listPublicTanks, matching the leaderboard's already-shipped filter) is
+    a fast, low-risk pickup for a scheduled sweep -- no design judgment
+    needed, just apply the established pattern and verify with the existing
+    aquarium test suites. Worth favoring these small, precisely-scoped kaizen
+    followups when a session needs to pick one task with minimal ambiguity.
