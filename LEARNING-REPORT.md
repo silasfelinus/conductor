@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-27T03:28:20Z
+Generated: 2026-08-27T03:39:54Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **773**
-- Outcomes: blocked: 15, cancelled: 1, done: 757
+- Closed tasks recorded: **774**
+- Outcomes: blocked: 15, cancelled: 1, done: 758
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -52,7 +52,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | music-mentor | 1 | 100% |
 | newsfeed | 20 | 100% |
 | packmaker | 10 | 100% |
-| ruler-hooked | 7 | 100% |
+| ruler-hooked | 8 | 100% |
 | scene-animator | 2 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
@@ -68,7 +68,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 757 | 99% |
+| software | 758 | 99% |
 
 ## Failure categories
 
@@ -92,6 +92,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-27 `cthulhuquarium/t-044` — A batch generator that writes image_path == the staging directory consume_art_queue_core.py itself renders into is a self-referential destination for every entry it will ever produce, not an occasional edge case -- distribute_images.py's own self-referential-path guard (added the day before to stop a crash) had already surfaced this exact shape once and the root cause was deferred as "still open"; it recurred immediately on the very next batch through the same generator. When a bug's fix note says the root cause is open, treat the next batch that touches the same code path as a live suspect before assuming a downstream "unmatched"/"no-op" result is unrelated.
 
 - 2026-08-27 `ruler-hooked/t-017` — The task's own note already named its exact done condition ('flip to done when #2139 merges') -- reconciling status after a companion cross-repo PR merges is a one-line check against that condition, not a re-review of the work.
+- 2026-08-26 `ruler-hooked/t-017` — Two coherent specs in different repos can contradict each other indefinitely when nothing connects them; the art direction said layers are full-frame and transparent outside their band while the component cropped each to a 20:1 strip, and only generating against it surfaced the conflict.
 - 2026-08-26 `ruler-hooked/t-020` — A rejected suggestion can still contain a real finding: Silas preferred the existing presets over his own six-ruler proposal, but that proposal named the age gap (no child ruler) the presets actually had.
 - 2026-08-26 `ruler-hooked/t-016` — Pinning one character as a constant for cross-piece consistency silently makes that character the product's default; parameterize the cast and name the hero instead.
 - 2026-08-26 `cthulhuquarium/t-043` — An existing generic pattern (server/utils/entityArt.ts, already wired for Character/Scenario/Reward/etc.) doesn't have to be extended to cover every entity with art fields -- Monster's fields are shaped identically but the actual need (link an already-generated ArtImage id directly, admin-only, no owner concept) was narrower than that system's generate/upload/history workflow. A small dedicated route was less code and easier to review than threading a new case through six switch statements in a shared file built for a different job.
@@ -104,8 +105,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-26 `mandarin-tutor/t-016` — Mirroring an already-established pattern exactly (MandarinCardProgress's userId-scalar-ownership, house JSON-as-serialized-text convention, upsert-by- client-generated-id) made a full-stack task (migration + 3 endpoints + store wiring) verifiable and mergeable in one pass with zero CI churn. The one design call worth flagging for future similar tasks: syncing a whole client-owned collection (customSets) as a full-array replace-on-every-mutation is tempting for simplicity but risks a second device's unsynced local mutation clobbering a set the first device already pushed -- upserting one item at a time by its client-generated id sidesteps that without needing real conflict resolution.
 
-- 2026-08-26 `mandarin-tutor/t-012` — "Prepare the domain for mobile clients" turned out to be an audit task, not a build task -- the portable pieces (header-token auth via requireApiUser, durable hash-keyed media identity, 100% server-side curriculum/SRS logic) were already in place from earlier tasks (t-004, t-009, t-015) without anyone framing them as "mobile-ready." Reading the actual auth guard and store persistence code before assuming a scoping task needs new architecture found the one real gap (customSets/ artJobs still localStorage-only) precisely, and let the task close as documentation plus one correctly-scoped follow-up (t-016) instead of either over-building or guessing at what was missing.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-27T03:28:20Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-27T03:39:54Z_
