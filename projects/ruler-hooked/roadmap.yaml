@@ -605,8 +605,8 @@ tasks:
   - id: t-020
     milestone: m5
     title: Stop the ruler defaulting to one body; ship ruler cosmetic presets as art
-    status: needs-human
-    soft_gate: true
+    status: done
+    approved_by_human: true
     passes: 0
     stakes: reversible
     owner: worker
@@ -644,14 +644,30 @@ tasks:
       It is now `RULER_PRESETS` with a named `HERO_RULER_ID` for the matched set,
       so the consistency survives and the default does not.
 
-      TO APPROVE: the open question is scope, not looks (the look is settled by
-      t-016). Does this range cover what the character creator should offer, and is
-      the honorific list -- King / Queen / Sovereign / Regent / Matriarch /
-      Chieftain / Monarch -- the right starting set, or do you want free text? Your
-      answer is the spec t-021 builds to. Set approved_by_human: true and status:
-      done, or note what to add.
+      APPROVED (Silas, in session 2026-08-26): "those rulers are better than my
+      suggestions, no reason to stick with speciesism" -- the nonhuman presets stay,
+      and the range is endorsed as the basis for t-021.
 
-      Soft gate: t-021 can start against the current presets and adjust.
+      EXTENDED to twelve on the same message. Silas's first instinct was "six
+      different rulers... little boy and girl, middle aged, and old", and although
+      he then preferred the existing eight, that message identified a real gap the
+      eight did not cover: they ran young-adult to elderly with no ruler who is
+      actually a CHILD. That is the most on-theme age the premise has -- a kid who
+      would rather fish than rule is not shirking, so the joke lands differently and
+      better. Added boy-king-tobin (~8), girl-queen-marisol (~9), cub-prince-bramble
+      (bear-cub-folk child) and elder-tortoise-yew (fills elderly x nonhuman), as
+      ArtJobs 10012-10015. Deliberately a spread rather than a boy/girl pair: Silas
+      flagged the binary himself ("I hate to be binary") in the same breath as
+      asking for both, so the set answers the ask and keeps going past it.
+
+      Twelve presets now span child to centuries-old, five species, and every
+      presentation across them. Adding a thirteenth is one dict entry plus one
+      render, so the count is not a design commitment.
+
+      STILL OPEN, moved to t-021 rather than held here: Silas's "Not sure if that is
+      better than doing customized overlays." That is an architecture question about
+      how the creator composes a ruler, not about this art, and t-021 carries the
+      recommendation.
     claimed_by: 2026-08-26T23-claude-ruler-hooked-art
     claimed_at: '2026-08-26T23:00:00Z'
     updated: '2026-08-26T23:05:00Z'
@@ -692,10 +708,39 @@ tasks:
           later (they are cosmetic-only by design, so there is no reason to lock
           them at creation).
 
-      t-020's eight presets are the art this builds against; each already exists at
-      public/images/ruler-hooked/ruler/<id>.webp. Starting before t-020 is approved
-      is fine -- the preset list may grow, and the code should read it as data
-      rather than hardcode eight ids.
+      t-020's twelve presets are the art this builds against, at
+      public/images/ruler-hooked/ruler/<id>.webp. Read the list as data; do not
+      hardcode ids, since adding a preset is one dict entry plus one render.
+
+      PRESETS OR OVERLAYS -- Silas, 2026-08-26: "Not sure if that is better than
+      doing customized overlays." Recommendation: presets for the figure, free text
+      for the words, and overlays only where registration is genuinely free.
+
+      A composable overlay creator (pick a body, then a skin, then a crown) needs
+      every part drawn to a shared skeleton with consistent anchor points. Diffusion
+      models do not produce registered separable parts -- each render reinvents the
+      proportions, so a crown generated against one body sits wrong on the next.
+      Getting real overlays means a deliberately drawn paper-doll set, which is an
+      illustration commission rather than a pipeline run. That is a legitimate thing
+      to want, and it should be chosen knowingly, not arrived at by discovering the
+      generator cannot do it.
+
+      Presets do not have that problem, and Silas's own "art is cheap" is the reason
+      they win: a coherent new ruler costs one dict entry and one render, the
+      compositor already swaps whole files by key so no new compositing axis is
+      needed, and every preset is guaranteed internally consistent because one
+      render drew all of it. The cost is combinatorial range -- twelve fixed figures
+      instead of a body x skin x crown product.
+
+      Two axes are free either way and should be free-form regardless: `honorific`
+      and the ruler's name are pure data, no art, and they are the customisation
+      that reads as most personal. Widen `honorific` past King|Queen|other to free
+      text with the twelve titles as suggestions.
+
+      If the combinatorial range turns out to matter more than the coherence, the
+      upgrade path is additive: keep presets as base figures and add a small set of
+      overlays that do not need tight registration (a held item, a colour tint on
+      the robes), rather than rebuilding the figure as parts.
 
   - id: t-022
     milestone: m5

@@ -221,6 +221,43 @@ RULER_PRESETS = [
         "warm tan fur, an enormous crown resting on both ears at once, seated on a "
         "stack of unread royal ledgers, holding a rod three times their length",
     },
+    # Child rulers, added 2026-08-26 on Silas's read of the first eight: "we can do
+    # little boy and girl, middle aged, and old rulers". The eight above already ran
+    # young-adult to elderly; a ruler who is actually a CHILD was the real gap, and
+    # it is the most on-theme age the premise has -- a kid who would rather fish
+    # than rule is not shirking, which makes the joke land differently and better.
+    #
+    # Deliberately a spread rather than a boy/girl pair: Silas flagged the binary
+    # himself ("I hate to be binary") in the same breath as asking for both, so the
+    # set answers the ask and keeps going past it.
+    {
+        "id": "boy-king-tobin",
+        "title": "King",
+        "look": "a small boy king of about eight, pale skin and a mop of red hair, "
+        "a crown far too big for him pushed back off his forehead, ceremonial robes "
+        "puddling around him, feet nowhere near the ground and swinging",
+    },
+    {
+        "id": "girl-queen-marisol",
+        "title": "Queen",
+        "look": "a small girl queen of about nine, warm brown skin and two tight "
+        "buns, a gap-toothed look of total concentration, a crown pinned firmly in "
+        "place because she checked, sleeves shoved up past her elbows",
+    },
+    {
+        "id": "cub-prince-bramble",
+        "title": "Prince",
+        "look": "a bear-cub-folk child ruler, round and shaggy in brown fur, a "
+        "circlet of woven river-reeds instead of gold, enormous paws entirely "
+        "unsuited to a delicate reel, deeply serious about the task",
+    },
+    {
+        "id": "elder-tortoise-yew",
+        "title": "Sovereign",
+        "look": "an immensely old tortoise-folk sovereign, mossy shell and a "
+        "kindly wrinkled face, a crown worn smooth by centuries, moving at a pace "
+        "that suggests the fish will simply have to wait",
+    },
 ]
 RULER_BY_ID = {preset["id"]: preset for preset in RULER_PRESETS}
 
