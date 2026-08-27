@@ -10843,3 +10843,24 @@ records:
     assuming a hung required check reflects a real diff issue saved real time;
     filed conductor/t-132 to track the pattern (esp. the ESLint-ratchet-specific
     recurrence) for future diagnosis rather than re-deriving it next time.
+- date: 2026-08-27
+  project: ruler-hooked
+  task: t-021
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A heavier cross-repo implementation task (kind_robots code, ~800 lines,
+    three distinct pieces) was claimed and implemented start-to-finish before
+    ever touching the conductor roadmap, since the code work itself needed no
+    roadmap edit until close-out. A different concurrent session claimed the
+    same task in the roadmap mid-implementation with no way to see this
+    session was already deep into it. No work was lost -- this session's
+    implementation was complete and merged first, so the close-out simply
+    documented the collision and pointed the other session at main -- but the
+    gap was real: claiming the conductor task BEFORE starting the cross-repo
+    code (not only recording it after), even though the roadmap edit itself
+    isn't needed until later, would have surfaced the collision to the other
+    session immediately instead of after both sides had sunk effort in.
