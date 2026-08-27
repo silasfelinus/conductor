@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-27T15:53:33Z
+Generated: 2026-08-27T16:00:04Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **784**
-- Outcomes: blocked: 15, cancelled: 1, done: 768
+- Closed tasks recorded: **785**
+- Outcomes: blocked: 15, cancelled: 1, done: 769
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 83 | 100% |
 | conductor-app | 4 | 100% |
-| cthulhuquarium | 16 | 100% |
+| cthulhuquarium | 17 | 100% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
@@ -68,7 +68,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 768 | 99% |
+| software | 769 | 99% |
 
 ## Failure categories
 
@@ -89,6 +89,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-27 `cthulhuquarium/t-048` — A kaizen task with no depends_on and a well-scoped note (pause two named loops on visibilitychange, resume the same way they started) is often genuinely a single-session, single-file change -- extracting startLoops()/stopLoops() from the existing onMounted/onBeforeUnmount bodies with zero behavior change on mount/unmount, then wiring a visibilitychange listener around them, needed no schema, no new test infra, and no design decisions left open. Verified by type-check + lint + reasoning about the extracted control flow rather than a new automated test, since no test harness for this component's mount lifecycle existed to extend.
 - 2026-08-27 `cthulhuquarium/t-031` — A record's schema and its consumers can land in different tasks without a gap: t-032 already added AquariumCodexEntry.bestStat* columns and t-024 already built the collected/fieldNote codex view, so t-031 was "wire the already-decided record's remaining two features into the existing view" rather than a new screen. Both new features (best-individual-stats, re-order) are provable no-ops today because their upstream dependencies (t-029 genetics, t-030 sell-back) haven't landed -- writing unit tests for the pure merge function (mergeBestStats) that assert the both-null case explicitly, rather than skipping coverage for "nothing to test yet," is what makes that correctly-inert-for-now claim verifiable instead of just asserted.
 - 2026-08-27 `cthulhuquarium/t-026` — A task's own economy.yaml section can already contain the full balance spec before any code exists -- set_pieces (all seven kinds, exact effect values) was fully authored in a prior session's economy.yaml edit, so this task was really "wire an already-decided spec into code" rather than "design set pieces from scratch." Reading the data file's own comments (no_stack_idle_effects, the debris_skimmer/click_clears sync note) surfaced constraints that would otherwise have needed a second pass to discover. The one real design gap economy.yaml left open was equip pricing, which it explicitly named as this task's job to fill in -- anchoring those to RARITY_TIERS rather than inventing unrelated numbers kept the new values traceable the same way every other price in the file already is.
 - 2026-08-27 `cthulhuquarium/t-013` — An "offline income" task can be mostly already shipped by an earlier task with a different name -- t-009/t-011 had already built the full server-authoritative settleTick/lastTickAt settlement (8h cap, 0.5x multiplier, coins only ever server-incremented) before this task was ever picked up. Reading the existing store/component flow end-to-end before writing anything found the real remaining gap was narrower and different from what the title suggests: the "welcome back" moment was an easy-to-miss inline banner instead of "one clear panel," and the Clean button (a different task's, t-027's, active-play channel) fired one write per click with no batching. Claimed the conductor task before starting the cross-repo kind_robots implementation this time, per the lesson recorded in this same day's ruler-hooked/t-021 collision.
@@ -103,8 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-27 `cthulhuquarium/t-045` — A slug-to-artImageId mapping that "only exists in job logs" is still fully recoverable, not a hard gap -- get_job_logs with a generous tail_lines covered the whole relevant step, and simple regex extraction over the consume_art_queue_core.py's own printed "DONE ... (ArtImage {id})" lines reconstructed the batch's mapping completely. Worth defaulting to log recovery before treating an unrecorded mapping as lost, since the generating script already prints exactly what's needed.
 
-- 2026-08-27 `cthulhuquarium/t-046` — A generator bug that was already root-caused and fixed (t-044's self-referential image_path) still had zero regression coverage until this task -- verifying a fix by hand once is not the same as making it impossible to reintroduce silently. Confirming a new test actually fails against the pre-fix code (not just passes against the post-fix code) is what makes a regression test trustworthy rather than a tautology.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-27T15:53:33Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-27T16:00:04Z_
