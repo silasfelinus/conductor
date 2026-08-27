@@ -545,7 +545,7 @@ tasks:
   - id: t-018
     milestone: m5
     title: Render the 37-piece region/state/time environment matrix
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     owner: worker
@@ -554,7 +554,7 @@ tasks:
       - t-017
     claimed_by: claude-scheduled-20260827T070751-rh-t018
     claimed_at: '2026-08-27T07:07:52Z'
-    updated: '2026-08-27T07:07:52Z'
+    updated: '2026-08-27T07:08:04Z'
     note: >-
       The full environment layer matrix implied by the live regions manifest in
       kind_robots utils/rulerHooked/content.ts: sky 1x3, far_shore 3x2, treeline
@@ -579,6 +579,22 @@ tasks:
       unblocked work (run build_ruler_hooked_art_queue.py --include-layers, submit the 37
       renders, verify delivery) rather than leaving it looking already-submitted-and-pending-
       review when it isn't.
+
+      Verified in-flight delivery (2026-08-27, this session): the 37-asset batch was already
+      submitted to the ArtJob queue by auto-art-generate.yml automation (commit f97ccdb,
+      06:13:07Z) -- all 37 entries carry last_art_job_id 10020-10056, none still 'Deliberately
+      not staged'. Spot-checked queue health via recheck_render_queue.py: PENDING=46 (all-
+      time, spans other lanes too), RUNNING=2, no recentFailed; oldest pending age ~5.4h,
+      engine=COMFY. Cross-checked projects/art-prompts.yaml directly: 16/37 layer entries
+      status=done, 21/37 still status=pending (ids 10036-10056), none failed. curl-verified
+      all 16 'done' source_urls on https://media.acrocatranch.com -- all 16 return HTTP 200
+      and serve real image bytes; delivery lands on self-hosted media directly per auto-art-
+      generate.yml's design ('Kind Robots image binaries are no longer checked out or
+      committed by this workflow'), so an empty local/git public/images/ruler-hooked is
+      expected, not a failure signal. No code or roadmap changes needed beyond this
+      verification -- draining normally, nothing stuck. Leaving status=ready (not done) since
+      21/37 assets have not landed yet; next session/automation should re-run this same spot-
+      check and only flip to done once all 37 verify 200.
 
   - id: t-019
     milestone: m5
