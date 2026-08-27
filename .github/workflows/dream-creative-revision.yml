@@ -48,6 +48,13 @@ jobs:
           printf 'Revision requests:\n'
           cat /tmp/dream-revision-files.txt
 
+      - name: Preflight all creative revisions
+        if: steps.pending.outputs.found == 'true'
+        shell: bash
+        run: |
+          mapfile -t files < /tmp/dream-revision-files.txt
+          python scripts/preflight_dream_revisions.py "${files[@]}"
+
       - name: Patch source and live Daily Dream entities
         if: steps.pending.outputs.found == 'true'
         shell: bash
