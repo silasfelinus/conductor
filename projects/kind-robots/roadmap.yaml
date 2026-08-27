@@ -2789,70 +2789,20 @@ tasks:
   - id: t-075
     milestone: m3
     title: "Drop Character.size — and it needs the REVERSE deploy order from an add"
-    status: needs-human
+    status: ready
     gate_human: false
-    owner: worker
     passes: 0
     stakes: irreversible
-    note: >-
-      `Character.size` is dead weight as of cthulhuquarium/t-038
-      (kind_robots#2093): nothing reads it any more, the aquarium tables point at
-      Monster, and Monster carries its own `size`. It exists only because fish were
-      briefly going to be Character records, and it is the column that took production
-      down in t-071.
-      THE REASON THIS IS ITS OWN TASK IS THE DEPLOY ORDER, WHICH IS BACKWARDS FROM EVERY
-      OTHER MIGRATION THIS PROJECT HAS RUN. An ADD is migrate-then-deploy: the new client
-      needs the column to exist, so the schema goes first. A DROP is the opposite --
-      deploy-then-migrate -- because the OLD client still selects the column and will 500
-      on every unselected findUnique the moment it disappears. Running `migrate deploy`
-      before the container is replaced reproduces t-071 exactly, in reverse, on the same
-      table, with the same symptom.
-      The documented Alexandria procedure is migrate first, then Force Update
-      (docs/runbooks/migration-credential-boundary.md), and that procedure is CORRECT for
-      everything else. Following it for this change is what breaks it. That is a genuinely
-      easy trap: the runbook is right, the habit is right, and the outcome is an outage.
-      SEQUENCE:
-      (1) Remove `size` from the Character model in schema.prisma, regenerate the client,
-      merge. Do NOT write the migration in the same PR -- the whole point is that the
-      image ships first.
-      (2) Force Update the container so production serves a client that no longer selects
-      the column. Verify GET /api/characters/<id> returns 200.
-      (3) Only then land a migration containing `ALTER TABLE Character DROP COLUMN size`
-      and run it.
-      Steps 1 and 3 are separate PRs on purpose. Combining them recreates the window this
-      task exists to avoid.
-      DO NOT EDIT 20260824223600 to remove the ADD. It is merged and applied; the column
-      comes out via a new forward migration, so the sequence on every environment is
-      add-then-drop and no history is rewritten.
-      RELATED: t-072 is the systemic fix (nothing applies pending migrations on deploy,
-      and nothing refuses to start a container whose client is ahead of the schema). Worth
-      noting when t-072 is designed: a guard that only checks "client ahead of schema"
-      would NOT catch this case, where the SCHEMA is ahead of the client. The drop
-      direction is the one nobody thinks about, and it is the one that is about to happen.
-
-      BLOCKED 2026-08-25 (agent): Step 1 (schema.prisma edit removing Character.size,
-      no migration in this PR, per this task's own sequencing) is implemented and
-      pushed as silasfelinus/kind_robots#2110, but its required "Schema Migration
-      Parity" check (schema-migration-parity-contract.yml, the second half of
-      kind-robots/t-072's fix for the class of bug that broke production in t-071)
-      fails it unconditionally: verifySchemaMigrationParity.ts / schemaMigrationParity.ts
-      has no escape hatch -- it fails any structural prisma/schema.prisma diff that
-      doesn't add a matching prisma/migrations/* file, full stop. There is no
-      annotation, label, or config flag to mark a schema change as "migration
-      intentionally deferred."
-
-      FOR SILAS: This is a genuine, real conflict between two pieces of safety
-      guidance that both exist for good reason and both trace back to production
-      incidents:
+    note: |-
+      `Character.size` is dead weight as of cthulhuquarium/t-038 (kind_robots#2093): nothing reads it any more, the aquarium tables point at Monster, and Monster carries its own `size`. It exists only because fish were briefly going to be Character records, and it is the column that took production down in t-071. THE REASON THIS IS ITS OWN TASK IS THE DEPLOY ORDER, WHICH IS BACKWARDS FROM EVERY OTHER MIGRATION THIS PROJECT HAS RUN. An ADD is migrate-then-deploy: the new client needs the column to exist, so the schema goes first. A DROP is the opposite -- deploy-then-migrate -- because the OLD client still selects the column and will 500 on every unselected findUnique the moment it disappears. Running `migrate deploy` before the container is replaced reproduces t-071 exactly, in reverse, on the same table, with the same symptom. The documented Alexandria procedure is migrate first, then Force Update (docs/runbooks/migration-credential-boundary.md), and that procedure is CORRECT for everything else. Following it for this change is what breaks it. That is a genuinely easy trap: the runbook is right, the habit is right, and the outcome is an outage. SEQUENCE: (1) Remove `size` from the Character model in schema.prisma, regenerate the client, merge. Do NOT write the migration in the same PR -- the whole point is that the image ships first. (2) Force Update the container so production serves a client that no longer selects the column. Verify GET /api/characters/<id> returns 200. (3) Only then land a migration containing `ALTER TABLE Character DROP COLUMN size` and run it. Steps 1 and 3 are separate PRs on purpose. Combining them recreates the window this task exists to avoid. DO NOT EDIT 20260824223600 to remove the ADD. It is merged and applied; the column comes out via a new forward migration, so the sequence on every environment is add-then-drop and no history is rewritten. RELATED: t-072 is the systemic fix (nothing applies pending migrations on deploy, and nothing refuses to start a container whose client is ahead of the schema). Worth noting when t-072 is designed: a guard that only checks "client ahead of schema" would NOT catch this case, where the SCHEMA is ahead of the client. The drop direction is the one nobody thinks about, and it is the one that is about to happen.
+      BLOCKED 2026-08-25 (agent): Step 1 (schema.prisma edit removing Character.size, no migration in this PR, per this task's own sequencing) is implemented and pushed as silasfelinus/kind_robots#2110, but its required "Schema Migration Parity" check (schema-migration-parity-contract.yml, the second half of kind-robots/t-072's fix for the class of bug that broke production in t-071) fails it unconditionally: verifySchemaMigrationParity.ts / schemaMigrationParity.ts has no escape hatch -- it fails any structural prisma/schema.prisma diff that doesn't add a matching prisma/migrations/* file, full stop. There is no annotation, label, or config flag to mark a schema change as "migration intentionally deferred."
+      FOR SILAS: This is a genuine, real conflict between two pieces of safety guidance that both exist for good reason and both trace back to production incidents:
         - t-075's own note: DROP needs deploy-then-migrate (opposite of ADD), so
           landing the migration in this PR would risk reproducing t-071 in reverse.
         - t-072's parity check: every schema diff needs a matching migration file,
           to prevent the *original* t-071 failure mode (schema and migrations
           silently drifting apart).
-      Both are correct in the case they were built for; neither currently
-      represents "this schema change is real, but its migration is deliberately
-      staged for later, after a Force Update."
-
+      Both are correct in the case they were built for; neither currently represents "this schema change is real, but its migration is deliberately staged for later, after a Force Update."
       TO APPROVE / UNBLOCK, pick one:
         (a) Extend the parity check with an explicit, narrow escape hatch (e.g. a
             trailer in the PR/commit body like "Schema-Migration-Deferred: <reason>"
@@ -2866,14 +2816,8 @@ tasks:
             and handling the Force Update timing manually and carefully outside
             the normal migrate-first habit (not recommended -- this is the exact
             trap the task's own note warns about).
-      Whichever you pick, steps 2 (Force Update, verify GET /api/characters/<id>)
-      and 3 (the DROP COLUMN migration) still need you regardless, since they
-      require Unraid-console access this sandbox doesn't have.
+      Whichever you pick, steps 2 (Force Update, verify GET /api/characters/<id>) and 3 (the DROP COLUMN migration) still need you regardless, since they require Unraid-console access this sandbox doesn't have.
+      PR open, unmerged: silasfelinus/kind_robots#2110. Not merging past a failing required check.
 
-      PR open, unmerged: silasfelinus/kind_robots#2110. Not merging past a failing
-      required check.
-    claimed_by: claude-t075-20260825T162946Z
-    claimed_at: '2026-08-25T16:29:48Z'
-    updated: '2026-08-25T16:49:09Z'
-    soft_gate: true
-    implementation_pr: 'silasfelinus/kind_robots#2110'
+      Silas explicitly selected option (a) in-session on 2026-08-27: extend the Schema Migration Parity guard with a narrow, auditable deferred-contract mechanism, then get kind_robots PR #2110 green and merged. This clears the soft tooling-choice gate only. After the client-first PR lands, stop again for the manual Unraid Force Update and production endpoint verification before any DROP COLUMN migration is created or run.
+    updated: '2026-08-27T23:10:00Z'
