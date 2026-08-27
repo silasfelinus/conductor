@@ -10944,3 +10944,22 @@ records:
     (mergeBestStats) that assert the both-null case explicitly, rather than
     skipping coverage for "nothing to test yet," is what makes that
     correctly-inert-for-now claim verifiable instead of just asserted.
+- date: 2026-08-27
+  project: cthulhuquarium
+  task: t-048
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A kaizen task with no depends_on and a well-scoped note (pause two named
+    loops on visibilitychange, resume the same way they started) is often
+    genuinely a single-session, single-file change -- extracting
+    startLoops()/stopLoops() from the existing onMounted/onBeforeUnmount
+    bodies with zero behavior change on mount/unmount, then wiring a
+    visibilitychange listener around them, needed no schema, no new test
+    infra, and no design decisions left open. Verified by type-check + lint
+    + reasoning about the extracted control flow rather than a new
+    automated test, since no test harness for this component's mount
+    lifecycle existed to extend.
