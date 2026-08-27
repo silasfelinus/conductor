@@ -1,0 +1,156 @@
+# ComfyUI model path map for the render box (Silas-PC).
+#
+# THIS IS A REFERENCE COPY. The live file ComfyUI reads is
+#   D:\comfy\comfy-fast\extra_model_paths.yaml
+# Copy this over it (back the old one up first) and restart comfyui. It is
+# tracked here because it is load-bearing for every render and was previously
+# knowable only by RDP-ing into the box.
+#
+# Audited 2026-08-26 against a full `dir Z:\ai\models` (60 directories).
+# Three classes of change, all verified against that listing:
+#
+# 1. REMOVED paths that do not exist. Harmless to ComfyUI (it skips them) but
+#    they are noise that reads like configuration:
+#      models/SDXL          models/Flux (x3)     models/LCM
+#      models/clip          models/loras         models/LyCORIS
+#      model/LLM            <- singular "model", a typo for models/LLM
+#
+# 2. REMOVED case-duplicates. SMB is case-insensitive and this tree was already
+#    merged to single casing (case_merge.py), so these resolved to the SAME
+#    directory as their lowercase twin. ComfyUI scanned each one twice and
+#    listed every file twice in the node dropdowns:
+#      models/IPAdapter == models/ipadapter
+#      models/VAE       == models/vae
+#      models/ControlNet == models/controlnet
+#    This is the one change with a measurable effect: every path here is a
+#    directory scan across SMB on each folder_paths refresh. Cutting the
+#    duplicates cuts that I/O, which is exactly the I/O that fails first when
+#    the mount degrades.
+#
+# 3. ADDED directories that exist on the share and map to real ComfyUI folder
+#    keys but were never declared, so their contents were invisible:
+#      audio_encoders  classifiers  diffusers  model_patches
+#      photomaker      style_models vae_approx
+#    Plus text_encoders as its own key -- it was reachable only through the
+#    legacy `clip` alias, which is what node 3 (CLIPTextEncode) resolves
+#    through. Declaring it directly is what that node actually wants on
+#    ComfyUI 0.28.
+#
+# NOT added, deliberately:
+#   models/vae~   -- debris. Created 2026-08-25 19:14, seven minutes before
+#                    disk13 dropped off the bus; it also bumped the parent
+#                    mtime, which is what made folder_paths re-enumerate a
+#                    half-readable share and cache a truncated model list.
+#                    Check it holds nothing unique, then delete it.
+#   models/VAE-approx -- distinct directory from vae_approx (hyphen vs
+#                    underscore, NOT a case-dupe). It is the A1111 layout;
+#                    ComfyUI's key is vae_approx.
+#   models/text, models/ollama, models/opencv, models/BLIP, models/Deforum,
+#   models/adetailer, models/sams, models/ultralytics, models/yolo_world,
+#   models/facerestore_models, models/Codeformer, models/GFPGAN, models/LDSR,
+#   models/svd, models/hunyuan, models/karlo, models/annotator,
+#   models/clip_interrogator, models/prompt_generator, models/liveportrait,
+#   models/animatediff_models, models/animatediff_motion_lora, models/FloweR,
+#   models/faceswaplab, models/RAFT, models/rembg, models/torch_deepdanbooru,
+#   models/TTS  -- real directories, but owned by custom nodes / A1111 that
+#                    find them their own way. Declaring them here would add
+#                    scans without adding anything ComfyUI can use.
+#
+# PATH STYLE: base_path is still the Z: drive letter. Switching it to a UNC
+# (//192.168.7.172/pc/ai) removes the per-logon-session mapping that has to be
+# re-established by hand after every NAS reboot -- see README, "The 2026-08-26
+# recurrence". It does NOT remove the need to restart ComfyUI when the share
+# returns, because folder_paths caches regardless; healthcheck.ps1's share
+# watchdog now does that restart automatically.
+
+comfyui:
+  base_path: Z:/ai
+  is_default: true
+
+  checkpoints: |
+    models/checkpoints
+    models/Stable-diffusion
+
+  diffusion_models: |
+    models/diffusion_models
+    models/unet
+
+  unet: |
+    models/unet
+
+  # `clip` is ComfyUI's legacy alias for text_encoders; both are declared so
+  # older workflows and custom nodes keep resolving.
+  clip: |
+    models/text_encoders
+
+  text_encoders: |
+    models/text_encoders
+
+  clip_vision: |
+    models/clip_vision
+
+  ipadapter: |
+    models/ipadapter
+
+  LLM: |
+    models/LLM
+    models/LLM/GGUF
+
+  llm: |
+    models/LLM
+    models/LLM/GGUF
+
+  vae: |
+    models/vae
+
+  vae_approx: |
+    models/vae_approx
+
+  loras: |
+    models/Lora
+
+  embeddings: |
+    models/embeddings
+
+  controlnet: |
+    models/controlnet
+
+  configs: |
+    models/configs
+    models/Stable-diffusion
+
+  upscale_models: |
+    models/upscale_models
+    models/ESRGAN
+    models/RealESRGAN
+    models/SwinIR
+
+  latent_upscale_models: |
+    models/latent_upscale_models
+
+  hypernetworks: |
+    models/hypernetworks
+
+  gligen: |
+    models/gligen
+
+  style_models: |
+    models/style_models
+
+  photomaker: |
+    models/photomaker
+
+  diffusers: |
+    models/diffusers
+
+  audio_encoders: |
+    models/audio_encoders
+
+  model_patches: |
+    models/model_patches
+
+  classifiers: |
+    models/classifiers
+
+  wildcards: |
+    models/wildcards

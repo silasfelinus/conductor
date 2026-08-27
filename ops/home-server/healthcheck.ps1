@@ -105,6 +105,104 @@ function Send-Alert($subject, $body) {
 $alertState = Get-AlertState
 $hostName = $env:COMPUTERNAME
 
+# --- Share watchdog ----------------------------------------------------------
+# Runs FIRST, because both watchdogs below misread a dead model mount.
+#
+# On 2026-08-26 alexandria rebooted several times during a disk replacement.
+# Every SMB mapping on this box went Unavailable, and ComfyUI kept answering
+# /system_stats with a 200 the whole time - so the liveness probe was happy,
+# while every render died at 'hostbuf_file_reader_read failed' and the queue
+# drained PENDING into FAILED at ~5/min. The render watchdog below WOULD have
+# fired on that spike and restarted comfyui straight back into the dead mount,
+# repeatedly, achieving nothing.
+#
+# This block: detects the dead share, optionally remaps it, and - the part that
+# actually matters - restarts comfyui once the share RETURNS. ComfyUI caches
+# folder_paths' filename lists and does not re-enumerate just because the mount
+# came back; without that restart it keeps failing reads against names it cached
+# while the share was down. That is the step whose omission made this look
+# intermittent on both 2026-08-25 and 2026-08-26.
+#
+# Config (setx, then open a NEW shell):
+#   setx KR_SHARE_PROBE_PATH "Z:\ai\models"          REM what to probe
+#   setx KR_SHARE_UNC        "\\192.168.7.172\pc"     REM optional: remap target
+# KR_SHARE_UNC is only usable when the probe path starts with a drive letter.
+# Leave it unset to detect and alert without touching the mapping. The remap
+# needs credentials in Credential Manager (cmdkey /add) - see README.
+$shareProbePath = if ($env:KR_SHARE_PROBE_PATH) { $env:KR_SHARE_PROBE_PATH } else { 'Z:\ai\models' }
+$shareUnc = $env:KR_SHARE_UNC
+
+function Test-ShareReadable($path) {
+    # Enumerate; do not settle for Test-Path. A stale SMB handle can satisfy
+    # Test-Path and still fail every read - that exact split (ComfyUI holding a
+    # dead handle while an interactive 'dir' said the path did not exist) is
+    # what made the 2026-08-25 outage so hard to name. An empty directory is
+    # readable and must pass: enumerating nothing is not an error.
+    if (-not $path) { return $false }
+    try {
+        $null = Get-ChildItem -LiteralPath $path -Force -ErrorAction Stop |
+            Select-Object -First 1
+        return $true
+    } catch {
+        return $false
+    }
+}
+
+function Repair-ShareMapping($path, $unc) {
+    if (-not $unc) { return $false }
+    if ($path -notmatch '^([A-Za-z]:)') {
+        Write-Log "share watchdog: $path is not a drive letter - cannot remap"
+        return $false
+    }
+    $letter = $Matches[1]
+    Write-Log "share watchdog: remapping $letter to $unc"
+    # stdin from NUL on purpose. 'net use' prompts for a username when no
+    # credential is cached, and a Task Scheduler run has no console to answer
+    # with - it would block until the task timeout instead of failing. With
+    # stdin closed it returns an error immediately and we alert instead.
+    & cmd.exe /c "net use $letter /delete /y < NUL" 2>&1 | Out-Null
+    & cmd.exe /c "net use $letter $unc /persistent:yes < NUL" 2>&1 | Out-Null
+    return (Test-ShareReadable $path)
+}
+
+$shareOk = $true
+if ($shareProbePath) {
+    $shareOk = Test-ShareReadable $shareProbePath
+    $sharePrev = if ($alertState.ContainsKey('share_state')) { [string]$alertState['share_state'] } else { 'ok' }
+    $shareStamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+
+    if (-not $shareOk) {
+        Write-Log "share watchdog: $shareProbePath is NOT readable"
+        if (Repair-ShareMapping $shareProbePath $shareUnc) {
+            $shareOk = $true
+            Write-Log "share watchdog: remap restored $shareProbePath"
+        }
+    }
+
+    if ($shareOk) {
+        if ($sharePrev -eq 'down') {
+            Write-Log "share watchdog: share is back - restarting comfyui to rebuild folder_paths"
+            & pm2 restart comfyui | Out-Null
+            Send-Alert "RECOVERED: model share is back on $hostName - comfyui restarted" `
+                "The model share $shareProbePath was unreadable and is now answering again as of $shareStamp on $hostName. comfyui has been restarted so folder_paths rebuilds its cached filename lists - without that it would keep failing reads against the names it cached while the share was down. Renders should resume on the next claim. No action needed unless this repeats."
+        }
+        $alertState['share_state'] = 'ok'
+        Save-AlertState $alertState
+    } else {
+        $alertState['share_state'] = 'down'
+        Save-AlertState $alertState
+        if (Test-AlertDue $alertState 'share-watchdog') {
+            $remapNote = if ($shareUnc) { "An automatic remap to $shareUnc was attempted and did not restore it." } else { "No KR_SHARE_UNC is configured, so no remap was attempted." }
+            Send-Alert "MODEL SHARE DOWN on $hostName - renders are paused" `
+                "The model share $shareProbePath is unreadable as of $shareStamp on $hostName. $remapNote ComfyUI will keep answering its API while failing every render, so treat a green /system_stats as meaningless here. kr-relay's own share gate should be holding claims (look for 'NOT claiming jobs' in its log); if that gate is not armed, the pending queue is being converted into failures right now. Check the NAS is up and the mapping is present (net use)."
+            $alertState['share-watchdog'] = $shareStamp
+            Save-AlertState $alertState
+        } else {
+            Write-Log "share watchdog: alert suppressed (within $($cooldownMinutes)-min cooldown)"
+        }
+    }
+}
+
 foreach ($t in $targets) {
     # Only police processes pm2 believes are online - a deliberate `pm2 stop`
     # (e.g. freeing the GPU) must not be fought by the watchdog.
@@ -214,11 +312,18 @@ if (-not $krToken) {
                 # EMAIL ALWAYS (not cooldown-gated). Naturally self-limits: emails
                 # stop once failures stop accruing (delta returns to ~0).
                 Send-Alert "RENDER FAILURES: +$deltaFailed failed on $hostName (only +$deltaDone done)" `
-                    "The art pipeline logged $deltaFailed new FAILED job(s) and only $deltaDone new DONE since the last check (all-time totals now DONE=$done FAILED=$failed) as of $stamp on $hostName. ComfyUI is still answering its API, so this is a RENDER config failure, not a hang - check the newest FAILED job's error (bad model/encoder/checkpoint or a broken custom node). See /api/art/queue/stats recentFailed and pm2 logs."
+                    "The art pipeline logged $deltaFailed new FAILED job(s) and only $deltaDone new DONE since the last check (all-time totals now DONE=$done FAILED=$failed) as of $stamp on $hostName. ComfyUI is still answering its API, so this is a RENDER failure, not a hang. The model share $shareProbePath is $(if ($shareOk) { 'readable' } else { 'NOT READABLE - that is almost certainly the cause; see the share watchdog alert' }). If the share is fine, check the newest FAILED job's error (bad model/encoder/checkpoint or a broken custom node). See /api/art/queue/stats recentFailed and pm2 logs."
 
                 # RESTART comfyui at most once per cooldown, in case it's a wedged
-                # GPU/driver state a restart can shake loose.
-                if (Test-AlertDue $alertState 'render-watchdog-restart') {
+                # GPU/driver state a restart can shake loose - but never while the
+                # model share is down. On 2026-08-26 a dead mount produced exactly
+                # this spike shape (+failures, no successes) with ComfyUI answering
+                # normally; restarting it back into an unreadable share fixes
+                # nothing and just churns the GPU. The share watchdog above owns
+                # that case and restarts comfyui when the mount actually returns.
+                if (-not $shareOk) {
+                    Write-Log "render watchdog: comfyui restart suppressed (model share is down - see share watchdog)"
+                } elseif (Test-AlertDue $alertState 'render-watchdog-restart') {
                     Write-Log "render watchdog: failure spike (+$deltaFailed) - restarting comfyui via pm2"
                     & pm2 restart comfyui | Out-Null
                     $alertState['render-watchdog-restart'] = $stamp
