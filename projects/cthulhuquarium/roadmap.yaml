@@ -971,7 +971,7 @@ tasks:
   - id: t-028
     milestone: m3
     title: "Milestones, interstitials, and backgrounds as the gating layer"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1028,9 +1028,33 @@ tasks:
       five landmarks that ARE fully computable today (bestiary_5/10/15/20 plus one of
       first_full_tank/first_spotless_tank once its semantics is picked) rather than all eight
       at once.
+
+      CLOSED 2026-08-27 (conductor scheduled session) on the landable core, per the
+      research pass above: merged silasfelinus/kind_robots#2161, wiring the four
+      bestiary-breakpoint landmarks (bestiary_5/10/15/20) as real AquariumEvent rows with
+      +2 setSlotsCap each, guarded against re-firing, unit-tested. This is the backend gate
+      only -- no interstitial UI, no Charlotte/Wilbur dialogue, no background art exist yet
+      for ANY landmark (including the already-shipped bestiary-complete signal from t-018/
+      t-024), so closing this task does not imply the player-facing feature is finished.
+      Explicitly NOT done, and NOT re-filed as open tasks here because each needs a
+      decision or a subsystem this task can't unilaterally supply:
+        - Frontend surface for the signals that do exist: filed as cthulhuquarium/t-053
+          (generic milestone/bestiary-completion toast), status: ready.
+        - first_full_tank / first_spotless_tank: blocked on the "full tank" semantics call
+          (sizeCap vs setSlotsCap vs both) the two-pool split (t-032) never settled --
+          needs a one-line decision from Silas before it's codeable, not more research.
+        - first_evolution / first_rivalry_resolved: blocked on subsystems that don't exist
+          yet (no evolution-progression or live rivalry-computation code anywhere in
+          kind_robots) -- not this task's scope to invent; wiring these as milestones is
+          a trivial follow-on once whichever task builds those subsystems lands, and
+          filing a task for it now would just be a placeholder with nothing to build.
+        - Background art (8 plates) and Charlotte/Wilbur interstitial dialogue: real
+          authored-content work, tracked implicitly by DESIGN-BRIEF.md's finale-adjacent
+          content backlog rather than duplicated here.
     claimed_by: 2026-08-27T222900Z-cq-t028-landmarks
     claimed_at: '2026-08-27T22:28:50Z'
-    updated: '2026-08-27T22:39:59Z'
+    updated: '2026-08-27T22:53:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#2161'
   - id: t-029
     milestone: m3
     title: "Genetics — hidden individual stats, breeding, and secret evolutions"
