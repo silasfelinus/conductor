@@ -1010,6 +1010,83 @@ def ending_entries(content_ts: Path) -> list[dict]:
     return entries
 
 
+CARD_FRAME = (
+    "a painted storybook moment, staged like a scene from a comic adventure "
+    "game, figures posed so a glance tells the whole joke, warm and inviting"
+)
+
+CARD_RE = re.compile(
+    r"\bid: '(?P<id>[^']+)',\s*\n"
+    r"(?:\s*\w+: [^\n]*\n)*?"
+    r"\s*title: '(?P<title>(?:[^'\\]|\\.)*)',\s*\n"
+    r"\s*body:\s*\n?\s*'(?P<body>(?:[^'\\]|\\.)*)',",
+    re.M,
+)
+
+
+def read_cards(content_ts: Path) -> list[dict[str, str]]:
+    """Every authored card, from both the free-draw decks and the arc steps.
+
+    A card's `body` is already one vivid sentence staging the moment -- the same
+    property that makes the fish roster's `silhouette` and an ending's `body`
+    usable verbatim. It is the art direction; it does not need paraphrasing.
+    """
+    text = content_ts.read_text(encoding="utf-8")
+    cards: list[dict[str, str]] = []
+    seen: set[str] = set()
+    for key in ("decks", "arcs"):
+        block = re.search(rf"\n  {key}: \[(.*?)\n  \],\n", text, re.S)
+        if not block:
+            raise SystemExit(f"no {key}: [...] block found in {content_ts}")
+        for m in CARD_RE.finditer(block.group(1)):
+            card = m.groupdict()
+            if card["id"] in seen:
+                continue
+            seen.add(card["id"])
+            # Which cast members this card stages, so they are drawn the same
+            # way here as in their own portrait -- Vex should look like Vex on
+            # every card he appears on, not be reinvented per render.
+            # `characters: [...]` sits BETWEEN the id and the title, so it is
+            # inside the match itself, not before it.
+            cast_match = re.search(r"characters: \[([^\]]*)\]", m.group(0))
+            card["cast"] = (
+                re.findall(r"'([a-z-]+)'", cast_match.group(1)) if cast_match else []
+            )
+            cards.append(card)
+    if not cards:
+        raise SystemExit(f"no cards parsed from {content_ts}")
+    return cards
+
+
+def card_entries(content_ts: Path) -> list[dict]:
+    """One scene per authored card, keyed to the id the deck already references."""
+    entries: list[dict] = []
+    for card in read_cards(content_ts):
+        title = card["title"].replace("\u2019", "'").replace("\\'", "'")
+        body = card["body"].replace("\u2019", "'").replace("\\'", "'")
+        who = [CAST_LOOK[s] for s in card.get("cast", []) if s in CAST_LOOK]
+        cast_clause = (
+            " In frame: " + "; ".join(who) + "."
+            if who
+            else ""
+        )
+        prompt_body = (
+            f"{title}. {body}{cast_clause} {CARD_FRAME}"
+        )
+        entries.append(
+            make_entry(
+                request_id=f"ruler-hooked-card-{card['id']}",
+                image_path=f"public/images/ruler-hooked/cards/{card['id']}.webp",
+                label=f"Ruler Hooked card: {title}",
+                size=WIDE,
+                prompt=f"{prompt_body}. {STYLE_TAIL}. {NO_TEXT}",
+                priority=CONCEPT_PRIORITY,
+                lane="card",
+            )
+        )
+    return entries
+
+
 def layer_entries(regions: dict[str, dict[str, list[str]]]) -> list[dict]:
     """The (region, state, time) matrix, named exactly as assetCandidates() resolves."""
     entries: list[dict] = []
@@ -1232,6 +1309,7 @@ def main() -> int:
         + fish_entries()
         + reward_entries(content_ts)
         + ending_entries(content_ts)
+        + card_entries(content_ts)
     )
     if args.include_layers:
         entries += layer_entries(read_regions(content_ts))
