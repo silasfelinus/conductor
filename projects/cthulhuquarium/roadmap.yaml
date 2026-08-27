@@ -664,7 +664,7 @@ tasks:
   - id: t-021
     milestone: m3
     title: "Mobile packaging groundwork — research and prepare only"
-    status: claimed
+    status: needs-human
     owner: worker
     passes: 0
     stakes: outward-facing
@@ -678,6 +678,26 @@ tasks:
       are hard human gates and stay that way regardless of how routine they look. Ends
       at needs-human with a checklist Silas can execute. Steam is explicitly not in
       scope for this task or this roadmap.
+
+      DONE, research-and-prepare scope (conductor scheduled Agent run, 2026-08-27): full
+      audit + submission checklist at
+      projects/cthulhuquarium/docs/t-021-mobile-packaging-audit.md. FOR SILAS: kind_robots
+      already has site-wide PWA installability (from ai-art-academy/t-066) and
+      /play/aquarium already gets it for free -- live-verified against production: manifest,
+      viewport, theme-color, and apple-touch-icon tags are all present, /manifest.webmanifest
+      resolves with valid icons. No code blocker found; nothing needed fixing for
+      installability. Cthulhuquarium's canvas is already phone-safe from t-020, and its
+      server-persisted design (not offline like ruler-hooked) means it correctly gets no
+      offline document caching. Recommendation, same as the site-wide Academy precedent:
+      stay PWA-only for now; only stand up a Capacitor wrap if you decide you want an
+      actual Play Store / App Store listing. TO APPROVE: read the doc's checklist section A
+      (verify the install experience yourself on a real Android/iOS device -- an agent
+      can't click "Install" on your phone) and, only if/when you want store presence,
+      section B (Capacitor + store-account steps, all of which stay agent-off-limits
+      regardless). No roadmap action is required to accept this as complete; set
+      approved_by_human: true and status: done once you've verified the install experience,
+      or leave it here as a standing reference until store distribution becomes a real ask.
+      Nothing unblocks on this task's completion -- it has no dependents.
     claimed_by: conductor-scheduled-20260827T1328Z-cq-t021
     claimed_at: '2026-08-27T13:34:53Z'
     updated: '2026-08-27T13:34:53Z'
@@ -2256,4 +2276,23 @@ tasks:
     claimed_at: '2026-08-27T10:33:47Z'
     updated: '2026-08-27T11:58:52Z'
     implementation_pr: 'silasfelinus/kind_robots#2146'
+
+  - id: t-048
+    milestone: m3
+    title: "Pause the tank's 20s poll/render loop when the tab is hidden"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from the t-021 mobile-packaging audit (see
+      projects/cthulhuquarium/docs/t-021-mobile-packaging-audit.md). Neither
+      cthulhuquarium-game.vue's TANK_POLL_INTERVAL_MS (20s) setInterval poll nor its
+      requestAnimationFrame render loop pauses on document.visibilitychange. Browsers
+      already throttle background-tab timers/rAF on their own, so this isn't a
+      functional bug today, but it's exactly the kind of background CPU/battery
+      behavior that becomes more visible (and more reviewer-relevant) once/if the game
+      ever ships inside a native Capacitor wrapper. Small, independently reversible:
+      gate both loops on document.hidden / a visibilitychange listener, resume cleanly
+      on foreground.
 
