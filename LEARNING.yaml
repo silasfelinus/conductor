@@ -10808,3 +10808,19 @@ records:
     (recheck_render_queue.py) needed the raised RuntimeError itself, so the
     shared helper had to raise and let each caller decide -- a naive merge that
     picked either behavior would have silently broken the other caller.
+- date: 2026-08-27
+  project: ruler-hooked
+  task: t-022
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    An asset-generation task's "review" status can mean "ArtJobs submitted,
+    awaiting delivery confirmation" rather than "PR open awaiting human review" --
+    check_pr_merged_drift.py's PR-shaped heuristic can't verify this kind of task
+    at all (no PR ever existed), so it correctly surfaces as unresolvable via
+    that script alone. The task's own note already named the exact completion
+    check (media paths live) -- reading that note before assuming "review" means
+    "needs a PR" avoided treating genuinely-finished async delivery as stuck.
