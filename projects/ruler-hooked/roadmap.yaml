@@ -624,9 +624,19 @@ tasks:
       old, wiry, robes too big), Matriarch Oshun (short, round, braided crown),
       Chieftain Brakka (orcish, antler crown), Queen Sedge (heron-folk), and Pip
       (mouse-folk, barely taller than a boot). Gender presentation, body shape and
-      size, skin, age, species, and honorific all vary. Each is rendered at the
-      `ruler` region layer's own side-on framing, so one file is simultaneously a
-      swappable game asset and the reference sheet t-021 gets built against.
+      size, skin, age, species, and honorific all vary. All eight share one side-on
+      seated pose and framing, so they read as one set and swap cleanly.
+
+      CORRECTION to how this was first written up: these are the PRESET REFERENCE
+      SHEET, not drop-in composited layer files. They came back with painted
+      lakeside backdrops, as portraits do, so a preset cannot be dropped into the
+      `ruler` region layer as-is -- the composited layer needs the figure alone
+      over an empty frame. `ruler-fishing.webp` (t-018, ArtJob 10011) is the actual
+      layer, and it renders only the hero preset. Producing a per-preset layer is
+      part of t-021's compositor work, either by rendering each preset again under
+      LAYER_TAIL or by matting these; the pose and framing are already consistent
+      enough that either path works. Flagged because the first version of this note
+      claimed one file did both jobs, and it does not.
 
       Root cause worth keeping: the builder treated the ruler as a CONSTANT
       (`THE_RULER`) because a single monarch is what makes four time-of-day vistas
