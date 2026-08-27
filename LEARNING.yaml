@@ -10983,3 +10983,34 @@ records:
     test:layout-contract run; switching to <h2> (matching the existing
     pages/play/challenges/* convention, since these are plain Nuxt pages
     with no content-frontmatter shell) fixed it in one pass.
+- date: 2026-08-27
+  project: cthulhuquarium
+  task: t-016
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A task note's "may pause or redirect income briefly" is a soft option,
+    not a requirement -- reading the HARD CONSTRAINT amendment in full
+    ("no event may take anything away") before designing anything showed
+    that every event kind could be built as a coin bonus or a zero-effect
+    cosmetic beat, sidestepping the real complexity of an actual accounted
+    income pause for a barely-noticeable player-facing difference. Explicit
+    scope-decision comments (in the YAML, the TS, and the PR body) on why
+    the pause was skipped make that a documented choice a reviewer can
+    challenge, not a silent gap they'd have to notice on their own.
+
+    Operational note for future sessions: `git reset --hard origin/<branch>`
+    silently discards ANY uncommitted local change in the working tree, not
+    just changes on the branch you're resetting -- including an edit to a
+    file the session made earlier in the SAME repo checkout for unrelated
+    reasons (here: an economy.yaml edit made before claiming the task, lost
+    by a later `git checkout main && git reset --hard origin/main` done
+    purely to refresh state after a different PR's merge). Caught by
+    grepping for the expected content immediately after the reset rather
+    than assuming the working tree still held it; redone from scratch. The
+    safer sequence when a local edit must survive a state refresh: check
+    `git status` for uncommitted changes before any `reset --hard`, or
+    commit/stash first.

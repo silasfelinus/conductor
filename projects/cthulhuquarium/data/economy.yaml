@@ -209,6 +209,47 @@ set_pieces:
   no_stack_idle_effects: [roaming_collector, idle_hoarder]
 
 # ---------------------------------------------------------------------------
+# Rare random events (t-016) — the retention hook from the pitch: rare timed
+# visitors, a collectible that pays far too much, a tank that goes briefly
+# wrong. HARD CONSTRAINT (Silas, 2026-08-24, amending t-016's original note):
+# no event may take anything away — not a fish, not coins, not an unlock.
+# Every kind below is additive-only or purely cosmetic; none may ever reduce
+# holdings. An event may pause or redirect income briefly and may be
+# alarming, but the player is never poorer after it than before — v1 keeps
+# this simple by never implementing an actual pause (accounting for "briefly
+# paused, still catches up to the correct total" correctly is real
+# complexity for very little player-visible difference from "no economic
+# effect at all"), so every kind here is either a coin bonus or a zero-effect
+# cosmetic beat. Tone: unsettling and dry, never jump-scare — no outside
+# reference, no lore, no hint at the finale; these read as an aquarium
+# incident log, not a character speaking.
+#
+# Rolled by the server at most once per settle call that actually processed
+# >=1 real tick (never on a call where no time elapsed, so a foreground poll
+# every tick_seconds can't roll repeatedly for the same span of time).
+# `chance` values are independent per-roll probabilities checked in the
+# fixed order below; they intentionally sum to well under 1 so "nothing
+# happened" stays the overwhelmingly common result of any given roll.
+# ---------------------------------------------------------------------------
+rare_events:
+  events:
+    rare_visitor:
+      chance: 0.03
+      bonus_coins_min: 15
+      bonus_coins_max: 40
+      tone: "Something paid a short visit, left more than it took, and did not linger."
+    windfall_collectible:
+      chance: 0.008
+      bonus_coins_min: 60
+      bonus_coins_max: 150
+      tone: "One piece of gravel is worth far more than gravel. Nobody asks why."
+    tank_gone_wrong:
+      chance: 0.015
+      bonus_coins_min: 0
+      bonus_coins_max: 0
+      tone: "For a few seconds the water was the wrong color. Then it was not."
+
+# ---------------------------------------------------------------------------
 # Milestones — landmark events, not coin thresholds (t-025 decision 4). Each
 # fires exactly once per Aquarium, delivered as an AquariumEvent with
 # kind: 'milestone' and a payload naming which landmark fired; a Charlotte
