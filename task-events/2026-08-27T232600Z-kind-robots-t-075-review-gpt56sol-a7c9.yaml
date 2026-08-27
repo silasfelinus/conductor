@@ -1,0 +1,8 @@
+version: 1
+project: kind-robots
+task: t-075
+operation: review
+session: 2026-08-27T231300Z-kind-robots-t-075-gpt56sol-a7c9
+updated: '2026-08-27T23:26:00Z'
+note: >-
+  Step 1 rescue is ready for review on worker/kind-robots-t-075-20260827-a7c9. It preserves #2110's Character.size schema/client contraction, adds a one-shot pending migration provenance marker, and extends Schema Migration Parity so deferred coverage is accepted only for removal-only schema diffs. Pending markers are rejected once their target migration exists, forcing the later DROP migration PR to consume the marker.
