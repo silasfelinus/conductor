@@ -618,12 +618,12 @@ tasks:
   - id: t-020
     milestone: m3
     title: "Performance, responsive layout, and the layout contract"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-015
-    note: >
+    note: >-
       Make it hold up at phone, tablet, and desktop widths against kind_robots'
       test:layout-contract and the responsive-layout-audit workflow. Canvas scaling,
       touch targets sized for thumbs, no horizontal overflow, and a frame budget that
@@ -631,9 +631,20 @@ tasks:
       AGENTS.md: no PR previews exist, so pre-merge verification is vue-tsc, eslint,
       unit tests, and the layout contract; real pixels come from the audit workflow
       against production after a Force Update.
+
+      Merged silasfelinus/kind_robots#2145: thumb-sized (44px) touch targets on Feed
+      hungriest/per-fish Feed/Unlock, explicit aspect-[16/9] canvas scaling, a
+      touchHitRadius() helper (utils/aquariumTouch.ts + selftest) so drifting-coin tap targets
+      stay thumb-sized when the canvas is CSS-scaled down on a phone, and a cached per-frame
+      water-gradient allocation. eslint/prettier/vue-tsc clean, test:layout-contract holds (0
+      new violations), new test:aquarium-touch and existing test:aquarium-economy both pass.
+      Real-pixel phone/tablet/desktop verification deferred to the responsive-layout-audit
+      workflow against production per the task's own note (no PR previews exist for this
+      repo).
     claimed_by: claude-scheduled-20260827T0926Z-cq-t020
     claimed_at: '2026-08-27T09:27:04Z'
-    updated: '2026-08-27T09:33:51Z'
+    updated: '2026-08-27T11:40:05Z'
+    implementation_pr: 'silasfelinus/kind_robots#2145'
 
   - id: t-021
     milestone: m3
