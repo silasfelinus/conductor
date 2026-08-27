@@ -2171,3 +2171,24 @@ tasks:
     claimed_at: null
     updated: '2026-08-27T02:50:00Z'
 
+  - id: t-046
+    milestone: m2
+    title: "Add a regression test asserting build_cthulhuquarium_art_queue.py never writes a self-referential image_path"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from the t-044 close-out review (PR #2962): the bug that batch fixed
+      -- image_path pointed at consume_art_queue_core.py's own staging directory,
+      so distribute_images.py could only ever see a self-match and park every
+      file in projects/process/unmatched/ -- had no test coverage at all
+      (tests/test_build_cthulhuquarium_art_queue.py does not exist). One
+      assertion that every generated entry's image_path never resolves under
+      projects/process/ would have caught this before it cost a full render
+      cycle. Add that test; consider the same assertion for any other
+      build_*_art_queue.py generator that shares the pattern.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-27T00:00:00Z'
+
