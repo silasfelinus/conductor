@@ -10864,3 +10864,21 @@ records:
     code (not only recording it after), even though the roadmap edit itself
     isn't needed until later, would have surfaced the collision to the other
     session immediately instead of after both sides had sunk effort in.
+- date: 2026-08-27
+  project: cthulhuquarium
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Before implementing a "wire the shop" task, read what the prior task
+    already shipped -- t-011 had already wired buy-food and species-unlock
+    end-to-end (including auto-placement), so the real remaining gap was a
+    design-intent violation already visible in the diff (the field note was
+    rendered pre-unlock, contradicting the task's own "reveals on first
+    unlock, not before" note), not a missing feature. Checking sibling tasks'
+    depends_on graph (t-026 depends_on t-012, status: waiting) also confirmed
+    "buy upgrades" from this task's note was intentionally deferred, not a
+    gap in this task.

@@ -445,21 +445,32 @@ tasks:
   - id: t-012
     milestone: m2
     title: "Economy wiring — coins, food, upgrades, species unlocks"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-011
-    note: >
+    note: >-
       Wire the shop to the real economy: buy food, buy upgrades (better food, faster
       collectible drops, more tank slots), unlock and place a new species. Every price
       and threshold reads from balance.yaml through the server -- no numbers in the
       component. Unlocking a species the player has never seen should feel like the
       point of the game, so give it a real beat: the field note reveals on first
       unlock, not before.
+
+      Merged silasfelinus/kind_robots#2144 (squash acc785e). Gated Monster.fieldNote off the
+      pre-unlock catalog select entirely (server-side, not just UI) and onto the owned-stock
+      select; added a reveal dialog (Teleport + <dialog>, daily-digest-object-dialog.vue's
+      pattern) showing the unlocked species' art/name/field note exactly once on unlock. Buy-
+      food and species-unlock+auto-place were already fully wired by t-011; verified via code
+      inspection that nothing there needed rework. 'Buy upgrades' from this task's original
+      note was deliberately NOT built -- t-026 (Set pieces) explicitly depends_on this task
+      and is status: waiting, and economy.yaml's slots section states capacity growth is
+      milestone-only, never coin-purchased. All 38 kind_robots checks green, mergeable clean,
+      diff matched intended scope (93/3 across 3 files).
     claimed_by: claude-scheduled-20260827T-cq-t012
     claimed_at: '2026-08-27T08:29:24Z'
-    updated: '2026-08-27T08:35:11Z'
+    updated: '2026-08-27T08:41:38Z'
     implementation_pr: 'silasfelinus/kind_robots#2144'
 
   - id: t-013
@@ -2181,4 +2192,24 @@ tasks:
     claimed_by: claude-20260827T042847-t046
     claimed_at: '2026-08-27T04:28:48Z'
     updated: '2026-08-27T04:39:06Z'
+
+  - id: t-047
+    milestone: m2
+    title: "Read per-species economy overrides (Monster.yieldPerTick/tickIntervalSeconds/unlockCost) instead of tier defaults alone"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from the t-012 close-out (PR kind_robots#2144): Monster carries
+      yieldPerTick/tickIntervalSeconds/unlockCost columns explicitly documented
+      as per-species overrides of the tier-derived economy constants ("Null
+      means 'use the tier default'... these three exist for a later per-species
+      balance pass, not required at seed time" -- schema.prisma's own comment),
+      but neither server/utils/aquariumEconomy.ts's incomePerTick/unlockCost
+      nor server/utils/aquarium.ts reads them -- every species still derives
+      purely from Monster.tier via RARITY_TIERS. Not a bug (the schema comment
+      says this is fine pre-balance-pass), but worth doing once Silas or a
+      later task wants per-species tuning without a schema change: fall back
+      to the tier default when a column is null, override when set.
 
