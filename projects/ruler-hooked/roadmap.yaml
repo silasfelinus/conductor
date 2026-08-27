@@ -489,7 +489,7 @@ tasks:
   - id: t-017
     milestone: m5
     title: Resolve the region-layer format contract before rendering the environment matrix
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     owner: worker
@@ -534,7 +534,8 @@ tasks:
       the mounted media root. Confirmed live rather than assumed (key-art-day.webp
       and characters/warlock-vex.webp both 200, byte-identical to the media origin).
 
-      Flip to done when #2139 merges. Unblocks t-018.
+      DONE: kind_robots PR #2139 squash-merged 2026-08-26 (f36f87b), all 38 checks
+      green. Unblocked t-018, whose 37 renders went out the same session.
 
   - id: t-018
     milestone: m5
@@ -712,9 +713,15 @@ tasks:
       public/images/ruler-hooked/ruler/<id>.webp. Read the list as data; do not
       hardcode ids, since adding a preset is one dict entry plus one render.
 
-      PRESETS OR OVERLAYS -- Silas, 2026-08-26: "Not sure if that is better than
-      doing customized overlays." Recommendation: presets for the figure, free text
-      for the words, and overlays only where registration is genuinely free.
+      DECIDED (Silas, in session 2026-08-26): "Agreed on your reasoning for custom
+      ruler images being too complex for expansion, I like custom name and
+      honorific, your presets are fine, we can always add more, and custom should
+      be an option." So: preset figures, free-text name and honorific, no
+      composable overlay system, and a custom escape hatch (see CUSTOM below).
+
+      The reasoning he agreed with, kept because it is the constraint, not a
+      preference: presets for the figure, free text for the words, and overlays
+      only where registration is genuinely free.
 
       A composable overlay creator (pick a body, then a skin, then a crown) needs
       every part drawn to a shared skeleton with consistent anchor points. Diffusion
@@ -732,15 +739,46 @@ tasks:
       render drew all of it. The cost is combinatorial range -- twelve fixed figures
       instead of a body x skin x crown product.
 
-      Two axes are free either way and should be free-form regardless: `honorific`
-      and the ruler's name are pure data, no art, and they are the customisation
-      that reads as most personal. Widen `honorific` past King|Queen|other to free
-      text with the twelve titles as suggestions.
+      Two axes are free either way, and Silas confirmed both: `honorific` and the
+      ruler's name are pure data, no art, and they are the customisation that reads
+      as most personal. Widen `honorific` past King|Queen|other to FREE TEXT, with
+      the twelve preset titles (King, Queen, Sovereign, Regent, Matriarch,
+      Chieftain, Monarch, Prince) offered as suggestions rather than as the set.
 
       If the combinatorial range turns out to matter more than the coherence, the
       upgrade path is additive: keep presets as base figures and add a small set of
       overlays that do not need tight registration (a held item, a colour tint on
       the robes), rather than rebuilding the figure as parts.
+
+      CUSTOM -- what "custom should be an option" can mean here. Worth stating
+      because the obvious reading is ruled out by a design pillar: DESIGN-BRIEF.md
+      is explicit that AI is used for asset generation DURING DEVELOPMENT and that
+      "there are NO live LLM interactions at runtime" -- the shipped game runs with
+      no internet. So custom cannot mean describe-your-ruler-and-we-generate-it,
+      and it cannot mean composable parts either, since that is the overlay system
+      just rejected.
+
+      What is left, and what this task should build: the player supplies their own
+      ruler picture from their own device. A file picker, held locally, alongside
+      the free-text name and honorific -- "your picture, your name, your title" is
+      a complete custom ruler with no runtime AI, no registration problem, and no
+      network. It also degrades correctly: a save with a custom image that is no
+      longer readable falls back to a preset rather than to a hole, using the same
+      ladder as the missing-art case.
+
+      Storage caveat: saves are local (rulerHookedStore.ts, localStorage) and the
+      brief requires multiple named saves. A 768x1024 webp is roughly 80-130KB, so
+      base64 in localStorage costs ~110-175KB per save against a ~5MB quota --
+      workable for a handful of saves and fragile past that. Prefer IndexedDB for
+      the image blob with the save holding only a key, and cap or downscale on
+      import. Do not let a custom portrait be the thing that makes save #12 fail
+      to write.
+
+      Flagged as interpretation rather than instruction: Silas said "custom should
+      be an option" without saying which kind, and the offline pillar is what
+      narrows it. If he meant something else -- a request queue that generates a
+      new preset for him during development, say -- that is a different and simpler
+      task, and this section should be corrected rather than built around.
 
   - id: t-022
     milestone: m5
