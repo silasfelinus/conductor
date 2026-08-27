@@ -476,8 +476,8 @@ tasks:
   - id: t-013
     milestone: m2
     title: "Offline income and autosave"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-012
@@ -488,6 +488,9 @@ tasks:
       than congratulatory. Autosave on meaningful state change plus a periodic
       heartbeat, debounced so a click spree does not become a write storm. The client
       never writes coin totals directly; it reports actions and the server recomputes.
+    claimed_by: sched-conductor-cq-t013-20260827T1250Z
+    claimed_at: '2026-08-27T12:50:08Z'
+    updated: '2026-08-27T12:50:08Z'
 
   - id: t-014
     milestone: m2
