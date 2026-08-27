@@ -2193,3 +2193,23 @@ tasks:
     claimed_at: '2026-08-27T04:28:48Z'
     updated: '2026-08-27T04:39:06Z'
 
+  - id: t-047
+    milestone: m2
+    title: "Read per-species economy overrides (Monster.yieldPerTick/tickIntervalSeconds/unlockCost) instead of tier defaults alone"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from the t-012 close-out (PR kind_robots#2144): Monster carries
+      yieldPerTick/tickIntervalSeconds/unlockCost columns explicitly documented
+      as per-species overrides of the tier-derived economy constants ("Null
+      means 'use the tier default'... these three exist for a later per-species
+      balance pass, not required at seed time" -- schema.prisma's own comment),
+      but neither server/utils/aquariumEconomy.ts's incomePerTick/unlockCost
+      nor server/utils/aquarium.ts reads them -- every species still derives
+      purely from Monster.tier via RARITY_TIERS. Not a bug (the schema comment
+      says this is fine pre-balance-pass), but worth doing once Silas or a
+      later task wants per-species tuning without a schema change: fall back
+      to the tier default when a column is null, override when set.
+
