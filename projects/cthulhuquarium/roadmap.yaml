@@ -638,12 +638,41 @@ tasks:
   - id: t-022
     milestone: m3
     title: "Shared bestiary handshake with Ruler is Hooked"
-    status: ready
-    owner: null
+    status: needs-human
+    soft_gate: true
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-008
     note: >
+      UPDATED 2026-08-27 (conductor scheduled Agent run). Documentation half of this
+      task is DONE: fish/SCHEMA.md and the new fish/CROSS-GAME-SHARING.md in
+      silasfelinus/cthulhuquarium already state the full contract (merged PR #14,
+      worker/ruler-hooked-shared-fish-20260826, 2026-08-26 14:43 PT) -- confirmed via a
+      read-only anonymous git clone (this session's GitHub grant excludes
+      silasfelinus/cthulhuquarium, but read-only HTTPS clone works, same finding
+      t-015's TALKBACK entry recorded). 18 species are tagged
+      games: [cthulhuquarium, ruler-hooked] in the bible: bailiff-eel, chandelier-lion,
+      choirfish, drowned-carp, errand-guppy, gutter-minnow, lamplight-angler,
+      ledger-crab, moebius-crab, parlour-rustfish, sea-camel, sump-blob, the-hold,
+      the-long-patience, the-pleasant-island, the-sexton, the-understone, tithe-shoal.
+      FOR SILAS: the seed-freshness half is NOT confirmed and is likely stale -- t-008's
+      own note timestamps the last production seed run at 01:45 PT on 2026-08-26, about
+      13 hours BEFORE the PR that tagged these 18 species merged (14:43 PT same day). No
+      later reseed is recorded anywhere. This sandbox cannot reach the database (same
+      DNS-resolves/TCP-times-out gap t-008 hit) and no public API exposes Monster.games
+      for an outside check. TO CONFIRM/CLOSE: from a machine that can reach the DB (per
+      t-008, that was your own WSL checkout, not this sandbox), run
+      `npm run seed:bestiary` (dry run) in kind_robots -- if it reports 0 pending
+      changes, the reseed already happened and this can go straight to done; if it
+      reports the 18 slugs above changing, run `npm run seed:bestiary:write` and then
+      flip this task to done. Full species table, exact query/never-mutate rules for
+      Ruler is Hooked's dark-ecosystem branch, and why this session couldn't verify the
+      live DB directly are all in
+      projects/cthulhuquarium/docs/t-022-shared-bestiary-handshake.md. Soft gate --
+      other cthulhuquarium/ruler-hooked work may continue in parallel; this only blocks
+      Ruler is Hooked's own dark-ecosystem branch from safely reading real data.
+    prior_note: >
       Close the loop Silas asked for: "we can have appropriate ones appear in both
       games." Confirm the ruler-hooked-tagged fish seed correctly into the shared
       abyssal-bestiary Pack, document the contract in the cthulhuquarium repo's
@@ -657,6 +686,9 @@ tasks:
       or edit the ruler-hooked roadmap from this task; that
       project's false "100% complete" state is Silas's to correct with a real scope
       conversation, and this task only prepares for it.
+    claimed_by: claude-scheduled-20260827T003036Z-cq-t022
+    claimed_at: '2026-08-27T00:30:37Z'
+    updated: '2026-08-27T00:45:00Z'
   - id: t-023
     milestone: m3
     title: "The voices — shopkeeper, assistant, and the Character/Bot records behind them"
@@ -1996,8 +2028,8 @@ tasks:
   - id: t-043
     milestone: m2
     title: "kind_robots: add a Monster API so ArtImage/artImageId can actually be linked"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -2015,6 +2047,10 @@ tasks:
       generated bestiary art can actually be linked to the creature it depicts, which
       blocks any future UI work that wants to render a Monster's art rather than just its
       stats.
+    claimed_by: claude-scheduled-20260826T234500Z-cq-t043
+    claimed_at: '2026-08-26T23:36:50Z'
+    updated: '2026-08-26T23:56:22Z'
+    implementation_pr: 'silasfelinus/kind_robots#2138'
 
   - id: t-044
     milestone: m2
@@ -2025,6 +2061,33 @@ tasks:
     stakes: reversible
     depends_on: [t-015]
     note: >
+      UPDATED 2026-08-27 (conductor scheduled Agent run): queue committed, NOT rendered
+      yet. Ran scripts/build_cthulhuquarium_art_queue.py (reads prompts straight from the
+      bible, silasfelinus/cthulhuquarium fish/*.yaml, via a read-only anonymous clone --
+      this session's GitHub grant excludes that repo but read-only HTTPS clone works) and
+      filtered its raw 174-entry output against t-015's own completed list before
+      committing, to avoid re-queuing the 32 tier-1 species + 3 backgrounds already
+      rendered and approved. Committed projects/art-generate.yaml with 138 pending
+      entries: 119 remaining fish species, the bg-parlour re-render, and 18 previously-
+      unqueued non-fish assets (characters/set pieces/egg icons/UI screens). Did NOT
+      manually POST/poll each job the way t-015 did -- 138 jobs is 1.5-2+ hours of
+      sequential polling at krea2's ~40s/image steady state (worse with its ~25min cold
+      start), which doesn't fit one scheduled sweep alongside everything else it has to
+      cover. Committing the queue lets the already-scheduled auto-art-generate.yml
+      workflow (cron 0 */6 * * *, timeout-minutes: 150) drain it without live babysitting
+      -- that IS the intended mechanism for a batch this size, confirmed by reading
+      consume_art_queue_core.py (krea2 is its DEFAULT_ENGINE) rather than assumed.
+      NEXT SESSION MUST: confirm auto-art-generate.yml actually drained the queue (check
+      its run history / the ArtJob rows), spot-check results for medium consistency the
+      way t-015 did (especially bg-parlour's re-render), requeue only any failures/misses,
+      then close this task done. Full detail, including the one entry a filtering parse
+      edge case may have dropped (139 expected vs. 138 committed -- file re-validated
+      clean, just possibly one species short) in
+      projects/cthulhuquarium/docs/t-044-full-art-pass-batch2.md. Status reset to `ready`
+      (not left at `claimed`) since the remaining work -- verify-and-close -- is a fresh
+      pickup for whichever session next has time to check the scheduled workflow's
+      results, not a continuation of this session's own in-progress state.
+    prior_note: >
       Kaizen from t-015 (2026-08-26, conductor scheduled Agent run): t-015 covered all 32
       tier-1 ("commons") species plus 4 tank backgrounds. The bible now has 152 species
       total, so tiers 2-5 (~120 species) remain ungenerated -- a substantially larger batch
@@ -2036,4 +2099,7 @@ tasks:
       background and fish hit -- worth a re-render with a stronger medium anchor in the
       prompt (or accept it and move on) before treating the background set as finished. See
       projects/cthulhuquarium/docs/t-015-full-art-pass.md for the full image review.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-27T00:50:00Z'
 

@@ -4262,12 +4262,12 @@ tasks:
   - id: t-130
     milestone: null
     title: check_render_box reports UP for a stalled box whose queue is backed up
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
-    owner: null
-    claimed_by: null
-    claimed_at: null
+    owner: worker
+    claimed_by: sched-conductor-t130-20260826T222912Z
+    claimed_at: '2026-08-26T22:29:13Z'
     note: >
       scripts/check_render_box.py exists because an HTTP probe alone cannot tell a
       rendering box from a dead one -- its own docstring cites 2026-08-25, when the
@@ -4304,3 +4304,21 @@ tasks:
       pure and directly testable.
 
       Filed rather than fixed inline to keep the art-batch PR scoped (hard rule 6).
+    updated: '2026-08-26T23:30:33Z'
+    implementation_pr: 'silasfelinus/conductor#2949'
+  - id: t-131
+    milestone: null
+    title: Give consume_art_queue.py a shared "GET queue stats" helper for callers of /api/art/queue/stats
+    status: ready
+    passes: 0
+    stakes: reversible
+    owner: null
+    note: >-
+      Kaizen from t-130 (2026-08-26, conductor PR #2949): check_render_box.py's
+      fetch_queue_stats() and recheck_render_queue.py's own fetch_queue_stats() each
+      independently re-derive the GET /api/art/queue/stats URL/window-param plumbing
+      via consume_art_queue.py's http_json helper. A small shared convenience in
+      consume_art_queue.py (or a new tiny module) would let future scripts reading
+      that endpoint reuse one implementation instead of a third copy appearing next
+      time. Small, reversible, self-contained -- no behavior change to either
+      existing caller.

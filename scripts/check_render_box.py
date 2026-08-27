@@ -30,6 +30,21 @@ evidence of sustained failure (failures piling up with nothing completing), and
 falls back to the HTTP verdict whenever the queue is merely idle or the stats
 call is unavailable. An idle queue is not a broken box.
 
+`render_throughput_verdict` used to short-circuit on `if done: return True` --
+ANY completion inside the window was treated as proof of health, no matter how
+long ago it happened or what the queue looks like right now. Observed
+2026-08-26 during the ruler-hooked art batch (conductor PRs #2945/#2947): 40
+ArtJobs submitted into a queue that had been genuinely empty, the first job
+claimed by the relay and then stuck RUNNING with no movement for 35+ minutes,
+nothing else started -- while the probe kept reporting UP on the strength of
+completions that all predated the batch. The stats payload already carries the
+signal that distinguishes this from "healthy" or "merely idle" and it was being
+ignored: `staleRunningCount` (a RUNNING job whose claim is older than
+kind_robots' STALE_CLAIM_MINUTES, see server/api/art/queue/stats.get.ts) and
+`queueDepth.PENDING`. A stale claim with pending work behind it is a stalled
+queue regardless of what finished earlier in the window, so that check now
+runs before the "any completion is healthy" shortcut, not after it.
+
 Env: KR_MEDIA_ORIGIN (default https://media.acrocatranch.com),
 KR_BASE_URL/KR_API_TOKEN for the throughput check (skipped without a token).
 """
@@ -64,19 +79,41 @@ def render_box_reachable(origin=MEDIA_ORIGIN, timeout=PROBE_TIMEOUT_SECONDS):
         return False, str(getattr(exc, "reason", exc))
 
 
-def render_throughput_verdict(throughput):
-    """(healthy, reason) from a queue stats `windowThroughput` block.
+def render_throughput_verdict(data):
+    """(healthy, reason) from the full ArtJob queue stats `data` block.
 
     `healthy` is None for "no opinion" -- an idle queue, or a stats payload we
-    could not read. Only a window with failures piling up and nothing completing
-    is treated as a broken box, because that is the one pattern an HTTP probe
-    provably cannot see (2026-08-25: the media origin answered all day while the
-    model share was unauthenticated).
+    could not read. Two independent patterns are treated as positive evidence
+    of a broken box, checked in this order:
+
+    1. A stale RUNNING claim with PENDING work still behind it
+       (`staleRunningCount > 0` and `queueDepth.PENDING > 0`). This must be
+       checked before the "any completion is healthy" shortcut below, not
+       after -- a completion earlier in the window does not mean the box is
+       rendering *now* (2026-08-26: 40 ArtJobs submitted into an empty queue,
+       the first stuck RUNNING for 35+ minutes with nothing else started,
+       while stale completions from before the batch kept this reporting UP).
+    2. Failures piling up with nothing completing at all in the window
+       (2026-08-25: the media origin answered all day while the model share
+       was unauthenticated, so completions and stale claims were both zero and
+       only the failure count moved).
     """
-    if not isinstance(throughput, dict):
+    if not isinstance(data, dict):
         return None, "no throughput data"
+    throughput = data.get("windowThroughput")
+    throughput = throughput if isinstance(throughput, dict) else {}
     done = throughput.get("DONE") or 0
     failed = throughput.get("FAILED") or 0
+
+    stale_running = data.get("staleRunningCount") or 0
+    queue_depth = data.get("queueDepth")
+    pending = queue_depth.get("PENDING") or 0 if isinstance(queue_depth, dict) else 0
+
+    if stale_running > 0 and pending > 0:
+        return False, (
+            f"{stale_running} stale RUNNING claim(s) with {pending} PENDING job(s) "
+            f"still waiting and nothing else moving -- the queue is stalled, not idle"
+        )
     if done:
         return True, f"{done} render(s) completed in the last {THROUGHPUT_WINDOW_HOURS}h"
     if failed >= SUSTAINED_FAILURE_COUNT:
@@ -87,8 +124,8 @@ def render_throughput_verdict(throughput):
     return None, "queue idle"
 
 
-def fetch_throughput():
-    """`windowThroughput` from the queue stats endpoint, or None."""
+def fetch_queue_stats():
+    """The full queue stats `data` block, or None."""
     try:
         import consume_art_queue as consumer
     except ImportError:
@@ -105,7 +142,7 @@ def fetch_throughput():
         return None
     if status != 200 or not response or not response.get("success"):
         return None
-    return (response.get("data") or {}).get("windowThroughput")
+    return response.get("data")
 
 
 def main():
@@ -117,7 +154,7 @@ def main():
         )
         return 1
 
-    healthy, reason = render_throughput_verdict(fetch_throughput())
+    healthy, reason = render_throughput_verdict(fetch_queue_stats())
     if healthy is False:
         print(
             f"render box DOWN: {MEDIA_ORIGIN} answers (HTTP {detail}), but the "

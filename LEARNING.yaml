@@ -10673,6 +10673,39 @@ records:
     converted elsewhere (newsfeed-feed.vue) -- cheap to check and turns a plausible-looking
     candidate into a documented, not-blind substitution matching the standing "same
     element rendering two different ways across sibling components" rule.
+- date: '2026-08-26'
+  project: conductor
+  task: t-130
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    check_render_box.py's render_throughput_verdict short-circuited on "any completion
+    in the window is healthy," hiding a stale RUNNING claim with a PENDING backlog
+    behind older completions -- the distinguishing signal (staleRunningCount,
+    queueDepth.PENDING) was already in the same stats payload the caller fetches and
+    just wasn't being read. When a health-check function ignores fields already
+    present in its input, check whether the unused fields are exactly the signal
+    needed before reaching for a new API call or backend change.
+- date: '2026-08-26'
+  project: cthulhuquarium
+  task: t-043
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    An existing generic pattern (server/utils/entityArt.ts, already wired for
+    Character/Scenario/Reward/etc.) doesn't have to be extended to cover every
+    entity with art fields -- Monster's fields are shaped identically but the
+    actual need (link an already-generated ArtImage id directly, admin-only,
+    no owner concept) was narrower than that system's generate/upload/history
+    workflow. A small dedicated route was less code and easier to review than
+    threading a new case through six switch statements in a shared file built
+    for a different job.
 - date: 2026-08-26
   project: ruler-hooked
   task: t-016
