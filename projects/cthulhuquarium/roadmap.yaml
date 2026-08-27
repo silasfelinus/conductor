@@ -476,21 +476,33 @@ tasks:
   - id: t-013
     milestone: m2
     title: "Offline income and autosave"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-012
-    note: >
+    note: >-
       Settle earnings on load from lastTickAt, capped per the balance spec, and show
       the player what they earned while away in one clear panel -- the "welcome back"
       moment is the whole idle-game hook and it should read as slightly ominous rather
       than congratulatory. Autosave on meaningful state change plus a periodic
       heartbeat, debounced so a click spree does not become a write storm. The client
       never writes coin totals directly; it reports actions and the server recomputes.
+
+      Implemented: welcome-back modal (Teleport+<dialog>, matching the
+      revealedUnlock/bestiaryJustCompleted local pattern, dry/ominous copy per DESIGN-BRIEF)
+      replacing the inline offline-earnings banner, plus debounced batching of the Clean
+      button click-spree (cleanDebris/cleanTankForUser gain an optional clicks count, clamped
+      via MAX_CLEAN_CLICKS_PER_REQUEST; store queues clicks and flushes after a 400ms
+      debounce, flushed immediately on unmount). Server-authoritative offline settlement
+      (settleTick/lastTickAt, 8h cap, 0.5x multiplier) already existed from t-009/t-011 and
+      needed no changes -- confirmed the client never proposes a coin amount. Full test
+      suite/eslint/vue-tsc/prettier/layout-contract all pass. kind_robots PR #2150 open, CI
+      pending.
     claimed_by: sched-conductor-cq-t013-20260827T1250Z
     claimed_at: '2026-08-27T12:50:08Z'
-    updated: '2026-08-27T12:50:08Z'
+    updated: '2026-08-27T13:10:28Z'
+    implementation_pr: 'silasfelinus/kind_robots#2150'
 
   - id: t-014
     milestone: m2
