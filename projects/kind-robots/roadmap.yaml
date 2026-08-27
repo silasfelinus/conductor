@@ -2789,7 +2789,7 @@ tasks:
   - id: t-075
     milestone: m3
     title: "Drop Character.size — and it needs the REVERSE deploy order from an add"
-    status: claimed
+    status: review
     gate_human: false
     passes: 0
     stakes: irreversible
@@ -2820,7 +2820,9 @@ tasks:
       PR open, unmerged: silasfelinus/kind_robots#2110. Not merging past a failing required check.
 
       Silas explicitly selected option (a) in-session on 2026-08-27: extend the Schema Migration Parity guard with a narrow, auditable deferred-contract mechanism, then get kind_robots PR #2110 green and merged. This clears the soft tooling-choice gate only. After the client-first PR lands, stop again for the manual Unraid Force Update and production endpoint verification before any DROP COLUMN migration is created or run.
-    updated: '2026-08-27T23:13:00Z'
+
+      Step 1 rescue is ready for review on worker/kind-robots-t-075-20260827-a7c9. It preserves #2110's Character.size schema/client contraction, adds a one-shot pending migration provenance marker, and extends Schema Migration Parity so deferred coverage is accepted only for removal-only schema diffs. Pending markers are rejected once their target migration exists, forcing the later DROP migration PR to consume the marker.
+    updated: '2026-08-27T23:26:00Z'
     owner: worker
     claimed_by: 2026-08-27T231300Z-kind-robots-t-075-gpt56sol-a7c9
     claimed_at: '2026-08-27T23:13:00Z'
