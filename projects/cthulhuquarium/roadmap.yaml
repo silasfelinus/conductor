@@ -2373,8 +2373,8 @@ tasks:
   - id: t-052
     milestone: m3
     title: Filter isRestricted users out of the public tank browse list
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-014
@@ -2387,3 +2387,6 @@ tasks:
       today even though it's excluded from the leaderboard. Add the same
       `User: { isRestricted: false }` filter to listPublicTanks'
       publicAquariumSummarySelect query for consistency.
+    claimed_by: scheduled-20260827T202736Z-t052
+    claimed_at: '2026-08-27T20:27:37Z'
+    updated: '2026-08-27T20:27:37Z'
