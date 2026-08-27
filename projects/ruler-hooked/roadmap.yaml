@@ -545,7 +545,7 @@ tasks:
   - id: t-018
     milestone: m5
     title: Render the 37-piece region/state/time environment matrix
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     owner: worker
@@ -554,8 +554,8 @@ tasks:
       - t-017
     claimed_by: 2026-08-26T23-claude-ruler-hooked-art
     claimed_at: '2026-08-26T23:30:00Z'
-    updated: '2026-08-26T23:40:00Z'
-    note: >
+    updated: '2026-08-27T06:16:12Z'
+    note: >-
       The full environment layer matrix implied by the live regions manifest in
       kind_robots utils/rulerHooked/content.ts: sky 1x3, far_shore 3x2, treeline
       4x3, village_edge 3x2, castle_grounds 3x2, lake 1x2, near_bank 1, ruler 1 =
@@ -569,6 +569,16 @@ tasks:
       t-016 (is the look right?) and t-017 (what shape is a layer file?). When both
       clear, this is one command plus a submit run, and the count self-updates if a
       region or state is added upstream.
+
+      State reconciliation (2026-08-27): status was 'review' but this task's own note says the
+      37-asset batch was 'Deliberately not staged' pending t-016/t-017 -- nothing was ever
+      actually submitted for review (no PR, no ArtJob batch referencing this task), and no
+      evidence of a submission run exists. Both dependencies (t-016, t-017) are now status:
+      done (t-017 finished 2026-08-27T01:34Z, after this task's own claim at 23:30Z the prior
+      day). Correcting status to 'ready' so the next session picks this up as real, now-
+      unblocked work (run build_ruler_hooked_art_queue.py --include-layers, submit the 37
+      renders, verify delivery) rather than leaving it looking already-submitted-and-pending-
+      review when it isn't.
 
   - id: t-019
     milestone: m5
