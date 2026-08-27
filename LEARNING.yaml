@@ -11014,3 +11014,28 @@ records:
     safer sequence when a local edit must survive a state refresh: check
     `git status` for uncommitted changes before any `reset --hard`, or
     commit/stash first.
+- date: 2026-08-27
+  project: cthulhuquarium
+  task: t-023
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A task whose deliverable is content (two authored Character/Bot voice
+    pairs) can be fully "done" even when a downstream, standard-rule step
+    (generated portrait art) is stalled by unrelated infra -- don't
+    conflate "the content is complete" with "everything the task mentions
+    has happened." Splitting them (ship the records now, file the infra
+    fault as its own needs-human task, note the exact idempotent retry
+    command in both the roadmap note and the PR) kept the real deliverable
+    from being held hostage by a render-box hardware problem outside this
+    task's control.
+
+    Cross-check any ComfyUI failure signature against
+    `GET /api/art/queue/stats` and TALKBACK before assuming it's novel --
+    this exact `CLIPTextEncode hostbuf_file_reader_read` string was already
+    diagnosed and closed once (ai-art-academy/t-068, disk13 cable) less
+    than 24 hours earlier, so the right move was flagging a likely
+    recurrence with full context, not re-diagnosing from scratch.
