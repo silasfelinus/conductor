@@ -1009,8 +1009,17 @@ def share_available(now=None):
     _share_state["detail"] = detail
 
     # Log the edges only. A NAS reboot is otherwise a line every poll.
+    #
+    # `reported is None` means this is the process's FIRST probe. A healthy
+    # share there is the ordinary case and must stay silent -- the first armed
+    # run on 2026-08-27 announced "is readable again - resuming claims" on a
+    # share that had never been down, because None is not True. That reads as a
+    # recovery from an outage that did not happen, and tells you to restart
+    # ComfyUI for nothing. A first probe that FAILS still logs: that one you
+    # want to hear about immediately.
+    first_probe = _share_state["reported"] is None
     if _share_state["reported"] is not ok:
-        if ok:
+        if ok and not first_probe:
             log(
                 f"model share {KR_SHARE_PROBE_PATH} is readable again - "
                 "resuming claims. If ComfyUI was running throughout, restart "
@@ -1018,7 +1027,7 @@ def share_available(now=None):
                 "failing reads against the names it cached while the share was "
                 "down."
             )
-        else:
+        elif not ok:
             log(
                 f"{WARN} model share {KR_SHARE_PROBE_PATH} is unreachable "
                 f"({detail}) - NOT claiming jobs until it returns. Renders "

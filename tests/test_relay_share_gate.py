@@ -106,6 +106,25 @@ class ShareGateTests(unittest.TestCase):
         self.assertEqual(len(relay.logged), 1, relay.logged)
         self.assertIn("NOT claiming", relay.logged[0])
 
+    def test_a_healthy_first_probe_says_nothing(self):
+        """A clean start must not announce a recovery that never happened.
+
+        The first armed run (2026-08-27) logged "is readable again - resuming
+        claims" against a share that had never been down, because the initial
+        reported state was None and `None is not True`. It read as an outage
+        and told the operator to restart ComfyUI for nothing.
+        """
+        relay = load_relay(KR_SHARE_PROBE_PATH=str(HOME_SERVER))
+        self.assertTrue(relay.share_available(now=1000.0))
+        self.assertEqual(relay.logged, [])
+
+    def test_a_failing_first_probe_still_warns(self):
+        """The silent-first-probe rule must not swallow a genuine dead mount."""
+        relay = load_relay(KR_SHARE_PROBE_PATH=DEAD_SHARE)
+        self.assertFalse(relay.share_available(now=1000.0))
+        self.assertEqual(len(relay.logged), 1, relay.logged)
+        self.assertIn("NOT claiming", relay.logged[0])
+
     def test_recovery_is_logged_and_names_the_comfyui_restart(self):
         """Remapping the drive is not enough; folder_paths caches. Say so."""
         relay = load_relay(
