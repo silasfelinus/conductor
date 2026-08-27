@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-27T20:35:54Z
+Generated: 2026-08-27T20:40:51Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **790**
-- Outcomes: blocked: 15, cancelled: 1, done: 774
+- Closed tasks recorded: **791**
+- Outcomes: blocked: 15, cancelled: 1, done: 775
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 83 | 100% |
 | conductor-app | 4 | 100% |
-| cthulhuquarium | 22 | 100% |
+| cthulhuquarium | 23 | 100% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
@@ -68,7 +68,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 774 | 99% |
+| software | 775 | 99% |
 
 ## Failure categories
 
@@ -89,6 +89,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-27 `cthulhuquarium/t-052` — A kaizen task that names the exact fix (add User: { isRestricted: false } to listPublicTanks, matching the leaderboard's already-shipped filter) is a fast, low-risk pickup for a scheduled sweep -- no design judgment needed, just apply the established pattern and verify with the existing aquarium test suites. Worth favoring these small, precisely-scoped kaizen followups when a session needs to pick one task with minimal ambiguity.
 - 2026-08-27 `cthulhuquarium/t-018` — A "leave it alone; it is funnier untouched" design note doesn't mean skip the feature -- it means build the plain, understated version and resist adding flourish, foreshadowing, or extra UI weight around it. Read against SYSTEMS.md/DESIGN-BRIEF.md's finale-foreshadowing section before starting confirmed the task's own note (rank by species collected, display names only) was the complete spec, with the "leave it alone" line steering tone (no finale hints near it) rather than scope.
 Consent boundaries for public-facing player data aren't one flag: a sibling feature's own opt-in (Aquarium.isPublic, from the dependency this task built on) is the right gate for "will this player's data appear here," not a same-purpose-sounding but different flag from an unrelated feature (the friend-finder directory's listInDirectory). Checking which existing feature the new one actually depends on for consent semantics -- not just grepping for the first consent-shaped flag in the schema -- kept the leaderboard consistent with the browse page it extends.
 - 2026-08-27 `cthulhuquarium/t-017` — A genuinely novel feature with no prior in-repo precedent (no decor code, no established real drag-and-drop convention) is worth a research-only Explore pass before writing any implementation code -- confirmed via grep across the whole repo that the only `draggable` attribute anywhere was unwired dead code in stage-manager.vue, which settled the design decision (native Pointer Events over introducing a DnD dependency) before any code was written instead of discovering it mid-implementation.
@@ -102,7 +103,6 @@ Operational note for future sessions: `git reset --hard origin/<branch>` silentl
 - 2026-08-27 `cthulhuquarium/t-031` — A record's schema and its consumers can land in different tasks without a gap: t-032 already added AquariumCodexEntry.bestStat* columns and t-024 already built the collected/fieldNote codex view, so t-031 was "wire the already-decided record's remaining two features into the existing view" rather than a new screen. Both new features (best-individual-stats, re-order) are provable no-ops today because their upstream dependencies (t-029 genetics, t-030 sell-back) haven't landed -- writing unit tests for the pure merge function (mergeBestStats) that assert the both-null case explicitly, rather than skipping coverage for "nothing to test yet," is what makes that correctly-inert-for-now claim verifiable instead of just asserted.
 - 2026-08-27 `cthulhuquarium/t-026` — A task's own economy.yaml section can already contain the full balance spec before any code exists -- set_pieces (all seven kinds, exact effect values) was fully authored in a prior session's economy.yaml edit, so this task was really "wire an already-decided spec into code" rather than "design set pieces from scratch." Reading the data file's own comments (no_stack_idle_effects, the debris_skimmer/click_clears sync note) surfaced constraints that would otherwise have needed a second pass to discover. The one real design gap economy.yaml left open was equip pricing, which it explicitly named as this task's job to fill in -- anchoring those to RARITY_TIERS rather than inventing unrelated numbers kept the new values traceable the same way every other price in the file already is.
 - 2026-08-27 `cthulhuquarium/t-013` — An "offline income" task can be mostly already shipped by an earlier task with a different name -- t-009/t-011 had already built the full server-authoritative settleTick/lastTickAt settlement (8h cap, 0.5x multiplier, coins only ever server-incremented) before this task was ever picked up. Reading the existing store/component flow end-to-end before writing anything found the real remaining gap was narrower and different from what the title suggests: the "welcome back" moment was an easy-to-miss inline banner instead of "one clear panel," and the Clean button (a different task's, t-027's, active-play channel) fired one write per click with no batching. Claimed the conductor task before starting the cross-repo kind_robots implementation this time, per the lesson recorded in this same day's ruler-hooked/t-021 collision.
-- 2026-08-27 `cthulhuquarium/t-012` — Before implementing a "wire the shop" task, read what the prior task already shipped -- t-011 had already wired buy-food and species-unlock end-to-end (including auto-placement), so the real remaining gap was a design-intent violation already visible in the diff (the field note was rendered pre-unlock, contradicting the task's own "reveals on first unlock, not before" note), not a missing feature. Checking sibling tasks' depends_on graph (t-026 depends_on t-012, status: waiting) also confirmed "buy upgrades" from this task's note was intentionally deferred, not a gap in this task.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-27T20:35:54Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-27T20:40:51Z_
