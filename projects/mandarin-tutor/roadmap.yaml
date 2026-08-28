@@ -497,3 +497,18 @@ tasks:
     claimed_at: '2026-08-26T04:30:34Z'
     updated: '2026-08-26T04:42:43Z'
     implementation_pr: 'silasfelinus/kind_robots#2122'
+  - id: t-018
+    title: Show a visible confirmation when an illustration is queued on the study card
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-017/mandarin-study-ux-gallery (2026-08-28, kind_robots PR #2171).
+      pages/play/mandarin.vue's queueCurrentIllustration/refreshCurrentIllustration set
+      an `artNotice` ref (e.g. "Illustration queued as ArtJob <id>.") but nothing in the
+      template renders it -- contrast `newSetNotice`, which IS rendered. A user clicking
+      "Request illustration" gets no visible feedback that anything happened. Render
+      `artNotice` the same way `newSetNotice` is rendered (a small transient banner near
+      the study card), and clear it on the same triggers `newSetNotice` clears on, or on a
+      short timeout if none of those apply here. Small, self-contained, reversible.
