@@ -2689,3 +2689,52 @@ tasks:
       `TANK_POLL_INTERVAL_MS`'s existing tick cadence -- no new server
       endpoint needed). This is the concrete "reason to check in" beat
       Silas's original task note called for that t-030 didn't build UI for.
+
+  - id: t-058
+    milestone: m3
+    title: Author a BREEDING-evolution species pair in the fish bible
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    soft_gate: true
+    depends_on: t-055
+    note: >-
+      Split out of t-055 (surface breeding as a real player action in the tank
+      UI). t-055's own task note asked for two things: (1) the store/UI
+      breeding flow, and (2) authoring at least one species in the fish bible
+      with `evolutionKind: BREEDING` + `evolvesToId` set so the secret-
+      evolution path (schema-ready since t-029/t-042, but inert -- no seed
+      data exercises it) has something real to reveal end-to-end. Part 1
+      shipped (kind_robots PR #2176). Part 2 is this task -- it requires
+      editing `silasfelinus/cthulhuquarium` (the fish bible, `fish/*.yaml`), a
+      SEPARATE GitHub repository from `conductor`/`kind_robots`, which was
+      outside the implementing session's GitHub access scope and not locally
+      cloned. FOR SILAS or a differently-scoped session: full handoff --
+      which fields to set, which script to run, what to sanity-check -- is at
+      `projects/cthulhuquarium/docs/t-058-breeding-evolution-species.md`. Soft
+      gate: this is a repo-access limitation, not a design decision awaiting
+      approval, so other cthulhuquarium work is unaffected and continues
+      normally. `evolutionKind: SECRET` species may exist already; this task
+      is specifically about the `BREEDING` kind, distinct from those.
+
+  - id: t-059
+    milestone: m3
+    title: Show a rolled individual's stats somewhere in the tank UI
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from t-055 (surface breeding as a real player action in the tank
+      UI, kind_robots PR #2176). That PR exposed each owned fish's rolled
+      individual stats (`statCharm..statWits`) on `TankStock` so the store
+      could read them, but nothing in `cthulhuquarium-game.vue` displays them
+      yet -- the confirm/reveal copy already leans on "well-bred fish"
+      framing (t-030's sell flow makes the same claim) without anywhere a
+      player can actually see a fish's own numbers. Add a compact stat
+      readout (reuse the Ichthyonomicon's existing `formatBestStats`/
+      `BEST_STAT_LABELS` idiom) to each tank card, or a lightweight detail
+      view -- whichever reads better without crowding the existing Feed/Sell/
+      Breed button row. Presentation-only; no new endpoint or economy change
+      needed, the data already reaches the client.
