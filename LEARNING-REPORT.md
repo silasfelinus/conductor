@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-28T00:56:45Z
+Generated: 2026-08-28T00:57:39Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **795**
-- Outcomes: blocked: 16, cancelled: 1, done: 778
+- Closed tasks recorded: **796**
+- Outcomes: blocked: 16, cancelled: 1, done: 779
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 83 | 100% |
 | conductor-app | 4 | 100% |
-| cthulhuquarium | 27 | 96% |
+| cthulhuquarium | 28 | 96% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
@@ -68,7 +68,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 779 | 99% |
+| software | 780 | 99% |
 
 ## Failure categories
 
@@ -89,6 +89,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-28 `cthulhuquarium/t-039` — A design note calling for two illustrated plates (screen-finale, set-last-aquarium) that were queued but not yet generated did not have to block the whole feature: the purchase/economy/event-logging mechanics and a code-only canvas vignette shipped now, with a placeholder text-only reveal dialog standing in for the real art -- the exact "mechanical gate now, authored pass later" shape t-028/t-053 already established for the milestone toast. Filed t-054 to swap in the real plates once generated, rather than leaving t-039 open/blocked on an asset pipeline outside this session's reach. Also confirmed conductor's own "Python test suite" CI job intermittently fails on a live kindrobots.org 502 (production Resource-registry read) plus two unrelated flaky assertions, identically across two independent roadmap-only PRs (#3040, #3041) -- consistent with t-124's existing finding that this job is not a required check; mergeable_state read "unstable" not "blocked" on both, so merged past it per that documented precedent rather than re-running indefinitely.
 - 2026-08-27 `cthulhuquarium/t-028` — A prior session's RESEARCHED-NOT-IMPLEMENTED note (scoping "5 of 8 landmarks are fully computable today") was a directly usable spec, not just context -- implementing exactly that recommendation (4 of the 5, dropping the one still blocked on an unresolved semantics call) landed clean on the first pass with no design ambiguity to resolve mid-task. Closing a title-broad task ("...as the gating layer") at `done` on its landable core, rather than leaving it `ready` forever waiting for unbuilt subsystems (evolution/rivalry) or a one-line human decision (full-tank semantics), keeps the roadmap's `ready` queue honest -- those remainders aren't actionable by another agent pass, so leaving the umbrella task open would just resurface as unclaimable "ready" work each sweep. A frontend-integration kaizen (t-053) captures the actually actionable follow-on instead.
 - 2026-08-27 `cthulhuquarium/t-019` — "Retune against real play data" cannot be satisfied by a sandboxed agent session when no telemetry/analytics path exists yet and the session has no way to generate a real multi-session player history itself -- this is an actionable failure (missing access to the core input the task needs), not a quality failure, so it does not burn a pass. A prior session (2026-08-25) had already flagged the milestone-ladder half of this task as needing play data specifically to avoid a naive fix (linear breakpoint extension) that would silently undermine an intentional design constraint (the tank-packing problem) -- worth trusting that prior judgment rather than re-deriving new numbers from design docs alone and asserting they're tuned, when they would actually just be another guess.
 - 2026-08-27 `cthulhuquarium/t-051` — A balance-pass task that explicitly allows a no-op exit does not need real play data to close well -- reviewing DECOR_CATALOG's six costs against the existing RARITY_TIERS anchor (already the established convention SET_PIECE_CATALOG uses) surfaced a deliberate taper, not a guess, and was enough to confirm the pricing rather than requiring telemetry this sandbox cannot produce. Worth distinguishing from t-019 in the same session: a task is only genuinely blocked on real data when its own note requires *feel* (does the pacing feel right) rather than *consistency* (does this number follow the pattern the rest of the file already sets).
@@ -102,7 +103,6 @@ Extending an existing shared Prisma select (publicAquariumDetailSelect) to carry
 Cross-check any ComfyUI failure signature against `GET /api/art/queue/stats` and TALKBACK before assuming it's novel -- this exact `CLIPTextEncode hostbuf_file_reader_read` string was already diagnosed and closed once (ai-art-academy/t-068, disk13 cable) less than 24 hours earlier, so the right move was flagging a likely recurrence with full context, not re-diagnosing from scratch.
 - 2026-08-27 `cthulhuquarium/t-016` — A task note's "may pause or redirect income briefly" is a soft option, not a requirement -- reading the HARD CONSTRAINT amendment in full ("no event may take anything away") before designing anything showed that every event kind could be built as a coin bonus or a zero-effect cosmetic beat, sidestepping the real complexity of an actual accounted income pause for a barely-noticeable player-facing difference. Explicit scope-decision comments (in the YAML, the TS, and the PR body) on why the pause was skipped make that a documented choice a reviewer can challenge, not a silent gap they'd have to notice on their own.
 Operational note for future sessions: `git reset --hard origin/<branch>` silently discards ANY uncommitted local change in the working tree, not just changes on the branch you're resetting -- including an edit to a file the session made earlier in the SAME repo checkout for unrelated reasons (here: an economy.yaml edit made before claiming the task, lost by a later `git checkout main && git reset --hard origin/main` done purely to refresh state after a different PR's merge). Caught by grepping for the expected content immediately after the reset rather than assuming the working tree still held it; redone from scratch. The safer sequence when a local edit must survive a state refresh: check `git status` for uncommitted changes before any `reset --hard`, or commit/stash first.
-- 2026-08-27 `cthulhuquarium/t-014` — A task whose server API already shipped under an earlier task (t-009 built the browse/[username]/[slug] endpoints "frontend/UI wiring is separate scope, not built here") is real remaining work, not a duplicate -- reading that prior task's completion note up front correctly scoped this one to default-visibility + a one-click toggle + the two frontend pages, instead of re-deriving or re-building the already-shipped server side. The layout contract's one-header rule caught both new pages rendering their own <h1> on the first test:layout-contract run; switching to <h2> (matching the existing pages/play/challenges/* convention, since these are plain Nuxt pages with no content-frontmatter shell) fixed it in one pass.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-28T00:56:45Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-28T00:57:39Z_
