@@ -2733,7 +2733,7 @@ tasks:
   - id: t-059
     milestone: m3
     title: Show a rolled individual's stats somewhere in the tank UI
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -2752,7 +2752,8 @@ tasks:
       needed, the data already reaches the client.
     claimed_by: 2026-08-28T30002-scheduled-t059
     claimed_at: '2026-08-28T10:31:48Z'
-    updated: '2026-08-28T10:36:13Z'
+    updated: '2026-08-28T10:40:43Z'
+    implementation_pr: 'silasfelinus/kind_robots#2179'
   - id: t-060
     milestone: m3
     title: Extract a shared one-shot-reveal composable for revealedUnlock/revealedHatch/revealedBreed
@@ -2801,3 +2802,24 @@ tasks:
       cthulhuquarium/t-057 only fixed the one calling site (catalog); this
       is a read-and-report audit that may turn up zero, one, or several
       applicable call sites, not a guaranteed refactor.
+  - id: t-062
+    milestone: m3
+    title: Show what selling would pay before the player clicks Sell
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from t-059 (rolled-stat readout on the tank card, kind_robots PR
+      #2179). That task made a fish's own rolled stats visible for the first
+      time, which makes it obvious the Sell button's payout
+      (`server/utils/aquariumEconomy.ts`'s `sellPrice()`, a function of
+      `baseCost` and the individual's stat average) varies per individual --
+      but nothing shows what a specific fish would actually sell for before
+      the one-click Sell is pressed. Surface the computed price on or near
+      the Sell button (e.g. add a `sellPrice` field alongside the existing
+      stat fields on the `/api/aquarium` stock payload and `TankStock`, or a
+      lightweight preview endpoint) rather than re-deriving the curve
+      client-side -- same "the server disposes" discipline the rest of this
+      economy already follows. Presentation-plus-small-payload change; no
+      change to the sell curve itself.
