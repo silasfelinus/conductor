@@ -11240,3 +11240,21 @@ records:
     (slot-cap increase, AquariumEvent log) working correctly gave no visible signal that the
     UI half was still missing. Worth periodically diffing a store's typed response interfaces
     against what the server actually returns, not just what the store currently reads off it.
+- date: '2026-08-28'
+  project: cthulhuquarium
+  task: t-030
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: t-031's currentlyOwned flag and dead "Re-order" button, and t-029's rolled
+    stat* columns, were both built ahead of time specifically for this task -- t-030
+    landed as almost pure wiring (rotateShopStock + sellPrice, both pure functions
+    in aquariumEconomy.ts) with zero migration, exactly as t-032's schema-first
+    discipline intended. The one design risk this task's own note called out by
+    name (rotating stock + selling creating a quiet permanent loss of access) was
+    already fully solved by t-031's Ichthyonomicon before this task started --
+    confirms that flagging a trap in a task note AND building its fix into an
+    earlier, unrelated-looking task (t-031) is a pattern worth repeating when a
+    later task's safety depends on state a dependency already tracks.
