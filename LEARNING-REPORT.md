@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-28T10:40:04Z
+Generated: 2026-08-28T10:46:28Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **806**
-- Outcomes: blocked: 16, cancelled: 1, done: 789
+- Closed tasks recorded: **807**
+- Outcomes: blocked: 16, cancelled: 1, done: 790
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 83 | 100% |
 | conductor-app | 4 | 100% |
-| cthulhuquarium | 35 | 97% |
+| cthulhuquarium | 36 | 97% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
@@ -68,7 +68,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 790 | 99% |
+| software | 791 | 99% |
 
 ## Failure categories
 
@@ -90,6 +90,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-28 `cthulhuquarium/t-059` — Reusing an existing formatting idiom (formatBestStats()/BEST_STAT_LABELS, t-031) instead of inventing a parallel one kept the diff to a single small helper (tankStockStatsLine()) that reshapes TankStock's stat<Name> fields into the same BestiaryStatBlock shape the Ichthyonomicon already consumes. Worth flagging as its own kaizen (t-062) rather than scope-creeping into this task: making an individual's rolled stats visible for the first time immediately raises the follow-on question a player will actually ask -- "what would this sell for?" -- which the Sell button still doesn't answer despite the price already varying per individual (sellPrice() in aquariumEconomy.ts). Noticing a UI change makes a previously-invisible economic question visible is a useful generic signal for kaizen filing, distinct from noticing a code-shape duplication.
 - 2026-08-28 `cthulhuquarium/t-057` — A task that reads as UI-only ("show a countdown") can be blocked on a small, shared infrastructure gap: performFetch() (stores/utils.ts) silently dropped every response's `meta` object, and at least 17 server routes already return one. Worth checking whether a "just read this field" task's data is actually reachable before assuming the store layer already exposes it -- the fix here (an optional second generic on ApiResponse<T, M>, purely additive/backward-compatible) was small, but skipping that check would have meant reaching for a server-side workaround (a second field on `data`, or a new endpoint) that the task's own note explicitly said wasn't needed.
 - 2026-08-28 `cthulhuquarium/t-056` — A repeated-shape kaizen (three near-identical one-shot-signal refs) is worth pausing on before extracting: the task named three call sites (bestiaryJustCompleted, milestoneToastQueue, finaleJustTriggered), but a fourth near-identical trio (revealedUnlock/revealedHatch/revealedBreed, a typed-payload variant of the same shape) was sitting right next to it in the same file. Scoping the extraction to exactly what the task named (rather than also folding in the sibling pattern) kept the diff small and reviewable, but the sibling was worth filing as its own immediate kaizen (t-060) rather than a speculative "if a fourth shows up" -- it already had three instances, the same threshold that triggered this task in the first place.
 - 2026-08-28 `cthulhuquarium/t-055` — A task can bundle two deliverables in different repos without saying so explicitly -- here, a store/UI change (in-scope) plus content authoring in silasfelinus/cthulhuquarium, a GitHub repo entirely outside this session's access (not just connector-blocked within an in-scope repo, and not locally cloned). When a target repo isn't accessible at all, don't guess at its content from memory or skip that half silently -- split the task, land what's actually landable, and write a concrete handoff doc naming the exact repo, fields, and script for whoever has access next. Worth checking a task's own note for "and author/write/edit X" clauses naming a different project before claiming, since those are the ones most likely to span a repo this session can't reach.
@@ -99,7 +100,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-28 `cthulhuquarium/t-030` — t-031's currentlyOwned flag and dead "Re-order" button, and t-029's rolled stat* columns, were both built ahead of time specifically for this task -- t-030 landed as almost pure wiring (rotateShopStock + sellPrice, both pure functions in aquariumEconomy.ts) with zero migration, exactly as t-032's schema-first discipline intended. The one design risk this task's own note called out by name (rotating stock + selling creating a quiet permanent loss of access) was already fully solved by t-031's Ichthyonomicon before this task started -- confirms that flagging a trap in a task note AND building its fix into an earlier, unrelated-looking task (t-031) is a pattern worth repeating when a later task's safety depends on state a dependency already tracks.
 - 2026-08-28 `cthulhuquarium/t-053` — t-018/t-028's justCompletedBestiary/firedMilestones purchase-response signals sat server-complete with zero frontend consumer for a full cycle -- the server-side gate (slot-cap increase, AquariumEvent log) working correctly gave no visible signal that the UI half was still missing. Worth periodically diffing a store's typed response interfaces against what the server actually returns, not just what the store currently reads off it.
 - 2026-08-28 `cthulhuquarium/t-029` — t-032's schema-first discipline (shipping nullable stat/parentage columns and the EvolutionKind enum before any code read them) paid off exactly as intended -- t-029 needed zero migration, only wiring pure roll/converge/threshold functions onto columns that already existed. A prior session's claim on this task had expired (CLAIM_TTL_MINUTES) with no PR ever opened; next_ready_task.py correctly resurfaced it as pickable rather than leaving it stuck.
-- 2026-08-28 `kind-robots/t-075` — DROP migrations need deploy-then-migrate sequencing when old clients still select the retiring column. The removal-only deferred parity marker now makes that staging explicit and auditable without weakening ordinary schema/migration parity.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-28T10:40:04Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-28T10:46:28Z_
