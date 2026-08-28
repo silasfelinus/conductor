@@ -134,3 +134,44 @@ jobs:
             echo "::error::One or more task events failed to apply; they remain in task-events/ for diagnosis." >&2
             exit 1
           fi
+
+  daily-digest-sentinel:
+    # The dedicated daily-digest and retry schedules can both disappear without
+    # GitHub creating a queued or failed run. Piggyback on this independently
+    # healthy hourly schedule so one missing scheduler lane cannot suppress the
+    # digest and its watchdog together.
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recover a missing daily digest invocation
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          today="$(date -u +%F)"
+          now_epoch="$(date -u +%s)"
+          recovery_epoch="$(date -u -d "${today} 16:00:00" +%s)"
+
+          if [ "$now_epoch" -lt "$recovery_epoch" ]; then
+            echo "Before the daily digest recovery window; nothing to do."
+            exit 0
+          fi
+
+          since="${today}T15:00:00Z"
+          runs_json="$(gh api \
+            -H 'Accept: application/vnd.github+json' \
+            "repos/${GITHUB_REPOSITORY}/actions/workflows/daily-digest.yml/runs?per_page=100")"
+          run_count="$(printf '%s' "$runs_json" | jq --arg since "$since" \
+            '[.workflow_runs[] | select(.created_at >= $since)] | length')"
+
+          if [ "$run_count" -gt 0 ]; then
+            echo "Daily digest already has ${run_count} run(s) created since ${since}; not dispatching a duplicate."
+            exit 0
+          fi
+
+          echo "No daily digest run exists since ${since}; dispatching the recovery run."
+          gh workflow run daily-digest.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref main \
+            -f send_email=true
