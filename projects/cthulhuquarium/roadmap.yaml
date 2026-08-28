@@ -1862,11 +1862,11 @@ tasks:
   - id: t-039
     milestone: m3
     title: "The finale — the eye at the window, and the last tank that has to exist first"
-    status: ready
+    status: claimed
     gate_human: true
     approved_by_human: true
     soft_gate: true
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-032, t-028, t-017]
@@ -1969,6 +1969,9 @@ tasks:
       waiting so it stops surfacing as workable until its actual prerequisites land;
       resolve_deps.py will flip it back to ready automatically once t-017 and t-028 both
       reach status: done. No design content changed.
+    claimed_by: 20260828T003723Z-cq-t039-finale
+    claimed_at: '2026-08-28T00:37:24Z'
+    updated: '2026-08-28T00:37:24Z'
   - id: t-040
     milestone: m1
     title: "Eight plate lineages, and no negations anywhere in an art prompt"
