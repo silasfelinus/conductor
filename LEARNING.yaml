@@ -11316,3 +11316,21 @@ records:
     fields, and script for whoever has access next. Worth checking a task's own note for
     "and author/write/edit X" clauses naming a different project before claiming, since
     those are the ones most likely to span a repo this session can't reach.
+- date: '2026-08-28'
+  project: cthulhuquarium
+  task: t-056
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A repeated-shape kaizen (three near-identical one-shot-signal refs) is worth pausing on
+    before extracting: the task named three call sites (bestiaryJustCompleted,
+    milestoneToastQueue, finaleJustTriggered), but a fourth near-identical trio
+    (revealedUnlock/revealedHatch/revealedBreed, a typed-payload variant of the same shape)
+    was sitting right next to it in the same file. Scoping the extraction to exactly what the
+    task named (rather than also folding in the sibling pattern) kept the diff small and
+    reviewable, but the sibling was worth filing as its own immediate kaizen (t-060) rather
+    than a speculative "if a fourth shows up" -- it already had three instances, the same
+    threshold that triggered this task in the first place.
