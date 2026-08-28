@@ -2048,14 +2048,14 @@ tasks:
   - id: t-041
     milestone: m3
     title: "Hidden egg purchases — rarity, and the size rule that keeps them housable"
-    status: review
+    status: needs-human
     gate_human: true
     approved_by_human: null
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-029
-    note: >
+    note: >-
       Silas, 2026-08-25: "a hidden egg purchase in the store, with different rarity. The
       challenge is that it should hatch something that fits in the aquarium, so it cannot
       hatch something beyond its own size." THE CONSTRAINT IS THE DESIGN, and it is the good
@@ -2166,9 +2166,26 @@ tasks:
       species, this is the paragraph to overturn, and the 151 count is what it costs. DECISION
       2 IS NOW THE ONLY ONE OPEN: whether the egg OPTION is itself concealed until something
       is discovered. Everything else about eggs is settled.
+
+      FOR SILAS: Egg purchases are implemented and merged (kind_robots PR #2172 --
+      server/utils/aquarium.ts purchaseEggForUser/hatchEggForUser, a new Eggs shop panel in
+      the tank UI, AquariumEgg migration). Contains: (1) a two-dial catalog, 6 rarities x 3
+      sizes, rarity and size priced independently; (2) a hatch reveal dialog that always shows
+      what the egg became, never silent; (3) hatching can duplicate an already-owned species
+      on purpose, since breeding (t-029) needs a second individual of the same species. TO
+      APPROVE: your own Decision 2 is still open -- should the egg PURCHASE OPTION itself be
+      concealed until something is discovered, or just its CONTENTS (which species it hatches)
+      stay a mystery while the option sits plainly in the shop? Shipped with the simpler
+      plainly-on-sale reading. If you want it concealed, say what should trigger the reveal
+      and I will wire it in a follow-up task. Also sanity-check the egg pricing
+      (aquariumEconomy.ts EGG_RARITY_PRICE_FACTOR=0.6, EGG_SIZE_PRICE_PER_UNIT) -- flagged as
+      a starting-point guess, same as every other catalog in that file. Set approved_by_human:
+      true and status: done once satisfied, or leave a note asking for changes. Nothing else
+      currently depends on this task.
     claimed_by: conductor-scheduled-2026-08-28T053433-egg
     claimed_at: '2026-08-28T05:34:34Z'
-    updated: '2026-08-28T06:09:07Z'
+    updated: '2026-08-28T06:19:53Z'
+    implementation_pr: 'silasfelinus/kind_robots#2172'
   - id: t-042
     milestone: m2
     title: "Monster is missing four bible fields — additive migration, DO NOT MERGE until kind-robots/t-072 is fixed or it is applied by hand"
