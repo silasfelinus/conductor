@@ -499,8 +499,8 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#2122'
   - id: t-018
     title: Show a visible confirmation when an illustration is queued on the study card
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -512,3 +512,6 @@ tasks:
       `artNotice` the same way `newSetNotice` is rendered (a small transient banner near
       the study card), and clear it on the same triggers `newSetNotice` clears on, or on a
       short timeout if none of those apply here. Small, self-contained, reversible.
+    claimed_by: claude-scheduled-20260828T073019Z-mandarin-t018
+    claimed_at: '2026-08-28T07:30:20Z'
+    updated: '2026-08-28T07:30:20Z'
