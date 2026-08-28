@@ -2454,8 +2454,8 @@ tasks:
   - id: t-050
     milestone: m3
     title: Fold a rolled individual's stats into the Ichthyonomicon's best-seen record
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
     depends_on: t-029
@@ -2472,6 +2472,9 @@ tasks:
       this task added is not the only place a stat can newly appear, just the
       only one that currently exists. Waiting on t-029 rather than ready,
       since there's nothing to wire against yet.
+    claimed_by: conductor-scheduled-2026-08-28T063200-sweep
+    claimed_at: '2026-08-28T06:32:31Z'
+    updated: '2026-08-28T06:32:31Z'
 
   - id: t-051
     milestone: m3
