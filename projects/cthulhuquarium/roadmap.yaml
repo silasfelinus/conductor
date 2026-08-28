@@ -2657,8 +2657,8 @@ tasks:
   - id: t-056
     milestone: m3
     title: Consolidate cthulhuquariumTankStore's repeated one-shot-signal queuing pattern
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -2675,6 +2675,9 @@ tasks:
       call sites adopts, so a fourth signal doesn't have to reinvent the
       pattern a fourth time. Presentation-only refactor -- no behavior change,
       no new signals.
+    claimed_by: 2026-08-28T-scheduled-t056
+    claimed_at: '2026-08-28T09:27:38Z'
+    updated: '2026-08-28T09:27:38Z'
   - id: t-057
     milestone: m3
     title: Show the rotating shop's refresh countdown on the unlock panel
