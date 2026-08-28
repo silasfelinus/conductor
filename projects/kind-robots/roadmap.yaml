@@ -2924,3 +2924,102 @@ tasks:
       queue surface, so no dashboard/tutorial registration or Project.liveUrl change
       is needed. approved_by_human is set because Silas requested the feature
       directly in-session; the work itself is reversible and not outward-facing.
+
+  - id: t-077
+    milestone: m6
+    title: "Home page redesign: dream hero, showcase rails, chooseable starting feed"
+    status: review
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-28T23:55:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#2187'
+    approved_by_human: true
+    note: >
+      Filed and implemented in the same session from a direct request by Silas,
+      2026-08-28, verbatim: "I want a redesign of our home page. Currently, we
+      are getting just our newsfeed ... I want a home page that really shows off
+      all the little parts of our website and its progress, and helps encourage
+      me to play around and see what we've been building ... all of our progress
+      is buried under nav paths that a user might never see. These displays
+      should always lead to something, not just static displays of images and
+      text."
+
+      Two structural choices were put to Silas before any code was written and
+      answered by him in-session: horizontal rails one-per-kind (over a mixed
+      bento grid or a tabbed panel), and the newsfeed kept whole as a full-width
+      section below the rails (over a side column or a 3-headline teaser). The
+      hero question came back amended rather than picked -- "I want the dream,
+      but there is a problem, it isn't always ready with art. So instead of
+      Today's dream, it needs to be the most recent dream that has full art" --
+      which is what the endpoint's candidate scan implements.
+
+      Shipped as silasfelinus/kind_robots#2187. content/index.md now mounts
+      components/home/home-page.vue (one MDC component, per the layout
+      contract): an orientation row with no <h1> of its own, the dream hero with
+      its cast docked beneath as links, eight horizontal rails (art, animations,
+      dreams, characters, scenarios, items/skills, bots, facets) each with a
+      "see all" into its gallery, a high-priority project strip that links to
+      the TOOL via PROJECT_PLACEMENTS rather than the project record, and the
+      newsfeed unchanged below. Empty rails are dropped rather than rendered
+      empty, which is how "if we are still making new animations" resolves
+      itself on a day with no clips. components/home/home-feed-placeholder.vue
+      is retired.
+
+      Backed by one new endpoint, /api/showcase/home: the per-object list routes
+      answer a different question (/api/characters returns the whole catalog
+      ordered by name), so eight of them asked for "the newest twelve" would
+      ship tens of thousands of rows to draw ~100 cards. Public-safe by
+      construction -- every query pinned to isPublic + isActive + isMature:false
+      with no auth path at all, and a FIXED error message rather than the
+      repo-usual forwarded one, since this route's failures render on the front
+      page and a forwarded Prisma error puts a full query dump in front of every
+      visitor during an outage.
+
+      Two supporting fixes rather than leaving the new cards half-wired.
+      (1) Deep links: Character, Bot and Facet managers already honoured a
+      route-query selection, Dream/Reward/Scenario/Art did not, so a rail card
+      would have landed on an unfiltered gallery -- all four gained the same
+      handling and querySelectionId moved to utils/routeSelection.ts instead of
+      being copy-pasted a fourth and fifth time. (2) utils/scripts/
+      verifyLayoutContract.ts's one-header rule read the raw template including
+      HTML comments and flagged a component for a comment DOCUMENTING that it
+      renders no H1 -- the same mention-is-not-use trap codeOf() already
+      documents for no-viewport. Stripping comments can only remove matches, so
+      no rule can gain a violation from it.
+
+      Starting feed (the smaller half of the request): a "Start here" toggle in
+      the newsfeed header pins the tab you are reading as the one it opens on,
+      stored with the other newsfeed preferences, falling back to All whenever
+      the saved feed is removed or turned off, and applied once per load so a
+      refresh never yanks a reader out of the tab they just clicked.
+
+      Stand-in art: the 8 defaults moved out of feed-card.vue into
+      utils/defaultArtPool.ts and are now shared with every rail card that has
+      no art of its own. 40 more in 40 different media are queued in
+      projects/art-prompts.yaml (default-09..48, low priority per Silas's own
+      "this is low priority, I just want more variety and freshness"). The
+      manifest is checked in rather than read from disk because public/images is
+      gitignored and served off the media share -- neither the build nor a
+      serverless route can enumerate it -- so `npm run audit:default-art --
+      --write` (utils/scripts/auditDefaultArt.ts) HEAD-checks the live site and
+      promotes only what is actually being served. Listing a name before its
+      render lands is the one thing that regresses the surface.
+
+      Verified: vue-tsc clean, eslint clean, prettier clean, layout contract
+      holds, MDC scroll ownership holds (baseline ratcheted down 6),
+      test:art-request-yaml and test:art-prompt-contract pass, and all 41 queued
+      prompts pass checkArtPromptContract at krea2/cfg 1 (four were rewritten
+      after that check flagged "poster"/"card illustration" as format-vocabulary
+      requests). Rendered in headless Chromium against a mocked showcase payload
+      to check the composition at 1400px; the hero was capped in height and the
+      full-colour section icons dropped as a result. NOT verified against a live
+      database -- the sandbox has none, so the queries are shape-checked only.
+
+      status: review rather than done, and left for Silas to look at on main:
+      he opened this asking for back-and-forth on the visual result ("this part
+      may take some back and forth ... I want it to look great"), so the design
+      is a first pass to react to, not a finished answer. approved_by_human is
+      set because he requested the feature directly in-session and answered the
+      two structural questions himself; the work is reversible and not
+      outward-facing.
