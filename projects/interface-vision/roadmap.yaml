@@ -3639,7 +3639,7 @@ tasks:
   - id: t-122
     milestone: m6
     title: "Kaizen: have layout-contract CI warn when --update would shrink the baseline"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     owner: worker
@@ -3656,7 +3656,13 @@ tasks:
       it; real baseline restored and confirmed silent/clean (209 unchanged violations).
       eslint, prettier --check, and vue-tsc all clean for the changed file. PR:
       silasfelinus/kind_robots#2185.
+
+      kind_robots PR #2185 merged (squash 9c44faa) with all 37 checks green (Contract
+      verifiers, TypeScript, Storybook/narrative contracts, facet-catalog, verify x3, comment-
+      contract, Taskmaster checkpoint). Verified the annotation fires correctly on a synthetic
+      shrink and stays silent on the real (currently non-shrinkable) baseline before merging.
+      Close-out bookkeeping PR silasfelinus/conductor#3102 also merged (squash ef66672).
     claimed_by: claude-scheduled-20260828T212825Z-iv-t122
     claimed_at: '2026-08-28T21:28:28Z'
-    updated: '2026-08-28T21:33:53Z'
+    updated: '2026-08-28T21:40:34Z'
     implementation_pr: 'silasfelinus/kind_robots#2185'
