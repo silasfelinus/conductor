@@ -624,6 +624,13 @@ tasks:
       model-share gate did not stop it (its probe passes on a share that can list one
       file).
 
+      Note that duplicate rows are NOT duplicate renders: the relay claims one job at a
+      time throughout, and RUNNING never exceeded 1 in any sample. ArtJob 12921 did hold
+      RUNNING for 15m01s (13:50:33Z-14:05:34Z, exactly STALE_CLAIM_MINUTES) while 36
+      other jobs claimed and failed past it at ~10s each -- a stale claim overlapping the
+      normal serial queue, which is what makes a dashboard look like two jobs are running
+      at once. staleRunningCount distinguishes the two.
+
       NOT requeued this session, deliberately: drain_failed_art_backlog.py's dry run
       classifies all 2888 as retryable render-host faults (2716
       render-host-model-vanished, 172 render-host-io) with zero payload faults, so

@@ -4439,8 +4439,28 @@ tasks:
 
       Job ids are strictly monotonic with createdAt (zero backward steps across all 2882
       rows), so this is NOT two producers racing -- it is one workflow enqueueing the
-      same corpus twice per run, in two different cadences. That is what "two concurrent
-      art jobs" looks like from the outside.
+      same corpus twice per run, in two different cadences.
+
+      This task was originally filed as the explanation for Silas seeing "two concurrent
+      art jobs running". That attribution was wrong and is withdrawn: what he saw is
+      explained separately below, and only one job ever renders at a time. This finding
+      is about duplicate ROWS in the queue, not about concurrent execution, and it stands
+      on its own measurement -- 709 distinct targets behind 2882 FAILED rows, plus the
+      code path that produces them. The two are independent; nothing here implies the
+      relay claimed more than one job at once.
+
+      What the "two concurrent jobs" sighting actually was: ArtJob 12921 was claimed by
+      Silas-PC at 13:50:33Z and held RUNNING for 15m01s until 14:05:34Z, when it dropped
+      to FAILED at attempts=3 on the same missing VAE. 15 minutes is exactly
+      STALE_CLAIM_MINUTES (server/api/art/queue/claim.post.ts, mirrored in
+      queue/stats.get.ts), so it was not rendering for that quarter hour -- it was a
+      zombie holding the RUNNING slot until the stale-claim timer released it. While it
+      sat there, 36 other jobs (12922-12958) were claimed and failed normally at ~10s
+      each. A dashboard during that window shows one long-lived RUNNING row alongside a
+      visibly churning second one, which reads as two concurrent jobs and is really one
+      stale claim plus the ordinary serial queue. Worth remembering when triaging the
+      next outage: staleRunningCount in the stats payload is the signal that tells these
+      apart, and it was 0 by the time the queue drained.
 
       Root cause, verified in code: submit_mandarin_tutor_artjobs.py calls
       consume_art_requests.record_submitted_job(), which writes ONLY `last_art_job_id`
