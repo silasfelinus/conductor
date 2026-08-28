@@ -2620,8 +2620,8 @@ tasks:
   - id: t-055
     milestone: m3
     title: Surface breeding as a real player action in the tank UI
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-029
@@ -2642,6 +2642,9 @@ tasks:
       schema-ready but inert -- no seed data exercises it) has something real
       to reveal end-to-end. Do not touch the breeding math/economy itself --
       t-029 already ships that correctly; this is presentation + content.
+    claimed_by: 20260828T082748Z-t055
+    claimed_at: '2026-08-28T08:27:49Z'
+    updated: '2026-08-28T08:27:49Z'
   - id: t-056
     milestone: m3
     title: Consolidate cthulhuquariumTankStore's repeated one-shot-signal queuing pattern
