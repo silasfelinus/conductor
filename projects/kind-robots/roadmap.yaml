@@ -2840,8 +2840,11 @@ tasks:
       Setting status back to needs-human (hard -- stakes: irreversible, and steps 2-3 are physical production actions this sandbox cannot perform) rather than done, since two of three steps remain. implementation_pr now correctly points at #2164 (the PR that actually landed) rather than the closed, superseded #2110.
 
       Step 2 production gate is now confirmed. Silas reported on 2026-08-27 that, after the Force Update, https://kindrobots.org/api/characters/200 works; this exercises the single-character full Prisma findUnique path with the deployed client that no longer contains Character.size. Step 3 is prepared in silasfelinus/kind_robots#2165: it adds only the forward migration prisma/migrations/20260827233000_drop_character_size/migration.sql with ALTER TABLE Character DROP COLUMN size and consumes the matching pending provenance marker. Keep this task needs-human because the remaining action is destructive/irreversible: merge/deploy #2165 only after Silas explicitly approves that DROP in-session. Do not mark done until the migration has landed and production is verified afterward.
-    updated: '2026-08-28T00:24:00Z'
+
+      Silas explicitly approved the destructive step in-session on 2026-08-27 with "Approved when ready." All required exact-head checks on kind_robots#2165 completed successfully (TypeScript, Contract verifiers, Schema Migration Parity), and #2165 was squash-merged as adb4dc799fa4b5c0a0db4e51dacd404f3cbbd3fc. The forward migration is now on main and the pending provenance marker is consumed. Keep t-075 needs-human until production migration execution is confirmed on Alexandria: pull the production image containing adb4dc7, run node scripts/prisma-migrate-deploy.mjs through the documented MIGRATION_DATABASE_URL one-shot container lane, then Force Update the KindRobots container to the same image and verify /api/characters/200 remains HTTP 200. Do not mark done until the production DROP has actually applied and the endpoint is healthy.
+    updated: '2026-08-28T00:42:00Z'
     claimed_by: 2026-08-27T231300Z-kind-robots-t-075-gpt56sol-a7c9
     claimed_at: '2026-08-27T23:13:00Z'
     implementation_pr: 'silasfelinus/kind_robots#2164'
     soft_gate: false
+    approved_by_human: true
