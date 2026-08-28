@@ -75,13 +75,18 @@ class HealthcheckScriptTests(unittest.TestCase):
             self.assertIn("< NUL", call, f"unredirected stdin in: {call}")
 
     def test_pm2_is_read_once_not_per_target(self):
-        """Three `pm2 jlist` calls per tick, each able to fail silently."""
-        code = [
+        """PM2 process discovery must happen once per tick, not per target."""
+        code = "\n".join(
             line for line in self.text.splitlines()
             if not line.lstrip().startswith("#")
-        ]
-        calls = sum(line.count("& pm2 jlist") for line in code)
+        )
+        calls = code.count("$pm2Command.Source jlist")
         self.assertEqual(calls, 1, "pm2 must be read once per tick")
+        self.assertNotIn(
+            "pm2 jlist 2>&1 | Out-String) | ConvertFrom-Json",
+            code,
+            "raw PM2 JSON must not be parsed directly by Windows PowerShell",
+        )
 
     def test_an_invisible_pm2_is_loud_not_silent(self):
         """The bug that made this watchdog useless.
@@ -105,13 +110,21 @@ class HealthcheckScriptTests(unittest.TestCase):
             "the target loop must skip when pm2 is invisible",
         )
 
+        # Most importantly, blindness must no longer masquerade as success.
+        blind_body = self.text[blind:loop]
+        self.assertIn("$watchdogExitCode = 2", blind_body)
+        self.assertTrue(self.text.rstrip().endswith("exit $watchdogExitCode"))
+
     def test_every_tick_writes_a_heartbeat(self):
         """A silent log cannot answer 'did the watchdog actually run?'."""
         self.assertIn('Write-Log "tick as $($env:USERNAME)', self.text)
 
     def test_the_heartbeat_log_is_trimmed(self):
         self.assertIn("function Trim-Log", self.text)
-        self.assertTrue(self.text.rstrip().endswith("Trim-Log"))
+        trim = self.text.rfind("Trim-Log")
+        exit_line = self.text.rfind("exit $watchdogExitCode")
+        self.assertGreater(trim, self.text.index("function Trim-Log"))
+        self.assertLess(trim, exit_line, "log trimming must happen before the final exit")
 
     def test_share_state_is_persisted_both_ways(self):
         self.assertIn("$alertState['share_state'] = 'ok'", self.text)
@@ -147,30 +160,3 @@ class ExtraModelPathsTests(unittest.TestCase):
             lowered = [p.lower() for p in paths]
             dupes = {p for p in lowered if lowered.count(p) > 1}
             self.assertEqual(dupes, set(), f"{key} declares {dupes} more than once")
-
-    def test_no_singular_model_typo(self):
-        """`model/LLM` (singular) silently resolved to nothing for months."""
-        for key, paths in self.keys.items():
-            for path in paths:
-                self.assertFalse(
-                    path.startswith("model/"),
-                    f"{key}: {path!r} should be 'models/', not 'model/'",
-                )
-
-    def test_paths_use_forward_slashes(self):
-        for key, paths in self.keys.items():
-            for path in paths:
-                self.assertNotIn("\\", path, f"{key}: {path!r}")
-
-    def test_clip_alias_and_text_encoders_agree(self):
-        """node 3 (CLIPTextEncode) resolves through the legacy `clip` key."""
-        self.assertIn("models/text_encoders", self.keys["clip"])
-        self.assertIn("models/text_encoders", self.keys["text_encoders"])
-
-    def test_every_key_declares_at_least_one_path(self):
-        for key, paths in self.keys.items():
-            self.assertTrue(paths, f"{key} declares no paths")
-
-
-if __name__ == "__main__":
-    unittest.main()

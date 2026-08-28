@@ -119,29 +119,66 @@ function Send-Alert($subject, $body) {
 
 $alertState = Get-AlertState
 $hostName = $env:COMPUTERNAME
+$watchdogExitCode = 0
 
 # --- pm2 visibility ----------------------------------------------------------
 # Read pm2's process list ONCE, and distinguish "pm2 says this app is stopped"
 # from "pm2 told us nothing at all". They are not the same, and conflating them
 # silently disabled this entire watchdog.
 #
-# 2026-08-27: ComfyUI was dead (nothing listening on 8188) while the scheduled
-# task ran every 5 minutes and exited 0 the whole time. The per-target lookup
-# was `(& pm2 jlist | ConvertFrom-Json) | Where-Object ...` followed by
-# `if (-not $status ...) { continue }`. With $ErrorActionPreference set to
-# SilentlyContinue, a `pm2` that is not on PATH under Task Scheduler -- or a
-# pm2 daemon belonging to a different logon session than the task runs in --
-# yields $null, every target is skipped, and the script reports success.
-#
-# That is the same per-logon-session trap as the mapped drive letters, one
-# layer up. A blind watchdog must say so.
+# Windows PowerShell 5.1's ConvertFrom-Json treats object keys case-insensitively.
+# PM2 jlist includes the process environment, where Windows can legitimately
+# contain both username and USERNAME. Parsing the raw jlist therefore throws on
+# valid PM2 JSON. Project the list through Node first, keeping only name/status;
+# Node is already a PM2 dependency and its JSON parser preserves case-distinct
+# keys. PowerShell only sees the small collision-free snapshot.
 $pm2List = $null
 $pm2Error = ''
-try {
-    $pm2List = (& pm2 jlist 2>&1 | Out-String) | ConvertFrom-Json
-} catch {
-    $pm2Error = $_.Exception.Message
+$pm2Command = Get-Command 'pm2.cmd' -CommandType Application -ErrorAction SilentlyContinue |
+    Select-Object -First 1
+if (-not $pm2Command) {
+    $pm2Command = Get-Command 'pm2' -CommandType Application -ErrorAction SilentlyContinue |
+        Select-Object -First 1
 }
+
+if (-not $pm2Command) {
+    $pm2Error = 'pm2 executable is not visible to the scheduled task'
+} else {
+    $pm2Raw = (& $pm2Command.Source jlist 2>&1 | Out-String)
+    $pm2ExitCode = $LASTEXITCODE
+    if ($pm2ExitCode -ne 0) {
+        $pm2Error = "pm2 jlist exited $pm2ExitCode`: $($pm2Raw.Trim())"
+    } elseif ([string]::IsNullOrWhiteSpace($pm2Raw)) {
+        $pm2Error = 'pm2 jlist returned no output'
+    } else {
+        $snapshotHelper = Join-Path $PSScriptRoot 'pm2-jlist-snapshot.js'
+        $nodeCommand = Get-Command 'node.exe' -CommandType Application -ErrorAction SilentlyContinue |
+            Select-Object -First 1
+        if (-not $nodeCommand) {
+            $nodeCommand = Get-Command 'node' -CommandType Application -ErrorAction SilentlyContinue |
+                Select-Object -First 1
+        }
+
+        if (-not $nodeCommand) {
+            $pm2Error = 'node executable is not visible to the scheduled task'
+        } elseif (-not (Test-Path -LiteralPath $snapshotHelper)) {
+            $pm2Error = "pm2 snapshot helper is missing: $snapshotHelper"
+        } else {
+            $pm2Snapshot = ($pm2Raw | & $nodeCommand.Source $snapshotHelper 2>&1 | Out-String)
+            $snapshotExitCode = $LASTEXITCODE
+            if ($snapshotExitCode -ne 0) {
+                $pm2Error = "pm2 jlist snapshot failed ($snapshotExitCode): $($pm2Snapshot.Trim())"
+            } else {
+                try {
+                    $pm2List = $pm2Snapshot | ConvertFrom-Json
+                } catch {
+                    $pm2Error = "safe pm2 snapshot could not be decoded: $($_.Exception.Message)"
+                }
+            }
+        }
+    }
+}
+
 $pm2Names = @()
 if ($pm2List) { $pm2Names = @($pm2List | ForEach-Object { $_.name } | Where-Object { $_ }) }
 $pm2Visible = $pm2Names.Count -gt 0
@@ -152,11 +189,13 @@ $pm2Visible = $pm2Names.Count -gt 0
 Write-Log "tick as $($env:USERNAME) - pm2 apps: $(if ($pm2Visible) { $pm2Names -join ', ' } else { 'NONE VISIBLE' })"
 
 if (-not $pm2Visible) {
-    Write-Log "pm2 returned no process list ($pm2Error) - watchdog is BLIND, skipping all checks"
+    $watchdogExitCode = 2
+    $reason = if ($pm2Error) { $pm2Error } else { 'pm2 returned an empty process list' }
+    Write-Log "pm2 unavailable ($reason) - backend liveness checks are BLIND; remaining checks continue; run will exit 2"
     if (Test-AlertDue $alertState 'pm2-invisible') {
         $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
-        Send-Alert "WATCHDOG BLIND on $hostName - pm2 returned no process list" `
-            "healthcheck.ps1 ran at $stamp on $hostName as user '$($env:USERNAME)' but 'pm2 jlist' returned nothing ($pm2Error). Every check is being skipped, so the watchdog is providing NO protection - it will keep exiting 0 while backends are down. Usual causes: pm2 is not on PATH for the scheduled task, or the task runs as a different user than the one owning the pm2 daemon (pm2's daemon is per-user). Fix the task's 'Run as' account or give the .vbs an absolute path to pm2."
+        Send-Alert "WATCHDOG BLIND on $hostName - pm2 unavailable" `
+            "healthcheck.ps1 ran at $stamp on $hostName as user '$($env:USERNAME)' but PM2 could not provide a usable process list ($reason). Backend liveness checks cannot safely run. Share/render checks will still run where possible, and this watchdog invocation will exit 2 instead of falsely reporting success. If pm2 is not found, verify the task's Run as account and PATH; PM2's daemon is per-user."
         $alertState['pm2-invisible'] = $stamp
         Save-AlertState $alertState
     }
@@ -409,3 +448,4 @@ if (-not $krToken) {
 }
 
 Trim-Log
+exit $watchdogExitCode
