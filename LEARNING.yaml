@@ -11423,3 +11423,22 @@ records:
     field that was technically present but structurally misleading. Checking why a
     precedent is shaped the way it is, not just that one exists, is what caught this
     before it shipped.
+- date: 2026-08-28
+  project: cthulhuquarium
+  task: t-063
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A kaizen note's framing of "what's still open" (t-062's note named only t-058)
+    was itself stale by the time this audit ran -- it undercounted by four tasks
+    (t-019, t-021, t-022, t-041 were also open needs-human items). A planning/audit
+    task should always re-derive the open set directly from live roadmap state
+    (grep every task's own status) rather than trusting the prior task's kaizen
+    prose about what remains, even when that prose sounds authoritative. Also
+    caught a genuinely stale milestone `status` field (m3 sat at `not-started`
+    despite 25/31 tasks done) -- milestone status isn't auto-derived from task
+    counts anywhere in this repo's tooling, so it silently drifts unless an audit
+    like this one checks it by hand.

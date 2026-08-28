@@ -87,7 +87,7 @@ milestones:
   - id: m3
     title: "POLISH & SHIP — events, decoration, leaderboard, balance, mobile groundwork"
     weight: 25
-    status: not-started
+    status: in-progress
 
 tasks:
   # ---------------------------------------------------------------- m1 SHAPE
@@ -2845,7 +2845,7 @@ tasks:
   - id: t-063
     milestone: m3
     title: Audit milestone m3's remaining open scope now that t-057/t-059/t-060/t-061/t-062 have all landed
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -2862,6 +2862,41 @@ tasks:
       either file the next concrete task(s) or note that m3 is functionally
       complete pending t-058's cross-repo handoff. Not a code task by itself
       -- a planning/audit pass, same shape as t-061 was for meta threading.
+      AUDIT RESULT (2026-08-28): checked every m3 task's live status against
+      the milestone goal ("events, decoration, leaderboard, balance, mobile
+      groundwork"). 25 of 31 m3 tasks are `done`. The kaizen note's premise
+      undercounted the open set -- it names only t-058, but five items are
+      actually still open: t-019 (soft needs-human, balance pass on real play
+      data -- data-only tuning, correctly held for real play telemetry),
+      t-021 (hard needs-human, mobile packaging -- research/checklist DONE,
+      literally just awaiting Silas's read/approval per its own note), t-022
+      (soft needs-human, shared bestiary handshake with Ruler is Hooked --
+      doc contract shipped, only a seed-freshness confirmation Silas can run
+      from a DB-reachable machine remains), t-041 (hard needs-human, hidden
+      egg purchases -- a genuine design decision on Silas's own mechanic),
+      and t-058 (soft needs-human, breeding-evolution species pair --
+      blocked on silasfelinus/cthulhuquarium repo access outside this
+      session's GitHub scope, full handoff doc already written). t-054
+      (finale art plates) sits at `status: review`, correctly not `done`:
+      the two plates are queued in art-generate.yaml but the render pipeline
+      cannot process them right now -- same live outage conductor commit
+      c383327 (2026-08-28) diagnosed, the Alexandria SMB model share behind
+      the Silas-PC ComfyUI relay dropping (tracked separately at
+      mandarin-tutor/t-020, needs-human). No new agent-actionable gap found
+      against the milestone goal: events/decoration/leaderboard are shipped,
+      balance and mobile groundwork are each one human action away from
+      closing, and the two remaining blockers (t-058, t-054) are both
+      cross-repo/infra limits already documented at their own tasks, not
+      missing scope. CONCLUSION: m3 is functionally complete from the agent
+      side. Flipped the milestone's own `status` field from `not-started` to
+      `in-progress` (25/31 tasks done, the rest genuinely gated or blocked --
+      `not-started` was stale from before m3 work began and was never
+      updated as tasks landed). Not flipping to `done`: five tasks remain
+      open and closing needs-human/review tasks without the underlying
+      gate/blocker actually clearing is exactly the drift
+      check_pr_merged_drift.py/audit_human_gates.py exist to catch. No new
+      tasks filed -- everything outstanding already has its own accurate
+      task and note; duplicating that here would just be scope-creep noise.
     claimed_by: 20260828T143210Z-scheduled-cq-t063
     claimed_at: '2026-08-28T14:32:11Z'
     updated: '2026-08-28T14:32:11Z'

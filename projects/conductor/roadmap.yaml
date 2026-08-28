@@ -4530,3 +4530,29 @@ tasks:
       per auto-art-generate run, hours apart, while the relay decides per claim, so the
       relay's own gate is the one that has to hold.
     updated: '2026-08-28T14:20:00Z'
+  - id: t-135
+    milestone: m2
+    title: "Milestone status fields have no freshness check -- they silently drift from actual task-done fraction"
+    status: ready
+    gate_human: false
+    owner: null
+    stakes: reversible
+    passes: 0
+    note: >
+      Kaizen from cthulhuquarium/t-063 (2026-08-28), a milestone-scope audit that found
+      m3's own `status` field stuck at `not-started` despite 25 of 31 tasks already
+      `done` -- stale since before the bulk of m3's work landed and never updated as
+      tasks closed. Every roadmap task status has some form of cross-referencing
+      tooling (next_ready_task.py, claim_task.py, select_role.py, audit_roadmaps.py's
+      INVALID_STATUS check), but milestone status is only read (build_digest.py,
+      build_digest_email.py for portfolio-percentage math) and never audited for
+      internal consistency against its own project's task list. Suggested fix: a
+      lightweight advisory check, similar in spirit to audit_roadmaps.py's existing
+      advisory findings (never fails CI, just reports) -- for each project, compute
+      each milestone's done-task fraction and flag a mismatch (e.g. milestone marked
+      `not-started` with >0 done tasks under it, or marked `done` with any non-done
+      task still under it). Could live in audit_roadmaps.py itself or as a small
+      standalone script following check_pr_merged_drift.py's shape. Not urgent --
+      wrong milestone status doesn't block task selection or gate anything, it only
+      skews the digest's portfolio-percentage math -- but cheap to add and prevents
+      the next project from sitting the same way m3 did.
