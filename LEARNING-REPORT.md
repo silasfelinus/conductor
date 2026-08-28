@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-28T01:49:38Z
+Generated: 2026-08-28T01:56:51Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **797**
-- Outcomes: blocked: 16, cancelled: 1, done: 780
+- Closed tasks recorded: **798**
+- Outcomes: blocked: 16, cancelled: 1, done: 781
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 83 | 100% |
 | conductor-app | 4 | 100% |
-| cthulhuquarium | 28 | 96% |
+| cthulhuquarium | 29 | 97% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
@@ -68,7 +68,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 781 | 99% |
+| software | 782 | 99% |
 
 ## Failure categories
 
@@ -89,6 +89,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-28 `cthulhuquarium/t-029` — t-032's schema-first discipline (shipping nullable stat/parentage columns and the EvolutionKind enum before any code read them) paid off exactly as intended -- t-029 needed zero migration, only wiring pure roll/converge/threshold functions onto columns that already existed. A prior session's claim on this task had expired (CLAIM_TTL_MINUTES) with no PR ever opened; next_ready_task.py correctly resurfaced it as pickable rather than leaving it stuck.
 - 2026-08-28 `kind-robots/t-075` — DROP migrations need deploy-then-migrate sequencing when old clients still select the retiring column. The removal-only deferred parity marker now makes that staging explicit and auditable without weakening ordinary schema/migration parity.
 - 2026-08-28 `cthulhuquarium/t-039` — A design note calling for two illustrated plates (screen-finale, set-last-aquarium) that were queued but not yet generated did not have to block the whole feature: the purchase/economy/event-logging mechanics and a code-only canvas vignette shipped now, with a placeholder text-only reveal dialog standing in for the real art -- the exact "mechanical gate now, authored pass later" shape t-028/t-053 already established for the milestone toast. Filed t-054 to swap in the real plates once generated, rather than leaving t-039 open/blocked on an asset pipeline outside this session's reach. Also confirmed conductor's own "Python test suite" CI job intermittently fails on a live kindrobots.org 502 (production Resource-registry read) plus two unrelated flaky assertions, identically across two independent roadmap-only PRs (#3040, #3041) -- consistent with t-124's existing finding that this job is not a required check; mergeable_state read "unstable" not "blocked" on both, so merged past it per that documented precedent rather than re-running indefinitely.
 - 2026-08-27 `cthulhuquarium/t-028` — A prior session's RESEARCHED-NOT-IMPLEMENTED note (scoping "5 of 8 landmarks are fully computable today") was a directly usable spec, not just context -- implementing exactly that recommendation (4 of the 5, dropping the one still blocked on an unresolved semantics call) landed clean on the first pass with no design ambiguity to resolve mid-task. Closing a title-broad task ("...as the gating layer") at `done` on its landable core, rather than leaving it `ready` forever waiting for unbuilt subsystems (evolution/rivalry) or a one-line human decision (full-tank semantics), keeps the roadmap's `ready` queue honest -- those remainders aren't actionable by another agent pass, so leaving the umbrella task open would just resurface as unclaimable "ready" work each sweep. A frontend-integration kaizen (t-053) captures the actually actionable follow-on instead.
@@ -100,8 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 Consent boundaries for public-facing player data aren't one flag: a sibling feature's own opt-in (Aquarium.isPublic, from the dependency this task built on) is the right gate for "will this player's data appear here," not a same-purpose-sounding but different flag from an unrelated feature (the friend-finder directory's listInDirectory). Checking which existing feature the new one actually depends on for consent semantics -- not just grepping for the first consent-shaped flag in the schema -- kept the leaderboard consistent with the browse page it extends.
 - 2026-08-27 `cthulhuquarium/t-017` — A genuinely novel feature with no prior in-repo precedent (no decor code, no established real drag-and-drop convention) is worth a research-only Explore pass before writing any implementation code -- confirmed via grep across the whole repo that the only `draggable` attribute anywhere was unwired dead code in stage-manager.vue, which settled the design decision (native Pointer Events over introducing a DnD dependency) before any code was written instead of discovering it mid-implementation.
 Extending an existing shared Prisma select (publicAquariumDetailSelect) to carry a new relation is often enough to satisfy a "visible to visitors" style requirement with zero new routes -- check whether the read path already flows through a shared select before assuming a new endpoint is needed.
-- 2026-08-27 `cthulhuquarium/t-023` — A task whose deliverable is content (two authored Character/Bot voice pairs) can be fully "done" even when a downstream, standard-rule step (generated portrait art) is stalled by unrelated infra -- don't conflate "the content is complete" with "everything the task mentions has happened." Splitting them (ship the records now, file the infra fault as its own needs-human task, note the exact idempotent retry command in both the roadmap note and the PR) kept the real deliverable from being held hostage by a render-box hardware problem outside this task's control.
-Cross-check any ComfyUI failure signature against `GET /api/art/queue/stats` and TALKBACK before assuming it's novel -- this exact `CLIPTextEncode hostbuf_file_reader_read` string was already diagnosed and closed once (ai-art-academy/t-068, disk13 cable) less than 24 hours earlier, so the right move was flagging a likely recurrence with full context, not re-diagnosing from scratch.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-28T01:49:38Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-28T01:56:51Z_
