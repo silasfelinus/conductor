@@ -11258,3 +11258,18 @@ records:
     confirms that flagging a trap in a task note AND building its fix into an
     earlier, unrelated-looking task (t-031) is a pattern worth repeating when a
     later task's safety depends on state a dependency already tracks.
+- date: '2026-08-28'
+  project: cthulhuquarium
+  task: t-050
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A kaizen task filed against a specific call site (purchaseSpeciesForUser) can be
+    fully subsumed by later, unrelated-looking dependency work (t-029's breeding
+    creation, t-041's egg hatching) that happens to wire the same helper for its own
+    reasons -- always grep for every call site of the thing the task asks you to add
+    (here: every AquariumStock-creating transaction) before writing new code, since
+    the task may already be done.
