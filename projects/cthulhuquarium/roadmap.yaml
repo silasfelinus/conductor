@@ -2786,8 +2786,8 @@ tasks:
   - id: t-061
     milestone: m3
     title: Audit other stores for hand-rolled pagination now that performFetch surfaces meta
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -2805,6 +2805,9 @@ tasks:
       cthulhuquarium/t-057 only fixed the one calling site (catalog); this
       is a read-and-report audit that may turn up zero, one, or several
       applicable call sites, not a guaranteed refactor.
+    claimed_by: 20260828T123321-scheduled-t061
+    claimed_at: '2026-08-28T12:33:22Z'
+    updated: '2026-08-28T12:33:22Z'
   - id: t-062
     milestone: m3
     title: Show what selling would pay before the player clicks Sell
