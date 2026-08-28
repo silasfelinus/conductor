@@ -4663,9 +4663,9 @@ tasks:
   - id: t-136
     milestone: m2
     title: "t-133's in-flight guard has no release for a request whose ArtJob was deleted, so the row is stuck pending forever"
-    status: ready
+    status: claimed
     gate_human: false
-    owner: null
+    owner: worker
     stakes: reversible
     passes: 0
     note: >
@@ -4721,4 +4721,6 @@ tasks:
       matching last_art_job_id, though that only covers deletions this repo performs.
       Worth pairing with a check that reports rows pending with a dangling job id, since
       today nothing would surface one.
-    updated: '2026-08-28T20:00:00Z'
+    updated: '2026-08-28T20:35:41Z'
+    claimed_by: 2026-08-28T-conductor-sweep-t136
+    claimed_at: '2026-08-28T20:35:41Z'
