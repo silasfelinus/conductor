@@ -595,5 +595,40 @@ tasks:
       rather than the bare reenqueue endpoint -- it renders a canary first and refuses to
       drain into a host that is still down, which is what keeps 500+ jobs from burning
       three attempts each and flushing the original error text.
-    updated: '2026-08-28T08:10:00Z'
+
+      UPDATE 2026-08-28T14:10Z (Silas asked whether the network was back and whether the
+      failures could be requeued): still down, and the backlog is now much bigger than
+      the 577 recorded above.
+
+      The ComfyUI *link* is healthy -- the Silas-PC relay is heartbeating every few
+      seconds (agent version conductor-relay-completion-proof-v1, supportsInputImages
+      true, both engines) and ComfyUI answers on 127.0.0.1:8188 well enough to return a
+      model list. What is still broken is the model share behind it. Both of this
+      incident's error signatures are documented in ops/home-server/README.md as the
+      Alexandria SMB mount dropping: the 2026-08-27 rows fail at CLIPTextEncode with
+      hostbuf_file_reader_read (a read against a dead session), the 2026-08-28 rows fail
+      at VAELoader with a shrunken model list (folder_paths re-enumerated a half-readable
+      share). Same outage, two faces. This is the third recurrence of the same mount.
+
+      Current state at 14:10Z: FAILED 2888, PENDING 0, RUNNING 0, DONE 5495. Zero
+      ArtImages created in 24h. scripts/check_render_box.py now correctly returns DOWN
+      ("2095 render(s) failed and none completed in the last 6h"), so auto-art-generate
+      will gate itself off on its next run -- it was returning UP throughout the burn,
+      which is why enqueueing continued.
+
+      The 2888 are NOT 2888 distinct requests. They are 709 distinct targets; 2173 rows
+      (75%) are duplicate enqueues of the same work, most targets appearing 4-5 times.
+      Cause filed as conductor/t-133 -- auto-art-generate drains art-prompts.yaml twice
+      per run through two lanes that do not mark rows in-flight, so a run against a dead
+      box re-submits the whole corpus. conductor/t-134 covers why the relay's own
+      model-share gate did not stop it (its probe passes on a share that can list one
+      file).
+
+      NOT requeued this session, deliberately: drain_failed_art_backlog.py's dry run
+      classifies all 2888 as retryable render-host faults (2716
+      render-host-model-vanished, 172 render-host-io) with zero payload faults, so
+      nothing is lost and nothing needs repair -- but firing them at a host that still
+      cannot see its VAE would burn 8664 render attempts and flush the error text this
+      diagnosis rests on. Requeue is a post-fix step, unchanged from above.
+    updated: '2026-08-28T14:20:00Z'
     gate_human: true
