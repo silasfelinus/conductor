@@ -1,0 +1,26 @@
+name: Resend daily digest once
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/resend-daily-digest-once.yml
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  resend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch today's daily digest
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh workflow run daily-digest.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref main \
+            -f send_email=true
