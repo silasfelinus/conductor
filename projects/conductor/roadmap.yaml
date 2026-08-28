@@ -4407,3 +4407,126 @@ tasks:
       fully verified locally (vue-tsc, eslint, prettier, and the relevant unit test suite
       all clean) before this stall, same as every prior occurrence's PR.
     updated: '2026-08-27T22:52:00Z'
+
+  - id: t-133
+    milestone: m2
+    title: "auto-art-generate submits the same art request twice per run: the bulk lane and the drip lane both drain art-prompts.yaml"
+    status: ready
+    gate_human: false
+    owner: null
+    stakes: reversible
+    passes: 0
+    note: >
+      Found 2026-08-28 while diagnosing why the FAILED ArtJob backlog had grown from
+      577 (mandarin-tutor/t-020, written 09:20Z) to 2882 by 14:05Z during a render-host
+      outage in which literally nothing rendered. The backlog is not 2882 distinct
+      requests: it is 709 distinct targets (targetRepo + imagePath), 605 of which appear
+      more than once, most at 4-5 rows each. 2173 of the 2882 rows -- 75% -- are
+      duplicate enqueues of work already sitting FAILED.
+
+      Two lanes in auto-art-generate.yml both read the same pending set out of
+      projects/art-prompts.yaml, back to back, in the same run, and neither marks an
+      entry as in-flight:
+
+        1. "Submit complete Mandarin Tutor v2 ArtJob corpus" --
+           scripts/submit_mandarin_tutor_artjobs.py --limit 1000. Fire-and-forget bulk
+           POST. Measured signature in the data: 577 rows in 88-303 seconds
+           (08:01:59-08:07:02, then again 09:19:58-09:21:27).
+        2. "Submit + wait + verify art requests" --
+           scripts/consume_art_requests_to_media.py --live. Submit-one-wait-for-it.
+           Measured signature: 4-10 seconds per row, e.g. 927 rows over 10:51:39-11:53:09
+           and 384 rows over 12:58:13-13:50:24.
+
+      Job ids are strictly monotonic with createdAt (zero backward steps across all 2882
+      rows), so this is NOT two producers racing -- it is one workflow enqueueing the
+      same corpus twice per run, in two different cadences.
+
+      This task was originally filed as the explanation for Silas seeing "two concurrent
+      art jobs running". That attribution was wrong and is withdrawn: what he saw is
+      explained separately below, and only one job ever renders at a time. This finding
+      is about duplicate ROWS in the queue, not about concurrent execution, and it stands
+      on its own measurement -- 709 distinct targets behind 2882 FAILED rows, plus the
+      code path that produces them. The two are independent; nothing here implies the
+      relay claimed more than one job at once.
+
+      What the "two concurrent jobs" sighting actually was: ArtJob 12921 was claimed by
+      Silas-PC at 13:50:33Z and held RUNNING for 15m01s until 14:05:34Z, when it dropped
+      to FAILED at attempts=3 on the same missing VAE. 15 minutes is exactly
+      STALE_CLAIM_MINUTES (server/api/art/queue/claim.post.ts, mirrored in
+      queue/stats.get.ts), so it was not rendering for that quarter hour -- it was a
+      zombie holding the RUNNING slot until the stale-claim timer released it. While it
+      sat there, 36 other jobs (12922-12958) were claimed and failed normally at ~10s
+      each. A dashboard during that window shows one long-lived RUNNING row alongside a
+      visibly churning second one, which reads as two concurrent jobs and is really one
+      stale claim plus the ordinary serial queue. Worth remembering when triaging the
+      next outage: staleRunningCount in the stats payload is the signal that tells these
+      apart, and it was 0 by the time the queue drained.
+
+      Root cause, verified in code: submit_mandarin_tutor_artjobs.py calls
+      consume_art_requests.record_submitted_job(), which writes ONLY `last_art_job_id`
+      onto the request row -- it never touches `status`, which stays `pending`. Only
+      mark_done() sets `status: done`, and that requires the render to have actually
+      completed and been verified. The guard that would catch this exists but is scoped
+      to one lane: art_request_staging_priority.should_consume_after_submission() opens
+      with `if not is_daily_dream_request(entry): return True`, and
+      consume_art_requests_to_media.prioritized_load_requests() likewise only consults
+      `last_art_job_id` for Daily Dream rows. Daily Dream got this exact protection when
+      it hit this exact problem; the Mandarin bulk lane was added later and never got the
+      equivalent, so its rows fall straight through and are POSTed a second time.
+
+      Under a healthy box the overlap is mostly invisible -- the drip lane's own renders
+      complete and mark rows done, so the second pass shrinks fast and the duplicates
+      look like ordinary retries. Under a dead box nothing is ever marked done, so every
+      subsequent run re-submits the entire corpus, forever. That is the amplifier that
+      turned a 577-job outage into a 2882-job one, and it will do it again on the next
+      outage regardless of whether t-020's mount is fixed.
+
+      Suggested fix: widen the `last_art_job_id` in-flight guard past the Daily Dream
+      special case -- if a request row already owns a non-terminal ArtJob, the drip lane
+      should not POST it again, whatever its source. Worth deciding at the same time
+      whether the bulk and drip lanes should both be draining the same file at all, or
+      whether the bulk lane should mark its rows `submitted` so the drip lane has
+      something to skip on.
+    updated: '2026-08-28T14:20:00Z'
+
+  - id: t-134
+    milestone: m2
+    title: "The relay's model-share gate passes on a half-readable share, so it kept claiming and burning 2700 jobs"
+    status: ready
+    gate_human: false
+    owner: null
+    stakes: reversible
+    passes: 0
+    note: >
+      Found 2026-08-28 alongside t-133, during the render-host outage tracked as
+      mandarin-tutor/t-020. ops/home-server/README.md documents guard #1 for exactly this
+      incident class ("The relay will not claim what the box cannot render"): relay_agent's
+      share_available() probes KR_SHARE_PROBE_PATH before each claim and idles while it
+      fails. It was armed and it did not fire -- the relay claimed and burned ~2700 jobs
+      across the outage, all three attempts each, at roughly one every 6-10 seconds.
+
+      Why: probe_share() (relay_agent.py ~983) is `os.scandir(path)` followed by
+      `next(entries, None)`, and it returns True if it can read ONE entry. The README is
+      explicit that this was deliberately made a scandir rather than an isdir, because a
+      stale SMB handle can satisfy isdir() and still fail every read -- which is the right
+      call and does catch the 2026-08-25/08-26 shapes, where the mount was fully gone.
+
+      Today's shape is different and slips through: the share is *partially* readable. The
+      relay's own error text says so on every failure -- "ComfyUI listed 1 file(s) for that
+      input" -- so ComfyUI's folder_paths enumerated the directory successfully and got a
+      truncated list. One entry is all probe_share() needs, so the gate reports healthy
+      while the directory is missing everything that matters, including
+      qwen_image_vae.safetensors (KREA2_VAE, hard-coded in
+      kind_robots server/api/comfy/krea2/utils/workflow.ts:23 and therefore required by
+      every single krea2 job).
+
+      A truncated model directory is the failure mode this guard was built for, and
+      "can I read at least one file" is not a test for it. Suggested fix: probe for the
+      specific model files the engines actually require (KREA2_VAE at minimum) rather
+      than for directory non-emptiness, or compare the enumerated count against a
+      known-good floor recorded when the share was last healthy. Note that
+      conductor's own scripts/check_render_box.py DID correctly call this outage
+      (exit 1, "2095 render(s) failed and none completed in the last 6h") -- but it runs
+      per auto-art-generate run, hours apart, while the relay decides per claim, so the
+      relay's own gate is the one that has to hold.
+    updated: '2026-08-28T14:20:00Z'
