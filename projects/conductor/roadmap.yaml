@@ -4494,7 +4494,7 @@ tasks:
   - id: t-134
     milestone: m2
     title: "The relay's model-share gate passes on a half-readable share, so it kept claiming and burning 2700 jobs"
-    status: review
+    status: done
     gate_human: false
     owner: worker
     stakes: reversible
@@ -4554,9 +4554,10 @@ tasks:
       Verified: python3 -m py_compile on relay_agent.py clean; `node -e
       "require('./ecosystem.config.js')"` loads without error; full repo test suite
       (pytest -q) 1338 passed, 1 skipped, 35 subtests, no failures or regressions.
-    updated: '2026-08-28T18:32:51Z'
+    updated: '2026-08-28T18:48:36Z'
     claimed_by: claude-scheduled-20260828T183251Z-conductor-t134
     claimed_at: '2026-08-28T18:32:51Z'
+    implementation_pr: 'silasfelinus/conductor#3087'
   - id: t-135
     milestone: m2
     title: "Milestone status fields have no freshness check -- they silently drift from actual task-done fraction"
