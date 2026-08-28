@@ -11334,3 +11334,20 @@ records:
     reviewable, but the sibling was worth filing as its own immediate kaizen (t-060) rather
     than a speculative "if a fourth shows up" -- it already had three instances, the same
     threshold that triggered this task in the first place.
+- date: '2026-08-28'
+  project: cthulhuquarium
+  task: t-057
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A task that reads as UI-only ("show a countdown") can be blocked on a small, shared
+    infrastructure gap: performFetch() (stores/utils.ts) silently dropped every response's
+    `meta` object, and at least 17 server routes already return one. Worth checking whether
+    a "just read this field" task's data is actually reachable before assuming the store
+    layer already exposes it -- the fix here (an optional second generic on ApiResponse<T, M>,
+    purely additive/backward-compatible) was small, but skipping that check would have meant
+    reaching for a server-side workaround (a second field on `data`, or a new endpoint) that
+    the task's own note explicitly said wasn't needed.

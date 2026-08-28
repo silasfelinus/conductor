@@ -2776,3 +2776,25 @@ tasks:
       dismissHatchReveal, dismissBreedReveal) so
       components/cthulhuquarium/cthulhuquarium-game.vue needs no changes,
       same discipline as t-056.
+  - id: t-061
+    milestone: m3
+    title: Audit other stores for hand-rolled pagination now that performFetch surfaces meta
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from t-057 (live shop-rotation countdown, kind_robots PR #2178).
+      That task discovered `performFetch()` (stores/utils.ts) silently
+      dropped every response's `meta` object -- only `data` ever reached a
+      store -- and fixed it by adding an optional second generic to
+      `ApiResponse<T, M>` plus threading `body.meta` through. At least 17
+      server routes already return a `meta` object (several of them
+      pagination: `take`/`skip`/`total`), so some existing store may already
+      be hand-rolling its own pagination tracking (re-deriving total/hasMore
+      from `data.length` or a separate count call) that could now read the
+      server's own `meta` directly instead. Grep each `meta:` server route
+      against its calling store before assuming this applies broadly --
+      cthulhuquarium/t-057 only fixed the one calling site (catalog); this
+      is a read-and-report audit that may turn up zero, one, or several
+      applicable call sites, not a guaranteed refactor.
