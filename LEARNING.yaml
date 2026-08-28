@@ -11491,3 +11491,20 @@ records:
     summarizes) will drift silently no matter how cheap it would be to keep
     correct; the fix is a lightweight standalone advisory check wired into the
     session-startup sweep, not a one-time manual correction.
+- date: 2026-08-28
+  project: ruler-hooked
+  task: t-018
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A task can go stale purely because the asset it's tracking outlived the
+    rolling window of the file used to check it -- art-prompts.yaml only
+    retains a recent slice of requests, so the 37-piece matrix's original
+    job ids (10020-10056) had aged out entirely by the time this session
+    looked, even though the renders themselves had long since landed.
+    Direct HTTP verification against the actual delivery host
+    (media.acrocatranch.com) was the reliable check; the tracking file's
+    absence of an entry was not evidence of non-delivery.
