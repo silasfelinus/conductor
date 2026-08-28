@@ -1,33 +1,25 @@
-generated_by: scripts/build_cthulhuquarium_art_queue.py (partial, hand-added)
-mode: live
-description: >-
-  cthulhuquarium/t-054 -- the two non-fish plates the finale's real reveal
-  needs (screen-finale, set-last-aquarium). Prompts copied verbatim from
-  scripts/build_cthulhuquarium_art_queue.py's NON_FISH list, which is this
-  session's authoritative source for non-fish prompts -- the fish bible
-  (silasfelinus/cthulhuquarium) is outside this session's repo scope, so the
-  full queue (fish + non-fish) could not be regenerated via that script. Once
-  a session with bible access runs `python scripts/build_cthulhuquarium_art_queue.py`
-  for real, its output supersedes this hand-written partial file.
+generated_by: scripts/queue_missing_project_art.py
+mode: dry-run
+description: Concrete project image requests ready for generation; active retries are preserved until
+  the consumer marks them complete.
 batch:
   entries:
   - project: cthulhuquarium
     engine: krea2
     size: 1024x1024
     image_path: projects/cthulhuquarium/art/cthulhuquarium-set-last-aquarium.webp
-    prompt: an enormous ornate aquarium tank with a heavy moulded brass frame and bevelled glass,
-      scrollwork at every corner, standing empty on a plinth, far larger than the plate can
-      comfortably hold, Victorian trade-catalogue engraving of a single product, line engraving
-      with fine hatched shading, the object alone on bare white paper, drawn to be sold from a
-      supplier's list, the caption space beneath left empty
+    prompt: an enormous ornate aquarium tank with a heavy moulded brass frame and bevelled glass, scrollwork
+      at every corner, standing empty on a plinth, far larger than the plate can comfortably hold, Victorian
+      trade-catalogue engraving of a single product, line engraving with fine hatched shading, the object
+      alone on bare white paper, drawn to be sold from a supplier's list, the caption space beneath left
+      empty
   - project: cthulhuquarium
     engine: krea2
     size: 1344x768
     image_path: projects/cthulhuquarium/art/cthulhuquarium-screen-finale.webp
-    prompt: the same cluttered Victorian aquarium shop interior seen from further back and slightly
-      below, its wooden shelves and glowing tanks small in the middle distance, a broad pane of
-      glass across the whole foreground with a soft bloom of light on it, and beyond the pane an
-      enormous eye mid-drift and incurious, filling the upper frame, warm gold lamplight inside
-      and cooler light outside, unpeopled, interior view on a wide plate camera, albumen print,
-      long exposure with everything held perfectly still, slightly converging verticals, the far
-      corners sunk in flat unlit shadow, mounted to card
+    prompt: the same cluttered Victorian aquarium shop interior seen from further back and slightly below,
+      its wooden shelves and glowing tanks small in the middle distance, a broad pane of glass across
+      the whole foreground with a soft bloom of light on it, and beyond the pane an enormous eye mid-drift
+      and incurious, filling the upper frame, warm gold lamplight inside and cooler light outside, unpeopled,
+      interior view on a wide plate camera, albumen print, long exposure with everything held perfectly
+      still, slightly converging verticals, the far corners sunk in flat unlit shadow, mounted to card
