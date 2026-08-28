@@ -140,6 +140,10 @@ Recorded against the bar this document sets:
    because Alexandria still serves the pre-fix recipe.
 3. **Bulk submission**: 577/577 durable ArtJobs, ids 10291–10867, each recorded on its
    request as `last_art_job_id`. ✅ All 577 prompts unique; 537 distinct style draws.
+   By 09:20Z the queue had drained and **all 577 were FAILED at attempts=3** on the render
+   host, not on anything about the prompts. The requests and job ids survive in
+   `art-prompts.yaml`, so requeueing after the mount is fixed is a required step, not an
+   optional one — the corpus will not render on its own.
 4. **Media under `/images/mandarin-tutor/cards/v2/`**: none yet. ❌ Blocked on the render
    host, not on the queue — see below.
 5. **Tutor displays rendered v2 media**: not yet verifiable. ❌

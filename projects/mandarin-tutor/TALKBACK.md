@@ -140,3 +140,10 @@ content type — `curl -I` and read the type, not the status.
 **Not done, and not ours.** Alexandria's ComfyUI has lost sight of its model directory and
 has rendered nothing since 2026-08-27T09:04Z; the 577 jobs are draining into that failure.
 Filed as t-020. It is not Mandarin-specific — it burns every job the box is handed.
+
+**Update, same session, 09:20Z.** The queue drained while this was being written: all 577
+Mandarin jobs are now FAILED at attempts=3 on the missing VAE (sampled 15 across the id
+range, all identical). Reporting "577 submitted" without this would be exactly the kind of
+unearned success the entry above is about. Nothing is lost — the requests and their job ids
+are in `projects/art-prompts.yaml` — but requeueing via `drain_failed_art_backlog.py` after
+the mount is fixed is now a required step, not an optional one.
