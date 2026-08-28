@@ -11444,6 +11444,39 @@ records:
     like this one checks it by hand.
 - date: 2026-08-28
   project: conductor
+  task: t-134
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A directory-listing-only share probe ("can I read one entry") is not a test
+    for a partially-populated share -- it needs to check the specific files a
+    render actually depends on, opened and read, not just scandir'd or stat'd
+    (a stale SMB handle can satisfy a stat too). Generalized as
+    KR_SHARE_REQUIRED_FILES, opt-in and unset by default so the existing
+    directory-only behavior is unchanged unless configured.
+- date: 2026-08-28
+  project: conductor
+  task: t-133
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A guard added to fix one lane's resubmission bug (Daily Dream's
+    should_consume_after_submission, scoped via is_daily_dream_request) does not
+    automatically protect a second lane that reaches the same underlying data
+    through a different, unpatched import path (submit_mandarin_tutor_artjobs.py
+    imports consume_art_requests directly, bypassing the
+    consume_art_requests_to_media.py monkeypatch entirely). When a task says
+    "widen guard X", check every caller reaches guard X's actual code path
+    before assuming a change to X's own module is sufficient -- here the real
+    fix had to live one layer lower, in a function both lanes genuinely share.
+- date: 2026-08-28
+  project: conductor
   task: t-135
   kind: software
   stakes: reversible
