@@ -2594,3 +2594,24 @@ tasks:
       schema-ready but inert -- no seed data exercises it) has something real
       to reveal end-to-end. Do not touch the breeding math/economy itself --
       t-029 already ships that correctly; this is presentation + content.
+  - id: t-056
+    milestone: m3
+    title: Consolidate cthulhuquariumTankStore's repeated one-shot-signal queuing pattern
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from t-053 (generic milestone toast, kind_robots PR #2169).
+      `stores/cthulhuquariumTankStore.ts`'s `unlock()` now has three
+      near-identical "read a one-shot signal off a purchase response, stash it
+      as a queued/one-shot ref for the game component to consume and dismiss"
+      blocks: `bestiaryJustCompleted` (t-024), `milestoneToastQueue` (t-053),
+      and `finaleJustTriggered` in the separate `purchaseFinale()` (t-039).
+      Each repeats the same shape (set a ref from a response field, expose a
+      dismiss function, never re-derive from later reloads) with slightly
+      different names and no shared helper. Extract one small generic
+      composable/factory (e.g. `useOneShotSignal<T>()`) that each of the three
+      call sites adopts, so a fourth signal doesn't have to reinvent the
+      pattern a fourth time. Presentation-only refactor -- no behavior change,
+      no new signals.
