@@ -11370,3 +11370,17 @@ records:
     varying per individual (sellPrice() in aquariumEconomy.ts). Noticing a UI change makes a
     previously-invisible economic question visible is a useful generic signal for kaizen
     filing, distinct from noticing a code-shape duplication.
+- date: '2026-08-28'
+  project: cthulhuquarium
+  task: t-060
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Extracting a shared useOneShotReveal() composable for revealedUnlock/Hatch/Breed
+    (kind_robots#2180) kept every external ref/function name on the store unchanged, so no
+    component needed touching -- confirming a presentation-only refactor is genuinely
+    presentation-only by checking call-site signatures, not just behavior, avoids a
+    should-have-been-a-no-op PR accidentally growing scope.
