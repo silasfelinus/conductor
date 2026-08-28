@@ -1862,7 +1862,7 @@ tasks:
   - id: t-039
     milestone: m3
     title: "The finale — the eye at the window, and the last tank that has to exist first"
-    status: claimed
+    status: review
     gate_human: true
     approved_by_human: true
     soft_gate: true
@@ -1870,7 +1870,7 @@ tasks:
     passes: 0
     stakes: reversible
     depends_on: [t-032, t-028, t-017]
-    note: >
+    note: >-
       SETTING AND ENDING, Silas 2026-08-25, both now written up in full in DESIGN-BRIEF.md
       ("The setting -- you came in out of it" and "The finale -- you are also in an
       aquarium"). Setting: "You are welcomed after stumbling into the aquarium store. Things
@@ -1969,9 +1969,23 @@ tasks:
       waiting so it stops surfacing as workable until its actual prerequisites land;
       resolve_deps.py will flip it back to ready automatically once t-017 and t-028 both
       reach status: done. No design content changed.
+
+      IMPLEMENTED 2026-08-28 (scheduled Agent run): shipped the mechanical gate --
+      LAST_AQUARIUM_CONFIG (250000 coins, cosmetic_reframe, deliberately not a SetPieceKind),
+      purchase endpoint guarded by a 'finale' AquariumEvent, a one-time text-only reveal
+      dialog, and a permanent code-only canvas vignette/cool-wash reframe (the live tank
+      canvas has never drawn a raster image at all -- every occupant/decor is procedural, so
+      this stayed code-only rather than waiting on an asset pipeline). The two art plates the
+      design note calls for (screen-finale, set-last-aquarium) are already queued in art-
+      generate.yaml but not yet generated -- filed t-054 to swap them in once they exist,
+      following the exact placeholder-now/authored-later precedent t-028/t-053 already
+      established. kind_robots PR #2166 open, all local checks green (vue-
+      tsc/eslint/prettier/prisma validate/test:aquarium-economy/test:aquarium-
+      touch/test:layout-contract).
     claimed_by: 20260828T003723Z-cq-t039-finale
     claimed_at: '2026-08-28T00:37:24Z'
-    updated: '2026-08-28T00:37:24Z'
+    updated: '2026-08-28T00:49:21Z'
+    implementation_pr: 'silasfelinus/kind_robots#2166'
   - id: t-040
     milestone: m1
     title: "Eight plate lineages, and no negations anywhere in an art prompt"
