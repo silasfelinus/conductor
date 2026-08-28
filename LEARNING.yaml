@@ -11405,3 +11405,21 @@ records:
     routing through performFetch's typed second generic instead of a manual
     ApiResponse<T> & {meta?: {...}} cast, so "no behavior change" was verifiable, not
     just claimed.
+- date: '2026-08-28'
+  project: cthulhuquarium
+  task: t-062
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Show-the-price-before-clicking (kind_robots#2182) had a nearby precedent in the same
+    function (breedCost, added by t-055) that looked like a template but wasn't quite
+    one: breedCost is a fixed per-species number nested under Monster, while sellPrice
+    depends on the individual's own rolled stats and belongs as a top-level ClientStock
+    field instead. Copying the precedent's TYPE SHAPE without checking whether its
+    reasoning (per-species vs. per-individual) still applies would have produced a
+    field that was technically present but structurally misleading. Checking why a
+    precedent is shaped the way it is, not just that one exists, is what caught this
+    before it shipped.
