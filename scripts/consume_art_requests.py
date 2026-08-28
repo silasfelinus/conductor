@@ -144,7 +144,44 @@ def already_satisfied(entry):
         return False
 
 
-def has_unresolved_submission(entry):
+def job_still_reserves_submission(job_id, timeout=20):
+    """True while an ArtJob still owns this request and should keep blocking
+    a re-submission; False once nothing else will ever resolve the row.
+
+    conductor/t-136: has_unresolved_submission()'s only release condition was
+    "the media landed" (already_satisfied). A request whose ArtJob is later
+    deleted (kind_robots' scripts/reconcile_failed_art_jobs.ts prunes
+    irreparable/superseded FAILED rows) or explicitly CANCELLED never lands
+    media and is never retried by anything else, so it stayed guarded
+    forever -- a card that silently never gets art. Treat "the job no longer
+    exists" (404) or "CANCELLED" as resolved (safe to submit again); every
+    other status (PENDING, RUNNING, DONE not yet reflected in
+    already_satisfied, FAILED awaiting drain_failed_art_backlog.py's
+    in-place requeue) still reserves the row exactly as before -- this must
+    not reopen the t-133 outage-duplicate-submission bug, so it only ever
+    narrows the guard for the two terminal "nothing else will act" states.
+
+    Requires KR_API_TOKEN; without it (offline/dry-run/tests) or on any
+    network/response hiccup this stays conservative and reports the job as
+    still reserving the row, matching pre-t-136 behavior exactly.
+    """
+    if not consumer.KR_API_TOKEN:
+        return True
+    try:
+        status, resp = consumer.http_json(
+            "GET", f"{consumer.KR_BASE_URL}/api/art/queue/{job_id}", timeout=timeout
+        )
+    except Exception:  # noqa: BLE001 - network hiccup, stay conservative
+        return True
+    if status == 404:
+        return False
+    if status != 200 or not isinstance(resp, dict) or not resp.get("success"):
+        return True
+    job = (resp.get("data") or {}).get("job") or {}
+    return str(job.get("status") or "").upper() != "CANCELLED"
+
+
+def has_unresolved_submission(entry, *, check_live=False):
     """True when this entry already owns an ArtJob that hasn't finished yet.
 
     record_submitted_job() writes ONLY `last_art_job_id` -- it never touches
@@ -165,10 +202,21 @@ def has_unresolved_submission(entry):
     Daily Dream requests; this is the same in-flight check, generalized to
     every source and applied at the one place ("is this row safe to submit")
     both lanes actually share.
+
+    conductor/t-136: `check_live=True` additionally releases the guard when
+    job_still_reserves_submission() confirms the recorded job is deleted or
+    CANCELLED -- see that function's docstring. Callers that can't or don't
+    want a network round-trip (offline checks, most tests) leave this False
+    and get the original already_satisfied-only behavior unchanged.
     """
-    if positive_job_id(entry.get("last_art_job_id")) is None:
+    job_id = positive_job_id(entry.get("last_art_job_id"))
+    if job_id is None:
         return False
-    return not already_satisfied(entry)
+    if already_satisfied(entry):
+        return False
+    if check_live and not job_still_reserves_submission(job_id):
+        return False
+    return True
 
 
 def apply_default_steps(entries, steps):
@@ -416,7 +464,8 @@ def main():
         [
             request
             for request in load_requests()
-            if is_pending(request) and not has_unresolved_submission(request)
+            if is_pending(request)
+            and not has_unresolved_submission(request, check_live=True)
         ],
         args.id_prefix,
     )
