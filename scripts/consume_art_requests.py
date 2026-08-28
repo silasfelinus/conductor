@@ -40,6 +40,7 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).parent))
 import consume_art_queue as consumer  # noqa: E402
+from art_request_staging_priority import positive_job_id  # noqa: E402
 
 ROOT = consumer.ROOT
 ART_PROMPTS_FILE = ROOT / "projects" / "art-prompts.yaml"
@@ -141,6 +142,33 @@ def already_satisfied(entry):
         return target_path(entry).exists()
     except OSError:
         return False
+
+
+def has_unresolved_submission(entry):
+    """True when this entry already owns an ArtJob that hasn't finished yet.
+
+    record_submitted_job() writes ONLY `last_art_job_id` -- it never touches
+    `status`, which stays "pending" for as long as the job is in flight (and
+    forever, if the job never completes). So `is_pending()` alone cannot tell
+    "genuinely never submitted" from "already submitted, still rendering, or
+    the render host has been down for days": every caller that filters on
+    is_pending() and not also this would re-POST the same request on every
+    run once nothing is left to mark it done.
+
+    conductor/t-133 (2026-08-28): this let the Mandarin Tutor bulk lane
+    (submit_mandarin_tutor_artjobs.py) and the ad-hoc drip consumer (this
+    module's own main(), via consume_art_requests_to_media.py) both re-POST
+    the same 709 targets, 4-5x each, during a render-host outage -- 2882
+    FAILED rows, 75% of them duplicate enqueues of work already sitting
+    FAILED. A prior guard (art_request_staging_priority.py's
+    should_consume_after_submission) covers exactly this shape but only for
+    Daily Dream requests; this is the same in-flight check, generalized to
+    every source and applied at the one place ("is this row safe to submit")
+    both lanes actually share.
+    """
+    if positive_job_id(entry.get("last_art_job_id")) is None:
+        return False
+    return not already_satisfied(entry)
 
 
 def apply_default_steps(entries, steps):
@@ -385,7 +413,11 @@ def main():
     args = parser.parse_args()
 
     pending = filter_by_id_prefix(
-        [request for request in load_requests() if is_pending(request)],
+        [
+            request
+            for request in load_requests()
+            if is_pending(request) and not has_unresolved_submission(request)
+        ],
         args.id_prefix,
     )
     blocked = [

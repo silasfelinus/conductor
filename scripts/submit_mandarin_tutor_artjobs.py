@@ -40,7 +40,12 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     candidates = requests.filter_by_id_prefix(
-        [entry for entry in requests.load_requests() if requests.is_pending(entry)],
+        [
+            entry
+            for entry in requests.load_requests()
+            if requests.is_pending(entry)
+            and not requests.has_unresolved_submission(entry)
+        ],
         ID_PREFIX,
     )
     safe = [entry for entry in candidates if not requests.weak_prompt_reason(entry)]
