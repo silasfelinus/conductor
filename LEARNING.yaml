@@ -11442,3 +11442,19 @@ records:
     despite 25/31 tasks done) -- milestone status isn't auto-derived from task
     counts anywhere in this repo's tooling, so it silently drifts unless an audit
     like this one checks it by hand.
+- date: 2026-08-28
+  project: conductor
+  task: t-135
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Every roadmap TASK status has cross-referencing tooling; MILESTONE status
+    had none, and it drifted badly once checked -- 30 real mismatches across 20
+    active projects on the first run, not just the one case that prompted the
+    task. A field that is only ever read (never audited against the data it
+    summarizes) will drift silently no matter how cheap it would be to keep
+    correct; the fix is a lightweight standalone advisory check wired into the
+    session-startup sweep, not a one-time manual correction.
