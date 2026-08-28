@@ -2747,3 +2747,29 @@ tasks:
       view -- whichever reads better without crowding the existing Feed/Sell/
       Breed button row. Presentation-only; no new endpoint or economy change
       needed, the data already reaches the client.
+  - id: t-060
+    milestone: m3
+    title: Extract a shared one-shot-reveal composable for revealedUnlock/revealedHatch/revealedBreed
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from t-056 (useOneShotQueue/useOneShotFlag, kind_robots PR
+      #2177, utils/useOneShotSignal.ts). That task consolidated the
+      flag/queue-shaped one-shot signals (bestiaryJustCompleted,
+      milestoneToastQueue, finaleJustTriggered) but deliberately left a
+      sibling pattern alone: `revealedUnlock`, `revealedHatch`, and
+      `revealedBreed` in stores/cthulhuquariumTankStore.ts are each their
+      own hand-rolled `ref<T | null>(null)` set once from a purchase
+      response and cleared via a matching dismissX() -- the same "one
+      moment this is legitimately known client-side" shape repeated three
+      times with a typed payload instead of a boolean/queue. Add a small
+      `useOneShotReveal<T>()` to utils/useOneShotSignal.ts (value/reveal/
+      dismiss, same file as the existing two) and have all three call
+      sites (unlock(), hatchEgg(), breed()) adopt it. Presentation-only;
+      keep every external ref/function name on the store unchanged
+      (revealedUnlock, revealedHatch, revealedBreed, dismissReveal,
+      dismissHatchReveal, dismissBreedReveal) so
+      components/cthulhuquarium/cthulhuquarium-game.vue needs no changes,
+      same discipline as t-056.
