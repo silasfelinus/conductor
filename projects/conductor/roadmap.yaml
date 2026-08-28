@@ -4560,9 +4560,9 @@ tasks:
   - id: t-135
     milestone: m2
     title: "Milestone status fields have no freshness check -- they silently drift from actual task-done fraction"
-    status: ready
+    status: claimed
     gate_human: false
-    owner: null
+    owner: worker
     stakes: reversible
     passes: 0
     note: >
@@ -4583,3 +4583,6 @@ tasks:
       wrong milestone status doesn't block task selection or gate anything, it only
       skews the digest's portfolio-percentage math -- but cheap to add and prevents
       the next project from sitting the same way m3 did.
+    claimed_by: claude-scheduled-20260828T184847Z-conductor-t135
+    claimed_at: '2026-08-28T18:48:48Z'
+    updated: '2026-08-28T18:48:48Z'
