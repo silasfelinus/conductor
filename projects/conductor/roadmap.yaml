@@ -4411,9 +4411,9 @@ tasks:
   - id: t-133
     milestone: m2
     title: "auto-art-generate submits the same art request twice per run: the bulk lane and the drip lane both drain art-prompts.yaml"
-    status: ready
+    status: claimed
     gate_human: false
-    owner: null
+    owner: worker
     stakes: reversible
     passes: 0
     note: >
@@ -4487,7 +4487,9 @@ tasks:
       whether the bulk and drip lanes should both be draining the same file at all, or
       whether the bulk lane should mark its rows `submitted` so the drip lane has
       something to skip on.
-    updated: '2026-08-28T14:20:00Z'
+    updated: '2026-08-28T18:36:59Z'
+    claimed_by: claude-scheduled-20260828T183658Z-conductor-t133
+    claimed_at: '2026-08-28T18:36:59Z'
 
   - id: t-134
     milestone: m2
