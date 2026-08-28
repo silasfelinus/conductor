@@ -64,6 +64,23 @@ RELAY_VERSION = os.environ.get(
 KR_SHARE_PROBE_PATH = os.environ.get("KR_SHARE_PROBE_PATH", "").strip()
 SHARE_PROBE_SECONDS = float(os.environ.get("KR_SHARE_PROBE_SECONDS", "30") or 30)
 
+# 2026-08-28: the scandir-only check above passed on a *partially* readable
+# share -- "ComfyUI listed 1 file(s) for that input" on every failure, so the
+# directory answered but the specific file every krea2 job needs
+# (qwen_image_vae.safetensors) was not among what got listed. One entry is
+# all probe_share() needed, so the gate stayed green while the relay claimed
+# and burned ~2700 jobs, all three attempts each. KR_SHARE_REQUIRED_FILES
+# (comma-separated, relative to KR_SHARE_PROBE_PATH) names files probe_share
+# opens and reads a byte from -- not just stats -- so a truncated listing that
+# is missing one of them fails the gate instead of passing it. Unset (the
+# default) to keep the directory-only check exactly as it was; opt-in, like
+# the gate itself.
+KR_SHARE_REQUIRED_FILES = [
+    entry.strip()
+    for entry in os.environ.get("KR_SHARE_REQUIRED_FILES", "").split(",")
+    if entry.strip()
+]
+
 def detect_relay_build():
     """Identify the code actually running, without needing anyone to set an env var.
 
@@ -971,22 +988,41 @@ _share_state = {"checked_at": 0.0, "ok": True, "detail": "", "reported": None}
 
 
 def probe_share(path):
-    """Read `path` as a directory. Return (ok, detail).
+    """Read `path` as a directory, then confirm any required files are
+    actually readable. Return (ok, detail).
 
     A listing rather than a bare isdir(): a stale SMB handle can satisfy
     os.path.isdir() and still fail every read, which is the exact shape of the
     2026-08-25 failure (an interactive `dir` said "cannot find the path" while
     the process holding the mount saw something else). Reading one entry costs
     nothing and proves the mount answers.
+
+    That alone is not enough for a *partially* readable share: 2026-08-28 saw
+    a directory that scandir'd fine but was missing the one file every krea2
+    job needs. KR_SHARE_REQUIRED_FILES (unset by default) names paths, relative
+    to `path`, that must each open and yield at least one byte -- a real read,
+    not just a listing or a stat(), since a stale handle can satisfy those too.
     """
     try:
         with os.scandir(path) as entries:
             next(entries, None)
-        return True, ""
     except StopIteration:  # pragma: no cover - scandir yields via next() above
-        return True, ""
+        pass
     except OSError as error:
         return False, f"{type(error).__name__}: {error}"
+
+    for relative in KR_SHARE_REQUIRED_FILES:
+        required_path = os.path.join(path, relative)
+        try:
+            with open(required_path, "rb") as handle:
+                handle.read(1)
+        except OSError as error:
+            return False, (
+                f"required model file unreadable: {relative} "
+                f"({type(error).__name__}: {error})"
+            )
+
+    return True, ""
 
 
 def share_available(now=None):

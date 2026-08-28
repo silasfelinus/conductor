@@ -4529,6 +4529,29 @@ tasks:
       (exit 1, "2095 render(s) failed and none completed in the last 6h") -- but it runs
       per auto-art-generate run, hours apart, while the relay decides per claim, so the
       relay's own gate is the one that has to hold.
+
+      Fixed (conductor scheduled Agent run, 2026-08-28): added KR_SHARE_REQUIRED_FILES
+      to relay_agent.py -- a comma-separated list of paths, relative to
+      KR_SHARE_PROBE_PATH, that probe_share() now opens and reads a byte from (not
+      just stat()s, since a stale handle can satisfy a stat too) after the existing
+      scandir check passes. Unset by default, so the directory-only check behaves
+      exactly as before unless configured -- same opt-in shape as KR_SHARE_PROBE_PATH
+      itself. ecosystem.config.js now defaults KR_SHARE_REQUIRED_FILES to
+      'vae/qwen_image_vae.safetensors' (KREA2_VAE, relative to KR_MODEL_ROOT's own
+      vae/ subdirectory per its existing extra_model_paths.yaml/ecosystem.config.js
+      layout), so a partially-readable share missing that one file now fails the gate
+      instead of passing it, with the missing path named in the block message. Did
+      not implement the "compare enumerated count against a known-good floor"
+      alternative the note also suggested -- the required-file read is simpler, needs
+      no persisted baseline, and directly targets the file that actually broke.
+      6 new tests added to tests/test_relay_share_gate.py covering: the default
+      (unset) behaves identically to the old code, a required file that's actually
+      missing fails probe_share() and blocks share_available()/claiming with the
+      path named in the log line, a required file that IS present passes, and
+      comma-separated multi-file parsing (including surrounding whitespace).
+      Verified: python3 -m py_compile on relay_agent.py clean; `node -e
+      "require('./ecosystem.config.js')"` loads without error; full repo test suite
+      (pytest -q) 1338 passed, 1 skipped, 35 subtests, no failures or regressions.
     updated: '2026-08-28T18:32:51Z'
     claimed_by: claude-scheduled-20260828T183251Z-conductor-t134
     claimed_at: '2026-08-28T18:32:51Z'

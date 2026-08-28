@@ -78,6 +78,53 @@ class ShareProbeTests(unittest.TestCase):
         self.assertTrue(ok)
         self.assertEqual(detail, "")
 
+    def test_required_files_default_to_none(self):
+        """Unset KR_SHARE_REQUIRED_FILES -> behaves exactly like before this existed."""
+        relay = load_relay(
+            KR_SHARE_PROBE_PATH=str(HOME_SERVER), KR_SHARE_REQUIRED_FILES=None
+        )
+        self.assertEqual(relay.KR_SHARE_REQUIRED_FILES, [])
+        ok, detail = relay.probe_share(str(HOME_SERVER))
+        self.assertTrue(ok)
+        self.assertEqual(detail, "")
+
+    def test_a_partially_readable_share_fails_on_a_missing_required_file(self):
+        """2026-08-28: scandir found one entry; the file that mattered was not it.
+
+        A directory that lists fine but is missing the one file a job actually
+        needs must fail the gate, not pass it.
+        """
+        relay = load_relay(
+            KR_SHARE_PROBE_PATH=str(HOME_SERVER),
+            KR_SHARE_REQUIRED_FILES="vae/qwen_image_vae.safetensors",
+        )
+        # HOME_SERVER scandir's fine (this test file lives there) but has no
+        # vae/ subdirectory at all -- the partially-readable-share shape.
+        ok, detail = relay.probe_share(str(HOME_SERVER))
+        self.assertFalse(ok)
+        self.assertIn("vae/qwen_image_vae.safetensors", detail)
+
+    def test_a_required_file_that_is_actually_present_passes(self):
+        relay = load_relay(
+            KR_SHARE_PROBE_PATH=str(HOME_SERVER),
+            KR_SHARE_REQUIRED_FILES="relay_agent.py",
+        )
+        ok, detail = relay.probe_share(str(HOME_SERVER))
+        self.assertTrue(ok)
+        self.assertEqual(detail, "")
+
+    def test_multiple_required_files_are_comma_separated(self):
+        relay = load_relay(
+            KR_SHARE_PROBE_PATH=str(HOME_SERVER),
+            KR_SHARE_REQUIRED_FILES=" relay_agent.py , ecosystem.config.js ",
+        )
+        self.assertEqual(
+            relay.KR_SHARE_REQUIRED_FILES,
+            ["relay_agent.py", "ecosystem.config.js"],
+        )
+        ok, detail = relay.probe_share(str(HOME_SERVER))
+        self.assertTrue(ok)
+
 
 class ShareGateTests(unittest.TestCase):
     def test_gate_is_opt_in(self):
@@ -164,6 +211,17 @@ class ShareGateTests(unittest.TestCase):
         self.assertIn(DEAD_SHARE, message)
         self.assertIn("net use", message)
         self.assertIn("retry budget", message)
+
+    def test_a_partially_readable_share_blocks_claiming_too(self):
+        """The gate itself, not just probe_share, must catch a missing required file."""
+        relay = load_relay(
+            KR_SHARE_PROBE_PATH=str(HOME_SERVER),
+            KR_SHARE_REQUIRED_FILES="vae/qwen_image_vae.safetensors",
+        )
+        self.assertFalse(relay.share_available(now=1000.0))
+        self.assertEqual(len(relay.logged), 1, relay.logged)
+        self.assertIn("vae/qwen_image_vae.safetensors", relay.logged[0])
+        self.assertIn("NOT claiming", relay.logged[0])
 
 
 if __name__ == "__main__":
