@@ -71,6 +71,75 @@ def test_has_unresolved_submission_false_once_media_lands(monkeypatch):
     ) is False
 
 
+def test_job_still_reserves_submission_conservative_without_token(monkeypatch):
+    """conductor/t-136: with no KR_API_TOKEN (offline/dry-run/tests), stay
+    conservative rather than guessing -- matches pre-t-136 behavior exactly."""
+    monkeypatch.setattr(cr.consumer, "KR_API_TOKEN", "")
+    assert cr.job_still_reserves_submission(99) is True
+
+
+def test_job_still_reserves_submission_false_when_job_deleted(monkeypatch):
+    """A 404 means kind_robots' reconcile_failed_art_jobs.ts pruned the row --
+    nothing else will ever resolve it, so it's safe to submit again."""
+    monkeypatch.setattr(cr.consumer, "KR_API_TOKEN", "test-token")
+    monkeypatch.setattr(cr.consumer, "http_json", lambda *a, **k: (404, {"success": False}))
+    assert cr.job_still_reserves_submission(99) is False
+
+
+def test_job_still_reserves_submission_false_when_cancelled(monkeypatch):
+    monkeypatch.setattr(cr.consumer, "KR_API_TOKEN", "test-token")
+    monkeypatch.setattr(
+        cr.consumer,
+        "http_json",
+        lambda *a, **k: (200, {"success": True, "data": {"job": {"id": 99, "status": "CANCELLED"}}}),
+    )
+    assert cr.job_still_reserves_submission(99) is False
+
+
+def test_job_still_reserves_submission_true_for_live_or_terminal_states(monkeypatch):
+    """PENDING/RUNNING/DONE/FAILED must all keep reserving the row -- this
+    must not reopen the t-133 outage-duplicate-submission bug, and FAILED
+    rows are retried in place by drain_failed_art_backlog.py, not resubmitted
+    here."""
+    monkeypatch.setattr(cr.consumer, "KR_API_TOKEN", "test-token")
+    for status in ("PENDING", "RUNNING", "DONE", "FAILED"):
+        monkeypatch.setattr(
+            cr.consumer,
+            "http_json",
+            lambda *a, status=status, **k: (
+                200,
+                {"success": True, "data": {"job": {"id": 99, "status": status}}},
+            ),
+        )
+        assert cr.job_still_reserves_submission(99) is True, status
+
+
+def test_job_still_reserves_submission_true_on_network_hiccup(monkeypatch):
+    monkeypatch.setattr(cr.consumer, "KR_API_TOKEN", "test-token")
+
+    def raise_error(*a, **k):
+        raise OSError("connection reset")
+
+    monkeypatch.setattr(cr.consumer, "http_json", raise_error)
+    assert cr.job_still_reserves_submission(99) is True
+
+
+def test_has_unresolved_submission_check_live_releases_deleted_job(monkeypatch):
+    monkeypatch.setattr(cr, "already_satisfied", lambda entry: False)
+    monkeypatch.setattr(cr, "job_still_reserves_submission", lambda job_id, timeout=20: False)
+    assert cr.has_unresolved_submission(
+        {"last_art_job_id": 99}, check_live=True
+    ) is False
+
+
+def test_has_unresolved_submission_check_live_defaults_to_off(monkeypatch):
+    """Without check_live=True, a deleted/cancelled job still blocks -- callers
+    that never opt in keep the original already_satisfied-only behavior."""
+    monkeypatch.setattr(cr, "already_satisfied", lambda entry: False)
+    monkeypatch.setattr(cr, "job_still_reserves_submission", lambda job_id, timeout=20: False)
+    assert cr.has_unresolved_submission({"last_art_job_id": 99}) is True
+
+
 def test_main_pending_filter_excludes_an_unresolved_non_daily_dream_request(
     tmp_path, monkeypatch, capsys
 ):

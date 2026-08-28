@@ -44,7 +44,7 @@ def main(argv: list[str] | None = None) -> int:
             entry
             for entry in requests.load_requests()
             if requests.is_pending(entry)
-            and not requests.has_unresolved_submission(entry)
+            and not requests.has_unresolved_submission(entry, check_live=True)
         ],
         ID_PREFIX,
     )
