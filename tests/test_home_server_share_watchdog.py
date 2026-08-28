@@ -74,6 +74,45 @@ class HealthcheckScriptTests(unittest.TestCase):
         for call in re.findall(r'"net use [^"]*"', self.text):
             self.assertIn("< NUL", call, f"unredirected stdin in: {call}")
 
+    def test_pm2_is_read_once_not_per_target(self):
+        """Three `pm2 jlist` calls per tick, each able to fail silently."""
+        code = [
+            line for line in self.text.splitlines()
+            if not line.lstrip().startswith("#")
+        ]
+        calls = sum(line.count("& pm2 jlist") for line in code)
+        self.assertEqual(calls, 1, "pm2 must be read once per tick")
+
+    def test_an_invisible_pm2_is_loud_not_silent(self):
+        """The bug that made this watchdog useless.
+
+        `pm2 jlist` returning nothing looked identical to "the app is
+        deliberately stopped", so on 2026-08-27 the task ran every 5 minutes
+        and exited 0 while ComfyUI was dead. pm2's daemon is per-user and the
+        task may not share the session or the PATH.
+        """
+        self.assertIn("$pm2Visible", self.text)
+        self.assertIn("WATCHDOG BLIND", self.text)
+        blind = self.text.index("if (-not $pm2Visible) {")
+        loop = self.text.index("foreach ($t in $targets)")
+        self.assertLess(blind, loop, "the blindness check must precede the loop")
+
+        # And the loop itself must bail, not just the alert above it.
+        body = self.text[loop : self.text.index("--- Render-failure watchdog")]
+        self.assertIn(
+            "if (-not $pm2Visible) { continue }",
+            body,
+            "the target loop must skip when pm2 is invisible",
+        )
+
+    def test_every_tick_writes_a_heartbeat(self):
+        """A silent log cannot answer 'did the watchdog actually run?'."""
+        self.assertIn('Write-Log "tick as $($env:USERNAME)', self.text)
+
+    def test_the_heartbeat_log_is_trimmed(self):
+        self.assertIn("function Trim-Log", self.text)
+        self.assertTrue(self.text.rstrip().endswith("Trim-Log"))
+
     def test_share_state_is_persisted_both_ways(self):
         self.assertIn("$alertState['share_state'] = 'ok'", self.text)
         self.assertIn("$alertState['share_state'] = 'down'", self.text)

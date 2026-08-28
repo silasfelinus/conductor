@@ -401,6 +401,32 @@ Together with the relay's share gate the sequence becomes: NAS reboots → relay
 stops claiming → healthcheck remaps and restarts ComfyUI → renders resume. No
 human in the loop, and the queue is paused rather than consumed throughout.
 
+**4. The watchdog can now tell you it is blind.** On 2026-08-27 ComfyUI was
+dead — nothing listening on 8188 — while `\AI-Backends-Healthcheck` ran every
+five minutes and exited 0 throughout. The per-target lookup was:
+
+```powershell
+$status = (& pm2 jlist | ConvertFrom-Json) | Where-Object { $_.name -eq $t.Name } ...
+if (-not $status -or $status.status -ne 'online') { continue }
+```
+
+With `$ErrorActionPreference = 'SilentlyContinue'`, **a `pm2 jlist` that returns
+nothing is indistinguishable from "the app is deliberately stopped."** The
+`.vbs` launches PowerShell `-NonInteractive` under Task Scheduler, so if `pm2`
+is not on that context's PATH — or the task runs as a different user than the
+one owning the pm2 daemon, which is per-user — every target is skipped and the
+script reports success. Same per-logon-session trap as the mapped drive letters,
+one layer up.
+
+Now: `pm2 jlist` is read **once** per tick, an empty result is treated as a
+fault (logged, emailed once per cooldown, all checks skipped explicitly), and
+every tick writes a heartbeat naming the user it ran as and the apps it could
+see. A silent log previously could not answer "did the watchdog run?" — the
+question that mattered. The log is trimmed to 4000 lines once it passes 8000.
+
+If you get a `WATCHDOG BLIND` email, fix the task's *Run as* account to match
+the pm2 daemon owner, or give the `.vbs` an absolute path to `pm2`.
+
 **`extra_model_paths.yaml` is now tracked** at `ops/home-server/extra_model_paths.yaml`
 as a reference copy of what belongs at `D:\comfy\comfy-fast\extra_model_paths.yaml`.
 It was audited 2026-08-26 against a full directory listing of the share: dead

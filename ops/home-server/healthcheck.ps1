@@ -42,6 +42,21 @@ function Write-Log($msg) {
     Add-Content -Path $logFile -Value "$stamp  $msg"
 }
 
+# The heartbeat line below writes on every tick (~288/day at 5-minute spacing),
+# which is the point -- a silent log cannot answer "did the watchdog run?".
+# Trim so that never becomes a problem: keep the newest $logKeepLines once the
+# file passes $logTrimAt.
+$logTrimAt = 8000
+$logKeepLines = 4000
+function Trim-Log {
+    try {
+        if (-not (Test-Path $logFile)) { return }
+        $lines = @(Get-Content -Path $logFile)
+        if ($lines.Count -le $logTrimAt) { return }
+        $lines[-$logKeepLines..-1] | Set-Content -Path $logFile
+    } catch {}
+}
+
 function Get-AlertState {
     if (Test-Path $alertStateFile) {
         try {
@@ -104,6 +119,48 @@ function Send-Alert($subject, $body) {
 
 $alertState = Get-AlertState
 $hostName = $env:COMPUTERNAME
+
+# --- pm2 visibility ----------------------------------------------------------
+# Read pm2's process list ONCE, and distinguish "pm2 says this app is stopped"
+# from "pm2 told us nothing at all". They are not the same, and conflating them
+# silently disabled this entire watchdog.
+#
+# 2026-08-27: ComfyUI was dead (nothing listening on 8188) while the scheduled
+# task ran every 5 minutes and exited 0 the whole time. The per-target lookup
+# was `(& pm2 jlist | ConvertFrom-Json) | Where-Object ...` followed by
+# `if (-not $status ...) { continue }`. With $ErrorActionPreference set to
+# SilentlyContinue, a `pm2` that is not on PATH under Task Scheduler -- or a
+# pm2 daemon belonging to a different logon session than the task runs in --
+# yields $null, every target is skipped, and the script reports success.
+#
+# That is the same per-logon-session trap as the mapped drive letters, one
+# layer up. A blind watchdog must say so.
+$pm2List = $null
+$pm2Error = ''
+try {
+    $pm2List = (& pm2 jlist 2>&1 | Out-String) | ConvertFrom-Json
+} catch {
+    $pm2Error = $_.Exception.Message
+}
+$pm2Names = @()
+if ($pm2List) { $pm2Names = @($pm2List | ForEach-Object { $_.name } | Where-Object { $_ }) }
+$pm2Visible = $pm2Names.Count -gt 0
+
+# Heartbeat. Previously a healthy tick wrote NOTHING, so an empty log could not
+# be told apart from a task that never ran -- which is precisely the question
+# that mattered on 2026-08-27. One line per tick, ~288/day, trimmed below.
+Write-Log "tick as $($env:USERNAME) - pm2 apps: $(if ($pm2Visible) { $pm2Names -join ', ' } else { 'NONE VISIBLE' })"
+
+if (-not $pm2Visible) {
+    Write-Log "pm2 returned no process list ($pm2Error) - watchdog is BLIND, skipping all checks"
+    if (Test-AlertDue $alertState 'pm2-invisible') {
+        $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+        Send-Alert "WATCHDOG BLIND on $hostName - pm2 returned no process list" `
+            "healthcheck.ps1 ran at $stamp on $hostName as user '$($env:USERNAME)' but 'pm2 jlist' returned nothing ($pm2Error). Every check is being skipped, so the watchdog is providing NO protection - it will keep exiting 0 while backends are down. Usual causes: pm2 is not on PATH for the scheduled task, or the task runs as a different user than the one owning the pm2 daemon (pm2's daemon is per-user). Fix the task's 'Run as' account or give the .vbs an absolute path to pm2."
+        $alertState['pm2-invisible'] = $stamp
+        Save-AlertState $alertState
+    }
+}
 
 # --- Share watchdog ----------------------------------------------------------
 # Runs FIRST, because both watchdogs below misread a dead model mount.
@@ -204,13 +261,25 @@ if ($shareProbePath) {
 }
 
 foreach ($t in $targets) {
+    if (-not $pm2Visible) { continue }
+
     # Only police processes pm2 believes are online - a deliberate `pm2 stop`
-    # (e.g. freeing the GPU) must not be fought by the watchdog.
-    $status = (& pm2 jlist | ConvertFrom-Json) |
+    # (e.g. freeing the GPU) must not be fought by the watchdog. Reuses the
+    # single $pm2List read above rather than shelling out per target: three
+    # `pm2 jlist` calls per tick was wasteful, and worse, each one could fail
+    # independently and be silently swallowed.
+    $status = $pm2List |
         Where-Object { $_.name -eq $t.Name } |
         Select-Object -ExpandProperty pm2_env -ErrorAction SilentlyContinue
 
-    if (-not $status -or $status.status -ne 'online') { continue }
+    if (-not $status) {
+        Write-Log "$($t.Name): not in pm2's list - not started on this box?"
+        continue
+    }
+    if ($status.status -ne 'online') {
+        Write-Log "$($t.Name): pm2 status is '$($status.status)' - leaving it alone"
+        continue
+    }
 
     $ok = $false
     try {
@@ -338,3 +407,5 @@ if (-not $krToken) {
         Save-AlertState $alertState
     }
 }
+
+Trim-Log
