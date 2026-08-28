@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-28T12:43:48Z
+Generated: 2026-08-28T12:47:01Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **808**
-- Outcomes: blocked: 16, cancelled: 1, done: 791
+- Closed tasks recorded: **809**
+- Outcomes: blocked: 16, cancelled: 1, done: 792
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 83 | 100% |
 | conductor-app | 4 | 100% |
-| cthulhuquarium | 37 | 97% |
+| cthulhuquarium | 38 | 97% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
@@ -68,7 +68,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 792 | 99% |
+| software | 793 | 99% |
 
 ## Failure categories
 
@@ -90,6 +90,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-28 `cthulhuquarium/t-061` — A "read-and-report audit" task (kind_robots#2181) turned out to have exactly one applicable shape once grepped precisely: of 17 files matching `meta:` under server/, only three (browse/catalog/leaderboard) return an actual API-response meta object -- everything else was ComfyUI workflow node `_meta`, a same-named but unrelated shape. Narrowing from a broad text match to the specific contract (an API route's response envelope, not any object literal keyed `meta`) before concluding "N call sites found" avoided both over-counting false positives and under-counting by assuming the grep result was already the answer. The two real hand-cast call sites (browse/leaderboard pages) already read the server's meta.total correctly -- the audit's fix was purely routing through performFetch's typed second generic instead of a manual ApiResponse<T> & {meta?: {...}} cast, so "no behavior change" was verifiable, not just claimed.
 - 2026-08-28 `cthulhuquarium/t-060` — Extracting a shared useOneShotReveal() composable for revealedUnlock/Hatch/Breed (kind_robots#2180) kept every external ref/function name on the store unchanged, so no component needed touching -- confirming a presentation-only refactor is genuinely presentation-only by checking call-site signatures, not just behavior, avoids a should-have-been-a-no-op PR accidentally growing scope.
 - 2026-08-28 `cthulhuquarium/t-059` — Reusing an existing formatting idiom (formatBestStats()/BEST_STAT_LABELS, t-031) instead of inventing a parallel one kept the diff to a single small helper (tankStockStatsLine()) that reshapes TankStock's stat<Name> fields into the same BestiaryStatBlock shape the Ichthyonomicon already consumes. Worth flagging as its own kaizen (t-062) rather than scope-creeping into this task: making an individual's rolled stats visible for the first time immediately raises the follow-on question a player will actually ask -- "what would this sell for?" -- which the Sell button still doesn't answer despite the price already varying per individual (sellPrice() in aquariumEconomy.ts). Noticing a UI change makes a previously-invisible economic question visible is a useful generic signal for kaizen filing, distinct from noticing a code-shape duplication.
 - 2026-08-28 `cthulhuquarium/t-057` — A task that reads as UI-only ("show a countdown") can be blocked on a small, shared infrastructure gap: performFetch() (stores/utils.ts) silently dropped every response's `meta` object, and at least 17 server routes already return one. Worth checking whether a "just read this field" task's data is actually reachable before assuming the store layer already exposes it -- the fix here (an optional second generic on ApiResponse<T, M>, purely additive/backward-compatible) was small, but skipping that check would have meant reaching for a server-side workaround (a second field on `data`, or a new endpoint) that the task's own note explicitly said wasn't needed.
@@ -99,7 +100,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-28 `mandarin-tutor/t-018` — When a shared notice ref (artNotice) backs multiple template call sites, check every call site before assuming one render location suffices -- and a task note's suggested "clear on the same trigger as X" can be wrong if X itself has no real clear trigger; verify the cited precedent actually holds before copying its pattern.
 - 2026-08-28 `cthulhuquarium/t-050` — A kaizen task filed against a specific call site (purchaseSpeciesForUser) can be fully subsumed by later, unrelated-looking dependency work (t-029's breeding creation, t-041's egg hatching) that happens to wire the same helper for its own reasons -- always grep for every call site of the thing the task asks you to add (here: every AquariumStock-creating transaction) before writing new code, since the task may already be done.
 - 2026-08-28 `cthulhuquarium/t-030` — t-031's currentlyOwned flag and dead "Re-order" button, and t-029's rolled stat* columns, were both built ahead of time specifically for this task -- t-030 landed as almost pure wiring (rotateShopStock + sellPrice, both pure functions in aquariumEconomy.ts) with zero migration, exactly as t-032's schema-first discipline intended. The one design risk this task's own note called out by name (rotating stock + selling creating a quiet permanent loss of access) was already fully solved by t-031's Ichthyonomicon before this task started -- confirms that flagging a trap in a task note AND building its fix into an earlier, unrelated-looking task (t-031) is a pattern worth repeating when a later task's safety depends on state a dependency already tracks.
-- 2026-08-28 `cthulhuquarium/t-053` — t-018/t-028's justCompletedBestiary/firedMilestones purchase-response signals sat server-complete with zero frontend consumer for a full cycle -- the server-side gate (slot-cap increase, AquariumEvent log) working correctly gave no visible signal that the UI half was still missing. Worth periodically diffing a store's typed response interfaces against what the server actually returns, not just what the store currently reads off it.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-28T12:43:48Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-28T12:47:01Z_
