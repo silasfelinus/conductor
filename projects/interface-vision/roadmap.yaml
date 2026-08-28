@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     recurring: true
@@ -3249,7 +3249,23 @@ tasks:
       tolerance. Seventh independent confirmation both pools are exhausted (slices 36, 48, 49,
       50, 53, 54, now 55). No kind_robots code change. Rolled the roadmap task back to status:
       ready per this recurring task's established convention.
-    updated: '2026-08-28T19:31:31Z'
+
+      Slice 56 merged as silasfelinus/kind_robots#2184 (squash fe73a1b) from exact head
+      356f330. This was a baseline-only ratchet, not a new component conversion:
+      utils/scripts/layout-contract-baseline.json's viewport-grid entries for
+      components/video-lora-picker.vue (lg:grid-cols-3, sm:grid-cols-2, sm:grid-
+      cols-[1fr_7rem]) were removed because the file's grid classes had already been converted
+      to container-width-based grid-cols-[repeat(auto-fit,minmax(...))] form in an earlier,
+      unrelated change -- the baseline just hadn't caught up. Ran 'npm run test:layout-
+      contract -- --update' then confirmed a plain 'npm run test:layout-contract' held clean
+      (209 total violations, unchanged count, only the 3 stale entries removed). Re-checked
+      both previously-exhausted mechanical pools (mx-auto/w-full/max-w-* container conversion:
+      exhausted through slice 32/#2183; kr-note color-block conversion: exhausted through
+      slice 55, 7 independent confirmations) for a new candidate -- both remain exhausted, no
+      new component-level slice found this cycle. All 37 kind_robots PR checks green
+      (including layout-contract and TypeScript) before merge. Returning to ready for the next
+      bounded slice.
+    updated: '2026-08-28T19:36:03Z'
     approved_by_human: true
     implementation_pr: 'silasfelinus/kind_robots#2184'
     owner: worker
