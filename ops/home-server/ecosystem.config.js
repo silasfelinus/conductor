@@ -188,6 +188,17 @@ module.exports = {
         // 2026-08-26 while every health signal stayed green. Unset to disable.
         KR_SHARE_PROBE_PATH: process.env.KR_SHARE_PROBE_PATH || KR_MODEL_ROOT,
         KR_SHARE_PROBE_SECONDS: process.env.KR_SHARE_PROBE_SECONDS || '30',
+        // 2026-08-28: a directory listing alone passed on a share that was
+        // only partially readable -- "ComfyUI listed 1 file(s) for that
+        // input" on every failure, and the one file every krea2 job needs
+        // (qwen_image_vae.safetensors) was not the one listed. The relay
+        // claimed and burned ~2700 jobs while the scandir-only gate stayed
+        // green. Each entry (relative to KR_SHARE_PROBE_PATH) is opened and
+        // read, not just stat()ed. Unset to fall back to the directory-only
+        // check.
+        KR_SHARE_REQUIRED_FILES:
+          process.env.KR_SHARE_REQUIRED_FILES ||
+          'vae/qwen_image_vae.safetensors',
         COMFY_PROMPT_TIMEOUT: process.env.COMFY_PROMPT_TIMEOUT || '180',
         COMFY_RECOVERY_SECONDS: process.env.COMFY_RECOVERY_SECONDS || '45',
         // LTX 2.3 22B video renders at 1280x720 can legitimately outlive the
