@@ -2732,6 +2732,25 @@ tasks:
       NOT BLOCKING ANY CURRENT WORK. Production is healthy, t-071 is closed, and
       cthulhuquarium is unaffected. This is filed at this severity because the gap is
       long-standing and invisible rather than because something is currently failing.
+      UPDATE 2026-08-28: kind_robots PR #2102 ("finish the app-account least-privilege
+      boundary") merged -- Silas's own branch, all 39 CI checks green, repo-only
+      changes (a read-only grant verifier, offline regression tests for grant
+      parsing/redaction, an npm command, and a runbook doc). No live privilege
+      mutation shipped through the PR itself. The PR's top-level description states
+      Silas completed the full DML-only narrowing manually on Alexandria on
+      2026-08-27 (kindrobot left with only `USAGE ON *.*` plus
+      `SELECT, INSERT, UPDATE, DELETE ON kindblank_fresh.*`), with healthy post-change
+      ProxySQL/MariaDB diagnostics. FLAG FOR SILAS: the committed runbook
+      (docs/runbooks/app-account-privilege-narrowing.md) still documents an
+      intermediate "verified live 2026-08-27" snapshot with `ALL PRIVILEGES` on four
+      databases (kindrobots/kindblank/kindblank_fresh/kindblank_shadow) as the
+      "current state" and lists narrowing to DML-only as a still-to-do step -- that
+      reads as one step behind the PR description's claim that narrowing is already
+      complete. Worth running `npm run test:app-account-privileges` against
+      production once more (or Silas eyeballing a fresh `SHOW GRANTS`) to confirm
+      which is accurate before closing this out, and updating the runbook doc if it's
+      the one that's stale. Leaving status/gate as-is -- only Silas can set
+      approved_by_human/status:done here.
 
   - id: t-074
     milestone: m3
