@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-28T19:03:44Z
+Generated: 2026-08-28T19:11:44Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **813**
-- Outcomes: blocked: 16, cancelled: 1, done: 796
+- Closed tasks recorded: **814**
+- Outcomes: blocked: 16, cancelled: 1, done: 797
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -26,7 +26,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 25 | 100% |
-| conductor | 85 | 100% |
+| conductor | 86 | 100% |
 | conductor-app | 4 | 100% |
 | cthulhuquarium | 40 | 98% |
 | davinci | 8 | 100% |
@@ -68,7 +68,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 797 | 99% |
+| software | 798 | 99% |
 
 ## Failure categories
 
@@ -90,6 +90,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-28 `conductor/t-135` — Every roadmap TASK status has cross-referencing tooling; MILESTONE status had none, and it drifted badly once checked -- 30 real mismatches across 20 active projects on the first run, not just the one case that prompted the task. A field that is only ever read (never audited against the data it summarizes) will drift silently no matter how cheap it would be to keep correct; the fix is a lightweight standalone advisory check wired into the session-startup sweep, not a one-time manual correction.
 - 2026-08-28 `conductor/t-133` — A guard added to fix one lane's resubmission bug (Daily Dream's should_consume_after_submission, scoped via is_daily_dream_request) does not automatically protect a second lane that reaches the same underlying data through a different, unpatched import path (submit_mandarin_tutor_artjobs.py imports consume_art_requests directly, bypassing the consume_art_requests_to_media.py monkeypatch entirely). When a task says "widen guard X", check every caller reaches guard X's actual code path before assuming a change to X's own module is sufficient -- here the real fix had to live one layer lower, in a function both lanes genuinely share.
 - 2026-08-28 `conductor/t-134` — A directory-listing-only share probe ("can I read one entry") is not a test for a partially-populated share -- it needs to check the specific files a render actually depends on, opened and read, not just scandir'd or stat'd (a stale SMB handle can satisfy a stat too). Generalized as KR_SHARE_REQUIRED_FILES, opt-in and unset by default so the existing directory-only behavior is unchanged unless configured.
 - 2026-08-28 `cthulhuquarium/t-063` — A kaizen note's framing of "what's still open" (t-062's note named only t-058) was itself stale by the time this audit ran -- it undercounted by four tasks (t-019, t-021, t-022, t-041 were also open needs-human items). A planning/audit task should always re-derive the open set directly from live roadmap state (grep every task's own status) rather than trusting the prior task's kaizen prose about what remains, even when that prose sounds authoritative. Also caught a genuinely stale milestone `status` field (m3 sat at `not-started` despite 25/31 tasks done) -- milestone status isn't auto-derived from task counts anywhere in this repo's tooling, so it silently drifts unless an audit like this one checks it by hand.
@@ -99,7 +100,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-28 `cthulhuquarium/t-059` — Reusing an existing formatting idiom (formatBestStats()/BEST_STAT_LABELS, t-031) instead of inventing a parallel one kept the diff to a single small helper (tankStockStatsLine()) that reshapes TankStock's stat<Name> fields into the same BestiaryStatBlock shape the Ichthyonomicon already consumes. Worth flagging as its own kaizen (t-062) rather than scope-creeping into this task: making an individual's rolled stats visible for the first time immediately raises the follow-on question a player will actually ask -- "what would this sell for?" -- which the Sell button still doesn't answer despite the price already varying per individual (sellPrice() in aquariumEconomy.ts). Noticing a UI change makes a previously-invisible economic question visible is a useful generic signal for kaizen filing, distinct from noticing a code-shape duplication.
 - 2026-08-28 `cthulhuquarium/t-057` — A task that reads as UI-only ("show a countdown") can be blocked on a small, shared infrastructure gap: performFetch() (stores/utils.ts) silently dropped every response's `meta` object, and at least 17 server routes already return one. Worth checking whether a "just read this field" task's data is actually reachable before assuming the store layer already exposes it -- the fix here (an optional second generic on ApiResponse<T, M>, purely additive/backward-compatible) was small, but skipping that check would have meant reaching for a server-side workaround (a second field on `data`, or a new endpoint) that the task's own note explicitly said wasn't needed.
 - 2026-08-28 `cthulhuquarium/t-056` — A repeated-shape kaizen (three near-identical one-shot-signal refs) is worth pausing on before extracting: the task named three call sites (bestiaryJustCompleted, milestoneToastQueue, finaleJustTriggered), but a fourth near-identical trio (revealedUnlock/revealedHatch/revealedBreed, a typed-payload variant of the same shape) was sitting right next to it in the same file. Scoping the extraction to exactly what the task named (rather than also folding in the sibling pattern) kept the diff small and reviewable, but the sibling was worth filing as its own immediate kaizen (t-060) rather than a speculative "if a fourth shows up" -- it already had three instances, the same threshold that triggered this task in the first place.
-- 2026-08-28 `cthulhuquarium/t-055` — A task can bundle two deliverables in different repos without saying so explicitly -- here, a store/UI change (in-scope) plus content authoring in silasfelinus/cthulhuquarium, a GitHub repo entirely outside this session's access (not just connector-blocked within an in-scope repo, and not locally cloned). When a target repo isn't accessible at all, don't guess at its content from memory or skip that half silently -- split the task, land what's actually landable, and write a concrete handoff doc naming the exact repo, fields, and script for whoever has access next. Worth checking a task's own note for "and author/write/edit X" clauses naming a different project before claiming, since those are the ones most likely to span a repo this session can't reach.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-28T19:03:44Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-28T19:11:44Z_
