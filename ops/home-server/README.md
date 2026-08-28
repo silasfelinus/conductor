@@ -368,6 +368,74 @@ the mount → `pm2 restart comfyui` → `pm2 start kr-relay`.
 guards convert a NAS reboot from a silent backlog into a visible pause; they do
 not stop the mapping from being lost.
 
+**3. `healthcheck.ps1` closes the loop.** A share watchdog now runs *before* the
+other two, because both misread a dead mount: the liveness probe sees ComfyUI
+answering `/system_stats` with a 200 and is satisfied, and the render-failure
+watchdog sees the failure spike and would restart ComfyUI straight back into the
+unreadable share, repeatedly. It:
+
+- probes `KR_SHARE_PROBE_PATH` by **enumerating** it (a stale SMB handle passes
+  `Test-Path` and still fails every read)
+- remaps the drive from `KR_SHARE_UNC` if configured, with stdin redirected from
+  `NUL` so a missing credential fails fast instead of blocking a Task Scheduler
+  run on an unanswerable username prompt
+- **restarts ComfyUI when the share returns** — the step that matters, and the
+  one a human kept forgetting
+- suppresses the render watchdog's restart while the share is down, and says so
+  in the spike email
+
+Configure with:
+
+```
+setx KR_SHARE_PROBE_PATH "Z:\ai\models"
+setx KR_SHARE_UNC        "\\192.168.7.172\pc"
+cmdkey /add:192.168.7.172 /user:silasfelinus /pass
+```
+
+`KR_SHARE_UNC` is optional — leave it unset to detect and alert without touching
+the mapping. The remap needs the credential in Credential Manager; without it
+`net use` has nothing to authenticate with and the watchdog will alert rather
+than silently fail.
+
+Together with the relay's share gate the sequence becomes: NAS reboots → relay
+stops claiming → healthcheck remaps and restarts ComfyUI → renders resume. No
+human in the loop, and the queue is paused rather than consumed throughout.
+
+**4. The watchdog can now tell you it is blind.** On 2026-08-27 ComfyUI was
+dead — nothing listening on 8188 — while `\AI-Backends-Healthcheck` ran every
+five minutes and exited 0 throughout. The per-target lookup was:
+
+```powershell
+$status = (& pm2 jlist | ConvertFrom-Json) | Where-Object { $_.name -eq $t.Name } ...
+if (-not $status -or $status.status -ne 'online') { continue }
+```
+
+With `$ErrorActionPreference = 'SilentlyContinue'`, **a `pm2 jlist` that returns
+nothing is indistinguishable from "the app is deliberately stopped."** The
+`.vbs` launches PowerShell `-NonInteractive` under Task Scheduler, so if `pm2`
+is not on that context's PATH — or the task runs as a different user than the
+one owning the pm2 daemon, which is per-user — every target is skipped and the
+script reports success. Same per-logon-session trap as the mapped drive letters,
+one layer up.
+
+Now: `pm2 jlist` is read **once** per tick, an empty result is treated as a
+fault (logged, emailed once per cooldown, all checks skipped explicitly), and
+every tick writes a heartbeat naming the user it ran as and the apps it could
+see. A silent log previously could not answer "did the watchdog run?" — the
+question that mattered. The log is trimmed to 4000 lines once it passes 8000.
+
+If you get a `WATCHDOG BLIND` email, fix the task's *Run as* account to match
+the pm2 daemon owner, or give the `.vbs` an absolute path to `pm2`.
+
+**`extra_model_paths.yaml` is now tracked** at `ops/home-server/extra_model_paths.yaml`
+as a reference copy of what belongs at `D:\comfy\comfy-fast\extra_model_paths.yaml`.
+It was audited 2026-08-26 against a full directory listing of the share: dead
+paths removed, case-duplicates removed (SMB is case-insensitive, so `models/VAE`
+and `models/vae` were the same directory scanned twice and listed twice), and
+seven real directories added that had never been declared. Every declared path
+is a directory scan across SMB on each `folder_paths` refresh, so the duplicates
+were costing exactly the I/O that fails first when the mount degrades.
+
 **Then requeue the backlog** from the conductor checkout:
 
 ```
