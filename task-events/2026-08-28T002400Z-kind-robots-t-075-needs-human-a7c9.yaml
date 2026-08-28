@@ -1,0 +1,18 @@
+version: 1
+project: kind-robots
+task: t-075
+operation: needs-human
+session: 2026-08-27T231300Z-kind-robots-t-075-gpt56sol-a7c9
+updated: '2026-08-28T00:24:00Z'
+note: >-
+  Step 2 production gate is now confirmed. Silas reported on 2026-08-27 that,
+  after the Force Update, https://kindrobots.org/api/characters/200 works; this
+  exercises the single-character full Prisma findUnique path with the deployed
+  client that no longer contains Character.size. Step 3 is prepared in
+  silasfelinus/kind_robots#2165: it adds only the forward migration
+  prisma/migrations/20260827233000_drop_character_size/migration.sql with
+  ALTER TABLE Character DROP COLUMN size and consumes the matching pending
+  provenance marker. Keep this task needs-human because the remaining action is
+  destructive/irreversible: merge/deploy #2165 only after Silas explicitly
+  approves that DROP in-session. Do not mark done until the migration has landed
+  and production is verified afterward.
