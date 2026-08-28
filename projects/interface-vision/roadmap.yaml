@@ -3635,3 +3635,12 @@ tasks:
     claimed_at: '2026-08-27T06:31:16Z'
     updated: '2026-08-27T06:53:06Z'
     implementation_pr: 'silasfelinus/kind_robots#2141'
+
+  - id: t-122
+    milestone: m6
+    title: "Kaizen: have layout-contract CI warn when --update would shrink the baseline"
+    status: ready
+    passes: 0
+    stakes: reversible
+    owner: null
+    note: "Kaizen from the t-104 slice that ratcheted the viewport-grid baseline for components/video-lora-picker.vue (2026-08-28, kind_robots PR #2184). The baseline had listed 3 violations (lg:grid-cols-3, sm:grid-cols-2, sm:grid-cols-[1fr_7rem]) that no longer matched the file's actual, already-fixed grid classes -- a change unrelated to interface-vision had silently fixed the code without anyone ratcheting the baseline down to match, so the layout-contract report kept counting a phantom violation until this slice happened to run 'npm run test:layout-contract' directly and noticed. Add a CI step (or extend the existing layout-contract job) that runs verifyLayoutContract.ts --update in a scratch/dry mode and warns (annotation, not a failing check) whenever the computed baseline would be strictly smaller than the committed one, naming which entries would be removed. This surfaces a ratchet opportunity on the PR that actually caused it instead of leaving it for a future report/session to notice by chance."
