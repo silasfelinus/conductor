@@ -1,0 +1,18 @@
+version: 1
+project: kind-robots
+task: t-075
+operation: needs-human
+session: 2026-08-27T231300Z-kind-robots-t-075-gpt56sol-a7c9
+approved_by_human: true
+updated: '2026-08-28T00:42:00Z'
+note: >-
+  Silas explicitly approved the destructive step in-session on 2026-08-27 with
+  "Approved when ready." All required exact-head checks on kind_robots#2165
+  completed successfully (TypeScript, Contract verifiers, Schema Migration Parity),
+  and #2165 was squash-merged as adb4dc799fa4b5c0a0db4e51dacd404f3cbbd3fc.
+  The forward migration is now on main and the pending provenance marker is consumed.
+  Keep t-075 needs-human until production migration execution is confirmed on Alexandria:
+  pull the production image containing adb4dc7, run node scripts/prisma-migrate-deploy.mjs
+  through the documented MIGRATION_DATABASE_URL one-shot container lane, then Force Update
+  the KindRobots container to the same image and verify /api/characters/200 remains HTTP 200.
+  Do not mark done until the production DROP has actually applied and the endpoint is healthy.
