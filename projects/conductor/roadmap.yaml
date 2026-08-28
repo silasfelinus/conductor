@@ -4411,7 +4411,7 @@ tasks:
   - id: t-133
     milestone: m2
     title: "auto-art-generate submits the same art request twice per run: the bulk lane and the drip lane both drain art-prompts.yaml"
-    status: claimed
+    status: review
     gate_human: false
     owner: worker
     stakes: reversible
@@ -4487,9 +4487,46 @@ tasks:
       whether the bulk and drip lanes should both be draining the same file at all, or
       whether the bulk lane should mark its rows `submitted` so the drip lane has
       something to skip on.
-    updated: '2026-08-28T18:36:59Z'
+
+      Fixed (conductor scheduled Agent run, 2026-08-28): widened the guard past the
+      Daily Dream special case, but at a lower shared layer than
+      art_request_staging_priority.py -- that module is only reachable through
+      consume_art_requests_to_media.py (the drip lane); submit_mandarin_tutor_artjobs.py
+      (the bulk lane) imports the base consume_art_requests module directly and never
+      goes through it, so widening only that module would have fixed the drip lane and
+      left the bulk lane exactly as broken. Instead added
+      consume_art_requests.has_unresolved_submission(entry) -- true when an entry has a
+      positive last_art_job_id AND already_satisfied(entry) is still false -- and wired
+      it into both places that decide whether a row is safe to submit: (1)
+      consume_art_requests.py's own main() pending filter (the drip lane, via
+      consume_art_requests_to_media.py's monkeypatched already_satisfied), and (2)
+      submit_mandarin_tutor_artjobs.py's own candidate filter (the bulk lane, direct
+      import, unpatched already_satisfied -- same target_path().exists() check main()
+      already used for every source before this fix). Left
+      art_request_staging_priority.should_consume_after_submission() and its Daily-Dream
+      scoping untouched: it's now a redundant subset of the general check (harmless,
+      still correct for what it tests) rather than wrong, and touching it would have
+      meant either breaking or rewriting its existing tests for no behavioral gain --
+      flagging as a legitimate future cleanup rather than doing it in this pass. Did not
+      change whether the bulk and drip lanes both drain the same file (the note's second
+      open question) -- out of scope for this fix, which targets "don't resubmit
+      in-flight work" specifically; worth a separate task if Silas wants the lanes
+      restructured.
+
+      4 new tests in tests/test_consume_art_requests.py: has_unresolved_submission's
+      three cases (open job/any source -> true, no job id -> false, media landed ->
+      false), plus one wired-through-main() integration test proving a non-Daily-Dream
+      request with an unresolved last_art_job_id is excluded from the dry-run "would
+      queue" list (network-free -- a --live run in this sandbox has no reachable
+      KR_BASE_URL and would hang on consumer.wait_for_job).
+
+      Verified: python3 -m py_compile on all four changed/touched .py files clean;
+      full repo suite (pytest -q) 1342 passed, 1 skipped, 35 subtests -- up from 1338
+      passed pre-change (the net +4 new tests), no regressions; validate_roadmaps.py
+      clean.
+    updated: '2026-08-28T18:36:58Z'
     claimed_by: claude-scheduled-20260828T183658Z-conductor-t133
-    claimed_at: '2026-08-28T18:36:59Z'
+    claimed_at: '2026-08-28T18:36:58Z'
 
   - id: t-134
     milestone: m2

@@ -40,6 +40,65 @@ def test_is_pending():
     assert cr.is_pending({"status": "DONE"}) is False
 
 
+def test_has_unresolved_submission_true_for_any_source_with_an_open_job(monkeypatch):
+    """conductor/t-133: the in-flight guard must not be Daily-Dream-only.
+
+    record_submitted_job() only ever writes last_art_job_id, never status, so
+    a request that already owns a job -- from ANY source, not just Daily
+    Dream -- must be treated as unresolved (not safe to re-POST) until its
+    media lands.
+    """
+    monkeypatch.setattr(cr, "already_satisfied", lambda entry: False)
+    assert cr.has_unresolved_submission(
+        {"source": "mandarin-tutor-v2", "last_art_job_id": 99}
+    ) is True
+    assert cr.has_unresolved_submission(
+        {"source": "kind-robots-missing-image", "last_art_job_id": 99}
+    ) is True
+
+
+def test_has_unresolved_submission_false_without_a_job_id():
+    assert cr.has_unresolved_submission({"source": "mandarin-tutor-v2"}) is False
+    assert cr.has_unresolved_submission(
+        {"source": "mandarin-tutor-v2", "last_art_job_id": None}
+    ) is False
+
+
+def test_has_unresolved_submission_false_once_media_lands(monkeypatch):
+    monkeypatch.setattr(cr, "already_satisfied", lambda entry: True)
+    assert cr.has_unresolved_submission(
+        {"source": "mandarin-tutor-v2", "last_art_job_id": 99}
+    ) is False
+
+
+def test_main_pending_filter_excludes_an_unresolved_non_daily_dream_request(
+    tmp_path, monkeypatch, capsys
+):
+    """The exact conductor/t-133 shape: a generic (non-Daily-Dream) request
+    that already owns an in-flight job must not be re-submitted. Dry run only
+    (no --live): a real network call would hang in a sandbox with no reachable
+    KR_BASE_URL, and the dry-run print output is all this needs to prove."""
+    sample = SAMPLE.replace(
+        "  prompt: a fox\n",
+        "  prompt: a fox\n  last_art_job_id: 99\n",
+    )
+    assert sample != SAMPLE, "fixture indentation drifted; the replace() found nothing"
+    file = tmp_path / "art-prompts.yaml"
+    file.write_text(sample)
+    monkeypatch.setattr(cr, "ART_PROMPTS_FILE", file)
+    monkeypatch.setattr(cr, "already_satisfied", lambda entry: False)
+    monkeypatch.setattr(
+        sys, "argv", ["consume_art_requests.py", "--id-prefix", "kind-robots-fox"]
+    )
+
+    exit_code = cr.main()
+
+    assert exit_code == 0
+    out = capsys.readouterr().out
+    assert "a-fox.webp" not in out, "an unresolved-job request must not reach the queue list"
+    assert "No pending requests" in out or "No safe pending requests" in out
+
+
 def test_target_path_maps_repo_root(tmp_path, monkeypatch):
     monkeypatch.setattr(cr, "ROOT", Path("/c"))
     monkeypatch.setattr(cr, "KIND_ROBOTS_ROOT", Path("/kr"))
