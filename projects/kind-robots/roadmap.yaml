@@ -61,6 +61,11 @@ milestones:
     weight: 20
     status: done
 
+  - id: m6
+    title: "Art queue viewing surfaces (watch what the pipeline is producing)"
+    weight: 10
+    status: in-progress
+
 tasks:
   - id: t-001
     milestone: m1
@@ -2868,3 +2873,54 @@ tasks:
     claimed_at: '2026-08-27T23:13:00Z'
     implementation_pr: 'silasfelinus/kind_robots#2164'
     approved_by_human: true
+
+  - id: t-076
+    milestone: m6
+    title: "Full-screen slideshow off the ArtJob queue"
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-28T22:40:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#2186'
+    approved_by_human: true
+    note: >
+      Filed and implemented in the same session from a direct request by Silas,
+      2026-08-28, verbatim: "realized with all our new art coming through, can I
+      get a slideshow option, where I can just watch a slideshow of art that gets
+      made, full screen in browser? It should be an extension of the artqueue, and
+      have a timer, so it should show new art that comes in, but give random art
+      from the finished queue (chosen depth) and options for showing file name or
+      other info."
+
+      Shipped as silasfelinus/kind_robots#2186. A Slideshow button in the ArtJob
+      queue header (Images -> ArtJob -> Queue) opens a teleported `fixed inset-0`
+      overlay that requests browser fullscreen. Slides are drawn at random from the
+      N most recent DONE jobs (depth 12/25/50/100/200) with a no-repeat window; the
+      head of the queue is polled every 15s so a freshly finished render cuts in as
+      soon as it lands (or waits its turn, per setting), and the full depth window
+      refreshes every 5 minutes. Timer is 1-600s with a progress bar, play/pause,
+      previous/next, and keyboard control (space, arrows, i, f, s, esc). The caption
+      has independent toggles for title/project/engine, file name and destination
+      path, prompt, model and generation settings, job id + finish time, and the
+      timer bar; settings persist to localStorage through the new
+      stores/artSlideshowStore.ts. Mature renders stay behind the account's existing
+      showMature gate and are skipped rather than shown as blanks.
+
+      Two supporting extractions rather than a third near-copy of the same readers
+      (AGENTS.md flags ArtJob surfaces as the repo's highest-risk duplicate area):
+      utils/artJobFields.ts now holds the tolerant ArtJob.payload readers that
+      artjob-queue-card.vue had grown locally, shared with
+      artJobStore.cachePublicImageUrls (the card loses ~200 lines; the ESLint
+      ratchet drops 57 problems); utils/artSlideshowRotation.ts holds the pure
+      "what plays next" arithmetic, covered by
+      utils/scripts/verifyArtSlideshowRotation.test.ts and wired into the Contract
+      Tests workflow. That test pins the two failure modes a hand-check misses: a
+      job reaching DONE out of id order (a max-id watermark would swallow it, so
+      arrivals are tracked by set membership) and a pool smaller than the no-repeat
+      window (a naive exclusion leaves no candidate and the slideshow freezes).
+
+      No route, channel, or tab was added -- this hangs off the existing ArtJob
+      queue surface, so no dashboard/tutorial registration or Project.liveUrl change
+      is needed. approved_by_human is set because Silas requested the feature
+      directly in-session; the work itself is reversible and not outward-facing.
