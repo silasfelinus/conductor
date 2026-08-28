@@ -2534,3 +2534,34 @@ tasks:
       a placeholder/no-art presentation. Makes the mechanical gate playtestable
       now, ahead of the authored-content pass that replaces it with a real
       Charlotte interstitial + background reveal later.
+
+  - id: t-054
+    milestone: m3
+    title: Swap the finale's placeholder reveal for the real screen-finale/set-last-aquarium plates
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-039
+    note: >-
+      Kaizen from t-039 (the last aquarium / finale purchase, kind_robots PR
+      #2166). t-039 shipped the mechanical gate -- the terminal purchase, the
+      one-time reveal dialog, and a permanent code-only canvas vignette/cool-wash
+      "reframe" of the existing tank -- but the two art plates the design note
+      calls for were not yet generated: `screen-finale` (the eye "mid-drift and
+      incurious" beyond a window pane, same albumen interior stock as
+      screen-shop/screen-bestiary) and `set-last-aquarium` (the shop plate).
+      Both are already queued in `projects/art-generate.yaml`
+      (`scripts/build_cthulhuquarium_art_queue.py`), so this task does NOT need
+      to invent new prompts -- it needs the render pipeline to actually run
+      them (the render-box healthcheck fixes in conductor PR #3037 should help
+      here) and the resulting images to land somewhere the kind_robots app can
+      read them, then:
+      (1) wire `screen-finale` into the finale reveal dialog in
+      `components/cthulhuquarium/cthulhuquarium-game.vue` (currently a
+      text-only `<Icon name="kind-icon:eye">` placeholder), replacing or
+      supplementing the vignette-only canvas reframe with the real plate;
+      (2) wire `set-last-aquarium` into the shop row for the purchase (currently
+      no art, text-only title/description/button).
+      Do not touch the purchase/economy logic itself -- t-039 already ships
+      that correctly; this is presentation-only.
