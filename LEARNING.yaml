@@ -11203,3 +11203,14 @@ records:
     with t-124's existing finding that this job is not a required check;
     mergeable_state read "unstable" not "blocked" on both, so merged past it
     per that documented precedent rather than re-running indefinitely.
+- date: '2026-08-28'
+  project: kind-robots
+  task: t-075
+  kind: software
+  stakes: irreversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: DROP migrations need deploy-then-migrate sequencing when old clients still select the retiring
+    column. The removal-only deferred parity marker now makes that staging explicit and auditable without
+    weakening ordinary schema/migration parity.
