@@ -4663,12 +4663,12 @@ tasks:
   - id: t-136
     milestone: m2
     title: "t-133's in-flight guard has no release for a request whose ArtJob was deleted, so the row is stuck pending forever"
-    status: review
+    status: done
     gate_human: false
     owner: worker
     stakes: reversible
     passes: 0
-    note: >
+    note: >-
       Found 2026-08-28 reviewing t-133's fix (PR #3088) after it merged. The fix is
       correct and does what it set out to do -- verified by re-reading both call sites
       and running the full suite (1350 passed). This is a narrow residual gap it
@@ -4721,7 +4721,20 @@ tasks:
       matching last_art_job_id, though that only covers deletions this repo performs.
       Worth pairing with a check that reports rows pending with a dangling job id, since
       today nothing would surface one.
-    updated: '2026-08-28T20:37:03Z'
+
+      Merged as silasfelinus/conductor#3097 (squash 6669654). Added
+      job_still_reserves_submission(): a per-job GET /api/art/queue/{id} that treats a 404
+      (deleted) or CANCELLED status as resolved, wired in as an opt-in check_live=True on
+      has_unresolved_submission() used by both submitting call sites (consume_art_requests.py
+      main(), which also covers the drip lane via consume_art_requests_to_media.py's
+      monkeypatching, and the Mandarin Tutor bulk lane in submit_mandarin_tutor_artjobs.py).
+      PENDING/RUNNING/DONE/FAILED are unchanged so this cannot reopen the t-133 outage-
+      duplicate-submission bug; without KR_API_TOKEN or on any network hiccup it stays
+      conservative, matching pre-fix behavior exactly. 7 new tests added (39/39 passed in
+      tests/test_consume_art_requests.py); full suite 1357 passed, 1 skipped; ruff clean. All
+      22 PR checks green before merge (including the previously-flaky Python test suite and
+      CodeQL javascript-typescript analyzer, both green this run).
+    updated: '2026-08-28T20:42:35Z'
     claimed_by: 2026-08-28T-conductor-sweep-t136
     claimed_at: '2026-08-28T20:35:41Z'
     implementation_pr: 'silasfelinus/conductor#3097'
