@@ -4598,7 +4598,7 @@ tasks:
   - id: t-135
     milestone: m2
     title: "Milestone status fields have no freshness check -- they silently drift from actual task-done fraction"
-    status: claimed
+    status: review
     gate_human: false
     owner: worker
     stakes: reversible
@@ -4621,6 +4621,39 @@ tasks:
       wrong milestone status doesn't block task selection or gate anything, it only
       skews the digest's portfolio-percentage math -- but cheap to add and prevents
       the next project from sitting the same way m3 did.
+
+      Fixed (conductor scheduled Agent run, 2026-08-28): added
+      scripts/check_milestone_status_drift.py as a standalone script, following
+      check_pr_merged_drift.py's shape (project-overrides.yaml filtering,
+      --include-inactive, --json, exit 1 on findings / 0 clean). Two mismatch
+      shapes: milestone status is not-started/pending/waiting but has any done
+      task under it, or milestone status is done/complete but has any
+      non-recurring task under it that isn't done -- recurring tasks are
+      excluded from the second check since they never reach done by design
+      (AGENTS.md's "Recurring tasks" convention) and a milestone can
+      legitimately be done while one keeps cycling under it. Pure local YAML
+      analysis, no network/KR_API_TOKEN needed. Wired into CLAUDE.md's session-
+      startup sweep (step 5) alongside the three existing reconciliation
+      checks.
+
+      Ran it against the live repo as part of verification: found 30 real
+      mismatches across 20 active projects (not just cthulhuquarium/m3, the
+      case that prompted this task) -- almost all "not-started with done work"
+      (e.g. mandarin-tutor/m3 and m4 both fully done, kind-economy/m2 through
+      m6 all showing done work, media-watchlist/m3/m4). Deliberately did NOT
+      mass-fix all 30 in this PR -- that is a much larger, separate scope
+      (per-project milestone status is a judgment call, not mechanical, and
+      several of these projects have their own active work in flight this
+      same session) and the task asked for the detection tool, not a rewrite
+      of every project's milestone state. Left the findings for a future
+      session/task to work through with the check now in place to verify each
+      fix and catch regressions.
+
+      8 new tests in tests/test_check_milestone_status_drift.py.
+
+      Verified: python3 -m py_compile clean; full repo suite (pytest -q) 1346
+      passed, 1 skipped, 35 subtests on this branch (based on origin/main
+      after t-134 merged), no regressions.
     claimed_by: claude-scheduled-20260828T184847Z-conductor-t135
     claimed_at: '2026-08-28T18:48:48Z'
     updated: '2026-08-28T18:48:48Z'

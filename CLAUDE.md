@@ -27,8 +27,16 @@ At the start of every session, before responding to any task, run a conductor sw
      directions — a Kind Robots `conductorSlug` with no matching `projects/<slug>/roadmap.yaml`
      (the reported bug, exit 1), and a Conductor project with no matching Kind Robots row at all
      (weaker/informational, exit 3). Needs `KR_API_TOKEN`; exits 2 (unresolved, not clean) without it.
+   - `python scripts/check_milestone_status_drift.py` — a milestone's `status:` field (not-started/
+     in-progress/done) is only ever read, never cross-checked against its own project's task list, so
+     it can sit stale for weeks (conductor/t-135, filed 2026-08-28 from cthulhuquarium/t-063: m3 stuck
+     at `not-started` despite 25/31 tasks already done). Flags a milestone marked not-started/pending/
+     waiting with any done task under it, or marked done/complete with any non-recurring task under it
+     that isn't done. Advisory only — wrong milestone status doesn't block task selection or gate
+     anything, it only skews the digest's portfolio-percentage math; exit 1 means "worth a look and an
+     edit," not a genuine gate. No network/token needed.
    Treat exit 1 (or 3) from any of these as a reconciliation prompt, not permission to bypass a genuine gate. All
-   three commands intentionally exclude paused, retired, and finished projects unless `--include-inactive` is
+   four commands intentionally exclude paused, retired, and finished projects unless `--include-inactive` is
    supplied.
 6. Check `TALKBACK.md` tail for any unresolved escalations or security flags
 7. Run `python scripts/build_dream_proposal.py --check --fetch`. **This is now a
