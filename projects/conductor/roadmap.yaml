@@ -4659,3 +4659,66 @@ tasks:
     claimed_at: '2026-08-28T18:48:48Z'
     updated: '2026-08-28T18:59:45Z'
     implementation_pr: 'silasfelinus/conductor#3090'
+
+  - id: t-136
+    milestone: m2
+    title: "t-133's in-flight guard has no release for a request whose ArtJob was deleted, so the row is stuck pending forever"
+    status: ready
+    gate_human: false
+    owner: null
+    stakes: reversible
+    passes: 0
+    note: >
+      Found 2026-08-28 reviewing t-133's fix (PR #3088) after it merged. The fix is
+      correct and does what it set out to do -- verified by re-reading both call sites
+      and running the full suite (1350 passed). This is a narrow residual gap it
+      introduces, not a defect in the change.
+
+      has_unresolved_submission(entry) is `positive_job_id(last_art_job_id) is not None
+      and not already_satisfied(entry)`. Its release condition is therefore entirely
+      "did the image land", and the two lanes resolve already_satisfied differently:
+
+        * Drip lane (consume_art_requests_to_media.py) monkeypatches
+          consume_art_requests.already_satisfied to a media-origin check, so its guard
+          self-releases the moment the render lands on media. Confirmed at runtime --
+          cr.already_satisfied.__module__ is consume_art_requests_to_media. This lane is
+          fine.
+        * Bulk lane (submit_mandarin_tutor_artjobs.py) imports consume_art_requests
+          directly and gets the UNPATCHED already_satisfied, which is
+          target_path(entry).exists() against the checked-out repo. Mandarin v2 card
+          images are not tracked in kind_robots at all (`git ls-files
+          public/images/mandarin-tutor/cards/v2/` returns 0; the directory does not
+          exist) -- they live only on self-hosted media, and auto-art-generate.yml
+          deliberately no longer checks kind_robots out. So that check can never return
+          true for these entries, and the bulk lane's guard is effectively permanent:
+          submitted once, never again.
+
+      In the normal path this is harmless and arguably correct -- once media lands the
+      drip lane marks the row `status: done`, so is_pending() excludes it from the bulk
+      lane anyway and the guard's permanence never comes up. Retries are supposed to
+      happen at the ArtJob level (drain_failed_art_backlog.py requeues in place,
+      preserving the id), which is the right model and the same one the Daily Dream
+      precedent assumes.
+
+      The gap is when the ArtJob stops existing. kind_robots'
+      scripts/reconcile_failed_art_jobs.ts DELETEs FAILED rows it classifies as
+      irreparable or superseded. A request row whose job is deleted keeps `status:
+      pending` and a dangling last_art_job_id, and nothing in scripts/ ever clears or
+      repairs that field -- it is written once by record_submitted_job (line 292) and
+      only ever read after that. Both lanes now skip such a row permanently, so that
+      card silently never gets art and nothing reports it. Before t-133 the row would
+      have been resubmitted; that was the bug, but it did self-heal this case.
+
+      Low urgency: the deleting script is run by hand, not by any workflow, so no
+      automated path currently produces an orphan. Worth closing before one does.
+
+      Suggested fix: make the guard's release condition "the job is still live" rather
+      than only "the media landed" -- resolve last_art_job_id against the queue (a
+      single GET /api/art/queue?status=... pass builds the id set for a whole batch, so
+      it stays one request, not one per row) and treat a job id that no longer exists,
+      or that is CANCELLED, as resolved so the row becomes submittable again. A cheaper
+      alternative that needs no API call: have whatever deletes an ArtJob also clear the
+      matching last_art_job_id, though that only covers deletions this repo performs.
+      Worth pairing with a check that reports rows pending with a dangling job id, since
+      today nothing would surface one.
+    updated: '2026-08-28T20:00:00Z'
