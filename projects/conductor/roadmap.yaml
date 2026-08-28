@@ -4411,7 +4411,7 @@ tasks:
   - id: t-133
     milestone: m2
     title: "auto-art-generate submits the same art request twice per run: the bulk lane and the drip lane both drain art-prompts.yaml"
-    status: review
+    status: done
     gate_human: false
     owner: worker
     stakes: reversible
@@ -4524,9 +4524,10 @@ tasks:
       full repo suite (pytest -q) 1342 passed, 1 skipped, 35 subtests -- up from 1338
       passed pre-change (the net +4 new tests), no regressions; validate_roadmaps.py
       clean.
-    updated: '2026-08-28T18:36:58Z'
+    updated: '2026-08-28T18:55:43Z'
     claimed_by: claude-scheduled-20260828T183658Z-conductor-t133
     claimed_at: '2026-08-28T18:36:58Z'
+    implementation_pr: 'silasfelinus/conductor#3088'
 
   - id: t-134
     milestone: m2
