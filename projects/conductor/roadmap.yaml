@@ -4492,9 +4492,9 @@ tasks:
   - id: t-134
     milestone: m2
     title: "The relay's model-share gate passes on a half-readable share, so it kept claiming and burning 2700 jobs"
-    status: ready
+    status: claimed
     gate_human: false
-    owner: null
+    owner: worker
     stakes: reversible
     passes: 0
     note: >
@@ -4529,7 +4529,9 @@ tasks:
       (exit 1, "2095 render(s) failed and none completed in the last 6h") -- but it runs
       per auto-art-generate run, hours apart, while the relay decides per claim, so the
       relay's own gate is the one that has to hold.
-    updated: '2026-08-28T14:20:00Z'
+    updated: '2026-08-28T18:32:51Z'
+    claimed_by: claude-scheduled-20260828T183251Z-conductor-t134
+    claimed_at: '2026-08-28T18:32:51Z'
   - id: t-135
     milestone: m2
     title: "Milestone status fields have no freshness check -- they silently drift from actual task-done fraction"
