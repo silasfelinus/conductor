@@ -1,21 +1,21 @@
 # Roadmap Audit
 
-Generated: `2026-08-28T08:12:10.356957+00:00`
+Generated: `2026-08-28T09:12:25.678889+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **51** roadmaps, **28** active + **2** continuous projects, **1277** tasks
-- **22 ready**, **57 waiting**, **76 needs-human**, **4 claimed/review**, **1109 done**
-- Findings: **3 errors**, **9 warnings**, **82 informational**
+- **51** roadmaps, **28** active + **2** continuous projects, **1280** tasks
+- **22 ready**, **57 waiting**, **77 needs-human**, **3 claimed/review**, **1112 done**
+- Findings: **3 errors**, **9 warnings**, **83 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
-| 1 | `mandarin-tutor` | active | software | 0 | 0 | 3 | 1 | 15 / 19 |
-| 2 | `cthulhuquarium` | active | software | 3 | 0 | 4 | 1 | 49 / 57 |
+| 1 | `mandarin-tutor` | active | software | 0 | 0 | 3 | 0 | 17 / 20 |
+| 2 | `cthulhuquarium` | active | software | 3 | 0 | 5 | 1 | 50 / 59 |
 | 3 | `kapowarr` | active | software | 0 | 0 | 4 | 0 | 65 / 69 |
 | 4 | `kind-economy` | active | software | 0 | 3 | 10 | 0 | 14 / 27 |
 | 5 | `interface-vision` | active | software | 2 | 1 | 0 | 0 | 119 / 122 |
@@ -86,7 +86,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 - **SOFT_NEEDS_HUMAN** — `kind-economy` / `t-022`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
 - **SOFT_NEEDS_HUMAN** — `kind-economy` / `t-023`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
 
-### Info (82)
+### Info (83)
 
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-011`: approved_by_human is set on a task that is not human-gated.
@@ -108,6 +108,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 - **NEEDS_HUMAN_NOTE_FORMAT** — `conductor` / `t-132`: needs-human note does not use the AGENTS.md FOR SILAS action format.
 - **MISSING_GOAL** — `conductor-app`: Roadmap has no friendly goal/definition of done.
 - **APPROVAL_WITHOUT_GATE** — `conductor-app` / `t-014`: approved_by_human is set on a task that is not human-gated.
+- **NEEDS_HUMAN_NOTE_FORMAT** — `cthulhuquarium` / `t-058`: needs-human note does not use the AGENTS.md FOR SILAS action format.
 - **APPROVAL_WITHOUT_GATE** — `davinci` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `digital-storefront` / `t-020`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `digital-storefront` / `t-021`: approved_by_human is set on a task that is not human-gated.

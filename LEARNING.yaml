@@ -11273,3 +11273,46 @@ records:
     reasons -- always grep for every call site of the thing the task asks you to add
     (here: every AquariumStock-creating transaction) before writing new code, since
     the task may already be done.
+- date: '2026-08-28'
+  project: mandarin-tutor
+  task: t-018
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    When a shared notice ref (artNotice) backs multiple template call sites, check every
+    call site before assuming one render location suffices -- and a task note's suggested
+    "clear on the same trigger as X" can be wrong if X itself has no real clear trigger;
+    verify the cited precedent actually holds before copying its pattern.
+- date: '2026-08-28'
+  project: mandarin-tutor
+  task: t-019
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A same-session kaizen filed off a just-merged task can be picked up immediately if it's
+    the only ready work left in a leading-priority project -- no need to wait for a future
+    cycle when the follow-up is small, mechanical, and reuses the pattern already verified.
+- date: '2026-08-28'
+  project: cthulhuquarium
+  task: t-055
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: scope
+  lesson: >-
+    A task can bundle two deliverables in different repos without saying so explicitly --
+    here, a store/UI change (in-scope) plus content authoring in silasfelinus/cthulhuquarium,
+    a GitHub repo entirely outside this session's access (not just connector-blocked within
+    an in-scope repo, and not locally cloned). When a target repo isn't accessible at all,
+    don't guess at its content from memory or skip that half silently -- split the task,
+    land what's actually landable, and write a concrete handoff doc naming the exact repo,
+    fields, and script for whoever has access next. Worth checking a task's own note for
+    "and author/write/edit X" clauses naming a different project before claiming, since
+    those are the ones most likely to span a repo this session can't reach.

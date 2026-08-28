@@ -153,7 +153,7 @@ tutor's probe used to treat that as a hit — fixed in kind_robots#2174.
 (`VAELoader.vae_name='qwen_image_vae.safetensors'` absent from the live model list) and has
 rendered nothing since 2026-08-27T09:04Z. The submitted jobs drain into that failure. This
 predates the Mandarin submission and affects every project's art. Filed as
-mandarin-tutor/t-019; recover with `scripts/drain_failed_art_backlog.py`, which canaries
+mandarin-tutor/t-020; recover with `scripts/drain_failed_art_backlog.py`, which canaries
 before draining.
 
 ## Current rollout state — 2026-08-25

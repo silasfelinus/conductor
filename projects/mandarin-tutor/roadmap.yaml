@@ -293,7 +293,7 @@ tasks:
     depends_on: t-005
     note: |-
       FOR SILAS: nothing to decide here yet -- this gate is waiting on the production render
-      host in t-019. Reopen the coverage audit once the box renders again.
+      host in t-020. Reopen the coverage audit once the box renders again.
 
       2026-08-28: the corpus IS submitted. All 577 illustrate cards are durable ArtJobs
       (ids 10291-10867, one per request, recorded as last_art_job_id in
@@ -317,7 +317,7 @@ tasks:
       Remaining gate is the render host, not this task's design: Alexandria's ComfyUI has
       lost sight of its model directory (VAELoader.vae_name='qwen_image_vae.safetensors'
       not in the live model list) and has rendered nothing since 2026-08-27T09:04Z. See
-      t-019. Coverage cannot be audited until the box renders again; the recovery path is
+      t-020. Coverage cannot be audited until the box renders again; the recovery path is
       scripts/drain_failed_art_backlog.py, which canaries before draining.
     claimed_by: 2026-08-25T081930Z-mandarin-tutor-t-010-sk84
     claimed_at: '2026-08-25T08:19:30Z'
@@ -523,8 +523,8 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#2122'
   - id: t-018
     title: Show a visible confirmation when an illustration is queued on the study card
-    status: review
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -536,9 +536,31 @@ tasks:
       `artNotice` the same way `newSetNotice` is rendered (a small transient banner near
       the study card), and clear it on the same triggers `newSetNotice` clears on, or on a
       short timeout if none of those apply here. Small, self-contained, reversible.
-    implementation_pr: 'silasfelinus/kind_robots#2174'
-    updated: '2026-08-28T08:09:52Z'
+    claimed_by: claude-scheduled-20260828T073019Z-mandarin-t018
+    claimed_at: '2026-08-28T07:30:20Z'
+    updated: '2026-08-28T07:40:12Z'
+    implementation_pr: 'silasfelinus/kind_robots#2173'
   - id: t-019
+    title: Show a confirmation when "Check art" actually finds the illustration
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-018 (2026-08-28, kind_robots PR #2173). `refreshCurrentIllustration`
+      in pages/play/mandarin.vue clears `artNotice` on start but never sets a success
+      message when the refresh actually finds art (`probeCanonicalIllustration` or
+      `refreshRequestedIllustration`/`refreshIllustration` returning a url) -- a user
+      clicking "Check art" gets the same "nothing visibly happened" gap t-018 just fixed
+      for the queue action. Mirror t-018's `setArtNotice()` pattern: set a short-lived
+      success notice (e.g. "Illustration ready.") when a url comes back, leave it silent
+      when it doesn't (avoids implying failure on a job that's still processing). Small,
+      self-contained, reversible.
+    claimed_by: claude-scheduled-20260828T074324Z-mandarin-t019
+    claimed_at: '2026-08-28T07:43:24Z'
+    updated: '2026-08-28T07:50:38Z'
+    implementation_pr: 'silasfelinus/kind_robots#2175'
+  - id: t-020
     title: "PRODUCTION: the render host cannot see its models, so no art renders at all"
     status: needs-human
     owner: null
