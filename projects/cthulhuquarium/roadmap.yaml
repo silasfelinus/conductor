@@ -2786,7 +2786,7 @@ tasks:
   - id: t-061
     milestone: m3
     title: Audit other stores for hand-rolled pagination now that performFetch surfaces meta
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -2805,9 +2805,17 @@ tasks:
       cthulhuquarium/t-057 only fixed the one calling site (catalog); this
       is a read-and-report audit that may turn up zero, one, or several
       applicable call sites, not a guaranteed refactor.
+
+      RESOLVED: kind_robots#2181 merged. Added PaginationMeta type (types/api.ts); switched
+      /play/aquarium/browse and /play/aquarium/leaderboard to performFetch<T,
+      PaginationMeta>() instead of hand-casting the response. Audited every meta: match under
+      server/ -- only browse/catalog/leaderboard return an API-response meta object; catalog's
+      caller already used the typed generic from t-057. No other hand-rolled pagination
+      tracking found.
     claimed_by: 20260828T123321-scheduled-t061
     claimed_at: '2026-08-28T12:33:22Z'
-    updated: '2026-08-28T12:37:59Z'
+    updated: '2026-08-28T12:41:32Z'
+    implementation_pr: 'silasfelinus/kind_robots#2181'
   - id: t-062
     milestone: m3
     title: Show what selling would pay before the player clicks Sell
