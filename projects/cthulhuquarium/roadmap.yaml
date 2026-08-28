@@ -2620,7 +2620,7 @@ tasks:
   - id: t-055
     milestone: m3
     title: Surface breeding as a real player action in the tank UI
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -2645,9 +2645,15 @@ tasks:
 
       kind_robots PR #2176 open (claude/eager-bohr-or1f0n): store/UI breeding flow. Bible-
       authoring half split out as new task (pending) -- repo not in this session's access.
+
+      DONE (partial-scope): store/UI breeding flow shipped in kind_robots#2176 (merged).
+      Bible-authoring half (evolutionKind: BREEDING species pair) split out as t-058 (needs-
+      human, soft_gate -- repo access limitation, not a design gate). Kaizen t-059 filed for a
+      stat display follow-up.
     claimed_by: 20260828T082748Z-t055
     claimed_at: '2026-08-28T08:27:49Z'
-    updated: '2026-08-28T08:39:19Z'
+    updated: '2026-08-28T08:43:05Z'
+    implementation_pr: 'silasfelinus/kind_robots#2176'
   - id: t-056
     milestone: m3
     title: Consolidate cthulhuquariumTankStore's repeated one-shot-signal queuing pattern
