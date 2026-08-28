@@ -11351,3 +11351,22 @@ records:
     purely additive/backward-compatible) was small, but skipping that check would have meant
     reaching for a server-side workaround (a second field on `data`, or a new endpoint) that
     the task's own note explicitly said wasn't needed.
+- date: '2026-08-28'
+  project: cthulhuquarium
+  task: t-059
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Reusing an existing formatting idiom (formatBestStats()/BEST_STAT_LABELS, t-031) instead
+    of inventing a parallel one kept the diff to a single small helper (tankStockStatsLine())
+    that reshapes TankStock's stat<Name> fields into the same BestiaryStatBlock shape the
+    Ichthyonomicon already consumes. Worth flagging as its own kaizen (t-062) rather than
+    scope-creeping into this task: making an individual's rolled stats visible for the first
+    time immediately raises the follow-on question a player will actually ask -- "what would
+    this sell for?" -- which the Sell button still doesn't answer despite the price already
+    varying per individual (sellPrice() in aquariumEconomy.ts). Noticing a UI change makes a
+    previously-invisible economic question visible is a useful generic signal for kaizen
+    filing, distinct from noticing a code-shape duplication.
