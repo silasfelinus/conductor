@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-28T02:37:55Z
+Generated: 2026-08-28T02:41:20Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **798**
-- Outcomes: blocked: 16, cancelled: 1, done: 781
+- Closed tasks recorded: **799**
+- Outcomes: blocked: 16, cancelled: 1, done: 782
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 83 | 100% |
 | conductor-app | 4 | 100% |
-| cthulhuquarium | 29 | 97% |
+| cthulhuquarium | 30 | 97% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
@@ -68,7 +68,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 782 | 99% |
+| software | 783 | 99% |
 
 ## Failure categories
 
@@ -89,6 +89,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-28 `cthulhuquarium/t-053` — t-018/t-028's justCompletedBestiary/firedMilestones purchase-response signals sat server-complete with zero frontend consumer for a full cycle -- the server-side gate (slot-cap increase, AquariumEvent log) working correctly gave no visible signal that the UI half was still missing. Worth periodically diffing a store's typed response interfaces against what the server actually returns, not just what the store currently reads off it.
 - 2026-08-28 `cthulhuquarium/t-029` — t-032's schema-first discipline (shipping nullable stat/parentage columns and the EvolutionKind enum before any code read them) paid off exactly as intended -- t-029 needed zero migration, only wiring pure roll/converge/threshold functions onto columns that already existed. A prior session's claim on this task had expired (CLAIM_TTL_MINUTES) with no PR ever opened; next_ready_task.py correctly resurfaced it as pickable rather than leaving it stuck.
 - 2026-08-28 `kind-robots/t-075` — DROP migrations need deploy-then-migrate sequencing when old clients still select the retiring column. The removal-only deferred parity marker now makes that staging explicit and auditable without weakening ordinary schema/migration parity.
 - 2026-08-28 `cthulhuquarium/t-039` — A design note calling for two illustrated plates (screen-finale, set-last-aquarium) that were queued but not yet generated did not have to block the whole feature: the purchase/economy/event-logging mechanics and a code-only canvas vignette shipped now, with a placeholder text-only reveal dialog standing in for the real art -- the exact "mechanical gate now, authored pass later" shape t-028/t-053 already established for the milestone toast. Filed t-054 to swap in the real plates once generated, rather than leaving t-039 open/blocked on an asset pipeline outside this session's reach. Also confirmed conductor's own "Python test suite" CI job intermittently fails on a live kindrobots.org 502 (production Resource-registry read) plus two unrelated flaky assertions, identically across two independent roadmap-only PRs (#3040, #3041) -- consistent with t-124's existing finding that this job is not a required check; mergeable_state read "unstable" not "blocked" on both, so merged past it per that documented precedent rather than re-running indefinitely.
@@ -99,8 +100,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-27 `cthulhuquarium/t-052` — A kaizen task that names the exact fix (add User: { isRestricted: false } to listPublicTanks, matching the leaderboard's already-shipped filter) is a fast, low-risk pickup for a scheduled sweep -- no design judgment needed, just apply the established pattern and verify with the existing aquarium test suites. Worth favoring these small, precisely-scoped kaizen followups when a session needs to pick one task with minimal ambiguity.
 - 2026-08-27 `cthulhuquarium/t-018` — A "leave it alone; it is funnier untouched" design note doesn't mean skip the feature -- it means build the plain, understated version and resist adding flourish, foreshadowing, or extra UI weight around it. Read against SYSTEMS.md/DESIGN-BRIEF.md's finale-foreshadowing section before starting confirmed the task's own note (rank by species collected, display names only) was the complete spec, with the "leave it alone" line steering tone (no finale hints near it) rather than scope.
 Consent boundaries for public-facing player data aren't one flag: a sibling feature's own opt-in (Aquarium.isPublic, from the dependency this task built on) is the right gate for "will this player's data appear here," not a same-purpose-sounding but different flag from an unrelated feature (the friend-finder directory's listInDirectory). Checking which existing feature the new one actually depends on for consent semantics -- not just grepping for the first consent-shaped flag in the schema -- kept the leaderboard consistent with the browse page it extends.
-- 2026-08-27 `cthulhuquarium/t-017` — A genuinely novel feature with no prior in-repo precedent (no decor code, no established real drag-and-drop convention) is worth a research-only Explore pass before writing any implementation code -- confirmed via grep across the whole repo that the only `draggable` attribute anywhere was unwired dead code in stage-manager.vue, which settled the design decision (native Pointer Events over introducing a DnD dependency) before any code was written instead of discovering it mid-implementation.
-Extending an existing shared Prisma select (publicAquariumDetailSelect) to carry a new relation is often enough to satisfy a "visible to visitors" style requirement with zero new routes -- check whether the read path already flows through a shared select before assuming a new endpoint is needed.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-28T02:37:55Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-28T02:41:20Z_
