@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     recurring: true
@@ -3196,9 +3196,20 @@ tasks:
       49's still-open needs-human scope fork (viewport-grid sub-slice vs. mark mechanical
       phase complete) -- unchanged, still Silas's call. Moving on to other ready work this
       cycle.
-    updated: '2026-08-28T15:37:23Z'
+
+      Slice 32 merged as silasfelinus/kind_robots#2183 (squash
+      ca2aea726a2bb74674289a9cbcad5a891a14468d) from exact head
+      f3364519f721c7140c1f1b30573719c3956e4058. components/user/registration-page.vue's
+      registration form root now uses kr-container max-w-md space-y-6 instead of hand-rolled
+      space-y-6 w-full max-w-md mx-auto; no geometry or behavior change. All 37 PR checks
+      green (eslint ratchet, vue-tsc, layout-contract, Contract verifiers -- a long ~300-step
+      sequential job, not a stall -- and the rest), mergeable_state clean. Verified locally
+      before push: eslint clean on the changed file, prettier --check clean, vue-tsc --noEmit
+      0 errors, npm run test:layout-contract holds with no new violations. Return the non-
+      recurring consistency umbrella to ready for the next bounded slice.
+    updated: '2026-08-28T15:41:14Z'
     approved_by_human: true
-    implementation_pr: 'silasfelinus/kind_robots#2125'
+    implementation_pr: 'silasfelinus/kind_robots#2183'
     owner: reviewer
     claimed_by: claude-scheduled-20260828T153212Z-iv-t104
     claimed_at: '2026-08-28T15:32:13Z'
