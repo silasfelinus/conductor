@@ -24,6 +24,11 @@ from typing import Any
 
 import yaml
 
+try:
+    from scripts.mandarin_prompt_variation import apply_style_variation
+except ImportError:
+    from mandarin_prompt_variation import apply_style_variation
+
 ROOT = Path(__file__).resolve().parent.parent
 ART_PROMPTS = ROOT / "projects" / "art-prompts.yaml"
 SNAPSHOT = ROOT / "projects" / "mandarin-tutor" / "art-manifest.json"
@@ -142,6 +147,21 @@ def request_entry(raw: dict[str, Any]) -> dict[str, Any]:
     image_path = str(raw["imagePath"]).strip()
     image_url = str(raw.get("imageUrl") or "").strip()
     prompt = " ".join(str(raw.get("prompt") or "").split())
+
+    # Per-card framing/light/palette/handling/ground. A manifest from a
+    # deployment that already applies the draw carries it as styleVariant and is
+    # used as-is; an older one gets the identical edit applied here so the
+    # corpus does not have to wait on an Alexandria container update. See
+    # scripts/mandarin_prompt_variation.py.
+    manifest_variant = raw.get("styleVariant")
+    if isinstance(manifest_variant, dict) and manifest_variant.get("id"):
+        style_variant = str(manifest_variant["id"])
+        style_variant_source = "manifest"
+    else:
+        prompt, applied = apply_style_variation(prompt, str(raw.get("cardKey") or ""))
+        style_variant = str(applied["id"]) if applied else ""
+        style_variant_source = "conductor-fallback" if applied else "none"
+
     label_parts = [part for part in [simplified, pinyin, meaning] if part]
     return {
         "id": str(raw["requestId"]),
@@ -152,6 +172,8 @@ def request_entry(raw: dict[str, Any]) -> dict[str, Any]:
         "project_slug": "mandarin-tutor",
         "recipe_version": EXPECTED_RECIPE_VERSION,
         "art_direction_id": EXPECTED_ART_DIRECTION_ID,
+        "style_variant": style_variant,
+        "style_variant_source": style_variant_source,
         "image_path": image_path,
         "source_url": f"https://media.acrocatranch.com{image_url}" if image_url.startswith("/") else image_url,
         "page_url": "https://kindrobots.org/play/mandarin",
@@ -214,7 +236,8 @@ def queue_batch(manifest: dict[str, Any], batch_size: int) -> dict[str, int]:
         and str(entry.get("imagePath") or "") not in existing_paths
     ]
     selected = missing[: max(0, batch_size)]
-    append_request_blocks([render_request(request_entry(entry)) for entry in selected])
+    staged = [request_entry(entry) for entry in selected]
+    append_request_blocks([render_request(entry) for entry in staged])
     return {
         "total": len(entries),
         "illustrated": len(illustrated),
@@ -222,6 +245,16 @@ def queue_batch(manifest: dict[str, Any], batch_size: int) -> dict[str, int]:
         "already_staged": len(illustrated) - len(missing),
         "missing": len(missing),
         "queued": len(selected),
+        "variant_from_manifest": sum(
+            1 for entry in staged if entry["style_variant_source"] == "manifest"
+        ),
+        "variant_from_fallback": sum(
+            1 for entry in staged if entry["style_variant_source"] == "conductor-fallback"
+        ),
+        "variant_missing": sum(
+            1 for entry in staged if entry["style_variant_source"] == "none"
+        ),
+        "distinct_variants": len({entry["style_variant"] for entry in staged if entry["style_variant"]}),
     }
 
 
@@ -264,6 +297,20 @@ def main(argv: list[str] | None = None) -> int:
         f"{summary['already_staged']} already staged, {summary['missing']} still missing, "
         f"{summary['queued']} appended this run."
     )
+    if summary["queued"]:
+        print(
+            "v2 style draws: "
+            f"{summary['variant_from_manifest']} from the manifest, "
+            f"{summary['variant_from_fallback']} applied locally, "
+            f"{summary['variant_missing']} unrecognized prompt shape "
+            f"({summary['distinct_variants']} distinct draws)."
+        )
+        if summary["variant_missing"]:
+            print(
+                "WARNING: some staged prompts matched neither v2 house-style sentence; "
+                "they were submitted unvaried. Check whether the recipe changed shape.",
+                file=sys.stderr,
+            )
     print(f"Manifest snapshot {'updated' if snapshot_changed else 'unchanged'}: {SNAPSHOT.relative_to(ROOT)}")
     return 0
 
