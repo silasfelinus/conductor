@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     recurring: true
@@ -3207,7 +3207,30 @@ tasks:
       before push: eslint clean on the changed file, prettier --check clean, vue-tsc --noEmit
       0 errors, npm run test:layout-contract holds with no new violations. Return the non-
       recurring consistency umbrella to ready for the next bounded slice.
-    updated: '2026-08-28T16:27:49Z'
+
+      Slice 54 (conductor scheduled Agent run, 2026-08-28T1627Z session, claude-
+      scheduled-20260828T162749Z-iv-t104): claimed the umbrella and re-ran the established
+      mechanical pools against current kind_robots main (ca2aea7, includes slice 32's
+      registration-page.vue merge #2183). mx-auto+w-full+max-w-* root-container sweep: grepped
+      every .vue file combining mx-auto, w-full, and max-w- on the same class string (28
+      broader candidates), then checked each for a pure root-element substitution matching kr-
+      container/kr-container-wide. Every hit mixes in structural classes the established
+      exclusion rule already covers -- flex/grid layout (project-front-page.vue, academy-
+      timeline.vue, academy-styles-browser.vue), custom named classes plus height constraints
+      (messenger.vue's kr-panes h-[70vh]), or non-uniform padding (for-you-manager.vue's p-2
+      pb-8 sm:p-4). Zero genuine new candidates -- sixth confirmation this pool is exhausted
+      for pure byte-exact substitution (slices 36, 48, 49, 50, 53, now 54). kr-note-
+      error/warning/success/info pool: re-checked the text-{status} standalone/near-match
+      family (component-flip through user-manager-directory.vue, login-page.vue, chat-
+      gallery.vue, bot-gallery.vue, model-builder/* and others). Found two near-matches --
+      user-manager-directory.vue:43/49 (rounded-xl vs kr-note's rounded-2xl, p-2 vs p-4,
+      missing font-semibold) and login-page.vue:87 (border-info/30 vs /40, p-3 vs p-4) -- both
+      carry two or more geometry deltas from kr-note's exact spec, a worse match than slice
+      53's already-declined theme-gallery.vue p-3 candidate (one delta). Left untouched per
+      the same standing risk tolerance: this sandbox cannot visually verify
+      padding/radius/opacity deltas pre- or post-deploy. No code change this session.
+      Returning to ready per this task's established convention.
+    updated: '2026-08-28T16:29:06Z'
     approved_by_human: true
     implementation_pr: 'silasfelinus/kind_robots#2183'
     owner: worker
