@@ -1098,7 +1098,7 @@ tasks:
   - id: t-030
     milestone: m3
     title: "Rotating shop stock, selling fish back, and the individual-stat economy"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1128,7 +1128,7 @@ tasks:
       path into the same tables.
     claimed_by: 20260828T-scheduled-cq-t030
     claimed_at: '2026-08-28T04:27:31Z'
-    updated: '2026-08-28T04:44:24Z'
+    updated: '2026-08-28T04:58:10Z'
 
   - id: t-031
     milestone: m3
@@ -2621,3 +2621,23 @@ tasks:
       call sites adopts, so a fourth signal doesn't have to reinvent the
       pattern a fourth time. Presentation-only refactor -- no behavior change,
       no new signals.
+  - id: t-057
+    milestone: m3
+    title: Show the rotating shop's refresh countdown on the unlock panel
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from t-030 (rotating shop stock + selling, kind_robots PR #2170).
+      `GET /api/aquarium/catalog` now returns `meta.dateKey` (today's UTC
+      rotation key, `aquariumEconomy.ts`'s `todaysShopDateKey`) but nothing in
+      `stores/cthulhuquariumTankStore.ts` or `cthulhuquarium-game.vue` reads
+      it -- the unlock panel only has a static "Today's arrivals -- check back
+      tomorrow for more" hint, not an actual countdown. Thread `meta.dateKey`
+      through `loadCatalog()` into a small ref, derive "next UTC midnight"
+      from it, and replace the static hint with a live "refreshes in Xh Ym"
+      readout (recompute on an interval or on visibility, same idea as
+      `TANK_POLL_INTERVAL_MS`'s existing tick cadence -- no new server
+      endpoint needed). This is the concrete "reason to check in" beat
+      Silas's original task note called for that t-030 didn't build UI for.
