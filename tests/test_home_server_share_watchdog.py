@@ -160,3 +160,30 @@ class ExtraModelPathsTests(unittest.TestCase):
             lowered = [p.lower() for p in paths]
             dupes = {p for p in lowered if lowered.count(p) > 1}
             self.assertEqual(dupes, set(), f"{key} declares {dupes} more than once")
+
+    def test_no_singular_model_typo(self):
+        """`model/LLM` (singular) silently resolved to nothing for months."""
+        for key, paths in self.keys.items():
+            for path in paths:
+                self.assertFalse(
+                    path.startswith("model/"),
+                    f"{key}: {path!r} should be 'models/', not 'model/'",
+                )
+
+    def test_paths_use_forward_slashes(self):
+        for key, paths in self.keys.items():
+            for path in paths:
+                self.assertNotIn("\\", path, f"{key}: {path!r}")
+
+    def test_clip_alias_and_text_encoders_agree(self):
+        """node 3 (CLIPTextEncode) resolves through the legacy `clip` key."""
+        self.assertIn("models/text_encoders", self.keys["clip"])
+        self.assertIn("models/text_encoders", self.keys["text_encoders"])
+
+    def test_every_key_declares_at_least_one_path(self):
+        for key, paths in self.keys.items():
+            self.assertTrue(paths, f"{key} declares no paths")
+
+
+if __name__ == "__main__":
+    unittest.main()
