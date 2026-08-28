@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-28T14:32:59Z
+Generated: 2026-08-28T14:37:12Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **810**
-- Outcomes: blocked: 16, cancelled: 1, done: 793
+- Closed tasks recorded: **811**
+- Outcomes: blocked: 16, cancelled: 1, done: 794
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 83 | 100% |
 | conductor-app | 4 | 100% |
-| cthulhuquarium | 39 | 97% |
+| cthulhuquarium | 40 | 98% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
@@ -68,7 +68,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 794 | 99% |
+| software | 795 | 99% |
 
 ## Failure categories
 
@@ -90,6 +90,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-28 `cthulhuquarium/t-063` — A kaizen note's framing of "what's still open" (t-062's note named only t-058) was itself stale by the time this audit ran -- it undercounted by four tasks (t-019, t-021, t-022, t-041 were also open needs-human items). A planning/audit task should always re-derive the open set directly from live roadmap state (grep every task's own status) rather than trusting the prior task's kaizen prose about what remains, even when that prose sounds authoritative. Also caught a genuinely stale milestone `status` field (m3 sat at `not-started` despite 25/31 tasks done) -- milestone status isn't auto-derived from task counts anywhere in this repo's tooling, so it silently drifts unless an audit like this one checks it by hand.
 - 2026-08-28 `cthulhuquarium/t-062` — Show-the-price-before-clicking (kind_robots#2182) had a nearby precedent in the same function (breedCost, added by t-055) that looked like a template but wasn't quite one: breedCost is a fixed per-species number nested under Monster, while sellPrice depends on the individual's own rolled stats and belongs as a top-level ClientStock field instead. Copying the precedent's TYPE SHAPE without checking whether its reasoning (per-species vs. per-individual) still applies would have produced a field that was technically present but structurally misleading. Checking why a precedent is shaped the way it is, not just that one exists, is what caught this before it shipped.
 - 2026-08-28 `cthulhuquarium/t-061` — A "read-and-report audit" task (kind_robots#2181) turned out to have exactly one applicable shape once grepped precisely: of 17 files matching `meta:` under server/, only three (browse/catalog/leaderboard) return an actual API-response meta object -- everything else was ComfyUI workflow node `_meta`, a same-named but unrelated shape. Narrowing from a broad text match to the specific contract (an API route's response envelope, not any object literal keyed `meta`) before concluding "N call sites found" avoided both over-counting false positives and under-counting by assuming the grep result was already the answer. The two real hand-cast call sites (browse/leaderboard pages) already read the server's meta.total correctly -- the audit's fix was purely routing through performFetch's typed second generic instead of a manual ApiResponse<T> & {meta?: {...}} cast, so "no behavior change" was verifiable, not just claimed.
 - 2026-08-28 `cthulhuquarium/t-060` — Extracting a shared useOneShotReveal() composable for revealedUnlock/Hatch/Breed (kind_robots#2180) kept every external ref/function name on the store unchanged, so no component needed touching -- confirming a presentation-only refactor is genuinely presentation-only by checking call-site signatures, not just behavior, avoids a should-have-been-a-no-op PR accidentally growing scope.
@@ -99,7 +100,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-28 `cthulhuquarium/t-055` — A task can bundle two deliverables in different repos without saying so explicitly -- here, a store/UI change (in-scope) plus content authoring in silasfelinus/cthulhuquarium, a GitHub repo entirely outside this session's access (not just connector-blocked within an in-scope repo, and not locally cloned). When a target repo isn't accessible at all, don't guess at its content from memory or skip that half silently -- split the task, land what's actually landable, and write a concrete handoff doc naming the exact repo, fields, and script for whoever has access next. Worth checking a task's own note for "and author/write/edit X" clauses naming a different project before claiming, since those are the ones most likely to span a repo this session can't reach.
 - 2026-08-28 `mandarin-tutor/t-019` — A same-session kaizen filed off a just-merged task can be picked up immediately if it's the only ready work left in a leading-priority project -- no need to wait for a future cycle when the follow-up is small, mechanical, and reuses the pattern already verified.
 - 2026-08-28 `mandarin-tutor/t-018` — When a shared notice ref (artNotice) backs multiple template call sites, check every call site before assuming one render location suffices -- and a task note's suggested "clear on the same trigger as X" can be wrong if X itself has no real clear trigger; verify the cited precedent actually holds before copying its pattern.
-- 2026-08-28 `cthulhuquarium/t-050` — A kaizen task filed against a specific call site (purchaseSpeciesForUser) can be fully subsumed by later, unrelated-looking dependency work (t-029's breeding creation, t-041's egg hatching) that happens to wire the same helper for its own reasons -- always grep for every call site of the thing the task asks you to add (here: every AquariumStock-creating transaction) before writing new code, since the task may already be done.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-28T14:32:59Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-28T14:37:12Z_
