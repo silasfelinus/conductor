@@ -292,15 +292,39 @@ tasks:
     stakes: reversible
     depends_on: t-005
     note: |-
-      DONE 2026-08-25 (reconciled by conductor sweep). kind_robots PR #2094 ('feat: add Mandarin illustration manifest') merged c4b37e0a..4669500a9182f51388e69ccb09ac8aa8443b2ebf-equivalent -- all 39 checks green, merged by silasfelinus. Deterministic server-side illustration manifest derives from Starter 500 + Casino, assigns stable Krea2 request/media identities under /images/mandarin-tutor/cards/v1/, generates category-aware no-text flashcard prompts, and marks primarily grammatical/function entries glyph-only. /api/mandarin/art-manifest is the source Conductor uses to submit controlled durable art batches. Task sat at status:review post-merge with no reconciliation checkpoint -- caught by check_pr_merged_drift.py.
+      FOR SILAS: nothing to decide here yet -- this gate is waiting on the production render
+      host in t-019. Reopen the coverage audit once the box renders again.
 
-      The earlier completion was based on the superseded v1 manifest and did not prove rendered core-catalog coverage. The deliberate v2 reset now lives in kind_robots PR #2095, tutor display integration in #2096, and complete-corpus staging/submission in conductor PR #2848. Conductor still has no committed projects/mandarin-tutor/art-manifest.json snapshot, so Alexandria has not yet served the v2 manifest to automation. Production is the remaining gate: update the KindRobots container from the freshly published main image using the established migration-then-Force-Update runbook, then rerun Auto Art Generate and verify concrete v2 ArtJob/render/media counts before calling coverage done.
+      2026-08-28: the corpus IS submitted. All 577 illustrate cards are durable ArtJobs
+      (ids 10291-10867, one per request, recorded as last_art_job_id in
+      projects/art-prompts.yaml). Measured coverage immediately before submission was
+      0/577 -- every sampled v2 media path answers 200 text/html, which is Nuxt's
+      catch-all page, not an image.
+
+      Two blockers were found and cleared, neither of which was the container update this
+      task had been waiting on since 2026-08-25 (production has served the v2 manifest
+      since before this session):
+
+      1. The v2 prompts could never be enqueued. All 577 came back HTTP 422 from the art
+         prompt contract's conditional-instruction rule -- "ground it in Chinese detail
+         only when it naturally belongs to the concept". The corpus was unsubmittable by
+         construction from the day the recipe was written. Fixed in kind_robots#2174,
+         which also adds the recipe/contract test that was missing.
+      2. probeCanonicalIllustration treated Nuxt's 200 text/html as a hit, so every
+         unrendered card reported V2 READY, painted a broken img, and hid the request
+         button. Also fixed in kind_robots#2174.
+
+      Remaining gate is the render host, not this task's design: Alexandria's ComfyUI has
+      lost sight of its model directory (VAELoader.vae_name='qwen_image_vae.safetensors'
+      not in the live model list) and has rendered nothing since 2026-08-27T09:04Z. See
+      t-019. Coverage cannot be audited until the box renders again; the recovery path is
+      scripts/drain_failed_art_backlog.py, which canaries before draining.
     claimed_by: 2026-08-25T081930Z-mandarin-tutor-t-010-sk84
     claimed_at: '2026-08-25T08:19:30Z'
-    updated: '2026-08-25T09:24:36Z'
-    implementation_pr: 'silasfelinus/kind_robots#2094'
+    updated: '2026-08-28T08:10:00Z'
+    implementation_pr: silasfelinus/kind_robots#2094
     soft_gate: false
-
+    gate_human: true
   - id: t-011
     milestone: m3
     title: "Add linguistic provenance and content-quality audits"
@@ -499,7 +523,7 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#2122'
   - id: t-018
     title: Show a visible confirmation when an illustration is queued on the study card
-    status: ready
+    status: review
     owner: null
     passes: 0
     stakes: reversible
@@ -512,3 +536,36 @@ tasks:
       `artNotice` the same way `newSetNotice` is rendered (a small transient banner near
       the study card), and clear it on the same triggers `newSetNotice` clears on, or on a
       short timeout if none of those apply here. Small, self-contained, reversible.
+    implementation_pr: 'silasfelinus/kind_robots#2174'
+    updated: '2026-08-28T08:09:52Z'
+  - id: t-019
+    title: "PRODUCTION: the render host cannot see its models, so no art renders at all"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      FOR SILAS: only you can fix this one -- it is a production Alexandria/Unraid mount,
+      not code. Every project's art generation is down until it is remounted.
+
+      Every COMFY ArtJob fails immediately with:
+        ComfyUI has no matching file for: VAELoader.vae_name='qwen_image_vae.safetensors'
+        (ComfyUI listed 1 file(s) for that input). Not in the live model list at
+        http://127.0.0.1:8188.
+
+      The same VAE name rendered successfully as recently as job 10069 at
+      2026-08-27T09:04Z, so the file is not misnamed -- the render host lost sight of its
+      model directory. ComfyUI reporting exactly one file for that input is the tell: the
+      directory is unmounted or unreadable, not empty.
+
+      Nothing has rendered since. This is not specific to Mandarin: it burns every job the
+      queue hands the box, and it was already eating the queue before the Mandarin corpus
+      was submitted into it (the 2026-08-27 backlog fails earlier, at CLIPTextEncode with
+      hostbuf_file_reader_read, which is the same story one node upstream).
+
+      Once the mount is back, requeue with `python scripts/drain_failed_art_backlog.py`
+      rather than the bare reenqueue endpoint -- it renders a canary first and refuses to
+      drain into a host that is still down, which is what keeps 500+ jobs from burning
+      three attempts each and flushing the original error text.
+    updated: '2026-08-28T08:10:00Z'
+    gate_human: true
