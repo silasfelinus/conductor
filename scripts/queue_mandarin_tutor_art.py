@@ -24,11 +24,6 @@ from typing import Any
 
 import yaml
 
-try:
-    from scripts.mandarin_prompt_variation import apply_style_variation
-except ImportError:
-    from mandarin_prompt_variation import apply_style_variation
-
 ROOT = Path(__file__).resolve().parent.parent
 ART_PROMPTS = ROOT / "projects" / "art-prompts.yaml"
 SNAPSHOT = ROOT / "projects" / "mandarin-tutor" / "art-manifest.json"
@@ -58,6 +53,29 @@ def fetch_manifest(timeout: int = 30) -> dict[str, Any]:
     data = payload.get("data")
     if not isinstance(data, dict) or not isinstance(data.get("entries"), list):
         raise RuntimeError("Mandarin art manifest response is missing data.entries.")
+    return data
+
+
+def load_manifest_file(path: Path) -> dict[str, Any]:
+    """Read a manifest produced by a Kind Robots build that is not deployed yet.
+
+    Production is self-hosted on Alexandria and updates on Silas's schedule, so
+    a recipe fix can be correct, merged, and still unreachable by this script for
+    days. `--manifest-file` lets the corpus be staged from a manifest generated
+    by running the target branch locally and hitting its own
+    /api/mandarin/art-manifest -- the same code path production will serve, just
+    earlier.
+
+    It is not a way around the manifest contract: the payload goes through the
+    same validate_manifest as a fetched one, and the snapshot Conductor commits
+    is the artifact that gets audited either way. Record which build produced it
+    in the commit message.
+    """
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    # Accept both the raw manifest and a saved API envelope.
+    data = payload.get("data") if isinstance(payload, dict) and "data" in payload else payload
+    if not isinstance(data, dict) or not isinstance(data.get("entries"), list):
+        raise RuntimeError(f"{path} does not contain a Mandarin art manifest.")
     return data
 
 
@@ -148,19 +166,15 @@ def request_entry(raw: dict[str, Any]) -> dict[str, Any]:
     image_url = str(raw.get("imageUrl") or "").strip()
     prompt = " ".join(str(raw.get("prompt") or "").split())
 
-    # Per-card framing/light/palette/handling/ground. A manifest from a
-    # deployment that already applies the draw carries it as styleVariant and is
-    # used as-is; an older one gets the identical edit applied here so the
-    # corpus does not have to wait on an Alexandria container update. See
-    # scripts/mandarin_prompt_variation.py.
+    # The per-card framing/light/palette/handling/ground draw the recipe baked
+    # into this prompt. Recorded so QA can tell a weak render apart from a weak
+    # style draw without re-deriving anything.
     manifest_variant = raw.get("styleVariant")
-    if isinstance(manifest_variant, dict) and manifest_variant.get("id"):
-        style_variant = str(manifest_variant["id"])
-        style_variant_source = "manifest"
-    else:
-        prompt, applied = apply_style_variation(prompt, str(raw.get("cardKey") or ""))
-        style_variant = str(applied["id"]) if applied else ""
-        style_variant_source = "conductor-fallback" if applied else "none"
+    style_variant = (
+        str(manifest_variant["id"])
+        if isinstance(manifest_variant, dict) and manifest_variant.get("id")
+        else ""
+    )
 
     label_parts = [part for part in [simplified, pinyin, meaning] if part]
     return {
@@ -173,7 +187,6 @@ def request_entry(raw: dict[str, Any]) -> dict[str, Any]:
         "recipe_version": EXPECTED_RECIPE_VERSION,
         "art_direction_id": EXPECTED_ART_DIRECTION_ID,
         "style_variant": style_variant,
-        "style_variant_source": style_variant_source,
         "image_path": image_path,
         "source_url": f"https://media.acrocatranch.com{image_url}" if image_url.startswith("/") else image_url,
         "page_url": "https://kindrobots.org/play/mandarin",
@@ -245,15 +258,7 @@ def queue_batch(manifest: dict[str, Any], batch_size: int) -> dict[str, int]:
         "already_staged": len(illustrated) - len(missing),
         "missing": len(missing),
         "queued": len(selected),
-        "variant_from_manifest": sum(
-            1 for entry in staged if entry["style_variant_source"] == "manifest"
-        ),
-        "variant_from_fallback": sum(
-            1 for entry in staged if entry["style_variant_source"] == "conductor-fallback"
-        ),
-        "variant_missing": sum(
-            1 for entry in staged if entry["style_variant_source"] == "none"
-        ),
+        "unvaried": sum(1 for entry in staged if not entry["style_variant"]),
         "distinct_variants": len({entry["style_variant"] for entry in staged if entry["style_variant"]}),
     }
 
@@ -271,15 +276,30 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="fail when the public v2 manifest cannot be fetched instead of preserving the existing queue",
     )
+    parser.add_argument(
+        "--manifest-file",
+        type=Path,
+        default=None,
+        help=(
+            "stage from a manifest saved from a Kind Robots build instead of fetching the live one. "
+            "For a recipe fix that is merged but not yet deployed to Alexandria; the payload still "
+            "goes through the same validation. Record the producing build in the commit."
+        ),
+    )
     args = parser.parse_args(argv)
     if args.batch_size < 0:
         parser.error("--batch-size must be >= 0")
 
     try:
-        manifest = fetch_manifest()
+        manifest = (
+            load_manifest_file(args.manifest_file) if args.manifest_file else fetch_manifest()
+        )
         validate_manifest(manifest)
-    except RuntimeError as error:
-        if args.strict:
+    except (RuntimeError, OSError, json.JSONDecodeError) as error:
+        # An explicitly named file is always fatal: the fail-open path exists so
+        # a scheduled run survives production being briefly unreachable, not so
+        # an operator's typo silently stages nothing.
+        if args.strict or args.manifest_file:
             print(f"ERROR: {error}", file=sys.stderr)
             return 1
         print(f"WARNING: {error}; preserving the current Mandarin art queue.", file=sys.stderr)
@@ -298,17 +318,11 @@ def main(argv: list[str] | None = None) -> int:
         f"{summary['queued']} appended this run."
     )
     if summary["queued"]:
-        print(
-            "v2 style draws: "
-            f"{summary['variant_from_manifest']} from the manifest, "
-            f"{summary['variant_from_fallback']} applied locally, "
-            f"{summary['variant_missing']} unrecognized prompt shape "
-            f"({summary['distinct_variants']} distinct draws)."
-        )
-        if summary["variant_missing"]:
+        print(f"v2 style draws: {summary['distinct_variants']} distinct across {summary['queued']} cards.")
+        if summary["unvaried"]:
             print(
-                "WARNING: some staged prompts matched neither v2 house-style sentence; "
-                "they were submitted unvaried. Check whether the recipe changed shape.",
+                f"WARNING: {summary['unvaried']} staged card(s) carry no styleVariant. That manifest "
+                "predates the per-card style draw, so those prompts are all in one style.",
                 file=sys.stderr,
             )
     print(f"Manifest snapshot {'updated' if snapshot_changed else 'unchanged'}: {SNAPSHOT.relative_to(ROOT)}")
