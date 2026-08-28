@@ -85,6 +85,81 @@ A rendered card is acceptable only if:
 
 A failure is a regeneration candidate. It does not create another vocabulary edition.
 
+## Per-card style variation — added 2026-08-28
+
+The house style is fixed. The illustrator's decisions are not.
+
+The original v2 recipe emitted identical style language for every card: any two prompts
+were ~82% identical and 38 pairs were byte-for-byte identical. A corpus built from that
+converges on one camera distance, one lighting setup, and one palette — which is the
+interchangeable read this document exists to prevent, arriving through the recipe rather
+than through the model.
+
+Each card now also draws one option per axis — framing (6), light (5), palette (6), paint
+handling (5), ground (4), 3600 combinations — from its own stable card token, the same
+token that names its media file. Deterministic in both directions: a card's look is tied
+to its identity, and the tutor's per-card retry rebuilds the prompt the batch was
+submitted with. The draw ships in the manifest as `styleVariant` and on each staged
+request as `style_variant`, so a weak render can be traced to a weak concept or a weak
+style draw.
+
+Canonical implementation: kind_robots `server/utils/mandarinIllustrationStyle.ts`, guarded
+by `utils/scripts/verifyMandarinArtRecipe.test.ts`.
+
+## The prompt contract is part of the art direction
+
+Kind Robots enforces `server/utils/artPromptContract.ts` at the enqueue boundary, and it
+rejected all 577 v2 prompts with HTTP 422. The recipe hedged the way a person writes —
+"ground it in Chinese detail **only when** it naturally belongs to the concept" — and the
+contract rejects conditionals because Krea 2 cannot evaluate one; it paints the densest
+noun phrase it is handed. The corpus was unsubmittable from the day the recipe was
+written, which is the actual reason nothing rendered, upstream of any container update.
+
+Three rules the recipe now respects, all of which read as pedantic and are not:
+
+- **No conditionals.** The recipe knows each card's categories and meaning, so it decides
+  at build time and states one outcome. The cultural-shorthand exclusion is dropped
+  entirely for a card whose concept *is* a dragon or a lantern.
+- **No format nouns.** Not "flashcard illustration" — asking for a card renders a card,
+  title bar and invented text included. The tutor owns the card.
+- **No piled-up exclusions.** At cfg 1 the ComfyUI negative prompt is inert, so naming
+  text fourteen ways and listing "lens flare, bokeh, neon glow" put all of it into
+  *positive* conditioning. Same art direction, stated as the wanted result.
+
+Any future edit to the house style has to keep passing that contract. The recipe test
+asserts it card by card, per category, including the dragon case.
+
+## Submission evidence — 2026-08-28
+
+Recorded against the bar this document sets:
+
+1. **Live manifest** returns recipe `v2` and `modern-chinese-picturebook-v2`. ✅
+2. **Committed snapshot** (`art-manifest.json`) records 621 total, 577 `illustrate`,
+   44 `glyph-only`. ✅ The snapshot is the manifest the submission was built from, produced
+   by a local run of kind_robots#2174 via `queue_mandarin_tutor_art.py --manifest-file`,
+   because Alexandria still serves the pre-fix recipe.
+3. **Bulk submission**: 577/577 durable ArtJobs, ids 10291–10867, each recorded on its
+   request as `last_art_job_id`. ✅ All 577 prompts unique; 537 distinct style draws.
+   By 09:20Z the queue had drained and **all 577 were FAILED at attempts=3** on the render
+   host, not on anything about the prompts. The requests and job ids survive in
+   `art-prompts.yaml`, so requeueing after the mount is fixed is a required step, not an
+   optional one — the corpus will not render on its own.
+4. **Media under `/images/mandarin-tutor/cards/v2/`**: none yet. ❌ Blocked on the render
+   host, not on the queue — see below.
+5. **Tutor displays rendered v2 media**: not yet verifiable. ❌
+6. **Visual QA sample against the rubric**: not yet possible. ❌
+
+Coverage measured immediately before submission was **0 of 577**: every sampled v2 media
+path answers 200 `text/html`, which is Nuxt's catch-all page rather than an image. The
+tutor's probe used to treat that as a hit — fixed in kind_robots#2174.
+
+**Remaining gate is the render host.** Alexandria's ComfyUI cannot see its model directory
+(`VAELoader.vae_name='qwen_image_vae.safetensors'` absent from the live model list) and has
+rendered nothing since 2026-08-27T09:04Z. The submitted jobs drain into that failure. This
+predates the Mandarin submission and affects every project's art. Filed as
+mandarin-tutor/t-020; recover with `scripts/drain_failed_art_backlog.py`, which canaries
+before draining.
+
 ## Current rollout state — 2026-08-25
 
 - Kind Robots PR #2095 merged: canonical v2 prompt recipe and house-style documentation.
