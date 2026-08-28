@@ -2454,7 +2454,7 @@ tasks:
   - id: t-050
     milestone: m3
     title: Fold a rolled individual's stats into the Ichthyonomicon's best-seen record
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -2472,9 +2472,28 @@ tasks:
       this task added is not the only place a stat can newly appear, just the
       only one that currently exists. Waiting on t-029 rather than ready,
       since there's nothing to wire against yet.
+
+      RESOLVED (2026-08-28, no new code needed): audited all three places an AquariumStock
+      individual gets rolled/converged hidden stats -- purchaseSpeciesForUser, hatchEggForUser
+      (t-041, kind_robots#2172), and breedFishForUser (t-029, kind_robots#2168) -- and every
+      one of them already calls mergeBestStats against the AquariumCodexEntry best-seen record
+      before the transaction commits (server/utils/aquarium.ts:957,1250,1537). The purchase
+      call site (wired by t-031) now observes real rolled stats because t-029 landed
+      rollIndividualStats/convergeBreedStats; breeding was built with its mergeBestStats call
+      already in place as part of t-029 itself; hatching got the same wiring when t-041 built
+      it. Grepped the whole repo for aquariumStock.create/createMany -- these three are the
+      only individual-stat-creating call sites that exist, so there is no fourth place left to
+      wire. Confirmed with verifyAquariumGenetics.test.ts and verifyAquariumEconomy.test.ts
+      (both green, including the existing "mergeBestStats: correct under real rolled/converged
+      StatBlock input" and "mergeBestStats: per-stat max, independently, never regresses an
+      existing best" assertions). No post-hatch reroll-toward-parent step exists separate from
+      convergeBreedStats -- convergence happens once, synchronously, before the offspring row
+      is created, so it is already covered by the same call. Closing done rather than opening
+      a no-op PR.
     claimed_by: conductor-scheduled-2026-08-28T063200-sweep
     claimed_at: '2026-08-28T06:32:31Z'
-    updated: '2026-08-28T06:32:31Z'
+    updated: '2026-08-28T06:35:12Z'
+    implementation_pr: 'silasfelinus/kind_robots#2168'
 
   - id: t-051
     milestone: m3
