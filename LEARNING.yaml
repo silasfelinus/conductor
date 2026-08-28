@@ -11475,3 +11475,19 @@ records:
     "widen guard X", check every caller reaches guard X's actual code path
     before assuming a change to X's own module is sufficient -- here the real
     fix had to live one layer lower, in a function both lanes genuinely share.
+- date: 2026-08-28
+  project: conductor
+  task: t-135
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Every roadmap TASK status has cross-referencing tooling; MILESTONE status
+    had none, and it drifted badly once checked -- 30 real mismatches across 20
+    active projects on the first run, not just the one case that prompted the
+    task. A field that is only ever read (never audited against the data it
+    summarizes) will drift silently no matter how cheap it would be to keep
+    correct; the fix is a lightweight standalone advisory check wired into the
+    session-startup sweep, not a one-time manual correction.
