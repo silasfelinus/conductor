@@ -133,6 +133,41 @@ class HealthcheckScriptTests(unittest.TestCase):
     def test_down_alert_is_cooldown_gated(self):
         self.assertIn("Test-AlertDue $alertState 'share-watchdog'", self.text)
 
+    def test_render_watchdog_default_host_is_the_live_host(self):
+        """kind_robots migrated off Vercel entirely (2026-08-12); the retired
+        kind-robots.vercel.app host 402s/DEPLOYMENT_PAUSED for good, so a
+        script that falls back to it silently loses render-failure coverage
+        whenever KR_BASE_URL isn't set. Conductor/t-137 (2026-08-29): the
+        scheduled-execution wrapper was fixed in isolation (PR #3113) first;
+        this locks the script's own default too so the two can't drift apart
+        again.
+        """
+        self.assertIn("else { 'https://kindrobots.org' }", self.text)
+        self.assertNotIn("vercel.app", self.text)
+
+    def test_share_recovery_restart_suppresses_the_immediate_liveness_probe(self):
+        """A just-triggered share-recovery restart must not race the ordinary
+        per-target health probe into restarting comfyui a second time in the
+        same tick, before it has finished starting up (conductor/t-137).
+        """
+        self.assertIn("$comfyuiJustRestarted = $false", self.text)
+        self.assertIn("$comfyuiJustRestarted = $true", self.text)
+
+        restart_flag_set = self.text.index("$comfyuiJustRestarted = $true")
+        loop = self.text.index("foreach ($t in $targets)")
+        self.assertLess(
+            restart_flag_set, loop,
+            "the flag must be set by the share-recovery restart before the probe loop runs",
+        )
+
+        loop_body = self.text[loop : self.text.index("--- Render-failure watchdog")]
+        self.assertIn(
+            "$comfyuiJustRestarted) {",
+            loop_body,
+            "the per-target loop must check the flag before probing",
+        )
+        self.assertIn("continue", loop_body[: loop_body.index("$comfyuiJustRestarted) {") + 400])
+
 
 class ExtraModelPathsTests(unittest.TestCase):
     def setUp(self):
