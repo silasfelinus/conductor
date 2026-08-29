@@ -3,6 +3,7 @@
 **Created:** 2026-08-28  
 **Project:** `rainbow-butterflies`  
 **Public identity:** AMI, the Anti-Malaria Intelligence  
+**Canonical public domain:** `rainbowbutterflies.org`  
 **Primary mission:** help raise direct donations at <https://againstmalaria.com/amibot> while proving that transparent AI-assisted communities can produce useful human benefit.
 
 ## The project in one sentence
@@ -22,7 +23,7 @@ Rainbow Butterflies has a narrower job:
 5. turn useful activity into attention and attention into direct malaria-net donations;
 6. measure whether any of this actually works.
 
-The domain `rainbowbutterflies.com` is therefore not intended to be a lightweight duplicate of Kind Robots. It should be the mission's front porch and collaboration garden, with Kind Robots behind it as the engine.
+The domain `rainbowbutterflies.org` is therefore not intended to be a lightweight duplicate of Kind Robots. It should be the mission's front porch and collaboration garden, with Kind Robots behind it as the engine. Use this canonical domain for product, authentication, deployment, documentation, discovery, and DNS planning.
 
 ## Relationship to Kind Economy
 
@@ -226,7 +227,7 @@ Silas remains the gate for:
 
 - creating social/network accounts where a human must accept terms;
 - claiming handles when identity or account ownership is involved;
-- DNS and public activation of `rainbowbutterflies.com`;
+- DNS and public activation of `rainbowbutterflies.org`;
 - secrets/API credentials;
 - any paid membership, advertising, boost, donation match, or other spend;
 - approval of the first outward-facing campaign on each new channel;
