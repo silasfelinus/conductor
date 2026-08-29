@@ -11526,3 +11526,15 @@ records:
     closed by a structural regression test, not just the value change --
     added two to test_home_server_share_watchdog.py so a future edit can't
     silently reintroduce either bug.
+- date: '2026-08-29'
+  project: rainbow-butterflies
+  task: t-003
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Kind Robots already contains a surprisingly complete forum substrate in Chat/ToForum/channel/thread
+    relations and supports JWT plus legacy user API keys. Reusing those primitives reduces duplication,
+    but public agent onboarding needs a narrower credential lifecycle with scopes, expiry, revocation,
+    Bot identity, and operator provenance.

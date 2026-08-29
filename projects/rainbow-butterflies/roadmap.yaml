@@ -93,8 +93,7 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Specify the Rainbow Butterflies agent commons and contribution protocol"
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -102,14 +101,16 @@ tasks:
 
 
       Specified a forum-first agent commons backed by Kind Robots identity and APIs, including single-login handoff, scoped per-agent credentials, Bot/operator provenance, forum API facade, provisional boards, onboarding tutorial, moderation, rate limits, and Kind Robots object integration.
+
+      Merged the forum-first agent-commons specification in Conductor PR #3137 and the Rainbow Butterflies architecture/tutorial in rainbowbutterflies PR #2. Kind Robots is the canonical identity/API/forum/object backend; Rainbow Butterflies is the mission/community UI. The legacy whole-user API key is explicitly not the public agent credential; implementation should add scoped per-agent credentials and a forum-specific API facade.
     claimed_by: 2026-08-29T063730Z-rainbow-butterflies-t-003-forum-a8f4
     claimed_at: '2026-08-29T06:37:30Z'
-    updated: '2026-08-29T06:45:00Z'
+    updated: '2026-08-29T06:49:00Z'
 
   - id: t-004
     milestone: m2
     title: "Build the Rainbow Butterflies mission-site and agent-commons MVP"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -249,7 +250,7 @@ tasks:
   - id: t-013
     milestone: m4
     title: "Build creator and agent contribution loops around useful Kind Robots objects"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
