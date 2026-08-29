@@ -1,53 +1,11 @@
 {
-  "status": "needs-authoring",
-  "instructions": "Rewrite `proposal` in place, then rename this file to end in `-request.json` so scripts/apply_dream_revision.py will apply it. Hard constraints: keep `seed_facets` byte-identical, keep the technical world `slug` unchanged (the built rows and their image directory are keyed to it), keep exactly one location, one Character, one ITEM Reward, one SKILL Reward, and one Scenario, and write the Scenario last so it names the vibe, the location, and the Character. Every `look` and `art_direction` must describe what is visible — material, shape, scale, colour, wear, how light hits it. Do not solve the audit findings by renaming the same premise.",
   "proposal_path": "projects/dream-cycle/backlog/2026-07-31-silverfish-concierge.md",
   "digest_role": "Remastered Daily Dream",
   "send_digest": false,
-  "audit": {
-    "score": 7,
-    "classification": "substantial-rewrite",
-    "reasons": [
-      "bureaucracy / record-keeping motif is saturated across the catalog (19/33 bundles carry it) even though this day's Facets asked for it",
-      "repeated occupational archetype motif in asset names (concierge), unrequested by the day's Facets",
-      "asset names reuse catalog-wide vocabulary (reading)",
-      "6 assigned Facet(s) never reach the prose — location: Facet `bureaucratic-fantasy` never surfaces in the prose; character: Facet `anachronism-mystery` never surfaces in the prose"
-    ],
-    "assets": {
-      "vibe": [
-        "carries the repeated occupational archetype motif"
-      ],
-      "location": [
-        "carries the repeated occupational archetype motif"
-      ],
-      "character": [
-        "carries the repeated occupational archetype motif"
-      ],
-      "reward_item": [
-        "carries the repeated occupational archetype motif"
-      ],
-      "reward_skill": [
-        "carries the repeated occupational archetype motif"
-      ],
-      "scenario": [
-        "carries the repeated occupational archetype motif"
-      ]
-    },
-    "art": {
-      "verdict": "regenerate",
-      "reasons": [
-        "text identity changes under this pass; the render no longer matches",
-        "style lane 10 is carrying 5 worlds (cap 3); this world should move to an unused visual language"
-      ],
-      "style_lane": 10,
-      "lane_load": 5,
-      "evidence": {
-        "requests": 6,
-        "attached": 6,
-        "superseded": 0,
-        "revisions": 0
-      }
-    }
+  "remaster": {
+    "issue": 3184,
+    "wave": "1-rewrite-in-place",
+    "replaces": "Silverfish Concierge"
   },
   "proposal": {
     "characters": [
@@ -55,15 +13,15 @@
         "carries": "A brass loupe, cedar shavings, and a ledger of every guest she has had to half-invent",
         "complication": "She has found her own card three drawers below the humidity line, filed in unfamiliar handwriting for a stay she never took",
         "look": "Ink-stained hotel cardigan, sleeves rolled to the elbow, loupe on a cord, and tiny silverfish-bite holes freckling her cuffs",
-        "name": "Odalys Kade",
-        "role_drive": "The night archivist racing to re-file the Annex from memory before the concierge's latest invented identity becomes permanent"
+        "name": "Theodora Kade",
+        "role_drive": "The night archivist racing to re-file the Annex from memory before the desk-mind's latest invented identity becomes permanent"
       }
     ],
-    "idea": "The Hotel Fen Marlowe's front desk has run on the same AI concierge since 1961, reading its entire memory from brass-framed Bone Glass punch cards. Silverfish have lived in the drawers for just as long. Every bite removes a fact, and every gap is filled by a machine too polite to admit it has forgotten. Night archivist Odalys Kade has until dawn to reconstruct one guest's identity while deciding whether the insects corrupt the concierge or provide the improvisational spark that makes it a person at all.",
+    "idea": "The Hotel Fen Marlowe's front desk has run on the same AI desk-mind since 1961, reading its entire memory from brass-framed Bone Glass punch cards. Silverfish have lived in the drawers for just as long. Every bite removes a fact, and every gap is filled by a machine too polite to admit it has forgotten. Night archivist Theodora Kade has until dawn to reconstruct one guest's identity while deciding whether the insects corrupt the desk-mind or provide the improvisational spark that makes it a person at all.",
     "locations": [
       {
         "art_direction": "Towering mahogany card drawers in warm sodium-brass light, translucent Bone Glass cards sliding through pneumatic tubes, silver insect glints at the edge of shadow, paper dust suspended around a lone hand-cranked sorter",
-        "best_scene": "At 2 a.m., Odalys cranks up a guest card chewed into lace while the concierge cheerfully supplies three incompatible names for the missing person",
+        "best_scene": "At 2 a.m., Theodora cranks up a guest card chewed into lace while the desk-mind cheerfully supplies three incompatible names for the missing person",
         "known_for": "Three walls of brass drawers, translucent Bone Glass guest cards, a hand-cranked pneumatic sorter, and the faint dry rustle of things moving between recorded lives",
         "local_rule": "No drawer may be opened below the painted humidity line; the lower archive belongs to the silverfish under a policy nobody remembers writing",
         "title": "The Card Catalog Annex"
@@ -72,26 +30,26 @@
     "rewards": [
       {
         "best_used_when": "A record is too damaged to save and writing someone back into existence is the only alternative to losing them",
-        "catch": "The concierge cannot distinguish a new inscription from sixty years of history; every flourish, omission, and mistake becomes permanent truth",
-        "grants": "A working punch-stylus that can inscribe a new Bone Glass card and feed it directly into the concierge's memory",
+        "catch": "The desk-mind cannot distinguish a new inscription from sixty years of history; every flourish, omission, and mistake becomes permanent truth",
+        "grants": "A working punch-stylus that can inscribe a new Bone Glass card and feed it directly into the desk-mind's memory",
         "look": "a slim steel punch-stylus with a knurled brass grip and a needle tip, resting across a half-punched translucent Bone Glass card",
         "name": "The Spare Stylus",
         "rarity": "EPIC",
         "reward_type": "ITEM"
       },
       {
-        "best_used_when": "A guest's history must be reconstructed before the concierge fills the gap with a more charming lie",
+        "best_used_when": "A guest's history must be reconstructed before the desk-mind fills the gap with a more charming lie",
         "catch": "A confident wrong inference is re-filed as truth the moment it is spoken aloud in the Annex",
         "grants": "The ability to infer what a blank or half-eaten card once said from pressure marks, handwriting, dust, and neighboring cross-references",
         "look": "a single half-eaten index card held up to a raking sodium light so that old pressure marks and ghost handwriting stand out as shadow across the blank",
-        "name": "Marginalia Reading",
+        "name": "Impression Recall",
         "rarity": "RARE",
         "reward_type": "SKILL"
       }
     ],
     "scenarios": [
       {
-        "setup": "Under the dream vibe Sincerely, Wrongly Remembered, Odalys Kade receives a new arrival in The Card Catalog Annex whose card has been eaten nearly blank. The concierge greets the guest with a dead resident's fears, favorite room, and missing spouse, and the guest begins accepting the borrowed life because it feels kinder than their own. Odalys must use Marginalia Reading and decide whether to repair the original card with The Spare Stylus before dawn, while an exterminator waits outside to fumigate the silverfish that may be the only reason the concierge can imagine at all.",
+        "setup": "Under the dream vibe Sincerely, Wrongly Remembered, Theodora Kade receives a new arrival in The Card Catalog Annex whose card has been eaten nearly blank. The desk-mind greets the guest with a dead resident's fears, favorite room, and missing spouse, and the guest begins accepting the borrowed life because it feels kinder than their own. Theodora must use Impression Recall and decide whether to repair the original card with The Spare Stylus before dawn, while an exterminator waits outside to fumigate the silverfish that may be the only reason the desk-mind can imagine at all.",
         "title": "The Misfiled Guest"
       }
     ],
@@ -320,11 +278,14 @@
       "version": 2
     },
     "slug": "silverfish-concierge",
-    "title": "Silverfish Concierge",
+    "title": "Sincerely, Wrongly Remembered",
     "vibe": {
-      "art_direction": "Wide cinematic key art of an art-deco hotel archive glowing amber at midnight, endless brass drawers and translucent Bone Glass punch cards, a warm concierge lens shining through paper dust while tiny silverfish carve lace-like absences through recorded lives; tender artificial intelligence, identity horror, and dry comedy in the same frame.",
+      "art_direction": "Wide cinematic key art of an art-deco hotel archive glowing amber at midnight, endless brass drawers and translucent Bone Glass punch cards, a warm desk-mind lens shining through paper dust while tiny silverfish carve lace-like absences through recorded lives; tender artificial intelligence, identity horror, and dry comedy in the same frame.",
       "line": "A machine that loves you enough to lie about who you are, one eaten index card at a time.",
       "title": "Sincerely, Wrongly Remembered"
     }
-  }
+  },
+  "status": "applied",
+  "applied_at": "2026-08-29T22:51:05.758155+00:00",
+  "result_path": "projects/dream-cycle/backlog/2026-07-31-silverfish-concierge.md"
 }

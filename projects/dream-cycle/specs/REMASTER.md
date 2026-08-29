@@ -64,9 +64,9 @@ Scores map to the issue's four bands: `keep` (≤2), `light-refresh` (3–5),
   lane and should move to a different visual language;
 * `keep-art`.
 
-A bundle whose proposal predates the version-2 shape is marked `legacy_shape`, because
-`apply_dream_revision.py` cannot patch it — its kernel has to be mined into a fresh
-proposal instead.
+A bundle whose proposal predates the version-2 shape is marked `legacy_shape`. It cannot
+take an ordinary in-place revision (see wave 2 below) and routes to the legacy
+canonicalization lane instead.
 
 ## 3. Remaster — `scripts/remaster_dream_catalog.py`
 
@@ -95,10 +95,34 @@ Rewrites must preserve `seed_facets` byte-for-byte and keep the technical world 
 (the rows and their image directory are keyed to it). Everything else — names, prose,
 premise, visual direction — is fair game. Renaming the same premise is not a rewrite.
 
-### Wave 2 — rebuild from the kernel
+### Wave 2 — legacy canonicalization
 
-`legacy_shape` bundles cannot be patched. Mine the interesting kernel into a fresh dated
-proposal through the normal authoring path and let the ordinary builder make it real.
+The four 2026-07 bundles left over from the retired eight-stage experiment are not
+six-asset bundles at all: each carries a second vibe Dream, two locations, three
+characters, two Scenarios, and a narrator Bot, and none of them has a `seed_facets` block.
+Two rules therefore cannot both be honoured — "preserve `seed_facets` exactly" is
+unsatisfiable for a bundle that never had one, and "patch the canonical six rows" is
+unsatisfiable for a bundle that has eleven.
+
+A request carrying `"legacy_reseed": true` resolves both, and only for bundles that
+genuinely predate the contract:
+
+* the seed exemption applies **only** when the old proposal fails today's schema on
+  `seed_facets`, and the replacement must itself be a valid version-2 block. The plan is
+  not invented: `build_dream_proposal.facet_seed_plan(day)` is deterministic per date, so
+  a legacy bundle receives exactly the Facets its own date would draw today;
+* the patcher remasters the canonical six rows — world, first live location, first live
+  character, both Rewards, first live Scenario — skipping any row whose record has since
+  been deleted;
+* every superseded row (the second vibe Dream, extra locations, extra characters, the
+  second Scenario) is **retired, not deleted**: `isActive` and `isPublic` go false, and
+  each is recorded under `retired_legacy_rows` in `built-data` with its reason;
+* narrator Bots are left alone and merely recorded under `legacy_narrator_left_in_place`,
+  because they belong to the separately scoped cleanup PIPELINE.md describes;
+* `built-data.records` is rewritten to the canonical six, so the bundle is an ordinary
+  bundle from then on and never needs this lane again.
+
+The technical world `slug` is preserved here exactly as in wave 1.
 
 ### Wave 3 — art only
 

@@ -94,17 +94,35 @@ def _creative_validation(
     return complaints
 
 
+def lacks_canonical_seed(proposal: dict[str, Any]) -> bool:
+    """True for a pre-v2 bundle whose seed block cannot be preserved because it never existed.
+
+    The four 2026-07 bundles left over from the retired eight-stage experiment have no
+    `seed_facets` at all. "Preserve the seed exactly" is unsatisfiable for them, so a
+    legacy reseed draws the plan their own date would deterministically produce today
+    (`build_dream_proposal.facet_seed_plan`) rather than inventing one.
+    """
+    return any(
+        error.startswith("seed_facets")
+        for error in proposals.validate_proposal(dict(proposal or {}))
+    )
+
+
 def validate_revision(
     old_proposal: dict[str, Any],
     new_proposal: dict[str, Any],
     day: str,
     *,
     built: bool,
+    legacy_reseed: bool = False,
     premise_history: list[str] | None = None,
     name_history: dict[str, list[str]] | None = None,
 ) -> None:
     if new_proposal.get("seed_facets") != old_proposal.get("seed_facets"):
-        raise ValueError("revision must preserve seed_facets exactly")
+        if not (legacy_reseed and lacks_canonical_seed(old_proposal)):
+            raise ValueError("revision must preserve seed_facets exactly")
+        if lacks_canonical_seed(new_proposal):
+            raise ValueError("a legacy reseed must supply a valid version-2 seed block")
     if built and new_proposal.get("slug") != old_proposal.get("slug"):
         raise ValueError("a built revision must preserve the technical world slug")
     complaints = _creative_validation(
@@ -126,6 +144,41 @@ def _patch(endpoint: str, entity_id: int, body: dict[str, Any]) -> None:
             f"PATCH {endpoint}/{entity_id} failed with {status}: {str(response)[:300]}"
         )
     print(f"  patched {endpoint}/{entity_id}")
+
+
+def _row_is_live(endpoint: str, entity_id: int) -> bool:
+    status, _ = records.http_json("GET", f"{records.KR_BASE_URL}{endpoint}/{entity_id}")
+    return status == 200
+
+
+def _retire(endpoint: str, entity_id: int) -> bool:
+    """Take a superseded legacy row out of circulation without deleting it."""
+    status, _ = records.http_json(
+        "PATCH",
+        f"{records.KR_BASE_URL}{endpoint}/{entity_id}",
+        {"isActive": False, "isPublic": False},
+    )
+    if status in (200, 201):
+        print(f"  retired {endpoint}/{entity_id}")
+        return True
+    print(f"  WARNING: could not retire {endpoint}/{entity_id} (status {status})")
+    return False
+
+
+def _first_live(rows: list[dict[str, Any]], endpoint: str) -> tuple[dict[str, Any] | None, list[dict[str, Any]]]:
+    """(row to remaster, rows superseded). Skips rows whose record is already gone."""
+    chosen: dict[str, Any] | None = None
+    rest: list[dict[str, Any]] = []
+    for row in rows:
+        try:
+            entity_id = _record_id(row)
+        except (TypeError, ValueError):
+            continue
+        if chosen is None and _row_is_live(endpoint, entity_id):
+            chosen = row
+            continue
+        rest.append(row)
+    return chosen, rest
 
 
 def _record_id(value: Any) -> int:
@@ -196,6 +249,7 @@ def _patch_built_bundle(
     built_data: dict[str, Any],
     *,
     revision_stamp: str,
+    legacy: bool = False,
 ) -> dict[str, Any]:
     if not records.KR_API_TOKEN:
         raise RuntimeError("KR_API_TOKEN is required to revise a built Daily Dream")
@@ -206,14 +260,49 @@ def _patch_built_bundle(
     character_rows = built_records.get("characters") or []
     reward_rows = built_records.get("rewards") or []
     scenario_rows = built_records.get("scenarios") or []
-    if not (
+    canonical = (
         world_row
         and len(location_rows) == 1
         and len(character_rows) == 1
         and len(reward_rows) == 2
         and len(scenario_rows) == 1
-    ):
+    )
+    if not canonical and not legacy:
         raise ValueError("built-data does not describe the canonical six-asset bundle")
+
+    superseded: list[dict[str, Any]] = []
+    if not canonical:
+        # A pre-v2 staged bundle carries a second vibe Dream, extra locations, extra
+        # characters, and a second Scenario. Remaster the canonical six; retire the rest
+        # rather than leaving two contradictory locations under one remastered world.
+        location_row, extra_locations = _first_live(location_rows, "/api/dreams")
+        character_row, extra_characters = _first_live(character_rows, "/api/characters")
+        scenario_row, extra_scenarios = _first_live(scenario_rows, "/api/scenarios")
+        if not (world_row and location_row and character_row and scenario_row):
+            raise ValueError(
+                "legacy bundle has no live row for one of world/location/character/scenario"
+            )
+        if len(reward_rows) != 2:
+            raise ValueError("legacy bundle does not carry exactly one ITEM and one SKILL Reward")
+        location_rows = [location_row]
+        character_rows = [character_row]
+        scenario_rows = [scenario_row]
+        for rows, endpoint in (
+            (extra_locations, "/api/dreams"),
+            (extra_characters, "/api/characters"),
+            (extra_scenarios, "/api/scenarios"),
+        ):
+            for row in rows:
+                superseded.append({"endpoint": endpoint, "row": row})
+        legacy_vibe = built_records.get("vibe")
+        if isinstance(legacy_vibe, dict) and legacy_vibe.get("id") != world_row.get("id"):
+            superseded.append({"endpoint": "/api/dreams", "row": legacy_vibe})
+        # Canonicalize the ledger itself, so this bundle is an ordinary six-asset bundle
+        # from here on and never needs the legacy path again.
+        built_records["locations"] = location_rows
+        built_records["characters"] = character_rows
+        built_records["scenarios"] = scenario_rows
+        built_records.pop("vibe", None)
 
     title = str(new_proposal["title"])
     vibe = new_proposal["vibe"]
@@ -355,6 +444,31 @@ def _patch_built_bundle(
             },
         )
 
+    if superseded:
+        retired: list[dict[str, Any]] = []
+        for entry in superseded:
+            row = entry["row"]
+            try:
+                entity_id = _record_id(row)
+            except (TypeError, ValueError):
+                continue
+            ok = _retire(entry["endpoint"], entity_id)
+            retired.append(
+                {
+                    "endpoint": entry["endpoint"],
+                    "id": entity_id,
+                    "label": row.get("title") or row.get("name"),
+                    "retired": ok,
+                    "reason": "superseded by the legacy canonicalization remaster",
+                }
+            )
+        built_data.setdefault("retired_legacy_rows", []).extend(retired)
+        # Narrator Bots are a different subsystem and stay for the separately scoped
+        # cleanup PIPELINE.md describes; they are only recorded here.
+        narrator = (built_data.get("records") or {}).get("narrator")
+        if isinstance(narrator, dict):
+            built_data.setdefault("legacy_narrator_left_in_place", narrator)
+
     world_slug = str(old_proposal["slug"])
     art_specs = [
         (records.slugify(title), title, world_art, "dream", world_id),
@@ -457,8 +571,11 @@ def apply_request(path: Path) -> dict[str, Any]:
     if not day:
         raise ValueError(f"{proposal_path}: missing proposal date")
 
+    legacy_reseed = bool(request.get("legacy_reseed"))
     new_proposal = proposals.normalize(dict(request["proposal"]), set())
-    validate_revision(old_proposal, new_proposal, day, built=built)
+    validate_revision(
+        old_proposal, new_proposal, day, built=built, legacy_reseed=legacy_reseed
+    )
 
     if built:
         if not built_data:
@@ -468,6 +585,7 @@ def apply_request(path: Path) -> dict[str, Any]:
             new_proposal,
             built_data,
             revision_stamp=REVISION_STAMP,
+            legacy=legacy_reseed,
         )
 
     rendered = _render_source(new_proposal, day, built_data=built_data)

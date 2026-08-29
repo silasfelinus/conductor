@@ -94,7 +94,9 @@ RUT_FAMILIES: dict[str, dict[str, object]] = {
             "belfry", "campanile", "minaret", "watchtower", "beacon", "beacons",
             "obelisk",
         },
-        "facet_markers": {"lighthouse", "tower", "beacon", "watchtower", "monk"},
+        # "spire" earns its place here: Spire Crystal is a MATERIAL Facet, so a day that
+        # draws it is *asking* for spires and should not then be scored for having them.
+        "facet_markers": {"lighthouse", "tower", "beacon", "watchtower", "monk", "spire"},
     },
     "occupational-archetype": {
         "label": "repeated occupational archetype",

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-29T22:06:22.492058+00:00",
+  "generated_at": "2026-08-29T22:52:46.224506+00:00",
   "generator": "scripts/audit_dream_catalog.py",
   "issue": "https://github.com/silasfelinus/conductor/issues/3184",
   "catalog": {
@@ -21,22 +21,20 @@
   },
   "summary": {
     "classification": {
-      "keep": 9,
-      "light-refresh": 8,
-      "substantial-rewrite": 12,
-      "retire-replace": 4
+      "keep": 33,
+      "light-refresh": 0,
+      "substantial-rewrite": 0,
+      "retire-replace": 0
     },
     "art": {
-      "keep-art": 7,
-      "restyle": 2,
-      "regenerate": 24
+      "keep-art": 6,
+      "restyle": 0,
+      "regenerate": 27
     },
     "rut_families": {
-      "bureaucracy": 13,
-      "tower-beacon": 10,
-      "occupational-archetype": 7,
-      "archive": 6,
-      "cozy-market": 5
+      "tower-beacon": 4,
+      "occupational-archetype": 2,
+      "cozy-market": 1
     }
   },
   "poisoned_unbuilt": [],
@@ -44,26 +42,15 @@
     {
       "day": "2026-07-16",
       "slug": "comet-market",
-      "title": "The Comet Market",
+      "title": "Rulewriter's Season",
       "path": "projects/dream-cycle/backlog/2026-07-16-comet-market.md",
       "status": "built",
       "built": true,
-      "classification": "retire-replace",
-      "score": 13,
-      "legacy_shape": true,
-      "remaster_path": "rebuild",
-      "reasons": [
-        "pre-v2 bundle shape, so it cannot be revised in place by apply_dream_revision.py — mine it into a fresh proposal instead (vibe missing art_direction; locations must be a list of exactly 1; characters must be a list of exactly 1)",
-        "archive / library / recordkeeping vault motif in the prose (archive), unrequested by the day's Facets",
-        "bureaucracy / record-keeping motif is saturated across the catalog (18/33 bundles carry it)",
-        "bureaucracy / record-keeping motif in the prose (ledger, tally), unrequested by the day's Facets",
-        "cozy market / workshop / shopfront motif in asset names (market), unrequested by the day's Facets",
-        "repeated occupational archetype motif in the prose (keeper), unrequested by the day's Facets",
-        "tower / lighthouse / beacon spire motif is saturated across the catalog (10/33 bundles carry it)",
-        "tower / lighthouse / beacon spire motif in the prose (lighthouse), unrequested by the day's Facets",
-        "asset names reuse catalog-wide vocabulary (reading)",
-        "1 weak or missing visual field(s)"
-      ],
+      "classification": "keep",
+      "score": 0,
+      "legacy_shape": false,
+      "remaster_path": "in-place",
+      "reasons": [],
       "records": {
         "vibe": {
           "model": "Dream",
@@ -71,7 +58,7 @@
         },
         "location": {
           "model": "Dream",
-          "id": 2141
+          "id": 2142
         },
         "character": {
           "model": "Character",
@@ -92,111 +79,87 @@
       },
       "assets": {
         "vibe": {
-          "name": "Borrowed-Light Bittersweet",
+          "name": "Rulewriter's Season",
           "record": {
             "model": "Dream",
             "id": 2139
           },
-          "findings": [
-            "missing `art_direction` — the renderer has no subject to paint"
-          ],
-          "visual_findings": [
-            "missing `art_direction` — the renderer has no subject to paint"
-          ]
+          "findings": [],
+          "visual_findings": []
         },
         "location": {
-          "name": "The Comet Market",
+          "name": "The Glowstone Shelf",
           "record": {
             "model": "Dream",
-            "id": 2141
+            "id": 2142
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping, cozy market / workshop / shopfront motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "character": {
-          "name": "Whisk Tallow",
+          "name": "Oriel Tanaka",
           "record": {
             "model": "Character",
             "id": 982
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping, cozy market / workshop / shopfront, repeated occupational archetype motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "reward_item": {
-          "name": "Bottled Comet-Light",
+          "name": "The Second-Chance Stone",
           "record": {
             "model": "Reward",
             "id": 1235
           },
-          "findings": [
-            "carries the archive / library / recordkeeping vault, tower / lighthouse / beacon spire motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "reward_skill": {
-          "name": "Debt-Reading",
+          "name": "Clause Craft",
           "record": {
             "model": "Reward",
             "id": 1234
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping, cozy market / workshop / shopfront motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "scenario": {
-          "name": "The Ninety-First Night",
+          "name": "The Night the Rules Changed Mid-Air",
           "record": {
             "model": "Scenario",
             "id": 877
           },
-          "findings": [
-            "carries the cozy market / workshop / shopfront motif"
-          ],
+          "findings": [],
           "visual_findings": []
         }
       },
       "art": {
         "verdict": "regenerate",
         "reasons": [
-          "text identity changes under this pass; the render no longer matches",
-          "renders were built from weak visual fields"
+          "only 0/6 renders ever attached"
         ],
-        "style_lane": 1,
-        "lane_load": 3,
+        "style_lane": 10,
+        "lane_load": 2,
         "evidence": {
-          "requests": 9,
-          "attached": 9,
-          "superseded": 0,
-          "revisions": 0
+          "requests": 6,
+          "attached": 0,
+          "superseded": 9,
+          "revisions": 1
         }
       }
     },
     {
       "day": "2026-07-17",
       "slug": "marrow-library",
-      "title": "The Marrow Library",
+      "title": "The Dowry of Stones",
       "path": "projects/dream-cycle/backlog/2026-07-17-marrow-library.md",
       "status": "built",
       "built": true,
-      "classification": "retire-replace",
-      "score": 11,
-      "legacy_shape": true,
-      "remaster_path": "rebuild",
-      "reasons": [
-        "pre-v2 bundle shape, so it cannot be revised in place by apply_dream_revision.py — mine it into a fresh proposal instead (vibe missing art_direction; locations must be a list of exactly 1; characters must be a list of exactly 1)",
-        "archive / library / recordkeeping vault motif in asset names (library), unrequested by the day's Facets",
-        "bureaucracy / record-keeping motif is saturated across the catalog (18/33 bundles carry it)",
-        "bureaucracy / record-keeping motif in the prose (ledger), unrequested by the day's Facets",
-        "repeated occupational archetype motif in the prose (courier), unrequested by the day's Facets",
-        "civil-service honorific in an asset name (undersecretary)",
-        "asset names reuse catalog-wide vocabulary (reading)",
-        "1 weak or missing visual field(s)"
-      ],
+      "classification": "keep",
+      "score": 0,
+      "legacy_shape": false,
+      "remaster_path": "in-place",
+      "reasons": [],
       "records": {
         "vibe": {
           "model": "Dream",
@@ -225,20 +188,16 @@
       },
       "assets": {
         "vibe": {
-          "name": "Elegiac Wonder",
+          "name": "The Dowry of Stones",
           "record": {
             "model": "Dream",
             "id": 2329
           },
-          "findings": [
-            "missing `art_direction` — the renderer has no subject to paint"
-          ],
-          "visual_findings": [
-            "missing `art_direction` — the renderer has no subject to paint"
-          ]
+          "findings": [],
+          "visual_findings": []
         },
         "location": {
-          "name": "The Molting Yard",
+          "name": "The Bride's Long Stair",
           "record": {
             "model": "Dream",
             "id": 2331
@@ -247,18 +206,16 @@
           "visual_findings": []
         },
         "character": {
-          "name": "Undersecretary Wrenna Vail",
+          "name": "Ilkay Demirci",
           "record": {
             "model": "Character",
             "id": 1024
           },
-          "findings": [
-            "carries the archive / library / recordkeeping vault motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "reward_item": {
-          "name": "Molt-Jar",
+          "name": "Sieve of Small Grievances",
           "record": {
             "model": "Reward",
             "id": 1285
@@ -267,7 +224,7 @@
           "visual_findings": []
         },
         "reward_skill": {
-          "name": "Marrow-Reading",
+          "name": "Standing to Object",
           "record": {
             "model": "Reward",
             "id": 1284
@@ -276,7 +233,7 @@
           "visual_findings": []
         },
         "scenario": {
-          "name": "The Debt Iso Can't Repay",
+          "name": "The Objection on the Stair",
           "record": {
             "model": "Scenario",
             "id": 934
@@ -288,40 +245,31 @@
       "art": {
         "verdict": "regenerate",
         "reasons": [
-          "text identity changes under this pass; the render no longer matches",
-          "renders were built from weak visual fields",
-          "only 3/9 renders ever attached",
-          "style lane 10 is carrying 5 worlds (cap 3); this world should move to an unused visual language"
+          "only 0/6 renders ever attached",
+          "style lane 2 is carrying 5 worlds (cap 3); this world should move to an unused visual language"
         ],
-        "style_lane": 10,
+        "style_lane": 2,
         "lane_load": 5,
         "evidence": {
-          "requests": 9,
-          "attached": 3,
-          "superseded": 0,
-          "revisions": 0
+          "requests": 6,
+          "attached": 0,
+          "superseded": 15,
+          "revisions": 2
         }
       }
     },
     {
       "day": "2026-07-18",
       "slug": "kite-string-exchange",
-      "title": "The Kite-String Exchange",
+      "title": "The Reactor Dragon",
       "path": "projects/dream-cycle/backlog/2026-07-18-kite-string-exchange.md",
       "status": "built",
       "built": true,
-      "classification": "retire-replace",
-      "score": 9,
-      "legacy_shape": true,
-      "remaster_path": "rebuild",
-      "reasons": [
-        "pre-v2 bundle shape, so it cannot be revised in place by apply_dream_revision.py — mine it into a fresh proposal instead (vibe missing art_direction; locations must be a list of exactly 1; characters must be a list of exactly 1)",
-        "bureaucracy / record-keeping motif is saturated across the catalog (18/33 bundles carry it)",
-        "bureaucracy / record-keeping motif in the prose (tally), unrequested by the day's Facets",
-        "cozy market / workshop / shopfront motif in asset names (workshop), unrequested by the day's Facets",
-        "repeated occupational archetype motif in the prose (cartographer), unrequested by the day's Facets",
-        "1 weak or missing visual field(s)"
-      ],
+      "classification": "keep",
+      "score": 0,
+      "legacy_shape": false,
+      "remaster_path": "in-place",
+      "reasons": [],
       "records": {
         "vibe": {
           "model": "Dream",
@@ -350,31 +298,25 @@
       },
       "assets": {
         "vibe": {
-          "name": "Wind-Fortune",
+          "name": "The Reactor Dragon",
           "record": {
             "model": "Dream",
             "id": 2619
           },
-          "findings": [
-            "missing `art_direction` — the renderer has no subject to paint"
-          ],
-          "visual_findings": [
-            "missing `art_direction` — the renderer has no subject to paint"
-          ]
+          "findings": [],
+          "visual_findings": []
         },
         "location": {
-          "name": "The Spindle Workshop",
+          "name": "Neon Bay Nine",
           "record": {
             "model": "Dream",
             "id": 2621
           },
-          "findings": [
-            "carries the cozy market / workshop / shopfront motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "character": {
-          "name": "Mother Spindle",
+          "name": "Marisol Quintero",
           "record": {
             "model": "Character",
             "id": 1067
@@ -383,7 +325,7 @@
           "visual_findings": []
         },
         "reward_item": {
-          "name": "Cobb's Hooked Pole",
+          "name": "The Cold Ping",
           "record": {
             "model": "Reward",
             "id": 1367
@@ -392,7 +334,7 @@
           "visual_findings": []
         },
         "reward_skill": {
-          "name": "Blind Knotting",
+          "name": "Talk the Sky Down",
           "record": {
             "model": "Reward",
             "id": 1366
@@ -401,7 +343,7 @@
           "visual_findings": []
         },
         "scenario": {
-          "name": "The Thirty-Year Tangle",
+          "name": "Three Seconds of Warning",
           "record": {
             "model": "Scenario",
             "id": 1002
@@ -413,39 +355,31 @@
       "art": {
         "verdict": "regenerate",
         "reasons": [
-          "text identity changes under this pass; the render no longer matches",
-          "renders were built from weak visual fields",
-          "only 3/9 renders ever attached"
+          "only 0/6 renders ever attached"
         ],
-        "style_lane": 1,
+        "style_lane": 4,
         "lane_load": 3,
         "evidence": {
-          "requests": 9,
-          "attached": 3,
-          "superseded": 0,
-          "revisions": 0
+          "requests": 6,
+          "attached": 0,
+          "superseded": 9,
+          "revisions": 1
         }
       }
     },
     {
       "day": "2026-07-30",
       "slug": "stitch-echo",
-      "title": "Stitch & Echo",
+      "title": "The Bridge From Next Century",
       "path": "projects/dream-cycle/backlog/2026-07-30-stitch-echo.md",
       "status": "built",
       "built": true,
-      "classification": "retire-replace",
-      "score": 10,
-      "legacy_shape": true,
-      "remaster_path": "rebuild",
+      "classification": "keep",
+      "score": 1,
+      "legacy_shape": false,
+      "remaster_path": "in-place",
       "reasons": [
-        "pre-v2 bundle shape, so it cannot be revised in place by apply_dream_revision.py — mine it into a fresh proposal instead (vibe missing art_direction; locations must be a list of exactly 1; characters must be a list of exactly 1)",
-        "bureaucracy / record-keeping motif is saturated across the catalog (18/33 bundles carry it)",
-        "bureaucracy / record-keeping motif in the prose (filing, ledger, paperwork), unrequested by the day's Facets",
-        "cozy market / workshop / shopfront motif in asset names (parlor), unrequested by the day's Facets",
-        "repeated occupational archetype motif in the prose (undertaker), unrequested by the day's Facets",
-        "asset names reuse catalog-wide vocabulary (reading, reliquary)",
-        "1 weak or missing visual field(s)"
+        "repeated occupational archetype motif in the prose (apprentice), unrequested by the day's Facets"
       ],
       "records": {
         "vibe": {
@@ -475,31 +409,25 @@
       },
       "assets": {
         "vibe": {
-          "name": "Stitch & Echo",
+          "name": "The Bridge From Next Century",
           "record": {
             "model": "Dream",
             "id": 5006
           },
-          "findings": [
-            "missing `art_direction` — the renderer has no subject to paint"
-          ],
-          "visual_findings": [
-            "missing `art_direction` — the renderer has no subject to paint"
-          ]
+          "findings": [],
+          "visual_findings": []
         },
         "location": {
-          "name": "The Reliquary Parlor",
+          "name": "The Moonstone Bathhouse",
           "record": {
             "model": "Dream",
             "id": 5007
           },
-          "findings": [
-            "carries the cozy market / workshop / shopfront motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "character": {
-          "name": "Mortlake Vane",
+          "name": "Rina Oyelaran",
           "record": {
             "model": "Character",
             "id": 2823
@@ -508,7 +436,7 @@
           "visual_findings": []
         },
         "reward_item": {
-          "name": "Chronal Gut Thread",
+          "name": "The Patient Seed",
           "record": {
             "model": "Reward",
             "id": 2468
@@ -517,7 +445,7 @@
           "visual_findings": []
         },
         "reward_skill": {
-          "name": "Echo Reading",
+          "name": "Ask the Small Things",
           "record": {
             "model": "Reward",
             "id": 2467
@@ -526,49 +454,42 @@
           "visual_findings": []
         },
         "scenario": {
-          "name": "The Fox Who Argued Politics",
+          "name": "The Night the Bridge Asked for Help",
           "record": {
             "model": "Scenario",
             "id": 1864
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         }
       },
       "art": {
         "verdict": "regenerate",
         "reasons": [
-          "text identity changes under this pass; the render no longer matches",
-          "renders were built from weak visual fields"
+          "only 0/6 renders ever attached"
         ],
-        "style_lane": 1,
-        "lane_load": 3,
+        "style_lane": 6,
+        "lane_load": 2,
         "evidence": {
-          "requests": 11,
-          "attached": 11,
-          "superseded": 0,
-          "revisions": 0
+          "requests": 6,
+          "attached": 0,
+          "superseded": 11,
+          "revisions": 1
         }
       }
     },
     {
       "day": "2026-07-31",
       "slug": "silverfish-concierge",
-      "title": "Silverfish Concierge",
+      "title": "Sincerely, Wrongly Remembered",
       "path": "projects/dream-cycle/backlog/2026-07-31-silverfish-concierge.md",
       "status": "built",
       "built": true,
-      "classification": "light-refresh",
-      "score": 5,
+      "classification": "keep",
+      "score": 0,
       "legacy_shape": false,
       "remaster_path": "in-place",
-      "reasons": [
-        "bureaucracy / record-keeping motif is saturated across the catalog (18/33 bundles carry it) even though this day's Facets asked for it",
-        "repeated occupational archetype motif in asset names (concierge), unrequested by the day's Facets",
-        "asset names reuse catalog-wide vocabulary (reading)"
-      ],
+      "reasons": [],
       "records": {
         "vibe": {
           "model": "Dream",
@@ -602,9 +523,7 @@
             "model": "Dream",
             "id": 4992
           },
-          "findings": [
-            "carries the repeated occupational archetype motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "location": {
@@ -613,20 +532,16 @@
             "model": "Dream",
             "id": 4993
           },
-          "findings": [
-            "carries the repeated occupational archetype motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "character": {
-          "name": "Odalys Kade",
+          "name": "Theodora Kade",
           "record": {
             "model": "Character",
             "id": 2813
           },
-          "findings": [
-            "carries the repeated occupational archetype motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "reward_item": {
@@ -635,20 +550,16 @@
             "model": "Reward",
             "id": 2458
           },
-          "findings": [
-            "carries the repeated occupational archetype motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "reward_skill": {
-          "name": "Marginalia Reading",
+          "name": "Impression Recall",
           "record": {
             "model": "Reward",
             "id": 2459
           },
-          "findings": [
-            "carries the repeated occupational archetype motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "scenario": {
@@ -657,24 +568,22 @@
             "model": "Scenario",
             "id": 1857
           },
-          "findings": [
-            "carries the repeated occupational archetype motif"
-          ],
+          "findings": [],
           "visual_findings": []
         }
       },
       "art": {
-        "verdict": "restyle",
+        "verdict": "regenerate",
         "reasons": [
-          "style lane 10 is carrying 5 worlds (cap 3); this world should move to an unused visual language"
+          "only 0/6 renders ever attached"
         ],
-        "style_lane": 10,
-        "lane_load": 5,
+        "style_lane": 4,
+        "lane_load": 3,
         "evidence": {
           "requests": 6,
-          "attached": 6,
-          "superseded": 0,
-          "revisions": 0
+          "attached": 0,
+          "superseded": 6,
+          "revisions": 1
         }
       }
     },
@@ -685,16 +594,13 @@
       "path": "projects/dream-cycle/backlog/2026-08-01-the-filing-echidna.md",
       "status": "built",
       "built": true,
-      "classification": "light-refresh",
-      "score": 5,
+      "classification": "keep",
+      "score": 2,
       "legacy_shape": false,
       "remaster_path": "in-place",
       "reasons": [
-        "bureaucracy / record-keeping motif is saturated across the catalog (18/33 bundles carry it) even though this day's Facets asked for it",
         "repeated occupational archetype motif in the prose (inspector), unrequested by the day's Facets",
-        "tower / lighthouse / beacon spire motif is saturated across the catalog (10/33 bundles carry it)",
-        "tower / lighthouse / beacon spire motif in the prose (spires), unrequested by the day's Facets",
-        "asset names reuse catalog-wide vocabulary (filing)"
+        "tower / lighthouse / beacon spire motif in the prose (spires), unrequested by the day's Facets"
       ],
       "records": {
         "vibe": {
@@ -802,20 +708,15 @@
     {
       "day": "2026-08-02",
       "slug": "choir-of-the-drowned-kingdom",
-      "title": "Choir of the Drowned Kingdom",
+      "title": "The Island That Started Swimming",
       "path": "projects/dream-cycle/backlog/2026-08-02-choir-of-the-drowned-kingdom.md",
       "status": "built",
       "built": true,
-      "classification": "substantial-rewrite",
-      "score": 7,
+      "classification": "keep",
+      "score": 0,
       "legacy_shape": false,
       "remaster_path": "in-place",
-      "reasons": [
-        "bureaucracy / record-keeping motif is saturated across the catalog (18/33 bundles carry it)",
-        "bureaucracy / record-keeping motif in asset names (ledger), unrequested by the day's Facets",
-        "asset names reuse catalog-wide vocabulary (drowned, ledger)",
-        "2 weak or missing visual field(s)"
-      ],
+      "reasons": [],
       "records": {
         "vibe": {
           "model": "Dream",
@@ -844,20 +745,16 @@
       },
       "assets": {
         "vibe": {
-          "name": "The Gentle Abyss",
+          "name": "The Island That Started Swimming",
           "record": {
             "model": "Dream",
             "id": 5045
           },
-          "findings": [
-            "`art_direction` carries no material, colour, or light detail"
-          ],
-          "visual_findings": [
-            "`art_direction` carries no material, colour, or light detail"
-          ]
+          "findings": [],
+          "visual_findings": []
         },
         "location": {
-          "name": "The Sunken Cantata",
+          "name": "Halewater Spine",
           "record": {
             "model": "Dream",
             "id": 5046
@@ -866,20 +763,16 @@
           "visual_findings": []
         },
         "character": {
-          "name": "Perrin Voss",
+          "name": "Ines Abarca",
           "record": {
             "model": "Character",
             "id": 2853
           },
-          "findings": [
-            "`look` carries no material, colour, or light detail"
-          ],
-          "visual_findings": [
-            "`look` carries no material, colour, or light detail"
-          ]
+          "findings": [],
+          "visual_findings": []
         },
         "reward_item": {
-          "name": "Starfruit Cipher Net",
+          "name": "The Sounding Cord",
           "record": {
             "model": "Reward",
             "id": 2490
@@ -888,18 +781,16 @@
           "visual_findings": []
         },
         "reward_skill": {
-          "name": "Wayfarer's Ledger",
+          "name": "Borrowed Breath",
           "record": {
             "model": "Reward",
             "id": 2491
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "scenario": {
-          "name": "The Second Verse",
+          "name": "The First Sounding",
           "record": {
             "model": "Scenario",
             "id": 1884
@@ -911,16 +802,16 @@
       "art": {
         "verdict": "regenerate",
         "reasons": [
-          "text identity changes under this pass; the render no longer matches",
-          "renders were built from weak visual fields"
+          "only 0/6 renders ever attached",
+          "style lane 1 is carrying 4 worlds (cap 3); this world should move to an unused visual language"
         ],
-        "style_lane": 7,
-        "lane_load": 3,
+        "style_lane": 1,
+        "lane_load": 4,
         "evidence": {
           "requests": 6,
-          "attached": 6,
-          "superseded": 0,
-          "revisions": 0
+          "attached": 0,
+          "superseded": 6,
+          "revisions": 1
         }
       }
     },
@@ -1022,7 +913,7 @@
         "verdict": "keep-art",
         "reasons": [],
         "style_lane": 7,
-        "lane_load": 3,
+        "lane_load": 1,
         "evidence": {
           "requests": 6,
           "attached": 6,
@@ -1129,7 +1020,7 @@
         "verdict": "keep-art",
         "reasons": [],
         "style_lane": 0,
-        "lane_load": 2,
+        "lane_load": 3,
         "evidence": {
           "requests": 6,
           "attached": 6,
@@ -1141,19 +1032,17 @@
     {
       "day": "2026-08-05",
       "slug": "spire-that-remembers",
-      "title": "The Spire That Remembers",
+      "title": "Bloomline",
       "path": "projects/dream-cycle/backlog/2026-08-05-spire-that-remembers.md",
       "status": "built",
       "built": true,
-      "classification": "substantial-rewrite",
-      "score": 6,
+      "classification": "keep",
+      "score": 2,
       "legacy_shape": false,
       "remaster_path": "in-place",
       "reasons": [
-        "tower / lighthouse / beacon spire motif is saturated across the catalog (10/33 bundles carry it)",
-        "tower / lighthouse / beacon spire motif in asset names (spire), unrequested by the day's Facets",
-        "character name: surname 'Thistlewick' is built from the recurring noun stem 'thistle'",
-        "asset names reuse catalog-wide vocabulary (hollow, reading, reliquary)"
+        "3 assigned Facet(s) never reach the prose — vibe: Facet `investigator` never surfaces in the prose; character: Facet `investigator` never surfaces in the prose",
+        "1 weak or missing visual field(s)"
       ],
       "records": {
         "vibe": {
@@ -1183,29 +1072,25 @@
       },
       "assets": {
         "vibe": {
-          "name": "The Spire That Remembers",
+          "name": "Bloomline",
           "record": {
             "model": "Dream",
             "id": 5384
           },
-          "findings": [
-            "carries the tower / lighthouse / beacon spire motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "location": {
-          "name": "The Hollow Reliquary",
+          "name": "Greenhold",
           "record": {
             "model": "Dream",
             "id": 5385
           },
-          "findings": [
-            "carries the tower / lighthouse / beacon spire motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "character": {
-          "name": "Vex Thistlewick",
+          "name": "Yusra Panek",
           "record": {
             "model": "Character",
             "id": 3104
@@ -1214,50 +1099,50 @@
           "visual_findings": []
         },
         "reward_item": {
-          "name": "Aria Shard",
+          "name": "The Overture Fork",
           "record": {
             "model": "Reward",
             "id": 2687
           },
-          "findings": [
-            "carries the tower / lighthouse / beacon spire motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "reward_skill": {
-          "name": "Ghost-Ring Reading",
+          "name": "The Long Pause",
           "record": {
             "model": "Reward",
             "id": 2688
           },
-          "findings": [],
-          "visual_findings": []
+          "findings": [
+            "`look` describes people (figures); a Reward's look is an object or a visible effect"
+          ],
+          "visual_findings": [
+            "`look` describes people (figures); a Reward's look is an object or a visible effect"
+          ]
         },
         "scenario": {
-          "name": "The Ring That Wasn't Grown Yet",
+          "name": "What Flowered on Deck Nine",
           "record": {
             "model": "Scenario",
             "id": 2050
           },
-          "findings": [
-            "carries the tower / lighthouse / beacon spire motif"
-          ],
+          "findings": [],
           "visual_findings": []
         }
       },
       "art": {
         "verdict": "regenerate",
         "reasons": [
-          "text identity changes under this pass; the render no longer matches",
-          "style lane 2 is carrying 8 worlds (cap 3); this world should move to an unused visual language"
+          "renders were built from weak visual fields",
+          "only 0/6 renders ever attached"
         ],
-        "style_lane": 2,
-        "lane_load": 8,
+        "style_lane": 4,
+        "lane_load": 3,
         "evidence": {
           "requests": 6,
-          "attached": 6,
-          "superseded": 0,
-          "revisions": 0
+          "attached": 0,
+          "superseded": 6,
+          "revisions": 1
         }
       }
     },
@@ -1269,12 +1154,10 @@
       "status": "built",
       "built": true,
       "classification": "keep",
-      "score": 1,
+      "score": 0,
       "legacy_shape": false,
       "remaster_path": "in-place",
-      "reasons": [
-        "asset names reuse catalog-wide vocabulary (drowned)"
-      ],
+      "reasons": [],
       "records": {
         "vibe": {
           "model": "Dream",
@@ -1360,11 +1243,10 @@
       "art": {
         "verdict": "regenerate",
         "reasons": [
-          "only 0/6 renders ever attached",
-          "style lane 10 is carrying 5 worlds (cap 3); this world should move to an unused visual language"
+          "only 0/6 renders ever attached"
         ],
         "style_lane": 10,
-        "lane_load": 5,
+        "lane_load": 2,
         "evidence": {
           "requests": 6,
           "attached": 0,
@@ -1380,13 +1262,12 @@
       "path": "projects/dream-cycle/backlog/2026-08-07-corsairs-aria.md",
       "status": "built",
       "built": true,
-      "classification": "light-refresh",
-      "score": 3,
+      "classification": "keep",
+      "score": 2,
       "legacy_shape": false,
       "remaster_path": "in-place",
       "reasons": [
         "character name: surname 'Marrow' is a bare nature/object noun",
-        "asset names reuse catalog-wide vocabulary (drowned)",
         "1 weak or missing visual field(s)"
       ],
       "records": {
@@ -1480,10 +1361,10 @@
         "reasons": [
           "renders were built from weak visual fields",
           "only 0/6 renders ever attached",
-          "style lane 2 is carrying 8 worlds (cap 3); this world should move to an unused visual language"
+          "style lane 2 is carrying 5 worlds (cap 3); this world should move to an unused visual language"
         ],
         "style_lane": 2,
-        "lane_load": 8,
+        "lane_load": 5,
         "evidence": {
           "requests": 6,
           "attached": 0,
@@ -1495,19 +1376,16 @@
     {
       "day": "2026-08-08",
       "slug": "vinehorn-verdict",
-      "title": "Vinehorn Verdict",
+      "title": "The Noon Mirrors",
       "path": "projects/dream-cycle/backlog/2026-08-08-vinehorn-verdict.md",
       "status": "built",
       "built": true,
-      "classification": "substantial-rewrite",
-      "score": 6,
+      "classification": "keep",
+      "score": 1,
       "legacy_shape": false,
       "remaster_path": "in-place",
       "reasons": [
-        "archive / library / recordkeeping vault motif in asset names (archive), unrequested by the day's Facets",
-        "bureaucracy / record-keeping motif is saturated across the catalog (18/33 bundles carry it)",
-        "bureaucracy / record-keeping motif in the prose (file, files, filing), unrequested by the day's Facets",
-        "civil-service honorific in an asset name (deputy)"
+        "3 assigned Facet(s) never reach the prose — vibe: Facet `investigator` never surfaces in the prose; character: Facet `investigator` never surfaces in the prose"
       ],
       "records": {
         "vibe": {
@@ -1537,40 +1415,34 @@
       },
       "assets": {
         "vibe": {
-          "name": "The Green Labyrinth Beat",
+          "name": "The Noon Mirrors",
           "record": {
             "model": "Dream",
             "id": 5638
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "location": {
-          "name": "The Vinehorn Archive",
+          "name": "Halcyon Mirrorfield",
           "record": {
             "model": "Dream",
             "id": 5639
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping, archive / library / recordkeeping vault motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "character": {
-          "name": "Bailiff Ashorn",
+          "name": "Dolan Ferreira",
           "record": {
             "model": "Character",
             "id": 3292
           },
-          "findings": [
-            "carries the archive / library / recordkeeping vault motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "reward_item": {
-          "name": "Deputy's Granite Star",
+          "name": "The Dawnpin",
           "record": {
             "model": "Reward",
             "id": 2836
@@ -1579,7 +1451,7 @@
           "visual_findings": []
         },
         "reward_skill": {
-          "name": "Lanternlight Deduction",
+          "name": "Reading the Burn",
           "record": {
             "model": "Reward",
             "id": 2837
@@ -1588,30 +1460,28 @@
           "visual_findings": []
         },
         "scenario": {
-          "name": "The Vote That Grew Teeth",
+          "name": "Before the Next Dawn Burn",
           "record": {
             "model": "Scenario",
             "id": 2175
           },
-          "findings": [
-            "carries the archive / library / recordkeeping vault motif"
-          ],
+          "findings": [],
           "visual_findings": []
         }
       },
       "art": {
         "verdict": "regenerate",
         "reasons": [
-          "text identity changes under this pass; the render no longer matches",
-          "style lane 2 is carrying 8 worlds (cap 3); this world should move to an unused visual language"
+          "only 0/6 renders ever attached",
+          "style lane 1 is carrying 4 worlds (cap 3); this world should move to an unused visual language"
         ],
-        "style_lane": 2,
-        "lane_load": 8,
+        "style_lane": 1,
+        "lane_load": 4,
         "evidence": {
           "requests": 6,
-          "attached": 6,
-          "superseded": 0,
-          "revisions": 0
+          "attached": 0,
+          "superseded": 6,
+          "revisions": 1
         }
       }
     },
@@ -1622,14 +1492,12 @@
       "path": "projects/dream-cycle/backlog/2026-08-09-static-marsh.md",
       "status": "built",
       "built": true,
-      "classification": "light-refresh",
-      "score": 3,
+      "classification": "keep",
+      "score": 1,
       "legacy_shape": false,
       "remaster_path": "in-place",
       "reasons": [
-        "tower / lighthouse / beacon spire motif is saturated across the catalog (10/33 bundles carry it)",
-        "tower / lighthouse / beacon spire motif in the prose (watchtower), unrequested by the day's Facets",
-        "asset names reuse catalog-wide vocabulary (static)"
+        "tower / lighthouse / beacon spire motif in the prose (watchtower), unrequested by the day's Facets"
       ],
       "records": {
         "vibe": {
@@ -1719,7 +1587,7 @@
         "verdict": "keep-art",
         "reasons": [],
         "style_lane": 3,
-        "lane_load": 2,
+        "lane_load": 3,
         "evidence": {
           "requests": 6,
           "attached": 6,
@@ -1731,20 +1599,15 @@
     {
       "day": "2026-08-10",
       "slug": "spire-static",
-      "title": "Spire Static",
+      "title": "Lullaby Run",
       "path": "projects/dream-cycle/backlog/2026-08-10-spire-static.md",
       "status": "built",
       "built": true,
-      "classification": "substantial-rewrite",
-      "score": 6,
+      "classification": "keep",
+      "score": 0,
       "legacy_shape": false,
       "remaster_path": "in-place",
-      "reasons": [
-        "tower / lighthouse / beacon spire motif is saturated across the catalog (10/33 bundles carry it)",
-        "tower / lighthouse / beacon spire motif in asset names (spire), unrequested by the day's Facets",
-        "asset names reuse catalog-wide vocabulary (static)",
-        "1 weak or missing visual field(s)"
-      ],
+      "reasons": [],
       "records": {
         "vibe": {
           "model": "Dream",
@@ -1773,7 +1636,7 @@
       },
       "assets": {
         "vibe": {
-          "name": "Hangar Ghostlight",
+          "name": "Lullaby Run",
           "record": {
             "model": "Dream",
             "id": 5642
@@ -1782,76 +1645,63 @@
           "visual_findings": []
         },
         "location": {
-          "name": "The Crystal Spire Strand",
+          "name": "The Ribbed Sound",
           "record": {
             "model": "Dream",
             "id": 5643
           },
-          "findings": [
-            "carries the tower / lighthouse / beacon spire motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "character": {
-          "name": "Corra Finnwake",
+          "name": "Maret Solvang",
           "record": {
             "model": "Character",
             "id": 3294
           },
-          "findings": [
-            "carries the tower / lighthouse / beacon spire motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "reward_item": {
-          "name": "The Widow's Splinter",
+          "name": "Hushspore Canister",
           "record": {
             "model": "Reward",
             "id": 2840
           },
-          "findings": [
-            "carries the tower / lighthouse / beacon spire motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "reward_skill": {
-          "name": "Leviathan-Wake Trim",
+          "name": "Breath Timing",
           "record": {
             "model": "Reward",
             "id": 2841
           },
-          "findings": [
-            "`look` carries no material, colour, or light detail"
-          ],
-          "visual_findings": [
-            "`look` carries no material, colour, or light detail"
-          ]
+          "findings": [],
+          "visual_findings": []
         },
         "scenario": {
-          "name": "The Grounding Order",
+          "name": "The Night They Cut the Spore Line",
           "record": {
             "model": "Scenario",
             "id": 2177
           },
-          "findings": [
-            "carries the tower / lighthouse / beacon spire motif"
-          ],
+          "findings": [],
           "visual_findings": []
         }
       },
       "art": {
         "verdict": "regenerate",
         "reasons": [
-          "text identity changes under this pass; the render no longer matches",
-          "renders were built from weak visual fields"
+          "only 0/6 renders ever attached"
         ],
-        "style_lane": 7,
-        "lane_load": 3,
+        "style_lane": 6,
+        "lane_load": 2,
         "evidence": {
           "requests": 6,
-          "attached": 6,
-          "superseded": 0,
-          "revisions": 0
+          "attached": 0,
+          "superseded": 6,
+          "revisions": 1
         }
       }
     },
@@ -1862,12 +1712,11 @@
       "path": "projects/dream-cycle/backlog/2026-08-11-the-hollow-bracket.md",
       "status": "built",
       "built": true,
-      "classification": "light-refresh",
-      "score": 3,
+      "classification": "keep",
+      "score": 2,
       "legacy_shape": false,
       "remaster_path": "in-place",
       "reasons": [
-        "asset names reuse catalog-wide vocabulary (hollow, perpetua)",
         "4 assigned Facet(s) never reach the prose — vibe: Facet `opossum` never surfaces in the prose; location: Facet `opossum` never surfaces in the prose"
       ],
       "records": {
@@ -1956,10 +1805,10 @@
         "verdict": "regenerate",
         "reasons": [
           "only 0/6 renders ever attached",
-          "style lane 2 is carrying 8 worlds (cap 3); this world should move to an unused visual language"
+          "style lane 2 is carrying 5 worlds (cap 3); this world should move to an unused visual language"
         ],
         "style_lane": 2,
-        "lane_load": 8,
+        "lane_load": 5,
         "evidence": {
           "requests": 6,
           "attached": 0,
@@ -1976,11 +1825,10 @@
       "status": "built",
       "built": true,
       "classification": "keep",
-      "score": 2,
+      "score": 1,
       "legacy_shape": false,
       "remaster_path": "in-place",
       "reasons": [
-        "asset names reuse catalog-wide vocabulary (static)",
         "3 assigned Facet(s) never reach the prose — vibe: Facet `creative-writer` never surfaces in the prose; character: Facet `creative-writer` never surfaces in the prose"
       ],
       "records": {
@@ -2071,7 +1919,7 @@
           "only 0/6 renders ever attached"
         ],
         "style_lane": 5,
-        "lane_load": 1,
+        "lane_load": 2,
         "evidence": {
           "requests": 6,
           "attached": 0,
@@ -2083,19 +1931,17 @@
     {
       "day": "2026-08-13",
       "slug": "the-quota-of-bones",
-      "title": "The Quota of Bones",
+      "title": "The Salt Rebellion",
       "path": "projects/dream-cycle/backlog/2026-08-13-the-quota-of-bones.md",
       "status": "built",
       "built": true,
-      "classification": "substantial-rewrite",
-      "score": 6,
+      "classification": "keep",
+      "score": 2,
       "legacy_shape": false,
       "remaster_path": "in-place",
       "reasons": [
-        "bureaucracy / record-keeping motif is saturated across the catalog (18/33 bundles carry it)",
-        "bureaucracy / record-keeping motif in asset names (ledger, quota), unrequested by the day's Facets",
-        "asset names reuse catalog-wide vocabulary (ledger)",
-        "3 assigned Facet(s) never reach the prose — vibe: Facet `middle-manager` never surfaces in the prose; character: Facet `middle-manager` never surfaces in the prose"
+        "3 assigned Facet(s) never reach the prose — vibe: Facet `middle-manager` never surfaces in the prose; character: Facet `middle-manager` never surfaces in the prose",
+        "1 weak or missing visual field(s)"
       ],
       "records": {
         "vibe": {
@@ -2125,85 +1971,78 @@
       },
       "assets": {
         "vibe": {
-          "name": "The Quota of Bones",
+          "name": "The Salt Rebellion",
           "record": {
             "model": "Dream",
             "id": 5662
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "location": {
-          "name": "The Ration Yard",
+          "name": "Sixmile Camp",
           "record": {
             "model": "Dream",
             "id": 5663
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "character": {
-          "name": "Quartermaster-Cook Ilsevet Korrin",
+          "name": "Ilse Vantroost",
           "record": {
             "model": "Character",
             "id": 3296
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "reward_item": {
-          "name": "The Unspent Ration",
+          "name": "The Last Grey Block",
           "record": {
             "model": "Reward",
             "id": 2844
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "reward_skill": {
-          "name": "The Fair Count",
+          "name": "The Fair Share",
           "record": {
             "model": "Reward",
             "id": 2845
           },
           "findings": [
-            "carries the bureaucracy / record-keeping motif"
+            "`look` carries no material, colour, or light detail"
           ],
-          "visual_findings": []
+          "visual_findings": [
+            "`look` carries no material, colour, or light detail"
+          ]
         },
         "scenario": {
-          "name": "The Last Ledger",
+          "name": "The Night the Bowls Went Down",
           "record": {
             "model": "Scenario",
             "id": 2179
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         }
       },
       "art": {
         "verdict": "regenerate",
         "reasons": [
-          "text identity changes under this pass; the render no longer matches",
-          "style lane 10 is carrying 5 worlds (cap 3); this world should move to an unused visual language"
+          "renders were built from weak visual fields",
+          "only 0/6 renders ever attached",
+          "style lane 8 is carrying 4 worlds (cap 3); this world should move to an unused visual language"
         ],
-        "style_lane": 10,
-        "lane_load": 5,
+        "style_lane": 8,
+        "lane_load": 4,
         "evidence": {
           "requests": 6,
-          "attached": 6,
-          "superseded": 0,
-          "revisions": 0
+          "attached": 0,
+          "superseded": 6,
+          "revisions": 1
         }
       }
     },
@@ -2215,11 +2054,10 @@
       "status": "built",
       "built": true,
       "classification": "keep",
-      "score": 2,
+      "score": 1,
       "legacy_shape": false,
       "remaster_path": "in-place",
       "reasons": [
-        "asset names reuse catalog-wide vocabulary (reading)",
         "1 weak or missing visual field(s)"
       ],
       "records": {
@@ -2312,10 +2150,11 @@
         "verdict": "regenerate",
         "reasons": [
           "renders were built from weak visual fields",
-          "only 0/6 renders ever attached"
+          "only 0/6 renders ever attached",
+          "style lane 8 is carrying 4 worlds (cap 3); this world should move to an unused visual language"
         ],
         "style_lane": 8,
-        "lane_load": 1,
+        "lane_load": 4,
         "evidence": {
           "requests": 6,
           "attached": 0,
@@ -2327,19 +2166,15 @@
     {
       "day": "2026-08-15",
       "slug": "the-slow-bell-of-ninth-ledger",
-      "title": "The Slow Bell of Ninth Ledger",
+      "title": "Salvage Rights",
       "path": "projects/dream-cycle/backlog/2026-08-15-the-slow-bell-of-ninth-ledger.md",
       "status": "built",
       "built": true,
-      "classification": "light-refresh",
-      "score": 5,
+      "classification": "keep",
+      "score": 0,
       "legacy_shape": false,
       "remaster_path": "in-place",
-      "reasons": [
-        "bureaucracy / record-keeping motif is saturated across the catalog (18/33 bundles carry it)",
-        "bureaucracy / record-keeping motif in asset names (ledger, tally), unrequested by the day's Facets",
-        "asset names reuse catalog-wide vocabulary (ledger)"
-      ],
+      "reasons": [],
       "records": {
         "vibe": {
           "model": "Dream",
@@ -2368,25 +2203,21 @@
       },
       "assets": {
         "vibe": {
-          "name": "The Slow Bell of Ninth Ledger",
+          "name": "Salvage Rights",
           "record": {
             "model": "Dream",
             "id": 5666
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "location": {
-          "name": "Ninth Ledger Flood Deck",
+          "name": "The Ninth Deck Floodline",
           "record": {
             "model": "Dream",
             "id": 5667
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "character": {
@@ -2395,57 +2226,49 @@
             "model": "Character",
             "id": 3298
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "reward_item": {
-          "name": "The Unsinkable Tally Chest",
+          "name": "The Unsinkable Strongbox",
           "record": {
             "model": "Reward",
             "id": 2848
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "reward_skill": {
-          "name": "Ledger-Skin Recalibration",
+          "name": "Repossession Swarm",
           "record": {
             "model": "Reward",
             "id": 2849
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "scenario": {
-          "name": "Three Rings of the Bell",
+          "name": "Sixty Seconds of Nothing",
           "record": {
             "model": "Scenario",
             "id": 2181
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         }
       },
       "art": {
-        "verdict": "restyle",
+        "verdict": "regenerate",
         "reasons": [
-          "style lane 2 is carrying 8 worlds (cap 3); this world should move to an unused visual language"
+          "only 0/6 renders ever attached"
         ],
-        "style_lane": 2,
-        "lane_load": 8,
+        "style_lane": 3,
+        "lane_load": 3,
         "evidence": {
           "requests": 6,
-          "attached": 6,
-          "superseded": 0,
-          "revisions": 0
+          "attached": 0,
+          "superseded": 6,
+          "revisions": 1
         }
       }
     },
@@ -2554,11 +2377,10 @@
         "verdict": "regenerate",
         "reasons": [
           "renders were built from weak visual fields",
-          "only 0/6 renders ever attached",
-          "style lane 11 is carrying 4 worlds (cap 3); this world should move to an unused visual language"
+          "only 0/6 renders ever attached"
         ],
         "style_lane": 11,
-        "lane_load": 4,
+        "lane_load": 2,
         "evidence": {
           "requests": 6,
           "attached": 0,
@@ -2570,20 +2392,16 @@
     {
       "day": "2026-08-17",
       "slug": "ever-after-files",
-      "title": "Ever After Files",
+      "title": "Third-Act Money",
       "path": "projects/dream-cycle/backlog/2026-08-17-ever-after-files.md",
       "status": "built",
       "built": true,
-      "classification": "substantial-rewrite",
-      "score": 7,
+      "classification": "keep",
+      "score": 1,
       "legacy_shape": false,
       "remaster_path": "in-place",
       "reasons": [
-        "bureaucracy / record-keeping motif is saturated across the catalog (18/33 bundles carry it)",
-        "bureaucracy / record-keeping motif in asset names (files, ledger), unrequested by the day's Facets",
-        "character name: surname 'Quill' is a bare nature/object noun",
-        "asset names reuse catalog-wide vocabulary (ledger, perpetua)",
-        "1 weak or missing visual field(s)"
+        "3 assigned Facet(s) never reach the prose — vibe: Facet `creative-writer` never surfaces in the prose; character: Facet `creative-writer` never surfaces in the prose"
       ],
       "records": {
         "vibe": {
@@ -2613,29 +2431,25 @@
       },
       "assets": {
         "vibe": {
-          "name": "The Ever After Files",
+          "name": "Third-Act Money",
           "record": {
             "model": "Dream",
             "id": 5686
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "location": {
-          "name": "The Godmother's Exchange",
+          "name": "The Gilded Rafters",
           "record": {
             "model": "Dream",
             "id": 5687
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "character": {
-          "name": "Perpetua Quill",
+          "name": "Ottoline Sarr",
           "record": {
             "model": "Character",
             "id": 3310
@@ -2644,74 +2458,63 @@
           "visual_findings": []
         },
         "reward_item": {
-          "name": "Godmother's Ledger Quill",
+          "name": "The Understudy's Shawl",
           "record": {
             "model": "Reward",
             "id": 2868
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "reward_skill": {
-          "name": "Ghostwriter's Tell",
+          "name": "Rewrite On Your Feet",
           "record": {
             "model": "Reward",
             "id": 2869
           },
-          "findings": [
-            "`look` carries no material, colour, or light detail"
-          ],
-          "visual_findings": [
-            "`look` carries no material, colour, or light detail"
-          ]
+          "findings": [],
+          "visual_findings": []
         },
         "scenario": {
-          "name": "The Wish That Wouldn't Clear",
+          "name": "Opening Night, Third Act",
           "record": {
             "model": "Scenario",
             "id": 2191
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         }
       },
       "art": {
         "verdict": "regenerate",
         "reasons": [
-          "text identity changes under this pass; the render no longer matches",
-          "renders were built from weak visual fields",
-          "style lane 2 is carrying 8 worlds (cap 3); this world should move to an unused visual language"
+          "only 0/6 renders ever attached",
+          "style lane 1 is carrying 4 worlds (cap 3); this world should move to an unused visual language"
         ],
-        "style_lane": 2,
-        "lane_load": 8,
+        "style_lane": 1,
+        "lane_load": 4,
         "evidence": {
           "requests": 6,
-          "attached": 6,
-          "superseded": 0,
-          "revisions": 0
+          "attached": 0,
+          "superseded": 6,
+          "revisions": 1
         }
       }
     },
     {
       "day": "2026-08-18",
       "slug": "tideglass-reliquary",
-      "title": "Tideglass Reliquary",
+      "title": "Spawning Tide",
       "path": "projects/dream-cycle/backlog/2026-08-18-tideglass-reliquary.md",
       "status": "built",
       "built": true,
-      "classification": "substantial-rewrite",
-      "score": 6,
+      "classification": "keep",
+      "score": 2,
       "legacy_shape": false,
       "remaster_path": "in-place",
       "reasons": [
-        "archive / library / recordkeeping vault motif in asset names (archive), unrequested by the day's Facets",
-        "bureaucracy / record-keeping motif is saturated across the catalog (18/33 bundles carry it)",
-        "bureaucracy / record-keeping motif in the prose (ledger), unrequested by the day's Facets",
-        "asset names reuse catalog-wide vocabulary (perpetua, reliquary)"
+        "3 assigned Facet(s) never reach the prose — vibe: Facet `grief-cartographer` never surfaces in the prose; character: Facet `grief-cartographer` never surfaces in the prose",
+        "1 weak or missing visual field(s)"
       ],
       "records": {
         "vibe": {
@@ -2741,7 +2544,7 @@
       },
       "assets": {
         "vibe": {
-          "name": "The Tideglass Reliquary",
+          "name": "Spawning Tide",
           "record": {
             "model": "Dream",
             "id": 5682
@@ -2750,29 +2553,25 @@
           "visual_findings": []
         },
         "location": {
-          "name": "The Coagulate Archive",
+          "name": "The Weeping Causeway",
           "record": {
             "model": "Dream",
             "id": 5683
           },
-          "findings": [
-            "carries the archive / library / recordkeeping vault motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "character": {
-          "name": "Perpetua Voss",
+          "name": "Juno Ashcombe",
           "record": {
             "model": "Character",
             "id": 3308
           },
-          "findings": [
-            "carries the archive / library / recordkeeping vault motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "reward_item": {
-          "name": "The Grief-Bled Compass",
+          "name": "The Wrong-Door Stone",
           "record": {
             "model": "Reward",
             "id": 2864
@@ -2781,60 +2580,57 @@
           "visual_findings": []
         },
         "reward_skill": {
-          "name": "Intake Ritual",
+          "name": "Loss Adjustment",
           "record": {
             "model": "Reward",
             "id": 2865
           },
           "findings": [
-            "carries the bureaucracy / record-keeping motif"
+            "`look` describes people (figure); a Reward's look is an object or a visible effect"
           ],
-          "visual_findings": []
+          "visual_findings": [
+            "`look` describes people (figure); a Reward's look is an object or a visible effect"
+          ]
         },
         "scenario": {
-          "name": "The Last Undelivered Letter",
+          "name": "The Night the Crabs Came Up",
           "record": {
             "model": "Scenario",
             "id": 2189
           },
-          "findings": [
-            "carries the archive / library / recordkeeping vault motif"
-          ],
+          "findings": [],
           "visual_findings": []
         }
       },
       "art": {
         "verdict": "regenerate",
         "reasons": [
-          "text identity changes under this pass; the render no longer matches",
-          "style lane 11 is carrying 4 worlds (cap 3); this world should move to an unused visual language"
+          "renders were built from weak visual fields",
+          "only 0/6 renders ever attached"
         ],
-        "style_lane": 11,
-        "lane_load": 4,
+        "style_lane": 0,
+        "lane_load": 3,
         "evidence": {
           "requests": 6,
-          "attached": 6,
-          "superseded": 0,
-          "revisions": 0
+          "attached": 0,
+          "superseded": 6,
+          "revisions": 1
         }
       }
     },
     {
       "day": "2026-08-19",
       "slug": "the-tally-of-small-suns",
-      "title": "The Tally of Small Suns",
+      "title": "The Silk Bargain",
       "path": "projects/dream-cycle/backlog/2026-08-19-the-tally-of-small-suns.md",
       "status": "built",
       "built": true,
-      "classification": "substantial-rewrite",
-      "score": 6,
+      "classification": "keep",
+      "score": 2,
       "legacy_shape": false,
       "remaster_path": "in-place",
       "reasons": [
-        "bureaucracy / record-keeping motif is saturated across the catalog (18/33 bundles carry it)",
-        "bureaucracy / record-keeping motif in asset names (tally), unrequested by the day's Facets",
-        "cozy market / workshop / shopfront motif in the prose (market, stalls), unrequested by the day's Facets",
-        "3 assigned Facet(s) never reach the prose — vibe: Facet `accountant` never surfaces in the prose; character: Facet `accountant` never surfaces in the prose"
+        "7 assigned Facet(s) never reach the prose — vibe: Facet `goblin-shark` never surfaces in the prose; vibe: Facet `accountant` never surfaces in the prose"
       ],
       "records": {
         "vibe": {
@@ -2864,105 +2660,88 @@
       },
       "assets": {
         "vibe": {
-          "name": "The Tally of Small Suns",
+          "name": "The Silk Bargain",
           "record": {
             "model": "Dream",
             "id": 5670
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "location": {
-          "name": "The Driftspine Commons",
+          "name": "The Wedding Hulk",
           "record": {
             "model": "Dream",
             "id": 5671
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping, cozy market / workshop / shopfront motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "character": {
-          "name": "Odalys Marsh",
+          "name": "Reyna Odum",
           "record": {
             "model": "Character",
             "id": 3300
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "reward_item": {
-          "name": "The Debtless Sash",
+          "name": "First-Light Sash",
           "record": {
             "model": "Reward",
             "id": 2852
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "reward_skill": {
-          "name": "The Nightly Reckoning",
+          "name": "The Long Telling",
           "record": {
             "model": "Reward",
             "id": 2853
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "scenario": {
-          "name": "The Shark Who Kept Count",
+          "name": "The Sash That Went Dark",
           "record": {
             "model": "Scenario",
             "id": 2183
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping, cozy market / workshop / shopfront motif"
-          ],
+          "findings": [],
           "visual_findings": []
         }
       },
       "art": {
         "verdict": "regenerate",
         "reasons": [
-          "text identity changes under this pass; the render no longer matches",
-          "style lane 10 is carrying 5 worlds (cap 3); this world should move to an unused visual language"
+          "only 0/6 renders ever attached"
         ],
-        "style_lane": 10,
-        "lane_load": 5,
+        "style_lane": 5,
+        "lane_load": 2,
         "evidence": {
           "requests": 6,
-          "attached": 6,
-          "superseded": 0,
-          "revisions": 0
+          "attached": 0,
+          "superseded": 6,
+          "revisions": 1
         }
       }
     },
     {
       "day": "2026-08-20",
       "slug": "canopy-permit-office",
-      "title": "The Canopy Permit Office",
+      "title": "Boundary Day",
       "path": "projects/dream-cycle/backlog/2026-08-20-canopy-permit-office.md",
       "status": "built",
       "built": true,
-      "classification": "substantial-rewrite",
-      "score": 7,
+      "classification": "keep",
+      "score": 1,
       "legacy_shape": false,
       "remaster_path": "in-place",
       "reasons": [
-        "bureaucracy / record-keeping motif is saturated across the catalog (18/33 bundles carry it) even though this day's Facets asked for it",
-        "repeated occupational archetype motif in the prose (courier), unrequested by the day's Facets",
-        "tower / lighthouse / beacon spire motif is saturated across the catalog (10/33 bundles carry it)",
-        "tower / lighthouse / beacon spire motif in asset names (tower), unrequested by the day's Facets",
-        "asset names reuse catalog-wide vocabulary (reading)"
+        "tower / lighthouse / beacon spire motif in the prose (beacons), unrequested by the day's Facets"
       ],
       "records": {
         "vibe": {
@@ -2992,7 +2771,7 @@
       },
       "assets": {
         "vibe": {
-          "name": "The Canopy Permit Office",
+          "name": "Boundary Day",
           "record": {
             "model": "Dream",
             "id": 5668
@@ -3001,29 +2780,25 @@
           "visual_findings": []
         },
         "location": {
-          "name": "Root Court Tower",
+          "name": "The Bonewood Line",
           "record": {
             "model": "Dream",
             "id": 5669
           },
-          "findings": [
-            "carries the tower / lighthouse / beacon spire motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "character": {
-          "name": "Cass Windrell",
+          "name": "Kesia Adeyemi",
           "record": {
             "model": "Character",
             "id": 3299
           },
-          "findings": [
-            "carries the repeated occupational archetype motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "reward_item": {
-          "name": "The Self-Stamping Bone Seal",
+          "name": "The Claim Splinter",
           "record": {
             "model": "Reward",
             "id": 2850
@@ -3032,7 +2807,7 @@
           "visual_findings": []
         },
         "reward_skill": {
-          "name": "Root-Reading",
+          "name": "Rootwake Landing",
           "record": {
             "model": "Reward",
             "id": 2851
@@ -3041,49 +2816,44 @@
           "visual_findings": []
         },
         "scenario": {
-          "name": "The Permit That Doesn't Expire",
+          "name": "The Line They Flew Twice",
           "record": {
             "model": "Scenario",
             "id": 2182
           },
-          "findings": [
-            "carries the tower / lighthouse / beacon spire motif"
-          ],
+          "findings": [],
           "visual_findings": []
         }
       },
       "art": {
         "verdict": "regenerate",
         "reasons": [
-          "text identity changes under this pass; the render no longer matches"
+          "only 0/6 renders ever attached",
+          "style lane 8 is carrying 4 worlds (cap 3); this world should move to an unused visual language"
         ],
-        "style_lane": 6,
-        "lane_load": 2,
+        "style_lane": 8,
+        "lane_load": 4,
         "evidence": {
           "requests": 6,
-          "attached": 6,
-          "superseded": 0,
-          "revisions": 0
+          "attached": 0,
+          "superseded": 6,
+          "revisions": 1
         }
       }
     },
     {
       "day": "2026-08-21",
       "slug": "kelp-ink-transfer",
-      "title": "The Kelp-Ink Transfer",
+      "title": "The Deep Shift",
       "path": "projects/dream-cycle/backlog/2026-08-21-kelp-ink-transfer.md",
       "status": "built",
       "built": true,
-      "classification": "substantial-rewrite",
-      "score": 7,
+      "classification": "keep",
+      "score": 1,
       "legacy_shape": false,
       "remaster_path": "in-place",
       "reasons": [
-        "archive / library / recordkeeping vault motif in the prose (archive, index), unrequested by the day's Facets",
-        "bureaucracy / record-keeping motif is saturated across the catalog (18/33 bundles carry it)",
-        "bureaucracy / record-keeping motif in asset names (file, filing, ledger), unrequested by the day's Facets",
-        "asset names reuse catalog-wide vocabulary (filing, ledger)",
-        "1 weak or missing visual field(s)"
+        "2 assigned Facet(s) never reach the prose — location: Facet `cosmic-ice` never surfaces in the prose; reward_item: Facet `cosmic-ice` never surfaces in the prose"
       ],
       "records": {
         "vibe": {
@@ -3113,109 +2883,88 @@
       },
       "assets": {
         "vibe": {
-          "name": "The Kelp-Ink Transfer",
+          "name": "The Deep Shift",
           "record": {
             "model": "Dream",
             "id": 5670
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "location": {
-          "name": "The Low-Tide Ledger",
+          "name": "Kelphold Rig",
           "record": {
             "model": "Dream",
             "id": 5671
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping, archive / library / recordkeeping vault motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "character": {
-          "name": "Bristle Voss",
+          "name": "Imogen Halvard",
           "record": {
             "model": "Character",
             "id": 3300
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping, archive / library / recordkeeping vault motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "reward_item": {
-          "name": "The Unclosed Requisition",
+          "name": "Coldwater Bell",
           "record": {
             "model": "Reward",
             "id": 2852
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "reward_skill": {
-          "name": "Dead-Reckoning Filing",
+          "name": "Dead-Reckoning Descent",
           "record": {
             "model": "Reward",
             "id": 2853
           },
-          "findings": [
-            "`look` carries no material, colour, or light detail",
-            "carries the bureaucracy / record-keeping, archive / library / recordkeeping vault motif"
-          ],
-          "visual_findings": [
-            "`look` carries no material, colour, or light detail"
-          ]
+          "findings": [],
+          "visual_findings": []
         },
         "scenario": {
-          "name": "The Tide That Reads Your File",
+          "name": "What the Amber Lamps Mean",
           "record": {
             "model": "Scenario",
             "id": 2183
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping, archive / library / recordkeeping vault motif"
-          ],
+          "findings": [],
           "visual_findings": []
         }
       },
       "art": {
         "verdict": "regenerate",
         "reasons": [
-          "text identity changes under this pass; the render no longer matches",
-          "renders were built from weak visual fields",
-          "style lane 11 is carrying 4 worlds (cap 3); this world should move to an unused visual language"
+          "only 0/6 renders ever attached"
         ],
         "style_lane": 11,
-        "lane_load": 4,
+        "lane_load": 2,
         "evidence": {
           "requests": 6,
-          "attached": 6,
-          "superseded": 0,
-          "revisions": 0
+          "attached": 0,
+          "superseded": 6,
+          "revisions": 1
         }
       }
     },
     {
       "day": "2026-08-22",
       "slug": "marshlight-draw",
-      "title": "Marshlight Draw",
+      "title": "The Dusk Drive",
       "path": "projects/dream-cycle/backlog/2026-08-22-marshlight-draw.md",
       "status": "built",
       "built": true,
-      "classification": "substantial-rewrite",
-      "score": 7,
+      "classification": "keep",
+      "score": 1,
       "legacy_shape": false,
       "remaster_path": "in-place",
       "reasons": [
-        "bureaucracy / record-keeping motif is saturated across the catalog (18/33 bundles carry it)",
-        "bureaucracy / record-keeping motif in asset names (ledger), unrequested by the day's Facets",
-        "tower / lighthouse / beacon spire motif is saturated across the catalog (10/33 bundles carry it)",
-        "tower / lighthouse / beacon spire motif in the prose (beacon), unrequested by the day's Facets",
-        "asset names reuse catalog-wide vocabulary (ledger)"
+        "3 assigned Facet(s) never reach the prose — vibe: Facet `cybernetic-hacker` never surfaces in the prose; character: Facet `cybernetic-hacker` never surfaces in the prose"
       ],
       "records": {
         "vibe": {
@@ -3245,7 +2994,7 @@
       },
       "assets": {
         "vibe": {
-          "name": "Marshlight Draw",
+          "name": "The Dusk Drive",
           "record": {
             "model": "Dream",
             "id": 5672
@@ -3254,29 +3003,25 @@
           "visual_findings": []
         },
         "location": {
-          "name": "Sourmoss Landing",
+          "name": "Sump Nine",
           "record": {
             "model": "Dream",
             "id": 5673
           },
-          "findings": [
-            "carries the tower / lighthouse / beacon spire motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "character": {
-          "name": "Tamsin Ruel",
+          "name": "Tobiah Ncube",
           "record": {
             "model": "Character",
             "id": 3301
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "reward_item": {
-          "name": "Revenant Derringer",
+          "name": "The Borrowed Grin",
           "record": {
             "model": "Reward",
             "id": 2854
@@ -3285,18 +3030,16 @@
           "visual_findings": []
         },
         "reward_skill": {
-          "name": "Ghost Ledger Read",
+          "name": "Old-Protocol Whisper",
           "record": {
             "model": "Reward",
             "id": 2855
           },
-          "findings": [
-            "carries the bureaucracy / record-keeping motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "scenario": {
-          "name": "The Horn at Sourmoss Landing",
+          "name": "The Night Shift Reroute",
           "record": {
             "model": "Scenario",
             "id": 2184
@@ -3308,16 +3051,16 @@
       "art": {
         "verdict": "regenerate",
         "reasons": [
-          "text identity changes under this pass; the render no longer matches",
-          "style lane 11 is carrying 4 worlds (cap 3); this world should move to an unused visual language"
+          "only 0/6 renders ever attached",
+          "style lane 8 is carrying 4 worlds (cap 3); this world should move to an unused visual language"
         ],
-        "style_lane": 11,
+        "style_lane": 8,
         "lane_load": 4,
         "evidence": {
           "requests": 6,
-          "attached": 6,
-          "superseded": 0,
-          "revisions": 0
+          "attached": 0,
+          "superseded": 6,
+          "revisions": 1
         }
       }
     },
@@ -3433,19 +3176,17 @@
     {
       "day": "2026-08-24",
       "slug": "the-hollow-charter",
-      "title": "The Hollow Charter",
+      "title": "The Ironback Braid",
       "path": "projects/dream-cycle/backlog/2026-08-24-the-hollow-charter.md",
       "status": "built",
       "built": true,
-      "classification": "light-refresh",
-      "score": 5,
+      "classification": "keep",
+      "score": 2,
       "legacy_shape": false,
       "remaster_path": "in-place",
       "reasons": [
-        "archive / library / recordkeeping vault motif in the prose (archive), unrequested by the day's Facets",
-        "bureaucracy / record-keeping motif is saturated across the catalog (18/33 bundles carry it) even though this day's Facets asked for it",
-        "asset names reuse catalog-wide vocabulary (hollow, ledger)",
-        "4 assigned Facet(s) never reach the prose — vibe: Facet `armadillo` never surfaces in the prose; location: Facet `armadillo` never surfaces in the prose"
+        "3 assigned Facet(s) never reach the prose — vibe: Facet `accidental-diplomat` never surfaces in the prose; character: Facet `accidental-diplomat` never surfaces in the prose",
+        "1 weak or missing visual field(s)"
       ],
       "records": {
         "vibe": {
@@ -3475,7 +3216,7 @@
       },
       "assets": {
         "vibe": {
-          "name": "The Hollow Charter",
+          "name": "The Ironback Braid",
           "record": {
             "model": "Dream",
             "id": 5676
@@ -3489,9 +3230,7 @@
             "model": "Dream",
             "id": 5677
           },
-          "findings": [
-            "carries the archive / library / recordkeeping vault motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "character": {
@@ -3504,7 +3243,7 @@
           "visual_findings": []
         },
         "reward_item": {
-          "name": "The Shadow Oak Ledger Case",
+          "name": "The Shadow Oak Spindle",
           "record": {
             "model": "Reward",
             "id": 2858
@@ -3513,16 +3252,20 @@
           "visual_findings": []
         },
         "reward_skill": {
-          "name": "The Folded Concession",
+          "name": "The Third Cup",
           "record": {
             "model": "Reward",
             "id": 2859
           },
-          "findings": [],
-          "visual_findings": []
+          "findings": [
+            "`look` carries no material, colour, or light detail"
+          ],
+          "visual_findings": [
+            "`look` carries no material, colour, or light detail"
+          ]
         },
         "scenario": {
-          "name": "The Faction That Read First",
+          "name": "Two Delegations, One Knot",
           "record": {
             "model": "Scenario",
             "id": 2186
@@ -3534,37 +3277,34 @@
       "art": {
         "verdict": "regenerate",
         "reasons": [
+          "renders were built from weak visual fields",
           "only 0/6 renders ever attached",
-          "style lane 2 is carrying 8 worlds (cap 3); this world should move to an unused visual language"
+          "style lane 1 is carrying 4 worlds (cap 3); this world should move to an unused visual language"
         ],
-        "style_lane": 2,
-        "lane_load": 8,
+        "style_lane": 1,
+        "lane_load": 4,
         "evidence": {
           "requests": 6,
           "attached": 0,
-          "superseded": 6,
-          "revisions": 0
+          "superseded": 12,
+          "revisions": 1
         }
       }
     },
     {
       "day": "2026-08-25",
       "slug": "filing-office-end-of-history",
-      "title": "The Filing Office at the End of History",
+      "title": "The Hundredth Procession",
       "path": "projects/dream-cycle/backlog/2026-08-25-filing-office-end-of-history.md",
       "status": "built",
       "built": true,
-      "classification": "substantial-rewrite",
-      "score": 6,
+      "classification": "keep",
+      "score": 2,
       "legacy_shape": false,
       "remaster_path": "in-place",
       "reasons": [
-        "bureaucracy / record-keeping motif is saturated across the catalog (18/33 bundles carry it) even though this day's Facets asked for it",
-        "tower / lighthouse / beacon spire motif is saturated across the catalog (10/33 bundles carry it)",
-        "tower / lighthouse / beacon spire motif in the prose (towers), unrequested by the day's Facets",
-        "character name: surname 'Bramble' is a bare nature/object noun",
-        "civil-service honorific in an asset name (undersecretary)",
-        "asset names reuse catalog-wide vocabulary (filing)"
+        "3 assigned Facet(s) never reach the prose — vibe: Facet `accidental-diplomat` never surfaces in the prose; character: Facet `accidental-diplomat` never surfaces in the prose",
+        "1 weak or missing visual field(s)"
       ],
       "records": {
         "vibe": {
@@ -3594,18 +3334,16 @@
       },
       "assets": {
         "vibe": {
-          "name": "The Filing Office at the End of History",
+          "name": "The Hundredth Procession",
           "record": {
             "model": "Dream",
             "id": 5678
           },
-          "findings": [
-            "carries the tower / lighthouse / beacon spire motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "location": {
-          "name": "The Chronofiling Depot",
+          "name": "The Repeating Mile",
           "record": {
             "model": "Dream",
             "id": 5679
@@ -3614,7 +3352,7 @@
           "visual_findings": []
         },
         "character": {
-          "name": "Undersecretary Bramble",
+          "name": "Absalom Duretti",
           "record": {
             "model": "Character",
             "id": 3304
@@ -3623,7 +3361,7 @@
           "visual_findings": []
         },
         "reward_item": {
-          "name": "The Stamp of Unlikely Provenance",
+          "name": "The Enormous Ceremonial Key",
           "record": {
             "model": "Reward",
             "id": 2860
@@ -3632,16 +3370,20 @@
           "visual_findings": []
         },
         "reward_skill": {
-          "name": "Plausible Deniability",
+          "name": "Confident Nonsense",
           "record": {
             "model": "Reward",
             "id": 2861
           },
-          "findings": [],
-          "visual_findings": []
+          "findings": [
+            "`look` describes people (figure); a Reward's look is an object or a visible effect"
+          ],
+          "visual_findings": [
+            "`look` describes people (figure); a Reward's look is an object or a visible effect"
+          ]
         },
         "scenario": {
-          "name": "The Audit That Shouldn't Remember",
+          "name": "The Year the Mile Disagreed",
           "record": {
             "model": "Scenario",
             "id": 2187
@@ -3653,15 +3395,17 @@
       "art": {
         "verdict": "regenerate",
         "reasons": [
-          "text identity changes under this pass; the render no longer matches"
+          "renders were built from weak visual fields",
+          "only 0/6 renders ever attached",
+          "style lane 2 is carrying 5 worlds (cap 3); this world should move to an unused visual language"
         ],
-        "style_lane": 6,
-        "lane_load": 2,
+        "style_lane": 2,
+        "lane_load": 5,
         "evidence": {
           "requests": 6,
-          "attached": 6,
-          "superseded": 0,
-          "revisions": 0
+          "attached": 0,
+          "superseded": 6,
+          "revisions": 1
         }
       }
     },
@@ -3673,11 +3417,10 @@
       "status": "built",
       "built": true,
       "classification": "keep",
-      "score": 2,
+      "score": 1,
       "legacy_shape": false,
       "remaster_path": "in-place",
       "reasons": [
-        "tower / lighthouse / beacon spire motif is saturated across the catalog (10/33 bundles carry it)",
         "tower / lighthouse / beacon spire motif in the prose (beacon), unrequested by the day's Facets"
       ],
       "records": {
@@ -3774,7 +3517,7 @@
         "verdict": "keep-art",
         "reasons": [],
         "style_lane": 3,
-        "lane_load": 2,
+        "lane_load": 3,
         "evidence": {
           "requests": 6,
           "attached": 6,
@@ -3790,16 +3533,11 @@
       "path": "projects/dream-cycle/backlog/2026-08-27-the-moonpool-matinee.md",
       "status": "built",
       "built": true,
-      "classification": "light-refresh",
-      "score": 4,
+      "classification": "keep",
+      "score": 0,
       "legacy_shape": false,
       "remaster_path": "in-place",
-      "reasons": [
-        "tower / lighthouse / beacon spire motif is saturated across the catalog (10/33 bundles carry it)",
-        "tower / lighthouse / beacon spire motif in the prose (spire), unrequested by the day's Facets",
-        "character name: surname 'Bellamy' is built from the recurring noun stem 'bell'",
-        "3 assigned Facet(s) never reach the prose — vibe: Facet `creative-writer` never surfaces in the prose; character: Facet `creative-writer` never surfaces in the prose"
-      ],
+      "reasons": [],
       "records": {
         "vibe": {
           "model": "Dream",
@@ -3842,13 +3580,11 @@
             "model": "Dream",
             "id": 5685
           },
-          "findings": [
-            "carries the tower / lighthouse / beacon spire motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "character": {
-          "name": "June Bellamy",
+          "name": "Delphine Tarrant",
           "record": {
             "model": "Character",
             "id": 3309
@@ -3862,9 +3598,7 @@
             "model": "Reward",
             "id": 2866
           },
-          "findings": [
-            "carries the tower / lighthouse / beacon spire motif"
-          ],
+          "findings": [],
           "visual_findings": []
         },
         "reward_skill": {
@@ -3887,15 +3621,17 @@
         }
       },
       "art": {
-        "verdict": "keep-art",
-        "reasons": [],
+        "verdict": "regenerate",
+        "reasons": [
+          "only 0/6 renders ever attached"
+        ],
         "style_lane": 0,
-        "lane_load": 2,
+        "lane_load": 3,
         "evidence": {
           "requests": 6,
-          "attached": 6,
-          "superseded": 0,
-          "revisions": 0
+          "attached": 0,
+          "superseded": 6,
+          "revisions": 1
         }
       }
     },
@@ -3997,10 +3733,10 @@
         "verdict": "regenerate",
         "reasons": [
           "only 0/6 renders ever attached",
-          "style lane 2 is carrying 8 worlds (cap 3); this world should move to an unused visual language"
+          "style lane 2 is carrying 5 worlds (cap 3); this world should move to an unused visual language"
         ],
         "style_lane": 2,
-        "lane_load": 8,
+        "lane_load": 5,
         "evidence": {
           "requests": 6,
           "attached": 0,

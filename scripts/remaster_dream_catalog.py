@@ -115,8 +115,10 @@ def build_plan(manifest: dict[str, Any]) -> dict[str, Any]:
         if row["classification"] in REWRITE_VERDICTS:
             if row.get("legacy_shape"):
                 entry["how"] = (
-                    "pre-v2 shape: mine the kernel into a fresh dated proposal; the "
-                    "in-place patcher cannot take it"
+                    "pre-v2 staged bundle: author a canonical six-asset proposal over its "
+                    "kernel and apply it with `legacy_reseed`, which draws the deterministic "
+                    "seed its own date would produce today, remasters the canonical six rows, "
+                    "and retires the leftover staged rows"
                 )
                 rebuild.append(entry)
             else:
@@ -137,7 +139,7 @@ def build_plan(manifest: dict[str, Any]) -> dict[str, Any]:
         "audit_generated_at": manifest.get("generated_at"),
         "waves": {
             "1-rewrite-in-place": order(rewrite_in_place),
-            "2-rebuild-from-kernel": order(rebuild),
+            "2-legacy-canonicalization": order(rebuild),
             "3-art-only": order(art_only),
             "4-keep": order(keep),
         },
@@ -162,6 +164,17 @@ def print_plan(plan: dict[str, Any]) -> None:
 # ── stubs ────────────────────────────────────────────────────────────────────
 
 
+LEGACY_STUB_INSTRUCTIONS = (
+    "This is a pre-v2 staged bundle. Author a full canonical six-asset proposal over its "
+    "kernel, keep the technical world `slug`, and leave `seed_facets` set to the "
+    "deterministic plan already filled in here — it is what "
+    "`build_dream_proposal.facet_seed_plan` produces for this bundle's own date, not an "
+    "invented one. Applying it remasters the canonical six rows and retires the leftover "
+    "staged rows (the second vibe Dream, extra locations, extra characters, the second "
+    "Scenario) by deactivating them; narrator Bots are left alone for the separately "
+    "scoped cleanup PIPELINE.md describes."
+)
+
 STUB_INSTRUCTIONS = (
     "Rewrite `proposal` in place, then rename this file to end in `-request.json` so "
     "scripts/apply_dream_revision.py will apply it. Hard constraints: keep `seed_facets` "
@@ -185,14 +198,16 @@ def write_stubs(
     findings = {row["day"]: row for row in manifest["bundles"]}
     written: list[Path] = []
     day_stamp = datetime.date.today().isoformat()
-    for row in plan["waves"]["1-rewrite-in-place"][:limit]:
+    queue = plan["waves"]["1-rewrite-in-place"] + plan["waves"]["2-legacy-canonicalization"]
+    for row in queue[:limit]:
         bundle = catalog.get(row["day"])
         if bundle is None:
             continue
         audit_row = findings[row["day"]]
+        legacy = bool(audit_row.get("legacy_shape"))
         stub = {
             "status": "needs-authoring",
-            "instructions": STUB_INSTRUCTIONS,
+            "instructions": LEGACY_STUB_INSTRUCTIONS if legacy else STUB_INSTRUCTIONS,
             "proposal_path": audit._rel(bundle.path),
             "digest_role": "Remastered Daily Dream",
             "send_digest": False,
@@ -209,6 +224,13 @@ def write_stubs(
             },
             "proposal": bundle.proposal,
         }
+        if legacy:
+            stub["legacy_reseed"] = True
+            stub["seed_facets_for_this_date"] = (
+                "run: python -c \"import sys; sys.path.insert(0,'scripts'); "
+                "import build_dream_proposal as p, json; "
+                f"print(json.dumps(p.facet_seed_plan('{bundle.day}')))\""
+            )
         target = REVISIONS_DIR / f"{day_stamp}-remaster-{bundle.slug}-stub.json"
         written.append(target)
         if apply:

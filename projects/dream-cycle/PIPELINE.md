@@ -114,8 +114,9 @@ The built catalog is mutable creative material. `specs/REMASTER.md` documents th
 recurring freshness pass: `scripts/audit_dream_catalog.py` classifies every built bundle
 under today's rules, and `scripts/remaster_dream_catalog.py` applies the result in waves —
 in-place text revisions through `apply_dream_revision.py`, art-only regeneration staged
-through the same `projects/art-prompts.yaml` ledger a normal morning uses, and kernels
-mined out of pre-v2 bundles that cannot be patched.
+through the same `projects/art-prompts.yaml` ledger a normal morning uses, and a legacy
+canonicalization lane that remasters the six canonical rows of a pre-v2 staged bundle and
+retires its leftover rows rather than deleting them.
 
 The remaster creates no objects. It patches existing rows and stages art;
 `build_dream_records.py` remains the sole object writer.
