@@ -1,51 +1,52 @@
 # Roadmap Audit
 
-Generated: `2026-08-28T09:12:25.678889+00:00`
+Generated: `2026-08-29T23:51:44.528997+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **51** roadmaps, **28** active + **2** continuous projects, **1280** tasks
-- **22 ready**, **57 waiting**, **77 needs-human**, **3 claimed/review**, **1112 done**
-- Findings: **3 errors**, **9 warnings**, **83 informational**
+- **52** roadmaps, **29** active + **2** continuous projects, **1329** tasks
+- **18 ready**, **73 waiting**, **82 needs-human**, **2 claimed/review**, **1145 done**
+- Findings: **0 errors**, **4 warnings**, **93 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `mandarin-tutor` | active | software | 0 | 0 | 3 | 0 | 17 / 20 |
-| 2 | `cthulhuquarium` | active | software | 3 | 0 | 5 | 1 | 50 / 59 |
+| 2 | `cthulhuquarium` | active | software | 0 | 0 | 5 | 1 | 57 / 63 |
 | 3 | `kapowarr` | active | software | 0 | 0 | 4 | 0 | 65 / 69 |
 | 4 | `kind-economy` | active | software | 0 | 3 | 10 | 0 | 14 / 27 |
-| 5 | `interface-vision` | active | software | 2 | 1 | 0 | 0 | 119 / 122 |
+| 5 | `interface-vision` | active | software | 1 | 1 | 0 | 0 | 121 / 123 |
 | 6 | `ai-art-academy` | active | software | 0 | 3 | 4 | 0 | 70 / 77 |
 | 7 | `coloring-book` | active | software | 0 | 9 | 2 | 0 | 27 / 38 |
 | 8 | `humboldt-scoop-cms` | active | software | 0 | 0 | 4 | 0 | 35 / 39 |
 | 9 | `digital-storefront` | active | software | 0 | 2 | 2 | 0 | 40 / 44 |
 | 10 | `mermaids-of-venice` | active | content | 1 | 0 | 8 | 0 | 4 / 13 |
-| 11 | `kind-robots` | active | software | 0 | 0 | 4 | 0 | 71 / 75 |
-| 12 | `scene-animator` | active | software | 0 | 0 | 1 | 0 | 3 / 4 |
-| 13 | `text-generation` | active | software | 0 | 1 | 1 | 0 | 6 / 8 |
-| 14 | `kindrobots-unraid` | active | software | 0 | 6 | 1 | 0 | 6 / 13 |
-| 15 | `model-builder` | active | software | 1 | 0 | 1 | 0 | 43 / 45 |
-| 16 | `lora-ingestion` | active | infrastructure | 0 | 0 | 1 | 0 | 7 / 8 |
-| 17 | `conductor` | active | software | 0 | 0 | 5 | 0 | 127 / 132 |
-| 18 | `taskmaster` | active | software | 0 | 0 | 1 | 0 | 3 / 4 |
-| 19 | `storybook` | active | software | 1 | 0 | 2 | 0 | 20 / 23 |
-| 20 | `davinci` | active | software | 0 | 2 | 1 | 0 | 23 / 26 |
-| 21 | `mural-design` | active | content | 0 | 3 | 1 | 0 | 3 / 7 |
-| 22 | `coat-dance` | active | content | 1 | 0 | 1 | 0 | 2 / 10 |
-| 23 | `alexa-integration` | active | software | 0 | 0 | 1 | 0 | 20 / 21 |
-| 24 | `conductor-app` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
-| 25 | `appmaker` | active | software | 0 | 0 | 2 | 0 | 12 / 14 |
-| 26 | `media-watchlist` | active | software | 1 | 0 | 1 | 0 | 15 / 17 |
-| 27 | `brainstorm` | active | software | 0 | 0 | 1 | 1 | 29 / 31 |
-| 28 | `wishmaster` | retired | software | 1 | 0 | 1 | 0 | 2 / 4 |
-| 29 | `ruler-hooked` | active | software | 1 | 0 | 1 | 0 | 20 / 22 |
-| 30 | `music-mentor` | finished | software | 1 | 0 | 0 | 0 | 8 / 9 |
-| 31 | `animation-manager` | continuous | software | 2 | 0 | 0 | 0 | 15 / 17 |
-| 32 | `dream-cycle` | continuous | software | 0 | 0 | 0 | 1 | 21 / 22 |
+| 11 | `kind-robots` | active | software | 0 | 0 | 5 | 0 | 79 / 84 |
+| 12 | `rainbow-butterflies` | active | software | 0 | 16 | 4 | 1 | 8 / 29 |
+| 13 | `scene-animator` | active | software | 0 | 0 | 1 | 0 | 3 / 4 |
+| 14 | `text-generation` | active | software | 0 | 1 | 1 | 0 | 6 / 8 |
+| 15 | `kindrobots-unraid` | active | software | 0 | 6 | 1 | 0 | 6 / 13 |
+| 16 | `model-builder` | active | software | 1 | 0 | 1 | 0 | 43 / 45 |
+| 17 | `lora-ingestion` | active | infrastructure | 0 | 0 | 1 | 0 | 7 / 8 |
+| 18 | `conductor` | active | software | 0 | 0 | 5 | 0 | 132 / 137 |
+| 19 | `taskmaster` | active | software | 0 | 0 | 1 | 0 | 3 / 4 |
+| 20 | `storybook` | active | software | 1 | 0 | 2 | 0 | 20 / 23 |
+| 21 | `davinci` | active | software | 0 | 2 | 1 | 0 | 23 / 26 |
+| 22 | `mural-design` | active | content | 0 | 3 | 1 | 0 | 3 / 7 |
+| 23 | `coat-dance` | active | content | 1 | 0 | 1 | 0 | 2 / 10 |
+| 24 | `alexa-integration` | active | software | 0 | 0 | 1 | 0 | 20 / 21 |
+| 25 | `conductor-app` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
+| 26 | `appmaker` | active | software | 0 | 0 | 2 | 0 | 12 / 14 |
+| 27 | `media-watchlist` | active | software | 1 | 0 | 1 | 0 | 15 / 17 |
+| 28 | `brainstorm` | active | software | 0 | 0 | 1 | 0 | 30 / 31 |
+| 29 | `wishmaster` | retired | software | 1 | 0 | 1 | 0 | 2 / 4 |
+| 30 | `ruler-hooked` | active | software | 0 | 0 | 1 | 0 | 21 / 22 |
+| 31 | `music-mentor` | finished | software | 1 | 0 | 0 | 0 | 8 / 9 |
+| 32 | `animation-manager` | continuous | software | 2 | 0 | 0 | 0 | 15 / 17 |
+| 33 | `dream-cycle` | continuous | software | 1 | 0 | 0 | 0 | 22 / 23 |
 | — | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | — | `approval-portal` | retired | software | 0 | 0 | 0 | 0 | 3 / 5 |
 | — | `art-generator-connect` | finished | software | 0 | 0 | 0 | 0 | 22 / 22 |
@@ -68,25 +69,18 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 ## Findings by severity
 
-### Error (3)
+### Error (0)
 
-- **CONTROL_PRIORITY_DRIFT** — `_global`: CONTROL.md priority band ['interface-vision', 'ai-art-academy', 'coloring-book', 'humboldt-scoop-cms', 'digital-storefront', 'mermaids-of-venice', 'kind-robots', 'kindrobots-unraid'] does not match priority.yaml prefix ['mandarin-tutor', 'cthulhuquarium', 'kapowarr', 'kind-economy', 'interface-vision', 'ai-art-academy', 'coloring-book', 'humboldt-scoop-cms'].
-- **READY_WITH_UNMET_DEPS** — `interface-vision` / `t-105`: Ready task has unmet dependencies: t-104.
-- **GATED_DONE_WITHOUT_APPROVAL** — `kind-robots` / `t-071`: Human-gated task is done without approved_by_human: true.
+_None._
 
-### Warning (9)
+### Warning (4)
 
 - **DUPLICATE_YAML_KEY** — `ai-art-academy`: Duplicate key 'implementation_pr' at line 2666 — YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one.
-- **STALE_IN_PROGRESS** — `brainstorm` / `t-025`: Task has remained claimed for 4 days.
-- **SOFT_NEEDS_HUMAN** — `coloring-book` / `t-022`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
-- **DUPLICATE_YAML_KEY** — `cthulhuquarium`: Duplicate key 'updated' at line 561 — YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one.
-- **DUPLICATE_YAML_KEY** — `cthulhuquarium`: Duplicate key 'claimed_by' at line 1565 — YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one.
-- **DUPLICATE_YAML_KEY** — `cthulhuquarium`: Duplicate key 'updated' at line 1567 — YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one.
-- **SOFT_NEEDS_HUMAN** — `kind-economy` / `t-014`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
-- **SOFT_NEEDS_HUMAN** — `kind-economy` / `t-022`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
-- **SOFT_NEEDS_HUMAN** — `kind-economy` / `t-023`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
+- **DUPLICATE_YAML_KEY** — `cthulhuquarium`: Duplicate key 'claimed_by' at line 1564 — YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one.
+- **DUPLICATE_YAML_KEY** — `cthulhuquarium`: Duplicate key 'updated' at line 1566 — YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one.
+- **SOFT_NEEDS_HUMAN** — `kind-robots` / `t-078`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
 
-### Info (83)
+### Info (93)
 
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-011`: approved_by_human is set on a task that is not human-gated.
@@ -143,8 +137,14 @@ This is a conservative structural audit. It reports suspicious state; it does no
 - **NEEDS_HUMAN_NOTE_FORMAT** — `kind-economy` / `t-026`: needs-human note does not use the AGENTS.md FOR SILAS action format.
 - **MISSING_GOAL** — `kind-robots`: Roadmap has no friendly goal/definition of done.
 - **APPROVAL_WITHOUT_GATE** — `kind-robots` / `t-029`: approved_by_human is set on a task that is not human-gated.
-- **NEEDS_HUMAN_NOTE_FORMAT** — `kind-robots` / `t-073`: needs-human note does not use the AGENTS.md FOR SILAS action format.
 - **APPROVAL_WITHOUT_GATE** — `kind-robots` / `t-075`: approved_by_human is set on a task that is not human-gated.
+- **APPROVAL_WITHOUT_GATE** — `kind-robots` / `t-076`: approved_by_human is set on a task that is not human-gated.
+- **APPROVAL_WITHOUT_GATE** — `kind-robots` / `t-077`: approved_by_human is set on a task that is not human-gated.
+- **NEEDS_HUMAN_NOTE_FORMAT** — `kind-robots` / `t-078`: needs-human note does not use the AGENTS.md FOR SILAS action format.
+- **APPROVAL_WITHOUT_GATE** — `kind-robots` / `t-079`: approved_by_human is set on a task that is not human-gated.
+- **APPROVAL_WITHOUT_GATE** — `kind-robots` / `t-080`: approved_by_human is set on a task that is not human-gated.
+- **APPROVAL_WITHOUT_GATE** — `kind-robots` / `t-081`: approved_by_human is set on a task that is not human-gated.
+- **APPROVAL_WITHOUT_GATE** — `kind-robots` / `t-082`: approved_by_human is set on a task that is not human-gated.
 - **MISSING_GOAL** — `kindrobots-unraid`: Roadmap has no friendly goal/definition of done.
 - **APPROVAL_WITHOUT_GATE** — `kindrobots-unraid` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **MISSING_GOAL** — `media-watchlist`: Roadmap has no friendly goal/definition of done.
@@ -159,6 +159,10 @@ This is a conservative structural audit. It reports suspicious state; it does no
 - **APPROVAL_WITHOUT_GATE** — `newsfeed` / `t-021`: approved_by_human is set on a task that is not human-gated.
 - **MISSING_GOAL** — `packmaker`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `pinball-hero`: Roadmap has no friendly goal/definition of done.
+- **NEEDS_HUMAN_NOTE_FORMAT** — `rainbow-butterflies` / `t-009`: needs-human note does not use the AGENTS.md FOR SILAS action format.
+- **NEEDS_HUMAN_NOTE_FORMAT** — `rainbow-butterflies` / `t-010`: needs-human note does not use the AGENTS.md FOR SILAS action format.
+- **NEEDS_HUMAN_NOTE_FORMAT** — `rainbow-butterflies` / `t-027`: needs-human note does not use the AGENTS.md FOR SILAS action format.
+- **NEEDS_HUMAN_NOTE_FORMAT** — `rainbow-butterflies` / `t-028`: needs-human note does not use the AGENTS.md FOR SILAS action format.
 - **MISSING_GOAL** — `recipe-box`: Roadmap has no friendly goal/definition of done.
 - **APPROVAL_WITHOUT_GATE** — `ruler-hooked` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **INACTIVE_PROJECT_HAS_READY_TASKS** — `serendipity`: Inactive project retains 1 ready task(s); harmless but misleading in generated status.
