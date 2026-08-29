@@ -29,6 +29,7 @@ API_SURFACE = Path("projects/dream-cycle/docs/api-surface.md")
 OUTLINE_CHECKER = Path("scripts/check_dream_outlines.py")
 ROADMAP = Path("projects/dream-cycle/roadmap.yaml")
 BUILDER = Path("scripts/build_dream_records.py")
+BUILD_RUNNER = Path("scripts/run_daily_dream_build.py")
 AUTHOR = Path("scripts/author_dream_proposal.py")
 SUBMIT = Path("scripts/submit_daily_dream_art.py")
 CLAUDE = Path("CLAUDE.md")
@@ -50,6 +51,7 @@ REQUIRED_FILES = (
     OUTLINE_CHECKER,
     ROADMAP,
     BUILDER,
+    BUILD_RUNNER,
     AUTHOR,
     SUBMIT,
     CLAUDE,
@@ -93,12 +95,18 @@ def check_pipeline(root: Path = ROOT) -> list[str]:
     outline_checker = content[OUTLINE_CHECKER]
     roadmap = content[ROADMAP]
     builder = content[BUILDER]
+    build_runner = content[BUILD_RUNNER]
     submit = content[SUBMIT]
     claude = content[CLAUDE]
 
     if hourly.count("python scripts/build_conductor_summary_report_only.py") != 1:
         errors.append("Hourly Conductor must invoke the report-only summary entrypoint exactly once")
-    for forbidden in ("build_dream_records.py", "apply_daily_dream_facets.py", "submit_daily_dream_art.py"):
+    for forbidden in (
+        "build_dream_records.py",
+        "run_daily_dream_build.py",
+        "apply_daily_dream_facets.py",
+        "submit_daily_dream_art.py",
+    ):
         if forbidden in hourly:
             errors.append(f"Hourly Conductor must not perform Daily Dream creation work: {forbidden}")
     if "summary.build_dream_records.ensure_records = report_only_daily_dream" not in report_only:
@@ -106,7 +114,7 @@ def check_pipeline(root: Path = ROOT) -> list[str]:
 
     digest_sequence = (
         "python scripts/author_dream_proposal.py",
-        "python scripts/build_dream_records.py",
+        "python scripts/run_daily_dream_build.py",
         "python scripts/apply_daily_dream_facets.py",
         "python scripts/submit_daily_dream_art.py",
         "Commit Daily Dream cycle evidence",
@@ -124,10 +132,17 @@ def check_pipeline(root: Path = ROOT) -> list[str]:
         )
     if digest.count("python scripts/author_dream_proposal.py") != 1:
         errors.append("Daily Digest must author exactly once, at the start of the cycle")
-    if digest.count("python scripts/build_dream_records.py") != 1:
-        errors.append("Daily Digest must invoke the sole object writer exactly once")
+    if digest.count("python scripts/run_daily_dream_build.py") != 1:
+        errors.append("Daily Digest must invoke the guarded object-writer entrypoint exactly once")
     if "KR_API_TOKEN" not in digest:
         errors.append("Daily Digest now owns object creation and must receive KR_API_TOKEN")
+
+    # The runner is policy only. It may replace candidate selection, but all live
+    # writes must still delegate to the canonical transactional builder.
+    if "import build_dream_records as core" not in build_runner:
+        errors.append("guarded build runner must delegate to the canonical object writer")
+    if "core.eligible_proposal = eligible_proposal" not in build_runner:
+        errors.append("guarded build runner must install its selection policy before invoking the writer")
 
     # Build, Facet, and ArtJob steps may leave useful local evidence even when
     # their final status is failure. The workflow must commit that evidence before
@@ -150,7 +165,11 @@ def check_pipeline(root: Path = ROOT) -> list[str]:
         if workflow.name in {"daily-dream-contract.yml", "daily-digest.yml"}:
             continue
         text = workflow.read_text(encoding="utf-8")
-        if "build_dream_records.py" in text or "submit_daily_dream_art.py" in text:
+        if (
+            "build_dream_records.py" in text
+            or "run_daily_dream_build.py" in text
+            or "submit_daily_dream_art.py" in text
+        ):
             errors.append(
                 f"workflow {workflow.name} invokes Daily Dream creation/submission; only daily-digest.yml may"
             )
