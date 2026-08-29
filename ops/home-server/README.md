@@ -622,6 +622,16 @@ instead — a network logon session (SSH, Termius) reads its own empty drive
 table and cannot save credentials at all, so a FAIL from the wrong shell may be
 an artifact rather than a fault.
 
+**Reading fields off `DeserializeObject` output: index, never `.Contains()`.**
+It returns `Dictionary[string,object]`, which implements the non-generic
+`IDictionary` *explicitly* — so `-is [IDictionary]` is true while `.Contains()`
+is not publicly bound and, under `SilentlyContinue`, resolves to nothing rather
+than erroring. That returned `$null` for every field and printed a wall of
+`[FAIL]  is , not online` on a completely healthy box. The indexer is public on
+both shapes; use `$obj[$key]`. The pm2 checks now also refuse to report
+failures at all when no app name could be read — "cannot tell" is the honest
+answer there, and it is indistinguishable from "everything is down" otherwise.
+
 **On PowerShell 5.1, do not parse pm2's output with `ConvertFrom-Json`.** There
 it is `JavaScriptSerializer` with a `MaxJsonLength` cap it will not tell you
 about, and `pm2 jlist` — every app with its full environment — goes straight

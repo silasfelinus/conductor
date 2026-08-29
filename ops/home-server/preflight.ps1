@@ -68,10 +68,14 @@ function ConvertFrom-JsonBig($text) {
 # PSObjects, so callers do not care which parser produced the object.
 function Prop($obj, $key) {
     if ($null -eq $obj) { return $null }
-    if ($obj -is [System.Collections.IDictionary]) {
-        if ($obj.Contains($key)) { return $obj[$key] }
-        return $null
-    }
+    # Index; do NOT call .Contains(). DeserializeObject returns
+    # Dictionary[string,object], which implements the non-generic IDictionary
+    # EXPLICITLY -- so `-is [IDictionary]` is true while `.Contains()` is not a
+    # publicly bound method and silently resolves to nothing under
+    # SilentlyContinue. That returned $null for every field and printed a wall
+    # of '[FAIL]  is , not online' on a healthy box (2026-08-29). The indexer is
+    # public on both the generic and non-generic shapes.
+    if ($obj -is [System.Collections.IDictionary]) { return $obj[$key] }
     return $obj.$key
 }
 
@@ -182,12 +186,23 @@ if (-not $running) {
     }
     Say 'unknown' "pm2 returned no usable process list" $why
 } else {
-    $names = @($running | ForEach-Object { Prop $_ 'name' })
-    Say 'ok' "pm2 running: $($names -join ', ')" $null
-    foreach ($app in $running) {
-        $st = Prop (Prop $app 'pm2_env') 'status'
-        if ($st -ne 'online') {
-            Say 'fail' "$(Prop $app 'name') is $st, not online" $null
+    $names = @($running | ForEach-Object { Prop $_ 'name' } | Where-Object { $_ })
+    if (-not $names.Count) {
+        # Never report a wall of failures on the strength of fields we could not
+        # read -- that is indistinguishable from every app being down, and it is
+        # the script that is broken, not the box.
+        Say 'unknown' "pm2 answered but no app names could be read" @(
+            "The process list parsed, but its fields did not. Treating this as",
+            "'cannot tell', not as every app being down."
+        )
+    } else {
+        Say 'ok' "pm2 running: $($names -join ', ')" $null
+        foreach ($app in $running) {
+            $appName = Prop $app 'name'
+            $st = Prop (Prop $app 'pm2_env') 'status'
+            if ($appName -and $st -ne 'online') {
+                Say 'fail' "$appName is $st, not online" $null
+            }
         }
     }
     if ($names -contains 'sd-webui') {
@@ -209,8 +224,12 @@ if (-not (Test-Path $dumpPath)) {
     if (-not $dump) {
         Say 'unknown' "could not parse $dumpPath" $dumpErr
     } else {
-        $dumpNames = @($dump | ForEach-Object { Prop $_ 'name' })
-        Say 'ok' "pm2 would restore on reboot: $($dumpNames -join ', ')" $null
+        $dumpNames = @($dump | ForEach-Object { Prop $_ 'name' } | Where-Object { $_ })
+        if (-not $dumpNames.Count) {
+            Say 'unknown' "dump.pm2 parsed but no app names could be read" $null
+        } else {
+            Say 'ok' "pm2 would restore on reboot: $($dumpNames -join ', ')" $null
+        }
         if ($dumpNames -contains 'sd-webui') {
             Say 'fail' "the SAVED list still contains sd-webui" @(
                 "Deleting it from the running list is not enough -- the dump is what",
