@@ -84,7 +84,11 @@ jobs:
             echo "Attempt ${attempt}/${max_attempts}: processing against $(git rev-parse HEAD)"
 
             had_error=0
-            python3 scripts/reject_ineligible_task_event_claims.py
+            if [ -f scripts/reject_ineligible_task_event_claims.py ]; then
+              python3 scripts/reject_ineligible_task_event_claims.py
+            else
+              echo "Dependency-claim preflight is not present on checked-out main yet; PR test coverage validates the pending helper."
+            fi
             python3 scripts/process_task_events.py || had_error=1
             python3 scripts/validate_roadmaps.py
 
