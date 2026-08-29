@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     recurring: true
@@ -2953,12 +2953,11 @@ tasks:
       Slice 31 merged as silasfelinus/kind_robots#2201 (squash d41934c2c257611b9b90fdc59fd6ee050cfad40c) from exact head 11c4d845808346200ce2505b7660260b47fca0f1. error.vue's <section> root now uses kr- container max-w-5xl flex flex-col items-center justify-center gap-6 instead of hand- rolled mx-auto flex w-full max-w-5xl flex-col items-center justify-center gap-6; no geometry or behavior change. All 36 exact-head PR checks completed successfully (including the intermittently-hanging required 'Contract verifiers' check, which took ~3min this run but completed clean, per conductor/t-132's documented pattern). Six more unconverted candidates found this cycle and queued for the next slice: components/user/messenger.vue, components/conductor/project-front-page.vue (2 occurrences), components/achievements/achievement-popup.vue, components/academy/academy- timeline.vue, components/academy/academy-styles-browser.vue, components/pages/for-you- manager.vue. Return the non-recurring consistency umbrella to ready for the next bounded slice.
 
       Bounded consistency slice: components/academy/academy-timeline.vue replaces the root hand-rolled mx-auto w-full max-w-[1600px] wrapper with the shared kr-container plus the same max-width override. No behavior or geometry intent changes.
-    updated: '2026-08-29T17:20:12Z'
+
+      Bounded consistency slice merged as silasfelinus/kind_robots#2202 (squash 33f642378f42c929c04ec88d25252ad1c0dd0d48) from exact head 69b1c2e0821404b2df53caf9832c2706f6f03af3. components/academy/academy-timeline.vue now uses kr-container plus its existing max-w-[1600px] override instead of re-declaring mx-auto w-full. All exact-head PR workflows completed successfully, including Contract Tests #33265466132, TypeScript #33265465986, Layout Contract #33265466062, Schema Migration Parity #33265466117, and MDC Scroll Ownership #33265466180. Return the recurring consistency umbrella to ready for the next bounded slice.
+    updated: '2026-08-29T17:27:09Z'
     approved_by_human: true
     implementation_pr: 'silasfelinus/kind_robots#2201'
-    owner: worker
-    claimed_by: openai-scheduled-20260829T171603Z-ivt104-a3f7
-    claimed_at: '2026-08-29T17:16:03Z'
 
   - id: t-105
     milestone: m6
