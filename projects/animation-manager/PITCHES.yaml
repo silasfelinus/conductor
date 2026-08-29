@@ -1,4 +1,4 @@
-updated: "2026-08-29T03:31:41+00:00"
+updated: "2026-08-29T14:30:00+00:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -1151,3 +1151,62 @@ pitches:
       - the rupture tear expands smoothly across the full loop and clears it completely before the reseed begins, never leaving a partially-torn film stuck mid-cycle
       - pointer-driven local thinning and click-triggered ruptures never block underlying page input, and the forced rupture is rate-limited
       - thickness-grid resolution and tear-front growth rate stay fixed regardless of viewport size or how many rupture cycles have run this session
+  - id: kaleidoscope-bloom
+    title: Kaleidoscope Bloom
+    status: pitched
+    priority: 27
+    surprise: >
+      A softly rotating kaleidoscope window reveals drifting jewel-toned shard clusters
+      blooming outward from the center in perfect radial symmetry, each cluster's colors and
+      shapes subtly different from the last, before slowly dissolving so a fresh cluster can
+      begin forming again.
+    passive_loop: >
+      A small number of colored polygon shard particles drift and slowly rotate within a
+      single wedge sector (e.g. one-eighth of the full circle). Each frame that one wedge is
+      simulated and rendered once to a small offscreen buffer, then composited onto the main
+      canvas N times via alternating rotate and mirror transforms around the canvas center to
+      build the full N-fold symmetric image -- the simulation runs once per particle no matter
+      how many-fold the pattern is, with the symmetry produced entirely by the rendering pass.
+      Shards spawn near the wedge's inner apex, drift outward along a gentle spiral while
+      fading in, hold near full bloom, then fade out and are recycled; a slow overall rotation
+      of the wedge geometry keeps the whole pattern gently turning.
+    optional_interaction: >
+      Pointer distance from the canvas center scales spawn rate and outward drift speed
+      (closer in slows and thickens the churn, the way leaning into a real kaleidoscope's
+      eyepiece changes what you see). A click seeds an immediate fresh burst of shards and
+      briefly raises the fold count (e.g. from six-fold to twelve-fold) for a few seconds
+      before it settles back to the base count.
+    technique: >
+      Canvas 2D. One small offscreen buffer holds the single simulated wedge sector; the main
+      draw pass composites it via paired ctx.rotate() and ctx.scale(-1, 1) transforms around
+      the canvas center, alternating mirrored and unmirrored copies for true dihedral (both
+      rotational and reflective) symmetry so adjacent wedge edges line up seamlessly. Shard
+      particles are simple 3-6 vertex polygons with independent hue, rotation, and alpha,
+      capped at a small fixed count per wedge regardless of the current fold count.
+    reduced_motion: >
+      A single static N-fold symmetric bloom frame, no drift, no rotation, and no pointer
+      response, held at roughly 70% bloom density so the piece reads as complete rather than
+      caught mid-formation.
+    performance_risk: >
+      Simulating shard particles once per full-circle copy instead of once per wedge would
+      multiply particle-update cost by the fold count for no visual benefit, and an uncapped
+      interactive fold-count boost could make the offscreen-to-main composite pass itself the
+      bottleneck. Simulate strictly once per wedge regardless of fold count, cap the
+      interactive fold-count boost (e.g. twelve-fold maximum) and its duration, and keep the
+      offscreen buffer's resolution fixed independent of the main canvas size.
+    novelty: >
+      The core mechanic is single-wedge simulation composited via rotate-and-mirror transforms
+      into full dihedral symmetry -- no existing pitch renders through geometric symmetry
+      compositing. Stained-glass-rain refracts the desktop into unsymmetric drifting polygon
+      fragments, not a radially mirrored bloom. Magnetic-sand-garden and geode-bloom each grow
+      a single asymmetric structure via raking or lattice accretion, not mirrored-sector
+      compositing. Ink-oracle's reaction-diffusion buffer is one unsymmetric field.
+      Zoetrope-lantern-drum samples discrete poses by rotation angle from a fixed pose strip,
+      not mirror-composited particles, and soap-film-membrane's thickness-to-color field has
+      no radial symmetry at all. No existing pitch uses dihedral mirror-symmetry rendering to
+      multiply a single simulated region into a full radial pattern.
+    acceptance:
+      - the full kaleidoscope image is always exactly N-fold dihedral symmetric (every wedge is an exact rotated or mirrored copy of the simulated wedge) with no visible seams at wedge boundaries
+      - shard particles are simulated exactly once per wedge regardless of the current fold count, never once per full-circle copy
+      - pointer proximity to center visibly and continuously changes spawn rate and drift speed, and a click's fold-count boost always settles back to the base count within a few seconds
+      - offscreen wedge-buffer resolution and shard particle cap stay fixed regardless of main canvas or viewport size
