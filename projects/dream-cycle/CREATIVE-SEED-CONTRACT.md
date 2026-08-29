@@ -66,6 +66,26 @@ Avoid repeating recent genre combinations, species families, occupations, palett
 
 Architecture and imagery should follow from the assigned Facets rather than serving as a generic starting shell.
 
+## Rut families are enforced, not just advised
+
+The variety guardrails above are checked, not left to good intentions.
+`scripts/dream_creative_ruts.py` holds the shared vocabulary for five historical grooves —
+bureaucracy/record-keeping, archives and libraries, cozy markets and workshops, towers and
+lighthouses, and repeated occupational archetypes — plus the ornamental noun-surname
+detector.
+
+Two rules keep this from over-blocking:
+
+- a family is only a complaint when the day's **Facets did not ask for it**, so a
+  Bureaucratic Fantasy Facet may still produce a permit office on purpose;
+- outside bureaucracy (a whole-text guard), a family only complains when the motif reaches
+  an **asset name**. A lighthouse in passing is scenery; *The Lighthouse of Small Regrets*
+  is the rut.
+
+At catalog scale the audit is stricter than the live contract: a motif carried by ≥30% of
+the built catalog counts against a bundle even when its Facets did request it. See
+`specs/REMASTER.md`.
+
 ## Validation
 
 `build_dream_proposal.py --from-json` validates the authored bundle. `scripts/check_dream_outlines.py` and Daily Dream Contract CI verify that every eligible unbuilt proposal carries the exact version-2 six-asset shape.

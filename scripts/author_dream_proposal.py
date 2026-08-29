@@ -28,6 +28,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 import build_dream_proposal as dreams  # noqa: E402
+import dream_creative_ruts as ruts  # noqa: E402
 
 API_URL = "https://api.anthropic.com/v1/messages"
 API_VERSION = "2023-06-01"
@@ -427,6 +428,24 @@ def _proposal_creative_text(proposal: dict) -> str:
     return " ".join(_flatten_creative_values(proposal))
 
 
+def _proposal_names(proposal: dict) -> list[str]:
+    """Every asset name/title in a proposal — the surface the rut families guard."""
+    names: list[str] = [str(proposal.get("title") or "")]
+    vibe = proposal.get("vibe")
+    if isinstance(vibe, dict):
+        names.append(str(vibe.get("title") or ""))
+    for key, field in (
+        ("locations", "title"),
+        ("characters", "name"),
+        ("rewards", "name"),
+        ("scenarios", "title"),
+    ):
+        for row in proposal.get(key) or []:
+            if isinstance(row, dict):
+                names.append(str(row.get(field) or ""))
+    return [name for name in names if name]
+
+
 def story_diversity_complaints(
     proposal: dict,
     recent_premises: list[str],
@@ -448,6 +467,8 @@ def story_diversity_complaints(
             f"({examples}) even though today's Facets do not request it; replace the "
             "institution, conflict engine, and signature objects with a different kind of story"
         )
+
+    complaints.extend(ruts.name_rut_complaints(_proposal_names(proposal), facet_text))
 
     candidate_terms = _word_set(creative_text)
     for recent in recent_premises[-PREMISE_HISTORY_LIMIT:]:

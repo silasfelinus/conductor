@@ -9,7 +9,9 @@ on:
       - "projects/dream-cycle/PIPELINE.md"
       - "projects/dream-cycle/specs/**"
       - "projects/dream-cycle/backlog/**"
+      - "projects/dream-cycle/remaster/**"
       - "scripts/annotate_daily_dream_art_queue.py"
+      - "scripts/audit_dream_catalog.py"
       - "scripts/apply_daily_dream_facets.py"
       - "scripts/art_request_staging_priority.py"
       - "scripts/build_digest.py"
@@ -21,8 +23,11 @@ on:
       - "scripts/build_dream_proposal.py"
       - "scripts/build_dream_records.py"
       - "scripts/check_daily_dream_pipeline.py"
+      - "scripts/dream_art_prompts.py"
+      - "scripts/dream_creative_ruts.py"
       - "scripts/consume_art_requests_to_media.py"
       - "scripts/enrich_daily_dream_digest.py"
+      - "scripts/remaster_dream_catalog.py"
       - "scripts/submit_daily_dream_art.py"
       - "scripts/validate_digest.py"
       - "tests/test_annotate_daily_dream_art_queue.py"
@@ -37,6 +42,8 @@ on:
       - "tests/test_daily_dream_art_staging_priority.py"
       - "tests/test_daily_dream_bundle_art_queue.py"
       - "tests/test_daily_dream_pipeline_contract.py"
+      - "tests/test_dream_art_prompts.py"
+      - "tests/test_dream_catalog_remaster.py"
       - "tests/test_daily_dream_vibe_link_source.py"
       - "tests/test_enrich_daily_dream_digest.py"
       - "tests/test_submit_daily_dream_art.py"
@@ -69,7 +76,11 @@ jobs:
             scripts/author_dream_proposal.py \
             scripts/build_dream_proposal.py \
             scripts/build_dream_records.py \
+            scripts/audit_dream_catalog.py \
             scripts/check_daily_dream_pipeline.py \
+            scripts/dream_art_prompts.py \
+            scripts/dream_creative_ruts.py \
+            scripts/remaster_dream_catalog.py \
             scripts/consume_art_requests_to_media.py \
             scripts/enrich_daily_dream_digest.py \
             scripts/submit_daily_dream_art.py \
@@ -90,6 +101,8 @@ jobs:
           PY
       - name: Check single-writer pipeline
         run: python scripts/check_daily_dream_pipeline.py
+      - name: Audit the built catalog (informational)
+        run: python scripts/audit_dream_catalog.py --stdout-summary
       - name: Run daily-dream contract tests
         run: |
           python -m pytest -q \
@@ -106,5 +119,7 @@ jobs:
             tests/test_daily_dream_bundle_art_queue.py \
             tests/test_daily_dream_pipeline_contract.py \
             tests/test_daily_dream_vibe_link_source.py \
+            tests/test_dream_art_prompts.py \
+            tests/test_dream_catalog_remaster.py \
             tests/test_enrich_daily_dream_digest.py \
             tests/test_submit_daily_dream_art.py
