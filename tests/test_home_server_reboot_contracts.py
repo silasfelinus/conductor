@@ -21,7 +21,6 @@ def test_restore_check_fails_readable_mapping_to_wrong_unc():
     text = (ROOT / "restore-shares.ps1").read_text(encoding="ascii")
     marker = "readable but points at $($existing.Unc)"
     assert marker in text
-    mismatch = text.split(marker, 1)[1].split("if ($Check)", 1)[0] if False else text
     assert 'Write-Log "$letter -> $unc : BROKEN (readable but points at $($existing.Unc))"' in text
     assert "$failed += $letter" in text
     assert "remapping to configured target" in text
