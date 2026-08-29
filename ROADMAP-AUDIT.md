@@ -1,6 +1,6 @@
 # Roadmap Audit
 
-Generated: `2026-08-29T23:54:48.642637+00:00`
+Generated: `2026-08-29T23:56:20.476417+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
@@ -8,7 +8,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 - **52** roadmaps, **29** active + **2** continuous projects, **1329** tasks
 - **18 ready**, **73 waiting**, **82 needs-human**, **2 claimed/review**, **1145 done**
-- Findings: **0 errors**, **1 warnings**, **93 informational**
+- Findings: **0 errors**, **0 warnings**, **93 informational**
 
 ## Project inventory
 
@@ -73,9 +73,9 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 _None._
 
-### Warning (1)
+### Warning (0)
 
-- **SOFT_NEEDS_HUMAN** — `kind-robots` / `t-078`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
+_None._
 
 ### Info (93)
 
