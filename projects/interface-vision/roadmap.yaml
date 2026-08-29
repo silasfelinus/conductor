@@ -3039,7 +3039,7 @@ tasks:
   - id: t-105
     milestone: m6
     title: "Polish every reachable Kind Robots surface page-by-page"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     recurring: true
@@ -3094,7 +3094,13 @@ tasks:
       -- a re-run would be a pure duplicate with zero chance of new evidence, so I moved
       directly to t-105's page-polish work instead, per this task's own established 'move to
       other ready work' convention.
-    updated: '2026-08-29T05:37:09Z'
+
+      Merged silasfelinus/kind_robots#2194 (squash 42fed1f) from exact head 41c0e7a. All 37 PR
+      checks green (TypeScript, Contract verifiers, layout-contract, facet-catalog,
+      GitGuardian, verify x3, full Storybook/Narrative contract suite), mergeable_state clean
+      before merge. Return the reusable page-polish task to ready for the next visual-review
+      slice.
+    updated: '2026-08-29T05:42:53Z'
     implementation_pr: 'silasfelinus/kind_robots#2194'
     owner: worker
     claimed_by: 20260829T235900Z-interface-vision-t105-rebel-button
