@@ -1,16 +1,43 @@
+# art-prompts.yaml — Image queue for Conductor project assets and Kind Robots missing-image requests
+#
+# Project assets use `images:` and are pruned automatically when matching files
+# exist in this repo's projects/images/ folder.
+#
+# Inspiration images use `inspirations:`. Pruned automatically when matching files
+# exist in the kind_robots repo at ../kind_robots/public/images/artcollections/.
+#
+# Site-wide missing-image reports use `requests:`. Kind Robots writes those
+# requests here when an admin sees a missing image. Requests should be removed
+# once the image has been generated and committed to the target repo.
+#
+# Project image variants:
+#   icon  — square 1:1 (256×256 min). Used in nav, sidebar, card headers, favicons.
+#   card  — portrait 2:3 (512×768 min). Shown on the workspace project card.
+#   hero  — landscape 16:9 (1280×720 min). Shown as a banner/header in project view.
+#
+# Prompt standard:
+#   Write for modern OpenAI image generation, not legacy flat placeholders.
+#   Kind Robots represents a consortium of projects aimed at multi-genre,
+#   cross-dimensional experiences. When a scene includes people, characters,
+#   teams, families, players, operators, or companions, represent a diverse array
+#   across genders, races, ages, body sizes, body shapes, presentation styles,
+#   and species. Mix humans, robots, animal-like beings, fantasy creatures, and
+#   original nonhuman companions when it fits the asset.
+#   Do this naturally and respectfully, without tokenism or stereotypes.
+#   Icons should read instantly at small sizes: premium app-icon polish, strong silhouette.
+#   Cards should feel like professional portrait key art for a polished product.
+#   Heroes should feel like studio-quality game/product illustration with cinematic depth.
+#   Always avoid readable text, logos, watermarks, contact sheets, and collages.
+#
+# Workflow:
+#   1. Copy the generator prompt from ART-PROMPTS.md into ChatGPT.
+#   2. Paste one batch of up to ten entries from this file.
+#   3. Generate exactly one unique image per entry with the listed aspect ratio.
+#   4. Export as .webp at the minimum size listed.
+#   5. Save to the image_path listed below.
+#   6. Run `python scripts/build_workspace.py` to refresh the workspace.
+#
+# Status values: pending
 
-
-requests:
-- id: "conductor-mandarin-tutor-icon-a6deb4d7-mtetgpeu"
-  source: "kind-robots-missing-image"
-  status: "pending"
-  target_repo: "silasfelinus/conductor"
-  image_path: "projects/images/mandarin-tutor-icon.webp"
-  source_url: "https://raw.githubusercontent.com/silasfelinus/conductor/main/projects/images/mandarin-tutor-icon.webp"
-  page_url: "https://kindrobots.org/"
-  variant: "icon"
-  engine: "krea2"
-  size: "256x256"
-  label: "mandarin-tutor"
-  prompt: >
-    Illustrate a stylized, strong silhouette of a traditional Chinese lantern, symbolizing guidance and knowledge, set against a soft gradient background of warm orange and deep red hues. The lantern should feature intricate patterns carved into a textured paper surface, glowing softly from within, casting gentle shadows that enhance its depth. Use a subtle shine on the edges to create a three-dimensional effect, making it pop against the background, while maintaining a clean and simple aesthetic suitable for a square icon format. no readable text, no logo, no watermark, no collage.
+images: []
+requests: []
