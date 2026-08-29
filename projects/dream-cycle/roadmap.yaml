@@ -535,4 +535,60 @@ tasks:
       Final verification completed through PR #1484. Characters, legacy narrator Bots, Rewards, and Scenarios now link directly to both the PITCH world and the GENRE vibe, while Scenarios retain location links. PR #1484 passed Daily Dream Contract, Worker PR CI, Security Audit, and Process task events before merge. Combined with PRs #1480 and #1482, this completes the exact-date digest, six readable art-aware asset cards, deterministic weighted Facet selection and assignment, six-asset proposal/build contract, art queue coverage, and documented CLI compatibility.
     claimed_by: 2026-08-01T024100Z-dream-cycle-t022-vibe-links
     claimed_at: '2026-08-01T02:41:00Z'
+  - id: t-023
+    milestone: m5
+    title: "Dream catalog freshness remaster: audit built bundles, rewrite weak assets, regenerate art"
+    status: review
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-29T22:07:23Z'
+    note: >
+      Silas-directed via conductor issue #3184 (2026-08-29): treat the built Daily Dream
+      catalog as mutable creative material and improve it in place under today's rules,
+      as a reproducible workflow rather than a one-off hand edit.
 
+      SHIPPED (2026-08-29): scripts/dream_creative_ruts.py holds the shared vocabulary
+      for the five historical grooves the issue names (bureaucracy/record-keeping,
+      archives, cozy markets and workshops, towers and lighthouses, repeated
+      occupational archetypes) plus ornamental-surname detection, and is wired into the
+      live creative contract name-scoped and Facet-aware, so an intentional Bureaucratic
+      Fantasy Facet still works. scripts/audit_dream_catalog.py classifies every built
+      bundle into keep / light-refresh / substantial-rewrite / retire-replace with an
+      independent art verdict, and adds signals the per-proposal contract cannot see:
+      catalog-scale motif saturation (a family carried by 30% of the catalog counts even
+      when that day's Facets asked for it), premise echo across the whole catalog, Facet
+      fusion for concrete taxonomies, and visual-field checks. It writes
+      projects/dream-cycle/remaster/catalog-audit.json and CATALOG-AUDIT.md.
+      scripts/remaster_dream_catalog.py applies the result in waves (plan / stubs / art /
+      verify), dry-run by default with receipts on every applied batch. Text mutation
+      goes through the existing apply_dream_revision.py; art is staged through the same
+      projects/art-prompts.yaml ledger a normal morning uses and submitted by
+      submit_daily_dream_art.py, so the remaster never becomes a second object writer.
+
+      First wave executed live against production: 42 replacement renders staged and
+      submitted (ArtJobs 13026-13067) for the seven art-only bundles, each against a
+      deliberately different visual language (dream_art_prompts.py gained a
+      camera/palette/light treatment axis orthogonal to its twelve media lanes plus a
+      variant offset, so a restyle never lands back where it started). One exemplar text
+      rewrite proved the wave-1 loop end to end: The Chittering Archive (audit score 11,
+      retire-replace) became Monsoon Static, patched in place across its six live rows
+      and two sheets with six replacement renders queued (ArtJobs 13068-13073), and
+      re-audits at score 2 / keep. Sixteen rewrite stubs are staged in
+      projects/dream-cycle/revisions/ for the rest of wave 1; they are inert until an
+      authoring pass rewrites them and renames them to -request.json.
+
+      Verified: full pytest suite green (1402 passed, 1 skipped) plus the new
+      tests/test_dream_catalog_remaster.py (19 tests);
+      scripts/check_daily_dream_pipeline.py clean; live verify pass across all 33 built
+      bundles resolved 197/198 records (the one 404 is a pre-existing legacy row on
+      2026-07-16, already routed to the rebuild wave).
+
+      Poisoned-proposal rule: the two-day freshness window in run_daily_dream_build.py
+      was already enforced; this pass documents it in PIPELINE.md and specs/REMASTER.md,
+      surfaces poisoned proposals in every audit run, and confirms the two exceptions
+      (pinned retry, explicit --date backfill) still re-clear the creative contract.
+
+      REMAINING (not blocking): waves 1 and 2 need creative authoring passes — 12
+      substantial rewrites and 4 pre-v2 bundles whose kernels must be mined into fresh
+      dated proposals. Each is one stub away from applying.

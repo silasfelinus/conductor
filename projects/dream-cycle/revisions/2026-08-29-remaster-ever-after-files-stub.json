@@ -1,0 +1,455 @@
+{
+  "status": "needs-authoring",
+  "instructions": "Rewrite `proposal` in place, then rename this file to end in `-request.json` so scripts/apply_dream_revision.py will apply it. Hard constraints: keep `seed_facets` byte-identical, keep the technical world `slug` unchanged (the built rows and their image directory are keyed to it), keep exactly one location, one Character, one ITEM Reward, one SKILL Reward, and one Scenario, and write the Scenario last so it names the vibe, the location, and the Character. Every `look` and `art_direction` must describe what is visible — material, shape, scale, colour, wear, how light hits it. Do not solve the audit findings by renaming the same premise.",
+  "proposal_path": "projects/dream-cycle/backlog/2026-08-17-ever-after-files.md",
+  "digest_role": "Remastered Daily Dream",
+  "send_digest": false,
+  "audit": {
+    "score": 9,
+    "classification": "retire-replace",
+    "reasons": [
+      "bureaucracy / record-keeping motif is saturated across the catalog (19/33 bundles carry it)",
+      "bureaucracy / record-keeping motif in asset names (files, ledger), unrequested by the day's Facets",
+      "character name: surname 'Quill' is a bare nature/object noun",
+      "asset names reuse catalog-wide vocabulary (ledger, perpetua)",
+      "8 assigned Facet(s) never reach the prose — location: Facet `weird-capitalism` never surfaces in the prose; character: Facet `post-human-dystopia` never surfaces in the prose",
+      "1 weak or missing visual field(s)"
+    ],
+    "assets": {
+      "vibe": [
+        "carries the bureaucracy / record-keeping motif"
+      ],
+      "location": [
+        "carries the bureaucracy / record-keeping motif"
+      ],
+      "reward_item": [
+        "carries the bureaucracy / record-keeping motif"
+      ],
+      "reward_skill": [
+        "`look` carries no material, colour, or light detail"
+      ],
+      "scenario": [
+        "carries the bureaucracy / record-keeping motif"
+      ]
+    },
+    "art": {
+      "verdict": "regenerate",
+      "reasons": [
+        "text identity changes under this pass; the render no longer matches",
+        "renders were built from weak visual fields",
+        "style lane 2 is carrying 9 worlds (cap 3); this world should move to an unused visual language"
+      ],
+      "style_lane": 2,
+      "lane_load": 9,
+      "evidence": {
+        "requests": 6,
+        "attached": 6,
+        "superseded": 0,
+        "revisions": 0
+      }
+    }
+  },
+  "proposal": {
+    "characters": [
+      {
+        "carries": "a starfruit-fiber-bound notebook that only writes true words",
+        "complication": "the notebook also writes down her own petty grudges, poisoning the confession",
+        "look": "a gaunt woman in a moth-eaten trench coat, forearms replaced with jointed chitin-and-brass stick-insect limbs, ink-stained fingers, a coat lined with dead gaslamp moths",
+        "name": "Perpetua Quill",
+        "role_drive": "ghostwrite a confession that will finally indict the godmother who blacklisted her"
+      }
+    ],
+    "idea": "A blacklisted ghostwriter, half-grafted into a stick insect's camouflage limbs, investigates fairy-tale wish-trading crimes for a noir agency that never forgets a debt.",
+    "locations": [
+      {
+        "art_direction": "A cramped shopfront of towering brass ledgers, gaslight glinting off insect-thin scaffolding, golden starfruit-fiber threads strung floor to ceiling like a stock ticker.",
+        "best_scene": "a ledger entry rewrites itself mid-sale",
+        "known_for": "trading fractional shares of broken wishes",
+        "local_rule": "no wish trades below its opening curse price",
+        "title": "The Godmother's Exchange"
+      }
+    ],
+    "rewards": [
+      {
+        "best_used_when": "a suspect's testimony is incomplete",
+        "catch": "it also transcribes the writer's own secrets",
+        "grants": "writes a binding true confession",
+        "look": "a slim quill fashioned from a starfruit-fiber stalk, its nib capped in tarnished gold leaf, a faint golden thread trailing from the barrel like unspooled twine",
+        "name": "Godmother's Ledger Quill",
+        "rarity": "RARE",
+        "reward_type": "ITEM"
+      },
+      {
+        "best_used_when": "a witness's account has been polished for public consumption",
+        "catch": "reveals your own unspoken drafts too",
+        "grants": "reads the true draft beneath a rewritten story",
+        "look": "the air around a page ripples like heat haze, faint charcoal lines of a crossed-out sentence bleeding up through the visible ink",
+        "name": "Ghostwriter's Tell",
+        "rarity": "UNCOMMON",
+        "reward_type": "SKILL"
+      }
+    ],
+    "scenarios": [
+      {
+        "setup": "In The Ever After Files at The Godmother's Exchange, Perpetua Quill traces a wish-trader found drained of every unwritten word, the only clue a starfruit-fiber thread leading straight back to the godmother who ruined her.",
+        "title": "The Wish That Wouldn't Clear"
+      }
+    ],
+    "seed_facets": {
+      "catalog_source": "live",
+      "date": "2026-08-17",
+      "deterministic_seed": 15616929889325772471,
+      "elements": {
+        "character": [
+          {
+            "canonicalValue": "Noir",
+            "id": 1881,
+            "randomWeight": 1.5,
+            "slug": "noir",
+            "taxonomy": "GENRE",
+            "title": "Noir"
+          },
+          {
+            "canonicalValue": "Fairy Tale",
+            "id": 784,
+            "randomWeight": 3.0,
+            "slug": "fairy-tale",
+            "taxonomy": "GENRE",
+            "title": "Fairy Tale"
+          },
+          {
+            "canonicalValue": "Post-Human Dystopia",
+            "id": 797,
+            "randomWeight": 1.0,
+            "slug": "post-human-dystopia",
+            "taxonomy": "GENRE",
+            "title": "Post-Human Dystopia"
+          },
+          {
+            "canonicalValue": "Stick Insect",
+            "id": 291,
+            "randomWeight": 1.0,
+            "slug": "stick-insect",
+            "taxonomy": "ANIMAL",
+            "title": "Stick Insect"
+          },
+          {
+            "canonicalValue": "Creative Writer",
+            "id": 1026,
+            "randomWeight": 1.0,
+            "slug": "creative-writer",
+            "taxonomy": "OCCUPATION",
+            "title": "Creative Writer"
+          },
+          {
+            "canonicalValue": "vindictive",
+            "id": 1066,
+            "randomWeight": 1.0,
+            "slug": "vindictive",
+            "taxonomy": "PERSONALITY",
+            "title": "Vindictive"
+          }
+        ],
+        "location": [
+          {
+            "canonicalValue": "Noir",
+            "id": 1881,
+            "randomWeight": 1.5,
+            "slug": "noir",
+            "taxonomy": "GENRE",
+            "title": "Noir"
+          },
+          {
+            "canonicalValue": "Fairy Tale",
+            "id": 784,
+            "randomWeight": 3.0,
+            "slug": "fairy-tale",
+            "taxonomy": "GENRE",
+            "title": "Fairy Tale"
+          },
+          {
+            "canonicalValue": "Weird Capitalism",
+            "id": 5,
+            "randomWeight": 1.0,
+            "slug": "weird-capitalism",
+            "taxonomy": "GENRE",
+            "title": "Weird Capitalism"
+          },
+          {
+            "canonicalValue": "Stick Insect",
+            "id": 291,
+            "randomWeight": 1.0,
+            "slug": "stick-insect",
+            "taxonomy": "ANIMAL",
+            "title": "Stick Insect"
+          },
+          {
+            "canonicalValue": "Starfruit Fiber",
+            "id": 937,
+            "randomWeight": 1.0,
+            "slug": "starfruit-fiber",
+            "taxonomy": "MATERIAL",
+            "title": "Starfruit Fiber"
+          }
+        ],
+        "reward_item": [
+          {
+            "canonicalValue": "Noir",
+            "id": 1881,
+            "randomWeight": 1.5,
+            "slug": "noir",
+            "taxonomy": "GENRE",
+            "title": "Noir"
+          },
+          {
+            "canonicalValue": "Fairy Tale",
+            "id": 784,
+            "randomWeight": 3.0,
+            "slug": "fairy-tale",
+            "taxonomy": "GENRE",
+            "title": "Fairy Tale"
+          },
+          {
+            "canonicalValue": "Cozy Fantasy",
+            "id": 822,
+            "randomWeight": 1.5,
+            "slug": "cozy-fantasy",
+            "taxonomy": "GENRE",
+            "title": "Cozy Fantasy"
+          },
+          {
+            "canonicalValue": "Starfruit Fiber",
+            "id": 937,
+            "randomWeight": 1.0,
+            "slug": "starfruit-fiber",
+            "taxonomy": "MATERIAL",
+            "title": "Starfruit Fiber"
+          }
+        ],
+        "reward_skill": [
+          {
+            "canonicalValue": "Noir",
+            "id": 1881,
+            "randomWeight": 1.5,
+            "slug": "noir",
+            "taxonomy": "GENRE",
+            "title": "Noir"
+          },
+          {
+            "canonicalValue": "Fairy Tale",
+            "id": 784,
+            "randomWeight": 3.0,
+            "slug": "fairy-tale",
+            "taxonomy": "GENRE",
+            "title": "Fairy Tale"
+          },
+          {
+            "canonicalValue": "Thriller",
+            "id": 772,
+            "randomWeight": 3.0,
+            "slug": "thriller",
+            "taxonomy": "GENRE",
+            "title": "Thriller"
+          },
+          {
+            "canonicalValue": "Creative Writer",
+            "id": 1026,
+            "randomWeight": 1.0,
+            "slug": "creative-writer",
+            "taxonomy": "OCCUPATION",
+            "title": "Creative Writer"
+          }
+        ],
+        "scenario": [
+          {
+            "canonicalValue": "Noir",
+            "id": 1881,
+            "randomWeight": 1.5,
+            "slug": "noir",
+            "taxonomy": "GENRE",
+            "title": "Noir"
+          },
+          {
+            "canonicalValue": "Fairy Tale",
+            "id": 784,
+            "randomWeight": 3.0,
+            "slug": "fairy-tale",
+            "taxonomy": "GENRE",
+            "title": "Fairy Tale"
+          },
+          {
+            "canonicalValue": "Dystopian Romance",
+            "id": 800,
+            "randomWeight": 1.0,
+            "slug": "dystopian-romance",
+            "taxonomy": "GENRE",
+            "title": "Dystopian Romance"
+          },
+          {
+            "canonicalValue": "Weird Capitalism",
+            "id": 5,
+            "randomWeight": 1.0,
+            "slug": "weird-capitalism",
+            "taxonomy": "GENRE",
+            "title": "Weird Capitalism"
+          },
+          {
+            "canonicalValue": "Post-Human Dystopia",
+            "id": 797,
+            "randomWeight": 1.0,
+            "slug": "post-human-dystopia",
+            "taxonomy": "GENRE",
+            "title": "Post-Human Dystopia"
+          },
+          {
+            "canonicalValue": "Stick Insect",
+            "id": 291,
+            "randomWeight": 1.0,
+            "slug": "stick-insect",
+            "taxonomy": "ANIMAL",
+            "title": "Stick Insect"
+          }
+        ],
+        "vibe": [
+          {
+            "canonicalValue": "Noir",
+            "id": 1881,
+            "randomWeight": 1.5,
+            "slug": "noir",
+            "taxonomy": "GENRE",
+            "title": "Noir"
+          },
+          {
+            "canonicalValue": "Fairy Tale",
+            "id": 784,
+            "randomWeight": 3.0,
+            "slug": "fairy-tale",
+            "taxonomy": "GENRE",
+            "title": "Fairy Tale"
+          },
+          {
+            "canonicalValue": "Stick Insect",
+            "id": 291,
+            "randomWeight": 1.0,
+            "slug": "stick-insect",
+            "taxonomy": "ANIMAL",
+            "title": "Stick Insect"
+          },
+          {
+            "canonicalValue": "Creative Writer",
+            "id": 1026,
+            "randomWeight": 1.0,
+            "slug": "creative-writer",
+            "taxonomy": "OCCUPATION",
+            "title": "Creative Writer"
+          }
+        ]
+      },
+      "extra_genres": {
+        "character": {
+          "canonicalValue": "Post-Human Dystopia",
+          "id": 797,
+          "randomWeight": 1.0,
+          "slug": "post-human-dystopia",
+          "taxonomy": "GENRE",
+          "title": "Post-Human Dystopia"
+        },
+        "location": {
+          "canonicalValue": "Weird Capitalism",
+          "id": 5,
+          "randomWeight": 1.0,
+          "slug": "weird-capitalism",
+          "taxonomy": "GENRE",
+          "title": "Weird Capitalism"
+        },
+        "reward_item": {
+          "canonicalValue": "Cozy Fantasy",
+          "id": 822,
+          "randomWeight": 1.5,
+          "slug": "cozy-fantasy",
+          "taxonomy": "GENRE",
+          "title": "Cozy Fantasy"
+        },
+        "reward_skill": {
+          "canonicalValue": "Thriller",
+          "id": 772,
+          "randomWeight": 3.0,
+          "slug": "thriller",
+          "taxonomy": "GENRE",
+          "title": "Thriller"
+        },
+        "scenario": {
+          "canonicalValue": "Dystopian Romance",
+          "id": 800,
+          "randomWeight": 1.0,
+          "slug": "dystopian-romance",
+          "taxonomy": "GENRE",
+          "title": "Dystopian Romance"
+        }
+      },
+      "shared": {
+        "material": {
+          "canonicalValue": "Starfruit Fiber",
+          "id": 937,
+          "randomWeight": 1.0,
+          "slug": "starfruit-fiber",
+          "taxonomy": "MATERIAL",
+          "title": "Starfruit Fiber"
+        },
+        "personality": {
+          "canonicalValue": "vindictive",
+          "id": 1066,
+          "randomWeight": 1.0,
+          "slug": "vindictive",
+          "taxonomy": "PERSONALITY",
+          "title": "Vindictive"
+        }
+      },
+      "umbrella": {
+        "creature": {
+          "canonicalValue": "Stick Insect",
+          "id": 291,
+          "randomWeight": 1.0,
+          "slug": "stick-insect",
+          "taxonomy": "ANIMAL",
+          "title": "Stick Insect"
+        },
+        "genres": [
+          {
+            "canonicalValue": "Noir",
+            "id": 1881,
+            "randomWeight": 1.5,
+            "slug": "noir",
+            "taxonomy": "GENRE",
+            "title": "Noir"
+          },
+          {
+            "canonicalValue": "Fairy Tale",
+            "id": 784,
+            "randomWeight": 3.0,
+            "slug": "fairy-tale",
+            "taxonomy": "GENRE",
+            "title": "Fairy Tale"
+          }
+        ],
+        "wildcard": {
+          "canonicalValue": "Creative Writer",
+          "id": 1026,
+          "randomWeight": 1.0,
+          "slug": "creative-writer",
+          "taxonomy": "OCCUPATION",
+          "title": "Creative Writer"
+        },
+        "wildcard_role": "occupation"
+      },
+      "version": 2
+    },
+    "slug": "ever-after-files",
+    "title": "Ever After Files",
+    "vibe": {
+      "art_direction": "A rain-slicked cobblestone alley under a gaslamp, gingerbread rooftops looming through fog, a long insectile shadow thrown across wet stone.",
+      "line": "Every happily ever after has a body count nobody wrote down.",
+      "title": "The Ever After Files"
+    }
+  }
+}

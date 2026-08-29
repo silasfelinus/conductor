@@ -212,6 +212,16 @@ class Bundle:
             }
         return out
 
+    def facet_taxonomies(self) -> dict[str, str]:
+        """slug -> taxonomy, from the proposal's own seed block."""
+        out: dict[str, str] = {}
+        elements = (self.proposal.get("seed_facets") or {}).get("elements") or {}
+        for rows in elements.values():
+            for row in rows if isinstance(rows, list) else []:
+                if isinstance(row, dict) and row.get("slug"):
+                    out[str(row["slug"])] = str(row.get("taxonomy") or "")
+        return out
+
     def facet_keys(self) -> dict[str, list[str]]:
         assignments = ((self.built or {}).get("facet_assignments") or {}).get("targets") or []
         out = {
@@ -343,12 +353,21 @@ def visual_findings(element: str, row: dict[str, Any]) -> list[str]:
     return findings
 
 
+# Only concrete Facets can be checked lexically. A GENRE Facet ("Urban Fantasy",
+# "Afrofuturism") is a mode the prose is written *in*; demanding the words appear would
+# reward pasting the genre name into a sentence, which is the opposite of fusion.
+CONCRETE_TAXONOMIES = {"ANIMAL", "SPECIES", "MATERIAL", "OCCUPATION"}
+
+
 def facet_fusion_findings(bundle: Bundle) -> list[str]:
-    """Facets whose vocabulary never reaches the prose were pasted on afterwards."""
+    """Concrete Facets whose vocabulary never reaches the prose were pasted on."""
     text_words = _words(bundle.creative_text())
+    taxonomies = bundle.facet_taxonomies()
     findings: list[str] = []
     for element, keys in bundle.facet_keys().items():
         for key in keys:
+            if taxonomies.get(key, "") not in CONCRETE_TAXONOMIES:
+                continue
             tokens = [token for token in re.split(r"[^a-z]+", key.casefold()) if len(token) >= 4]
             if not tokens:
                 continue

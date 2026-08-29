@@ -71,6 +71,11 @@ REWRITE_VERDICTS = {audit.SUBSTANTIAL, audit.RETIRE}
 ART_ACTION_VERDICTS = {audit.ART_REGENERATE, audit.ART_RESTYLE}
 
 
+def _yq(value: str) -> str:
+    """Single-quote a YAML scalar for the staging ledger."""
+    return "'" + str(value).replace("'", "''") + "'"
+
+
 def _stamp() -> str:
     return datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
 
@@ -338,8 +343,8 @@ def _art_request(
         f"  page_url: {records.PAGE_URL}\n"
         "  variant: card\n"
         f"  size: {records.CARD_SIZE}\n"
-        f"  label: {records._yq(label)}\n"
-        f"  prompt: {records._yq(' '.join(prompt.split()))}\n"
+        f"  label: {_yq(label)}\n"
+        f"  prompt: {_yq(' '.join(prompt.split()))}\n"
         f"  entity_type: {entity_type}\n"
         f"  entity_id: {entity_id}\n"
         "  entity_field: imagePath\n"

@@ -1,0 +1,362 @@
+{
+  "status": "needs-authoring",
+  "instructions": "Rewrite `proposal` in place, then rename this file to end in `-request.json` so scripts/apply_dream_revision.py will apply it. Hard constraints: keep `seed_facets` byte-identical, keep the technical world `slug` unchanged (the built rows and their image directory are keyed to it), keep exactly one location, one Character, one ITEM Reward, one SKILL Reward, and one Scenario, and write the Scenario last so it names the vibe, the location, and the Character. Every `look` and `art_direction` must describe what is visible — material, shape, scale, colour, wear, how light hits it. Do not solve the audit findings by renaming the same premise.",
+  "proposal_path": "projects/dream-cycle/backlog/2026-08-25-filing-office-end-of-history.md",
+  "digest_role": "Remastered Daily Dream",
+  "send_digest": false,
+  "audit": {
+    "score": 7,
+    "classification": "substantial-rewrite",
+    "reasons": [
+      "bureaucracy / record-keeping motif is saturated across the catalog (19/33 bundles carry it) even though this day's Facets asked for it",
+      "tower / lighthouse / beacon spire motif is saturated across the catalog (10/33 bundles carry it)",
+      "tower / lighthouse / beacon spire motif in the prose (towers), unrequested by the day's Facets",
+      "character name: surname 'Bramble' is a bare nature/object noun",
+      "civil-service honorific in an asset name (undersecretary)",
+      "asset names reuse catalog-wide vocabulary (filing)",
+      "3 assigned Facet(s) never reach the prose — character: Facet `charismatic` never surfaces in the prose; reward_item: Facet `absurdist-comedy` never surfaces in the prose"
+    ],
+    "assets": {
+      "vibe": [
+        "carries the tower / lighthouse / beacon spire motif"
+      ]
+    },
+    "art": {
+      "verdict": "regenerate",
+      "reasons": [
+        "text identity changes under this pass; the render no longer matches"
+      ],
+      "style_lane": 6,
+      "lane_load": 2,
+      "evidence": {
+        "requests": 6,
+        "attached": 6,
+        "superseded": 0,
+        "revisions": 0
+      }
+    }
+  },
+  "proposal": {
+    "characters": [
+      {
+        "carries": "a carnival ticket stub laminated into an official medallion",
+        "complication": "the real ambassador he's impersonating is about to arrive",
+        "look": "A large, placid capybara wearing an oversized velvet diplomatic sash over damp brown fur, a tiny striped carnival ticket-booth cap perched between his ears, whiskers dusted white with ledger chalk",
+        "name": "Undersecretary Bramble",
+        "role_drive": "keep the timeline from unraveling without admitting he isn't really an ambassador"
+      }
+    ],
+    "idea": "A bureaucratic archive stamps the timeline's mistakes into official history, and a capybara masquerading as an ambassador is the fragile hinge holding today together.",
+    "locations": [
+      {
+        "art_direction": "A vaulted archive of shelving fused from glowing astral ore, humming pale blue; brass punch-card conveyor rails loop overhead; a boxy riveted automaton clerk stamps forms with a hissing piston arm beside stacked capybara-sized filing carts.",
+        "best_scene": "an artifact from next century starts filling out its own intake form",
+        "known_for": "filing anachronistic artifacts before they destabilize the timeline",
+        "local_rule": "no object may be shelved until its arrival paperwork is signed by the object itself, or by its own era",
+        "title": "The Chronofiling Depot"
+      }
+    ],
+    "rewards": [
+      {
+        "best_used_when": "an object's timeline paperwork is hopelessly contradictory",
+        "catch": "it cannot be un-stamped, so a mistake becomes permanently official",
+        "grants": "retroactively legitimizes anything it stamps, regardless of when it's actually from",
+        "look": "A palm-sized brass stamp, its handle a coiled ribbon of glowing astral ore, the stamp face carved with an ouroboros biting a filing tab, ore-light leaking faintly from the seams",
+        "name": "The Stamp of Unlikely Provenance",
+        "rarity": "RARE",
+        "reward_type": "ITEM"
+      },
+      {
+        "best_used_when": "caught somewhere, or somewhen, with no paperwork to explain it",
+        "catch": "the more it's used, the more paperwork quietly retroactively appears to catch up with the lie",
+        "grants": "talks any clerk, guard, or tribunal into believing you were always supposed to be there",
+        "look": "A shadow that falls one exposure-stop darker than the room around it, hat brim tilted just low enough to blur the eyes, a thin curl of cigarette smoke bending into the shape of a question mark",
+        "name": "Plausible Deniability",
+        "rarity": "UNCOMMON",
+        "reward_type": "SKILL"
+      }
+    ],
+    "scenarios": [
+      {
+        "setup": "In The Filing Office at the End of History, at the Chronofiling Depot, Undersecretary Bramble is dragged into an emergency audit when the depot's automaton clerk starts filing carnival tickets that haven't been sold yet — and one of them is stamped with tomorrow's date.",
+        "title": "The Audit That Shouldn't Remember"
+      }
+    ],
+    "seed_facets": {
+      "catalog_source": "mixed-fallback",
+      "date": "2026-08-25",
+      "deterministic_seed": 1273495928801285601,
+      "elements": {
+        "character": [
+          {
+            "randomWeight": 1.0,
+            "slug": "anachronism-mystery",
+            "taxonomy": "GENRE",
+            "title": "Anachronism Mystery"
+          },
+          {
+            "randomWeight": 1.0,
+            "slug": "bureaucratic-fantasy",
+            "taxonomy": "GENRE",
+            "title": "Bureaucratic Fantasy"
+          },
+          {
+            "randomWeight": 1.0,
+            "slug": "carnival",
+            "taxonomy": "GENRE",
+            "title": "Carnival"
+          },
+          {
+            "randomWeight": 1.0,
+            "slug": "capybara",
+            "taxonomy": "ANIMAL",
+            "title": "Capybara"
+          },
+          {
+            "randomWeight": 1.0,
+            "slug": "accidental-diplomat",
+            "taxonomy": "OCCUPATION",
+            "title": "Accidental Diplomat"
+          },
+          {
+            "randomWeight": 1.0,
+            "slug": "charismatic",
+            "taxonomy": "PERSONALITY",
+            "title": "Charismatic"
+          }
+        ],
+        "location": [
+          {
+            "randomWeight": 1.0,
+            "slug": "anachronism-mystery",
+            "taxonomy": "GENRE",
+            "title": "Anachronism Mystery"
+          },
+          {
+            "randomWeight": 1.0,
+            "slug": "bureaucratic-fantasy",
+            "taxonomy": "GENRE",
+            "title": "Bureaucratic Fantasy"
+          },
+          {
+            "randomWeight": 1.0,
+            "slug": "artificial-intelligence",
+            "taxonomy": "GENRE",
+            "title": "Artificial Intelligence"
+          },
+          {
+            "randomWeight": 1.0,
+            "slug": "capybara",
+            "taxonomy": "ANIMAL",
+            "title": "Capybara"
+          },
+          {
+            "randomWeight": 1.0,
+            "slug": "astral-ore",
+            "taxonomy": "MATERIAL",
+            "title": "Astral Ore"
+          }
+        ],
+        "reward_item": [
+          {
+            "randomWeight": 1.0,
+            "slug": "anachronism-mystery",
+            "taxonomy": "GENRE",
+            "title": "Anachronism Mystery"
+          },
+          {
+            "randomWeight": 1.0,
+            "slug": "bureaucratic-fantasy",
+            "taxonomy": "GENRE",
+            "title": "Bureaucratic Fantasy"
+          },
+          {
+            "randomWeight": 1.0,
+            "slug": "absurdist-comedy",
+            "taxonomy": "GENRE",
+            "title": "Absurdist Comedy"
+          },
+          {
+            "randomWeight": 1.0,
+            "slug": "astral-ore",
+            "taxonomy": "MATERIAL",
+            "title": "Astral Ore"
+          }
+        ],
+        "reward_skill": [
+          {
+            "randomWeight": 1.0,
+            "slug": "anachronism-mystery",
+            "taxonomy": "GENRE",
+            "title": "Anachronism Mystery"
+          },
+          {
+            "randomWeight": 1.0,
+            "slug": "bureaucratic-fantasy",
+            "taxonomy": "GENRE",
+            "title": "Bureaucratic Fantasy"
+          },
+          {
+            "randomWeight": 1.0,
+            "slug": "cartoon-noir",
+            "taxonomy": "GENRE",
+            "title": "Cartoon Noir"
+          },
+          {
+            "randomWeight": 1.0,
+            "slug": "accidental-diplomat",
+            "taxonomy": "OCCUPATION",
+            "title": "Accidental Diplomat"
+          }
+        ],
+        "scenario": [
+          {
+            "randomWeight": 1.0,
+            "slug": "anachronism-mystery",
+            "taxonomy": "GENRE",
+            "title": "Anachronism Mystery"
+          },
+          {
+            "randomWeight": 1.0,
+            "slug": "bureaucratic-fantasy",
+            "taxonomy": "GENRE",
+            "title": "Bureaucratic Fantasy"
+          },
+          {
+            "randomWeight": 1.0,
+            "slug": "archive-horror",
+            "taxonomy": "GENRE",
+            "title": "Archive Horror"
+          },
+          {
+            "randomWeight": 1.0,
+            "slug": "artificial-intelligence",
+            "taxonomy": "GENRE",
+            "title": "Artificial Intelligence"
+          },
+          {
+            "randomWeight": 1.0,
+            "slug": "carnival",
+            "taxonomy": "GENRE",
+            "title": "Carnival"
+          },
+          {
+            "randomWeight": 1.0,
+            "slug": "capybara",
+            "taxonomy": "ANIMAL",
+            "title": "Capybara"
+          }
+        ],
+        "vibe": [
+          {
+            "randomWeight": 1.0,
+            "slug": "anachronism-mystery",
+            "taxonomy": "GENRE",
+            "title": "Anachronism Mystery"
+          },
+          {
+            "randomWeight": 1.0,
+            "slug": "bureaucratic-fantasy",
+            "taxonomy": "GENRE",
+            "title": "Bureaucratic Fantasy"
+          },
+          {
+            "randomWeight": 1.0,
+            "slug": "capybara",
+            "taxonomy": "ANIMAL",
+            "title": "Capybara"
+          },
+          {
+            "randomWeight": 1.0,
+            "slug": "accidental-diplomat",
+            "taxonomy": "OCCUPATION",
+            "title": "Accidental Diplomat"
+          }
+        ]
+      },
+      "extra_genres": {
+        "character": {
+          "randomWeight": 1.0,
+          "slug": "carnival",
+          "taxonomy": "GENRE",
+          "title": "Carnival"
+        },
+        "location": {
+          "randomWeight": 1.0,
+          "slug": "artificial-intelligence",
+          "taxonomy": "GENRE",
+          "title": "Artificial Intelligence"
+        },
+        "reward_item": {
+          "randomWeight": 1.0,
+          "slug": "absurdist-comedy",
+          "taxonomy": "GENRE",
+          "title": "Absurdist Comedy"
+        },
+        "reward_skill": {
+          "randomWeight": 1.0,
+          "slug": "cartoon-noir",
+          "taxonomy": "GENRE",
+          "title": "Cartoon Noir"
+        },
+        "scenario": {
+          "randomWeight": 1.0,
+          "slug": "archive-horror",
+          "taxonomy": "GENRE",
+          "title": "Archive Horror"
+        }
+      },
+      "shared": {
+        "material": {
+          "randomWeight": 1.0,
+          "slug": "astral-ore",
+          "taxonomy": "MATERIAL",
+          "title": "Astral Ore"
+        },
+        "personality": {
+          "randomWeight": 1.0,
+          "slug": "charismatic",
+          "taxonomy": "PERSONALITY",
+          "title": "Charismatic"
+        }
+      },
+      "umbrella": {
+        "creature": {
+          "randomWeight": 1.0,
+          "slug": "capybara",
+          "taxonomy": "ANIMAL",
+          "title": "Capybara"
+        },
+        "genres": [
+          {
+            "randomWeight": 1.0,
+            "slug": "anachronism-mystery",
+            "taxonomy": "GENRE",
+            "title": "Anachronism Mystery"
+          },
+          {
+            "randomWeight": 1.0,
+            "slug": "bureaucratic-fantasy",
+            "taxonomy": "GENRE",
+            "title": "Bureaucratic Fantasy"
+          }
+        ],
+        "wildcard": {
+          "randomWeight": 1.0,
+          "slug": "accidental-diplomat",
+          "taxonomy": "OCCUPATION",
+          "title": "Accidental Diplomat"
+        },
+        "wildcard_role": "occupation"
+      },
+      "version": 2
+    },
+    "slug": "filing-office-end-of-history",
+    "title": "The Filing Office at the End of History",
+    "vibe": {
+      "art_direction": "A cavernous archive of impossible objects on endless shelves, lit by floating brass lamps on chains, capybara-sized filing carts rolling between towers of paper down aisles that recede past where the light reaches.",
+      "line": "Every artifact that shouldn't exist yet gets stamped, shelved, and quietly negotiated with.",
+      "title": "The Filing Office at the End of History"
+    }
+  }
+}
