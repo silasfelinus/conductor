@@ -445,7 +445,7 @@ pitches:
 
   - id: strandbeest-migration
     title: Strandbeest Migration
-    status: pitched
+    status: candidate
     priority: 15
     surprise: >
       A herd of wind-powered wire-legged walker sculptures ambles across a dune
@@ -480,6 +480,35 @@ pitches:
       - at least three walkers are visible ambling across the screen at any time during normal (non-reduced-motion) play
       - the wind gust interaction visibly changes at least one walker's gait speed within one second of pointer movement
       - a walker that exits one edge re-enters from the opposite edge without a visible teleport pop (fade or off-screen buffer)
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/strandbeest-migration.vue
+        verification:
+          - eslint
+          - prettier
+          - vue-tsc (full project)
+          - test:animation-catalog
+          - test:animation-component-attempts
+          - test:layout-contract
+          - check_animation_novelty.py --strict
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
+        notes: >-
+          Foot/joint positions use the real Jansen eight-bar linkage (the twelve
+          "holy number" link lengths plus the 15-unit crank radius), solved via
+          circle-circle intersection with continuity-based branch selection and
+          a vertical-orientation normalization pass, precomputed once into a
+          180-step lookup table per SPEC.md's performance-risk note rather than
+          solved live per frame. Three legs per walker at 0/120/240 degree crank
+          phase offsets (tripod-style, so at least one leg is always mid-stance).
+          Herd: 5 walkers normally / 2 reduced-motion, capped at 9 via click-spawn,
+          ambient sine+noise wind scaling both stride speed and crank rate, a
+          pointer-proximity gust giving a fast per-walker speed/tilt boost, and
+          continuous world-position wrapping through an off-screen buffer so
+          re-entry never pops. Manual browser smoke matrix (docs/architecture/
+          animation-catalog-smoke-matrix.md) deferred per the standing sandbox
+          gap -- no live/interactive browser available in this session.
 
   - id: shadow-puppet-theater
     title: Shadow Puppet Theater
