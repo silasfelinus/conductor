@@ -2924,3 +2924,168 @@ tasks:
       queue surface, so no dashboard/tutorial registration or Project.liveUrl change
       is needed. approved_by_human is set because Silas requested the feature
       directly in-session; the work itself is reversible and not outward-facing.
+
+  - id: t-077
+    milestone: m6
+    title: "Home page redesign: dream hero, showcase rails, chooseable starting feed"
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-29T00:06:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#2187'
+    approved_by_human: true
+    note: >
+      Filed and implemented in the same session from a direct request by Silas,
+      2026-08-28, verbatim: "I want a redesign of our home page. Currently, we
+      are getting just our newsfeed ... I want a home page that really shows off
+      all the little parts of our website and its progress, and helps encourage
+      me to play around and see what we've been building ... all of our progress
+      is buried under nav paths that a user might never see. These displays
+      should always lead to something, not just static displays of images and
+      text."
+
+      Two structural choices were put to Silas before any code was written and
+      answered by him in-session: horizontal rails one-per-kind (over a mixed
+      bento grid or a tabbed panel), and the newsfeed kept whole as a full-width
+      section below the rails (over a side column or a 3-headline teaser). The
+      hero question came back amended rather than picked -- "I want the dream,
+      but there is a problem, it isn't always ready with art. So instead of
+      Today's dream, it needs to be the most recent dream that has full art" --
+      which is what the endpoint's candidate scan implements.
+
+      Shipped as silasfelinus/kind_robots#2187. content/index.md now mounts
+      components/home/home-page.vue (one MDC component, per the layout
+      contract): an orientation row with no <h1> of its own, the dream hero with
+      its cast docked beneath as links, eight horizontal rails (art, animations,
+      dreams, characters, scenarios, items/skills, bots, facets) each with a
+      "see all" into its gallery, a high-priority project strip that links to
+      the TOOL via PROJECT_PLACEMENTS rather than the project record, and the
+      newsfeed unchanged below. Empty rails are dropped rather than rendered
+      empty, which is how "if we are still making new animations" resolves
+      itself on a day with no clips. components/home/home-feed-placeholder.vue
+      is retired.
+
+      Backed by one new endpoint, /api/showcase/home: the per-object list routes
+      answer a different question (/api/characters returns the whole catalog
+      ordered by name), so eight of them asked for "the newest twelve" would
+      ship tens of thousands of rows to draw ~100 cards. Public-safe by
+      construction -- every query pinned to isPublic + isActive + isMature:false
+      with no auth path at all, and a FIXED error message rather than the
+      repo-usual forwarded one, since this route's failures render on the front
+      page and a forwarded Prisma error puts a full query dump in front of every
+      visitor during an outage.
+
+      Two supporting fixes rather than leaving the new cards half-wired.
+      (1) Deep links: Character, Bot and Facet managers already honoured a
+      route-query selection, Dream/Reward/Scenario/Art did not, so a rail card
+      would have landed on an unfiltered gallery -- all four gained the same
+      handling and querySelectionId moved to utils/routeSelection.ts instead of
+      being copy-pasted a fourth and fifth time. (2) utils/scripts/
+      verifyLayoutContract.ts's one-header rule read the raw template including
+      HTML comments and flagged a component for a comment DOCUMENTING that it
+      renders no H1 -- the same mention-is-not-use trap codeOf() already
+      documents for no-viewport. Stripping comments can only remove matches, so
+      no rule can gain a violation from it.
+
+      Starting feed (the smaller half of the request): a "Start here" toggle in
+      the newsfeed header pins the tab you are reading as the one it opens on,
+      stored with the other newsfeed preferences, falling back to All whenever
+      the saved feed is removed or turned off, and applied once per load so a
+      refresh never yanks a reader out of the tab they just clicked.
+
+      Stand-in art: the 8 defaults moved out of feed-card.vue into
+      utils/defaultArtPool.ts and are now shared with every rail card that has
+      no art of its own. 40 more in 40 different media are queued in
+      projects/art-prompts.yaml (default-09..48, low priority per Silas's own
+      "this is low priority, I just want more variety and freshness"). The
+      manifest is checked in rather than read from disk because public/images is
+      gitignored and served off the media share -- neither the build nor a
+      serverless route can enumerate it -- so `npm run audit:default-art --
+      --write` (utils/scripts/auditDefaultArt.ts) HEAD-checks the live site and
+      promotes only what is actually being served. Listing a name before its
+      render lands is the one thing that regresses the surface.
+
+      Verified: vue-tsc clean, eslint clean, prettier clean, layout contract
+      holds, MDC scroll ownership holds (baseline ratcheted down 6),
+      test:art-request-yaml and test:art-prompt-contract pass, and all 41 queued
+      prompts pass checkArtPromptContract at krea2/cfg 1 (four were rewritten
+      after that check flagged "poster"/"card illustration" as format-vocabulary
+      requests). Rendered in headless Chromium against a mocked showcase payload
+      to check the composition at 1400px; the hero was capped in height and the
+      full-colour section icons dropped as a result. NOT verified against a live
+      database -- the sandbox has none, so the queries are shape-checked only.
+
+      MERGED 2026-08-29T00:05Z as squash b87d19eb7c706ed23bfa6e6b45761ad47a670f2d,
+      all 43 checks green (TypeScript, layout-contract, MDC scroll ownership,
+      facet-catalog, Contract verifiers, Build production image, GitGuardian and
+      the Storybook/narrative contract suite).
+
+      Filed done rather than parked at review. The first draft of this note said
+      the opposite -- hold it at review to carry Silas's "this part may take some
+      back and forth" -- which was wrong for a mechanical reason worth recording:
+      scripts/check_pr_merged_drift.py flags exactly the shape "task at
+      claimed/review whose implementation_pr has merged", so parking a finished
+      implementation there to hold an open design conversation manufactures a
+      false drift finding on every future sweep. That is the same
+      stale-signal-every-session failure CLAUDE.md's startup section already
+      complains about from the project-overrides side. The implementation is
+      done; the design conversation is its own work and is filed as t-078.
+
+      approved_by_human is set because Silas requested the feature directly
+      in-session and answered the two structural layout questions himself; the
+      work is reversible and not outward-facing.
+
+  - id: t-078
+    milestone: m6
+    title: "Home page visual iteration with Silas"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-29T00:06:00Z'
+    depends_on: [t-077]
+    note: >
+      The back-and-forth t-077 shipped a first draft for. Silas, 2026-08-28,
+      opening the home page redesign: "this part may take some back and forth,
+      I want it to look great ... we don't have a solid front end design, and
+      this is going to be the first thing people see when the site loads, so I
+      want it to be special."
+
+      needs-human because the remaining question is aesthetic judgement, and
+      only Silas can supply it. Nothing here is blocked on engineering.
+
+      FOUR CALLS MADE FROM SCREENSHOTS during t-077, each a one-line revert if
+      he disagrees:
+
+      1. The hero is height-capped (h-64 / sm:h-80 / lg:h-26rem in
+         components/home/home-dream-hero.vue). Uncapped it used kr-art-plate's
+         own aspect-video, which at desktop content width came out ~750px tall
+         and filled the viewport on its own -- the page read as a single
+         picture with nothing below it even hinted at. Capping crops the frame
+         (object-cover) rather than squashing it.
+      2. Full-colour section icons were removed from the rail and section
+         headers (components/home/home-rail.vue, home-page.vue). The kind-icon
+         set is full-colour by design and several rendered as flat coloured
+         squares at 16px -- kind-icon:scenario showed as an x -- so a column of
+         unrelated glyphs fought the terracotta small-caps rather than
+         supporting it. The icons still do real work inside the plates, where
+         an artless card needs something to show. Restoring them is one prop.
+      3. Rail tile widths: w-36/sm:w-40 for the portrait object rails,
+         w-52/sm:w-64 for the landscape art and animation rails
+         (cardWidthClass in home-rail.vue).
+      4. Rail order and the eight blurb lines (the RAILS constant in
+         home-page.vue): art, animations, dreams, characters, scenarios,
+         items/skills, bots, facets.
+
+      Also open for his call: whether the hero should server-render. It
+      currently loads client-side in onMounted, matching every other store in
+      the repo, so first paint shows skeletons. Moving it to useAsyncData would
+      SSR the hero but puts an async setup inside ContentRenderer's subtree,
+      which risks a hydration boundary problem that could not be tested in the
+      build sandbox (no database). Deliberately not attempted blind.
+
+      Not verified against real data anywhere: the sandbox that built t-077 had
+      no database, so the showcase queries are shape-checked only and the
+      screenshots used a mocked payload. The first honest look at this page is
+      Silas on main.

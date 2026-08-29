@@ -11072,3 +11072,502 @@ requests:
   entity_type: scenario
   entity_id: 2191
   entity_field: imagePath
+
+# ── Newsfeed / showcase stand-in art, batch 2 (kind-robots home redesign, 2026-08-28)
+#
+# Silas: "I need more default art if we don't have an image to go with the
+# article. At least 20-40 more in a variety of krea2 styles. We've got a couple
+# days of art in the queue, but this is low priority. I just want more variety
+# and freshness."
+#
+# Forty stand-ins, default-09 through default-48, each in a DIFFERENT medium --
+# that variety is the whole point, so do not collapse them toward one house look
+# when repairing prompts. The pool these join is now shared by the newsfeed AND
+# every home-page rail card with no art of its own
+# (kind_robots utils/defaultArtPool.ts), so subjects are deliberately evocative
+# rather than news-specific.
+#
+# LOW PRIORITY by Silas's own instruction: these are filler behind the daily
+# dream and project art already queued. Once they land, run
+# `npm run audit:default-art -- --write` in kind_robots to promote the ones
+# actually being served into READY_DEFAULT_ART -- listing a name before its file
+# exists puts an empty plate back on the card.
+- id: "kind-robots-newsfeed-default-09"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-09.webp"
+  source_url: "/images/newsfeed/defaults/default-09.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 09 — risograph duotone print"
+  prompt: >
+    A friendly hand-built robot reading a newspaper on a fire escape while pigeons roost on the railing, rendered as a risograph duotone print. Coral and deep teal ink on warm off-white paper, visible misregistration and grain. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-10"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-10.webp"
+  source_url: "/images/newsfeed/defaults/default-10.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 10 — mid-century modern poster composition"
+  prompt: >
+    A rooftop radio dish angled at a dawn sky above a small town of stacked pastel buildings, rendered as a mid-century modern poster composition. Muted mustard, sage and burnt orange, flat shapes with a single hard light source. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-11"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-11.webp"
+  source_url: "/images/newsfeed/defaults/default-11.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 11 — ukiyo-e woodblock print"
+  prompt: >
+    A river of glowing paper lanterns carrying letters downstream past a wooden bridge, rendered as a ukiyo-e woodblock print. Indigo, soft rose and gold, flat planes with fine keyblock outlines. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-12"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-12.webp"
+  source_url: "/images/newsfeed/defaults/default-12.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 12 — art nouveau stained glass"
+  prompt: >
+    A greenhouse of impossible flowers with a small brass automaton tending them, rendered as a art nouveau stained glass. Emerald, amber and violet glass, heavy lead lines, backlit. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-13"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-13.webp"
+  source_url: "/images/newsfeed/defaults/default-13.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 13 — cyanotype photogram"
+  prompt: >
+    Ferns, circuit boards and feathers arranged as a specimen sheet, rendered as a cyanotype photogram. Deep prussian blue and paper white, soft edges where objects touched the paper. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-14"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-14.webp"
+  source_url: "/images/newsfeed/defaults/default-14.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 14 — gouache travel-poster composition"
+  prompt: >
+    A lighthouse rebuilt as a signal tower, beam sweeping a fogged coastline, rendered as a gouache travel-poster composition. Cream, slate blue and warm ochre, chalky opaque paint, confident brush shapes. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-15"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-15.webp"
+  source_url: "/images/newsfeed/defaults/default-15.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 15 — isometric diorama render"
+  prompt: >
+    A tiny cutaway workshop where three robots repair a much larger sleeping machine, rendered as a isometric diorama render. Warm lamplight against cool shadow, clean matte materials, shallow depth. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-16"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-16.webp"
+  source_url: "/images/newsfeed/defaults/default-16.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 16 — layered papercut shadowbox"
+  prompt: >
+    A forest at dusk in five receding paper planes with a lit cabin in the last one, rendered as a layered papercut shadowbox. Graduated blues into a single warm window glow, visible paper edges and cast shadows. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-17"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-17.webp"
+  source_url: "/images/newsfeed/defaults/default-17.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 17 — soft chalk pastel"
+  prompt: >
+    A field of radio antennas at blue hour with grass moving in the wind, rendered as a soft chalk pastel. Dusty lavender, ash grey and a low ember horizon, smudged velvety texture. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-18"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-18.webp"
+  source_url: "/images/newsfeed/defaults/default-18.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 18 — architectural blueprint"
+  prompt: >
+    An exploded diagram of a kindly machine whose purpose is clearly to make tea, rendered as a architectural blueprint. Cyan-white linework on deep blueprint blue, precise annotation marks with no legible letters. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-19"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-19.webp"
+  source_url: "/images/newsfeed/defaults/default-19.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 19 — bauhaus geometric composition"
+  prompt: >
+    A printing press abstracted into circles, arcs and bars mid-impression, rendered as a bauhaus geometric composition. Primary red, cobalt and black on bone, hard-edged, balanced asymmetry. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-20"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-20.webp"
+  source_url: "/images/newsfeed/defaults/default-20.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 20 — loose watercolor wash"
+  prompt: >
+    A flooded library where books float like lily pads and a lamp still burns, rendered as a loose watercolor wash. Wet-in-wet indigo and sepia bleeding into raw paper, one saved highlight. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-21"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-21.webp"
+  source_url: "/images/newsfeed/defaults/default-21.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 21 — linocut relief print"
+  prompt: >
+    A beekeeper robot among hives at the edge of an orchard, rendered as a linocut relief print. Single black ink on kraft paper, bold gouged marks, strong negative space. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-22"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-22.webp"
+  source_url: "/images/newsfeed/defaults/default-22.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 22 — vintage botanical engraving"
+  prompt: >
+    A cross-sectioned seed pod whose interior is a small mechanical orrery, rendered as a vintage botanical engraving. Sepia hatching on aged paper with one hand-tinted verdigris accent. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-23"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-23.webp"
+  source_url: "/images/newsfeed/defaults/default-23.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 23 — neon-noir photograph"
+  prompt: >
+    A rain-slick alley where a repair-shop sign reflects in standing water, rendered as a neon-noir photograph. Magenta and cyan signage against wet asphalt, deep blacks, anamorphic flare. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-24"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-24.webp"
+  source_url: "/images/newsfeed/defaults/default-24.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 24 — claymation macro still"
+  prompt: >
+    A lumpy clay robot proudly holding up a slightly crooked cake, rendered as a claymation macro still. Warm practical lighting, visible fingerprints in the clay, shallow tabletop depth of field. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-25"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-25.webp"
+  source_url: "/images/newsfeed/defaults/default-25.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 25 — embroidered textile"
+  prompt: >
+    A satellite orbiting a stitched earth, its trail a running thread, rendered as a embroidered textile. Linen ground with floss in rust, cream and deep teal, raised satin stitch, visible weave. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-26"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-26.webp"
+  source_url: "/images/newsfeed/defaults/default-26.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 26 — tarot-style symbolic illustration"
+  prompt: >
+    A figure carrying a lantern down an impossible staircase of open doors, rendered as a tarot-style symbolic illustration. Gold leaf on midnight blue, flat symbolic composition, heavy ornamental border. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-27"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-27.webp"
+  source_url: "/images/newsfeed/defaults/default-27.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 27 — constructivist poster composition"
+  prompt: >
+    A crane assembling a bridge out of speech bubbles, rendered as a constructivist poster composition. Red, black and paper-white diagonals, photomontage energy, extreme perspective. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-28"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-28.webp"
+  source_url: "/images/newsfeed/defaults/default-28.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 28 — impressionist oil painting"
+  prompt: >
+    A busy market square seen through morning haze, awnings and umbrellas, rendered as a impressionist oil painting. Broken color, thick visible brushwork, warm light dissolving the edges. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-29"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-29.webp"
+  source_url: "/images/newsfeed/defaults/default-29.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 29 — pixel art scene"
+  prompt: >
+    A cluttered bedroom studio at night with a crt glow and a cat on the desk, rendered as a pixel art scene. Limited 32-color palette, chunky dithering, cozy warm-versus-cool contrast. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-30"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-30.webp"
+  source_url: "/images/newsfeed/defaults/default-30.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 30 — sumi-e ink wash"
+  prompt: >
+    A heron standing in shallow water beside a half-sunken machine, rendered as a sumi-e ink wash. Single black ink at three dilutions on rice paper, enormous empty space, one confident stroke. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-31"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-31.webp"
+  source_url: "/images/newsfeed/defaults/default-31.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 31 — mosaic tile"
+  prompt: >
+    A sun disc made of thousands of small glazed tiles above a courtyard fountain, rendered as a mosaic tile. Terracotta, lapis and gold tesserae with visible grout, ancient and hand-set. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-32"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-32.webp"
+  source_url: "/images/newsfeed/defaults/default-32.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 32 — architectural photograph"
+  prompt: >
+    A brutalist concrete library with a single warm reading window lit at dusk, rendered as a architectural photograph. Raw grey concrete, long shadows, one saturated interior glow, tripod-steady. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-33"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-33.webp"
+  source_url: "/images/newsfeed/defaults/default-33.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 33 — children's book crayon drawing"
+  prompt: >
+    A very small robot and a very large dog sharing an umbrella, rendered as a children's book crayon drawing. Waxy crayon texture on toothy paper, joyful uneven color, generous white space. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-34"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-34.webp"
+  source_url: "/images/newsfeed/defaults/default-34.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 34 — iridescent holographic foil"
+  prompt: >
+    An abstract bloom of interference patterns forming a soft face-like symmetry, rendered as a iridescent holographic foil. Shifting rainbow sheen over charcoal, sharp specular highlights, no visible brush. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-35"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-35.webp"
+  source_url: "/images/newsfeed/defaults/default-35.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 35 — copper plate etching"
+  prompt: >
+    An airship moored to a cathedral spire above a sleeping city, rendered as a copper plate etching. Fine cross-hatched linework, warm plate-tone, aged ivory paper. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-36"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-36.webp"
+  source_url: "/images/newsfeed/defaults/default-36.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 36 — long-exposure light painting"
+  prompt: >
+    Someone drawing a spiral of light in a dark warehouse over thirty seconds, rendered as a long-exposure light painting. Pure light trails against deep black, faint ghosted figure, real photographic grain. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-37"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-37.webp"
+  source_url: "/images/newsfeed/defaults/default-37.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 37 — macro nature photograph"
+  prompt: >
+    A glass terrarium after rain, condensation on the inside, moss and one tiny door, rendered as a macro nature photograph. Green-gold backlight through water droplets, extremely shallow focus. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-38"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-38.webp"
+  source_url: "/images/newsfeed/defaults/default-38.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 38 — patchwork quilt"
+  prompt: >
+    A night sky pieced from scrap fabric with a single appliqued comet, rendered as a patchwork quilt. Indigo and cream cottons, visible hand quilting stitches, slightly imperfect seams. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-39"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-39.webp"
+  source_url: "/images/newsfeed/defaults/default-39.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 39 — scientific cross-section illustration"
+  prompt: >
+    The interior of a hillside showing burrows, roots, pipes and one buried lantern, rendered as a scientific cross-section illustration. Flat informational color, clean layer boundaries, calm didactic palette. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-40"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-40.webp"
+  source_url: "/images/newsfeed/defaults/default-40.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 40 — cel-shaded anime background"
+  prompt: >
+    A train platform at golden hour with cherry petals and no passengers, rendered as a cel-shaded anime background. Hard shadow shapes, saturated skies, painterly clouds, warm rim light. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-41"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-41.webp"
+  source_url: "/images/newsfeed/defaults/default-41.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 41 — suminagashi marbled paper"
+  prompt: >
+    Concentric drifting rings that suggest a slow spiral galaxy, rendered as a suminagashi marbled paper. Black and rust ink floated on water, organic feathered edges, cream ground. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-42"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-42.webp"
+  source_url: "/images/newsfeed/defaults/default-42.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 42 — bronze bas-relief"
+  prompt: >
+    A procession of small figures carrying tools toward a rising sun, rendered as a bronze bas-relief. Patinated bronze with verdigris in the recesses, raking side light, shallow carved depth. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-43"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-43.webp"
+  source_url: "/images/newsfeed/defaults/default-43.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 43 — stop-motion felt puppet still"
+  prompt: >
+    A felt fox operating a felt switchboard with visible stitching, rendered as a stop-motion felt puppet still. Handmade fuzz texture, tiny practical lights, tabletop set with a painted backdrop. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-44"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-44.webp"
+  source_url: "/images/newsfeed/defaults/default-44.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 44 — airbrushed 1970s paperback cover"
+  prompt: >
+    A lone figure on a dune watching two moons rise over a wrecked antenna array, rendered as a airbrushed 1970s paperback cover. Airbrush gradients, chrome highlights, dusty violet and orange sky. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-45"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-45.webp"
+  source_url: "/images/newsfeed/defaults/default-45.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 45 — blown glass macro"
+  prompt: >
+    A hand-blown glass vessel with a swirl of trapped color and one air bubble, rendered as a blown glass macro. Studio lighting through the glass, caustic light pooling on the surface below. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-46"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-46.webp"
+  source_url: "/images/newsfeed/defaults/default-46.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 46 — topographic relief map"
+  prompt: >
+    An island of layered contour lines rising to a single lit peak, rendered as a topographic relief map. Stacked paper-like contours in sand, sage and slate, soft shadow between layers. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-47"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-47.webp"
+  source_url: "/images/newsfeed/defaults/default-47.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 47 — charcoal chiaroscuro drawing"
+  prompt: >
+    A workbench lit by one bare bulb, tools and a half-finished mask, rendered as a charcoal chiaroscuro drawing. Compressed charcoal on grey paper, deep blacks, white chalk highlights only where the light lands. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
+
+- id: "kind-robots-newsfeed-default-48"
+  source: "kind-robots-newsfeed-defaults"
+  status: "pending"
+  target_repo: "silasfelinus/kind_robots"
+  image_path: "public/images/newsfeed/defaults/default-48.webp"
+  source_url: "/images/newsfeed/defaults/default-48.webp"
+  page_url: "https://kindrobots.org/"
+  variant: "image"
+  label: "Newsfeed stand-in 48 — sun-bleached instant photograph"
+  prompt: >
+    A roadside diner with a hand-painted sign, shot at noon in 1987, rendered as a sun-bleached instant photograph. Washed cyan cast, blown highlights, soft corners, faint chemical mottling. Intentional composition with one clear subject and real focal hierarchy, light with direction and atmosphere, finished enough to read at card size. Wide 16:9 landscape composition. no readable text, no logo, no watermark, no collage, no grid layout, no borders or title bars.
