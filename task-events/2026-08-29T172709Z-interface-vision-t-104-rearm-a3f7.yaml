@@ -1,0 +1,12 @@
+version: 1
+project: interface-vision
+task: t-104
+operation: rearm
+owner: worker
+session: openai-scheduled-20260829T171603Z-ivt104-a3f7
+updated: '2026-08-29T17:27:09Z'
+implementation_pr: 'silasfelinus/kind_robots#2202'
+note: >-
+  Bounded consistency slice merged as silasfelinus/kind_robots#2202 (squash 33f642378f42c929c04ec88d25252ad1c0dd0d48) from exact head 69b1c2e0821404b2df53caf9832c2706f6f03af3. components/academy/academy-timeline.vue now uses kr-container plus its existing max-w-[1600px] override instead of re-declaring mx-auto w-full. All exact-head PR workflows completed successfully, including Contract Tests #33265466132, TypeScript #33265465986, Layout Contract #33265466062, Schema Migration Parity #33265466117, and MDC Scroll Ownership #33265466180. Return the recurring consistency umbrella to ready for the next bounded slice.
+learning: >-
+  kr-container owns mx-auto w-full max-w-6xl; a later explicit max-w utility can preserve a component's established width while centralizing the shared centering/full-width contract.
