@@ -188,9 +188,6 @@ if (-not $running) {
 } else {
     $names = @($running | ForEach-Object { Prop $_ 'name' } | Where-Object { $_ })
     if (-not $names.Count) {
-        # Never report a wall of failures on the strength of fields we could not
-        # read -- that is indistinguishable from every app being down, and it is
-        # the script that is broken, not the box.
         Say 'unknown' "pm2 answered but no app names could be read" @(
             "The process list parsed, but its fields did not. Treating this as",
             "'cannot tell', not as every app being down."
@@ -247,7 +244,6 @@ if (-not (Test-Path $dumpPath)) {
                 )
             }
         }
-        # The stale-env trap, checked directly rather than inferred.
         foreach ($app in $dump) {
             if ((Prop $app 'name') -eq 'kr-relay') {
                 $savedEnv = Prop $app 'env'
@@ -317,8 +313,6 @@ if (Test-Path $relayLog) {
 }
 
 # --- 8. ComfyUI's own model paths --------------------------------------------
-# Not in this repo -- ComfyUI reads its own copy, and leaving it on Z: while the
-# relay runs on UNC splits the two: the relay claims work ComfyUI then fails.
 $emp = 'D:\comfy\comfy-fast\extra_model_paths.yaml'
 if (Test-Path $emp) {
     $base = Get-Content -Path $emp | Select-String -Pattern '^\s*base_path:' | Select-Object -First 1
@@ -357,8 +351,11 @@ if ($script:fail) {
         Write-Host "console before acting on a FAIL above."
     }
     exit 1
-} elseif ($script:warn -or $script:unknown) {
-    Write-Host "Probably fine, with caveats: $($script:warn) warning, $($script:unknown) unknown"
+} elseif ($script:unknown) {
+    Write-Host "Cannot determine reboot safety: $($script:warn) warning, $($script:unknown) unknown"
+    exit 2
+} elseif ($script:warn) {
+    Write-Host "Reboot-safe with caveats: $($script:warn) warning"
     exit 0
 } else {
     Write-Host "Reboot-safe: all checks passed."
