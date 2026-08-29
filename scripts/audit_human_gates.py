@@ -89,10 +89,56 @@ def load_project_statuses(path: Path) -> dict[str, str]:
     return statuses
 
 
+# A note written by Silas from the Kind Robots front end, rather than by an
+# agent. server/api/conductor/task-action.post.ts stamps these prefixes; they
+# are the only machine-readable marker that a human has spoken on a task.
+HUMAN_NOTE_PREFIX = re.compile(
+    r"^(?:HUMAN NOTE|HUMAN ANSWER|APPROVED|SENT BACK) (?:from|by) ",
+    re.IGNORECASE,
+)
+
+
+def latest_note_block(task: dict[str, Any]) -> str:
+    """The most recently appended paragraph of a task's `note`.
+
+    process_task_events.py appends with a blank line between entries
+    (`f"{existing}\n\n{note}"`), so the last blank-line-separated block is
+    whatever spoke last.
+    """
+    note = task.get("note")
+    if not isinstance(note, str):
+        return ""
+    blocks = [block.strip() for block in note.split("\n\n") if block.strip()]
+    return blocks[-1] if blocks else ""
+
+
+def human_answer_unread(task: dict[str, Any]) -> str:
+    """The text of a human note that no agent has answered yet, or "".
+
+    WHY THIS EXISTS. Silas, 2026-08-29, on the gate pipeline: "we might be
+    missing whatever ties the response to the project referenced. follow it end
+    to end." Following it found this: a `comment` task-event appends the human's
+    note and leaves the task at `needs-human`, and run_worker.find_ready_task
+    only ever selects `status: ready`. So nothing picks the task up, and this
+    audit -- the one thing that reads every gate on every session start -- did
+    not print notes at all. A human answer could be written and then be
+    invisible to every subsequent agent.
+
+    A human note that is the LAST block means the human spoke and nothing has
+    replied since; any agent transition on the task appends its own block after
+    it. That is the whole heuristic, and it needs no new roadmap field.
+    """
+    block = latest_note_block(task)
+    return block if HUMAN_NOTE_PREFIX.match(block) else ""
+
+
 def stale_reasons(task: dict[str, Any]) -> list[str]:
     reasons: list[str] = []
     if task.get("approved_by_human") is True:
         reasons.append("approved-by-human-but-still-needs-human")
+
+    if human_answer_unread(task):
+        reasons.append("human-answer-unread")
 
     text = f"{task.get('title', '')}\n{task.get('note', '')}"
     for reason, pattern in RESOLVED_PATTERNS:
@@ -133,6 +179,7 @@ def scan(
                     "stakes": task.get("stakes"),
                     "approved_by_human": task.get("approved_by_human"),
                     "updated": task.get("updated"),
+                    "human_answer": human_answer_unread(task),
                     "stale_reasons": stale_reasons(task),
                 }
             )
@@ -140,6 +187,10 @@ def scan(
     return sorted(
         gates,
         key=lambda gate: (
+            # An unread human answer outranks everything: it is the one gate
+            # state where somebody is already waiting on US rather than the
+            # other way round.
+            not gate.get("human_answer"),
             gate["soft_gate"],
             gate["project"],
             str(gate["task_id"]),
@@ -152,9 +203,11 @@ def render(gates: list[dict[str, Any]]) -> str:
         return "No active-project human gates found."
 
     findings = [gate for gate in gates if gate["stale_reasons"]]
+    answered = [gate for gate in gates if gate.get("human_answer")]
     lines = [
         f"Active human gates: {len(gates)}",
         f"Strong stale-state signals: {len(findings)}",
+        f"Gates with an unread answer from Silas: {len(answered)}",
         "",
     ]
     for gate in gates:
@@ -166,6 +219,13 @@ def render(gates: list[dict[str, Any]]) -> str:
             f"- {gate['project']}/{gate['task_id']} [{flavor}] "
             f"{gate['title']}{suffix}"
         )
+        # The note itself, not just the flag. The point of surfacing an unread
+        # human answer is that the next agent ACTS on what it says.
+        if gate.get("human_answer"):
+            answer = " ".join(gate["human_answer"].split())
+            if len(answer) > 300:
+                answer = f"{answer[:297]}..."
+            lines.append(f"    ANSWER FROM SILAS: {answer}")
 
     if findings:
         lines.extend(

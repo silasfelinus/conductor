@@ -156,3 +156,66 @@ def test_render_separates_gate_count_from_stale_signal_count():
     assert "Active human gates: 2" in output
     assert "Strong stale-state signals: 1" in output
     assert "REVIEW: nothing-left" in output
+
+
+def test_human_answer_unread_detects_only_a_trailing_human_note():
+    """The Kind Robots gate composer stamps these prefixes; a trailing one means
+    Silas spoke and no agent has replied since. See scripts/audit_human_gates.py
+    for why this is the tie that was missing from the gate pipeline."""
+    assert audit.human_answer_unread({"note": "Worker parked this."}) == ""
+    assert audit.human_answer_unread({}) == ""
+    assert audit.human_answer_unread({"note": None}) == ""
+
+    answered = {
+        "note": "Worker parked this.\n\n"
+        "HUMAN ANSWER from silas via Kind Robots. Gate released. Use option B."
+    }
+    assert audit.human_answer_unread(answered).startswith("HUMAN ANSWER")
+    assert "human-answer-unread" in audit.stale_reasons(answered)
+
+    # An agent transition appends its own block, which is what "read" looks
+    # like -- the flag must clear rather than nag forever.
+    replied = {
+        "note": "HUMAN NOTE from silas via Kind Robots. Still gated. x\n\n"
+        "Worker: acted on this, still blocked upstream."
+    }
+    assert audit.human_answer_unread(replied) == ""
+    assert "human-answer-unread" not in audit.stale_reasons(replied)
+
+
+def test_render_surfaces_the_answer_text_and_counts_it():
+    gates = [
+        {
+            "project": "kind-robots",
+            "task_id": "t-078",
+            "title": "Home page review",
+            "soft_gate": False,
+            "stale_reasons": ["human-answer-unread"],
+            "human_answer": "HUMAN NOTE from silas via Kind Robots. Ship the toggle.",
+        },
+    ]
+
+    output = audit.render(gates)
+    assert "Gates with an unread answer from Silas: 1" in output
+    # The flag alone would repeat the original bug: a human answer nobody reads.
+    assert "ANSWER FROM SILAS: HUMAN NOTE from silas" in output
+
+
+def test_scan_sorts_answered_gates_first(tmp_path):
+    write_roadmap(
+        tmp_path,
+        "academy",
+        [
+            {"id": "t-001", "status": "needs-human", "title": "Plain gate"},
+            {
+                "id": "t-002",
+                "status": "needs-human",
+                "title": "Answered gate",
+                "note": "HUMAN ANSWER from silas via Kind Robots. Go ahead.",
+            },
+        ],
+    )
+    write_overrides(tmp_path, [("academy", "active")])
+
+    gates = audit.scan(tmp_path / "projects", include_inactive=False)
+    assert [gate["task_id"] for gate in gates] == ["t-002", "t-001"]
