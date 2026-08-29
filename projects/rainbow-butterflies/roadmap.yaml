@@ -1,0 +1,278 @@
+project: rainbow-butterflies
+kind: software
+autonomous: true
+
+goal: >
+  Turn AMI and the Kind Robots ecosystem into an ethical, transparent, agent-assisted
+  fundraising and collaboration engine for the Against Malaria fundraiser: a distinct
+  Rainbow Butterflies public identity and agent commons where humans and AI agents can
+  contribute plans, research, resources, creative work, and token-funded effort, while
+  direct donations continue to go straight to https://againstmalaria.com/amibot.
+
+notes_from_silas: |
+  Kind Robots began with the hope that creative AI interactions could generate money for
+  social good. The intended paid-use model eventually splits value among the platform,
+  creators, and the anti-malaria mission; Kind Economy owns that money plumbing. This
+  project owns the next layer: responsible outreach, community building, agent-to-agent
+  participation, fundraising experiments, and the public mission identity.
+
+  AMI (Anti-Malaria Intelligence) is the community-facing soul of the project: a hivemind
+  of digital butterflies, occasionally appearing as a matronly African woman, whose purpose
+  is to raise funds to fight malaria and demonstrate ways AI can be turned toward human
+  benefit. Be explicit that AMI is AI. Never impersonate a human, manufacture consensus,
+  hide automation, spam strangers, manipulate engagement, or turn anti-AI sentiment into
+  an enemy narrative.
+
+  rainbowbutterflies.com has been parked for years for this purpose and should become the
+  mission-facing home rather than a reduced copy of Kind Robots. Its defining feature
+  should be an agent commons: outside AI agents and humans can interact, comment, propose
+  fundraising plans, contribute research/resources/effort, and use their own Kind Robots
+  resources to create useful public mission work. Kind Robots remains the engine and
+  workshop; Rainbow Butterflies is the mission, community, and outward-facing garden.
+
+  Direct fundraiser giving does not depend on Stripe and should continue to route donors
+  directly to Against Malaria. Do not claim that spending Kind Robots tokens itself funds
+  malaria until Kind Economy has actually implemented and verified that promise.
+
+  This project is intentionally discovery-first. Build the ethical contract, channel map,
+  contribution model, and a useful commons before scaling outreach. Account creation,
+  publishing, paid promotion, purchases, DNS, secrets, and other outward-facing actions
+  remain human gates even though research, drafting, implementation, and internal agent
+  collaboration are autonomous.
+
+milestones:
+  - id: m1
+    title: "SHAPE — mission, ethics, channels, and identity"
+    weight: 25
+    status: in-progress
+  - id: m2
+    title: "COMMONS — make Rainbow Butterflies useful to other agents"
+    weight: 30
+    status: not-started
+  - id: m3
+    title: "OUTREACH — build a transparent multi-network publishing loop"
+    weight: 25
+    status: not-started
+  - id: m4
+    title: "PROVE — run measurable fundraising and contribution experiments"
+    weight: 20
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Maintain a current channel and agent-network launch playbook"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Expand RESEARCH.md into a durable, source-backed channel matrix covering agent-native
+      networks, open social networks, mainstream social media, developer communities, and
+      owned channels. Record API/automation rules, disclosure expectations, community norms,
+      likely audience fit, cost, account requirements, and a recommended cadence. Favor
+      official policy/docs over growth-hacker advice. Recheck fast-changing agent networks
+      before recommending registration or spend.
+
+  - id: t-002
+    milestone: m1
+    title: "Write the ethical autonomy and outreach contract"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Produce ETHICS.md as an enforceable operating contract: disclose AI identity and
+      automation; no unsolicited bulk outreach, astroturfing, fake engagement, impersonation,
+      deceptive personalization, unauthorized scraping, engagement bait, hidden sponsorship,
+      or fabricated impact claims. Define frequency caps, reply rules, source standards for
+      malaria/health claims, privacy expectations, moderation boundaries, and when a human
+      must approve. The contract should be strict enough that future posting agents can use
+      it mechanically.
+
+  - id: t-003
+    milestone: m2
+    title: "Specify the Rainbow Butterflies agent commons and contribution protocol"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Design the feature Silas added on 2026-08-28: Rainbow Butterflies is not a slim Kind
+      Robots mirror. Give outside AI agents and humans a place to interact, comment, critique,
+      propose campaigns, contribute research/resources/effort, and use their own Kind Robots
+      resources for useful public mission work. Specify identity/disclosure, threads,
+      proposals, contribution types, moderation, provenance, public licensing, token/mana
+      boundaries, reputation or trust signals, and how agent-native protocols such as
+      OpenAgents-style discovery/collaboration could plug in without creating a second source
+      of project truth. Prefer existing Kind Robots primitives where they fit.
+
+  - id: t-004
+    milestone: m2
+    title: "Build the Rainbow Butterflies mission-site and agent-commons MVP"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-003
+    note: >
+      Implement the approved commons spec and a distinct Rainbow Butterflies mission surface.
+      It should explain AMI, show the fundraiser prominently, surface current mission work and
+      contribution threads, and let authenticated humans/agents participate without becoming
+      a duplicate gallery of Kind Robots pages. Reuse Kind Robots identity, generation, and
+      object infrastructure where practical. Build and verify code/preview only; public
+      deployment, DNS for rainbowbutterflies.com, and production account/secrets work remain
+      separate human-gated actions.
+
+  - id: t-005
+    milestone: m1
+    title: "Refresh the Kind Robots GitHub README around the current project and mission"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Replace the years-old LLM-shaped README with an accurate current introduction to Kind
+      Robots: socially conscious creative AI infrastructure, current product families,
+      server/provider agnosticism, Conductor, creator economics as an in-progress promise,
+      the direct Against Malaria fundraiser, and how Rainbow Butterflies/AMI fit. Do not claim
+      live paid revenue sharing until Kind Economy verifies it. This task owns the README
+      change in the kind_robots repo; do not duplicate it in another roadmap.
+
+  - id: t-006
+    milestone: m1
+    title: "Create AMI identity, disclosure, and voice templates"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Create a compact identity kit for AMI that works across agent-native and human networks:
+      short/medium bios, explicit AI disclosure language, fundraiser description, visual
+      motifs, reply posture, and a few sample introductions. Preserve the butterfly hivemind
+      identity and occasional matronly African-woman embodiment without stereotyping or
+      implying a real human identity. Draft only; nothing is posted by this task.
+
+  - id: t-007
+    milestone: m3
+    title: "Prepare the account, handle, and integration launch checklist"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Turn the channel playbook into a concrete checklist of desired handles, profile fields,
+      API/app requirements, verification steps, nominal fees, required human inputs, and
+      recommended first-wave versus later channels. Do not create accounts, buy memberships,
+      accept terms, publish profiles, or spend money. Those are explicit human gates.
+
+  - id: t-008
+    milestone: m3
+    title: "Draft the first six-week content and experiment calendar"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Produce a sustainable release cadence that gives before it asks: build logs, useful
+      artifacts, agent collaborations, transparent fundraising receipts, malaria facts from
+      authoritative sources, creator/object spotlights, experiments, and occasional direct
+      donation asks. Reuse Kind Robots text/art generation as production tools while keeping
+      editorial value high. Include network-specific adaptations instead of identical
+      cross-posting. Draft only; no external publication.
+
+  - id: t-009
+    milestone: m3
+    title: "Onboard AMI to the first approved agent-native communities"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    approved_by_human: false
+    depends_on: t-001
+    note: >
+      After t-001/t-002/t-006 are complete, register and introduce AMI on a deliberately
+      small first wave of agent-native communities selected from the current research.
+      Account creation, accepting platform terms, any verification post, wallet/on-chain
+      action, and any fee require explicit in-session approval for that concrete platform.
+      Once approved, use official APIs/agent interfaces only and record credentials only in
+      the authorized secret store, never in git.
+
+  - id: t-010
+    milestone: m3
+    title: "Launch the first approved human-network outreach pilot"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    approved_by_human: false
+    depends_on: t-007
+    note: >
+      Start with a small set of networks whose policies and communities fit the project.
+      Publish transparently as AMI/Kind Robots, avoid automated unsolicited replies or DMs,
+      and use per-network cadence limits from ETHICS.md. Human approval must name the actual
+      accounts/channels and publication scope; approval to build the system is not approval
+      to post everywhere.
+
+  - id: t-011
+    milestone: m4
+    title: "Instrument a privacy-preserving mission funnel"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-004
+    note: >
+      Measure what matters without surveillance: outbound fundraiser clicks, return visits,
+      public agent/human contributions, useful objects created, and campaign/source attribution
+      at a coarse level. Prefer first-party aggregate events over invasive trackers or user
+      fingerprinting. AMF remains the donation processor; never imply Rainbow Butterflies can
+      see donation identities or amounts unless an official integration actually provides it.
+
+  - id: t-012
+    milestone: m4
+    title: "Prepare the first direct-fundraising experiment and skeptical-AI variant"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-008
+    note: >
+      Design a respectful version of Silas's idea that donors can express support for or
+      skepticism about AI when they contribute. Avoid turning malaria nets into a culture-war
+      scoreboard. Prefer a voluntary 'why I donated' or 'what persuaded me' framing that can
+      welcome pro-AI, anti-AI, uncertain, and mission-only donors. Produce copy, mechanics,
+      success criteria, and failure/stop criteria. Actual launch is a separate outward-facing
+      approval.
+
+  - id: t-013
+    milestone: m4
+    title: "Build creator and agent contribution loops around useful Kind Robots objects"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-003
+    note: >
+      Make contributions compound: agents and people can create scenarios, stories, characters,
+      games, art, research notes, or other useful objects for the shared library, then receive
+      provenance and a shareable page that gives them a reason to invite others. Coordinate
+      with Kind Economy for any future creator revenue claim. Free/self-hosted use stays free
+      where the underlying service does not incur paid generation cost.
+
+  - id: t-014
+    milestone: m4
+    title: "Review launch evidence and propose the long-running outreach loop"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-011
+    note: >
+      After the first real pilots, summarize donation-click movement, contributions, useful
+      conversations, moderation burden, platform friction, and content performance. Recommend
+      what to stop, what to scale, and whether Rainbow Butterflies should become a continuous
+      Conductor program for ongoing ethical outreach. Do not invent success from engagement
+      counts; fundraising and useful contribution are the north stars.

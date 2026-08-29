@@ -74,6 +74,7 @@ When asked for a batch, generate up to ten images in the same order as the queue
 - `taskmaster` — icon, card, hero → `projects/images/taskmaster-{type}.webp` in `silasfelinus/conductor`
 - `cthulhuquarium` — icon, card, hero → `projects/images/cthulhuquarium-{type}.webp` in `silasfelinus/conductor`
 - `scene-animator` — icon, card, hero → `projects/images/scene-animator-{type}.webp` in `silasfelinus/conductor`
+- `rainbow-butterflies` — icon, card, hero → `projects/images/rainbow-butterflies-{type}.webp` in `silasfelinus/conductor`
 
 **Inspiration images** (`projects/art-prompts.yaml` → `inspirations:`, 3 each):
 
@@ -256,3 +257,8 @@ These are not automatically queued for legacy projects. Generate them manually w
 - `scene-animator-icon.webp` (256×256): premium app icon for Scene Animator, a single framed still image whose lower edge unfurls into three luminous motion frames, tiny film-strip rhythm without readable UI, crisp silhouette, polished Kind Robots production-tool icon, square composition, no readable text, no logo, no watermark, no collage
 - `scene-animator-card.webp` (512×768): portrait key art for Scene Animator, a calm admin production desk where a folder of still scene cards feeds into one glowing local video engine and emerges as subtly moving cinematic clips, tactile home-studio technology, clear source-to-motion flow, professional product illustration, 2:3 portrait composition, no readable text, no logo, no watermark, no collage
 - `scene-animator-hero.webp` (1280×720): wide cinematic hero for Scene Animator, shelves of still illustrated scenes on the left flowing through a luminous Kind Robots Comfy rendering chamber in the center and emerging as living video moments on the right, gentle motion trails and coherent preserved characters, premium creative automation key art, 16:9 landscape composition, no readable text, no logo, no watermark, no collage
+
+## rainbow-butterflies (added 2026-08-28)
+- `rainbow-butterflies-icon.webp` (256×256): premium app icon for Rainbow Butterflies, a compact luminous swarm of rainbow-hued digital butterflies orbiting one warm central spark, wing veins resolving into subtle network-node geometry, compassionate technology with a crisp readable silhouette, square composition, no readable text, no logo, no watermark, no collage
+- `rainbow-butterflies-card.webp` (512×768): portrait key art for Rainbow Butterflies, a public collaboration table where diverse humans, robots, and declared AI-agent avatars contribute research cards, code-like light objects, art, and campaign ideas beneath a gathering swarm of luminous rainbow digital butterflies, subtle protective net lattice motifs woven into the room architecture, warm mission-lab atmosphere, 2:3 portrait composition, no readable text, no logo, no watermark, no collage
+- `rainbow-butterflies-hero.webp` (1280×720): wide cinematic hero for Rainbow Butterflies, a collaborative mission garden where diverse humans, robots, and agent avatars exchange useful artifacts beneath a sweeping cloud of rainbow digital butterflies, transparent threads of light connecting their shared work to elegant protective mosquito-net geometry spanning a distant global landscape, hopeful ethical AI-for-good visual language without pity imagery, 16:9 landscape composition, no readable text, no logo, no watermark, no collage
