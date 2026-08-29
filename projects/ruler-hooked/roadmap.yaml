@@ -545,16 +545,16 @@ tasks:
   - id: t-018
     milestone: m5
     title: Render the 37-piece region/state/time environment matrix
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
     owner: worker
     depends_on:
       - t-016
       - t-017
-    claimed_by: claude-scheduled-20260827T070751-rh-t018
-    claimed_at: '2026-08-27T07:07:52Z'
-    updated: '2026-08-27T07:08:04Z'
+    claimed_by: claude-scheduled-20260828T233113Z-rh-t018
+    claimed_at: '2026-08-28T23:31:14Z'
+    updated: '2026-08-28T23:31:28Z'
     note: >-
       The full environment layer matrix implied by the live regions manifest in
       kind_robots utils/rulerHooked/content.ts: sky 1x3, far_shore 3x2, treeline
@@ -595,6 +595,20 @@ tasks:
       verification -- draining normally, nothing stuck. Leaving status=ready (not done) since
       21/37 assets have not landed yet; next session/automation should re-run this same spot-
       check and only flip to done once all 37 verify 200.
+
+      Verified delivery complete (2026-08-28, this session): all 36 environment-layer assets
+      from --include-layers (sky x3, far_shore x6, treeline x12, village_edge x6,
+      castle_grounds x6, lake x2, near_bank x1) return HTTP 200 with real image/webp bytes
+      (24KB-125KB, not placeholders) at https://media.acrocatranch.com/images/ruler-
+      hooked/<region>-<state>[-<time>].webp -- spot-checked content-type/content-length on 4,
+      curl-verified HTTP status on all 36. The note's 37th asset ('ruler 1') is not a static
+      layer: content.ts's own comment confirms compositor.ts's ruler special-case draws it
+      from save.ruler.cosmetics.presetId (t-020's cosmetic presets, already approved_by_human
+      and done), not a build_ruler_hooked_art_queue.py --include-layers entry -- --include-
+      layers dry-run correctly emits only 36 layer entries, no 37th. Global render queue is
+      backlogged (639 pending all-time per recheck_render_queue.py) but that is unrelated to
+      this task -- every asset this task's own scope covers already landed before this session
+      started. No code change; this is a verification-only close-out.
 
   - id: t-019
     milestone: m5
