@@ -188,7 +188,7 @@ tasks:
   - id: t-006
     milestone: m5
     title: "Research and pitch one genuinely new passive animation"
-    owner: null
+    owner: reviewer
     passes: 0
     stakes: reversible
     recurring: true
@@ -218,10 +218,10 @@ tasks:
 
       RAN 2026-08-27 (~07:20 UTC, conductor scheduled Agent run): new Pacific calendar day since the last pitch (cairn-balancing, added 2026-08-25T11:45 UTC / ~04:45 PDT, Pacific day 08-25 -- no pitch was added on Pacific day 08-26, an unexplained one-day gap the note history does not account for) and the buildable (status: pitched) queue was at 10 (not above twelve), so neither no-op condition applied. Added `zoetrope-lantern-drum` (a slow-turning slotted lantern drum whose passing slat gaps sample one pose per gap from a short pre-authored pose strip, so a walking/wingbeat/juggling figure emerges from angle-driven frame-stepping rather than any continuous simulation; every few rotations the drum dims and swaps its interior figure for a different one), checked against all 24 existing pitches. Distinct from marble-run-contraption and cairn-balancing (both simulate physics on discrete objects; this rig has no physics, only fixed poses sampled by rotation angle), strandbeest-migration and celestial-mobile (continuous-motion linkage/rigid-body animation frame by frame, not discrete pose stepping), shadow-puppet-theater (closest in spirit -- backlit joint-driven figures -- but animates a continuous joint timeline behind a static light rather than a rotating physical occluder sampling discrete poses, and never swaps its figure identity mid-cycle), and clockwork-greenhouse/geode-bloom (state-machine growth of one persistent structure, versus resampling a fixed strip here) -- no existing pitch uses a rotating slotted occluder to build motion from discrete pose sampling. Appended directly to PITCHES.yaml as a surgical text insertion (verified via `git diff` that only the new entry and the top-level `updated` timestamp changed, no reformatting of existing entries), assigned priority 25. `check_animation_novelty.py --strict` reported no collisions at or above the 0.2 threshold across all 25 pitches. Brings the buildable queue to 11. No kind_robots code touched (pitch-only) -- re-arming to ready per the recurring-task convention.
       RAN 2026-08-29 (~03:31 UTC, conductor scheduled Agent session, claude-scheduled-20260829T033029Z-am-t006): PITCHES.yaml's `updated` timestamp was stale at 2026-08-27 and the buildable (status: pitched) queue was at 10 (below the cap of twelve), so neither no-op condition applied. Added `soap-film-membrane` (a diffusion/drainage thickness-grid simulation mapped through a thin-film interference color function, ending in a radial rupture-and-reseed rather than settling particles, rigid-body physics, or discrete pose stepping), checked against all 25 existing pitches. Distinct from magnetic-sand-garden (discrete grain aggregation into topographic islands, not a continuous liquid-thickness field mapped to color), hourglass-cascade/candlelit-reliquary (height-map particle accumulation, not a drainage field whose color rather than height is the visible signal), harmonograph-sand-table (single parametric stylus trace), cairn-balancing/marble-run-contraption (discrete rigid-body motion), and the water/terrarium scenes bioluminescent-tide/koi-memory-pond/impossible-terrarium (swimming or growing life, not an airborne membrane defined purely by a thickness-to-color mapping). Ran `scripts/check_animation_novelty.py --strict` -- no collisions at or above the 0.2 threshold across all 26 pitches. Brings the buildable queue to 11. No kind_robots code touched (pitch-only) -- re-arming to ready per the recurring-task convention.
-    status: ready
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-29T03:32:34Z'
+    status: claimed
+    claimed_by: 20260829T142845Z-am-t006-sched
+    claimed_at: '2026-08-29T14:28:46Z'
+    updated: '2026-08-29T14:28:46Z'
 
   - id: t-007
     milestone: m5
