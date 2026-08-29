@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: review
+  status: ready
   passes: 49
   stakes: reversible
   note: >-
@@ -382,7 +382,32 @@ tasks:
     No new bug found in any of the four. Minor, non-bug observation: kr-chat-window.vue's narratorTurnNumber(index) recomputes by re-scanning all turns up to index on every rendered turn (O(n^2) over a full transcript) -- not a correctness issue at the session sizes these products produce (dozens of beats, not thousands), so not filed as a fix. visibleStreamingText()'s partial-marker trim only catches [STORY_STATE] when it starts a fresh line, not mid-line after other prose on the same streamed line -- this is explicitly carried over from the predecessor narrative-transcript.vue per the code comment, and the model has always emitted the marker on its own line in practice, so left as an inherited, not newly-introduced, simplification.
 
     Releasing the claim without a code change; re-armed to ready. Kaizen for cycle 40: components/pages/storybook-library-page.vue's full template/script (per cycle 38's note) has never had a dedicated top-to-bottom read, only its call sites into storybookLibraryHelper.ts -- the clear next lead.
-  updated: '2026-08-29T23:43:38Z'
+
+    Cycle 41: acted on cycle 40's own kaizen (full top-to-bottom read of
+    components/pages/storybook-library-page.vue, never previously done end-to-end -- only
+    its call sites into storybookLibraryHelper.ts had been read). Found a genuine, low-risk
+    defect: the Export menu was built as a native <details>/<summary> dropdown, the only one
+    in the codebase built that way -- every sibling dropdown (channel-select.vue, tab-
+    select.vue, watchlist-browse.vue) uses the focus-based .dropdown/.dropdown-content pair
+    instead, and channel-select.vue explicitly closes on selection via its own
+    closeDropdown() (blurring document.activeElement). <details> has no such behavior:
+    clicking Markdown or JSON left the menu open afterward, unlike every other dropdown in
+    the app. Converted to the standard div/button/tabindex pattern and added a matching
+    closeExportMenu(), called from both export buttons. Also read the full
+    storybookLibraryHelper.ts end-to-end
+    (openStory/duplicateStory/restartStory/buildExport/remapDuplicate) -- extremely well-
+    scrutinized already (documented double-billing and race-condition fixes across many
+    prior cycles); found nothing further to flag there. Verified: eslint clean; prettier
+    --check flags pre-existing drift on this file, confirmed via git stash to predate this
+    change; npm run test (vue-tsc --noEmit, repo-wide) clean; npm run test:layout-contract
+    holds (0 new violations, 207 baseline unchanged). Merged as
+    silasfelinus/kind_robots#2207 with all 37 checks green (including the Contract verifiers
+    and TypeScript stragglers) and mergeable_state clean before merge. Kaizen for cycle 42:
+    no further lead identified in this file; the next cycle should pick a fresh top-level
+    page/component that has never had a dedicated end-to-end read, the same way cycle 40
+    surfaced this one, rather than re-reading storybook-library-page.vue or
+    storybookLibraryHelper.ts again.
+  updated: '2026-08-29T23:43:51Z'
   implementation_pr: 'silasfelinus/kind_robots#2207'
   owner: worker
   claimed_by: 20260829T232731-storybookt010-sched
