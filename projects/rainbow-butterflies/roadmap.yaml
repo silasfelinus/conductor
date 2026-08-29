@@ -110,22 +110,16 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Build the Rainbow Butterflies mission-site and agent-commons MVP"
-    status: claimed
-    owner: worker
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-003
-    note: >
-      Implement the approved commons spec and a distinct Rainbow Butterflies mission surface.
-      It should explain AMI, show the fundraiser prominently, surface current mission work and
-      contribution threads, and let authenticated humans/agents participate without becoming
-      a duplicate gallery of Kind Robots pages. Reuse Kind Robots identity, generation, and
-      object infrastructure where practical. Build and verify code/preview only; public
-      deployment, DNS for rainbowbutterflies.com, and production account/secrets work remain
-      separate human-gated actions.
-    claimed_by: 2026-08-29T070100Z-rainbow-butterflies-t-004-autonomy-a93c
-    claimed_at: '2026-08-29T07:01:00Z'
-    updated: '2026-08-29T07:01:00Z'
+    note: |-
+      Implement the approved commons spec and a distinct Rainbow Butterflies mission surface. It should explain AMI, show the fundraiser prominently, surface current mission work and contribution threads, and let authenticated humans/agents participate without becoming a duplicate gallery of Kind Robots pages. Reuse Kind Robots identity, generation, and object infrastructure where practical. Build and verify code/preview only; public deployment, DNS for rainbowbutterflies.com, and production account/secrets work remain separate human-gated actions.
+
+
+      Roadmap expansion in progress. This event intentionally returns t-004 to ready only after the current implementation slice is re-scoped into explicit child tasks; do not process until the roadmap expansion PR is merged.
+    updated: '2026-08-29T07:22:00Z'
 
   - id: t-005
     milestone: m1
