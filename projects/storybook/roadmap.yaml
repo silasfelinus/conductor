@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 49
   stakes: reversible
   note: >-
@@ -374,7 +374,15 @@ tasks:
     startNewStory()/archiveCurrent() call sites have been traced via
     storybookLibraryHelper.ts, not the whole component) -- worth a dedicated top-to-bottom
     read.
-  updated: '2026-08-29T17:28:41Z'
+
+    Cycle 39 (no-op, real investigation, conductor scheduled Agent run): took the cycle-31 kaizen and read the shared components/narrative/** surface used by both Storybook and Taskmaster in full -- narrative-role-assigner.vue (the casting board), narrative-cast-card.vue (its per-card native+pointer drag implementation), kr-chat-window.vue (the shared transcript), and utils/narrativeTurns.ts (the beats<->turns adapter) -- none previously individually audited by this task.
+
+    Chased four concrete hypotheses rather than skimming: (1) narrative-role-assigner.vue's toggle() compares roleFor(slug) against props.modelValue BEFORE building the filtered `next` object, so a same-role click correctly toggles off rather than reassigning -- correct. (2) narrative-cast-card.vue's dragend ALWAYS emits drag-cancel regardless of whether a drop already succeeded -- traced the native DnD event order (dragstart -> dragenter/dragover -> drop -> dragend) and confirmed drop fires and calls dropRole()/cancelDrag() before dragend fires, so the following drag-cancel is a harmless no-op on already-null state, not a race that clobbers a successful assignment. (3) The pointer-drag path (touch) captures the pointer on the drag-handle button via setPointerCapture, then reads event.clientX/clientY on pointerup to find the drop target via document.elementFromPoint -- confirmed setPointerCapture only affects event target routing, not clientX/Y, so the touch drop correctly resolves under the finger's actual position rather than the button. (4) narrativeBeatsToTurns()/beatIdFromTurnId() in utils/narrativeTurns.ts -- verified the empty-answer-omitted contract (answer text is trimmed only for the truthiness check, the untrimmed text is what actually renders) and that beatIdFromTurnId deliberately returns null for answer turns so per-beat illustration chrome renders once, not twice; both storybook-page.vue and taskmaster-page.vue consume it identically via the same beatForTurn() pattern.
+
+    No new bug found in any of the four. Minor, non-bug observation: kr-chat-window.vue's narratorTurnNumber(index) recomputes by re-scanning all turns up to index on every rendered turn (O(n^2) over a full transcript) -- not a correctness issue at the session sizes these products produce (dozens of beats, not thousands), so not filed as a fix. visibleStreamingText()'s partial-marker trim only catches [STORY_STATE] when it starts a fresh line, not mid-line after other prose on the same streamed line -- this is explicitly carried over from the predecessor narrative-transcript.vue per the code comment, and the model has always emitted the marker on its own line in practice, so left as an inherited, not newly-introduced, simplification.
+
+    Releasing the claim without a code change; re-armed to ready. Kaizen for cycle 40: components/pages/storybook-library-page.vue's full template/script (per cycle 38's note) has never had a dedicated top-to-bottom read, only its call sites into storybookLibraryHelper.ts -- the clear next lead.
+  updated: '2026-08-29T17:30:40Z'
   implementation_pr: 'silasfelinus/kind_robots#2054, silasfelinus/kind_robots#2056, silasfelinus/kind_robots#2059'
   owner: worker
   claimed_by: 20260829T172841Z-storybook-t010-sched
