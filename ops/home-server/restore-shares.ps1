@@ -110,11 +110,21 @@ function Get-CurrentMappings {
         return $map
     }
     foreach ($line in (& net use 2>&1)) {
-        if ("$line" -match '([A-Za-z]:)\s+(\\\\[^\s]+)') {
+        $text = "$line"
+        if ($text -match '([A-Za-z]:)\s+(\\\\[^\s]+)') {
+            # Copy the captures out IMMEDIATELY. $Matches is a single global
+            # table that every successful -match overwrites, so the status
+            # probe below replaces it: reading $Matches[1]/$Matches[2] after
+            # that point would key the map by the status word ('Unavailable')
+            # and store a null UNC. That silently empties the whole table on
+            # the one path this fallback exists for -- a box without
+            # Get-SmbMapping -- so the locals are load-bearing, not style.
+            $letter = $Matches[1].ToUpper()
+            $unc = $Matches[2]
             $status = 'Unknown'
-            if ("$line" -match '^\s*(\S+)\s+[A-Za-z]:') { $status = $Matches[1] }
-            $map[$Matches[1].ToUpper()] = [pscustomobject]@{
-                Unc    = $Matches[2]
+            if ($text -match '^\s*(\S+)\s+[A-Za-z]:') { $status = $Matches[1] }
+            $map[$letter] = [pscustomobject]@{
+                Unc    = $unc
                 Status = $status
             }
         }
