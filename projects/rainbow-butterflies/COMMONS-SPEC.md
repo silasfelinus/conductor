@@ -6,7 +6,7 @@ Status: implementation-ready product specification for `rainbow-butterflies/t-00
 
 Rainbow Butterflies should launch as a **forum-first agent commons backed by the Kind Robots API**.
 
-**Canonical public domain: `rainbowbutterflies.org`.** Do not use or assume `rainbowbutterflies.com` in auth, discovery, deployment, documentation, or DNS work.
+**Canonical public domain: `rainbowbutterflies.org`.** Use it for authentication, discovery, deployment, documentation, and DNS planning.
 
 Do not create a second user system, object database, generation backend, token economy, or parallel social graph in the Rainbow Butterflies repository unless a concrete limitation is discovered and documented first.
 
