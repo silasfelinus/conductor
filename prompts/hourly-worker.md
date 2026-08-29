@@ -33,6 +33,25 @@ python scripts/audit_human_gates.py
 
 Both commands exclude paused, retired, and finished projects by default. Findings are prompts to inspect current evidence, not authorization to bypass a real gate.
 
+**A gate flagged `human-answer-unread` is different from every other finding here: it is
+work, not a suggestion.** Silas can now answer a gate from the Kind Robots home page
+(`/api/conductor/task-action`), and `audit_human_gates.py` prints his reply under the gate
+as `ANSWER FROM SILAS:`. Two shapes reach you:
+
+- **He used "Send to agent".** The task is already back at `status: ready` with the answer
+  appended to its `note` — you will meet it in step 3 below as an ordinary ready task.
+  Read the trailing `HUMAN ANSWER from ...` block before planning: it is the decision the
+  gate was waiting on, and it usually answers the exact question that parked the task.
+- **He used "Note only".** The task stays at `needs-human` and will NOT appear in your ready
+  queue, which is precisely why the audit surfaces it. Read what he said and act on it: if
+  his answer resolves the gate, the right move is usually to do the work and close it, not
+  to leave it parked because the status field still says `needs-human`.
+
+Never let an answer sit unread across cycles. A human reply that nothing picks up is the
+failure this reporting exists to prevent (2026-08-29 — `comment` events appended a note and
+left the task parked, and no role selects `needs-human`, so an answer could be written and
+then be invisible to every subsequent agent).
+
 ## Productive cycle behavior
 
 1. Check todos with `python scripts/fetch_todos.py`.

@@ -44,6 +44,25 @@ continuous_improvement_pr: silasfelinus/conductor#1834
 verify_pr: silasfelinus/kind_robots#1718
 ```
 
+### Notes written by a human
+
+Kind Robots' gate composer (`server/api/conductor/task-action.post.ts`, surfaced on the home
+page's "Needs you" column) writes ordinary events through this same queue, and stamps their
+`note` with a prefix that marks it as Silas speaking rather than an agent:
+
+| Front-end action | `operation` | Note prefix |
+| --- | --- | --- |
+| Send to agent | `ready` | `HUMAN ANSWER from <user> via Kind Robots.` |
+| Note only | `needs-human` | `HUMAN NOTE from <user> via Kind Robots.` |
+| Approve | `done` | `APPROVED by <user> via Kind Robots For You.` |
+| Send back | `ready` | `SENT BACK by <user> via Kind Robots For You.` |
+
+The prefixes are load-bearing: `scripts/audit_human_gates.py` reports a gate whose newest
+note block carries one as `human-answer-unread` and prints the text, which is how a parked
+`Note only` reaches the next agent at all. Nothing selects `needs-human` tasks, so without
+that report a human answer would be written into the roadmap and never read. Do not
+reformat these prefixes without updating `HUMAN_NOTE_PREFIX` in that script.
+
 `learning` is accepted only for `done` and `blocked`. The processor derives `project`, `task`, and `outcome` from the event and appends no duplicate record for the same project/task/outcome.
 
 `continuous_improvement_lane`/`continuous_improvement_pr` are optional and only meaningful on a task that already carries a `t-010`-style nested `continuous_improvement` mapping (`last_lane`/`next_lane`/`last_run`/`last_pr`). Set both together when a task-event closes out a lane cycle (typically alongside a `rearm` event) and the processor advances the counter (`last_lane`, `next_lane = lane % 4 + 1`, `last_run`, `last_pr`) the same way `scripts/bump_continuous_improvement.py`'s manual CLI does — fixes conductor/t-103, where the counter previously froze on every close-out that went through this lighter path instead of a session hand-editing the roadmap. `continuous_improvement_lane` must be an integer 1-4; `continuous_improvement_pr` must look like `owner/repo#number`. Supplying only one of the pair is rejected as malformed.
