@@ -24,9 +24,9 @@ def test_failure_diagnostic_is_prompt_free_and_bounded():
 
 def test_failure_diagnostic_collapses_error_whitespace():
     diagnostic = repair.failure_diagnostic(
-        {"id": 9001, "engine": "A1111", "error": "connection\n refused\t now"}
+        {"id": 9001, "engine": "COMFY", "error": "connection\n refused\t now"}
     )
-    assert diagnostic == "ArtJob 9001: engine=A1111; error=connection refused now"
+    assert diagnostic == "ArtJob 9001: engine=COMFY; error=connection refused now"
 
 
 def test_repair_reasons_remains_default_deny_for_unrelated_failure():

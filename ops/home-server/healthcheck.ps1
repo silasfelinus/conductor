@@ -22,8 +22,7 @@
 $ErrorActionPreference = 'SilentlyContinue'
 
 $targets = @(
-    @{ Name = 'comfyui';  Url = 'http://127.0.0.1:8188/system_stats' },
-    @{ Name = 'sd-webui'; Url = 'http://127.0.0.1:7860/sdapi/v1/progress' }
+    @{ Name = 'comfyui';  Url = 'http://127.0.0.1:8188/system_stats' }
 )
 
 $logFile = Join-Path $PSScriptRoot 'logs\healthcheck.log'

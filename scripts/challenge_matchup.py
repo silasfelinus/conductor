@@ -15,7 +15,7 @@ The matchup specification may be inline JSON or a JSON/YAML file::
 Contender provider/model/generator defaults come from Kind Robots' ``/api/contenders``
 endpoint. Per-entry settings override ``defaultSettings``. TEXT and REASONING entries
 call Anthropic or OpenAI directly. ART entries call the Kind Robots generation surface;
-local A1111/Comfy jobs are enqueued and polled until they have a real ``artImageId``.
+local Comfy jobs are enqueued and polled until they have a real ``artImageId``.
 Unavailable credentials or unsupported backends skip only that contender.
 
 Usage:

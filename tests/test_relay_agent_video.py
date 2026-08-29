@@ -23,11 +23,19 @@ def test_missing_engine_defaults_to_comfy():
     assert relay.resolve_job_engine({"engine": ""}) == "COMFY"
 
 
-def test_explicit_a1111_remains_supported():
-    assert relay.resolve_job_engine({"engine": "a1111"}) == "A1111"
+def test_explicit_a1111_is_rejected():
+    """A1111/Forge was removed from this box 2026-08-29.
+
+    An explicitly-labeled A1111 job must fail fast with a clear reason rather
+    than time out against port 7860, where nothing listens any more.
+    """
+    import pytest
+
+    with pytest.raises(ValueError, match="only drives ComfyUI"):
+        relay.resolve_job_engine({"engine": "a1111"})
 
 
-def test_unknown_engine_is_rejected_instead_of_falling_through_to_a1111():
+def test_unknown_engine_is_rejected():
     import pytest
 
     with pytest.raises(ValueError, match="unsupported ArtJob engine"):

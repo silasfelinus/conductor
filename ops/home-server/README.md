@@ -1,16 +1,24 @@
-# Home Server Supervision — ComfyUI + Stable Diffusion (A1111) auto-restart
+# Home Server Supervision — ComfyUI auto-restart
 
-Keeps the two art backends on Silas's Windows box alive without hand-launching
+Keeps the art backend on Silas's Windows box alive without hand-launching
 `.bat` files: crash → auto-restart, reboot → auto-start, plus an optional
 health watchdog. Uses **pm2**, which runs fine on Windows.
+
+> **A1111 / Forge was removed 2026-08-29.** It had not been used in a long
+> time, and its pm2 entry meant `pm2 restart ecosystem.config.js` silently
+> started it and held VRAM that ComfyUI wanted. ComfyUI is the only engine this
+> box runs. If you find an `sd-webui` process still registered from an older
+> `pm2 save`, clear it with `pm2 delete sd-webui && pm2 save`.
 
 Files in this folder:
 
 | File | What it is |
 |---|---|
-| `ecosystem.config.js` | pm2 process definitions for `comfyui` and `sd-webui` (plus opt-in `kr-relay` and `kr-download`) |
+| `ecosystem.config.js` | pm2 process definitions for `comfyui` (plus opt-in `kr-relay` and `kr-download`) |
 | `healthcheck.ps1` | optional watchdog — probes the HTTP health endpoints and `pm2 restart`s a hung process |
-| `relay_agent.py` | pull-based bridge: claims ArtJobs from kind_robots and drives local ComfyUI/A1111 (enable after art-generator-connect/t-010 deploys) |
+| `restore-shares.ps1` | logon-time repair for **this box's** SMB drive letters after *it* reboots (healthcheck covers the NAS going away while this box stays up) |
+| `preflight.ps1` | read-only "if I reboot now, does it all come back?" check — verifies the **saved** state (persistent mappings, `dump.pm2` and its env), not just the running state |
+| `relay_agent.py` | pull-based bridge: claims ArtJobs from kind_robots and drives local ComfyUI (enable after art-generator-connect/t-010 deploys) |
 | `relay_download_agent.py` | pull-based model downloader: claims queued LoRA/checkpoint downloads, fetches them onto the engine dirs, and catalogs them as Resources (the `kr-download` app) |
 | `start-engines.bat` | double-click launcher: starts both engines (no-op if running) and attaches the live log stream — the old bats' echo, without owning the processes |
 
@@ -35,19 +43,17 @@ bottom if you'd rather not unpack a bat.)
 # 1. Install pm2 (needs Node.js; you already have it for kind_robots)
 npm install -g pm2
 
-# 2. Verify the two *_DIR paths at the top of ecosystem.config.js
-#    (pre-filled from startcomfyfast.bat / webui-user.bat, 2026-07-05:
-#     D:\comfy\comfy-fast and D:\code\sd-webui-forge-neo)
+# 2. Verify COMFY_DIR at the top of ecosystem.config.js
+#    (pre-filled from startcomfyfast.bat, 2026-07-05: D:\comfy\comfy-fast)
 
 # 3. Stop any copies still running from the old bats, then start under pm2
 cd <this folder>   # wherever you checked out conductor/ops/home-server
 pm2 start ecosystem.config.js
 
 # 4. Verify
-pm2 status          # both should say "online"
+pm2 status          # comfyui should say "online"
 pm2 logs comfyui    # watch ComfyUI boot; Ctrl+C to detach
 curl http://127.0.0.1:8188/system_stats       # ComfyUI health
-curl http://127.0.0.1:7860/sdapi/v1/progress  # A1111 health (needs --api)
 
 # 5. Freeze the process list so pm2 can restore it
 pm2 save
@@ -139,11 +145,10 @@ Two layers of coverage:
 
 ```powershell
 pm2 status                  # what's running
-pm2 restart comfyui         # bounce one backend
-pm2 restart sd-webui
+pm2 restart comfyui         # bounce the render backend
 pm2 stop all                # free the GPU (e.g. before gaming)
 pm2 start all
-pm2 logs sd-webui --lines 200
+pm2 logs comfyui --lines 200
 ```
 
 ## What carried over from the old bats (and what deliberately didn't)
@@ -153,20 +158,18 @@ Checklist against `startcomfyfast.bat` / `webui-user.bat` (2026-07-05):
 | Old bat behavior | In the pm2 kit? |
 |---|---|
 | ComfyUI: venv python, `--listen 127.0.0.1 --port 8188 --enable-cors-header` | ✅ verbatim in `ecosystem.config.js` |
-| Forge: full `COMMANDLINE_ARGS` — `--api --listen --cuda-malloc`, Z:\ model dirs, `--cors-allow-origins` (kindrobots.org, vercel, localhost:3000/3001), `--xformers --skip-python-version-check --reserve-vram 2` | ✅ verbatim, passed straight to `launch.py` |
-| Tailscale Serve (`serve --bg` → 443 for comfy, `--https=8443` for forge) | ⚠️ **not pm2-managed — it doesn't need to be.** `tailscale serve --bg` config persists in tailscaled across reboots. Run the two commands once (below), confirm with `tailscale serve status`, done. |
-| pip repair / ensurepip bootstrap (webui-user.bat) | ❌ intentionally left out — that's a one-time repair job, not supervision. Keep the old bat around; if Python ever breaks, run it once by hand. |
+| Forge: full `COMMANDLINE_ARGS` | ❌ **removed 2026-08-29** — the app was unused and its pm2 entry cost VRAM. |
+| Tailscale Serve (`serve --bg` → 443 for comfy) | ⚠️ **not pm2-managed — it doesn't need to be.** `tailscale serve --bg` config persists in tailscaled across reboots. Run the two commands once (below), confirm with `tailscale serve status`, done. |
 | `pause` at the end | ❌ dropped — it's what makes bats un-automatable. |
 
 ### Tailscale Serve (one-time)
 
 ```powershell
 & "C:\Program Files\Tailscale\tailscale.exe" serve --bg http://127.0.0.1:8188
-& "C:\Program Files\Tailscale\tailscale.exe" serve --bg --https=8443 http://127.0.0.1:7860
-& "C:\Program Files\Tailscale\tailscale.exe" serve status   # verify both mappings
+& "C:\Program Files\Tailscale\tailscale.exe" serve status   # verify the mapping
 ```
 
-If both mappings already show in `serve status` from your old bat runs, there's
+If the mapping already shows in `serve status` from your old bat runs, there's
 nothing to do — the config is already persistent.
 
 ## The relay agent (kr-relay) — enable after t-010 deploys
@@ -427,6 +430,151 @@ question that mattered. The log is trimmed to 4000 lines once it passes 8000.
 If you get a `WATCHDOG BLIND` email, fix the task's *Run as* account to match
 the pm2 daemon owner, or give the `.vbs` an absolute path to `pm2`.
 
+### The 2026-08-29 recurrence: the *client* rebooted, not the NAS
+
+"I rebooted ferngrotto and lost access to my network drives, again." Same
+symptom, a different cause from 2026-08-25/26 — and worth separating, because
+the fixes are different and the earlier ones don't cover this.
+
+The two failures:
+
+| | 2026-08-25/26 | 2026-08-29 |
+|---|---|---|
+| What rebooted | alexandria (the NAS) | ferngrotto (this box) |
+| What was lost | the *sessions* behind live mappings | every mapping in every logon session, at once |
+| Who notices first | ComfyUI, mid-render | you, opening Explorer |
+| What covers it | `healthcheck.ps1` share watchdog, 5-min tick | `restore-shares.ps1`, at logon |
+
+Three specific reasons the existing watchdog does not close the client-reboot
+case, all of them structural rather than bugs:
+
+1. **It may not be running yet.** A `schtasks /SC MINUTE` task created without
+   `/RU` runs only while its creating user is logged on. A box sitting at the
+   login screen after a reboot runs no watchdog at all — the same trap as pm2
+   Option B starting at *logon* rather than boot.
+2. **It repairs one letter.** `KR_SHARE_UNC` remaps whatever letter is in
+   `KR_SHARE_PROBE_PATH`. There are four mappings on this box; a reboot takes
+   all four, and the watchdog was only ever asked about the models one.
+3. **It cannot repair a letter into your session anyway.** See below.
+
+**Why you cannot just have a service fix this for you.** A mapped drive letter
+belongs to one Windows logon session. Letters mapped by a task running as
+SYSTEM, or as "run whether user is logged on or not", land in a session you are
+not sitting in — your desktop still shows nothing, and pm2 running under your
+account still sees nothing. This is the same per-session trap that produced the
+two misreads already recorded here: a `net use` listing from Terminus showing
+everything `Unavailable` while the console session was fine (2026-08-25), and
+`pm2 jlist` returning an empty list under a Task Scheduler account that did not
+own the daemon (2026-08-27). There is no configuration that makes one process
+restore letters for everybody.
+
+So the split is:
+
+**The pipeline is *supposed* to be off drive letters — verify, do not assume.**
+`extra_model_paths.yaml` and `ecosystem.config.js` both default to
+`//192.168.7.172/pc`, and a UNC path has no logon session to lose. But
+2026-08-29 caught the box still running on `Z:` regardless: ArtJob 10258 failed
+with `[WinError 3] The system cannot find the path specified: 'Z:\'` at 09:50,
+two days after this repo recorded the move as done. Documentation of an intended
+state is not evidence of the deployed state. Check the running process, not this
+file:
+
+```powershell
+pm2 logs kr-relay --lines 40 | findstr /i "share gate"
+```
+
+`share gate armed on //192.168.7.172/pc/ai/models` means it took. `armed on Z:`
+means it did not. `share gate disabled` means `KR_SHARE_PROBE_PATH` is unset in
+that process and the relay will claim jobs it cannot render, converting PENDING
+into FAILED at the rate the queue feeds it.
+
+**Why the change can silently not take: `pm2 resurrect` replays the environment
+captured at the last `pm2 save`.** A `setx` performed after that save never
+reaches the resurrected process, and every reboot faithfully restores the stale
+env. That is the mechanism that kept this box on `Z:` for two days while the
+config on disk said UNC. Applying it needs both halves:
+
+```powershell
+setx KR_SHARE_ROOT "//192.168.7.172/pc"
+setx KR_SHARE_UNC  "\\192.168.7.172\pc"
+# open a NEW shell -- setx only affects new processes
+cd D:\code\Conductor\ops\home-server
+pm2 restart ecosystem.config.js --update-env
+pm2 save
+```
+
+Leave `KR_SHARE_PROBE_PATH` unset on purpose. Unset, the relay inherits the UNC
+path from `KR_SHARE_ROOT` while `healthcheck.ps1` falls back to `Z:\ai\models`
+and can still auto-remap via `KR_SHARE_UNC`. Setting it machine-wide collapses
+both consumers onto one path and disables the remap.
+
+Whichever path the pipeline is on, it needs the **credential**, and that is the
+part to check first when the box comes back:
+
+```powershell
+cmdkey /list          # is there an entry for 192.168.7.172 at all?
+```
+
+A bad credential presents *identically* to a dead NAS — every path unreadable,
+the host plainly up, `folder_paths` enumerating nothing. It has been wiped here
+before (ai-art-academy/t-033, 2026-08-25: "`cmdkey /list` was empty and all four
+alexandria mappings showed Unavailable"). Three traps, all hit on 2026-08-29:
+
+1. **A listed credential is not a working credential.** `cmdkey /list` showed
+   entries for both `192.168.7.172` and `alexandria`, and every share still
+   answered `The user name or password is incorrect`. The entries were present
+   with a stale password. Re-adding replaced it and the share read immediately.
+   Treat "an entry exists" as telling you nothing; only a successful `dir` of
+   the UNC path counts.
+2. **You cannot fix this over SSH.** `cmdkey /add` from a network logon session
+   fails with `CMDKEY: Credentials cannot be saved from this logon session` —
+   Credential Manager refuses to write from one. A Termius/SSH shell also reads
+   its own (empty) drive-letter table, which is how a `net use` listing showing
+   everything `Unavailable` got misread as "the array is down" on 2026-08-25.
+   Confirm where you are before believing anything: `echo %SESSIONNAME%` should
+   say `Console` or `RDP-Tcp#N`. Do this work from the console.
+3. **`cmdkey` is per-user**, so the account pm2 runs as needs its own entry. If
+   the engines run under a different account than your desktop, adding it in
+   your shell fixes Explorer and nothing else.
+
+Errors do not agree with each other across shells, and only one of them is
+honest. For the same broken share on the same box: cmd said `The user name or
+password is incorrect` (true), PowerShell said `Cannot find path ... because it
+does not exist` (misleading — the path exists, the session could not
+authenticate to it), and ComfyUI reported `no matching file for` a model that
+was registered and present. Believe the cmd error.
+
+**The letters are for you**, and `restore-shares.ps1` restores them at logon:
+
+```powershell
+cd <this folder>
+.\restore-shares.ps1 -Save     # once, while the mappings are healthy:
+                               # snapshots letter -> UNC into shares.json (gitignored)
+.\restore-shares.ps1 -Check    # report only: what is mapped, readable, credentialed
+.\restore-shares.ps1           # restore anything missing or unreadable
+```
+
+Register it — **as your normal user, not elevated, not SYSTEM**, or it will map
+letters into a session you are not in:
+
+```powershell
+schtasks /Create /SC ONLOGON /TN "Restore-SMB-Shares" /RL LIMITED `
+  /TR "powershell -NoProfile -ExecutionPolicy Bypass -File \"C:\path\to\conductor\ops\home-server\restore-shares.ps1\""
+```
+
+It waits up to 90s for TCP 445 on each file server before touching anything (a
+logon trigger fires while the NIC may still be negotiating), reports any host
+missing a stored credential, remaps only what is actually unreadable — it
+*enumerates* rather than trusting `Test-Path`, for the stale-handle reason
+above — and restarts ComfyUI if it restored anything and can see the daemon,
+because `folder_paths` caches its filename lists and will not re-enumerate just
+because a share came back. Logs to `logs\restore-shares.log`.
+
+`-Save` deliberately refuses to record a mapping it cannot read, so running it
+during an outage cannot bake today's breakage into the config as if it were the
+intent. Which means: run `-Save` once now, while things are working, or it has
+nothing to restore from next time.
+
 **`extra_model_paths.yaml` is now tracked** at `ops/home-server/extra_model_paths.yaml`
 as a reference copy of what belongs at `D:\comfy\comfy-fast\extra_model_paths.yaml`.
 It was audited 2026-08-26 against a full directory listing of the share: dead
@@ -445,17 +593,62 @@ python scripts/drain_failed_art_backlog.py --live
 It renders a canary batch first and refuses to drain if the host is still
 broken, so it is safe to run before you are sure the mount is fixed.
 
+## Reboot-readiness check (`preflight.ps1`)
+
+```powershell
+cd D:\code\Conductor\ops\home-server
+.\preflight.ps1
+```
+
+Read-only; changes nothing. Exit 0 clean, 1 if something would break on reboot.
+
+It exists because **working now and surviving a reboot are different
+questions**, and every failure in the 2026-08-25 → 08-29 run looked fine right
+up until the box came back. What survives is the *saved* state, so that is what
+it checks:
+
+| Running state | What a reboot actually restores |
+|---|---|
+| `net use` shows `Z:` working | `HKCU:\Network\Z` — absent means the mapping was made without `/persistent:yes` and is gone |
+| `pm2 status` lists the right apps | `~\.pm2\dump.pm2` — the list *and the environment* frozen at the last `pm2 save` |
+| `setx KR_SHARE_ROOT` succeeded | the env inside `dump.pm2`, which a `setx` after the last save never reached |
+| a credential is listed by `cmdkey` | nothing — presence is not validity; only a UNC read proves it |
+
+It reports the logon session as INFO rather than a warning: `SESSIONNAME` is
+empty in plenty of good shells (Windows Terminal among them), and warning on
+that alone cried wolf on a session whose drives, credential and pm2 all worked.
+It only matters as an explanation for a failure, so the summary raises it there
+instead — a network logon session (SSH, Termius) reads its own empty drive
+table and cannot save credentials at all, so a FAIL from the wrong shell may be
+an artifact rather than a fault.
+
+**Reading fields off `DeserializeObject` output: index, never `.Contains()`.**
+It returns `Dictionary[string,object]`, which implements the non-generic
+`IDictionary` *explicitly* — so `-is [IDictionary]` is true while `.Contains()`
+is not publicly bound and, under `SilentlyContinue`, resolves to nothing rather
+than erroring. That returned `$null` for every field and printed a wall of
+`[FAIL]  is , not online` on a completely healthy box. The indexer is public on
+both shapes; use `$obj[$key]`. The pm2 checks now also refuse to report
+failures at all when no app name could be read — "cannot tell" is the honest
+answer there, and it is indistinguishable from "everything is down" otherwise.
+
+**On PowerShell 5.1, do not parse pm2's output with `ConvertFrom-Json`.** There
+it is `JavaScriptSerializer` with a `MaxJsonLength` cap it will not tell you
+about, and `pm2 jlist` — every app with its full environment — goes straight
+past it. The first version of this script reported "pm2 returned no usable
+process list" on a box where pm2 was working perfectly, silently losing exactly
+the two checks that read the reboot-restored state. `ConvertFrom-JsonBig` raises
+the cap and parses directly; capture `pm2 jlist` with `2>$null` rather than
+`2>&1`, since merging its stderr chatter corrupts the JSON before parsing.
+
 ## Notes & gotchas
 
-- **A1111 must run with `--api`** or the kind_robots handshake
-  (`/sdapi/v1/txt2img`) fails. It's already in the ecosystem args — keep it.
 - **`--listen` / `0.0.0.0`** binds beyond localhost so the tailscale interface
-  can reach each backend. Tailscale is the only route in; do not port-forward
-  these on the router.
-- **VRAM contention:** pm2 keeps *both* backends resident. ComfyUI and A1111
-  each grab VRAM at load. If one GPU can't hold both, either add
-  `--medvram` (A1111) / `--lowvram` (ComfyUI) to the args, or run only one at
-  a time (`pm2 stop sd-webui` when doing Flux work, etc.).
+  can reach the backend. Tailscale is the only route in; do not port-forward
+  this on the router.
+- **VRAM:** ComfyUI is now the only resident backend, which is the point of
+  removing Forge — nothing else on this box competes for VRAM at load. Add
+  `--lowvram` if a single large model still will not fit.
 - **Model updates / git pulls:** pm2 only supervises the process. Update the
   apps the way you always have, then `pm2 restart <name>`.
 - **Logs** land in `ops/home-server/logs/` next to the config (gitignored —

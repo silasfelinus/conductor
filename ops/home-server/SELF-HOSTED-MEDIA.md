@@ -12,7 +12,7 @@ Kind Robots Git repository.
 - WSL path: `/mnt/z/kindrobots/images`
 - Nginx container: `media`
 
-The Windows home relay uses the Windows path because ComfyUI, A1111, Python,
+The Windows home relay uses the Windows path because ComfyUI, Python,
 and pm2 run in Windows rather than WSL.
 
 ## How direct delivery works

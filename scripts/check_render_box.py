@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """check_render_box.py — is the self-hosted render/media box reachable?
 
-The art pipeline renders on a home ComfyUI/A1111 box and writes results to
+The art pipeline renders on a home ComfyUI box and writes results to
 self-hosted media (media.acrocatranch.com). When that box is offline the
 consumers can't tell the difference between "nothing to do" and "everything is
 stuck waiting on a dead box" -- they just time out silently (auto-art-generate

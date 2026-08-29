@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Pull-based ArtJob relay for the Kind Robots queue.
 
-Runs on the home server beside ComfyUI/A1111:
+Runs on the home server beside ComfyUI:
 
   1. claim a runnable ArtJob from kind_robots
   2. render it on the local engine
@@ -39,7 +39,6 @@ KR_RELAY_TOKEN = os.environ.get("KR_RELAY_TOKEN", "").strip()
 KR_RELAY_USER_ID = int(os.environ.get("KR_RELAY_USER_ID", "0") or 0)
 KR_LOCAL_IMAGES_DIR = os.environ.get("KR_LOCAL_IMAGES_DIR", "").strip()
 COMFY_URL = os.environ.get("COMFY_URL", "http://127.0.0.1:8188").rstrip("/")
-SD_URL = os.environ.get("SD_URL", "http://127.0.0.1:7860").rstrip("/")
 POLL_SECONDS = float(os.environ.get("POLL_SECONDS", "10"))
 GEN_TIMEOUT = float(os.environ.get("GEN_TIMEOUT", "600"))
 AGENT_ID = os.environ.get("AGENT_ID", socket.gethostname())
@@ -290,8 +289,6 @@ def post_heartbeat(engine, ok, latency_ms):
 def send_heartbeats():
     comfy_ok, comfy_ms = check_engine(COMFY_URL, "/system_stats")
     post_heartbeat("COMFY", comfy_ok, comfy_ms)
-    sd_ok, sd_ms = check_engine(SD_URL, "/sdapi/v1/progress")
-    post_heartbeat("A1111", sd_ok, sd_ms)
 
 
 def claim_job():
@@ -316,31 +313,6 @@ def claim_job():
         log(f"claim failed: HTTP {status} {response and response.get('message')}")
         return None
     return (response.get("data") or {}).get("job")
-
-
-def run_a1111(payload):
-    body = {
-        "prompt": payload.get("prompt") or payload.get("promptString") or "",
-        "negative_prompt": payload.get("negative_prompt")
-        or payload.get("negativePrompt")
-        or "",
-        "steps": payload.get("steps", 20),
-        "cfg_scale": payload.get("cfg_scale", payload.get("cfg", 7)),
-        "seed": payload.get("seed", -1),
-        "width": payload.get("width", 512),
-        "height": payload.get("height", 512),
-        "sampler_name": payload.get("sampler_name")
-        or payload.get("sampler")
-        or "Euler a",
-    }
-    if not body["prompt"]:
-        raise ValueError("A1111 payload has no prompt/promptString")
-    status, response = http_json(
-        "POST", f"{SD_URL}/sdapi/v1/txt2img", body, timeout=GEN_TIMEOUT
-    )
-    if status != 200 or not response or not response.get("images"):
-        raise RuntimeError(f"A1111 returned HTTP {status}, no images")
-    return response["images"][0]
 
 
 def decode_image_entry(entry):
@@ -1299,11 +1271,18 @@ def complete_job(job_id, success, art_image_id=None, error=None, provenance=None
 
 
 def resolve_job_engine(job):
-    """Use Comfy for unlabeled jobs while preserving explicit A1111 support."""
+    """ComfyUI is the only engine this box runs; anything else is rejected.
+
+    A1111/Forge was removed 2026-08-29 -- it had not been used in a long time,
+    and the pm2 entry that kept it resident was quietly costing VRAM ComfyUI
+    wanted. Rejecting an explicitly-labeled A1111 job here fails it fast with a
+    clear reason instead of letting it time out against a port nothing is
+    listening on.
+    """
     engine = str(job.get("engine") or "COMFY").strip().upper()
-    if engine not in ("COMFY", "A1111"):
+    if engine != "COMFY":
         raise ValueError(
-            f"unsupported ArtJob engine {engine!r}; expected COMFY or A1111"
+            f"unsupported ArtJob engine {engine!r}; this relay only drives ComfyUI"
         )
     return engine
 
@@ -1316,16 +1295,8 @@ def process(job):
         payload = json.loads(payload)
     log(f"job {job_id}: {engine} attempt {job.get('attempts')}")
 
-    if engine == "COMFY":
-        media = run_comfy(payload)
-        provenance = completion_provenance(payload, media)
-    else:  # explicit A1111 jobs remain supported for Kind Robots users
-        media = {
-            "data_b64": run_a1111(payload),
-            "file_type": "png",
-            "is_video": False,
-        }
-        provenance = None
+    media = run_comfy(payload)
+    provenance = completion_provenance(payload, media)
 
     staged_art_image_id = upload_result(job, media)
     if not staged_art_image_id:
