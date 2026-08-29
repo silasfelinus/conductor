@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-import scripts.build_dream_records as bdr
+import scripts.run_daily_dream_build as runner
 
 
 PROPOSAL = {
@@ -62,7 +62,7 @@ PROPOSAL = {
         "version": 2,
         "elements": {
             key: [{"id": index, "title": key}]
-            for index, key in enumerate(sorted(bdr.REQUIRED_SEED_ASSETS), start=1)
+            for index, key in enumerate(sorted(runner.core.REQUIRED_SEED_ASSETS), start=1)
         },
     },
 }
@@ -102,19 +102,19 @@ def _write_proposal(backlog: Path, day: datetime.date, slug: str, *, retry: bool
 def backlog(tmp_path, monkeypatch):
     root = tmp_path / "backlog"
     root.mkdir()
-    monkeypatch.setattr(bdr, "BACKLOG", root)
-    monkeypatch.setattr(bdr.creative_contract, "validate_path", lambda path: [])
+    monkeypatch.setattr(runner.core, "BACKLOG", root)
+    monkeypatch.setattr(runner.creative_contract, "validate_path", lambda path: [])
     return root
 
 
 def _today() -> datetime.date:
-    return datetime.datetime.now(bdr._TZ).date()
+    return datetime.datetime.now(runner.core._TZ).date()
 
 
 def test_automatic_selection_rejects_twelve_day_old_orphan(backlog):
     old = _write_proposal(backlog, _today() - datetime.timedelta(days=12), "old-orphan")
 
-    path, reason = bdr.eligible_proposal(None)
+    path, reason = runner.eligible_proposal(None)
 
     assert path is None
     assert old.name in reason
@@ -129,7 +129,7 @@ def test_pinned_retry_can_be_older_than_freshness_window(backlog):
         retry=True,
     )
 
-    path, reason = bdr.eligible_proposal(None)
+    path, reason = runner.eligible_proposal(None)
 
     assert path == old_retry
     assert reason == ""
@@ -138,7 +138,7 @@ def test_pinned_retry_can_be_older_than_freshness_window(backlog):
 def test_recent_proposal_still_builds_automatically(backlog):
     recent = _write_proposal(backlog, _today() - datetime.timedelta(days=2), "recent")
 
-    path, reason = bdr.eligible_proposal(None)
+    path, reason = runner.eligible_proposal(None)
 
     assert path == recent
     assert reason == ""
@@ -148,16 +148,16 @@ def test_explicit_date_bypasses_freshness_but_not_creative_contract(backlog, mon
     day = _today() - datetime.timedelta(days=12)
     old = _write_proposal(backlog, day, "manual-old")
 
-    path, reason = bdr.eligible_proposal(day.isoformat())
+    path, reason = runner.eligible_proposal(day.isoformat())
     assert path == old
     assert reason == ""
 
     monkeypatch.setattr(
-        bdr.creative_contract,
+        runner.creative_contract,
         "validate_path",
         lambda path: ["story falls back into the overused bureaucracy/record-keeping motif"],
     )
-    path, reason = bdr.eligible_proposal(day.isoformat())
+    path, reason = runner.eligible_proposal(day.isoformat())
     assert path is None
     assert "creative contract failed at build time" in reason
 
@@ -165,12 +165,12 @@ def test_explicit_date_bypasses_freshness_but_not_creative_contract(backlog, mon
 def test_creative_contract_is_rechecked_for_fresh_candidates(backlog, monkeypatch):
     recent = _write_proposal(backlog, _today() - datetime.timedelta(days=1), "ledger-redux")
     monkeypatch.setattr(
-        bdr.creative_contract,
+        runner.creative_contract,
         "validate_path",
         lambda path: ["story falls back into the overused bureaucracy/record-keeping motif"],
     )
 
-    path, reason = bdr.eligible_proposal(None)
+    path, reason = runner.eligible_proposal(None)
 
     assert path is None
     assert recent.name in reason

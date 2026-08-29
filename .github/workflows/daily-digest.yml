@@ -73,7 +73,7 @@ jobs:
       - name: Build the eligible Daily Dream proposal
         id: daily_dream_build
         continue-on-error: true
-        run: python scripts/build_dream_records.py
+        run: python scripts/run_daily_dream_build.py
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
 
