@@ -3043,54 +3043,53 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-08-29T01:30:00Z'
-    depends_on: [t-077, t-080]
+    updated: '2026-08-29T03:40:00Z'
+    depends_on: [t-077, t-080, t-081]
     note: >
-      The back-and-forth t-077 shipped a first draft for. Silas, 2026-08-28,
-      opening the home page redesign: "this part may take some back and forth,
-      I want it to look great ... we don't have a solid front end design, and
-      this is going to be the first thing people see when the site loads, so I
-      want it to be special."
+      The back-and-forth t-077 shipped a first draft for. Silas, 2026-08-28:
+      "this part may take some back and forth, I want it to look great ... this
+      is going to be the first thing people see when the site loads, so I want
+      it to be special."
 
       needs-human because the remaining question is aesthetic judgement, and
       only Silas can supply it. Nothing here is blocked on engineering.
 
-      REWRITTEN 2026-08-29 after t-080. The list this note carried described the
-      first pass, and t-080 superseded most of it -- a stale list of "here are
-      your options" is worse than none, because it invites a decision about
-      something that no longer exists. What is actually on main now, each still
-      cheap to change:
+      REWRITTEN AGAIN 2026-08-29 after t-081, for the same reason as last time:
+      a needs-human note that describes a version no longer on main invites a
+      decision about something that does not exist. What is live now:
 
-      1. The hero is a side-by-side panel: plate left (h-36/sm:h-40/lg:h-44),
-         cast right as a fixed three-column grid of six chips. The earlier
-         full-width plate with a strip beneath it is gone. Ratios and the split
-         point are all one class each.
-      2. Object rails use SQUARE plates at w-24 and show a title only; art and
-         animation rails use 4:3 plates at w-32. Portrait 2:3 and a subtitle
-         line are what the first pass had.
-      3. The rails sit in a four-column grid from lg (sm:grid-cols-2
-         lg:grid-cols-4 in home-page.vue, which is a page component so a
-         viewport breakpoint is legitimate there). Two rows of four at 1366px.
-      4. Section icons are still absent from the rail and section headers --
-         several kind-icons render as flat coloured squares at 16px and
-         kind-icon:scenario as an x. Restoring them is one prop if he wants
-         colour back in the headers rather than only in the cards.
-      5. Rail order and labels (the RAILS constant in home-page.vue): art,
-         animations, dreams, characters, scenarios, items/skills, bots, facets.
-      6. The newsfeed runs in `compact` mode here (no summary paragraph, 13rem
-         grid minimum, six headlines). The Newsfeed Lab page is unaffected.
+      1. The hero is a fifth-width card -- 4:3 plate with the kicker, title,
+         hook and call-to-action BELOW it, not scrimmed over it -- with the cast
+         filling the other four fifths as portrait plates in container-width
+         columns.
+      2. The art rail spans two grid rows and lays its tiles in two rows; the
+         six object shelves sit in an even 3x2 beside it (sm:grid-cols-2
+         lg:grid-cols-4 on home-page.vue, a page component, where a viewport
+         breakpoint is legitimate).
+      3. Tiles are w-32 for object shelves, w-48 for the landscape art and
+         animation shelves; captions are text-xs, title only.
+      4. Card borders are border-2 in each record's own daisyUI `primary`.
+         base-300 was theme-derived but is a near-neutral grey in every theme,
+         which is why the variety read as absent.
+      5. The newsfeed is a max-h-64 vertically scrolling box showing 24
+         headlines, in `compact` mode. The Newsfeed Lab page is unaffected.
+      6. Section icons are still absent from the headers -- several kind-icons
+         render as flat coloured squares at 16px, kind-icon:scenario as an x.
+         One prop to restore if he wants colour there too.
 
-      The page now measures 1017px against a ~510px content window at Silas's
-      own 1366x768 -- 1.99 screens, inside his "definitely don't want it larger
-      than two". If he wants it tighter still, the newsfeed is 341px of that
-      1017 and is the only band with real slack left.
+      THE OPEN TENSION, which is his to settle: the page is 1169px / 2.29
+      screens at his 1366x768, having been 1.99 before t-081. Bigger cards with
+      uncut titles and a two-screen ceiling pull against each other, and t-081
+      chose legibility. The levers if he wants the ceiling back are the hero
+      band (326px, mostly the cast's portrait plates -- square ones are shorter
+      but left dead space) and the rails (396px, driven by tile width).
 
-      Also still open for his call: whether the hero should server-render. It
-      loads client-side in onMounted, matching every other store in the repo, so
-      first paint shows skeletons. Moving it to useAsyncData would SSR the hero
-      but puts an async setup inside ContentRenderer's subtree, which risks a
-      hydration boundary problem that cannot be tested in a sandbox with no
-      database. Deliberately not attempted blind.
+      Also still open: whether the hero should server-render. It loads
+      client-side in onMounted, matching every other store in the repo, so first
+      paint shows skeletons. useAsyncData would SSR it but puts an async setup
+      inside ContentRenderer's subtree, risking a hydration boundary problem
+      that cannot be tested in a sandbox with no database. Deliberately not
+      attempted blind.
 
   - id: t-079
     milestone: m6
@@ -3231,3 +3230,87 @@ tasks:
       Heights are measured against a mock; the sandbox still has no database, so
       real captions and real art may move a band by a few pixels. t-078 stays
       open for Silas's eye on the real thing.
+
+  - id: t-081
+    milestone: m6
+    title: "Home page third pass: hero proportions, art-queue filler bug, bigger cards"
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-29T03:40:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#2191'
+    approved_by_human: true
+    depends_on: [t-080]
+    note: >
+      Silas, 2026-08-29, on the two-screen version: "Obviously the dream hero is
+      horribly proportioned, It would be better to have something that fits
+      about 20% width of screen, properly fitted height, and then the other
+      cards are to it's right. All the cards need to be big enough to see more
+      of the titles, they shouldn't be cut off that much. newsfeeds should
+      scroll vertically, and take up less height. and it looks like artqueue is
+      giving us a lot of filler images, which is weird for something that should
+      definitely have an image. and on desktop, art queue can take up twice the
+      height, so we have an even spacing for the other six objects. And slightly
+      larger colored borders around those objects, if they are theme colors,
+      it's very hard to tell."
+
+      THE ART-QUEUE FILLER WAS A BUG, not a design nit, and it is the second
+      time a wrong assumption about art URLs has bitten this endpoint (t-079 was
+      the first). /api/art/images/[id]/file is the canonical URL for an
+      ArtImage: it 302s to imagePath when that is set and usable, and serves
+      (webp-transcoded) the stored bytes when it is not. It is the same URL
+      cardPath/heroPath/iconPath already store for entity art. The rail did
+      neither -- it used the raw imagePath AND filtered to rows that have one,
+      so the freshest renders (bytes still in ArtImage.imageData until
+      offloadArtImageData.ts moves them to the share) were excluded outright,
+      and older rows whose stored path had stopped serving fell through
+      kr-art-plate's error path onto the stand-in pool. Both rails now use the
+      file route with no path filter.
+
+      LAYOUT: hero is a fifth-width card with its caption below the plate rather
+      than scrimmed over it (a 16:9 plate at full content width is a 1300x200
+      letterbox, and a scrim stops working at 260px where title plus hook covers
+      the whole picture); cast takes the other four fifths in portrait plates
+      (square ones left ~160px of dead band beside the taller card); art rail
+      spans two grid rows via a new `rows` prop so the six object shelves sit in
+      an even 3x2; tiles w-24 -> w-32, w-48 landscape; newsfeed is a max-h-64
+      vertical scroller with 24 headlines; borders are border-2 in the record's
+      own primary.
+
+      RECONCILING TWO VERIFIERS. The bounded newsfeed box is a "nested preview,
+      not a page-level owner" by verifyLayoutContract's definition, which has
+      exempted max-h-* scrollers from the one-scroll rule from the start; but
+      verifyMdcScrollOwnership used a blunter test (a bare regex for
+      overflow-y-auto anywhere in the file) and called the same element a
+      violation. Reconciled in the direction the more considered rule already
+      documents, judging per element rather than per file. Two baseline entries
+      dropped (voice-lab-page, storybook-library-page), both max-h-bounded all
+      along. A FIRST CUT ALSO DROPPED art-manager.vue, which was WRONG -- it
+      hides a kr-scroll inside a :class ternary, and reading only static class
+      attributes stopped seeing it. That would have been a loosening disguised
+      as a cleanup; classGroups() now reads dynamic bindings and treats each
+      quoted literal as its own candidate, so the file stays correctly flagged.
+
+      THE HONEST NUMBER: 1169px / 2.29 screens at his viewport, UP from 1.99.
+      Bigger cards with uncut titles cost height, and this pass chose the cards
+      because that was the more specific ask. Silas can have the other trade;
+      the levers are named in t-078.
+
+      PROCESS FAILURE WORTH RECORDING. The third pass was committed onto `main`
+      rather than the designated branch (the previous round's cleanup left the
+      checkout on main), and `git push -u origin <branch>` pushes the LOCAL
+      BRANCH OF THAT NAME, not HEAD -- so the push "succeeded" while sending the
+      stale second-pass commit, and PR #2191 was opened containing a duplicate
+      of already-merged work with none of the third pass in it. Its
+      302/-305/10-files matched the merged #2189 exactly, which should have been
+      the tell when those numbers were read back and was not. Caught by the
+      stop-hook noticing an unpushed commit on main. Repaired by merging the
+      stale remote tip into the branch (force-push is blocked here, and a merge
+      is the documented preference anyway), resolving to ours, and VERIFYING the
+      merged tree was byte-identical to the intended commit before pushing.
+      Merged as squash 063f69a4c97a0532c5d6451366715b2b3a598026.
+
+      Verified: vue-tsc, eslint, prettier, layout contract and MDC scroll
+      ownership all clean. Heights measured against a mocked payload; the
+      sandbox has no database.
