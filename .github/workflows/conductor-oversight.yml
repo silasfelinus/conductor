@@ -1,0 +1,82 @@
+name: Conductor Oversight
+
+# Repo-side watchdog for portfolio drift plus disappearance of the OpenAI
+# scheduled Conductor agent specifically. Claude's scheduled sessions do not
+# satisfy the OpenAI heartbeat marker.
+on:
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: conductor-main-writers
+  cancel-in-progress: false
+
+jobs:
+  oversight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Build portfolio oversight report
+        id: oversight
+        shell: bash
+        run: |
+          set +e
+          python scripts/build_portfolio_oversight.py --fail-on-action
+          code=$?
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          exit 0
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+
+      - name: Upload oversight artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-oversight
+          path: |
+            PORTFOLIO-OVERSIGHT.json
+            PORTFOLIO-OVERSIGHT.md
+          retention-days: 30
+
+      - name: Persist oversight report
+        run: |
+          git config user.name "conductor-bot"
+          git config user.email "conductor-bot@users.noreply.github.com"
+          git add PORTFOLIO-OVERSIGHT.json PORTFOLIO-OVERSIGHT.md
+          if git diff --staged --quiet; then
+            echo "No report changes to commit"
+          else
+            git commit -m "chore: refresh portfolio oversight [skip ci]"
+            for attempt in 1 2 3; do
+              git fetch origin main
+              git rebase origin/main
+              if git push origin HEAD:main; then
+                break
+              fi
+              if [ "$attempt" -eq 3 ]; then
+                echo "::error::Unable to persist oversight report after 3 attempts"
+                exit 1
+              fi
+              sleep $((attempt * 2))
+            done
+          fi
+
+      - name: Surface oversight action
+        if: ${{ steps.oversight.outputs.exit_code != '0' }}
+        run: |
+          echo "::error::Portfolio oversight requires agent attention. See PORTFOLIO-OVERSIGHT.md artifact/report."
+          exit "${{ steps.oversight.outputs.exit_code }}"
