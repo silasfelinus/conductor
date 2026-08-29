@@ -262,6 +262,12 @@ function Repair-ShareMapping($path, $unc) {
 }
 
 $shareOk = $true
+# Set when this tick's share-recovery block below restarts comfyui, so the
+# ordinary liveness probe further down does not immediately restart it again
+# before it has finished starting up (a real double-restart observed
+# 2026-08-28: pm2 marks a just-restarted process 'online' well before
+# ComfyUI's own HTTP server is actually answering /system_stats).
+$comfyuiJustRestarted = $false
 if ($shareProbePath) {
     $shareOk = Test-ShareReadable $shareProbePath
     $sharePrev = if ($alertState.ContainsKey('share_state')) { [string]$alertState['share_state'] } else { 'ok' }
@@ -279,6 +285,7 @@ if ($shareProbePath) {
         if ($sharePrev -eq 'down') {
             Write-Log "share watchdog: share is back - restarting comfyui to rebuild folder_paths"
             & pm2 restart comfyui | Out-Null
+            $comfyuiJustRestarted = $true
             Send-Alert "RECOVERED: model share is back on $hostName - comfyui restarted" `
                 "The model share $shareProbePath was unreadable and is now answering again as of $shareStamp on $hostName. comfyui has been restarted so folder_paths rebuilds its cached filename lists - without that it would keep failing reads against the names it cached while the share was down. Renders should resume on the next claim. No action needed unless this repeats."
         }
@@ -301,6 +308,18 @@ if ($shareProbePath) {
 
 foreach ($t in $targets) {
     if (-not $pm2Visible) { continue }
+
+    # The share watchdog above may have just restarted this exact process for
+    # the model-share recovery (see $comfyuiJustRestarted). Give it this tick
+    # to finish starting up instead of racing it: pm2 reports 'online' almost
+    # immediately on restart, well before ComfyUI's HTTP server is actually
+    # answering, so probing right away would see a false hang and restart it
+    # again for no reason. The regular 5-minute cadence is plenty of warm-up
+    # time before the next tick's probe.
+    if ($t.Name -eq 'comfyui' -and $comfyuiJustRestarted) {
+        Write-Log "$($t.Name): skipping liveness probe this tick - just restarted by the share watchdog"
+        continue
+    }
 
     # Only police processes pm2 believes are online - a deliberate `pm2 stop`
     # (e.g. freeing the GPU) must not be fought by the watchdog. Reuses the
@@ -372,7 +391,7 @@ foreach ($t in $targets) {
 # Detection uses per-tick DELTAS of the all-time DONE/FAILED counts, so it is
 # self-normalizing: re-enqueueing failures (FAILED drops) yields a negative delta
 # and never false-alarms; only NEW failures outpacing NEW successes trip it.
-$krBase = if ($env:KR_BASE_URL) { $env:KR_BASE_URL.TrimEnd('/') } else { 'https://kind-robots.vercel.app' }
+$krBase = if ($env:KR_BASE_URL) { $env:KR_BASE_URL.TrimEnd('/') } else { 'https://kindrobots.org' }
 $krToken = $env:KR_API_TOKEN
 
 $failSpikeThreshold = 5
