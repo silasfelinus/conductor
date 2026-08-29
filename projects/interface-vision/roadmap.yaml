@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     recurring: true
@@ -2972,7 +2972,21 @@ tasks:
       components/achievements/achievement-popup.vue, components/pages/for-you-manager.vue --
       academy-styles-browser.vue is now done, leaving these four for the next slice. Return
       the recurring consistency umbrella to ready for the next bounded slice.
-    updated: '2026-08-29T18:31:26Z'
+
+      Slice 32 merged as silasfelinus/kind_robots#2204 (squash c29d9734) from exact head
+      334a2cd39f8cfd49824232178b6fee4cc9954e39. components/conductor/project-front-page.vue's
+      hero and body root wrappers (2 occurrences, same file) now use kr-container plus their
+      existing max-w-5xl override instead of hand-rolled mx-auto flex w-full max-w-5xl; no
+      geometry or behavior change. All 37 exact-head PR checks completed successfully,
+      including the documented multi-minute Contract verifiers job (conductor/t-132's pattern,
+      ~3.5min this run, confirmed actively progressing via mcp__github__actions_get's job step
+      list rather than assumed hung). Remaining queued candidates from the prior slice's note:
+      components/achievements/achievement-popup.vue (max-w-md) and components/pages/for-you-
+      manager.vue (max-w-[1800px]) -- both straightforward single-occurrence substitutions.
+      components/user/messenger.vue remains out of scope (root mixes kr-panes grid primitive
+      with arbitrary h-[70vh]). Return the recurring consistency umbrella to ready for the
+      next bounded slice.
+    updated: '2026-08-29T18:35:47Z'
     approved_by_human: true
     implementation_pr: 'silasfelinus/kind_robots#2204'
     owner: worker
