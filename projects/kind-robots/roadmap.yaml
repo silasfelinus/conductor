@@ -3043,8 +3043,8 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-08-29T03:40:00Z'
-    depends_on: [t-077, t-080, t-081]
+    updated: '2026-08-29T04:35:00Z'
+    depends_on: [t-077, t-080, t-081, t-082]
     note: >
       The back-and-forth t-077 shipped a first draft for. Silas, 2026-08-28:
       "this part may take some back and forth, I want it to look great ... this
@@ -3052,44 +3052,44 @@ tasks:
       it to be special."
 
       needs-human because the remaining question is aesthetic judgement, and
-      only Silas can supply it. Nothing here is blocked on engineering.
+      only Silas can supply it.
 
-      REWRITTEN AGAIN 2026-08-29 after t-081, for the same reason as last time:
-      a needs-human note that describes a version no longer on main invites a
-      decision about something that does not exist. What is live now:
+      REWRITTEN AFTER EACH PASS -- t-080, t-081, now t-082 -- because a
+      needs-human note describing a version no longer on main invites a decision
+      about something that does not exist. What is live now:
 
-      1. The hero is a fifth-width card -- 4:3 plate with the kicker, title,
-         hook and call-to-action BELOW it, not scrimmed over it -- with the cast
-         filling the other four fifths as portrait plates in container-width
-         columns.
-      2. The art rail spans two grid rows and lays its tiles in two rows; the
-         six object shelves sit in an even 3x2 beside it (sm:grid-cols-2
-         lg:grid-cols-4 on home-page.vue, a page component, where a viewport
-         breakpoint is legitimate).
-      3. Tiles are w-32 for object shelves, w-48 for the landscape art and
-         animation shelves; captions are text-xs, title only.
-      4. Card borders are border-2 in each record's own daisyUI `primary`.
-         base-300 was theme-derived but is a near-neutral grey in every theme,
-         which is why the variety read as absent.
-      5. The newsfeed is a max-h-64 vertically scrolling box showing 24
-         headlines, in `compact` mode. The Newsfeed Lab page is unaffected.
-      6. Section icons are still absent from the headers -- several kind-icons
-         render as flat coloured squares at 16px, kind-icon:scenario as an x.
-         One prop to restore if he wants colour there too.
+      1. TOP BAND: a fixed 11rem dream card (4:3 plate, caption below it), its
+         cast as square plates in container-width columns, and a "Needs you"
+         column of conductor human-gates on the right.
+      2. RAILS: art spans two grid rows with `contain` plates and no theme
+         (ArtImage has no theme column); six object shelves in a 3x2 beside it,
+         w-32 square plates, title only, border-2 in each record's own primary.
+      3. PROJECTS: title, one-letter priority, progress bar joined to
+         conductor's own figure. No description.
+      4. NEWSFEED: max-h-64 vertical scroller, compact cards, header and topic
+         chips on one row.
+      5. NAV: a `tabMessage` frontmatter field fills the empty stretch beside
+         the tab dropdown from lg up. content/index.md sets one; other pages
+         inherit nothing and show the blank they had before, so this is worth
+         a sweep if he likes it.
+      6. Section icons remain absent from headers -- several kind-icons render
+         as flat coloured squares at 16px. One prop to restore.
 
-      THE OPEN TENSION, which is his to settle: the page is 1169px / 2.29
-      screens at his 1366x768, having been 1.99 before t-081. Bigger cards with
-      uncut titles and a two-screen ceiling pull against each other, and t-081
-      chose legibility. The levers if he wants the ceiling back are the hero
-      band (326px, mostly the cast's portrait plates -- square ones are shorter
-      but left dead space) and the rails (396px, driven by tile width).
+      OPEN FOR HIM, in rough order of how much it would change:
 
-      Also still open: whether the hero should server-render. It loads
-      client-side in onMounted, matching every other store in the repo, so first
-      paint shows skeletons. useAsyncData would SSR it but puts an async setup
-      inside ContentRenderer's subtree, risking a hydration boundary problem
-      that cannot be tested in a sandbox with no database. Deliberately not
-      attempted blind.
+      - Inline approve/reject on the Needs-you column. /api/conductor/task-action
+        already takes approve, reject and comment; t-082 shipped links only
+        because approving writes to the coordination system of record and no
+        sandbox here has live conductor data to test it against. This is the
+        obvious next step and needs his go-ahead, not more design.
+      - Height: 1106px / 2.17 screens, against his "not larger than two". The
+        remaining slack is the rails (396px, driven by tile width) and the
+        newsfeed (305px).
+      - Whether the hero should server-render. It loads client-side in
+        onMounted like every other store in the repo, so first paint shows
+        skeletons; useAsyncData would SSR it but puts an async setup inside
+        ContentRenderer's subtree, risking a hydration boundary problem that
+        cannot be tested without a database. Deliberately not attempted blind.
 
   - id: t-079
     milestone: m6
@@ -3314,3 +3314,84 @@ tasks:
       Verified: vue-tsc, eslint, prettier, layout contract and MDC scroll
       ownership all clean. Heights measured against a mocked payload; the
       sandbox has no database.
+
+  - id: t-082
+    milestone: m6
+    title: "Home page fourth pass: newsfeed resilience, Needs-you column, project progress"
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-29T04:35:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#2192'
+    approved_by_human: true
+    depends_on: [t-081]
+    note: >
+      Silas, 2026-08-29: "ok, something broke on the newsfeed. there were ai
+      gaming news articles and now there is nothing ... the dream elements are
+      matched according to the dream hero, and that leaves a bunch of dead
+      space, it would be better if the dream hero shrunk rather than the others
+      gained ... project titles are still getting cut off...they are the most
+      important part, and we should see progress indicator, the priority rating
+      could be a simple single letter. description is not needed ... art queue
+      items are appearing, great, but we sghould get full views of the images,
+      and there is a weird gap below the entries ... Dream entry should take up
+      less horizontal space to leave room for a vertical notification scroll,
+      especially things that I can answer that are human gated ... news is still
+      too tall, and we could condense the title and the selection for topics
+      into one row ... we still have a wide akward space in the navigation tab
+      selector, it would be better on sufficiently large screens to show a
+      unique tab message, we should have something in front matter."
+
+      THE NEWSFEED WAS NOT BROKEN, AND THIS IS THE ENTRY WORTH READING LATER.
+      Production was serving 20 items for ai-gaming when queried directly
+      (GET /api/newsfeed?feeds=ai-gaming). What had happened is that one of that
+      feed's two sources failed on his refresh, and the starting-feed pin filed
+      under t-077 turned a transient upstream hiccup into an apparently empty
+      site: before the pin he would have landed on All and seen everything else.
+      A feature that narrows what you see by default also narrows what survives
+      a partial outage, which was not considered when it shipped. Fixed twice
+      over -- a pinned feed with no items this refresh falls back to All for the
+      AUTOMATIC first landing (an explicit click still stays put), and the empty
+      state now distinguishes "nothing published lately" from "we could not
+      reach the source". Those two silences look identical on screen and mean
+      opposite things, and reporting the first when the second is true is
+      precisely how an outage reads as an empty site.
+
+      NEEDS-YOU COLUMN (components/home/home-attention.vue) needed no new data,
+      only a surface. conductorStore.humanGates already existed -- every
+      conductor task at needs-human, filtered to active projects, sorted -- and
+      conductorCards.ts already labelled that status "Needs You"; grepping
+      components for it returned nothing before this. Links to /conductor rather
+      than approving inline: /api/conductor/task-action does take
+      approve/reject/comment, but approving writes to the coordination system of
+      record and this sandbox has no live conductor data to test against. An
+      untested one-click approve on a gate is worse than one more click. Filed
+      as the next step in t-078 for Silas to green-light.
+
+      PROGRESS IS NULL, NOT ZERO, when conductor has no project matching a
+      card's conductorSlug. An unknown project is not a project at 0%; an empty
+      bar asserts that no work has been done, which is a different and probably
+      false claim. The bar is omitted instead.
+
+      ART PLATES STOPPED WEARING A THEME. ArtImage has no `theme` column, so
+      resolveEntityTheme's id-derived fallback was dressing every render in an
+      arbitrary one. Harmless while plates were cropped; the moment they became
+      `contain` (his "full views of the images"), the letterbox bars took that
+      theme's base colour and the queue became a row of bright pink and navy
+      frames. A fallback that is invisible under one presentation and wrong
+      under another is worth remembering. Object shelves keep it -- that is
+      where the variety was asked for.
+
+      Also: hero shrank to a fixed 11rem with square cast plates (portrait ones
+      had made the CAST set the band height, the reverse of the ask); projects
+      lost their description and gained a one-letter priority; newsfeed header
+      and topic chips are one row; a new `tabMessage` frontmatter field, resolved
+      through pageStore, fills the empty stretch beside the tab dropdown from lg
+      up.
+
+      Measured 1106px / 2.17 screens at his viewport. Verified: vue-tsc, eslint,
+      prettier, layout contract and MDC scroll ownership all clean. Merged as
+      squash f1ba035f0bf3337352479a1eceae8f6ba9c0d1f9. NOT verified against real
+      data -- the conductor progress join in particular is unexercised against
+      real slugs, since the sandbox has no database.

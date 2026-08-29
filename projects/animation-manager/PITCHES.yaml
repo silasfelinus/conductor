@@ -1,4 +1,4 @@
-updated: "2026-08-27T07:20:00+00:00"
+updated: "2026-08-29T03:31:41+00:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -1083,3 +1083,71 @@ pitches:
       - pointer-drag speed changes and click-triggered figure swaps never block underlying page input, and drag can never reverse or exceed the capped rotation rate
       - the dim-and-swap transition between figures completes fully (old figure fully dimmed) before the next figure's first pose is ever sampled
       - pose sampling is driven by rotation angle, not a frame-rate timer, so backgrounding and resuming the tab cannot desync or accelerate the apparent walk cycle
+  - id: soap-film-membrane
+    title: Soap-Film Membrane
+    status: pitched
+    priority: 26
+    surprise: >
+      A translucent rectangular soap-film membrane hangs stretched across a wire loop,
+      catching the light in slow, colorful swirls -- the same shifting rainbow sheen a real
+      bubble film shows -- as if the world's iridescence is happening in real time. Then,
+      imperceptibly, one patch of the film looks perilously thin, and gives way in a rushing,
+      radial tear that clears the frame in an instant, before, a beat later, a fresh clean
+      film stretches back across the loop and the color swirl begins anew.
+    passive_loop: >
+      A small fixed-resolution thickness grid spanning the loop is updated each frame by a
+      lightweight gravity-drainage-plus-diffusion pass -- thickness slowly migrates downward
+      (drainage) while diffusing outward to smooth sharp edges, the way a real thinning soap
+      film behaves. Each grid cell's thickness feeds a compact thin-film interference color
+      approximation (a periodic hue function of thickness, not a physically exact spectral
+      integral), rendered as a smooth gradient image scaled up to the loop's full size,
+      producing the continuously drifting rainbow-swirl look real soap films show. Once any
+      region's thickness drains below a rupture threshold, a rupture point seeds there and a
+      radial tear front expands outward frame by frame (an expanding transparent disc masked
+      against the color buffer) until the whole loop is clear; a brief pause, then the
+      thickness grid reseeds to a fresh, near-uniform starting state and drainage resumes.
+    optional_interaction: >
+      Pointer position over the loop applies a small local thinning nudge to the thickness
+      grid beneath it, as if a fingertip brushed the film, visibly disturbing the color swirl
+      without forcing a rupture on its own. A click forces an immediate rupture at the
+      pointer's position, rate-limited so repeated clicks cannot restart the cycle faster than
+      the tear-and-reseed sequence allows.
+    technique: >
+      Canvas 2D. The thickness field is a small fixed-size grid (e.g. 24x16) updated with a
+      handful of cheap explicit diffusion/drainage steps per frame -- no fluid solver, no
+      per-pixel simulation. Thickness-to-color is a closed-form periodic function (a small
+      number of stacked sinusoids over the visible spectrum's rough hue range), evaluated once
+      per grid cell and upscaled via drawImage rather than per-pixel canvas writes. The
+      rupture tear is a single expanding radius value masked against the color buffer, not a
+      particle or fragment system, so its cost stays flat regardless of loop size.
+    reduced_motion: >
+      A single static frame of a mostly-intact film mid-swirl, holding one representative
+      thickness-color gradient with no drainage drift, no pointer disturbance, and no rupture
+      -- only a very slow, subtle hue-cycle breathing to confirm the piece is alive.
+    performance_risk: >
+      An unbounded thickness-grid resolution tied to viewport size, or a drainage rate low
+      enough that rupture never actually triggers, would waste cycles or stall the cycle
+      indefinitely. Keep the thickness grid a small fixed resolution independent of the loop's
+      rendered size, force a rupture once elapsed cycle time exceeds a cap even if no cell has
+      drained naturally, and bound the tear front's per-frame growth so the clearing phase
+      always completes in a fixed number of frames regardless of loop size.
+    novelty: >
+      The core loop is a diffusion-drainage thickness field mapped through a thin-film
+      interference color function, ending in a radial rupture-and-reseed rather than any
+      particle accumulation, rigid-body physics, or discrete pose stepping -- distinct from
+      every existing pitch. Magnetic-sand-garden's low-resolution buffer aggregates discrete
+      grains into topographic islands under raking, not a continuous liquid-thickness field
+      mapped to interference color. Hourglass-cascade and candlelit-reliquary both accumulate
+      settling particles into a height-map, never a drainage field whose color, not height, is
+      the visible signal. Harmonograph-sand-table traces a single parametric stylus path;
+      cairn-balancing and marble-run-contraption move discrete rigid objects; none of them
+      render color as a function of a continuously thinning field. Bioluminescent-tide,
+      koi-memory-pond, and impossible-terrarium are aquatic or terrarium scenes with swimming
+      or growing life, not an airborne membrane defined purely by a thickness-to-color
+      mapping. No existing pitch uses thin-film-interference coloring or a drainage-triggered
+      rupture-and-reseed cycle.
+    acceptance:
+      - the film's color swirl visibly and continuously drifts from the drainage/diffusion simulation, and no two cycles trace an identical color pattern before rupturing
+      - the rupture tear expands smoothly across the full loop and clears it completely before the reseed begins, never leaving a partially-torn film stuck mid-cycle
+      - pointer-driven local thinning and click-triggered ruptures never block underlying page input, and the forced rupture is rate-limited
+      - thickness-grid resolution and tear-front growth rate stay fixed regardless of viewport size or how many rupture cycles have run this session
