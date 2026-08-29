@@ -538,12 +538,12 @@ tasks:
   - id: t-023
     milestone: m5
     title: "Dream catalog freshness remaster: audit built bundles, rewrite weak assets, regenerate art"
-    status: review
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-08-29T22:07:23Z'
-    note: >
+    updated: '2026-08-29T22:13:43Z'
+    note: >-
       Silas-directed via conductor issue #3184 (2026-08-29): treat the built Daily Dream
       catalog as mutable creative material and improve it in place under today's rules,
       as a reproducible workflow rather than a one-off hand edit.
@@ -592,3 +592,12 @@ tasks:
       REMAINING (not blocking): waves 1 and 2 need creative authoring passes — 12
       substantial rewrites and 4 pre-v2 bundles whose kernels must be mined into fresh
       dated proposals. Each is one stub away from applying.
+
+      CLOSED 2026-08-29: PR #3189 merged (squash ea17e06) with all 25 checks green. Post-merge
+      state: the first remaster wave's 48 ArtJobs (13026-13073) are draining normally through
+      the standard relay with zero failures; the rewritten Monsoon Static bundle's six live
+      rows all resolve with art attached. Waves 1 and 2 remain as staged creative work: 16
+      rewrite stubs in projects/dream-cycle/revisions/ and 4 pre-v2 bundles to mine into fresh
+      proposals, tracked by re-running scripts/audit_dream_catalog.py rather than by a
+      standing task.
+    implementation_pr: 'silasfelinus/conductor#3189'
