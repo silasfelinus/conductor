@@ -614,10 +614,22 @@ it checks:
 | `setx KR_SHARE_ROOT` succeeded | the env inside `dump.pm2`, which a `setx` after the last save never reached |
 | a credential is listed by `cmdkey` | nothing — presence is not validity; only a UNC read proves it |
 
-It also flags the session trap first, because a network logon session (SSH,
-Termius) reads its own empty drive table and cannot save credentials at all —
-so a FAIL from the wrong session may be an artifact rather than a fault. Run it
-from the console.
+It reports the logon session as INFO rather than a warning: `SESSIONNAME` is
+empty in plenty of good shells (Windows Terminal among them), and warning on
+that alone cried wolf on a session whose drives, credential and pm2 all worked.
+It only matters as an explanation for a failure, so the summary raises it there
+instead — a network logon session (SSH, Termius) reads its own empty drive
+table and cannot save credentials at all, so a FAIL from the wrong shell may be
+an artifact rather than a fault.
+
+**On PowerShell 5.1, do not parse pm2's output with `ConvertFrom-Json`.** There
+it is `JavaScriptSerializer` with a `MaxJsonLength` cap it will not tell you
+about, and `pm2 jlist` — every app with its full environment — goes straight
+past it. The first version of this script reported "pm2 returned no usable
+process list" on a box where pm2 was working perfectly, silently losing exactly
+the two checks that read the reboot-restored state. `ConvertFrom-JsonBig` raises
+the cap and parses directly; capture `pm2 jlist` with `2>$null` rather than
+`2>&1`, since merging its stderr chatter corrupts the JSON before parsing.
 
 ## Notes & gotchas
 

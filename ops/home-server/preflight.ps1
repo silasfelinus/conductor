@@ -41,6 +41,7 @@ function Say($level, $name, $detail) {
         'ok'   { '[ OK ]' }
         'fail' { '[FAIL]'; }
         'warn' { '[WARN]' }
+        'info' { '[INFO]' }
         default { '[ ?? ]' }
     }
     if ($level -eq 'fail') { $script:fail++ }
@@ -48,6 +49,30 @@ function Say($level, $name, $detail) {
     elseif ($level -eq 'unknown') { $script:unknown++ }
     Write-Host "$tag $name"
     if ($detail) { foreach ($d in @($detail)) { Write-Host "       $d" } }
+}
+
+# PowerShell 5.1's ConvertFrom-Json is JavaScriptSerializer with a MaxJsonLength
+# cap it will not tell you about -- pm2's jlist carries every app's full
+# environment and blows straight past it. Raise the cap and parse directly.
+# Returns nested hashtables/arrays (not PSObjects), so read fields with Prop.
+function ConvertFrom-JsonBig($text) {
+    if (-not $text) { return $null }
+    Add-Type -AssemblyName System.Web.Extensions -ErrorAction Stop
+    $ser = New-Object System.Web.Script.Serialization.JavaScriptSerializer
+    $ser.MaxJsonLength = [int]::MaxValue
+    $ser.RecursionLimit = 1024
+    return $ser.DeserializeObject($text)
+}
+
+# Field access that works on both hashtables (ConvertFrom-JsonBig) and
+# PSObjects, so callers do not care which parser produced the object.
+function Prop($obj, $key) {
+    if ($null -eq $obj) { return $null }
+    if ($obj -is [System.Collections.IDictionary]) {
+        if ($obj.Contains($key)) { return $obj[$key] }
+        return $null
+    }
+    return $obj.$key
 }
 
 function Test-Readable($path) {
@@ -69,17 +94,16 @@ Write-Host ("-" * 78)
 # all ("CMDKEY: Credentials cannot be saved from this logon session"). A net use
 # listing read from Termius showing everything Unavailable is how this box's
 # 2026-08-25 outage got misdiagnosed as a dead array.
+# Reported as INFO, not a warning: SESSIONNAME is empty in plenty of perfectly
+# good shells (Windows Terminal among them), and warning on that alone cried
+# wolf on a session whose drives, credential and pm2 all worked. It only
+# matters as an explanation for a FAIL, so the summary raises it there instead.
 $sessionName = $env:SESSIONNAME
-if ($sessionName -eq 'Console' -or $sessionName -like 'RDP-Tcp*') {
-    Say 'ok' "logon session: $sessionName" $null
-} else {
-    $shown = if ($sessionName) { $sessionName } else { '(empty)' }
-    Say 'warn' "logon session: $shown -- not the console" @(
-        "Drive letters and credentials are per-logon-session. Results below may",
-        "not reflect what the console session (or pm2) actually sees. Re-run from",
-        "the console before believing a FAIL."
-    )
-}
+$script:onConsole = ($sessionName -eq 'Console' -or $sessionName -like 'RDP-Tcp*')
+$shown = if ($sessionName) { $sessionName } else { '(not set)' }
+Say 'info' "logon session: $shown" $(if (-not $script:onConsole) {
+    "Not identifiably the console. Only matters if something below FAILs."
+} else { $null })
 
 # --- 2. Credential ------------------------------------------------------------
 # A listed credential is not a working credential: on 2026-08-29 entries existed
@@ -140,20 +164,30 @@ if (-not $mappings.Count) {
 # --- 5. pm2: what is running, and what a reboot would restore ----------------
 # These are different lists. `pm2 save` snapshots the running list AND its
 # environment into dump.pm2; `pm2 resurrect` replays that snapshot verbatim.
-$jlistRaw = (& pm2 jlist 2>&1) -join ''
+# 2>$null, not 2>&1: merging pm2's stderr chatter into the string corrupts the
+# JSON before it is ever parsed.
+$jlistRaw = (& pm2 jlist 2>$null) -join ''
 $running = $null
-try { $running = $jlistRaw | ConvertFrom-Json } catch {}
+$jlistErr = $null
+if ($jlistRaw) {
+    try { $running = ConvertFrom-JsonBig $jlistRaw } catch { $jlistErr = $_.Exception.Message }
+}
 if (-not $running) {
-    Say 'unknown' "pm2 returned no usable process list" @(
-        "pm2's daemon is per-user and WSL's pm2 is a separate world entirely.",
-        "Run this from the same Windows account that owns the engines."
-    )
+    $why = if (-not $jlistRaw) {
+        "pm2 produced no output. Its daemon is per-user, and WSL's pm2 is a separate world -- run this from the Windows account that owns the engines."
+    } elseif ($jlistErr) {
+        "pm2 answered but the output could not be parsed: $jlistErr"
+    } else {
+        "pm2 answered with output this script could not read."
+    }
+    Say 'unknown' "pm2 returned no usable process list" $why
 } else {
-    $names = @($running | ForEach-Object { $_.name })
+    $names = @($running | ForEach-Object { Prop $_ 'name' })
     Say 'ok' "pm2 running: $($names -join ', ')" $null
     foreach ($app in $running) {
-        if ($app.pm2_env.status -ne 'online') {
-            Say 'fail' "$($app.name) is $($app.pm2_env.status), not online" $null
+        $st = Prop (Prop $app 'pm2_env') 'status'
+        if ($st -ne 'online') {
+            Say 'fail' "$(Prop $app 'name') is $st, not online" $null
         }
     }
     if ($names -contains 'sd-webui') {
@@ -169,11 +203,13 @@ if (-not (Test-Path $dumpPath)) {
     Say 'fail' "no pm2 dump at $dumpPath" "Nothing would come back on reboot. Run: pm2 save"
 } else {
     $dump = $null
-    try { $dump = Get-Content -Raw -Path $dumpPath | ConvertFrom-Json } catch {}
+    $dumpErr = $null
+    try { $dump = ConvertFrom-JsonBig (Get-Content -Raw -Path $dumpPath) }
+    catch { $dumpErr = $_.Exception.Message }
     if (-not $dump) {
-        Say 'unknown' "could not parse $dumpPath" $null
+        Say 'unknown' "could not parse $dumpPath" $dumpErr
     } else {
-        $dumpNames = @($dump | ForEach-Object { $_.name })
+        $dumpNames = @($dump | ForEach-Object { Prop $_ 'name' })
         Say 'ok' "pm2 would restore on reboot: $($dumpNames -join ', ')" $null
         if ($dumpNames -contains 'sd-webui') {
             Say 'fail' "the SAVED list still contains sd-webui" @(
@@ -182,7 +218,7 @@ if (-not (Test-Path $dumpPath)) {
             )
         }
         if ($running) {
-            $runNames = @($running | ForEach-Object { $_.name })
+            $runNames = @($running | ForEach-Object { Prop $_ 'name' })
             $drift = @($runNames | Where-Object { $dumpNames -notcontains $_ }) +
                      @($dumpNames | Where-Object { $runNames -notcontains $_ })
             if ($drift.Count) {
@@ -194,9 +230,10 @@ if (-not (Test-Path $dumpPath)) {
         }
         # The stale-env trap, checked directly rather than inferred.
         foreach ($app in $dump) {
-            if ($app.name -eq 'kr-relay') {
-                $savedRoot = $app.env.KR_SHARE_ROOT
-                $savedProbe = $app.env.KR_SHARE_PROBE_PATH
+            if ((Prop $app 'name') -eq 'kr-relay') {
+                $savedEnv = Prop $app 'env'
+                $savedRoot = Prop $savedEnv 'KR_SHARE_ROOT'
+                $savedProbe = Prop $savedEnv 'KR_SHARE_PROBE_PATH'
                 if ($savedProbe -match '^[A-Za-z]:') {
                     Say 'fail' "saved kr-relay env still points at a drive letter ($savedProbe)" @(
                         "A reboot restores THIS, not whatever you setx afterwards. Fix:",
@@ -294,6 +331,12 @@ if (Test-Path $sharesJson) {
 Write-Host ("-" * 78)
 if ($script:fail) {
     Write-Host "NOT reboot-safe: $($script:fail) failing, $($script:warn) warning, $($script:unknown) unknown"
+    if (-not $script:onConsole) {
+        Write-Host ""
+        Write-Host "NOTE: this did not run from an identifiable console session. Drive"
+        Write-Host "letters and credentials are per-logon-session, so re-run from the"
+        Write-Host "console before acting on a FAIL above."
+    }
     exit 1
 } elseif ($script:warn -or $script:unknown) {
     Write-Host "Probably fine, with caveats: $($script:warn) warning, $($script:unknown) unknown"
