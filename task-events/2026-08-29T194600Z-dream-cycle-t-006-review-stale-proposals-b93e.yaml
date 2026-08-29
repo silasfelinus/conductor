@@ -1,0 +1,8 @@
+version: 1
+project: dream-cycle
+task: t-006
+operation: review
+session: 2026-08-29T193700Z-dream-cycle-t006-stale-proposals-b93e
+updated: '2026-08-29T19:46:00Z'
+note: >-
+  Root-caused the Aug 29 Perpetua Quill / ledger repeat to the scheduled builder consuming an orphaned Aug 17 outline. Prepared a focused production-path guard: ordinary automatic proposals expire after two Pacific days, pinned transaction retries and explicit backfills remain possible, and every selected proposal re-runs the current creative-diversity contract before live record creation. Added five regression tests including the exact 12-day orphan case; daily-digest now calls the guarded runner while the transactional writer stays untouched.
