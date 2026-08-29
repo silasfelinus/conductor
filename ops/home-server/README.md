@@ -17,6 +17,7 @@ Files in this folder:
 | `ecosystem.config.js` | pm2 process definitions for `comfyui` (plus opt-in `kr-relay` and `kr-download`) |
 | `healthcheck.ps1` | optional watchdog — probes the HTTP health endpoints and `pm2 restart`s a hung process |
 | `restore-shares.ps1` | logon-time repair for **this box's** SMB drive letters after *it* reboots (healthcheck covers the NAS going away while this box stays up) |
+| `preflight.ps1` | read-only "if I reboot now, does it all come back?" check — verifies the **saved** state (persistent mappings, `dump.pm2` and its env), not just the running state |
 | `relay_agent.py` | pull-based bridge: claims ArtJobs from kind_robots and drives local ComfyUI (enable after art-generator-connect/t-010 deploys) |
 | `relay_download_agent.py` | pull-based model downloader: claims queued LoRA/checkpoint downloads, fetches them onto the engine dirs, and catalogs them as Resources (the `kr-download` app) |
 | `start-engines.bat` | double-click launcher: starts both engines (no-op if running) and attaches the live log stream — the old bats' echo, without owning the processes |
@@ -591,6 +592,32 @@ python scripts/drain_failed_art_backlog.py --live
 
 It renders a canary batch first and refuses to drain if the host is still
 broken, so it is safe to run before you are sure the mount is fixed.
+
+## Reboot-readiness check (`preflight.ps1`)
+
+```powershell
+cd D:\code\Conductor\ops\home-server
+.\preflight.ps1
+```
+
+Read-only; changes nothing. Exit 0 clean, 1 if something would break on reboot.
+
+It exists because **working now and surviving a reboot are different
+questions**, and every failure in the 2026-08-25 → 08-29 run looked fine right
+up until the box came back. What survives is the *saved* state, so that is what
+it checks:
+
+| Running state | What a reboot actually restores |
+|---|---|
+| `net use` shows `Z:` working | `HKCU:\Network\Z` — absent means the mapping was made without `/persistent:yes` and is gone |
+| `pm2 status` lists the right apps | `~\.pm2\dump.pm2` — the list *and the environment* frozen at the last `pm2 save` |
+| `setx KR_SHARE_ROOT` succeeded | the env inside `dump.pm2`, which a `setx` after the last save never reached |
+| a credential is listed by `cmdkey` | nothing — presence is not validity; only a UNC read proves it |
+
+It also flags the session trap first, because a network logon session (SSH,
+Termius) reads its own empty drive table and cannot save credentials at all —
+so a FAIL from the wrong session may be an artifact rather than a fault. Run it
+from the console.
 
 ## Notes & gotchas
 
