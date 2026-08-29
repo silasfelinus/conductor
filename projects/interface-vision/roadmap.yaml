@@ -3039,7 +3039,7 @@ tasks:
   - id: t-105
     milestone: m6
     title: "Polish every reachable Kind Robots surface page-by-page"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     recurring: true
@@ -3073,8 +3073,11 @@ tasks:
       Slice attempt (2026-08-27, this cycle): surveyed pages/*.vue and components/pages/*.vue for the next icon-badge header candidate per the prior slice's own suggestion (music- mentor.vue/coloring-page.vue, already done in t-121). Two candidates turned up -- components/pages/giving-page.vue (donation/AMF page) and components/pages/mermaids- page.vue (/mermaids) -- but both already have a deliberately-designed, richer hero (icon centered above a large title inside a promotional card, or a title+decorative-image pair) rather than the bare-emoji/plain-text-no-hierarchy state every prior slice's target was in. Converting either to the established small horizontal icon-badge-beside- title bar would shrink and de-emphasize an intentional visual focal point, not fix a real gap -- a downgrade dressed as consistency, not a genuine polish. portos-page.vue and taskmaster-page.vue were also considered and are correctly out of scope (stub placeholder; purpose-built quest-HUD page, same category as the already-excluded memory- dungeon.vue/rebel-button.vue). No change made this cycle -- the same-shape 'cheap, uniform, mechanical' candidate pool this task has been drawing from for 10 slices looks exhausted, similar to t-104's own documented exhaustion. Re-arming to ready without a diff; a future slice should either accept a genuine design judgment call on giving- page.vue/mermaids-page.vue (ideally with real screenshots, which this sandbox cannot produce -- no reachable DB, no PR-preview infra) or treat the mechanical phase of this task as complete and scope any further work as deliberate redesign rather than another icon-badge-application pass.
 
       Released without implementation after live dependency re-check: t-105 declares depends_on: t-104, and t-104 is currently ready rather than done. Do not run a polish slice ahead of its consistency dependency.
-    updated: '2026-08-29T05:14:30Z'
+    updated: '2026-08-29T05:36:25Z'
     implementation_pr: 'silasfelinus/kind_robots#2140'
+    owner: worker
+    claimed_by: 20260829T235900Z-interface-vision-t105-rebel-button
+    claimed_at: '2026-08-29T05:36:25Z'
 
   - id: t-106
     milestone: m6
