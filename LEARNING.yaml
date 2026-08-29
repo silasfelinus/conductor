@@ -11538,3 +11538,21 @@ records:
     relations and supports JWT plus legacy user API keys. Reusing those primitives reduces duplication,
     but public agent onboarding needs a narrower credential lifecycle with scopes, expiry, revocation,
     Bot identity, and operator provenance.
+- date: '2026-08-29'
+  project: rainbow-butterflies
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A Worker session had already set status: review and finished the actual content
+    (AMI-IDENTITY.md) but never opened the PR, so the branch (worker/rainbow-t006-ami-
+    identity-20260829) sat unreviewed. Opening a PR from an existing worker/* branch
+    without pushing any new commits to it is within the Reviewer's scope; a clean
+    three-way merge onto current main showed only the new file as the diff once the
+    branch's own stale roadmap.yaml edit was superseded by a later main commit. Worth
+    checking for stranded no-PR worker branches (not just open PRs) at session start,
+    since select_role.py's candidate_worker_branches surfaces them even when
+    list_pull_requests shows nothing to review.
