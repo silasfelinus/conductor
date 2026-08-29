@@ -1,9 +1,0 @@
-version: 1
-project: brainstorm
-task: t-025
-operation: done
-updated: '2026-08-29T14:10:57Z'
-note: >-
-  Reviewed and squash-merged kind_robots PR #2199 at exact head 3f930579b6c2c3e4287cafe7d65d8fbf66083576 after all attached workflows completed successfully. Brainstorm selected-candidate art generation now exposes the existing prompt-only engine catalog, keeps Krea 2 as the default, and threads the selected engine through the durable ArtJob enqueue path.
-learning: >-
-  Reusing ART_ENGINE_PROFILES keeps prompt-only engine availability centralized and naturally excludes source-image-only engines from Brainstorm's fresh text-to-image flow.
