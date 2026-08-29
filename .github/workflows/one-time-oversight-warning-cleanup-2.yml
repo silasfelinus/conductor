@@ -1,0 +1,100 @@
+name: One-time Oversight Warning Cleanup 2
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/one-time-oversight-warning-cleanup-2.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: conductor-main-writers
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Remove duplicate task fields without changing effective values
+        shell: python
+        run: |
+          import re
+          from pathlib import Path
+
+          TASK_RE = re.compile(r'^  - id: (\S+)\s*$')
+          FIELD_RE = re.compile(r'^    ([A-Za-z0-9_]+):')
+
+          def task_bounds(lines, task_id):
+              start = next((i for i, line in enumerate(lines) if line.rstrip('\n') == f'  - id: {task_id}'), None)
+              if start is None:
+                  raise SystemExit(f'task {task_id} not found')
+              end = len(lines)
+              for i in range(start + 1, len(lines)):
+                  if TASK_RE.match(lines[i].rstrip('\n')):
+                      end = i
+                      break
+              return start, end
+
+          def duplicate_indices(lines, task_id, field):
+              start, end = task_bounds(lines, task_id)
+              hits = []
+              for i in range(start + 1, end):
+                  match = FIELD_RE.match(lines[i])
+                  if match and match.group(1) == field:
+                      hits.append(i)
+              return hits
+
+          # ai-art-academy/t-072: both implementation_pr values are identical;
+          # keep the canonical metadata field before note:, remove the stale trailing copy.
+          path = Path('projects/ai-art-academy/roadmap.yaml')
+          lines = path.read_text(encoding='utf-8').splitlines(keepends=True)
+          hits = duplicate_indices(lines, 't-072', 'implementation_pr')
+          if len(hits) != 2:
+              raise SystemExit(f'ai-art-academy/t-072 expected 2 implementation_pr fields, found {len(hits)}')
+          first_value = lines[hits[0]].split(':', 1)[1].strip()
+          second_value = lines[hits[1]].split(':', 1)[1].strip()
+          if first_value != second_value:
+              raise SystemExit('ai-art-academy/t-072 duplicate implementation_pr values differ; refusing automatic choice')
+          del lines[hits[1]]
+          path.write_text(''.join(lines), encoding='utf-8')
+
+          # cthulhuquarium/t-035: YAML currently resolves to the later claimed_by/updated.
+          # Preserve that effective state and delete the stale earlier copies.
+          path = Path('projects/cthulhuquarium/roadmap.yaml')
+          lines = path.read_text(encoding='utf-8').splitlines(keepends=True)
+          for field in ('claimed_by', 'updated'):
+              hits = duplicate_indices(lines, 't-035', field)
+              if len(hits) != 2:
+                  raise SystemExit(f'cthulhuquarium/t-035 expected 2 {field} fields, found {len(hits)}')
+              del lines[hits[0]]
+          path.write_text(''.join(lines), encoding='utf-8')
+
+      - name: Validate and regenerate roadmap audit
+        run: |
+          python scripts/validate_roadmaps.py
+          python scripts/audit_roadmaps.py
+
+      - name: Remove one-shot workflow and persist cleanup
+        run: |
+          rm .github/workflows/one-time-oversight-warning-cleanup-2.yml
+          git config user.name "conductor-bot"
+          git config user.email "conductor-bot@users.noreply.github.com"
+          git add projects/ai-art-academy/roadmap.yaml projects/cthulhuquarium/roadmap.yaml ROADMAP-AUDIT.md ROADMAP-AUDIT.json .github/workflows/one-time-oversight-warning-cleanup-2.yml
+          git diff --staged --check
+          git commit -m "fix(oversight): remove duplicate roadmap keys [skip ci]"
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
