@@ -3043,8 +3043,8 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-08-29T00:06:00Z'
-    depends_on: [t-077]
+    updated: '2026-08-29T01:30:00Z'
+    depends_on: [t-077, t-080]
     note: >
       The back-and-forth t-077 shipped a first draft for. Silas, 2026-08-28,
       opening the home page redesign: "this part may take some back and forth,
@@ -3055,40 +3055,42 @@ tasks:
       needs-human because the remaining question is aesthetic judgement, and
       only Silas can supply it. Nothing here is blocked on engineering.
 
-      FOUR CALLS MADE FROM SCREENSHOTS during t-077, each a one-line revert if
-      he disagrees:
+      REWRITTEN 2026-08-29 after t-080. The list this note carried described the
+      first pass, and t-080 superseded most of it -- a stale list of "here are
+      your options" is worse than none, because it invites a decision about
+      something that no longer exists. What is actually on main now, each still
+      cheap to change:
 
-      1. The hero is height-capped (h-64 / sm:h-80 / lg:h-26rem in
-         components/home/home-dream-hero.vue). Uncapped it used kr-art-plate's
-         own aspect-video, which at desktop content width came out ~750px tall
-         and filled the viewport on its own -- the page read as a single
-         picture with nothing below it even hinted at. Capping crops the frame
-         (object-cover) rather than squashing it.
-      2. Full-colour section icons were removed from the rail and section
-         headers (components/home/home-rail.vue, home-page.vue). The kind-icon
-         set is full-colour by design and several rendered as flat coloured
-         squares at 16px -- kind-icon:scenario showed as an x -- so a column of
-         unrelated glyphs fought the terracotta small-caps rather than
-         supporting it. The icons still do real work inside the plates, where
-         an artless card needs something to show. Restoring them is one prop.
-      3. Rail tile widths: w-36/sm:w-40 for the portrait object rails,
-         w-52/sm:w-64 for the landscape art and animation rails
-         (cardWidthClass in home-rail.vue).
-      4. Rail order and the eight blurb lines (the RAILS constant in
-         home-page.vue): art, animations, dreams, characters, scenarios,
-         items/skills, bots, facets.
+      1. The hero is a side-by-side panel: plate left (h-36/sm:h-40/lg:h-44),
+         cast right as a fixed three-column grid of six chips. The earlier
+         full-width plate with a strip beneath it is gone. Ratios and the split
+         point are all one class each.
+      2. Object rails use SQUARE plates at w-24 and show a title only; art and
+         animation rails use 4:3 plates at w-32. Portrait 2:3 and a subtitle
+         line are what the first pass had.
+      3. The rails sit in a four-column grid from lg (sm:grid-cols-2
+         lg:grid-cols-4 in home-page.vue, which is a page component so a
+         viewport breakpoint is legitimate there). Two rows of four at 1366px.
+      4. Section icons are still absent from the rail and section headers --
+         several kind-icons render as flat coloured squares at 16px and
+         kind-icon:scenario as an x. Restoring them is one prop if he wants
+         colour back in the headers rather than only in the cards.
+      5. Rail order and labels (the RAILS constant in home-page.vue): art,
+         animations, dreams, characters, scenarios, items/skills, bots, facets.
+      6. The newsfeed runs in `compact` mode here (no summary paragraph, 13rem
+         grid minimum, six headlines). The Newsfeed Lab page is unaffected.
 
-      Also open for his call: whether the hero should server-render. It
-      currently loads client-side in onMounted, matching every other store in
-      the repo, so first paint shows skeletons. Moving it to useAsyncData would
-      SSR the hero but puts an async setup inside ContentRenderer's subtree,
-      which risks a hydration boundary problem that could not be tested in the
-      build sandbox (no database). Deliberately not attempted blind.
+      The page now measures 1017px against a ~510px content window at Silas's
+      own 1366x768 -- 1.99 screens, inside his "definitely don't want it larger
+      than two". If he wants it tighter still, the newsfeed is 341px of that
+      1017 and is the only band with real slack left.
 
-      Not verified against real data anywhere: the sandbox that built t-077 had
-      no database, so the showcase queries are shape-checked only and the
-      screenshots used a mocked payload. The first honest look at this page is
-      Silas on main.
+      Also still open for his call: whether the hero should server-render. It
+      loads client-side in onMounted, matching every other store in the repo, so
+      first paint shows skeletons. Moving it to useAsyncData would SSR the hero
+      but puts an async setup inside ContentRenderer's subtree, which risks a
+      hydration boundary problem that cannot be tested in a sandbox with no
+      database. Deliberately not attempted blind.
 
   - id: t-079
     milestone: m6
@@ -3147,3 +3149,85 @@ tasks:
       Still NOT verified against real rows: this proves the queries are valid,
       not that the hero picks a sensible dream or that the rails come back
       populated. That remains t-078's territory and Silas's eye.
+
+  - id: t-080
+    milestone: m6
+    title: "Home page density pass: two screens, panelled sections, per-card themes"
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-29T01:30:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#2189'
+    approved_by_human: true
+    depends_on: [t-077]
+    note: >
+      Silas, 2026-08-29, on the working page: "ok, so it works, and now what I
+      want is a better, tighter layout. I'm not sure if we can get this down to
+      one page, but I definitely don't want it larger than two. We should be
+      condensing this, that initial banner shouldn't be an entire page, gutters
+      too large, and things should be combined. Weird gutters are hiding content
+      and the lack of backgrounds around text is merging it with the background.
+      The lack of different theme colors is notable, it would give us more
+      variety easily. nothing on that very first row below the header nav is
+      needed: the text, refresh, and dashboard link ... I do like how projects
+      appear differently than the rest."
+
+      MEASURED, NOT ESTIMATED. Rendered in headless Chromium against a mocked
+      payload at his own viewport (1366x768, ~510px of content below the browser
+      chrome). 1628px -> 1017px, 3.19 -> 1.99 screens. Per band, before ->
+      after: hero+cast 260->202, rails 377->331, projects 165->103, newsfeed
+      519->341.
+
+      Changes, in order of height recovered: the eight rails went from a
+      vertical stack to a four-column grid; object rails moved to square plates
+      and dropped their subtitle line (it truncated to "a short line of co..."
+      at that width and survives as the link tooltip); hero and cast became one
+      side-by-side panel with the cast as a fixed three-column grid, which is
+      what removed the dead field under the plate; projects fit one row with
+      their shape deliberately untouched; the newsfeed gained an opt-in
+      `compact` prop used only here; the orientation row was deleted outright.
+      Every section is now a panel, because kr-page-backdrop paints art behind
+      the whole route and text with no ground of its own dissolved into it.
+
+      THE THEME ASK NEEDED NO NEW MECHANISM. utils/entityTheme.ts and a `theme`
+      column on all six object models already existed, from Silas's own
+      2026-08-10 request for the object cards. The showcase payload now carries
+      `theme` and the rails and cast put it on a data-theme wrapper, matching
+      character-card.vue. Deliberately NOT added to entityArtSelect: Project has
+      no such column and t-079's satisfies-intersection guard rejects it there,
+      which is that guard doing its job the first time it was tested.
+
+      TWO THINGS WORTH REMEMBERING.
+
+      (a) The first height measurement mocked an EMPTY newsfeed and reported the
+      feed at 224px, understating the page by ~300px. It was re-mocked with
+      realistic items before any tuning happened. This is the same failure mode
+      as t-079 (TALKBACK 2026-08-29) one step removed: there, a symptom was
+      explained without being tested; here, a measurement would have been taken
+      against a fixture that did not resemble production. Tuning a layout
+      against an empty list is measuring a fiction.
+
+      (b) "Weird gutters are hiding content" had a specific cause: the rails
+      carried `snap-x snap-mandatory`, and mandatory snapping re-aligns the
+      track to the nearest snap point on layout, which with this row's padding
+      landed mid-tile and clipped the first card. A browse rail gains nothing
+      from snapping, so it was removed rather than tuned, along with the
+      `-mx-1` bleed that had also been pushing the first tile under the panel
+      edge.
+
+      One rendering fix found only by looking: the kind chip used text-primary,
+      which several daisyUI themes render too pale to read on base-100 -- the
+      Facet chip vanished on a pastel tile. base-content is the token daisyUI
+      guarantees contrasts in every theme.
+
+      Housekeeping: the newsfeed grid moved from sm:/lg: breakpoints to
+      container-width columns, which is the shape the viewport-grid rule wants
+      from a shared component, so the layout-contract baseline RATCHETED DOWN
+      from 209 to 207 rather than growing. Verified: vue-tsc, eslint, prettier,
+      layout contract and MDC scroll ownership all clean. Merged as squash
+      d93fe3a4e5f2172d0963ac99ea4daf538497c3fc.
+
+      Heights are measured against a mock; the sandbox still has no database, so
+      real captions and real art may move a band by a few pixels. t-078 stays
+      open for Silas's eye on the real thing.
