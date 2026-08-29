@@ -10,6 +10,7 @@ Files in this folder:
 |---|---|
 | `ecosystem.config.js` | pm2 process definitions for `comfyui` and `sd-webui` (plus opt-in `kr-relay` and `kr-download`) |
 | `healthcheck.ps1` | optional watchdog — probes the HTTP health endpoints and `pm2 restart`s a hung process |
+| `restore-shares.ps1` | logon-time repair for **this box's** SMB drive letters after *it* reboots (healthcheck covers the NAS going away while this box stays up) |
 | `relay_agent.py` | pull-based bridge: claims ArtJobs from kind_robots and drives local ComfyUI/A1111 (enable after art-generator-connect/t-010 deploys) |
 | `relay_download_agent.py` | pull-based model downloader: claims queued LoRA/checkpoint downloads, fetches them onto the engine dirs, and catalogs them as Resources (the `kr-download` app) |
 | `start-engines.bat` | double-click launcher: starts both engines (no-op if running) and attaches the live log stream — the old bats' echo, without owning the processes |
@@ -426,6 +427,95 @@ question that mattered. The log is trimmed to 4000 lines once it passes 8000.
 
 If you get a `WATCHDOG BLIND` email, fix the task's *Run as* account to match
 the pm2 daemon owner, or give the `.vbs` an absolute path to `pm2`.
+
+### The 2026-08-29 recurrence: the *client* rebooted, not the NAS
+
+"I rebooted ferngrotto and lost access to my network drives, again." Same
+symptom, a different cause from 2026-08-25/26 — and worth separating, because
+the fixes are different and the earlier ones don't cover this.
+
+The two failures:
+
+| | 2026-08-25/26 | 2026-08-29 |
+|---|---|---|
+| What rebooted | alexandria (the NAS) | ferngrotto (this box) |
+| What was lost | the *sessions* behind live mappings | every mapping in every logon session, at once |
+| Who notices first | ComfyUI, mid-render | you, opening Explorer |
+| What covers it | `healthcheck.ps1` share watchdog, 5-min tick | `restore-shares.ps1`, at logon |
+
+Three specific reasons the existing watchdog does not close the client-reboot
+case, all of them structural rather than bugs:
+
+1. **It may not be running yet.** A `schtasks /SC MINUTE` task created without
+   `/RU` runs only while its creating user is logged on. A box sitting at the
+   login screen after a reboot runs no watchdog at all — the same trap as pm2
+   Option B starting at *logon* rather than boot.
+2. **It repairs one letter.** `KR_SHARE_UNC` remaps whatever letter is in
+   `KR_SHARE_PROBE_PATH`. There are four mappings on this box; a reboot takes
+   all four, and the watchdog was only ever asked about the models one.
+3. **It cannot repair a letter into your session anyway.** See below.
+
+**Why you cannot just have a service fix this for you.** A mapped drive letter
+belongs to one Windows logon session. Letters mapped by a task running as
+SYSTEM, or as "run whether user is logged on or not", land in a session you are
+not sitting in — your desktop still shows nothing, and pm2 running under your
+account still sees nothing. This is the same per-session trap that produced the
+two misreads already recorded here: a `net use` listing from Terminus showing
+everything `Unavailable` while the console session was fine (2026-08-25), and
+`pm2 jlist` returning an empty list under a Task Scheduler account that did not
+own the daemon (2026-08-27). There is no configuration that makes one process
+restore letters for everybody.
+
+So the split is:
+
+**The pipeline does not use letters, and has not since 2026-08-27.**
+`KR_SHARE_ROOT` and `extra_model_paths.yaml` are both on `//192.168.7.172/pc`.
+A UNC path has no logon session to lose, so losing `Z:` no longer stops a
+render. What it does still need is the **credential**, and that is the part to
+check first when the box comes back:
+
+```powershell
+cmdkey /list          # is there an entry for 192.168.7.172 at all?
+```
+
+A missing credential presents *identically* to a dead NAS — every path
+unreadable, the host plainly up, `folder_paths` enumerating nothing. It has
+been wiped here before (ai-art-academy/t-033, 2026-08-25: "`cmdkey /list` was
+empty and all four alexandria mappings showed Unavailable"). And `cmdkey` is
+per-user: **the account pm2 runs as needs its own entry.** If the engines run
+under a different account than your desktop, adding it in your shell fixes your
+Explorer and nothing else.
+
+**The letters are for you**, and `restore-shares.ps1` restores them at logon:
+
+```powershell
+cd <this folder>
+.\restore-shares.ps1 -Save     # once, while the mappings are healthy:
+                               # snapshots letter -> UNC into shares.json (gitignored)
+.\restore-shares.ps1 -Check    # report only: what is mapped, readable, credentialed
+.\restore-shares.ps1           # restore anything missing or unreadable
+```
+
+Register it — **as your normal user, not elevated, not SYSTEM**, or it will map
+letters into a session you are not in:
+
+```powershell
+schtasks /Create /SC ONLOGON /TN "Restore-SMB-Shares" /RL LIMITED `
+  /TR "powershell -NoProfile -ExecutionPolicy Bypass -File \"C:\path\to\conductor\ops\home-server\restore-shares.ps1\""
+```
+
+It waits up to 90s for TCP 445 on each file server before touching anything (a
+logon trigger fires while the NIC may still be negotiating), reports any host
+missing a stored credential, remaps only what is actually unreadable — it
+*enumerates* rather than trusting `Test-Path`, for the stale-handle reason
+above — and restarts ComfyUI if it restored anything and can see the daemon,
+because `folder_paths` caches its filename lists and will not re-enumerate just
+because a share came back. Logs to `logs\restore-shares.log`.
+
+`-Save` deliberately refuses to record a mapping it cannot read, so running it
+during an outage cannot bake today's breakage into the config as if it were the
+intent. Which means: run `-Save` once now, while things are working, or it has
+nothing to restore from next time.
 
 **`extra_model_paths.yaml` is now tracked** at `ops/home-server/extra_model_paths.yaml`
 as a reference copy of what belongs at `D:\comfy\comfy-fast\extra_model_paths.yaml`.
