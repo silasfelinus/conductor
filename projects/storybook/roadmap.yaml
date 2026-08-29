@@ -133,10 +133,10 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 49
   stakes: reversible
-  note: |-
+  note: >-
     Cycle 30 (no-op, re-armed): cycle 29 flagged storybook-library-page.vue (350 lines) and storybook-page.vue full template as unread. Read storybook-library-page.vue end to end and storybook-page.vue in full (template + script, 1065 lines). Chased two concrete hypotheses: (1) storybook-page.vues startAnother() (child "New story" button, header) calls store.resetSession() directly with no explicit archiveCurrent() call first, unlike storybook-library-page.vues startNewStory() (wrapper "New story" button) which calls archiveCurrent() then resetSession() -- looked like a real asymmetry where the childs button could discard an unsaved session without archiving it into the library. Traced into storybookLibraryHelper.ts and found this is NOT a bug: its own watch(() => bridge.getSession(), ...) is a deep watcher that fires on every session transition, including session -> null, and its else-branch (`else if (previous) upsert(previous)`) archives the outgoing session automatically regardless of which components button triggered the reset -- library-pages explicit archiveCurrent() call is redundant defensive code, not filling a real gap the child lacks. (2) seedFromQuery() (deep-link ingredient seeding) writes into store.setupDraft unconditionally whenever scenario/location/character/facet/reward query params are present, with no check for whether store.session is already active -- confirmed this only affects the (hidden, unrendered) setup draft while a session is active, not the live story, and strips the query params regardless; a minor, low-frequency surprise (a deep link clicked mid-story silently seeds the NEXT storys draft) rather than a correctness bug, left as a note rather than a fix. No new bug found this cycle. Releasing the claim without a code change. Two hypotheses were investigated and ruled out with reasoning (not just skipped), which is real signal that the covered surface is solid. Kaizen for cycle 31: read the remaining ~350 unread lines of storybook-page.vue (roughly 300-700 and 745-920 -- the review step, beat-weaving chat flow, and the ingredient-picker computed selectors), or move to the components/narrative/** shared surface (narrative-role-assigner.vue, kr-chat-window.vue, narrativeBeatsToTurns) that both Storybook and Taskmaster depend on but neither projects audits fully own.
 
     ---
@@ -345,7 +345,36 @@ tasks:
     verifyStorybookRestoreIdempotencyGuard covers for Storybook.
 
     Cycle 37 re-check (conductor scheduled Agent run, session 20260824-sched-conductor-storybook-t010-run1): picked up this task's own flagged next lead (READ-path asymmetry between storybookStore.restoreFromLocalStorage() and taskmasterStore.restoreFromLocalStorage()) and found it was already fully closed by kind_robots#2060 (storybook/t-023, merged 2026-08-23) -- that PR moved Taskmaster's getItem() inside its try and confirmed via mount-site tracing that Taskmaster's single call site makes its !session.value guard sufficient, no reachable mount-order race. No new lead surfaced this cycle from either store's persistence code. Also checked the current kind_robots main (576ad9d, includes the just-merged Aquarium persistence models and Scene Animator admin workflow, neither touching storybook/taskmaster) for any new front-end surface to polish -- nothing new found. No code change. Re-armed to ready; next cycle should look past the persistence-guard family (write path: cycle 36/#2059, read path: t-023/#2060, both closed) toward a genuinely new angle.
-  updated: '2026-08-29T13:28:55Z'
+
+    Cycle 38 (no-op, real investigation, conductor scheduled Agent run): looked past the
+    persistence-guard family (cycle 36/#2059 write path, t-023/#2060 read path) per cycle
+    37's own flagged next lead, toward genuinely unread narrative-family surfaces. Read
+    components/rewards/reward-encounter.vue in full (a kr-choice-list/kr-chat-window
+    consumer that links into Storybook via startStoryWithReward(), though it is Rewards' own
+    encounter engine, not Storybook's) -- its getStoryChoices()/getStoryScene() regex
+    parsing and rollback-free chat flow are internally consistent, no bug found, and it is
+    out of this task's actual project scope regardless (Rewards, not Storybook). Read
+    components/storybook/storybook-state-panel.vue end to end (never individually audited in
+    this task's history, only referenced by verifyStorybookBranchState.mjs's contract) and
+    traced its reactive `:open="session.branchHistory.length > 0 || session.inventory.length
+    > 0"` binding against Vue's patch semantics: the only value transitions are false->true
+    (once, on the first choice/reward) and, narrowly, true->false only if
+    branchHistory+inventory both roll back to exactly zero (the first-ever choice's weave
+    failing and rolling back per storybookStore.ts's own documented soft-lock fix) --
+    confirmed this reflects genuinely empty state rather than fighting a user's manual
+    toggle in the common case, and did not file a fix for the edge case since it correctly
+    shows the panel's actual (now-empty) content rather than an arbitrary override. Re-read
+    stores/helpers/storybookLibraryHelper.ts end to end (420 lines, already the target of
+    several real fixes per its own inline comments -- duplicateStory's art-rekeying,
+    openStory's double-resumeNarrativeArtJobs guard) looking specifically for a new gap in
+    remapDuplicate()'s dedupeKey/jobId handling and restartStory()'s beginStory-failure
+    path; both traced correctly against their own documented invariants, no new bug. No new
+    bug found this cycle. Next lead for cycle 39: this session did not reach
+    components/pages/storybook-library-page.vue's own template/script in full (only its
+    startNewStory()/archiveCurrent() call sites have been traced via
+    storybookLibraryHelper.ts, not the whole component) -- worth a dedicated top-to-bottom
+    read.
+  updated: '2026-08-29T13:31:56Z'
   implementation_pr: 'silasfelinus/kind_robots#2054, silasfelinus/kind_robots#2056, silasfelinus/kind_robots#2059'
   owner: worker
   claimed_by: 20260829T132855Z-storybook-t010-sched
