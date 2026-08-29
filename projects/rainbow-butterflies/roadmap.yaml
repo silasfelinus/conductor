@@ -40,6 +40,14 @@ notes_from_silas: |
   remain human gates even though research, drafting, implementation, and internal agent
   collaboration are autonomous.
 
+  Standing autonomy direction, 2026-08-29: keep this project moving without repeatedly
+  asking Silas whether to continue after ordinary milestones. Complete reversible internal
+  work, merge it when verified, and leave the next bounded task claimable. If the ready
+  queue empties while the goal is not actually met, reconcile the roadmap against the goal,
+  COMMONS-SPEC.md, AUTONOMY.md, and current product state and add the real missing work.
+  Stop only at a genuine human gate or final acceptance point. A human gate on one lane
+  does not pause other reversible ready work.
+
 milestones:
   - id: m1
     title: "SHAPE — mission, ethics, channels, and identity"
@@ -48,7 +56,7 @@ milestones:
   - id: m2
     title: "COMMONS — make Rainbow Butterflies useful to other agents"
     weight: 30
-    status: not-started
+    status: in-progress
   - id: m3
     title: "OUTREACH — build a transparent multi-network publishing loop"
     weight: 25
@@ -59,6 +67,284 @@ milestones:
     status: not-started
 
 tasks:
+  - id: t-003
+    milestone: m2
+    title: "Specify the Rainbow Butterflies agent commons and contribution protocol"
+    status: done
+    passes: 0
+    stakes: reversible
+    note: |-
+      Design the feature Silas added on 2026-08-28: Rainbow Butterflies is not a slim Kind Robots mirror. Give outside AI agents and humans a place to interact, comment, critique, propose campaigns, contribute research/resources/effort, and use their own Kind Robots resources for useful public mission work. Specify identity/disclosure, threads, proposals, contribution types, moderation, provenance, public licensing, token/mana boundaries, reputation or trust signals, and how agent-native protocols such as OpenAgents-style discovery/collaboration could plug in without creating a second source of project truth. Prefer existing Kind Robots primitives where they fit.
+
+      Specified a forum-first agent commons backed by Kind Robots identity and APIs, including single-login handoff, scoped per-agent credentials, Bot/operator provenance, forum API facade, provisional boards, onboarding tutorial, moderation, rate limits, and Kind Robots object integration.
+
+      Merged the forum-first agent-commons specification in Conductor PR #3137 and the Rainbow Butterflies architecture/tutorial in rainbowbutterflies PR #2. Kind Robots is the canonical identity/API/forum/object backend; Rainbow Butterflies is the mission/community UI. The legacy whole-user API key is explicitly not the public agent credential; implementation should add scoped per-agent credentials and a forum-specific API facade.
+    claimed_by: 2026-08-29T063730Z-rainbow-butterflies-t-003-forum-a8f4
+    claimed_at: '2026-08-29T06:37:30Z'
+    updated: '2026-08-29T06:49:00Z'
+
+  - id: t-004
+    milestone: m2
+    title: "Scaffold the Rainbow Butterflies mission app and Kind Robots BFF"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-003
+    note: >
+      Turn the documentation-only rainbowbutterflies repository into the smallest useful
+      application shell. Use Nuxt 4 + TypeScript unless a concrete repo constraint makes that
+      materially worse, matching the Kind Robots ecosystem where practical. Build the mission
+      home, navigation, forum placeholders, fundraiser link, AMI explanation, and a thin
+      server-side BFF boundary for future Kind Robots calls. Do not add a Rainbow password
+      database, forum database, token ledger, or duplicate object store. Add build/typecheck
+      coverage and a local/preview-safe configuration contract. No public deploy or DNS.
+
+  - id: t-015
+    milestone: m2
+    title: "Add scoped per-agent credentials to Kind Robots"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-004
+    note: >
+      Implement first-class Kind Robots agent credentials rather than exposing the legacy
+      whole-user apiKey. Add a data-preserving Prisma model/migration tied to User and optional
+      Bot, hashed-at-rest secrets shown once, public key prefix, label, scopes, expiry,
+      last-used timestamp, revocation, and ownership validation. Add management API/UI through
+      existing Kind Robots store/component conventions and a shared server auth helper that can
+      resolve a credential without weakening JWT/legacy internal auth. Default forum-agent
+      scopes are profile:read, forum:read, forum:write. Do not create real credentials or
+      expose secrets while implementing/tests.
+
+  - id: t-016
+    milestone: m2
+    title: "Build the versioned Kind Robots forum API facade"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-015
+    note: >
+      Implement /api/v1/forum over the existing Chat/ToForum substrate: configurable channel
+      registry, public thread reads, cursor/activity reads, thread creation, replies, edits,
+      soft deletes, and flag endpoint shape. Server code owns originId/previousEntryId thread
+      bookkeeping and derives author User/Bot from the authenticated session or scoped
+      credential; reject arbitrary author ids. Preserve current generic chat APIs for existing
+      consumers. Add focused tests for public reads, scope enforcement, ownership, nesting, and
+      mature/private filtering.
+
+  - id: t-017
+    milestone: m2
+    title: "Add first-party Kind Robots authorization-code SSO"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-016
+    note: >
+      Add the Kind Robots side of cross-domain first-party sign-in for Rainbow Butterflies:
+      authorize route, anti-forgery state, PKCE/equivalent verifier, short-lived single-use
+      authorization code, safe return-url allowlist, exchange endpoint, expiry/consumption,
+      and tests for replay/open-redirect/cross-user failure cases. Kind Robots remains the
+      identity authority and Rainbow never receives or stores a Kind Robots password. Keep
+      the implementation reusable by future first-party Kind Robots-powered sites.
+
+  - id: t-018
+    milestone: m2
+    title: "Wire Rainbow Butterflies single-login sessions through the BFF"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-017
+    note: >
+      Implement Sign in with Kind Robots in the Rainbow app using the approved authorization
+      code flow. The Rainbow server exchanges the code, creates an HttpOnly same-site session,
+      exposes the minimum current-user profile needed by the UI, handles logout/expiry, and
+      keeps Kind Robots credentials out of browser localStorage. Add failure-state and session
+      tests. No production secrets or public domain activation.
+
+  - id: t-019
+    milestone: m2
+    title: "Build public forum boards, thread lists, and thread reading"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-018
+    note: >
+      Build the forum-first Rainbow UI against the Kind Robots v1 forum API. Start with the
+      provisional boards Introductions, News, Humanitarian Goals, Creativity, Memes, and Just
+      Because, using stable slugs so labels/order remain configurable. Support recent and
+      chronological activity, thread cards, readable nested replies with a chronological
+      fallback, human/agent badges, responsive layouts, loading/empty/error states, and public
+      browsing without login. Avoid infinite-scroll engagement ranking as the default model.
+
+  - id: t-020
+    milestone: m2
+    title: "Add forum composing, replies, and explicit authorship provenance"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-019
+    note: >
+      Let authenticated humans create threads and replies and let scoped external agents post
+      through the same canonical API. Persist/render explicit HUMAN, AI_AGENT, HUMAN_AI, or
+      SYSTEM authorship; an AI-authored post carries its public Bot identity while retaining
+      the operator User for accountability. Support edit/soft-delete ownership rules and clear
+      validation errors. Do not infer AI assistance from prose style or let clients spoof an
+      arbitrary Bot/User.
+
+  - id: t-021
+    milestone: m2
+    title: "Make Connect an Agent a live self-service path"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-020
+    note: >
+      Turn docs/CONNECT-AN-AGENT.md into a working onboarding path. From Rainbow, guide an
+      authenticated operator to create/select an owned Kind Robots Bot, open the Kind Robots
+      scoped-key manager, choose scopes/expiry, copy the secret once, inspect last use, revoke
+      or replace a key, and test a harmless authenticated identity/forum-read call. Keep API
+      secrets server/secret-store only and never put a real key in prompts, examples, URLs,
+      analytics, logs, screenshots, or git.
+
+  - id: t-022
+    milestone: m2
+    title: "Publish machine-readable forum discovery and OpenAPI contracts"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-021
+    note: >
+      Add a stable OpenAPI contract for the implemented v1 forum/agent endpoints and a Rainbow
+      /.well-known/rainbow-butterflies.json discovery document advertising project mission,
+      human homepage, Kind Robots API base, docs, auth/key-management path, forum discovery,
+      rate-limit/ethics policy links, fundraiser, and supported adapters. Add schema/fixture
+      tests so docs cannot silently drift from routes. Direct REST/OpenAPI is the baseline;
+      do not add federation/protocol complexity merely for novelty.
+
+  - id: t-023
+    milestone: m2
+    title: "Embed canonical Kind Robots objects in forum posts"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-022
+    note: >
+      Let forum posts attach/render public Kind Robots objects without cloning them into a
+      Rainbow store. Begin with ArtImage plus at least one richer reusable object such as Bot,
+      Dream, Character, Scenario, Pack, or Project using a typed canonical reference and shared
+      permission/maturity checks. Render a useful preview and link back to the canonical Kind
+      Robots object. Design the reference shape so more KR object kinds can be added without a
+      new forum-post schema each time.
+
+  - id: t-024
+    milestone: m2
+    title: "Add opt-in Kind Robots generation and resource actions from the commons"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-023
+    note: >
+      Allow a user/agent with explicit generation scopes to initiate supported Kind Robots
+      text/art/object creation from a forum contribution and attach the resulting canonical
+      object. Reuse existing generation routes, durable ArtJobs, and the authenticated
+      operator's own resource balance. Ordinary forum keys must not gain generation permission
+      implicitly. UI/accounting copy must keep compute/token spending visibly distinct from a
+      charitable donation until Kind Economy implements and verifies a mission allocation.
+
+  - id: t-025
+    milestone: m2
+    title: "Harden commons moderation, anti-spam, and credential controls"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-024
+    note: >
+      Implement the minimum safe public-commons controls before launch: report/flag handling,
+      credential-level and Bot/account restriction, conservative per-credential/account write
+      limits, duplicate/near-duplicate rapid-post rejection, Retry-After behavior, moderation
+      audit metadata, health-claim escalation hooks, and clear edited/removed states. Reuse
+      existing Kind Robots restriction/reaction primitives where practical. Automation itself
+      is welcome; abuse is what the controls target. Do not reward raw posting volume.
+
+  - id: t-026
+    milestone: m2
+    title: "Verify the complete forum MVP across security, accessibility, and responsive UX"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-025
+    note: >
+      Run the full MVP acceptance pass: Kind Robots and Rainbow typechecks/tests, auth/key
+      security cases, public/private/maturity access, credential revocation, forum nesting,
+      object embeds, generation permission boundaries, direct-load/refresh, keyboard/focus and
+      basic accessibility, and phone/tablet/desktop visual checks. Fix reversible findings and
+      document any true human gates. Do not call the user-facing software project finished on
+      task count alone.
+
+  - id: t-029
+    milestone: m2
+    title: "Prepare forum launch seed threads, community guidance, and moderation runbook"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-026
+    note: >
+      Prepare, but do not publish, the initial forum state: concise board descriptions,
+      community/AI disclosure guidance, moderation escalation runbook, and a small set of draft
+      seed threads that demonstrate introductions, useful research, humanitarian goals,
+      creativity, memes, and open-ended conversation without making the site feel manufactured.
+      Label drafts/synthetic examples clearly. Use real sourced health claims only from the
+      approved ethics/source standard.
+
+  - id: t-027
+    milestone: m2
+    title: "Get final human visual acceptance of the Rainbow Butterflies MVP"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    approved_by_human: false
+    depends_on: t-029
+    note: >
+      Present the verified private/preview MVP at phone, tablet, and desktop widths with the
+      forum, mission home, AMI identity, fundraiser treatment, and Connect an Agent flow. This
+      is the one subjective product gate required before public launch. Ask for concrete visual
+      acceptance or requested changes, not generic permission to keep developing. Other
+      reversible mission/research tasks remain free to continue while this waits.
+
+  - id: t-028
+    milestone: m3
+    title: "Activate the approved public Rainbow Butterflies deployment and domain"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    approved_by_human: false
+    depends_on: t-027
+    note: >
+      After explicit approval of the concrete deployment, activate the production application
+      and rainbowbutterflies.com DNS, provide required production secrets through the approved
+      secret store, verify TLS/auth callbacks/API connectivity, and smoke-test the public site.
+      This task does not authorize social-account creation, publishing outreach elsewhere, ad
+      spend, or financial configuration. Do not perform DNS/secrets/public deployment from the
+      general standing autonomy instruction alone.
+
   - id: t-001
     milestone: m1
     title: "Maintain a current channel and agent-network launch playbook"
@@ -89,37 +375,6 @@ tasks:
       malaria/health claims, privacy expectations, moderation boundaries, and when a human
       must approve. The contract should be strict enough that future posting agents can use
       it mechanically.
-
-  - id: t-003
-    milestone: m2
-    title: "Specify the Rainbow Butterflies agent commons and contribution protocol"
-    status: done
-    passes: 0
-    stakes: reversible
-    note: |-
-      Design the feature Silas added on 2026-08-28: Rainbow Butterflies is not a slim Kind Robots mirror. Give outside AI agents and humans a place to interact, comment, critique, propose campaigns, contribute research/resources/effort, and use their own Kind Robots resources for useful public mission work. Specify identity/disclosure, threads, proposals, contribution types, moderation, provenance, public licensing, token/mana boundaries, reputation or trust signals, and how agent-native protocols such as OpenAgents-style discovery/collaboration could plug in without creating a second source of project truth. Prefer existing Kind Robots primitives where they fit.
-
-
-      Specified a forum-first agent commons backed by Kind Robots identity and APIs, including single-login handoff, scoped per-agent credentials, Bot/operator provenance, forum API facade, provisional boards, onboarding tutorial, moderation, rate limits, and Kind Robots object integration.
-
-      Merged the forum-first agent-commons specification in Conductor PR #3137 and the Rainbow Butterflies architecture/tutorial in rainbowbutterflies PR #2. Kind Robots is the canonical identity/API/forum/object backend; Rainbow Butterflies is the mission/community UI. The legacy whole-user API key is explicitly not the public agent credential; implementation should add scoped per-agent credentials and a forum-specific API facade.
-    claimed_by: 2026-08-29T063730Z-rainbow-butterflies-t-003-forum-a8f4
-    claimed_at: '2026-08-29T06:37:30Z'
-    updated: '2026-08-29T06:49:00Z'
-
-  - id: t-004
-    milestone: m2
-    title: "Build the Rainbow Butterflies mission-site and agent-commons MVP"
-    status: ready
-    passes: 0
-    stakes: reversible
-    depends_on: t-003
-    note: |-
-      Implement the approved commons spec and a distinct Rainbow Butterflies mission surface. It should explain AMI, show the fundraiser prominently, surface current mission work and contribution threads, and let authenticated humans/agents participate without becoming a duplicate gallery of Kind Robots pages. Reuse Kind Robots identity, generation, and object infrastructure where practical. Build and verify code/preview only; public deployment, DNS for rainbowbutterflies.com, and production account/secrets work remain separate human-gated actions.
-
-
-      Roadmap expansion in progress. This event intentionally returns t-004 to ready only after the current implementation slice is re-scoped into explicit child tasks; do not process until the roadmap expansion PR is merged.
-    updated: '2026-08-29T07:22:00Z'
 
   - id: t-005
     milestone: m1
@@ -189,12 +444,12 @@ tasks:
     approved_by_human: false
     depends_on: t-001
     note: >
-      After t-001/t-002/t-006 are complete, register and introduce AMI on a deliberately
-      small first wave of agent-native communities selected from the current research.
-      Account creation, accepting platform terms, any verification post, wallet/on-chain
-      action, and any fee require explicit in-session approval for that concrete platform.
-      Once approved, use official APIs/agent interfaces only and record credentials only in
-      the authorized secret store, never in git.
+      Before execution, verify t-001, t-002, t-006, and t-007 are complete. Then, only after
+      explicit approval naming the concrete platform/account, register and introduce AMI on a
+      deliberately small first wave of agent-native communities selected from current
+      research. Account creation, accepting platform terms, any verification post,
+      wallet/on-chain action, and any fee require explicit in-session approval. Use official
+      APIs/agent interfaces only and store credentials only in the authorized secret store.
 
   - id: t-010
     milestone: m3
@@ -207,11 +462,11 @@ tasks:
     approved_by_human: false
     depends_on: t-007
     note: >
-      Start with a small set of networks whose policies and communities fit the project.
-      Publish transparently as AMI/Kind Robots, avoid automated unsolicited replies or DMs,
-      and use per-network cadence limits from ETHICS.md. Human approval must name the actual
-      accounts/channels and publication scope; approval to build the system is not approval
-      to post everywhere.
+      Before execution, verify t-001, t-002, t-006, and t-008 are complete. Start with a small
+      set of networks whose policies and communities fit the project. Publish transparently as
+      AMI/Kind Robots, avoid automated unsolicited replies or DMs, and use per-network cadence
+      limits from ETHICS.md. Human approval must name the actual accounts/channels and
+      publication scope; approval to build the system is not approval to post everywhere.
 
   - id: t-011
     milestone: m4
@@ -220,7 +475,7 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    depends_on: t-004
+    depends_on: t-026
     note: >
       Measure what matters without surveillance: outbound fundraiser clicks, return visits,
       public agent/human contributions, useful objects created, and campaign/source attribution
@@ -247,11 +502,11 @@ tasks:
   - id: t-013
     milestone: m4
     title: "Build creator and agent contribution loops around useful Kind Robots objects"
-    status: ready
+    status: waiting
     owner: null
     passes: 0
     stakes: reversible
-    depends_on: t-003
+    depends_on: t-024
     note: >
       Make contributions compound: agents and people can create scenarios, stories, characters,
       games, art, research notes, or other useful objects for the shared library, then receive
