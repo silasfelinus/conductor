@@ -6,8 +6,13 @@ surfaced to agent rotation at all:
 
 * Kind Robots <-> Conductor project scaffold parity.
 * Deterministic roadmap/CONTROL/priority findings from audit_roadmaps.py.
-* Freshness of both external scheduled-Agent activity and the periodic semantic
+* Freshness of the OpenAI scheduled-Agent heartbeat and the periodic semantic
   roadmap-intent review described in projects/conductor/OVERSIGHT-AGENT.md.
+
+The OpenAI heartbeat is deliberately provider-specific. Claude scheduled agents
+can continue working while the OpenAI automation is disabled, so generic
+"scheduled Agent" git activity is not sufficient evidence that the OpenAI side
+is healthy.
 
 The script is intentionally read-only except for the two report files it writes.
 It never repairs roadmap state itself. GitHub Actions has KR_API_TOKEN and persists
@@ -37,6 +42,7 @@ INTENT_DIR = ROOT / "projects" / "conductor"
 INTENT_REPORT_RE = re.compile(r"^INTENT-AUDIT-(\d{4}-\d{2}-\d{2})\.md$")
 DEFAULT_INTENT_STALE_DAYS = 3.0
 DEFAULT_AGENT_HEARTBEAT_HOURS = 6.0
+OPENAI_SESSION_MARKER = "openai-scheduled-"
 
 
 def _parse_iso_datetime(value: str) -> datetime | None:
@@ -88,11 +94,12 @@ def intent_review_status(
 
 
 def _scheduled_git_log() -> str:
-    """Return the newest commit date that visibly came from a scheduled Agent.
+    """Return newest commit date carrying the OpenAI scheduled-session marker.
 
-    We cannot query the external scheduler from inside the repo, so this is a
-    heartbeat, not a proof-of-scheduler API. The patterns match the session ids and
-    prose already used by Conductor's scheduled Claude runs.
+    The OpenAI automation is configured to generate session IDs beginning with
+    ``openai-scheduled-`` and preserve that id in claim/task-event/review markers.
+    Claude uses different session identifiers, so Claude activity cannot satisfy
+    this heartbeat by accident.
     """
     result = subprocess.run(
         [
@@ -101,9 +108,7 @@ def _scheduled_git_log() -> str:
             "--all",
             "-1",
             "--regexp-ignore-case",
-            "--grep=claude-scheduled",
-            "--grep=scheduled Agent run",
-            "--grep=scheduled sweep",
+            f"--grep={OPENAI_SESSION_MARKER}",
             "--format=%cI",
         ],
         cwd=ROOT,
@@ -129,7 +134,8 @@ def scheduled_agent_status(
             "last_activity": None,
             "hours_since": None,
             "stale_hours": stale_hours,
-            "note": "No scheduled-Agent heartbeat commit was found in available git history.",
+            "marker": OPENAI_SESSION_MARKER,
+            "note": "No OpenAI scheduled-Agent heartbeat commit was found in available git history. Claude activity does not satisfy this check.",
         }
     hours_since = max(0.0, (now - last).total_seconds() / 3600.0)
     return {
@@ -137,7 +143,8 @@ def scheduled_agent_status(
         "last_activity": last.isoformat(),
         "hours_since": round(hours_since, 2),
         "stale_hours": stale_hours,
-        "note": "Commit activity is a heartbeat only; a clean no-op scheduled cycle may leave no commit.",
+        "marker": OPENAI_SESSION_MARKER,
+        "note": "OpenAI commit activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit.",
     }
 
 
@@ -176,7 +183,7 @@ def classify_report(
         "project_forward_drift": len(forward),
         "project_reverse_orphans": len(reverse),
         "project_unresolved": project_unresolved,
-        "scheduled_agent_overdue": bool(heartbeat.get("overdue")),
+        "openai_scheduled_agent_overdue": bool(heartbeat.get("overdue")),
         "intent_review_due": bool(intent.get("due")),
     }
 
@@ -215,7 +222,7 @@ def build_report(
     return {
         "generated_at": generated_at.isoformat(),
         "summary": summary,
-        "scheduled_agent": heartbeat,
+        "openai_scheduled_agent": heartbeat,
         "intent_review": intent,
         "project_parity": {
             "forward": list((project_scan or {}).get("forward", [])),
@@ -237,7 +244,7 @@ def build_report(
 
 def render_markdown(report: dict[str, Any]) -> str:
     summary = report["summary"]
-    heartbeat = report["scheduled_agent"]
+    heartbeat = report["openai_scheduled_agent"]
     intent = report["intent_review"]
     parity = report["project_parity"]
     roadmap = report["roadmap_audit"]
@@ -251,16 +258,18 @@ def render_markdown(report: dict[str, Any]) -> str:
         "",
         "This is a deterministic sensor. For semantic roadmap/progress intent review, follow `projects/conductor/OVERSIGHT-AGENT.md`.",
         "",
-        "## Scheduled-agent heartbeat",
+        "## OpenAI scheduled-agent heartbeat",
         "",
     ]
     if heartbeat["last_activity"]:
         lines.append(
-            f"- Latest visible scheduled-Agent activity: `{heartbeat['last_activity']}` "
+            f"- Latest visible OpenAI scheduled-Agent activity: `{heartbeat['last_activity']}` "
             f"({heartbeat['hours_since']}h ago; overdue at {heartbeat['stale_hours']}h)."
         )
     else:
-        lines.append("- No scheduled-Agent heartbeat commit found in available history.")
+        lines.append(
+            f"- No commit containing `{heartbeat['marker']}` was found in available history. Claude scheduled activity does not count."
+        )
     lines.append(f"- Overdue: **{str(bool(heartbeat['overdue'])).lower()}**")
     lines.append(f"- Note: {heartbeat['note']}")
 
