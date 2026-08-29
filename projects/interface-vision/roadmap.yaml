@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     recurring: true
@@ -2974,7 +2974,27 @@ tasks:
       wrappers).
 
       Slice 34 (kind_robots#2206) done. Re-arming for the next bounded slice.
-    updated: '2026-08-29T21:30:53Z'
+
+      Slice-35 investigation (no-op): checked slice 34's suggested next candidate pool
+      ('components still hand-rolling overflow-y-auto instead of kr-scroll') and found it is
+      NOT a clean mechanical match like the mx-auto/max-w- pool. kr-scroll's own contract
+      (assets/css/tailwind.css) is 'min-h-0 flex-1 overflow-y-auto overscroll-contain',
+      explicitly 'capped at exactly one per .kr-surface by design' to avoid the nested-scroll
+      bug interface-vision t-003b removed from app.vue's shell. Repo-wide grep for overflow-y-
+      auto outside kr-scroll found ~35 hits, but almost all are nested component-level scroll
+      regions (dropdown/popover contents like navigation/tab-select.vue, navigation/account-
+      hub.vue, character-facet-picker.vue; fixed max-h-* panels; two-pane split views like
+      bots/bot-chat.vue and rewards/reward-encounter.vue) rather than a page's single .kr-
+      surface-owned scroll region -- converting these to kr-scroll would misapply flex-1/no-
+      max-height sizing and likely break their intended bounded/dropdown geometry, plus risk
+      creating a second scroll owner alongside an existing kr-scroll on the same surface. Only
+      one page-level file matched (pages/[...slug].vue's content-host wrapper), and even that
+      is structurally different from the accepted pattern (h-full flex-col content-host, not
+      nested inside a .kr-surface the way kr-scroll assumes) so it isn't a drop-in swap
+      either. Recommend future slices skip this pool entirely rather than re-deriving this
+      each cycle; try other kr-* composition gaps instead (e.g. grid-cols breakpoint gating,
+      already tracked separately at 207 baseline).
+    updated: '2026-08-29T21:31:08Z'
     approved_by_human: true
     implementation_pr: 'silasfelinus/kind_robots#2206'
     owner: worker
