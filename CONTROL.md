@@ -291,7 +291,7 @@ listings, and spend remain hard-gated).
   regenerate an approved design for production (exploratory queue stays active).
 - The dream-cycle idler may spend idle days advancing this project's set-production
   tasks (Monster Recast first) under its delegation rule: content stays here, the
-  idler updates both records, and never double-claim a task the Worker holds.
+  idler updates both records, and never double-claims a task the Worker holds.
 - Tech seed: the mural-design WonderLab color studio (kind_robots /mural, PR #135) —
   generalize/share the engine, don't fork it; mural-design keeps working.
 - Humboldt Impropriety Society coloring book/calendar stay archived inspiration; no
