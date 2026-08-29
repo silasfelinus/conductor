@@ -27014,5 +27014,34 @@ sandbox. The script is unrun; PowerShell 5.1 has no linter here either, so it is
 reading only, kept ASCII-only per the existing `healthcheck.ps1` codepage note. First real
 execution is `-Check` on the box.
 
+**Then the diagnosis was wrong, twice, and the corrections are the valuable part.** Both errors
+came from trusting this repo's own documentation over live evidence:
+
+1. Asserted the outage was `Z:`-specific because Silas said "the others are fine." `net use`
+   showed all four (V:/W:/Y:/Z:, all `\\192.168.7.172\...`) `Unavailable`. Should have asked for
+   the listing before theorizing.
+2. Asserted the model share was provably healthy, reasoning that kr-relay had claimed a job and
+   its share gate enumerates the path before every claim. ArtJob 10258 then failed at 09:50 with
+   `[WinError 3] ... 'Z:\'` — the relay was still on the drive letter, two days after this repo
+   recorded the move to UNC as done, so its claim proved nothing. **Root cause of the drift:
+   `pm2 resurrect` replays the env captured at the last `pm2 save`, so a `setx` made after that
+   save never reaches the process and every reboot restores the stale env.** Fixed in the README
+   along with the standing lesson: documentation of an intended state is not evidence of the
+   deployed state.
+
+**Resolved.** The fault was a stale SMB credential, not a mount: `cmdkey /list` showed entries
+for both `192.168.7.172` and `alexandria` while every share answered `The user name or password
+is incorrect`. Re-adding replaced the password and `dir \\192.168.7.172\pc\ai\models` listed all
+60 directories, matching the 2026-08-26 audit. Two traps recorded in the README: a listed
+credential is not a working credential, and `cmdkey /add` cannot write from a network logon
+session at all (`CMDKEY: Credentials cannot be saved from this logon session` — Silas was in
+Termius, the same session confusion as 2026-08-25). Also noted that the three shells disagree
+about the same fault and only cmd is honest: cmd `The user name or password is incorrect`,
+PowerShell `Cannot find path ... because it does not exist`, ComfyUI `no matching file for` a
+model that is present.
+
 **Suggested action:** Silas runs `-Save` once while the mappings are healthy — the script has
-nothing to restore from until he does.
+nothing to restore from until he does. Separately, kr-relay has no preflight against a ComfyUI
+that is not yet listening (jobs 10255-10257 burned to FAILED at 3 attempts each during a boot
+window, `WinError 10061`), which is the same shape as the share gate and worth the same
+treatment. Not filed as a task yet — awaiting Silas.

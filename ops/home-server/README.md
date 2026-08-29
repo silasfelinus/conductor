@@ -468,23 +468,79 @@ restore letters for everybody.
 
 So the split is:
 
-**The pipeline does not use letters, and has not since 2026-08-27.**
-`KR_SHARE_ROOT` and `extra_model_paths.yaml` are both on `//192.168.7.172/pc`.
-A UNC path has no logon session to lose, so losing `Z:` no longer stops a
-render. What it does still need is the **credential**, and that is the part to
-check first when the box comes back:
+**The pipeline is *supposed* to be off drive letters — verify, do not assume.**
+`extra_model_paths.yaml` and `ecosystem.config.js` both default to
+`//192.168.7.172/pc`, and a UNC path has no logon session to lose. But
+2026-08-29 caught the box still running on `Z:` regardless: ArtJob 10258 failed
+with `[WinError 3] The system cannot find the path specified: 'Z:\'` at 09:50,
+two days after this repo recorded the move as done. Documentation of an intended
+state is not evidence of the deployed state. Check the running process, not this
+file:
+
+```powershell
+pm2 logs kr-relay --lines 40 | findstr /i "share gate"
+```
+
+`share gate armed on //192.168.7.172/pc/ai/models` means it took. `armed on Z:`
+means it did not. `share gate disabled` means `KR_SHARE_PROBE_PATH` is unset in
+that process and the relay will claim jobs it cannot render, converting PENDING
+into FAILED at the rate the queue feeds it.
+
+**Why the change can silently not take: `pm2 resurrect` replays the environment
+captured at the last `pm2 save`.** A `setx` performed after that save never
+reaches the resurrected process, and every reboot faithfully restores the stale
+env. That is the mechanism that kept this box on `Z:` for two days while the
+config on disk said UNC. Applying it needs both halves:
+
+```powershell
+setx KR_SHARE_ROOT "//192.168.7.172/pc"
+setx KR_SHARE_UNC  "\\192.168.7.172\pc"
+# open a NEW shell -- setx only affects new processes
+cd D:\code\Conductor\ops\home-server
+pm2 restart ecosystem.config.js --update-env
+pm2 save
+```
+
+Leave `KR_SHARE_PROBE_PATH` unset on purpose. Unset, the relay inherits the UNC
+path from `KR_SHARE_ROOT` while `healthcheck.ps1` falls back to `Z:\ai\models`
+and can still auto-remap via `KR_SHARE_UNC`. Setting it machine-wide collapses
+both consumers onto one path and disables the remap.
+
+Whichever path the pipeline is on, it needs the **credential**, and that is the
+part to check first when the box comes back:
 
 ```powershell
 cmdkey /list          # is there an entry for 192.168.7.172 at all?
 ```
 
-A missing credential presents *identically* to a dead NAS — every path
-unreadable, the host plainly up, `folder_paths` enumerating nothing. It has
-been wiped here before (ai-art-academy/t-033, 2026-08-25: "`cmdkey /list` was
-empty and all four alexandria mappings showed Unavailable"). And `cmdkey` is
-per-user: **the account pm2 runs as needs its own entry.** If the engines run
-under a different account than your desktop, adding it in your shell fixes your
-Explorer and nothing else.
+A bad credential presents *identically* to a dead NAS — every path unreadable,
+the host plainly up, `folder_paths` enumerating nothing. It has been wiped here
+before (ai-art-academy/t-033, 2026-08-25: "`cmdkey /list` was empty and all four
+alexandria mappings showed Unavailable"). Three traps, all hit on 2026-08-29:
+
+1. **A listed credential is not a working credential.** `cmdkey /list` showed
+   entries for both `192.168.7.172` and `alexandria`, and every share still
+   answered `The user name or password is incorrect`. The entries were present
+   with a stale password. Re-adding replaced it and the share read immediately.
+   Treat "an entry exists" as telling you nothing; only a successful `dir` of
+   the UNC path counts.
+2. **You cannot fix this over SSH.** `cmdkey /add` from a network logon session
+   fails with `CMDKEY: Credentials cannot be saved from this logon session` —
+   Credential Manager refuses to write from one. A Termius/SSH shell also reads
+   its own (empty) drive-letter table, which is how a `net use` listing showing
+   everything `Unavailable` got misread as "the array is down" on 2026-08-25.
+   Confirm where you are before believing anything: `echo %SESSIONNAME%` should
+   say `Console` or `RDP-Tcp#N`. Do this work from the console.
+3. **`cmdkey` is per-user**, so the account pm2 runs as needs its own entry. If
+   the engines run under a different account than your desktop, adding it in
+   your shell fixes Explorer and nothing else.
+
+Errors do not agree with each other across shells, and only one of them is
+honest. For the same broken share on the same box: cmd said `The user name or
+password is incorrect` (true), PowerShell said `Cannot find path ... because it
+does not exist` (misleading — the path exists, the session could not
+authenticate to it), and ComfyUI reported `no matching file for` a model that
+was registered and present. Believe the cmd error.
 
 **The letters are for you**, and `restore-shares.ps1` restores them at logon:
 

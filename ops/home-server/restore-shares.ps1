@@ -22,12 +22,15 @@
 #
 # So the split this repo settled on, and which this script assumes:
 #
-#   * THE PIPELINE DOES NOT USE LETTERS. KR_SHARE_ROOT and
-#     extra_model_paths.yaml are both on the UNC path already
-#     (//192.168.7.172/pc). UNC has no logon session to lose, so a lost mapping
-#     no longer stops a render. What it still needs is the CREDENTIAL, which is
-#     per-user -- see -Check below, because a missing credential fails exactly
-#     like a dead NAS and is invisible.
+#   * THE PIPELINE SHOULD NOT USE LETTERS -- but verify rather than assume.
+#     KR_SHARE_ROOT and extra_model_paths.yaml both default to the UNC path
+#     (//192.168.7.172/pc), and UNC has no logon session to lose. On 2026-08-29
+#     the box was nonetheless still on Z: two days after the repo recorded the
+#     move, because pm2 resurrect replays the env captured at the last pm2 save
+#     and the setx came after it. Check the process, not the config: pm2 logs
+#     kr-relay should say 'share gate armed on //192.168.7.172/pc/ai/models'.
+#     Either way it needs the CREDENTIAL, which is per-user and which fails
+#     exactly like a dead NAS -- see -Check below.
 #   * THE LETTERS ARE FOR YOU. Explorer, shells, anything that wants Z:. Those
 #     are worth restoring at logon, which is what this does.
 #
