@@ -637,30 +637,17 @@ tasks:
   - id: t-025
     milestone: m4
     title: Add an engine picker to Brainstorm's selected-candidate art generation
-    status: ready
-    owner: null
+    status: done
     passes: 0
     stakes: reversible
-    note: >-
-      Kaizen from t-016 (2026-08-21, kind_robots PR #1993): batch art generation for
-      selected candidates is hardcoded to the krea2 engine with no UI to choose another
-      supported option, even though enqueueArtGeneration/POST /api/art/enqueue already
-      support flux/kontext/sdxl/etc. Add a lightweight engine selector to the "Generate
-      art" batch control in brainstorm-manager.vue (default remains Krea2 per the
-      original task note), threaded through generateArtForSelected's per-candidate
-      enqueue call. Small, reversible, self-contained.
+    note: |-
+      Kaizen from t-016 (2026-08-21, kind_robots PR #1993): batch art generation for selected candidates is hardcoded to the krea2 engine with no UI to choose another supported option, even though enqueueArtGeneration/POST /api/art/enqueue already support flux/kontext/sdxl/etc. Add a lightweight engine selector to the "Generate art" batch control in brainstorm-manager.vue (default remains Krea2 per the original task note), threaded through generateArtForSelected's per-candidate enqueue call. Small, reversible, self-contained.
+      ROADMAP-ACCURACY FIX 2026-08-29 (conductor scheduled Agent run, state-reconciliation sweep): status was left at `claimed` (claimed_by claude- scheduled-20260824T045500Z-brainstorm-t025, claimed_at 2026-08-24T04:46:11Z) for 5 days -- far past CLAIM_TTL_MINUTES (90 min). Searched for any PR referencing t-025 (search_pull_requests, search_issues) -- none exists, so this is not merged-PR drift, just an abandoned claim whose implementing session never opened a PR. Cleared owner/claimed_by/claimed_at and reset status to ready so it surfaces normally in priority rotation again.
 
-      ROADMAP-ACCURACY FIX 2026-08-29 (conductor scheduled Agent run, state-reconciliation
-      sweep): status was left at `claimed` (claimed_by claude-
-      scheduled-20260824T045500Z-brainstorm-t025, claimed_at 2026-08-24T04:46:11Z) for 5 days
-      -- far past CLAIM_TTL_MINUTES (90 min). Searched for any PR referencing t-025
-      (search_pull_requests, search_issues) -- none exists, so this is not merged-PR drift,
-      just an abandoned claim whose implementing session never opened a PR. Cleared
-      owner/claimed_by/claimed_at and reset status to ready so it surfaces normally in
-      priority rotation again.
-    updated: '2026-08-29T04:50:06Z'
-    claimed_by: null
-    claimed_at: null
+      Reviewed and squash-merged kind_robots PR #2199 at exact head 3f930579b6c2c3e4287cafe7d65d8fbf66083576 after all attached workflows completed successfully. Brainstorm selected-candidate art generation now exposes the existing prompt-only engine catalog, keeps Krea 2 as the default, and threads the selected engine through the durable ArtJob enqueue path.
+    updated: '2026-08-29T14:10:57Z'
+    claimed_by: 20260829T124800Z-brainstorm-t025-scheduled
+    claimed_at: '2026-08-29T12:48:08Z'
 
   - id: t-026
     milestone: m4

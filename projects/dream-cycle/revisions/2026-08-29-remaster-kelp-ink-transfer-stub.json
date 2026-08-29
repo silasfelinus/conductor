@@ -1,0 +1,459 @@
+{
+  "status": "needs-authoring",
+  "instructions": "Rewrite `proposal` in place, then rename this file to end in `-request.json` so scripts/apply_dream_revision.py will apply it. Hard constraints: keep `seed_facets` byte-identical, keep the technical world `slug` unchanged (the built rows and their image directory are keyed to it), keep exactly one location, one Character, one ITEM Reward, one SKILL Reward, and one Scenario, and write the Scenario last so it names the vibe, the location, and the Character. Every `look` and `art_direction` must describe what is visible — material, shape, scale, colour, wear, how light hits it. Do not solve the audit findings by renaming the same premise.",
+  "proposal_path": "projects/dream-cycle/backlog/2026-08-21-kelp-ink-transfer.md",
+  "digest_role": "Remastered Daily Dream",
+  "send_digest": false,
+  "audit": {
+    "score": 9,
+    "classification": "retire-replace",
+    "reasons": [
+      "archive / library / recordkeeping vault motif in the prose (archive, index), unrequested by the day's Facets",
+      "bureaucracy / record-keeping motif is saturated across the catalog (19/33 bundles carry it)",
+      "bureaucracy / record-keeping motif in asset names (file, filing, ledger), unrequested by the day's Facets",
+      "asset names reuse catalog-wide vocabulary (filing, ledger)",
+      "14 assigned Facet(s) never reach the prose — vibe: Facet `isekai` never surfaces in the prose; location: Facet `isekai` never surfaces in the prose",
+      "1 weak or missing visual field(s)"
+    ],
+    "assets": {
+      "vibe": [
+        "carries the bureaucracy / record-keeping motif"
+      ],
+      "location": [
+        "carries the bureaucracy / record-keeping, archive / library / recordkeeping vault motif"
+      ],
+      "character": [
+        "carries the bureaucracy / record-keeping, archive / library / recordkeeping vault motif"
+      ],
+      "reward_item": [
+        "carries the bureaucracy / record-keeping motif"
+      ],
+      "reward_skill": [
+        "`look` carries no material, colour, or light detail",
+        "carries the bureaucracy / record-keeping, archive / library / recordkeeping vault motif"
+      ],
+      "scenario": [
+        "carries the bureaucracy / record-keeping, archive / library / recordkeeping vault motif"
+      ]
+    },
+    "art": {
+      "verdict": "regenerate",
+      "reasons": [
+        "text identity changes under this pass; the render no longer matches",
+        "renders were built from weak visual fields",
+        "style lane 11 is carrying 4 worlds (cap 3); this world should move to an unused visual language"
+      ],
+      "style_lane": 11,
+      "lane_load": 4,
+      "evidence": {
+        "requests": 6,
+        "attached": 6,
+        "superseded": 0,
+        "revisions": 0
+      }
+    }
+  },
+  "proposal": {
+    "characters": [
+      {
+        "carries": "a dented pilot's chronometer that now ticks backwards",
+        "complication": "it is counting down to something buried in the archive",
+        "look": "a sleek sea otter in a cracked void-suit collar over ink-stained fur, whiskers threaded with fine brass wire, one webbed paw permanently stained with kelp-ink.",
+        "name": "Bristle Voss",
+        "role_drive": "prove her downgrade from starship pilot to filing clerk was a clerical error, not a demotion"
+      }
+    ],
+    "idea": "A starship pilot demoted to a sea-otter admiralty's filing trench must out-bureaucracy an alien archive before the tide erases her file.",
+    "locations": [
+      {
+        "art_direction": "A glacial archive carved into a wall of cosmic ice, brass filing cabinets sunk waist-deep into blue-white ice, kelp fronds frozen mid-drift between the drawers, otter clerks perched along shelves gnawing sealing wax.",
+        "best_scene": "a filed grievance floods the archive",
+        "known_for": "settling filing disputes by tide schedule",
+        "local_rule": "no request outlives the tide",
+        "title": "The Low-Tide Ledger"
+      }
+    ],
+    "rewards": [
+      {
+        "best_used_when": "a rejection was declared final",
+        "catch": "it reopens something else along with it",
+        "grants": "reopens any denied request once",
+        "look": "a frost-rimed brass stamp, its face carved into a small open mouth instead of a seal, cold enough to smoke faintly in warm air.",
+        "name": "The Unclosed Requisition",
+        "rarity": "RARE",
+        "reward_type": "ITEM"
+      },
+      {
+        "best_used_when": "the archive has rearranged itself",
+        "catch": "you stop trusting solid ground afterward",
+        "grants": "navigates any bureaucracy by feel alone, no map or index needed",
+        "look": "a spread webbed paw trailing faint star-chart lines of light across a bare desk that has no business holding them.",
+        "name": "Dead-Reckoning Filing",
+        "rarity": "UNCOMMON",
+        "reward_type": "SKILL"
+      }
+    ],
+    "scenarios": [
+      {
+        "setup": "In The Kelp-Ink Transfer at The Low-Tide Ledger, Bristle Voss must refile her own transfer order before the next tide erases the archive's memory of her ever being a starship pilot.",
+        "title": "The Tide That Reads Your File"
+      }
+    ],
+    "seed_facets": {
+      "catalog_source": "live",
+      "date": "2026-08-21",
+      "deterministic_seed": 18165763423560516750,
+      "elements": {
+        "character": [
+          {
+            "canonicalValue": "Office Thriller",
+            "id": 1681,
+            "randomWeight": 1.0,
+            "slug": "office-thriller",
+            "taxonomy": "GENRE",
+            "title": "Office Thriller"
+          },
+          {
+            "canonicalValue": "Isekai",
+            "id": 1869,
+            "randomWeight": 1.5,
+            "slug": "isekai",
+            "taxonomy": "GENRE",
+            "title": "Isekai"
+          },
+          {
+            "canonicalValue": "Cozy Horror",
+            "id": 1631,
+            "randomWeight": 1.0,
+            "slug": "cozy-horror",
+            "taxonomy": "GENRE",
+            "title": "Cozy Horror"
+          },
+          {
+            "canonicalValue": "Sea Otter",
+            "id": 340,
+            "randomWeight": 1.0,
+            "slug": "sea-otter",
+            "taxonomy": "ANIMAL",
+            "title": "Sea Otter"
+          },
+          {
+            "canonicalValue": "Starship Pilot",
+            "id": 944,
+            "randomWeight": 1.0,
+            "slug": "starship-pilot",
+            "taxonomy": "OCCUPATION",
+            "title": "Starship Pilot"
+          },
+          {
+            "canonicalValue": "Visionary",
+            "id": 1057,
+            "randomWeight": 1.0,
+            "slug": "visionary",
+            "taxonomy": "PERSONALITY",
+            "title": "Visionary"
+          }
+        ],
+        "location": [
+          {
+            "canonicalValue": "Office Thriller",
+            "id": 1681,
+            "randomWeight": 1.0,
+            "slug": "office-thriller",
+            "taxonomy": "GENRE",
+            "title": "Office Thriller"
+          },
+          {
+            "canonicalValue": "Isekai",
+            "id": 1869,
+            "randomWeight": 1.5,
+            "slug": "isekai",
+            "taxonomy": "GENRE",
+            "title": "Isekai"
+          },
+          {
+            "canonicalValue": "Eco-Fiction",
+            "id": 779,
+            "randomWeight": 1.5,
+            "slug": "eco-fiction",
+            "taxonomy": "GENRE",
+            "title": "Eco-Fiction"
+          },
+          {
+            "canonicalValue": "Sea Otter",
+            "id": 340,
+            "randomWeight": 1.0,
+            "slug": "sea-otter",
+            "taxonomy": "ANIMAL",
+            "title": "Sea Otter"
+          },
+          {
+            "canonicalValue": "Cosmic Ice",
+            "id": 921,
+            "randomWeight": 1.0,
+            "slug": "cosmic-ice",
+            "taxonomy": "MATERIAL",
+            "title": "Cosmic Ice"
+          }
+        ],
+        "reward_item": [
+          {
+            "canonicalValue": "Office Thriller",
+            "id": 1681,
+            "randomWeight": 1.0,
+            "slug": "office-thriller",
+            "taxonomy": "GENRE",
+            "title": "Office Thriller"
+          },
+          {
+            "canonicalValue": "Isekai",
+            "id": 1869,
+            "randomWeight": 1.5,
+            "slug": "isekai",
+            "taxonomy": "GENRE",
+            "title": "Isekai"
+          },
+          {
+            "canonicalValue": "EldritchCore",
+            "id": 10,
+            "randomWeight": 0.5,
+            "slug": "eldritchcore",
+            "taxonomy": "GENRE",
+            "title": "EldritchCore"
+          },
+          {
+            "canonicalValue": "Cosmic Ice",
+            "id": 921,
+            "randomWeight": 1.0,
+            "slug": "cosmic-ice",
+            "taxonomy": "MATERIAL",
+            "title": "Cosmic Ice"
+          }
+        ],
+        "reward_skill": [
+          {
+            "canonicalValue": "Office Thriller",
+            "id": 1681,
+            "randomWeight": 1.0,
+            "slug": "office-thriller",
+            "taxonomy": "GENRE",
+            "title": "Office Thriller"
+          },
+          {
+            "canonicalValue": "Isekai",
+            "id": 1869,
+            "randomWeight": 1.5,
+            "slug": "isekai",
+            "taxonomy": "GENRE",
+            "title": "Isekai"
+          },
+          {
+            "canonicalValue": "Fantasy",
+            "id": 766,
+            "randomWeight": 3.0,
+            "slug": "fantasy",
+            "taxonomy": "GENRE",
+            "title": "Fantasy"
+          },
+          {
+            "canonicalValue": "Starship Pilot",
+            "id": 944,
+            "randomWeight": 1.0,
+            "slug": "starship-pilot",
+            "taxonomy": "OCCUPATION",
+            "title": "Starship Pilot"
+          }
+        ],
+        "scenario": [
+          {
+            "canonicalValue": "Office Thriller",
+            "id": 1681,
+            "randomWeight": 1.0,
+            "slug": "office-thriller",
+            "taxonomy": "GENRE",
+            "title": "Office Thriller"
+          },
+          {
+            "canonicalValue": "Isekai",
+            "id": 1869,
+            "randomWeight": 1.5,
+            "slug": "isekai",
+            "taxonomy": "GENRE",
+            "title": "Isekai"
+          },
+          {
+            "canonicalValue": "Techno-Thriller",
+            "id": 813,
+            "randomWeight": 1.0,
+            "slug": "techno-thriller",
+            "taxonomy": "GENRE",
+            "title": "Techno-Thriller"
+          },
+          {
+            "canonicalValue": "Eco-Fiction",
+            "id": 779,
+            "randomWeight": 1.5,
+            "slug": "eco-fiction",
+            "taxonomy": "GENRE",
+            "title": "Eco-Fiction"
+          },
+          {
+            "canonicalValue": "Cozy Horror",
+            "id": 1631,
+            "randomWeight": 1.0,
+            "slug": "cozy-horror",
+            "taxonomy": "GENRE",
+            "title": "Cozy Horror"
+          },
+          {
+            "canonicalValue": "Sea Otter",
+            "id": 340,
+            "randomWeight": 1.0,
+            "slug": "sea-otter",
+            "taxonomy": "ANIMAL",
+            "title": "Sea Otter"
+          }
+        ],
+        "vibe": [
+          {
+            "canonicalValue": "Office Thriller",
+            "id": 1681,
+            "randomWeight": 1.0,
+            "slug": "office-thriller",
+            "taxonomy": "GENRE",
+            "title": "Office Thriller"
+          },
+          {
+            "canonicalValue": "Isekai",
+            "id": 1869,
+            "randomWeight": 1.5,
+            "slug": "isekai",
+            "taxonomy": "GENRE",
+            "title": "Isekai"
+          },
+          {
+            "canonicalValue": "Sea Otter",
+            "id": 340,
+            "randomWeight": 1.0,
+            "slug": "sea-otter",
+            "taxonomy": "ANIMAL",
+            "title": "Sea Otter"
+          },
+          {
+            "canonicalValue": "Starship Pilot",
+            "id": 944,
+            "randomWeight": 1.0,
+            "slug": "starship-pilot",
+            "taxonomy": "OCCUPATION",
+            "title": "Starship Pilot"
+          }
+        ]
+      },
+      "extra_genres": {
+        "character": {
+          "canonicalValue": "Cozy Horror",
+          "id": 1631,
+          "randomWeight": 1.0,
+          "slug": "cozy-horror",
+          "taxonomy": "GENRE",
+          "title": "Cozy Horror"
+        },
+        "location": {
+          "canonicalValue": "Eco-Fiction",
+          "id": 779,
+          "randomWeight": 1.5,
+          "slug": "eco-fiction",
+          "taxonomy": "GENRE",
+          "title": "Eco-Fiction"
+        },
+        "reward_item": {
+          "canonicalValue": "EldritchCore",
+          "id": 10,
+          "randomWeight": 0.5,
+          "slug": "eldritchcore",
+          "taxonomy": "GENRE",
+          "title": "EldritchCore"
+        },
+        "reward_skill": {
+          "canonicalValue": "Fantasy",
+          "id": 766,
+          "randomWeight": 3.0,
+          "slug": "fantasy",
+          "taxonomy": "GENRE",
+          "title": "Fantasy"
+        },
+        "scenario": {
+          "canonicalValue": "Techno-Thriller",
+          "id": 813,
+          "randomWeight": 1.0,
+          "slug": "techno-thriller",
+          "taxonomy": "GENRE",
+          "title": "Techno-Thriller"
+        }
+      },
+      "shared": {
+        "material": {
+          "canonicalValue": "Cosmic Ice",
+          "id": 921,
+          "randomWeight": 1.0,
+          "slug": "cosmic-ice",
+          "taxonomy": "MATERIAL",
+          "title": "Cosmic Ice"
+        },
+        "personality": {
+          "canonicalValue": "Visionary",
+          "id": 1057,
+          "randomWeight": 1.0,
+          "slug": "visionary",
+          "taxonomy": "PERSONALITY",
+          "title": "Visionary"
+        }
+      },
+      "umbrella": {
+        "creature": {
+          "canonicalValue": "Sea Otter",
+          "id": 340,
+          "randomWeight": 1.0,
+          "slug": "sea-otter",
+          "taxonomy": "ANIMAL",
+          "title": "Sea Otter"
+        },
+        "genres": [
+          {
+            "canonicalValue": "Office Thriller",
+            "id": 1681,
+            "randomWeight": 1.0,
+            "slug": "office-thriller",
+            "taxonomy": "GENRE",
+            "title": "Office Thriller"
+          },
+          {
+            "canonicalValue": "Isekai",
+            "id": 1869,
+            "randomWeight": 1.5,
+            "slug": "isekai",
+            "taxonomy": "GENRE",
+            "title": "Isekai"
+          }
+        ],
+        "wildcard": {
+          "canonicalValue": "Starship Pilot",
+          "id": 944,
+          "randomWeight": 1.0,
+          "slug": "starship-pilot",
+          "taxonomy": "OCCUPATION",
+          "title": "Starship Pilot"
+        },
+        "wildcard_role": "occupation"
+      },
+      "version": 2
+    },
+    "slug": "kelp-ink-transfer",
+    "title": "The Kelp-Ink Transfer",
+    "vibe": {
+      "art_direction": "A cramped orbital office where kelp fronds grow through the seams of steel desks, otters in tarnished brass epaulettes stamping forms under flickering starlight.",
+      "line": "One passive-aggressive memo away from mutiny, and nobody will say whose.",
+      "title": "The Kelp-Ink Transfer"
+    }
+  }
+}

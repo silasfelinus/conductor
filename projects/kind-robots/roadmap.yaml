@@ -2555,87 +2555,15 @@ tasks:
     title: "PRODUCTION: Character.size migration merged and deployed but never applied — every findUnique on Character 500s"
     status: done
     gate_human: true
-    owner: null
     passes: 0
     stakes: irreversible
-    note: >
-      LIVE PRODUCTION BREAKAGE, reported by Silas 2026-08-25 and reproduced from this
-      session. FOR SILAS: this needs one command from someone holding
-      MIGRATION_DATABASE_URL, and no agent can run it -- prisma.config.ts deliberately
-      refuses migration commands when only DATABASE_URL is present, which is the correct
-      guard and is why this is a hard gate rather than an agent fix.
-      WHAT IS BROKEN: `prisma.character.findUnique()` fails with "The column
-      `Character.size` does not exist in the current database." Reproduced live:
-      GET /api/characters/238 and /api/characters/1 both return HTTP 500.
-      BLAST RADIUS is narrower than it first looks, and worth stating precisely so nobody
-      over- or under-reacts. Prisma only requests the missing column when a query returns
-      the full scalar set, so: queries with an explicit narrowing `select` STILL WORK --
-      GET /api/characters (browse), /api/bots, /api/rewards, /api/resources and
-      /api/health/database all returned 200 during the same probe -- while any
-      findUnique/findFirst without a select is dead. That includes the ArtJob completion
-      path: Silas saw `complete(9004) failed: HTTP 500` on a character-portrait job, so
-      CHARACTER-LINKED ART CANNOT COMPLETE. Project-linked art is unaffected, which is why
-      the Cthulhuquarium queue kept rendering through it.
-      CAUSE IS DEPLOY ORDER, NOT A BAD MIGRATION. The migration is correct and merged:
-      prisma/migrations/20260824223600_extend_aquarium_capacity_genetics_codex/migration.sql
-      line 32, `ALTER TABLE Character ADD COLUMN size INTEGER NOT NULL DEFAULT 1`, shipped
-      in kind_robots#2075. The regenerated Prisma client went out with the container while
-      the migration never ran against the database, so the client asks for a column the DB
-      does not have.
-      THE FIX: `npx prisma migrate deploy` with MIGRATION_DATABASE_URL set. Additive and
-      safe -- ADD COLUMN with a NOT NULL DEFAULT rewrites no existing data, and MariaDB
-      does this INSTANT for most cases. Check `prisma migrate status` first: #2073
-      (add_aquarium_persistence) may also be unapplied, in which case the Aquarium tables
-      do not exist either and the same deploy fixes both.
-      THE REAL BUG IS THAT THIS CAN HAPPEN AT ALL. kind_robots deploys by a manual Unraid
-      Force Update, and nothing in that path runs pending migrations or refuses to start a
-      container whose client is ahead of the schema. So ANY merged migration silently
-      breaks production at the next Force Update until a human remembers. Filed as the
-      follow-up in t-072 rather than buried here, because the one-command fix and the
-      systemic fix have different urgencies.
-      UPSTREAM CAUSE, added 2026-08-25 after Silas corrected the architecture:
-      `Character.size` SHOULD NOT EXIST. It was added only because an earlier design
-      decision in this session made aquarium fish into Character records, and fish need a
-      capacity weight. Silas: "why do our characters have size? These monsters are not
-      meant to be added as characters. characters are our website's chattable
-      personalities and npcs for story based games. the monsters are something new." He is
-      right, and that makes this outage the downstream cost of a bad architectural call
-      rather than only a deploy-order mistake.
-      THE IMMEDIATE FIX IS UNCHANGED -- still `npx prisma migrate deploy` with
-      MIGRATION_DATABASE_URL. Do that first regardless of the architecture. The same
-      migration also carries the Aquarium capacity/genetics/codex work, which IS wanted,
-      so reverting the migration wholesale would take that with it. Converge the database
-      to the client first, then correct the model deliberately in a follow-up migration.
-      DO NOT edit or revert 20260824223600 in place -- it is merged and may already be
-      applied in a dev database. `Character.size` comes out via a NEW forward migration,
-      once the replacement model exists, so the sequence on every environment is
-      add-then-drop and no history is rewritten. See cthulhuquarium/t-035 for the model
-      correction that has to land before that drop.
-      RESOLVED 2026-08-25. Silas ran the documented deploy from
-      /mnt/user/appdata/kind_robots after recreating the lost credential handoff file
-      with scripts/provision-migrate-db-lane.sh --apply. Verified from outside: GET
-      /api/characters/238 returns 200 (it returned 500 for the whole incident), and
-      /api/health/database returns 200. `Character.size` now exists in the database and
-      character-linked ArtJob completion is unblocked.
-      ONLY ONE MIGRATION ACTUALLY APPLIED (20260825050500_add_mandarin_audio_asset), out
-      of 67 found. The other four this task was waiting on -- add_aquarium_persistence,
-      extend_aquarium_capacity_genetics_codex, add_upscaler_resource_types and
-      add_creature_model/rename_creature_to_monster -- were already present in
-      kindblank_fresh by the time the deploy ran. So the Monster table and Character.size
-      are both live, and cthulhuquarium/t-038 (repoint AquariumStock/AquariumCodexEntry,
-      then drop Character.size) is unblocked.
-      TWO REAL BUGS WERE FOUND AND FIXED ON THE WAY, both of which made this outage last
-      longer than the one-command fix implied. (1) MIGRATION_DATABASE_URL was not
-      quote-stripped, so a value coming from --env-file died at `new URL()` several steps
-      AFTER the CA had loaded and printed, reading as a TLS fault (kind_robots#2086).
-      (2) The handoff file had been lost in the /mnt/user/pc -> .secrets move, and
-      `. ./.secrets/<file>` prints one line and CARRIES ON when the file is missing, so
-      the credential silently fell through from .env instead of failing (kind_robots#2087,
-      AGENTS.md hard rule 14).
-      THE FAR MORE SERIOUS FINDING IS FILED SEPARATELY AS t-073: the .env fallback that
-      caused (2) was pointed at `kindrobot`, the application account, not
-      `kindrobot_migrate` -- and `kindrobot` turns out to hold ALL PRIVILEGES ON *.* WITH
-      GRANT OPTION. Do not treat this task closing as the end of the incident.
+    note: |-
+      LIVE PRODUCTION BREAKAGE, reported by Silas 2026-08-25 and reproduced from this session. FOR SILAS: this needs one command from someone holding MIGRATION_DATABASE_URL, and no agent can run it -- prisma.config.ts deliberately refuses migration commands when only DATABASE_URL is present, which is the correct guard and is why this is a hard gate rather than an agent fix. WHAT IS BROKEN: `prisma.character.findUnique()` fails with "The column `Character.size` does not exist in the current database." Reproduced live: GET /api/characters/238 and /api/characters/1 both return HTTP 500. BLAST RADIUS is narrower than it first looks, and worth stating precisely so nobody over- or under-reacts. Prisma only requests the missing column when a query returns the full scalar set, so: queries with an explicit narrowing `select` STILL WORK -- GET /api/characters (browse), /api/bots, /api/rewards, /api/resources and /api/health/database all returned 200 during the same probe -- while any findUnique/findFirst without a select is dead. That includes the ArtJob completion path: Silas saw `complete(9004) failed: HTTP 500` on a character-portrait job, so CHARACTER-LINKED ART CANNOT COMPLETE. Project-linked art is unaffected, which is why the Cthulhuquarium queue kept rendering through it. CAUSE IS DEPLOY ORDER, NOT A BAD MIGRATION. The migration is correct and merged: prisma/migrations/20260824223600_extend_aquarium_capacity_genetics_codex/migration.sql line 32, `ALTER TABLE Character ADD COLUMN size INTEGER NOT NULL DEFAULT 1`, shipped in kind_robots#2075. The regenerated Prisma client went out with the container while the migration never ran against the database, so the client asks for a column the DB does not have. THE FIX: `npx prisma migrate deploy` with MIGRATION_DATABASE_URL set. Additive and safe -- ADD COLUMN with a NOT NULL DEFAULT rewrites no existing data, and MariaDB does this INSTANT for most cases. Check `prisma migrate status` first: #2073 (add_aquarium_persistence) may also be unapplied, in which case the Aquarium tables do not exist either and the same deploy fixes both. THE REAL BUG IS THAT THIS CAN HAPPEN AT ALL. kind_robots deploys by a manual Unraid Force Update, and nothing in that path runs pending migrations or refuses to start a container whose client is ahead of the schema. So ANY merged migration silently breaks production at the next Force Update until a human remembers. Filed as the follow-up in t-072 rather than buried here, because the one-command fix and the systemic fix have different urgencies. UPSTREAM CAUSE, added 2026-08-25 after Silas corrected the architecture: `Character.size` SHOULD NOT EXIST. It was added only because an earlier design decision in this session made aquarium fish into Character records, and fish need a capacity weight. Silas: "why do our characters have size? These monsters are not meant to be added as characters. characters are our website's chattable personalities and npcs for story based games. the monsters are something new." He is right, and that makes this outage the downstream cost of a bad architectural call rather than only a deploy-order mistake. THE IMMEDIATE FIX IS UNCHANGED -- still `npx prisma migrate deploy` with MIGRATION_DATABASE_URL. Do that first regardless of the architecture. The same migration also carries the Aquarium capacity/genetics/codex work, which IS wanted, so reverting the migration wholesale would take that with it. Converge the database to the client first, then correct the model deliberately in a follow-up migration. DO NOT edit or revert 20260824223600 in place -- it is merged and may already be applied in a dev database. `Character.size` comes out via a NEW forward migration, once the replacement model exists, so the sequence on every environment is add-then-drop and no history is rewritten. See cthulhuquarium/t-035 for the model correction that has to land before that drop. RESOLVED 2026-08-25. Silas ran the documented deploy from /mnt/user/appdata/kind_robots after recreating the lost credential handoff file with scripts/provision-migrate-db-lane.sh --apply. Verified from outside: GET /api/characters/238 returns 200 (it returned 500 for the whole incident), and /api/health/database returns 200. `Character.size` now exists in the database and character-linked ArtJob completion is unblocked. ONLY ONE MIGRATION ACTUALLY APPLIED (20260825050500_add_mandarin_audio_asset), out of 67 found. The other four this task was waiting on -- add_aquarium_persistence, extend_aquarium_capacity_genetics_codex, add_upscaler_resource_types and add_creature_model/rename_creature_to_monster -- were already present in kindblank_fresh by the time the deploy ran. So the Monster table and Character.size are both live, and cthulhuquarium/t-038 (repoint AquariumStock/AquariumCodexEntry, then drop Character.size) is unblocked. TWO REAL BUGS WERE FOUND AND FIXED ON THE WAY, both of which made this outage last longer than the one-command fix implied. (1) MIGRATION_DATABASE_URL was not quote-stripped, so a value coming from --env-file died at `new URL()` several steps AFTER the CA had loaded and printed, reading as a TLS fault (kind_robots#2086). (2) The handoff file had been lost in the /mnt/user/pc -> .secrets move, and `. ./.secrets/<file>` prints one line and CARRIES ON when the file is missing, so the credential silently fell through from .env instead of failing (kind_robots#2087, AGENTS.md hard rule 14). THE FAR MORE SERIOUS FINDING IS FILED SEPARATELY AS t-073: the .env fallback that caused (2) was pointed at `kindrobot`, the application account, not `kindrobot_migrate` -- and `kindrobot` turns out to hold ALL PRIVILEGES ON *.* WITH GRANT OPTION. Do not treat this task closing as the end of the incident.
+
+
+      HUMAN CLEARANCE 2026-08-29: Silas explicitly instructed this ChatGPT/GitHub session to fix the current Conductor Oversight findings after t-071 was identified as resolved-but-missing approval bookkeeping. The task's existing resolution evidence remains authoritative: Silas ran the production migration/deploy recovery on 2026-08-25, and the session verified GET /api/characters/238 and /api/health/database both returned 200 afterward. Recording approved_by_human: true closes the deterministic GATED_DONE_WITHOUT_APPROVAL finding; this records the already-completed human action and does not perform any new production mutation.
+    approved_by_human: true
+    updated: '2026-08-29T21:58:05Z'
 
   - id: t-072
     milestone: m3
@@ -3043,8 +2971,8 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-08-29T08:00:00Z'
-    depends_on: [t-077, t-080, t-081, t-082, t-083]
+    updated: '2026-08-29T11:10:00Z'
+    depends_on: [t-077, t-080, t-081, t-082, t-083, t-084]
     note: >
       The back-and-forth t-077 shipped a first draft for. Silas, 2026-08-28:
       "this part may take some back and forth, I want it to look great ... this
@@ -3054,55 +2982,56 @@ tasks:
       needs-human because the remaining question is aesthetic judgement, and
       only Silas can supply it.
 
-      REWRITTEN AFTER EACH PASS -- t-080, t-081, t-082, now t-083 -- because a
-      needs-human note describing a version no longer on main invites a decision
-      about something that does not exist. What is live now:
+      REWRITTEN AFTER EACH PASS -- t-080 through t-084 -- because a needs-human
+      note describing a version no longer on main invites a decision about
+      something that does not exist. What is live now, with the top band
+      MEASURED at 1920x1080 rather than estimated (see t-084 for why that
+      distinction earned its own task):
 
-      1. TOP BAND: a 16rem dream card (4:3 plate, kicker, title, one-line hook,
-         three-line description below it), its cast as 4.5rem square plates in
-         container-width columns, and a 20rem "Needs you" column on the right
-         that is now a COMPOSER rather than a list of links.
-      2. NEEDS YOU: each gate expands in place to a textarea and three actions.
-         "Send to agent" writes the note AND releases the task to `ready`, so
-         conductor's next Worker cycle picks it up carrying the answer. "Note
-         only" keeps it parked and conductor's audit surfaces it. "Approve"
-         closes it. This is the pipeline he asked to have followed end to end.
-      3. RAILS: art spans two grid rows and now TOGGLES between finished art and
-         the live ArtJob queue with a status filter (Active/Pending/Running/
-         Failed/Done/Cancelled); six object shelves in a 3x2 beside it. Headers
-         are a single icon plus a count, see-all is an arrow glyph, and chevrons
-         replaced the scrollbar gutters.
+      1. TOP BAND, one definite height, all three columns filling it exactly:
+         dream card 384px (20.0% of screen, stated as 20vw clamped to
+         [14rem,26rem]); cast of 4.5rem tiles in three rows flowing sideways,
+         224px total; Needs-you 1238px (64.5%).
+      2. NEEDS YOU is a composer, not a list of links. Each gate expands in
+         place to a textarea and three actions. "Send to agent" writes the note
+         AND releases the task to `ready`, so the next Worker cycle picks it up
+         carrying the answer. "Note only" keeps it parked and conductor's audit
+         surfaces it. "Approve" closes it. At its current width it shows about
+         twelve gates at once in container columns.
+      3. RAILS: art spans two grid rows and toggles between finished art and the
+         live ArtJob queue with a status filter; six object shelves in a 3x2
+         beside it. Headers are one icon plus a count; chevrons replaced the
+         scrollbar gutters.
       4. CLICKING AN OBJECT opens an interstitial with its description, its
-         attributes, and its reviews; clicking outside returns to the page. The
-         tiles are still anchors, so middle-click and cmd-click navigate.
-      5. PROJECTS: title, one-letter priority, progress bar joined to
-         conductor's own figure. No description.
-      6. NEWSFEED: max-h-64 vertical scroller; cards keep their summary and
-         spend one thin line on source and time; the topic chips, the controls,
-         the "From around the web" heading and the lab link are all one row.
-      7. NAV: the empty stretch beside the tab dropdown shows a brand line plus
-         the page's tabMessage, or its subtitle where no tabMessage is authored.
-         It renders on every page now, not only the home page.
+         attributes and its reviews; clicking outside returns. Tiles are still
+         anchors, so middle-click and cmd-click navigate.
+      5. PROJECTS: title, one-letter priority, progress joined to conductor's
+         own figure.
+      6. NEWSFEED: bounded scroller; cards keep their summary and spend one thin
+         line on source and time; topic chips, controls, heading and lab link
+         all on one row.
+      7. NAV: brand line plus the page's tabMessage, or its subtitle where no
+         tabMessage is authored. Renders on every page now.
+
+      Page height 1049px: 1.03 screens at 1080, 1.48 at 768. Inside his "not
+      larger than two" either way.
 
       OPEN FOR HIM, in rough order of how much it would change:
 
-      - THE CAST TILES ARE 4.5rem, NOT THE 3.5rem HE ASKED FOR. He said "50%
-         slimmer"; a literal half truncates a name to about four characters,
-         which fights his earlier "All the cards need to be big enough to see
-         more of the titles". This is the one place this pass knowingly did not
-         do what was asked, and it is his call. If he wants it slimmer still,
-         cutting the tile CAPTION rather than the plate is the better trade.
+      - IS 64% THE RIGHT SHARE FOR NEEDS-YOU? He asked twice for the dream to
+        give up width to it and it now has nearly two thirds of the band. That
+        is a big swing from 17%, and it is the number most likely to be wrong in
+        the other direction. Easy to dial: the hero sizes to its contents, so
+        the split follows the cast's tile size and row count.
       - Whether "Send to agent" should be able to close a gate outright, or
-         whether releasing to `ready` with the answer attached is the right
-         ceiling for a one-click action on the coordination system of record.
-      - Height at his viewport. Not re-measured this pass -- the mocked-payload
-         Playwright harness was not rebuilt, so the 1106px / 2.17 screens figure
-         is from t-082 and the net of this pass (a taller hero card, a shorter
-         feed header, taller feed cards) is unmeasured. Worth a look before
-         calling the two-screen budget met.
+        whether releasing to `ready` with the answer attached is the right
+        ceiling for a one-click action on the coordination system of record.
       - Whether the hero should server-render. It loads client-side in
-         home-page.vue's onMounted, so the first paint of the front page is a
-         skeleton.
+        home-page.vue's onMounted, so the first paint of the front page is a
+        skeleton.
+      - The cast tiles are now 4.5rem wide and about 117px tall, which is close
+        to the 2:3 portrait these objects are drawn at. If they read as too
+        small at that size, the band height is the dial, not the tile width.
 
   - id: t-079
     milestone: m6
@@ -3523,3 +3452,71 @@ tasks:
       two-screen budget is unknown.
 
       Merged as squash fb4b2b5cb83f081216846ccbdeaf2562cc949e96.
+
+  - id: t-084
+    milestone: m6
+    title: "Home band: measured layout fix after three asks went unmet"
+    status: done
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-29T11:10:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#2198'
+    depends_on: [t-083]
+    note: >
+      Silas, 2026-08-29: "that dream hero is absolutely not 20%. did not get the
+      increased horizontal space for notifications either. still a discrepancy
+      betwen hero dream height and the rest...I'm wondering if anything actually
+      got done." He was right on all three.
+
+      THE LESSON IS ABOUT VERIFICATION, NOT CSS. Three consecutive passes tuned
+      this band by reading the diff and looking at a screenshot, and three
+      consecutive times the numbers were not what he asked for. One of the
+      changes moved ZERO pixels and shipped anyway, described in its own commit
+      as "slimmer tiles". Measuring took about fifteen minutes with a Playwright
+      harness against a mocked payload; not measuring cost three round trips and
+      most of his patience. A geometric requirement -- "about 20% width of
+      screen", "50% slimmer" -- is a number, and a number can be checked. Check
+      it before claiming it.
+
+      MEASURED AT 1920x1080, before -> after:
+        dream card    256px (13.3%)  ->  384px (20.0%)
+        cast tile     157px          ->   72px (54% slimmer)
+        Needs-you     320px (17%)    -> 1238px (64.5%)
+        hero vs cast  358 vs ~180    ->  358 vs 358
+        page height   970px          -> 1049px (1.03 screens)
+      Also 273px = exactly 20.0% at 1366x768, no horizontal overflow at either.
+
+      WHY THE CAST CHANGE DID NOTHING, which is the one worth remembering. It
+      was `grid-cols-[repeat(auto-fit,minmax(min(100%,4.5rem),1fr))]`. With
+      auto-fit, the `1fr` MAXIMUM stretches every track to fill the container,
+      so eight tiles in a wide row were container/8 -- measured at 157px --
+      whatever the minimum said. Lowering the minimum from 7rem to 4.5rem was a
+      no-op at any width where the container exceeded 8 x 7rem. `minmax(X,1fr)`
+      sets a FLOOR, not a size; `auto-cols-[X]` sets a size.
+
+      WHY THE WIDTH NEVER REACHED THE NOTIFICATIONS. The hero panel carried
+      `lg:flex-1`, so however narrow its contents became the panel still
+      absorbed every pixel the cast released -- widening Needs-you from 16rem to
+      20rem moved 64px while the cast kept the other 1200. Slimming a sibling
+      only frees width if the parent is not set to consume whatever is left. The
+      hero now sizes to its contents and Needs-you takes the remainder, with
+      `lg:flex-1` kept as the fallback for when there is no gate column at all.
+
+      WHY THE HEIGHTS DISAGREED. The dream card's 4:3 plate set the band height
+      and one row of cast tiles left ~150px of dead space beneath it. The row now
+      has a definite height and every column fills it: the card's plate flexes
+      (`h-full` makes an aspect-ratio inert, since a ratio only sizes a box while
+      one dimension is auto), the cast's three rows share it, the gate list
+      scrolls.
+
+      Also: 20% is now stated as `20vw` clamped to [14rem, 26rem] rather than a
+      rem width correct at exactly one viewport (the contract's no-viewport rule
+      bans viewport HEIGHT units, not vw); Needs-you became a container-column
+      grid now that it has width, showing about twelve gates instead of four;
+      the hero's one-line hook was removed because it and the description are
+      summarized from the same source fields and printed the same sentence twice;
+      and the newsfeed's bounded scroller was restored after t-083 dropped it
+      while moving the heading into the feed's control row.
+
+      Merged as squash b847fb12ce1a964d62cd52077675099055fe79cc.

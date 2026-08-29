@@ -97,6 +97,29 @@ The Daily Digest retry watchdog may rerun the same workflow after a failed or mi
 
 A failed morning cycle should be retried as a cycle, rather than letting Hourly Conductor quietly advance only one piece of it.
 
+## Freshness: old proposals are poisoned, not queued
+
+An ordinary unbuilt proposal older than the two-day freshness window is a poisoned build
+artifact and is never built as written. `scripts/run_daily_dream_build.py` owns that
+policy (`MAX_AUTOBUILD_AGE_DAYS`) and re-runs `check_dream_creative_contract.py` against
+every candidate at build time — pinned retries and explicit `--date` backfills included,
+so neither exception can smuggle an old proposal past today's creative rules.
+
+Poisoned proposals stay useful as idea inventory. Mine the kernel into a fresh dated
+proposal; never resurrect one wholesale.
+
+## Remastering what is already built
+
+The built catalog is mutable creative material. `specs/REMASTER.md` documents the
+recurring freshness pass: `scripts/audit_dream_catalog.py` classifies every built bundle
+under today's rules, and `scripts/remaster_dream_catalog.py` applies the result in waves —
+in-place text revisions through `apply_dream_revision.py`, art-only regeneration staged
+through the same `projects/art-prompts.yaml` ledger a normal morning uses, and kernels
+mined out of pre-v2 bundles that cannot be patched.
+
+The remaster creates no objects. It patches existing rows and stages art;
+`build_dream_records.py` remains the sole object writer.
+
 ## Legacy staged builds
 
 The former eight-stage `type: dream` playbook was retired on 2026-08-02. It was a second object writer and had already left partial creations. Legacy non-proposal outlines remain useful as idea inventory, but they are never resumed with direct API calls. To reuse one, adapt its concept into a canonical six-asset proposal.

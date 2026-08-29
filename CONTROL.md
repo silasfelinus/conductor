@@ -16,9 +16,8 @@ happened. Don't edit it; edit here.
 reversible until the first clean cycle is done. Nothing publishes, deploys, or spends
 money without my explicit approval (set `approved_by_human: true` on the gated task).
 
-**Priority order this week:** interface-vision → ai-art-academy → coloring-book →
-humboldt-scoop-cms → digital-storefront → mermaids-of-venice → kind-robots →
-kindrobots-unraid.
+**Priority order this week:** mandarin-tutor → cthulhuquarium → kapowarr → kind-economy →
+interface-vision → ai-art-academy → coloring-book → humboldt-scoop-cms.
 
 **Continuous fallback order:** animation-manager, then dream-cycle. Finite `active` work
 always outranks `continuous` programs; dream-cycle remains the final idle fallback.

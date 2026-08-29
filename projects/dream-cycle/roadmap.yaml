@@ -110,11 +110,11 @@ tasks:
   - id: t-006
     milestone: m4
     title: 'Daily Dream maintenance: author proposals and verify the canonical pipeline'
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-08-27T21:51:00Z'
+    updated: '2026-08-29T19:51:00Z'
     depends_on: t-004
     note: |-
       RAN (conductor scheduled Agent run, session sched-conductor-dc-t006-20260815T063000Z): flagged stale by select_role.py (no RAN/NO-OP marker or updated bump since 2026-08-09). Verified rather than re-derived: today's Pacific (2026-08-14) daily-dream proposal exists (build_dream_proposal.py --check --fetch passes). Checked the last 6 daily-digest.yml runs (2026-08-09 through 2026-08-14): 5/6 succeeded; the one failure (2026-08-12, run 31616582389) was already root-caused and closed out in the 2026-08-13 TALKBACK entry (conductor/t-115, t-116, dream-cycle pattern note) as a stale GitHub Actions re-run replaying a pre-migration workflow file (KR_BASE_URL still kind-robots.vercel.app) rather than a live regression -- main already had the kindrobots.org fix at the time, and every run since has been green. No new signal, no code change needed. The task itself has gone quiet not because the pipeline is unhealthy but because daily-digest.yml's own author_dream_proposal.py step (CLAUDE.md: "a backstop, not the primary path") now produces the day's proposal automatically most days, so this task's own manual-authoring branch simply hasn't had to fire. Re-arming to ready per recurring-task convention; no idea-inventory replenishment needed this pass (proposal pipeline healthy, not a content shortage).
@@ -145,9 +145,12 @@ tasks:
       RAN (conductor scheduled Agent run): merged both companion PRs -- conductor#2996 (canonical pipeline: premise-history anti-echo, ten rotating story engines, bureaucracy- rut guard, twelve per-world Krea media styles) and kind_robots#2149 (legacy /api/dreams/daily generator: matching eight-engine + ten-medium diversity pass hooked into the existing name-diversity postprocessor seam). Both were already implemented and green when this session began (claimed/authored by a concurrent session, session id 20260827T115200Z-dream-cycle-t006-variety-7f3a); this session verified CI (all checks green on both), sampled the diffs against the PR bodies bullet-by-bullet, confirmed no code-level cross-repo dependency existed between the two changes, and merged kind_robots#2149 then conductor#2996. Re-arming to ready per recurring-task convention; no idea-inventory replenishment needed this pass.
 
       Added a safe Daily Dream creative-revision path for human-requested resets: built bundles are patched in place using their recorded Kind Robots entity IDs, replacement art is queued against the same entities, unbuilt steering proposals can be replaced cleanly, and a canonical Brevo creative-reset digest can be sent. Added a separate creative-contract check so manual/backstop steering proposals must clear the same history-aware story and naming diversity rules instead of bypassing the overhaul.
-    owner: worker
-    claimed_by: 2026-08-27T214500Z-dream-cycle-t006-redesign-k7m2
-    claimed_at: '2026-08-27T21:45:00Z'
+
+      Re-arming the recurring maintenance task after the prior 2026-08-27 creative-diversity work merged. The roadmap remained at review despite no open dream-cycle t-006 PR or branch; clearing that stale coordination state before a new Silas-directed maintenance claim.
+
+      Root-caused the Aug 29 Perpetua Quill / ledger repeat to the scheduled builder consuming an orphaned Aug 17 outline. Prepared a focused production-path guard: ordinary automatic proposals expire after two Pacific days, pinned transaction retries and explicit backfills remain possible, and every selected proposal re-runs the current creative-diversity contract before live record creation. Added five regression tests including the exact 12-day orphan case; daily-digest now calls the guarded runner while the transactional writer stays untouched.
+
+      Merged PR #3183 (fd9de5c): automatic Daily Dream builds now reject ordinary proposals older than two Pacific days and re-run the current creative-diversity contract at consumption time. Pinned transaction retries and explicit dated backfills remain supported. Verification: Daily Dream Contract #125 success, Worker PR CI #3863 success including the full Python suite, and Security Audit #3844 success. Rearming recurring maintenance.
     implementation_pr: 'silasfelinus/conductor#2996'
   - id: t-007
     milestone: m5
@@ -532,4 +535,69 @@ tasks:
       Final verification completed through PR #1484. Characters, legacy narrator Bots, Rewards, and Scenarios now link directly to both the PITCH world and the GENRE vibe, while Scenarios retain location links. PR #1484 passed Daily Dream Contract, Worker PR CI, Security Audit, and Process task events before merge. Combined with PRs #1480 and #1482, this completes the exact-date digest, six readable art-aware asset cards, deterministic weighted Facet selection and assignment, six-asset proposal/build contract, art queue coverage, and documented CLI compatibility.
     claimed_by: 2026-08-01T024100Z-dream-cycle-t022-vibe-links
     claimed_at: '2026-08-01T02:41:00Z'
+  - id: t-023
+    milestone: m5
+    title: "Dream catalog freshness remaster: audit built bundles, rewrite weak assets, regenerate art"
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-29T22:13:43Z'
+    note: >-
+      Silas-directed via conductor issue #3184 (2026-08-29): treat the built Daily Dream
+      catalog as mutable creative material and improve it in place under today's rules,
+      as a reproducible workflow rather than a one-off hand edit.
 
+      SHIPPED (2026-08-29): scripts/dream_creative_ruts.py holds the shared vocabulary
+      for the five historical grooves the issue names (bureaucracy/record-keeping,
+      archives, cozy markets and workshops, towers and lighthouses, repeated
+      occupational archetypes) plus ornamental-surname detection, and is wired into the
+      live creative contract name-scoped and Facet-aware, so an intentional Bureaucratic
+      Fantasy Facet still works. scripts/audit_dream_catalog.py classifies every built
+      bundle into keep / light-refresh / substantial-rewrite / retire-replace with an
+      independent art verdict, and adds signals the per-proposal contract cannot see:
+      catalog-scale motif saturation (a family carried by 30% of the catalog counts even
+      when that day's Facets asked for it), premise echo across the whole catalog, Facet
+      fusion for concrete taxonomies, and visual-field checks. It writes
+      projects/dream-cycle/remaster/catalog-audit.json and CATALOG-AUDIT.md.
+      scripts/remaster_dream_catalog.py applies the result in waves (plan / stubs / art /
+      verify), dry-run by default with receipts on every applied batch. Text mutation
+      goes through the existing apply_dream_revision.py; art is staged through the same
+      projects/art-prompts.yaml ledger a normal morning uses and submitted by
+      submit_daily_dream_art.py, so the remaster never becomes a second object writer.
+
+      First wave executed live against production: 42 replacement renders staged and
+      submitted (ArtJobs 13026-13067) for the seven art-only bundles, each against a
+      deliberately different visual language (dream_art_prompts.py gained a
+      camera/palette/light treatment axis orthogonal to its twelve media lanes plus a
+      variant offset, so a restyle never lands back where it started). One exemplar text
+      rewrite proved the wave-1 loop end to end: The Chittering Archive (audit score 11,
+      retire-replace) became Monsoon Static, patched in place across its six live rows
+      and two sheets with six replacement renders queued (ArtJobs 13068-13073), and
+      re-audits at score 2 / keep. Sixteen rewrite stubs are staged in
+      projects/dream-cycle/revisions/ for the rest of wave 1; they are inert until an
+      authoring pass rewrites them and renames them to -request.json.
+
+      Verified: full pytest suite green (1402 passed, 1 skipped) plus the new
+      tests/test_dream_catalog_remaster.py (19 tests);
+      scripts/check_daily_dream_pipeline.py clean; live verify pass across all 33 built
+      bundles resolved 197/198 records (the one 404 is a pre-existing legacy row on
+      2026-07-16, already routed to the rebuild wave).
+
+      Poisoned-proposal rule: the two-day freshness window in run_daily_dream_build.py
+      was already enforced; this pass documents it in PIPELINE.md and specs/REMASTER.md,
+      surfaces poisoned proposals in every audit run, and confirms the two exceptions
+      (pinned retry, explicit --date backfill) still re-clear the creative contract.
+
+      REMAINING (not blocking): waves 1 and 2 need creative authoring passes — 12
+      substantial rewrites and 4 pre-v2 bundles whose kernels must be mined into fresh
+      dated proposals. Each is one stub away from applying.
+
+      CLOSED 2026-08-29: PR #3189 merged (squash ea17e06) with all 25 checks green. Post-merge
+      state: the first remaster wave's 48 ArtJobs (13026-13073) are draining normally through
+      the standard relay with zero failures; the rewritten Monsoon Static bundle's six live
+      rows all resolve with art attached. Waves 1 and 2 remain as staged creative work: 16
+      rewrite stubs in projects/dream-cycle/revisions/ and 4 pre-v2 bundles to mine into fresh
+      proposals, tracked by re-running scripts/audit_dream_catalog.py rather than by a
+      standing task.
+    implementation_pr: 'silasfelinus/conductor#3189'

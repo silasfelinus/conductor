@@ -1,0 +1,447 @@
+{
+  "status": "needs-authoring",
+  "instructions": "Rewrite `proposal` in place, then rename this file to end in `-request.json` so scripts/apply_dream_revision.py will apply it. Hard constraints: keep `seed_facets` byte-identical, keep the technical world `slug` unchanged (the built rows and their image directory are keyed to it), keep exactly one location, one Character, one ITEM Reward, one SKILL Reward, and one Scenario, and write the Scenario last so it names the vibe, the location, and the Character. Every `look` and `art_direction` must describe what is visible — material, shape, scale, colour, wear, how light hits it. Do not solve the audit findings by renaming the same premise.",
+  "proposal_path": "projects/dream-cycle/backlog/2026-08-20-canopy-permit-office.md",
+  "digest_role": "Remastered Daily Dream",
+  "send_digest": false,
+  "audit": {
+    "score": 9,
+    "classification": "retire-replace",
+    "reasons": [
+      "bureaucracy / record-keeping motif is saturated across the catalog (19/33 bundles carry it) even though this day's Facets asked for it",
+      "repeated occupational archetype motif in the prose (courier), unrequested by the day's Facets",
+      "tower / lighthouse / beacon spire motif is saturated across the catalog (10/33 bundles carry it)",
+      "tower / lighthouse / beacon spire motif in asset names (tower), unrequested by the day's Facets",
+      "asset names reuse catalog-wide vocabulary (reading)",
+      "5 assigned Facet(s) never reach the prose — character: Facet `science-romance` never surfaces in the prose; reward_item: Facet `weird-capitalism` never surfaces in the prose"
+    ],
+    "assets": {
+      "location": [
+        "carries the tower / lighthouse / beacon spire motif"
+      ],
+      "character": [
+        "carries the repeated occupational archetype motif"
+      ],
+      "scenario": [
+        "carries the tower / lighthouse / beacon spire motif"
+      ]
+    },
+    "art": {
+      "verdict": "regenerate",
+      "reasons": [
+        "text identity changes under this pass; the render no longer matches"
+      ],
+      "style_lane": 6,
+      "lane_load": 2,
+      "evidence": {
+        "requests": 6,
+        "attached": 6,
+        "superseded": 0,
+        "revisions": 0
+      }
+    }
+  },
+  "proposal": {
+    "characters": [
+      {
+        "carries": "a scuffed leather permit satchel stuffed with forged and half-forged stamps",
+        "complication": "the clerk she loves is a dryad fused to a single office chair grown from her own root system — pulling her free would kill the tree and her both",
+        "look": "a lean woman in a quilted flight jacket patched with mismatched fabric, aviator goggles pushed up into close-cropped grey-streaked hair, one forearm wrapped in cracked leather strapping, knuckles stained dark with old stamp ink",
+        "name": "Cass Windrell",
+        "role_drive": "a resourceful courier pilot who flies unlicensed cargo runs through the forest's restricted canopy airspace, chasing a loophole that would let a rooted clerk finally leave her post"
+      }
+    ],
+    "idea": "An ancient wood has grown up through a corporate office tower, and the dryads who staff its lower floors now run the forest's civil service — enforcing centuries of folklore as binding statute law on anyone who wants to fly, walk, or trade through their canopy. A courier pilot keeps coming back for a permit renewal that's really an excuse to see the root-bound clerk she can't stop loving.",
+    "locations": [
+      {
+        "art_direction": "a fifty-story glass-and-steel tower engulfed from the base upward by massive tree roots that have cracked the lobby floor and climbed the interior stairwell, fluorescent office lighting flickering behind vine-choked windows on the lower floors while the upper floors stand dark and untouched, exterior view at dusk with fog pooling at street level",
+        "best_scene": "the ground-floor atrium where escalators rust under hanging moss and a single working elevator car, its brass gate wrapped in bark, rises through a shaft lined with root-bored office doors",
+        "known_for": "a corporate glass-and-steel office tower whose lower dozen floors have been swallowed by an ancient wood, its curtain wall cracked open by root growth",
+        "local_rule": "every visitor must state their business aloud to the entry tree before the elevator doors will part",
+        "title": "Root Court Tower"
+      }
+    ],
+    "rewards": [
+      {
+        "best_used_when": "a passage or exemption is needed before a deadline the normal permit queue can't meet",
+        "catch": "every use is logged against the bearer's own name in the forest's root-ledger, and the debt eventually comes due in a form the bearer doesn't choose",
+        "grants": "an instant, binding forest-law permit stamp that overrides ordinary bureaucratic review",
+        "look": "a fist-sized signet carved from black-veined bone, one face worn to a soft shine by a knotwork sigil, a hinged brass arm folded against its side, faint red light tracing the carved grooves whenever it is pressed to paper",
+        "name": "The Self-Stamping Bone Seal",
+        "rarity": "RARE",
+        "reward_type": "ITEM"
+      },
+      {
+        "best_used_when": "contesting a ruling that has no paper record left to cite",
+        "catch": "each use leaves a little more bark-like scarring on the caller's arm that never fully fades",
+        "grants": "the ability to draw the forest's stored case history directly out of a tree's growth rings through touch",
+        "look": "thin vine-like tendrils growing visibly out from beneath the fingernails and across the back of the hand, briefly threading into the grain of touched wood, faint green bioluminescence pulsing under the skin along each vein",
+        "name": "Root-Reading",
+        "rarity": "UNCOMMON",
+        "reward_type": "SKILL"
+      }
+    ],
+    "scenarios": [
+      {
+        "setup": "At Root Court Tower, Cass Windrell walks into The Canopy Permit Office demanding a renewal on a permit that was never supposed to expire — because the clerk who signed it in the first place is the reason she keeps coming back.",
+        "title": "The Permit That Doesn't Expire"
+      }
+    ],
+    "seed_facets": {
+      "catalog_source": "live",
+      "date": "2026-08-20",
+      "deterministic_seed": 15345348186411019656,
+      "elements": {
+        "character": [
+          {
+            "canonicalValue": "Wilderness Bureaucracy",
+            "id": 1642,
+            "randomWeight": 0.5,
+            "slug": "wilderness-bureaucracy",
+            "taxonomy": "GENRE",
+            "title": "Wilderness Bureaucracy"
+          },
+          {
+            "canonicalValue": "Folklore",
+            "id": 1887,
+            "randomWeight": 1.5,
+            "slug": "folklore",
+            "taxonomy": "GENRE",
+            "title": "Folk Fantasy"
+          },
+          {
+            "canonicalValue": "Science Romance",
+            "id": 827,
+            "randomWeight": 1.0,
+            "slug": "science-romance",
+            "taxonomy": "GENRE",
+            "title": "Science Romance"
+          },
+          {
+            "canonicalValue": "Dryad",
+            "id": 1372,
+            "randomWeight": 1.0,
+            "slug": "dryad",
+            "taxonomy": "SPECIES",
+            "title": "Dryad"
+          },
+          {
+            "canonicalValue": "Pilot",
+            "id": 1549,
+            "randomWeight": 1.0,
+            "slug": "pilot",
+            "taxonomy": "OCCUPATION",
+            "title": "Pilot"
+          },
+          {
+            "canonicalValue": "Resourceful",
+            "id": 1094,
+            "randomWeight": 1.0,
+            "slug": "resourceful",
+            "taxonomy": "PERSONALITY",
+            "title": "Resourceful"
+          }
+        ],
+        "location": [
+          {
+            "canonicalValue": "Wilderness Bureaucracy",
+            "id": 1642,
+            "randomWeight": 0.5,
+            "slug": "wilderness-bureaucracy",
+            "taxonomy": "GENRE",
+            "title": "Wilderness Bureaucracy"
+          },
+          {
+            "canonicalValue": "Folklore",
+            "id": 1887,
+            "randomWeight": 1.5,
+            "slug": "folklore",
+            "taxonomy": "GENRE",
+            "title": "Folk Fantasy"
+          },
+          {
+            "canonicalValue": "Corporate Sci-Fi",
+            "id": 1669,
+            "randomWeight": 1.0,
+            "slug": "corporate-sci-fi",
+            "taxonomy": "GENRE",
+            "title": "Corporate Sci-Fi"
+          },
+          {
+            "canonicalValue": "Dryad",
+            "id": 1372,
+            "randomWeight": 1.0,
+            "slug": "dryad",
+            "taxonomy": "SPECIES",
+            "title": "Dryad"
+          },
+          {
+            "canonicalValue": "Demonic Bone",
+            "id": 865,
+            "randomWeight": 1.0,
+            "slug": "demonic-bone",
+            "taxonomy": "MATERIAL",
+            "title": "Demonic Bone"
+          }
+        ],
+        "reward_item": [
+          {
+            "canonicalValue": "Wilderness Bureaucracy",
+            "id": 1642,
+            "randomWeight": 0.5,
+            "slug": "wilderness-bureaucracy",
+            "taxonomy": "GENRE",
+            "title": "Wilderness Bureaucracy"
+          },
+          {
+            "canonicalValue": "Folklore",
+            "id": 1887,
+            "randomWeight": 1.5,
+            "slug": "folklore",
+            "taxonomy": "GENRE",
+            "title": "Folk Fantasy"
+          },
+          {
+            "canonicalValue": "Weird Capitalism",
+            "id": 5,
+            "randomWeight": 1.0,
+            "slug": "weird-capitalism",
+            "taxonomy": "GENRE",
+            "title": "Weird Capitalism"
+          },
+          {
+            "canonicalValue": "Demonic Bone",
+            "id": 865,
+            "randomWeight": 1.0,
+            "slug": "demonic-bone",
+            "taxonomy": "MATERIAL",
+            "title": "Demonic Bone"
+          }
+        ],
+        "reward_skill": [
+          {
+            "canonicalValue": "Wilderness Bureaucracy",
+            "id": 1642,
+            "randomWeight": 0.5,
+            "slug": "wilderness-bureaucracy",
+            "taxonomy": "GENRE",
+            "title": "Wilderness Bureaucracy"
+          },
+          {
+            "canonicalValue": "Folklore",
+            "id": 1887,
+            "randomWeight": 1.5,
+            "slug": "folklore",
+            "taxonomy": "GENRE",
+            "title": "Folk Fantasy"
+          },
+          {
+            "canonicalValue": "Biopunk",
+            "id": 805,
+            "randomWeight": 1.5,
+            "slug": "biopunk",
+            "taxonomy": "GENRE",
+            "title": "Biopunk"
+          },
+          {
+            "canonicalValue": "Pilot",
+            "id": 1549,
+            "randomWeight": 1.0,
+            "slug": "pilot",
+            "taxonomy": "OCCUPATION",
+            "title": "Pilot"
+          }
+        ],
+        "scenario": [
+          {
+            "canonicalValue": "Wilderness Bureaucracy",
+            "id": 1642,
+            "randomWeight": 0.5,
+            "slug": "wilderness-bureaucracy",
+            "taxonomy": "GENRE",
+            "title": "Wilderness Bureaucracy"
+          },
+          {
+            "canonicalValue": "Folklore",
+            "id": 1887,
+            "randomWeight": 1.5,
+            "slug": "folklore",
+            "taxonomy": "GENRE",
+            "title": "Folk Fantasy"
+          },
+          {
+            "canonicalValue": "Deep Space Western",
+            "id": 1667,
+            "randomWeight": 1.0,
+            "slug": "deep-space-western",
+            "taxonomy": "GENRE",
+            "title": "Deep Space Western"
+          },
+          {
+            "canonicalValue": "Corporate Sci-Fi",
+            "id": 1669,
+            "randomWeight": 1.0,
+            "slug": "corporate-sci-fi",
+            "taxonomy": "GENRE",
+            "title": "Corporate Sci-Fi"
+          },
+          {
+            "canonicalValue": "Science Romance",
+            "id": 827,
+            "randomWeight": 1.0,
+            "slug": "science-romance",
+            "taxonomy": "GENRE",
+            "title": "Science Romance"
+          },
+          {
+            "canonicalValue": "Dryad",
+            "id": 1372,
+            "randomWeight": 1.0,
+            "slug": "dryad",
+            "taxonomy": "SPECIES",
+            "title": "Dryad"
+          }
+        ],
+        "vibe": [
+          {
+            "canonicalValue": "Wilderness Bureaucracy",
+            "id": 1642,
+            "randomWeight": 0.5,
+            "slug": "wilderness-bureaucracy",
+            "taxonomy": "GENRE",
+            "title": "Wilderness Bureaucracy"
+          },
+          {
+            "canonicalValue": "Folklore",
+            "id": 1887,
+            "randomWeight": 1.5,
+            "slug": "folklore",
+            "taxonomy": "GENRE",
+            "title": "Folk Fantasy"
+          },
+          {
+            "canonicalValue": "Dryad",
+            "id": 1372,
+            "randomWeight": 1.0,
+            "slug": "dryad",
+            "taxonomy": "SPECIES",
+            "title": "Dryad"
+          },
+          {
+            "canonicalValue": "Pilot",
+            "id": 1549,
+            "randomWeight": 1.0,
+            "slug": "pilot",
+            "taxonomy": "OCCUPATION",
+            "title": "Pilot"
+          }
+        ]
+      },
+      "extra_genres": {
+        "character": {
+          "canonicalValue": "Science Romance",
+          "id": 827,
+          "randomWeight": 1.0,
+          "slug": "science-romance",
+          "taxonomy": "GENRE",
+          "title": "Science Romance"
+        },
+        "location": {
+          "canonicalValue": "Corporate Sci-Fi",
+          "id": 1669,
+          "randomWeight": 1.0,
+          "slug": "corporate-sci-fi",
+          "taxonomy": "GENRE",
+          "title": "Corporate Sci-Fi"
+        },
+        "reward_item": {
+          "canonicalValue": "Weird Capitalism",
+          "id": 5,
+          "randomWeight": 1.0,
+          "slug": "weird-capitalism",
+          "taxonomy": "GENRE",
+          "title": "Weird Capitalism"
+        },
+        "reward_skill": {
+          "canonicalValue": "Biopunk",
+          "id": 805,
+          "randomWeight": 1.5,
+          "slug": "biopunk",
+          "taxonomy": "GENRE",
+          "title": "Biopunk"
+        },
+        "scenario": {
+          "canonicalValue": "Deep Space Western",
+          "id": 1667,
+          "randomWeight": 1.0,
+          "slug": "deep-space-western",
+          "taxonomy": "GENRE",
+          "title": "Deep Space Western"
+        }
+      },
+      "shared": {
+        "material": {
+          "canonicalValue": "Demonic Bone",
+          "id": 865,
+          "randomWeight": 1.0,
+          "slug": "demonic-bone",
+          "taxonomy": "MATERIAL",
+          "title": "Demonic Bone"
+        },
+        "personality": {
+          "canonicalValue": "Resourceful",
+          "id": 1094,
+          "randomWeight": 1.0,
+          "slug": "resourceful",
+          "taxonomy": "PERSONALITY",
+          "title": "Resourceful"
+        }
+      },
+      "umbrella": {
+        "creature": {
+          "canonicalValue": "Dryad",
+          "id": 1372,
+          "randomWeight": 1.0,
+          "slug": "dryad",
+          "taxonomy": "SPECIES",
+          "title": "Dryad"
+        },
+        "genres": [
+          {
+            "canonicalValue": "Wilderness Bureaucracy",
+            "id": 1642,
+            "randomWeight": 0.5,
+            "slug": "wilderness-bureaucracy",
+            "taxonomy": "GENRE",
+            "title": "Wilderness Bureaucracy"
+          },
+          {
+            "canonicalValue": "Folklore",
+            "id": 1887,
+            "randomWeight": 1.5,
+            "slug": "folklore",
+            "taxonomy": "GENRE",
+            "title": "Folk Fantasy"
+          }
+        ],
+        "wildcard": {
+          "canonicalValue": "Pilot",
+          "id": 1549,
+          "randomWeight": 1.0,
+          "slug": "pilot",
+          "taxonomy": "OCCUPATION",
+          "title": "Pilot"
+        },
+        "wildcard_role": "occupation"
+      },
+      "version": 2
+    },
+    "slug": "canopy-permit-office",
+    "title": "The Canopy Permit Office",
+    "vibe": {
+      "art_direction": "Interior of a moss-furred waiting room where steel filing cabinets are grown through with living root, tarnished brass wickets set into bark-covered walls, a knot of black-veined bone forming the front desk, pale green under-canopy light falling through a cracked skylight onto scattered stamped forms.",
+      "line": "A civil-service outpost bound into an old forest, where dryad clerks enforce folklore as binding statute and pilots queue for stamped rights of passage.",
+      "title": "The Canopy Permit Office"
+    }
+  }
+}

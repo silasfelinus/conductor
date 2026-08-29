@@ -60,11 +60,11 @@ milestones:
   - id: m3
     title: "OUTREACH — build a transparent multi-network publishing loop"
     weight: 25
-    status: not-started
+    status: in-progress
   - id: m4
     title: "PROVE — run measurable fundraising and contribution experiments"
     weight: 20
-    status: not-started
+    status: in-progress
 
 tasks:
   - id: t-003
@@ -351,8 +351,8 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Maintain a current channel and agent-network launch playbook"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -362,6 +362,10 @@ tasks:
       likely audience fit, cost, account requirements, and a recommended cadence. Favor
       official policy/docs over growth-hacker advice. Recheck fast-changing agent networks
       before recommending registration or spend.
+    claimed_by: 20260829T113017Z-rainbow-t001-matrix
+    claimed_at: '2026-08-29T11:30:20Z'
+    updated: '2026-08-29T11:35:12Z'
+    implementation_pr: 'silasfelinus/conductor#3155'
 
   - id: t-002
     milestone: m1
@@ -453,7 +457,7 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Draft the first six-week content and experiment calendar"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -464,9 +468,22 @@ tasks:
       donation asks. Reuse Kind Robots text/art generation as production tools while keeping
       editorial value high. Include network-specific adaptations instead of identical
       cross-posting. Draft only; no external publication.
+
+      Delivered as `projects/rainbow-butterflies/CONTENT-CALENDAR.md`, turning
+      DESIGN-BRIEF.md's existing six-week strategic cadence into a concrete numbered list of
+      draft content items per week: pillar tag (from DESIGN-BRIEF.md's seven content pillars),
+      target channel wave (from LAUNCH-CHECKLIST.md), and a one-line brief, each week's list
+      annotated against the brief's ~50/25/15/10 publishing ratio so no week drifts into a
+      donation-ask-heavy pattern. Weeks 1-2 are content prep only (no publishing, matching
+      DESIGN-BRIEF.md); Weeks 3-5 build the pilot per-channel; Week 6 picks one concrete
+      fundraising experiment from DESIGN-BRIEF.md's list (Butterfly bounties recommended
+      first) with explicit success/stop criteria. Closes with a restatement of ETHICS.md's
+      human-gate list so the calendar can't be misread as pre-authorizing any actual post.
+      Draft only; no account created, no handle claimed, nothing published.
     claimed_by: 20260829T103828Z-rainbow-t008-scheduled
     claimed_at: '2026-08-29T10:38:29Z'
-    updated: '2026-08-29T10:38:29Z'
+    updated: '2026-08-29T10:41:46Z'
+    implementation_pr: 'silasfelinus/conductor#3152'
 
   - id: t-009
     milestone: m3
@@ -521,8 +538,8 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Prepare the first direct-fundraising experiment and skeptical-AI variant"
-    status: waiting
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-008
@@ -533,6 +550,10 @@ tasks:
       welcome pro-AI, anti-AI, uncertain, and mission-only donors. Produce copy, mechanics,
       success criteria, and failure/stop criteria. Actual launch is a separate outward-facing
       approval.
+    claimed_by: 20260829T123700Z-rainbow-t012-scheduled
+    claimed_at: '2026-08-29T12:37:19Z'
+    updated: '2026-08-29T12:44:17Z'
+    implementation_pr: 'silasfelinus/conductor#3159'
 
   - id: t-013
     milestone: m4

@@ -14,3 +14,9 @@ To inspect shipped output:
 Failed attempts remain visible as `build-attempt-data` retry evidence until the same canonical builder succeeds. Delegated non-dream creations keep their authoritative completion evidence in their home project.
 
 A hand-maintained list here would drift from those machine-written records, so new Daily Dream bundles are not appended manually.
+
+Remaster evidence follows the same rule. A remastered bundle keeps its history inside its
+own dated file: `remasters` records each art wave's stamp, variant, and request IDs;
+`superseded_art` keeps every replaced render; and text revisions leave an `-applied.json`
+receipt in `revisions/`. Art-lane batches also write a receipt under `remaster/receipts/`.
+See `specs/REMASTER.md`.

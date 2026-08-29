@@ -1,0 +1,452 @@
+{
+  "status": "needs-authoring",
+  "instructions": "Rewrite `proposal` in place, then rename this file to end in `-request.json` so scripts/apply_dream_revision.py will apply it. Hard constraints: keep `seed_facets` byte-identical, keep the technical world `slug` unchanged (the built rows and their image directory are keyed to it), keep exactly one location, one Character, one ITEM Reward, one SKILL Reward, and one Scenario, and write the Scenario last so it names the vibe, the location, and the Character. Every `look` and `art_direction` must describe what is visible — material, shape, scale, colour, wear, how light hits it. Do not solve the audit findings by renaming the same premise.",
+  "proposal_path": "projects/dream-cycle/backlog/2026-08-10-spire-static.md",
+  "digest_role": "Remastered Daily Dream",
+  "send_digest": false,
+  "audit": {
+    "score": 7,
+    "classification": "substantial-rewrite",
+    "reasons": [
+      "tower / lighthouse / beacon spire motif is saturated across the catalog (10/33 bundles carry it)",
+      "tower / lighthouse / beacon spire motif in asset names (spire), unrequested by the day's Facets",
+      "18 assigned Facet(s) never reach the prose — vibe: Facet `mythpunk` never surfaces in the prose; vibe: Facet `cozy-horror` never surfaces in the prose",
+      "1 weak or missing visual field(s)"
+    ],
+    "assets": {
+      "location": [
+        "carries the tower / lighthouse / beacon spire motif"
+      ],
+      "character": [
+        "carries the tower / lighthouse / beacon spire motif"
+      ],
+      "reward_item": [
+        "carries the tower / lighthouse / beacon spire motif"
+      ],
+      "reward_skill": [
+        "`look` carries no material, colour, or light detail"
+      ],
+      "scenario": [
+        "carries the tower / lighthouse / beacon spire motif"
+      ]
+    },
+    "art": {
+      "verdict": "regenerate",
+      "reasons": [
+        "text identity changes under this pass; the render no longer matches",
+        "renders were built from weak visual fields"
+      ],
+      "style_lane": 7,
+      "lane_load": 3,
+      "evidence": {
+        "requests": 6,
+        "attached": 6,
+        "superseded": 0,
+        "revisions": 0
+      }
+    }
+  },
+  "proposal": {
+    "characters": [
+      {
+        "carries": "a waterlogged logbook of unsent letters addressed to \"Wingmate Ordo\"",
+        "complication": "the crystal spires read her handwriting back to her in his voice",
+        "look": "a broad-shouldered sharkfolk in a cracked leather flight jacket, rows of small gill-slits along her neck, a grey dorsal fin visible through a slit cut in the jacket's back, ink-stained fingers, a battered brass compass on a cord",
+        "name": "Corra Finnwake",
+        "role_drive": "keep writing unsent letters to her dead wingmate, hoping one more log entry will bring him back"
+      }
+    ],
+    "idea": "A ghost airfield where the runway lights never go out and the spires remember every flight that didn't land. A sharkfolk pilot writes letters to her dead wingmate and starts hearing them answered. When a shadowy council orders the field grounded, she has to decide whether the last flight out is escape or exactly what the spires have been waiting for.",
+    "locations": [
+      {
+        "art_direction": "A runway paved between towering translucent quartz-blue spires, each one veined with faint bioluminescent light, jagged crystal formations rising fifty feet on either side of a cracked landing strip slicked with fog.",
+        "best_scene": "a pilot's engine stalls and the spires begin to sing in her dead wingmate's voice",
+        "known_for": "guiding lost flights home by resonant hum",
+        "local_rule": "never taxi past the third spire after dusk",
+        "title": "The Crystal Spire Strand"
+      }
+    ],
+    "rewards": [
+      {
+        "best_used_when": "preflighting at dusk",
+        "catch": "it grows warmer the more people you've already lost",
+        "grants": "warns of an unflyable night before the fog rolls in",
+        "look": "a thumb-length shard of milky spire crystal wrapped in braided black cord, its broken edge stained rust-brown, faint internal cracks like frozen lightning",
+        "name": "The Widow's Splinter",
+        "rarity": "RARE",
+        "reward_type": "ITEM"
+      },
+      {
+        "best_used_when": "flying blind through storm-fog",
+        "catch": "sometimes there really is something down there",
+        "grants": "reads turbulence like the wake of something impossibly large passing beneath the clouds",
+        "look": "the aircraft's wings visibly flex and correct in long slow ripples, matching a rhythm no instrument shows, contrails briefly curling into the shape of a passing fin",
+        "name": "Leviathan-Wake Trim",
+        "rarity": "UNCOMMON",
+        "reward_type": "SKILL"
+      }
+    ],
+    "scenarios": [
+      {
+        "setup": "In Hangar Ghostlight at The Crystal Spire Strand, Corra Finnwake receives a grounding order signed by a council that doesn't exist yet -- and one more unsent letter that insists she fly tonight anyway.",
+        "title": "The Grounding Order"
+      }
+    ],
+    "seed_facets": {
+      "catalog_source": "live",
+      "date": "2026-08-10",
+      "deterministic_seed": 4651251826418480312,
+      "elements": {
+        "character": [
+          {
+            "canonicalValue": "Mythpunk",
+            "id": 793,
+            "randomWeight": 1.5,
+            "slug": "mythpunk",
+            "taxonomy": "GENRE",
+            "title": "Mythpunk"
+          },
+          {
+            "canonicalValue": "Cozy Horror",
+            "id": 1631,
+            "randomWeight": 1.0,
+            "slug": "cozy-horror",
+            "taxonomy": "GENRE",
+            "title": "Cozy Horror"
+          },
+          {
+            "canonicalValue": "Epistolary Fiction",
+            "id": 831,
+            "randomWeight": 1.0,
+            "slug": "epistolary-fiction",
+            "taxonomy": "GENRE",
+            "title": "Epistolary Fiction"
+          },
+          {
+            "canonicalValue": "Sharkfolk",
+            "id": 1325,
+            "randomWeight": 1.0,
+            "slug": "sharkfolk",
+            "taxonomy": "SPECIES",
+            "title": "Sharkfolk"
+          },
+          {
+            "canonicalValue": "Pilot",
+            "id": 1549,
+            "randomWeight": 1.0,
+            "slug": "pilot",
+            "taxonomy": "OCCUPATION",
+            "title": "Pilot"
+          },
+          {
+            "canonicalValue": "worrisome",
+            "id": 1059,
+            "randomWeight": 1.0,
+            "slug": "worrisome",
+            "taxonomy": "PERSONALITY",
+            "title": "Worrisome"
+          }
+        ],
+        "location": [
+          {
+            "canonicalValue": "Mythpunk",
+            "id": 793,
+            "randomWeight": 1.5,
+            "slug": "mythpunk",
+            "taxonomy": "GENRE",
+            "title": "Mythpunk"
+          },
+          {
+            "canonicalValue": "Cozy Horror",
+            "id": 1631,
+            "randomWeight": 1.0,
+            "slug": "cozy-horror",
+            "taxonomy": "GENRE",
+            "title": "Cozy Horror"
+          },
+          {
+            "canonicalValue": "Sci-Fi",
+            "id": 767,
+            "randomWeight": 3.0,
+            "slug": "sci-fi",
+            "taxonomy": "GENRE",
+            "title": "Sci-Fi"
+          },
+          {
+            "canonicalValue": "Sharkfolk",
+            "id": 1325,
+            "randomWeight": 1.0,
+            "slug": "sharkfolk",
+            "taxonomy": "SPECIES",
+            "title": "Sharkfolk"
+          },
+          {
+            "canonicalValue": "Spire Crystal",
+            "id": 891,
+            "randomWeight": 1.0,
+            "slug": "spire-crystal",
+            "taxonomy": "MATERIAL",
+            "title": "Spire Crystal"
+          }
+        ],
+        "reward_item": [
+          {
+            "canonicalValue": "Mythpunk",
+            "id": 793,
+            "randomWeight": 1.5,
+            "slug": "mythpunk",
+            "taxonomy": "GENRE",
+            "title": "Mythpunk"
+          },
+          {
+            "canonicalValue": "Cozy Horror",
+            "id": 1631,
+            "randomWeight": 1.0,
+            "slug": "cozy-horror",
+            "taxonomy": "GENRE",
+            "title": "Cozy Horror"
+          },
+          {
+            "canonicalValue": "Folk Horror",
+            "id": 1675,
+            "randomWeight": 1.5,
+            "slug": "folk-horror",
+            "taxonomy": "GENRE",
+            "title": "Folk Horror"
+          },
+          {
+            "canonicalValue": "Spire Crystal",
+            "id": 891,
+            "randomWeight": 1.0,
+            "slug": "spire-crystal",
+            "taxonomy": "MATERIAL",
+            "title": "Spire Crystal"
+          }
+        ],
+        "reward_skill": [
+          {
+            "canonicalValue": "Mythpunk",
+            "id": 793,
+            "randomWeight": 1.5,
+            "slug": "mythpunk",
+            "taxonomy": "GENRE",
+            "title": "Mythpunk"
+          },
+          {
+            "canonicalValue": "Cozy Horror",
+            "id": 1631,
+            "randomWeight": 1.0,
+            "slug": "cozy-horror",
+            "taxonomy": "GENRE",
+            "title": "Cozy Horror"
+          },
+          {
+            "canonicalValue": "KaijuCore",
+            "id": 19,
+            "randomWeight": 0.5,
+            "slug": "kaijucore",
+            "taxonomy": "GENRE",
+            "title": "KaijuCore"
+          },
+          {
+            "canonicalValue": "Pilot",
+            "id": 1549,
+            "randomWeight": 1.0,
+            "slug": "pilot",
+            "taxonomy": "OCCUPATION",
+            "title": "Pilot"
+          }
+        ],
+        "scenario": [
+          {
+            "canonicalValue": "Mythpunk",
+            "id": 793,
+            "randomWeight": 1.5,
+            "slug": "mythpunk",
+            "taxonomy": "GENRE",
+            "title": "Mythpunk"
+          },
+          {
+            "canonicalValue": "Cozy Horror",
+            "id": 1631,
+            "randomWeight": 1.0,
+            "slug": "cozy-horror",
+            "taxonomy": "GENRE",
+            "title": "Cozy Horror"
+          },
+          {
+            "canonicalValue": "Political Thriller",
+            "id": 1886,
+            "randomWeight": 1.5,
+            "slug": "political-thriller",
+            "taxonomy": "GENRE",
+            "title": "Political Thriller"
+          },
+          {
+            "canonicalValue": "Sci-Fi",
+            "id": 767,
+            "randomWeight": 3.0,
+            "slug": "sci-fi",
+            "taxonomy": "GENRE",
+            "title": "Sci-Fi"
+          },
+          {
+            "canonicalValue": "Epistolary Fiction",
+            "id": 831,
+            "randomWeight": 1.0,
+            "slug": "epistolary-fiction",
+            "taxonomy": "GENRE",
+            "title": "Epistolary Fiction"
+          },
+          {
+            "canonicalValue": "Sharkfolk",
+            "id": 1325,
+            "randomWeight": 1.0,
+            "slug": "sharkfolk",
+            "taxonomy": "SPECIES",
+            "title": "Sharkfolk"
+          }
+        ],
+        "vibe": [
+          {
+            "canonicalValue": "Mythpunk",
+            "id": 793,
+            "randomWeight": 1.5,
+            "slug": "mythpunk",
+            "taxonomy": "GENRE",
+            "title": "Mythpunk"
+          },
+          {
+            "canonicalValue": "Cozy Horror",
+            "id": 1631,
+            "randomWeight": 1.0,
+            "slug": "cozy-horror",
+            "taxonomy": "GENRE",
+            "title": "Cozy Horror"
+          },
+          {
+            "canonicalValue": "Sharkfolk",
+            "id": 1325,
+            "randomWeight": 1.0,
+            "slug": "sharkfolk",
+            "taxonomy": "SPECIES",
+            "title": "Sharkfolk"
+          },
+          {
+            "canonicalValue": "Pilot",
+            "id": 1549,
+            "randomWeight": 1.0,
+            "slug": "pilot",
+            "taxonomy": "OCCUPATION",
+            "title": "Pilot"
+          }
+        ]
+      },
+      "extra_genres": {
+        "character": {
+          "canonicalValue": "Epistolary Fiction",
+          "id": 831,
+          "randomWeight": 1.0,
+          "slug": "epistolary-fiction",
+          "taxonomy": "GENRE",
+          "title": "Epistolary Fiction"
+        },
+        "location": {
+          "canonicalValue": "Sci-Fi",
+          "id": 767,
+          "randomWeight": 3.0,
+          "slug": "sci-fi",
+          "taxonomy": "GENRE",
+          "title": "Sci-Fi"
+        },
+        "reward_item": {
+          "canonicalValue": "Folk Horror",
+          "id": 1675,
+          "randomWeight": 1.5,
+          "slug": "folk-horror",
+          "taxonomy": "GENRE",
+          "title": "Folk Horror"
+        },
+        "reward_skill": {
+          "canonicalValue": "KaijuCore",
+          "id": 19,
+          "randomWeight": 0.5,
+          "slug": "kaijucore",
+          "taxonomy": "GENRE",
+          "title": "KaijuCore"
+        },
+        "scenario": {
+          "canonicalValue": "Political Thriller",
+          "id": 1886,
+          "randomWeight": 1.5,
+          "slug": "political-thriller",
+          "taxonomy": "GENRE",
+          "title": "Political Thriller"
+        }
+      },
+      "shared": {
+        "material": {
+          "canonicalValue": "Spire Crystal",
+          "id": 891,
+          "randomWeight": 1.0,
+          "slug": "spire-crystal",
+          "taxonomy": "MATERIAL",
+          "title": "Spire Crystal"
+        },
+        "personality": {
+          "canonicalValue": "worrisome",
+          "id": 1059,
+          "randomWeight": 1.0,
+          "slug": "worrisome",
+          "taxonomy": "PERSONALITY",
+          "title": "Worrisome"
+        }
+      },
+      "umbrella": {
+        "creature": {
+          "canonicalValue": "Sharkfolk",
+          "id": 1325,
+          "randomWeight": 1.0,
+          "slug": "sharkfolk",
+          "taxonomy": "SPECIES",
+          "title": "Sharkfolk"
+        },
+        "genres": [
+          {
+            "canonicalValue": "Mythpunk",
+            "id": 793,
+            "randomWeight": 1.5,
+            "slug": "mythpunk",
+            "taxonomy": "GENRE",
+            "title": "Mythpunk"
+          },
+          {
+            "canonicalValue": "Cozy Horror",
+            "id": 1631,
+            "randomWeight": 1.0,
+            "slug": "cozy-horror",
+            "taxonomy": "GENRE",
+            "title": "Cozy Horror"
+          }
+        ],
+        "wildcard": {
+          "canonicalValue": "Pilot",
+          "id": 1549,
+          "randomWeight": 1.0,
+          "slug": "pilot",
+          "taxonomy": "OCCUPATION",
+          "title": "Pilot"
+        },
+        "wildcard_role": "occupation"
+      },
+      "version": 2
+    },
+    "slug": "spire-static",
+    "title": "Spire Static",
+    "vibe": {
+      "art_direction": "A fog-wrapped airfield strung with flickering blue-white lanterns, their glass housings grown over with barnacles and kelp lace, propeller silhouettes rusted mid-spin against a bruised violet sky.",
+      "line": "Every runway light left burning belongs to someone who hasn't landed yet.",
+      "title": "Hangar Ghostlight"
+    }
+  }
+}

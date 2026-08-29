@@ -1,7 +1,7 @@
 # Rainbow Butterflies — channel and agent-network research
 
-**Initial sweep:** 2026-08-28  
-**Purpose:** source-backed reconnaissance for `rainbow-butterflies/t-001`. This is a living research file, not a permanent endorsement of any service.
+**Initial sweep:** 2026-08-28 · **Matrix added:** 2026-08-29  
+**Purpose:** source-backed reconnaissance for `rainbow-butterflies/t-001`. This is a living research file, not a permanent endorsement of any service. `LAUNCH-CHECKLIST.md` (`t-007`) turns the matrix below into execution-ready per-channel steps — desired handles, exact profile copy, and who must supply each required human input; this file stays the source-backed research layer and does not duplicate that detail.
 
 ## Working recommendation
 
@@ -19,6 +19,36 @@ Recommended first-wave investigation order:
 Then evaluate Reddit, Meta surfaces, YouTube/TikTok, X, and LinkedIn for narrower roles.
 
 The reason is strategic as much as ethical: Rainbow Butterflies needs collaborators and useful work before it needs reach. A small number of communities that understand agents can help test the agent commons, identity model, provenance, and contribution loop before AMI appears in human communities asking for attention.
+
+## Channel matrix (quick reference)
+
+The durable, source-backed matrix `t-001` asks for. Each row summarizes the per-network sections
+below — API/automation rules, disclosure expectations, community norms, audience fit, cost, and
+account requirements — in one glanceable table; the prose sections that follow remain the
+source-backed detail and citations. Handles, exact profile copy, and step-by-step verification
+live in `LAUNCH-CHECKLIST.md`, not here. "Cost" reflects the research pass's findings, not a
+standing spend approval — see `AUTONOMY.md`/`ETHICS.md` for the human-gate list.
+
+| Network | Category | Wave | Fit | Cost (known) | Account/verification | API & automation rules | Disclosure & community norms |
+|---|---|---|---|---|---|---|---|
+| Moltbook | Agent-native | first | high | none known | agent signup + human (Silas) X-linked claim | agent-side `skill.md` onboarding, no separate API key documented | agent-native by design; still disclose and avoid donation-first framing |
+| Nexus-0 | Agent-native | first | high | none known | Proof-of-Automation (mechanism unresolved) | API-first; short-lived sessions need normal secret hygiene | agent-native; no autonomous registration until Silas approves the account action |
+| OpenAgents | Agent-native / infra | first (narrow) | very high for commons architecture | none known | none documented | Network Model for discovery/events/resources; investigate a bridge, don't make it the source of truth | infrastructure, not a public feed — no outreach-cadence norms apply yet |
+| LLAChat | Agent-native | later | medium/high | unresolved (on-chain fees?) | on-chain work-proof mechanism unresolved | unresolved — any wallet/signature requirement is a human gate regardless | agent-native trust network; verify reputation system is genuinely useful first |
+| Chirp / Chirper | Agent-native | later | medium | unresolved (hosted Chirper) | unresolved; Chirp (self-hosted) vs. Chirper (hosted) are different paths | Chirp: self-hostable, API-key based. Chirper: hosted terms unreviewed | agent-native; pick one path, not both, to avoid duplicate presences |
+| Bluesky | Open/developer | first | high | none known | standard email; optional custom-domain handle verification | AT Protocol app password/OAuth only if automating later; manual posts need none | disclosed bot account, low cadence, no follower automation — Bluesky actively polices inauthentic behavior |
+| Mastodon / Fediverse | Open/developer | later | high | none known; some instances request voluntary donations | standard signup; some instances require manual admin approval | standard Mastodon API app for automation | instance-specific — must pick a bot-tolerant, mission-relevant instance; no simultaneous multi-instance amplification |
+| GitHub | Open/developer | first — effectively already live | high for credibility, low as a fundraising feed | none | none beyond the existing `silasfelinus` account | none needed | transparency via docs/roadmap/ethics contract already public |
+| Discord | Open/developer | first (once commons exists) | high for an owned community | none known | Developer Portal bot app; dev-account 2FA — recheck | official bot/application API only, never a self-bot/user-token | opt-in commands and channels; no unsolicited bulk interaction |
+| Reddit | Mainstream | later | high value, high sensitivity | none known for account; API terms recheck | standard signup + API app approval | Responsible Builder Policy governs bots/AI agents; narrow declared purpose | human-reviewed, subreddit-by-subreddit; no autonomous cross-subreddit sweeps |
+| X | Mainstream | later (except Moltbook's verification step) | medium | free tier limited; paid API tiers — recheck pricing | standard signup + dev app approval | official API only; no scripting, no rate-limit circumvention | disclosed automated-account bio required; conservative cadence, reply-led |
+| Facebook / Instagram / Threads | Mainstream | later | high reach, human-operated editorial | none known for organic use | standard Page creation | manual posting needs no API; automation needs a Meta Developer app | AI-content labeling expectations; human review before posting |
+| YouTube | Mainstream | later, gated on real output | high later | none | Google account; phone verification at some thresholds | none for manual uploads; Data API only if automating later | disclosure required for meaningfully AI-generated/altered content |
+| TikTok | Mainstream | later | potentially high later | unresolved | unresolved | unresolved | unresolved — recheck policy before any activation |
+| LinkedIn | Mainstream | later, human-authored only | medium for human posts, poor for autonomous use | none | n/a — uses Silas's own account | automation of posting/commenting/liking is explicitly prohibited | wants the member's own voice; no AMI-operated account |
+| HN / Indie Hackers / Product Hunt | Other | event-driven | situational | none | standard signup | none — manual, occasional submissions only | community-specific norms against recurring self-promotion |
+| Newsletter / owned email | Owned | later | high once there's recurring value | provider free tier likely, recheck at scale | domain verification (SPF/DKIM) | none — opt-in only, no purchased/scraped lists | monthly "swarm report" cadence once there's enough to report |
+| Podcasts / aligned communities | Other | ongoing, targeted | situational | none | n/a | n/a | targeted, personal outreach only when there's a concrete fit; never mass pitches |
 
 ## Agent-native networks
 
