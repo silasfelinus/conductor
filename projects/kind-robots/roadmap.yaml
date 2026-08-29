@@ -2968,26 +2968,14 @@ tasks:
     milestone: m6
     title: "Home page visual iteration with Silas"
     status: needs-human
-    owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-08-29T11:10:00Z'
+    updated: '2026-08-29T23:55:00Z'
     depends_on: [t-077, t-080, t-081, t-082, t-083, t-084]
-    note: >
-      The back-and-forth t-077 shipped a first draft for. Silas, 2026-08-28:
-      "this part may take some back and forth, I want it to look great ... this
-      is going to be the first thing people see when the site loads, so I want
-      it to be special."
-
-      needs-human because the remaining question is aesthetic judgement, and
-      only Silas can supply it.
-
-      REWRITTEN AFTER EACH PASS -- t-080 through t-084 -- because a needs-human
-      note describing a version no longer on main invites a decision about
-      something that does not exist. What is live now, with the top band
-      MEASURED at 1920x1080 rather than estimated (see t-084 for why that
-      distinction earned its own task):
-
+    note: |-
+      The back-and-forth t-077 shipped a first draft for. Silas, 2026-08-28: "this part may take some back and forth, I want it to look great ... this is going to be the first thing people see when the site loads, so I want it to be special."
+      needs-human because the remaining question is aesthetic judgement, and only Silas can supply it.
+      REWRITTEN AFTER EACH PASS -- t-080 through t-084 -- because a needs-human note describing a version no longer on main invites a decision about something that does not exist. What is live now, with the top band MEASURED at 1920x1080 rather than estimated (see t-084 for why that distinction earned its own task):
       1. TOP BAND, one definite height, all three columns filling it exactly:
          dream card 384px (20.0% of screen, stated as 20vw clamped to
          [14rem,26rem]); cast of 4.5rem tiles in three rows flowing sideways,
@@ -3013,11 +3001,8 @@ tasks:
       7. NAV: brand line plus the page's tabMessage, or its subtitle where no
          tabMessage is authored. Renders on every page now.
 
-      Page height 1049px: 1.03 screens at 1080, 1.48 at 768. Inside his "not
-      larger than two" either way.
-
+      Page height 1049px: 1.03 screens at 1080, 1.48 at 768. Inside his "not larger than two" either way.
       OPEN FOR HIM, in rough order of how much it would change:
-
       - IS 64% THE RIGHT SHARE FOR NEEDS-YOU? He asked twice for the dream to
         give up width to it and it now has nearly two thirds of the band. That
         is a big swing from 17%, and it is the number most likely to be wrong in
@@ -3032,6 +3017,10 @@ tasks:
       - The cast tiles are now 4.5rem wide and about 117px tall, which is close
         to the 2:3 portrait these objects are drawn at. If they read as too
         small at that size, the band height is the dial, not the tile width.
+
+
+      Oversight reconciliation: the home-page implementation work is complete and the remaining hold is Silas's aesthetic/product judgment on the visual composition. This is a soft review gate only; it does not authorize any new outward-facing, production, or irreversible action.
+    soft_gate: true
 
   - id: t-079
     milestone: m6
