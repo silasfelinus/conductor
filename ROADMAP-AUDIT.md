@@ -1,6 +1,6 @@
 # Roadmap Audit
 
-Generated: `2026-08-29T23:51:44.528997+00:00`
+Generated: `2026-08-29T23:54:48.642637+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
@@ -8,7 +8,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 - **52** roadmaps, **29** active + **2** continuous projects, **1329** tasks
 - **18 ready**, **73 waiting**, **82 needs-human**, **2 claimed/review**, **1145 done**
-- Findings: **0 errors**, **4 warnings**, **93 informational**
+- Findings: **0 errors**, **1 warnings**, **93 informational**
 
 ## Project inventory
 
@@ -73,11 +73,8 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 _None._
 
-### Warning (4)
+### Warning (1)
 
-- **DUPLICATE_YAML_KEY** — `ai-art-academy`: Duplicate key 'implementation_pr' at line 2666 — YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one.
-- **DUPLICATE_YAML_KEY** — `cthulhuquarium`: Duplicate key 'claimed_by' at line 1564 — YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one.
-- **DUPLICATE_YAML_KEY** — `cthulhuquarium`: Duplicate key 'updated' at line 1566 — YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one.
 - **SOFT_NEEDS_HUMAN** — `kind-robots` / `t-078`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
 
 ### Info (93)
