@@ -1,0 +1,137 @@
+{
+  "generated_at": "2026-08-29T12:44:42.744852+00:00",
+  "summary": {
+    "status": "action-needed",
+    "roadmap_errors": 3,
+    "roadmap_warnings": 9,
+    "project_forward_drift": 0,
+    "project_reverse_orphans": 0,
+    "project_unresolved": null,
+    "openai_scheduled_agent_overdue": true,
+    "intent_review_due": true
+  },
+  "openai_scheduled_agent": {
+    "overdue": true,
+    "last_activity": null,
+    "hours_since": null,
+    "stale_hours": 6.0,
+    "marker": "openai-scheduled-",
+    "note": "No OpenAI scheduled-Agent heartbeat commit was found in available git history. Claude activity does not satisfy this check."
+  },
+  "intent_review": {
+    "due": true,
+    "last_report": null,
+    "days_since": null,
+    "stale_days": 3.0
+  },
+  "project_parity": {
+    "forward": [],
+    "reverse": [],
+    "unresolved": null
+  },
+  "roadmap_audit": {
+    "generated_at": "2026-08-29T12:44:42.744857+00:00",
+    "summary": {
+      "roadmaps": 52,
+      "active_projects": 29,
+      "continuous_projects": 2,
+      "tasks": 1328,
+      "ready": 19,
+      "waiting": 73,
+      "needs_human": 82,
+      "in_progress": 4,
+      "done": 1141,
+      "errors": 3,
+      "warnings": 9,
+      "info": 93
+    },
+    "errors": [
+      {
+        "severity": "error",
+        "code": "CONTROL_PRIORITY_DRIFT",
+        "project": "_global",
+        "task": null,
+        "message": "CONTROL.md priority band ['interface-vision', 'ai-art-academy', 'coloring-book', 'humboldt-scoop-cms', 'digital-storefront', 'mermaids-of-venice', 'kind-robots', 'kindrobots-unraid'] does not match priority.yaml prefix ['mandarin-tutor', 'cthulhuquarium', 'kapowarr', 'kind-economy', 'interface-vision', 'ai-art-academy', 'coloring-book', 'humboldt-scoop-cms']."
+      },
+      {
+        "severity": "error",
+        "code": "READY_WITH_UNMET_DEPS",
+        "project": "interface-vision",
+        "task": "t-105",
+        "message": "Ready task has unmet dependencies: t-104."
+      },
+      {
+        "severity": "error",
+        "code": "GATED_DONE_WITHOUT_APPROVAL",
+        "project": "kind-robots",
+        "task": "t-071",
+        "message": "Human-gated task is done without approved_by_human: true."
+      }
+    ],
+    "warnings": [
+      {
+        "severity": "warning",
+        "code": "DUPLICATE_YAML_KEY",
+        "project": "ai-art-academy",
+        "task": null,
+        "message": "Duplicate key 'implementation_pr' at line 2666 \u2014 YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one."
+      },
+      {
+        "severity": "warning",
+        "code": "SOFT_NEEDS_HUMAN",
+        "project": "coloring-book",
+        "task": "t-022",
+        "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
+      },
+      {
+        "severity": "warning",
+        "code": "DUPLICATE_YAML_KEY",
+        "project": "cthulhuquarium",
+        "task": null,
+        "message": "Duplicate key 'updated' at line 561 \u2014 YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one."
+      },
+      {
+        "severity": "warning",
+        "code": "DUPLICATE_YAML_KEY",
+        "project": "cthulhuquarium",
+        "task": null,
+        "message": "Duplicate key 'claimed_by' at line 1565 \u2014 YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one."
+      },
+      {
+        "severity": "warning",
+        "code": "DUPLICATE_YAML_KEY",
+        "project": "cthulhuquarium",
+        "task": null,
+        "message": "Duplicate key 'updated' at line 1567 \u2014 YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one."
+      },
+      {
+        "severity": "warning",
+        "code": "SOFT_NEEDS_HUMAN",
+        "project": "kind-economy",
+        "task": "t-014",
+        "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
+      },
+      {
+        "severity": "warning",
+        "code": "SOFT_NEEDS_HUMAN",
+        "project": "kind-economy",
+        "task": "t-022",
+        "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
+      },
+      {
+        "severity": "warning",
+        "code": "SOFT_NEEDS_HUMAN",
+        "project": "kind-economy",
+        "task": "t-023",
+        "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
+      },
+      {
+        "severity": "warning",
+        "code": "SOFT_NEEDS_HUMAN",
+        "project": "kind-robots",
+        "task": "t-078",
+        "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
+      }
+    ]
+  }
+}
