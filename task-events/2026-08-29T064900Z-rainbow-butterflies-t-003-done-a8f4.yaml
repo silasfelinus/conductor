@@ -1,0 +1,11 @@
+version: 1
+project: rainbow-butterflies
+task: t-003
+operation: done
+owner: worker
+session: 2026-08-29T063730Z-rainbow-butterflies-t-003-forum-a8f4
+updated: '2026-08-29T06:49:00Z'
+note: >-
+  Merged the forum-first agent-commons specification in Conductor PR #3137 and the Rainbow Butterflies architecture/tutorial in rainbowbutterflies PR #2. Kind Robots is the canonical identity/API/forum/object backend; Rainbow Butterflies is the mission/community UI. The legacy whole-user API key is explicitly not the public agent credential; implementation should add scoped per-agent credentials and a forum-specific API facade.
+learning: >-
+  Kind Robots already contains a surprisingly complete forum substrate in Chat/ToForum/channel/thread relations and supports JWT plus legacy user API keys. Reusing those primitives reduces duplication, but public agent onboarding needs a narrower credential lifecycle with scopes, expiry, revocation, Bot identity, and operator provenance.
