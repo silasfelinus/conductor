@@ -3043,8 +3043,8 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-08-29T04:35:00Z'
-    depends_on: [t-077, t-080, t-081, t-082]
+    updated: '2026-08-29T08:00:00Z'
+    depends_on: [t-077, t-080, t-081, t-082, t-083]
     note: >
       The back-and-forth t-077 shipped a first draft for. Silas, 2026-08-28:
       "this part may take some back and forth, I want it to look great ... this
@@ -3054,42 +3054,55 @@ tasks:
       needs-human because the remaining question is aesthetic judgement, and
       only Silas can supply it.
 
-      REWRITTEN AFTER EACH PASS -- t-080, t-081, now t-082 -- because a
+      REWRITTEN AFTER EACH PASS -- t-080, t-081, t-082, now t-083 -- because a
       needs-human note describing a version no longer on main invites a decision
       about something that does not exist. What is live now:
 
-      1. TOP BAND: a fixed 11rem dream card (4:3 plate, caption below it), its
-         cast as square plates in container-width columns, and a "Needs you"
-         column of conductor human-gates on the right.
-      2. RAILS: art spans two grid rows with `contain` plates and no theme
-         (ArtImage has no theme column); six object shelves in a 3x2 beside it,
-         w-32 square plates, title only, border-2 in each record's own primary.
-      3. PROJECTS: title, one-letter priority, progress bar joined to
+      1. TOP BAND: a 16rem dream card (4:3 plate, kicker, title, one-line hook,
+         three-line description below it), its cast as 4.5rem square plates in
+         container-width columns, and a 20rem "Needs you" column on the right
+         that is now a COMPOSER rather than a list of links.
+      2. NEEDS YOU: each gate expands in place to a textarea and three actions.
+         "Send to agent" writes the note AND releases the task to `ready`, so
+         conductor's next Worker cycle picks it up carrying the answer. "Note
+         only" keeps it parked and conductor's audit surfaces it. "Approve"
+         closes it. This is the pipeline he asked to have followed end to end.
+      3. RAILS: art spans two grid rows and now TOGGLES between finished art and
+         the live ArtJob queue with a status filter (Active/Pending/Running/
+         Failed/Done/Cancelled); six object shelves in a 3x2 beside it. Headers
+         are a single icon plus a count, see-all is an arrow glyph, and chevrons
+         replaced the scrollbar gutters.
+      4. CLICKING AN OBJECT opens an interstitial with its description, its
+         attributes, and its reviews; clicking outside returns to the page. The
+         tiles are still anchors, so middle-click and cmd-click navigate.
+      5. PROJECTS: title, one-letter priority, progress bar joined to
          conductor's own figure. No description.
-      4. NEWSFEED: max-h-64 vertical scroller, compact cards, header and topic
-         chips on one row.
-      5. NAV: a `tabMessage` frontmatter field fills the empty stretch beside
-         the tab dropdown from lg up. content/index.md sets one; other pages
-         inherit nothing and show the blank they had before, so this is worth
-         a sweep if he likes it.
-      6. Section icons remain absent from headers -- several kind-icons render
-         as flat coloured squares at 16px. One prop to restore.
+      6. NEWSFEED: max-h-64 vertical scroller; cards keep their summary and
+         spend one thin line on source and time; the topic chips, the controls,
+         the "From around the web" heading and the lab link are all one row.
+      7. NAV: the empty stretch beside the tab dropdown shows a brand line plus
+         the page's tabMessage, or its subtitle where no tabMessage is authored.
+         It renders on every page now, not only the home page.
 
       OPEN FOR HIM, in rough order of how much it would change:
 
-      - Inline approve/reject on the Needs-you column. /api/conductor/task-action
-        already takes approve, reject and comment; t-082 shipped links only
-        because approving writes to the coordination system of record and no
-        sandbox here has live conductor data to test it against. This is the
-        obvious next step and needs his go-ahead, not more design.
-      - Height: 1106px / 2.17 screens, against his "not larger than two". The
-        remaining slack is the rails (396px, driven by tile width) and the
-        newsfeed (305px).
+      - THE CAST TILES ARE 4.5rem, NOT THE 3.5rem HE ASKED FOR. He said "50%
+         slimmer"; a literal half truncates a name to about four characters,
+         which fights his earlier "All the cards need to be big enough to see
+         more of the titles". This is the one place this pass knowingly did not
+         do what was asked, and it is his call. If he wants it slimmer still,
+         cutting the tile CAPTION rather than the plate is the better trade.
+      - Whether "Send to agent" should be able to close a gate outright, or
+         whether releasing to `ready` with the answer attached is the right
+         ceiling for a one-click action on the coordination system of record.
+      - Height at his viewport. Not re-measured this pass -- the mocked-payload
+         Playwright harness was not rebuilt, so the 1106px / 2.17 screens figure
+         is from t-082 and the net of this pass (a taller hero card, a shorter
+         feed header, taller feed cards) is unmeasured. Worth a look before
+         calling the two-screen budget met.
       - Whether the hero should server-render. It loads client-side in
-        onMounted like every other store in the repo, so first paint shows
-        skeletons; useAsyncData would SSR it but puts an async setup inside
-        ContentRenderer's subtree, risking a hydration boundary problem that
-        cannot be tested without a database. Deliberately not attempted blind.
+         home-page.vue's onMounted, so the first paint of the front page is a
+         skeleton.
 
   - id: t-079
     milestone: m6
@@ -3395,3 +3408,108 @@ tasks:
       squash f1ba035f0bf3337352479a1eceae8f6ba9c0d1f9. NOT verified against real
       data -- the conductor progress join in particular is unexercised against
       real slugs, since the sandbox has no database.
+
+  - id: t-083
+    milestone: m6
+    title: "Home page fifth pass: interstitial, art-queue toggle, and the human-gate answer pipeline"
+    status: review
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-29T08:00:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#2196'
+    depends_on: [t-082]
+    note: >
+      Silas, 2026-08-29, across two messages: "Still seeing no information and a
+      very large tab seletor on the actual dashboard ... that giant bar is
+      selectable with crazy whitespace ... we could put something else there, a
+      kind robots title and a subtitle? ... make it a little wider because we
+      want to add the descrition for the dream, that is missing. the other
+      elements on the daily dream can be 50% slimmer, to make room for a better
+      human gate needs you section. We need a definite pipeline, so that if I
+      click on one of the human gate notifications, it lets me enter a comment
+      and that comment is fed to the next agent dealing with that problem ...
+      but also we might be missing whatever ties the response to the project
+      referenced. follow it end to end ... Whenever I click on one of the new
+      objects, I want it to expand to tell me about it ... I need more of the
+      title and description in the news feeds ... Would love to replace the
+      words for new dreams, characters, etc with just an icon ... Could we use
+      <> chevrons instead of a scrollbar." Then: "we are already fighting for
+      space, but the artqueue should also be present. let me togle between the
+      fresh from art queue and to see the current progress, and choose from
+      active to failed, etc, keeping the layout."
+
+      THE GATE PIPELINE HAD A REAL BREAK, and it is the entry worth reading
+      later. He asked me to follow it end to end and it turned out to be broken
+      at the far end, not the near one. The chain -- composer, submitTaskAction,
+      /api/conductor/task-action, a YAML event committed to conductor,
+      process_task_events.py, the note appended to the roadmap task, projected
+      back to Kind Robots -- existed and worked at every link. But the only
+      comment action left the task at status needs-human, and conductor's Worker
+      (run_worker.find_ready_task) selects status ready and nothing else. So an
+      answer was written into the roadmap and handed to nobody. Worse,
+      audit_human_gates.py -- the one thing that reads every gate on every
+      session start -- listed titles and never printed notes at all, so there
+      was no path by which a parked answer reached a human either.
+
+      A FEATURE CAN BE COMPLETE AT EVERY STEP AND STILL NOT CONNECT. Nothing
+      here was unimplemented; the endpoint, the event queue, the processor and
+      the projection were all correct in isolation. What was missing was that
+      the terminal state the pipeline wrote into is not a state anything reads
+      from. Worth checking for on any queue whose consumer filters by status.
+
+      Fixed on both sides. Kind Robots gained an `answer` action: the same note
+      plus the release back to `ready` that queues it for the next agent.
+      Deliberately not `reject`, which sets approved_by_human false and stamps
+      the note SENT BACK -- an answer is not a verdict on the work. `comment`
+      survives as "note only" for gates that should stay gated, and conductor's
+      audit_human_gates.py now flags a gate whose newest note block carries a
+      human prefix as `human-answer-unread`, prints the text, sorts those first,
+      and hourly-worker.md says plainly that it is work rather than a
+      suggestion. See silasfelinus/conductor#3142.
+
+      THE TAB MESSAGE WAS NEVER RENDERING, and the renderer was never the
+      problem. t-082 added the header element and content/index.md's frontmatter
+      in the same pass, and it still showed blank -- because `tabMessage` was
+      not declared in content.config.ts, and Nuxt Content validates frontmatter
+      against that schema and silently drops every key it does not know. The
+      field had been thrown away one layer before anything could read it. A
+      second lesson in the same shape as the one above: verify the value arrives,
+      not just that the code that would display it exists. The stretch now also
+      falls back to a brand line plus the page's own subtitle, so it says
+      something on every page rather than only where a tabMessage was authored,
+      and is pointer-events-none so the shell stops reading as one huge button.
+
+      ALSO SHIPPED: an interstitial (components/home/home-object-sheet.vue plus
+      /api/showcase/detail) that expands an object in place with its details and
+      its reviews, closing on a click outside -- reviews EMBEDDED rather than
+      linked, because review-list.vue is a component every gallery mounts and
+      not a route, and the /chat and /reviews links the first draft of that
+      footer reached for do not exist and would have 404'd off the front page.
+      The art shelf toggles finished art against the live ArtJob queue with a
+      status filter, rendering the same rail in the same two-row cell so the
+      layout is structurally unchanged, and its controls ride in the header row
+      that already existed so it costs no page height. Rail headers are one
+      glyph; chevrons replaced eight reserved scrollbar gutters. The hero is
+      16rem and finally renders the dream description, which the payload had
+      been summarizing to a single 160-character line and which nothing
+      rendered. Feed cards keep their summary and spend one thin line on
+      provenance instead of two. Tiles stayed anchors and intercept only the
+      plain click, so middle-click and cmd-click still work.
+
+      DEVIATION WORTH FLAGGING: the cast tiles are 4.5rem, not the literal half
+      of 7rem he asked for. At 3.5rem a name truncates to about four characters,
+      which fights his earlier "All the cards need to be big enough to see more
+      of the titles". The band still gives up more width than the difference
+      because the Needs-you column grew to 20rem at the same time. If it is
+      still too wide, the next thing to cut is the tile caption, not the plate.
+
+      Verified: eslint and prettier clean on every changed file, layout contract
+      holds (the sheet's grid moved to container-width after the viewport-grid
+      rule flagged it), MDC scroll ownership unchanged at 15, nuxi build
+      completes, and all eight new Prisma selects were validated against the
+      schema offline WITH a negative control -- dream.path, the exact field that
+      500'd the whole page on 2026-08-29 -- proving the probe catches that class
+      of bug rather than passing vacuously. NOT verified: the answer round trip
+      against a live conductor, since this sandbox has no database and no
+      projection; it is proven by construction and by conductor's own tests.
