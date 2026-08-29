@@ -1,0 +1,448 @@
+{
+  "status": "needs-authoring",
+  "instructions": "Rewrite `proposal` in place, then rename this file to end in `-request.json` so scripts/apply_dream_revision.py will apply it. Hard constraints: keep `seed_facets` byte-identical, keep the technical world `slug` unchanged (the built rows and their image directory are keyed to it), keep exactly one location, one Character, one ITEM Reward, one SKILL Reward, and one Scenario, and write the Scenario last so it names the vibe, the location, and the Character. Every `look` and `art_direction` must describe what is visible — material, shape, scale, colour, wear, how light hits it. Do not solve the audit findings by renaming the same premise.",
+  "proposal_path": "projects/dream-cycle/backlog/2026-08-22-marshlight-draw.md",
+  "digest_role": "Remastered Daily Dream",
+  "send_digest": false,
+  "audit": {
+    "score": 9,
+    "classification": "retire-replace",
+    "reasons": [
+      "bureaucracy / record-keeping motif is saturated across the catalog (19/33 bundles carry it)",
+      "bureaucracy / record-keeping motif in asset names (ledger), unrequested by the day's Facets",
+      "tower / lighthouse / beacon spire motif is saturated across the catalog (10/33 bundles carry it)",
+      "tower / lighthouse / beacon spire motif in the prose (beacon), unrequested by the day's Facets",
+      "asset names reuse catalog-wide vocabulary (ledger)",
+      "13 assigned Facet(s) never reach the prose — vibe: Facet `deep-space-western` never surfaces in the prose; location: Facet `deep-space-western` never surfaces in the prose"
+    ],
+    "assets": {
+      "location": [
+        "carries the tower / lighthouse / beacon spire motif"
+      ],
+      "character": [
+        "carries the bureaucracy / record-keeping motif"
+      ],
+      "reward_skill": [
+        "carries the bureaucracy / record-keeping motif"
+      ]
+    },
+    "art": {
+      "verdict": "regenerate",
+      "reasons": [
+        "text identity changes under this pass; the render no longer matches",
+        "style lane 11 is carrying 4 worlds (cap 3); this world should move to an unused visual language"
+      ],
+      "style_lane": 11,
+      "lane_load": 4,
+      "evidence": {
+        "requests": 6,
+        "attached": 6,
+        "superseded": 0,
+        "revisions": 0
+      }
+    }
+  },
+  "proposal": {
+    "characters": [
+      {
+        "carries": "a forearm rig of adamantium fingers wired to a cracked data-horn",
+        "complication": "the horn only tells the truth about her own claim",
+        "look": "a lean figure in a mud-oiled duster, one arm sheathed in dull adamantium plating, a spiraled bone-white horn-shard fused into her temple, wires trailing from it into a cracked wrist terminal",
+        "name": "Tamsin Ruel",
+        "role_drive": "crack the claims registry before the marshal's horn calls her out"
+      }
+    ],
+    "idea": "A bog-punk frontier town settles land claims with a horn that senses lies. A coolheaded cybernetic hacker marked by unicorns has to out-code the marshal's ledger before the horn calls her bluff.",
+    "locations": [
+      {
+        "art_direction": "A sunken frontier town built on stilts over black bogwater, corrugated-metal storefronts patched with salvaged satellite panels, a rusted horn-shaped beacon mounted at the crossroads, moss-slick boardwalks reflecting orbital ring-light.",
+        "best_scene": "a buried adamantium vein surfaces mid-duel",
+        "known_for": "adamantium claims buried under the mud",
+        "local_rule": "no draw before the horn sounds",
+        "title": "Sourmoss Landing"
+      }
+    ],
+    "rewards": [
+      {
+        "best_used_when": "the horn has already called the duel",
+        "catch": "it remembers every hand that's fired it, including the dead ones",
+        "grants": "draws faster than the hand that holds it",
+        "look": "a stubby adamantium derringer, its barrel etched with faint glowing sigils, grip wrapped in bone-pale leather that shifts like breathing skin",
+        "name": "Revenant Derringer",
+        "rarity": "RARE",
+        "reward_type": "ITEM"
+      },
+      {
+        "best_used_when": "the paperwork has been forged",
+        "catch": "it also reads what you erased",
+        "grants": "reads a claim's true owner from static alone",
+        "look": "a flicker of green code bleeding across the user's vision, ledger lines rendering mid-air in cracked, archaic script",
+        "name": "Ghost Ledger Read",
+        "rarity": "UNCOMMON",
+        "reward_type": "SKILL"
+      }
+    ],
+    "scenarios": [
+      {
+        "setup": "In Marshlight Draw at Sourmoss Landing, Tamsin Ruel has forty seconds to prove the buried adamantium vein is hers before the horn calls a duel she can't win.",
+        "title": "The Horn at Sourmoss Landing"
+      }
+    ],
+    "seed_facets": {
+      "catalog_source": "live",
+      "date": "2026-08-22",
+      "deterministic_seed": 9117762654851915366,
+      "elements": {
+        "character": [
+          {
+            "canonicalValue": "Bog Punk",
+            "id": 1646,
+            "randomWeight": 1.0,
+            "slug": "bog-punk",
+            "taxonomy": "GENRE",
+            "title": "Bog Punk"
+          },
+          {
+            "canonicalValue": "Deep Space Western",
+            "id": 1667,
+            "randomWeight": 1.0,
+            "slug": "deep-space-western",
+            "taxonomy": "GENRE",
+            "title": "Deep Space Western"
+          },
+          {
+            "canonicalValue": "Cozy Fantasy",
+            "id": 822,
+            "randomWeight": 1.5,
+            "slug": "cozy-fantasy",
+            "taxonomy": "GENRE",
+            "title": "Cozy Fantasy"
+          },
+          {
+            "canonicalValue": "Unicorn-Touched",
+            "id": 1337,
+            "randomWeight": 1.0,
+            "slug": "unicorn-touched",
+            "taxonomy": "SPECIES",
+            "title": "Unicorn-Touched"
+          },
+          {
+            "canonicalValue": "Cybernetic Hacker",
+            "id": 943,
+            "randomWeight": 1.0,
+            "slug": "cybernetic-hacker",
+            "taxonomy": "OCCUPATION",
+            "title": "Cybernetic Hacker"
+          },
+          {
+            "canonicalValue": "Coolheaded",
+            "id": 1091,
+            "randomWeight": 1.0,
+            "slug": "coolheaded",
+            "taxonomy": "PERSONALITY",
+            "title": "Coolheaded"
+          }
+        ],
+        "location": [
+          {
+            "canonicalValue": "Bog Punk",
+            "id": 1646,
+            "randomWeight": 1.0,
+            "slug": "bog-punk",
+            "taxonomy": "GENRE",
+            "title": "Bog Punk"
+          },
+          {
+            "canonicalValue": "Deep Space Western",
+            "id": 1667,
+            "randomWeight": 1.0,
+            "slug": "deep-space-western",
+            "taxonomy": "GENRE",
+            "title": "Deep Space Western"
+          },
+          {
+            "canonicalValue": "Martian Colonization",
+            "id": 810,
+            "randomWeight": 1.0,
+            "slug": "martian-colonization",
+            "taxonomy": "GENRE",
+            "title": "Martian Colonization"
+          },
+          {
+            "canonicalValue": "Unicorn-Touched",
+            "id": 1337,
+            "randomWeight": 1.0,
+            "slug": "unicorn-touched",
+            "taxonomy": "SPECIES",
+            "title": "Unicorn-Touched"
+          },
+          {
+            "canonicalValue": "Adamantium",
+            "id": 845,
+            "randomWeight": 1.0,
+            "slug": "adamantium",
+            "taxonomy": "MATERIAL",
+            "title": "Adamantium"
+          }
+        ],
+        "reward_item": [
+          {
+            "canonicalValue": "Bog Punk",
+            "id": 1646,
+            "randomWeight": 1.0,
+            "slug": "bog-punk",
+            "taxonomy": "GENRE",
+            "title": "Bog Punk"
+          },
+          {
+            "canonicalValue": "Deep Space Western",
+            "id": 1667,
+            "randomWeight": 1.0,
+            "slug": "deep-space-western",
+            "taxonomy": "GENRE",
+            "title": "Deep Space Western"
+          },
+          {
+            "canonicalValue": "Undead Glamour",
+            "id": 2059,
+            "randomWeight": 1.5,
+            "slug": "undead-glamour",
+            "taxonomy": "GENRE",
+            "title": "Undead Glamour"
+          },
+          {
+            "canonicalValue": "Adamantium",
+            "id": 845,
+            "randomWeight": 1.0,
+            "slug": "adamantium",
+            "taxonomy": "MATERIAL",
+            "title": "Adamantium"
+          }
+        ],
+        "reward_skill": [
+          {
+            "canonicalValue": "Bog Punk",
+            "id": 1646,
+            "randomWeight": 1.0,
+            "slug": "bog-punk",
+            "taxonomy": "GENRE",
+            "title": "Bog Punk"
+          },
+          {
+            "canonicalValue": "Deep Space Western",
+            "id": 1667,
+            "randomWeight": 1.0,
+            "slug": "deep-space-western",
+            "taxonomy": "GENRE",
+            "title": "Deep Space Western"
+          },
+          {
+            "canonicalValue": "Anachronism Mystery",
+            "id": 1695,
+            "randomWeight": 1.0,
+            "slug": "anachronism-mystery",
+            "taxonomy": "GENRE",
+            "title": "Anachronism Mystery"
+          },
+          {
+            "canonicalValue": "Cybernetic Hacker",
+            "id": 943,
+            "randomWeight": 1.0,
+            "slug": "cybernetic-hacker",
+            "taxonomy": "OCCUPATION",
+            "title": "Cybernetic Hacker"
+          }
+        ],
+        "scenario": [
+          {
+            "canonicalValue": "Bog Punk",
+            "id": 1646,
+            "randomWeight": 1.0,
+            "slug": "bog-punk",
+            "taxonomy": "GENRE",
+            "title": "Bog Punk"
+          },
+          {
+            "canonicalValue": "Deep Space Western",
+            "id": 1667,
+            "randomWeight": 1.0,
+            "slug": "deep-space-western",
+            "taxonomy": "GENRE",
+            "title": "Deep Space Western"
+          },
+          {
+            "canonicalValue": "Middle Management Horror",
+            "id": 1684,
+            "randomWeight": 1.0,
+            "slug": "middle-management-horror",
+            "taxonomy": "GENRE",
+            "title": "Middle Management Horror"
+          },
+          {
+            "canonicalValue": "Martian Colonization",
+            "id": 810,
+            "randomWeight": 1.0,
+            "slug": "martian-colonization",
+            "taxonomy": "GENRE",
+            "title": "Martian Colonization"
+          },
+          {
+            "canonicalValue": "Cozy Fantasy",
+            "id": 822,
+            "randomWeight": 1.5,
+            "slug": "cozy-fantasy",
+            "taxonomy": "GENRE",
+            "title": "Cozy Fantasy"
+          },
+          {
+            "canonicalValue": "Unicorn-Touched",
+            "id": 1337,
+            "randomWeight": 1.0,
+            "slug": "unicorn-touched",
+            "taxonomy": "SPECIES",
+            "title": "Unicorn-Touched"
+          }
+        ],
+        "vibe": [
+          {
+            "canonicalValue": "Bog Punk",
+            "id": 1646,
+            "randomWeight": 1.0,
+            "slug": "bog-punk",
+            "taxonomy": "GENRE",
+            "title": "Bog Punk"
+          },
+          {
+            "canonicalValue": "Deep Space Western",
+            "id": 1667,
+            "randomWeight": 1.0,
+            "slug": "deep-space-western",
+            "taxonomy": "GENRE",
+            "title": "Deep Space Western"
+          },
+          {
+            "canonicalValue": "Unicorn-Touched",
+            "id": 1337,
+            "randomWeight": 1.0,
+            "slug": "unicorn-touched",
+            "taxonomy": "SPECIES",
+            "title": "Unicorn-Touched"
+          },
+          {
+            "canonicalValue": "Cybernetic Hacker",
+            "id": 943,
+            "randomWeight": 1.0,
+            "slug": "cybernetic-hacker",
+            "taxonomy": "OCCUPATION",
+            "title": "Cybernetic Hacker"
+          }
+        ]
+      },
+      "extra_genres": {
+        "character": {
+          "canonicalValue": "Cozy Fantasy",
+          "id": 822,
+          "randomWeight": 1.5,
+          "slug": "cozy-fantasy",
+          "taxonomy": "GENRE",
+          "title": "Cozy Fantasy"
+        },
+        "location": {
+          "canonicalValue": "Martian Colonization",
+          "id": 810,
+          "randomWeight": 1.0,
+          "slug": "martian-colonization",
+          "taxonomy": "GENRE",
+          "title": "Martian Colonization"
+        },
+        "reward_item": {
+          "canonicalValue": "Undead Glamour",
+          "id": 2059,
+          "randomWeight": 1.5,
+          "slug": "undead-glamour",
+          "taxonomy": "GENRE",
+          "title": "Undead Glamour"
+        },
+        "reward_skill": {
+          "canonicalValue": "Anachronism Mystery",
+          "id": 1695,
+          "randomWeight": 1.0,
+          "slug": "anachronism-mystery",
+          "taxonomy": "GENRE",
+          "title": "Anachronism Mystery"
+        },
+        "scenario": {
+          "canonicalValue": "Middle Management Horror",
+          "id": 1684,
+          "randomWeight": 1.0,
+          "slug": "middle-management-horror",
+          "taxonomy": "GENRE",
+          "title": "Middle Management Horror"
+        }
+      },
+      "shared": {
+        "material": {
+          "canonicalValue": "Adamantium",
+          "id": 845,
+          "randomWeight": 1.0,
+          "slug": "adamantium",
+          "taxonomy": "MATERIAL",
+          "title": "Adamantium"
+        },
+        "personality": {
+          "canonicalValue": "Coolheaded",
+          "id": 1091,
+          "randomWeight": 1.0,
+          "slug": "coolheaded",
+          "taxonomy": "PERSONALITY",
+          "title": "Coolheaded"
+        }
+      },
+      "umbrella": {
+        "creature": {
+          "canonicalValue": "Unicorn-Touched",
+          "id": 1337,
+          "randomWeight": 1.0,
+          "slug": "unicorn-touched",
+          "taxonomy": "SPECIES",
+          "title": "Unicorn-Touched"
+        },
+        "genres": [
+          {
+            "canonicalValue": "Bog Punk",
+            "id": 1646,
+            "randomWeight": 1.0,
+            "slug": "bog-punk",
+            "taxonomy": "GENRE",
+            "title": "Bog Punk"
+          },
+          {
+            "canonicalValue": "Deep Space Western",
+            "id": 1667,
+            "randomWeight": 1.0,
+            "slug": "deep-space-western",
+            "taxonomy": "GENRE",
+            "title": "Deep Space Western"
+          }
+        ],
+        "wildcard": {
+          "canonicalValue": "Cybernetic Hacker",
+          "id": 943,
+          "randomWeight": 1.0,
+          "slug": "cybernetic-hacker",
+          "taxonomy": "OCCUPATION",
+          "title": "Cybernetic Hacker"
+        },
+        "wildcard_role": "occupation"
+      },
+      "version": 2
+    },
+    "slug": "marshlight-draw",
+    "title": "Marshlight Draw",
+    "vibe": {
+      "art_direction": "A muddy frontier street at dusk, wooden storefronts leaning into black bogwater, gas lanterns strung between a crashed satellite dish and a hitching post, the pale glow of an orbital ring above the tree line.",
+      "line": "In this bog, every duel is judged by a horn that already knows who lied.",
+      "title": "Marshlight Draw"
+    }
+  }
+}

@@ -72,6 +72,23 @@ STYLE_DIRECTIONS = (
 # pass. Builders no longer use one universal STYLE.
 STYLE = STYLE_DIRECTIONS[0]
 
+# An orthogonal axis to STYLE_DIRECTIONS. Twelve media multiplied by these treatments
+# give the remaster enough room to replace a few hundred images without producing a few
+# hundred cousins of the same diffusion look. Treatments describe camera, palette, and
+# light — never medium — so a treatment can ride on any style without fighting it.
+TREATMENTS = (
+    "low hero angle, deep shadow, one hard key light, restricted palette of two hues",
+    "overhead plan view, flat even daylight, chalky pastel palette, long soft shadows",
+    "eye-level middle distance, overcast diffuse light, muted earth palette, fine haze",
+    "extreme close framing with shallow focus, warm rim light against a cool ground",
+    "wide horizon-low composition, dusk gradient sky, silhouette-forward staging",
+    "tilted dynamic framing, hard coloured light from two directions, high saturation",
+    "symmetrical centred framing, cold monochrome palette, one saturated accent colour",
+    "backlit contre-jour staging, dust and moisture in the beam, deep bronze shadows",
+    "high vantage looking down a steep drop, cool blue shade against a hot lit floor",
+    "night scene lit only by sources inside the frame, deep blacks, small warm pools",
+)
+
 CAST_DIRECTION = (
     "cast the figures who appear naturally across many species, ages, body sizes, "
     "body shapes, and gender presentations"
@@ -107,6 +124,12 @@ def _a(name: str) -> str:
     return f"a single {name}"
 
 
+def _the(name: str) -> str:
+    """`the <name>` without doubling an article the title already carries."""
+    name = _clean(name)
+    return name if re.match(r"(?i)^(the|a|an)\s", name) else f"the {name}"
+
+
 def _world_context(title: str, vibe_line: str) -> str:
     line = _clean(vibe_line)
     title = _clean(title)
@@ -115,19 +138,38 @@ def _world_context(title: str, vibe_line: str) -> str:
     return f"set in the world of {title}" if title else ""
 
 
-def style_for_world(world_title: str) -> str:
+def _lane(world_title: str, salt: str, size: int, variant: int) -> int:
+    """Deterministic lane index, offset by `variant` for a remaster restyle."""
+    key = (_clean(world_title).casefold() + salt).encode("utf-8") or b"daily-dream"
+    index = int.from_bytes(hashlib.sha256(key).digest()[:4], "big")
+    return (index + variant) % size
+
+
+def style_for_world(world_title: str, variant: int = 0) -> str:
     """Return one deterministic visual language for all assets in a world.
 
     Python's built-in hash is intentionally randomized between processes, so use
     SHA-256 to keep rebuilds and retries stable. Twelve lanes make accidental
     adjacent-world repeats uncommon without turning style into another model call.
+
+    `variant` walks a world deliberately off its default lane. The catalog remaster
+    uses it to break up crowded lanes without making style selection random.
     """
-    key = _clean(world_title).casefold().encode("utf-8") or b"daily-dream"
-    index = int.from_bytes(hashlib.sha256(key).digest()[:4], "big") % len(STYLE_DIRECTIONS)
-    return STYLE_DIRECTIONS[index]
+    return STYLE_DIRECTIONS[_lane(world_title, "", len(STYLE_DIRECTIONS), variant)]
 
 
-def world_prompt(title: str, idea: str, vibe_line: str, vibe_art: str = "") -> str:
+def treatment_for_world(world_title: str, variant: int = 0) -> str:
+    """Camera/palette/light treatment for a world, orthogonal to its medium."""
+    return TREATMENTS[_lane(world_title, "|treatment", len(TREATMENTS), variant)]
+
+
+def visual_language(world_title: str, variant: int = 0) -> str:
+    """Medium plus treatment — the full visual identity of one remastered world."""
+    return f"{style_for_world(world_title, variant)}, {treatment_for_world(world_title, variant)}"
+
+
+def world_prompt(title: str, idea: str, vibe_line: str, vibe_art: str = "",
+                 style: str | None = None) -> str:
     return _join(
         f"establishing key art for {_clean(title)}",
         vibe_art or idea,
@@ -136,28 +178,30 @@ def world_prompt(title: str, idea: str, vibe_line: str, vibe_art: str = "") -> s
         "wide establishing view with a strong foreground anchor, clear middle ground, "
         "and deep atmospheric background",
         "the setting is the subject; any figures present are incidental to the place",
-        style_for_world(title),
+        style or style_for_world(title),
         NO_TEXT,
     )
 
 
 def location_prompt(title: str, art_direction: str, known_for: str,
-                    best_scene: str, world_title: str, vibe_line: str) -> str:
+                    best_scene: str, world_title: str, vibe_line: str,
+                    style: str | None = None) -> str:
     return _join(
-        f"{_clean(art_direction)} — the {_clean(title)}",
+        f"{_clean(art_direction)} — {_the(title)}",
         f"a place known for {_clean(known_for)}" if known_for else "",
         f"staged at its most telling moment: {_clean(best_scene)}" if best_scene else "",
         _world_context(world_title, vibe_line),
         CARD_FRAMING,
         "architectural establishing shot, the environment is the subject and any figures "
         "present are small and incidental, included only for scale",
-        style_for_world(world_title),
+        style or style_for_world(world_title),
         NO_TEXT,
     )
 
 
 def character_prompt(name: str, look: str, role_drive: str, carries: str,
-                     world_title: str, vibe_line: str) -> str:
+                     world_title: str, vibe_line: str,
+                     style: str | None = None) -> str:
     return _join(
         f"character portrait of {_clean(name)}",
         _clean(look),
@@ -167,18 +211,19 @@ def character_prompt(name: str, look: str, role_drive: str, carries: str,
         CARD_FRAMING,
         "single figure, three-quarter view from the waist up, filling most of the frame, "
         "sharply separated from a simple world-specific background",
-        style_for_world(world_title),
+        style or style_for_world(world_title),
         NO_TEXT,
     )
 
 
 def reward_prompt(name: str, reward_type: str, look: str, grants: str,
-                  rarity: str, world_title: str, vibe_line: str) -> str:
+                  rarity: str, world_title: str, vibe_line: str,
+                  style: str | None = None) -> str:
     kind = str(reward_type or "ITEM").upper()
     look = _clean(look)
     grants = _clean(grants)
     rarity = _clean(rarity).lower()
-    style = style_for_world(world_title)
+    style = style or style_for_world(world_title)
 
     if kind == "SKILL":
         manifestation = look or (
@@ -214,7 +259,8 @@ def reward_prompt(name: str, reward_type: str, look: str, grants: str,
 
 
 def scenario_prompt(title: str, setup: str, location_title: str,
-                    world_title: str, vibe_line: str) -> str:
+                    world_title: str, vibe_line: str,
+                    style: str | None = None) -> str:
     return _join(
         f"establishing scene art for the moment titled {_clean(title)}",
         _clean(setup),
@@ -224,6 +270,6 @@ def scenario_prompt(title: str, setup: str, location_title: str,
         "a single decisive moment with one clear focal action, foreground figures reacting, "
         "uncluttered staging so the event reads at a glance",
         CAST_DIRECTION,
-        style_for_world(world_title),
+        style or style_for_world(world_title),
         NO_TEXT,
     )
