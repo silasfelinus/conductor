@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: ready
+  status: claimed
   passes: 49
   stakes: reversible
   note: >-
@@ -382,11 +382,11 @@ tasks:
     No new bug found in any of the four. Minor, non-bug observation: kr-chat-window.vue's narratorTurnNumber(index) recomputes by re-scanning all turns up to index on every rendered turn (O(n^2) over a full transcript) -- not a correctness issue at the session sizes these products produce (dozens of beats, not thousands), so not filed as a fix. visibleStreamingText()'s partial-marker trim only catches [STORY_STATE] when it starts a fresh line, not mid-line after other prose on the same streamed line -- this is explicitly carried over from the predecessor narrative-transcript.vue per the code comment, and the model has always emitted the marker on its own line in practice, so left as an inherited, not newly-introduced, simplification.
 
     Releasing the claim without a code change; re-armed to ready. Kaizen for cycle 40: components/pages/storybook-library-page.vue's full template/script (per cycle 38's note) has never had a dedicated top-to-bottom read, only its call sites into storybookLibraryHelper.ts -- the clear next lead.
-  updated: '2026-08-29T17:30:40Z'
+  updated: '2026-08-29T23:40:28Z'
   implementation_pr: 'silasfelinus/kind_robots#2054, silasfelinus/kind_robots#2056, silasfelinus/kind_robots#2059'
   owner: worker
-  claimed_by: 20260829T172841Z-storybook-t010-sched
-  claimed_at: '2026-08-29T17:28:41Z'
+  claimed_by: 20260829T232731-storybookt010-sched
+  claimed_at: '2026-08-29T23:40:28Z'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
