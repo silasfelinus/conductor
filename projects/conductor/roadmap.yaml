@@ -4742,9 +4742,9 @@ tasks:
   - id: t-137
     milestone: m2
     title: "healthcheck.ps1's own default render-stats host is still the retired Vercel URL, and a share-recovery double-restart race can fire ComfyUI twice in one tick"
-    status: ready
+    status: claimed
     gate_human: false
-    owner: null
+    owner: worker
     stakes: reversible
     passes: 0
     note: >-
@@ -4771,3 +4771,6 @@ tasks:
       base URL into one tested ops config source so wrappers and scripts cannot drift
       independently -- worth considering as part of this task's fix rather than a
       third patch to the same drift class.
+    claimed_by: claude-conductor-scheduled-20260829T0035-t137
+    claimed_at: '2026-08-29T00:35:49Z'
+    updated: '2026-08-29T00:35:49Z'
