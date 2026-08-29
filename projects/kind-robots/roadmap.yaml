@@ -3089,3 +3089,61 @@ tasks:
       no database, so the showcase queries are shape-checked only and the
       screenshots used a mocked payload. The first honest look at this page is
       Silas on main.
+
+  - id: t-079
+    milestone: m6
+    title: "Fix the /api/showcase/home 500 that made the new home page inert"
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-08-29T00:45:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#2188'
+    approved_by_human: true
+    depends_on: [t-077]
+    note: >
+      Silas, 2026-08-29, on the home page t-077 had just merged: "looks the
+      same, other than the message 'showcase can't be loaded right now'". The
+      whole redesign was inert in production -- /api/showcase/home returned 500
+      on every request, so the page fell through to its error note and the
+      newsfeed, which is exactly what it looked like before the redesign.
+
+      ROOT CAUSE. `entityArtSelect` listed `path` and `fileType` alongside the
+      four *Path columns and was spread into the select for all seven showcase
+      objects (Dream, Character, Bot, Reward, Scenario, Facet, Project). Those
+      two columns exist only on ArtImage. Prisma rejects that before it opens a
+      connection -- "Unknown field `path` for select statement on model
+      `Dream`" -- and because the handler fans out through Promise.all, one bad
+      select failed all ten queries at once.
+
+      WHY THE TYPECHECK PASSED, WHICH IS THE REUSABLE PART. TypeScript's
+      excess-property checking applies only to FRESH object literals. Spreading
+      a variable (`select: { id: true, ...entityArtSelect }`) launders its
+      properties past that check, so vue-tsc was clean on a query Prisma always
+      rejects. Adding `satisfies` at the call sites does not help either -- the
+      spread is still not fresh. The fix constrains the shared constant itself:
+      `as const satisfies Prisma.DreamSelect & Prisma.CharacterSelect & ...`
+      across all seven models, so a field must exist on every one of them to
+      live there. Verified by reverting that line and watching the compiler
+      reject `path` as an excess property, naming all seven Select types. The
+      ArtImage relation keeps both columns under a separate
+      artImageRelationSelect, since an ArtImage genuinely has them.
+
+      HOW IT SHIPPED BROKEN, recorded because the process failure is more
+      reusable than the bug. The build sandbox has no database, and the first
+      curl of this route during t-077 returned "Invalid
+      `prisma.dream.findMany()` invocation" with the arguments rendered beneath
+      it. That WAS this validation error. It was read as a
+      missing-database/connection error from the truncated output and not
+      pursued, and the endpoint merged unexercised. See TALKBACK.md 2026-08-29.
+
+      Verified for this fix: all ten queries reach the connection stage instead
+      of failing validation, checked offline against the generated client with
+      a throwaway MariaDB adapter -- Prisma validates before it connects, which
+      is precisely what makes that check possible with no database. vue-tsc,
+      eslint, prettier and the layout contract all clean. Merged as squash
+      0ec17a1b6622520650f98be444b1ba2cfa79803e.
+
+      Still NOT verified against real rows: this proves the queries are valid,
+      not that the hero picks a sensible dream or that the rails come back
+      populated. That remains t-078's territory and Silas's eye.
