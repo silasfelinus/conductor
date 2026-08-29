@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-29T11:37:15Z
+Generated: 2026-08-29T11:37:49Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **820**
-- Outcomes: blocked: 16, cancelled: 1, done: 803
+- Closed tasks recorded: **821**
+- Outcomes: blocked: 16, cancelled: 1, done: 804
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -52,7 +52,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | music-mentor | 1 | 100% |
 | newsfeed | 20 | 100% |
 | packmaker | 10 | 100% |
-| rainbow-butterflies | 4 | 100% |
+| rainbow-butterflies | 5 | 100% |
 | ruler-hooked | 11 | 100% |
 | scene-animator | 2 | 100% |
 | serendipity | 3 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 804 | 99% |
+| software | 805 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-29 `rainbow-butterflies/t-001` — When a task literally asks for a 'matrix' but the requested content already exists as prose scattered across multiple files, the real gap is often structural (consolidate into one table) rather than missing research -- check what already exists before assuming a from-scratch rewrite is needed.
 - 2026-08-29 `rainbow-butterflies/t-008` — Another clean first-pass success, same session as t-007: DESIGN-BRIEF.md already contained a "six-week first release cadence" section with phases, seven content pillars, and a publishing ratio -- reading the existing brief in full before writing turned this into "make the existing plan concrete" rather than inventing a parallel structure. Checking each week's item list against the brief's own 50/25/15/10 ratio caught that only Week 4 and Week 6 should carry a direct ask, matching a constraint the brief already stated but the task description alone didn't repeat.
 - 2026-08-29 `rainbow-butterflies/t-007` — Straightforward first-pass success: turned RESEARCH.md's existing prose channel matrix into a concrete per-channel checklist (handles, profile fields, API/app requirements, verification, fees, required human inputs, wave) by systematically walking every network RESEARCH.md already covered rather than starting fresh, and reusing AMI-IDENTITY.md's existing bios instead of inventing new copy. Marking genuinely unresolved research items "recheck before launch" (rather than guessing) kept the document honest about what it doesn't know yet.
 - 2026-08-29 `rainbow-butterflies/t-006` — A Worker session had already set status: review and finished the actual content (AMI-IDENTITY.md) but never opened the PR, so the branch (worker/rainbow-t006-ami- identity-20260829) sat unreviewed. Opening a PR from an existing worker/* branch without pushing any new commits to it is within the Reviewer's scope; a clean three-way merge onto current main showed only the new file as the diff once the branch's own stale roadmap.yaml edit was superseded by a later main commit. Worth checking for stranded no-PR worker branches (not just open PRs) at session start, since select_role.py's candidate_worker_branches surfaces them even when list_pull_requests shows nothing to review.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-28 `conductor/t-135` — Every roadmap TASK status has cross-referencing tooling; MILESTONE status had none, and it drifted badly once checked -- 30 real mismatches across 20 active projects on the first run, not just the one case that prompted the task. A field that is only ever read (never audited against the data it summarizes) will drift silently no matter how cheap it would be to keep correct; the fix is a lightweight standalone advisory check wired into the session-startup sweep, not a one-time manual correction.
 - 2026-08-28 `conductor/t-133` — A guard added to fix one lane's resubmission bug (Daily Dream's should_consume_after_submission, scoped via is_daily_dream_request) does not automatically protect a second lane that reaches the same underlying data through a different, unpatched import path (submit_mandarin_tutor_artjobs.py imports consume_art_requests directly, bypassing the consume_art_requests_to_media.py monkeypatch entirely). When a task says "widen guard X", check every caller reaches guard X's actual code path before assuming a change to X's own module is sufficient -- here the real fix had to live one layer lower, in a function both lanes genuinely share.
 - 2026-08-28 `conductor/t-134` — A directory-listing-only share probe ("can I read one entry") is not a test for a partially-populated share -- it needs to check the specific files a render actually depends on, opened and read, not just scandir'd or stat'd (a stale SMB handle can satisfy a stat too). Generalized as KR_SHARE_REQUIRED_FILES, opt-in and unset by default so the existing directory-only behavior is unchanged unless configured.
-- 2026-08-28 `cthulhuquarium/t-063` — A kaizen note's framing of "what's still open" (t-062's note named only t-058) was itself stale by the time this audit ran -- it undercounted by four tasks (t-019, t-021, t-022, t-041 were also open needs-human items). A planning/audit task should always re-derive the open set directly from live roadmap state (grep every task's own status) rather than trusting the prior task's kaizen prose about what remains, even when that prose sounds authoritative. Also caught a genuinely stale milestone `status` field (m3 sat at `not-started` despite 25/31 tasks done) -- milestone status isn't auto-derived from task counts anywhere in this repo's tooling, so it silently drifts unless an audit like this one checks it by hand.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-29T11:37:15Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-29T11:37:49Z_
