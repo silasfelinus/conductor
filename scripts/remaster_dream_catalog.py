@@ -68,6 +68,7 @@ ENTITY_TYPES = {
 }
 
 REWRITE_VERDICTS = {audit.SUBSTANTIAL, audit.RETIRE}
+# ART_PENDING is deliberately absent: those renders are already staged and in flight.
 ART_ACTION_VERDICTS = {audit.ART_REGENERATE, audit.ART_RESTYLE}
 
 

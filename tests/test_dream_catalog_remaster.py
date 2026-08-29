@@ -678,3 +678,35 @@ def test_a_spire_crystal_facet_licenses_the_spire_it_asked_for():
     assert ruts.facets_request("tower-beacon", facets)
     assert ruts.name_rut_complaints(["The Spire That Remembers"], facets) == []
     assert ruts.name_rut_complaints(["The Spire That Remembers"], "{}")
+
+
+def test_renders_this_pass_staged_are_pending_not_a_second_regeneration(backlog: Path):
+    """A re-run must not queue a replacement for a replacement still in the relay."""
+    built = built_data(attached=False)
+    built["art"] = [
+        {"request_id": f"dream-cycle-remaster-TESTSTAMP-{index}", "attached": False}
+        for index in range(6)
+    ]
+    built["remasters"] = [
+        {"stamp": "TESTSTAMP", "art_request_ids": [row["request_id"] for row in built["art"]]}
+    ]
+    write_bundle(backlog, "2026-08-06", CLEAN_PROPOSAL, built=built)
+
+    result = audit.audit_catalog(audit.load_bundles(backlog))[0]
+
+    assert result.art["verdict"] == audit.ART_PENDING
+    assert "still working through the relay" in " ".join(result.art["reasons"])
+
+    manifest = audit.build_manifest([result], window_days=2, backlog=backlog)
+    plan = remaster.build_plan(manifest)
+    assert plan["waves"]["3-art-only"] == []  # nothing to re-queue
+    assert manifest["summary"]["art"][audit.ART_PENDING] == 1
+
+
+def test_art_never_attached_outside_this_pass_still_reads_as_regenerate(backlog: Path):
+    write_bundle(backlog, "2026-08-06", CLEAN_PROPOSAL, built=built_data(attached=False))
+
+    result = audit.audit_catalog(audit.load_bundles(backlog))[0]
+
+    assert result.art["verdict"] == audit.ART_REGENERATE
+    assert "ever attached" in " ".join(result.art["reasons"])

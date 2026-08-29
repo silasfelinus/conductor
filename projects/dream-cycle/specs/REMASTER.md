@@ -62,6 +62,9 @@ Scores map to the issue's four bands: `keep` (≤2), `light-refresh` (3–5),
   renders never attached;
 * `restyle` — the prose and images are fine, but the world sits in an overcrowded style
   lane and should move to a different visual language;
+* `pending-render` — replacement renders this pass already staged, still working through
+  the relay. The art lane skips these, so re-running it never queues a replacement for a
+  replacement;
 * `keep-art`.
 
 A bundle whose proposal predates the version-2 shape is marked `legacy_shape`. It cannot
