@@ -23,9 +23,7 @@ Rainbow Butterflies has a narrower job:
 5. turn useful activity into attention and attention into direct malaria-net donations;
 6. measure whether any of this actually works.
 
-The domain `rainbowbutterflies.org` is therefore not intended to be a lightweight duplicate of Kind Robots. It should be the mission's front porch and collaboration garden, with Kind Robots behind it as the engine.
-
-Do not use or assume `rainbowbutterflies.com` in product, auth, deployment, documentation, or DNS planning.
+The domain `rainbowbutterflies.org` is therefore not intended to be a lightweight duplicate of Kind Robots. It should be the mission's front porch and collaboration garden, with Kind Robots behind it as the engine. Use this canonical domain for product, authentication, deployment, documentation, discovery, and DNS planning.
 
 ## Relationship to Kind Economy
 
