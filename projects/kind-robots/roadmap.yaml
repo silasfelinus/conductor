@@ -3412,8 +3412,8 @@ tasks:
   - id: t-083
     milestone: m6
     title: "Home page fifth pass: interstitial, art-queue toggle, and the human-gate answer pipeline"
-    status: review
-    owner: worker
+    status: done
+    owner: null
     passes: 0
     stakes: reversible
     updated: '2026-08-29T08:00:00Z'
@@ -3510,6 +3510,16 @@ tasks:
       completes, and all eight new Prisma selects were validated against the
       schema offline WITH a negative control -- dream.path, the exact field that
       500'd the whole page on 2026-08-29 -- proving the probe catches that class
-      of bug rather than passing vacuously. NOT verified: the answer round trip
-      against a live conductor, since this sandbox has no database and no
-      projection; it is proven by construction and by conductor's own tests.
+      of bug rather than passing vacuously. CI's TypeScript job caught one thing
+      the local checks had not: the interstitial's $fetch failed with TS2589,
+      fixed by putting /api/showcase/detail on the same {success, message, data}
+      envelope home.get.ts already uses rather than casting past it.
+
+      NOT verified: the answer round trip against a live conductor, since this
+      sandbox has no database and no projection; it is proven by construction
+      and by conductor's own tests. Page height was also not re-measured -- the
+      mocked-payload Playwright harness was not rebuilt, so the net of a taller
+      hero card, a shorter feed header and taller feed cards against the
+      two-screen budget is unknown.
+
+      Merged as squash fb4b2b5cb83f081216846ccbdeaf2562cc949e96.
