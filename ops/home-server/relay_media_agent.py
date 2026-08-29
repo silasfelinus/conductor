@@ -450,21 +450,13 @@ def process_with_media(job):
 
     relative = target
     job_id = job["id"]
-    engine = (job.get("engine") or "A1111").upper()
+    engine = relay.resolve_job_engine(job)
     payload = job_payload(job)
     payload["_relayClientId"] = f"{relay.AGENT_ID}-artjob-{job_id}"
     relay.log(f"job {job_id}: {engine} direct media -> {relative.as_posix()}")
 
-    if engine == "COMFY":
-        media = relay.run_comfy(payload)
-        provenance = relay.completion_provenance(payload, media)
-    else:
-        media = {
-            "data_b64": relay.run_a1111(payload),
-            "file_type": "png",
-            "is_video": False,
-        }
-        provenance = None
+    media = relay.run_comfy(payload)
+    provenance = relay.completion_provenance(payload, media)
 
     staged_art_image_id = relay.upload_result(job, media)
     if not staged_art_image_id:

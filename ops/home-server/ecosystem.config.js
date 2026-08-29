@@ -11,7 +11,6 @@
 
 // ---- VERIFY THESE PATHS ----------------------------------------------------
 const COMFY_DIR = 'D:/comfy/comfy-fast'
-const SD_DIR = 'D:/code/sd-webui-forge-neo'
 const LOG_DIR = `${__dirname}/logs`
 
 // The SMB share on alexandria, reached from this box. Every model path below is
@@ -60,7 +59,7 @@ module.exports = {
       out_file: `${LOG_DIR}/comfyui.out.log`,
       error_file: `${LOG_DIR}/comfyui.err.log`,
       merge_logs: true,
-      // ComfyUI and sd-webui do not timestamp their own output, and theirs is
+      // ComfyUI does not timestamp its own output, and theirs is
       // where the real generation errors surface -- without this a red line
       // cannot be told apart from a week-old one. Our own agents DO timestamp
       // themselves, so they set time:false rather than carry two stamps per
@@ -68,90 +67,6 @@ module.exports = {
       time: true,
       log_date_format: 'YYYY-MM-DDTHH:mm:ssZ'
     },
-    {
-      // Stable Diffusion WebUI (forge-neo) at D:\code\sd-webui-forge-neo.
-      // Mirrors webui-user.bat's COMMANDLINE_ARGS, passed straight to launch.py
-      // via the venv python (webui.bat's only supervision-relevant job).
-      // --api is REQUIRED for the kind_robots /sdapi/v1/txt2img handshake.
-      // If venv/ doesn't exist yet, run the old webui-user.bat once to bootstrap.
-      name: 'sd-webui',
-      cwd: SD_DIR,
-      script: `${SD_DIR}/venv/Scripts/python.exe`,
-      args: [
-        'launch.py',
-        '--api',
-        '--listen',
-        '--cuda-malloc',
-        '--ckpt-dir',
-        `${KR_MODEL_ROOT}/Stable-diffusion`,
-        '--cors-allow-origins',
-        'https://kindrobots.org,http://localhost:3000,http://localhost:3001',
-        '--lora-dir',
-        `${KR_MODEL_ROOT}/Lora`,
-        '--vae-dir',
-        `${KR_MODEL_ROOT}/vae`,
-        '--controlnet-dir',
-        `${KR_MODEL_ROOT}/controlnet`,
-        '--xformers',
-        '--skip-python-version-check',
-        '--reserve-vram',
-        '2',
-        '--enable-insecure-extension-access'
-      ].join(' '),
-      interpreter: 'none',
-      windowsHide: true,
-      autorestart: true,
-      restart_delay: 5000,
-      max_restarts: 50,
-      min_uptime: 30000,
-      kill_timeout: 15000,
-      out_file: `${LOG_DIR}/sd-webui.out.log`,
-      error_file: `${LOG_DIR}/sd-webui.err.log`,
-      merge_logs: true,
-      // ComfyUI and sd-webui do not timestamp their own output, and theirs is
-      // where the real generation errors surface -- without this a red line
-      // cannot be told apart from a week-old one. Our own agents DO timestamp
-      // themselves, so they set time:false rather than carry two stamps per
-      // line (see kr-relay below).
-      time: true,
-      log_date_format: 'YYYY-MM-DDTHH:mm:ssZ'
-    },
-    // kr-relay — pull-based bridge between the kind_robots ArtJob queue and the
-    // local engines. relay_media_agent.py wraps the proven relay_agent.py and
-    // writes Kind Robots-targeted jobs to their exact self-hosted media path
-    // before reporting the job successful.
-    //
-    // It ALSO runs the LoRA auto-import watcher on a daemon thread in the same
-    // process (relay_media_agent.start_lora_watcher). Files dropped in
-    // <LORA_ROOT>/import are auto-detected (base model, SFW/NSFW, triggers,
-    // preview image), sorted into <Base>/<SFW|NSFW>/, and upserted as
-    // kind_robots Resources with the localPath the enqueue path
-    // (server/utils/artLoraResource.ts) needs — reusing scan_loras.py +
-    // import_catalog.py. One process, one token, one log; the watcher thread
-    // can't stall the render loop and vice versa. The array host (alexandria)
-    // is a locked-down NAS that doesn't run ad-hoc daemons, so this render box
-    // is the permanent home. The tree is reached over SMB (Z:), which is
-    // case-insensitive — with the folders already merged to single casing
-    // (case_merge.py), Windows moves are safe and prevent fresh case-dupes.
-    // If the LoRA env vars are unset the watcher just logs "disabled" and
-    // kr-relay runs as a pure render relay.
-    //
-    // One-time, in PowerShell (keeps secrets out of git):
-    //   setx KR_RELAY_TOKEN "your-admin-apikey"
-    //   setx KR_RELAY_USER_ID "1"
-    //   setx CIVITAI_TOKEN "your-civitai-token"      # for LoRA detection
-    //   py -3.12 -m pip install Pillow
-    //
-    // The canonical media destination is Z:/kindrobots/image. Override
-    // KR_MEDIA_IMAGES_DIR only when intentionally moving the mounted image root.
-    // The scan/import tools run from LOCAL disk — vendored copies in
-    // ops/home-server/lora-catalog/ (the agent defaults to them). Only the LoRA
-    // files are remote (LORA_ROOT=Z:). Re-sync those two scripts from kind_robots
-    // when its lora-catalog tools change (see lora-catalog/PROVENANCE.md).
-    // Open a NEW shell after setx, then:
-    //   pm2 start ecosystem.config.js --only kr-relay
-    //   pm2 save
-    // NEVER paste the real token into this file — it is committed to git.
     {
       name: 'kr-relay',
       cwd: __dirname,

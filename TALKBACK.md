@@ -27045,3 +27045,44 @@ nothing to restore from until he does. Separately, kr-relay has no preflight aga
 that is not yet listening (jobs 10255-10257 burned to FAILED at 3 attempts each during a boot
 window, `WinError 10061`), which is the same shape as the share gate and worth the same
 treatment. Not filed as a task yet — awaiting Silas.
+
+---
+
+## 2026-08-29 | Agent (Claude) | ops/home-server | remove A1111/Forge from the render box
+
+**Subject:** Silas: "we should not have references to a1111 period. it's an old app, it's not used
+at all." Removed it from everything that runs; left the historical record and one user-facing
+kind_robots feature that is not the same thing.
+
+**Detail:**
+- Surfaced by the reboot recovery: `pm2 restart ecosystem.config.js` started `sd-webui` (and
+  `kr-download`) because restarting an ecosystem file starts every app defined in it, not just
+  the running ones. The subsequent `pm2 save` then froze a six-app list into `dump.pm2`, so every
+  future boot would have brought A1111 up to hold VRAM ComfyUI wanted.
+- Removed: the `sd-webui` pm2 app and `SD_DIR` (`ecosystem.config.js`), the `sd-webui` liveness
+  target (`healthcheck.ps1`), `run_a1111`/`SD_URL`/the A1111 heartbeat (`relay_agent.py`), the
+  A1111 branch in `relay_media_agent.py`, and every live instruction in `README.md` /
+  `SELF-HOSTED-MEDIA.md` / `start-engines.bat`.
+- `resolve_job_engine` now accepts COMFY only and rejects anything else with "this relay only
+  drives ComfyUI". Deliberate reversal of the earlier "explicit A1111 jobs remain supported"
+  decision: with the app gone those jobs could only time out against a dead port 7860, so failing
+  fast with a real reason is strictly better. Test renamed to assert the rejection.
+- **Found a latent bug while cutting:** `relay_media_agent.py` defaulted an unlabeled job to
+  `A1111` (`job.get("engine") or "A1111"`) while `relay_agent.py` defaulted the same job to
+  `COMFY`. Any job reaching the direct-media path without an explicit engine would have gone to
+  A1111. Both now route through `relay.resolve_job_engine`.
+- **Kept deliberately, flagged to Silas:** (1) the `"a1111": "krea2"` normalization in
+  `consume_art_queue_core.py` -- that is data compatibility for yaml entries already on disk, and
+  removing it converts a silent migration into a hard rejection; no live yaml uses it. (2)
+  `docs/art-api.md` and the kind_robots A1111 server type -- `POST /api/art/generate` is a live,
+  mana-gated endpoint where *users register their own* A1111 server, backed by a Prisma enum,
+  stores, and UI. That is a product feature, not detritus on this box, and deleting it is a
+  schema/migration decision. (3) Roadmap/CHANGELOG/LEARNING history, which is the record.
+
+**Verification:** full suite `1378 passed, 1 skipped, 35 subtests` in 98s; `ecosystem.config.js`
+loads under node and resolves to `comfyui, kr-relay, kr-download`. Not executed on ferngrotto --
+Silas still needs `pm2 delete sd-webui && pm2 save` there to clear the app from the saved dump.
+
+**What was good:** checking kind_robots before treating "no references period" as global -- the
+same string names a dead local app and a live user-facing feature, and a blind sweep would have
+broken the latter.

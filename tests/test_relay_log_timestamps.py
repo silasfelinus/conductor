@@ -205,8 +205,8 @@ def test_pm2_does_not_double_stamp_the_self_stamping_agents():
         block = _pm2_app_block(config, app)
         assert "time: false" in block, f"{app} would carry two timestamps per line"
         assert "time: true" not in block
-    # ComfyUI and sd-webui do not stamp themselves, so pm2 must.
-    for app in ("comfyui", "sd-webui"):
+    # ComfyUI does not stamp itself, so pm2 must.
+    for app in ("comfyui",):
         block = _pm2_app_block(config, app)
         assert "time: true" in block, f"{app} does not stamp itself and needs pm2's"
         assert "log_date_format" in block

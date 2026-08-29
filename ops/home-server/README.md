@@ -1,17 +1,23 @@
-# Home Server Supervision — ComfyUI + Stable Diffusion (A1111) auto-restart
+# Home Server Supervision — ComfyUI auto-restart
 
-Keeps the two art backends on Silas's Windows box alive without hand-launching
+Keeps the art backend on Silas's Windows box alive without hand-launching
 `.bat` files: crash → auto-restart, reboot → auto-start, plus an optional
 health watchdog. Uses **pm2**, which runs fine on Windows.
+
+> **A1111 / Forge was removed 2026-08-29.** It had not been used in a long
+> time, and its pm2 entry meant `pm2 restart ecosystem.config.js` silently
+> started it and held VRAM that ComfyUI wanted. ComfyUI is the only engine this
+> box runs. If you find an `sd-webui` process still registered from an older
+> `pm2 save`, clear it with `pm2 delete sd-webui && pm2 save`.
 
 Files in this folder:
 
 | File | What it is |
 |---|---|
-| `ecosystem.config.js` | pm2 process definitions for `comfyui` and `sd-webui` (plus opt-in `kr-relay` and `kr-download`) |
+| `ecosystem.config.js` | pm2 process definitions for `comfyui` (plus opt-in `kr-relay` and `kr-download`) |
 | `healthcheck.ps1` | optional watchdog — probes the HTTP health endpoints and `pm2 restart`s a hung process |
 | `restore-shares.ps1` | logon-time repair for **this box's** SMB drive letters after *it* reboots (healthcheck covers the NAS going away while this box stays up) |
-| `relay_agent.py` | pull-based bridge: claims ArtJobs from kind_robots and drives local ComfyUI/A1111 (enable after art-generator-connect/t-010 deploys) |
+| `relay_agent.py` | pull-based bridge: claims ArtJobs from kind_robots and drives local ComfyUI (enable after art-generator-connect/t-010 deploys) |
 | `relay_download_agent.py` | pull-based model downloader: claims queued LoRA/checkpoint downloads, fetches them onto the engine dirs, and catalogs them as Resources (the `kr-download` app) |
 | `start-engines.bat` | double-click launcher: starts both engines (no-op if running) and attaches the live log stream — the old bats' echo, without owning the processes |
 
@@ -36,19 +42,17 @@ bottom if you'd rather not unpack a bat.)
 # 1. Install pm2 (needs Node.js; you already have it for kind_robots)
 npm install -g pm2
 
-# 2. Verify the two *_DIR paths at the top of ecosystem.config.js
-#    (pre-filled from startcomfyfast.bat / webui-user.bat, 2026-07-05:
-#     D:\comfy\comfy-fast and D:\code\sd-webui-forge-neo)
+# 2. Verify COMFY_DIR at the top of ecosystem.config.js
+#    (pre-filled from startcomfyfast.bat, 2026-07-05: D:\comfy\comfy-fast)
 
 # 3. Stop any copies still running from the old bats, then start under pm2
 cd <this folder>   # wherever you checked out conductor/ops/home-server
 pm2 start ecosystem.config.js
 
 # 4. Verify
-pm2 status          # both should say "online"
+pm2 status          # comfyui should say "online"
 pm2 logs comfyui    # watch ComfyUI boot; Ctrl+C to detach
 curl http://127.0.0.1:8188/system_stats       # ComfyUI health
-curl http://127.0.0.1:7860/sdapi/v1/progress  # A1111 health (needs --api)
 
 # 5. Freeze the process list so pm2 can restore it
 pm2 save
@@ -140,11 +144,10 @@ Two layers of coverage:
 
 ```powershell
 pm2 status                  # what's running
-pm2 restart comfyui         # bounce one backend
-pm2 restart sd-webui
+pm2 restart comfyui         # bounce the render backend
 pm2 stop all                # free the GPU (e.g. before gaming)
 pm2 start all
-pm2 logs sd-webui --lines 200
+pm2 logs comfyui --lines 200
 ```
 
 ## What carried over from the old bats (and what deliberately didn't)
@@ -154,20 +157,18 @@ Checklist against `startcomfyfast.bat` / `webui-user.bat` (2026-07-05):
 | Old bat behavior | In the pm2 kit? |
 |---|---|
 | ComfyUI: venv python, `--listen 127.0.0.1 --port 8188 --enable-cors-header` | ✅ verbatim in `ecosystem.config.js` |
-| Forge: full `COMMANDLINE_ARGS` — `--api --listen --cuda-malloc`, Z:\ model dirs, `--cors-allow-origins` (kindrobots.org, vercel, localhost:3000/3001), `--xformers --skip-python-version-check --reserve-vram 2` | ✅ verbatim, passed straight to `launch.py` |
-| Tailscale Serve (`serve --bg` → 443 for comfy, `--https=8443` for forge) | ⚠️ **not pm2-managed — it doesn't need to be.** `tailscale serve --bg` config persists in tailscaled across reboots. Run the two commands once (below), confirm with `tailscale serve status`, done. |
-| pip repair / ensurepip bootstrap (webui-user.bat) | ❌ intentionally left out — that's a one-time repair job, not supervision. Keep the old bat around; if Python ever breaks, run it once by hand. |
+| Forge: full `COMMANDLINE_ARGS` | ❌ **removed 2026-08-29** — the app was unused and its pm2 entry cost VRAM. |
+| Tailscale Serve (`serve --bg` → 443 for comfy) | ⚠️ **not pm2-managed — it doesn't need to be.** `tailscale serve --bg` config persists in tailscaled across reboots. Run the two commands once (below), confirm with `tailscale serve status`, done. |
 | `pause` at the end | ❌ dropped — it's what makes bats un-automatable. |
 
 ### Tailscale Serve (one-time)
 
 ```powershell
 & "C:\Program Files\Tailscale\tailscale.exe" serve --bg http://127.0.0.1:8188
-& "C:\Program Files\Tailscale\tailscale.exe" serve --bg --https=8443 http://127.0.0.1:7860
-& "C:\Program Files\Tailscale\tailscale.exe" serve status   # verify both mappings
+& "C:\Program Files\Tailscale\tailscale.exe" serve status   # verify the mapping
 ```
 
-If both mappings already show in `serve status` from your old bat runs, there's
+If the mapping already shows in `serve status` from your old bat runs, there's
 nothing to do — the config is already persistent.
 
 ## The relay agent (kr-relay) — enable after t-010 deploys
@@ -593,15 +594,12 @@ broken, so it is safe to run before you are sure the mount is fixed.
 
 ## Notes & gotchas
 
-- **A1111 must run with `--api`** or the kind_robots handshake
-  (`/sdapi/v1/txt2img`) fails. It's already in the ecosystem args — keep it.
 - **`--listen` / `0.0.0.0`** binds beyond localhost so the tailscale interface
-  can reach each backend. Tailscale is the only route in; do not port-forward
-  these on the router.
-- **VRAM contention:** pm2 keeps *both* backends resident. ComfyUI and A1111
-  each grab VRAM at load. If one GPU can't hold both, either add
-  `--medvram` (A1111) / `--lowvram` (ComfyUI) to the args, or run only one at
-  a time (`pm2 stop sd-webui` when doing Flux work, etc.).
+  can reach the backend. Tailscale is the only route in; do not port-forward
+  this on the router.
+- **VRAM:** ComfyUI is now the only resident backend, which is the point of
+  removing Forge — nothing else on this box competes for VRAM at load. Add
+  `--lowvram` if a single large model still will not fit.
 - **Model updates / git pulls:** pm2 only supervises the process. Update the
   apps the way you always have, then `pm2 restart <name>`.
 - **Logs** land in `ops/home-server/logs/` next to the config (gitignored —

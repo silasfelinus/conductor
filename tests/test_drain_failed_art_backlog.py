@@ -93,8 +93,8 @@ def test_failure_diagnostic_is_prompt_free_and_bounded():
 
 def test_failure_diagnostic_collapses_whitespace():
     assert drain.failure_diagnostic(
-        {"id": 1, "engine": "A1111", "error": "connection\n refused\t now"}
-    ) == "ArtJob 1 [-] engine=A1111: connection refused now"
+        {"id": 1, "engine": "COMFY", "error": "connection\n refused\t now"}
+    ) == "ArtJob 1 [-] engine=COMFY: connection refused now"
 
 
 def _stub_requeue(monkeypatch, queued):

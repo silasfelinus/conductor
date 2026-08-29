@@ -59,8 +59,7 @@ def test_default_paths_are_unchanged():
     assert apps["kr-download"]["env"]["KR_CHECKPOINT_DIR"] == (
         "Z:/ai/models/Stable-diffusion"
     )
-    assert "Z:/ai/models/Stable-diffusion" in apps["sd-webui"]["args"]
-    assert "Z:/ai/models/controlnet" in apps["sd-webui"]["args"]
+    assert apps["kr-relay"]["env"]["KR_SHARE_PROBE_PATH"] == "Z:/ai/models"
 
 
 def test_one_env_var_moves_every_model_path_off_the_drive_letter():

@@ -71,8 +71,10 @@ POLL_SECONDS = 5
 # relay's run_comfy drives on ComfyUI. Flux (dev) stays available per-entry
 # (`engine: flux`) for anything that genuinely needs it, and Kontext for edits;
 # legacy `engine: a1111` entries are migrated to Krea 2 so Conductor never
-# creates A1111 work. The shared Kind Robots relay still supports explicitly
-# labeled A1111 jobs created by users outside Conductor.
+# creates A1111 work. As of 2026-08-29 the home relay no longer drives A1111 at
+# all (the app was removed from the box), so this mapping is the only thing
+# standing between an old yaml entry and a hard rejection. Keep it: it is data
+# compatibility for entries already on disk, not support for the engine.
 DEFAULT_ENGINE = "krea2"
 DEFAULT_STEPS = 30
 DEFAULT_CFG = 7
@@ -163,7 +165,8 @@ FLUX2_KLEIN_SCHEDULER = "simple"
 # queue entry (or a defaults block) can say "krea", "klein", "flux2", etc.
 ENGINE_ALIASES = {
     # Conductor is Comfy-only. Preserve old queue/config compatibility by
-    # migrating legacy A1111 labels to the default Krea 2 workflow.
+    # migrating legacy A1111 labels to the default Krea 2 workflow. See above:
+    # this is compatibility for old entries, not engine support.
     "a1111": "krea2",
     "sd": "krea2",
     "stable-diffusion": "krea2",
@@ -179,7 +182,7 @@ ENGINE_ALIASES = {
 }
 
 # Engines that emit a full ComfyUI graph (relay engine "COMFY"). Conductor
-# normalizes its legacy A1111 labels into this set rather than creating raw
+# normalizes its legacy a1111 labels into this set rather than creating raw
 # txt2img jobs.
 COMFY_WORKFLOW_ENGINES = ("flux", "krea2", "flux2-klein")
 
