@@ -1,8 +1,8 @@
 name: Conductor Oversight
 
-# Repo-side watchdog for things external scheduled Agent sessions can otherwise
-# silently miss: project registry parity, roadmap/CONTROL drift, semantic intent
-# review freshness, and disappearance of the scheduled-Agent heartbeat itself.
+# Repo-side watchdog for portfolio drift plus disappearance of the OpenAI
+# scheduled Conductor agent specifically. Claude's scheduled sessions do not
+# satisfy the OpenAI heartbeat marker.
 on:
   schedule:
     - cron: '17 */6 * * *'
