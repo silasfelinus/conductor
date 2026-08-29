@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     recurring: true
@@ -3286,12 +3286,36 @@ tasks:
       analysis. Eighth independent confirmation both mechanical pools remain exhausted for
       pure byte-exact substitution (slices 36, 48, 49, 50, 53, 54, 55, now 57). No kind_robots
       code change. Returning to ready per this task's established convention.
-    updated: '2026-08-29T04:33:42Z'
+
+      Slice 58 merged as silasfelinus/kind_robots#2193 (squash 41c0e7a) from exact head
+      ff6d0ad against base f1ba035. Re-ran the kr_panel_codemod.py --root . dry-run against
+      main after the recent home-page-redesign passes (#2189-2192) and the Animation Manager
+      Strandbeest build (#2190) landed since slice 57's last check a few hours earlier --
+      found 3 genuinely new byte-exact candidates, all in cthulhuquarium's aquarium
+      browse/leaderboard surfaces added 2026-08-27/28 (cthulhuquarium/t-017, t-061):
+      pages/play/aquarium/browse/[username]/[slug].vue's tank stock row,
+      pages/play/aquarium/browse/index.vue's tank card, and
+      pages/play/aquarium/leaderboard/index.vue's leaderboard row all had 'rounded-2xl border
+      border-base-300 bg-base-100' roots matching kr-panel-flat's exact definition;
+      substituted, keeping each row's own padding/flex/shadow/transition utilities. No
+      geometry or behavior change. Correctly skipped by the codemod as unsafe: ruler-hooked-
+      fishopedia.vue, kr-stat-tile.vue, chat-gallery.vue (each mixes a bare DaisyUI/structural
+      root class with the kr-panel-flat tokens). Re-ran the mx-auto+w-full+max-w-* container
+      pool and the kr-note border-{status}/40+bg-{status}/10 co-occurrence pool too -- both
+      remain exhausted, unchanged from slice 57 (same previously-excluded file sets; the new
+      home-page/aquarium/animation-manager files introduced no new candidates in either pool).
+      All 38 exact-head kind_robots PR checks green (TypeScript, Contract verifiers, layout-
+      contract, facet-catalog, Storybook/narrative contract suite), mergeable_state clean.
+      Verified before merge: eslint clean, vue-tsc --noEmit clean repo-wide, npm run
+      test:layout-contract holds (207 baseline, 0 new violations), prettier clean. Return the
+      non-recurring consistency umbrella to ready for the next bounded slice, per this task's
+      established convention.
+    updated: '2026-08-29T04:40:09Z'
     approved_by_human: true
-    implementation_pr: 'silasfelinus/kind_robots#2184'
-    owner: worker
-    claimed_by: claude-scheduled-20260829T0430Z-iv-t104-s58
-    claimed_at: '2026-08-29T04:29:46Z'
+    implementation_pr: 'silasfelinus/kind_robots#2193'
+    owner: null
+    claimed_by: null
+    claimed_at: null
 
   - id: t-105
     milestone: m6
