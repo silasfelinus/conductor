@@ -11616,3 +11616,12 @@ records:
   failure_category: null
   lesson: Reusing ART_ENGINE_PROFILES keeps prompt-only engine availability centralized and naturally
     excludes source-image-only engines from Brainstorm's fresh text-to-image flow.
+- date: '2026-08-29'
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A recurring mechanical-sweep task's 'exhausted against main@<SHA>' note goes stale the moment main moves, even by unrelated commits -- several same-day sessions treated the note as still valid without re-running the actual grep, and a fresh full-repo search turned up six real unconverted candidates. Re-verify against the exact current SHA before trusting a same-day exhaustion claim, don't just check whether the SHA moved."
