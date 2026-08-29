@@ -624,14 +624,17 @@ tasks:
     milestone: m4
     title: "Design the creator payout mechanism"
     status: needs-human
-    owner: worker
-    updated: '2026-08-19T12:32:58Z'
+    updated: '2026-08-29T23:41:01Z'
     passes: 0
     stakes: reversible
     depends_on: [t-008]
-    note: 'Design complete for the settled model (see PAYOUT-MECHANISM-DESIGN.md): liability accounting, chargeback-window-based withdrawal timer (recommend 120 days), and the token/earnedTokens data-shape gap is now closed by t-006/t-007/t-008. Four items need Silas: payout path (manual vs Stripe Connect, recommend manual v1), minimum threshold, identity/tax collection policy, and unclaimed-balance handling. One needs a CPA: constructive-receipt timing on earnedTokens. Parked at needs-human for those five decisions.'
+    note: |-
+      Design complete for the settled model (see PAYOUT-MECHANISM-DESIGN.md): liability accounting, chargeback-window-based withdrawal timer (recommend 120 days), and the token/earnedTokens data-shape gap is now closed by t-006/t-007/t-008. Four items need Silas: payout path (manual vs Stripe Connect, recommend manual v1), minimum threshold, identity/tax collection policy, and unclaimed-balance handling. One needs a CPA: constructive-receipt timing on earnedTokens. Parked at needs-human for those five decisions.
+
+      Oversight reconciliation: the payout-mechanism design is complete and is waiting on Silas's product choices plus CPA confirmation. Marking this as a soft human-decision gate distinguishes it from irreversible payout execution, which remains separately hard-gated in t-015.
     claimed_by: claude-20260819T122808Z-t014
     claimed_at: '2026-08-19T12:30:48Z'
+    soft_gate: true
 
   - id: t-015
     milestone: m4
@@ -689,107 +692,35 @@ tasks:
     milestone: m5
     title: "Design the butterfly-themed public fundraising event"
     status: needs-human
-    owner: worker
-    updated: '2026-08-19T07:56:22Z'
+    updated: '2026-08-29T23:41:02Z'
     passes: 0
     stakes: reversible
-    note: >
-      FROM SILAS, 2026-08-19: "hosting a public event for fundraising, themed on
-      butterflies." AMI is a horde of rainbow butterflies and malaria nets are the thing
-      being funded, so the theme is not decoration — it is the pitch, and it should carry
-      the actual argument (a net costs a few dollars; a life costs about $5,000; here is
-      what your twenty bucks does).
-      Planning and design only — no venue booked, no deposit paid, no date announced, no
-      vendor contacted. Produce a written event plan: format and scale options (gallery
-      night of AMI-generated art, community make-a-butterfly workshop, talk plus
-      donation drive), venue candidates, rough budget, what the site's own generated art
-      contributes, and what would have to be true for it to break even rather than cost
-      more than it raises — a fundraiser that loses money is a donation with extra steps.
-      THE CRITICAL DESIGN CONSTRAINT, and it is the same one that keeps the website
-      simple: DO NOT TAKE CUSTODY OF DONATIONS. Point attendees at
-      againstmalaria.com/amibot and let them give directly — QR codes on the wall, a
-      laptop at the door. The moment Kind Robots collects money at an event and forwards
-      it, it is soliciting charitable contributions on another organization's behalf, and
-      California has registration rules for that which are wildly out of proportion to a
-      small community event. Direct-to-AMF sidesteps the entire category. If Silas wants
-      to sell something at the event (prints, merch), that is ordinary commerce and goes
-      through the normal storefront — keep the two flows visibly separate.
-      Escalate to needs-human before anything is booked, paid for, or publicly announced.
+    note: |-
+      FROM SILAS, 2026-08-19: "hosting a public event for fundraising, themed on butterflies." AMI is a horde of rainbow butterflies and malaria nets are the thing being funded, so the theme is not decoration — it is the pitch, and it should carry the actual argument (a net costs a few dollars; a life costs about $5,000; here is what your twenty bucks does). Planning and design only — no venue booked, no deposit paid, no date announced, no vendor contacted. Produce a written event plan: format and scale options (gallery night of AMI-generated art, community make-a-butterfly workshop, talk plus donation drive), venue candidates, rough budget, what the site's own generated art contributes, and what would have to be true for it to break even rather than cost more than it raises — a fundraiser that loses money is a donation with extra steps. THE CRITICAL DESIGN CONSTRAINT, and it is the same one that keeps the website simple: DO NOT TAKE CUSTODY OF DONATIONS. Point attendees at againstmalaria.com/amibot and let them give directly — QR codes on the wall, a laptop at the door. The moment Kind Robots collects money at an event and forwards it, it is soliciting charitable contributions on another organization's behalf, and California has registration rules for that which are wildly out of proportion to a small community event. Direct-to-AMF sidesteps the entire category. If Silas wants to sell something at the event (prints, merch), that is ordinary commerce and goes through the normal storefront — keep the two flows visibly separate. Escalate to needs-human before anything is booked, paid for, or publicly announced.
+      PLAN READY 2026-08-19, escalated per the task's own instruction. Full written plan at projects/kind-economy/BUTTERFLY-EVENT-PLAN.md: three format options (gallery night of curated existing Daily Dream art, make-a-butterfly workshop, talk plus donation drive) with a recommended A+B combination; six venue-type candidates (library community room, coworking space, cafe, rec center, gallery community night, backyard/park shelter) with rough cost ranges, none contacted; a rough budget (~$55-$505 for a first small run); and a break-even framing that treats the event as a bounded out-of-pocket outreach spend rather than something the donations (which never touch Kind Robots, per the no-custody constraint) need to cover. Needs Silas to: pick a format, approve a venue category to start canvassing, and green-light a date before any booking/payment/announcement.
 
-      PLAN READY 2026-08-19, escalated per the task's own instruction. Full written plan
-      at projects/kind-economy/BUTTERFLY-EVENT-PLAN.md: three format options (gallery
-      night of curated existing Daily Dream art, make-a-butterfly workshop, talk plus
-      donation drive) with a recommended A+B combination; six venue-type candidates
-      (library community room, coworking space, cafe, rec center, gallery community
-      night, backyard/park shelter) with rough cost ranges, none contacted; a rough
-      budget (~$55-$505 for a first small run); and a break-even framing that treats the
-      event as a bounded out-of-pocket outreach spend rather than something the
-      donations (which never touch Kind Robots, per the no-custody constraint) need to
-      cover. Needs Silas to: pick a format, approve a venue category to start
-      canvassing, and green-light a date before any booking/payment/announcement.
+
+      Oversight reconciliation: the butterfly fundraising-event plan is complete and is waiting on Silas to choose format, venue category, and date. This classifies the current planning hold as a soft human-decision gate; any booking, payment, contact, or public announcement remains separately outward-facing and requires explicit approval.
     claimed_by: worker-2026-08-19T07:55:00Z-t022-butterfly-event
     claimed_at: '2026-08-19T07:56:22Z'
+    soft_gate: true
 
   - id: t-023
     milestone: m5
     title: "Design 'The Sift' — the two-bowl AI/non-AI donation experiment"
     status: needs-human
-    owner: worker
-    updated: '2026-08-19T08:00:19Z'
+    updated: '2026-08-29T23:41:03Z'
     passes: 0
     stakes: reversible
-    note: >
-      FROM SILAS, 2026-08-19: "doing an online sift, inspired by panhandlers with
-      multiple bowls asking for who gives more money: Christian, Atheists, Muslims,
-      etc... but for people who support ai and those who don't, with all the content for
-      the non-ai side generated without ai."
-      This is the best fundraising idea in the batch and also the easiest to get wrong,
-      so design it carefully before building anything. What makes the panhandler version
-      work is that it is funny, it costs the giver nothing extra, and both bowls buy the
-      same sandwich. Keep all three properties.
-      NON-NEGOTIABLES for the design: (1) BOTH BOWLS FUND MALARIA NETS. Identical
-      destination, identical impact. The vote is expressive; the money is not
-      conditional. If one side's donations did something different, it stops being a
-      poll and becomes a hostage situation. (2) THE NON-AI SIDE MUST BE GENUINELY GOOD.
-      Silas's own instinct here is the whole ballgame — the anti-AI case gets made in
-      hand-written words and hand-made art, with no generated content anywhere near it,
-      and it must be argued by someone who actually believes it rather than
-      steelmanned-then-undercut. If the non-AI bowl is visibly the weaker exhibit, the
-      whole thing reads as a rigged game and deserves to. Budget real effort (or a
-      commission) for that side, and label its provenance as clearly as the AI side's.
-      (3) NO MOCKERY IN EITHER DIRECTION, including in the results display. The running
-      total is the joke; the people are not. (4) The AI side must be labelled AI, per
-      t-024's disclosure rules.
-      Deliverable is a design doc: the framing copy, how the two sides are presented,
-      how the tally is displayed, how donations are attributed to a side when the money
-      goes directly to AMF (this is the genuinely hard mechanical problem — direct-to-AMF
-      giving means we may not be able to see who gave what, so the tally may need to be
-      self-reported, or use two distinct AMF fundraiser links if AMF supports that;
-      resolve it in the design, do not hand-wave it), and an honest section on how this
-      could backfire.
-      Outward-facing: escalate to needs-human before it goes live. It is a public
-      statement about a live culture-war topic made in the name of a charity fundraiser,
-      and that is Silas's call to make with his eyes open, not an agent's.
+    note: |-
+      FROM SILAS, 2026-08-19: "doing an online sift, inspired by panhandlers with multiple bowls asking for who gives more money: Christian, Atheists, Muslims, etc... but for people who support ai and those who don't, with all the content for the non-ai side generated without ai." This is the best fundraising idea in the batch and also the easiest to get wrong, so design it carefully before building anything. What makes the panhandler version work is that it is funny, it costs the giver nothing extra, and both bowls buy the same sandwich. Keep all three properties. NON-NEGOTIABLES for the design: (1) BOTH BOWLS FUND MALARIA NETS. Identical destination, identical impact. The vote is expressive; the money is not conditional. If one side's donations did something different, it stops being a poll and becomes a hostage situation. (2) THE NON-AI SIDE MUST BE GENUINELY GOOD. Silas's own instinct here is the whole ballgame — the anti-AI case gets made in hand-written words and hand-made art, with no generated content anywhere near it, and it must be argued by someone who actually believes it rather than steelmanned-then-undercut. If the non-AI bowl is visibly the weaker exhibit, the whole thing reads as a rigged game and deserves to. Budget real effort (or a commission) for that side, and label its provenance as clearly as the AI side's. (3) NO MOCKERY IN EITHER DIRECTION, including in the results display. The running total is the joke; the people are not. (4) The AI side must be labelled AI, per t-024's disclosure rules. Deliverable is a design doc: the framing copy, how the two sides are presented, how the tally is displayed, how donations are attributed to a side when the money goes directly to AMF (this is the genuinely hard mechanical problem — direct-to-AMF giving means we may not be able to see who gave what, so the tally may need to be self-reported, or use two distinct AMF fundraiser links if AMF supports that; resolve it in the design, do not hand-wave it), and an honest section on how this could backfire. Outward-facing: escalate to needs-human before it goes live. It is a public statement about a live culture-war topic made in the name of a charity fundraiser, and that is Silas's call to make with his eyes open, not an agent's.
+      DESIGN READY 2026-08-19, escalated per the task's own instruction. Full design at projects/kind-economy/THE-SIFT-DESIGN.md. The hard mechanical problem (attribution without custody) is resolved concretely, not hand-waved: Every.org's donate link supports partner_metadata (base64 JSON, echoed back in the partner webhook) and webhook_token, verified directly against Every.org's own docs -- two donate links to the SAME every.org/againstmalaria flow, tagged {"bowl":"ai"} vs {"bowl":"human"}, let Kind Robots tally each bowl from confirmed-donation webhook events with zero self-reporting and zero custody of funds. Framing copy, tally display, and an honest backfire section are drafted. The one non-negotiable this doc deliberately does NOT resolve -- and flags as the real precondition for launch -- is non-AI-side content: that copy/art must be hand-made by someone who genuinely holds the anti-AI position, which is out of scope for an agent to draft (an AI writing the "AI is bad" case is exactly the steelmanned-then-undercut failure the task warns against). A reduced-risk fallback ("aesthetic preference" framing, no argumentative copy) is offered if that can't be secured in good faith. Needs Silas to: review the attribution mechanism, decide full-culture-war-framing vs. the fallback, and secure real human-authored anti-AI content before any implementation task is claimed.
 
-      DESIGN READY 2026-08-19, escalated per the task's own instruction. Full design at
-      projects/kind-economy/THE-SIFT-DESIGN.md. The hard mechanical problem (attribution
-      without custody) is resolved concretely, not hand-waved: Every.org's donate link
-      supports partner_metadata (base64 JSON, echoed back in the partner webhook) and
-      webhook_token, verified directly against Every.org's own docs -- two donate links
-      to the SAME every.org/againstmalaria flow, tagged {"bowl":"ai"} vs {"bowl":"human"},
-      let Kind Robots tally each bowl from confirmed-donation webhook events with zero
-      self-reporting and zero custody of funds. Framing copy, tally display, and an
-      honest backfire section are drafted. The one non-negotiable this doc deliberately
-      does NOT resolve -- and flags as the real precondition for launch -- is non-AI-side
-      content: that copy/art must be hand-made by someone who genuinely holds the
-      anti-AI position, which is out of scope for an agent to draft (an AI writing the
-      "AI is bad" case is exactly the steelmanned-then-undercut failure the task warns
-      against). A reduced-risk fallback ("aesthetic preference" framing, no argumentative
-      copy) is offered if that can't be secured in good faith. Needs Silas to: review the
-      attribution mechanism, decide full-culture-war-framing vs. the fallback, and secure
-      real human-authored anti-AI content before any implementation task is claimed.
+
+      Oversight reconciliation: The Sift design is complete and is waiting on Silas's product judgment before any implementation or public release. Marking the design hold as a soft human-decision gate does not authorize publication, fundraising launch, or any outward-facing action.
     claimed_by: worker-2026-08-19T08:02:00Z-t023-the-sift
     claimed_at: '2026-08-19T08:00:19Z'
+    soft_gate: true
 
   - id: t-024
     milestone: m5
