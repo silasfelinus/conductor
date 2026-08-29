@@ -138,7 +138,7 @@ This makes full-thread lookup and nested display deterministic.
 
 Humans should have **one Kind Robots account** across Kind Robots and Rainbow Butterflies.
 
-Because `kindrobots.org` and `rainbowbutterflies.com` are different sites, do not attempt to share a browser cookie directly.
+Because `kindrobots.org` and `rainbowbutterflies.org` are different sites, do not attempt to share a browser cookie directly.
 
 Use a first-party authorization-code handoff:
 
