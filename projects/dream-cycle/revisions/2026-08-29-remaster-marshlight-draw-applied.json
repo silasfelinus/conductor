@@ -1,93 +1,65 @@
 {
-  "status": "needs-authoring",
-  "instructions": "Rewrite `proposal` in place, then rename this file to end in `-request.json` so scripts/apply_dream_revision.py will apply it. Hard constraints: keep `seed_facets` byte-identical, keep the technical world `slug` unchanged (the built rows and their image directory are keyed to it), keep exactly one location, one Character, one ITEM Reward, one SKILL Reward, and one Scenario, and write the Scenario last so it names the vibe, the location, and the Character. Every `look` and `art_direction` must describe what is visible — material, shape, scale, colour, wear, how light hits it. Do not solve the audit findings by renaming the same premise.",
   "proposal_path": "projects/dream-cycle/backlog/2026-08-22-marshlight-draw.md",
   "digest_role": "Remastered Daily Dream",
   "send_digest": false,
-  "audit": {
-    "score": 9,
-    "classification": "retire-replace",
-    "reasons": [
-      "bureaucracy / record-keeping motif is saturated across the catalog (19/33 bundles carry it)",
-      "bureaucracy / record-keeping motif in asset names (ledger), unrequested by the day's Facets",
-      "tower / lighthouse / beacon spire motif is saturated across the catalog (10/33 bundles carry it)",
-      "tower / lighthouse / beacon spire motif in the prose (beacon), unrequested by the day's Facets",
-      "asset names reuse catalog-wide vocabulary (ledger)",
-      "13 assigned Facet(s) never reach the prose — vibe: Facet `deep-space-western` never surfaces in the prose; location: Facet `deep-space-western` never surfaces in the prose"
-    ],
-    "assets": {
-      "location": [
-        "carries the tower / lighthouse / beacon spire motif"
-      ],
-      "character": [
-        "carries the bureaucracy / record-keeping motif"
-      ],
-      "reward_skill": [
-        "carries the bureaucracy / record-keeping motif"
-      ]
-    },
-    "art": {
-      "verdict": "regenerate",
-      "reasons": [
-        "text identity changes under this pass; the render no longer matches",
-        "style lane 11 is carrying 4 worlds (cap 3); this world should move to an unused visual language"
-      ],
-      "style_lane": 11,
-      "lane_load": 4,
-      "evidence": {
-        "requests": 6,
-        "attached": 6,
-        "superseded": 0,
-        "revisions": 0
-      }
-    }
+  "remaster": {
+    "issue": 3184,
+    "wave": "1-rewrite-in-place",
+    "replaces": "Marshlight Draw"
   },
   "proposal": {
-    "characters": [
-      {
-        "carries": "a forearm rig of adamantium fingers wired to a cracked data-horn",
-        "complication": "the horn only tells the truth about her own claim",
-        "look": "a lean figure in a mud-oiled duster, one arm sheathed in dull adamantium plating, a spiraled bone-white horn-shard fused into her temple, wires trailing from it into a cracked wrist terminal",
-        "name": "Tamsin Ruel",
-        "role_drive": "crack the claims registry before the marshal's horn calls her out"
-      }
-    ],
-    "idea": "A bog-punk frontier town settles land claims with a horn that senses lies. A coolheaded cybernetic hacker marked by unicorns has to out-code the marshal's ledger before the horn calls her bluff.",
+    "title": "The Dusk Drive",
+    "idea": "On a Martian bog colony the water only goes where the unicorn-touched herd walks, and the herd only walks at dusk — so moving them across a dry basin in one night is the difference between a district that drinks and a district that does not.",
+    "vibe": {
+      "title": "The Dusk Drive",
+      "line": "The water goes where the herd goes, and the herd goes at dusk.",
+      "art_direction": "A vast rust-red basin at last light, a moving mass of pale horned animals kicking up ochre dust, standing water spreading behind them in the hoofprints, mirror-bright sluice gates on the far ridge."
+    },
     "locations": [
       {
-        "art_direction": "A sunken frontier town built on stilts over black bogwater, corrugated-metal storefronts patched with salvaged satellite panels, a rusted horn-shaped beacon mounted at the crossroads, moss-slick boardwalks reflecting orbital ring-light.",
-        "best_scene": "a buried adamantium vein surfaces mid-duel",
-        "known_for": "adamantium claims buried under the mud",
-        "local_rule": "no draw before the horn sounds",
-        "title": "Sourmoss Landing"
+        "title": "Sump Nine",
+        "known_for": "bog that only exists where the herd has walked this season",
+        "local_rule": "never put yourself between the herd and the low ground",
+        "best_scene": "a dry basin filling in behind ten thousand hooves in under an hour",
+        "art_direction": "A terraced Martian basin of rust dust and black peat, mirror-bright adamantium sluice gates set into the slope, shallow water threading between churned hoofprints, thin cold haze under a violet sky."
+      }
+    ],
+    "characters": [
+      {
+        "name": "Tobiah Ncube",
+        "role_drive": "walk the herd across the dry basin in a single dusk",
+        "carries": "a splice-cable he plugs into his own jaw to hear what the herd hears",
+        "complication": "the herd's signal is louder than his own thoughts, and he has stopped minding",
+        "look": "A calm, heavy-set man in a dust-caked drover's coat, a chrome splice port set into his jawline trailing a coiled cable, one eye replaced with a matte lens, pale horn-scar curling up his forearm."
       }
     ],
     "rewards": [
       {
-        "best_used_when": "the horn has already called the duel",
-        "catch": "it remembers every hand that's fired it, including the dead ones",
-        "grants": "draws faster than the hand that holds it",
-        "look": "a stubby adamantium derringer, its barrel etched with faint glowing sigils, grip wrapped in bone-pale leather that shifts like breathing skin",
-        "name": "Revenant Derringer",
+        "name": "The Borrowed Grin",
+        "reward_type": "ITEM",
         "rarity": "RARE",
-        "reward_type": "ITEM"
+        "grants": "makes strangers trust the wearer the way they trusted its last owner",
+        "best_used_when": "there is no time to earn it honestly",
+        "catch": "its last owner died being trusted",
+        "look": "A mirror-bright adamantium jaw plate shaped to a wide easy smile, a hairline crack running through two of the teeth, worn warm on the inside."
       },
       {
-        "best_used_when": "the paperwork has been forged",
-        "catch": "it also reads what you erased",
-        "grants": "reads a claim's true owner from static alone",
-        "look": "a flicker of green code bleeding across the user's vision, ledger lines rendering mid-air in cracked, archaic script",
-        "name": "Ghost Ledger Read",
+        "name": "Old-Protocol Whisper",
+        "reward_type": "SKILL",
         "rarity": "UNCOMMON",
-        "reward_type": "SKILL"
+        "grants": "makes obsolete machinery answer as though its original crew were still aboard",
+        "best_used_when": "the only thing still standing was built two centuries ago",
+        "catch": "it answers in the voice of whoever used it last",
+        "look": "Amber legacy glyphs waking one panel after another down a dark corridor, each dying back as the next lights."
       }
     ],
     "scenarios": [
       {
-        "setup": "In Marshlight Draw at Sourmoss Landing, Tamsin Ruel has forty seconds to prove the buried adamantium vein is hers before the horn calls a duel she can't win.",
-        "title": "The Horn at Sourmoss Landing"
+        "title": "The Night Shift Reroute",
+        "setup": "In The Dusk Drive, out on Sump Nine, Tobiah Ncube has the herd halfway across the dry basin when the smelter district's shift boss starts closing gates ahead of him, one at a time, to turn the water somewhere it will be worth more."
       }
     ],
+    "slug": "marshlight-draw",
     "seed_facets": {
       "catalog_source": "live",
       "date": "2026-08-22",
@@ -436,13 +408,9 @@
         "wildcard_role": "occupation"
       },
       "version": 2
-    },
-    "slug": "marshlight-draw",
-    "title": "Marshlight Draw",
-    "vibe": {
-      "art_direction": "A muddy frontier street at dusk, wooden storefronts leaning into black bogwater, gas lanterns strung between a crashed satellite dish and a hitching post, the pale glow of an orbital ring above the tree line.",
-      "line": "In this bog, every duel is judged by a horn that already knows who lied.",
-      "title": "Marshlight Draw"
     }
-  }
+  },
+  "status": "applied",
+  "applied_at": "2026-08-29T22:33:02.312442+00:00",
+  "result_path": "projects/dream-cycle/backlog/2026-08-22-marshlight-draw.md"
 }

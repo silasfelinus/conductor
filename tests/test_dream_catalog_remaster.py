@@ -391,7 +391,7 @@ def test_plan_routes_each_bundle_to_the_lane_that_can_actually_fix_it(backlog: P
     }
 
     assert lanes["2026-08-12"] == "1-rewrite-in-place"
-    assert lanes["2026-07-17"] == "2-rebuild-from-kernel"
+    assert lanes["2026-07-17"] == "2-legacy-canonicalization"
     assert lanes["2026-08-06"] in {"3-art-only", "4-keep"}
 
 
@@ -493,6 +493,28 @@ def test_stubs_are_inert_until_an_author_renames_them(backlog: Path, monkeypatch
     assert stub["audit"]["reasons"]
 
 
+def test_legacy_bundles_get_a_reseed_stub_that_names_the_deterministic_plan(
+    backlog: Path, monkeypatch, tmp_path: Path
+):
+    legacy = copy.deepcopy(rut_proposal())
+    legacy["slug"] = "marrow-library"
+    legacy["title"] = "The Marrow Library"
+    legacy["characters"] = legacy["characters"] * 3  # the retired eight-stage shape
+    write_bundle(backlog, "2026-07-17", legacy, built=built_data())
+    catalog = {bundle.day: bundle for bundle in audit.load_bundles(backlog)}
+    manifest = _manifest(backlog)
+    monkeypatch.setattr(remaster, "REVISIONS_DIR", tmp_path / "revisions")
+
+    written = remaster.write_stubs(
+        remaster.build_plan(manifest), catalog, manifest, limit=5, apply=True
+    )
+
+    stub = json.loads(written[0].read_text(encoding="utf-8"))
+    assert stub["legacy_reseed"] is True
+    assert "facet_seed_plan" in stub["seed_facets_for_this_date"]
+    assert "retires the leftover staged rows" in stub["instructions"]
+
+
 def test_verify_reports_missing_records_without_network_access(backlog: Path):
     broken = built_data()
     broken["records"]["scenarios"] = []
@@ -507,3 +529,184 @@ def test_verify_reports_missing_records_without_network_access(backlog: Path):
     assert "no art evidence" in problems
     assert report["problems"] == 2
 
+
+
+# ── legacy canonicalization (pre-v2 staged bundles) ──────────────────────────
+
+
+def legacy_built_data() -> dict:
+    """The retired eight-stage shape: a second vibe Dream, extra rows, a narrator Bot."""
+    return {
+        "built_at": "2026-07-17T09:00:00-07:00",
+        "designer": "dream-cycle",
+        "records": {
+            "world": {"id": 100, "model": "Dream", "title": "world"},
+            "vibe": {"id": 101, "model": "Dream", "title": "a second vibe Dream"},
+            "locations": [
+                {"id": 110, "model": "Dream", "title": "first location"},
+                {"id": 111, "model": "Dream", "title": "second location"},
+            ],
+            "characters": [
+                {"id": 120, "model": "Character", "name": "first"},
+                {"id": 121, "model": "Character", "name": "second"},
+                {"id": 122, "model": "Character", "name": "third"},
+            ],
+            "rewards": [
+                {"id": 130, "model": "Reward", "reward_type": "ITEM", "name": "item"},
+                {"id": 131, "model": "Reward", "reward_type": "SKILL", "name": "skill"},
+            ],
+            "scenarios": [
+                {"id": 140, "model": "Scenario", "title": "first scenario"},
+                {"id": 141, "model": "Scenario", "title": "second scenario"},
+            ],
+            "narrator": {"id": 150, "model": "Bot", "name": "a legacy narrator"},
+        },
+        "art": [],
+    }
+
+
+@pytest.fixture
+def stub_api(monkeypatch):
+    """Record every call instead of touching Kind Robots."""
+    import apply_dream_revision as revision
+
+    calls: list[tuple[str, str, dict | None]] = []
+
+    def fake(method, url, body=None, timeout=60):
+        calls.append((method, url, body))
+        return 200, {"success": True, "data": {"id": 1}}
+
+    monkeypatch.setattr(revision.records, "http_json", fake)
+    monkeypatch.setattr(revision.records, "append_art_requests", lambda entries, dry_run: None)
+    monkeypatch.setattr(revision.records, "KR_API_TOKEN", "test-token")
+    return calls
+
+
+def test_a_bundle_that_never_had_a_seed_cannot_be_asked_to_preserve_one():
+    import apply_dream_revision as revision
+
+    pre_v2 = {k: v for k, v in CLEAN_PROPOSAL.items() if k != "seed_facets"}
+    assert revision.lacks_canonical_seed(pre_v2)
+    assert not revision.lacks_canonical_seed(CLEAN_PROPOSAL)
+
+    with pytest.raises(ValueError, match="preserve seed_facets"):
+        revision.validate_revision(pre_v2, CLEAN_PROPOSAL, "2026-07-17", built=True)
+
+    revision.validate_revision(
+        pre_v2, CLEAN_PROPOSAL, "2026-07-17", built=True, legacy_reseed=True
+    )
+
+
+def test_a_legacy_reseed_still_requires_a_valid_version_two_seed():
+    """The exemption is "you cannot preserve a seed that never existed", not "no seed"."""
+    import apply_dream_revision as revision
+
+    pre_v2 = {k: v for k, v in CLEAN_PROPOSAL.items() if k != "seed_facets"}
+
+    bogus_seed = dict(CLEAN_PROPOSAL, seed_facets={"version": 2, "elements": "not-an-object"})
+    with pytest.raises(ValueError, match="valid version-2 seed"):
+        revision.validate_revision(
+            pre_v2, bogus_seed, "2026-07-17", built=True, legacy_reseed=True
+        )
+
+    still_seedless = dict(pre_v2)
+    with pytest.raises(ValueError, match="seed_facets must be an object"):
+        revision.validate_revision(
+            pre_v2, still_seedless, "2026-07-17", built=True, legacy_reseed=True
+        )
+
+
+def test_legacy_canonicalization_remasters_six_rows_and_retires_the_rest(stub_api):
+    import apply_dream_revision as revision
+
+    built = revision._patch_built_bundle(
+        {"slug": "marrow-library", "locations": [{"title": "first location"}]},
+        copy.deepcopy(CLEAN_PROPOSAL),
+        legacy_built_data(),
+        revision_stamp="TESTSTAMP",
+        legacy=True,
+    )
+
+    retired = {row["id"] for row in built["retired_legacy_rows"]}
+    assert retired == {101, 111, 121, 122, 141}  # second vibe, extra rows
+    assert all(
+        call[2] == {"isActive": False, "isPublic": False}
+        for call in stub_api
+        if call[0] == "PATCH" and call[1].rsplit("/", 1)[-1] in {"101", "111", "121", "122", "141"}
+    )
+    # the ledger is canonical afterwards, so the bundle never needs this path again
+    records = built["records"]
+    assert [row["id"] for row in records["locations"]] == [110]
+    assert [row["id"] for row in records["characters"]] == [120]
+    assert [row["id"] for row in records["scenarios"]] == [140]
+    assert "vibe" not in records
+    # narrator Bots belong to a separately scoped cleanup, so they are recorded, not touched
+    assert built["legacy_narrator_left_in_place"]["id"] == 150
+    assert not any(call[1].endswith("/api/bots/150") for call in stub_api)
+
+
+def test_legacy_lane_skips_a_row_that_is_already_gone(stub_api, monkeypatch):
+    import apply_dream_revision as revision
+
+    monkeypatch.setattr(revision, "_row_is_live", lambda endpoint, entity_id: entity_id != 110)
+
+    built = revision._patch_built_bundle(
+        {"slug": "marrow-library", "locations": [{"title": "first location"}]},
+        copy.deepcopy(CLEAN_PROPOSAL),
+        legacy_built_data(),
+        revision_stamp="TESTSTAMP",
+        legacy=True,
+    )
+
+    assert [row["id"] for row in built["records"]["locations"]] == [111]
+
+
+def test_a_canonical_bundle_still_refuses_the_legacy_shape(stub_api):
+    import apply_dream_revision as revision
+
+    with pytest.raises(ValueError, match="canonical six-asset bundle"):
+        revision._patch_built_bundle(
+            {"slug": "marrow-library", "locations": [{"title": "first location"}]},
+            copy.deepcopy(CLEAN_PROPOSAL),
+            legacy_built_data(),
+            revision_stamp="TESTSTAMP",
+        )
+
+
+def test_a_spire_crystal_facet_licenses_the_spire_it_asked_for():
+    facets = json.dumps({"shared": {"material": {"slug": "spire-crystal"}}})
+    assert ruts.facets_request("tower-beacon", facets)
+    assert ruts.name_rut_complaints(["The Spire That Remembers"], facets) == []
+    assert ruts.name_rut_complaints(["The Spire That Remembers"], "{}")
+
+
+def test_renders_this_pass_staged_are_pending_not_a_second_regeneration(backlog: Path):
+    """A re-run must not queue a replacement for a replacement still in the relay."""
+    built = built_data(attached=False)
+    built["art"] = [
+        {"request_id": f"dream-cycle-remaster-TESTSTAMP-{index}", "attached": False}
+        for index in range(6)
+    ]
+    built["remasters"] = [
+        {"stamp": "TESTSTAMP", "art_request_ids": [row["request_id"] for row in built["art"]]}
+    ]
+    write_bundle(backlog, "2026-08-06", CLEAN_PROPOSAL, built=built)
+
+    result = audit.audit_catalog(audit.load_bundles(backlog))[0]
+
+    assert result.art["verdict"] == audit.ART_PENDING
+    assert "still working through the relay" in " ".join(result.art["reasons"])
+
+    manifest = audit.build_manifest([result], window_days=2, backlog=backlog)
+    plan = remaster.build_plan(manifest)
+    assert plan["waves"]["3-art-only"] == []  # nothing to re-queue
+    assert manifest["summary"]["art"][audit.ART_PENDING] == 1
+
+
+def test_art_never_attached_outside_this_pass_still_reads_as_regenerate(backlog: Path):
+    write_bundle(backlog, "2026-08-06", CLEAN_PROPOSAL, built=built_data(attached=False))
+
+    result = audit.audit_catalog(audit.load_bundles(backlog))[0]
+
+    assert result.art["verdict"] == audit.ART_REGENERATE
+    assert "ever attached" in " ".join(result.art["reasons"])

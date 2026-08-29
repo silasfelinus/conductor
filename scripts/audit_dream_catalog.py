@@ -61,6 +61,9 @@ ORDER = (KEEP, LIGHT, SUBSTANTIAL, RETIRE)
 ART_KEEP = "keep-art"
 ART_RESTYLE = "restyle"
 ART_REGENERATE = "regenerate"
+# Replacement renders already staged by this pass and still working through the relay.
+# Distinct from "regenerate" so a second run of the art lane does not double-queue them.
+ART_PENDING = "pending-render"
 
 # Score bands. Deliberately generous at the bottom: a bundle with one passing motif
 # mention should not be dragged into a rewrite queue.
@@ -431,13 +434,23 @@ def nearest_premise(bundle: Bundle, catalog: list[Bundle]) -> tuple[float, str]:
 
 
 def art_evidence(bundle: Bundle) -> dict[str, Any]:
-    art = (bundle.built or {}).get("art") or []
+    built = bundle.built or {}
+    art = built.get("art") or []
     attached = [row for row in art if row.get("attached")]
+    staged_ids = {
+        request_id
+        for record in (built.get("revisions") or []) + (built.get("remasters") or [])
+        for request_id in (record.get("art_request_ids") or [])
+    }
+    current_ids = {str(row.get("request_id") or "") for row in art}
     return {
         "requests": len(art),
         "attached": len(attached),
-        "superseded": len((bundle.built or {}).get("superseded_art") or []),
-        "revisions": len((bundle.built or {}).get("revisions") or []),
+        "superseded": len(built.get("superseded_art") or []),
+        "revisions": len(built.get("revisions") or []),
+        "remasters": len(built.get("remasters") or []),
+        # True when every current request came from a remaster/revision this pass staged.
+        "awaiting_staged_renders": bool(current_ids) and current_ids <= staged_ids,
     }
 
 
@@ -619,10 +632,17 @@ def audit_bundle(
         verdict = ART_REGENERATE
         art_reasons.append("renders were built from weak visual fields")
     if bundle.is_built and evidence["requests"] and evidence["attached"] < evidence["requests"]:
-        verdict = ART_REGENERATE
-        art_reasons.append(
-            f"only {evidence['attached']}/{evidence['requests']} renders ever attached"
-        )
+        if evidence["awaiting_staged_renders"]:
+            verdict = ART_PENDING
+            art_reasons.append(
+                f"{evidence['requests'] - evidence['attached']} replacement render(s) "
+                "staged by this pass and still working through the relay"
+            )
+        else:
+            verdict = ART_REGENERATE
+            art_reasons.append(
+                f"only {evidence['attached']}/{evidence['requests']} renders ever attached"
+            )
     if lane_load[lane] > lane_cap:
         art_reasons.append(
             f"style lane {lane} is carrying {lane_load[lane]} worlds (cap {lane_cap}); "
@@ -730,7 +750,7 @@ def build_manifest(audits: list[BundleAudit], *, window_days: int, backlog: Path
             "classification": {label: counts.get(label, 0) for label in ORDER},
             "art": {
                 label: art_counts.get(label, 0)
-                for label in (ART_KEEP, ART_RESTYLE, ART_REGENERATE)
+                for label in (ART_KEEP, ART_PENDING, ART_RESTYLE, ART_REGENERATE)
             },
             "rut_families": dict(families.most_common()),
         },
@@ -756,7 +776,7 @@ def render_markdown(manifest: dict[str, Any]) -> str:
     for label in ORDER:
         lines.append(f"| {label} | {summary['classification'][label]} |")
     lines += ["", "| Art verdict | Bundles |", "| --- | --- |"]
-    for label in (ART_KEEP, ART_RESTYLE, ART_REGENERATE):
+    for label in (ART_KEEP, ART_PENDING, ART_RESTYLE, ART_REGENERATE):
         lines.append(f"| {label} | {summary['art'][label]} |")
     if summary["rut_families"]:
         lines += ["", "| Unrequested motif family | Bundles |", "| --- | --- |"]
@@ -859,7 +879,7 @@ def main(argv: list[str] | None = None) -> int:
         + " | art: "
         + ", ".join(
             f"{label}={summary['art'][label]}"
-            for label in (ART_KEEP, ART_RESTYLE, ART_REGENERATE)
+            for label in (ART_KEEP, ART_PENDING, ART_RESTYLE, ART_REGENERATE)
         )
         + f" | poisoned unbuilt: {len(manifest['poisoned_unbuilt'])}"
     )

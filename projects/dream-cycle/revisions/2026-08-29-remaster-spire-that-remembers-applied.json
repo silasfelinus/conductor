@@ -1,95 +1,65 @@
 {
-  "status": "needs-authoring",
-  "instructions": "Rewrite `proposal` in place, then rename this file to end in `-request.json` so scripts/apply_dream_revision.py will apply it. Hard constraints: keep `seed_facets` byte-identical, keep the technical world `slug` unchanged (the built rows and their image directory are keyed to it), keep exactly one location, one Character, one ITEM Reward, one SKILL Reward, and one Scenario, and write the Scenario last so it names the vibe, the location, and the Character. Every `look` and `art_direction` must describe what is visible — material, shape, scale, colour, wear, how light hits it. Do not solve the audit findings by renaming the same premise.",
   "proposal_path": "projects/dream-cycle/backlog/2026-08-05-spire-that-remembers.md",
   "digest_role": "Remastered Daily Dream",
   "send_digest": false,
-  "audit": {
-    "score": 8,
-    "classification": "substantial-rewrite",
-    "reasons": [
-      "tower / lighthouse / beacon spire motif is saturated across the catalog (10/33 bundles carry it)",
-      "tower / lighthouse / beacon spire motif in asset names (spire), unrequested by the day's Facets",
-      "character name: surname 'Thistlewick' is built from the recurring noun stem 'thistle'",
-      "asset names reuse catalog-wide vocabulary (hollow, reading, reliquary)",
-      "4 assigned Facet(s) never reach the prose — character: Facet `solarpunk` never surfaces in the prose; reward_skill: Facet `gothic-comedy` never surfaces in the prose"
-    ],
-    "assets": {
-      "vibe": [
-        "carries the tower / lighthouse / beacon spire motif"
-      ],
-      "location": [
-        "carries the tower / lighthouse / beacon spire motif"
-      ],
-      "reward_item": [
-        "carries the tower / lighthouse / beacon spire motif"
-      ],
-      "scenario": [
-        "carries the tower / lighthouse / beacon spire motif"
-      ]
-    },
-    "art": {
-      "verdict": "regenerate",
-      "reasons": [
-        "text identity changes under this pass; the render no longer matches",
-        "style lane 2 is carrying 9 worlds (cap 3); this world should move to an unused visual language"
-      ],
-      "style_lane": 2,
-      "lane_load": 9,
-      "evidence": {
-        "requests": 6,
-        "attached": 6,
-        "superseded": 0,
-        "revisions": 0
-      }
-    }
+  "remaster": {
+    "issue": 3184,
+    "wave": "1-rewrite-in-place",
+    "replaces": "The Spire That Remembers"
   },
   "proposal": {
-    "characters": [
-      {
-        "carries": "a notebook of hand-copied growth-ring rubbings, refusing to trust the digital record",
-        "complication": "the newest ring matches a memory nobody aboard has actually lived yet",
-        "look": "patchwork nanopunk coveralls, an oversized brass loupe, crystal dust permanently under every fingernail",
-        "name": "Vex Thistlewick",
-        "role_drive": "cheerfully investigate every misremembered crystal ring before the ship's official history quietly rewrites itself"
-      }
-    ],
-    "idea": "Aboard a generation ship whose living skeleton is grown from Spire Crystal, the crystal spine doesn't just hold memories the way tree rings hold seasons -- it's started growing rings for things that haven't happened yet. A cheerfully stubborn goblin investigator has to figure out whether the ship is remembering the future or quietly writing it.",
+    "title": "Bloomline",
+    "idea": "On a generation ship whose air is grown rather than pumped, a flower nobody planted has begun opening in a line across the farm decks — and the line traces exactly where a missing crewmate walked on the night she vanished.",
+    "vibe": {
+      "title": "Bloomline",
+      "line": "Something is planting evidence in the air we breathe.",
+      "art_direction": "A curved agricultural deck lit by grown crystal instead of lamps, one narrow line of white flowers opening across otherwise green rows, pale violet light raking low between the planting beds."
+    },
     "locations": [
       {
-        "art_direction": "A fantasy-tinged grotto deck where the spire's roots fan out like a tree's through nanopunk scaffolding, goblin-sized catwalks strung with lantern light between crystal buttresses.",
-        "best_scene": "an engineer presses a palm to warm crystal and hears, faintly, a dead crewmate's voice",
-        "known_for": "goblin engineers who read the spire's crystal growth rings like tree rings, each one holding a season's worth of the ship's memories",
-        "local_rule": "no one splices new crystal into the spire without an Investigator present to log what memory gets grown over",
-        "title": "The Hollow Reliquary"
+        "title": "Greenhold",
+        "known_for": "a farm deck lit by grown crystal instead of lamps",
+        "local_rule": "nobody prunes what they did not plant",
+        "best_scene": "an entire row flowers at once, tracing a person's path from door to hull wall",
+        "art_direction": "Long curving planting beds under a ceiling of clustered violet crystal, wet black soil, condensation beading on cold metal ribs, one line of white blossoms cutting across the green."
+      }
+    ],
+    "characters": [
+      {
+        "name": "Yusra Panek",
+        "role_drive": "find out who the flowers are following before the line reaches the nursery deck",
+        "carries": "a pocketful of seed envelopes she keeps refilling and never plants",
+        "complication": "she is relentlessly cheerful, and the crew has stopped believing anything she says",
+        "look": "A stocky goblin in patched solar-weave coveralls, green skin dusted yellow with pollen, wide flat nose, magnifying spectacles pushed up into wiry grey hair, soil worked deep into her knuckles."
       }
     ],
     "rewards": [
       {
-        "best_used_when": "a buried memory needs to come out gently, in a form people will actually stop and listen to",
-        "catch": "it only ever sings the memory as the spire chose to remember it, never as it actually happened",
-        "grants": "a sliver of Spire Crystal wound through with clockwork gearing that plays back any memory grown into it as a sung aria",
-        "look": "a palm-length sliver of pale crystal threaded with fine brass clockwork, tiny gears sunk into its facets, light pulsing along its internal fractures",
-        "name": "Aria Shard",
+        "name": "The Overture Fork",
+        "reward_type": "ITEM",
         "rarity": "RARE",
-        "reward_type": "ITEM"
+        "grants": "hums when it passes air the wrong plant has breathed",
+        "best_used_when": "a room smells ordinary and should not",
+        "catch": "it hums for the plant, never for the person who carried it",
+        "look": "A wind-up tuning fork of brass and clouded crystal, its winding key worn smooth, a hairline fracture running up one tine and catching the light."
       },
       {
-        "best_used_when": "a haunting needs to be laughed at instead of run from",
-        "catch": "the jokes get bleaker the closer the ghost is to the truth",
-        "grants": "read the emotional residue left in a freshly grown crystal ring like tea leaves, dry commentary included",
-        "look": "a freshly split crystal growth-ring lit from behind, its concentric bands smeared with faint coloured residue like oil floating on water",
-        "name": "Ghost-Ring Reading",
+        "name": "The Long Pause",
+        "reward_type": "SKILL",
         "rarity": "UNCOMMON",
-        "reward_type": "SKILL"
+        "grants": "holds a silence until the other person fills it with something true",
+        "best_used_when": "an answer arrives too quickly and too complete",
+        "catch": "it works just as well on whoever is holding the silence",
+        "look": "Air gone visibly still between two figures, dust hanging motionless in a shaft of violet light, one lamp guttering low and steadying again."
       }
     ],
     "scenarios": [
       {
-        "setup": "At The Spire That Remembers, in the goblin engineer grotto of the Hollow Reliquary, Vex Thistlewick finds a crystal growth ring already recording a memory that hasn't happened yet -- and has to decide whether to warn the crew or let the spire finish growing its prophecy.",
-        "title": "The Ring That Wasn't Grown Yet"
+        "title": "What Flowered on Deck Nine",
+        "setup": "In Bloomline, down in Greenhold, Yusra Panek follows the opening flowers from the missing woman's bunk to a hull seam nobody has cracked in forty years, and finds the next bloom already unfolding on the inside of her own wrist."
       }
     ],
+    "slug": "spire-that-remembers",
     "seed_facets": {
       "catalog_source": "live",
       "date": "2026-08-05",
@@ -438,13 +408,9 @@
         "wildcard_role": "occupation"
       },
       "version": 2
-    },
-    "slug": "spire-that-remembers",
-    "title": "The Spire That Remembers",
-    "vibe": {
-      "art_direction": "A towering faceted crystal spire growing straight through the generation ship's core decks, veins of nanite light pulsing upward like sap, goblin engineers dwarfed and glowing in its reflected light.",
-      "line": "The ship's crystal spine keeps growing new memories -- by eating the crew's old ones.",
-      "title": "The Spire That Remembers"
     }
-  }
+  },
+  "status": "applied",
+  "applied_at": "2026-08-29T22:33:08.646944+00:00",
+  "result_path": "projects/dream-cycle/backlog/2026-08-05-spire-that-remembers.md"
 }

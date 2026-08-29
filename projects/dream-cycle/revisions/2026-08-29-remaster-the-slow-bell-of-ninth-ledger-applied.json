@@ -1,100 +1,65 @@
 {
-  "status": "needs-authoring",
-  "instructions": "Rewrite `proposal` in place, then rename this file to end in `-request.json` so scripts/apply_dream_revision.py will apply it. Hard constraints: keep `seed_facets` byte-identical, keep the technical world `slug` unchanged (the built rows and their image directory are keyed to it), keep exactly one location, one Character, one ITEM Reward, one SKILL Reward, and one Scenario, and write the Scenario last so it names the vibe, the location, and the Character. Every `look` and `art_direction` must describe what is visible — material, shape, scale, colour, wear, how light hits it. Do not solve the audit findings by renaming the same premise.",
   "proposal_path": "projects/dream-cycle/backlog/2026-08-15-the-slow-bell-of-ninth-ledger.md",
   "digest_role": "Remastered Daily Dream",
   "send_digest": false,
-  "audit": {
-    "score": 7,
-    "classification": "substantial-rewrite",
-    "reasons": [
-      "bureaucracy / record-keeping motif is saturated across the catalog (19/33 bundles carry it)",
-      "bureaucracy / record-keeping motif in asset names (ledger, tally), unrequested by the day's Facets",
-      "asset names reuse catalog-wide vocabulary (ledger)",
-      "7 assigned Facet(s) never reach the prose — location: Facet `cryptid-documentary` never surfaces in the prose; character: Facet `weird-fiction` never surfaces in the prose"
-    ],
-    "assets": {
-      "vibe": [
-        "carries the bureaucracy / record-keeping motif"
-      ],
-      "location": [
-        "carries the bureaucracy / record-keeping motif"
-      ],
-      "character": [
-        "carries the bureaucracy / record-keeping motif"
-      ],
-      "reward_item": [
-        "carries the bureaucracy / record-keeping motif"
-      ],
-      "reward_skill": [
-        "carries the bureaucracy / record-keeping motif"
-      ],
-      "scenario": [
-        "carries the bureaucracy / record-keeping motif"
-      ]
-    },
-    "art": {
-      "verdict": "regenerate",
-      "reasons": [
-        "text identity changes under this pass; the render no longer matches",
-        "style lane 2 is carrying 9 worlds (cap 3); this world should move to an unused visual language"
-      ],
-      "style_lane": 2,
-      "lane_load": 9,
-      "evidence": {
-        "requests": 6,
-        "attached": 6,
-        "superseded": 0,
-        "revisions": 0
-      }
-    }
+  "remaster": {
+    "issue": 3184,
+    "wave": "1-rewrite-in-place",
+    "replaces": "The Slow Bell of Ninth Ledger"
   },
   "proposal": {
-    "characters": [
-      {
-        "carries": "a waterproof abacus case strapped across her back with a cracked leather strap",
-        "complication": "she cannot stop auditing things that were never debts — meals, apologies, silences — and adds them all to the total",
-        "look": "A heavyset grey-brown dugong body with a broad fluked tail, small deep-set eyes, and a whiskered snout, dragon-scale plates riveted in an overlapping row down her spine like segmented armor, a cracked leather satchel strapped across her back leaking a thin stream of bubbles, front flippers oddly articulated with small metal rings threaded along the edges like tally beads.",
-        "name": "Portia Fivetooth",
-        "role_drive": "a debt collector reincarnated in dugong shape who insists every unpaid ledger on the ship still belongs to her, and hums with restless hyperactive energy while doing sums no one asked for"
-      }
-    ],
-    "idea": "On a generation ship gone frontier-lawless, a dugong-formed debt collector drifts the flooded cargo decks calling in debts owed to a dead economy, while something in the water keeps the books better than she does.",
+    "title": "Salvage Rights",
+    "idea": "The flooded cargo decks of a lawless generation ship are full of salvage nobody has collected, because the only route out crosses water that something very large has never let anyone film.",
+    "vibe": {
+      "title": "Salvage Rights",
+      "line": "Nobody out here pays you. You go down and take it back yourself.",
+      "art_direction": "A flooded ship corridor lit by failing amber strip-lights doubled in still black water, a heavy tow cable running away into the dark, overlapping iridescent scale plating welded across a bulkhead."
+    },
     "locations": [
       {
-        "art_direction": "Waist-deep black water filling a corridor between rusted cargo containers, patches of overlapping dragon-scale plating welded crooked over hull cracks, a low ceiling strung with dead cables dripping condensation, single swinging lamp casting a moving disk of light on the water's surface.",
-        "best_scene": "a rowboat threading between upright shipping crates half-submerged, dragon-scale patches welded over hull breaches catching lamplight, a slow wake fanning out where something unseen has just passed beneath",
-        "known_for": "a sunken cargo level of a generation ship where old debt contracts float sealed in waterproof pouches, and something large and gentle patrols the wreckage collecting them",
-        "local_rule": "no debt may be called in until the bell above the waterline is rung three times by hand",
-        "title": "Ninth Ledger Flood Deck"
+        "title": "The Ninth Deck Floodline",
+        "known_for": "a flooded cargo level nobody has yet filmed all the way across",
+        "local_rule": "keep one lamp pointed at the water behind you",
+        "best_scene": "a camera rig comes back up with sixty seconds of nothing and one bent mounting frame",
+        "art_direction": "Waist-deep black water filling a corridor of rusted cargo containers, overlapping iridescent dragon-scale plates welded crookedly over a breach, amber worklights strung low and doubling in the surface."
+      }
+    ],
+    "characters": [
+      {
+        "name": "Portia Fivetooth",
+        "role_drive": "tow the sunken lifeboat out of Ninth Deck before her claim on it lapses at dawn",
+        "carries": "a spool of scale-plated tow cable and somebody else's borrowed camera rig",
+        "complication": "she cannot hold still for more than a moment, and the water tracks movement",
+        "look": "A heavyset grey-brown dugong body with a broad fluked tail and small deep-set eyes, iridescent scale plates riveted along both flanks, a cable spool strapped across her back and a lamp lashed to her snout."
       }
     ],
     "rewards": [
       {
-        "best_used_when": "smuggling a debt, a letter, or a secret through flooded or hostile territory",
-        "catch": "it always drifts slowly toward whoever is owed something by its contents, regardless of your intentions",
-        "grants": "a small chest that always floats upright and keeps whatever is sealed inside dry no matter how deep it sinks",
-        "look": "A squat iron-bound chest the size of a footlocker, its wood blackened and swollen with old water damage, banded in corroded brass hoops, one corner patched with an overlapping plate of dragon scale gone dull silver-green, a thin rope of barnacles crusted along its waterline seam.",
-        "name": "The Unsinkable Tally Chest",
+        "name": "The Unsinkable Strongbox",
+        "reward_type": "ITEM",
         "rarity": "RARE",
-        "reward_type": "ITEM"
+        "grants": "always floats upright and keeps whatever is inside it dry",
+        "best_used_when": "the way out is underwater and what you are carrying is not",
+        "catch": "it floats upright whether or not you are still holding it",
+        "look": "A squat iron-bound chest the size of a footlocker, its wood blackened and swollen, overlapping green-gold scale plates nailed across the lid, waterline stains ringing it."
       },
       {
-        "best_used_when": "someone denies owing anything and the truth needs to be made visible without a word said",
-        "catch": "the nanites cannot be told which debts matter, so old grudges and forgotten kindnesses surface with equal glowing insistence",
-        "grants": "the ability to seed a swarm of debt-tracking nanites into any surface, causing faint glowing tally marks to surface on skin, metal, or stone wherever an unpaid obligation exists",
-        "look": "A skin or surface suddenly stippled with faint blue-white filament lines that crawl like slow lightning beneath the top layer, converging into small glowing tally notches that pulse once and dim, leaving a temporary silvery residue like frost.",
-        "name": "Ledger-Skin Recalibration",
-        "rarity": "EPIC",
-        "reward_type": "SKILL"
+        "name": "Repossession Swarm",
+        "reward_type": "SKILL",
+        "rarity": "UNCOMMON",
+        "grants": "marks a piece of salvage as yours so it comes to you when called",
+        "best_used_when": "what you are owed is too heavy to carry out",
+        "catch": "it comes when called, by whatever route is shortest",
+        "look": "Blue-white filament lines crawling across a submerged hull plate and pulsing once, brighter, as the plate begins to drift."
       }
     ],
     "scenarios": [
       {
-        "setup": "Under The Slow Bell of Ninth Ledger, deep in the Ninth Ledger Flood Deck, Portia Fivetooth rings the bulkhead bell for the third time in a single day — a violation of the local rule no one has committed in a generation — because the water itself has started keeping a ledger she did not write, and something beneath the surface is finally answering the call.",
-        "title": "Three Rings of the Bell"
+        "title": "Sixty Seconds of Nothing",
+        "setup": "In Salvage Rights, out along The Ninth Deck Floodline, Portia Fivetooth has the lifeboat under tow and forty metres of open water left when the borrowed camera rig starts playing back sixty seconds she does not remember swimming."
       }
     ],
+    "slug": "the-slow-bell-of-ninth-ledger",
     "seed_facets": {
       "catalog_source": "live",
       "date": "2026-08-15",
@@ -443,13 +408,9 @@
         "wildcard_role": "occupation"
       },
       "version": 2
-    },
-    "slug": "the-slow-bell-of-ninth-ledger",
-    "title": "The Slow Bell of Ninth Ledger",
-    "vibe": {
-      "art_direction": "Wide flooded corridor of a generation ship lit by failing amber strip-lights reflected in still black water, dust motes hanging in stale recycled air, a brass bell bolted to a bulkhead green with verdigris, distant silhouette of a heavy round body gliding just beneath the surface.",
-      "line": "Out past the last audited star, the only law left is compound interest.",
-      "title": "The Slow Bell of Ninth Ledger"
     }
-  }
+  },
+  "status": "applied",
+  "applied_at": "2026-08-29T22:51:15.065373+00:00",
+  "result_path": "projects/dream-cycle/backlog/2026-08-15-the-slow-bell-of-ninth-ledger.md"
 }

@@ -1,97 +1,65 @@
 {
-  "status": "needs-authoring",
-  "instructions": "Rewrite `proposal` in place, then rename this file to end in `-request.json` so scripts/apply_dream_revision.py will apply it. Hard constraints: keep `seed_facets` byte-identical, keep the technical world `slug` unchanged (the built rows and their image directory are keyed to it), keep exactly one location, one Character, one ITEM Reward, one SKILL Reward, and one Scenario, and write the Scenario last so it names the vibe, the location, and the Character. Every `look` and `art_direction` must describe what is visible — material, shape, scale, colour, wear, how light hits it. Do not solve the audit findings by renaming the same premise.",
   "proposal_path": "projects/dream-cycle/backlog/2026-08-10-spire-static.md",
   "digest_role": "Remastered Daily Dream",
   "send_digest": false,
-  "audit": {
-    "score": 7,
-    "classification": "substantial-rewrite",
-    "reasons": [
-      "tower / lighthouse / beacon spire motif is saturated across the catalog (10/33 bundles carry it)",
-      "tower / lighthouse / beacon spire motif in asset names (spire), unrequested by the day's Facets",
-      "18 assigned Facet(s) never reach the prose — vibe: Facet `mythpunk` never surfaces in the prose; vibe: Facet `cozy-horror` never surfaces in the prose",
-      "1 weak or missing visual field(s)"
-    ],
-    "assets": {
-      "location": [
-        "carries the tower / lighthouse / beacon spire motif"
-      ],
-      "character": [
-        "carries the tower / lighthouse / beacon spire motif"
-      ],
-      "reward_item": [
-        "carries the tower / lighthouse / beacon spire motif"
-      ],
-      "reward_skill": [
-        "`look` carries no material, colour, or light detail"
-      ],
-      "scenario": [
-        "carries the tower / lighthouse / beacon spire motif"
-      ]
-    },
-    "art": {
-      "verdict": "regenerate",
-      "reasons": [
-        "text identity changes under this pass; the render no longer matches",
-        "renders were built from weak visual fields"
-      ],
-      "style_lane": 7,
-      "lane_load": 3,
-      "evidence": {
-        "requests": 6,
-        "attached": 6,
-        "superseded": 0,
-        "revisions": 0
-      }
-    }
+  "remaster": {
+    "issue": 3184,
+    "wave": "1-rewrite-in-place",
+    "replaces": "Spire Static"
   },
   "proposal": {
-    "characters": [
-      {
-        "carries": "a waterlogged logbook of unsent letters addressed to \"Wingmate Ordo\"",
-        "complication": "the crystal spires read her handwriting back to her in his voice",
-        "look": "a broad-shouldered sharkfolk in a cracked leather flight jacket, rows of small gill-slits along her neck, a grey dorsal fin visible through a slit cut in the jacket's back, ink-stained fingers, a battered brass compass on a cord",
-        "name": "Corra Finnwake",
-        "role_drive": "keep writing unsent letters to her dead wingmate, hoping one more log entry will bring him back"
-      }
-    ],
-    "idea": "A ghost airfield where the runway lights never go out and the spires remember every flight that didn't land. A sharkfolk pilot writes letters to her dead wingmate and starts hearing them answered. When a shadowy council orders the field grounded, she has to decide whether the last flight out is escape or exactly what the spires have been waiting for.",
+    "title": "Lullaby Run",
+    "idea": "A coastal town's whole economy is keeping one enormous sleeping thing asleep, and the crop-duster pilot who flies sleep-spore between its ribs every dusk has just been told the mainland wants it awake.",
+    "vibe": {
+      "title": "Lullaby Run",
+      "line": "The whole town's work is keeping one enormous thing asleep.",
+      "art_direction": "A small propeller plane threading between colossal barnacled ribs that arch out of a calm bay, violet crystal furring the bone, dusk light and a long trail of pale spore drifting behind the wing."
+    },
     "locations": [
       {
-        "art_direction": "A runway paved between towering translucent quartz-blue spires, each one veined with faint bioluminescent light, jagged crystal formations rising fifty feet on either side of a cracked landing strip slicked with fog.",
-        "best_scene": "a pilot's engine stalls and the spires begin to sing in her dead wingmate's voice",
-        "known_for": "guiding lost flights home by resonant hum",
-        "local_rule": "never taxi past the third spire after dusk",
-        "title": "The Crystal Spire Strand"
+        "title": "The Ribbed Sound",
+        "known_for": "a bay roofed by the ribs of something still breathing",
+        "local_rule": "engines off between the third and fourth rib",
+        "best_scene": "the ribs flex a handspan and every boat in the bay lifts at once",
+        "art_direction": "Vast curved bone arches rising from flat green water, violet crystal growth crusting their undersides, fishing boats tied up small beneath them, low amber light and mist on the surface."
+      }
+    ],
+    "characters": [
+      {
+        "name": "Maret Solvang",
+        "role_drive": "fly the dusk spore run without waking what she is dusting",
+        "carries": "a canvas satchel of townsfolk's letters she reads aloud over the open radio each run",
+        "complication": "she narrates every worry out loud, and the radio carries all of it to the town below",
+        "look": "A lean sharkfolk pilot in a cracked leather flight jacket, slate-grey skin, gill lines dark along her throat, goggles pushed up on a smooth crown, one webbed hand taped at the knuckles."
       }
     ],
     "rewards": [
       {
-        "best_used_when": "preflighting at dusk",
-        "catch": "it grows warmer the more people you've already lost",
-        "grants": "warns of an unflyable night before the fog rolls in",
-        "look": "a thumb-length shard of milky spire crystal wrapped in braided black cord, its broken edge stained rust-brown, faint internal cracks like frozen lightning",
-        "name": "The Widow's Splinter",
+        "name": "Hushspore Canister",
+        "reward_type": "ITEM",
         "rarity": "RARE",
-        "reward_type": "ITEM"
+        "grants": "releases one dose of sleep-spore across a wide area",
+        "best_used_when": "something very large has begun to stir",
+        "catch": "everything under the cloud sleeps, including whoever dropped it",
+        "look": "A dented copper canister the length of a forearm, its little glass window furred with pale violet crystal, a rope handle bound around with faded red thread."
       },
       {
-        "best_used_when": "flying blind through storm-fog",
-        "catch": "sometimes there really is something down there",
-        "grants": "reads turbulence like the wake of something impossibly large passing beneath the clouds",
-        "look": "the aircraft's wings visibly flex and correct in long slow ripples, matching a rhythm no instrument shows, contrails briefly curling into the shape of a passing fin",
-        "name": "Leviathan-Wake Trim",
+        "name": "Breath Timing",
+        "reward_type": "SKILL",
         "rarity": "UNCOMMON",
-        "reward_type": "SKILL"
+        "grants": "matches a run to the rhythm of something enormous breathing",
+        "best_used_when": "the gap you need opens and closes on its own schedule",
+        "catch": "she feels the next breath coming in her own chest, awake or not",
+        "look": "A long white contrail bending in slow unison with a vast rising surface, spray rolling outward from it in a widening ring."
       }
     ],
     "scenarios": [
       {
-        "setup": "In Hangar Ghostlight at The Crystal Spire Strand, Corra Finnwake receives a grounding order signed by a council that doesn't exist yet -- and one more unsent letter that insists she fly tonight anyway.",
-        "title": "The Grounding Order"
+        "title": "The Night They Cut the Spore Line",
+        "setup": "In Lullaby Run, out over The Ribbed Sound, Maret Solvang finds the dusk supply barge gone and mainland launches anchored where it should be, and has to decide on the radio, in front of the whole listening town, whether to fly the run empty or land."
       }
     ],
+    "slug": "spire-static",
     "seed_facets": {
       "catalog_source": "live",
       "date": "2026-08-10",
@@ -440,13 +408,9 @@
         "wildcard_role": "occupation"
       },
       "version": 2
-    },
-    "slug": "spire-static",
-    "title": "Spire Static",
-    "vibe": {
-      "art_direction": "A fog-wrapped airfield strung with flickering blue-white lanterns, their glass housings grown over with barnacles and kelp lace, propeller silhouettes rusted mid-spin against a bruised violet sky.",
-      "line": "Every runway light left burning belongs to someone who hasn't landed yet.",
-      "title": "Hangar Ghostlight"
     }
-  }
+  },
+  "status": "applied",
+  "applied_at": "2026-08-29T22:33:05.457334+00:00",
+  "result_path": "projects/dream-cycle/backlog/2026-08-10-spire-static.md"
 }

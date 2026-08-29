@@ -1,95 +1,65 @@
 {
-  "status": "needs-authoring",
-  "instructions": "Rewrite `proposal` in place, then rename this file to end in `-request.json` so scripts/apply_dream_revision.py will apply it. Hard constraints: keep `seed_facets` byte-identical, keep the technical world `slug` unchanged (the built rows and their image directory are keyed to it), keep exactly one location, one Character, one ITEM Reward, one SKILL Reward, and one Scenario, and write the Scenario last so it names the vibe, the location, and the Character. Every `look` and `art_direction` must describe what is visible — material, shape, scale, colour, wear, how light hits it. Do not solve the audit findings by renaming the same premise.",
   "proposal_path": "projects/dream-cycle/backlog/2026-08-18-tideglass-reliquary.md",
   "digest_role": "Remastered Daily Dream",
   "send_digest": false,
-  "audit": {
-    "score": 8,
-    "classification": "substantial-rewrite",
-    "reasons": [
-      "archive / library / recordkeeping vault motif in asset names (archive), unrequested by the day's Facets",
-      "bureaucracy / record-keeping motif is saturated across the catalog (19/33 bundles carry it)",
-      "bureaucracy / record-keeping motif in the prose (ledger), unrequested by the day's Facets",
-      "asset names reuse catalog-wide vocabulary (archive, perpetua, reliquary)",
-      "7 assigned Facet(s) never reach the prose — location: Facet `epistolary-fiction` never surfaces in the prose; character: Facet `cli-fi-climate-fiction` never surfaces in the prose"
-    ],
-    "assets": {
-      "location": [
-        "carries the archive / library / recordkeeping vault motif"
-      ],
-      "character": [
-        "carries the archive / library / recordkeeping vault motif"
-      ],
-      "reward_skill": [
-        "carries the bureaucracy / record-keeping motif"
-      ],
-      "scenario": [
-        "carries the archive / library / recordkeeping vault motif"
-      ]
-    },
-    "art": {
-      "verdict": "regenerate",
-      "reasons": [
-        "text identity changes under this pass; the render no longer matches",
-        "style lane 11 is carrying 4 worlds (cap 3); this world should move to an unused visual language"
-      ],
-      "style_lane": 11,
-      "lane_load": 4,
-      "evidence": {
-        "requests": 6,
-        "attached": 6,
-        "superseded": 0,
-        "revisions": 0
-      }
-    }
+  "remaster": {
+    "issue": 3184,
+    "wave": "1-rewrite-in-place",
+    "replaces": "Tideglass Reliquary"
   },
   "proposal": {
-    "characters": [
-      {
-        "carries": "a horseshoe-crab-shell inkwell on a salt-cracked strap, its hinge worn glass-smooth",
-        "complication": "ignorant that the archive's final map will draw itself, in her own blood, once she finds the last name",
-        "look": "a gaunt cartographer in a coat the mottled black-and-silver of galactic granite, stiff with dried salt, fingertips stained permanent blue-black, an old brass compass fused shut around one wrist",
-        "name": "Perpetua Voss",
-        "role_drive": "map every grief the vampire lord of the Reliquary has caused, one shoreline visit at a time"
-      }
-    ],
-    "idea": "A grief cartographer maps a vampire lord's four centuries of losses in horseshoe-crab-blue ink, unaware the archive's final map will draw itself in her own blood.",
+    "title": "Spawning Tide",
+    "idea": "Once a year the horseshoe crabs come ashore in their millions, and the drowned come up with them. The woman hired to walk an old lord across the flats that night has not been told which of the two he intends to end up as.",
+    "vibe": {
+      "title": "Spawning Tide",
+      "line": "Once a year the sea gives everything back at once.",
+      "art_direction": "A moonlit tidal flat carpeted edge to edge with armoured horseshoe crabs, a granite causeway running out into black water, pale figures standing further out than anyone should be able to stand."
+    },
     "locations": [
       {
-        "art_direction": "A vaulted stone gallery of shelved scroll-cases, floor inlaid with tidal channels that fill with seawater at high tide, horseshoe-crab shells nailed above every doorway, ink-blue stains creeping up the plaster.",
-        "best_scene": "the tide floods the archive floor and the maps start bleeding into each other",
-        "known_for": "storing every grief map the vampire lord of the Reliquary has ever commissioned",
-        "local_rule": "no map may be redrawn once its ink dries to black",
-        "title": "The Coagulate Archive"
+        "title": "The Weeping Causeway",
+        "known_for": "letters wedged into every joint of its stone by people who could not say it aloud",
+        "local_rule": "read one aloud before you cross, whichever one your hand finds",
+        "best_scene": "the tide comes over and takes a whole year of letters at once",
+        "art_direction": "A low causeway of speckled violet granite running into dark water, folded paper jammed into every seam and fluttering, salt crust and weed on the stones, a drowned graveyard island at the far end under moonlight."
+      }
+    ],
+    "characters": [
+      {
+        "name": "Juno Ashcombe",
+        "role_drive": "walk her client out to the island and back before the tide closes the causeway",
+        "carries": "a surveyor's tape, a hooded lamp, and a client's letter she has not opened",
+        "complication": "she takes the job at face value, and nobody in the town will explain it to her",
+        "look": "A young woman in a waxed storm coat too thin for the season, wet hair scraped back, a brass surveyor's tape clipped at her belt, mud to the knee, a hooded lamp swinging low."
       }
     ],
     "rewards": [
       {
-        "best_used_when": "the way forward is lost to grief, not geography",
-        "catch": "the path only opens while the grief is still raw",
-        "grants": "opens a walkable path to wherever the bearer's dead now rest, as if that place were just around the next corner",
-        "look": "a fist-sized compass housed in polished galactic-granite stone, its needle a sliver of horseshoe-crab shell that swings only toward the drowned",
-        "name": "The Grief-Bled Compass",
+        "name": "The Wrong-Door Stone",
+        "reward_type": "ITEM",
         "rarity": "RARE",
-        "reward_type": "ITEM"
+        "grants": "opens the door you needed instead of the one in front of you",
+        "best_used_when": "the way out is not where you are standing",
+        "catch": "it never opens the same door twice, and never opens back",
+        "look": "A palm-sized wedge of violet granite worn smooth on one face, a keyhole-shaped void bored clean through it, cold and faintly wet to the touch."
       },
       {
-        "best_used_when": "a fresh retainer arrives and must be catalogued before they forget who they were",
-        "catch": "the memory transfers to the reader, one lost name heavier",
-        "grants": "reads a newly turned zombie retainer's last memory straight off their skin, like scanning a manifest",
-        "look": "a palm pressed flat to a retainer's brow, faint blue veins surfacing under the skin like ink bleeding through paper, a nearby ledger page filling itself in looping handwriting",
-        "name": "Intake Ritual",
+        "name": "Loss Adjustment",
+        "reward_type": "SKILL",
         "rarity": "UNCOMMON",
-        "reward_type": "SKILL"
+        "grants": "prices exactly what a loss is going to cost the person carrying it",
+        "best_used_when": "someone insists they are fine",
+        "catch": "the number is always right and never welcome",
+        "look": "Thin amber survey lines crawling across wet sand and closing into a tight contour ring around one standing figure."
       }
     ],
     "scenarios": [
       {
-        "setup": "In The Tideglass Reliquary at The Coagulate Archive, Perpetua Voss finds a decades-old letter addressed to herself in her own handwriting — proof the estate's zombie retainers have been trying to warn her since long before she arrived, as a rising tide threatens to drown the last unfinished map.",
-        "title": "The Last Undelivered Letter"
+        "title": "The Night the Crabs Came Up",
+        "setup": "In Spawning Tide, out on The Weeping Causeway during the spawning, Juno Ashcombe walks her client toward the drowning graveyard through a moving carpet of shells, and realises the pale figures standing in the shallows are all facing the two of them."
       }
     ],
+    "slug": "tideglass-reliquary",
     "seed_facets": {
       "catalog_source": "live",
       "date": "2026-08-18",
@@ -438,13 +408,9 @@
         "wildcard_role": "occupation"
       },
       "version": 2
-    },
-    "slug": "tideglass-reliquary",
-    "title": "Tideglass Reliquary",
-    "vibe": {
-      "art_direction": "A crumbling seaside vampire manor half-submerged at high tide, stained-glass windows the color of horseshoe-crab blood, driftwood scaffolding bracing a collapsing widow's walk.",
-      "line": "Grief has a shoreline, and something ancient keeps the charts.",
-      "title": "The Tideglass Reliquary"
     }
-  }
+  },
+  "status": "applied",
+  "applied_at": "2026-08-29T22:33:18.658028+00:00",
+  "result_path": "projects/dream-cycle/backlog/2026-08-18-tideglass-reliquary.md"
 }

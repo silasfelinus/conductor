@@ -1,100 +1,65 @@
 {
-  "status": "needs-authoring",
-  "instructions": "Rewrite `proposal` in place, then rename this file to end in `-request.json` so scripts/apply_dream_revision.py will apply it. Hard constraints: keep `seed_facets` byte-identical, keep the technical world `slug` unchanged (the built rows and their image directory are keyed to it), keep exactly one location, one Character, one ITEM Reward, one SKILL Reward, and one Scenario, and write the Scenario last so it names the vibe, the location, and the Character. Every `look` and `art_direction` must describe what is visible — material, shape, scale, colour, wear, how light hits it. Do not solve the audit findings by renaming the same premise.",
   "proposal_path": "projects/dream-cycle/backlog/2026-08-17-ever-after-files.md",
   "digest_role": "Remastered Daily Dream",
   "send_digest": false,
-  "audit": {
-    "score": 9,
-    "classification": "retire-replace",
-    "reasons": [
-      "bureaucracy / record-keeping motif is saturated across the catalog (19/33 bundles carry it)",
-      "bureaucracy / record-keeping motif in asset names (files, ledger), unrequested by the day's Facets",
-      "character name: surname 'Quill' is a bare nature/object noun",
-      "asset names reuse catalog-wide vocabulary (ledger, perpetua)",
-      "8 assigned Facet(s) never reach the prose — location: Facet `weird-capitalism` never surfaces in the prose; character: Facet `post-human-dystopia` never surfaces in the prose",
-      "1 weak or missing visual field(s)"
-    ],
-    "assets": {
-      "vibe": [
-        "carries the bureaucracy / record-keeping motif"
-      ],
-      "location": [
-        "carries the bureaucracy / record-keeping motif"
-      ],
-      "reward_item": [
-        "carries the bureaucracy / record-keeping motif"
-      ],
-      "reward_skill": [
-        "`look` carries no material, colour, or light detail"
-      ],
-      "scenario": [
-        "carries the bureaucracy / record-keeping motif"
-      ]
-    },
-    "art": {
-      "verdict": "regenerate",
-      "reasons": [
-        "text identity changes under this pass; the render no longer matches",
-        "renders were built from weak visual fields",
-        "style lane 2 is carrying 9 worlds (cap 3); this world should move to an unused visual language"
-      ],
-      "style_lane": 2,
-      "lane_load": 9,
-      "evidence": {
-        "requests": 6,
-        "attached": 6,
-        "superseded": 0,
-        "revisions": 0
-      }
-    }
+  "remaster": {
+    "issue": 3184,
+    "wave": "1-rewrite-in-place",
+    "replaces": "Ever After Files"
   },
   "proposal": {
-    "characters": [
-      {
-        "carries": "a starfruit-fiber-bound notebook that only writes true words",
-        "complication": "the notebook also writes down her own petty grudges, poisoning the confession",
-        "look": "a gaunt woman in a moth-eaten trench coat, forearms replaced with jointed chitin-and-brass stick-insect limbs, ink-stained fingers, a coat lined with dead gaslamp moths",
-        "name": "Perpetua Quill",
-        "role_drive": "ghostwrite a confession that will finally indict the godmother who blacklisted her"
-      }
-    ],
-    "idea": "A blacklisted ghostwriter, half-grafted into a stick insect's camouflage limbs, investigates fairy-tale wish-trading crimes for a noir agency that never forgets a debt.",
+    "title": "Third-Act Money",
+    "idea": "In a city where happy endings are bought and sold as futures above the stage, a playwright who was written out of her own hit show goes back on opening night to take her ending off the actress currently wearing it.",
+    "vibe": {
+      "title": "Third-Act Money",
+      "line": "Somebody is trading your ending on a floor you will never be shown.",
+      "art_direction": "A gilded theatre seen from the flies at night, brokers hanging motionless along the rafter beams, gold thread strung between them catching the stage-light rising from below, rain on the high windows."
+    },
     "locations": [
       {
-        "art_direction": "A cramped shopfront of towering brass ledgers, gaslight glinting off insect-thin scaffolding, golden starfruit-fiber threads strung floor to ceiling like a stock ticker.",
-        "best_scene": "a ledger entry rewrites itself mid-sale",
-        "known_for": "trading fractional shares of broken wishes",
-        "local_rule": "no wish trades below its opening curse price",
-        "title": "The Godmother's Exchange"
+        "title": "The Gilded Rafters",
+        "known_for": "endings bought and sold in the beams above a working stage",
+        "local_rule": "no bidding while the curtain is up",
+        "best_scene": "the whole rafter goes still mid-bid because a real ending just walked in the door",
+        "art_direction": "Dust-thick timber beams above a lit stage, brokers folded thin and motionless along them like branches, gold starfruit-fiber thread strung bead to bead, warm light leaking up through the boards."
+      }
+    ],
+    "characters": [
+      {
+        "name": "Ottoline Sarr",
+        "role_drive": "take back the ending that was cut out of her and sold on",
+        "carries": "the only surviving copy of her original third act, folded into eight",
+        "complication": "she has waited so long to be owed this that she no longer wants it back gently",
+        "look": "A tall stick-insect woman in a soaked evening coat, limbs long and dry-brown and jointed twice too often, a narrow face lit hard from below, gold thread wound and knotted along one forearm."
       }
     ],
     "rewards": [
       {
-        "best_used_when": "a suspect's testimony is incomplete",
-        "catch": "it also transcribes the writer's own secrets",
-        "grants": "writes a binding true confession",
-        "look": "a slim quill fashioned from a starfruit-fiber stalk, its nib capped in tarnished gold leaf, a faint golden thread trailing from the barrel like unspooled twine",
-        "name": "Godmother's Ledger Quill",
+        "name": "The Understudy's Shawl",
+        "reward_type": "ITEM",
         "rarity": "RARE",
-        "reward_type": "ITEM"
+        "grants": "makes the wearer read as whoever the room was already expecting",
+        "best_used_when": "you need to be somewhere your face is not welcome",
+        "catch": "the room's expectation is what shows, not anything you chose",
+        "look": "A loose knitted shawl of gold starfruit fiber gone soft with handling, one corner unravelling into a long loose thread, warm lamplight caught in the weave."
       },
       {
-        "best_used_when": "a witness's account has been polished for public consumption",
-        "catch": "reveals your own unspoken drafts too",
-        "grants": "reads the true draft beneath a rewritten story",
-        "look": "the air around a page ripples like heat haze, faint charcoal lines of a crossed-out sentence bleeding up through the visible ink",
-        "name": "Ghostwriter's Tell",
+        "name": "Rewrite On Your Feet",
+        "reward_type": "SKILL",
         "rarity": "UNCOMMON",
-        "reward_type": "SKILL"
+        "grants": "changes how a scene ends while it is still being played",
+        "best_used_when": "the room has committed to a version of events",
+        "catch": "whatever it changes, it changes for everyone who was there, permanently",
+        "look": "Wet black ink blooming up through printed lines on a held page, letters sliding into new positions while the paper is still in someone's hand."
       }
     ],
     "scenarios": [
       {
-        "setup": "In The Ever After Files at The Godmother's Exchange, Perpetua Quill traces a wish-trader found drained of every unwritten word, the only clue a starfruit-fiber thread leading straight back to the godmother who ruined her.",
-        "title": "The Wish That Wouldn't Clear"
+        "title": "Opening Night, Third Act",
+        "setup": "In Third-Act Money, up in The Gilded Rafters on the biggest night of the season, Ottoline Sarr walks in during the interval with her folded third act while the brokers above the stage bid on how her own story is going to finish."
       }
     ],
+    "slug": "ever-after-files",
     "seed_facets": {
       "catalog_source": "live",
       "date": "2026-08-17",
@@ -443,13 +408,9 @@
         "wildcard_role": "occupation"
       },
       "version": 2
-    },
-    "slug": "ever-after-files",
-    "title": "Ever After Files",
-    "vibe": {
-      "art_direction": "A rain-slicked cobblestone alley under a gaslamp, gingerbread rooftops looming through fog, a long insectile shadow thrown across wet stone.",
-      "line": "Every happily ever after has a body count nobody wrote down.",
-      "title": "The Ever After Files"
     }
-  }
+  },
+  "status": "applied",
+  "applied_at": "2026-08-29T22:32:52.699586+00:00",
+  "result_path": "projects/dream-cycle/backlog/2026-08-17-ever-after-files.md"
 }

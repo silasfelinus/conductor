@@ -1,100 +1,65 @@
 {
-  "status": "needs-authoring",
-  "instructions": "Rewrite `proposal` in place, then rename this file to end in `-request.json` so scripts/apply_dream_revision.py will apply it. Hard constraints: keep `seed_facets` byte-identical, keep the technical world `slug` unchanged (the built rows and their image directory are keyed to it), keep exactly one location, one Character, one ITEM Reward, one SKILL Reward, and one Scenario, and write the Scenario last so it names the vibe, the location, and the Character. Every `look` and `art_direction` must describe what is visible — material, shape, scale, colour, wear, how light hits it. Do not solve the audit findings by renaming the same premise.",
   "proposal_path": "projects/dream-cycle/backlog/2026-08-19-the-tally-of-small-suns.md",
   "digest_role": "Remastered Daily Dream",
   "send_digest": false,
-  "audit": {
-    "score": 7,
-    "classification": "substantial-rewrite",
-    "reasons": [
-      "bureaucracy / record-keeping motif is saturated across the catalog (19/33 bundles carry it)",
-      "bureaucracy / record-keeping motif in asset names (tally), unrequested by the day's Facets",
-      "cozy market / workshop / shopfront motif in the prose (market, stalls), unrequested by the day's Facets",
-      "15 assigned Facet(s) never reach the prose — vibe: Facet `hopepunk` never surfaces in the prose; vibe: Facet `accountant` never surfaces in the prose"
-    ],
-    "assets": {
-      "vibe": [
-        "carries the bureaucracy / record-keeping motif"
-      ],
-      "location": [
-        "carries the bureaucracy / record-keeping, cozy market / workshop / shopfront motif"
-      ],
-      "character": [
-        "carries the bureaucracy / record-keeping motif"
-      ],
-      "reward_item": [
-        "carries the bureaucracy / record-keeping motif"
-      ],
-      "reward_skill": [
-        "carries the bureaucracy / record-keeping motif"
-      ],
-      "scenario": [
-        "carries the bureaucracy / record-keeping, cozy market / workshop / shopfront motif"
-      ]
-    },
-    "art": {
-      "verdict": "regenerate",
-      "reasons": [
-        "text identity changes under this pass; the render no longer matches",
-        "style lane 10 is carrying 5 worlds (cap 3); this world should move to an unused visual language"
-      ],
-      "style_lane": 10,
-      "lane_load": 5,
-      "evidence": {
-        "requests": 6,
-        "attached": 6,
-        "superseded": 0,
-        "revisions": 0
-      }
-    }
+  "remaster": {
+    "issue": 3184,
+    "wave": "1-rewrite-in-place",
+    "replaces": "The Tally of Small Suns"
   },
   "proposal": {
-    "characters": [
-      {
-        "carries": "a slim alloy tally-wand salvaged from the wreck, wrapped at the grip in aether-silk cord",
-        "complication": "she keeps quietly forgiving the debts of the one vendor she can't stop watching",
-        "look": "a compact woman in a patched grey overcoat lined with strips of shimmering aether-silk, a tally-wand tucked behind one ear like a pencil, ink-stained fingertips.",
-        "name": "Odalys Marsh",
-        "role_drive": "keep the commons' shared ledger honest enough that both species still trust it"
-      }
-    ],
-    "idea": "A fallen invasion ship becomes a commons where survivors of two species rebuild trust one recorded debt at a time.",
+    "title": "The Silk Bargain",
+    "idea": "After the invasion stalled, two species share one wrecked warship, and peace holds because every promise between them is woven into a sash worn where everyone can see whether it is still being kept.",
+    "vibe": {
+      "title": "The Silk Bargain",
+      "line": "Peace here is a promise you have to wear in public.",
+      "art_direction": "A vast wrecked hull opened to the sky and filled with hanging woven sashes glowing faint gold, two very different silhouettes standing close under them, dusk light through torn plating."
+    },
     "locations": [
       {
-        "art_direction": "Market stalls hung from a curved alien hull rib on ropes of braided aether-silk, chalk ledger boards swinging between them, silt-grey light filtering through torn hull plating overhead.",
-        "best_scene": "a goblin-shark-jawed vendor forgives a debt out loud, and the whole commons hears it",
-        "known_for": "neutral trade between the two species who survived the landing",
-        "local_rule": "no debt goes unlisted on the public chalk ledger strung along the spine",
-        "title": "The Driftspine Commons"
+        "title": "The Wedding Hulk",
+        "known_for": "a downed warship where two peoples come to make promises out loud",
+        "local_rule": "wear what you promised where it can be seen",
+        "best_scene": "hundreds of sashes dim and brighten across one hall as promises are kept or dropped",
+        "art_direction": "A cathedral-sized breached hull, rain coming through the tear, hundreds of woven sashes strung between girders and glowing pale gold, scorched deck plate below swept clean and laid with mats."
+      }
+    ],
+    "characters": [
+      {
+        "name": "Reyna Odum",
+        "role_drive": "hold every promise in the hulk straight in her head so nobody has to be taken at their word",
+        "carries": "nothing written down, and a spare undyed sash for anyone who arrives without one",
+        "complication": "she is keeping one promise she has told absolutely no one about",
+        "look": "A steady, unhurried woman in a plain grey work coat, sleeves rolled, close-cropped hair going white at the temple, an undyed sash folded over one shoulder and no ornament of any kind."
       }
     ],
     "rewards": [
       {
-        "best_used_when": "a community's trust is fraying and no one agrees anymore who owes whom",
-        "catch": "it reveals the wearer's own outstanding debts just as plainly",
-        "grants": "reveals every debt and favor owed to whoever wears it",
-        "look": "a wide woven sash of shifting silver-white aether-silk, patterned with beadwork knots in indigo and rust that catch light like a starfield, a fringe of small bone tally-beads clicking at the hem.",
-        "name": "The Debtless Sash",
+        "name": "First-Light Sash",
+        "reward_type": "ITEM",
         "rarity": "RARE",
-        "reward_type": "ITEM"
+        "grants": "shows at a glance whether the promise woven into it is still being kept",
+        "best_used_when": "two people need to trust each other faster than trust normally takes",
+        "catch": "it shows everyone, not only the two who made it",
+        "look": "A broad woven sash holding the colours of a sunrise in its threads, gold running to rose along its length, one end frayed and rewoven in a slightly different shade."
       },
       {
-        "best_used_when": "the written records are gone and only memory can settle what's owed",
-        "catch": "the recitation leaves out nothing, including the reciter's own debts",
-        "grants": "recites an entire night's tally from memory, turning a list of debts and gifts into a story no one can dispute",
-        "look": "a speaker standing at the commons' center at dusk, one hand tracing invisible tally-marks in the air as the recitation unspools, fine motes of aether-silk fiber drifting up from their sleeve with each name spoken.",
-        "name": "The Nightly Reckoning",
+        "name": "The Long Telling",
+        "reward_type": "SKILL",
         "rarity": "UNCOMMON",
-        "reward_type": "SKILL"
+        "grants": "settles a quarrel by telling it back as a story both sides recognise",
+        "best_used_when": "both sides are certain and neither is lying",
+        "catch": "it takes all night, and everyone has to stay",
+        "look": "A ring of seated listeners lit only by the sash-glow of the one speaking, that light strengthening steadily as the telling goes on."
       }
     ],
     "scenarios": [
       {
-        "setup": "In The Tally of Small Suns at The Driftspine Commons, Odalys Marsh is handed an impossible debt by the goblin-shark-jawed trader who runs the west rib stalls: not silk, not grain, but the truth of why she keeps forgiving him.",
-        "title": "The Shark Who Kept Count"
+        "title": "The Sash That Went Dark",
+        "setup": "In The Silk Bargain, in the middle of The Wedding Hulk, the oldest promise in the hall goes dark during a crowded evening, and Reyna Odum has until dawn to tell it back correctly before both sides decide the other broke it first."
       }
     ],
+    "slug": "the-tally-of-small-suns",
     "seed_facets": {
       "catalog_source": "live",
       "date": "2026-08-19",
@@ -443,13 +408,9 @@
         "wildcard_role": "occupation"
       },
       "version": 2
-    },
-    "slug": "the-tally-of-small-suns",
-    "title": "The Tally of Small Suns",
-    "vibe": {
-      "art_direction": "A collapsed alien needle-ship's ribbed spine, the size of a cathedral nave, wrapped in overlapping sheets of silver-white aether-silk that catch dusk light like fish scales; strings of small paper lanterns hang between the ribs.",
-      "line": "Every debt from the invasion gets counted, and every count gets rebuilt into something worth keeping.",
-      "title": "The Tally of Small Suns"
     }
-  }
+  },
+  "status": "applied",
+  "applied_at": "2026-08-29T22:33:15.266168+00:00",
+  "result_path": "projects/dream-cycle/backlog/2026-08-19-the-tally-of-small-suns.md"
 }

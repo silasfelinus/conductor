@@ -589,9 +589,21 @@ tasks:
       surfaces poisoned proposals in every audit run, and confirms the two exceptions
       (pinned retry, explicit --date backfill) still re-clear the creative contract.
 
-      REMAINING (not blocking): waves 1 and 2 need creative authoring passes — 12
-      substantial rewrites and 4 pre-v2 bundles whose kernels must be mined into fresh
-      dated proposals. Each is one stub away from applying.
+      WAVES 1-3 COMPLETE (2026-08-29, second session pass, PR #3191): the remaining
+      creative work is done rather than queued. Wave 1 rewrote all 12 substantial-rewrite
+      bundles in place, each preserving its deterministic seed and technical slug. Wave 2
+      canonicalized the 4 pre-v2 staged bundles through a new opt-in `legacy_reseed` path
+      in apply_dream_revision.py -- the seed exemption fires only where the old proposal
+      actually fails today's schema on seed_facets, the replacement is the deterministic
+      plan that date would draw today, the canonical six rows are remastered, and every
+      superseded staged row is retired via isActive/isPublic rather than deleted (narrator
+      Bots left for the separately scoped cleanup PIPELINE.md describes). Wave 3 handled
+      the 5 light-refresh bundles, two of which needed real rewrites because their whole
+      machinery was the rut. The catalog now audits at 33/33 keep, with zero
+      substantial-rewrite and zero retire-replace, and the bureaucracy/record-keeping motif
+      gone from the unrequested tally entirely (it was carried by 20 of 33 bundles).
+      175 ArtJobs queued across the pass, zero failures; live verify reports 0 problems
+      across all 33 bundles.
 
       CLOSED 2026-08-29: PR #3189 merged (squash ea17e06) with all 25 checks green. Post-merge
       state: the first remaster wave's 48 ArtJobs (13026-13073) are draining normally through
