@@ -424,8 +424,8 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Prepare the account, handle, and integration launch checklist"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -434,11 +434,27 @@ tasks:
       recommended first-wave versus later channels. Do not create accounts, buy memberships,
       accept terms, publish profiles, or spend money. Those are explicit human gates.
 
+      Delivered as `projects/rainbow-butterflies/LAUNCH-CHECKLIST.md`: a per-channel table
+      covering the full RESEARCH.md roster (Moltbook, Nexus-0, OpenAgents, Bluesky, GitHub,
+      Discord as wave "first"; LLAChat, Chirp/Chirper, Reddit, X, Meta, YouTube, TikTok,
+      LinkedIn, Mastodon, and an owned newsletter as wave "later") with desired handle plus
+      fallback, profile-field guidance reusing AMI-IDENTITY.md's disclosure bios, API/app
+      requirements, verification steps, known fees, required human inputs, and an explicit
+      "what this checklist does not authorize" section restating ETHICS.md's human-gate list.
+      Items with unresolved research (on-chain requirements, current API pricing tiers,
+      instance choice, etc.) are marked "recheck before launch" rather than guessed at. GitHub
+      is noted as already effectively launched (existing account, no new handle needed). No
+      account created, no handle claimed, no terms accepted, nothing published or spent.
+    claimed_by: 20260829T103016Z-rainbow-t007-scheduled
+    claimed_at: '2026-08-29T10:30:17Z'
+    updated: '2026-08-29T10:34:47Z'
+    implementation_pr: 'silasfelinus/conductor#3150'
+
   - id: t-008
     milestone: m3
     title: "Draft the first six-week content and experiment calendar"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -448,6 +464,9 @@ tasks:
       donation asks. Reuse Kind Robots text/art generation as production tools while keeping
       editorial value high. Include network-specific adaptations instead of identical
       cross-posting. Draft only; no external publication.
+    claimed_by: 20260829T103828Z-rainbow-t008-scheduled
+    claimed_at: '2026-08-29T10:38:29Z'
+    updated: '2026-08-29T10:38:29Z'
 
   - id: t-009
     milestone: m3
