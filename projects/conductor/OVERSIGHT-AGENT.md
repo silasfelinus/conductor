@@ -1,6 +1,6 @@
 # Conductor portfolio oversight roles
 
-This is the repo-side operating contract for the oversight work that ordinary Worker/Reviewer rotation does not reliably cover. It exists because a healthy task queue can still be pointed at the wrong portfolio: Kind Robots project rows can drift from Conductor, CONTROL/priority can drift from the latest human direction, and task bookkeeping can say "done" while the intended outcome is not actually true.
+This is the repo-side operating contract for oversight work that ordinary Worker/Reviewer rotation does not reliably cover. It exists because a healthy task queue can still be pointed at the wrong portfolio: Kind Robots project rows can drift from Conductor, CONTROL/priority can drift from the latest human direction, and task bookkeeping can say "done" while the intended outcome is not actually true.
 
 `PORTFOLIO-OVERSIGHT.md` is the deterministic sensor. Scheduled/rotating agents are the judgment layer.
 
@@ -10,7 +10,7 @@ After reading `AGENTS.md`, `CONTROL.md`, `project-overrides.yaml`, and `projects
 
 Use these oversight roles when the report says they are needed, in this order:
 
-1. **schedule-medic** — scheduled-agent heartbeat is overdue. Confirm whether the external scheduled sessions are still firing. The heartbeat is evidence of repo activity, not proof by itself: a genuinely clean/no-op scheduled session may leave no commit. If the external scheduler is healthy, record that evidence and do not manufacture work. If it is absent, surface the platform-level gate immediately; repo code cannot recreate an external trigger.
+1. **openai-schedule-medic** — the OpenAI scheduled-agent heartbeat is overdue. This is intentionally distinct from Claude's scheduled sessions: Claude activity must never make a dead OpenAI scheduler look healthy. OpenAI scheduled sessions use a session id beginning `openai-scheduled-`, which should appear in claim/task-event/review markers and therefore in resulting commit history whenever the run mutates repo state. The heartbeat is evidence, not proof: a genuinely clean/no-op OpenAI cycle may leave no commit. If the OpenAI scheduler is healthy, record that evidence and do not manufacture work. If it is absent, surface the platform-level gate immediately; repo code cannot recreate an OpenAI platform trigger.
 2. **project-sync-auditor** — Kind Robots ↔ Conductor project parity has forward drift, reverse orphan(s), or could not be verified. Run `scripts/check_project_scaffold_drift.py` with the production-safe token path. Verify every Kind Robots `conductorSlug` resolves to one Conductor roadmap and every active Conductor project has the intended Kind Robots row. Where live Project settings are available, also verify the Conductor-owned coordination fields projected into Kind Robots still agree with `project-overrides.yaml` and `projects/priority.yaml`; presentation-only fields remain Kind Robots-owned per `SOURCE_OF_TRUTH.md`.
 3. **roadmap-auditor** — `audit_roadmaps.py` reports deterministic errors. Repair unambiguous bookkeeping/state defects immediately. Never paper over a source-of-truth conflict by changing whichever side is easiest.
 4. **roadmap-intent-auditor** — the semantic intent review is due. This is deliberately model/human-judgment work rather than another regex. Perform the review described below and write a dated report only after actually completing it.
@@ -64,11 +64,11 @@ Keep it short and evidence-oriented:
 
 Do **not** write a dated report merely to silence the due signal. If required sources were unavailable, leave the review overdue and record the availability problem instead.
 
-## Scheduled-agent heartbeat
+## OpenAI scheduled-agent heartbeat
 
-`scripts/build_portfolio_oversight.py` looks for recent git activity whose commit message identifies a scheduled Agent session. Default threshold: **6 hours**. This is a watchdog for the class of outage where external platform triggers disappear while GitHub Actions continue producing reports.
+`scripts/build_portfolio_oversight.py` looks specifically for recent git activity containing the `openai-scheduled-` session marker. Claude scheduled commits do **not** satisfy this signal. Default threshold: **6 hours**. This is a repo-side watchdog for the exact failure mode where the OpenAI automation is disabled or stops firing while Claude and GitHub Actions continue normally.
 
-The threshold is intentionally looser than the usual cadence because not every valid scheduled cycle must mutate the repo. Treat an overdue heartbeat as a reason to inspect the scheduler, not as proof that it is broken.
+The threshold is intentionally looser than the hourly OpenAI cadence because not every valid cycle must mutate the repo. Treat an overdue heartbeat as a reason to inspect the OpenAI task state, not as proof by itself that the scheduler is broken.
 
 ## Deterministic sensor
 
@@ -78,4 +78,4 @@ Run locally/CI:
 python scripts/build_portfolio_oversight.py
 ```
 
-With `KR_API_TOKEN`, it includes Kind Robots project parity. `--fail-on-action` exits non-zero when deterministic drift, an overdue scheduled-agent heartbeat, an overdue semantic intent review, or an unresolved Kind Robots parity check requires attention. The scheduled `Conductor Oversight` workflow persists `PORTFOLIO-OVERSIGHT.{md,json}` so connector-only agents can consume the result without needing direct production API access.
+With `KR_API_TOKEN`, it includes Kind Robots project parity. `--fail-on-action` exits non-zero when deterministic drift, an overdue OpenAI scheduled-agent heartbeat, an overdue semantic intent review, or an unresolved Kind Robots parity check requires attention. The scheduled `Conductor Oversight` workflow persists `PORTFOLIO-OVERSIGHT.{md,json}` so connector-only agents can consume the result without needing direct production API access.
