@@ -44,11 +44,12 @@ def test_scheduled_agent_heartbeat_fresh_and_overdue():
 
     assert fresh["overdue"] is False
     assert fresh["hours_since"] == 1.0
+    assert fresh["marker"] == "openai-scheduled-"
     assert overdue["overdue"] is True
     assert overdue["hours_since"] == 7.5
 
 
-def test_missing_scheduled_agent_heartbeat_is_overdue():
+def test_missing_scheduled_agent_heartbeat_is_overdue_and_provider_specific():
     result = oversight.scheduled_agent_status(
         stale_hours=6,
         now=datetime(2026, 8, 29, 3, 30, tzinfo=timezone.utc),
@@ -56,6 +57,7 @@ def test_missing_scheduled_agent_heartbeat_is_overdue():
     )
     assert result["overdue"] is True
     assert result["last_activity"] is None
+    assert "Claude activity does not satisfy" in result["note"]
 
 
 def test_classify_deterministic_drift_beats_semantic_due_and_unresolved():
@@ -108,12 +110,13 @@ def test_render_markdown_surfaces_role_signals():
     report = {
         "generated_at": "2026-08-29T03:30:00+00:00",
         "summary": {"status": "action-needed"},
-        "scheduled_agent": {
+        "openai_scheduled_agent": {
             "last_activity": "2026-08-29T02:30:00+00:00",
             "hours_since": 1.0,
             "stale_hours": 6,
             "overdue": False,
-            "note": "heartbeat only",
+            "marker": "openai-scheduled-",
+            "note": "OpenAI heartbeat only",
         },
         "intent_review": {
             "last_report": None,
@@ -143,6 +146,7 @@ def test_render_markdown_surfaces_role_signals():
 
     text = oversight.render_markdown(report)
 
+    assert "OpenAI scheduled-agent heartbeat" in text
     assert "CONTROL_PRIORITY_DRIFT" in text
     assert "Forward drift" in text
     assert "INTENT-AUDIT" in text
