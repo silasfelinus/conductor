@@ -80,7 +80,6 @@ function Write-Log($msg) {
     Write-Host $line
 }
 
-# Keep the log bounded the same way healthcheck.ps1 does.
 function Trim-Log {
     try {
         if (-not (Test-Path $logFile)) { return }
@@ -90,11 +89,6 @@ function Trim-Log {
     } catch {}
 }
 
-# --- Reading the current mapping table ---------------------------------------
-# Get-SmbMapping is the good source (it reports Status directly) but only exists
-# on Win8+/2012+ with the SmbShare module present. net use is the fallback, and
-# its Status column is blank for a mapping in some transitional states, so the
-# regex anchors on the letter and the UNC rather than on the status word.
 function Get-CurrentMappings {
     $map = @{}
     $smb = Get-SmbMapping -ErrorAction SilentlyContinue
@@ -112,13 +106,6 @@ function Get-CurrentMappings {
     foreach ($line in (& net use 2>&1)) {
         $text = "$line"
         if ($text -match '([A-Za-z]:)\s+(\\\\[^\s]+)') {
-            # Copy the captures out IMMEDIATELY. $Matches is a single global
-            # table that every successful -match overwrites, so the status
-            # probe below replaces it: reading $Matches[1]/$Matches[2] after
-            # that point would key the map by the status word ('Unavailable')
-            # and store a null UNC. That silently empties the whole table on
-            # the one path this fallback exists for -- a box without
-            # Get-SmbMapping -- so the locals are load-bearing, not style.
             $letter = $Matches[1].ToUpper()
             $unc = $Matches[2]
             $status = 'Unknown'
@@ -132,9 +119,6 @@ function Get-CurrentMappings {
     return $map
 }
 
-# Enumerate, never Test-Path. A stale SMB handle satisfies Test-Path and still
-# fails every read -- that exact split is what made the 2026-08-25 outage hard
-# to name. An empty directory is readable and must pass.
 function Test-PathReadable($path) {
     if (-not $path) { return $false }
     try {
@@ -151,8 +135,6 @@ function Get-UncHost($unc) {
     return $null
 }
 
-# TCP 445 rather than ping: a NAS can answer ICMP while SMB is still starting,
-# and plenty of boxes drop ICMP entirely.
 function Test-SmbHostUp($hostName, $timeoutMs = 3000) {
     if (-not $hostName) { return $false }
     $client = New-Object System.Net.Sockets.TcpClient
@@ -168,18 +150,12 @@ function Test-SmbHostUp($hostName, $timeoutMs = 3000) {
     }
 }
 
-# A stored credential is per-user, and losing it looks exactly like a dead NAS:
-# every path unreadable, the host plainly up. It has been wiped here at least
-# once (ai-art-academy t-033, 2026-08-25: "cmdkey /list was empty and all four
-# alexandria mappings showed Unavailable"). Worth naming explicitly rather than
-# letting it present as an outage.
 function Test-CredentialStored($hostName) {
     if (-not $hostName) { return $false }
     $out = (& cmdkey /list 2>&1) -join "`n"
     return ($out -match [regex]::Escape($hostName))
 }
 
-# --- Config ------------------------------------------------------------------
 function Read-ShareMap {
     if ($env:KR_SHARE_MAP) {
         $entries = @()
@@ -224,8 +200,6 @@ function Save-ShareMap {
     $skipped = @()
     foreach ($letter in ($current.Keys | Sort-Object)) {
         $entry = $current[$letter]
-        # Only snapshot mappings that are actually working. Recording a broken
-        # one bakes today's outage into the config as if it were the intent.
         if (Test-PathReadable "$letter\") {
             $out[$letter] = $entry.Unc
         } else {
@@ -244,7 +218,6 @@ function Save-ShareMap {
     return 0
 }
 
-# --- Main --------------------------------------------------------------------
 Write-Log "restore-shares starting as user '$($env:USERNAME)' on '$($env:COMPUTERNAME)' (mode: $(if ($Save) {'save'} elseif ($Check) {'check'} else {'restore'}))"
 
 if ($Save) {
@@ -262,12 +235,9 @@ if (-not $wanted.Count) {
     exit 2
 }
 
-# Wait for the file server(s) before touching anything. At logon the NIC is
-# often still coming up, and remapping against an unreachable host just burns
-# the attempt and leaves a dead mapping behind.
 $hosts = @($wanted | ForEach-Object { Get-UncHost $_.Unc } | Where-Object { $_ } | Sort-Object -Unique)
-# -Check is a report, so it probes once instead of sitting in the boot wait.
 $waitFor = if ($Check) { 0 } else { $WaitSeconds }
+$credentialFailures = @()
 foreach ($h in $hosts) {
     $deadline = (Get-Date).AddSeconds($waitFor)
     $up = Test-SmbHostUp $h
@@ -287,6 +257,7 @@ foreach ($h in $hosts) {
         Write-Log "  NAS from every consumer, including ComfyUI on the UNC path. Fix with:"
         Write-Log "    cmdkey /add:$h /user:<user> /pass"
         Write-Log "  Note cmdkey is per-user: the account pm2 runs as needs its own."
+        $credentialFailures += $h
     }
 }
 
@@ -303,11 +274,16 @@ foreach ($w in $wanted) {
 
     if ($existing -and (Test-PathReadable $root)) {
         if ($existing.Unc -and ($existing.Unc.TrimEnd('\') -ne $unc.TrimEnd('\'))) {
-            Write-Log "$letter is readable but points at $($existing.Unc), not $unc - leaving it alone"
+            if ($Check) {
+                Write-Log "$letter -> $unc : BROKEN (readable but points at $($existing.Unc))"
+                $failed += $letter
+                continue
+            }
+            Write-Log "$letter is readable but points at $($existing.Unc), not $unc - remapping to configured target"
         } else {
             $alreadyOk += $letter
+            continue
         }
-        continue
     }
 
     if ($Check) {
@@ -319,10 +295,6 @@ foreach ($w in $wanted) {
 
     $state = if ($existing) { 'status ' + $existing.Status } else { 'not mapped' }
     Write-Log "$letter -> $unc : remapping ($state)"
-    # stdin from NUL on purpose, same as healthcheck.ps1: net use prompts for a
-    # username when no credential is cached, and a Task Scheduler run has no
-    # console to answer with - it would block until the task timeout instead of
-    # failing. With stdin closed it errors immediately and we report it.
     & cmd.exe /c "net use $letter /delete /y < NUL" 2>&1 | Out-Null
     $out = (& cmd.exe /c "net use $letter $unc /persistent:yes < NUL" 2>&1) -join ' '
     if (Test-PathReadable $root) {
@@ -337,13 +309,8 @@ foreach ($w in $wanted) {
 if ($alreadyOk.Count) { Write-Log "already healthy: $($alreadyOk -join ', ')" }
 if ($restored.Count) { Write-Log "restored: $($restored -join ', ')" }
 if ($failed.Count) { Write-Log "still broken: $($failed -join ', ')" }
+if ($credentialFailures.Count) { Write-Log "missing stored credential: $($credentialFailures -join ', ')" }
 
-# If letters came back AND comfyui is up, its folder_paths cache is stale --
-# it does not re-enumerate just because a share returned. healthcheck.ps1 does
-# this restart on its own down->up edge, but only for the one path it probes,
-# and only if it is actually running; after a reboot it may not be yet.
-# Harmless to repeat: a restart of an already-correct comfyui costs a model
-# reload, not a failure.
 if ($restored.Count -and -not $Check) {
     $jlist = (& pm2 jlist 2>&1) -join ''
     if ($jlist -match '"name"\s*:\s*"comfyui"') {
@@ -357,5 +324,5 @@ if ($restored.Count -and -not $Check) {
 }
 
 Trim-Log
-if ($failed.Count) { exit 1 }
+if ($failed.Count -or $credentialFailures.Count) { exit 1 }
 exit 0
