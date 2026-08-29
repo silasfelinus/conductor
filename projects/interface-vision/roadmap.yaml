@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     recurring: true
@@ -2986,9 +2986,30 @@ tasks:
       components/user/messenger.vue remains out of scope (root mixes kr-panes grid primitive
       with arbitrary h-[70vh]). Return the recurring consistency umbrella to ready for the
       next bounded slice.
-    updated: '2026-08-29T19:31:17Z'
+
+      Slice 33 merged as silasfelinus/kind_robots#2205 (squash 8a8740f) from exact head
+      883ee58f13aa560125d773e6468b76a608b91ade. components/pages/for-you-manager.vue's root
+      scroll wrapper now uses kr-container plus its existing max-w-[1800px] override instead
+      of hand-rolled mx-auto w-full max-w-[1800px]; no geometry or behavior change. Verified
+      before merge: eslint clean on changed file (1 pre-existing no-dynamic-delete error at
+      line 563 confirmed via git stash to predate this change), prettier --check clean, npm
+      run test (vue-tsc --noEmit repo-wide) clean, npm run test:layout-contract holds (0 new
+      violations, 207 baseline unchanged). All 37 exact-head PR checks completed successfully,
+      including the documented multi-minute Contract verifiers job (conductor/t-132's pattern,
+      confirmed genuinely progressing step-by-step via mcp__github__actions_get rather than
+      assumed hung). Re-examined the achievement-popup.vue candidate the prior slice's note
+      called straightforward: its mx-auto w-full max-w-md sits on a modal-content div that
+      also carries border/bg-base-100/shadow-2xl decorative utilities on the same class
+      string, a different shape from every accepted conversion so far (which only combine kr-
+      container with layout/spacing utilities, e.g. mana-wallet.vue's kr-container max-w-3xl
+      p-6 space-y-8) -- kept it out of scope again per the earlier slice-31 assessment rather
+      than trust the more recent note over the file-level read, and flagged the discrepancy in
+      the PR body for a maintainer to resolve explicitly. components/user/messenger.vue
+      remains out of scope (root mixes kr-panes grid primitive with arbitrary h-[70vh]).
+      Return the recurring consistency umbrella to ready for the next bounded slice.
+    updated: '2026-08-29T19:36:06Z'
     approved_by_human: true
-    implementation_pr: 'silasfelinus/kind_robots#2204'
+    implementation_pr: 'silasfelinus/kind_robots#2205'
     owner: worker
     claimed_by: 20260829T192812-ivt104-sched3
     claimed_at: '2026-08-29T19:28:13Z'
