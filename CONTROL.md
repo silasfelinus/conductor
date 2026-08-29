@@ -16,9 +16,8 @@ happened. Don't edit it; edit here.
 reversible until the first clean cycle is done. Nothing publishes, deploys, or spends
 money without my explicit approval (set `approved_by_human: true` on the gated task).
 
-**Priority order this week:** interface-vision → ai-art-academy → coloring-book →
-humboldt-scoop-cms → digital-storefront → mermaids-of-venice → kind-robots →
-kindrobots-unraid.
+**Priority order this week:** mandarin-tutor → cthulhuquarium → kapowarr → kind-economy →
+interface-vision → ai-art-academy → coloring-book → humboldt-scoop-cms.
 
 **Continuous fallback order:** animation-manager, then dream-cycle. Finite `active` work
 always outranks `continuous` programs; dream-cycle remains the final idle fallback.
@@ -292,7 +291,7 @@ listings, and spend remain hard-gated).
   regenerate an approved design for production (exploratory queue stays active).
 - The dream-cycle idler may spend idle days advancing this project's set-production
   tasks (Monster Recast first) under its delegation rule: content stays here, the
-  idler updates both records, and never double-claims a task the Worker holds.
+  idler updates both records, and never double-claim a task the Worker holds.
 - Tech seed: the mural-design WonderLab color studio (kind_robots /mural, PR #135) —
   generalize/share the engine, don't fork it; mural-design keeps working.
 - Humboldt Impropriety Society coloring book/calendar stay archived inspiration; no
