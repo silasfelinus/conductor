@@ -4738,3 +4738,36 @@ tasks:
     claimed_by: 2026-08-28T-conductor-sweep-t136
     claimed_at: '2026-08-28T20:35:41Z'
     implementation_pr: 'silasfelinus/conductor#3097'
+
+  - id: t-137
+    milestone: m2
+    title: "healthcheck.ps1's own default render-stats host is still the retired Vercel URL, and a share-recovery double-restart race can fire ComfyUI twice in one tick"
+    status: ready
+    gate_human: false
+    owner: null
+    stakes: reversible
+    passes: 0
+    note: >-
+      Flagged 2026-08-29 as "Flags for Reviewer" on PR #3113 (merged), which fixed the
+      *scheduled-execution* path only (the hidden VBS wrapper now defaults
+      KR_BASE_URL to https://kindrobots.org when unset, preserving any explicit
+      override). Two related gaps remain in ops/home-server/healthcheck.ps1 itself:
+
+      1. The script's own default for its render-stats request still points at the
+         retired https://kind-robots.vercel.app host rather than
+         https://kindrobots.org. Any invocation that doesn't go through the wrapper
+         (interactive run, a different scheduler entry, manual debugging) still hits
+         dead infrastructure. Fix the default in the script directly, and add a
+         structural regression test so this can't silently drift back.
+      2. The same user-reported scheduled-task log that surfaced the above also showed
+         a double-restart race: the share watchdog restarts ComfyUI after model-share
+         recovery, and the same tick's normal health probe can then restart it again
+         before the first restart has finished starting up. Needs a guard (e.g. a
+         short cooldown/in-flight flag) so a just-triggered share-recovery restart
+         isn't immediately followed by a second, redundant one from the ordinary
+         health probe.
+
+      Kaizen candidate from PR #3113's own suggestion: move the canonical Kind Robots
+      base URL into one tested ops config source so wrappers and scripts cannot drift
+      independently -- worth considering as part of this task's fix rather than a
+      third patch to the same drift class.
