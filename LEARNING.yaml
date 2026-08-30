@@ -11680,3 +11680,23 @@ records:
     editing to know whether a resulting --write is a real fix (file was clean) or would trigger
     an unrelated full-file reformat (file was already dirty) -- doing this blind cost one wasted
     2700-line reformat-and-revert cycle on art-test.vue this slice.
+- date: '2026-08-30'
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Slice 62: the kr-note family (border-{status}/N + bg-{status}/M + text-{status}) is a
+    much bigger candidate pool (~150+ raw grep hits) than any prior mechanical sweep, but
+    padding/opacity/text-size/font-weight vary too widely across it to convert blindly --
+    unlike kr-container/kr-surface/kr-panel-flat, where near-total instances matched the
+    canonical shape exactly. Scoping the slice to only instances where every differing
+    attribute was explicit in the original class list (never inferring an ambient/inherited
+    text-size or font-weight) kept the substitution provably byte-for-visual-identical at
+    the cost of converting only 7 of ~150 instances this slice. Also worth noting: a family
+    of otherwise-identical pills/badges sharing one non-kr-note color (stage-manager.vue's
+    primary/success/warning trio) should be skipped as a set rather than partially converted,
+    since fixing two of three fragments what was a visually consistent group.
