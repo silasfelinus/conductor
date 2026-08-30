@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     recurring: true
@@ -2952,9 +2952,9 @@ tasks:
       Slice 36 (kind_robots#2208): pages/music-mentor.vue's kr-scroll root wrapper used hand- rolled max-w-3xl mx-auto, the same shape as the 8 files converted in slice 34 (kr-scroll mx-auto max-w-N -> kr-scroll kr-container max-w-N). Re-derived the candidate pool fresh from current main with a repo-wide mx-auto+max-w- grep (both orders) across components/ and pages/: 19 hits, all but this one already handled or correctly out-of-scope (nested/non-root text-centering, decorative-utility-mixing modal content, or flex- centered sections like checkout-success.vue/checkout-cancel.vue that slice 32 already excluded as a new unverified pattern shape). Converted music-mentor.vue's root to kr- scroll kr-container max-w-3xl p-6 space-y-6; no geometry change (kr-container is mx-auto w-full max-w-6xl, overridden to max-w-3xl exactly as before). Verified: eslint clean, prettier clean, vue-tsc --noEmit repo-wide clean, test:layout-contract holds (207 baseline unchanged, 0 new violations). All PR checks green, mergeable_state clean, merged. Re-arming for the next bounded slice -- the mx-auto/max-w- pool looks exhausted again; per slice 35's note, skip the overflow-y-auto/kr-scroll pool (ruled out, would break the one-scroll-per-surface invariant) and the viewport-grid/grid-cols pool (that's the separately-tracked 207-count layout-contract ratchet allow-list, not a byte-exact kr-container substitution -- treating it as this task's scope would require per- component breakpoint-necessity judgment calls, not mechanical substitution).
 
       Reused the shared kr-panel-flat surface primitive for the public user profile card and loading surface while preserving their intentional rounded-3xl and shadow/layout overrides. Kind Robots #2209 merged after every exact-head PR workflow completed successfully.
-    updated: '2026-08-30T02:47:12Z'
+    updated: '2026-08-30T02:47:22Z'
     approved_by_human: true
-    implementation_pr: 'silasfelinus/kind_robots#2208'
+    implementation_pr: 'silasfelinus/kind_robots#2210'
     owner: worker
     claimed_by: claude-20260830T024711Z-ivt104-slice55
     claimed_at: '2026-08-30T02:47:12Z'
