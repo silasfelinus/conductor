@@ -1,19 +1,16 @@
 project: engagement
 kind: software
-notes_from_silas: "The engagement and referral economy for Kind Robots. Governs how karma and\nmana flow\
-  \ through community interaction: referrals, bounties, content creation,\nreactions, and social sharing.\n\
-  \nCore principles:\n- Interaction is always rewarded, never punished. Posting a bounty (asking for\n\
-  \  help) is a social good \u2014 when someone fills it using house resources, the\n  POSTER gets mana\
-  \ back from the house. Both sides are celebrated.\n- Bounties live IN the Prompt model (isBounty flag)\
-  \ \u2014 no separate model.\n  A bounty is just a public prompt request with a status and claim system.\n\
-  - Karma and mana are separate registers with separate transaction tables.\n  Karma = social standing\
-  \ (non-purchasable, earned by being a good citizen).\n  Mana = generation fuel (rechargeable, purchasable,\
-  \ the energy economy).\n- Referrals earn karma + mana upfront, PLUS an ongoing cut of future payouts\n\
-  \  from the referred user (like patronage). The referral tree is permanent.\n- Karma and mana reward\
-  \ rates are Silas-set parameters \u2014 agents propose\n  values, Silas approves before anything goes\
-  \ live. Always needs-human for\n  rate changes.\n\nAnti-abuse: rate limits on all reward triggers. Circular\
-  \ referral rings,\nbot farms, and reaction spam need detection before any economy goes live.\nGate every\
-  \ rate-setting task with gate_human: true.\n"
+notes_from_silas: "The engagement and referral economy for Kind Robots. Governs how karma and\nmana flow through community
+  interaction: referrals, bounties, content creation,\nreactions, and social sharing.\n\nCore principles:\n- Interaction is
+  always rewarded, never punished. Posting a bounty (asking for\n  help) is a social good — when someone fills it using house
+  resources, the\n  POSTER gets mana back from the house. Both sides are celebrated.\n- Bounties live IN the Prompt model
+  (isBounty flag) — no separate model.\n  A bounty is just a public prompt request with a status and claim system.\n- Karma
+  and mana are separate registers with separate transaction tables.\n  Karma = social standing (non-purchasable, earned by
+  being a good citizen).\n  Mana = generation fuel (rechargeable, purchasable, the energy economy).\n- Referrals earn karma
+  + mana upfront, PLUS an ongoing cut of future payouts\n  from the referred user (like patronage). The referral tree is permanent.\n\
+  - Karma and mana reward rates are Silas-set parameters — agents propose\n  values, Silas approves before anything goes live.
+  Always needs-human for\n  rate changes.\n\nAnti-abuse: rate limits on all reward triggers. Circular referral rings,\nbot
+  farms, and reaction spam need detection before any economy goes live.\nGate every rate-setting task with gate_human: true.\n"
 milestones:
 - id: m1
   title: Referral model + User.referralCode + signup attribution
@@ -46,11 +43,10 @@ tasks:
   passes: 0
   stakes: reversible
   updated: '2026-06-30T00:00:00Z'
-  note: 'Model already present in kind_robots/prisma/schema.prisma: Referral (id, createdAt, referrerId,
-    referredId unique, codeUsed, cutRate 0.05, Referrer and Referred relations, index on referrerId).
-    User.referralCode @unique also present. signedUpAt covered by createdAt. KarmaTransaction model and
-    KarmaReason enum also confirmed present (REFERRAL_SIGNUP, REFERRAL_CUT among values). Schema-level
-    work is complete; no migration needed here.
+  note: 'Model already present in kind_robots/prisma/schema.prisma: Referral (id, createdAt, referrerId, referredId unique,
+    codeUsed, cutRate 0.05, Referrer and Referred relations, index on referrerId). User.referralCode @unique also present.
+    signedUpAt covered by createdAt. KarmaTransaction model and KarmaReason enum also confirmed present (REFERRAL_SIGNUP,
+    REFERRAL_CUT among values). Schema-level work is complete; no migration needed here.
 
     '
 - id: t-002
@@ -62,13 +58,12 @@ tasks:
   passes: 0
   stakes: reversible
   updated: '2026-06-30T00:00:00Z'
-  note: "All karma infrastructure was already in place: KarmaTransaction model, KarmaReason enum, awardKarma()\
-    \ utility, KARMA_LIVE=false gate, and KARMA_AMOUNTS constants in server/utils/karma.ts. Existing triggers\
-    \ already wired: REACTION_GIVEN (reactions/index.post.ts), CONTENT_CREATED_PUBLIC (prompts/index.post.ts),\
-    \ REFERRAL_SIGNUP (users/register.post.ts). Added missing trigger: REACTION_RECEIVED (content owner\
-    \ awarded when someone reacts to their content) in reactions/index.post.ts via getContentOwnerId()\
-    \ helper. Skips self-reactions (ownerId !== reactor.id). Component model has no userId so returns null\
-    \ for that category. All awards are fire-and-forget; gated by KARMA_LIVE=false until Silas approves rates.\n"
+  note: "All karma infrastructure was already in place: KarmaTransaction model, KarmaReason enum, awardKarma() utility, KARMA_LIVE=false
+    gate, and KARMA_AMOUNTS constants in server/utils/karma.ts. Existing triggers already wired: REACTION_GIVEN (reactions/index.post.ts),
+    CONTENT_CREATED_PUBLIC (prompts/index.post.ts), REFERRAL_SIGNUP (users/register.post.ts). Added missing trigger: REACTION_RECEIVED
+    (content owner awarded when someone reacts to their content) in reactions/index.post.ts via getContentOwnerId() helper.
+    Skips self-reactions (ownerId !== reactor.id). Component model has no userId so returns null for that category. All awards
+    are fire-and-forget; gated by KARMA_LIVE=false until Silas approves rates.\n"
 - id: t-003
   milestone: m3
   title: Add isBounty fields to Prompt + bounty API
@@ -80,9 +75,10 @@ tasks:
   gate_human: true
   approved_by_human: true
   updated: '2026-07-05T00:00:00Z'
-  note: 'Complete: Silas approved the bounty amounts (BOUNTY_MANA_FULFILLER=50, BOUNTY_MANA_POSTER=25,
-    conductor PR #177) and KARMA_LIVE=true rode kind_robots PR #87, which merged 2026-07-04 with a
-    successful Vercel deploy. The bounty API (POST /api/prompts/:id/bounty/claim and /fulfill) is live
-    and awarding real karma/mana.
+  note: 'Complete: Silas approved the bounty amounts (BOUNTY_MANA_FULFILLER=50, BOUNTY_MANA_POSTER=25, conductor PR #177)
+    and KARMA_LIVE=true rode kind_robots PR #87, which merged 2026-07-04 with a successful Vercel deploy. The bounty API (POST
+    /api/prompts/:id/bounty/claim and /fulfill) is live and awarding real karma/mana.
 
     '
+goal: Ship a coherent engagement loop that gives users useful reasons to return and interact without obscuring the 
+  underlying Kind Robots experiences.

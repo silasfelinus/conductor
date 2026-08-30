@@ -29,875 +29,944 @@ notes_from_silas: |
   live LLM interactions. Bucket-list project.
 
 milestones:
-  - id: m1
-    title: "SHAPE — design brief, specs, art direction"
-    weight: 25
-    status: done
-  - id: m2
-    title: "BUILD — slideshow play-loop proof of concept (web)"
-    weight: 50
-    status: done
-  - id: m3
-    title: "POLISH & SHIP — content depth, app packaging, Steam/Unreal research"
-    weight: 25
-    status: done
+- id: m1
+  title: "SHAPE — design brief, specs, art direction"
+  weight: 25
+  status: done
+- id: m2
+  title: "BUILD — slideshow play-loop proof of concept (web)"
+  weight: 50
+  status: done
+- id: m3
+  title: "POLISH & SHIP — content depth, app packaging, Steam/Unreal research"
+  weight: 25
+  status: done
   # m4 (full-game vertical slice: fishing domain model, Fishopedia, character
   # parity, encounter authoring pipeline, progression/economy) is specified in
   # FULL-GAME-GAP-AUDIT.md and deliberately not filed as tasks yet — the audit's
   # own recommendation is to prove the loop before scaling production. m5 is open
   # first because Silas asked for art on 2026-08-26 and the render box was idle.
-  - id: m5
-    title: "ART & CONTENT PRODUCTION — pin the look, then render the asset matrix"
-    weight: 50
-    status: in-progress
+- id: m5
+  title: "ART & CONTENT PRODUCTION — pin the look, then render the asset matrix"
+  weight: 50
+  status: in-progress
 
 tasks:
-  - id: t-001
-    milestone: m1
-    title: Write the design brief
-    status: done
-    owner: reviewer
-    passes: 0
-    stakes: reversible
-    updated: 2026-07-05
-    note: >
-      DESIGN-BRIEF.md written by the Reviewer in session 2026-07-05 directly
-      from Silas's pitch. Includes core loop, PoC exit criteria, art
-      direction, and the offline-at-runtime rule.
-
-  - id: t-002
-    milestone: m1
-    title: Confirm scope with Silas
-    status: done
-    owner: null
-    updated: '2026-07-06T20:00:00Z'
-    passes: 0
-    stakes: reversible
-    approved_by_human: true
-    note: >
-      CLEARED 2026-07-06 (Silas in-session, daily standup): scope + PoC exit
-      criteria confirmed (Prime Monster as the primary UI/structure reference).
-      approved_by_human set per the CONTROL.md in-session clearance rule.
-      FOR SILAS: soft checkpoint, nothing is blocked on it — you pitched this
-      in session so it's mostly a fidelity check. Read DESIGN-BRIEF.md and
-      confirm the PoC exit criteria. (The "prime monster" question is
-      resolved: it's the Steam game Prime Monster, now the brief's primary
-      UI/structure reference — card selections, navigable pre-baked screens,
-      honestly-evil moral decisions.) TO APPROVE: set approved_by_human: true
-      and status: done, or correct the brief in a note here. Development
-      continues meanwhile.
-
-  - id: t-003
-    milestone: m1
-    title: Create the matching kind_robots Project (slug parity)
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: >
-      DONE 2026-07-16 (claude-build-sxndmc). Slug parity satisfied: kind_robots
-      Project id 95 ("Ruler Hooked") already exists with
-      conductorSlug=ruler-hooked (verified via GET /api/projects/ruler-hooked).
-      The friendly definition-of-done goal is now recorded in this roadmap's
-      top-level `goal:` field (the source of truth sync_projects.py reads), so it
-      backfills onto the live Project row on the next successful sync. A direct
-      PATCH /api/projects/95 to set goal immediately returned 503 "Database
-      connection temporarily unavailable" (transient DB-write outage; reads
-      succeed) and was not retried further — the goal is captured durably and
-      syncs automatically when writes recover. No live gameplay depends on this
-      row (the PoC is offline-first).
-    updated: '2026-07-16T20:38:19Z'
-
-  - id: t-004
-    milestone: m1
-    title: Spec the play-loop data model and save system
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: >
-      docs/data-model.md — runs, save slots (multiple named saves), kingdom
-      health axes/sliders, region states, event/choice records, character
-      references. Keep game content as data (JSON/YAML) so it survives a
-      future Unreal migration. Design for offline play: state lives client
-      side, backend is for account sync and nothing gameplay-critical.
-      TIME PILLAR (Silas 2026-07-05, see DESIGN-BRIEF.md): no clock, hidden
-      or shown — time-of-day is a turn-driven presentation state, and NOTHING
-      (events, choices, content) may key off it or expire. Model it as a
-      cosmetic cycle position advanced by actions, never wall-clock time.
-    claimed_by: claude-ruler-hooked-sxndmc
-    claimed_at: '2026-07-16T09:42:41Z'
-    updated: '2026-07-16T09:42:41Z'
-
-  - id: t-005
-    milestone: m1
-    title: Spec the environment layer compositing (regions, states, merge)
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: >
-      docs/compositing.md — name the landscape regions (sky, treeline, far
-      shore, village edge, castle grounds...), the states each can be in, how
-      slider values map to states, and how layered images merge into the one
-      play-screen image (z-order, transparent webp/png layers, optional subtle
-      animation). Include the pitch example: warlock development vs druid
-      preservation visibly changing a region. TIME-OF-DAY DIMENSION (Silas
-      2026-07-05): every region state needs time-of-day variants (day, night,
-      plus brief transitional treats — morning dew, golden hour — that show
-      only for a short beat before settling into day/night). Spec the variant
-      matrix and asset naming so region-state × time-of-day stays generatable
-      and the transitions are purely visual — never content gates.
-    claimed_by: claude-ruler-hooked-sxndmc
-    claimed_at: '2026-07-16T09:48:58Z'
-    updated: '2026-07-16T09:48:58Z'
-
-  - id: t-006
-    milestone: m1
-    title: Spec the event/character card deck format
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: >
-      docs/decks.md — the card/deck data format for kingdom tasks and
-      narrative arcs: trigger conditions, choices, slider effects, region
-      effects, character hooks (kind_robots Character model — reuse existing
-      Characters where they fit), and per-run variation so different
-      characters/events appear on different playthroughs (example arc: the
-      ruler's child wants to elope). Adding an arc must be a content task,
-      not a code task.
-    claimed_by: claude-ruler-hooked-sxndmc
-    claimed_at: '2026-07-16T09:49:18Z'
-    updated: '2026-07-16T09:49:18Z'
-
-  - id: t-007
-    milestone: m2
-    title: Build the slideshow play-loop proof of concept in kind_robots
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-004
-      - t-005
-      - t-006
-      - t-012
-    note: >
-      Cross-repo task (kind_robots). PoC exit criteria are in DESIGN-BRIEF.md.
-      PHASE 1 (foundation) DELIVERED + MERGED 2026-07-16 (claude-build-sxndmc):
-      kind_robots PR #328 (MERGED) added the pure, framework-free game engine +
-      type contracts — types/ruler-hooked.ts and utils/rulerHooked/*
-      (seed RNG, applyEffects reducer, triggers, compositor, seeded select)
-      plus a runtime engine.selftest.ts. Verified via isolated strict
-      `tsc --noEmit` (exit 0) and the tsx self-test (all pass); the full
-      vue-tsc gate could not run in-session (kind_robots toolchain OOM-restarts
-      the sandbox) — flagged for CI. PHASE 2 (the visible play screen: Pinia
-      store + Vue components + content bundle + wire into the /ruler-hooked
-      #interactive slot, placeholder art) is split to t-012. Mark t-007 done
-      once PR #328 merges AND t-012 lands the playable screen meeting all four
-      DESIGN-BRIEF m2 exit criteria.
-
-      UPDATE 2026-07-16T21:55Z (Reviewer): PR #328 merged, but its merge commit
-      (df89de7c) already left kind_robots `main` red on the TypeScript check —
-      9 pre-existing "possibly undefined" errors across applyEffects.ts/
-      compositor.ts/engine.selftest.ts/select.ts (GH Actions run 29536584357,
-      confirmed by local reproduction, not an OOM artifact). t-012 (PR #329)
-      rejected pass 1 for 3 further new errors plus needing to clean up these 9 —
-      see t-012's retry_context. Re-added as an explicit t-007 dependency; will
-      flip back to ready once t-012 lands with a green vue-tsc gate.
-
-      DONE 2026-07-21 (scheduled session, claude-conductor-scheduled-20260721T1214Z):
-      both remaining conditions hold on current kind_robots main (736b663f):
-      PR #328 is merged, and t-012 (PR #811, merged 2026-07-21) landed the
-      playable screen. Did not just trust t-012's prior note — re-verified
-      independently against a fresh kind_robots checkout: `npx tsx
-      utils/rulerHooked/engine.selftest.ts` and `game.selftest.ts` both
-      ALL PASS, and the full `npm run test` (vue-tsc --noEmit) gate is green
-      (exit 0), so the 2026-07-16 red-main TypeScript regression this task's
-      own note flagged is resolved. All four DESIGN-BRIEF m2 exit criteria are
-      structurally present and wired: components/ruler-hooked/ruler-hooked-page.vue
-      (mounted at content/ruler-hooked.md's #interactive slot) composes
-      ruler-hooked-game.vue (playable session + event cards/narrative arc),
-      ruler-hooked-stage.vue (composited landscape regions), ruler-hooked-health.vue,
-      and ruler-hooked-slots.vue (multiple save slots). No kind_robots code
-      change needed this cycle — purely a verification + bookkeeping close-out.
-
-      CORRECTION (ruler-hooked/t-013, 2026-08-10): the file named above,
-      components/ruler-hooked/ruler-hooked-page.vue, does not exist in
-      silasfelinus/kind_robots. The component actually lives at
-      components/conductor/ruler-hooked-page.vue. Nuxt's flat auto-import
-      means the app still works regardless, but a future contributor
-      searching by the documented path would not find it. Documentation-only;
-      no code changed.
-    updated: '2026-07-21T12:26:00Z'
-
-  - id: t-008
-    milestone: m1
-    title: Write the art direction doc and first landscape prompt pack
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: >
-      docs/art-direction.md — pin the look (cartoony, goofy, exaggerated
-      good/evil with wry twists; Monkey Island / Bakshi / Treasure Planet /
-      Steven Universe / She-Ra references) and add the first landscape-layer
-      prompt entries to projects/art-prompts.yaml (inspirations for
-      ruler-hooked). Icon/card/hero entries already queued 2026-07-05.
-      Account for the time-of-day variant matrix (t-005): each region state
-      generates in day/night plus brief morning-dew and golden-hour treat
-      variants — write prompts as templates (region + state + time) so the
-      set scales without hand-writing every combination.
-    claimed_by: claude-ruler-hooked-sxndmc
-    claimed_at: '2026-07-16T10:15:41Z'
-    updated: '2026-07-16T10:15:41Z'
-
-  - id: t-009
-    milestone: m3
-    title: Research the Unreal/Steam migration path (note only)
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: >
-      docs/unreal-migration.md — what the web PoC's data-first content
-      (decks, regions, saves) needs to look like to port cleanly to Unreal;
-      what does NOT port (DOM compositing) and its Unreal equivalent; rough
-      effort tiers. Research note only — no engine work, no Steam page.
-    claimed_by: claude-ruler-hooked-sxndmc
-    claimed_at: '2026-07-16T10:18:35Z'
-    updated: '2026-07-16T10:18:35Z'
-
-  - id: t-010
-    milestone: m2
-    title: Polish and upgrade Ruler Hooked front-end surface
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: 'RECHECK 2026-08-15 (~19:30 UTC, conductor scheduled Agent run, sched-conductor-rh-t010-20260815T1930Z): all four steps now verified complete against kind_robots main and production. (1) Art: relay is back online (relay-status API confirms agent ''Silas-PC'' reporting live) -- and per curl against production, both public/images/dashboard-tabs/wonder/ruler-hooked.webp (200, image/webp, 104586 bytes) and public/images/tutorials/wonder/ruler-hooked.webp (200, image/webp, 93712 bytes) already exist and are live; the tutorial asset traces to taskmaster/t-004''s earlier audit (art-prompts.yaml id asset-audit-t004-tutorial-wonder-ruler-hooked, status: done, last_art_job_id 8246) and the dashboard-tab asset is confirmed live too, so no new art request was needed. (2) tutorialCards.ts: confirmed via GitHub code search -- stores/helpers/tutorialCards.ts has the ''ruler-hooked'' entry under tutorialChannels.wonder.sections with image: tutorialImage(''wonder'', ''ruler-hooked''), matching the live asset path. (3) Placement: utils/projectPlacements.ts PROJECT_PLACEMENTS[''ruler-hooked''] = { channelKey: ''plan'', tabKey: ''projects'', route: ''/plan/projects/ruler-hooked'' } -- confirmed this repo''s project-overrides.yaml ruler-hooked entry (liveUrl/channelKey/tabKey) was already corrected to match on 2026-08-14 (coat-dance/t-010 cycle''s lab-channel-dissolution fix swept this project too). (4) Interactive component: components/ruler-hooked/ruler-hooked-page.vue mounts the real components/ruler-hooked/ruler-hooked-game.vue in the #interactive slot -- an offline-first, client-only playable PoC backed by a localStorage store, not a placeholder. Live spot check: https://kindrobots.org/plan/projects/ruler-hooked returns 200 with real SSR markup ("Ruler Hooked" title/content present). No kind_robots code change needed this cycle -- every remaining step from the original task note is independently confirmed done. Closing as done rather than re-arming; this task''s scope was a bounded 4-step checklist (unlike the open-ended recurring bug-hunt convention used by storybook/model-builder/kapowarr''s "polish" tasks), and all four are now met.'
-    updated: '2026-08-15T19:31:55Z'
-    claimed_by: sched-conductor-rh-t010-20260815T1930Z
-    claimed_at: '2026-08-15T19:31:02Z'
-
-  - id: t-011
-    milestone: m1
-    title: CI lint check for ruler-hooked docs cross-references and art-prompts.yaml inspirations entries
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: >
-      Kaizen from the m1 design-doc merge (Reviewer, autonomous hourly cycle, 2026-07-16).
-      The m1 design docs (data-model.md, compositing.md, decks.md,
-      art-direction.md, unreal-migration.md) share vocabulary that must stay
-      in sync by hand today: region names (treeline, far_shore, village_edge,
-      castle_grounds), slider axes (nature, prosperity), regionOverride, and
-      the asset-naming convention. Add a small CI check that (1) lint-
-      validates cross-references between projects/ruler-hooked/docs/*.md stay
-      consistent (region/axis vocabulary doesn't silently drift when one doc
-      is edited without the others), and (2) confirms any queued
-      projects/art-prompts.yaml `inspirations:` entries parse against the
-      schema scripts/distribute_images.py actually reads — so a future
-      spec/prompt edit can't silently break the art pipeline.
-    claimed_by: claude-build-sxndmc
-    claimed_at: '2026-07-16T20:43:59Z'
-    updated: '2026-07-16T20:43:59Z'
-
-  - id: t-012
-    milestone: m2
-    title: "Ruler Hooked PoC — Phase 2: play-screen UI, store, and content bundle"
-    status: done
-    owner: worker
-    passes: 1
-    stakes: reversible
-    note: >
-      DELIVERED 2026-07-16 (claude-build-sxndmc) — kind_robots PR #329 (open,
-      for review/CI). Makes /ruler-hooked playable: content bundle
-      (utils/rulerHooked/content.ts — 4 ramp-driven regions, warlock/druid
-      interrupt, heir-elopes arc, 4 characters, 3 rewards, 2 endings),
-      newGame/loop/save (pure), the Pinia store, and 5 Vue components wired into
-      ProjectFrontPage's #interactive slot. Placeholder art via state-coloured
-      bands + the asset fallback ladder for real webp. VERIFIED (given the
-      kind_robots vue-tsc toolchain OOMs this sandbox): strict isolated tsc over
-      engine+logic+store (exit 0), headless engine.selftest + game.selftest all
-      pass — proving the four DESIGN-BRIEF m2 exit criteria at the logic layer —
-      and all 6 SFCs compile via @vue/compiler-sfc. CI to confirm the full
-      vue-tsc pass. When #329 merges, set t-012 AND t-007 to done. Original plan
-      below.
-      Cross-repo (kind_robots). Phase 2 of the PoC, on top of the Phase-1
-      engine foundation landed in kind_robots PR #328 (MERGED; types/ruler-hooked.ts +
-      utils/rulerHooked/*). Build the visible play screen and make it playable:
-      (1) stores/rulerHookedStore.ts — a Pinia setup-store holding the active
-      RunSave, wrapping the engine + a localStorage SaveStore (multi-slot;
-      reuse the stores/compositionStore.ts safeGet/SetLocalStorage +
-      canUseDom idiom — the app has no IndexedDB/persist plugin); fish(),
-      resolveChoice(), slot new/continue/rename/delete. (2) Components
-      (ssr:false + onMounted, like components/pages/memory-dungeon.vue):
-      ruler-hooked-game (orchestrator), ruler-hooked-stage (layered
-      absolute-inset-0 compositor with per-region crossfade + the
-      assetCandidates fallback ladder), ruler-hooked-card (event card + N
-      choices; adapt components/navigation/swipe-deck.vue /
-      components/scenarios/choice-*), ruler-hooked-health (axis meters, fill-%
-      like components/butterfly/single-slider.vue), ruler-hooked-slots.
-      (3) Content bundle under content/ruler-hooked/ (or assets) loaded via the
-      stores/helpers/snapshotLoader.ts import.meta.glob idiom: regions manifest,
-      the warlock/druid interrupt deck, the heir-elopes arc, >=2 Characters,
-      1 SKILL + 1 ITEM Reward, endings. (4) Wire ruler-hooked-game into
-      components/conductor/ruler-hooked-page.vue's #interactive slot. Placeholder
-      art is fine (reuse the 9 staged /images/ruler-hooked/*.webp + gradients).
-      DONE when the four DESIGN-BRIEF m2 exit criteria hold: playable
-      fish->card->choice loop; >=2 regions x >=2 states composited live and
-      responding to choices; one full character arc + the warlock/druid choice;
-      multi-slot save/load. VERIFY with `source
-      scripts/provision_kind_robots_deps.sh` then `npm run test` (vue-tsc) and
-      `npm run dev` — note the kind_robots toolchain is memory-heavy and has
-      OOM-restarted this sandbox, so run the vue-tsc/dev gate carefully.
-      RECHECK 2026-07-21 (burst-mode session, claude-conductor-burst-20260721T1130Z):
-      re-verified this task from scratch rather than trusting the stale
-      retry_context above — PR #329 was actually merged directly by Silas on
-      2026-07-16T22:04:56Z (5 days after the pass-1 rejection at 21:55Z the same
-      day), so the retry_context's "push a fix to PR #329" instruction was already
-      moot. Provisioned kind_robots deps via
-      scripts/provision_kind_robots_deps.sh and ran the real gates against current
-      main (branch claude/keen-fermat-njvo76, in sync with origin/main): `npm run
-      test` (vue-tsc --noEmit) exits 0 — none of the 12 type errors from the
-      retry_context reproduce; also cross-checked kind_robots CI directly
-      (typecheck.yml run 29821460238, conclusion success, on main tip 48ed8265).
-      Both headless self-tests (engine.selftest.ts, game.selftest.ts) ALL PASS,
-      confirming the four DESIGN-BRIEF m2 exit criteria still hold at the logic
-      layer. ruler-hooked-page.vue wires <RulerHookedGame /> into
-      ProjectFrontPage's #interactive slot, so /ruler-hooked is genuinely
-      playable. eslint (not part of npm run test / CI, but repo convention) found
-      2 small pre-existing errors outside the retry_context's scope
-      (stores/rulerHookedStore.ts prefer-const, applyEffects.ts
-      no-dynamic-delete) — fixed both and re-verified vue-tsc/eslint/self-tests
-      all still green; opened kind_robots PR #811 for that 2-line lint-only diff.
-      Setting status: review (not done yet) pending that PR's merge; retry_context
-      left in place for now per convention (removed only once this reaches done).
-      When PR #811 merges, set t-012 to done and re-run
-      scripts/resolve_deps.py to unblock t-007 (all its other deps — t-004,
-      t-005, t-006 — are already done).
-
-      CORRECTION (ruler-hooked/t-013, 2026-08-10): the original plan above
-      cited three reuse targets that never existed under those names in
-      silasfelinus/kind_robots — components/navigation/swipe-deck.vue was
-      never built, components/butterfly/single-slider.vue now lives at
-      components/abandonware/butterfly/single-slider.vue, and
-      stores/compositionStore.ts never existed (rulerHookedStore.ts ships its
-      own localStorage handling directly, per the DELIVERED section above).
-      Recorded here so a future contributor does not try to import
-      nonexistent files. Documentation-only; no code changed.
-    claimed_by: claude-conductor-burst-20260721T1130Z
-    claimed_at: '2026-07-21T11:18:51Z'
-    updated: '2026-07-21T11:23:33Z'
-  - id: t-013
-    milestone: m1
-    title: 'Weekly site audit (2026-08-07): correct t-012''s stale file paths'
-    status: done
-    owner: worker
-    stakes: reversible
-    note: 'Filed by the weekly site-audit gap scan. t-012 (done, 2026-07-21) asserts components/ruler-hooked/ruler-hooked-page.vue is "structurally present and wired" -- the file actually lives at components/conductor/ruler-hooked-page.vue (Nuxt''s flat auto-import means the app still works, but the documented path is wrong). The same task cites components/navigation/swipe-deck.vue and components/butterfly/single-slider.vue as reuse patterns and stores/compositionStore.ts as a reuse idiom for local-storage persistence; none of the three exist under those names (swipe-deck.vue was never built, single-slider.vue now lives at components/abandonware/butterfly/single-slider.vue, and compositionStore.ts never existed -- rulerHookedStore.ts ships its own local-storage handling directly). Add a one-line correction addendum to t-012''s note recording the actual current paths so a future contributor does not try to import nonexistent reuse targets.'
-    claimed_by: 20260810T083500Z-sched-ruler-t013
-    claimed_at: '2026-08-10T08:34:48Z'
-    updated: '2026-08-10T08:44:30Z'
-    implementation_pr: 'silasfelinus/conductor#2016'
-  - id: t-014
-    milestone: m3
-    title: Audit and expand the event/character card deck for real content depth
-    status: done
-    passes: 0
-    stakes: reversible
-    note: >
-      With t-010 closed (2026-08-15), every m1/m2 task is done and the PoC (slideshow play-loop, save slots, kingdom-health compositing, real dashboard-tab/tutorial art) is live at /plan/projects/ruler-hooked. m3 ("content depth, app packaging, Steam/Unreal research") is the only remaining real work: t-009 already covered the Steam/Unreal research half. This task covers the "content depth" half. Read the current event/character card deck the game actually ships with (components/ ruler-hooked/ruler-hooked-card.vue + whatever data source it draws from -- decks.md per the component's own header comment) and count how many distinct event/character cards exist versus what the design brief implies ("different characters/events appear on different runs"). If the deck is thin (a handful of cards, low replay variety), author a meaningfully larger set of new event cards in the established format -- using existing kind_robots Characters where they fit per notes_from_silas, cartoony/goofy tone with nuanced sides on each choice, each choice wired to real kingdom-health-axis and landscape-region effects (not cosmetic-only) -- and add them through the deck's real data path, not a one-off hack. If the audit finds the deck already has strong content depth, document that finding instead of inventing padding, and consider whether "app packaging" (an installable/offline PWA wrapper, distinct from the client-side localStorage offline-play that already works) is the more useful next slice for a follow-up task.
-      DONE (conductor scheduled Agent run, kind_robots PR #1911, squash-merged 93783f2): audit confirmed the deck was genuinely thin -- utils/rulerHooked/content.ts (the real data path components/ruler-hooked/ruler-hooked-card.vue reads from) shipped exactly 1 deck (kingdom-core, 3 free-draw cards) + 1 arc (child-elopes, 3 steps) = 6 distinct cards total, plus 4 characters, 3 rewards, 2 endings -- well short of the design brief's explicit replay-variety goal. Expanded rather than documented: 10 new free-draw cards added to kingdom-core; 1 new deck (lake-mysteries, 4 cards); 2 new arcs (envoy-treaty, bog-witch-bargain), 3 steps each, same branch-into-two-endings shape as child-elopes; 7 new characters (existing 4 -- Vex, Sela, Robin, Ash -- reused across several new cards per the brief); 5 new rewards; 2 new endings (one MIXED, one SECRET). Result: 6 cards/1 arc/2 endings -> 25 cards/3 arcs/4 endings. Every new choice moves real kingdomHealth sliders and/or pins a real region state (only states already defined in the regions manifest: far_shore/treeline/village_edge) -- no cosmetic-only choices, matching the existing cards' effects structure exactly; every new interrupt card keeps the mandatory requeue: true defer path. Verified: engine.selftest.ts and game.selftest.ts both ALL PASS, vue-tsc --noEmit (repo-wide) exit 0, eslint clean, prettier --check clean, test:layout-contract holds with no new violations, git status --porcelain showed exactly one file touched (utils/rulerHooked/content.ts). All 23 kind_robots CI checks passed, mergeable_state: clean, squash-merged. App-packaging (an installable/offline PWA wrapper, distinct from the client-side localStorage offline-play that already works) was NOT built this cycle -- filed as ruler-hooked/t-015 for a future slice per this task's own note.
-    owner: null
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-16T13:34:57Z'
-    implementation_pr: 'silasfelinus/kind_robots#1911'
-
-  - id: t-015
-    milestone: m3
-    title: Ship an installable/offline PWA wrapper for Ruler Hooked
-    status: done
-    passes: 0
-    stakes: reversible
-    depends_on: t-014
-    note: 'DONE (conductor scheduled Agent run, 2026-08-18T18:28-scheduled-ruler-hooked-t015): shipped an installable/offline PWA wrapper for the Ruler Hooked route. Convention audit found kind_robots already has a shared, site-wide install-chrome-only @vite-pwa/nuxt convention (added for ai-art-academy/t-062/t-063/t-066, with a dedicated CI budget guard verifyPwaPrecacheBudget.ts) -- reused and extended it rather than building a ruler-hooked-specific manifest/service-worker, per the task note''s explicit preference. Two narrow nuxt.config.ts additions: (1) pwa.client.installPrompt, which was never set and left the shared $pwa composable''s beforeinstallprompt/install() flow permanently dead site-wide -- enabling it is what makes an install affordance possible anywhere, though only ruler-hooked-page.vue actually renders the UI for it; (2) pwa.workbox.runtimeCaching, one NetworkFirst cache entry scoped by regex to exactly /plan/projects/ruler-hooked''s document (maxEntries: 1), closing the real gap -- the game already played fully offline via localStorage once loaded, but a hard reload with network off failed because Nitro does not give SSR HTML the long-lived cache headers hashed build assets get. Did not touch globPatterns (still icons/manifest only, confirmed by the unchanged-and-passing precache budget check) and did not attempt a site-wide PWA conversion, per the task''s narrow-first-slice instruction. Added an explicit Install/Not-now banner in components/conductor/ruler-hooked-page.vue. Verified: production build succeeds; manifest.webmanifest unchanged; sw.js precache list unchanged plus the new NetworkFirst registerRoute entry; vue-tsc --noEmit clean; eslint on changed files clean and the repo lint ratchet holds (339 problems, -53, no rule regressed); verifyPwaPrecacheBudget.ts passes locally and in CI. NOT verified (no real browser in this sandbox): an actual beforeinstallprompt event/native install dialog, or a real network-disabled reload-after-first-visit check -- flagged explicitly in the PR body per this task''s own honesty discipline. One transient CI anomaly (Contract Tests job hung 15+ min at checkout on first run, unrelated to this diff, confirmed by a clean ~2.5min re-run) resolved via cancel+rerun. kind_robots PR #1939 (squash bd1e6d9f), all 28 checks green, merged. Deliberately left for follow-up: site-wide PWA conversion, caching Nuxt Content''s data-fetch path for offline client-side SPA navigation into the route, and install-prompt UI on any other route.'
-    owner: worker
-    claimed_by: 2026-08-18T18:28-scheduled-ruler-hooked-t015
-    claimed_at: '2026-08-18T18:28:19Z'
-    updated: '2026-08-18T19:06:35Z'
-    implementation_pr: 'silasfelinus/kind_robots#1939'
-
-  - id: t-016
-    milestone: m5
-    title: Generate the concept-art batch that pins the look for full-game production
-    status: done
-    approved_by_human: true
-    passes: 0
-    stakes: reversible
-    owner: worker
-    gate_human: true
-    note: >
-      FOR SILAS: 25 concept pieces are rendering right now on the home box
-      (ArtJobs 9910-9934) and will appear at
-      https://media.acrocatranch.com/images/ruler-hooked/ — 14 under concept/
-      and 11 under characters/. This is the batch you asked for on 2026-08-26
-      ("start as concept pieces... our art generator is unused").
-
-      What it contains: four full lakeside vistas of the same monarch fishing at
-      day / golden hour / night / dawn, so you can see the time-of-day cycle read
-      as one place; three kingdom poles showing the nature-vs-development hue axis
-      end to end (preserved, prosperous, developed-by-warlock); four story beats
-      (the courier interrupting a cast, the Vex-vs-Sela standoff, landing an absurd
-      fish, sneaking past the courtiers); three UI concepts (event-card scene,
-      Fishopedia specimen plate, title screen); and a portrait of all eleven cast
-      members from the shipped content bundle, archetype-then-twist per
-      docs/art-direction.md.
-
-      TO APPROVE: look at the batch and say whether the house look is right. If it
-      is, set approved_by_human: true and status: done — that unblocks t-018 (the
-      37-piece environment matrix) and every production batch after it. If it is
-      not, say what is wrong in a note and the prompts get corrected in one place:
-      STYLE_TAIL / CAST_LOOK / SCENE_CONCEPTS in
-      scripts/build_ruler_hooked_art_queue.py, which is the single source these
-      prompts are generated from. Nothing is hand-typed, so a style correction is
-      one edit and a re-run, not 25 rewrites.
-
-      APPROVED (Silas, in session 2026-08-26, verbatim): "I really love the art
-      assets created, they hit the intended vibe perfectly." All 25 pieces rendered
-      and are live under https://media.acrocatranch.com/images/ruler-hooked/. The
-      house look defined in docs/art-direction.md is now settled and every
-      subsequent batch inherits it, so later art batches do not each need their own
-      look gate.
-
-      ONE CRITIQUE, carried forward, verbatim: "My only critique is that the ruler
-      should absolutely not always be male in our mockups, and we will need to add a
-      character creator element that lets the user pick body shapes, skin color, and
-      ruler title, etc." Correct, and self-inflicted: this batch pinned a single
-      monarch across all four time-of-day vistas so the cycle would read as one
-      person in one place, and paid for that consistency by making every hero mockup
-      a king. Split into t-020 (the art fix, plus ruler cosmetic presets) and t-021
-      (the character creator itself).
-    claimed_by: 2026-08-26T21-claude-ruler-hooked-art
-    claimed_at: '2026-08-26T21:45:00Z'
-    updated: '2026-08-26T22:00:00Z'
-
-  - id: t-017
-    milestone: m5
-    title: Resolve the region-layer format contract before rendering the environment matrix
-    status: done
-    passes: 0
-    stakes: reversible
-    owner: worker
-    claimed_by: 2026-08-26T23-claude-ruler-hooked-art
-    claimed_at: '2026-08-26T23:20:00Z'
-    updated: '2026-08-27T01:34:18Z'
-    implementation_pr: 'silasfelinus/kind_robots#2139'
-    note: >-
-      Two shipped specs disagree about what a region layer file actually is, and
-      they cannot both be satisfied by one rendered image. docs/art-direction.md
-      §2 (t-008) specifies every layer as a full-play-screen image with everything
-      outside its own depth band transparent, registered so layers stack into one
-      frame. What actually shipped in kind_robots
-      components/ruler-hooked/ruler-hooked-stage.vue renders each region as its own
-      `flex-1` band inside an `h-72 sm:h-96` column — eight bands, so roughly a
-      20:1 strip — with the layer image as `object-cover` inside that strip. A
-      full-frame transparent layer sent through that component is cropped to a thin
-      slice of its own middle; a strip authored for the component cannot be
-      generated at 20:1 by any image model.
-
-      Pick one and make the other follow: either (a) change the stage to absolutely
-      position full-frame layers over one shared canvas, which is what the
-      compositing spec assumed and what makes the art direction's registration and
-      shared-key-light rules mean anything, or (b) keep banded rendering and respec
-      the art direction to per-band crops with a generatable aspect ratio and a
-      documented crop rectangle per region. (a) is the recommendation — it is what
-      docs/compositing.md already describes and it does not require re-deriving the
-      art direction — but the call is a real one, not a formality.
-
-      RESOLVED (kind_robots PR #2139) in favour of (a), the compositing spec.
-      ruler-hooked-stage.vue now composites full-frame layers in z-order over one
-      canvas, keeping the banded gradients underneath as the placeholder floor so
-      the artless state and the graceful degradation are unchanged. Verified:
-      vue-tsc exit 0, eslint clean, prettier clean, both headless self-tests ALL
-      PASS, test:layout-contract holds. Not verified: real pixels -- no browser in
-      this sandbox, and no layer art existed yet at the time.
-
-      Storage turned out to need no change, which was not obvious: the pipeline
-      writes to self-hosted media while the compositor asks for a relative
-      /images/ruler-hooked/... path, and those are the same store -- kind_robots'
-      own images route serves /images/** from IMAGES_PATH, which in production is
-      the mounted media root. Confirmed live rather than assumed (key-art-day.webp
-      and characters/warlock-vex.webp both 200, byte-identical to the media origin).
-
-      DONE: kind_robots PR #2139 squash-merged 2026-08-26 (f36f87b), all 38 checks
-      green. Unblocked t-018, whose 37 renders went out the same session.
-
-      RECONCILED 2026-08-27 (conductor scheduled Agent run): kind_robots#2139 confirmed merged
-      (merged_by silasfelinus). Task's own note says 'Flip to done when #2139 merges' -- doing
-      so. Unblocks t-018 (already submitted, still status: review pending its own art-render
-      verification).
-
-  - id: t-018
-    milestone: m5
-    title: Render the 37-piece region/state/time environment matrix
-    status: done
-    passes: 0
-    stakes: reversible
-    owner: worker
-    depends_on:
-      - t-016
-      - t-017
-    claimed_by: claude-scheduled-20260828T233113Z-rh-t018
-    claimed_at: '2026-08-28T23:31:14Z'
-    updated: '2026-08-28T23:31:28Z'
-    note: >-
-      The full environment layer matrix implied by the live regions manifest in
-      kind_robots utils/rulerHooked/content.ts: sky 1x3, far_shore 3x2, treeline
-      4x3, village_edge 3x2, castle_grounds 3x2, lake 1x2, near_bank 1, ruler 1 =
-      37 assets, named exactly as compositor.ts assetCandidates() resolves them
-      ({region}-{state}[-{time}].webp under /images/ruler-hooked/).
-
-      Already implemented and verified end to end — `python
-      scripts/build_ruler_hooked_art_queue.py --include-layers` builds all 37 from
-      the manifest plus the docs/art-direction.md BASE strings, and its prompt
-      contract self-check passes on every one. Deliberately not staged: it waits on
-      t-016 (is the look right?) and t-017 (what shape is a layer file?). When both
-      clear, this is one command plus a submit run, and the count self-updates if a
-      region or state is added upstream.
-
-      State reconciliation (2026-08-27): status was 'review' but this task's own note says the
-      37-asset batch was 'Deliberately not staged' pending t-016/t-017 -- nothing was ever
-      actually submitted for review (no PR, no ArtJob batch referencing this task), and no
-      evidence of a submission run exists. Both dependencies (t-016, t-017) are now status:
-      done (t-017 finished 2026-08-27T01:34Z, after this task's own claim at 23:30Z the prior
-      day). Correcting status to 'ready' so the next session picks this up as real, now-
-      unblocked work (run build_ruler_hooked_art_queue.py --include-layers, submit the 37
-      renders, verify delivery) rather than leaving it looking already-submitted-and-pending-
-      review when it isn't.
-
-      Verified in-flight delivery (2026-08-27, this session): the 37-asset batch was already
-      submitted to the ArtJob queue by auto-art-generate.yml automation (commit f97ccdb,
-      06:13:07Z) -- all 37 entries carry last_art_job_id 10020-10056, none still 'Deliberately
-      not staged'. Spot-checked queue health via recheck_render_queue.py: PENDING=46 (all-
-      time, spans other lanes too), RUNNING=2, no recentFailed; oldest pending age ~5.4h,
-      engine=COMFY. Cross-checked projects/art-prompts.yaml directly: 16/37 layer entries
-      status=done, 21/37 still status=pending (ids 10036-10056), none failed. curl-verified
-      all 16 'done' source_urls on https://media.acrocatranch.com -- all 16 return HTTP 200
-      and serve real image bytes; delivery lands on self-hosted media directly per auto-art-
-      generate.yml's design ('Kind Robots image binaries are no longer checked out or
-      committed by this workflow'), so an empty local/git public/images/ruler-hooked is
-      expected, not a failure signal. No code or roadmap changes needed beyond this
-      verification -- draining normally, nothing stuck. Leaving status=ready (not done) since
-      21/37 assets have not landed yet; next session/automation should re-run this same spot-
-      check and only flip to done once all 37 verify 200.
-
-      Verified delivery complete (2026-08-28, this session): all 36 environment-layer assets
-      from --include-layers (sky x3, far_shore x6, treeline x12, village_edge x6,
-      castle_grounds x6, lake x2, near_bank x1) return HTTP 200 with real image/webp bytes
-      (24KB-125KB, not placeholders) at https://media.acrocatranch.com/images/ruler-
-      hooked/<region>-<state>[-<time>].webp -- spot-checked content-type/content-length on 4,
-      curl-verified HTTP status on all 36. The note's 37th asset ('ruler 1') is not a static
-      layer: content.ts's own comment confirms compositor.ts's ruler special-case draws it
-      from save.ruler.cosmetics.presetId (t-020's cosmetic presets, already approved_by_human
-      and done), not a build_ruler_hooked_art_queue.py --include-layers entry -- --include-
-      layers dry-run correctly emits only 36 layer entries, no 37th. Global render queue is
-      backlogged (639 pending all-time per recheck_render_queue.py) but that is unrelated to
-      this task -- every asset this task's own scope covers already landed before this session
-      started. No code change; this is a verification-only close-out.
-
-  - id: t-019
-    milestone: m5
-    title: Generate species designs for the 15-fish vertical-slice roster
-    status: needs-human
-    soft_gate: true
-    passes: 0
-    stakes: reversible
-    owner: worker
-    gate_human: true
-    note: >
-      FOR SILAS: 15 fish species designs are rendering (ArtJobs 9935-9949), one per
-      entry in projects/ruler-hooked/fish/vertical-slice.yaml, landing at
-      https://media.acrocatranch.com/images/ruler-hooked/fish/<slug>/bestiary.webp.
-      Same batch and same look as t-016's concept art -- the roster merged (PR #2944)
-      about twenty minutes before the art pipeline was staged, so it went out on the
-      same rails rather than waiting for a cycle.
-
-      Each prompt is built from that fish's own `silhouette` and `distinction`
-      fields, used verbatim, so the roster stays the single source: editing a
-      species' description there and re-running regenerates its art with no prompt
-      rewriting. The path follows docs/fish-ecology.md's art key convention
-      (<creature-slug>/<variant>), and `bestiary` is deliberately the first variant
-      -- it is the species design that every later presentation variant
-      (ruler-catch-card, ruler-silhouette, lake context) derives from, and it is the
-      one Cthulhuquarium shares.
-
-      TO APPROVE: look at the five shared-with-Cthulhuquarium species first
-      (choirfish, parlour-rustfish, errand-guppy, moebius-crab, lamplight-angler,
-      the-pleasant-island) and say whether each still reads as the same creature
-      as its Ichthyonomicon version. That shared identity is the thing a
-      regeneration is most likely to lose. Then set approved_by_human: true and
-      status: done, or note what to change.
-
-      Soft gate, same as t-016: a look call, not a safety gate.
-    claimed_by: 2026-08-26T22-claude-ruler-hooked-art
-    claimed_at: '2026-08-26T22:10:00Z'
-    updated: '2026-08-26T22:20:00Z'
-
-  - id: t-020
-    milestone: m5
-    title: Stop the ruler defaulting to one body; ship ruler cosmetic presets as art
-    status: done
-    approved_by_human: true
-    passes: 0
-    stakes: reversible
-    owner: worker
-    gate_human: true
-    note: >
-      FOR SILAS: fixes your t-016 critique. Twelve pieces are rendering (ArtJobs
-      9950-9957 and 9971-9974): eight ruler cosmetic presets at
-      https://media.acrocatranch.com/images/ruler-hooked/ruler/<id>.webp, plus four
-      alternate key-art vistas so the hero mockups themselves are not one body.
-
-      The eight presets deliberately span everything the character creator has to
-      cover -- King Osric (the one already rendered, kept so the approved art stays
-      canonical), Queen Mabel (broad-shouldered, fifties, silver crop), Sovereign
-      Wren (young, androgynous, circlet worn at the throat), Regent Halvard (very
-      old, wiry, robes too big), Matriarch Oshun (short, round, braided crown),
-      Chieftain Brakka (orcish, antler crown), Queen Sedge (heron-folk), and Pip
-      (mouse-folk, barely taller than a boot). Gender presentation, body shape and
-      size, skin, age, species, and honorific all vary. All eight share one side-on
-      seated pose and framing, so they read as one set and swap cleanly.
-
-      CORRECTION to how this was first written up: these are the PRESET REFERENCE
-      SHEET, not drop-in composited layer files. They came back with painted
-      lakeside backdrops, as portraits do, so a preset cannot be dropped into the
-      `ruler` region layer as-is -- the composited layer needs the figure alone
-      over an empty frame. `ruler-fishing.webp` (t-018, ArtJob 10011) is the actual
-      layer, and it renders only the hero preset. Producing a per-preset layer is
-      part of t-021's compositor work, either by rendering each preset again under
-      LAYER_TAIL or by matting these; the pose and framing are already consistent
-      enough that either path works. Flagged because the first version of this note
-      claimed one file did both jobs, and it does not.
-
-      Root cause worth keeping: the builder treated the ruler as a CONSTANT
-      (`THE_RULER`) because a single monarch is what makes four time-of-day vistas
-      read as one place. That is a real constraint, and the wrong solution to it.
-      It is now `RULER_PRESETS` with a named `HERO_RULER_ID` for the matched set,
-      so the consistency survives and the default does not.
-
-      APPROVED (Silas, in session 2026-08-26): "those rulers are better than my
-      suggestions, no reason to stick with speciesism" -- the nonhuman presets stay,
-      and the range is endorsed as the basis for t-021.
-
-      EXTENDED to twelve on the same message. Silas's first instinct was "six
-      different rulers... little boy and girl, middle aged, and old", and although
-      he then preferred the existing eight, that message identified a real gap the
-      eight did not cover: they ran young-adult to elderly with no ruler who is
-      actually a CHILD. That is the most on-theme age the premise has -- a kid who
-      would rather fish than rule is not shirking, so the joke lands differently and
-      better. Added boy-king-tobin (~8), girl-queen-marisol (~9), cub-prince-bramble
-      (bear-cub-folk child) and elder-tortoise-yew (fills elderly x nonhuman), as
-      ArtJobs 10012-10015. Deliberately a spread rather than a boy/girl pair: Silas
-      flagged the binary himself ("I hate to be binary") in the same breath as
-      asking for both, so the set answers the ask and keeps going past it.
-
-      Twelve presets now span child to centuries-old, five species, and every
-      presentation across them. Adding a thirteenth is one dict entry plus one
-      render, so the count is not a design commitment.
-
-      STILL OPEN, moved to t-021 rather than held here: Silas's "Not sure if that is
-      better than doing customized overlays." That is an architecture question about
-      how the creator composes a ruler, not about this art, and t-021 carries the
-      recommendation.
-    claimed_by: 2026-08-26T23-claude-ruler-hooked-art
-    claimed_at: '2026-08-26T23:00:00Z'
-    updated: '2026-08-26T23:05:00Z'
-
-  - id: t-021
-    milestone: m5
-    title: Build the ruler character creator (body, skin, honorific, species)
-    status: done
-    passes: 0
-    stakes: reversible
-    owner: worker
-    claimed_by: claude-scheduled-20260827T0830Z-rh-t021
-    claimed_at: '2026-08-27T07:33:19Z'
-    note: >-
-      Silas, 2026-08-26: "we will need to add a character creator element that lets
-      the user pick body shapes, skin color, and ruler title, etc." Cross-repo: the
-      code lands in kind_robots, this task holds the state.
-
-      The data model already anticipates this and is not yet wired to anything.
-      docs/data-model.md defines `ruler.honorific` (King|Queen|other, a cosmetic
-      label) and `ruler.cosmetics` (currently `{ outfit, crownTilt }`), and
-      newGame.ts sets defaults nobody can change. Nothing in the UI reads or writes
-      either, and the compositor's asset scheme has no cosmetic axis at all --
-      `assetCandidates()` resolves `{region}-{state}[-{time}]`, so there is
-      currently no path shape that can address "the ruler layer, but Pip".
-
-      Three pieces of work, in order:
-      (1) Widen `ruler.cosmetics` to carry the axes Silas named -- body, skin,
-          species, plus the existing outfit/crownTilt -- and widen `honorific` past
-          the King|Queen|other trio to the set t-020 settles. Save-format change:
-          bump `contentVersion` and make old saves load with defaults rather than
-          breaking, per the brief's multiple-named-saves guarantee.
-      (2) Give the compositor a cosmetic axis for the `ruler` region so a preset
-          resolves to its own file, with the same graceful fallback ladder the time
-          variants already use -- a missing cosmetic degrades to the base ruler
-          layer, never a hole.
-      (3) A creation screen at new-game time, and the ability to change cosmetics
-          later (they are cosmetic-only by design, so there is no reason to lock
-          them at creation).
-
-      t-020's twelve presets are the art this builds against, at
-      public/images/ruler-hooked/ruler/<id>.webp. Read the list as data; do not
-      hardcode ids, since adding a preset is one dict entry plus one render.
-
-      DECIDED (Silas, in session 2026-08-26): "Agreed on your reasoning for custom
-      ruler images being too complex for expansion, I like custom name and
-      honorific, your presets are fine, we can always add more, and custom should
-      be an option." So: preset figures, free-text name and honorific, no
-      composable overlay system, and a custom escape hatch (see CUSTOM below).
-
-      The reasoning he agreed with, kept because it is the constraint, not a
-      preference: presets for the figure, free text for the words, and overlays
-      only where registration is genuinely free.
-
-      A composable overlay creator (pick a body, then a skin, then a crown) needs
-      every part drawn to a shared skeleton with consistent anchor points. Diffusion
-      models do not produce registered separable parts -- each render reinvents the
-      proportions, so a crown generated against one body sits wrong on the next.
-      Getting real overlays means a deliberately drawn paper-doll set, which is an
-      illustration commission rather than a pipeline run. That is a legitimate thing
-      to want, and it should be chosen knowingly, not arrived at by discovering the
-      generator cannot do it.
-
-      Presets do not have that problem, and Silas's own "art is cheap" is the reason
-      they win: a coherent new ruler costs one dict entry and one render, the
-      compositor already swaps whole files by key so no new compositing axis is
-      needed, and every preset is guaranteed internally consistent because one
-      render drew all of it. The cost is combinatorial range -- twelve fixed figures
-      instead of a body x skin x crown product.
-
-      Two axes are free either way, and Silas confirmed both: `honorific` and the
-      ruler's name are pure data, no art, and they are the customisation that reads
-      as most personal. Widen `honorific` past King|Queen|other to FREE TEXT, with
-      the twelve preset titles (King, Queen, Sovereign, Regent, Matriarch,
-      Chieftain, Monarch, Prince) offered as suggestions rather than as the set.
-
-      If the combinatorial range turns out to matter more than the coherence, the
-      upgrade path is additive: keep presets as base figures and add a small set of
-      overlays that do not need tight registration (a held item, a colour tint on
-      the robes), rather than rebuilding the figure as parts.
-
-      CUSTOM -- what "custom should be an option" can mean here. Worth stating
-      because the obvious reading is ruled out by a design pillar: DESIGN-BRIEF.md
-      is explicit that AI is used for asset generation DURING DEVELOPMENT and that
-      "there are NO live LLM interactions at runtime" -- the shipped game runs with
-      no internet. So custom cannot mean describe-your-ruler-and-we-generate-it,
-      and it cannot mean composable parts either, since that is the overlay system
-      just rejected.
-
-      What is left, and what this task should build: the player supplies their own
-      ruler picture from their own device. A file picker, held locally, alongside
-      the free-text name and honorific -- "your picture, your name, your title" is
-      a complete custom ruler with no runtime AI, no registration problem, and no
-      network. It also degrades correctly: a save with a custom image that is no
-      longer readable falls back to a preset rather than to a hole, using the same
-      ladder as the missing-art case.
-
-      Storage caveat: saves are local (rulerHookedStore.ts, localStorage) and the
-      brief requires multiple named saves. A 768x1024 webp is roughly 80-130KB, so
-      base64 in localStorage costs ~110-175KB per save against a ~5MB quota --
-      workable for a handful of saves and fragile past that. Prefer IndexedDB for
-      the image blob with the save holding only a key, and cap or downscale on
-      import. Do not let a custom portrait be the thing that makes save #12 fail
-      to write.
-
-      Flagged as interpretation rather than instruction: Silas said "custom should
-      be an option" without saying which kind, and the offline pillar is what
-      narrows it. If he meant something else -- a request queue that generates a
-      new preset for him during development, say -- that is a different and simpler
-      task, and this section should be corrected rather than built around.
-
-      COLLISION NOTE + close-out (this session, 2026-08-27 ~07:50 UTC): implemented and merged
-      the full task before noticing a different concurrent session (claude-
-      scheduled-20260827T0830Z-rh-t021) had also claimed this task in the roadmap at 07:33:19Z
-      -- this session had already been working the kind_robots side since well before that
-      timestamp (started ~07:22 UTC per its own PR's first commit) and had no visibility into
-      the roadmap claim happening concurrently, since the kind_robots implementation itself
-      needed no roadmap edit until this close-out. Implemented all three pieces the note
-      specifies, in order: (1) widened ruler.cosmetics to a typed RulerCosmetics
-      (presetId/customPortraitId/reserved body-skin-species-outfit-crownTilt), bumped
-      SAVE_SCHEMA_VERSION 4->5, migrateSave() defaults old saves to the hero preset; (2) gave
-      the compositor a real cosmetic axis for the ruler region (resolveScene special-cases it
-      to save.ruler.cosmetics.presetId; assetCandidates gained a fallbackState param so any
-      preset lacking its own rendered layer gracefully degrades to the existing ruler-
-      fishing.webp hero layer, never a hole); (3) built the creation-time picker (free-text
-      honorific with the twelve preset titles as suggestions, a preset grid read entirely from
-      data, and a 'use my own picture instead' file input backed by a new IndexedDB
-      portraitStore with downscale-on-import) plus a separate in-play 'change appearance'
-      panel, since cosmetics are cosmetic-only by design and were never meant to lock at
-      creation. Also fixed one real gap found along the way:
-      utils/rulerHooked/engine.selftest.ts existed but was never wired into
-      .github/workflows/ruler-hooked.yml, so added it as a third CI step (verified it actually
-      runs in CI on this PR). Full verification: vue-tsc clean, eslint clean, layout-contract
-      clean (fixed one new viewport-breakpoint grid violation along the way), all three
-      selftest scripts pass including new coverage for the cosmetic axis/fallback
-      ladder/migration defaults, all 38 kind_robots PR checks green. Merged
-      silasfelinus/kind_robots#2142 (squash 4cf157b). Per-preset ruler layer ART
-      (ruler-<id>.webp) is explicitly NOT part of this task -- that is the separate async
-      ArtJob pipeline (t-020's own note flags it as follow-up); everything here degrades
-      gracefully until that art lands. If claude-scheduled-20260827T0830Z-rh-t021 is still
-      active: please check main before doing further work here -- this task is genuinely done
-      and duplicate implementation would be wasted effort.
-    updated: '2026-08-27T07:48:53Z'
-    implementation_pr: 'silasfelinus/kind_robots#2142'
-
-  - id: t-022
-    milestone: m5
-    title: Reward and ending illustrations from the content bundle
-    status: done
-    passes: 0
-    stakes: reversible
-    owner: worker
-    note: >-
-      Thirteen pieces submitted (ArtJobs 9958-9970): one object study per Reward
-      (9 -- druid-charm, gilded-lure, buildpermit-scroll, treaty-seal,
-      smugglers-map, mossy-hex, captains-pin, bards-ballad, nix-pearl) and one
-      closing illustration per ending (4 -- druid-utopia, warlock-metropolis,
-      thistlewood-empire, fishers-peace), at
-      public/images/ruler-hooked/rewards/<slug>.webp and
-      public/images/ruler-hooked/endings/<outcomeKey>.webp.
-
-      Prompts are built from the bundle's own fields -- a reward's `effect` line and
-      an ending's `body` line are already one vivid sentence about the thing, so
-      they are used as the art direction rather than paraphrased. No new look gate:
-      t-016 settled the house style and these inherit it.
-
-      Found while writing the reward parser, and worth keeping: three of the nine
-      rewards had `effect:` wrapped onto its own line by prettier, so a same-line
-      regex silently matched only six and the run reported a cheerful "6 entries".
-      A parser that returns a subset is worse than one that crashes -- the batch
-      still stages, still renders, still looks successful, and the gap only surfaces
-      when something reaches for a missing asset. `expect_all()` now compares the
-      match count against the declared entry count and names what it missed, for
-      every block this script reads.
-
-      Flip to done once the media paths are live; the ArtJob ids are recorded on
-      each request row in projects/art-prompts.yaml.
-
-      State reconciliation (2026-08-27): all 13 media paths spot-checked live at
-      kindrobots.org and confirmed 200 -- rewards/{druid-charm,gilded-lure,buildpermit-
-      scroll,treaty-seal,smugglers-map,mossy-hex,captains-pin,bards-ballad,nix-pearl}.webp and
-      endings/{druid-utopia,warlock-metropolis,thistlewood-empire,fishers-peace}.webp all
-      resolve. Matches this task's own stated completion criterion ('Flip to done once the
-      media paths are live'). Flipping to done.
-    claimed_by: 2026-08-26T23-claude-ruler-hooked-art
-    claimed_at: '2026-08-26T23:00:00Z'
-    updated: '2026-08-27T06:16:02Z'
+- id: t-001
+  milestone: m1
+  title: Write the design brief
+  status: done
+  owner: reviewer
+  passes: 0
+  stakes: reversible
+  updated: 2026-07-05
+  note: >
+    DESIGN-BRIEF.md written by the Reviewer in session 2026-07-05 directly
+    from Silas's pitch. Includes core loop, PoC exit criteria, art
+    direction, and the offline-at-runtime rule.
+
+- id: t-002
+  milestone: m1
+  title: Confirm scope with Silas
+  status: done
+  owner:
+  updated: '2026-07-06T20:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: >
+    CLEARED 2026-07-06 (Silas in-session, daily standup): scope + PoC exit
+    criteria confirmed (Prime Monster as the primary UI/structure reference).
+    approved_by_human set per the CONTROL.md in-session clearance rule.
+    FOR SILAS: soft checkpoint, nothing is blocked on it — you pitched this
+    in session so it's mostly a fidelity check. Read DESIGN-BRIEF.md and
+    confirm the PoC exit criteria. (The "prime monster" question is
+    resolved: it's the Steam game Prime Monster, now the brief's primary
+    UI/structure reference — card selections, navigable pre-baked screens,
+    honestly-evil moral decisions.) TO APPROVE: set approved_by_human: true
+    and status: done, or correct the brief in a note here. Development
+    continues meanwhile.
+
+- id: t-003
+  milestone: m1
+  title: Create the matching kind_robots Project (slug parity)
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >
+    DONE 2026-07-16 (claude-build-sxndmc). Slug parity satisfied: kind_robots
+    Project id 95 ("Ruler Hooked") already exists with
+    conductorSlug=ruler-hooked (verified via GET /api/projects/ruler-hooked).
+    The friendly definition-of-done goal is now recorded in this roadmap's
+    top-level `goal:` field (the source of truth sync_projects.py reads), so it
+    backfills onto the live Project row on the next successful sync. A direct
+    PATCH /api/projects/95 to set goal immediately returned 503 "Database
+    connection temporarily unavailable" (transient DB-write outage; reads
+    succeed) and was not retried further — the goal is captured durably and
+    syncs automatically when writes recover. No live gameplay depends on this
+    row (the PoC is offline-first).
+  updated: '2026-07-16T20:38:19Z'
+
+- id: t-004
+  milestone: m1
+  title: Spec the play-loop data model and save system
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >
+    docs/data-model.md — runs, save slots (multiple named saves), kingdom
+    health axes/sliders, region states, event/choice records, character
+    references. Keep game content as data (JSON/YAML) so it survives a
+    future Unreal migration. Design for offline play: state lives client
+    side, backend is for account sync and nothing gameplay-critical.
+    TIME PILLAR (Silas 2026-07-05, see DESIGN-BRIEF.md): no clock, hidden
+    or shown — time-of-day is a turn-driven presentation state, and NOTHING
+    (events, choices, content) may key off it or expire. Model it as a
+    cosmetic cycle position advanced by actions, never wall-clock time.
+  claimed_by: claude-ruler-hooked-sxndmc
+  claimed_at: '2026-07-16T09:42:41Z'
+  updated: '2026-07-16T09:42:41Z'
+
+- id: t-005
+  milestone: m1
+  title: Spec the environment layer compositing (regions, states, merge)
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >
+    docs/compositing.md — name the landscape regions (sky, treeline, far
+    shore, village edge, castle grounds...), the states each can be in, how
+    slider values map to states, and how layered images merge into the one
+    play-screen image (z-order, transparent webp/png layers, optional subtle
+    animation). Include the pitch example: warlock development vs druid
+    preservation visibly changing a region. TIME-OF-DAY DIMENSION (Silas
+    2026-07-05): every region state needs time-of-day variants (day, night,
+    plus brief transitional treats — morning dew, golden hour — that show
+    only for a short beat before settling into day/night). Spec the variant
+    matrix and asset naming so region-state × time-of-day stays generatable
+    and the transitions are purely visual — never content gates.
+  claimed_by: claude-ruler-hooked-sxndmc
+  claimed_at: '2026-07-16T09:48:58Z'
+  updated: '2026-07-16T09:48:58Z'
+
+- id: t-006
+  milestone: m1
+  title: Spec the event/character card deck format
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >
+    docs/decks.md — the card/deck data format for kingdom tasks and
+    narrative arcs: trigger conditions, choices, slider effects, region
+    effects, character hooks (kind_robots Character model — reuse existing
+    Characters where they fit), and per-run variation so different
+    characters/events appear on different playthroughs (example arc: the
+    ruler's child wants to elope). Adding an arc must be a content task,
+    not a code task.
+  claimed_by: claude-ruler-hooked-sxndmc
+  claimed_at: '2026-07-16T09:49:18Z'
+  updated: '2026-07-16T09:49:18Z'
+
+- id: t-007
+  milestone: m2
+  title: Build the slideshow play-loop proof of concept in kind_robots
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-004
+  - t-005
+  - t-006
+  - t-012
+  note: >
+    Cross-repo task (kind_robots). PoC exit criteria are in DESIGN-BRIEF.md.
+    PHASE 1 (foundation) DELIVERED + MERGED 2026-07-16 (claude-build-sxndmc):
+    kind_robots PR #328 (MERGED) added the pure, framework-free game engine +
+    type contracts — types/ruler-hooked.ts and utils/rulerHooked/*
+    (seed RNG, applyEffects reducer, triggers, compositor, seeded select)
+    plus a runtime engine.selftest.ts. Verified via isolated strict
+    `tsc --noEmit` (exit 0) and the tsx self-test (all pass); the full
+    vue-tsc gate could not run in-session (kind_robots toolchain OOM-restarts
+    the sandbox) — flagged for CI. PHASE 2 (the visible play screen: Pinia
+    store + Vue components + content bundle + wire into the /ruler-hooked
+    #interactive slot, placeholder art) is split to t-012. Mark t-007 done
+    once PR #328 merges AND t-012 lands the playable screen meeting all four
+    DESIGN-BRIEF m2 exit criteria.
+
+    UPDATE 2026-07-16T21:55Z (Reviewer): PR #328 merged, but its merge commit
+    (df89de7c) already left kind_robots `main` red on the TypeScript check —
+    9 pre-existing "possibly undefined" errors across applyEffects.ts/
+    compositor.ts/engine.selftest.ts/select.ts (GH Actions run 29536584357,
+    confirmed by local reproduction, not an OOM artifact). t-012 (PR #329)
+    rejected pass 1 for 3 further new errors plus needing to clean up these 9 —
+    see t-012's retry_context. Re-added as an explicit t-007 dependency; will
+    flip back to ready once t-012 lands with a green vue-tsc gate.
+
+    DONE 2026-07-21 (scheduled session, claude-conductor-scheduled-20260721T1214Z):
+    both remaining conditions hold on current kind_robots main (736b663f):
+    PR #328 is merged, and t-012 (PR #811, merged 2026-07-21) landed the
+    playable screen. Did not just trust t-012's prior note — re-verified
+    independently against a fresh kind_robots checkout: `npx tsx
+    utils/rulerHooked/engine.selftest.ts` and `game.selftest.ts` both
+    ALL PASS, and the full `npm run test` (vue-tsc --noEmit) gate is green
+    (exit 0), so the 2026-07-16 red-main TypeScript regression this task's
+    own note flagged is resolved. All four DESIGN-BRIEF m2 exit criteria are
+    structurally present and wired: components/ruler-hooked/ruler-hooked-page.vue
+    (mounted at content/ruler-hooked.md's #interactive slot) composes
+    ruler-hooked-game.vue (playable session + event cards/narrative arc),
+    ruler-hooked-stage.vue (composited landscape regions), ruler-hooked-health.vue,
+    and ruler-hooked-slots.vue (multiple save slots). No kind_robots code
+    change needed this cycle — purely a verification + bookkeeping close-out.
+
+    CORRECTION (ruler-hooked/t-013, 2026-08-10): the file named above,
+    components/ruler-hooked/ruler-hooked-page.vue, does not exist in
+    silasfelinus/kind_robots. The component actually lives at
+    components/conductor/ruler-hooked-page.vue. Nuxt's flat auto-import
+    means the app still works regardless, but a future contributor
+    searching by the documented path would not find it. Documentation-only;
+    no code changed.
+  updated: '2026-07-21T12:26:00Z'
+
+- id: t-008
+  milestone: m1
+  title: Write the art direction doc and first landscape prompt pack
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >
+    docs/art-direction.md — pin the look (cartoony, goofy, exaggerated
+    good/evil with wry twists; Monkey Island / Bakshi / Treasure Planet /
+    Steven Universe / She-Ra references) and add the first landscape-layer
+    prompt entries to projects/art-prompts.yaml (inspirations for
+    ruler-hooked). Icon/card/hero entries already queued 2026-07-05.
+    Account for the time-of-day variant matrix (t-005): each region state
+    generates in day/night plus brief morning-dew and golden-hour treat
+    variants — write prompts as templates (region + state + time) so the
+    set scales without hand-writing every combination.
+  claimed_by: claude-ruler-hooked-sxndmc
+  claimed_at: '2026-07-16T10:15:41Z'
+  updated: '2026-07-16T10:15:41Z'
+
+- id: t-009
+  milestone: m3
+  title: Research the Unreal/Steam migration path (note only)
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >
+    docs/unreal-migration.md — what the web PoC's data-first content
+    (decks, regions, saves) needs to look like to port cleanly to Unreal;
+    what does NOT port (DOM compositing) and its Unreal equivalent; rough
+    effort tiers. Research note only — no engine work, no Steam page.
+  claimed_by: claude-ruler-hooked-sxndmc
+  claimed_at: '2026-07-16T10:18:35Z'
+  updated: '2026-07-16T10:18:35Z'
+
+- id: t-010
+  milestone: m2
+  title: Polish and upgrade Ruler Hooked front-end surface
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: 'RECHECK 2026-08-15 (~19:30 UTC, conductor scheduled Agent run, sched-conductor-rh-t010-20260815T1930Z): all four
+    steps now verified complete against kind_robots main and production. (1) Art: relay is back online (relay-status API confirms
+    agent ''Silas-PC'' reporting live) -- and per curl against production, both public/images/dashboard-tabs/wonder/ruler-hooked.webp
+    (200, image/webp, 104586 bytes) and public/images/tutorials/wonder/ruler-hooked.webp (200, image/webp, 93712 bytes) already
+    exist and are live; the tutorial asset traces to taskmaster/t-004''s earlier audit (art-prompts.yaml id asset-audit-t004-tutorial-wonder-ruler-hooked,
+    status: done, last_art_job_id 8246) and the dashboard-tab asset is confirmed live too, so no new art request was needed.
+    (2) tutorialCards.ts: confirmed via GitHub code search -- stores/helpers/tutorialCards.ts has the ''ruler-hooked'' entry
+    under tutorialChannels.wonder.sections with image: tutorialImage(''wonder'', ''ruler-hooked''), matching the live asset
+    path. (3) Placement: utils/projectPlacements.ts PROJECT_PLACEMENTS[''ruler-hooked''] = { channelKey: ''plan'', tabKey:
+    ''projects'', route: ''/plan/projects/ruler-hooked'' } -- confirmed this repo''s project-overrides.yaml ruler-hooked entry
+    (liveUrl/channelKey/tabKey) was already corrected to match on 2026-08-14 (coat-dance/t-010 cycle''s lab-channel-dissolution
+    fix swept this project too). (4) Interactive component: components/ruler-hooked/ruler-hooked-page.vue mounts the real
+    components/ruler-hooked/ruler-hooked-game.vue in the #interactive slot -- an offline-first, client-only playable PoC backed
+    by a localStorage store, not a placeholder. Live spot check: https://kindrobots.org/plan/projects/ruler-hooked returns
+    200 with real SSR markup ("Ruler Hooked" title/content present). No kind_robots code change needed this cycle -- every
+    remaining step from the original task note is independently confirmed done. Closing as done rather than re-arming; this
+    task''s scope was a bounded 4-step checklist (unlike the open-ended recurring bug-hunt convention used by storybook/model-builder/kapowarr''s
+    "polish" tasks), and all four are now met.'
+  updated: '2026-08-15T19:31:55Z'
+  claimed_by: sched-conductor-rh-t010-20260815T1930Z
+  claimed_at: '2026-08-15T19:31:02Z'
+
+- id: t-011
+  milestone: m1
+  title: CI lint check for ruler-hooked docs cross-references and art-prompts.yaml inspirations entries
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from the m1 design-doc merge (Reviewer, autonomous hourly cycle, 2026-07-16).
+    The m1 design docs (data-model.md, compositing.md, decks.md,
+    art-direction.md, unreal-migration.md) share vocabulary that must stay
+    in sync by hand today: region names (treeline, far_shore, village_edge,
+    castle_grounds), slider axes (nature, prosperity), regionOverride, and
+    the asset-naming convention. Add a small CI check that (1) lint-
+    validates cross-references between projects/ruler-hooked/docs/*.md stay
+    consistent (region/axis vocabulary doesn't silently drift when one doc
+    is edited without the others), and (2) confirms any queued
+    projects/art-prompts.yaml `inspirations:` entries parse against the
+    schema scripts/distribute_images.py actually reads — so a future
+    spec/prompt edit can't silently break the art pipeline.
+  claimed_by: claude-build-sxndmc
+  claimed_at: '2026-07-16T20:43:59Z'
+  updated: '2026-07-16T20:43:59Z'
+
+- id: t-012
+  milestone: m2
+  title: "Ruler Hooked PoC — Phase 2: play-screen UI, store, and content bundle"
+  status: done
+  owner: worker
+  passes: 1
+  stakes: reversible
+  note: >
+    DELIVERED 2026-07-16 (claude-build-sxndmc) — kind_robots PR #329 (open,
+    for review/CI). Makes /ruler-hooked playable: content bundle
+    (utils/rulerHooked/content.ts — 4 ramp-driven regions, warlock/druid
+    interrupt, heir-elopes arc, 4 characters, 3 rewards, 2 endings),
+    newGame/loop/save (pure), the Pinia store, and 5 Vue components wired into
+    ProjectFrontPage's #interactive slot. Placeholder art via state-coloured
+    bands + the asset fallback ladder for real webp. VERIFIED (given the
+    kind_robots vue-tsc toolchain OOMs this sandbox): strict isolated tsc over
+    engine+logic+store (exit 0), headless engine.selftest + game.selftest all
+    pass — proving the four DESIGN-BRIEF m2 exit criteria at the logic layer —
+    and all 6 SFCs compile via @vue/compiler-sfc. CI to confirm the full
+    vue-tsc pass. When #329 merges, set t-012 AND t-007 to done. Original plan
+    below.
+    Cross-repo (kind_robots). Phase 2 of the PoC, on top of the Phase-1
+    engine foundation landed in kind_robots PR #328 (MERGED; types/ruler-hooked.ts +
+    utils/rulerHooked/*). Build the visible play screen and make it playable:
+    (1) stores/rulerHookedStore.ts — a Pinia setup-store holding the active
+    RunSave, wrapping the engine + a localStorage SaveStore (multi-slot;
+    reuse the stores/compositionStore.ts safeGet/SetLocalStorage +
+    canUseDom idiom — the app has no IndexedDB/persist plugin); fish(),
+    resolveChoice(), slot new/continue/rename/delete. (2) Components
+    (ssr:false + onMounted, like components/pages/memory-dungeon.vue):
+    ruler-hooked-game (orchestrator), ruler-hooked-stage (layered
+    absolute-inset-0 compositor with per-region crossfade + the
+    assetCandidates fallback ladder), ruler-hooked-card (event card + N
+    choices; adapt components/navigation/swipe-deck.vue /
+    components/scenarios/choice-*), ruler-hooked-health (axis meters, fill-%
+    like components/butterfly/single-slider.vue), ruler-hooked-slots.
+    (3) Content bundle under content/ruler-hooked/ (or assets) loaded via the
+    stores/helpers/snapshotLoader.ts import.meta.glob idiom: regions manifest,
+    the warlock/druid interrupt deck, the heir-elopes arc, >=2 Characters,
+    1 SKILL + 1 ITEM Reward, endings. (4) Wire ruler-hooked-game into
+    components/conductor/ruler-hooked-page.vue's #interactive slot. Placeholder
+    art is fine (reuse the 9 staged /images/ruler-hooked/*.webp + gradients).
+    DONE when the four DESIGN-BRIEF m2 exit criteria hold: playable
+    fish->card->choice loop; >=2 regions x >=2 states composited live and
+    responding to choices; one full character arc + the warlock/druid choice;
+    multi-slot save/load. VERIFY with `source
+    scripts/provision_kind_robots_deps.sh` then `npm run test` (vue-tsc) and
+    `npm run dev` — note the kind_robots toolchain is memory-heavy and has
+    OOM-restarted this sandbox, so run the vue-tsc/dev gate carefully.
+    RECHECK 2026-07-21 (burst-mode session, claude-conductor-burst-20260721T1130Z):
+    re-verified this task from scratch rather than trusting the stale
+    retry_context above — PR #329 was actually merged directly by Silas on
+    2026-07-16T22:04:56Z (5 days after the pass-1 rejection at 21:55Z the same
+    day), so the retry_context's "push a fix to PR #329" instruction was already
+    moot. Provisioned kind_robots deps via
+    scripts/provision_kind_robots_deps.sh and ran the real gates against current
+    main (branch claude/keen-fermat-njvo76, in sync with origin/main): `npm run
+    test` (vue-tsc --noEmit) exits 0 — none of the 12 type errors from the
+    retry_context reproduce; also cross-checked kind_robots CI directly
+    (typecheck.yml run 29821460238, conclusion success, on main tip 48ed8265).
+    Both headless self-tests (engine.selftest.ts, game.selftest.ts) ALL PASS,
+    confirming the four DESIGN-BRIEF m2 exit criteria still hold at the logic
+    layer. ruler-hooked-page.vue wires <RulerHookedGame /> into
+    ProjectFrontPage's #interactive slot, so /ruler-hooked is genuinely
+    playable. eslint (not part of npm run test / CI, but repo convention) found
+    2 small pre-existing errors outside the retry_context's scope
+    (stores/rulerHookedStore.ts prefer-const, applyEffects.ts
+    no-dynamic-delete) — fixed both and re-verified vue-tsc/eslint/self-tests
+    all still green; opened kind_robots PR #811 for that 2-line lint-only diff.
+    Setting status: review (not done yet) pending that PR's merge; retry_context
+    left in place for now per convention (removed only once this reaches done).
+    When PR #811 merges, set t-012 to done and re-run
+    scripts/resolve_deps.py to unblock t-007 (all its other deps — t-004,
+    t-005, t-006 — are already done).
+
+    CORRECTION (ruler-hooked/t-013, 2026-08-10): the original plan above
+    cited three reuse targets that never existed under those names in
+    silasfelinus/kind_robots — components/navigation/swipe-deck.vue was
+    never built, components/butterfly/single-slider.vue now lives at
+    components/abandonware/butterfly/single-slider.vue, and
+    stores/compositionStore.ts never existed (rulerHookedStore.ts ships its
+    own localStorage handling directly, per the DELIVERED section above).
+    Recorded here so a future contributor does not try to import
+    nonexistent files. Documentation-only; no code changed.
+  claimed_by: claude-conductor-burst-20260721T1130Z
+  claimed_at: '2026-07-21T11:18:51Z'
+  updated: '2026-07-21T11:23:33Z'
+- id: t-013
+  milestone: m1
+  title: 'Weekly site audit (2026-08-07): correct t-012''s stale file paths'
+  status: done
+  owner: worker
+  stakes: reversible
+  note: 'Filed by the weekly site-audit gap scan. t-012 (done, 2026-07-21) asserts components/ruler-hooked/ruler-hooked-page.vue
+    is "structurally present and wired" -- the file actually lives at components/conductor/ruler-hooked-page.vue (Nuxt''s
+    flat auto-import means the app still works, but the documented path is wrong). The same task cites components/navigation/swipe-deck.vue
+    and components/butterfly/single-slider.vue as reuse patterns and stores/compositionStore.ts as a reuse idiom for local-storage
+    persistence; none of the three exist under those names (swipe-deck.vue was never built, single-slider.vue now lives at
+    components/abandonware/butterfly/single-slider.vue, and compositionStore.ts never existed -- rulerHookedStore.ts ships
+    its own local-storage handling directly). Add a one-line correction addendum to t-012''s note recording the actual current
+    paths so a future contributor does not try to import nonexistent reuse targets.'
+  claimed_by: 20260810T083500Z-sched-ruler-t013
+  claimed_at: '2026-08-10T08:34:48Z'
+  updated: '2026-08-10T08:44:30Z'
+  implementation_pr: 'silasfelinus/conductor#2016'
+- id: t-014
+  milestone: m3
+  title: Audit and expand the event/character card deck for real content depth
+  status: done
+  passes: 0
+  stakes: reversible
+  note: >
+    With t-010 closed (2026-08-15), every m1/m2 task is done and the PoC (slideshow play-loop, save slots, kingdom-health
+    compositing, real dashboard-tab/tutorial art) is live at /plan/projects/ruler-hooked. m3 ("content depth, app packaging,
+    Steam/Unreal research") is the only remaining real work: t-009 already covered the Steam/Unreal research half. This task
+    covers the "content depth" half. Read the current event/character card deck the game actually ships with (components/
+    ruler-hooked/ruler-hooked-card.vue + whatever data source it draws from -- decks.md per the component's own header comment)
+    and count how many distinct event/character cards exist versus what the design brief implies ("different characters/events
+    appear on different runs"). If the deck is thin (a handful of cards, low replay variety), author a meaningfully larger
+    set of new event cards in the established format -- using existing kind_robots Characters where they fit per notes_from_silas,
+    cartoony/goofy tone with nuanced sides on each choice, each choice wired to real kingdom-health-axis and landscape-region
+    effects (not cosmetic-only) -- and add them through the deck's real data path, not a one-off hack. If the audit finds
+    the deck already has strong content depth, document that finding instead of inventing padding, and consider whether "app
+    packaging" (an installable/offline PWA wrapper, distinct from the client-side localStorage offline-play that already works)
+    is the more useful next slice for a follow-up task.
+    DONE (conductor scheduled Agent run, kind_robots PR #1911, squash-merged 93783f2): audit confirmed the deck was genuinely
+    thin -- utils/rulerHooked/content.ts (the real data path components/ruler-hooked/ruler-hooked-card.vue reads from) shipped
+    exactly 1 deck (kingdom-core, 3 free-draw cards) + 1 arc (child-elopes, 3 steps) = 6 distinct cards total, plus 4 characters,
+    3 rewards, 2 endings -- well short of the design brief's explicit replay-variety goal. Expanded rather than documented:
+    10 new free-draw cards added to kingdom-core; 1 new deck (lake-mysteries, 4 cards); 2 new arcs (envoy-treaty, bog-witch-bargain),
+    3 steps each, same branch-into-two-endings shape as child-elopes; 7 new characters (existing 4 -- Vex, Sela, Robin, Ash
+    -- reused across several new cards per the brief); 5 new rewards; 2 new endings (one MIXED, one SECRET). Result: 6 cards/1
+    arc/2 endings -> 25 cards/3 arcs/4 endings. Every new choice moves real kingdomHealth sliders and/or pins a real region
+    state (only states already defined in the regions manifest: far_shore/treeline/village_edge) -- no cosmetic-only choices,
+    matching the existing cards' effects structure exactly; every new interrupt card keeps the mandatory requeue: true defer
+    path. Verified: engine.selftest.ts and game.selftest.ts both ALL PASS, vue-tsc --noEmit (repo-wide) exit 0, eslint clean,
+    prettier --check clean, test:layout-contract holds with no new violations, git status --porcelain showed exactly one file
+    touched (utils/rulerHooked/content.ts). All 23 kind_robots CI checks passed, mergeable_state: clean, squash-merged. App-packaging
+    (an installable/offline PWA wrapper, distinct from the client-side localStorage offline-play that already works) was NOT
+    built this cycle -- filed as ruler-hooked/t-015 for a future slice per this task's own note.
+  owner:
+  claimed_by:
+  claimed_at:
+  updated: '2026-08-16T13:34:57Z'
+  implementation_pr: 'silasfelinus/kind_robots#1911'
+
+- id: t-015
+  milestone: m3
+  title: Ship an installable/offline PWA wrapper for Ruler Hooked
+  status: done
+  passes: 0
+  stakes: reversible
+  depends_on: t-014
+  note: 'DONE (conductor scheduled Agent run, 2026-08-18T18:28-scheduled-ruler-hooked-t015): shipped an installable/offline
+    PWA wrapper for the Ruler Hooked route. Convention audit found kind_robots already has a shared, site-wide install-chrome-only
+    @vite-pwa/nuxt convention (added for ai-art-academy/t-062/t-063/t-066, with a dedicated CI budget guard verifyPwaPrecacheBudget.ts)
+    -- reused and extended it rather than building a ruler-hooked-specific manifest/service-worker, per the task note''s explicit
+    preference. Two narrow nuxt.config.ts additions: (1) pwa.client.installPrompt, which was never set and left the shared
+    $pwa composable''s beforeinstallprompt/install() flow permanently dead site-wide -- enabling it is what makes an install
+    affordance possible anywhere, though only ruler-hooked-page.vue actually renders the UI for it; (2) pwa.workbox.runtimeCaching,
+    one NetworkFirst cache entry scoped by regex to exactly /plan/projects/ruler-hooked''s document (maxEntries: 1), closing
+    the real gap -- the game already played fully offline via localStorage once loaded, but a hard reload with network off
+    failed because Nitro does not give SSR HTML the long-lived cache headers hashed build assets get. Did not touch globPatterns
+    (still icons/manifest only, confirmed by the unchanged-and-passing precache budget check) and did not attempt a site-wide
+    PWA conversion, per the task''s narrow-first-slice instruction. Added an explicit Install/Not-now banner in components/conductor/ruler-hooked-page.vue.
+    Verified: production build succeeds; manifest.webmanifest unchanged; sw.js precache list unchanged plus the new NetworkFirst
+    registerRoute entry; vue-tsc --noEmit clean; eslint on changed files clean and the repo lint ratchet holds (339 problems,
+    -53, no rule regressed); verifyPwaPrecacheBudget.ts passes locally and in CI. NOT verified (no real browser in this sandbox):
+    an actual beforeinstallprompt event/native install dialog, or a real network-disabled reload-after-first-visit check --
+    flagged explicitly in the PR body per this task''s own honesty discipline. One transient CI anomaly (Contract Tests job
+    hung 15+ min at checkout on first run, unrelated to this diff, confirmed by a clean ~2.5min re-run) resolved via cancel+rerun.
+    kind_robots PR #1939 (squash bd1e6d9f), all 28 checks green, merged. Deliberately left for follow-up: site-wide PWA conversion,
+    caching Nuxt Content''s data-fetch path for offline client-side SPA navigation into the route, and install-prompt UI on
+    any other route.'
+  owner: worker
+  claimed_by: 2026-08-18T18:28-scheduled-ruler-hooked-t015
+  claimed_at: '2026-08-18T18:28:19Z'
+  updated: '2026-08-18T19:06:35Z'
+  implementation_pr: 'silasfelinus/kind_robots#1939'
+
+- id: t-016
+  milestone: m5
+  title: Generate the concept-art batch that pins the look for full-game production
+  status: done
+  approved_by_human: true
+  passes: 0
+  stakes: reversible
+  owner: worker
+  gate_human: true
+  note: >
+    FOR SILAS: 25 concept pieces are rendering right now on the home box
+    (ArtJobs 9910-9934) and will appear at
+    https://media.acrocatranch.com/images/ruler-hooked/ — 14 under concept/
+    and 11 under characters/. This is the batch you asked for on 2026-08-26
+    ("start as concept pieces... our art generator is unused").
+
+    What it contains: four full lakeside vistas of the same monarch fishing at
+    day / golden hour / night / dawn, so you can see the time-of-day cycle read
+    as one place; three kingdom poles showing the nature-vs-development hue axis
+    end to end (preserved, prosperous, developed-by-warlock); four story beats
+    (the courier interrupting a cast, the Vex-vs-Sela standoff, landing an absurd
+    fish, sneaking past the courtiers); three UI concepts (event-card scene,
+    Fishopedia specimen plate, title screen); and a portrait of all eleven cast
+    members from the shipped content bundle, archetype-then-twist per
+    docs/art-direction.md.
+
+    TO APPROVE: look at the batch and say whether the house look is right. If it
+    is, set approved_by_human: true and status: done — that unblocks t-018 (the
+    37-piece environment matrix) and every production batch after it. If it is
+    not, say what is wrong in a note and the prompts get corrected in one place:
+    STYLE_TAIL / CAST_LOOK / SCENE_CONCEPTS in
+    scripts/build_ruler_hooked_art_queue.py, which is the single source these
+    prompts are generated from. Nothing is hand-typed, so a style correction is
+    one edit and a re-run, not 25 rewrites.
+
+    APPROVED (Silas, in session 2026-08-26, verbatim): "I really love the art
+    assets created, they hit the intended vibe perfectly." All 25 pieces rendered
+    and are live under https://media.acrocatranch.com/images/ruler-hooked/. The
+    house look defined in docs/art-direction.md is now settled and every
+    subsequent batch inherits it, so later art batches do not each need their own
+    look gate.
+
+    ONE CRITIQUE, carried forward, verbatim: "My only critique is that the ruler
+    should absolutely not always be male in our mockups, and we will need to add a
+    character creator element that lets the user pick body shapes, skin color, and
+    ruler title, etc." Correct, and self-inflicted: this batch pinned a single
+    monarch across all four time-of-day vistas so the cycle would read as one
+    person in one place, and paid for that consistency by making every hero mockup
+    a king. Split into t-020 (the art fix, plus ruler cosmetic presets) and t-021
+    (the character creator itself).
+  claimed_by: 2026-08-26T21-claude-ruler-hooked-art
+  claimed_at: '2026-08-26T21:45:00Z'
+  updated: '2026-08-26T22:00:00Z'
+
+- id: t-017
+  milestone: m5
+  title: Resolve the region-layer format contract before rendering the environment matrix
+  status: done
+  passes: 0
+  stakes: reversible
+  owner: worker
+  claimed_by: 2026-08-26T23-claude-ruler-hooked-art
+  claimed_at: '2026-08-26T23:20:00Z'
+  updated: '2026-08-27T01:34:18Z'
+  implementation_pr: 'silasfelinus/kind_robots#2139'
+  note: >-
+    Two shipped specs disagree about what a region layer file actually is, and
+    they cannot both be satisfied by one rendered image. docs/art-direction.md
+    §2 (t-008) specifies every layer as a full-play-screen image with everything
+    outside its own depth band transparent, registered so layers stack into one
+    frame. What actually shipped in kind_robots
+    components/ruler-hooked/ruler-hooked-stage.vue renders each region as its own
+    `flex-1` band inside an `h-72 sm:h-96` column — eight bands, so roughly a
+    20:1 strip — with the layer image as `object-cover` inside that strip. A
+    full-frame transparent layer sent through that component is cropped to a thin
+    slice of its own middle; a strip authored for the component cannot be
+    generated at 20:1 by any image model.
+
+    Pick one and make the other follow: either (a) change the stage to absolutely
+    position full-frame layers over one shared canvas, which is what the
+    compositing spec assumed and what makes the art direction's registration and
+    shared-key-light rules mean anything, or (b) keep banded rendering and respec
+    the art direction to per-band crops with a generatable aspect ratio and a
+    documented crop rectangle per region. (a) is the recommendation — it is what
+    docs/compositing.md already describes and it does not require re-deriving the
+    art direction — but the call is a real one, not a formality.
+
+    RESOLVED (kind_robots PR #2139) in favour of (a), the compositing spec.
+    ruler-hooked-stage.vue now composites full-frame layers in z-order over one
+    canvas, keeping the banded gradients underneath as the placeholder floor so
+    the artless state and the graceful degradation are unchanged. Verified:
+    vue-tsc exit 0, eslint clean, prettier clean, both headless self-tests ALL
+    PASS, test:layout-contract holds. Not verified: real pixels -- no browser in
+    this sandbox, and no layer art existed yet at the time.
+
+    Storage turned out to need no change, which was not obvious: the pipeline
+    writes to self-hosted media while the compositor asks for a relative
+    /images/ruler-hooked/... path, and those are the same store -- kind_robots'
+    own images route serves /images/** from IMAGES_PATH, which in production is
+    the mounted media root. Confirmed live rather than assumed (key-art-day.webp
+    and characters/warlock-vex.webp both 200, byte-identical to the media origin).
+
+    DONE: kind_robots PR #2139 squash-merged 2026-08-26 (f36f87b), all 38 checks
+    green. Unblocked t-018, whose 37 renders went out the same session.
+
+    RECONCILED 2026-08-27 (conductor scheduled Agent run): kind_robots#2139 confirmed merged
+    (merged_by silasfelinus). Task's own note says 'Flip to done when #2139 merges' -- doing
+    so. Unblocks t-018 (already submitted, still status: review pending its own art-render
+    verification).
+
+- id: t-018
+  milestone: m5
+  title: Render the 37-piece region/state/time environment matrix
+  status: done
+  passes: 0
+  stakes: reversible
+  owner: worker
+  depends_on:
+  - t-016
+  - t-017
+  claimed_by: claude-scheduled-20260828T233113Z-rh-t018
+  claimed_at: '2026-08-28T23:31:14Z'
+  updated: '2026-08-28T23:31:28Z'
+  note: >-
+    The full environment layer matrix implied by the live regions manifest in
+    kind_robots utils/rulerHooked/content.ts: sky 1x3, far_shore 3x2, treeline
+    4x3, village_edge 3x2, castle_grounds 3x2, lake 1x2, near_bank 1, ruler 1 =
+    37 assets, named exactly as compositor.ts assetCandidates() resolves them
+    ({region}-{state}[-{time}].webp under /images/ruler-hooked/).
+
+    Already implemented and verified end to end — `python
+    scripts/build_ruler_hooked_art_queue.py --include-layers` builds all 37 from
+    the manifest plus the docs/art-direction.md BASE strings, and its prompt
+    contract self-check passes on every one. Deliberately not staged: it waits on
+    t-016 (is the look right?) and t-017 (what shape is a layer file?). When both
+    clear, this is one command plus a submit run, and the count self-updates if a
+    region or state is added upstream.
+
+    State reconciliation (2026-08-27): status was 'review' but this task's own note says the
+    37-asset batch was 'Deliberately not staged' pending t-016/t-017 -- nothing was ever
+    actually submitted for review (no PR, no ArtJob batch referencing this task), and no
+    evidence of a submission run exists. Both dependencies (t-016, t-017) are now status:
+    done (t-017 finished 2026-08-27T01:34Z, after this task's own claim at 23:30Z the prior
+    day). Correcting status to 'ready' so the next session picks this up as real, now-
+    unblocked work (run build_ruler_hooked_art_queue.py --include-layers, submit the 37
+    renders, verify delivery) rather than leaving it looking already-submitted-and-pending-
+    review when it isn't.
+
+    Verified in-flight delivery (2026-08-27, this session): the 37-asset batch was already
+    submitted to the ArtJob queue by auto-art-generate.yml automation (commit f97ccdb,
+    06:13:07Z) -- all 37 entries carry last_art_job_id 10020-10056, none still 'Deliberately
+    not staged'. Spot-checked queue health via recheck_render_queue.py: PENDING=46 (all-
+    time, spans other lanes too), RUNNING=2, no recentFailed; oldest pending age ~5.4h,
+    engine=COMFY. Cross-checked projects/art-prompts.yaml directly: 16/37 layer entries
+    status=done, 21/37 still status=pending (ids 10036-10056), none failed. curl-verified
+    all 16 'done' source_urls on https://media.acrocatranch.com -- all 16 return HTTP 200
+    and serve real image bytes; delivery lands on self-hosted media directly per auto-art-
+    generate.yml's design ('Kind Robots image binaries are no longer checked out or
+    committed by this workflow'), so an empty local/git public/images/ruler-hooked is
+    expected, not a failure signal. No code or roadmap changes needed beyond this
+    verification -- draining normally, nothing stuck. Leaving status=ready (not done) since
+    21/37 assets have not landed yet; next session/automation should re-run this same spot-
+    check and only flip to done once all 37 verify 200.
+
+    Verified delivery complete (2026-08-28, this session): all 36 environment-layer assets
+    from --include-layers (sky x3, far_shore x6, treeline x12, village_edge x6,
+    castle_grounds x6, lake x2, near_bank x1) return HTTP 200 with real image/webp bytes
+    (24KB-125KB, not placeholders) at https://media.acrocatranch.com/images/ruler-
+    hooked/<region>-<state>[-<time>].webp -- spot-checked content-type/content-length on 4,
+    curl-verified HTTP status on all 36. The note's 37th asset ('ruler 1') is not a static
+    layer: content.ts's own comment confirms compositor.ts's ruler special-case draws it
+    from save.ruler.cosmetics.presetId (t-020's cosmetic presets, already approved_by_human
+    and done), not a build_ruler_hooked_art_queue.py --include-layers entry -- --include-
+    layers dry-run correctly emits only 36 layer entries, no 37th. Global render queue is
+    backlogged (639 pending all-time per recheck_render_queue.py) but that is unrelated to
+    this task -- every asset this task's own scope covers already landed before this session
+    started. No code change; this is a verification-only close-out.
+
+- id: t-019
+  milestone: m5
+  title: Generate species designs for the 15-fish vertical-slice roster
+  status: needs-human
+  soft_gate: true
+  passes: 0
+  stakes: reversible
+  owner: worker
+  gate_human: true
+  note: >
+    FOR SILAS: 15 fish species designs are rendering (ArtJobs 9935-9949), one per
+    entry in projects/ruler-hooked/fish/vertical-slice.yaml, landing at
+    https://media.acrocatranch.com/images/ruler-hooked/fish/<slug>/bestiary.webp.
+    Same batch and same look as t-016's concept art -- the roster merged (PR #2944)
+    about twenty minutes before the art pipeline was staged, so it went out on the
+    same rails rather than waiting for a cycle.
+
+    Each prompt is built from that fish's own `silhouette` and `distinction`
+    fields, used verbatim, so the roster stays the single source: editing a
+    species' description there and re-running regenerates its art with no prompt
+    rewriting. The path follows docs/fish-ecology.md's art key convention
+    (<creature-slug>/<variant>), and `bestiary` is deliberately the first variant
+    -- it is the species design that every later presentation variant
+    (ruler-catch-card, ruler-silhouette, lake context) derives from, and it is the
+    one Cthulhuquarium shares.
+
+    TO APPROVE: look at the five shared-with-Cthulhuquarium species first
+    (choirfish, parlour-rustfish, errand-guppy, moebius-crab, lamplight-angler,
+    the-pleasant-island) and say whether each still reads as the same creature
+    as its Ichthyonomicon version. That shared identity is the thing a
+    regeneration is most likely to lose. Then set approved_by_human: true and
+    status: done, or note what to change.
+
+    Soft gate, same as t-016: a look call, not a safety gate.
+  claimed_by: 2026-08-26T22-claude-ruler-hooked-art
+  claimed_at: '2026-08-26T22:10:00Z'
+  updated: '2026-08-26T22:20:00Z'
+
+- id: t-020
+  milestone: m5
+  title: Stop the ruler defaulting to one body; ship ruler cosmetic presets as art
+  status: done
+  approved_by_human: true
+  passes: 0
+  stakes: reversible
+  owner: worker
+  gate_human: true
+  note: >
+    FOR SILAS: fixes your t-016 critique. Twelve pieces are rendering (ArtJobs
+    9950-9957 and 9971-9974): eight ruler cosmetic presets at
+    https://media.acrocatranch.com/images/ruler-hooked/ruler/<id>.webp, plus four
+    alternate key-art vistas so the hero mockups themselves are not one body.
+
+    The eight presets deliberately span everything the character creator has to
+    cover -- King Osric (the one already rendered, kept so the approved art stays
+    canonical), Queen Mabel (broad-shouldered, fifties, silver crop), Sovereign
+    Wren (young, androgynous, circlet worn at the throat), Regent Halvard (very
+    old, wiry, robes too big), Matriarch Oshun (short, round, braided crown),
+    Chieftain Brakka (orcish, antler crown), Queen Sedge (heron-folk), and Pip
+    (mouse-folk, barely taller than a boot). Gender presentation, body shape and
+    size, skin, age, species, and honorific all vary. All eight share one side-on
+    seated pose and framing, so they read as one set and swap cleanly.
+
+    CORRECTION to how this was first written up: these are the PRESET REFERENCE
+    SHEET, not drop-in composited layer files. They came back with painted
+    lakeside backdrops, as portraits do, so a preset cannot be dropped into the
+    `ruler` region layer as-is -- the composited layer needs the figure alone
+    over an empty frame. `ruler-fishing.webp` (t-018, ArtJob 10011) is the actual
+    layer, and it renders only the hero preset. Producing a per-preset layer is
+    part of t-021's compositor work, either by rendering each preset again under
+    LAYER_TAIL or by matting these; the pose and framing are already consistent
+    enough that either path works. Flagged because the first version of this note
+    claimed one file did both jobs, and it does not.
+
+    Root cause worth keeping: the builder treated the ruler as a CONSTANT
+    (`THE_RULER`) because a single monarch is what makes four time-of-day vistas
+    read as one place. That is a real constraint, and the wrong solution to it.
+    It is now `RULER_PRESETS` with a named `HERO_RULER_ID` for the matched set,
+    so the consistency survives and the default does not.
+
+    APPROVED (Silas, in session 2026-08-26): "those rulers are better than my
+    suggestions, no reason to stick with speciesism" -- the nonhuman presets stay,
+    and the range is endorsed as the basis for t-021.
+
+    EXTENDED to twelve on the same message. Silas's first instinct was "six
+    different rulers... little boy and girl, middle aged, and old", and although
+    he then preferred the existing eight, that message identified a real gap the
+    eight did not cover: they ran young-adult to elderly with no ruler who is
+    actually a CHILD. That is the most on-theme age the premise has -- a kid who
+    would rather fish than rule is not shirking, so the joke lands differently and
+    better. Added boy-king-tobin (~8), girl-queen-marisol (~9), cub-prince-bramble
+    (bear-cub-folk child) and elder-tortoise-yew (fills elderly x nonhuman), as
+    ArtJobs 10012-10015. Deliberately a spread rather than a boy/girl pair: Silas
+    flagged the binary himself ("I hate to be binary") in the same breath as
+    asking for both, so the set answers the ask and keeps going past it.
+
+    Twelve presets now span child to centuries-old, five species, and every
+    presentation across them. Adding a thirteenth is one dict entry plus one
+    render, so the count is not a design commitment.
+
+    STILL OPEN, moved to t-021 rather than held here: Silas's "Not sure if that is
+    better than doing customized overlays." That is an architecture question about
+    how the creator composes a ruler, not about this art, and t-021 carries the
+    recommendation.
+  claimed_by: 2026-08-26T23-claude-ruler-hooked-art
+  claimed_at: '2026-08-26T23:00:00Z'
+  updated: '2026-08-26T23:05:00Z'
+
+- id: t-021
+  milestone: m5
+  title: Build the ruler character creator (body, skin, honorific, species)
+  status: done
+  passes: 0
+  stakes: reversible
+  owner: worker
+  claimed_by: claude-scheduled-20260827T0830Z-rh-t021
+  claimed_at: '2026-08-27T07:33:19Z'
+  note: >-
+    Silas, 2026-08-26: "we will need to add a character creator element that lets
+    the user pick body shapes, skin color, and ruler title, etc." Cross-repo: the
+    code lands in kind_robots, this task holds the state.
+
+    The data model already anticipates this and is not yet wired to anything.
+    docs/data-model.md defines `ruler.honorific` (King|Queen|other, a cosmetic
+    label) and `ruler.cosmetics` (currently `{ outfit, crownTilt }`), and
+    newGame.ts sets defaults nobody can change. Nothing in the UI reads or writes
+    either, and the compositor's asset scheme has no cosmetic axis at all --
+    `assetCandidates()` resolves `{region}-{state}[-{time}]`, so there is
+    currently no path shape that can address "the ruler layer, but Pip".
+
+    Three pieces of work, in order:
+    (1) Widen `ruler.cosmetics` to carry the axes Silas named -- body, skin,
+        species, plus the existing outfit/crownTilt -- and widen `honorific` past
+        the King|Queen|other trio to the set t-020 settles. Save-format change:
+        bump `contentVersion` and make old saves load with defaults rather than
+        breaking, per the brief's multiple-named-saves guarantee.
+    (2) Give the compositor a cosmetic axis for the `ruler` region so a preset
+        resolves to its own file, with the same graceful fallback ladder the time
+        variants already use -- a missing cosmetic degrades to the base ruler
+        layer, never a hole.
+    (3) A creation screen at new-game time, and the ability to change cosmetics
+        later (they are cosmetic-only by design, so there is no reason to lock
+        them at creation).
+
+    t-020's twelve presets are the art this builds against, at
+    public/images/ruler-hooked/ruler/<id>.webp. Read the list as data; do not
+    hardcode ids, since adding a preset is one dict entry plus one render.
+
+    DECIDED (Silas, in session 2026-08-26): "Agreed on your reasoning for custom
+    ruler images being too complex for expansion, I like custom name and
+    honorific, your presets are fine, we can always add more, and custom should
+    be an option." So: preset figures, free-text name and honorific, no
+    composable overlay system, and a custom escape hatch (see CUSTOM below).
+
+    The reasoning he agreed with, kept because it is the constraint, not a
+    preference: presets for the figure, free text for the words, and overlays
+    only where registration is genuinely free.
+
+    A composable overlay creator (pick a body, then a skin, then a crown) needs
+    every part drawn to a shared skeleton with consistent anchor points. Diffusion
+    models do not produce registered separable parts -- each render reinvents the
+    proportions, so a crown generated against one body sits wrong on the next.
+    Getting real overlays means a deliberately drawn paper-doll set, which is an
+    illustration commission rather than a pipeline run. That is a legitimate thing
+    to want, and it should be chosen knowingly, not arrived at by discovering the
+    generator cannot do it.
+
+    Presets do not have that problem, and Silas's own "art is cheap" is the reason
+    they win: a coherent new ruler costs one dict entry and one render, the
+    compositor already swaps whole files by key so no new compositing axis is
+    needed, and every preset is guaranteed internally consistent because one
+    render drew all of it. The cost is combinatorial range -- twelve fixed figures
+    instead of a body x skin x crown product.
+
+    Two axes are free either way, and Silas confirmed both: `honorific` and the
+    ruler's name are pure data, no art, and they are the customisation that reads
+    as most personal. Widen `honorific` past King|Queen|other to FREE TEXT, with
+    the twelve preset titles (King, Queen, Sovereign, Regent, Matriarch,
+    Chieftain, Monarch, Prince) offered as suggestions rather than as the set.
+
+    If the combinatorial range turns out to matter more than the coherence, the
+    upgrade path is additive: keep presets as base figures and add a small set of
+    overlays that do not need tight registration (a held item, a colour tint on
+    the robes), rather than rebuilding the figure as parts.
+
+    CUSTOM -- what "custom should be an option" can mean here. Worth stating
+    because the obvious reading is ruled out by a design pillar: DESIGN-BRIEF.md
+    is explicit that AI is used for asset generation DURING DEVELOPMENT and that
+    "there are NO live LLM interactions at runtime" -- the shipped game runs with
+    no internet. So custom cannot mean describe-your-ruler-and-we-generate-it,
+    and it cannot mean composable parts either, since that is the overlay system
+    just rejected.
+
+    What is left, and what this task should build: the player supplies their own
+    ruler picture from their own device. A file picker, held locally, alongside
+    the free-text name and honorific -- "your picture, your name, your title" is
+    a complete custom ruler with no runtime AI, no registration problem, and no
+    network. It also degrades correctly: a save with a custom image that is no
+    longer readable falls back to a preset rather than to a hole, using the same
+    ladder as the missing-art case.
+
+    Storage caveat: saves are local (rulerHookedStore.ts, localStorage) and the
+    brief requires multiple named saves. A 768x1024 webp is roughly 80-130KB, so
+    base64 in localStorage costs ~110-175KB per save against a ~5MB quota --
+    workable for a handful of saves and fragile past that. Prefer IndexedDB for
+    the image blob with the save holding only a key, and cap or downscale on
+    import. Do not let a custom portrait be the thing that makes save #12 fail
+    to write.
+
+    Flagged as interpretation rather than instruction: Silas said "custom should
+    be an option" without saying which kind, and the offline pillar is what
+    narrows it. If he meant something else -- a request queue that generates a
+    new preset for him during development, say -- that is a different and simpler
+    task, and this section should be corrected rather than built around.
+
+    COLLISION NOTE + close-out (this session, 2026-08-27 ~07:50 UTC): implemented and merged
+    the full task before noticing a different concurrent session (claude-
+    scheduled-20260827T0830Z-rh-t021) had also claimed this task in the roadmap at 07:33:19Z
+    -- this session had already been working the kind_robots side since well before that
+    timestamp (started ~07:22 UTC per its own PR's first commit) and had no visibility into
+    the roadmap claim happening concurrently, since the kind_robots implementation itself
+    needed no roadmap edit until this close-out. Implemented all three pieces the note
+    specifies, in order: (1) widened ruler.cosmetics to a typed RulerCosmetics
+    (presetId/customPortraitId/reserved body-skin-species-outfit-crownTilt), bumped
+    SAVE_SCHEMA_VERSION 4->5, migrateSave() defaults old saves to the hero preset; (2) gave
+    the compositor a real cosmetic axis for the ruler region (resolveScene special-cases it
+    to save.ruler.cosmetics.presetId; assetCandidates gained a fallbackState param so any
+    preset lacking its own rendered layer gracefully degrades to the existing ruler-
+    fishing.webp hero layer, never a hole); (3) built the creation-time picker (free-text
+    honorific with the twelve preset titles as suggestions, a preset grid read entirely from
+    data, and a 'use my own picture instead' file input backed by a new IndexedDB
+    portraitStore with downscale-on-import) plus a separate in-play 'change appearance'
+    panel, since cosmetics are cosmetic-only by design and were never meant to lock at
+    creation. Also fixed one real gap found along the way:
+    utils/rulerHooked/engine.selftest.ts existed but was never wired into
+    .github/workflows/ruler-hooked.yml, so added it as a third CI step (verified it actually
+    runs in CI on this PR). Full verification: vue-tsc clean, eslint clean, layout-contract
+    clean (fixed one new viewport-breakpoint grid violation along the way), all three
+    selftest scripts pass including new coverage for the cosmetic axis/fallback
+    ladder/migration defaults, all 38 kind_robots PR checks green. Merged
+    silasfelinus/kind_robots#2142 (squash 4cf157b). Per-preset ruler layer ART
+    (ruler-<id>.webp) is explicitly NOT part of this task -- that is the separate async
+    ArtJob pipeline (t-020's own note flags it as follow-up); everything here degrades
+    gracefully until that art lands. If claude-scheduled-20260827T0830Z-rh-t021 is still
+    active: please check main before doing further work here -- this task is genuinely done
+    and duplicate implementation would be wasted effort.
+  updated: '2026-08-27T07:48:53Z'
+  implementation_pr: 'silasfelinus/kind_robots#2142'
+
+- id: t-022
+  milestone: m5
+  title: Reward and ending illustrations from the content bundle
+  status: done
+  passes: 0
+  stakes: reversible
+  owner: worker
+  note: >-
+    Thirteen pieces submitted (ArtJobs 9958-9970): one object study per Reward
+    (9 -- druid-charm, gilded-lure, buildpermit-scroll, treaty-seal,
+    smugglers-map, mossy-hex, captains-pin, bards-ballad, nix-pearl) and one
+    closing illustration per ending (4 -- druid-utopia, warlock-metropolis,
+    thistlewood-empire, fishers-peace), at
+    public/images/ruler-hooked/rewards/<slug>.webp and
+    public/images/ruler-hooked/endings/<outcomeKey>.webp.
+
+    Prompts are built from the bundle's own fields -- a reward's `effect` line and
+    an ending's `body` line are already one vivid sentence about the thing, so
+    they are used as the art direction rather than paraphrased. No new look gate:
+    t-016 settled the house style and these inherit it.
+
+    Found while writing the reward parser, and worth keeping: three of the nine
+    rewards had `effect:` wrapped onto its own line by prettier, so a same-line
+    regex silently matched only six and the run reported a cheerful "6 entries".
+    A parser that returns a subset is worse than one that crashes -- the batch
+    still stages, still renders, still looks successful, and the gap only surfaces
+    when something reaches for a missing asset. `expect_all()` now compares the
+    match count against the declared entry count and names what it missed, for
+    every block this script reads.
+
+    Flip to done once the media paths are live; the ArtJob ids are recorded on
+    each request row in projects/art-prompts.yaml.
+
+    State reconciliation (2026-08-27): all 13 media paths spot-checked live at
+    kindrobots.org and confirmed 200 -- rewards/{druid-charm,gilded-lure,buildpermit-
+    scroll,treaty-seal,smugglers-map,mossy-hex,captains-pin,bards-ballad,nix-pearl}.webp and
+    endings/{druid-utopia,warlock-metropolis,thistlewood-empire,fishers-peace}.webp all
+    resolve. Matches this task's own stated completion criterion ('Flip to done once the
+    media paths are live'). Flipping to done.
+  claimed_by: 2026-08-26T23-claude-ruler-hooked-art
+  claimed_at: '2026-08-26T23:00:00Z'
+  updated: '2026-08-27T06:16:02Z'

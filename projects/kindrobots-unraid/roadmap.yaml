@@ -10,229 +10,230 @@ notes_from_silas: |
   Design for today's home deployment without blocking a future viral-scale architecture.
 
 milestones:
-  - id: m1
-    title: Catalog foundation
-    weight: 20
-    status: done
+- id: m1
+  title: Catalog foundation
+  weight: 20
+  status: done
 
-  - id: m2
-    title: Database resilience stack
-    weight: 25
-    status: in-progress
+- id: m2
+  title: Database resilience stack
+  weight: 25
+  status: in-progress
 
-  - id: m3
-    title: Core Kind Robots application templates
-    weight: 30
-    status: in-progress
+- id: m3
+  title: Core Kind Robots application templates
+  weight: 30
+  status: in-progress
 
-  - id: m4
-    title: AI service templates
-    weight: 15
-    status: not-started
+- id: m4
+  title: AI service templates
+  weight: 15
+  status: not-started
 
-  - id: m5
-    title: Community Applications publication
-    weight: 10
-    status: not-started
+- id: m5
+  title: Community Applications publication
+  weight: 10
+  status: not-started
 
 tasks:
-  - id: t-001
-    milestone: m1
-    title: Establish master Unraid catalog repository structure
-    status: done
-    owner: worker
-    updated: "2026-07-13T20:45:00Z"
-    passes: 0
-    stakes: reversible
-    note: >
-      Created README, template directory, project catalog, phased roadmap, documentation,
-      icon assets, and GitHub Actions validation in silasfelinus/kindrobots-unraid.
+- id: t-001
+  milestone: m1
+  title: Establish master Unraid catalog repository structure
+  status: done
+  owner: worker
+  updated: "2026-07-13T20:45:00Z"
+  passes: 0
+  stakes: reversible
+  note: >
+    Created README, template directory, project catalog, phased roadmap, documentation,
+    icon assets, and GitHub Actions validation in silasfelinus/kindrobots-unraid.
 
-  - id: t-002
-    milestone: m2
-    title: Create and document the first ProxySQL Unraid template
-    status: done
-    owner: reviewer
-    updated: "2026-07-14T03:20:00Z"
-    passes: 0
-    stakes: reversible
-    soft_gate: true
-    approved_by_human: true
-    note: >
-      Installed ProxySQL 3.0.9 on Alexandria and verified the local path from the
-      ProxySQL frontend to mariadb-kindrobots2:3306. The Unraid template and setup
-      guide document the 5544 host-port to 6033 container-port mapping, persistent
-      runtime configuration, private admin access through docker exec, and frontend TLS.
+- id: t-002
+  milestone: m2
+  title: Create and document the first ProxySQL Unraid template
+  status: done
+  owner: reviewer
+  updated: "2026-07-14T03:20:00Z"
+  passes: 0
+  stakes: reversible
+  soft_gate: true
+  note: >
+    Installed ProxySQL 3.0.9 on Alexandria and verified the local path from the
+    ProxySQL frontend to mariadb-kindrobots2:3306. The Unraid template and setup
+    guide document the 5544 host-port to 6033 container-port mapping, persistent
+    runtime configuration, private admin access through docker exec, and frontend TLS.
 
-  - id: t-003
-    milestone: m2
-    title: Tune ProxySQL and switch Kind Robots database traffic
-    status: done
-    owner: reviewer
-    updated: "2026-07-14T03:20:00Z"
-    passes: 0
-    stakes: irreversible
-    depends_on: t-002
-    gate_human: true
-    approved_by_human: true
-    note: >
-      Completed the production cutover. ProxySQL uses backend hostgroup 10 with
-      mariadb-kindrobots2:3306, a 40-connection backend cap, the Kind Robots application
-      user and schema, monitoring, and verified frontend TLS. The certificate now
-      identifies acrocatranch.com as well as the local endpoints. Vercel strict hostname
-      verification passed, Prisma checked all 43 migrations with none pending, the final
-      clean production deployment reached READY, the homepage returned HTTP 200, and a
-      database-backed /api/dreams request returned HTTP 200 with live records. Kind Robots
-      retains a two-connection application pool limit per Vercel runtime instance.
+- id: t-003
+  milestone: m2
+  title: Tune ProxySQL and switch Kind Robots database traffic
+  status: done
+  owner: reviewer
+  updated: "2026-07-14T03:20:00Z"
+  passes: 0
+  stakes: irreversible
+  depends_on: t-002
+  gate_human: true
+  approved_by_human: true
+  note: >
+    Completed the production cutover. ProxySQL uses backend hostgroup 10 with
+    mariadb-kindrobots2:3306, a 40-connection backend cap, the Kind Robots application
+    user and schema, monitoring, and verified frontend TLS. The certificate now
+    identifies acrocatranch.com as well as the local endpoints. Vercel strict hostname
+    verification passed, Prisma checked all 43 migrations with none pending, the final
+    clean production deployment reached READY, the homepage returned HTTP 200, and a
+    database-backed /api/dreams request returned HTTP 200 with live records. Kind Robots
+    retains a two-connection application pool limit per Vercel runtime instance.
 
-  - id: t-012
-    milestone: m2
-    title: Observe ProxySQL production pooling and record steady-state thresholds
-    status: needs-human
-    soft_gate: true
-    updated: '2026-08-10T11:47:00Z'
-    passes: 0
-    stakes: reversible
-    depends_on: t-003
-    note: |-
-      FOR SILAS: after normal production traffic has accumulated, capture stats_mysql_connection_pool plus frontend connection and query statistics from the ProxySQL admin interface. Record ConnUsed, ConnFree, ConnOK, ConnERR, Queries, latency, and failure behavior; then define alert and capacity thresholds. This is a soft gate because Alexandria's ProxySQL admin interface is intentionally available only through local docker exec and is not reachable by the Worker sandbox.
+- id: t-012
+  milestone: m2
+  title: Observe ProxySQL production pooling and record steady-state thresholds
+  status: needs-human
+  soft_gate: true
+  updated: '2026-08-10T11:47:00Z'
+  passes: 0
+  stakes: reversible
+  depends_on: t-003
+  note: |-
+    FOR SILAS: after normal production traffic has accumulated, capture stats_mysql_connection_pool plus frontend connection and query statistics from the ProxySQL admin interface. Record ConnUsed, ConnFree, ConnOK, ConnERR, Queries, latency, and failure behavior; then define alert and capacity thresholds. This is a soft gate because Alexandria's ProxySQL admin interface is intentionally available only through local docker exec and is not reachable by the Worker sandbox.
 
 
-      SENT BACK by silasfelinus via Kind Robots For You. You haven't given me information on this thread to do the work so I do not know how to get it.
+    SENT BACK by silasfelinus via Kind Robots For You. You haven't given me information on this thread to do the work so I do not know how to get it.
 
-      Reconciliation (conductor scheduled sweep, 2026-08-10T11:47Z): claim from session
-      2026-08-10T092116Z-kindrobots-unraid-t012-q6n4 had gone stale (claimed 09:21Z, past
-      the 90-minute CLAIM_TTL_MINUTES with no further progress -- the claiming session
-      ended after the "SENT BACK" note above without releasing it). No agent sandbox can
-      do this work regardless of TTL: the ProxySQL admin interface genuinely requires
-      local docker exec access. Corrected status from stale `claimed` to `needs-human`
-      (soft) to reflect that reality accurately -- this was already effectively a soft
-      gate per this note's own first paragraph, just not reflected in `status`.
-    approved_by_human: false
-    owner: worker
-    claimed_by: 2026-08-10T092116Z-kindrobots-unraid-t012-q6n4
-    claimed_at: '2026-08-10T09:21:16Z'
+    Reconciliation (conductor scheduled sweep, 2026-08-10T11:47Z): claim from session
+    2026-08-10T092116Z-kindrobots-unraid-t012-q6n4 had gone stale (claimed 09:21Z, past
+    the 90-minute CLAIM_TTL_MINUTES with no further progress -- the claiming session
+    ended after the "SENT BACK" note above without releasing it). No agent sandbox can
+    do this work regardless of TTL: the ProxySQL admin interface genuinely requires
+    local docker exec access. Corrected status from stale `claimed` to `needs-human`
+    (soft) to reflect that reality accurately -- this was already effectively a soft
+    gate per this note's own first paragraph, just not reflected in `status`.
+  approved_by_human: false
+  owner: worker
+  claimed_by: 2026-08-10T092116Z-kindrobots-unraid-t012-q6n4
+  claimed_at: '2026-08-10T09:21:16Z'
 
-  - id: t-004
-    milestone: m2
-    title: Add database backup, restore verification, and capacity runbook
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    note: >
-      Package backups as an Unraid app or companion service. Include retention,
-      encrypted off-host copy, automated restore tests, and capacity thresholds.
+- id: t-004
+  milestone: m2
+  title: Add database backup, restore verification, and capacity runbook
+  status: waiting
+  owner:
+  passes: 0
+  stakes: reversible
+  note: >
+    Package backups as an Unraid app or companion service. Include retention,
+    encrypted off-host copy, automated restore tests, and capacity thresholds.
 
-  - id: t-005
-    milestone: m3
-    title: Normalize the existing PortOS Unraid deployment into the catalog
-    status: done
-    owner: reviewer
-    passes: 0
-    stakes: reversible
-    note: >
-      Inspected silasfelinus/PortOS: it has no app-level Dockerfile (runs as a
-      native Node/PM2 process per its CLAUDE.md single-user, multi-machine-federation
-      model). The only Unraid-relevant piece is docs/features/network-postgres.md,
-      which documents pointing PGMODE=network at a pgvector/pgvector:pg17 container
-      (matching PortOS's own docker-compose.yml) so multiple PortOS machines can
-      share one database. Packaged that as templates/portos-postgres.xml (mirroring
-      proxysql.xml's shape: Host Port 5432, POSTGRES_DB/USER/PASSWORD config vars,
-      masked password, persistent /mnt/user/appdata/portos-postgres/data path,
-      Tailscale/LAN-only Requires note) plus docs/portos-postgres.md (install steps,
-      per-machine .env wiring, quick checks, backup/upgrade policy with a
-      dump-and-restore-before-major-version-bump warning since it can serve several
-      machines at once). Added assets/portos-postgres-icon.svg and updated
-      projects/catalog.yaml (portos: discovery -> template) and README.md. Also
-      updated kindrobots-unraid's own in-repo projects/roadmap.yaml
-      (app-packaging/portos-template: planned -> done) to keep both trackers in sync.
-      Deliberately scoped to the database only -- containerizing the PortOS app
-      itself (multi-service Node/PM2/browser-CDP packaging) is a separate, much
-      larger effort not implied by this task's existing-Unraid-files framing.
-      Verified: XML passes the same required-element/duplicate-Config checks as
-      .github/workflows validate-catalog.yml; catalog.yaml and roadmap.yaml both
-      parse clean with pyyaml.
-    claimed_by: claude-burst-2026-07-15
-    claimed_at: '2026-07-15T09:09:33Z'
-    updated: '2026-07-15T09:09:33Z'
+- id: t-005
+  milestone: m3
+  title: Normalize the existing PortOS Unraid deployment into the catalog
+  status: done
+  owner: reviewer
+  passes: 0
+  stakes: reversible
+  note: >
+    Inspected silasfelinus/PortOS: it has no app-level Dockerfile (runs as a
+    native Node/PM2 process per its CLAUDE.md single-user, multi-machine-federation
+    model). The only Unraid-relevant piece is docs/features/network-postgres.md,
+    which documents pointing PGMODE=network at a pgvector/pgvector:pg17 container
+    (matching PortOS's own docker-compose.yml) so multiple PortOS machines can
+    share one database. Packaged that as templates/portos-postgres.xml (mirroring
+    proxysql.xml's shape: Host Port 5432, POSTGRES_DB/USER/PASSWORD config vars,
+    masked password, persistent /mnt/user/appdata/portos-postgres/data path,
+    Tailscale/LAN-only Requires note) plus docs/portos-postgres.md (install steps,
+    per-machine .env wiring, quick checks, backup/upgrade policy with a
+    dump-and-restore-before-major-version-bump warning since it can serve several
+    machines at once). Added assets/portos-postgres-icon.svg and updated
+    projects/catalog.yaml (portos: discovery -> template) and README.md. Also
+    updated kindrobots-unraid's own in-repo projects/roadmap.yaml
+    (app-packaging/portos-template: planned -> done) to keep both trackers in sync.
+    Deliberately scoped to the database only -- containerizing the PortOS app
+    itself (multi-service Node/PM2/browser-CDP packaging) is a separate, much
+    larger effort not implied by this task's existing-Unraid-files framing.
+    Verified: XML passes the same required-element/duplicate-Config checks as
+    .github/workflows validate-catalog.yml; catalog.yaml and roadmap.yaml both
+    parse clean with pyyaml.
+  claimed_by: claude-burst-2026-07-15
+  claimed_at: '2026-07-15T09:09:33Z'
+  updated: '2026-07-15T09:09:33Z'
 
-  - id: t-006
-    milestone: m3
-    title: Package persistent Kind Robots Nitro/API deployment for Unraid
-    status: done
-    passes: 0
-    stakes: reversible # was the invalid value "high" (conflated with priority) -- fixed
+- id: t-006
+  milestone: m3
+  title: Package persistent Kind Robots Nitro/API deployment for Unraid
+  status: done
+  passes: 0
+  stakes: reversible   # was the invalid value "high" (conflated with priority) -- fixed
     # 2026-08-09 alongside the LEARNING.yaml schema-conformance fix this caused; the note's
     # own text confirms the actual DNS/OAuth/reverse-proxy irreversible steps were explicitly
     # NOT performed, so the completed packaging work is reversible.
-    note: |-
-      Design the long-term topology where Vercel serves frontend traffic and a stable Nitro/API service near MariaDB owns the controlled database pool.
+  note: |-
+    Design the long-term topology where Vercel serves frontend traffic and a stable Nitro/API service near MariaDB owns the controlled database pool.
 
 
-      Silas explicitly redirected this task in-session on 2026-08-08: Kind Robots is moving from Vercel to a full self-hosted Unraid production deployment at kindrobots.org. Package the complete Nuxt/Nitro app for Unraid, keep configuration editable through the Unraid Docker UI, load the repo .env instead of duplicating the full environment list, mount /mnt/user/pc/kindrobots/images for persistent media, and document the DNS plus Google OAuth cutover as human-gated follow-up steps. The old Vercel-frontend/local-API topology is superseded.
+    Silas explicitly redirected this task in-session on 2026-08-08: Kind Robots is moving from Vercel to a full self-hosted Unraid production deployment at kindrobots.org. Package the complete Nuxt/Nitro app for Unraid, keep configuration editable through the Unraid Docker UI, load the repo .env instead of duplicating the full environment list, mount /mnt/user/pc/kindrobots/images for persistent media, and document the DNS plus Google OAuth cutover as human-gated follow-up steps. The old Vercel-frontend/local-API topology is superseded.
 
-      Implementation is ready for review across companion branches in silasfelinus/kind_robots and silasfelinus/kindrobots-unraid. The app container now builds on Node 24 without baking .env into the image, reads the host .env at runtime, persists the requested media directory, and keeps deployment overrides compatible with DockerMan. The catalog adds the Kind Robots user template and migration/cutover runbook. DNS, reverse-proxy publication, and Google OAuth account changes remain human actions and were not performed.
+    Implementation is ready for review across companion branches in silasfelinus/kind_robots and silasfelinus/kindrobots-unraid. The app container now builds on Node 24 without baking .env into the image, reads the host .env at runtime, persists the requested media directory, and keeps deployment overrides compatible with DockerMan. The catalog adds the Kind Robots user template and migration/cutover runbook. DNS, reverse-proxy publication, and Google OAuth account changes remain human actions and were not performed.
 
-      Completed and merged the full self-hosted Kind Robots packaging. silasfelinus/kind_robots#1637 merged as 63478f728c9ccfdf76ada097c7bf1283d26d493d after all 12 PR workflows completed successfully. silasfelinus/kindrobots-unraid#6 merged as 635bddc9f344b1b4ed3dbbcbb4eb51a1e292da3b after the Unraid catalog validator passed. The runtime now keeps .env out of the image, loads the existing host file at container startup, allows DockerMan variables to override deployment-specific values, persists /mnt/user/pc/kindrobots/images, and ships a DockerMan template/runbook. Actual Unraid installation, reverse-proxy publication, Google OAuth account changes, and DNS cutover remain human-gated deployment steps and were not performed.
-    updated: '2026-08-09T03:22:00Z'
-    claimed_by: 2026-08-09T025100Z-kindrobots-unraid-t-006-s56a
-    claimed_at: '2026-08-09T02:51:00Z'
+    Completed and merged the full self-hosted Kind Robots packaging. silasfelinus/kind_robots#1637 merged as 63478f728c9ccfdf76ada097c7bf1283d26d493d after all 12 PR workflows completed successfully. silasfelinus/kindrobots-unraid#6 merged as 635bddc9f344b1b4ed3dbbcbb4eb51a1e292da3b after the Unraid catalog validator passed. The runtime now keeps .env out of the image, loads the existing host file at container startup, allows DockerMan variables to override deployment-specific values, persists /mnt/user/pc/kindrobots/images, and ships a DockerMan template/runbook. Actual Unraid installation, reverse-proxy publication, Google OAuth account changes, and DNS cutover remain human-gated deployment steps and were not performed.
+  updated: '2026-08-09T03:22:00Z'
+  claimed_by: 2026-08-09T025100Z-kindrobots-unraid-t-006-s56a
+  claimed_at: '2026-08-09T02:51:00Z'
 
-  - id: t-007
-    milestone: m3
-    title: Package Conductor worker services for Unraid
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
+- id: t-007
+  milestone: m3
+  title: Package Conductor worker services for Unraid
+  status: waiting
+  owner:
+  passes: 0
+  stakes: reversible
 
-  - id: t-008
-    milestone: m4
-    title: Package ComfyUI with NVIDIA and shared model-volume conventions
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
+- id: t-008
+  milestone: m4
+  title: Package ComfyUI with NVIDIA and shared model-volume conventions
+  status: waiting
+  owner:
+  passes: 0
+  stakes: reversible
 
-  - id: t-009
-    milestone: m4
-    title: Package KnightForge and Ollama templates
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
+- id: t-009
+  milestone: m4
+  title: Package KnightForge and Ollama templates
+  status: waiting
+  owner:
+  passes: 0
+  stakes: reversible
 
-  - id: t-010
-    milestone: m5
-    title: Define and run clean-install certification for catalog apps
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    note: >
-      Validate fresh install, persistence, backup, restore, upgrade, security defaults,
-      support links, icons, and removal before any Community Applications submission.
+- id: t-010
+  milestone: m5
+  title: Define and run clean-install certification for catalog apps
+  status: waiting
+  owner:
+  passes: 0
+  stakes: reversible
+  note: >
+    Validate fresh install, persistence, backup, restore, upgrade, security defaults,
+    support links, icons, and removal before any Community Applications submission.
 
-  - id: t-011
-    milestone: m5
-    title: Publish eligible templates to Unraid Community Applications
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: outward-facing
-    gate_human: true
+- id: t-011
+  milestone: m5
+  title: Publish eligible templates to Unraid Community Applications
+  status: waiting
+  owner:
+  passes: 0
+  stakes: outward-facing
+  gate_human: true
 
-  - id: t-013
-    milestone: m3
-    title: Publish Kind Robots production image to GHCR and automate Unraid updates
-    status: done
-    updated: '2026-08-09T21:12:00Z'
-    passes: 0
-    stakes: outward-facing
-    gate_human: true
-    approved_by_human: true
-    note: |-
-      Silas explicitly requested automatic deployment updates after moving kindrobots.org to Alexandria. kind_robots PR #1680 adds the GHCR publish workflow: every main push builds linux/amd64 and publishes latest plus immutable sha tags with OCI revision metadata. kindrobots-unraid PR #10 switches DockerMan to the GHCR image and documents Force Update, CA Application Auto Update, version inspection, and rollback. The first GHCR package is private by GitHub default. Human gate: after #1680 merges and the first package is published, change the kind_robots container package visibility to Public; then verify anonymous pull and merge catalog PR #10. Public package visibility is irreversible on GitHub, so the catalog PR remains unmerged until that action is done.
+- id: t-013
+  milestone: m3
+  title: Publish Kind Robots production image to GHCR and automate Unraid updates
+  status: done
+  updated: '2026-08-09T21:12:00Z'
+  passes: 0
+  stakes: outward-facing
+  gate_human: true
+  approved_by_human: true
+  note: |-
+    Silas explicitly requested automatic deployment updates after moving kindrobots.org to Alexandria. kind_robots PR #1680 adds the GHCR publish workflow: every main push builds linux/amd64 and publishes latest plus immutable sha tags with OCI revision metadata. kindrobots-unraid PR #10 switches DockerMan to the GHCR image and documents Force Update, CA Application Auto Update, version inspection, and rollback. The first GHCR package is private by GitHub default. Human gate: after #1680 merges and the first package is published, change the kind_robots container package visibility to Public; then verify anonymous pull and merge catalog PR #10. Public package visibility is irreversible on GitHub, so the catalog PR remains unmerged until that action is done.
 
-      Silas explicitly confirmed the GHCR Kind Robots package was made public in-session. The companion Unraid catalog PR #10 is merged, so DockerMan can now consume ghcr.io/silasfelinus/kind_robots:latest without registry credentials.
+    Silas explicitly confirmed the GHCR Kind Robots package was made public in-session. The companion Unraid catalog PR #10 is merged, so DockerMan can now consume ghcr.io/silasfelinus/kind_robots:latest without registry credentials.
+goal: Run Kind Robots reliably on the Unraid/home infrastructure, with deployment, storage, networking, GPU services, 
+  and recovery procedures kept reproducible.

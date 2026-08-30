@@ -37,167 +37,155 @@ notes_from_silas: >
   ids. The surrounding environment must remain colored; only the actual fence and
   anything painted on it changes color, including the fence background.
 milestones:
-  - id: m1
-    title: Direction capture
-    weight: 20
-    status: done
-  - id: m2
-    title: Design iteration
-    weight: 35
-    status: in-progress
-  - id: m3
-    title: Final mural plan
-    weight: 30
-    status: not-started
-  - id: m4
-    title: Painting prep
-    weight: 15
-    status: not-started
+- id: m1
+  title: Direction capture
+  weight: 20
+  status: done
+- id: m2
+  title: Design iteration
+  weight: 35
+  status: in-progress
+- id: m3
+  title: Final mural plan
+  weight: 30
+  status: not-started
+- id: m4
+  title: Painting prep
+  weight: 15
+  status: not-started
 tasks:
-  - id: t-001
-    milestone: m1
-    title: Write the mural design brief from Silas's current direction
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    updated: '2026-07-06T00:00:00Z'
-    note: >
-      Wrote projects/mural-design/DESIGN-BRIEF.md capturing the current preferred
-      composition, constraints, palette direction, iteration history, what to avoid,
-      and prompt language for the next generator pass.
-  - id: t-002
-    milestone: m2
-    title: Create the fence-only coloring-page source assets from firstdraft
-    status: needs-human
-    owner: null
-    passes: 0
-    stakes: reversible
-    updated: '2026-08-04T08:00:00Z'
-    depends_on: t-001
-    note: >
-      FOR SILAS (Todo #1145): the maximalist-then-coloring-book fence mural pair you
-      asked for is ready to review in projects/mural-design/. Read
-      projects/mural-design/GENERATION-LOG.md for full prompt/model/source provenance
-      on every file below.
+- id: t-001
+  milestone: m1
+  title: Write the mural design brief from Silas's current direction
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-06T00:00:00Z'
+  note: >
+    Wrote projects/mural-design/DESIGN-BRIEF.md capturing the current preferred
+    composition, constraints, palette direction, iteration history, what to avoid,
+    and prompt language for the next generator pass.
+- id: t-002
+  milestone: m2
+  title: Create the fence-only coloring-page source assets from firstdraft
+  status: needs-human
+  owner:
+  passes: 0
+  stakes: reversible
+  updated: '2026-08-04T08:00:00Z'
+  depends_on: t-001
+  note: >
+    FOR SILAS: FOR SILAS (Todo #1145): the maximalist-then-coloring-book fence mural pair you asked for is ready to review
+    in projects/mural-design/. Read projects/mural-design/GENERATION-LOG.md for full prompt/model/source provenance on every
+    file below.
 
-      What's in it: (1) projects/mural-design/colored_revision2.png — the strongest
-      maximalist candidate: thick black outlines, flat single-color sections, Totoro-like
-      spirit in an ivy portal on the left, hidden soot sprites, a small Kind-Robots-style
-      robot, rainbow butterflies, stylized alien-leaning foliage, and the refreshed Catbus
-      on the right, generated img2img from your actual current.jpg fence photo with a
-      wine/magenta background per your 2026-07-07 palette note. (2) A second maximalist
-      candidate, projects/mural-design/mural-mockup-4878-15428.png (this session's ArtJob
-      4878, fully documented) — same brief, a looser/more-divergent interpretation, kept
-      for comparison rather than as the lead choice. (3) The coloring-book remix,
-      projects/mural-design/5f3d5014-a6aa-464a-8cee-b58b49cf51ad.png — thick black
-      linework on white for the fence and everything painted on it, while the sky, house,
-      sidewalk, curb, street, hedge/ivy, and off-fence flowers stay in full color, per
-      WONDERLAB-COLORING-SPEC.md's fence-only rule. One known imperfection: the soot
-      sprites render as solid black filled shapes rather than white-interior line art
-      (soot sprites are canonically black, so this may already be the right call — your
-      eye needed either way).
+    What's in it: (1) projects/mural-design/colored_revision2.png — the strongest maximalist candidate: thick black outlines,
+    flat single-color sections, Totoro-like spirit in an ivy portal on the left, hidden soot sprites, a small Kind-Robots-style
+    robot, rainbow butterflies, stylized alien-leaning foliage, and the refreshed Catbus on the right, generated img2img from
+    your actual current.jpg fence photo with a wine/magenta background per your 2026-07-07 palette note. (2) A second maximalist
+    candidate, projects/mural-design/mural-mockup-4878-15428.png (this session's ArtJob 4878, fully documented) — same brief,
+    a looser/more-divergent interpretation, kept for comparison rather than as the lead choice. (3) The coloring-book remix,
+    projects/mural-design/5f3d5014-a6aa-464a-8cee-b58b49cf51ad.png — thick black linework on white for the fence and everything
+    painted on it, while the sky, house, sidewalk, curb, street, hedge/ivy, and off-fence flowers stay in full color, per
+    WONDERLAB-COLORING-SPEC.md's fence-only rule. One known imperfection: the soot sprites render as solid black filled shapes
+    rather than white-interior line art (soot sprites are canonically black, so this may already be the right call — your
+    eye needed either way).
 
-      Provenance gap disclosed: colored_revision2.png and the 5f3d5014 coloring page were
-      already sitting in the project folder with no prior TALKBACK/roadmap record of the
-      job that made them (shallow git history only shows a truncation-boundary commit) —
-      their content was visually verified against the design brief this session, but their
-      exact prompt/seed could not be recovered. A second, fully-documented coloring-page
-      remix (ArtJob 4879, same source image, WONDERLAB-COLORING-SPEC's exact prompt) was
-      queued this session but had not finished rendering by the end of the session — see
-      GENERATION-LOG.md's follow-up note to fetch it later
-      (projects/mural-design/mural-coloring-4879-<artImageId>.png once done) as an
-      additional comparison candidate; it is not required to review what's already here.
+    Provenance gap disclosed: colored_revision2.png and the 5f3d5014 coloring page were already sitting in the project folder
+    with no prior TALKBACK/roadmap record of the job that made them (shallow git history only shows a truncation-boundary
+    commit) — their content was visually verified against the design brief this session, but their exact prompt/seed could
+    not be recovered. A second, fully-documented coloring-page remix (ArtJob 4879, same source image, WONDERLAB-COLORING-SPEC's
+    exact prompt) was queued this session but had not finished rendering by the end of the session — see GENERATION-LOG.md's
+    follow-up note to fetch it later (projects/mural-design/mural-coloring-4879-<artImageId>.png once done) as an additional
+    comparison candidate; it is not required to review what's already here.
 
-      TO APPROVE: pick a maximalist direction (colored_revision2.png recommended) and
-      confirm the coloring-book remix's black/white split matches what you want to
-      color-test, or note what to change (e.g. the soot-sprite fill). Set
-      approved_by_human: true and status: done, or leave a correction note here. This
-      unblocks t-003 (reviewing the section map / color-workflow adjustments) once the
-      coloring-page direction is confirmed.
-  - id: t-003
-    milestone: m2
-    title: Review the section map and choose color-workflow adjustments
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    updated: '2026-07-09T00:00:00Z'
-    depends_on: t-002
-    gate_human: true
-    note: >
-      Prepare a comparison/checkpoint note for Silas showing the generated coloring-page
-      assets, which regions are fillable, how the fence/background split works, and any
-      section groups that need retracing before final paint planning. This is a human
-      preference gate: Silas decides whether the section map is good enough for palette
-      iteration or needs another Kontext/manual-tracing pass.
-  - id: t-004
-    milestone: m3
-    title: Turn the chosen color assignments into a flat-color paint specification
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    updated: '2026-07-09T00:00:00Z'
-    depends_on: t-003
-    note: >
-      Create a paintable specification from the approved coloring-page section map and
-      exported color assignments. Include exact PPG Voice of Color swatch names/numbers
-      for every color id, simplified shape groups, line-weight guidance, and per-section
-      notes for the fence boards. Color roles must include three greens, black, off-white,
-      yellow, dark purple-red/magenta background, orange, brown, robin blue/teal, purple,
-      violet, and gray.
-  - id: t-005
-    milestone: m4
-    title: Create the grid transfer and painting checklist
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    updated: '2026-07-06T00:00:00Z'
-    depends_on: t-004
-    note: >
-      Produce the practical execution plan: grid transfer method, masking/chalk workflow,
-      painting order, supply list, and touch-up strategy for Silas to use on the fence.
-  - id: t-006
-    milestone: m1
-    title: Confirm the design brief matches Silas's intent
-    status: done
-    owner: null
-    passes: 0
-    stakes: reversible
-    approved_by_human: true
-    updated: '2026-07-25T00:00:00Z'
-    note: >
-      FOR SILAS: soft checkpoint per the new-project scope rule — nothing is blocked on
-      this, t-002 (coloring-page asset generation) proceeds in parallel. Read
-      projects/mural-design/DESIGN-BRIEF.md and
-      projects/mural-design/WONDERLAB-COLORING-SPEC.md and confirm they faithfully
-      capture your fence mural direction, uploaded current/first-draft image references,
-      Catbus right, Totoro-ivy portal left, normal-sized hidden soot sprites, small Kind
-      Robots-style robots, rainbow butterflies, alien-garden foliage, flat-color/thick-outline/grid-paintable
-      style, the updated PPG Voice of Color exterior-paint palette requirements, and the
-      WonderLab coloring-page direction where the off-fence environment remains colored
-      while only actual fence sections are recolored by color id. TO APPROVE: set
-      approved_by_human: true and status: done, or leave a correction note here.
+    TO APPROVE: pick a maximalist direction (colored_revision2.png recommended) and confirm the coloring-book remix's black/white
+    split matches what you want to color-test, or note what to change (e.g. the soot-sprite fill). Set approved_by_human:
+    true and status: done, or leave a correction note here. This unblocks t-003 (reviewing the section map / color-workflow
+    adjustments) once the coloring-page direction is confirmed.
+- id: t-003
+  milestone: m2
+  title: Review the section map and choose color-workflow adjustments
+  status: waiting
+  owner:
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-09T00:00:00Z'
+  depends_on: t-002
+  gate_human: true
+  note: >
+    Prepare a comparison/checkpoint note for Silas showing the generated coloring-page
+    assets, which regions are fillable, how the fence/background split works, and any
+    section groups that need retracing before final paint planning. This is a human
+    preference gate: Silas decides whether the section map is good enough for palette
+    iteration or needs another Kontext/manual-tracing pass.
+- id: t-004
+  milestone: m3
+  title: Turn the chosen color assignments into a flat-color paint specification
+  status: waiting
+  owner:
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-09T00:00:00Z'
+  depends_on: t-003
+  note: >
+    Create a paintable specification from the approved coloring-page section map and
+    exported color assignments. Include exact PPG Voice of Color swatch names/numbers
+    for every color id, simplified shape groups, line-weight guidance, and per-section
+    notes for the fence boards. Color roles must include three greens, black, off-white,
+    yellow, dark purple-red/magenta background, orange, brown, robin blue/teal, purple,
+    violet, and gray.
+- id: t-005
+  milestone: m4
+  title: Create the grid transfer and painting checklist
+  status: waiting
+  owner:
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-06T00:00:00Z'
+  depends_on: t-004
+  note: >
+    Produce the practical execution plan: grid transfer method, masking/chalk workflow,
+    painting order, supply list, and touch-up strategy for Silas to use on the fence.
+- id: t-006
+  milestone: m1
+  title: Confirm the design brief matches Silas's intent
+  status: done
+  owner:
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-25T00:00:00Z'
+  note: >
+    FOR SILAS: soft checkpoint per the new-project scope rule — nothing is blocked on
+    this, t-002 (coloring-page asset generation) proceeds in parallel. Read
+    projects/mural-design/DESIGN-BRIEF.md and
+    projects/mural-design/WONDERLAB-COLORING-SPEC.md and confirm they faithfully
+    capture your fence mural direction, uploaded current/first-draft image references,
+    Catbus right, Totoro-ivy portal left, normal-sized hidden soot sprites, small Kind
+    Robots-style robots, rainbow butterflies, alien-garden foliage, flat-color/thick-outline/grid-paintable
+    style, the updated PPG Voice of Color exterior-paint palette requirements, and the
+    WonderLab coloring-page direction where the off-fence environment remains colored
+    while only actual fence sections are recolored by color id. TO APPROVE: set
+    approved_by_human: true and status: done, or leave a correction note here.
 
-      CONFIRMED 2026-07-25: Silas — "confirmed."
-  - id: t-007
-    milestone: m2
-    title: Build the WonderLab mural coloring page in kind_robots
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    updated: '2026-07-09T22:18:00Z'
-    depends_on: t-002
-    note: >
-      Implemented and merged the first frontend color-studio pass in kind_robots PR #135.
-      The shipped /mural page includes a Pinia/localStorage mural store, saved colors,
-      add/remove swatches, clickable SVG sections, group fill controls, individual section
-      overrides, reset-to-default behavior, WonderLab card bridge wiring, tutorial wiring,
-      and required mural asset paths. This was intentionally a starter/manual UI scaffold
-      rather than the final generated fence-only asset workflow. Follow-up work should
-      replace placeholder WebP payloads with real artwork, promote mural into the canonical
-      dashboardConfigs.wonder.tabs registry, remove the temporary labCards bridge, add
-      palette/assignment JSON import-export, and add named paint schemes.
+    CONFIRMED 2026-07-25: Silas — "confirmed."
+- id: t-007
+  milestone: m2
+  title: Build the WonderLab mural coloring page in kind_robots
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-09T22:18:00Z'
+  depends_on: t-002
+  note: >-
+    Implemented and merged the first frontend color-studio pass in kind_robots PR #135.
+    The shipped /mural page includes a Pinia/localStorage mural store, saved colors,
+    add/remove swatches, clickable SVG sections, group fill controls, individual section
+    overrides, reset-to-default behavior, WonderLab card bridge wiring, tutorial wiring,
+    and required mural asset paths. This was intentionally a starter/manual UI scaffold
+    rather than the final generated fence-only asset workflow. Follow-up work should
+    replace placeholder WebP payloads with real artwork, promote mural into the canonical
+    dashboardConfigs.wonder.tabs registry, remove the temporary labCards bridge, add
+    palette/assignment JSON import-export, and add named paint schemes.

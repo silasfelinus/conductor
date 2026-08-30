@@ -22,242 +22,247 @@ notes_from_silas: |
   music-video cut.
 
 creative_constraints:
-  - Use the original coat dance recording as inspiration and structural source, not disposable b-roll.
-  - Preserve the experimental physical-theater feel; do not flatten it into generic AI spectacle.
-  - Treat the trench coat as a duet partner, character, shadow, relic, ghost, or trickster as useful per section.
-  - Prefer modular tests and reversible edits before committing to long renders.
-  - No public posting, paid tool spend, or final release without explicit Silas approval.
+- Use the original coat dance recording as inspiration and structural source, not disposable b-roll.
+- Preserve the experimental physical-theater feel; do not flatten it into generic AI spectacle.
+- Treat the trench coat as a duet partner, character, shadow, relic, ghost, or trickster as useful per section.
+- Prefer modular tests and reversible edits before committing to long renders.
+- No public posting, paid tool spend, or final release without explicit Silas approval.
 
 assets_needed:
-  - Original coat dance video file.
-  - Any available audio or music used in the original performance.
-  - Desired final music track or mood reference.
-  - Optional still frames, program notes, or memories from the performance.
-  - Local tool inventory: ComfyUI workflows, LAX/Wan availability, GPU constraints, and installed video utilities.
+- Original coat dance video file.
+- Any available audio or music used in the original performance.
+- Desired final music track or mood reference.
+- Optional still frames, program notes, or memories from the performance.
+- Local tool inventory: ComfyUI workflows, LAX/Wan availability, GPU constraints, and installed video utilities.
 
 milestones:
-  - id: m1
-    title: "Source ingest and beat map"
-    weight: 20
-    status: in-progress
-  - id: m2
-    title: "Creative treatment and section plan"
-    weight: 20
-    status: not-started
-  - id: m3
-    title: "Pipeline tests and style frames"
-    weight: 20
-    status: not-started
-  - id: m4
-    title: "Section remixes and assembly"
-    weight: 30
-    status: not-started
-  - id: m5
-    title: "Final review, export, and release decision"
-    weight: 10
-    status: not-started
-    gate_human: true
+- id: m1
+  title: "Source ingest and beat map"
+  weight: 20
+  status: in-progress
+- id: m2
+  title: "Creative treatment and section plan"
+  weight: 20
+  status: not-started
+- id: m3
+  title: "Pipeline tests and style frames"
+  weight: 20
+  status: not-started
+- id: m4
+  title: "Section remixes and assembly"
+  weight: 30
+  status: not-started
+- id: m5
+  title: "Final review, export, and release decision"
+  weight: 10
+  status: not-started
+  gate_human: true
 
 tasks:
-  - id: t-001
-    milestone: m1
-    title: "Draft production brief and asset checklist"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    gate_human: true
-    approved_by_human: true
-    note: >
-      FOR SILAS: Production brief written to projects/coat-dance/BRIEF.md. It covers
-      the core premise, target runtime assumptions, a required-assets checklist, and
-      a suggested (not-yet-created) working-folder layout.
+- id: t-001
+  milestone: m1
+  title: "Draft production brief and asset checklist"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  approved_by_human: true
+  note: >
+    FOR SILAS: Production brief written to projects/coat-dance/BRIEF.md. It covers
+    the core premise, target runtime assumptions, a required-assets checklist, and
+    a suggested (not-yet-created) working-folder layout.
 
 
-      Correction worth flagging: the brief's source note assumed the original video
-      still needed to be provided — it doesn't. `coat dance_x264.mp4` is already in
-      projects/coat-dance/ (has been since 2026-07-17). Read directly from the file
-      (no ffmpeg in this sandbox, so parsed the MP4 box headers by hand): 720x480
-      H.264, ~5:32 runtime, and it already has a synced audio track (44.1kHz) — not
-      silent, contrary to what "provide the original video" implied.
+    Correction worth flagging: the brief's source note assumed the original video
+    still needed to be provided — it doesn't. `coat dance_x264.mp4` is already in
+    projects/coat-dance/ (has been since 2026-07-17). Read directly from the file
+    (no ffmpeg in this sandbox, so parsed the MP4 box headers by hand): 720x480
+    H.264, ~5:32 runtime, and it already has a synced audio track (44.1kHz) — not
+    silent, contrary to what "provide the original video" implied.
 
 
-      ANSWERED 2026-07-25: Silas confirmed Q1 (music direction) — "there is very
-      specific audio used in the video, currently no interest in changing it at
-      this point." Original audio only, preserved as-is; no new/replacement track,
-      no blend. Recorded in BRIEF.md's Open Questions section (also resolves Q2 by
-      implication: the audio is intentional, not disposable). Q3-Q5 (tool
-      inventory, surviving stills/notes, target runtime length) remain open but are
-      not blockers for t-002. Unblocking t-002 (video beat-transcription tool
-      research).
-      moves from blocked to ready.
-    claimed_by: claude-conductor-burst-20260721T1321Z-coatdance
-    claimed_at: '2026-07-21T13:21:12Z'
-    updated: '2026-07-21T13:21:12Z'
+    ANSWERED 2026-07-25: Silas confirmed Q1 (music direction) — "there is very
+    specific audio used in the video, currently no interest in changing it at
+    this point." Original audio only, preserved as-is; no new/replacement track,
+    no blend. Recorded in BRIEF.md's Open Questions section (also resolves Q2 by
+    implication: the audio is intentional, not disposable). Q3-Q5 (tool
+    inventory, surviving stills/notes, target runtime length) remain open but are
+    not blockers for t-002. Unblocking t-002 (video beat-transcription tool
+    research).
+    moves from blocked to ready.
+  claimed_by: claude-conductor-burst-20260721T1321Z-coatdance
+  claimed_at: '2026-07-21T13:21:12Z'
+  updated: '2026-07-21T13:21:12Z'
 
-  - id: t-002
-    milestone: m1
-    title: "Research video beat transcription and shot-slicing tools"
-    status: done
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-001
-    note: |-
-      Identify practical tools or scripts for segmenting the source dance video by movement beats, shot changes, audio events, and pose/action changes. Compare options such as ffmpeg scene detection, optical-flow/pose analysis, transcript notes, manual beat sheets, and any Comfy/LAX/Wan-friendly preprocessing.
-      FOR SILAS: Tool-survey draft at projects/coat-dance/RESEARCH-t002-beat-transcription-tools.md (2026-07-29). Contains: (1) a shot/scene-detection pick (ffmpeg scdet as a cheap first pass; PySceneDetect kept in reserve only if the edit later adds cutaways, since the source is one continuous take), (2) an audio beat/onset pick (librosa by default, madmom as a fallback if the 2006 live-performance room audio proves too irregular for librosa's beat tracker), and (3) a movement-detection recommendation to layer MediaPipe Pose (performer) with dense optical flow (the coat itself, which has no skeleton to track) since no single tool covers both duet partners -- plus a suggested t-003 pipeline order for turning these into one merged beat-map table. TO APPROVE: read the doc; if the tool picks look right, set status: ready on t-003 (Create source-video beat map template) yourself, or leave a note here if you want a different tool swapped in first. Also note the doc's caveat: this sandbox has neither ffmpeg nor a Python audio/video stack, so nothing ran against the real file -- it's a selection, not a produced beat map. It re-confirms BRIEF.md's open Q3 (tool inventory in the real render environment) as the actual blocker before t-003's template can be exercised for real, so that's worth resolving alongside/before unblocking t-003. What unblocks: t-003 (currently `blocked` on this task) once you flip it to `ready` -- see BRIEF.md's suggested-folder plan for where its output (source/beatmap.md) should land.
+- id: t-002
+  milestone: m1
+  title: "Research video beat transcription and shot-slicing tools"
+  status: done
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-001
+  note: |-
+    Identify practical tools or scripts for segmenting the source dance video by movement beats, shot changes, audio events, and pose/action changes. Compare options such as ffmpeg scene detection, optical-flow/pose analysis, transcript notes, manual beat sheets, and any Comfy/LAX/Wan-friendly preprocessing.
+    FOR SILAS: Tool-survey draft at projects/coat-dance/RESEARCH-t002-beat-transcription-tools.md (2026-07-29). Contains: (1) a shot/scene-detection pick (ffmpeg scdet as a cheap first pass; PySceneDetect kept in reserve only if the edit later adds cutaways, since the source is one continuous take), (2) an audio beat/onset pick (librosa by default, madmom as a fallback if the 2006 live-performance room audio proves too irregular for librosa's beat tracker), and (3) a movement-detection recommendation to layer MediaPipe Pose (performer) with dense optical flow (the coat itself, which has no skeleton to track) since no single tool covers both duet partners -- plus a suggested t-003 pipeline order for turning these into one merged beat-map table. TO APPROVE: read the doc; if the tool picks look right, set status: ready on t-003 (Create source-video beat map template) yourself, or leave a note here if you want a different tool swapped in first. Also note the doc's caveat: this sandbox has neither ffmpeg nor a Python audio/video stack, so nothing ran against the real file -- it's a selection, not a produced beat map. It re-confirms BRIEF.md's open Q3 (tool inventory in the real render environment) as the actual blocker before t-003's template can be exercised for real, so that's worth resolving alongside/before unblocking t-003. What unblocks: t-003 (currently `blocked` on this task) once you flip it to `ready` -- see BRIEF.md's suggested-folder plan for where its output (source/beatmap.md) should land.
 
 
-      SENT BACK by silasfelinus via Kind Robots For You. I approve the default suggestions, and just need info on how to proceed. if I need to download tools, tell me where to put them.
+    SENT BACK by silasfelinus via Kind Robots For You. I approve the default suggestions, and just need info on how to proceed. if I need to download tools, tell me where to put them.
 
-      RESOLVED 2026-08-11: added a "5. Installation -- where to put these tools" section to
-      RESEARCH-t002-beat-transcription-tools.md answering the direct question -- ffmpeg is a
-      system package (brew/apt, install wherever the pipeline shell runs), the Python packages
-      (librosa, madmom, mediapipe, opencv-python, scenedetect) go in a dedicated virtualenv kept
-      separate from any ComfyUI env (mediapipe/madmom pin numpy/protobuf versions that can
-      conflict), and none of it needs a GPU except optionally mediapipe/optical-flow (both run
-      fine on CPU for one 5:32 clip) -- simplest to put it on whatever machine will run t-006's
-      ComfyUI pipeline so the beat map feeds straight in. Per Silas's own approval above and this
-      task's own "set status: ready on t-003 yourself" instruction, t-003 is now unblocked to
-      ready. Closing t-002 done -- deliverable (tool survey + install answer) complete and
-      approved; nothing further needed from Silas on this task specifically. BRIEF.md's Q3 (tool
-      inventory actually confirmed present in the real render environment) remains open and is
-      t-003/t-006's concern, not this task's.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-11T05:28:31Z'
-    approved_by_human: false
-    owner: worker
+    RESOLVED 2026-08-11: added a "5. Installation -- where to put these tools" section to
+    RESEARCH-t002-beat-transcription-tools.md answering the direct question -- ffmpeg is a
+    system package (brew/apt, install wherever the pipeline shell runs), the Python packages
+    (librosa, madmom, mediapipe, opencv-python, scenedetect) go in a dedicated virtualenv kept
+    separate from any ComfyUI env (mediapipe/madmom pin numpy/protobuf versions that can
+    conflict), and none of it needs a GPU except optionally mediapipe/optical-flow (both run
+    fine on CPU for one 5:32 clip) -- simplest to put it on whatever machine will run t-006's
+    ComfyUI pipeline so the beat map feeds straight in. Per Silas's own approval above and this
+    task's own "set status: ready on t-003 yourself" instruction, t-003 is now unblocked to
+    ready. Closing t-002 done -- deliverable (tool survey + install answer) complete and
+    approved; nothing further needed from Silas on this task specifically. BRIEF.md's Q3 (tool
+    inventory actually confirmed present in the real render environment) remains open and is
+    t-003/t-006's concern, not this task's.
+  claimed_by:
+  claimed_at:
+  updated: '2026-08-11T05:28:31Z'
+  approved_by_human: false
+  owner: worker
 
-  - id: t-003
-    milestone: m1
-    title: "Create source-video beat map template"
-    status: needs-human
-    soft_gate: true
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-002
-    note: >
-      FOR SILAS: the reusable beat-map table format lives at
-      projects/coat-dance/source/beatmap.md. It contains: column definitions
-      (Timestamp Range, Movement/Action, Coat Behavior, Camera/Framing, Emotional
-      Tone, Candidate AI Treatment, Generation Method, Restitch Notes), the
-      suggested fill-in pipeline order from t-002's tool research, and one
-      placeholder row rather than a preset section count (per BRIEF.md, section
-      count should follow the real beat structure once it's produced).
+- id: t-003
+  milestone: m1
+  title: "Create source-video beat map template"
+  status: needs-human
+  soft_gate: true
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-002
+  note: >
+    FOR SILAS: the reusable beat-map table format lives at
+    projects/coat-dance/source/beatmap.md. It contains: column definitions
+    (Timestamp Range, Movement/Action, Coat Behavior, Camera/Framing, Emotional
+    Tone, Candidate AI Treatment, Generation Method, Restitch Notes), the
+    suggested fill-in pipeline order from t-002's tool research, and one
+    placeholder row rather than a preset section count (per BRIEF.md, section
+    count should follow the real beat structure once it's produced).
 
-      TO APPROVE: read the template's column definitions and pipeline order --
-      confirm the shape looks right for populating once a render environment
-      with ffmpeg/librosa/mediapipe is available (this sandbox has neither, so
-      no real timestamps were produced), or leave notes if a column should
-      change. Set approved_by_human: true and status: done, or edit the note
-      with what to adjust.
+    TO APPROVE: read the template's column definitions and pipeline order --
+    confirm the shape looks right for populating once a render environment
+    with ffmpeg/librosa/mediapipe is available (this sandbox has neither, so
+    no real timestamps were produced), or leave notes if a column should
+    change. Set approved_by_human: true and status: done, or edit the note
+    with what to adjust.
 
-      What unblocks: t-004 (section-by-section creative treatment) still needs
-      the table actually filled in with real timestamps first -- that's a
-      separate future task once the render-environment tool inventory (BRIEF.md
-      Q3) is confirmed, not this one.
-    claimed_by: 20260812T103128Z-coatdance-t003
-    claimed_at: '2026-08-12T10:31:29Z'
-    updated: '2026-08-12T10:31:29Z'
+    What unblocks: t-004 (section-by-section creative treatment) still needs
+    the table actually filled in with real timestamps first -- that's a
+    separate future task once the render-environment tool inventory (BRIEF.md
+    Q3) is confirmed, not this one.
+  claimed_by: 20260812T103128Z-coatdance-t003
+  claimed_at: '2026-08-12T10:31:29Z'
+  updated: '2026-08-12T10:31:29Z'
 
-  - id: t-004
-    milestone: m2
-    title: "Write section-by-section creative treatment"
-    status: blocked
-    owner: null
-    passes: 0
-    stakes: reversible
-    gate_human: true
-    depends_on:
-      - t-003
-    note: >
-      Propose a music-video structure that remixes the dance in sections: faithful
-      reconstruction moments, animated transformations, impossible perspective shifts,
-      silhouette/shadow passages, object-manipulation flourishes, and a final return
-      to the human performer and coat. End at needs-human for Silas's creative approval.
+- id: t-004
+  milestone: m2
+  title: "Write section-by-section creative treatment"
+  status: blocked
+  owner:
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  depends_on:
+  - t-003
+  note: >
+    Propose a music-video structure that remixes the dance in sections: faithful
+    reconstruction moments, animated transformations, impossible perspective shifts,
+    silhouette/shadow passages, object-manipulation flourishes, and a final return
+    to the human performer and coat. End at needs-human for Silas's creative approval.
 
-  - id: t-005
-    milestone: m3
-    title: "Design first style-frame prompt pack"
-    status: blocked
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-004
-    note: >
-      Produce prompts and negative prompts for 6-10 visual treatments using still frames
-      from the source video as references. Include options for black-box theater,
-      charcoal animation, surreal stage lighting, rotoscoped ink, VHS memory, ghost-coat
-      partner, and theatrical object-manipulation energy.
+- id: t-005
+  milestone: m3
+  title: "Design first style-frame prompt pack"
+  status: blocked
+  owner:
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-004
+  note: >
+    Produce prompts and negative prompts for 6-10 visual treatments using still frames
+    from the source video as references. Include options for black-box theater,
+    charcoal animation, surreal stage lighting, rotoscoped ink, VHS memory, ghost-coat
+    partner, and theatrical object-manipulation energy.
 
-  - id: t-006
-    milestone: m3
-    title: "Prototype short remix pipeline"
-    status: blocked
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-005
-    note: >
-      Select one 5-10 second source segment and document a minimal reproducible path
-      through ComfyUI, LAX, Wan, or available video tools. Capture settings, inputs,
-      outputs, failure modes, render time, and whether the motion stays faithful enough.
+- id: t-006
+  milestone: m3
+  title: "Prototype short remix pipeline"
+  status: blocked
+  owner:
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-005
+  note: >
+    Select one 5-10 second source segment and document a minimal reproducible path
+    through ComfyUI, LAX, Wan, or available video tools. Capture settings, inputs,
+    outputs, failure modes, render time, and whether the motion stays faithful enough.
 
-  - id: t-007
-    milestone: m4
-    title: "Build section production queue"
-    status: blocked
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-006
-    note: >
-      Convert the approved beat map into a queue of renderable sections with source
-      timestamps, treatment, pipeline choice, prompt pack, expected output format,
-      dependencies, and review status.
+- id: t-007
+  milestone: m4
+  title: "Build section production queue"
+  status: blocked
+  owner:
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-006
+  note: >
+    Convert the approved beat map into a queue of renderable sections with source
+    timestamps, treatment, pipeline choice, prompt pack, expected output format,
+    dependencies, and review status.
 
-  - id: t-008
-    milestone: m4
-    title: "Assemble rough cut from remixed sections"
-    status: blocked
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-007
-    note: >
-      Restitch rendered sections into a rough cut aligned to the chosen music or
-      original audio. Track gaps, transitions, sections needing regeneration, and
-      places where the AI treatment overpowers the dance.
+- id: t-008
+  milestone: m4
+  title: "Assemble rough cut from remixed sections"
+  status: blocked
+  owner:
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-007
+  note: >
+    Restitch rendered sections into a rough cut aligned to the chosen music or
+    original audio. Track gaps, transitions, sections needing regeneration, and
+    places where the AI treatment overpowers the dance.
 
-  - id: t-009
-    milestone: m5
-    title: "Prepare final review package"
-    status: blocked
-    owner: null
-    passes: 0
-    stakes: reversible
-    gate_human: true
-    depends_on:
-      - t-008
-    note: >
-      Prepare an export checklist, review notes, credits/source notes, and release
-      decision options. Nothing is published or promoted until Silas explicitly approves.
+- id: t-009
+  milestone: m5
+  title: "Prepare final review package"
+  status: blocked
+  owner:
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  depends_on:
+  - t-008
+  note: >
+    Prepare an export checklist, review notes, credits/source notes, and release
+    decision options. Nothing is published or promoted until Silas explicitly approves.
 
-  - id: t-010
-    milestone: m1
-    title: "Polish and upgrade Coat Dance front-end surface"
-    status: ready
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: 'Re-checked before doing any work (per convention). Step (4) (evolve the interactive slot) remains blocked on t-003 (source-video beat map), still status: needs-human, unresolved -- no source video has landed since the 2026-08-20 cycle. Steps (1)-(3) remain confirmed done. No agent-actionable scope exists on this task until Silas supplies the source video via t-003. Re-armed to ready; will stay a genuine no-op until t-003 clears.'
-    updated: '2026-08-22T13:32:42Z'
-    claimed_by: 20260822T134500Z-coatdance-t010-cs1
-    claimed_at: '2026-08-22T13:32:29Z'
+- id: t-010
+  milestone: m1
+  title: "Polish and upgrade Coat Dance front-end surface"
+  status: ready
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: 'Re-checked before doing any work (per convention). Step (4) (evolve the interactive slot) remains blocked on t-003
+    (source-video beat map), still status: needs-human, unresolved -- no source video has landed since the 2026-08-20 cycle.
+    Steps (1)-(3) remain confirmed done. No agent-actionable scope exists on this task until Silas supplies the source video
+    via t-003. Re-armed to ready; will stay a genuine no-op until t-003 clears.'
+  updated: '2026-08-22T13:32:42Z'
+  claimed_by: 20260822T134500Z-coatdance-t010-cs1
+  claimed_at: '2026-08-22T13:32:29Z'
+goal: Develop Coat Dance into its intended polished creative work, with the roadmap’s authored concept, assets, and 
+  delivery package complete.

@@ -111,7 +111,22 @@ tasks:
   owner: reviewer
   passes: 0
   stakes: reversible
-  note: 'DONE 2026-07-15 (claude-burst-2026-07-15-0105): wrote projects/digital-storefront/STORE-AUDIT.md. Findings: Stripe checkout/subscribe routes work end to end up to the Stripe redirect but no webhook exists anywhere, so nothing downstream of a successful payment happens (no order record, no mana credit, no isMember flip). The Stripe checkout route prices against stores/seeds/cartItems.ts (7 items) as the real trusted catalog, but giftshop-interact.vue shows a different, unrelated 2-item demo array -- UI and real catalog are out of sync. Roughly half the giftshop components are wired to real state (shopping-cart.vue, mana-wallet.vue, social-publisher.vue, subscription-manager.vue''s start path) and half are alert()/console.log() stubs that look finished but do nothing (cart-interact.vue, credit-purchase.vue, print-swag.vue, subscription-manager.vue''s cancel path). No Order/Purchase/Cart/Subscription/Product Prisma models exist; commerce state lives only on User.stripeCustomerId. No POD vendor integration exists (0% wired). Neither Stripe route has an auth guard (contrast mana/social routes, which do) -- low severity today since nothing downstream trusts the session, but must be closed before a webhook starts crediting mana/membership off userId. Recommended next task: a Stripe webhook handler is the single highest-leverage next step -- every v1 catalog item (PDF delivery, subscription isMember flip, mana top-ups) needs it and none have it. No code changes made; audit only. ADDENDUM 2026-07-26 (t-027): the social-publisher.vue row above described this audit''s original 2026-07-15 findings. It was removed from kind_robots three days later (migration 20260718200000_remove_social_publishing) and no longer exists — see STORE-AUDIT.md §2/§6 for the corrected, dated write-up. No other finding in this note is affected.'
+  note: 'DONE 2026-07-15 (claude-burst-2026-07-15-0105): wrote projects/digital-storefront/STORE-AUDIT.md. Findings: Stripe
+    checkout/subscribe routes work end to end up to the Stripe redirect but no webhook exists anywhere, so nothing downstream
+    of a successful payment happens (no order record, no mana credit, no isMember flip). The Stripe checkout route prices
+    against stores/seeds/cartItems.ts (7 items) as the real trusted catalog, but giftshop-interact.vue shows a different,
+    unrelated 2-item demo array -- UI and real catalog are out of sync. Roughly half the giftshop components are wired to
+    real state (shopping-cart.vue, mana-wallet.vue, social-publisher.vue, subscription-manager.vue''s start path) and half
+    are alert()/console.log() stubs that look finished but do nothing (cart-interact.vue, credit-purchase.vue, print-swag.vue,
+    subscription-manager.vue''s cancel path). No Order/Purchase/Cart/Subscription/Product Prisma models exist; commerce state
+    lives only on User.stripeCustomerId. No POD vendor integration exists (0% wired). Neither Stripe route has an auth guard
+    (contrast mana/social routes, which do) -- low severity today since nothing downstream trusts the session, but must be
+    closed before a webhook starts crediting mana/membership off userId. Recommended next task: a Stripe webhook handler is
+    the single highest-leverage next step -- every v1 catalog item (PDF delivery, subscription isMember flip, mana top-ups)
+    needs it and none have it. No code changes made; audit only. ADDENDUM 2026-07-26 (t-027): the social-publisher.vue row
+    above described this audit''s original 2026-07-15 findings. It was removed from kind_robots three days later (migration
+    20260718200000_remove_social_publishing) and no longer exists — see STORE-AUDIT.md §2/§6 for the corrected, dated write-up.
+    No other finding in this note is affected.'
   claimed_by: claude-burst-2026-07-15-0105
   claimed_at: '2026-07-15T01:07:47Z'
   updated: '2026-07-15T01:13:28Z'
@@ -123,13 +138,26 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-008
-  note: 'DONE 2026-07-15 (claude-burst-2026-07-15-0105, same session as t-008 which unblocked this): wrote projects/digital-storefront/SPEC.md. Design covers Stripe architecture (keep Checkout Sessions, add the missing webhook handler with raw-body signature verification and idempotency via stored event/session ids), new Product/Order/OrderItem/Entitlement Prisma models replacing the imported stores/seeds/cartItems.ts as the trusted price source, secure PDF/DLC delivery via an Entitlement-gated download route (file stays outside public/ and outside the repo, per Silas''s hard rule), mana crediting (first writers for the already-defined but unused PURCHASE/SUBSCRIPTION_GRANT ManaReason values), subscription handling (webhook-driven isMember flip + a real soft-cancel route replacing cartStore.cancelSubscription''s stub), and admin vs user views. Flagged as a soft needs-human per the 2026-07-04 rule -- this is a proposal to refine, not an approved spec; Silas''s hard rules (no live Stripe products/webhooks in production, no POD account creation, no publishing, no spend without approval) are treated as non-negotiable regardless. Suggested a 6-step independently-landable build order ending with the Mermaids of Venice PDF go-live after step 3. Did not claim this via claim_task.py''s live origin/main check -- it was status:waiting on origin/main until this same session''s t-008 completion unblocked it (via resolve_deps.py), so a live check would have failed until t-008''s PR merges; doing both in one session/PR was faster than a blocked round-trip and collision risk is effectively zero since nothing could see this as ready before now.'
+  note: 'DONE 2026-07-15 (claude-burst-2026-07-15-0105, same session as t-008 which unblocked this): wrote projects/digital-storefront/SPEC.md.
+    Design covers Stripe architecture (keep Checkout Sessions, add the missing webhook handler with raw-body signature verification
+    and idempotency via stored event/session ids), new Product/Order/OrderItem/Entitlement Prisma models replacing the imported
+    stores/seeds/cartItems.ts as the trusted price source, secure PDF/DLC delivery via an Entitlement-gated download route
+    (file stays outside public/ and outside the repo, per Silas''s hard rule), mana crediting (first writers for the already-defined
+    but unused PURCHASE/SUBSCRIPTION_GRANT ManaReason values), subscription handling (webhook-driven isMember flip + a real
+    soft-cancel route replacing cartStore.cancelSubscription''s stub), and admin vs user views. Flagged as a soft needs-human
+    per the 2026-07-04 rule -- this is a proposal to refine, not an approved spec; Silas''s hard rules (no live Stripe products/webhooks
+    in production, no POD account creation, no publishing, no spend without approval) are treated as non-negotiable regardless.
+    Suggested a 6-step independently-landable build order ending with the Mermaids of Venice PDF go-live after step 3. Did
+    not claim this via claim_task.py''s live origin/main check -- it was status:waiting on origin/main until this same session''s
+    t-008 completion unblocked it (via resolve_deps.py), so a live check would have failed until t-008''s PR merges; doing
+    both in one session/PR was faster than a blocked round-trip and collision risk is effectively zero since nothing could
+    see this as ready before now.'
   updated: '2026-07-15T01:16:01Z'
 - id: t-010
   milestone: m2
   title: 'Novel PDF intake: Silas supplies the file and sets the price'
   status: done
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
   gate_human: true
@@ -147,7 +175,8 @@ tasks:
     buyers remains a separate hard needs-human).
 - id: t-011
   milestone: m2
-  title: 'kind_robots: Product/Order/OrderItem/Entitlement schema + seed (Mermaids PDF product) — step 1 of the original Mermaids purchase-flow task'
+  title: 'kind_robots: Product/Order/OrderItem/Entitlement schema + seed (Mermaids PDF product) — step 1 of the original Mermaids
+    purchase-flow task'
   status: done
   owner: worker
   passes: 0
@@ -195,7 +224,8 @@ tasks:
     scripts/recheck_egress_blocks.py before claiming either).
 - id: t-022
   milestone: m2
-  title: 'kind_robots: Stripe webhook (checkout.session.completed, payment mode) credits an Entitlement for the Mermaids PDF product'
+  title: 'kind_robots: Stripe webhook (checkout.session.completed, payment mode) credits an Entitlement for the Mermaids PDF
+    product'
   status: done
   owner: worker
   passes: 0
@@ -347,7 +377,7 @@ tasks:
   milestone: m3
   title: Wire one-time mana top-ups to Stripe checkout (test mode)
   status: done
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
   depends_on: t-009
@@ -373,9 +403,16 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-009
-  note: 'DONE 2026-07-17 (conductor hourly cycle): kind_robots PR #361 merged (98190504). Webhook now activates isMember/memberUntil/stripeSubscriptionId on checkout.session.completed (mode: subscription) and keeps it in sync via customer.subscription.updated/deleted; added a real cancel-subscription endpoint (cartStore.cancelSubscription was a stub); fixed success/cancel redirect URLs (pointed at nonexistent /members/* pages) to /sanctuary?subscription=...; added a notice banner mirroring the mana top-up one. Test mode only; live activation stays gated per CONTROL.md. Reviewed: migration purely additive (nullable ADD COLUMN), no live/hardcoded Stripe keys, cancel-subscription endpoint authenticates via requireApiUser and takes no client-supplied user/subscription id (cannot cancel another user''s subscription), webhook signature verification (constructEvent) untouched and still required. All 3 CI checks green.'
-  claimed_by: null
-  claimed_at: null
+  note: 'DONE 2026-07-17 (conductor hourly cycle): kind_robots PR #361 merged (98190504). Webhook now activates isMember/memberUntil/stripeSubscriptionId
+    on checkout.session.completed (mode: subscription) and keeps it in sync via customer.subscription.updated/deleted; added
+    a real cancel-subscription endpoint (cartStore.cancelSubscription was a stub); fixed success/cancel redirect URLs (pointed
+    at nonexistent /members/* pages) to /sanctuary?subscription=...; added a notice banner mirroring the mana top-up one.
+    Test mode only; live activation stays gated per CONTROL.md. Reviewed: migration purely additive (nullable ADD COLUMN),
+    no live/hardcoded Stripe keys, cancel-subscription endpoint authenticates via requireApiUser and takes no client-supplied
+    user/subscription id (cannot cancel another user''s subscription), webhook signature verification (constructEvent) untouched
+    and still required. All 3 CI checks green.'
+  claimed_by:
+  claimed_at:
   updated: '2026-07-17T00:00:00Z'
 - id: t-024
   milestone: m3
@@ -642,13 +679,13 @@ tasks:
   updated: '2026-07-15T07:08:30Z'
 - id: t-020
   milestone: m4
-  title: 'kind_robots pitch: add Resource.commercialSafe (or licenseClass) so gallery-to-swag can gate on generation-backend licensing'
+  title: 'kind_robots pitch: add Resource.commercialSafe (or licenseClass) so gallery-to-swag can gate on generation-backend
+    licensing'
   status: done
   owner: reviewer
   passes: 0
   stakes: reversible
   soft_gate: true
-  approved_by_human: true
   updated: '2026-07-25T00:00:00Z'
   note: >
     FOR SILAS: Pitch written at pitches/2026-07-15-resource-commercial-safe-field.md.
@@ -698,7 +735,6 @@ tasks:
   passes: 0
   stakes: reversible
   soft_gate: true
-  approved_by_human: true
   updated: '2026-07-25T00:00:00Z'
   note: >
     FOR SILAS: Pitch written at pitches/2026-07-15-storefront-featured-art.md.
@@ -755,7 +791,8 @@ tasks:
 
 - id: t-027
   milestone: m1
-  title: "Correct STORE-AUDIT.md / t-008 — social-publisher.vue was removed 2026-07-18, three days after being documented as the most-wired giftshop component"
+  title: "Correct STORE-AUDIT.md / t-008 — social-publisher.vue was removed 2026-07-18, three days after being documented
+    as the most-wired giftshop component"
   status: done
   owner: worker
   passes: 0
@@ -937,7 +974,8 @@ tasks:
 
 - id: t-031
   milestone: m4
-  title: "kind_robots: wire checkout.post.ts's general multi-item cart flow to actually fulfil (Order/OrderItem/Entitlement/PrintJob) whatever it sells"
+  title: "kind_robots: wire checkout.post.ts's general multi-item cart flow to actually fulfil (Order/OrderItem/Entitlement/PrintJob)
+    whatever it sells"
   status: done
   owner: worker
   passes: 0
@@ -1011,7 +1049,8 @@ tasks:
 
 - id: t-032
   milestone: m4
-  title: "kind_robots: re-check ArtImage takedown/eligibility at Stripe webhook time for POD purchases, not just at checkout-creation time"
+  title: "kind_robots: re-check ArtImage takedown/eligibility at Stripe webhook time for POD purchases, not just at checkout-creation
+    time"
   status: done
   owner: worker
   passes: 0
@@ -1058,7 +1097,8 @@ tasks:
 
 - id: t-033
   milestone: m4
-  title: "kind_robots: wire real artImageId through the general giftshop cart's print/shirt/sticker/mug/book checkout so those types can get a real PrintJob"
+  title: "kind_robots: wire real artImageId through the general giftshop cart's print/shirt/sticker/mug/book checkout so those
+    types can get a real PrintJob"
   status: done
   passes: 0
   stakes: reversible
@@ -1074,7 +1114,8 @@ tasks:
 
 - id: t-034
   milestone: m4
-  title: "kind_robots: handleProductPurchase's POD 'ArtImage not found' branch inserts a PrintJob referencing a nonexistent FK, which can throw and roll back the whole Order"
+  title: "kind_robots: handleProductPurchase's POD 'ArtImage not found' branch inserts a PrintJob referencing a nonexistent
+    FK, which can throw and roll back the whole Order"
   status: done
   owner: worker
   passes: 0
@@ -1188,7 +1229,7 @@ tasks:
   milestone: m6
   title: "Implement every missing storefront-owned catalog item found by the reality audit"
   status: done
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
   depends_on: t-037
@@ -1349,8 +1390,8 @@ tasks:
     -- nothing else in digital-storefront depends_on t-040 directly yet, but t-041 (responsive
     polish) and the broader "storefront is genuinely live" goal both assume real fulfillment
     exists.
-  claimed_by: null
-  claimed_at: null
+  claimed_by:
+  claimed_at:
   implementation_pr: silasfelinus/kind_robots#1658
   updated: '2026-08-09T11:32:44Z'
 
@@ -1358,7 +1399,7 @@ tasks:
   milestone: m6
   title: "Responsive storefront layout and visual polish pass"
   status: waiting
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
   depends_on: [t-038, t-039]
@@ -1510,7 +1551,8 @@ tasks:
 
 - id: t-005
   milestone: m6
-  title: "SECURITY: Character and Reward read routes have no access check at all -- decide whether to close before wiring packId Grants"
+  title: "SECURITY: Character and Reward read routes have no access check at all -- decide whether to close before wiring
+    packId Grants"
   status: done
   owner: worker
   passes: 0
@@ -1520,8 +1562,8 @@ tasks:
   approved_by_human: true
   updated: '2026-08-11T21:55:00Z'
   implementation_pr: 'silasfelinus/kind_robots#1787'
-  claimed_by: null
-  claimed_at: null
+  claimed_by:
+  claimed_at:
   note: >
     FOR SILAS: split off digital-storefront/t-004 (conductor sweep 2026-08-08) after a read-only
     investigation of kind_robots' server/api/ confirmed a real, pre-existing security gap unrelated to

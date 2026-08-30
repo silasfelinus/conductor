@@ -1,16 +1,15 @@
 project: coloring-book
 kind: software
-goal: 'A kind_robots coloring-book app and production pipeline: develop themed books through proposal ledgers, color
-  accepted paired masters in the app, and prepare complete digital and print-ready packages for the storefront.'
-notes_from_silas: 'Canonical book order and scope, clarified 2026-07-17: book 1 is Monster Recast, book 2 is Hollywood
-  Recast (never “Hollywood Recast 2”), and book 3 is Kind Robots. Each book tracks exactly 36 interior illustration
-  proposals and begins with a complete set of 36 COLOR design prompts. Prompt writing, ArtJob submission, render
-  retrieval, and same-stage review advance in batches of up to 18 images (half a book), not 1-6. Design iterations
-  are color-first. Early BW studies may be retained as inspiration, but a faithful BW coloring-page counterpart
-  is generated only after its color composition is accepted. Each proposal ultimately finishes as one confirmed
-  final color file and one faithful final BW file. Covers are separate. Accepted is not final. Use MR, HWR, and
-  KR prefixes. Internal art generation and curation are authorized; publishing, POD accounts/listings, spend, and
-  public Character release remain human-gated.'
+goal: 'A kind_robots coloring-book app and production pipeline: develop themed books through proposal ledgers, color accepted
+  paired masters in the app, and prepare complete digital and print-ready packages for the storefront.'
+notes_from_silas: 'Canonical book order and scope, clarified 2026-07-17: book 1 is Monster Recast, book 2 is Hollywood Recast
+  (never “Hollywood Recast 2”), and book 3 is Kind Robots. Each book tracks exactly 36 interior illustration proposals and
+  begins with a complete set of 36 COLOR design prompts. Prompt writing, ArtJob submission, render retrieval, and same-stage
+  review advance in batches of up to 18 images (half a book), not 1-6. Design iterations are color-first. Early BW studies
+  may be retained as inspiration, but a faithful BW coloring-page counterpart is generated only after its color composition
+  is accepted. Each proposal ultimately finishes as one confirmed final color file and one faithful final BW file. Covers
+  are separate. Accepted is not final. Use MR, HWR, and KR prefixes. Internal art generation and curation are authorized;
+  publishing, POD accounts/listings, spend, and public Character release remain human-gated.'
 milestones:
 - id: m1
   title: Design brief, proposal-ledger contract, and production specs
@@ -45,19 +44,18 @@ tasks:
   passes: 0
   stakes: reversible
   updated: '2026-07-10T00:00:00Z'
-  note: DESIGN-BRIEF.md established the product, shared engine, generation pipeline, originality guardrails, economy,
+  note: DESIGN-BRIEF.md established the product, shared engine, generation pipeline, originality guardrails, economy, 
     and POD direction. Later production-ledger direction supersedes old fixed 28-page details.
 - id: t-002
   milestone: m1
   title: Confirm the coloring book brief matches Silas's intent
   status: done
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
   updated: '2026-07-10T20:00:00Z'
-  note: Approved by Silas on 2026-07-10 with the standing rule that later direction supersedes stale brief details.
-    This approval does not authorize publishing, listings, accounts, or spend.
-  approved_by_human: true
+  note: Approved by Silas on 2026-07-10 with the standing rule that later direction supersedes stale brief details. This
+    approval does not authorize publishing, listings, accounts, or spend.
 - id: t-003
   milestone: m1
   title: Spec the shared coloring engine
@@ -66,7 +64,7 @@ tasks:
   passes: 0
   stakes: reversible
   updated: '2026-07-10T08:30:00Z'
-  note: docs/coloring-engine-spec.md defines the reusable ColoringCanvas/page-store contract and reversible mural
+  note: docs/coloring-engine-spec.md defines the reusable ColoringCanvas/page-store contract and reversible mural 
     migration.
 - id: t-004
   milestone: m3
@@ -76,7 +74,7 @@ tasks:
   passes: 0
   stakes: reversible
   updated: '2026-07-10T08:30:00Z'
-  note: docs/generation-pipeline.md selected raster flood fill for generated pages, retained SVG/region-map upgrade
+  note: docs/generation-pipeline.md selected raster flood fill for generated pages, retained SVG/region-map upgrade 
     paths, documented conversion prompts, print dimensions, leak QA, and licensing constraints.
 - id: t-005
   milestone: m2
@@ -86,8 +84,7 @@ tasks:
   passes: 0
   stakes: reversible
   updated: '2026-07-10T11:00:00Z'
-  note: 'kind_robots PR #144 shipped the set library, ColoringCanvas, coloringStore, save/export path, and starter
-    sampler.'
+  note: 'kind_robots PR #144 shipped the set library, ColoringCanvas, coloringStore, save/export path, and starter sampler.'
 - id: t-008
   milestone: m5
   title: Spec the free tier, tokens, and purchasable set economy
@@ -96,8 +93,8 @@ tasks:
   passes: 0
   stakes: reversible
   updated: '2026-07-10T11:00:00Z'
-  note: docs/economy-spec.md ties generation to the existing mana economy, keeps already-available coloring free,
-    and leaves paid production behind licensing and storefront gates.
+  note: docs/economy-spec.md ties generation to the existing mana economy, keeps already-available coloring free, and 
+    leaves paid production behind licensing and storefront gates.
 - id: t-009
   milestone: m6
   title: Spec the print-on-demand physical coloring book path
@@ -106,7 +103,7 @@ tasks:
   passes: 0
   stakes: reversible
   updated: '2026-07-10T08:30:00Z'
-  note: docs/pod-coloring-books.md recommends Lulu as v1, 8.5x11 one-sided interiors, and keeps provider accounts,
+  note: docs/pod-coloring-books.md recommends Lulu as v1, 8.5x11 one-sided interiors, and keeps provider accounts, 
     listings, pricing, and spend human-gated.
 - id: t-012
   milestone: m4
@@ -116,8 +113,8 @@ tasks:
   passes: 0
   stakes: reversible
   updated: '2026-07-10T05:16:50Z'
-  note: Created the first Monster Recast creative package. Its old 24-character/28-page assumptions are retained
-    as history but superseded by the 36-proposal production ledger.
+  note: Created the first Monster Recast creative package. Its old 24-character/28-page assumptions are retained as 
+    history but superseded by the 36-proposal production ledger.
 - id: t-017
   milestone: m2
   title: 'kind_robots: migrate /mural onto the shared coloring engine'
@@ -126,8 +123,8 @@ tasks:
   passes: 0
   stakes: reversible
   updated: '2026-07-10T20:00:00Z'
-  note: 'kind_robots PRs #147-#150 completed the geometry migration, ColoringCanvas swap, store cleanup, canonical
-    tab registration, and export-to-image.'
+  note: 'kind_robots PRs #147-#150 completed the geometry migration, ColoringCanvas swap, store cleanup, canonical tab registration,
+    and export-to-image.'
 - id: t-018
   milestone: m2
   title: 'kind_robots: implement raster-flood coloring mode'
@@ -136,8 +133,8 @@ tasks:
   passes: 0
   stakes: reversible
   updated: '2026-07-10T13:15:00Z'
-  note: 'kind_robots PR #146 shipped scanline flood fill, persistence, undo/reset, raster rendering, and leak-checked
-    sampler art.'
+  note: 'kind_robots PR #146 shipped scanline flood fill, persistence, undo/reset, raster rendering, and leak-checked sampler
+    art.'
 - id: t-019
   milestone: m2
   title: Polish and upgrade the Coloring Book front-end surface
@@ -156,8 +153,8 @@ tasks:
   passes: 0
   stakes: reversible
   updated: '2026-07-15T12:23:51Z'
-  note: 'kind_robots PR #290 replaced the hardcoded set list with index.json and added Cozy Corner, proving multi-set
-    loading. Ledger-aware tab work remains in t-028.'
+  note: 'kind_robots PR #290 replaced the hardcoded set list with index.json and added Cozy Corner, proving multi-set loading.
+    Ledger-aware tab work remains in t-028.'
   claimed_by: hourly-burst-20260715T-rotation
   claimed_at: '2026-07-15T12:07:13Z'
 - id: t-021
@@ -168,10 +165,10 @@ tasks:
   passes: 0
   stakes: reversible
   updated: '2026-07-17T00:00:00Z'
-  note: 'DONE 2026-07-17: added PRODUCTION-MODEL.md, ordered set catalog, ledger schema, 36-slot ledgers for Monster
-    Recast / Hollywood Recast / Kind Robots, and scripts/coloring_proposal_status.py. Seeded known Monster Recast
-    approvals honestly, carried the unresolved 27-file inventory snapshot forward, and integrated The Ticking Captain
-    as mr-035. Replaced stale all-or-nothing roadmap gates with the production sequence below.'
+  note: 'DONE 2026-07-17: added PRODUCTION-MODEL.md, ordered set catalog, ledger schema, 36-slot ledgers for Monster Recast
+    / Hollywood Recast / Kind Robots, and scripts/coloring_proposal_status.py. Seeded known Monster Recast approvals honestly,
+    carried the unresolved 27-file inventory snapshot forward, and integrated The Ticking Captain as mr-035. Replaced stale
+    all-or-nothing roadmap gates with the production sequence below.'
 - id: t-022
   milestone: m4
   title: Monster Recast book 1 production pass — 36 final color/BW pairs
@@ -181,7 +178,7 @@ tasks:
   updated: '2026-08-29T23:41:00Z'
   depends_on: t-021
   note: |-
-    Recovery pass (conductor scheduled sweep, 2026-08-10T17:28Z): recovered the last in-flight Hollywood Recast job (hwr-036, ArtJob 8214) left by the 16:30Z cycle -- landed cleanly, no duplicate submitted. Hollywood Recast is now {done: 36, pending: 0}, recommended_action=complete -- its color-proposal stage is fully drained, same as Monster Recast. Monster Recast unchanged ({done: 33, approved: 3, pending: 0}, recommended_action=complete). Both books are now agent-complete for this stage and awaiting Silas's review in the ArtJob trainer panel; the Kind Robots book (t-024) remains status: waiting, out of this task's scope. See run_log for full detail. Re-arming to ready (recurring) with nothing actionable until Silas reviews or a future stage opens up.
+    FOR SILAS: Recovery pass (conductor scheduled sweep, 2026-08-10T17:28Z): recovered the last in-flight Hollywood Recast job (hwr-036, ArtJob 8214) left by the 16:30Z cycle -- landed cleanly, no duplicate submitted. Hollywood Recast is now {done: 36, pending: 0}, recommended_action=complete -- its color-proposal stage is fully drained, same as Monster Recast. Monster Recast unchanged ({done: 33, approved: 3, pending: 0}, recommended_action=complete). Both books are now agent-complete for this stage and awaiting Silas's review in the ArtJob trainer panel; the Kind Robots book (t-024) remains status: waiting, out of this task's scope. See run_log for full detail. Re-arming to ready (recurring) with nothing actionable until Silas reviews or a future stage opens up.
 
     PROGRESS (conductor scheduled sweep, 2026-08-11T16:33Z): Monster Recast/Hollywood Recast unchanged, still awaiting Silas's proposal review (not agent-actionable). Ran a Kind Robots color batch (parallel-advancement per PRODUCTION-MODEL.md, since t-023/t-024 are still correctly status: waiting): 14 of 18 attempts failed with consecutive `[SSL: UNEXPECTED_EOF_WHILE_READING]` errors while polling ArtJob status; host reachability itself confirmed OK via recheck_egress_blocks.py (logged to EGRESS-BLOCKERS.md), so this looks like mid-poll connection resets rather than a block. 1 item (kr-021) resolved as a harmless duplicate-delivery cancel. 2 items (kr-018/kr-019) were blocked on a missing Pillow dependency in this sandbox -- now fixed (pip installed Pillow 12.3.0). No new completions landed this pass (kind-robots still {pending: 19, done: 17}); not attempting a third live retry in the same session per the transient-failure triage rule. Full detail and next-pass recommendations in run_log. Re-arming to ready (recurring), releasing the claim.
 
@@ -199,94 +196,92 @@ tasks:
   milestone: m6
   title: Package and register Monster Recast book 1
   status: waiting
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
   updated: '2026-07-17T00:00:00Z'
   depends_on:
   - t-009
   - t-022
-  note: After all 36 Monster Recast proposal records have confirmed final color/BW pairs, build the digital set
-    manifest, print-ready one-sided interior, separate cover assets, credits, provenance, and kind_robots set-index
-    entry. Validate 72 final interior files. Do not publish, create POD listings/accounts, spend, or make Characters
+  note: After all 36 Monster Recast proposal records have confirmed final color/BW pairs, build the digital set 
+    manifest, print-ready one-sided interior, separate cover assets, credits, provenance, and kind_robots set-index 
+    entry. Validate 72 final interior files. Do not publish, create POD listings/accounts, spend, or make Characters 
     public.
 - id: t-023
   milestone: m4
   title: Hollywood Recast book 2 production pass — 36 final color/BW pairs
   status: waiting
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
   updated: '2026-07-17T00:00:00Z'
   depends_on: t-022
-  note: Hollywood Recast already has 36 named color proposals and queued color ArtJobs. It may collect/render color
-    proposals while Monster Recast remains editorially first. Use batches of up to 18 at one stage. The canonical
-    title is Hollywood Recast, never Hollywood Recast 2. BW follows accepted color composition. Use sets/hollywood-recast/proposals.yaml.
-    The canonical title is Hollywood Recast, never Hollywood Recast 2, and ids use hwr- to avoid the old HR collision.
-    Each recurring cycle advances a small batch from prompt through inspiration, accepted pair, and confirmed final
-    pair. When all 36 final pairs exist, remove recurring and mark done.
+  note: Hollywood Recast already has 36 named color proposals and queued color ArtJobs. It may collect/render color 
+    proposals while Monster Recast remains editorially first. Use batches of up to 18 at one stage. The canonical title 
+    is Hollywood Recast, never Hollywood Recast 2. BW follows accepted color composition. Use 
+    sets/hollywood-recast/proposals.yaml. The canonical title is Hollywood Recast, never Hollywood Recast 2, and ids use
+    hwr- to avoid the old HR collision. Each recurring cycle advances a small batch from prompt through inspiration, 
+    accepted pair, and confirmed final pair. When all 36 final pairs exist, remove recurring and mark done.
   recurring: true
 - id: t-026
   milestone: m6
   title: Package and register Hollywood Recast book 2
   status: waiting
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
   updated: '2026-07-17T00:00:00Z'
   depends_on:
   - t-009
   - t-023
-  note: Validate 36 confirmed final pairs, then build the digital set manifest, print-ready one-sided interior,
-    separate cover assets, credits, provenance, and kind_robots set-index entry. Keep all outward release actions
-    human-gated.
+  note: Validate 36 confirmed final pairs, then build the digital set manifest, print-ready one-sided interior, separate
+    cover assets, credits, provenance, and kind_robots set-index entry. Keep all outward release actions human-gated.
 - id: t-024
   milestone: m4
   title: Kind Robots book 3 production pass — 36 final color/BW pairs
   status: waiting
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
   updated: '2026-07-17T00:00:00Z'
   depends_on: t-023
-  note: Kind Robots already has 36 named color proposals and queued color ArtJobs, including kr-001 as a variation
-    on the supplied/canonical Kind Robots logo. Use batches of up to 18 at one stage. Existing art and early BW
-    are inspiration until accepted; BW production follows accepted color composition. Use sets/kind-robots/proposals.yaml.
-    Existing Kind Robots art is inspiration or candidate material until explicitly accepted for this book. Each
-    recurring cycle advances a small batch from prompt through accepted pair and confirmed final pair. When all
-    36 final pairs exist, remove recurring and mark done.
+  note: Kind Robots already has 36 named color proposals and queued color ArtJobs, including kr-001 as a variation on 
+    the supplied/canonical Kind Robots logo. Use batches of up to 18 at one stage. Existing art and early BW are 
+    inspiration until accepted; BW production follows accepted color composition. Use sets/kind-robots/proposals.yaml. 
+    Existing Kind Robots art is inspiration or candidate material until explicitly accepted for this book. Each 
+    recurring cycle advances a small batch from prompt through accepted pair and confirmed final pair. When all 36 final
+    pairs exist, remove recurring and mark done.
   recurring: true
 - id: t-027
   milestone: m6
   title: Package and register Kind Robots book 3
   status: waiting
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
   updated: '2026-07-17T00:00:00Z'
   depends_on:
   - t-009
   - t-024
-  note: Validate 36 confirmed final pairs, then build the digital set manifest, print-ready one-sided interior,
-    separate cover assets, credits, provenance, and kind_robots set-index entry. Keep all outward release actions
-    human-gated.
+  note: Validate 36 confirmed final pairs, then build the digital set manifest, print-ready one-sided interior, separate
+    cover assets, credits, provenance, and kind_robots set-index entry. Keep all outward release actions human-gated.
 - id: t-014
   milestone: m4
   title: 'kind_robots: create the private Monster Recast Character collection'
   status: waiting
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
   updated: '2026-07-17T00:00:00Z'
   depends_on: t-025
-  note: After the Monster Recast package is stable, create private Character records for recurring original figures
-    using current API/schema fields and final art. This must not block book production or packaging; keep isPublic
+  note: After the Monster Recast package is stable, create private Character records for recurring original figures 
+    using current API/schema fields and final art. This must not block book production or packaging; keep isPublic 
     false.
 - id: t-028
   milestone: m2
   title: 'kind_robots: make Generate/Proposals/Prompts ledger-aware'
   status: waiting
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
   updated: '2026-07-17T00:00:00Z'
@@ -295,76 +290,76 @@ tasks:
   - t-026
   - t-027
   note: Use the canonical set catalog and proposal ledgers to turn the currently generic tabs into useful book progress,
-    proposal, prompt, inspiration, acceptance, and final-pair views. Do not create a second source of truth in kind_robots;
-    imported/display data must retain the conductor slug and proposal ids.
+    proposal, prompt, inspiration, acceptance, and final-pair views. Do not create a second source of truth in 
+    kind_robots; imported/display data must retain the conductor slug and proposal ids.
 - id: t-010
   milestone: m1
   title: Generate final coloring-book project icon, card, and hero art
   status: waiting
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
   updated: '2026-07-17T00:00:00Z'
   depends_on: t-027
-  note: Generate the queued project identity assets after the three books have stable visual direction. Use the
+  note: Generate the queued project identity assets after the three books have stable visual direction. Use the 
     authorized art pipeline and remove fulfilled prompt requests.
 - id: t-011
   milestone: m4
   title: Coloring book continuous growth pass
   status: waiting
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
   updated: '2026-07-17T00:00:00Z'
   depends_on: t-027
-  note: Recurring post-launch task. After the three canonical books are packaged, each cycle may add pages/sets,
-    polish the app, improve ledgers, or improve line/pair quality. Never publishes or spends without a human gate.
+  note: Recurring post-launch task. After the three canonical books are packaged, each cycle may add pages/sets, polish 
+    the app, improve ledgers, or improve line/pair quality. Never publishes or spends without a human gate.
   recurring: true
 - id: t-006
   milestone: m4
   title: 'Legacy: generate the Kind Robots set v1'
   status: done
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
   updated: '2026-07-17T00:00:00Z'
-  note: SUPERSEDED 2026-07-17 by t-024. The old 10-16 page scope and book-1 ordering were incorrect; Kind Robots
-    is book 3 with 36 proposal pairs. No production-completion claim is implied.
+  note: SUPERSEDED 2026-07-17 by t-024. The old 10-16 page scope and book-1 ordering were incorrect; Kind Robots is book
+    3 with 36 proposal pairs. No production-completion claim is implied.
 - id: t-007
   milestone: m4
   title: 'Legacy: generate Monster Recast concept-art candidates'
   status: done
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
   updated: '2026-07-17T00:00:00Z'
-  note: SUPERSEDED 2026-07-17 by the ledger-driven t-022. The old requirement to finish three candidates for every
+  note: SUPERSEDED 2026-07-17 by the ledger-driven t-022. The old requirement to finish three candidates for every 
     member before selection created an all-or-nothing gate and used stale 24-cast assumptions.
 - id: t-013
   milestone: m4
   title: 'Legacy: select and finalize Monster Recast designs'
   status: done
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
   updated: '2026-07-17T00:00:00Z'
-  note: SUPERSEDED 2026-07-17 by t-022. Selection, counterpart work, and final confirmation now advance per proposal
+  note: SUPERSEDED 2026-07-17 by t-022. Selection, counterpart work, and final confirmation now advance per proposal 
     instead of waiting for all exploration.
 - id: t-015
   milestone: m4
   title: 'Legacy: convert selected Monster Recast art into coloring pages'
   status: done
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
   updated: '2026-07-17T00:00:00Z'
-  note: SUPERSEDED 2026-07-17 by t-022. The old 28-page conversion batch is replaced by 36 independently tracked
+  note: SUPERSEDED 2026-07-17 by t-022. The old 28-page conversion batch is replaced by 36 independently tracked 
     faithful pairs.
 - id: t-016
   milestone: m6
   title: 'Legacy: assemble the Monster Recast package'
   status: done
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
   updated: '2026-07-17T00:00:00Z'
@@ -377,18 +372,18 @@ tasks:
   passes: 0
   stakes: reversible
   updated: '2026-07-17T18:05:22Z'
-  note: 'Kaizen from t-022 (PR #697, 2026-07-17): the mr-025 inspiration was matched to its concept "by elimination"
-    (no direct text match), and that distinction currently only lives in a roadmap/proposals.yaml note, not in --check
-    output. Add a --check flag or summary line listing any inspiration entries carrying needs_visual_verification:
-    true (or an equivalent elimination-only marker) so future cycles and Silas see them surfaced automatically instead
-    of having to read prose notes to find them.
+  note: 'Kaizen from t-022 (PR #697, 2026-07-17): the mr-025 inspiration was matched to its concept "by elimination" (no direct
+    text match), and that distinction currently only lives in a roadmap/proposals.yaml note, not in --check output. Add a
+    --check flag or summary line listing any inspiration entries carrying needs_visual_verification: true (or an equivalent
+    elimination-only marker) so future cycles and Silas see them surfaced automatically instead of having to read prose notes
+    to find them.
 
-    Done (burst-mode cycle, 2026-07-17): coloring_proposal_status.py now scans every proposal''s inspirations list
-    for entries carrying needs_visual_verification: true and prints a "NEEDS VISUAL VERIFICATION (elimination-only
-    inspiration matches)" section listing slug/proposal-id/path for each, ahead of the STRUCTURAL ERRORS block,
-    in both plain and --strict-finals runs. Verified against the current mr-025 gothic-schoolgirl color/BW pair
-    (both entries now show up automatically instead of needing the prose note read). No other script consumes validate_book()''s
-    return tuple, so extending it with the new needs_verification list was a safe, local change.'
+    Done (burst-mode cycle, 2026-07-17): coloring_proposal_status.py now scans every proposal''s inspirations list for entries
+    carrying needs_visual_verification: true and prints a "NEEDS VISUAL VERIFICATION (elimination-only inspiration matches)"
+    section listing slug/proposal-id/path for each, ahead of the STRUCTURAL ERRORS block, in both plain and --strict-finals
+    runs. Verified against the current mr-025 gothic-schoolgirl color/BW pair (both entries now show up automatically instead
+    of needing the prose note read). No other script consumes validate_book()''s return tuple, so extending it with the new
+    needs_verification list was a safe, local change.'
   claimed_by: claude-conductor-hourly-20260717d
   claimed_at: '2026-07-17T18:05:22Z'
 - id: t-030
@@ -487,7 +482,7 @@ tasks:
   status: done
   passes: 0
   stakes: reversible
-  owner: null
+  owner:
   updated: '2026-07-28T13:32:00Z'
   note: |-
     KAIZEN (from PR #1275, t-022, 2026-07-28): t-022's connector-only session added a bounded recovery_batch / recovery_actionable / recovery_actionable_count output to scripts/coloring_queue_status.py (read-only diagnostic, no ArtJobs touched) plus a --require-recovery-actionable automation guard, but could not exercise it live — this sandbox has no GitHub egress or KR_API_TOKEN in a connector-only run. No workflow or script currently consumes recovery_batch/--require-recovery-actionable yet. Next cycle with real execution access: (1) run `python scripts/coloring_queue_status.py --book monster-recast` and confirm recovery_actionable is true with a non-empty recovery_batch, (2) run the actual recovery pass (consume_coloring_book_color_art.py --live, per t-022's established recover_timed_out_job() pattern) bounded to that batch, verifying no duplicate ArtJob is submitted for an entry whose original job already completed, and (3) if useful going forward, wire `--require-recovery-actionable` into the relevant GitHub Actions workflow as a guard before an automated recovery run.
@@ -509,33 +504,29 @@ tasks:
   passes: 0
   stakes: reversible
   updated: '2026-07-28T12:05:00Z'
-  note: 'conductor PR #1322 (merged) added projects/coloring-book/print-package.yaml (per-book
-    layout/export fields, all null until Silas picks a printer), scripts/coloring_book_package_status.py
-    (source/layout/exports readiness state machine + ordered interior manifest generation),
-    tests/test_coloring_book_package_status.py, and a main-branch workflow that refreshes
-    print-readiness.yaml on relevant pushes. No trim/bleed/binding/paper/printer decisions are
-    made or assumed; nothing is published. Retroactively logged here — the PR opened from a
-    branch outside the worker/*-claude/* claim flow with no prior roadmap task, so t-025
-    (Package and register Monster Recast book 1) still gates final packaging on t-022 as before.
-    This task exists only to give the merged infra an audit trail.'
+  note: 'conductor PR #1322 (merged) added projects/coloring-book/print-package.yaml (per-book layout/export fields, all null
+    until Silas picks a printer), scripts/coloring_book_package_status.py (source/layout/exports readiness state machine +
+    ordered interior manifest generation), tests/test_coloring_book_package_status.py, and a main-branch workflow that refreshes
+    print-readiness.yaml on relevant pushes. No trim/bleed/binding/paper/printer decisions are made or assumed; nothing is
+    published. Retroactively logged here — the PR opened from a branch outside the worker/*-claude/* claim flow with no prior
+    roadmap task, so t-025 (Package and register Monster Recast book 1) still gates final packaging on t-022 as before. This
+    task exists only to give the merged infra an audit trail.'
 - id: t-034
   milestone: m6
   title: Wire print-package.yaml layout fields once Silas picks a printer/trim/binding
   status: needs-human
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
   soft_gate: true
   updated: '2026-07-28T12:05:00Z'
-  note: 'FOR SILAS: scripts/coloring_book_package_status.py (conductor PR #1322) tracks per-book
-    print layout as explicit null fields in projects/coloring-book/print-package.yaml (trim_width_inches,
-    trim_height_inches, bleed_inches, binding, paper, interior_color_mode, cover_color_mode,
-    printer_template, page_count_includes_blanks, inside_cover_printing, barcode_area_reserved).
-    TO APPROVE: pick a printer/POD vendor and fill in those fields for at least Monster Recast
-    (order 1) — once source assets are also complete (t-022), the status script will report
-    exports-needed with the exact next action. What unblocks: t-025 (package and register
-    Monster Recast book 1) can then generate the ordered interior PDF, cover-wrap PDF, and
-    source archive against real values instead of guessing a trim size.'
+  note: 'FOR SILAS: scripts/coloring_book_package_status.py (conductor PR #1322) tracks per-book print layout as explicit
+    null fields in projects/coloring-book/print-package.yaml (trim_width_inches, trim_height_inches, bleed_inches, binding,
+    paper, interior_color_mode, cover_color_mode, printer_template, page_count_includes_blanks, inside_cover_printing, barcode_area_reserved).
+    TO APPROVE: pick a printer/POD vendor and fill in those fields for at least Monster Recast (order 1) — once source assets
+    are also complete (t-022), the status script will report exports-needed with the exact next action. What unblocks: t-025
+    (package and register Monster Recast book 1) can then generate the ordered interior PDF, cover-wrap PDF, and source archive
+    against real values instead of guessing a trim size.'
 
 - id: t-035
   milestone: m4
@@ -599,7 +590,13 @@ tasks:
   stakes: reversible
   owner: worker
   updated: '2026-07-28T19:12:57Z'
-  note: 'Added --require-no-semantic-gate-error to scripts/coloring_queue_status.py: a new credential_gate_errors/credential_gate_error_count summary field (matching the ANTHROPIC_API_KEY-is-required message, distinct from recoverable timeout / transient enqueue semantic_gate_error entries) plus the CLI guard flag. Verified against the live projects/coloring-book/color-art-jobs.yaml queue: correctly reports credential_gate_error_count 18 and exits non-zero, matching the 18 Monster Recast slots already flagged stuck on the missing ANTHROPIC_API_KEY GitHub Actions secret (see TALKBACK.md 2026-07-28 security-flag entry -- still unresolved, needs Silas to check the repo secret). Two new regression tests added; full suite green (707 passed, 1 pre-existing skip).'
+  note: 'Added --require-no-semantic-gate-error to scripts/coloring_queue_status.py: a new credential_gate_errors/credential_gate_error_count
+    summary field (matching the ANTHROPIC_API_KEY-is-required message, distinct from recoverable timeout / transient enqueue
+    semantic_gate_error entries) plus the CLI guard flag. Verified against the live projects/coloring-book/color-art-jobs.yaml
+    queue: correctly reports credential_gate_error_count 18 and exits non-zero, matching the 18 Monster Recast slots already
+    flagged stuck on the missing ANTHROPIC_API_KEY GitHub Actions secret (see TALKBACK.md 2026-07-28 security-flag entry --
+    still unresolved, needs Silas to check the repo secret). Two new regression tests added; full suite green (707 passed,
+    1 pre-existing skip).'
   claimed_by: claude-conductor-scheduled-20260728T1930Z-cb-t036
   claimed_at: '2026-07-28T19:05:56Z'
 
@@ -651,7 +648,8 @@ tasks:
   updated: '2026-07-29T17:13:11Z'
 - id: t-038
   milestone: m4
-  title: Bake `pip install --user Pillow` into a coloring-book provisioning step so recovery cycles stop rediscovering the sandbox gap
+  title: Bake `pip install --user Pillow` into a coloring-book provisioning step so recovery cycles stop rediscovering 
+    the sandbox gap
   status: done
   passes: 0
   stakes: reversible

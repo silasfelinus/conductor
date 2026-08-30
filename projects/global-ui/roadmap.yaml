@@ -1,26 +1,22 @@
 project: global-ui
 kind: software
-notes_from_silas: "Create the shared Kind Robots interface system for presenting projects, tasks,\nhoneydos,\
-  \ kaizens, approvals, and front-end TODO prompts.\n\nA honeydo is a task the LLM assigns to the user\
-  \ to help projects along. Honeydos\nare not project-specific for viewing; they should surface in a global\
-  \ user-facing\nqueue or inbox.\n\nA kaizen is shown while viewing an individual project. It gives the\
-  \ user a prompt\nto move that specific project forward.\n\nFront-end task creation should register visibly\
-  \ in the workspace UI and connect\ncleanly to the conductor/todo flow without inventing a second source\
-  \ of truth.\nPrefer app-owned UI/store/API logic that consumes existing backend and conductor\nfiles\
-  \ safely.\n\nImplementation seed: the project view should include a specific field/prompt that\nasks,\
-  \ \"How can I make this look better?\" This should invite user-facing polish ideas\nfor the currently\
-  \ viewed project and can feed the kaizen/task creation flow.\n\nDesired features should be an orderable\
-  \ list on each dream/project. Humans and AI\nshould both be able to add, adjust, reorder, promote, or\
-  \ retire desired features\nwithout rewriting the whole project spec or roadmap. Treat it as a lightweight\n\
-  feature wishlist/backlog that can later graduate into concrete tasks.\n\nKind Robots audit note: current\
-  \ frontend/backend support is partial. Todo already\nsupports AGENT, KAIZEN, and HONEYDO categories\
-  \ globally, but Todos are not scoped to\na dream/project and desired features are not modeled as an\
-  \ orderable project list yet.\n\nPromote a recurring site-audit agent that does the same kind of check:\
-  \ compare the\nroadmap/conductor vocabulary against the actual Kind Robots frontend/backend, identify\n\
-  support gaps, and propose small reversible tasks. Weekly is a reasonable starting\ninterval; slow it\
-  \ down once the surfaces are stable.\n\nGate note (2026-06-30): t-001 gate removed. Silas pre-approves\
-  \ the spec direction \u2014\nwrite the task surface spec and merge without another approval round. Downstream\n\
-  tasks unblock automatically when t-001 reaches done.\n"
+notes_from_silas: "Create the shared Kind Robots interface system for presenting projects, tasks,\nhoneydos, kaizens, approvals,
+  and front-end TODO prompts.\n\nA honeydo is a task the LLM assigns to the user to help projects along. Honeydos\nare not
+  project-specific for viewing; they should surface in a global user-facing\nqueue or inbox.\n\nA kaizen is shown while viewing
+  an individual project. It gives the user a prompt\nto move that specific project forward.\n\nFront-end task creation should
+  register visibly in the workspace UI and connect\ncleanly to the conductor/todo flow without inventing a second source of
+  truth.\nPrefer app-owned UI/store/API logic that consumes existing backend and conductor\nfiles safely.\n\nImplementation
+  seed: the project view should include a specific field/prompt that\nasks, \"How can I make this look better?\" This should
+  invite user-facing polish ideas\nfor the currently viewed project and can feed the kaizen/task creation flow.\n\nDesired
+  features should be an orderable list on each dream/project. Humans and AI\nshould both be able to add, adjust, reorder,
+  promote, or retire desired features\nwithout rewriting the whole project spec or roadmap. Treat it as a lightweight\nfeature
+  wishlist/backlog that can later graduate into concrete tasks.\n\nKind Robots audit note: current frontend/backend support
+  is partial. Todo already\nsupports AGENT, KAIZEN, and HONEYDO categories globally, but Todos are not scoped to\na dream/project
+  and desired features are not modeled as an orderable project list yet.\n\nPromote a recurring site-audit agent that does
+  the same kind of check: compare the\nroadmap/conductor vocabulary against the actual Kind Robots frontend/backend, identify\n\
+  support gaps, and propose small reversible tasks. Weekly is a reasonable starting\ninterval; slow it down once the surfaces
+  are stable.\n\nGate note (2026-06-30): t-001 gate removed. Silas pre-approves the spec direction —\nwrite the task surface
+  spec and merge without another approval round. Downstream\ntasks unblock automatically when t-001 reaches done.\n"
 tasks:
 - id: t-001
   milestone: m1
@@ -32,10 +28,10 @@ tasks:
   stakes: reversible
   gate_human: false
   approved_by_human: false
-  note: 'Written projects/global-ui/TASK-SURFACE-SPEC.md. Covers: surface map (task, todo, honeydo, kaizen,
-    desired-feature, approval, completion), task card display rules, honeydo inbox spec, kaizen section
-    with polish prompt, desired-feature wishlist graduation flow, source-of-truth boundaries, completed/terminal
-    state display. Downstream t-002 through t-009 are now unblocked.
+  note: 'Written projects/global-ui/TASK-SURFACE-SPEC.md. Covers: surface map (task, todo, honeydo, kaizen, desired-feature,
+    approval, completion), task card display rules, honeydo inbox spec, kaizen section with polish prompt, desired-feature
+    wishlist graduation flow, source-of-truth boundaries, completed/terminal state display. Downstream t-002 through t-009
+    are now unblocked.
 
     '
 - id: t-002
@@ -47,10 +43,9 @@ tasks:
   stakes: reversible
   depends_on: t-001
   updated: '2026-06-30T00:00:00Z'
-  note: 'Added project-scoped task creation form to conductor-page.vue project detail view. Form passes
-    dreamId through todoStore.createTodo(), routes through the Pinia store, and shows the new task in
-    the relevant computed list immediately. Supports all four categories (AGENT, KAIZEN, HONEYDO,
-    DESIRED_FEATURE) and priority selection.
+  note: 'Added project-scoped task creation form to conductor-page.vue project detail view. Form passes dreamId through todoStore.createTodo(),
+    routes through the Pinia store, and shows the new task in the relevant computed list immediately. Supports all four categories
+    (AGENT, KAIZEN, HONEYDO, DESIRED_FEATURE) and priority selection.
 
     '
 - id: t-003
@@ -62,10 +57,9 @@ tasks:
   stakes: reversible
   depends_on: t-001
   updated: '2026-06-30T00:00:00Z'
-  note: 'Added Honey-Do Queue context banner to the HONEYDO tab in the tasks view: explains what honeydos
-    are, shows high-priority count alert, and provides a friendly empty state with icon when the queue
-    is clear. High-priority honeydos get a distinct error-tinted card background. Completion uses existing
-    toggleDone. Archive/delete available per item.
+  note: 'Added Honey-Do Queue context banner to the HONEYDO tab in the tasks view: explains what honeydos are, shows high-priority
+    count alert, and provides a friendly empty state with icon when the queue is clear. High-priority honeydos get a distinct
+    error-tinted card background. Completion uses existing toggleDone. Archive/delete available per item.
 
     '
 - id: t-004
@@ -77,10 +71,9 @@ tasks:
   stakes: reversible
   depends_on: t-001
   updated: '2026-06-30T00:00:00Z'
-  note: 'Added Kaizen section to conductor-page.vue project detail view. Shows existing dream-scoped
-    KAIZEN todos (filtered via todoStore.openTodos + dreamId), "done" button for each, and the polish
-    prompt field (t-006). Dream todos auto-fetched via watch(linkedDream) on project select. Kaizens
-    scoped to the project do not pollute the global honeydo queue.
+  note: 'Added Kaizen section to conductor-page.vue project detail view. Shows existing dream-scoped KAIZEN todos (filtered
+    via todoStore.openTodos + dreamId), "done" button for each, and the polish prompt field (t-006). Dream todos auto-fetched
+    via watch(linkedDream) on project select. Kaizens scoped to the project do not pollute the global honeydo queue.
 
     '
 - id: t-005
@@ -97,19 +90,15 @@ tasks:
   - t-007
   - t-008
   - t-009
-  note: 'Written projects/global-ui/NAVIGATION-MAP.md. Verified against kind_robots
-    origin/main (conductor-page.vue, conductor-manager.vue, todoStore.ts, serendipityStore.ts)
-    rather than assuming the original spec shipped as designed. Confirmed: project tasks,
-    task creation, kaizen, and desired-feature wishlist all match TASK-SURFACE-SPEC.md
-    exactly (dreamId-scoping is correct everywhere it matters). Found three discoverability
-    gaps versus the original spec: (1) honeydo has no top-level nav "For You" inbox --
-    it is a tab buried inside the per-project Conductor page, global data with no direct
-    front door; (2) no "Completed (N)" collapsed disclosure for done tasks -- they show
-    inline with badges/icons but no grouping; (3) the recurring site-audit agent
-    (SITE-AUDIT-AGENT.md, t-009) is designed but no TALKBACK/roadmap evidence confirms
-    the Claude Code Remote trigger was ever created -- the loop this task is supposed to
-    map does not appear to be running yet. Filed t-014/t-015/t-016 for the three gaps
-    per this task''s own instruction to scope follow-ups separately.
+  note: 'Written projects/global-ui/NAVIGATION-MAP.md. Verified against kind_robots origin/main (conductor-page.vue, conductor-manager.vue,
+    todoStore.ts, serendipityStore.ts) rather than assuming the original spec shipped as designed. Confirmed: project tasks,
+    task creation, kaizen, and desired-feature wishlist all match TASK-SURFACE-SPEC.md exactly (dreamId-scoping is correct
+    everywhere it matters). Found three discoverability gaps versus the original spec: (1) honeydo has no top-level nav "For
+    You" inbox -- it is a tab buried inside the per-project Conductor page, global data with no direct front door; (2) no
+    "Completed (N)" collapsed disclosure for done tasks -- they show inline with badges/icons but no grouping; (3) the recurring
+    site-audit agent (SITE-AUDIT-AGENT.md, t-009) is designed but no TALKBACK/roadmap evidence confirms the Claude Code Remote
+    trigger was ever created -- the loop this task is supposed to map does not appear to be running yet. Filed t-014/t-015/t-016
+    for the three gaps per this task''s own instruction to scope follow-ups separately.
 
     '
   claimed_at: '2026-07-15T10:06:45Z'
@@ -123,9 +112,9 @@ tasks:
   stakes: reversible
   depends_on: t-001
   updated: '2026-06-30T00:00:00Z'
-  note: 'Added "How can I make this look better?" prompt field to the Kaizen section of the project detail
-    view in conductor-page.vue. Submits as a KAIZEN todo scoped to the current dream (dreamId set). Routes
-    through todoStore.createTodo(), not a direct API call. Shows a success message on submit.
+  note: 'Added "How can I make this look better?" prompt field to the Kaizen section of the project detail view in conductor-page.vue.
+    Submits as a KAIZEN todo scoped to the current dream (dreamId set). Routes through todoStore.createTodo(), not a direct
+    API call. Shows a success message on submit.
 
     '
 - id: t-007
@@ -137,11 +126,10 @@ tasks:
   stakes: reversible
   depends_on: t-001
   updated: '2026-06-30T00:00:00Z'
-  note: 'Added Feature Wishlist section to conductor-page.vue project detail view. Shows DESIRED_FEATURE
-    todos for the current dream (all statuses for retire/strikethrough display), sorted by order field.
-    Up/Down buttons swap order values (two concurrent PATCH calls + refetch). "→ task" promotes to AGENT
-    category. "retire" sets status ARCHIVED with strikethrough styling. Add form creates new DESIRED_FEATURE
-    todo with order = current list length.
+  note: 'Added Feature Wishlist section to conductor-page.vue project detail view. Shows DESIRED_FEATURE todos for the current
+    dream (all statuses for retire/strikethrough display), sorted by order field. Up/Down buttons swap order values (two concurrent
+    PATCH calls + refetch). "→ task" promotes to AGENT category. "retire" sets status ARCHIVED with strikethrough styling.
+    Add form creates new DESIRED_FEATURE todo with order = current list length.
 
     '
 - id: t-008
@@ -155,13 +143,12 @@ tasks:
   approved_by_human: true
   depends_on: t-001
   updated: '2026-06-30T00:00:00Z'
-  note: 'Added DESIRED_FEATURE to TodoCategory enum and dreamId/order fields to Todo model in schema.prisma.
-    Added Dream.Todos back-relation. Updated todoStore.ts: Todo interface gets dreamId/order, TodoCategory
-    adds DESIRED_FEATURE, TodoCreate/Update types updated, added dreamKaizens()/dreamFeatures() computed
-    helpers, fetchDreamTodos() method, all exported. New API route GET /api/todos/dream/:dreamId. Updated
-    index.post.ts and [id].patch.ts to accept dreamId, order, and DESIRED_FEATURE category. NEEDS MIGRATION:
-    Silas must run `prisma migrate dev` before these fields are live. No UI component changes yet (t-002
-    through t-007 handle that). Review schema changes and approve migration before deploying.
+  note: 'Added DESIRED_FEATURE to TodoCategory enum and dreamId/order fields to Todo model in schema.prisma. Added Dream.Todos
+    back-relation. Updated todoStore.ts: Todo interface gets dreamId/order, TodoCategory adds DESIRED_FEATURE, TodoCreate/Update
+    types updated, added dreamKaizens()/dreamFeatures() computed helpers, fetchDreamTodos() method, all exported. New API
+    route GET /api/todos/dream/:dreamId. Updated index.post.ts and [id].patch.ts to accept dreamId, order, and DESIRED_FEATURE
+    category. NEEDS MIGRATION: Silas must run `prisma migrate dev` before these fields are live. No UI component changes yet
+    (t-002 through t-007 handle that). Review schema changes and approve migration before deploying.
 
     '
 - id: t-009
@@ -175,11 +162,10 @@ tasks:
   approved_by_human: true
   depends_on: t-001
   updated: '2026-06-30T00:00:00Z'
-  note: 'Wrote projects/global-ui/SITE-AUDIT-AGENT.md defining the agent prompt, weekly cron schedule
-    (Mondays 09:00 UTC, expression "0 9 * * 1"), scope of reads (roadmaps, API routes, stores, schema),
-    output format (AUDIT-REPORT-YYYY-MM-DD.md + up to 3 new ready tasks), and hard boundaries (no live
-    URLs, no main-branch pushes, no gate_human tasks). Setup instructions for Silas to activate via Claude
-    Code Remote create_trigger. Needs Silas approval before the trigger is created.
+  note: 'Wrote projects/global-ui/SITE-AUDIT-AGENT.md defining the agent prompt, weekly cron schedule (Mondays 09:00 UTC,
+    expression "0 9 * * 1"), scope of reads (roadmaps, API routes, stores, schema), output format (AUDIT-REPORT-YYYY-MM-DD.md
+    + up to 3 new ready tasks), and hard boundaries (no live URLs, no main-branch pushes, no gate_human tasks). Setup instructions
+    for Silas to activate via Claude Code Remote create_trigger. Needs Silas approval before the trigger is created.
 
     '
 
@@ -191,9 +177,9 @@ tasks:
   updated: '2026-06-30T00:00:00Z'
   passes: 0
   stakes: reversible
-  note: 'Written projects/global-ui/GLOSSARY.md. Defines: task, todo, honeydo, kaizen, desired-feature,
-    approval, completion. Each entry covers one-sentence definition, creator, home (conductor vs kind_robots
-    DB vs front-end), who acts on it, and how it differs from adjacent terms.
+  note: 'Written projects/global-ui/GLOSSARY.md. Defines: task, todo, honeydo, kaizen, desired-feature, approval, completion.
+    Each entry covers one-sentence definition, creator, home (conductor vs kind_robots DB vs front-end), who acts on it, and
+    how it differs from adjacent terms.
 
     '
 - id: t-011
@@ -205,20 +191,18 @@ tasks:
   stakes: reversible
   depends_on: t-001
   updated: '2026-07-06T00:00:00Z'
-  note: 'Added a living style guide at the /ui route in kind_robots, built to the app''s conventions:
-    content/ui.md (front matter + :ui-gallery MDC body, routed through pages/[...slug].vue) renders
-    components/ui/ui-gallery.vue. The gallery drives the real themeStore (setActiveTheme) with a live
-    theme switcher across all DaisyUI presets, and documents the style plan: a Conventions section
-    (surface rules: base-200 canvas / base-100 raised / base-300 borders; primary/secondary/accent for
-    action only; status colors for status only) plus a Design-tokens swatch grid teaching the semantic
-    vocabulary. Introduced reusable container/surface classes in assets/css/tailwind.css
-    (.kr-page, .kr-container, .kr-container-wide, .kr-section, .kr-panel, .kr-panel-muted, .kr-panel-flat)
-    so components stop reinventing padding/rounding/background per file. Verified end-to-end: dev server
-    renders /ui at HTTP 200 and the switcher flips data-theme (retro to synthwave) live; screenshotted
-    both themes. Directly answers the global-ui "How can I make this look better?" prompt by making the
-    design observable and giving humans + AI a shared token/class vocabulary to iterate in. Companion
-    recommendation to Silas: adopt code-native design (DaisyUI tokens + this gallery + screenshot-driven
-    iteration) as the primary path; Canva for marketing art only; Figma optional/later.
+  note: 'Added a living style guide at the /ui route in kind_robots, built to the app''s conventions: content/ui.md (front
+    matter + :ui-gallery MDC body, routed through pages/[...slug].vue) renders components/ui/ui-gallery.vue. The gallery drives
+    the real themeStore (setActiveTheme) with a live theme switcher across all DaisyUI presets, and documents the style plan:
+    a Conventions section (surface rules: base-200 canvas / base-100 raised / base-300 borders; primary/secondary/accent for
+    action only; status colors for status only) plus a Design-tokens swatch grid teaching the semantic vocabulary. Introduced
+    reusable container/surface classes in assets/css/tailwind.css (.kr-page, .kr-container, .kr-container-wide, .kr-section,
+    .kr-panel, .kr-panel-muted, .kr-panel-flat) so components stop reinventing padding/rounding/background per file. Verified
+    end-to-end: dev server renders /ui at HTTP 200 and the switcher flips data-theme (retro to synthwave) live; screenshotted
+    both themes. Directly answers the global-ui "How can I make this look better?" prompt by making the design observable
+    and giving humans + AI a shared token/class vocabulary to iterate in. Companion recommendation to Silas: adopt code-native
+    design (DaisyUI tokens + this gallery + screenshot-driven iteration) as the primary path; Canva for marketing art only;
+    Figma optional/later.
 
     '
 - id: t-012
@@ -230,35 +214,29 @@ tasks:
   stakes: reversible
   depends_on: t-011
   updated: '2026-07-19T00:20:00Z'
-  note: 'The style plan (t-011) only pays off once components adopt it. Incrementally migrate existing
-    panels/cards/pages to the shared .kr-* classes and the surface rules. IMPORTANT FINDING (2026-07-06):
-    most high-traffic surfaces are intentionally bespoke, NOT generic panels — the workspace header is a
-    translucent bg-base-100/95 + backdrop-blur chrome, login-page is glassmorphism (bg-base-100/88 +
-    backdrop-blur-xl + gradient border + rounded-4xl), and the "generic" panels are mostly dashed-border
-    empty-states. Do NOT force these onto .kr-panel; that regresses crafted UI. Scope real migration to
-    (a) genuinely-generic solid panels and (b) status-callout usages (see t-013). This work needs human
-    eyes in a preview deploy per surface — the dev sandbox has no DB, so most data-heavy pages cannot be
-    visually verified here. Do it in small reversible passes, screenshotting /ui and the touched views.
+  note: 'The style plan (t-011) only pays off once components adopt it. Incrementally migrate existing panels/cards/pages
+    to the shared .kr-* classes and the surface rules. IMPORTANT FINDING (2026-07-06): most high-traffic surfaces are intentionally
+    bespoke, NOT generic panels — the workspace header is a translucent bg-base-100/95 + backdrop-blur chrome, login-page
+    is glassmorphism (bg-base-100/88 + backdrop-blur-xl + gradient border + rounded-4xl), and the "generic" panels are mostly
+    dashed-border empty-states. Do NOT force these onto .kr-panel; that regresses crafted UI. Scope real migration to (a)
+    genuinely-generic solid panels and (b) status-callout usages (see t-013). This work needs human eyes in a preview deploy
+    per surface — the dev sandbox has no DB, so most data-heavy pages cannot be visually verified here. Do it in small reversible
+    passes, screenshotting /ui and the touched views.
 
-    PROGRESS 2026-07-17 (Silas-directed session, kind_robots PR #349 squash 9880cbd8):
-    first migration pass landed -- status callouts across 11 components onto .kr-note-*:
-    the add-* form family (add-bot/character/scenario/reward/checkpoint/composition) and the
-    interact + settings tail (character/bot/composition-interact, server-selector,
-    account-settings). Deferred for a preview-driven pass (documented in PR #349): the art
-    surfaces (artjob-manager, stylist-relay-status) are full-height flex containers / dense
-    p-2 text-xs chips where .kr-note is a poor fit; the /30-opacity notices with no text color
-    would gain colored text; stage-manager pills are not inline notes; and the
-    generic-solid-panel migration + code-library computed maps remain. Kept status: ready for
-    the next pass (see kaizen t-023). vue-tsc green; there is no lint gate in CI.
+    PROGRESS 2026-07-17 (Silas-directed session, kind_robots PR #349 squash 9880cbd8): first migration pass landed -- status
+    callouts across 11 components onto .kr-note-*: the add-* form family (add-bot/character/scenario/reward/checkpoint/composition)
+    and the interact + settings tail (character/bot/composition-interact, server-selector, account-settings). Deferred for
+    a preview-driven pass (documented in PR #349): the art surfaces (artjob-manager, stylist-relay-status) are full-height
+    flex containers / dense p-2 text-xs chips where .kr-note is a poor fit; the /30-opacity notices with no text color would
+    gain colored text; stage-manager pills are not inline notes; and the generic-solid-panel migration + code-library computed
+    maps remain. Kept status: ready for the next pass (see kaizen t-023). vue-tsc green; there is no lint gate in CI.
 
-    CLOSED 2026-07-19 (conductor agent run, claude-conductor-agent-20260719T0011Z): this task''s
-    own note delegated all remaining scope to kaizen task t-023 rather than tracking it here
-    directly. t-023 has now landed every deferred item across 4 passes (kind_robots PRs #398,
-    #427, #438) -- generic-solid-panel migration, status-callout drift fixes on the art
-    surfaces, and an explicit decision (not a guess) on the two remaining no-text-color sites
-    -- and is itself closed `done` in this same commit. There is no scope left under t-012 that
-    isn''t already covered by t-023''s closed history, so closing this one too rather than
-    leaving a duplicate empty-shell task at `status: ready` indefinitely.
+    CLOSED 2026-07-19 (conductor agent run, claude-conductor-agent-20260719T0011Z): this task''s own note delegated all remaining
+    scope to kaizen task t-023 rather than tracking it here directly. t-023 has now landed every deferred item across 4 passes
+    (kind_robots PRs #398, #427, #438) -- generic-solid-panel migration, status-callout drift fixes on the art surfaces, and
+    an explicit decision (not a guess) on the two remaining no-text-color sites -- and is itself closed `done` in this same
+    commit. There is no scope left under t-012 that isn''t already covered by t-023''s closed history, so closing this one
+    too rather than leaving a duplicate empty-shell task at `status: ready` indefinitely.
 
     '
   claimed_by: claude-conductor-agent-20260719T0011Z
@@ -272,13 +250,12 @@ tasks:
   stakes: reversible
   depends_on: t-011
   updated: '2026-07-06T00:00:00Z'
-  note: 'Standardised the most-repeated inconsistent surface in the app. Audit found 100+ hand-written
-    status-tint callouts with drifting opacities (border-info/30 vs /40, bg-info/5 vs /10 vs /15, likewise
-    success/warning/error). Added canonical .kr-note + .kr-note-info/success/warning/error classes to
-    assets/css/tailwind.css (border-{status}/40 + bg-{status}/10 + text-{status}) and a new Callouts
-    section to the /ui gallery documenting them, with a note to prefer DaisyUI `alert` for loud banners.
-    Verified rendering across themes (emerald, synthwave) via headless screenshots. Migrating the 100+
-    existing usages onto .kr-note-* is folded into t-012 (needs preview-deploy verification per surface).
+  note: 'Standardised the most-repeated inconsistent surface in the app. Audit found 100+ hand-written status-tint callouts
+    with drifting opacities (border-info/30 vs /40, bg-info/5 vs /10 vs /15, likewise success/warning/error). Added canonical
+    .kr-note + .kr-note-info/success/warning/error classes to assets/css/tailwind.css (border-{status}/40 + bg-{status}/10
+    + text-{status}) and a new Callouts section to the /ui gallery documenting them, with a note to prefer DaisyUI `alert`
+    for loud banners. Verified rendering across themes (emerald, synthwave) via headless screenshots. Migrating the 100+ existing
+    usages onto .kr-note-* is folded into t-012 (needs preview-deploy verification per surface).
 
     '
 - id: t-014
@@ -288,21 +265,17 @@ tasks:
   owner: worker
   passes: 0
   stakes: reversible
-  note: 'DONE 2026-07-17 (claude-conductor-hourly-2026-07-17-0149): added a top-level
-    "For You" tab under the Home channel dropdown, per TASK-SURFACE-SPEC.md section 3.
-    content/channels/home/for-you.md (nav metadata, channels collection) + content/for-you.md
-    (routable page, content collection, body :for-you-manager) + a new standalone
-    components/pages/for-you-manager.vue reading todoStore.honeyDoTodos directly -- no
-    project context required. Styled after the existing HONEYDO tab in conductor-page.vue
-    (left untouched, still works standalone) but adds two things the spec calls for that
-    the original tab never had: a relative timestamp per item and a "View <project>" link
-    (todo.projectId -> projectStore, then pageStore.setWorkspaceCardKey + navigateTo(''/conductor'')).
-    Empty-state copy matches the spec''s exact text. Verified: prettier + eslint clean,
-    full-project vue-tsc --noEmit 0 errors, dev server booted and Nuxt Content parsed both
-    new files with zero schema violations against content.config.ts. Could not click-through
-    live -- this sandbox has no DATABASE_URL, a pre-existing environment limitation (every
-    route 500s the same way, not specific to this page). kind_robots PR #337 merged (squash
-    76a1625): Contract verifiers, TypeScript, and GitGuardian all green.
+  note: 'DONE 2026-07-17 (claude-conductor-hourly-2026-07-17-0149): added a top-level "For You" tab under the Home channel
+    dropdown, per TASK-SURFACE-SPEC.md section 3. content/channels/home/for-you.md (nav metadata, channels collection) + content/for-you.md
+    (routable page, content collection, body :for-you-manager) + a new standalone components/pages/for-you-manager.vue reading
+    todoStore.honeyDoTodos directly -- no project context required. Styled after the existing HONEYDO tab in conductor-page.vue
+    (left untouched, still works standalone) but adds two things the spec calls for that the original tab never had: a relative
+    timestamp per item and a "View <project>" link (todo.projectId -> projectStore, then pageStore.setWorkspaceCardKey + navigateTo(''/conductor'')).
+    Empty-state copy matches the spec''s exact text. Verified: prettier + eslint clean, full-project vue-tsc --noEmit 0 errors,
+    dev server booted and Nuxt Content parsed both new files with zero schema violations against content.config.ts. Could
+    not click-through live -- this sandbox has no DATABASE_URL, a pre-existing environment limitation (every route 500s the
+    same way, not specific to this page). kind_robots PR #337 merged (squash 76a1625): Contract verifiers, TypeScript, and
+    GitGuardian all green.
 
     '
   claimed_by: claude-conductor-hourly-2026-07-17-0149
@@ -315,7 +288,15 @@ tasks:
   owner: worker
   passes: 0
   stakes: reversible
-  note: 'DONE 2026-07-15 (claude-burst-2026-07-15-rotation2): components/pages/conductor-page.vue''s project Tasks list now splits into activeTasks (unchanged flat rendering for non-done tasks) and doneTasksByMilestone (a computed grouping done tasks by milestone id, ordered to match selectedProject.milestones, with an ''Other'' fallback bucket for any unmatched milestone id). Done tasks render inside a collapsed <details> per milestone headed ''<milestone title> . Completed (N)'', matching TASK-SURFACE-SPEC.md section 7. Verified: eslint clean on the touched file; vue-tsc --noEmit shows the same 19 pre-existing errors tracked at kind-robots/t-020 (conductor-page.vue introduces none -- byte-diffed before/after). Could not exercise the page live -- dev sandbox has no DB, same limitation t-012 already documented for this page. kind_robots PR #293 merged (squash, be44ae5); the PR''s ''TypeScript'' check showed the same 19 known baseline errors and was merged anyway, matching the precedent set an hour earlier on kind-robots PR #292.'
+  note: 'DONE 2026-07-15 (claude-burst-2026-07-15-rotation2): components/pages/conductor-page.vue''s project Tasks list now
+    splits into activeTasks (unchanged flat rendering for non-done tasks) and doneTasksByMilestone (a computed grouping done
+    tasks by milestone id, ordered to match selectedProject.milestones, with an ''Other'' fallback bucket for any unmatched
+    milestone id). Done tasks render inside a collapsed <details> per milestone headed ''<milestone title> . Completed (N)'',
+    matching TASK-SURFACE-SPEC.md section 7. Verified: eslint clean on the touched file; vue-tsc --noEmit shows the same 19
+    pre-existing errors tracked at kind-robots/t-020 (conductor-page.vue introduces none -- byte-diffed before/after). Could
+    not exercise the page live -- dev sandbox has no DB, same limitation t-012 already documented for this page. kind_robots
+    PR #293 merged (squash, be44ae5); the PR''s ''TypeScript'' check showed the same 19 known baseline errors and was merged
+    anyway, matching the precedent set an hour earlier on kind-robots PR #292.'
   claimed_by: claude-burst-2026-07-15-rotation2
   claimed_at: '2026-07-15T15:08:34Z'
   updated: '2026-07-15T15:22:24Z'
@@ -323,7 +304,6 @@ tasks:
   milestone: m5
   title: Confirm or create the site-audit agent''s Claude Code Remote trigger
   status: done
-  approved_by_human: true
   passes: 0
   stakes: reversible
   note: |-
@@ -385,7 +365,18 @@ tasks:
   owner: worker
   passes: 0
   stakes: reversible
-  note: 'Added utils/dataSurfaceManifest.ts + utils/scripts/verifyDataSurfaceManifest.ts in kind_robots (PortOS navManifest.js-style registry): every data surface that must be reachable from a top-level nav destination gets an entry with either a navEntry resolving to a real content/channels tab, or an acknowledgedGap pointing at a tracking task -- a surface with neither fails CI, so a new undiscoverable surface (like the honeydo inbox that motivated this task) can never land silently again. Wired into package.json (test:data-surface-manifest) and .github/workflows/contract-tests.yml; documented in docs/channel-content-authoring.md. Seeded the manifest with the honeydo-inbox gap from NAVIGATION-MAP.md, acknowledged against global-ui/t-014. kind_robots PR #338 merged (squash 23cf36b): eslint/prettier clean, vue-tsc 0 errors, test:channel-content and test:channel-resolver unaffected, manual check confirmed the new contract fails when an entry has neither navEntry nor acknowledgedGap. t-014 (the actual honeydo top-level nav fix) landed in the same rotation cycle via a concurrent session (PR #337, home/for-you tab), which made this task''s acknowledgedGap stale within minutes of merging. Follow-up kind_robots PR #340 (squash efa34ad, merged) updated the manifest entry to navEntry: { channelKey: ''home'', tabKey: ''for-you'' } so the contract reflects the resolved state instead of a resolved-but-still-flagged gap.'
+  note: 'Added utils/dataSurfaceManifest.ts + utils/scripts/verifyDataSurfaceManifest.ts in kind_robots (PortOS navManifest.js-style
+    registry): every data surface that must be reachable from a top-level nav destination gets an entry with either a navEntry
+    resolving to a real content/channels tab, or an acknowledgedGap pointing at a tracking task -- a surface with neither
+    fails CI, so a new undiscoverable surface (like the honeydo inbox that motivated this task) can never land silently again.
+    Wired into package.json (test:data-surface-manifest) and .github/workflows/contract-tests.yml; documented in docs/channel-content-authoring.md.
+    Seeded the manifest with the honeydo-inbox gap from NAVIGATION-MAP.md, acknowledged against global-ui/t-014. kind_robots
+    PR #338 merged (squash 23cf36b): eslint/prettier clean, vue-tsc 0 errors, test:channel-content and test:channel-resolver
+    unaffected, manual check confirmed the new contract fails when an entry has neither navEntry nor acknowledgedGap. t-014
+    (the actual honeydo top-level nav fix) landed in the same rotation cycle via a concurrent session (PR #337, home/for-you
+    tab), which made this task''s acknowledgedGap stale within minutes of merging. Follow-up kind_robots PR #340 (squash efa34ad,
+    merged) updated the manifest entry to navEntry: { channelKey: ''home'', tabKey: ''for-you'' } so the contract reflects
+    the resolved state instead of a resolved-but-still-flagged gap.'
   claimed_by: claude-burst-2026-07-17-hourly-3
   claimed_at: '2026-07-17T02:11:27Z'
   updated: '2026-07-17T02:56:33Z'
@@ -449,7 +440,8 @@ tasks:
   updated: '2026-07-17T11:15:00Z'
 - id: t-020
   milestone: m5
-  title: Extract a shared honeydo-card component so the Conductor HONEYDO tab and the new For You page can't visually drift apart
+  title: Extract a shared honeydo-card component so the Conductor HONEYDO tab and the new For You page can't visually 
+    drift apart
   status: done
   owner: worker
   passes: 0
@@ -489,7 +481,8 @@ tasks:
   updated: '2026-07-17T06:56:00Z'
 - id: t-021
   milestone: m5
-  title: Wire the honeydo-inbox data-surface-manifest entry to its real nav location instead of the now-stale acknowledged gap
+  title: Wire the honeydo-inbox data-surface-manifest entry to its real nav location instead of the now-stale 
+    acknowledged gap
   status: done
   owner: worker
   passes: 0
@@ -513,7 +506,8 @@ tasks:
     green (TypeScript, Contract verifiers, GitGuardian).
 - id: t-022
   milestone: m5
-  title: Audit components/pages/*.vue for other card/list-item UI duplicated across 2+ top-level surfaces, matching the honeydo-card pattern t-020 just fixed
+  title: Audit components/pages/*.vue for other card/list-item UI duplicated across 2+ top-level surfaces, matching the 
+    honeydo-card pattern t-020 just fixed
   status: done
   owner: reviewer
   passes: 0
@@ -547,7 +541,8 @@ tasks:
     (TypeScript, Contract verifiers, GitGuardian); merged.
 - id: t-023
   milestone: m5
-  title: Preview-driven pass on the deferred kr-* surfaces (art callouts, /30-no-text notices, generic solid panels, code-library maps)
+  title: Preview-driven pass on the deferred kr-* surfaces (art callouts, /30-no-text notices, generic solid panels, 
+    code-library maps)
   status: done
   owner: worker
   passes: 0
@@ -776,3 +771,5 @@ milestones:
   title: Unified project/task navigation design
   weight: 10
   status: not-started
+goal: Keep the shared Kind Robots interface visually coherent, accessible, responsive, and consistent across pages while
+  preserving project-specific character.

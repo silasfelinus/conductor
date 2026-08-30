@@ -17,150 +17,162 @@ notes_from_silas: |
   animation preferences, and random opening screensavers through a single smart registration.
 
 milestones:
-  - id: m1
-    title: Research, standards, and pitch pipeline
-    weight: 20
-    status: in-progress
-  - id: m2
-    title: Canonical registry and reaction-backed attempt history
-    weight: 25
-    status: ready
-  - id: m3
-    title: First production animation shipped end-to-end
-    weight: 20
-    status: in-progress
-  - id: m4
-    title: Animation Manager and polish workflow
-    weight: 25
-    status: waiting
-  - id: m5
-    title: Recurring autonomous animation practice
-    weight: 10
-    status: waiting
+- id: m1
+  title: Research, standards, and pitch pipeline
+  weight: 20
+  status: in-progress
+- id: m2
+  title: Canonical registry and reaction-backed attempt history
+  weight: 25
+  status: ready
+- id: m3
+  title: First production animation shipped end-to-end
+  weight: 20
+  status: in-progress
+- id: m4
+  title: Animation Manager and polish workflow
+  weight: 25
+  status: waiting
+- id: m5
+  title: Recurring autonomous animation practice
+  weight: 10
+  status: waiting
 
 tasks:
-  - id: t-001
-    milestone: m1
-    title: Research modern passive screensavers and browser animation patterns
-    status: ready
-    owner: null
-    passes: 0
-    stakes: reversible
-    note: >
-      Maintain RESEARCH.md with sources, techniques, performance notes, reduced-motion behavior,
-      passive-first interaction patterns, and ideas worth adapting rather than cloning. Include
-      Canvas 2D, CSS, SVG, WebGL/WebGPU where justified, audio-free defaults, and mobile limits.
-      CLAIM RETRACTED 2026-07-21T23:07:28Z (conductor scheduled burst,
-      claude-conductor-burst-20260721T230725Z-anim-t001): claimed this in error --
-      project-overrides.yaml marks animation-studio status: retired (2026-07-19,
-      conductor/t-039), superseded by animation-manager, which already mirrors this
-      exact task (its own t-001/t-002 are done). The claiming session's ready-task
-      scan built the active-project set from project-overrides.yaml but never
-      actually filtered by it before walking priority.yaml, so a retired project's
-      ready task surfaced as pickable. Caught before any PR was opened -- no
-      animation-studio code/doc change was merged. Left at status: ready/owner: null
-      since this project is off-limits for claims per AGENTS.md's active-only rule;
-      a future session should not re-claim it either, and ideally the retired
-      project's remaining ready tasks (t-001, t-002, t-004) get formally closed
-      as superseded rather than surfacing as pickable again.
-    updated: '2026-07-21T23:07:28Z'
+- id: t-001
+  milestone: m1
+  title: Research modern passive screensavers and browser animation patterns
+  status: done
+  owner:
+  passes: 0
+  stakes: reversible
+  note: >-
+    Maintain RESEARCH.md with sources, techniques, performance notes, reduced-motion behavior, passive-first interaction patterns,
+    and ideas worth adapting rather than cloning. Include Canvas 2D, CSS, SVG, WebGL/WebGPU where justified, audio-free defaults,
+    and mobile limits. CLAIM RETRACTED 2026-07-21T23:07:28Z (conductor scheduled burst, claude-conductor-burst-20260721T230725Z-anim-t001):
+    claimed this in error -- project-overrides.yaml marks animation-studio status: retired (2026-07-19, conductor/t-039),
+    superseded by animation-manager, which already mirrors this exact task (its own t-001/t-002 are done). The claiming session's
+    ready-task scan built the active-project set from project-overrides.yaml but never actually filtered by it before walking
+    priority.yaml, so a retired project's ready task surfaced as pickable. Caught before any PR was opened -- no animation-studio
+    code/doc change was merged. Left at status: ready/owner: null since this project is off-limits for claims per AGENTS.md's
+    active-only rule; a future session should not re-claim it either, and ideally the retired project's remaining ready tasks
+    (t-001, t-002, t-004) get formally closed as superseded rather than surfacing as pickable again.
 
-  - id: t-002
-    milestone: m1
-    title: Maintain a ranked animation pitch queue
-    status: ready
-    owner: null
-    passes: 0
-    stakes: reversible
-    note: >
-      Add 5-10 concise pitches per research pass to pitches/. Each pitch defines the passive loop,
-      optional surprise interaction, visual novelty, implementation approach, performance risk,
-      reduced-motion fallback, and why it belongs in the opening rotation. Rank novelty, serenity,
-      surprise, reliability, and effort.
 
-  - id: t-003
-    milestone: m3
-    title: Ship Gravity Garden through the canonical animation catalog
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: >
-      Kind Robots draft PR #238 adds components/screenfx/gravity-garden.vue and one catalog entry.
-      Verify typecheck, lint, lifecycle cleanup, reduced-motion behavior, Screen FX selection, and
-      random startup selection. Merge only after verification.
-    updated: '2026-07-14T12:56:32Z'
+    CONSISTENCY CLOSE 2026-08-29: this retired project was superseded by animation-manager; closing the leftover ready task
+    prevents retired work from resurfacing as claimable.
+  updated: '2026-08-29T23:59:00Z'
 
-  - id: t-004
-    milestone: m2
-    title: Design reaction-backed animation attempts and revision lineage
-    status: ready
-    owner: null
-    passes: 0
-    stakes: reversible
-    note: >
-      Define the smallest durable contract linking an animation concept, implementation attempt,
-      revision/build, screenshots or clips, provenance, performance notes, status, and Reactions.
-      Reuse the existing Reaction model/API where possible. Do not invent a parallel voting system.
-      Aggregate reactions by attempt and preserve lineage so polish work can compare versions.
+- id: t-002
+  milestone: m1
+  title: Maintain a ranked animation pitch queue
+  status: done
+  owner:
+  passes: 0
+  stakes: reversible
+  note: >-
+    Add 5-10 concise pitches per research pass to pitches/. Each pitch defines the passive loop, optional surprise interaction,
+    visual novelty, implementation approach, performance risk, reduced-motion fallback, and why it belongs in the opening
+    rotation. Rank novelty, serenity, surprise, reliability, and effort.
 
-  - id: t-005
-    milestone: m2
-    title: Make animation registration declarative and self-validating
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-003
-      - t-004
-    note: >
-      Extend the canonical animation catalog with metadata needed by startup, Screen FX, manager,
-      safety, performance, quality, and provenance. Add validation for missing components, duplicate
-      IDs, blocking effects marked startup-safe, and effects without reduced-motion behavior.
 
-  - id: t-006
-    milestone: m4
-    title: Build the Animation Manager in Kind Robots
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-004
-      - t-005
-    note: >
-      Build a store-driven manager that browses concepts and attempts, previews versions, records
-      reactions, compares quality history, promotes a preferred build, retires stale attempts, and
-      creates polish tasks. Components never call API routes directly.
+    CONSISTENCY CLOSE 2026-08-29: this retired project was superseded by animation-manager; closing the leftover ready task
+    prevents retired work from resurfacing as claimable.
 
-  - id: t-007
-    milestone: m4
-    title: Audit and polish existing animation catalog
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-006
-    note: >
-      Inventory every current effect, including stale preference entries such as removed Aurora.
-      Record performance, interaction blocking, startup safety, reduced-motion support, lifecycle
-      cleanup, visual quality, and reaction score. Polish the strongest candidates and retire or
-      archive weak ones without silently deleting attempt history.
+  updated: '2026-08-29T23:59:00Z'
+- id: t-003
+  milestone: m3
+  title: Ship Gravity Garden through the canonical animation catalog
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >
+    Kind Robots draft PR #238 adds components/screenfx/gravity-garden.vue and one catalog entry.
+    Verify typecheck, lint, lifecycle cleanup, reduced-motion behavior, Screen FX selection, and
+    random startup selection. Merge only after verification.
+  updated: '2026-07-14T12:56:32Z'
 
-  - id: t-008
-    milestone: m5
-    title: Recurring research-pitch-build-polish animation cycle
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-006
-      - t-007
-    note: >
-      Standing autonomous loop: research selectively, keep the ranked pitch queue healthy, choose
-      one high-value pitch or reaction-backed polish target, implement one scoped reversible change,
-      verify it, and update attempt history. Prefer polishing a promising weak build over flooding
-      the catalog with mediocre new effects. This may occupy a full Worker cycle.
+- id: t-004
+  milestone: m2
+  title: Design reaction-backed animation attempts and revision lineage
+  status: done
+  owner:
+  passes: 0
+  stakes: reversible
+  note: >-
+    Define the smallest durable contract linking an animation concept, implementation attempt, revision/build, screenshots
+    or clips, provenance, performance notes, status, and Reactions. Reuse the existing Reaction model/API where possible.
+    Do not invent a parallel voting system. Aggregate reactions by attempt and preserve lineage so polish work can compare
+    versions.
+
+
+    CONSISTENCY CLOSE 2026-08-29: this retired project was superseded by animation-manager; closing the leftover ready task
+    prevents retired work from resurfacing as claimable.
+
+  updated: '2026-08-29T23:59:00Z'
+- id: t-005
+  milestone: m2
+  title: Make animation registration declarative and self-validating
+  status: blocked
+  owner:
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-003
+  - t-004
+  note: >-
+    Extend the canonical animation catalog with metadata needed by startup, Screen FX, manager, safety, performance, quality,
+    and provenance. Add validation for missing components, duplicate IDs, blocking effects marked startup-safe, and effects
+    without reduced-motion behavior.
+
+
+    CONSISTENCY HOLD 2026-08-29: animation-studio is retired and superseded by animation-manager; keep this dependent task
+    blocked rather than incorrectly dependency-waiting.
+
+  updated: '2026-08-29T23:59:00Z'
+- id: t-006
+  milestone: m4
+  title: Build the Animation Manager in Kind Robots
+  status: waiting
+  owner:
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-004
+  - t-005
+  note: >
+    Build a store-driven manager that browses concepts and attempts, previews versions, records
+    reactions, compares quality history, promotes a preferred build, retires stale attempts, and
+    creates polish tasks. Components never call API routes directly.
+
+- id: t-007
+  milestone: m4
+  title: Audit and polish existing animation catalog
+  status: waiting
+  owner:
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-006
+  note: >
+    Inventory every current effect, including stale preference entries such as removed Aurora.
+    Record performance, interaction blocking, startup safety, reduced-motion support, lifecycle
+    cleanup, visual quality, and reaction score. Polish the strongest candidates and retire or
+    archive weak ones without silently deleting attempt history.
+
+- id: t-008
+  milestone: m5
+  title: Recurring research-pitch-build-polish animation cycle
+  status: waiting
+  owner:
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-006
+  - t-007
+  note: >
+    Standing autonomous loop: research selectively, keep the ranked pitch queue healthy, choose
+    one high-value pitch or reaction-backed polish target, implement one scoped reversible change,
+    verify it, and update attempt history. Prefer polishing a promising weak build over flooding
+    the catalog with mediocre new effects. This may occupy a full Worker cycle.

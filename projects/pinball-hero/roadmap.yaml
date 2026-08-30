@@ -1,7 +1,6 @@
 project: pinball-hero
 kind: content
-notes_from_silas: 'Plan a high-quality but efficient homebuilt pinball machine with a practical parts
-  strategy.
+notes_from_silas: 'Plan a high-quality but efficient homebuilt pinball machine with a practical parts strategy.
 
   The end product should be build plans at multiple price points: parts lists, 3D printable
 
@@ -44,12 +43,11 @@ tasks:
   updated: '2026-07-01T00:00:00Z'
   gate_human: true
   approved_by_human: true
-  note: 'FOR SILAS: projects/pinball-hero/DESIGN-BRIEF.md is the design brief. It defines the target cabinet/playfield
-    size, mechanical scope, what to 3D print vs buy (with Bambu A1 print constraints), safety flags, and
-    outlines budget and premium build variants. Includes open questions for your direction before BOM/model
-    work begins. TO APPROVE: Read projects/pinball-hero/DESIGN-BRIEF.md and add any direction changes
-    as a note here. Set approved_by_human: true and status: done. Unblocks: pinball-hero/t-002 (BOM tiers
-    research), t-003 (3D printable model spec).
+  note: 'FOR SILAS: projects/pinball-hero/DESIGN-BRIEF.md is the design brief. It defines the target cabinet/playfield size,
+    mechanical scope, what to 3D print vs buy (with Bambu A1 print constraints), safety flags, and outlines budget and premium
+    build variants. Includes open questions for your direction before BOM/model work begins. TO APPROVE: Read projects/pinball-hero/DESIGN-BRIEF.md
+    and add any direction changes as a note here. Set approved_by_human: true and status: done. Unblocks: pinball-hero/t-002
+    (BOM tiers research), t-003 (3D printable model spec).
 
     '
 - id: t-002
@@ -108,23 +106,23 @@ tasks:
   milestone: m4
   title: Design the electronics and control plan
   status: waiting
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
   updated: 2026-06-29
   depends_on:
   - t-001
   - t-002
-  note: 'Draft the control architecture for lights, sensors, buttons, audio, scoring, and solenoid-safe
-    actuation if included. Compare microcontroller and SBC options, identify safe power domains, fuse/protection
-    needs, and document what should remain low-voltage beginner-friendly.
+  note: 'Draft the control architecture for lights, sensors, buttons, audio, scoring, and solenoid-safe actuation if included.
+    Compare microcontroller and SBC options, identify safe power domains, fuse/protection needs, and document what should
+    remain low-voltage beginner-friendly.
 
     '
 - id: t-005
   milestone: m5
   title: Assemble the first build-plan package outline
   status: waiting
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
   updated: 2026-06-29
@@ -132,9 +130,9 @@ tasks:
   - t-002
   - t-003
   - t-004
-  note: 'Produce the outline for the final deliverable: parts list by tier, printable files index, assembly
-    order, calibration/testing steps, safety checklist, maintenance notes, and upgrade paths. This is
-    still a draft package and should stay needs-human before publishing.
+  note: 'Produce the outline for the final deliverable: parts list by tier, printable files index, assembly order, calibration/testing
+    steps, safety checklist, maintenance notes, and upgrade paths. This is still a draft package and should stay needs-human
+    before publishing.
 
     '
 - id: t-006
@@ -145,11 +143,12 @@ tasks:
   updated: '2026-06-30T00:00:00Z'
   passes: 0
   stakes: reversible
-  note: 'Wrote projects/pinball-hero/SOFTWARE-SURVEY.md. Compared Mission Pinball Framework (MPF), FAST
-    Pinball software, Multimorphic P-ROC, pypinball, Visual Pinball X, and MiSTer FPGA pinball cores.
-    Recommendation: MPF + Open Pinball Project (OPP) hardware. MPF is the only free, hardware-agnostic,
-    actively maintained option with a large community and YAML-config-based machine definition. OPP boards
-    are open-source and cost-effective. First step for Silas: install MPF virtual simulator for zero-cost
-    development testing before hardware commitment.
+  note: 'Wrote projects/pinball-hero/SOFTWARE-SURVEY.md. Compared Mission Pinball Framework (MPF), FAST Pinball software,
+    Multimorphic P-ROC, pypinball, Visual Pinball X, and MiSTer FPGA pinball cores. Recommendation: MPF + Open Pinball Project
+    (OPP) hardware. MPF is the only free, hardware-agnostic, actively maintained option with a large community and YAML-config-based
+    machine definition. OPP boards are open-source and cost-effective. First step for Silas: install MPF virtual simulator
+    for zero-cost development testing before hardware commitment.
 
     '
+goal: Develop Pinball Hero into its intended playable, polished game experience with coherent mechanics, presentation, 
+  progression, and delivery.

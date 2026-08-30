@@ -59,865 +59,868 @@ notes_from_silas: >
     Foundation. t-003 remains open only to confirm that formally with a CPA.
 
 milestones:
-  - id: m1
-    title: "SHAPE — decide the money model"
-    weight: 20
-    status: in-progress
-  - id: m2
-    title: "LEDGER — make the three-way split real and computable"
-    weight: 30
-    status: in-progress
-  - id: m3
-    title: "LIVE STRIPE — first real dollar, safely"
-    weight: 15
-    status: in-progress
-  - id: m4
-    title: "DISPERSAL — creator payouts and mission remittance"
-    weight: 15
-    status: in-progress
-  - id: m5
-    title: "FUNDRAISING & OUTREACH — actually raise money, responsibly"
-    weight: 15
-    status: in-progress
-  - id: m6
-    title: "ENTITY — a new nonprofit under a new name, once real revenue exists"
-    weight: 5
-    status: in-progress
+- id: m1
+  title: "SHAPE — decide the money model"
+  weight: 20
+  status: in-progress
+- id: m2
+  title: "LEDGER — make the three-way split real and computable"
+  weight: 30
+  status: in-progress
+- id: m3
+  title: "LIVE STRIPE — first real dollar, safely"
+  weight: 15
+  status: in-progress
+- id: m4
+  title: "DISPERSAL — creator payouts and mission remittance"
+  weight: 15
+  status: in-progress
+- id: m5
+  title: "FUNDRAISING & OUTREACH — actually raise money, responsibly"
+  weight: 15
+  status: in-progress
+- id: m6
+  title: "ENTITY — a new nonprofit under a new name, once real revenue exists"
+  weight: 5
+  status: in-progress
 
 tasks:
 
   # ---------------------------------------------------------------- m1 SHAPE
-  - id: t-001
-    milestone: m1
-    title: "Write the design brief and audit the real state of the money layer"
-    status: done
-    owner: reviewer
-    updated: '2026-08-19T00:00:00Z'
-    passes: 1
-    stakes: reversible
-    note: >
-      DONE 2026-08-19 in the session that created this project. DESIGN-BRIEF.md audits
-      kind_robots, conductor, and SaveOneHuman and records five verified gaps: (1) paid
-      and free mana are indistinguishable because User.mana is one Int and maybeRefill()
-      grants free mana into the same balance, so "paid usage" is not computable;
-      (2) applyMana()'s refId is free text and carries no creator attribution;
-      (3) no Stripe Connect / transfer_data / application_fee anywhere in the repo, so
-      no payout mechanism exists; (4) the mission share has no route to the fundraiser
-      (giving-page.vue links users out to againstmalaria.com/amibot); (5) the three-way
-      split is already promised in live site copy (CREATOR_EARNINGS_MESSAGE on six
-      tutorial channels) ahead of the mechanism. Also established the key strategic
-      finding that reviving the nonprofit is NOT a prerequisite for the revenue share.
+- id: t-001
+  milestone: m1
+  title: "Write the design brief and audit the real state of the money layer"
+  status: done
+  owner: reviewer
+  updated: '2026-08-19T00:00:00Z'
+  passes: 1
+  stakes: reversible
+  note: >
+    DONE 2026-08-19 in the session that created this project. DESIGN-BRIEF.md audits
+    kind_robots, conductor, and SaveOneHuman and records five verified gaps: (1) paid
+    and free mana are indistinguishable because User.mana is one Int and maybeRefill()
+    grants free mana into the same balance, so "paid usage" is not computable;
+    (2) applyMana()'s refId is free text and carries no creator attribution;
+    (3) no Stripe Connect / transfer_data / application_fee anywhere in the repo, so
+    no payout mechanism exists; (4) the mission share has no route to the fundraiser
+    (giving-page.vue links users out to againstmalaria.com/amibot); (5) the three-way
+    split is already promised in live site copy (CREATOR_EARNINGS_MESSAGE on six
+    tutorial channels) ahead of the mechanism. Also established the key strategic
+    finding that reviving the nonprofit is NOT a prerequisite for the revenue share.
 
-  - id: t-002
-    milestone: m1
-    title: "Confirm scope and shape with Silas"
-    status: needs-human
-    owner: null
-    updated: '2026-08-19T00:00:00Z'
-    passes: 0
-    stakes: outward-facing
-    gate_human: true
-    approved_by_human: false
-    note: >
-      PARTIALLY ANSWERED 2026-08-19. Silas confirmed: "Profit share should be net. Not
-      gross." That settles the basis — Stripe fees and the raw model/GPU cost of the
-      generation come off the top, and the three shares are equal slices of NET. Recorded
-      in t-008, which is now unblocked on that point.
-      He also deprioritized the entity track: Jan 1 was "just a random date but beyond
-      this year, since I don't see taking in any money for a while... it just didn't seem
-      like a quick priority here in mid-August." m6 is reweighted to 5 and deferred; see
-      t-018's findings, which materially change the restart cost.
-      STILL OPEN, and it shapes the whole m2 schema so it wants an answer before t-008:
-      is the creator's share earned PER-INTERACTION (someone runs YOUR scenario, you earn
-      on that specific spend) or POOLED and distributed by usage share over a period?
-      Per-interaction is more honest and far easier to explain to a creator; pooled is
-      much cheaper to actually pay out and smooths tiny amounts into payable sums. A
-      plausible third answer is per-interaction accrual with pooled PAYOUT — accrue
-      honestly per spend, disburse on a schedule once a threshold is met — which gets
-      most of both and is what t-008/t-014 will assume unless told otherwise.
+- id: t-002
+  milestone: m1
+  title: "Confirm scope and shape with Silas"
+  status: needs-human
+  owner:
+  updated: '2026-08-19T00:00:00Z'
+  passes: 0
+  stakes: outward-facing
+  gate_human: true
+  approved_by_human: false
+  note: >
+    FOR SILAS: PARTIALLY ANSWERED 2026-08-19. Silas confirmed: "Profit share should be net. Not gross." That settles the basis
+    — Stripe fees and the raw model/GPU cost of the generation come off the top, and the three shares are equal slices of
+    NET. Recorded in t-008, which is now unblocked on that point. He also deprioritized the entity track: Jan 1 was "just
+    a random date but beyond this year, since I don't see taking in any money for a while... it just didn't seem like a quick
+    priority here in mid-August." m6 is reweighted to 5 and deferred; see t-018's findings, which materially change the restart
+    cost. STILL OPEN, and it shapes the whole m2 schema so it wants an answer before t-008: is the creator's share earned
+    PER-INTERACTION (someone runs YOUR scenario, you earn on that specific spend) or POOLED and distributed by usage share
+    over a period? Per-interaction is more honest and far easier to explain to a creator; pooled is much cheaper to actually
+    pay out and smooths tiny amounts into payable sums. A plausible third answer is per-interaction accrual with pooled PAYOUT
+    — accrue honestly per spend, disburse on a schedule once a threshold is met — which gets most of both and is what t-008/t-014
+    will assume unless told otherwise.
 
-  - id: t-003
-    milestone: m1
-    title: "DECISION: which entity receives the money"
-    status: needs-human
-    owner: null
-    updated: '2026-08-19T00:00:00Z'
-    passes: 0
-    stakes: irreversible
-    gate_human: true
-    approved_by_human: false
-    depends_on: [t-001]
-    note: >
-      FOR SILAS — this is the one decision that gates m4 and m5, and it is genuinely
-      yours (and a CPA's). DESIGN-BRIEF.md lays out three shapes: (A) for-profit Kind
-      Robots donating a share; (B) nonprofit receives everything; (C) hybrid — platform
-      is for-profit, mission share is donated either straight to the Against Malaria
-      Foundation (C1) or through a revived Save One Human (C2).
-      The brief's recommendation is C1 to start, because it needs no entity work, keeps
-      one clean deductible expense line, and does not stall the revenue build behind
-      months of paperwork — with C2 remaining fully available later if you decide you
-      want tax-deductible donations flowing to your own charity, grant eligibility, or
-      institutional permanence for the mission.
-      NOT legal or tax advice. Confirm with a CPA or nonprofit attorney before acting.
-      TO RESOLVE: record your choice in the note here, set approved_by_human: true, and
-      m4/m5 unblock against that choice.
+- id: t-003
+  milestone: m1
+  title: "DECISION: which entity receives the money"
+  status: needs-human
+  owner:
+  updated: '2026-08-19T00:00:00Z'
+  passes: 0
+  stakes: irreversible
+  gate_human: true
+  approved_by_human: false
+  depends_on: [t-001]
+  note: >
+    FOR SILAS: FOR SILAS — this is the one decision that gates m4 and m5, and it is genuinely yours (and a CPA's). DESIGN-BRIEF.md
+    lays out three shapes: (A) for-profit Kind Robots donating a share; (B) nonprofit receives everything; (C) hybrid — platform
+    is for-profit, mission share is donated either straight to the Against Malaria Foundation (C1) or through a revived Save
+    One Human (C2). The brief's recommendation is C1 to start, because it needs no entity work, keeps one clean deductible
+    expense line, and does not stall the revenue build behind months of paperwork — with C2 remaining fully available later
+    if you decide you want tax-deductible donations flowing to your own charity, grant eligibility, or institutional permanence
+    for the mission. NOT legal or tax advice. Confirm with a CPA or nonprofit attorney before acting. TO RESOLVE: record your
+    choice in the note here, set approved_by_human: true, and m4/m5 unblock against that choice.
 
-  - id: t-004
-    milestone: m1
-    title: "Reconcile the live creator-earnings copy with what actually exists"
-    status: done
-    owner: worker
-    updated: '2026-08-19T05:42:10Z'
-    passes: 0
-    stakes: reversible
-    depends_on: [t-001]
-    note: 'DONE 2026-08-19. Inventoried every surface promising creator earnings in kind_robots. Executed option (a) (shift to future tense): reworded CREATOR_EARNINGS_MESSAGE (stores/helpers/tutorialCards.ts, six tutorial channels) and softened about-page.vue''s VISION card creator-revenue clause. Mission/fundraiser copy left untouched (accurate today). Merged silasfelinus/kind_robots#1954 (vue-tsc + eslint clean; layout-contract CI job initially stuck queued/failed as a transient infra stall -- confirmed via local test:layout-contract + verifyMixedPanePrimitivesFixture both passing, then via workflow re-run succeeding on retry).'
-    claimed_by: claude-20260819T052739Z-t004
-    claimed_at: '2026-08-19T05:27:40Z'
-    implementation_pr: 'silasfelinus/kind_robots#1954'
+- id: t-004
+  milestone: m1
+  title: "Reconcile the live creator-earnings copy with what actually exists"
+  status: done
+  owner: worker
+  updated: '2026-08-19T05:42:10Z'
+  passes: 0
+  stakes: reversible
+  depends_on: [t-001]
+  note: 'DONE 2026-08-19. Inventoried every surface promising creator earnings in kind_robots. Executed option (a) (shift
+    to future tense): reworded CREATOR_EARNINGS_MESSAGE (stores/helpers/tutorialCards.ts, six tutorial channels) and softened
+    about-page.vue''s VISION card creator-revenue clause. Mission/fundraiser copy left untouched (accurate today). Merged
+    silasfelinus/kind_robots#1954 (vue-tsc + eslint clean; layout-contract CI job initially stuck queued/failed as a transient
+    infra stall -- confirmed via local test:layout-contract + verifyMixedPanePrimitivesFixture both passing, then via workflow
+    re-run succeeding on retry).'
+  claimed_by: claude-20260819T052739Z-t004
+  claimed_at: '2026-08-19T05:27:40Z'
+  implementation_pr: 'silasfelinus/kind_robots#1954'
 
-  - id: t-005
-    milestone: m1
-    title: "Decide how the mission third reaches AMF — structure first, mechanism second"
-    status: done
-    owner: worker
-    updated: '2026-08-19T07:11:03Z'
-    passes: 0
-    stakes: reversible
-    depends_on: [t-001]
-    note: >
-      RESCOPED 2026-08-19. Silas asked the right question: "can I take money and then
-      give it directly to againstmalaria to be considered tax neutral? Is there a way we
-      can automate that 1/3 so it is directly paid to our fundraiser to avoid any irs
-      double dipping?" The answer determines the mechanism, so this task now covers the
-      structure first and the plumbing second. Research and recommendation only — no
-      account creation, no contact with AMF or any platform, no money moved.
+- id: t-005
+  milestone: m1
+  title: "Decide how the mission third reaches AMF — structure first, mechanism second"
+  status: done
+  owner: worker
+  updated: '2026-08-19T07:11:03Z'
+  passes: 0
+  stakes: reversible
+  depends_on: [t-001]
+  note: >
+    RESCOPED 2026-08-19. Silas asked the right question: "can I take money and then
+    give it directly to againstmalaria to be considered tax neutral? Is there a way we
+    can automate that 1/3 so it is directly paid to our fundraiser to avoid any irs
+    double dipping?" The answer determines the mechanism, so this task now covers the
+    structure first and the plumbing second. Research and recommendation only — no
+    account creation, no contact with AMF or any platform, no money moved.
 
-      THE PROBLEM IS REAL, not hypothetical. Taking $100 and donating $33 does NOT net to
-      zero by default. The $100 is gross receipts; the $33 is a separate charitable
-      contribution whose deductibility depends entirely on entity type:
-        - Sole proprietorship / single-member LLC: a charitable contribution is NOT a
-          Schedule C business expense. It flows to the owner's Schedule A itemized
-          deductions. If Silas takes the standard deduction — as most filers do — the
-          deduction is worth NOTHING and he is taxed on the full amount. This is exactly
-          the double-dip he is worried about and it is the current default.
-        - Partnership / S-corp: same shape, passes through to the personal return.
-        - C-corp: the corporation deducts directly, but capped at 10% of taxable income,
-          with excess carried forward five years — and for tax years beginning after
-          2025-12-31 there is ALSO a new 1% floor. Donating a third of revenue blows past
-          10% immediately.
+    THE PROBLEM IS REAL, not hypothetical. Taking $100 and donating $33 does NOT net to
+    zero by default. The $100 is gross receipts; the $33 is a separate charitable
+    contribution whose deductibility depends entirely on entity type:
+      - Sole proprietorship / single-member LLC: a charitable contribution is NOT a
+        Schedule C business expense. It flows to the owner's Schedule A itemized
+        deductions. If Silas takes the standard deduction — as most filers do — the
+        deduction is worth NOTHING and he is taxed on the full amount. This is exactly
+        the double-dip he is worried about and it is the current default.
+      - Partnership / S-corp: same shape, passes through to the personal return.
+      - C-corp: the corporation deducts directly, but capped at 10% of taxable income,
+        with excess carried forward five years — and for tax years beginning after
+        2025-12-31 there is ALSO a new 1% floor. Donating a third of revenue blows past
+        10% immediately.
 
-      THE STRUCTURAL FIX IS TO KEEP IT OUT OF GROSS RECEIPTS IN THE FIRST PLACE. Evaluate
-      these three and recommend one primary and one fallback, writing findings to
-      research/remittance-options.md:
+    THE STRUCTURAL FIX IS TO KEEP IT OUT OF GROSS RECEIPTS IN THE FIRST PLACE. Evaluate
+    these three and recommend one primary and one fallback, writing findings to
+    research/remittance-options.md:
 
-      (A) MAKE THE MISSION THIRD THE CUSTOMER'S DONATION, NOT OURS — the strongest option
-      and the direct answer to "automate that 1/3". Structure checkout so the customer's
-      mission third goes to AMF as their own donation rather than passing through Kind
-      Robots. It never becomes our revenue, so there is no deduction question at all; our
-      gross receipts are two thirds, out of which the creator third is paid. The customer
-      gets a deductible donation, which is a genuine selling point rather than fine print,
-      and the claim "a third of what you pay buys nets" becomes literally true and
-      independently verifiable instead of a promise.
-      Mechanism to evaluate: a donation-platform API rather than Stripe Connect. Stripe
-      Connect is almost certainly a dead end — AMF would have to be an onboarded Connect
-      account — so rule it out explicitly and stop designing toward it. Every.org
-      publishes a free no-platform-fee donation API with embeddable donate links,
-      programmatic fundraiser creation, and partner webhooks for recording each donation,
-      covering 1M+ 501(c)(3)s; the webhook is what would reconcile a donation back to the
-      interaction that generated it. AMF is reachable: The Against Malaria Foundation
-      (US) is a real 501(c)(3), EIN 20-3069841, registered in Kansas City MO, and
-      donations from US donors are deductible. Verify it is actually listed and routable
-      on whichever platform is chosen before recommending it.
-      THE CATCH TO RESEARCH HONESTLY: soliciting or collecting donations on a charity's
-      behalf is a commercial co-venture / charitable solicitation in many states and
-      carries registration requirements. Routing through a platform that is itself the
-      receiving charity (or its donor-advised fund) may handle most of that, but do not
-      assume it — this is the part most likely to make option A more expensive than it
-      looks, and it must be checked rather than waved through.
+    (A) MAKE THE MISSION THIRD THE CUSTOMER'S DONATION, NOT OURS — the strongest option
+    and the direct answer to "automate that 1/3". Structure checkout so the customer's
+    mission third goes to AMF as their own donation rather than passing through Kind
+    Robots. It never becomes our revenue, so there is no deduction question at all; our
+    gross receipts are two thirds, out of which the creator third is paid. The customer
+    gets a deductible donation, which is a genuine selling point rather than fine print,
+    and the claim "a third of what you pay buys nets" becomes literally true and
+    independently verifiable instead of a promise.
+    Mechanism to evaluate: a donation-platform API rather than Stripe Connect. Stripe
+    Connect is almost certainly a dead end — AMF would have to be an onboarded Connect
+    account — so rule it out explicitly and stop designing toward it. Every.org
+    publishes a free no-platform-fee donation API with embeddable donate links,
+    programmatic fundraiser creation, and partner webhooks for recording each donation,
+    covering 1M+ 501(c)(3)s; the webhook is what would reconcile a donation back to the
+    interaction that generated it. AMF is reachable: The Against Malaria Foundation
+    (US) is a real 501(c)(3), EIN 20-3069841, registered in Kansas City MO, and
+    donations from US donors are deductible. Verify it is actually listed and routable
+    on whichever platform is chosen before recommending it.
+    THE CATCH TO RESEARCH HONESTLY: soliciting or collecting donations on a charity's
+    behalf is a commercial co-venture / charitable solicitation in many states and
+    carries registration requirements. Routing through a platform that is itself the
+    receiving charity (or its donor-advised fund) may handle most of that, but do not
+    assume it — this is the part most likely to make option A more expensive than it
+    looks, and it must be checked rather than waved through.
 
-      (B) SECTION 162 BUSINESS EXPENSE INSTEAD OF SECTION 170 CHARITABLE CONTRIBUTION.
-      If a payment to a charity carries a genuine return benefit commensurate with its
-      value — sponsorship, advertising, logo placement — it can be an ordinary business
-      expense with NO percentage ceiling, rather than a capped charitable contribution.
-      This is a real distinction, not a loophole, but the code explicitly prohibits
-      reclassifying what is really a gift as a business expense to dodge the limits, so it
-      only works where the business return is actual. Fact-specific; flag for the CPA.
+    (B) SECTION 162 BUSINESS EXPENSE INSTEAD OF SECTION 170 CHARITABLE CONTRIBUTION.
+    If a payment to a charity carries a genuine return benefit commensurate with its
+    value — sponsorship, advertising, logo placement — it can be an ordinary business
+    expense with NO percentage ceiling, rather than a capped charitable contribution.
+    This is a real distinction, not a loophole, but the code explicitly prohibits
+    reclassifying what is really a gift as a business expense to dodge the limits, so it
+    only works where the business return is actual. Fact-specific; flag for the CPA.
 
-      (C) BASELINE, ALREADY WORKING: keep pointing donors out to againstmalaria.com/amibot
-      for direct giving. Zero complication, zero reporting, and it is how the existing
-      ~$840 was raised. Whatever else gets built, this stays.
+    (C) BASELINE, ALREADY WORKING: keep pointing donors out to againstmalaria.com/amibot
+    for direct giving. Zero complication, zero reporting, and it is how the existing
+    ~$840 was raised. Whatever else gets built, this stays.
 
-      NOT LEGAL OR TAX ADVICE — general rules from public sources. The recommendation must
-      say plainly that a CPA confirms the structure before anything is built on it, and
-      must not present option A as settled merely because it is elegant.
+    NOT LEGAL OR TAX ADVICE — general rules from public sources. The recommendation must
+    say plainly that a CPA confirms the structure before anything is built on it, and
+    must not present option A as settled merely because it is elegant.
 
-      RESEARCH WRITTEN 2026-08-19 to projects/kind-economy/research/remittance-options.md.
-      Recommendation: Option A (Every.org, not Stripe Connect — ruled out and explained
-      why), specifically as a redirect to Every.org's own hosted AMF donate page rather
-      than an embedded-in-checkout flow, because California's charitable-fundraising-
-      platform law (effective 2024-06-12, Hawaii follows 2026-01-01) defines a covered
-      platform broadly enough to plausibly reach an embedded donate-at-checkout flow —
-      this is a real, more-concrete-than-expected finding beyond the seven commercial-
-      co-venture states originally flagged, and CA/AMF are both confirmed live (AMF listed
-      and routable at every.org/againstmalaria, EIN 20-3069841 matches Silas's records).
-      Option C (existing againstmalaria.com/amibot link-out) stays live unconditionally as
-      the zero-registration fallback. Option B (Section 162 sponsorship) is secondary, not
-      primary. The redirect-vs-embedded registration question is NOT resolved here — it is
-      the specific question for the CPA/attorney conversation, not a formality. No account
-      created, no contact made with AMF/Every.org, no money moved, per task scope.
+    RESEARCH WRITTEN 2026-08-19 to projects/kind-economy/research/remittance-options.md.
+    Recommendation: Option A (Every.org, not Stripe Connect — ruled out and explained
+    why), specifically as a redirect to Every.org's own hosted AMF donate page rather
+    than an embedded-in-checkout flow, because California's charitable-fundraising-
+    platform law (effective 2024-06-12, Hawaii follows 2026-01-01) defines a covered
+    platform broadly enough to plausibly reach an embedded donate-at-checkout flow —
+    this is a real, more-concrete-than-expected finding beyond the seven commercial-
+    co-venture states originally flagged, and CA/AMF are both confirmed live (AMF listed
+    and routable at every.org/againstmalaria, EIN 20-3069841 matches Silas's records).
+    Option C (existing againstmalaria.com/amibot link-out) stays live unconditionally as
+    the zero-registration fallback. Option B (Section 162 sponsorship) is secondary, not
+    primary. The redirect-vs-embedded registration question is NOT resolved here — it is
+    the specific question for the CPA/attorney conversation, not a formality. No account
+    created, no contact made with AMF/Every.org, no money moved, per task scope.
 
   # --------------------------------------------------------------- m2 LEDGER
-    claimed_by: worker-2026-08-19T07:05:00Z-t005-amf-remittance
-    claimed_at: '2026-08-19T07:08:01Z'
-  - id: t-006
-    milestone: m2
-    title: "Split the paid token resource from free mana"
-    status: done
-    owner: worker
-    updated: '2026-08-19T08:12:04Z'
-    passes: 0
-    stakes: reversible
-    depends_on: [t-001]
-    note: >
-      THE foundational blocker — nothing else in m2 is computable until this lands.
+  claimed_by: worker-2026-08-19T07:05:00Z-t005-amf-remittance
+  claimed_at: '2026-08-19T07:08:01Z'
+- id: t-006
+  milestone: m2
+  title: "Split the paid token resource from free mana"
+  status: done
+  owner: worker
+  updated: '2026-08-19T08:12:04Z'
+  passes: 0
+  stakes: reversible
+  depends_on: [t-001]
+  note: >
+    THE foundational blocker — nothing else in m2 is computable until this lands.
 
-      THE MODEL (Silas, 2026-08-19) is TWO DISTINCT RESOURCES, and this task exists
-      because the code has only one:
-        - MANA — given away freely. Grants limited access at lower queue priority.
-          Never purchased, never withdrawable, and it never becomes tokens.
-        - TOKENS — the paid resource actually used to generate interactions. "We only
-          generate tokens when actual tokens are spent." Created only when real money
-          is paid.
-      Creator share is credited in TOKENS, from token spends only.
+    THE MODEL (Silas, 2026-08-19) is TWO DISTINCT RESOURCES, and this task exists
+    because the code has only one:
+      - MANA — given away freely. Grants limited access at lower queue priority.
+        Never purchased, never withdrawable, and it never becomes tokens.
+      - TOKENS — the paid resource actually used to generate interactions. "We only
+        generate tokens when actual tokens are spent." Created only when real money
+        is paid.
+    Creator share is credited in TOKENS, from token spends only.
 
-      WHAT THE CODE ACTUALLY HAS TODAY: one currency, `User.mana`, a single Int, fed by
-      both paths. A Stripe top-up lands via `applyMana({ reason: 'PURCHASE' })`
-      (server/api/stripe/webhook.post.ts handleManaTopup) and the free daily refill lands
-      via `applyMana({ reason: 'CYCLE_REFILL' })` (server/utils/refill.ts) — same field,
-      same balance, indistinguishable at spend time. There is NO token model in
-      prisma/schema.prisma at all; the only `token` fields are auth/JWT unrelated to
-      currency. So the paid resource does not exist as a separate thing yet, and today's
-      "mana" is really the paid resource and the free resource wearing one name.
+    WHAT THE CODE ACTUALLY HAS TODAY: one currency, `User.mana`, a single Int, fed by
+    both paths. A Stripe top-up lands via `applyMana({ reason: 'PURCHASE' })`
+    (server/api/stripe/webhook.post.ts handleManaTopup) and the free daily refill lands
+    via `applyMana({ reason: 'CYCLE_REFILL' })` (server/utils/refill.ts) — same field,
+    same balance, indistinguishable at spend time. There is NO token model in
+    prisma/schema.prisma at all; the only `token` fields are auth/JWT unrelated to
+    currency. So the paid resource does not exist as a separate thing yet, and today's
+    "mana" is really the paid resource and the free resource wearing one name.
 
-      THE JOB: introduce the split the model already assumes. Free mana stays mana. The
-      purchased resource becomes tokens (or whatever it ends up called — naming is part
-      of this task, since "mana" currently means both and renaming mid-flight is worse
-      than deciding now). Then add the third state the payout model needs:
-        - EARNED tokens — creator share credited from someone else's paid spend. The only
-          balance that can ever be withdrawn as cash, and a real liability from the moment
-          it is credited rather than when it is paid. Purchased tokens are deliberately
-          NOT withdrawable: converting those back to cash is a refund, a Stripe operation
-          with its own rules, not a creator withdrawal.
+    THE JOB: introduce the split the model already assumes. Free mana stays mana. The
+    purchased resource becomes tokens (or whatever it ends up called — naming is part
+    of this task, since "mana" currently means both and renaming mid-flight is worse
+    than deciding now). Then add the third state the payout model needs:
+      - EARNED tokens — creator share credited from someone else's paid spend. The only
+        balance that can ever be withdrawn as cash, and a real liability from the moment
+        it is credited rather than when it is paid. Purchased tokens are deliberately
+        NOT withdrawable: converting those back to cash is a refund, a Stripe operation
+        with its own rules, not a creator withdrawal.
 
-      WHY THE SPLIT IS THE SECURITY BOUNDARY, not just tidiness: in the two-resource
-      model, free mana structurally cannot produce withdrawable value — there is no path
-      from a giveaway to cash, so the abuse case is closed by the data model rather than
-      by a runtime check somebody could forget. In today's single-balance code that
-      guarantee does not exist: free refills and purchases sit in the same Int, so any
-      creator-credit rule written against `User.mana` would credit giveaway balance
-      exactly as readily as purchased balance. Build the split so the invariant is
-      enforced by construction and cannot be reintroduced by a later caller.
+    WHY THE SPLIT IS THE SECURITY BOUNDARY, not just tidiness: in the two-resource
+    model, free mana structurally cannot produce withdrawable value — there is no path
+    from a giveaway to cash, so the abuse case is closed by the data model rather than
+    by a runtime check somebody could forget. In today's single-balance code that
+    guarantee does not exist: free refills and purchases sit in the same Int, so any
+    creator-credit rule written against `User.mana` would credit giveaway balance
+    exactly as readily as purchased balance. Build the split so the invariant is
+    enforced by construction and cannot be reintroduced by a later caller.
 
-      CONSTRAINTS: additive and reversible. No migration that drops or rewrites existing
-      balances, and no behavior change for users who never bought anything. The
-      ManaTransaction ledger already records every grant and spend with a `reason`, so
-      historical paid balance may be derivable rather than lost — check before assuming a
-      backfill is impossible. Also decide the lower-priority-queue behavior that free mana
-      is supposed to buy ("ideally", per Silas), or explicitly defer it as its own task.
-    claimed_by: worker-2026-08-19T07:20:00Z-t006-token-split
-    claimed_at: '2026-08-19T07:18:46Z'
-    implementation_pr: 'silasfelinus/kind_robots#1956'
+    CONSTRAINTS: additive and reversible. No migration that drops or rewrites existing
+    balances, and no behavior change for users who never bought anything. The
+    ManaTransaction ledger already records every grant and spend with a `reason`, so
+    historical paid balance may be derivable rather than lost — check before assuming a
+    backfill is impossible. Also decide the lower-priority-queue behavior that free mana
+    is supposed to buy ("ideally", per Silas), or explicitly defer it as its own task.
+  claimed_by: worker-2026-08-19T07:20:00Z-t006-token-split
+  claimed_at: '2026-08-19T07:18:46Z'
+  implementation_pr: 'silasfelinus/kind_robots#1956'
 
-  - id: t-007
-    milestone: m2
-    title: "Attribute each chargeable generation to the creator whose object seeded it"
-    status: done
-    owner: worker
-    updated: '2026-08-19T09:29:01Z'
-    passes: 0
-    stakes: reversible
-    depends_on: [t-006]
-    note: >
-      Inventoried nine seedable types with a plain owning/creating user: Bot, Character,
-      Facet, Scenario, PitchSheet, ArtImage, Pack (ownerId), Reward, Dream. Implemented as
-      server/utils/manaAttribution.ts's OWNER_LOOKUP registry + resolveManaAttribution(),
-      threaded through manaGate and chargeForGeneration onto four new additive
-      ManaTransaction columns (sourceType/sourceId/creatorUserId/isSelfAttribution).
-      FALLBACK (confirmed per this note's own instruction): a null creatorUserId (no
-      source, unresolvable, or system/deleted-owned) means the creator third of any
-      future RevenueSplit (t-008) falls through to the mission share, never the
-      platform — this task only records that fact, t-008 computes/credits it.
-      SELF-ATTRIBUTION: recorded explicitly via isSelfAttribution, decided by neither
-      this task nor t-008 — t-021 (Self-attribution policy) owns that call; t-008 must
-      check the flag before crediting EARNED tokens on such a row. Wired two entry
-      points with a real identifiable seed object today (brainstorm/generate.post.ts's
-      existing BrainstormSourceRef; characters/generate.ts's Character upgrade path) —
-      every other generation route has no single seed object yet, so passing no source
-      there is correct, not unfinished scope. PR: silasfelinus/kind_robots#1959.
-    claimed_by: claude-20260819T082810Z-kindecon-t007
-    claimed_at: '2026-08-19T08:28:10Z'
+- id: t-007
+  milestone: m2
+  title: "Attribute each chargeable generation to the creator whose object seeded it"
+  status: done
+  owner: worker
+  updated: '2026-08-19T09:29:01Z'
+  passes: 0
+  stakes: reversible
+  depends_on: [t-006]
+  note: >
+    Inventoried nine seedable types with a plain owning/creating user: Bot, Character,
+    Facet, Scenario, PitchSheet, ArtImage, Pack (ownerId), Reward, Dream. Implemented as
+    server/utils/manaAttribution.ts's OWNER_LOOKUP registry + resolveManaAttribution(),
+    threaded through manaGate and chargeForGeneration onto four new additive
+    ManaTransaction columns (sourceType/sourceId/creatorUserId/isSelfAttribution).
+    FALLBACK (confirmed per this note's own instruction): a null creatorUserId (no
+    source, unresolvable, or system/deleted-owned) means the creator third of any
+    future RevenueSplit (t-008) falls through to the mission share, never the
+    platform — this task only records that fact, t-008 computes/credits it.
+    SELF-ATTRIBUTION: recorded explicitly via isSelfAttribution, decided by neither
+    this task nor t-008 — t-021 (Self-attribution policy) owns that call; t-008 must
+    check the flag before crediting EARNED tokens on such a row. Wired two entry
+    points with a real identifiable seed object today (brainstorm/generate.post.ts's
+    existing BrainstormSourceRef; characters/generate.ts's Character upgrade path) —
+    every other generation route has no single seed object yet, so passing no source
+    there is correct, not unfinished scope. PR: silasfelinus/kind_robots#1959.
+  claimed_by: claude-20260819T082810Z-kindecon-t007
+  claimed_at: '2026-08-19T08:28:10Z'
 
-  - id: t-008
-    milestone: m2
-    title: "Write the immutable RevenueSplit ledger"
-    status: done
-    owner: worker
-    updated: '2026-08-19T11:29:06Z'
-    passes: 0
-    stakes: reversible
-    depends_on: [t-006, t-007]
-    note: >
-      One append-only row per paid spend: the spend it came from, gross cents, the costs
-      taken off the top (payment-processing fee, model/GPU cost), and then the three net
-      shares — platform, mission, creator — plus the resolved creator user id. Integer
-      cents only, never floats. The three shares plus the off-the-top costs must sum
-      EXACTLY to gross, with the rounding remainder assigned by a documented, tested rule
-      rather than left to drift; a property test over many random amounts should assert
-      the invariant holds. Rows are never edited or deleted — a correction is a new
-      reversing row referencing the original, exactly like ManaTransaction's reversedById
-      pattern.
-      BASIS DECIDED (Silas, 2026-08-19): "Profit share should be net. Not gross." So the
-      row records gross, then subtracts payment-processing fees and the actual model/GPU
-      cost of the generation, and splits what remains three equal ways. Two things this
-      makes non-optional: the ledger must capture real per-generation provider cost, not
-      a guess (`ManaTransaction.costUsd` already exists and `chargeForGeneration` already
-      threads `estCostUsd` — check whether that estimate is ever reconciled against the
-      provider's actual billed cost, and if it is not, say so rather than quietly
-      treating an estimate as truth); and a spend whose costs exceed its gross must
-      produce a zero or negative-margin row that is handled explicitly, not a negative
-      creator share. Keep the 1/3-1/3-1/3 ratio behind one named constant so a future
-      change to the percentages is a one-line edit.
-    claimed_by: claude-20260819T1027Z-kindecon-t008
-    claimed_at: '2026-08-19T10:30:15Z'
-    implementation_pr: 'silasfelinus/kind_robots#1962'
+- id: t-008
+  milestone: m2
+  title: "Write the immutable RevenueSplit ledger"
+  status: done
+  owner: worker
+  updated: '2026-08-19T11:29:06Z'
+  passes: 0
+  stakes: reversible
+  depends_on: [t-006, t-007]
+  note: >
+    One append-only row per paid spend: the spend it came from, gross cents, the costs
+    taken off the top (payment-processing fee, model/GPU cost), and then the three net
+    shares — platform, mission, creator — plus the resolved creator user id. Integer
+    cents only, never floats. The three shares plus the off-the-top costs must sum
+    EXACTLY to gross, with the rounding remainder assigned by a documented, tested rule
+    rather than left to drift; a property test over many random amounts should assert
+    the invariant holds. Rows are never edited or deleted — a correction is a new
+    reversing row referencing the original, exactly like ManaTransaction's reversedById
+    pattern.
+    BASIS DECIDED (Silas, 2026-08-19): "Profit share should be net. Not gross." So the
+    row records gross, then subtracts payment-processing fees and the actual model/GPU
+    cost of the generation, and splits what remains three equal ways. Two things this
+    makes non-optional: the ledger must capture real per-generation provider cost, not
+    a guess (`ManaTransaction.costUsd` already exists and `chargeForGeneration` already
+    threads `estCostUsd` — check whether that estimate is ever reconciled against the
+    provider's actual billed cost, and if it is not, say so rather than quietly
+    treating an estimate as truth); and a spend whose costs exceed its gross must
+    produce a zero or negative-margin row that is handled explicitly, not a negative
+    creator share. Keep the 1/3-1/3-1/3 ratio behind one named constant so a future
+    change to the percentages is a one-line edit.
+  claimed_by: claude-20260819T1027Z-kindecon-t008
+  claimed_at: '2026-08-19T10:30:15Z'
+  implementation_pr: 'silasfelinus/kind_robots#1962'
 
-  - id: t-009
-    milestone: m2
-    title: "Creator earnings view — read-only, no payouts"
-    status: done
-    owner: worker
-    updated: '2026-08-19T12:00:09Z'
-    passes: 0
-    stakes: reversible
-    depends_on: [t-008]
-    note: >
-      Give a creator an honest page showing what they have accrued: total, by object, by
-      period, with the individual interactions that produced it. Read-only — no payout
-      button, no withdrawal, nothing that implies money is claimable yet, and a plain
-      statement of what the current payout threshold and timeline actually are (or that
-      they are not set yet). This is the point at which the site's public promise stops
-      being vapor, so the copy matters as much as the query. Must also show a creator
-      zero honestly rather than hiding the surface. Follow the repo's shared kr-*
-      component conventions (see interface-vision) and check it at phone, tablet, and
-      desktop widths.
-    claimed_by: claude-20260819T1135Z-kindecon-t009
-    claimed_at: '2026-08-19T11:32:54Z'
-    implementation_pr: 'silasfelinus/kind_robots#1963'
+- id: t-009
+  milestone: m2
+  title: "Creator earnings view — read-only, no payouts"
+  status: done
+  owner: worker
+  updated: '2026-08-19T12:00:09Z'
+  passes: 0
+  stakes: reversible
+  depends_on: [t-008]
+  note: >
+    Give a creator an honest page showing what they have accrued: total, by object, by
+    period, with the individual interactions that produced it. Read-only — no payout
+    button, no withdrawal, nothing that implies money is claimable yet, and a plain
+    statement of what the current payout threshold and timeline actually are (or that
+    they are not set yet). This is the point at which the site's public promise stops
+    being vapor, so the copy matters as much as the query. Must also show a creator
+    zero honestly rather than hiding the surface. Follow the repo's shared kr-*
+    component conventions (see interface-vision) and check it at phone, tablet, and
+    desktop widths.
+  claimed_by: claude-20260819T1135Z-kindecon-t009
+  claimed_at: '2026-08-19T11:32:54Z'
+  implementation_pr: 'silasfelinus/kind_robots#1963'
 
-  - id: t-010
-    milestone: m2
-    title: "Mission-share accrual dashboard for Silas"
-    status: done
-    owner: worker
-    updated: '2026-08-19T12:55:45Z'
-    passes: 0
-    stakes: reversible
-    depends_on: [t-008]
-    note: 'Admin-only mission-share accrual dashboard, merged kind_robots#1964. Accrued (RevenueSplit.missionShareCents, reversal-excluded) vs remitted vs outstanding. Added a new admin-only append-only MissionRemittance ledger (judgment call -- no prior mechanism existed to record a real-world remittance; not speced explicitly but required to make "remitted"/"outstanding" computable). The ~$840 raised directly at againstmalaria.com/amibot is shown as a separate, hardcoded, clearly-labeled figure, never folded into platform totals. No money moves; pure bookkeeping.'
-    claimed_by: claude-20260819T122808Z-t010
-    claimed_at: '2026-08-19T12:28:12Z'
-    implementation_pr: 'silasfelinus/kind_robots#1964'
+- id: t-010
+  milestone: m2
+  title: "Mission-share accrual dashboard for Silas"
+  status: done
+  owner: worker
+  updated: '2026-08-19T12:55:45Z'
+  passes: 0
+  stakes: reversible
+  depends_on: [t-008]
+  note: 'Admin-only mission-share accrual dashboard, merged kind_robots#1964. Accrued (RevenueSplit.missionShareCents, reversal-excluded)
+    vs remitted vs outstanding. Added a new admin-only append-only MissionRemittance ledger (judgment call -- no prior mechanism
+    existed to record a real-world remittance; not speced explicitly but required to make "remitted"/"outstanding" computable).
+    The ~$840 raised directly at againstmalaria.com/amibot is shown as a separate, hardcoded, clearly-labeled figure, never
+    folded into platform totals. No money moves; pure bookkeeping.'
+  claimed_by: claude-20260819T122808Z-t010
+  claimed_at: '2026-08-19T12:28:12Z'
+  implementation_pr: 'silasfelinus/kind_robots#1964'
 
-  - id: t-021
-    milestone: m2
-    title: "Self-attribution policy — can Silas earn creator share on his own assets"
-    status: needs-human
-    soft_gate: true
-    owner: worker
-    updated: '2026-08-19T09:40:00Z'
-    passes: 0
-    stakes: reversible
-    depends_on: [t-007]
-    note: >
-      FOR SILAS: Wrote the policy at projects/kind-economy/SELF-ATTRIBUTION-POLICY.md.
+- id: t-021
+  milestone: m2
+  title: "Self-attribution policy — can Silas earn creator share on his own assets"
+  status: needs-human
+  soft_gate: true
+  owner: worker
+  updated: '2026-08-19T09:40:00Z'
+  passes: 0
+  stakes: reversible
+  depends_on: [t-007]
+  note: >
+    FOR SILAS: Wrote the policy at projects/kind-economy/SELF-ATTRIBUTION-POLICY.md.
 
-      It says: (1) admin-owned and self-owned assets earn the creator third on exactly
-      the same terms as anyone else's, no special-case branch in the split logic; (2)
-      every RevenueSplit row (t-008) records the creator identity, including your own —
-      nothing is silently folded into "platform"; (3) any public dashboard (t-010)
-      breaks out admin-attributed creator earnings as its own visible line, never
-      merged into a platform total; (4) the public one-liner is drafted verbatim in the
-      doc's section 4.
+    It says: (1) admin-owned and self-owned assets earn the creator third on exactly
+    the same terms as anyone else's, no special-case branch in the split logic; (2)
+    every RevenueSplit row (t-008) records the creator identity, including your own —
+    nothing is silently folded into "platform"; (3) any public dashboard (t-010)
+    breaks out admin-attributed creator earnings as its own visible line, never
+    merged into a platform total; (4) the public one-liner is drafted verbatim in the
+    doc's section 4.
 
-      On the abuse question: verified against the actual code (not assumed) that a
-      self-attributed round trip already can't be profitable today — manaGate spends
-      TOKENS (paid) before MANA (free), and only a TOKENS-funded spend is eligible to
-      generate a creator-share credit at all per the ManaResource enum's own design
-      comment, so every round trip loses two-thirds of the original spend for real.
-      Given that, the doc recommends logging/visibility only (already required by
-      point 2 above) rather than an additional cap or exclusion, since that would
-      special-case a behavior the mechanism already makes unprofitable.
+    On the abuse question: verified against the actual code (not assumed) that a
+    self-attributed round trip already can't be profitable today — manaGate spends
+    TOKENS (paid) before MANA (free), and only a TOKENS-funded spend is eligible to
+    generate a creator-share credit at all per the ManaResource enum's own design
+    comment, so every round trip loses two-thirds of the original spend for real.
+    Given that, the doc recommends logging/visibility only (already required by
+    point 2 above) rather than an additional cap or exclusion, since that would
+    special-case a behavior the mechanism already makes unprofitable.
 
-      TO APPROVE: read SELF-ATTRIBUTION-POLICY.md, in particular section 4's public
-      sentence and the "no cap, log-and-visible-only" call on the abuse question — set
-      approved_by_human: true and status: done if you agree, or leave a note here with
-      what to change. What unblocks: t-008 (RevenueSplit ledger) can build directly
-      against sections 1–2 either way, since they only restate what you already said;
-      the sign-off matters most for the public sentence in section 4, since that's the
-      part users will actually read.
+    TO APPROVE: read SELF-ATTRIBUTION-POLICY.md, in particular section 4's public
+    sentence and the "no cap, log-and-visible-only" call on the abuse question — set
+    approved_by_human: true and status: done if you agree, or leave a note here with
+    what to change. What unblocks: t-008 (RevenueSplit ledger) can build directly
+    against sections 1–2 either way, since they only restate what you already said;
+    the sign-off matters most for the public sentence in section 4, since that's the
+    part users will actually read.
 
-  - id: t-027
-    milestone: m2
-    title: "Close the metering gaps — every paid-resource generation charges"
-    status: done
-    owner: worker
-    updated: '2026-08-19T07:41:13Z'
-    passes: 0
-    stakes: reversible
-    note: >
-      FROM SILAS, 2026-08-19: "any time a user (non admin and non-family) use our llm
-      services or comfy, it should cost mana or tokens, and they should be prompted if
-      it's a token purchase, obviously. If they are using the site with their own api
-      keys or comfy/sd url, then that's cool, no mana expended."
+- id: t-027
+  milestone: m2
+  title: "Close the metering gaps — every paid-resource generation charges"
+  status: done
+  owner: worker
+  updated: '2026-08-19T07:41:13Z'
+  passes: 0
+  stakes: reversible
+  note: >
+    FROM SILAS, 2026-08-19: "any time a user (non admin and non-family) use our llm
+    services or comfy, it should cost mana or tokens, and they should be prompted if
+    it's a token purchase, obviously. If they are using the site with their own api
+    keys or comfy/sd url, then that's cool, no mana expended."
 
-      AUDIT ALREADY DONE (2026-08-19). Good news first: coverage is much better than it
-      looks from a naive grep. 25 generation endpoints are metered, via manaGate directly
-      or through one of its wrappers — authAndGate (comfyGate.ts), authAndTextGate and
-      withTextMana (textGate.ts), withArtMana (generationMana.ts), chargeForGeneration
-      (charge.ts). Anyone re-running this audit should derive that wrapper list from
-      what actually reaches manaGate rather than grepping for manaGate by name; three
-      separate passes produced false positives here before the wrapper set was complete,
-      including on art/generate.post.ts, which does charge (via withArtMana) but names
-      neither manaGate nor chargeForGeneration anywhere in the file.
+    AUDIT ALREADY DONE (2026-08-19). Good news first: coverage is much better than it
+    looks from a naive grep. 25 generation endpoints are metered, via manaGate directly
+    or through one of its wrappers — authAndGate (comfyGate.ts), authAndTextGate and
+    withTextMana (textGate.ts), withArtMana (generationMana.ts), chargeForGeneration
+    (charge.ts). Anyone re-running this audit should derive that wrapper list from
+    what actually reaches manaGate rather than grepping for manaGate by name; three
+    separate passes produced false positives here before the wrapper set was complete,
+    including on art/generate.post.ts, which does charge (via withArtMana) but names
+    neither manaGate nor chargeForGeneration anywhere in the file.
 
-      TWO GENUINE GAPS, both authenticated but free:
-      (1) server/api/characters/generate.ts — validates an API key, then calls
-          https://api.openai.com/v1/chat/completions using the SERVER's OPENAI_API_KEY
-          with no gate of any kind. Any user holding a valid token can spend Silas's
-          OpenAI budget without spending anything of their own. This is precisely the
-          case his instruction describes and it is the highest-value fix in this task.
-      (2) server/api/comfy/test/generate.post.ts — requireMachineUser (any authenticated
-          user or server key, NOT admin-only), then runComfySmokeGeneration against a
-          resolved comfy server. Named "test", but it is a real generation path on real
-          hardware reachable by any authenticated user. Either gate it like its siblings
-          or restrict it to admin/server-key; decide which, do not leave it as is.
+    TWO GENUINE GAPS, both authenticated but free:
+    (1) server/api/characters/generate.ts — validates an API key, then calls
+        https://api.openai.com/v1/chat/completions using the SERVER's OPENAI_API_KEY
+        with no gate of any kind. Any user holding a valid token can spend Silas's
+        OpenAI budget without spending anything of their own. This is precisely the
+        case his instruction describes and it is the highest-value fix in this task.
+    (2) server/api/comfy/test/generate.post.ts — requireMachineUser (any authenticated
+        user or server key, NOT admin-only), then runComfySmokeGeneration against a
+        resolved comfy server. Named "test", but it is a real generation path on real
+        hardware reachable by any authenticated user. Either gate it like its siblings
+        or restrict it to admin/server-key; decide which, do not leave it as is.
 
-      CONFIRMED NOT GAPS, recorded so a later pass does not re-flag them: the
-      art/queue/* family (claim, complete, edit, reenqueue, reenqueue-failed,
-      trainer-redo) is queue management, charged at enqueue, and the re-run routes are
-      already admin/server-key gated; art/sd/currentModel, comfy/prompt/[promptId],
-      comfy/test/info, server/heartbeat and server/uptime are read-only or infra;
-      botcafe/amibot.ts is a 16-line static response.
+    CONFIRMED NOT GAPS, recorded so a later pass does not re-flag them: the
+    art/queue/* family (claim, complete, edit, reenqueue, reenqueue-failed,
+    trainer-redo) is queue management, charged at enqueue, and the re-run routes are
+    already admin/server-key gated; art/sd/currentModel, comfy/prompt/[promptId],
+    comfy/test/info, server/heartbeat and server/uptime are read-only or infra;
+    botcafe/amibot.ts is a 16-line static response.
 
-      THE EXEMPTION LOGIC ALREADY EXISTS and matches what Silas asked for — do not
-      rebuild it. manaGate's isFreeGeneration() already exempts admins, the FAMILY role
-      (reading the COMPLETE role set, not just User.Role, so a secondary FAMILY grant is
-      honored), and own-resource use via useOwnResource/serverId. chargeForGeneration
-      logs BYOK and local plans at zero cost for visibility rather than skipping the
-      ledger entry. The fix for both gaps is to route them through the existing gate,
-      not to write new exemption logic.
+    THE EXEMPTION LOGIC ALREADY EXISTS and matches what Silas asked for — do not
+    rebuild it. manaGate's isFreeGeneration() already exempts admins, the FAMILY role
+    (reading the COMPLETE role set, not just User.Role, so a secondary FAMILY grant is
+    honored), and own-resource use via useOwnResource/serverId. chargeForGeneration
+    logs BYOK and local plans at zero cost for visibility rather than skipping the
+    ledger entry. The fix for both gaps is to route them through the existing gate,
+    not to write new exemption logic.
 
-      ALSO IN SCOPE: the purchase prompt. Silas asked that users "be prompted if it's a
-      token purchase, obviously" — verify the client actually surfaces an affordable
-      prompt-to-buy when a gate rejects for insufficient balance rather than failing with
-      a bare error. manaGate throws 402 INSUFFICIENT_MANA (server/utils/mana.ts); check
-      what the front end does with that today and make it a real prompt if it does not.
+    ALSO IN SCOPE: the purchase prompt. Silas asked that users "be prompted if it's a
+    token purchase, obviously" — verify the client actually surfaces an affordable
+    prompt-to-buy when a gate rejects for insufficient balance rather than failing with
+    a bare error. manaGate throws 402 INSUFFICIENT_MANA (server/utils/mana.ts); check
+    what the front end does with that today and make it a real prompt if it does not.
 
-      REGRESSION GUARD, so this cannot silently regress: add a contract test that
-      enumerates every server/api route reaching an LLM or comfy/diffusion host and
-      asserts each one either reaches a gate wrapper or appears on an explicit,
-      commented allowlist. The repo already uses this pattern (verify*Guard.ts +
-      self-test wired into package.json and contract-tests.yml). A new unmetered
-      endpoint should fail CI rather than be discovered by another manual audit.
+    REGRESSION GUARD, so this cannot silently regress: add a contract test that
+    enumerates every server/api route reaching an LLM or comfy/diffusion host and
+    asserts each one either reaches a gate wrapper or appears on an explicit,
+    commented allowlist. The repo already uses this pattern (verify*Guard.ts +
+    self-test wired into package.json and contract-tests.yml). A new unmetered
+    endpoint should fail CI rather than be discovered by another manual audit.
 
   # ---------------------------------------------------------- m3 LIVE STRIPE
-    claimed_by: worker-2026-08-19T07:30:00Z-t027-metering-gaps
-    claimed_at: '2026-08-19T07:27:47Z'
-    implementation_pr: 'silasfelinus/kind_robots#1955'
-  - id: t-011
-    milestone: m3
-    title: "Run the Stripe checkout/webhook/fulfillment matrix end-to-end in TEST mode"
-    status: needs-human
-    owner: null
-    updated: '2026-08-19T00:00:00Z'
-    passes: 0
-    stakes: outward-facing
-    gate_human: true
-    approved_by_human: false
-    note: >
-      ADOPTS digital-storefront/t-039, which has been parked at needs-human since
-      2026-08-08 for exactly this reason — do not duplicate that work; close t-039 by
-      reference once this lands. Six Stripe routes and a 663-line webhook exist and have
-      never processed a real transaction. The blocker is environmental, not technical:
-      no STRIPE_SECRET_KEY or STRIPE_WEBHOOK_SECRET is configured anywhere in the repo
-      or CI, no .env.example exists, and no database is reachable from an agent sandbox.
-      FOR SILAS — TO UNBLOCK, either (a) supply TEST-mode Stripe keys and a reachable
-      database URL to a session, or (b) run the matrix yourself against staging and
-      report what broke. Cover: mana top-up, supporter subscription, subscription cancel,
-      PDF entitlement, cart checkout, and webhook idempotency under Stripe's real retry
-      behavior (deliver the same event twice and assert one fulfillment).
-      Kaizen already suggested on t-039 and worth doing FIRST because it needs no
-      credentials at all: an offline webhook fixture test that signs a constructed
-      checkout.session.completed with stripe.webhooks.generateTestHeaderString against a
-      mocked Prisma client — that closes the routing/idempotency coverage gap without a
-      Stripe account and is safe to ship before any gate clears.
+  claimed_by: worker-2026-08-19T07:30:00Z-t027-metering-gaps
+  claimed_at: '2026-08-19T07:27:47Z'
+  implementation_pr: 'silasfelinus/kind_robots#1955'
+- id: t-011
+  milestone: m3
+  title: "Run the Stripe checkout/webhook/fulfillment matrix end-to-end in TEST mode"
+  status: needs-human
+  owner:
+  updated: '2026-08-19T00:00:00Z'
+  passes: 0
+  stakes: outward-facing
+  gate_human: true
+  approved_by_human: false
+  note: >
+    FOR SILAS: ADOPTS digital-storefront/t-039, which has been parked at needs-human since 2026-08-08 for exactly this reason
+    — do not duplicate that work; close t-039 by reference once this lands. Six Stripe routes and a 663-line webhook exist
+    and have never processed a real transaction. The blocker is environmental, not technical: no STRIPE_SECRET_KEY or STRIPE_WEBHOOK_SECRET
+    is configured anywhere in the repo or CI, no .env.example exists, and no database is reachable from an agent sandbox.
+    FOR SILAS — TO UNBLOCK, either (a) supply TEST-mode Stripe keys and a reachable database URL to a session, or (b) run
+    the matrix yourself against staging and report what broke. Cover: mana top-up, supporter subscription, subscription cancel,
+    PDF entitlement, cart checkout, and webhook idempotency under Stripe's real retry behavior (deliver the same event twice
+    and assert one fulfillment). Kaizen already suggested on t-039 and worth doing FIRST because it needs no credentials at
+    all: an offline webhook fixture test that signs a constructed checkout.session.completed with stripe.webhooks.generateTestHeaderString
+    against a mocked Prisma client — that closes the routing/idempotency coverage gap without a Stripe account and is safe
+    to ship before any gate clears.
 
-  - id: t-012
-    milestone: m3
-    title: "Document and provision the payment environment configuration"
-    status: done
-    owner: worker
-    updated: '2026-08-19T07:52:26Z'
-    passes: 0
-    stakes: reversible
-    note: >
-      WHERE THE SECRETS ACTUALLY GO (established 2026-08-19): kind_robots deploys as a
-      self-hosted Docker Compose stack, not a PaaS. docker-compose.yml gives both the
-      `migrate` and `kind-robots` services `env_file: ${KIND_ROBOTS_ENV_FILE:-.env}`, so
-      every runtime secret comes from a single `.env` beside docker-compose.yml on the
-      host, and `.env*` is gitignored. Deploying is `docker compose pull && docker compose
-      up -d`. Note the Stripe routes read `process.env.STRIPE_SECRET_KEY` DIRECTLY rather
-      than through nuxt.config's runtimeConfig block (which covers openaiApiKey,
-      anthropicApiKey, githubToken, brevoApiKey and friends but names no Stripe key at
-      all). That works — Nitro server routes can read process.env at runtime — but it is
-      an inconsistency worth either documenting or normalizing, and it is why grepping
-      runtimeConfig for Stripe config finds nothing and looks alarming.
+- id: t-012
+  milestone: m3
+  title: "Document and provision the payment environment configuration"
+  status: done
+  owner: worker
+  updated: '2026-08-19T07:52:26Z'
+  passes: 0
+  stakes: reversible
+  note: >
+    WHERE THE SECRETS ACTUALLY GO (established 2026-08-19): kind_robots deploys as a
+    self-hosted Docker Compose stack, not a PaaS. docker-compose.yml gives both the
+    `migrate` and `kind-robots` services `env_file: ${KIND_ROBOTS_ENV_FILE:-.env}`, so
+    every runtime secret comes from a single `.env` beside docker-compose.yml on the
+    host, and `.env*` is gitignored. Deploying is `docker compose pull && docker compose
+    up -d`. Note the Stripe routes read `process.env.STRIPE_SECRET_KEY` DIRECTLY rather
+    than through nuxt.config's runtimeConfig block (which covers openaiApiKey,
+    anthropicApiKey, githubToken, brevoApiKey and friends but names no Stripe key at
+    all). That works — Nitro server routes can read process.env at runtime — but it is
+    an inconsistency worth either documenting or normalizing, and it is why grepping
+    runtimeConfig for Stripe config finds nothing and looks alarming.
 
-      kind_robots has no .env.example, so every required payment secret is currently
-      tribal knowledge discoverable only by grepping process.env. Produce the documented
-      list — STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, STRIPE_PRICE_ID, plus the
-      PRINTFUL_API_KEY / PRINTFUL_STORE_ID pair podVendorClient.ts documents — with what
-      each is for, which routes fail without it, and how each route currently behaves
-      when it is missing (t-039 already fixed subscribe.post.ts's bare non-null
-      assertion so it returns a structured 500 like its siblings; verify the others
-      match). Write it as docs plus a committed .env.example with placeholder values.
-      NEVER commit a real key, and never echo a real value into any file, log, or PR.
-    claimed_by: worker-2026-08-19T07:47:00Z-t012-payment-env-docs
-    claimed_at: '2026-08-19T07:42:19Z'
-    implementation_pr: 'silasfelinus/kind_robots#1957'
+    kind_robots has no .env.example, so every required payment secret is currently
+    tribal knowledge discoverable only by grepping process.env. Produce the documented
+    list — STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, STRIPE_PRICE_ID, plus the
+    PRINTFUL_API_KEY / PRINTFUL_STORE_ID pair podVendorClient.ts documents — with what
+    each is for, which routes fail without it, and how each route currently behaves
+    when it is missing (t-039 already fixed subscribe.post.ts's bare non-null
+    assertion so it returns a structured 500 like its siblings; verify the others
+    match). Write it as docs plus a committed .env.example with placeholder values.
+    NEVER commit a real key, and never echo a real value into any file, log, or PR.
+  claimed_by: worker-2026-08-19T07:47:00Z-t012-payment-env-docs
+  claimed_at: '2026-08-19T07:42:19Z'
+  implementation_pr: 'silasfelinus/kind_robots#1957'
 
-  - id: t-013
-    milestone: m3
-    title: "GATE: go live with real Stripe keys and take the first real dollar"
-    status: needs-human
-    owner: null
-    updated: '2026-08-19T00:00:00Z'
-    passes: 0
-    stakes: irreversible
-    gate_human: true
-    approved_by_human: false
-    depends_on: [t-008, t-011, t-012]
-    note: >
-      FOR SILAS ONLY. Real money, real customers, real refund and chargeback exposure.
-      No agent may set live keys, create live products or prices, or trigger a live
-      charge. Preconditions before this is even askable: t-011's test matrix passes
-      clean, t-008's split ledger writes correctly for every purchase path, t-012's env
-      documentation is complete, and the customer-facing terms (what a purchase buys,
-      what is refundable, what the split means) exist and are accurate. The first real
-      transaction should be Silas buying the smallest mana tier from his own site and
-      then verifying, by hand, that the Order row, the mana credit, and the split rows
-      all match to the cent.
+- id: t-013
+  milestone: m3
+  title: "GATE: go live with real Stripe keys and take the first real dollar"
+  status: needs-human
+  owner:
+  updated: '2026-08-19T00:00:00Z'
+  passes: 0
+  stakes: irreversible
+  gate_human: true
+  approved_by_human: false
+  depends_on: [t-008, t-011, t-012]
+  note: >
+    FOR SILAS: FOR SILAS ONLY. Real money, real customers, real refund and chargeback exposure. No agent may set live keys,
+    create live products or prices, or trigger a live charge. Preconditions before this is even askable: t-011's test matrix
+    passes clean, t-008's split ledger writes correctly for every purchase path, t-012's env documentation is complete, and
+    the customer-facing terms (what a purchase buys, what is refundable, what the split means) exist and are accurate. The
+    first real transaction should be Silas buying the smallest mana tier from his own site and then verifying, by hand, that
+    the Order row, the mana credit, and the split rows all match to the cent.
 
   # ------------------------------------------------------------ m4 DISPERSAL
-  - id: t-014
-    milestone: m4
-    title: "Design the creator payout mechanism"
-    status: needs-human
-    updated: '2026-08-29T23:41:01Z'
-    passes: 0
-    stakes: reversible
-    depends_on: [t-008]
-    note: |-
-      Design complete for the settled model (see PAYOUT-MECHANISM-DESIGN.md): liability accounting, chargeback-window-based withdrawal timer (recommend 120 days), and the token/earnedTokens data-shape gap is now closed by t-006/t-007/t-008. Four items need Silas: payout path (manual vs Stripe Connect, recommend manual v1), minimum threshold, identity/tax collection policy, and unclaimed-balance handling. One needs a CPA: constructive-receipt timing on earnedTokens. Parked at needs-human for those five decisions.
+- id: t-014
+  milestone: m4
+  title: "Design the creator payout mechanism"
+  status: needs-human
+  updated: '2026-08-29T23:41:01Z'
+  passes: 0
+  stakes: reversible
+  depends_on: [t-008]
+  note: |-
+    FOR SILAS: Design complete for the settled model (see PAYOUT-MECHANISM-DESIGN.md): liability accounting, chargeback-window-based withdrawal timer (recommend 120 days), and the token/earnedTokens data-shape gap is now closed by t-006/t-007/t-008. Four items need Silas: payout path (manual vs Stripe Connect, recommend manual v1), minimum threshold, identity/tax collection policy, and unclaimed-balance handling. One needs a CPA: constructive-receipt timing on earnedTokens. Parked at needs-human for those five decisions.
 
-      Oversight reconciliation: the payout-mechanism design is complete and is waiting on Silas's product choices plus CPA confirmation. Marking this as a soft human-decision gate distinguishes it from irreversible payout execution, which remains separately hard-gated in t-015.
-    claimed_by: claude-20260819T122808Z-t014
-    claimed_at: '2026-08-19T12:30:48Z'
-    soft_gate: true
+    Oversight reconciliation: the payout-mechanism design is complete and is waiting on Silas's product choices plus CPA confirmation. Marking this as a soft human-decision gate distinguishes it from irreversible payout execution, which remains separately hard-gated in t-015.
+  claimed_by: claude-20260819T122808Z-t014
+  claimed_at: '2026-08-19T12:30:48Z'
+  soft_gate: true
 
-  - id: t-015
-    milestone: m4
-    title: "GATE: enable real creator payouts"
-    status: needs-human
-    owner: null
-    updated: '2026-08-19T00:00:00Z'
-    passes: 0
-    stakes: irreversible
-    gate_human: true
-    approved_by_human: false
-    depends_on: [t-014, t-013]
-    note: >
-      FOR SILAS ONLY. Paying third parties is irreversible, creates tax-reporting
-      obligations, and is the point at which the site's creator-earnings promise becomes
-      legally load-bearing rather than aspirational. No agent creates a Connect account,
-      onboards a creator, or moves a cent. Gated behind a working split ledger, live
-      payments, a settled entity decision, and t-014's design being reviewed by someone
-      qualified.
+- id: t-015
+  milestone: m4
+  title: "GATE: enable real creator payouts"
+  status: needs-human
+  owner:
+  updated: '2026-08-19T00:00:00Z'
+  passes: 0
+  stakes: irreversible
+  gate_human: true
+  approved_by_human: false
+  depends_on: [t-014, t-013]
+  note: >
+    FOR SILAS: FOR SILAS ONLY. Paying third parties is irreversible, creates tax-reporting obligations, and is the point at
+    which the site's creator-earnings promise becomes legally load-bearing rather than aspirational. No agent creates a Connect
+    account, onboards a creator, or moves a cent. Gated behind a working split ledger, live payments, a settled entity decision,
+    and t-014's design being reviewed by someone qualified.
 
-  - id: t-016
-    milestone: m4
-    title: "Mission remittance runbook and reconciliation"
-    status: done
-    owner: null
-    updated: '2026-08-19T19:43:41Z'
-    passes: 0
-    stakes: reversible
-    depends_on: [t-005, t-010]
-    note: 'Runbook written at projects/kind-economy/docs/mission-remittance-runbook.md (conductor PR #2526): cadence (quarterly, or sooner once outstanding sits non-trivial), who initiates (Silas, manually -- no agent moves money), how the amount is derived from t-010 accrual dashboard outstandingCents, where the receipt/reference is filed, and how the remittance is logged back so outstanding returns to zero. Reconciliation tooling shipped in kind_robots PR #1972 (squash-merged 88d193c): checkMissionRemittanceReconciliation() in server/utils/missionAccrual.ts flags under-remitted (outstanding > 0, promise broken) vs over-remitted (outstanding < 0, likely double-remit) vs reconciled (== 0), wired into GET /api/economy/mission-accrual and surfaced as a banner on /mission-accrual. No transfer automated. Verified: npm run test:mission-accrual 6/6, sibling contract tests re-run clean, vue-tsc/eslint/prettier clean, git status showed exactly the 4 intended files, 32/32 kind_robots CI checks green before merge.'
-    implementation_pr: 'silasfelinus/kind_robots#1972'
+- id: t-016
+  milestone: m4
+  title: "Mission remittance runbook and reconciliation"
+  status: done
+  owner:
+  updated: '2026-08-19T19:43:41Z'
+  passes: 0
+  stakes: reversible
+  depends_on: [t-005, t-010]
+  note: 'Runbook written at projects/kind-economy/docs/mission-remittance-runbook.md (conductor PR #2526): cadence (quarterly,
+    or sooner once outstanding sits non-trivial), who initiates (Silas, manually -- no agent moves money), how the amount
+    is derived from t-010 accrual dashboard outstandingCents, where the receipt/reference is filed, and how the remittance
+    is logged back so outstanding returns to zero. Reconciliation tooling shipped in kind_robots PR #1972 (squash-merged 88d193c):
+    checkMissionRemittanceReconciliation() in server/utils/missionAccrual.ts flags under-remitted (outstanding > 0, promise
+    broken) vs over-remitted (outstanding < 0, likely double-remit) vs reconciled (== 0), wired into GET /api/economy/mission-accrual
+    and surfaced as a banner on /mission-accrual. No transfer automated. Verified: npm run test:mission-accrual 6/6, sibling
+    contract tests re-run clean, vue-tsc/eslint/prettier clean, git status showed exactly the 4 intended files, 32/32 kind_robots
+    CI checks green before merge.'
+  implementation_pr: 'silasfelinus/kind_robots#1972'
 
-  - id: t-017
-    milestone: m4
-    title: "Creator-facing terms for the revenue share"
-    status: waiting
-    owner: null
-    updated: '2026-08-19T00:00:00Z'
-    passes: 0
-    stakes: outward-facing
-    gate_human: true
-    approved_by_human: false
-    depends_on: [t-003, t-014]
-    note: >
-      Draft the plain-language terms a creator agrees to: what earns a share, how it is
-      calculated, when and how it is paid, the minimum threshold, what happens if the
-      platform changes the percentages or shuts down, and what tax paperwork they will be
-      asked for. Agents draft; a professional reviews; Silas publishes. Publication is
-      the gate — the draft itself is safe work. Write it to be readable by a person who
-      makes art, not by a lawyer, and keep the mission share visible in it rather than
-      buried, because that is the actual reason anyone is here.
+- id: t-017
+  milestone: m4
+  title: "Creator-facing terms for the revenue share"
+  status: waiting
+  owner:
+  updated: '2026-08-19T00:00:00Z'
+  passes: 0
+  stakes: outward-facing
+  gate_human: true
+  approved_by_human: false
+  depends_on: [t-003, t-014]
+  note: >
+    Draft the plain-language terms a creator agrees to: what earns a share, how it is
+    calculated, when and how it is paid, the minimum threshold, what happens if the
+    platform changes the percentages or shuts down, and what tax paperwork they will be
+    asked for. Agents draft; a professional reviews; Silas publishes. Publication is
+    the gate — the draft itself is safe work. Write it to be readable by a person who
+    makes art, not by a lawyer, and keep the mission share visible in it rather than
+    buried, because that is the actual reason anyone is here.
 
   # -------------------------------------------- m5 FUNDRAISING & OUTREACH
-  - id: t-022
-    milestone: m5
-    title: "Design the butterfly-themed public fundraising event"
-    status: needs-human
-    updated: '2026-08-29T23:41:02Z'
-    passes: 0
-    stakes: reversible
-    note: |-
-      FROM SILAS, 2026-08-19: "hosting a public event for fundraising, themed on butterflies." AMI is a horde of rainbow butterflies and malaria nets are the thing being funded, so the theme is not decoration — it is the pitch, and it should carry the actual argument (a net costs a few dollars; a life costs about $5,000; here is what your twenty bucks does). Planning and design only — no venue booked, no deposit paid, no date announced, no vendor contacted. Produce a written event plan: format and scale options (gallery night of AMI-generated art, community make-a-butterfly workshop, talk plus donation drive), venue candidates, rough budget, what the site's own generated art contributes, and what would have to be true for it to break even rather than cost more than it raises — a fundraiser that loses money is a donation with extra steps. THE CRITICAL DESIGN CONSTRAINT, and it is the same one that keeps the website simple: DO NOT TAKE CUSTODY OF DONATIONS. Point attendees at againstmalaria.com/amibot and let them give directly — QR codes on the wall, a laptop at the door. The moment Kind Robots collects money at an event and forwards it, it is soliciting charitable contributions on another organization's behalf, and California has registration rules for that which are wildly out of proportion to a small community event. Direct-to-AMF sidesteps the entire category. If Silas wants to sell something at the event (prints, merch), that is ordinary commerce and goes through the normal storefront — keep the two flows visibly separate. Escalate to needs-human before anything is booked, paid for, or publicly announced.
-      PLAN READY 2026-08-19, escalated per the task's own instruction. Full written plan at projects/kind-economy/BUTTERFLY-EVENT-PLAN.md: three format options (gallery night of curated existing Daily Dream art, make-a-butterfly workshop, talk plus donation drive) with a recommended A+B combination; six venue-type candidates (library community room, coworking space, cafe, rec center, gallery community night, backyard/park shelter) with rough cost ranges, none contacted; a rough budget (~$55-$505 for a first small run); and a break-even framing that treats the event as a bounded out-of-pocket outreach spend rather than something the donations (which never touch Kind Robots, per the no-custody constraint) need to cover. Needs Silas to: pick a format, approve a venue category to start canvassing, and green-light a date before any booking/payment/announcement.
+- id: t-022
+  milestone: m5
+  title: "Design the butterfly-themed public fundraising event"
+  status: needs-human
+  updated: '2026-08-29T23:41:02Z'
+  passes: 0
+  stakes: reversible
+  note: |-
+    FOR SILAS: FROM SILAS, 2026-08-19: "hosting a public event for fundraising, themed on butterflies." AMI is a horde of rainbow butterflies and malaria nets are the thing being funded, so the theme is not decoration — it is the pitch, and it should carry the actual argument (a net costs a few dollars; a life costs about $5,000; here is what your twenty bucks does). Planning and design only — no venue booked, no deposit paid, no date announced, no vendor contacted. Produce a written event plan: format and scale options (gallery night of AMI-generated art, community make-a-butterfly workshop, talk plus donation drive), venue candidates, rough budget, what the site's own generated art contributes, and what would have to be true for it to break even rather than cost more than it raises — a fundraiser that loses money is a donation with extra steps. THE CRITICAL DESIGN CONSTRAINT, and it is the same one that keeps the website simple: DO NOT TAKE CUSTODY OF DONATIONS. Point attendees at againstmalaria.com/amibot and let them give directly — QR codes on the wall, a laptop at the door. The moment Kind Robots collects money at an event and forwards it, it is soliciting charitable contributions on another organization's behalf, and California has registration rules for that which are wildly out of proportion to a small community event. Direct-to-AMF sidesteps the entire category. If Silas wants to sell something at the event (prints, merch), that is ordinary commerce and goes through the normal storefront — keep the two flows visibly separate. Escalate to needs-human before anything is booked, paid for, or publicly announced.
+    PLAN READY 2026-08-19, escalated per the task's own instruction. Full written plan at projects/kind-economy/BUTTERFLY-EVENT-PLAN.md: three format options (gallery night of curated existing Daily Dream art, make-a-butterfly workshop, talk plus donation drive) with a recommended A+B combination; six venue-type candidates (library community room, coworking space, cafe, rec center, gallery community night, backyard/park shelter) with rough cost ranges, none contacted; a rough budget (~$55-$505 for a first small run); and a break-even framing that treats the event as a bounded out-of-pocket outreach spend rather than something the donations (which never touch Kind Robots, per the no-custody constraint) need to cover. Needs Silas to: pick a format, approve a venue category to start canvassing, and green-light a date before any booking/payment/announcement.
 
 
-      Oversight reconciliation: the butterfly fundraising-event plan is complete and is waiting on Silas to choose format, venue category, and date. This classifies the current planning hold as a soft human-decision gate; any booking, payment, contact, or public announcement remains separately outward-facing and requires explicit approval.
-    claimed_by: worker-2026-08-19T07:55:00Z-t022-butterfly-event
-    claimed_at: '2026-08-19T07:56:22Z'
-    soft_gate: true
+    Oversight reconciliation: the butterfly fundraising-event plan is complete and is waiting on Silas to choose format, venue category, and date. This classifies the current planning hold as a soft human-decision gate; any booking, payment, contact, or public announcement remains separately outward-facing and requires explicit approval.
+  claimed_by: worker-2026-08-19T07:55:00Z-t022-butterfly-event
+  claimed_at: '2026-08-19T07:56:22Z'
+  soft_gate: true
 
-  - id: t-023
-    milestone: m5
-    title: "Design 'The Sift' — the two-bowl AI/non-AI donation experiment"
-    status: needs-human
-    updated: '2026-08-29T23:41:03Z'
-    passes: 0
-    stakes: reversible
-    note: |-
-      FROM SILAS, 2026-08-19: "doing an online sift, inspired by panhandlers with multiple bowls asking for who gives more money: Christian, Atheists, Muslims, etc... but for people who support ai and those who don't, with all the content for the non-ai side generated without ai." This is the best fundraising idea in the batch and also the easiest to get wrong, so design it carefully before building anything. What makes the panhandler version work is that it is funny, it costs the giver nothing extra, and both bowls buy the same sandwich. Keep all three properties. NON-NEGOTIABLES for the design: (1) BOTH BOWLS FUND MALARIA NETS. Identical destination, identical impact. The vote is expressive; the money is not conditional. If one side's donations did something different, it stops being a poll and becomes a hostage situation. (2) THE NON-AI SIDE MUST BE GENUINELY GOOD. Silas's own instinct here is the whole ballgame — the anti-AI case gets made in hand-written words and hand-made art, with no generated content anywhere near it, and it must be argued by someone who actually believes it rather than steelmanned-then-undercut. If the non-AI bowl is visibly the weaker exhibit, the whole thing reads as a rigged game and deserves to. Budget real effort (or a commission) for that side, and label its provenance as clearly as the AI side's. (3) NO MOCKERY IN EITHER DIRECTION, including in the results display. The running total is the joke; the people are not. (4) The AI side must be labelled AI, per t-024's disclosure rules. Deliverable is a design doc: the framing copy, how the two sides are presented, how the tally is displayed, how donations are attributed to a side when the money goes directly to AMF (this is the genuinely hard mechanical problem — direct-to-AMF giving means we may not be able to see who gave what, so the tally may need to be self-reported, or use two distinct AMF fundraiser links if AMF supports that; resolve it in the design, do not hand-wave it), and an honest section on how this could backfire. Outward-facing: escalate to needs-human before it goes live. It is a public statement about a live culture-war topic made in the name of a charity fundraiser, and that is Silas's call to make with his eyes open, not an agent's.
-      DESIGN READY 2026-08-19, escalated per the task's own instruction. Full design at projects/kind-economy/THE-SIFT-DESIGN.md. The hard mechanical problem (attribution without custody) is resolved concretely, not hand-waved: Every.org's donate link supports partner_metadata (base64 JSON, echoed back in the partner webhook) and webhook_token, verified directly against Every.org's own docs -- two donate links to the SAME every.org/againstmalaria flow, tagged {"bowl":"ai"} vs {"bowl":"human"}, let Kind Robots tally each bowl from confirmed-donation webhook events with zero self-reporting and zero custody of funds. Framing copy, tally display, and an honest backfire section are drafted. The one non-negotiable this doc deliberately does NOT resolve -- and flags as the real precondition for launch -- is non-AI-side content: that copy/art must be hand-made by someone who genuinely holds the anti-AI position, which is out of scope for an agent to draft (an AI writing the "AI is bad" case is exactly the steelmanned-then-undercut failure the task warns against). A reduced-risk fallback ("aesthetic preference" framing, no argumentative copy) is offered if that can't be secured in good faith. Needs Silas to: review the attribution mechanism, decide full-culture-war-framing vs. the fallback, and secure real human-authored anti-AI content before any implementation task is claimed.
+- id: t-023
+  milestone: m5
+  title: "Design 'The Sift' — the two-bowl AI/non-AI donation experiment"
+  status: needs-human
+  updated: '2026-08-29T23:41:03Z'
+  passes: 0
+  stakes: reversible
+  note: |-
+    FOR SILAS: FROM SILAS, 2026-08-19: "doing an online sift, inspired by panhandlers with multiple bowls asking for who gives more money: Christian, Atheists, Muslims, etc... but for people who support ai and those who don't, with all the content for the non-ai side generated without ai." This is the best fundraising idea in the batch and also the easiest to get wrong, so design it carefully before building anything. What makes the panhandler version work is that it is funny, it costs the giver nothing extra, and both bowls buy the same sandwich. Keep all three properties. NON-NEGOTIABLES for the design: (1) BOTH BOWLS FUND MALARIA NETS. Identical destination, identical impact. The vote is expressive; the money is not conditional. If one side's donations did something different, it stops being a poll and becomes a hostage situation. (2) THE NON-AI SIDE MUST BE GENUINELY GOOD. Silas's own instinct here is the whole ballgame — the anti-AI case gets made in hand-written words and hand-made art, with no generated content anywhere near it, and it must be argued by someone who actually believes it rather than steelmanned-then-undercut. If the non-AI bowl is visibly the weaker exhibit, the whole thing reads as a rigged game and deserves to. Budget real effort (or a commission) for that side, and label its provenance as clearly as the AI side's. (3) NO MOCKERY IN EITHER DIRECTION, including in the results display. The running total is the joke; the people are not. (4) The AI side must be labelled AI, per t-024's disclosure rules. Deliverable is a design doc: the framing copy, how the two sides are presented, how the tally is displayed, how donations are attributed to a side when the money goes directly to AMF (this is the genuinely hard mechanical problem — direct-to-AMF giving means we may not be able to see who gave what, so the tally may need to be self-reported, or use two distinct AMF fundraiser links if AMF supports that; resolve it in the design, do not hand-wave it), and an honest section on how this could backfire. Outward-facing: escalate to needs-human before it goes live. It is a public statement about a live culture-war topic made in the name of a charity fundraiser, and that is Silas's call to make with his eyes open, not an agent's.
+    DESIGN READY 2026-08-19, escalated per the task's own instruction. Full design at projects/kind-economy/THE-SIFT-DESIGN.md. The hard mechanical problem (attribution without custody) is resolved concretely, not hand-waved: Every.org's donate link supports partner_metadata (base64 JSON, echoed back in the partner webhook) and webhook_token, verified directly against Every.org's own docs -- two donate links to the SAME every.org/againstmalaria flow, tagged {"bowl":"ai"} vs {"bowl":"human"}, let Kind Robots tally each bowl from confirmed-donation webhook events with zero self-reporting and zero custody of funds. Framing copy, tally display, and an honest backfire section are drafted. The one non-negotiable this doc deliberately does NOT resolve -- and flags as the real precondition for launch -- is non-AI-side content: that copy/art must be hand-made by someone who genuinely holds the anti-AI position, which is out of scope for an agent to draft (an AI writing the "AI is bad" case is exactly the steelmanned-then-undercut failure the task warns against). A reduced-risk fallback ("aesthetic preference" framing, no argumentative copy) is offered if that can't be secured in good faith. Needs Silas to: review the attribution mechanism, decide full-culture-war-framing vs. the fallback, and secure real human-authored anti-AI content before any implementation task is claimed.
 
 
-      Oversight reconciliation: The Sift design is complete and is waiting on Silas's product judgment before any implementation or public release. Marking the design hold as a soft human-decision gate does not authorize publication, fundraising launch, or any outward-facing action.
-    claimed_by: worker-2026-08-19T08:02:00Z-t023-the-sift
-    claimed_at: '2026-08-19T08:00:19Z'
-    soft_gate: true
+    Oversight reconciliation: The Sift design is complete and is waiting on Silas's product judgment before any implementation or public release. Marking the design hold as a soft human-decision gate does not authorize publication, fundraising launch, or any outward-facing action.
+  claimed_by: worker-2026-08-19T08:02:00Z-t023-the-sift
+  claimed_at: '2026-08-19T08:00:19Z'
+  soft_gate: true
 
-  - id: t-024
-    milestone: m5
-    title: "Social platform policy review for AI-generated and automated content"
-    status: done
-    owner: worker
-    updated: '2026-08-19T08:03:46Z'
-    passes: 0
-    stakes: reversible
-    note: >
-      Prerequisite research for t-025 — do this BEFORE building any posting pipeline,
-      because it determines what the pipeline is allowed to be.
-      For each candidate platform (Bluesky, Mastodon, Instagram, TikTok, YouTube, X,
-      Reddit, Discord), write to research/social-platform-policy.md: what the current
-      terms say about AI-generated content and required disclosure labels; what they say
-      about automated/API posting and bot accounts, including whether a bot must be
-      registered or flagged as one; whether charitable solicitation or fundraising links
-      trigger extra rules; and rate/volume limits. Note especially that some platforms
-      have first-class AI-content labels that are better to use than a hand-rolled
-      disclaimer, and that Reddit and Discord have per-community rules that override the
-      site-wide ones and are where most bot bans actually come from.
-      Flag any platform where responsible participation is not currently possible, and
-      recommend a starting set of two or three rather than all of them. Research only —
-      no account creation, no posting, no API keys.
+- id: t-024
+  milestone: m5
+  title: "Social platform policy review for AI-generated and automated content"
+  status: done
+  owner: worker
+  updated: '2026-08-19T08:03:46Z'
+  passes: 0
+  stakes: reversible
+  note: >
+    Prerequisite research for t-025 — do this BEFORE building any posting pipeline,
+    because it determines what the pipeline is allowed to be.
+    For each candidate platform (Bluesky, Mastodon, Instagram, TikTok, YouTube, X,
+    Reddit, Discord), write to research/social-platform-policy.md: what the current
+    terms say about AI-generated content and required disclosure labels; what they say
+    about automated/API posting and bot accounts, including whether a bot must be
+    registered or flagged as one; whether charitable solicitation or fundraising links
+    trigger extra rules; and rate/volume limits. Note especially that some platforms
+    have first-class AI-content labels that are better to use than a hand-rolled
+    disclaimer, and that Reddit and Discord have per-community rules that override the
+    site-wide ones and are where most bot bans actually come from.
+    Flag any platform where responsible participation is not currently possible, and
+    recommend a starting set of two or three rather than all of them. Research only —
+    no account creation, no posting, no API keys.
 
-      RESEARCH DONE 2026-08-19. Full findings in
-      projects/kind-economy/research/social-platform-policy.md, one section per platform
-      plus a comparison table. Bluesky and Instagram are the recommended starting pair:
-      Bluesky explicitly welcomes automation with a first-class "Automated" account
-      self-label and generous rate limits, no fundraising-specific rule found; Instagram
-      has the clearest first-class AI-content label of any platform (Meta's "AI info"),
-      at the cost of a standard Meta App Review gate. YouTube and Discord are workable
-      second-tier options. Mastodon is a real risk: the widely-adopted default Community
-      Standards (and apparently mastodon.social itself) explicitly prohibit accounts that
-      "primarily or exclusively post AI-generated content," which is a structural conflict
-      with what AMI is — instance choice matters. X now charges per post (~$0.015, +$0.20
-      for any post with a URL) under its Feb 2026 pay-per-use API pricing, a real
-      per-post cost unique to X. TikTok requires an API-client compliance audit before
-      posts are even publicly visible. The one open item this research cannot resolve in
-      the abstract, as flagged in the task brief: Reddit and Discord both have solid
-      site-wide/API-level bot paths (Reddit's Responsible Builder Policy, Discord's Bot
-      Account + Verification), but actual bot bans happen per-subreddit and per-server —
-      any real deployment to a specific community needs its own rules check first.
-    claimed_by: worker-2026-08-19T08:08:00Z-t024-platform-policy
-    claimed_at: '2026-08-19T08:03:46Z'
+    RESEARCH DONE 2026-08-19. Full findings in
+    projects/kind-economy/research/social-platform-policy.md, one section per platform
+    plus a comparison table. Bluesky and Instagram are the recommended starting pair:
+    Bluesky explicitly welcomes automation with a first-class "Automated" account
+    self-label and generous rate limits, no fundraising-specific rule found; Instagram
+    has the clearest first-class AI-content label of any platform (Meta's "AI info"),
+    at the cost of a standard Meta App Review gate. YouTube and Discord are workable
+    second-tier options. Mastodon is a real risk: the widely-adopted default Community
+    Standards (and apparently mastodon.social itself) explicitly prohibit accounts that
+    "primarily or exclusively post AI-generated content," which is a structural conflict
+    with what AMI is — instance choice matters. X now charges per post (~$0.015, +$0.20
+    for any post with a URL) under its Feb 2026 pay-per-use API pricing, a real
+    per-post cost unique to X. TikTok requires an API-client compliance audit before
+    posts are even publicly visible. The one open item this research cannot resolve in
+    the abstract, as flagged in the task brief: Reddit and Discord both have solid
+    site-wide/API-level bot paths (Reddit's Responsible Builder Policy, Discord's Bot
+    Account + Verification), but actual bot bans happen per-subreddit and per-server —
+    any real deployment to a specific community needs its own rules check first.
+  claimed_by: worker-2026-08-19T08:08:00Z-t024-platform-policy
+  claimed_at: '2026-08-19T08:03:46Z'
 
-  - id: t-025
-    milestone: m5
-    title: "Build the labelled-AI social content pipeline (draft-only, human-approved)"
-    status: done
-    owner: worker
-    updated: '2026-08-19T13:04:14Z'
-    passes: 0
-    stakes: reversible
-    depends_on: [t-024]
-    note: 'Draft-only, human-approved labelled-AI social content pipeline, merged kind_robots#1965. SocialPostDraft model with a structurally NOT NULL disclosureLabel (populated by a parameter-less pure function -- no code path can omit it), a three-value status enum (DRAFT/APPROVED/REJECTED, no POSTED value anywhere), a server-enforced 3-per-platform-per-day approval ceiling (429 past it, not just a UI hint), sourced from existing daily-dream/digest output. v1 ships Bluesky + Instagram only; Mastodon deliberately excluded (community standards prohibit AI-primary accounts), X/TikTok deferred to their own gated tasks. Zero live platform API calls, stored credentials, or outbound requests anywhere in the diff -- verified directly. Resolved a real schema.prisma merge conflict against t-010 (concurrent PR, same insertion point) by hand: kept both new models, regenerated the Prisma client via prisma generate rather than hand-merging generated output, reverted an unrelated prisma-format side effect on two untouched schema files before committing.'
-    claimed_by: claude-20260819T122808Z-t025
-    claimed_at: '2026-08-19T12:34:25Z'
-    implementation_pr: 'silasfelinus/kind_robots#1965'
+- id: t-025
+  milestone: m5
+  title: "Build the labelled-AI social content pipeline (draft-only, human-approved)"
+  status: done
+  owner: worker
+  updated: '2026-08-19T13:04:14Z'
+  passes: 0
+  stakes: reversible
+  depends_on: [t-024]
+  note: 'Draft-only, human-approved labelled-AI social content pipeline, merged kind_robots#1965. SocialPostDraft model with
+    a structurally NOT NULL disclosureLabel (populated by a parameter-less pure function -- no code path can omit it), a three-value
+    status enum (DRAFT/APPROVED/REJECTED, no POSTED value anywhere), a server-enforced 3-per-platform-per-day approval ceiling
+    (429 past it, not just a UI hint), sourced from existing daily-dream/digest output. v1 ships Bluesky + Instagram only;
+    Mastodon deliberately excluded (community standards prohibit AI-primary accounts), X/TikTok deferred to their own gated
+    tasks. Zero live platform API calls, stored credentials, or outbound requests anywhere in the diff -- verified directly.
+    Resolved a real schema.prisma merge conflict against t-010 (concurrent PR, same insertion point) by hand: kept both new
+    models, regenerated the Prisma client via prisma generate rather than hand-merging generated output, reverted an unrelated
+    prisma-format side effect on two untouched schema files before committing.'
+  claimed_by: claude-20260819T122808Z-t025
+  claimed_at: '2026-08-19T12:34:25Z'
+  implementation_pr: 'silasfelinus/kind_robots#1965'
 
-  - id: t-026
-    milestone: m5
-    title: "GATE: connect real social accounts and publish the first posts"
-    status: needs-human
-    owner: null
-    updated: '2026-08-19T00:00:00Z'
-    passes: 0
-    stakes: outward-facing
-    gate_human: true
-    approved_by_human: false
-    depends_on: [t-025]
-    note: >
-      FOR SILAS ONLY. Publishing under Kind Robots' name in public, on platforms with
-      live audiences, on a topic (AI) that a lot of people are actively angry about. No
-      agent creates a social account, connects an API key, or publishes a post.
-      When approving, decide explicitly: which platforms (from t-024's recommendation),
-      who reviews the queue and how often, what the volume ceiling is, and what the
-      response plan is if a post gets a hostile reception — deciding that in advance,
-      calmly, is much better than deciding it while a thread is going badly.
+- id: t-026
+  milestone: m5
+  title: "GATE: connect real social accounts and publish the first posts"
+  status: needs-human
+  owner:
+  updated: '2026-08-19T00:00:00Z'
+  passes: 0
+  stakes: outward-facing
+  gate_human: true
+  approved_by_human: false
+  depends_on: [t-025]
+  note: >
+    FOR SILAS: FOR SILAS ONLY. Publishing under Kind Robots' name in public, on platforms with live audiences, on a topic
+    (AI) that a lot of people are actively angry about. No agent creates a social account, connects an API key, or publishes
+    a post. When approving, decide explicitly: which platforms (from t-024's recommendation), who reviews the queue and how
+    often, what the volume ceiling is, and what the response plan is if a post gets a hostile reception — deciding that in
+    advance, calmly, is much better than deciding it while a thread is going badly.
 
   # --------------------------------------------------------------- m6 ENTITY
-  - id: t-018
-    milestone: m6
-    title: "Establish the true current legal status of Save One Human"
-    status: done
-    owner: reviewer
-    updated: '2026-08-19T00:00:00Z'
-    passes: 1
-    stakes: outward-facing
-    gate_human: true
-    approved_by_human: true
-    note: >
-      DONE 2026-08-19. Closed under CONTROL.md's human-gate clearance rule: Silas
-      resolved this in-session ("Save one human is definitely disbanded... I finalized
-      that around 2023-2024" and "that is moot, we are just going to go forward on all
-      the things that can be done first"). Deliberately closed rather than parked,
-      because audit_human_gates.py filters purely on status == needs-human and would
-      otherwise resurface this in every session sweep forever — the exact stale-gate
-      pattern CLAUDE.md documents.
+- id: t-018
+  milestone: m6
+  title: "Establish the true current legal status of Save One Human"
+  status: done
+  owner: reviewer
+  updated: '2026-08-19T00:00:00Z'
+  passes: 1
+  stakes: outward-facing
+  gate_human: true
+  approved_by_human: true
+  note: >
+    DONE 2026-08-19. Closed under CONTROL.md's human-gate clearance rule: Silas
+    resolved this in-session ("Save one human is definitely disbanded... I finalized
+    that around 2023-2024" and "that is moot, we are just going to go forward on all
+    the things that can be done first"). Deliberately closed rather than parked,
+    because audit_human_gates.py filters purely on status == needs-human and would
+    otherwise resurface this in every session sweep forever — the exact stale-gate
+    pattern CLAUDE.md documents.
 
-      WHAT WAS ESTABLISHED, for the record:
-      - DISSOLVED, finalized circa 2023-2024 (Silas's own account). Nothing to reinstate.
-      - NEVER A 501(c)(3). Federal exemption was never applied for. The SaveOneHuman
-        README's registration checklist marks only three of ten steps complete: name,
-        articles of incorporation (form arts-pb.pdf, nonprofit PUBLIC BENEFIT
-        corporation, $30, via northwestregisteredagent.com), and EIN. Never done: board,
-        bylaws + conflict-of-interest policy, initial board actions, CT-1 with the CA AG,
-        Statement of Information with the CA SOS, IRS Form 1023/1023-EZ, FTB Form 3500.
-      - NO PUBLIC IRS RECORD, and there never was one. ProPublica Nonprofit Explorer,
-        which mirrors the IRS Exempt Organizations Business Master File, returns
-        total_results: 0 — the expected result for an entity that never received a
-        determination letter, since the IRS only publishes organizations it recognized.
-        The EIN is not published anywhere because the IRS does not publish EINs for
-        non-exempt entities. The surviving public record is the CA SOS corporate filing.
-      - The name is retired anyway. Silas, 2026-08-19: "when we restart, it will be a new
-        name and new nonprofit. Kind robots is the future, save one human was the seed."
-        So no future work depends on this entity's disposition at all.
-
-      OPTIONAL, NON-BLOCKING, FOR SILAS WHENEVER HE FEELS LIKE IT — nothing waits on it
-      and he does not believe there is an issue: a CA nonprofit corporation that never
-      obtained FTB exemption accrues the $800 minimum franchise tax until a Certificate
-      of Dissolution is filed, so 2020-2024 is a few years of theoretical exposure.
-      California's remedy is FTB Form 3502, "Nonprofit Corporation Request for
-      Pre-Dissolution Tax Abatement" (R&TC section 23156), which abates unpaid qualified
-      taxes, interest, and penalties for a nonprofit certifying it never conducted
-      business and holds no assets — and with zero revenue ever, Save One Human is the
-      textbook case, so a competently handled dissolution very likely used it. If he ever
-      wants certainty: check the dissolution paperwork for a 3502, or call the FTB
-      nonprofit line at (916) 845-4171. Critically, a future entity would be a NEW
-      corporation with a NEW EIN and inherits none of this either way.
-      NOT LEGAL OR TAX ADVICE.
-
-  - id: t-019
-    milestone: m6
-    title: "Assemble the fresh-incorporation checklist, when revenue justifies it"
-    status: waiting
-    owner: null
-    updated: '2026-08-19T00:00:00Z'
-    passes: 0
-    stakes: reversible
-    depends_on: [t-003, t-013]
-    note: >
-      DO NOT PICK THIS UP YET. Silas, 2026-08-19: "We don't need to think about 501.3 or
-      whatever status until we have so much more under our belt and are legitimately
-      taking in money as an entity from users." The trigger is revenue, not a date — the
-      earlier January 1 target is withdrawn entirely, and this now depends_on t-013 (the
-      first real dollar) precisely so it cannot become actionable before the platform is
-      actually earning. If a session finds this pickable, that means live payments are
-      working, which is the point.
-
-      A NEW NAME AND A NEW ENTITY. Silas, 2026-08-19: "when we restart, it will be a new
+    WHAT WAS ESTABLISHED, for the record:
+    - DISSOLVED, finalized circa 2023-2024 (Silas's own account). Nothing to reinstate.
+    - NEVER A 501(c)(3). Federal exemption was never applied for. The SaveOneHuman
+      README's registration checklist marks only three of ten steps complete: name,
+      articles of incorporation (form arts-pb.pdf, nonprofit PUBLIC BENEFIT
+      corporation, $30, via northwestregisteredagent.com), and EIN. Never done: board,
+      bylaws + conflict-of-interest policy, initial board actions, CT-1 with the CA AG,
+      Statement of Information with the CA SOS, IRS Form 1023/1023-EZ, FTB Form 3500.
+    - NO PUBLIC IRS RECORD, and there never was one. ProPublica Nonprofit Explorer,
+      which mirrors the IRS Exempt Organizations Business Master File, returns
+      total_results: 0 — the expected result for an entity that never received a
+      determination letter, since the IRS only publishes organizations it recognized.
+      The EIN is not published anywhere because the IRS does not publish EINs for
+      non-exempt entities. The surviving public record is the CA SOS corporate filing.
+    - The name is retired anyway. Silas, 2026-08-19: "when we restart, it will be a new
       name and new nonprofit. Kind robots is the future, save one human was the seed."
-      So this is not a Save One Human revival under any framing — that name is retired,
-      the corporation is dissolved (t-018), and the future entity carries the Kind Robots
-      identity. Name availability against the CA SOS register is its own early check.
+      So no future work depends on this entity's disposition at all.
 
-      WHEN IT IS TIME: research and drafting only — no filing, no signing, no payment, no
-      agent contact with any agency. Build the dated checklist: every form, its filing
-      window, its fee, its dependencies, and which have long lead times (IRS
-      determination letters historically run months). Draft what agents CAN draft (bylaws
-      from a standard CA template, conflict-of-interest policy, initial board
-      resolutions) into projects/kind-economy/entity/, clearly marked as unreviewed
-      drafts requiring attorney review.
+    OPTIONAL, NON-BLOCKING, FOR SILAS WHENEVER HE FEELS LIKE IT — nothing waits on it
+    and he does not believe there is an issue: a CA nonprofit corporation that never
+    obtained FTB exemption accrues the $800 minimum franchise tax until a Certificate
+    of Dissolution is filed, so 2020-2024 is a few years of theoretical exposure.
+    California's remedy is FTB Form 3502, "Nonprofit Corporation Request for
+    Pre-Dissolution Tax Abatement" (R&TC section 23156), which abates unpaid qualified
+    taxes, interest, and penalties for a nonprofit certifying it never conducted
+    business and holds no assets — and with zero revenue ever, Save One Human is the
+    textbook case, so a competently handled dissolution very likely used it. If he ever
+    wants certainty: check the dissolution paperwork for a 3502, or call the FTB
+    nonprofit line at (916) 845-4171. Critically, a future entity would be a NEW
+    corporation with a NEW EIN and inherits none of this either way.
+    NOT LEGAL OR TAX ADVICE.
 
-      LEARN FROM THE SEED RATHER THAN REPEATING IT. Incorporating and stopping is exactly
-      what produced a public benefit corporation that was never exempt, never registered
-      with the AG, and quietly accruing $800/year for doing nothing. Incorporation is the
-      cheap, easy step; the exemption filings (IRS 1023/1023-EZ, FTB 3500) are the ones
-      that actually matter. Treat those as the real milestones, the SOS filing as a
-      prerequisite rather than an achievement, and do not file articles until the whole
-      path is funded and scheduled. Note the sequencing trap too: FTB Form 3500A is the
-      cheap route but requires an existing IRS determination letter, so federal exemption
-      has to come first or the fuller Form 3500 is required.
+- id: t-019
+  milestone: m6
+  title: "Assemble the fresh-incorporation checklist, when revenue justifies it"
+  status: waiting
+  owner:
+  updated: '2026-08-19T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  depends_on: [t-003, t-013]
+  note: >
+    DO NOT PICK THIS UP YET. Silas, 2026-08-19: "We don't need to think about 501.3 or
+    whatever status until we have so much more under our belt and are legitimately
+    taking in money as an entity from users." The trigger is revenue, not a date — the
+    earlier January 1 target is withdrawn entirely, and this now depends_on t-013 (the
+    first real dollar) precisely so it cannot become actionable before the platform is
+    actually earning. If a session finds this pickable, that means live payments are
+    working, which is the point.
 
-  - id: t-020
-    milestone: m6
-    title: "GATE: file the incorporation paperwork for the new nonprofit"
-    status: waiting
-    owner: null
-    updated: '2026-08-19T00:00:00Z'
-    passes: 0
-    stakes: irreversible
-    gate_human: true
-    approved_by_human: false
-    depends_on: [t-019]
-    note: >
-      FOR SILAS ONLY, with an attorney or CPA, and not for a long time. Filing with the
-      state or the IRS is irreversible and creates ongoing obligations; no agent may
-      file, sign, submit, or pay anything with any agency, ever, under any status this
-      task carries.
-      Deliberately `waiting` rather than `needs-human`: audit_human_gates.py reports
-      every needs-human task in an active project on every run, so parking a
-      years-out item there would nag Silas in each session sweep for something he has
-      explicitly said is not a current concern. `gate_human: true` and
-      `stakes: irreversible` still hold, so nothing can auto-execute it — the change is
-      purely about not manufacturing a recurring alert. Flip it back to needs-human when
-      t-019 actually completes and a filing decision is genuinely live.
-      This is a NEW nonprofit under a NEW name (Kind Robots is the future; Save One Human
-      was the seed and is dissolved), so it is a fresh incorporation, not a revival. It
-      also exists to be the place filing confirmations get recorded once they exist.
+    A NEW NAME AND A NEW ENTITY. Silas, 2026-08-19: "when we restart, it will be a new
+    name and new nonprofit. Kind robots is the future, save one human was the seed."
+    So this is not a Save One Human revival under any framing — that name is retired,
+    the corporation is dissolved (t-018), and the future entity carries the Kind Robots
+    identity. Name availability against the CA SOS register is its own early check.
+
+    WHEN IT IS TIME: research and drafting only — no filing, no signing, no payment, no
+    agent contact with any agency. Build the dated checklist: every form, its filing
+    window, its fee, its dependencies, and which have long lead times (IRS
+    determination letters historically run months). Draft what agents CAN draft (bylaws
+    from a standard CA template, conflict-of-interest policy, initial board
+    resolutions) into projects/kind-economy/entity/, clearly marked as unreviewed
+    drafts requiring attorney review.
+
+    LEARN FROM THE SEED RATHER THAN REPEATING IT. Incorporating and stopping is exactly
+    what produced a public benefit corporation that was never exempt, never registered
+    with the AG, and quietly accruing $800/year for doing nothing. Incorporation is the
+    cheap, easy step; the exemption filings (IRS 1023/1023-EZ, FTB 3500) are the ones
+    that actually matter. Treat those as the real milestones, the SOS filing as a
+    prerequisite rather than an achievement, and do not file articles until the whole
+    path is funded and scheduled. Note the sequencing trap too: FTB Form 3500A is the
+    cheap route but requires an existing IRS determination letter, so federal exemption
+    has to come first or the fuller Form 3500 is required.
+
+- id: t-020
+  milestone: m6
+  title: "GATE: file the incorporation paperwork for the new nonprofit"
+  status: waiting
+  owner:
+  updated: '2026-08-19T00:00:00Z'
+  passes: 0
+  stakes: irreversible
+  gate_human: true
+  approved_by_human: false
+  depends_on: [t-019]
+  note: >
+    FOR SILAS ONLY, with an attorney or CPA, and not for a long time. Filing with the
+    state or the IRS is irreversible and creates ongoing obligations; no agent may
+    file, sign, submit, or pay anything with any agency, ever, under any status this
+    task carries.
+    Deliberately `waiting` rather than `needs-human`: audit_human_gates.py reports
+    every needs-human task in an active project on every run, so parking a
+    years-out item there would nag Silas in each session sweep for something he has
+    explicitly said is not a current concern. `gate_human: true` and
+    `stakes: irreversible` still hold, so nothing can auto-execute it — the change is
+    purely about not manufacturing a recurring alert. Flip it back to needs-human when
+    t-019 actually completes and a filing decision is genuinely live.
+    This is a NEW nonprofit under a NEW name (Kind Robots is the future; Save One Human
+    was the seed and is dissolved), so it is a fresh incorporation, not a revival. It
+    also exists to be the place filing confirmations get recorded once they exist.

@@ -38,670 +38,831 @@ notes_from_silas: |
 milestones:
   # Completed foundation. Weight zero keeps history visible without making the
   # new product phase appear artificially complete.
-  - id: m1
-    title: "FOUNDATION — stack + skeleton"
-    weight: 0
-    status: done
-  - id: m2
-    title: "FOUNDATION — customer/property model"
-    weight: 0
-    status: done
-  - id: m3
-    title: "FOUNDATION — scheduling + route-card API"
-    weight: 0
-    status: done
-  - id: m4
-    title: "FOUNDATION — visit logging/history"
-    weight: 0
-    status: done
-  - id: m5
-    title: "FOUNDATION — billing/invoice surface"
-    weight: 0
-    status: done
-  - id: m6
-    title: "FOUNDATION — routing, dispatcher, field client"
-    weight: 0
-    status: done
+- id: m1
+  title: "FOUNDATION — stack + skeleton"
+  weight: 0
+  status: done
+- id: m2
+  title: "FOUNDATION — customer/property model"
+  weight: 0
+  status: done
+- id: m3
+  title: "FOUNDATION — scheduling + route-card API"
+  weight: 0
+  status: done
+- id: m4
+  title: "FOUNDATION — visit logging/history"
+  weight: 0
+  status: done
+- id: m5
+  title: "FOUNDATION — billing/invoice surface"
+  weight: 0
+  status: done
+- id: m6
+  title: "FOUNDATION — routing, dispatcher, field client"
+  weight: 0
+  status: done
 
-  - id: m7
-    title: "UNIFY — canonical source, identity, auth, capabilities"
-    weight: 20
-    status: done
-  - id: m8
-    title: "WEB PORTALS — public, customer, admin, dispatcher, worker"
-    weight: 25
-    status: done
-  - id: m9
-    title: "OPERATIONS — notifications, commerce promises, proof of service"
-    weight: 20
-    status: done
-  - id: m10
-    title: "MOBILE — resilient Android/iOS portals"
-    weight: 20
-    status: in-progress
-  - id: m11
-    title: "SHIP — production rollout, betas, Play Store + App Store"
-    weight: 15
-    status: not-started
+- id: m7
+  title: "UNIFY — canonical source, identity, auth, capabilities"
+  weight: 20
+  status: done
+- id: m8
+  title: "WEB PORTALS — public, customer, admin, dispatcher, worker"
+  weight: 25
+  status: done
+- id: m9
+  title: "OPERATIONS — notifications, commerce promises, proof of service"
+  weight: 20
+  status: done
+- id: m10
+  title: "MOBILE — resilient Android/iOS portals"
+  weight: 20
+  status: in-progress
+- id: m11
+  title: "SHIP — production rollout, betas, Play Store + App Store"
+  weight: 15
+  status: not-started
 
 tasks:
   # ── Completed foundation retained by ID ──────────────────────────────
-  - id: t-001
-    milestone: m1
-    title: "Propose a stack + scaffold a running skeleton"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: >
-      Hono/TypeScript self-hostable service skeleton delivered. Full historical
-      note is preserved in HISTORY.md / Git history.
+- id: t-001
+  milestone: m1
+  title: "Propose a stack + scaffold a running skeleton"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >
+    Hono/TypeScript self-hostable service skeleton delivered. Full historical
+    note is preserved in HISTORY.md / Git history.
 
-  - id: t-002
-    milestone: m2
-    title: "Design the customer + property schema"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: >
-      Initial customer/property/pet/service model delivered and later reconciled
-      with the WordPress-owned shared schema.
+- id: t-002
+  milestone: m2
+  title: "Design the customer + property schema"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >
+    Initial customer/property/pet/service model delivered and later reconciled
+    with the WordPress-owned shared schema.
 
-  - id: t-003
-    milestone: m3
-    title: "Write yard route calendar card spec"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    approved_by_human: true
-    note: >
-      Crew route-card specification delivered and approved.
+- id: t-003
+  milestone: m3
+  title: "Write yard route calendar card spec"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >
+    Crew route-card specification delivered and approved.
 
-  - id: t-004
-    milestone: m1
-    title: "Scaffold the app skeleton from STACK.md — run health-check"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: >
-      Delivered as part of the foundation scaffold.
+- id: t-004
+  milestone: m1
+  title: "Scaffold the app skeleton from STACK.md — run health-check"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >
+    Delivered as part of the foundation scaffold.
 
-  - id: t-005
-    milestone: m3
-    title: "Wire customer and route-card API routes using seed data"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-003
-    note: >
-      Customer detail and route-card API surface delivered; seed mode remains a
-      test fixture while the canonical CMS now also has a shared-database layer.
+- id: t-005
+  milestone: m3
+  title: "Wire customer and route-card API routes using seed data"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-003
+  note: >
+    Customer detail and route-card API surface delivered; seed mode remains a
+    test fixture while the canonical CMS now also has a shared-database layer.
 
-  - id: t-006
-    milestone: m6
-    title: "Write the mapped customer route planner specification"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    approved_by_human: true
-    note: >
-      Deterministic routing direction approved: self-hosted OSRM + VROOM + Leaflet,
-      with no paid routing API requirement.
+- id: t-006
+  milestone: m6
+  title: "Write the mapped customer route planner specification"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >
+    Deterministic routing direction approved: self-hosted OSRM + VROOM + Leaflet,
+    with no paid routing API requirement.
 
-  - id: t-007
-    milestone: m6
-    title: "Implement deterministic route-plan API with selected customer count"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-006
-    note: >
-      Route-plan API, OSRM integration point, Haversine fallback, and deterministic
-      nearest-neighbor + 2-opt optimizer delivered; Conductor PR #1132.
+- id: t-007
+  milestone: m6
+  title: "Implement deterministic route-plan API with selected customer count"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-006
+  note: >
+    Route-plan API, OSRM integration point, Haversine fallback, and deterministic
+    nearest-neighbor + 2-opt optimizer delivered; Conductor PR #1132.
 
-  - id: t-008
-    milestone: m6
-    title: "Build dispatcher map UI and manual route editing"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-007
-    note: >
-      Dispatcher map, route editing/locks, drafts, and local Leaflet assets delivered;
-      Conductor PR #1139.
+- id: t-008
+  milestone: m6
+  title: "Build dispatcher map UI and manual route editing"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-007
+  note: >
+    Dispatcher map, route editing/locks, drafts, and local Leaflet assets delivered;
+    Conductor PR #1139.
 
-  - id: t-009
-    milestone: m6
-    title: "Add Android-first crew route view with Linux/iOS-safe architecture"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-008
-    note: >
-      Flutter field-client working slice delivered with abstract API/storage/navigation
-      boundaries; Conductor PR #1193. Canonical copy is field-client/ in the HSS repo.
+- id: t-009
+  milestone: m6
+  title: "Add Android-first crew route view with Linux/iOS-safe architecture"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-008
+  note: >
+    Flutter field-client working slice delivered with abstract API/storage/navigation
+    boundaries; Conductor PR #1193. Canonical copy is field-client/ in the HSS repo.
 
-  - id: t-010
-    milestone: m6
-    title: "Review real-address privacy, map costs, and launch gates"
-    status: done
-    owner: null
-    passes: 0
-    stakes: irreversible
-    depends_on:
-      - t-007
-      - t-008
-      - t-009
-    gate_human: true
-    approved_by_human: true
-    updated: '2026-08-17T10:08:00Z'
-    note: >
-      PRIVACY-LAUNCH-REVIEW.md was completed previously and correctly identified
-      authentication/capabilities and geocoding as prerequisite engineering gaps.
-      2026-08-17 direction accepts the review and promotes those gaps into explicit
-      successor tasks (t-014/t-015 and t-020). Closing this review does NOT authorize
-      real-data activation, crew rollout, payment-mode changes, or app-store publication;
-      those remain explicit gates in t-028/t-029.
+- id: t-010
+  milestone: m6
+  title: "Review real-address privacy, map costs, and launch gates"
+  status: done
+  owner:
+  passes: 0
+  stakes: irreversible
+  depends_on:
+  - t-007
+  - t-008
+  - t-009
+  gate_human: true
+  approved_by_human: true
+  updated: '2026-08-17T10:08:00Z'
+  note: >
+    PRIVACY-LAUNCH-REVIEW.md was completed previously and correctly identified
+    authentication/capabilities and geocoding as prerequisite engineering gaps.
+    2026-08-17 direction accepts the review and promotes those gaps into explicit
+    successor tasks (t-014/t-015 and t-020). Closing this review does NOT authorize
+    real-data activation, crew rollout, payment-mode changes, or app-store publication;
+    those remain explicit gates in t-028/t-029.
 
-  - id: t-011
-    milestone: m1
-    title: "Polish and upgrade Humboldt Scoop CMS front-end surface"
-    status: done
-    owner: reviewer
-    passes: 0
-    stakes: reversible
-    note: >
-      Kind Robots project/tutorial surface delivered in Kind Robots PR #273.
+- id: t-011
+  milestone: m1
+  title: "Polish and upgrade Humboldt Scoop CMS front-end surface"
+  status: done
+  owner: reviewer
+  passes: 0
+  stakes: reversible
+  note: >
+    Kind Robots project/tutorial surface delivered in Kind Robots PR #273.
 
-  - id: t-012
-    milestone: m6
-    title: "Stand up self-hosted OSRM + VROOM scaffolding and pm2 startup"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: >
-      OSRM/VROOM pm2 scaffolding delivered in Conductor PR #1144. Canonical copy
-      is now humboldtscoopsolutions/cms/ops/routing/. Live host verification remains
-      operational deployment work, not a second codebase.
+- id: t-012
+  milestone: m6
+  title: "Stand up self-hosted OSRM + VROOM scaffolding and pm2 startup"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >
+    OSRM/VROOM pm2 scaffolding delivered in Conductor PR #1144. Canonical copy
+    is now humboldtscoopsolutions/cms/ops/routing/. Live host verification remains
+    operational deployment work, not a second codebase.
 
   # ── Unified HSS program ──────────────────────────────────────────────
-  - id: t-013
-    milestone: m7
-    title: "Consolidate HSS project identity and canonical source map"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    updated: '2026-08-17T10:08:00Z'
-    note: >
-      2026-08-17 consolidation: original humboldt-scoop remains finished; this slug
-      is the one ongoing HSS project; repos.yaml now points only this project at
-      silasfelinus/humboldtscoopsolutions. README/HISTORY document the supersession
-      rule so old Conductor copies cannot silently become working implementations again.
+- id: t-013
+  milestone: m7
+  title: "Consolidate HSS project identity and canonical source map"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  updated: '2026-08-17T10:08:00Z'
+  note: >
+    2026-08-17 consolidation: original humboldt-scoop remains finished; this slug
+    is the one ongoing HSS project; repos.yaml now points only this project at
+    silasfelinus/humboldtscoopsolutions. README/HISTORY document the supersession
+    rule so old Conductor copies cannot silently become working implementations again.
 
-  - id: t-014
-    milestone: m7
-    title: "Implement capability-based staff identity: admin and scooper are independent"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: 'Shipped in humboldtscoopsolutions PR #39 (schema 2.4.0). wp_hss_staff: user_id (optional WP link), name, email, phone, independent is_admin/is_scooper flags (not a mutually-exclusive enum), status for soft-deactivation. HSS_Staff accessor class. HSS_Staff::init() adds a hss_manage_business capability (granted to existing manage_options holders plus any staff row with is_admin=1) and HSS_Admin::CAP now gates on it instead of manage_options directly. New Staff admin screen to grant/revoke capabilities. cms/src/auth/staffCapabilities.ts: pure capability-mapping module for t-015 to build authentication on top of. Deliberately does not wire CMS/field-client authentication -- that is t-015''s scope. All local test suites (schema-test.php, pricing-test.php, quote-form-test.php, tools-test.sh, front-page-copy-test.sh, theme-css-test.sh, cms npm test 53/53, tsc --noEmit) pass; site/tools/verify-schema.php and schema-dry-run.sh updated by inspection but still need a live MariaDB dry run on Alexandria before production activation, same as every prior schema bump.'
-    claimed_by: scheduled-conductor-20260817T102828Z-hss-t014
-    claimed_at: '2026-08-17T10:28:29Z'
-    updated: '2026-08-17T10:37:39Z'
-    implementation_pr: 'silasfelinus/humboldtscoopsolutions#39'
+- id: t-014
+  milestone: m7
+  title: "Implement capability-based staff identity: admin and scooper are independent"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: 'Shipped in humboldtscoopsolutions PR #39 (schema 2.4.0). wp_hss_staff: user_id (optional WP link), name, email, phone,
+    independent is_admin/is_scooper flags (not a mutually-exclusive enum), status for soft-deactivation. HSS_Staff accessor
+    class. HSS_Staff::init() adds a hss_manage_business capability (granted to existing manage_options holders plus any staff
+    row with is_admin=1) and HSS_Admin::CAP now gates on it instead of manage_options directly. New Staff admin screen to
+    grant/revoke capabilities. cms/src/auth/staffCapabilities.ts: pure capability-mapping module for t-015 to build authentication
+    on top of. Deliberately does not wire CMS/field-client authentication -- that is t-015''s scope. All local test suites
+    (schema-test.php, pricing-test.php, quote-form-test.php, tools-test.sh, front-page-copy-test.sh, theme-css-test.sh, cms
+    npm test 53/53, tsc --noEmit) pass; site/tools/verify-schema.php and schema-dry-run.sh updated by inspection but still
+    need a live MariaDB dry run on Alexandria before production activation, same as every prior schema bump.'
+  claimed_by: scheduled-conductor-20260817T102828Z-hss-t014
+  claimed_at: '2026-08-17T10:28:29Z'
+  updated: '2026-08-17T10:37:39Z'
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#39'
 
-  - id: t-015
-    milestone: m7
-    title: "Authenticate the CMS and field client against staff capabilities"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-014
-    note: 'Shipped in humboldtscoopsolutions PR #42 (schema 2.5.0). wp_hss_staff_tokens (staff_id, token_hash sha256, label, created_at, last_used_at, revoked_at) + HSS_Staff_Tokens issue/revoke/resolve, managed from a new Tokens section on the Staff admin screen. wp_hss_service_visits.assigned_staff_id (default 0=unassigned) settable from the visit-scheduling form. CMS: cms/src/auth/authenticate.ts (requireCapability/requireAnyCapability Hono middleware resolving a bearer token to a staff member; DB mode hashes+queries the token table, seed/dev mode uses a small non-secret roster in seedStaff.ts) and cms/src/auth/scopeVisits.ts (pure, unit-tested scopeVisitsForStaff/mayActOnVisit). /customers*, /routes/plan, /routes/eligible, /routes/draft(s) now require the admin capability; /routes/today and POST /visits/:id/complete accept admin or scooper, with a scooper-only caller scoped to visits assigned_staff_id names them on (unassigned = admin-only, least privilege by default). Dispatcher page got a ''Set staff token'' prompt + apiFetch() helper. Field client got TokenStorage/AuthHttpClient/SettingsScreen, wired into main.dart behind --dart-define=CMS_BASE_URL (DummyRouteApi unchanged when unset). Verified: full PHP/shell test suite, cms npm test 71/71 + tsc clean, node --check on the dispatcher page''s script, php -l on every PHP file. NOT verified in this sandbox (no Flutter/Dart toolchain, no live MariaDB): flutter analyze/test, and schema-dry-run.sh''s live-database check -- pubspec.lock needs ''flutter pub get'' for the new shared_preferences dependency. humboldt-scoop-cms''s t-013->t-014->t-015 sequence is now fully shipped.'
-    claimed_by: scheduled-conductor-20260817T104723Z-hss-t015
-    claimed_at: '2026-08-17T10:47:24Z'
-    updated: '2026-08-17T11:09:37Z'
-    implementation_pr: 'silasfelinus/humboldtscoopsolutions#42'
+- id: t-015
+  milestone: m7
+  title: "Authenticate the CMS and field client against staff capabilities"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-014
+  note: 'Shipped in humboldtscoopsolutions PR #42 (schema 2.5.0). wp_hss_staff_tokens (staff_id, token_hash sha256, label,
+    created_at, last_used_at, revoked_at) + HSS_Staff_Tokens issue/revoke/resolve, managed from a new Tokens section on the
+    Staff admin screen. wp_hss_service_visits.assigned_staff_id (default 0=unassigned) settable from the visit-scheduling
+    form. CMS: cms/src/auth/authenticate.ts (requireCapability/requireAnyCapability Hono middleware resolving a bearer token
+    to a staff member; DB mode hashes+queries the token table, seed/dev mode uses a small non-secret roster in seedStaff.ts)
+    and cms/src/auth/scopeVisits.ts (pure, unit-tested scopeVisitsForStaff/mayActOnVisit). /customers*, /routes/plan, /routes/eligible,
+    /routes/draft(s) now require the admin capability; /routes/today and POST /visits/:id/complete accept admin or scooper,
+    with a scooper-only caller scoped to visits assigned_staff_id names them on (unassigned = admin-only, least privilege
+    by default). Dispatcher page got a ''Set staff token'' prompt + apiFetch() helper. Field client got TokenStorage/AuthHttpClient/SettingsScreen,
+    wired into main.dart behind --dart-define=CMS_BASE_URL (DummyRouteApi unchanged when unset). Verified: full PHP/shell
+    test suite, cms npm test 71/71 + tsc clean, node --check on the dispatcher page''s script, php -l on every PHP file. NOT
+    verified in this sandbox (no Flutter/Dart toolchain, no live MariaDB): flutter analyze/test, and schema-dry-run.sh''s
+    live-database check -- pubspec.lock needs ''flutter pub get'' for the new shared_preferences dependency. humboldt-scoop-cms''s
+    t-013->t-014->t-015 sequence is now fully shipped.'
+  claimed_by: scheduled-conductor-20260817T104723Z-hss-t015
+  claimed_at: '2026-08-17T10:47:24Z'
+  updated: '2026-08-17T11:09:37Z'
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#42'
 
-  - id: t-016
-    milestone: m8
-    title: "Unify admin, dispatcher, and scooper workflows in the website"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-014
-      - t-015
-    note: 'Shipped in humboldtscoopsolutions PR #46. Survey found wp-admin Visits already correctly gated on hss_manage_business (PR #39) and the CMS /dispatch JSON API already correctly capability-gated per PR #42 -- no change needed to either. Added GET /me (reports isAdmin/isScooper from the resolved staff token) and a role-aware My Visits Today tab on the existing /dispatch page, reusing the same GET /routes/today and POST /visits/:id/complete contracts the Flutter field client already calls. Dual-capability admin+scooper staff get both tabs and switch without a second login or app; scooper-only goes straight to My Visits; admin-only is unchanged; unauthenticated is unchanged. Tabs are explicitly a convenience layer only -- every JSON route keeps its own independent capability check. Deferred: wp-admin and the CMS remain two separate hosts with no shared navigation and no CMS-side business-management view; filed as t-031. Verified: cms npm test 72/72 (+1 new covering /me), tsc --noEmit clean, node --check clean, full PHP/shell suite re-run unaffected, live seed-mode service exercised end-to-end via curl. Not verified in this sandbox: real browser click-through, database-mode auth paths, Flutter re-run.'
-    claimed_by: scheduled-conductor-20260817T113600Z-hss-t016
-    claimed_at: '2026-08-17T11:34:45Z'
-    updated: '2026-08-17T11:44:11Z'
-    implementation_pr: 'silasfelinus/humboldtscoopsolutions#46'
+- id: t-016
+  milestone: m8
+  title: "Unify admin, dispatcher, and scooper workflows in the website"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-014
+  - t-015
+  note: 'Shipped in humboldtscoopsolutions PR #46. Survey found wp-admin Visits already correctly gated on hss_manage_business
+    (PR #39) and the CMS /dispatch JSON API already correctly capability-gated per PR #42 -- no change needed to either. Added
+    GET /me (reports isAdmin/isScooper from the resolved staff token) and a role-aware My Visits Today tab on the existing
+    /dispatch page, reusing the same GET /routes/today and POST /visits/:id/complete contracts the Flutter field client already
+    calls. Dual-capability admin+scooper staff get both tabs and switch without a second login or app; scooper-only goes straight
+    to My Visits; admin-only is unchanged; unauthenticated is unchanged. Tabs are explicitly a convenience layer only -- every
+    JSON route keeps its own independent capability check. Deferred: wp-admin and the CMS remain two separate hosts with no
+    shared navigation and no CMS-side business-management view; filed as t-031. Verified: cms npm test 72/72 (+1 new covering
+    /me), tsc --noEmit clean, node --check clean, full PHP/shell suite re-run unaffected, live seed-mode service exercised
+    end-to-end via curl. Not verified in this sandbox: real browser click-through, database-mode auth paths, Flutter re-run.'
+  claimed_by: scheduled-conductor-20260817T113600Z-hss-t016
+  claimed_at: '2026-08-17T11:34:45Z'
+  updated: '2026-08-17T11:44:11Z'
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#46'
 
-  - id: t-017
-    milestone: m7
-    title: "Build the customer invite/link identity bridge"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: 'Shipped in humboldtscoopsolutions PR #47 (schema 2.6.0). Bridges the two-identity seam explicitly: wp_hss_customers gains linked_at/linked_via; new wp_hss_customer_invites table (hash-only tokens, mirrors HSS_Staff_Tokens). HSS_Customer_Invites::issue/revoke/peek/redeem -- redeem() is the only path allowed to set an existing customer row user_id away from 0, and refuses with a named WP_Error (not a silent overwrite/duplicate) when either side of the link is already claimed elsewhere; idempotent on a retried same-pair redemption. HSS_Customers gains get()/create() (admin-entered customer, user_id=0 allowed) and a register() guard against a plain self-signup colliding with an unlinked existing row. Admin Customers screen gets an Add-a-customer form plus per-customer invite issue/revoke panel. Portal preserves an invite token through login/register and shows an explicit confirm step before linking, never automatic. Migration audited line-by-line before merge: additive-only (2 new nullable/defaulted columns, 1 new CREATE TABLE, no DROP/rewrite). Deferred: no merge tool yet for an actual conflict -- filed as t-032, logged in docs/BACKLOG.md. Verified: php -l clean repo-wide, full existing PHP/shell suite plus new site/tests/customer-link-test.php (40+ assertions) pass. NOT verified in this sandbox (no live MariaDB, no browser): a real dbDelta run and an end-to-end invite-link click-through.'
-    claimed_by: scheduled-conductor-20260817T115200Z-hss-t017
-    claimed_at: '2026-08-17T11:47:20Z'
-    updated: '2026-08-17T11:59:56Z'
-    implementation_pr: 'silasfelinus/humboldtscoopsolutions#47'
+- id: t-017
+  milestone: m7
+  title: "Build the customer invite/link identity bridge"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: 'Shipped in humboldtscoopsolutions PR #47 (schema 2.6.0). Bridges the two-identity seam explicitly: wp_hss_customers
+    gains linked_at/linked_via; new wp_hss_customer_invites table (hash-only tokens, mirrors HSS_Staff_Tokens). HSS_Customer_Invites::issue/revoke/peek/redeem
+    -- redeem() is the only path allowed to set an existing customer row user_id away from 0, and refuses with a named WP_Error
+    (not a silent overwrite/duplicate) when either side of the link is already claimed elsewhere; idempotent on a retried
+    same-pair redemption. HSS_Customers gains get()/create() (admin-entered customer, user_id=0 allowed) and a register()
+    guard against a plain self-signup colliding with an unlinked existing row. Admin Customers screen gets an Add-a-customer
+    form plus per-customer invite issue/revoke panel. Portal preserves an invite token through login/register and shows an
+    explicit confirm step before linking, never automatic. Migration audited line-by-line before merge: additive-only (2 new
+    nullable/defaulted columns, 1 new CREATE TABLE, no DROP/rewrite). Deferred: no merge tool yet for an actual conflict --
+    filed as t-032, logged in docs/BACKLOG.md. Verified: php -l clean repo-wide, full existing PHP/shell suite plus new site/tests/customer-link-test.php
+    (40+ assertions) pass. NOT verified in this sandbox (no live MariaDB, no browser): a real dbDelta run and an end-to-end
+    invite-link click-through.'
+  claimed_by: scheduled-conductor-20260817T115200Z-hss-t017
+  claimed_at: '2026-08-17T11:47:20Z'
+  updated: '2026-08-17T11:59:56Z'
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#47'
 
-  - id: t-018
-    milestone: m8
-    title: "Ship authorized-representative UI for customers and admins"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: 'PR open: silasfelinus/humboldtscoopsolutions#54. Adds HSS_Contacts::for_email(), a representative-routed portal view (render_representative_home()) checked before get_or_create() would manufacture a customer row, add/edit/remove UI in the customer dashboard (render_contacts()/contact_form()), read-only per-customer verification on the admin Customers screen (customer_contacts_section()), and wires the previously-unused HSS_Contacts::may_request_changes() into change_request handling via an on-behalf-of customer id. Verified: php -l clean repo-wide, full existing test suite green, new site/tests/representative-access-test.php (28 assertions). NOT verified in this sandbox (no live MariaDB, no browser): an actual representative login/session end-to-end.'
-    claimed_by: scheduled-conductor-20260817T1330Z-hss-t018
-    claimed_at: '2026-08-17T13:14:35Z'
-    updated: '2026-08-17T13:20:20Z'
-    implementation_pr: 'silasfelinus/humboldtscoopsolutions#54'
+- id: t-018
+  milestone: m8
+  title: "Ship authorized-representative UI for customers and admins"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: 'PR open: silasfelinus/humboldtscoopsolutions#54. Adds HSS_Contacts::for_email(), a representative-routed portal view
+    (render_representative_home()) checked before get_or_create() would manufacture a customer row, add/edit/remove UI in
+    the customer dashboard (render_contacts()/contact_form()), read-only per-customer verification on the admin Customers
+    screen (customer_contacts_section()), and wires the previously-unused HSS_Contacts::may_request_changes() into change_request
+    handling via an on-behalf-of customer id. Verified: php -l clean repo-wide, full existing test suite green, new site/tests/representative-access-test.php
+    (28 assertions). NOT verified in this sandbox (no live MariaDB, no browser): an actual representative login/session end-to-end.'
+  claimed_by: scheduled-conductor-20260817T1330Z-hss-t018
+  claimed_at: '2026-08-17T13:14:35Z'
+  updated: '2026-08-17T13:20:20Z'
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#54'
 
-  - id: t-019
-    milestone: m8
-    title: "Salvage the native quote form and REST handler; retire CF7 deliberately"
-    status: done
-    owner: null
-    passes: 0
-    stakes: reversible
-    note: '2026-08-17: shipped and merged as silasfelinus/humboldtscoopsolutions#36 BEFORE this task was authored -- the roadmap and docs/CANONICAL-SOURCES.md were both written against pre-merge main and describe it as outstanding. CF7 removed outright rather than run in parallel, per Silas: "we are in Alpha. We have no customers... Just do what is BEST, do not care about losing things if they are substandard." The form is native markup in hss-theme/front-page.php posting to /hss/v1/quote; schema 2.3.0 added yard_size, contact_method, contact_time, deodorizing, poopstakes, marketing_consent and marketing_consent_at (stamped only on actual consent). Verified against real MariaDB 10.11 + WordPress: 2.2.0 upgrades in place with exactly 7 ADD COLUMNs, idempotent on re-run; a real WP_REST_Request wrote all 13 fields with no loss; honeypot dropped, bad email 400d. quote-form-test.php now renders the real template and walks form -> get_param -> column in both directions, with both failure modes confirmed.'
-    updated: '2026-08-17T10:31:14Z'
-    implementation_pr: 'silasfelinus/humboldtscoopsolutions#36'
+- id: t-019
+  milestone: m8
+  title: "Salvage the native quote form and REST handler; retire CF7 deliberately"
+  status: done
+  owner:
+  passes: 0
+  stakes: reversible
+  note: '2026-08-17: shipped and merged as silasfelinus/humboldtscoopsolutions#36 BEFORE this task was authored -- the roadmap
+    and docs/CANONICAL-SOURCES.md were both written against pre-merge main and describe it as outstanding. CF7 removed outright
+    rather than run in parallel, per Silas: "we are in Alpha. We have no customers... Just do what is BEST, do not care about
+    losing things if they are substandard." The form is native markup in hss-theme/front-page.php posting to /hss/v1/quote;
+    schema 2.3.0 added yard_size, contact_method, contact_time, deodorizing, poopstakes, marketing_consent and marketing_consent_at
+    (stamped only on actual consent). Verified against real MariaDB 10.11 + WordPress: 2.2.0 upgrades in place with exactly
+    7 ADD COLUMNs, idempotent on re-run; a real WP_REST_Request wrote all 13 fields with no loss; honeypot dropped, bad email
+    400d. quote-form-test.php now renders the real template and walks form -> get_param -> column in both directions, with
+    both failure modes confirmed.'
+  updated: '2026-08-17T10:31:14Z'
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#36'
 
-  - id: t-020
-    milestone: m7
-    title: "Add self-hosted geocoding and a safe address-to-coordinate workflow"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: 'Shipped in humboldtscoopsolutions PR #44. Self-hosted only (Nominatim), no fallback to the public nominatim.openstreetmap.org instance anywhere in the code -- unconfigured means not geocoding, matching cms/PRIVACY-LAUNCH-REVIEW.md''s recommended direction. HSS_Config::nominatim_base_url()/is_geocoding_configured(). HSS_Geocoder calls Nominatim''s /search endpoint (wp_remote_get, timeout, WP_Error on failure, rejects 0,0 null-island). HSS_Properties::update_address() centralizes the address-changed-clears-coordinates check that was previously ad hoc at HSS_Rest::save_profile()''s one call site -- and fixes a real gap: the old check only compared address/city, missing state/postal_code. HSS_Geocode_Sweep retries missing-coordinate properties hourly via wp-cron, mirroring HSS_Notify''s proven pattern (no claim-then-stamp -- a failed geocode simply stays ''missing'' and is retried next sweep, since there''s nothing to over-notify about). cms/ops/routing/nominatim/ has checked-in pm2/Docker scaffolding to run the actual instance, sibling to the existing OSRM/VROOM scaffold -- not runnable in this sandbox, same as that scaffold. Unroutable properties remaining visibly flagged needed no change (HSS_Properties::is_routable() and the admin ''no coordinates'' pill already existed). Updated cms/PRIVACY-LAUNCH-REVIEW.md and docs/DATA-ARCHITECTURE.md -- both prerequisite gaps that doc originally flagged (auth via t-014/t-015, geocoding via this task) are now closed; real customer data import remains t-028''s separate hard gate, untouched by this task. Verified: full PHP/shell test suite plus new site/tests/geocoding-test.php, php -l on every file, node --check on the new ecosystem.config.cjs. NOT verified in this sandbox (no Docker, no outbound network): the actual Nominatim container or an end-to-end geocode against it.'
-    claimed_by: scheduled-conductor-20260817T111504Z-hss-t020
-    claimed_at: '2026-08-17T11:15:05Z'
-    updated: '2026-08-17T11:28:06Z'
-    implementation_pr: 'silasfelinus/humboldtscoopsolutions#44'
+- id: t-020
+  milestone: m7
+  title: "Add self-hosted geocoding and a safe address-to-coordinate workflow"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: 'Shipped in humboldtscoopsolutions PR #44. Self-hosted only (Nominatim), no fallback to the public nominatim.openstreetmap.org
+    instance anywhere in the code -- unconfigured means not geocoding, matching cms/PRIVACY-LAUNCH-REVIEW.md''s recommended
+    direction. HSS_Config::nominatim_base_url()/is_geocoding_configured(). HSS_Geocoder calls Nominatim''s /search endpoint
+    (wp_remote_get, timeout, WP_Error on failure, rejects 0,0 null-island). HSS_Properties::update_address() centralizes the
+    address-changed-clears-coordinates check that was previously ad hoc at HSS_Rest::save_profile()''s one call site -- and
+    fixes a real gap: the old check only compared address/city, missing state/postal_code. HSS_Geocode_Sweep retries missing-coordinate
+    properties hourly via wp-cron, mirroring HSS_Notify''s proven pattern (no claim-then-stamp -- a failed geocode simply
+    stays ''missing'' and is retried next sweep, since there''s nothing to over-notify about). cms/ops/routing/nominatim/
+    has checked-in pm2/Docker scaffolding to run the actual instance, sibling to the existing OSRM/VROOM scaffold -- not runnable
+    in this sandbox, same as that scaffold. Unroutable properties remaining visibly flagged needed no change (HSS_Properties::is_routable()
+    and the admin ''no coordinates'' pill already existed). Updated cms/PRIVACY-LAUNCH-REVIEW.md and docs/DATA-ARCHITECTURE.md
+    -- both prerequisite gaps that doc originally flagged (auth via t-014/t-015, geocoding via this task) are now closed;
+    real customer data import remains t-028''s separate hard gate, untouched by this task. Verified: full PHP/shell test suite
+    plus new site/tests/geocoding-test.php, php -l on every file, node --check on the new ecosystem.config.cjs. NOT verified
+    in this sandbox (no Docker, no outbound network): the actual Nominatim container or an end-to-end geocode against it.'
+  claimed_by: scheduled-conductor-20260817T111504Z-hss-t020
+  claimed_at: '2026-08-17T11:15:05Z'
+  updated: '2026-08-17T11:28:06Z'
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#44'
 
-  - id: t-021
-    milestone: m9
-    title: "Finish notification operations: failure UI, SMS, and en-route status"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: 'Shipped in humboldtscoopsolutions PR #55 (schema 2.7.0). Closed the three real gaps: (1) POST /visits/:id/enroute (field client "I''m on my way" button + dispatch page''s "My Visits Today" tab) -- the scooper-facing en-route trigger that never existed; (2) HSS_Notify::send_sms() texts the account holder alongside every email the wp-cron sweep already sends (was email-only); (3) a new read-only Notifications admin page lists HSS_Notify::failures(). New notified_enroute_at column backs a sweep_enroute() claim, same pattern as sweep_completed(). SMS coverage stays account-holder-only (HSS_Contacts reps have no phone/opt-in column -- flagged as a kaizen). Did not touch HSS_Sms/the admin-form enroute path per the task note.'
-    claimed_by: scheduled-conductor-20260817T-hss-t021
-    claimed_at: '2026-08-17T17:27:27Z'
-    updated: '2026-08-17T17:42:39Z'
-    implementation_pr: 'silasfelinus/humboldtscoopsolutions#55'
+- id: t-021
+  milestone: m9
+  title: "Finish notification operations: failure UI, SMS, and en-route status"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: 'Shipped in humboldtscoopsolutions PR #55 (schema 2.7.0). Closed the three real gaps: (1) POST /visits/:id/enroute
+    (field client "I''m on my way" button + dispatch page''s "My Visits Today" tab) -- the scooper-facing en-route trigger
+    that never existed; (2) HSS_Notify::send_sms() texts the account holder alongside every email the wp-cron sweep already
+    sends (was email-only); (3) a new read-only Notifications admin page lists HSS_Notify::failures(). New notified_enroute_at
+    column backs a sweep_enroute() claim, same pattern as sweep_completed(). SMS coverage stays account-holder-only (HSS_Contacts
+    reps have no phone/opt-in column -- flagged as a kaizen). Did not touch HSS_Sms/the admin-form enroute path per the task
+    note.'
+  claimed_by: scheduled-conductor-20260817T-hss-t021
+  claimed_at: '2026-08-17T17:27:27Z'
+  updated: '2026-08-17T17:42:39Z'
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#55'
 
-  - id: t-022
-    milestone: m9
-    title: "Finish advertised commerce promises: referrals, free first visit, deodorization"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: 'Implemented and merged in silasfelinus/humboldtscoopsolutions#56 (squash 03f4787). Deodorizing: checkbox on the plan-confirm screen (skipped for Yard Restoration) -> portal.js payload -> HSS_Rest::checkout() adds it as a second recurring Stripe line item (per-visit price x visits/month, since billing is flat monthly regardless of visit count) -> subscription metadata -> webhook persists it to the deodorizing column and now sums every line item into amount_cents, not just the first. Free first visit: HSS_Config::FREE_FIRST_VISIT was a boolean nothing read; now checkout() applies a subscription_data[trial_period_days] (new FREE_FIRST_VISIT_TRIAL_DAYS constant) deferring the first invoice ~one billing cycle -- Yard Restoration uses mode=payment with no subscription_data at all, so it never consumes the free visit by construction, not extra bookkeeping. Referral: registration form gained a Referred by field, HSS_Customers::register() stores it, and on the referred customers first paid-invoice webhook, HSS_Rest::maybe_credit_referral() resolves it to an existing linked customer by exact email match and credits their Stripe balance via a new HSS_Stripe::create_customer_balance_credit(); a new referral_credited_at column (additive migration, schema 2.8.0) guards against double-crediting. Anything automation cannot resolve stays visible via a new Referred by column on the admin Customers page instead of the previous "not yet automated" dead end. Found and fixed a real pre-existing bug along the way: register()s customer insert referenced a city column that does not exist on wp_hss_customers (city belongs to a property, not a customer) -- $wpdb->insert() does not validate column names, so MySQL rejected the whole statement and every self-registration was silently failing to create its customer row (phone, and now referred_by, would have been lost the same way), invisible because get_or_create() papered over it with a bare fallback row on first dashboard visit. No .github/workflows exist in this repo; verified locally -- php -l clean on all 7 touched files, full existing test suite green, new site/tests/commerce-promises-test.php (26 checks) added. No live Stripe testing was possible (no test-mode secret key in this sandbox); flagged for a real test-mode smoke test before the production rollout gate (humboldt-scoop-cms/t-028).'
-    claimed_by: 20260817T184300Z-hss-t022
-    claimed_at: '2026-08-17T18:43:10Z'
-    updated: '2026-08-17T18:51:48Z'
-    implementation_pr: 'silasfelinus/humboldtscoopsolutions#56'
+- id: t-022
+  milestone: m9
+  title: "Finish advertised commerce promises: referrals, free first visit, deodorization"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: 'Implemented and merged in silasfelinus/humboldtscoopsolutions#56 (squash 03f4787). Deodorizing: checkbox on the plan-confirm
+    screen (skipped for Yard Restoration) -> portal.js payload -> HSS_Rest::checkout() adds it as a second recurring Stripe
+    line item (per-visit price x visits/month, since billing is flat monthly regardless of visit count) -> subscription metadata
+    -> webhook persists it to the deodorizing column and now sums every line item into amount_cents, not just the first. Free
+    first visit: HSS_Config::FREE_FIRST_VISIT was a boolean nothing read; now checkout() applies a subscription_data[trial_period_days]
+    (new FREE_FIRST_VISIT_TRIAL_DAYS constant) deferring the first invoice ~one billing cycle -- Yard Restoration uses mode=payment
+    with no subscription_data at all, so it never consumes the free visit by construction, not extra bookkeeping. Referral:
+    registration form gained a Referred by field, HSS_Customers::register() stores it, and on the referred customers first
+    paid-invoice webhook, HSS_Rest::maybe_credit_referral() resolves it to an existing linked customer by exact email match
+    and credits their Stripe balance via a new HSS_Stripe::create_customer_balance_credit(); a new referral_credited_at column
+    (additive migration, schema 2.8.0) guards against double-crediting. Anything automation cannot resolve stays visible via
+    a new Referred by column on the admin Customers page instead of the previous "not yet automated" dead end. Found and fixed
+    a real pre-existing bug along the way: register()s customer insert referenced a city column that does not exist on wp_hss_customers
+    (city belongs to a property, not a customer) -- $wpdb->insert() does not validate column names, so MySQL rejected the
+    whole statement and every self-registration was silently failing to create its customer row (phone, and now referred_by,
+    would have been lost the same way), invisible because get_or_create() papered over it with a bare fallback row on first
+    dashboard visit. No .github/workflows exist in this repo; verified locally -- php -l clean on all 7 touched files, full
+    existing test suite green, new site/tests/commerce-promises-test.php (26 checks) added. No live Stripe testing was possible
+    (no test-mode secret key in this sandbox); flagged for a real test-mode smoke test before the production rollout gate
+    (humboldt-scoop-cms/t-028).'
+  claimed_by: 20260817T184300Z-hss-t022
+  claimed_at: '2026-08-17T18:43:10Z'
+  updated: '2026-08-17T18:51:48Z'
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#56'
 
-  - id: t-023
-    milestone: m9
-    title: "Add opt-in proof-of-service photos with retention and offline-safe upload"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-015
-    note: 'Built end to end: wp_hss_visit_photos table (schema 2.12.0, LONGBLOB storage since the CMS runs on a different host from WordPress with no shared filesystem), CMS POST /visits/:id/photos with live consent re-check, authenticated per-photo REST viewing (not a public media-library URL), a daily retention sweep (180 days) plus admin delete-on-request, and a field-client capture/compress/offline-queue flow gated on photosOptIn. Full storage/retention/access reasoning in docs/DATA-ARCHITECTURE.md (humboldtscoopsolutions repo). Flutter changes are unverified by a toolchain (none available in this sandbox, same standing limitation as every prior Flutter task here) -- documented in field-client/README.md.'
-    claimed_by: hss-photos-2026-08-18T0030
-    claimed_at: '2026-08-18T00:28:58Z'
-    updated: '2026-08-18T00:53:41Z'
-    implementation_pr: 'silasfelinus/humboldtscoopsolutions#66'
+- id: t-023
+  milestone: m9
+  title: "Add opt-in proof-of-service photos with retention and offline-safe upload"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-015
+  note: 'Built end to end: wp_hss_visit_photos table (schema 2.12.0, LONGBLOB storage since the CMS runs on a different host
+    from WordPress with no shared filesystem), CMS POST /visits/:id/photos with live consent re-check, authenticated per-photo
+    REST viewing (not a public media-library URL), a daily retention sweep (180 days) plus admin delete-on-request, and a
+    field-client capture/compress/offline-queue flow gated on photosOptIn. Full storage/retention/access reasoning in docs/DATA-ARCHITECTURE.md
+    (humboldtscoopsolutions repo). Flutter changes are unverified by a toolchain (none available in this sandbox, same standing
+    limitation as every prior Flutter task here) -- documented in field-client/README.md.'
+  claimed_by: hss-photos-2026-08-18T0030
+  claimed_at: '2026-08-18T00:28:58Z'
+  updated: '2026-08-18T00:53:41Z'
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#66'
 
-  - id: t-024
-    milestone: m10
-    title: "Make field work durable offline and sync safely after reconnect"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-015
-    note: >
-      Replace MemoryRouteStorage with durable local storage, cache assigned route/visit data,
-      queue completion/notes/photo writes, and reconcile safely after connectivity returns.
-      Preserve the abstract storage/API boundaries already built into the Flutter client.
-    claimed_by: 20260818T043409-hscms-t024
-    claimed_at: '2026-08-18T04:34:10Z'
-    updated: '2026-08-18T04:45:35Z'
-    implementation_pr: 'silasfelinus/humboldtscoopsolutions#72'
+- id: t-024
+  milestone: m10
+  title: "Make field work durable offline and sync safely after reconnect"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-015
+  note: >
+    Replace MemoryRouteStorage with durable local storage, cache assigned route/visit data,
+    queue completion/notes/photo writes, and reconcile safely after connectivity returns.
+    Preserve the abstract storage/API boundaries already built into the Flutter client.
+  claimed_by: 20260818T043409-hscms-t024
+  claimed_at: '2026-08-18T04:34:10Z'
+  updated: '2026-08-18T04:45:35Z'
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#72'
 
-  - id: t-025
-    milestone: m10
-    title: "Build essentialized role-aware mobile portals for customer, admin, and worker"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-014
-      - t-015
-      - t-017
-    note: 'Implemented and merged silasfelinus/humboldtscoopsolutions#75 (squash 94259a2) via an isolated background worker agent. Evolves the Flutter field client from worker-only into a role-aware app shell: Worker (unchanged, t-024 offline queue untouched) + Admin (new, read-only over existing admin-gated endpoints: today routes, customer list/detail) + Customer (new) toolsets in one app/one login -- a dual-capability staff member gets both toolsets from one /me resolution, no second login. New customer-facing auth surface on the CMS (none existed before): wp_hss_customer_tokens table (schema 2.14.0), customerAuth.ts/customerScope.ts mirroring the staff bearer-token contract via a structurally separate table/resolve path (a customer token can never satisfy a staff capability check or vice versa), GET /customer/me, GET /customer/visits(+/:id) (404 not 403 for another customers visit; customer-safe field shape), POST /customer/requests (writes to the pre-existing wp_hss_change_requests table -- zero new admin surface needed), admin-gated POST /customers/:id/app-token for issuance. Tests include the required cross-customer-isolation cases (customer A vs B visit, both list and by-id, both directions) -- 111/111 CMS tests pass, tsc clean. No Flutter toolchain in sandbox (standing limitation, t-021/t-023/t-024 precedent) -- hand-reviewed carefully, new Flutter unit tests written but unrun; merged on hand-verification alone matching prior precedent. Verified merge myself via GitHub MCP before closing: PR #75 state=closed/merged=true, 26 files +2315/-76, matches PR description, no unexpected reverted lines. Filed 4 follow-up tasks (t-036..t-039) for explicitly deferred scope: admin write actions on phone, token list/revoke UI, WP admin-side issuance UI, and customer self-registration.'
-    claimed_by: 20260818T0555Z-hscms-t025-conductor-sweep
-    claimed_at: '2026-08-18T05:50:11Z'
-    updated: '2026-08-18T06:12:28Z'
-    implementation_pr: 'silasfelinus/humboldtscoopsolutions#75'
+- id: t-025
+  milestone: m10
+  title: "Build essentialized role-aware mobile portals for customer, admin, and worker"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-014
+  - t-015
+  - t-017
+  note: 'Implemented and merged silasfelinus/humboldtscoopsolutions#75 (squash 94259a2) via an isolated background worker
+    agent. Evolves the Flutter field client from worker-only into a role-aware app shell: Worker (unchanged, t-024 offline
+    queue untouched) + Admin (new, read-only over existing admin-gated endpoints: today routes, customer list/detail) + Customer
+    (new) toolsets in one app/one login -- a dual-capability staff member gets both toolsets from one /me resolution, no second
+    login. New customer-facing auth surface on the CMS (none existed before): wp_hss_customer_tokens table (schema 2.14.0),
+    customerAuth.ts/customerScope.ts mirroring the staff bearer-token contract via a structurally separate table/resolve path
+    (a customer token can never satisfy a staff capability check or vice versa), GET /customer/me, GET /customer/visits(+/:id)
+    (404 not 403 for another customers visit; customer-safe field shape), POST /customer/requests (writes to the pre-existing
+    wp_hss_change_requests table -- zero new admin surface needed), admin-gated POST /customers/:id/app-token for issuance.
+    Tests include the required cross-customer-isolation cases (customer A vs B visit, both list and by-id, both directions)
+    -- 111/111 CMS tests pass, tsc clean. No Flutter toolchain in sandbox (standing limitation, t-021/t-023/t-024 precedent)
+    -- hand-reviewed carefully, new Flutter unit tests written but unrun; merged on hand-verification alone matching prior
+    precedent. Verified merge myself via GitHub MCP before closing: PR #75 state=closed/merged=true, 26 files +2315/-76, matches
+    PR description, no unexpected reverted lines. Filed 4 follow-up tasks (t-036..t-039) for explicitly deferred scope: admin
+    write actions on phone, token list/revoke UI, WP admin-side issuance UI, and customer self-registration.'
+  claimed_by: 20260818T0555Z-hscms-t025-conductor-sweep
+  claimed_at: '2026-08-18T05:50:11Z'
+  updated: '2026-08-18T06:12:28Z'
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#75'
 
-  - id: t-026
-    milestone: m10
-    title: "Finish Android production beta and Play Store readiness"
-    status: needs-human
-    owner: worker
-    passes: 0
-    stakes: outward-facing
-    depends_on:
-      - t-024
-      - t-025
-    note: >
-      FOR SILAS: All the software-only prep is done and merged
-      (silasfelinus/humboldtscoopsolutions#79, field-client/). It contains a
-      release-signing scaffold (build.gradle.kts reads a git-ignored
-      key.properties, falls back to debug signing with a loud warning when
-      absent), a fixed real bug (the release manifest was missing the
-      INTERNET permission -- every network call would have silently failed
-      on a release build), a minimal crash logger, a version bump to
-      1.0.0+1, and three drafted docs under field-client/docs/:
-      PLAY-STORE-READINESS.md (the full numbered checklist below, in detail),
-      PRIVACY-POLICY-DRAFT.md, and PLAY-STORE-LISTING-DRAFT.md.
+- id: t-026
+  milestone: m10
+  title: "Finish Android production beta and Play Store readiness"
+  status: needs-human
+  owner: worker
+  passes: 0
+  stakes: outward-facing
+  depends_on:
+  - t-024
+  - t-025
+  note: >
+    FOR SILAS: All the software-only prep is done and merged
+    (silasfelinus/humboldtscoopsolutions#79, field-client/). It contains a
+    release-signing scaffold (build.gradle.kts reads a git-ignored
+    key.properties, falls back to debug signing with a loud warning when
+    absent), a fixed real bug (the release manifest was missing the
+    INTERNET permission -- every network call would have silently failed
+    on a release build), a minimal crash logger, a version bump to
+    1.0.0+1, and three drafted docs under field-client/docs/:
+    PLAY-STORE-READINESS.md (the full numbered checklist below, in detail),
+    PRIVACY-POLICY-DRAFT.md, and PLAY-STORE-LISTING-DRAFT.md.
 
-      TO APPROVE / DO: this task can't reach done without you, because
-      actual submission needs things only you can create --
-      (1) a Play Console developer account + the $25 fee, (2) run
-      `keytool -genkey` locally per key.properties.example and keep the
-      real keystore safe (losing it loses the ability to update the same
-      listing later -- opt into Google Play App Signing to make this
-      resettable), (3) publish PRIVACY-POLICY-DRAFT.md's text at a real URL
-      (e.g. a new page on the existing WordPress site) and fill in the
-      placeholders, (4) review/edit the listing copy draft, (5) capture
-      real screenshots on a device/emulator, (6) fill in Play Console's
-      Data Safety and content-rating forms, (7) run
-      `flutter build appbundle --release` once key.properties exists to
-      produce the actual release candidate, then upload/submit. Once you've
-      done these (or want to fast-track/skip any), set status: done (and
-      approved_by_human: true if you want the record to reflect an explicit
-      go-ahead) -- that unblocks t-027 (iOS) and t-029 (actual store
-      publish) to proceed on the same footing.
+    TO APPROVE / DO: this task can't reach done without you, because
+    actual submission needs things only you can create --
+    (1) a Play Console developer account + the $25 fee, (2) run
+    `keytool -genkey` locally per key.properties.example and keep the
+    real keystore safe (losing it loses the ability to update the same
+    listing later -- opt into Google Play App Signing to make this
+    resettable), (3) publish PRIVACY-POLICY-DRAFT.md's text at a real URL
+    (e.g. a new page on the existing WordPress site) and fill in the
+    placeholders, (4) review/edit the listing copy draft, (5) capture
+    real screenshots on a device/emulator, (6) fill in Play Console's
+    Data Safety and content-rating forms, (7) run
+    `flutter build appbundle --release` once key.properties exists to
+    produce the actual release candidate, then upload/submit. Once you've
+    done these (or want to fast-track/skip any), set status: done (and
+    approved_by_human: true if you want the record to reflect an explicit
+    go-ahead) -- that unblocks t-027 (iOS) and t-029 (actual store
+    publish) to proceed on the same footing.
 
-      iOS (t-027) is a separate task, untouched here.
-    claimed_by: 20260818T082745Z-hsscms-t026
-    claimed_at: '2026-08-18T08:28:51Z'
-    updated: '2026-08-18T08:38:13Z'
-    soft_gate: false
-    implementation_pr: 'silasfelinus/humboldtscoopsolutions#79'
+    iOS (t-027) is a separate task, untouched here.
+  claimed_by: 20260818T082745Z-hsscms-t026
+  claimed_at: '2026-08-18T08:28:51Z'
+  updated: '2026-08-18T08:38:13Z'
+  soft_gate: false
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#79'
 
-  - id: t-027
-    milestone: m10
-    title: "Finish iOS production beta and App Store readiness"
-    status: needs-human
-    owner: worker
-    passes: 0
-    stakes: outward-facing
-    depends_on:
-      - t-024
-      - t-025
-    note: >
-      FOR SILAS: All the software-only prep is done and merged
-      (silasfelinus/humboldtscoopsolutions#80, field-client/). It contains an
-      iOS Info.plist audit (result: no missing usage-description keys --
-      camera-only permission was already correct from t-023, no location/
-      background-mode/custom-URL-scheme usage exists to need one), a
-      release-signing scaffold (Release.xcconfig optionally includes a
-      git-ignored Config/Release.xcconfig for a real DEVELOPMENT_TEAM/manual
-      cert+profile, mirroring the Android key.properties pattern), and three
-      docs under field-client/docs/: APP-STORE-READINESS.md (the full numbered
-      checklist below, in detail), a PRIVACY-POLICY-DRAFT.md update (now covers
-      both platforms under one URL instead of Android-only wording), and
-      APP-STORE-LISTING-DRAFT.md (name/subtitle/description/keywords/category
-      plus an App Privacy data-collection table).
+- id: t-027
+  milestone: m10
+  title: "Finish iOS production beta and App Store readiness"
+  status: needs-human
+  owner: worker
+  passes: 0
+  stakes: outward-facing
+  depends_on:
+  - t-024
+  - t-025
+  note: >
+    FOR SILAS: All the software-only prep is done and merged
+    (silasfelinus/humboldtscoopsolutions#80, field-client/). It contains an
+    iOS Info.plist audit (result: no missing usage-description keys --
+    camera-only permission was already correct from t-023, no location/
+    background-mode/custom-URL-scheme usage exists to need one), a
+    release-signing scaffold (Release.xcconfig optionally includes a
+    git-ignored Config/Release.xcconfig for a real DEVELOPMENT_TEAM/manual
+    cert+profile, mirroring the Android key.properties pattern), and three
+    docs under field-client/docs/: APP-STORE-READINESS.md (the full numbered
+    checklist below, in detail), a PRIVACY-POLICY-DRAFT.md update (now covers
+    both platforms under one URL instead of Android-only wording), and
+    APP-STORE-LISTING-DRAFT.md (name/subtitle/description/keywords/category
+    plus an App Privacy data-collection table).
 
-      TO APPROVE / DO: this task cannot reach done without you, because actual
-      submission needs things only you can create -- (1) enroll in the Apple
-      Developer Program ($99/year, your own Apple ID), (2) create the app
-      record in App Store Connect, (3) set up real signing (Xcode automatic
-      signing + DEVELOPMENT_TEAM in a local ios/Config/Release.xcconfig, or
-      manual cert/profile -- never commit that file), (4) publish
-      PRIVACY-POLICY-DRAFT.md's text at a real URL (same one used for Android),
-      (5) review/edit the listing copy draft including the App Privacy table,
-      (6) capture real screenshots on a device/Simulator from a Mac with Xcode,
-      (7) complete App Store Connect's App Privacy and age-rating
-      questionnaires, (8) run `flutter build ipa --release` once signing exists
-      to produce the release archive, then (9) upload via Xcode
-      Organizer/Transporter, create a TestFlight beta, and submit for App
-      Review. Once you have done these (or want to fast-track/skip any), set
-      status: done (and approved_by_human: true if you want the record to
-      reflect an explicit go-ahead) -- that unblocks t-029 (actual store
-      publish) to proceed on the same footing as Android.
+    TO APPROVE / DO: this task cannot reach done without you, because actual
+    submission needs things only you can create -- (1) enroll in the Apple
+    Developer Program ($99/year, your own Apple ID), (2) create the app
+    record in App Store Connect, (3) set up real signing (Xcode automatic
+    signing + DEVELOPMENT_TEAM in a local ios/Config/Release.xcconfig, or
+    manual cert/profile -- never commit that file), (4) publish
+    PRIVACY-POLICY-DRAFT.md's text at a real URL (same one used for Android),
+    (5) review/edit the listing copy draft including the App Privacy table,
+    (6) capture real screenshots on a device/Simulator from a Mac with Xcode,
+    (7) complete App Store Connect's App Privacy and age-rating
+    questionnaires, (8) run `flutter build ipa --release` once signing exists
+    to produce the release archive, then (9) upload via Xcode
+    Organizer/Transporter, create a TestFlight beta, and submit for App
+    Review. Once you have done these (or want to fast-track/skip any), set
+    status: done (and approved_by_human: true if you want the record to
+    reflect an explicit go-ahead) -- that unblocks t-029 (actual store
+    publish) to proceed on the same footing as Android.
 
-      Android (t-026) already reached this same needs-human state and is a
-      separate task.
-    claimed_by: 2026-08-18T092755Z-hss-t027-
-    claimed_at: '2026-08-18T09:27:56Z'
-    updated: '2026-08-18T09:36:49Z'
-    soft_gate: false
-    implementation_pr: 'silasfelinus/humboldtscoopsolutions#80'
+    Android (t-026) already reached this same needs-human state and is a
+    separate task.
+  claimed_by: 2026-08-18T092755Z-hss-t027-
+  claimed_at: '2026-08-18T09:27:56Z'
+  updated: '2026-08-18T09:36:49Z'
+  soft_gate: false
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#80'
 
-  - id: t-028
-    milestone: m11
-    title: "Approve and execute real-data / production crew rollout"
-    status: needs-human
-    owner: null
-    passes: 0
-    stakes: irreversible
-    gate_human: true
-    approved_by_human: false
-    depends_on:
-      - t-014
-      - t-015
-      - t-020
-    note: >
-      Hard launch gate. Before switching from test/seed behavior to real customer addresses,
-      production credentials, or real crew assignments, verify auth boundaries, backups,
-      retention/deletion/export, TLS, geocoding, schema dry run/migrations, and rollback.
-      Development may proceed around this gate; crossing it requires explicit human approval.
+- id: t-028
+  milestone: m11
+  title: "Approve and execute real-data / production crew rollout"
+  status: needs-human
+  owner:
+  passes: 0
+  stakes: irreversible
+  gate_human: true
+  approved_by_human: false
+  depends_on:
+  - t-014
+  - t-015
+  - t-020
+  note: >
+    FOR SILAS: Hard launch gate. Before switching from test/seed behavior to real customer addresses, production credentials,
+    or real crew assignments, verify auth boundaries, backups, retention/deletion/export, TLS, geocoding, schema dry run/migrations,
+    and rollback. Development may proceed around this gate; crossing it requires explicit human approval.
 
-  - id: t-029
-    milestone: m11
-    title: "Publish HSS Android and iOS apps to the public stores"
-    status: needs-human
-    owner: null
-    passes: 0
-    stakes: outward-facing
-    gate_human: true
-    approved_by_human: false
-    depends_on:
-      - t-026
-      - t-027
-      - t-028
-    note: >
-      Final outward-facing gate: submit the production-ready Android and iOS builds, complete
-      store-account/review requirements, address review feedback, and verify the public releases.
-      The project is not finished until both portals are actually available in their stores.
+- id: t-029
+  milestone: m11
+  title: "Publish HSS Android and iOS apps to the public stores"
+  status: needs-human
+  owner:
+  passes: 0
+  stakes: outward-facing
+  gate_human: true
+  approved_by_human: false
+  depends_on:
+  - t-026
+  - t-027
+  - t-028
+  note: >
+    FOR SILAS: Final outward-facing gate: submit the production-ready Android and iOS builds, complete store-account/review
+    requirements, address review feedback, and verify the public releases. The project is not finished until both portals
+    are actually available in their stores.
 
-  - id: t-030
-    milestone: m8
-    title: "Finish remaining public-site polish inside the unified HSS project"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: 'Merged silasfelinus/humboldtscoopsolutions#63 (squash 191844b). Scoped this open-ended ''public-site polish'' task to a concrete stale-WordPress-leftover fix: deleted wp-content/themes/humboldt-scoop-solutions/, the pre-hss-theme-port duplicate that site/tests already documented in comments as retired/dead-pending-deletion and that had zero commits since PR #15 while hss-theme shipped three feature PRs since. Fixed site/README.md, which had the two themes backwards (called the dead theme v2.0/active and hss-theme v1.0/earlier) and pointed at a nonexistent docs/INVENTORY.md. Verified: php -l clean on every PHP file, all 12 site/tests/*.php and *.sh suites pass (repo has no CI). t-030 note describes an open-ended polish scope (mobile layout, accessibility, performance, copy/SEO) -- leaving status ready for a future cycle would misrepresent this as fully done, so closing this specific slice as done and letting a future session open a fresh polish task for the remaining areas if warranted.'
-    claimed_by: sched-20260817T232900Z-hss-t030
-    claimed_at: '2026-08-17T23:28:02Z'
-    updated: '2026-08-17T23:31:10Z'
-    implementation_pr: 'silasfelinus/humboldtscoopsolutions#63'
+- id: t-030
+  milestone: m8
+  title: "Finish remaining public-site polish inside the unified HSS project"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: 'Merged silasfelinus/humboldtscoopsolutions#63 (squash 191844b). Scoped this open-ended ''public-site polish'' task
+    to a concrete stale-WordPress-leftover fix: deleted wp-content/themes/humboldt-scoop-solutions/, the pre-hss-theme-port
+    duplicate that site/tests already documented in comments as retired/dead-pending-deletion and that had zero commits since
+    PR #15 while hss-theme shipped three feature PRs since. Fixed site/README.md, which had the two themes backwards (called
+    the dead theme v2.0/active and hss-theme v1.0/earlier) and pointed at a nonexistent docs/INVENTORY.md. Verified: php -l
+    clean on every PHP file, all 12 site/tests/*.php and *.sh suites pass (repo has no CI). t-030 note describes an open-ended
+    polish scope (mobile layout, accessibility, performance, copy/SEO) -- leaving status ready for a future cycle would misrepresent
+    this as fully done, so closing this specific slice as done and letting a future session open a fresh polish task for the
+    remaining areas if warranted.'
+  claimed_by: sched-20260817T232900Z-hss-t030
+  claimed_at: '2026-08-17T23:28:02Z'
+  updated: '2026-08-17T23:31:10Z'
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#63'
 
-  - id: t-031
-    milestone: m8
-    title: "Add an admin business-management view inside the CMS, and/or shared navigation between wp-admin and the CMS host"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: 'Shipped silasfelinus/humboldtscoopsolutions#62 (squash 4bf160b): CMS HSS_WP_ADMIN_URL powers a Business management link on the dispatch page (admin-capable staff only, via GET /me); wp-admin HSS_CMS_URL adds an Open Dispatch / Field Console link to every Scoop Solutions page via the shared open() header, plus a Settings status row. Both optional/independent, silent no-op when unset or malformed. wp-admins existing Scoop Solutions menu already covers the business-management screens the task named, so this took the shared-navigation half of the tasks and/or rather than duplicating a working screen. Verified: cms npm test 81/81 (7 new), tsc clean; php site/tests/cms-nav-test.php 14/14 (new) plus all 10 pre-existing site/tests/*.php suites clean; php -l clean.'
-    claimed_by: sched-20260817T222934Z-t031
-    claimed_at: '2026-08-17T22:29:35Z'
-    updated: '2026-08-17T22:41:07Z'
-    implementation_pr: 'silasfelinus/humboldtscoopsolutions#62'
+- id: t-031
+  milestone: m8
+  title: "Add an admin business-management view inside the CMS, and/or shared navigation between wp-admin and the CMS host"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: 'Shipped silasfelinus/humboldtscoopsolutions#62 (squash 4bf160b): CMS HSS_WP_ADMIN_URL powers a Business management
+    link on the dispatch page (admin-capable staff only, via GET /me); wp-admin HSS_CMS_URL adds an Open Dispatch / Field
+    Console link to every Scoop Solutions page via the shared open() header, plus a Settings status row. Both optional/independent,
+    silent no-op when unset or malformed. wp-admins existing Scoop Solutions menu already covers the business-management screens
+    the task named, so this took the shared-navigation half of the tasks and/or rather than duplicating a working screen.
+    Verified: cms npm test 81/81 (7 new), tsc clean; php site/tests/cms-nav-test.php 14/14 (new) plus all 10 pre-existing
+    site/tests/*.php suites clean; php -l clean.'
+  claimed_by: sched-20260817T222934Z-t031
+  claimed_at: '2026-08-17T22:29:35Z'
+  updated: '2026-08-17T22:41:07Z'
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#62'
 
-  - id: t-032
-    milestone: m7
-    title: "Build an admin merge tool for two customer records that represent the same person"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: 'Merged silasfelinus/humboldtscoopsolutions#57. Added HSS_Customers::merge_preview()/merge() plus a Merge Customers admin screen: side-by-side preview, then confirm which record survives. Moves properties/pets/contacts/invites by customer_id and rewrites customer_id+user_id together on subscriptions/invoices/service_visits/change_requests (portal history queries key on user_id). Refuses when both rows already carry a different real WordPress account or Stripe customer. Schema 2.9.0 adds merged_into/merged_at/merged_by; absorbed rows kept for history, excluded from identity lookups via merged_into IS NULL. site/tests/customer-merge-test.php passes; no live WordPress/MariaDB in this sandbox to exercise the migration itself.'
-    updated: '2026-08-17T20:37:12Z'
-    claimed_by: claude-20260817T203702Z-hss-t032
-    implementation_pr: 'silasfelinus/humboldtscoopsolutions#57'
+- id: t-032
+  milestone: m7
+  title: "Build an admin merge tool for two customer records that represent the same person"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: 'Merged silasfelinus/humboldtscoopsolutions#57. Added HSS_Customers::merge_preview()/merge() plus a Merge Customers
+    admin screen: side-by-side preview, then confirm which record survives. Moves properties/pets/contacts/invites by customer_id
+    and rewrites customer_id+user_id together on subscriptions/invoices/service_visits/change_requests (portal history queries
+    key on user_id). Refuses when both rows already carry a different real WordPress account or Stripe customer. Schema 2.9.0
+    adds merged_into/merged_at/merged_by; absorbed rows kept for history, excluded from identity lookups via merged_into IS
+    NULL. site/tests/customer-merge-test.php passes; no live WordPress/MariaDB in this sandbox to exercise the migration itself.'
+  updated: '2026-08-17T20:37:12Z'
+  claimed_by: claude-20260817T203702Z-hss-t032
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#57'
 
-  - id: t-033
-    milestone: m8
-    title: "Extend site/tools/portal-roles-check.php to cover the representative identity"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: 'Implemented and merged silasfelinus/humboldtscoopsolutions#58 (squash fc5d5e0). Added a fifth fixture user to site/tools/portal-roles-check.php (hss_fixture_rep) with two HSS_Contacts rows: one representing the client fixture''s already-created customer (a real linked WP user id), one representing an offline-signup customer inserted directly (user_id=0). Asserts the representative label renders with neither staff tools nor the ordinary dashboard, the linked account''s section shows the change-request form (''Manage Your Plan''), the offline account''s section is routed to a human instead, and the render creates no customer/property row -- the same write-guard the other four identities already have. Also truncates wp_hss_contacts alongside the existing three fixture tables so the tool stays idempotent across runs. Verified: php -l clean, and the existing static suites (representative-access-test.php, portal-test.php) still pass unchanged. No live WordPress/MariaDB available in this sandbox to run portal-roles-check.php itself -- same documented limitation as t-018/t-032; the new section closely mirrors the four identities already verified against a real WordPress and reuses HSS_Customers/HSS_Contacts methods already covered elsewhere. Repo has no CI workflows configured; merged on local verification per established precedent (t-021/t-022/t-032).'
-    claimed_by: 2026-08-17-sched-t033
-    claimed_at: '2026-08-17T21:27:27Z'
-    updated: '2026-08-17T21:34:02Z'
-    implementation_pr: 'silasfelinus/humboldtscoopsolutions#58'
+- id: t-033
+  milestone: m8
+  title: "Extend site/tools/portal-roles-check.php to cover the representative identity"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: 'Implemented and merged silasfelinus/humboldtscoopsolutions#58 (squash fc5d5e0). Added a fifth fixture user to site/tools/portal-roles-check.php
+    (hss_fixture_rep) with two HSS_Contacts rows: one representing the client fixture''s already-created customer (a real
+    linked WP user id), one representing an offline-signup customer inserted directly (user_id=0). Asserts the representative
+    label renders with neither staff tools nor the ordinary dashboard, the linked account''s section shows the change-request
+    form (''Manage Your Plan''), the offline account''s section is routed to a human instead, and the render creates no customer/property
+    row -- the same write-guard the other four identities already have. Also truncates wp_hss_contacts alongside the existing
+    three fixture tables so the tool stays idempotent across runs. Verified: php -l clean, and the existing static suites
+    (representative-access-test.php, portal-test.php) still pass unchanged. No live WordPress/MariaDB available in this sandbox
+    to run portal-roles-check.php itself -- same documented limitation as t-018/t-032; the new section closely mirrors the
+    four identities already verified against a real WordPress and reuses HSS_Customers/HSS_Contacts methods already covered
+    elsewhere. Repo has no CI workflows configured; merged on local verification per established precedent (t-021/t-022/t-032).'
+  claimed_by: 2026-08-17-sched-t033
+  claimed_at: '2026-08-17T21:27:27Z'
+  updated: '2026-08-17T21:34:02Z'
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#58'
 
-  - id: t-034
-    milestone: m9
-    title: "Give HSS_Contacts its own phone/sms_opt_in so a representative can opt into SMS"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: 'Implemented and merged silasfelinus/humboldtscoopsolutions#59 (squash 09698b7). Schema 2.10.0 adds an additive sms_opt_in column to wp_hss_contacts (dbDelta, default off); HSS_Contacts::create() defaults it to 0. Refactored HSS_Sms to extract the shared visit-lifecycle message text into send_visit_message(), so the existing visit_status() (account holder) and the new visit_status_to($visit, $phone) (an already-opted-in phone, caller checks consent) send identical text through one place. HSS_Notify::send_sms() now also texts every representative scoped to the visit''s property (HSS_Contacts::for_property(), same scoping the email fan-out already uses) with can_receive_updates, sms_opt_in, and a phone on file, skipping a representative who shares the account holder''s own number so nobody is texted twice for one visit. Portal UI: contact_form() gained an sms_opt_in checkbox gated on HSS_Config::is_sms_configured(), same as the customer''s own; contact_save persists it. Verified: php -l clean on every touched file; schema-test.php extended with checks for the new column/default; new representative-sms-test.php (15 checks, same static-source discipline as representative-access-test.php -- no live WordPress/MariaDB/SMS provider in this sandbox) asserts the representative''s consent is actually wired into the send path, not merely stored; every *.php file in site/tests/ still exits 0; tools-test.sh passes unchanged. Repo has no CI workflows configured; merged on local verification per established precedent (t-021/t-022/t-032/t-033).'
-    claimed_by: 2026-08-17-sched-t034
-    claimed_at: '2026-08-17T21:34:53Z'
-    updated: '2026-08-17T21:40:57Z'
-    implementation_pr: 'silasfelinus/humboldtscoopsolutions#59'
+- id: t-034
+  milestone: m9
+  title: "Give HSS_Contacts its own phone/sms_opt_in so a representative can opt into SMS"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: 'Implemented and merged silasfelinus/humboldtscoopsolutions#59 (squash 09698b7). Schema 2.10.0 adds an additive sms_opt_in
+    column to wp_hss_contacts (dbDelta, default off); HSS_Contacts::create() defaults it to 0. Refactored HSS_Sms to extract
+    the shared visit-lifecycle message text into send_visit_message(), so the existing visit_status() (account holder) and
+    the new visit_status_to($visit, $phone) (an already-opted-in phone, caller checks consent) send identical text through
+    one place. HSS_Notify::send_sms() now also texts every representative scoped to the visit''s property (HSS_Contacts::for_property(),
+    same scoping the email fan-out already uses) with can_receive_updates, sms_opt_in, and a phone on file, skipping a representative
+    who shares the account holder''s own number so nobody is texted twice for one visit. Portal UI: contact_form() gained
+    an sms_opt_in checkbox gated on HSS_Config::is_sms_configured(), same as the customer''s own; contact_save persists it.
+    Verified: php -l clean on every touched file; schema-test.php extended with checks for the new column/default; new representative-sms-test.php
+    (15 checks, same static-source discipline as representative-access-test.php -- no live WordPress/MariaDB/SMS provider
+    in this sandbox) asserts the representative''s consent is actually wired into the send path, not merely stored; every
+    *.php file in site/tests/ still exits 0; tools-test.sh passes unchanged. Repo has no CI workflows configured; merged on
+    local verification per established precedent (t-021/t-022/t-032/t-033).'
+  claimed_by: 2026-08-17-sched-t034
+  claimed_at: '2026-08-17T21:34:53Z'
+  updated: '2026-08-17T21:40:57Z'
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#59'
 
-  - id: t-035
-    milestone: m8
-    title: "Extract a render_header_extras() hook before HSS_Admin::open() grows a second cross-host widget"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: >
-      Kaizen from t-031: open() now does two jobs -- render the shared page header
-      AND conditionally render the wp-admin -> CMS nav link (HSS_Config::cms_url()).
-      That is fine for one widget, but the next thing that wants a presence on every
-      Scoop Solutions page (a notice banner, a second cross-host link, etc.) should
-      not just get appended to open() as a third inline block. Small, low-priority --
-      only worth doing once/if a second such widget is actually proposed.
-    claimed_by: 20260818T072856-hsscms-t035
-    claimed_at: '2026-08-18T07:28:57Z'
-    updated: '2026-08-18T07:30:23Z'
-    implementation_pr: 'silasfelinus/humboldtscoopsolutions#77'
+- id: t-035
+  milestone: m8
+  title: "Extract a render_header_extras() hook before HSS_Admin::open() grows a second cross-host widget"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-031: open() now does two jobs -- render the shared page header
+    AND conditionally render the wp-admin -> CMS nav link (HSS_Config::cms_url()).
+    That is fine for one widget, but the next thing that wants a presence on every
+    Scoop Solutions page (a notice banner, a second cross-host link, etc.) should
+    not just get appended to open() as a third inline block. Small, low-priority --
+    only worth doing once/if a second such widget is actually proposed.
+  claimed_by: 20260818T072856-hsscms-t035
+  claimed_at: '2026-08-18T07:28:57Z'
+  updated: '2026-08-18T07:30:23Z'
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#77'
 
-  - id: t-036
-    milestone: m10
-    title: Add admin write actions to the mobile portal (route drafting/planning, editing a customer)
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-025
-    note: >
-      Deferred from t-025 (silasfelinus/humboldtscoopsolutions#75): the mobile
-      Admin toolset shipped read-only (today's routes, customer list/detail) over
-      already-existing admin-gated CMS endpoints. Route drafting/planning and
-      editing a customer record are dispatcher/desktop-shaped workflows that
-      t-025's own task note flagged as likely out of scope for "worth doing on a
-      phone" -- revisit deliberately rather than assuming they belong here; may
-      turn out route drafting genuinely wants the desktop dispatcher UI to stay
-      canonical and this task closes as "not needed."
-    claimed_by: 20260818T074022-hsscms-t036
-    claimed_at: '2026-08-18T07:40:23Z'
-    updated: '2026-08-18T07:53:44Z'
-    implementation_pr: 'silasfelinus/humboldtscoopsolutions#78'
+- id: t-036
+  milestone: m10
+  title: Add admin write actions to the mobile portal (route drafting/planning, editing a customer)
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-025
+  note: >
+    Deferred from t-025 (silasfelinus/humboldtscoopsolutions#75): the mobile
+    Admin toolset shipped read-only (today's routes, customer list/detail) over
+    already-existing admin-gated CMS endpoints. Route drafting/planning and
+    editing a customer record are dispatcher/desktop-shaped workflows that
+    t-025's own task note flagged as likely out of scope for "worth doing on a
+    phone" -- revisit deliberately rather than assuming they belong here; may
+    turn out route drafting genuinely wants the desktop dispatcher UI to stay
+    canonical and this task closes as "not needed."
+  claimed_by: 20260818T074022-hsscms-t036
+  claimed_at: '2026-08-18T07:40:23Z'
+  updated: '2026-08-18T07:53:44Z'
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#78'
 
-  - id: t-037
-    milestone: m10
-    title: Add admin UI to list and revoke issued customer app-access tokens
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-025
-    note: 'Delivered: HSS_Customer_Tokens (for_customer/revoke), an App tokens column + section on the Customers admin screen (list + nonce-checked revoke), and site/tests/customer-token-admin-test.php. Issuance stays on the CMS''s own admin-gated endpoint; a WordPress-side issuance UI is t-038.'
-    claimed_by: 20260818T062811Z-hsscms-t037
-    claimed_at: '2026-08-18T06:28:11Z'
-    updated: '2026-08-18T06:34:07Z'
-    implementation_pr: 'silasfelinus/humboldtscoopsolutions#76'
+- id: t-037
+  milestone: m10
+  title: Add admin UI to list and revoke issued customer app-access tokens
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-025
+  note: 'Delivered: HSS_Customer_Tokens (for_customer/revoke), an App tokens column + section on the Customers admin screen
+    (list + nonce-checked revoke), and site/tests/customer-token-admin-test.php. Issuance stays on the CMS''s own admin-gated
+    endpoint; a WordPress-side issuance UI is t-038.'
+  claimed_by: 20260818T062811Z-hsscms-t037
+  claimed_at: '2026-08-18T06:28:11Z'
+  updated: '2026-08-18T06:34:07Z'
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#76'
 
-  - id: t-038
-    milestone: m10
-    title: Add WordPress admin-side UI for customer app-token issuance
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-025
-    note: 'Built HSS_Customer_Tokens::issue() plus a WordPress admin issue form on the Customers screen, mirroring staff_tokens_section()''s shape exactly (one-time plaintext reveal, nonce-checked POST handler, same admin capability gate as page_customers()/page_staff()). Investigation found t-037 (merged, PR #76) had already built list/revoke and explicitly deferred issue() to this task, so the real gap was narrower than the original scope. issue() writes only to wp_hss_customer_tokens (never wp_hss_staff_tokens), uses the same SHA-256-of-32-random-bytes scheme as cms/src/auth/customerTokenHash.ts, so a token from either the WP screen or the CMS''s own admin-gated endpoint (t-025) resolves identically. Full 15-file/4-script site/tests/ suite passes (0 failures), including the extended customer-token-admin-test.php (29 checks). Merged silasfelinus/humboldtscoopsolutions#81 (squash 36afef2).'
-    claimed_by: 2026-08-18T094355Z-hss-t038-19cd9261
-    claimed_at: '2026-08-18T09:43:56Z'
-    updated: '2026-08-18T09:50:05Z'
-    implementation_pr: 'silasfelinus/humboldtscoopsolutions#81'
+- id: t-038
+  milestone: m10
+  title: Add WordPress admin-side UI for customer app-token issuance
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-025
+  note: 'Built HSS_Customer_Tokens::issue() plus a WordPress admin issue form on the Customers screen, mirroring staff_tokens_section()''s
+    shape exactly (one-time plaintext reveal, nonce-checked POST handler, same admin capability gate as page_customers()/page_staff()).
+    Investigation found t-037 (merged, PR #76) had already built list/revoke and explicitly deferred issue() to this task,
+    so the real gap was narrower than the original scope. issue() writes only to wp_hss_customer_tokens (never wp_hss_staff_tokens),
+    uses the same SHA-256-of-32-random-bytes scheme as cms/src/auth/customerTokenHash.ts, so a token from either the WP screen
+    or the CMS''s own admin-gated endpoint (t-025) resolves identically. Full 15-file/4-script site/tests/ suite passes (0
+    failures), including the extended customer-token-admin-test.php (29 checks). Merged silasfelinus/humboldtscoopsolutions#81
+    (squash 36afef2).'
+  claimed_by: 2026-08-18T094355Z-hss-t038-19cd9261
+  claimed_at: '2026-08-18T09:43:56Z'
+  updated: '2026-08-18T09:50:05Z'
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#81'
 
-  - id: t-039
-    milestone: m10
-    title: Design and build customer self-registration for mobile app access
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-025
-    note: >
-      Deferred from t-025 (silasfelinus/humboldtscoopsolutions#75): v1 shipped
-      admin-issued customer tokens only (an admin taps "send app access" for a
-      customer via the new POST /customers/:id/app-token endpoint), matching the
-      task's "at least one path end-to-end" guidance. A customer self-service
-      registration/first-login flow (verifying they are who they claim to be
-      against an existing wp_hss_customers row, likely via the existing
-      HSS_Customer_Invites-style hash-token-in-a-link pattern from t-017) is a
-      real design question, not just a UI addition -- worth its own scoped pass
-      rather than folding into t-025's already-large diff.
-    claimed_by: 2026-08-18T102727Z-hss-t039-
-    claimed_at: '2026-08-18T10:27:28Z'
-    updated: '2026-08-18T10:49:46Z'
-    implementation_pr: 'silasfelinus/humboldtscoopsolutions#82'
+- id: t-039
+  milestone: m10
+  title: Design and build customer self-registration for mobile app access
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-025
+  note: >
+    Deferred from t-025 (silasfelinus/humboldtscoopsolutions#75): v1 shipped
+    admin-issued customer tokens only (an admin taps "send app access" for a
+    customer via the new POST /customers/:id/app-token endpoint), matching the
+    task's "at least one path end-to-end" guidance. A customer self-service
+    registration/first-login flow (verifying they are who they claim to be
+    against an existing wp_hss_customers row, likely via the existing
+    HSS_Customer_Invites-style hash-token-in-a-link pattern from t-017) is a
+    real design question, not just a UI addition -- worth its own scoped pass
+    rather than folding into t-025's already-large diff.
+  claimed_by: 2026-08-18T102727Z-hss-t039-
+  claimed_at: '2026-08-18T10:27:28Z'
+  updated: '2026-08-18T10:49:46Z'
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#82'
+goal: Keep Humboldt Scoop Solutions’ website maintainable through its CMS while accurately presenting services, leads, 
+  operations, and brand voice.

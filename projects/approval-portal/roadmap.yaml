@@ -18,99 +18,101 @@ notes_from_silas: |
   House style if it helps: Nuxt/Vue/TS, but pick what's fastest to ship a read-only v1.
 
 milestones:
-  - id: m1
-    title: "Read-only dashboard: projects, progress %, tasks, pitches"
-    weight: 25
-    status: not-started
-  - id: m2
-    title: "Pitch voting: approve/reject writes back to the repo"
-    weight: 25
-    status: not-started
-  - id: m3
-    title: "Update confirmation: see open PRs, approve-merge or reject"
-    weight: 20
-    status: not-started
-  - id: m4
-    title: "Rollback: one-click revert of a merged change"
-    weight: 15
-    status: not-started
-  - id: m5
-    title: "Login + deploy (gated for Silas to approve going live)"
-    weight: 15
-    status: not-started
+- id: m1
+  title: "Read-only dashboard: projects, progress %, tasks, pitches"
+  weight: 25
+  status: not-started
+- id: m2
+  title: "Pitch voting: approve/reject writes back to the repo"
+  weight: 25
+  status: not-started
+- id: m3
+  title: "Update confirmation: see open PRs, approve-merge or reject"
+  weight: 20
+  status: not-started
+- id: m4
+  title: "Rollback: one-click revert of a merged change"
+  weight: 15
+  status: not-started
+- id: m5
+  title: "Login + deploy (gated for Silas to approve going live)"
+  weight: 15
+  status: not-started
 
 tasks:
-  - id: t-001
-    milestone: m1
-    title: "Spec the portal: data sources, screens, and repo-write strategy"
-    status: done
-    owner: worker
-    updated: "2026-06-30T00:00:00Z"
-    passes: 0
-    stakes: reversible
-    gate_human: true
-    approved_by_human: true
-    note: >
-      Wrote projects/approval-portal/SPEC.md covering data sources, m1-m5 screens,
-      GitHub/repo write strategy, safety boundaries, and open decisions for Silas.
-      Approved by Silas 2026-06-30. t-002 now unblocked.
+- id: t-001
+  milestone: m1
+  title: "Spec the portal: data sources, screens, and repo-write strategy"
+  status: done
+  owner: worker
+  updated: "2026-06-30T00:00:00Z"
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  approved_by_human: true
+  note: >
+    Wrote projects/approval-portal/SPEC.md covering data sources, m1-m5 screens,
+    GitHub/repo write strategy, safety boundaries, and open decisions for Silas.
+    Approved by Silas 2026-06-30. t-002 now unblocked.
 
-  - id: t-002
-    milestone: m1
-    title: "Build read-only dashboard from repo data"
-    status: done
-    owner: worker
-    updated: "2026-06-30T08:30:00Z"
-    passes: 0
-    stakes: reversible
-    depends_on: t-001
-    note: >
-      Delivered via PR #58: Nuxt 3 app with /api/projects and /api/project/[slug]
-      endpoints reading real roadmap/override/priority files; app.vue dashboard
-      listing all active projects with progress %, task counts by status, and
-      per-project detail (milestones, tasks grouped by status, control direction,
-      gates, dependencies). Read-only, runs locally, no deploy. Merged to main.
-      Worker connector failed at PR-open step but content was complete and merged
-      by Silas. Reviewed and marked done by Reviewer 2026-06-30.
+- id: t-002
+  milestone: m1
+  title: "Build read-only dashboard from repo data"
+  status: done
+  owner: worker
+  updated: "2026-06-30T08:30:00Z"
+  passes: 0
+  stakes: reversible
+  depends_on: t-001
+  note: >
+    Delivered via PR #58: Nuxt 3 app with /api/projects and /api/project/[slug]
+    endpoints reading real roadmap/override/priority files; app.vue dashboard
+    listing all active projects with progress %, task counts by status, and
+    per-project detail (milestones, tasks grouped by status, control direction,
+    gates, dependencies). Read-only, runs locally, no deploy. Merged to main.
+    Worker connector failed at PR-open step but content was complete and merged
+    by Silas. Reviewed and marked done by Reviewer 2026-06-30.
 
-  - id: t-003
-    milestone: m2
-    title: "Pitch voting that writes approve/reject back to the repo"
-    status: done
-    owner: worker
-    updated: "2026-06-30T00:00:00Z"
-    passes: 0
-    stakes: outward-facing
-    depends_on: t-002
-    note: >
-      Already live in kind_robots: conductor-page.vue brainstorm section has
-      approve/pass/undo pitch voting wired to /api/conductor/pitch-vote.post.ts.
-      No work needed here — this task is done in kind_robots, not as a standalone app.
+- id: t-003
+  milestone: m2
+  title: "Pitch voting that writes approve/reject back to the repo"
+  status: done
+  owner: worker
+  updated: "2026-06-30T00:00:00Z"
+  passes: 0
+  stakes: outward-facing
+  depends_on: t-002
+  note: >
+    Already live in kind_robots: conductor-page.vue brainstorm section has
+    approve/pass/undo pitch voting wired to /api/conductor/pitch-vote.post.ts.
+    No work needed here — this task is done in kind_robots, not as a standalone app.
 
-  - id: t-004
-    milestone: m4
-    title: "One-click rollback via git revert"
-    status: blocked
-    owner: null
-    passes: 0
-    stakes: outward-facing
-    gate_human: true
-    approved_by_human: false
-    note: >
-      Redirected to kind_robots. Any rollback UI belongs in conductor-page.vue,
-      not in a standalone approval-portal app. Create a task in projects/kind-robots/roadmap.yaml
-      when Silas is ready to build this. Ends needs-human until that decision is made.
+- id: t-004
+  milestone: m4
+  title: "One-click rollback via git revert"
+  status: blocked
+  owner:
+  passes: 0
+  stakes: outward-facing
+  gate_human: true
+  approved_by_human: false
+  note: >
+    Redirected to kind_robots. Any rollback UI belongs in conductor-page.vue,
+    not in a standalone approval-portal app. Create a task in projects/kind-robots/roadmap.yaml
+    when Silas is ready to build this. Ends needs-human until that decision is made.
 
-  - id: t-005
-    milestone: m5
-    title: "Plan auth + deploy (do NOT deploy)"
-    status: blocked
-    owner: null
-    passes: 0
-    stakes: irreversible
-    gate_human: true
-    approved_by_human: false
-    note: >
-      Redirected to kind_robots. Auth and deploy for the workspace belong to kind_robots,
-      not a separate app. Create a task in projects/kind-robots/roadmap.yaml when ready.
-      Ends needs-human until Silas decides to proceed.
+- id: t-005
+  milestone: m5
+  title: "Plan auth + deploy (do NOT deploy)"
+  status: blocked
+  owner:
+  passes: 0
+  stakes: irreversible
+  gate_human: true
+  approved_by_human: false
+  note: >
+    Redirected to kind_robots. Auth and deploy for the workspace belong to kind_robots,
+    not a separate app. Create a task in projects/kind-robots/roadmap.yaml when ready.
+    Ends needs-human until Silas decides to proceed.
+goal: Provide a clear human-review surface for inspecting, approving, redirecting, or rejecting gated Conductor work 
+  without editing roadmap YAML by hand.

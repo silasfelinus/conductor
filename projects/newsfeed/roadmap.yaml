@@ -18,707 +18,808 @@ notes_from_silas: |
   from unrelated behavior, and keep factual reliability separate from political bias.
 
 milestones:
-  - id: m1
-    title: "SHAPE — define the modular feed contract"
-    weight: 20
-    status: not-started
+- id: m1
+  title: "SHAPE — define the modular feed contract"
+  weight: 20
+  status: not-started
 
-  - id: m2
-    title: "BUILD — ship the functional homepage feed"
-    weight: 60
-    status: not-started
+- id: m2
+  title: "BUILD — ship the functional homepage feed"
+  weight: 60
+  status: not-started
 
-  - id: m3
-    title: "POLISH & SHIP — customization, resilience, and UX"
-    weight: 20
-    status: not-started
+- id: m3
+  title: "POLISH & SHIP — customization, resilience, and UX"
+  weight: 20
+  status: not-started
 
 tasks:
-  - id: t-001
-    milestone: m1
-    title: "Audit the homepage and write the implementation brief"
-    status: done
-    owner: null
-    updated: 2026-07-14T12:00:00Z
-    passes: 0
-    stakes: reversible
-    note: >
-      Done. Audited pages/[...slug].vue + content/index.md (homepage is a Nuxt Content
-      doc rendering :user-manager -> user-dashboard.vue, which is where settings actually
-      live today), stores/userStore.ts + Prisma User columns (settings persistence),
-      stores/helpers/dashboardHelper.ts (wonder.newsfeed tab already registered, route
-      /newsfeed, image asset missing on disk), stores/helpers/tutorialCards.ts (no
-      top-level wonder channel yet), content/newsfeed.md + content/channels/lab/newsfeed.md
-      (already-stubbed routes), components/conductor/newsfeed-page.vue (separate pitch/
-      status page, not the real feature), server/api/conductor/prs.get.ts (fetch pattern
-      to model aggregation on; no caching layer exists yet anywhere in server/), and
-      components/dreams/dream-card.vue (best existing feed-card visual model). Findings
-      written into DESIGN-BRIEF.md's new "Audit findings" section with exact paths.
-      BUILD task notes (t-003 through t-006) refined below with these specifics.
+- id: t-001
+  milestone: m1
+  title: "Audit the homepage and write the implementation brief"
+  status: done
+  owner:
+  updated: 2026-07-14T12:00:00Z
+  passes: 0
+  stakes: reversible
+  note: >
+    Done. Audited pages/[...slug].vue + content/index.md (homepage is a Nuxt Content
+    doc rendering :user-manager -> user-dashboard.vue, which is where settings actually
+    live today), stores/userStore.ts + Prisma User columns (settings persistence),
+    stores/helpers/dashboardHelper.ts (wonder.newsfeed tab already registered, route
+    /newsfeed, image asset missing on disk), stores/helpers/tutorialCards.ts (no
+    top-level wonder channel yet), content/newsfeed.md + content/channels/lab/newsfeed.md
+    (already-stubbed routes), components/conductor/newsfeed-page.vue (separate pitch/
+    status page, not the real feature), server/api/conductor/prs.get.ts (fetch pattern
+    to model aggregation on; no caching layer exists yet anywhere in server/), and
+    components/dreams/dream-card.vue (best existing feed-card visual model). Findings
+    written into DESIGN-BRIEF.md's new "Audit findings" section with exact paths.
+    BUILD task notes (t-003 through t-006) refined below with these specifics.
 
-  - id: t-002
-    milestone: m1
-    title: "Confirm scope with Silas"
-    status: done
-    owner: null
-    passes: 0
-    stakes: reversible
-    approved_by_human: true
-    note: >
-      FOR SILAS: soft checkpoint only; development is not blocked. Review
-      projects/newsfeed/DESIGN-BRIEF.md and BIAS-CONTROLS.md, then redirect any feed
-      categories, homepage behavior, perspective vocabulary, or customization expectations.
-      Add a note here with changes, then set approved_by_human: true and status: done when satisfied.
+- id: t-002
+  milestone: m1
+  title: "Confirm scope with Silas"
+  status: done
+  owner:
+  passes: 0
+  stakes: reversible
+  note: >
+    FOR SILAS: soft checkpoint only; development is not blocked. Review
+    projects/newsfeed/DESIGN-BRIEF.md and BIAS-CONTROLS.md, then redirect any feed
+    categories, homepage behavior, perspective vocabulary, or customization expectations.
+    Add a note here with changes, then set approved_by_human: true and status: done when satisfied.
 
-      CONFIRMED 2026-07-25: Silas — "confirmed, but I did have a request that
-      we add a default image (or ten) to the newsfeed front end when we have
-      no image (on KR). there's a lot of blank images and so the feed is a
-      sea of empty boxes." Filed as its own task, newsfeed/t-022, so it
-      doesn't get lost inside this checkpoint's note.
-    soft_gate: true
+    CONFIRMED 2026-07-25: Silas — "confirmed, but I did have a request that
+    we add a default image (or ten) to the newsfeed front end when we have
+    no image (on KR). there's a lot of blank images and so the feed is a
+    sea of empty boxes." Filed as its own task, newsfeed/t-022, so it
+    doesn't get lost inside this checkpoint's note.
+  soft_gate: true
 
-  - id: t-003
-    milestone: m2
-    title: "Move homepage settings into a dedicated settings section"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-001
-    note: 'Audit (t-001): the homepage is content/index.md, currently rendering :user-manager (components/user/user-manager.vue -> user-dashboard.vue, which embeds user-panel.vue''s settings form, avatar upload, theme picker, cache-clear, galleries). No settings live in a dedicated route today. Relocate user-manager''s "dashboard" tab so it''s reachable at the existing /dashboard route (dashboardConfigs.user is already registered) instead of the root, preserving all current controls. Settings data itself stays on the Prisma User model via stores/userStore.ts / server/api/users — do not add a new settings table. Connector-backed Worker claim (conductor-burst-hourly rotation, 2026-07-18): kind_robots PR https://github.com/silasfelinus/kind_robots/pull/391 swaps content/index.md''s body from :user-manager to a new :home-feed-placeholder component (components/home/home-feed-placeholder.vue) and drops the stale dashboardKey/dashboardTab binding on content/channels/home/dashboard.md (the Home channel''s Dashboard nav-tab entry, route /). content/dashboard.md (route /dashboard) is untouched -- it already rendered the identical :user-manager, so every current control (avatars/friends/achievements/ themes/chats/logout) is preserved exactly where it already lived, and the header avatar widget (user-picture.vue) already links there. vue-tsc, eslint, and prettier all clean on the touched files. Could not get a working browser preview of either / or /dashboard in this sandbox (both showed the stock Nuxt welcome page pre- and post-change -- a DB/session limitation, not caused by this diff). PR CI is the verification gate before merge.'
-    claimed_by: claude-conductor-burst-20260718T-newsfeed
-    claimed_at: '2026-07-18T09:07:43Z'
-    updated: '2026-07-18T09:20:07Z'
+- id: t-003
+  milestone: m2
+  title: "Move homepage settings into a dedicated settings section"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-001
+  note: 'Audit (t-001): the homepage is content/index.md, currently rendering :user-manager (components/user/user-manager.vue
+    -> user-dashboard.vue, which embeds user-panel.vue''s settings form, avatar upload, theme picker, cache-clear, galleries).
+    No settings live in a dedicated route today. Relocate user-manager''s "dashboard" tab so it''s reachable at the existing
+    /dashboard route (dashboardConfigs.user is already registered) instead of the root, preserving all current controls. Settings
+    data itself stays on the Prisma User model via stores/userStore.ts / server/api/users — do not add a new settings table.
+    Connector-backed Worker claim (conductor-burst-hourly rotation, 2026-07-18): kind_robots PR https://github.com/silasfelinus/kind_robots/pull/391
+    swaps content/index.md''s body from :user-manager to a new :home-feed-placeholder component (components/home/home-feed-placeholder.vue)
+    and drops the stale dashboardKey/dashboardTab binding on content/channels/home/dashboard.md (the Home channel''s Dashboard
+    nav-tab entry, route /). content/dashboard.md (route /dashboard) is untouched -- it already rendered the identical :user-manager,
+    so every current control (avatars/friends/achievements/ themes/chats/logout) is preserved exactly where it already lived,
+    and the header avatar widget (user-picture.vue) already links there. vue-tsc, eslint, and prettier all clean on the touched
+    files. Could not get a working browser preview of either / or /dashboard in this sandbox (both showed the stock Nuxt welcome
+    page pre- and post-change -- a DB/session limitation, not caused by this diff). PR CI is the verification gate before
+    merge.'
+  claimed_by: claude-conductor-burst-20260718T-newsfeed
+  claimed_at: '2026-07-18T09:07:43Z'
+  updated: '2026-07-18T09:20:07Z'
 
-  - id: t-004
-    milestone: m2
-    title: "Create the feed registry and recommended presets"
-    status: done
-    owner: reviewer
-    passes: 0
-    stakes: reversible
-    depends_on: t-001
-    note: >
-      DONE 2026-07-16: kind_robots PR #318 merged (squash a4d0bd29). Added
-      stores/helpers/newsfeed.ts (typed FeedSourceDefinition/FeedDefinition/
-      NewsFeedItem/PerspectiveMode/PerspectiveWeights contracts + the
-      FEED_SOURCES and FEED_DEFINITIONS registries covering the six starter
-      presets) and stores/feedPreferenceStore.ts (enabled feeds + order,
-      perspective mode/weights, label visibility, contrast preference,
-      persisted via the existing safeGetLocalStorage/safeSetLocalStorage
-      pattern, no DB table). Verified: eslint + prettier clean, full-project
-      vue-tsc --noEmit 0 errors, all 3 kind_robots CI checks green (GitGuardian,
-      TypeScript, Contract verifiers). Source URLs are unverified candidates
-      (`verified: false`) — this session's sandbox 403'd every outbound feed-URL
-      probe attempted, so live reachability is deferred to t-005/t-013.
-      Original spec: Add typed, modular feed definitions for AI news, activism,
-      malaria activism, AI gaming, AI model creation, and developer tips. Keep
-      source adapters, feed metadata, defaults, user selection, and optional
-      ranking dimensions separate. Prefer configuration and Pinia state over
-      hard-coded branching in components. Audit (t-001): new feedPreferenceStore
-      should follow the safeGetLocalStorage/safeSetLocalStorage client-persistence
-      pattern used by stores/navStore.ts and stores/socialStore.ts (no
-      Pinia-persistence plugin exists in this repo) rather than a database table.
-    claimed_by: claude-conductor-burst-20260716-newsfeed004
-    claimed_at: '2026-07-16T17:06:59Z'
-    updated: '2026-07-16T17:35:00Z'
+- id: t-004
+  milestone: m2
+  title: "Create the feed registry and recommended presets"
+  status: done
+  owner: reviewer
+  passes: 0
+  stakes: reversible
+  depends_on: t-001
+  note: >
+    DONE 2026-07-16: kind_robots PR #318 merged (squash a4d0bd29). Added
+    stores/helpers/newsfeed.ts (typed FeedSourceDefinition/FeedDefinition/
+    NewsFeedItem/PerspectiveMode/PerspectiveWeights contracts + the
+    FEED_SOURCES and FEED_DEFINITIONS registries covering the six starter
+    presets) and stores/feedPreferenceStore.ts (enabled feeds + order,
+    perspective mode/weights, label visibility, contrast preference,
+    persisted via the existing safeGetLocalStorage/safeSetLocalStorage
+    pattern, no DB table). Verified: eslint + prettier clean, full-project
+    vue-tsc --noEmit 0 errors, all 3 kind_robots CI checks green (GitGuardian,
+    TypeScript, Contract verifiers). Source URLs are unverified candidates
+    (`verified: false`) — this session's sandbox 403'd every outbound feed-URL
+    probe attempted, so live reachability is deferred to t-005/t-013.
+    Original spec: Add typed, modular feed definitions for AI news, activism,
+    malaria activism, AI gaming, AI model creation, and developer tips. Keep
+    source adapters, feed metadata, defaults, user selection, and optional
+    ranking dimensions separate. Prefer configuration and Pinia state over
+    hard-coded branching in components. Audit (t-001): new feedPreferenceStore
+    should follow the safeGetLocalStorage/safeSetLocalStorage client-persistence
+    pattern used by stores/navStore.ts and stores/socialStore.ts (no
+    Pinia-persistence plugin exists in this repo) rather than a database table.
+  claimed_by: claude-conductor-burst-20260716-newsfeed004
+  claimed_at: '2026-07-16T17:06:59Z'
+  updated: '2026-07-16T17:35:00Z'
 
-  - id: t-013
-    milestone: m3
-    title: "Batch-verify FEED_SOURCES reachability once the aggregation pipeline exists"
-    status: done
-    owner: reviewer
-    passes: 0
-    stakes: reversible
-    depends_on: t-005
-    note: >
-      Kaizen from t-004: every FEED_SOURCES entry in stores/helpers/newsfeed.ts
-      is currently an unverified candidate (verified: false) because the
-      sandbox's egress allowlist 403'd every outbound feed-URL probe attempted
-      during t-004 (TechCrunch, WHO, MarkTechPost, Kotaku). Once t-005 wires the
-      real server-side aggregation pipeline, batch-fetch every source once,
-      record verified: true/false per entry, and swap out any that 404/403 for
-      a working replacement rather than discovering broken feeds one at a time
-      in production.
+- id: t-013
+  milestone: m3
+  title: "Batch-verify FEED_SOURCES reachability once the aggregation pipeline exists"
+  status: done
+  owner: reviewer
+  passes: 0
+  stakes: reversible
+  depends_on: t-005
+  note: >
+    Kaizen from t-004: every FEED_SOURCES entry in stores/helpers/newsfeed.ts
+    is currently an unverified candidate (verified: false) because the
+    sandbox's egress allowlist 403'd every outbound feed-URL probe attempted
+    during t-004 (TechCrunch, WHO, MarkTechPost, Kotaku). Once t-005 wires the
+    real server-side aggregation pipeline, batch-fetch every source once,
+    record verified: true/false per entry, and swap out any that 404/403 for
+    a working replacement rather than discovering broken feeds one at a time
+    in production.
 
-      RAN 2026-07-19 (~20:10-20:20 UTC, claude-conductor-agentrun-20260719T201329Z):
-      batch-fetched all 15 FEED_SOURCES entries via the live pipeline (GET
-      /api/newsfeed on production through the Vercel MCP connector). 9 resolved
-      cleanly first try. 6 were 404/403: globalcitizen, devex-news,
-      gatesfoundation-ideas, kotaku-ai, pcgamer-ai, anthropic-news. Researched
-      and confirmed (via fetchSourceItems directly, real items returned) working
-      replacement URLs for 2 -- globalcitizen -> /en/content/feed/, kotaku-ai ->
-      /tag/ai/feed. Checked several URL patterns for the other 4 with no working
-      RSS endpoint found (devex-news 403s on every path tried -- bot-blocked, not
-      a wrong path; gatesfoundation-ideas and anthropic-news appear to have no
-      RSS at all; pcgamer-ai only resolves a site-wide off-topic feed) --
-      documented what was tried inline per source in newsfeed.ts rather than
-      guessing, matching the existing devex-news perspective-rating precedent.
-      Net: 11/15 sources verified: true (up from 0/15). Verified: eslint,
-      prettier --check, npm run test (vue-tsc, 0 errors), and the existing
-      utils/scripts/verifyNewsfeedAggregation.ts regression test all clean.
-      kind_robots PR #554 (branch claude/vigilant-edison-jcxp06): all 3 CI
-      checks green (TypeScript, Contract verifiers, GitGuardian) -- merged
-      squash 6bd0de82.
-    claimed_by: claude-conductor-agentrun-20260719T201329Z
-    claimed_at: '2026-07-19T20:13:30Z'
-    updated: '2026-07-19T20:13:30Z'
+    RAN 2026-07-19 (~20:10-20:20 UTC, claude-conductor-agentrun-20260719T201329Z):
+    batch-fetched all 15 FEED_SOURCES entries via the live pipeline (GET
+    /api/newsfeed on production through the Vercel MCP connector). 9 resolved
+    cleanly first try. 6 were 404/403: globalcitizen, devex-news,
+    gatesfoundation-ideas, kotaku-ai, pcgamer-ai, anthropic-news. Researched
+    and confirmed (via fetchSourceItems directly, real items returned) working
+    replacement URLs for 2 -- globalcitizen -> /en/content/feed/, kotaku-ai ->
+    /tag/ai/feed. Checked several URL patterns for the other 4 with no working
+    RSS endpoint found (devex-news 403s on every path tried -- bot-blocked, not
+    a wrong path; gatesfoundation-ideas and anthropic-news appear to have no
+    RSS at all; pcgamer-ai only resolves a site-wide off-topic feed) --
+    documented what was tried inline per source in newsfeed.ts rather than
+    guessing, matching the existing devex-news perspective-rating precedent.
+    Net: 11/15 sources verified: true (up from 0/15). Verified: eslint,
+    prettier --check, npm run test (vue-tsc, 0 errors), and the existing
+    utils/scripts/verifyNewsfeedAggregation.ts regression test all clean.
+    kind_robots PR #554 (branch claude/vigilant-edison-jcxp06): all 3 CI
+    checks green (TypeScript, Contract verifiers, GitGuardian) -- merged
+    squash 6bd0de82.
+  claimed_by: claude-conductor-agentrun-20260719T201329Z
+  claimed_at: '2026-07-19T20:13:30Z'
+  updated: '2026-07-19T20:13:30Z'
 
-  - id: t-005
-    milestone: m2
-    title: "Build a minimal feed aggregation pipeline"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-004
-    note: >
-      Normalize feed items into one typed contract with title, summary, source, URL,
-      published time, category, optional image, and optional perspective metadata with
-      provenance/confidence. Use the smallest reliable ingestion approach supported by the
-      existing Kind Robots architecture. Avoid database schema work for v1; any unavoidable
-      shared-backend change becomes a proposal rather than an improvised migration. Audit
-      (t-001): no server-side caching layer exists anywhere in server/ yet. Model the new
-      server/api/newsfeed/index.get.ts handler on server/api/conductor/prs.get.ts's shape
-      (thin handler + a shared fetch helper in a new server/utils/newsfeed.ts, mirroring
-      server/utils/conductor-github.ts), and introduce defineCachedEventHandler for TTL
-      caching — document the chosen TTL in the PR since there's no existing precedent.
+- id: t-005
+  milestone: m2
+  title: "Build a minimal feed aggregation pipeline"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-004
+  note: >
+    Normalize feed items into one typed contract with title, summary, source, URL,
+    published time, category, optional image, and optional perspective metadata with
+    provenance/confidence. Use the smallest reliable ingestion approach supported by the
+    existing Kind Robots architecture. Avoid database schema work for v1; any unavoidable
+    shared-backend change becomes a proposal rather than an improvised migration. Audit
+    (t-001): no server-side caching layer exists anywhere in server/ yet. Model the new
+    server/api/newsfeed/index.get.ts handler on server/api/conductor/prs.get.ts's shape
+    (thin handler + a shared fetch helper in a new server/utils/newsfeed.ts, mirroring
+    server/utils/conductor-github.ts), and introduce defineCachedEventHandler for TTL
+    caching — document the chosen TTL in the PR since there's no existing precedent.
 
-      DONE 2026-07-18 (conductor-burst session claude-conductor-burst-20260718T131014Z-18889):
-      built server/utils/newsfeed.ts (dependency-free RSS 2.0 / Atom parsing via regex
-      extraction -- no new npm dependency for a handful of known tags; sanitizes/truncates HTML
-      via a shared sanitizeText; per-source fetchSourceItems with an 8s timeout that never
-      throws, returning an error string instead so one broken source can't blank the feed;
-      aggregateFeed dedupes by stable id, sorts newest-first, applies optional
-      includeTags/excludeTags keyword filtering against title+summary+category) and
-      server/api/newsfeed/index.get.ts (thin handler, ?feed=/?feeds= query, defaults to every
-      defaultEnabled feed from t-004's registry). Used this repo's dominant
-      {success,message,data}+errorHandler response convention (110+ existing GET routes) rather
-      than prs.get.ts's raw-array shape, since prs.get.ts is a rare conductor-only outlier and a
-      future frontend consumer (t-006) will expect the standard shape. Wrapped in
-      defineCachedEventHandler at a 15-minute TTL -- this repo's first use of Nitro caching --
-      documented in a code comment (RSS sources publish far slower than 15 minutes; bounds
-      egress to the ~15 registry hosts to 4x/hour regardless of traffic). category on
-      NewsFeedItem is populated from each entry's real RSS/Atom <category> tags rather than
-      synthesized from the feed slug, matching DESIGN-BRIEF.md's "include/exclude tags or
-      keywords" wording more literally (no current FEED_DEFINITIONS entry sets
-      includeTags/excludeTags yet, so that path is untested against real data). Added
-      utils/scripts/verifyNewsfeedAggregation.ts (+ test:newsfeed-aggregation script) covering
-      RSS/Atom parsing, sanitization, malformed input, and unreachable-source resilience without
-      hitting the network for the deterministic assertions. Verified: test:newsfeed-aggregation
-      passes; full-project npm run test (vue-tsc --noEmit) clean (caught and fixed two real
-      noUncheckedIndexedAccess errors during development); eslint clean; prettier clean.
-      kind_robots PR #421 merged (squash, sha 9fa53d7). No live verification of the actual
-      FEED_SOURCES RSS URLs -- all remain verified: false per their own docstring; pipeline
-      verified against fixtures + a deliberately-unreachable host instead. Frontend consumption
-      (FeedCard.vue etc.) is t-006, out of scope here. CI's "Contract verifiers" check showed 2
-      failures on this PR (academy-examples-manifest, workflow-paths) -- both confirmed
-      pre-existing on origin/main via a clean worktree check before merging, unrelated to this
-      diff; merged anyway and filed ai-art-academy/t-033 and kind-robots/t-038 to track them
-      separately.
-    claimed_by: claude-conductor-burst-20260718T131014Z-18889
-    claimed_at: '2026-07-18T13:10:15Z'
-    updated: '2026-07-18T13:24:49Z'
+    DONE 2026-07-18 (conductor-burst session claude-conductor-burst-20260718T131014Z-18889):
+    built server/utils/newsfeed.ts (dependency-free RSS 2.0 / Atom parsing via regex
+    extraction -- no new npm dependency for a handful of known tags; sanitizes/truncates HTML
+    via a shared sanitizeText; per-source fetchSourceItems with an 8s timeout that never
+    throws, returning an error string instead so one broken source can't blank the feed;
+    aggregateFeed dedupes by stable id, sorts newest-first, applies optional
+    includeTags/excludeTags keyword filtering against title+summary+category) and
+    server/api/newsfeed/index.get.ts (thin handler, ?feed=/?feeds= query, defaults to every
+    defaultEnabled feed from t-004's registry). Used this repo's dominant
+    {success,message,data}+errorHandler response convention (110+ existing GET routes) rather
+    than prs.get.ts's raw-array shape, since prs.get.ts is a rare conductor-only outlier and a
+    future frontend consumer (t-006) will expect the standard shape. Wrapped in
+    defineCachedEventHandler at a 15-minute TTL -- this repo's first use of Nitro caching --
+    documented in a code comment (RSS sources publish far slower than 15 minutes; bounds
+    egress to the ~15 registry hosts to 4x/hour regardless of traffic). category on
+    NewsFeedItem is populated from each entry's real RSS/Atom <category> tags rather than
+    synthesized from the feed slug, matching DESIGN-BRIEF.md's "include/exclude tags or
+    keywords" wording more literally (no current FEED_DEFINITIONS entry sets
+    includeTags/excludeTags yet, so that path is untested against real data). Added
+    utils/scripts/verifyNewsfeedAggregation.ts (+ test:newsfeed-aggregation script) covering
+    RSS/Atom parsing, sanitization, malformed input, and unreachable-source resilience without
+    hitting the network for the deterministic assertions. Verified: test:newsfeed-aggregation
+    passes; full-project npm run test (vue-tsc --noEmit) clean (caught and fixed two real
+    noUncheckedIndexedAccess errors during development); eslint clean; prettier clean.
+    kind_robots PR #421 merged (squash, sha 9fa53d7). No live verification of the actual
+    FEED_SOURCES RSS URLs -- all remain verified: false per their own docstring; pipeline
+    verified against fixtures + a deliberately-unreachable host instead. Frontend consumption
+    (FeedCard.vue etc.) is t-006, out of scope here. CI's "Contract verifiers" check showed 2
+    failures on this PR (academy-examples-manifest, workflow-paths) -- both confirmed
+    pre-existing on origin/main via a clean worktree check before merging, unrelated to this
+    diff; merged anyway and filed ai-art-academy/t-033 and kind-robots/t-038 to track them
+    separately.
+  claimed_by: claude-conductor-burst-20260718T131014Z-18889
+  claimed_at: '2026-07-18T13:10:15Z'
+  updated: '2026-07-18T13:24:49Z'
 
-  - id: t-006
-    milestone: m2
-    title: "Render the recommended newsfeed on the user homepage"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-003
-      - t-005
-    note: >
-      Ship the first useful homepage: responsive feed cards, loading and empty states,
-      source attribution, external links, category filtering, and sensible chronological
-      ordering. Use the existing Kind Robots visual system and keep the component surface
-      small enough to evolve. Audit (t-001): fork components/dreams/dream-card.vue for the
-      new FeedCard.vue (closest existing title/badge/image/timestamp grammar plus a
-      multi-source image-fallback chain for inconsistent RSS thumbnails). content/newsfeed.md
-      and content/channels/lab/newsfeed.md are already stubbed — build into them rather than
-      new routes. components/conductor/newsfeed-page.vue is a separate Project pitch/status
-      page (channelKey: wonder, tabKey: newsfeed) — keep it as-is and update its
-      deliverables.done list as milestones land; slot the real feed component into
-      project-front-page.vue's #interactive slot or swap content/newsfeed.md's body once
-      the real feature is ready, rather than replacing the pitch page.
+- id: t-006
+  milestone: m2
+  title: "Render the recommended newsfeed on the user homepage"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-003
+  - t-005
+  note: >
+    Ship the first useful homepage: responsive feed cards, loading and empty states,
+    source attribution, external links, category filtering, and sensible chronological
+    ordering. Use the existing Kind Robots visual system and keep the component surface
+    small enough to evolve. Audit (t-001): fork components/dreams/dream-card.vue for the
+    new FeedCard.vue (closest existing title/badge/image/timestamp grammar plus a
+    multi-source image-fallback chain for inconsistent RSS thumbnails). content/newsfeed.md
+    and content/channels/lab/newsfeed.md are already stubbed — build into them rather than
+    new routes. components/conductor/newsfeed-page.vue is a separate Project pitch/status
+    page (channelKey: wonder, tabKey: newsfeed) — keep it as-is and update its
+    deliverables.done list as milestones land; slot the real feed component into
+    project-front-page.vue's #interactive slot or swap content/newsfeed.md's body once
+    the real feature is ready, rather than replacing the pitch page.
 
-      DONE 2026-07-18: kind_robots PR #425 merged (squash 14ef1c6). Added
-      components/newsfeed/feed-card.vue (forked dream-card.vue's grammar, per-item
-      image-fallback chain + category badge + relative timestamp) and
-      components/newsfeed/newsfeed-feed.vue (fetches /api/newsfeed filtered by
-      feedPreferenceStore.enabledFeedSlugs, merges/dedupes/sorts chronologically,
-      loading/empty/error states, per-feed filter chips). Wired into both
-      components/home/home-feed-placeholder.vue (the live homepage) and
-      components/conductor/newsfeed-page.vue's #interactive slot (the project
-      pitch page). Reviewer (this session) verified all 3 kind_robots CI checks
-      green (GitGuardian, TypeScript, Contract verifiers) and merged directly —
-      reversible, scoped, does the task. Follow-ups filed as kaizen below.
-    claimed_by: claude-conductor-burst-20260718T1506Z
-    claimed_at: '2026-07-18T15:06:56Z'
-    updated: '2026-07-18T16:11:18Z'
+    DONE 2026-07-18: kind_robots PR #425 merged (squash 14ef1c6). Added
+    components/newsfeed/feed-card.vue (forked dream-card.vue's grammar, per-item
+    image-fallback chain + category badge + relative timestamp) and
+    components/newsfeed/newsfeed-feed.vue (fetches /api/newsfeed filtered by
+    feedPreferenceStore.enabledFeedSlugs, merges/dedupes/sorts chronologically,
+    loading/empty/error states, per-feed filter chips). Wired into both
+    components/home/home-feed-placeholder.vue (the live homepage) and
+    components/conductor/newsfeed-page.vue's #interactive slot (the project
+    pitch page). Reviewer (this session) verified all 3 kind_robots CI checks
+    green (GitGuardian, TypeScript, Contract verifiers) and merged directly —
+    reversible, scoped, does the task. Follow-ups filed as kaizen below.
+  claimed_by: claude-conductor-burst-20260718T1506Z
+  claimed_at: '2026-07-18T15:06:56Z'
+  updated: '2026-07-18T16:11:18Z'
 
-  - id: t-007
-    milestone: m2
-    title: "Add user feed selection and ordering"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-006
-    note: >
-      Let users enable or disable recommended feeds and reorder them. Persist preferences through the existing user/store/local-storage patterns without adding a new schema for the MVP. Defaults should remain useful before any configuration.
+- id: t-007
+  milestone: m2
+  title: "Add user feed selection and ordering"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-006
+  note: >
+    Let users enable or disable recommended feeds and reorder them. Persist preferences through the existing user/store/local-storage
+    patterns without adding a new schema for the MVP. Defaults should remain useful before any configuration.
 
-      DONE 2026-07-18 (conductor session claude-conductor-session-20260718T211402Z): the store side (t-004's feedPreferenceStore, enableFeed/disableFeed/reorderFeeds) already existed with nothing consuming it. Added components/newsfeed/newsfeed-preferences.vue, a "Manage feeds" panel toggled from newsfeed-feed.vue's header, listing every FEED_DEFINITIONS entry with an enable/disable toggle and move-up/move-down reordering for enabled feeds (no drag-and-drop library exists in this repo, so buttons instead of a drag handle). newsfeed-feed.vue now watches enabledFeedSlugs (order-sensitive .join(',')) to auto-refetch on any selection/order change, guarded against the store's own initial-hydrate mutation via a hasLoadedOnce flag. Registered the component in public/components.json. Verified: vue-tsc --noEmit (0 errors), eslint clean, prettier clean on touched files (public/components.json's one remaining prettier warning is pre-existing drift on main, confirmed via git stash). No live preview available (sandbox has no DB). kind_robots PR https://github.com/silasfelinus/kind_robots/pull/456 (branch claude/vigilant-edison-15k0tv). Flagged for the Reviewer: the "All" tab still sorts purely chronologically (feed order only affects per-feed chip order, not "All" interleaving), and a pre-existing quirk where disabling every feed still fetches everything via the availableFeeds fallback -- both out of this task's scope, noted as possible follow-ups.
-    claimed_by: claude-conductor-session-20260718T211402Z
-    claimed_at: '2026-07-18T21:14:02Z'
-    updated: '2026-07-18T21:30:43Z'
+    DONE 2026-07-18 (conductor session claude-conductor-session-20260718T211402Z): the store side (t-004's feedPreferenceStore,
+    enableFeed/disableFeed/reorderFeeds) already existed with nothing consuming it. Added components/newsfeed/newsfeed-preferences.vue,
+    a "Manage feeds" panel toggled from newsfeed-feed.vue's header, listing every FEED_DEFINITIONS entry with an enable/disable
+    toggle and move-up/move-down reordering for enabled feeds (no drag-and-drop library exists in this repo, so buttons instead
+    of a drag handle). newsfeed-feed.vue now watches enabledFeedSlugs (order-sensitive .join(',')) to auto-refetch on any
+    selection/order change, guarded against the store's own initial-hydrate mutation via a hasLoadedOnce flag. Registered
+    the component in public/components.json. Verified: vue-tsc --noEmit (0 errors), eslint clean, prettier clean on touched
+    files (public/components.json's one remaining prettier warning is pre-existing drift on main, confirmed via git stash).
+    No live preview available (sandbox has no DB). kind_robots PR https://github.com/silasfelinus/kind_robots/pull/456 (branch
+    claude/vigilant-edison-15k0tv). Flagged for the Reviewer: the "All" tab still sorts purely chronologically (feed order
+    only affects per-feed chip order, not "All" interleaving), and a pre-existing quirk where disabling every feed still fetches
+    everything via the availableFeeds fallback -- both out of this task's scope, noted as possible follow-ups.
+  claimed_by: claude-conductor-session-20260718T211402Z
+  claimed_at: '2026-07-18T21:14:02Z'
+  updated: '2026-07-18T21:30:43Z'
 
-  - id: t-008
-    milestone: m3
-    title: "Add programmable feed filters"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-007
-    note: >
-      Add a compact advanced surface for include/exclude keywords, category filters,
-      source toggles, and sort mode. Treat this as a declarative configuration layer,
-      not arbitrary executable user code.
-      DONE 2026-07-19 (claude-conductor-agentrun-20260719, Reviewer merge): kind_robots
-      PR #484 merged (squash 43c7dc6). New pure applyNewsfeedFilters()/sanitizeKeywordList()
-      in stores/helpers/newsfeed.ts, a stable sourceId on NewsFeedItem, persisted
-      include/exclude keywords + disabledSourceIds + selectedCategories + sortMode on
-      feedPreferenceStore, a new newsfeed-filters.vue panel, and a regression test
-      (utils/scripts/verifyNewsfeedFilters.ts) wired into contract-tests.yml CI.
-      The PR's initial CI never triggered (0 workflow runs queued for its branch
-      beyond GitGuardian, ~15+ min after opening) -- manually re-queued
-      contract-tests.yml/typecheck.yml via workflow_dispatch to unblock review; see
-      TALKBACK.md for the anomaly note. Once green, the PR had drifted behind the
-      just-merged t-010 (#486, same file) and hit a real merge conflict (both added
-      steps to contract-tests.yml and both touched newsfeed-feed.vue's Manage-feeds
-      panel markup) -- resolved by hand (kept both new CI steps; kept both the
-      aria-controls id from t-010 and the NewsfeedFilters panel from t-008),
-      re-verified locally (vue-tsc, eslint, prettier, both newsfeed contract tests
-      all clean) via provision_kind_robots_deps.sh, pushed, re-ran CI clean, merged.
-    claimed_by: claude-conductor-burst-20260719
-    claimed_at: '2026-07-19T01:04:38Z'
-    updated: '2026-07-19T02:20:00Z'
+- id: t-008
+  milestone: m3
+  title: "Add programmable feed filters"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-007
+  note: >
+    Add a compact advanced surface for include/exclude keywords, category filters,
+    source toggles, and sort mode. Treat this as a declarative configuration layer,
+    not arbitrary executable user code.
+    DONE 2026-07-19 (claude-conductor-agentrun-20260719, Reviewer merge): kind_robots
+    PR #484 merged (squash 43c7dc6). New pure applyNewsfeedFilters()/sanitizeKeywordList()
+    in stores/helpers/newsfeed.ts, a stable sourceId on NewsFeedItem, persisted
+    include/exclude keywords + disabledSourceIds + selectedCategories + sortMode on
+    feedPreferenceStore, a new newsfeed-filters.vue panel, and a regression test
+    (utils/scripts/verifyNewsfeedFilters.ts) wired into contract-tests.yml CI.
+    The PR's initial CI never triggered (0 workflow runs queued for its branch
+    beyond GitGuardian, ~15+ min after opening) -- manually re-queued
+    contract-tests.yml/typecheck.yml via workflow_dispatch to unblock review; see
+    TALKBACK.md for the anomaly note. Once green, the PR had drifted behind the
+    just-merged t-010 (#486, same file) and hit a real merge conflict (both added
+    steps to contract-tests.yml and both touched newsfeed-feed.vue's Manage-feeds
+    panel markup) -- resolved by hand (kept both new CI steps; kept both the
+    aria-controls id from t-010 and the NewsfeedFilters panel from t-008),
+    re-verified locally (vue-tsc, eslint, prettier, both newsfeed contract tests
+    all clean) via provision_kind_robots_deps.sh, pushed, re-ran CI clean, merged.
+  claimed_by: claude-conductor-burst-20260719
+  claimed_at: '2026-07-19T01:04:38Z'
+  updated: '2026-07-19T02:20:00Z'
 
-  - id: t-009
-    milestone: m3
-    title: "Harden caching, deduplication, and failure handling"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-006
-    note: 'Add bounded caching, stable item identity, duplicate removal, stale-source tolerance, and partial-success behavior so one broken feed does not blank the homepage. RAN 2026-07-18 (conductor-burst-hourly rotation, claude-conductor-burst-20260718T1707Z): audited server/utils/newsfeed.ts against the five requirements in this note''s original text. Bounded caching (defineCachedEventHandler, 15min TTL at the route), stable item identity (stableId hash over guid/link), duplicate removal (per-aggregateFeed-call seen-id Set), and partial-success (Promise.all + per-source sourceErrors, one broken source never blanks the others) were already in place from t-005/t-006. The one real gap was stale-source tolerance: a source that failed returned zero items with no fallback. Added an in-memory last-known-good cache per source id in fetchSourceItems -- on failure, serves the prior successful items (bounded to 24h old) flagged stale: true, with the underlying error still reported via AggregatedFeed.sourceErrors[].stale. A source with no prior success keeps the original always-empty-on-failure behavior. Added regression coverage to utils/scripts/verifyNewsfeedAggregation.ts using a local http.createServer fixture (serves once, then closed) to prove the stale-fallback path without relying on real network egress. Verified: npm run test:newsfeed-aggregation, npm test (vue-tsc --noEmit, exit 0), eslint, prettier --check -- all clean. kind_robots PR #428 (branch claude/keen-fermat-7exrse), CI pending at time of this note.'
-    claimed_by: claude-conductor-burst-20260718T1707Z
-    claimed_at: '2026-07-18T17:07:15Z'
-    updated: '2026-07-18T17:07:15Z'
+- id: t-009
+  milestone: m3
+  title: "Harden caching, deduplication, and failure handling"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-006
+  note: 'Add bounded caching, stable item identity, duplicate removal, stale-source tolerance, and partial-success behavior
+    so one broken feed does not blank the homepage. RAN 2026-07-18 (conductor-burst-hourly rotation, claude-conductor-burst-20260718T1707Z):
+    audited server/utils/newsfeed.ts against the five requirements in this note''s original text. Bounded caching (defineCachedEventHandler,
+    15min TTL at the route), stable item identity (stableId hash over guid/link), duplicate removal (per-aggregateFeed-call
+    seen-id Set), and partial-success (Promise.all + per-source sourceErrors, one broken source never blanks the others) were
+    already in place from t-005/t-006. The one real gap was stale-source tolerance: a source that failed returned zero items
+    with no fallback. Added an in-memory last-known-good cache per source id in fetchSourceItems -- on failure, serves the
+    prior successful items (bounded to 24h old) flagged stale: true, with the underlying error still reported via AggregatedFeed.sourceErrors[].stale.
+    A source with no prior success keeps the original always-empty-on-failure behavior. Added regression coverage to utils/scripts/verifyNewsfeedAggregation.ts
+    using a local http.createServer fixture (serves once, then closed) to prove the stale-fallback path without relying on
+    real network egress. Verified: npm run test:newsfeed-aggregation, npm test (vue-tsc --noEmit, exit 0), eslint, prettier
+    --check -- all clean. kind_robots PR #428 (branch claude/keen-fermat-7exrse), CI pending at time of this note.'
+  claimed_by: claude-conductor-burst-20260718T1707Z
+  claimed_at: '2026-07-18T17:07:15Z'
+  updated: '2026-07-18T17:07:15Z'
 
-  - id: t-010
-    milestone: m3
-    title: "Polish accessibility and responsive presentation"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-007
-      - t-009
-    note: >
-      Finish keyboard behavior, focus states, readable timestamps, mobile layout,
-      reduced-motion behavior where relevant, and final visual consistency. Keep the
-      feed fast and calm rather than turning the homepage into algorithmic slot-machine soup.
-      DONE 2026-07-19 (claude-conductor-agentrun-20260719T0110Z): kind_robots PR #486
-      merged (squash a75cb03). aria-pressed/aria-expanded/aria-controls/aria-busy added
-      to feed-card and newsfeed-feed controls, aria-live status region, motion-safe:
-      variants for hover transforms, focus-visible rings throughout, and a semantic
-      <time> element with absolute-timestamp title on feed cards. Verified via
-      vue-tsc --noEmit, eslint, prettier (all clean); no live nuxt dev render was
-      possible in-sandbox (dummy DATABASE_URL), so this is static/type verification
-      only — flagged for a follow-up visual/keyboard-nav pass, see t-014.
-    claimed_by: claude-conductor-agentrun-20260719T0110Z
-    claimed_at: '2026-07-19T01:12:57Z'
-    updated: '2026-07-19T01:12:57Z'
+- id: t-010
+  milestone: m3
+  title: "Polish accessibility and responsive presentation"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-007
+  - t-009
+  note: >
+    Finish keyboard behavior, focus states, readable timestamps, mobile layout,
+    reduced-motion behavior where relevant, and final visual consistency. Keep the
+    feed fast and calm rather than turning the homepage into algorithmic slot-machine soup.
+    DONE 2026-07-19 (claude-conductor-agentrun-20260719T0110Z): kind_robots PR #486
+    merged (squash a75cb03). aria-pressed/aria-expanded/aria-controls/aria-busy added
+    to feed-card and newsfeed-feed controls, aria-live status region, motion-safe:
+    variants for hover transforms, focus-visible rings throughout, and a semantic
+    <time> element with absolute-timestamp title on feed cards. Verified via
+    vue-tsc --noEmit, eslint, prettier (all clean); no live nuxt dev render was
+    possible in-sandbox (dummy DATABASE_URL), so this is static/type verification
+    only — flagged for a follow-up visual/keyboard-nav pass, see t-014.
+  claimed_by: claude-conductor-agentrun-20260719T0110Z
+  claimed_at: '2026-07-19T01:12:57Z'
+  updated: '2026-07-19T01:12:57Z'
 
-  - id: t-011
-    milestone: m3
-    title: "Add adjustable political perspective balance"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-007
-      - t-008
-    note: >
-      Implement the staged controls from BIAS-CONTROLS.md. Start with transparent
-      Focused, Balanced, and Broad spectrum modes backed by normalized numeric weights;
-      show optional source-perspective labels only where provenance exists. Keep political
-      perspective separate from factual reliability, do not infer user ideology, preserve
-      unrated and primary sources, and avoid applying political balancing to unrelated feeds.
-      Custom per-bucket weights and contrasting-coverage grouping may follow once the simple
-      modes work cleanly.
-      DONE 2026-07-19 (~07:05 UTC, conductor reviewer sweep): kind_robots PR #505 shipped
-      PERSPECTIVE_MODE_PRESETS + applyPerspectiveBalance() in stores/helpers/newsfeed.ts
-      (pass-through for non-political items, weighted round-robin merge, unrated items get
-      their own never-zero bucket), wired setPerspectiveMode() to actually apply preset
-      weights, added the mode selector + label toggle to newsfeed-filters.vue and a
-      perspective badge to feed-card.vue (shown only when a source rating exists and labels
-      are visible), and a new contract test (test:newsfeed-perspective-balance) wired into
-      CI. All 4 checks green (TypeScript, Contract verifiers, facet-alias-smoke, GitGuardian).
-      Custom per-bucket weights/contrasting-coverage grouping deferred as originally scoped.
-      No real FEED_SOURCES perspective ratings exist yet, so the UI has nothing to visibly
-      act on until at least one source is rated -- see new task t-018. Merged squash `ca74f5f`.
-    claimed_by: claude-conductor-burst-20260719T-rotation-newsfeed
-    claimed_at: '2026-07-19T06:07:28Z'
-    updated: '2026-07-19T07:05:00Z'
+- id: t-011
+  milestone: m3
+  title: "Add adjustable political perspective balance"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-007
+  - t-008
+  note: >
+    Implement the staged controls from BIAS-CONTROLS.md. Start with transparent
+    Focused, Balanced, and Broad spectrum modes backed by normalized numeric weights;
+    show optional source-perspective labels only where provenance exists. Keep political
+    perspective separate from factual reliability, do not infer user ideology, preserve
+    unrated and primary sources, and avoid applying political balancing to unrelated feeds.
+    Custom per-bucket weights and contrasting-coverage grouping may follow once the simple
+    modes work cleanly.
+    DONE 2026-07-19 (~07:05 UTC, conductor reviewer sweep): kind_robots PR #505 shipped
+    PERSPECTIVE_MODE_PRESETS + applyPerspectiveBalance() in stores/helpers/newsfeed.ts
+    (pass-through for non-political items, weighted round-robin merge, unrated items get
+    their own never-zero bucket), wired setPerspectiveMode() to actually apply preset
+    weights, added the mode selector + label toggle to newsfeed-filters.vue and a
+    perspective badge to feed-card.vue (shown only when a source rating exists and labels
+    are visible), and a new contract test (test:newsfeed-perspective-balance) wired into
+    CI. All 4 checks green (TypeScript, Contract verifiers, facet-alias-smoke, GitGuardian).
+    Custom per-bucket weights/contrasting-coverage grouping deferred as originally scoped.
+    No real FEED_SOURCES perspective ratings exist yet, so the UI has nothing to visibly
+    act on until at least one source is rated -- see new task t-018. Merged squash `ca74f5f`.
+  claimed_by: claude-conductor-burst-20260719T-rotation-newsfeed
+  claimed_at: '2026-07-19T06:07:28Z'
+  updated: '2026-07-19T07:05:00Z'
 
-  - id: t-012
-    milestone: m2
-    title: "Polish and upgrade Newsfeed front-end surface"
-    status: done
-    owner: null
-    passes: 0
-    stakes: reversible
-    note: |-
-      UI polish + upgrade for the newsfeed front end now that the scaffold page is live at /newsfeed. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/wonder/newsfeed.webp and tutorial art at public/images/tutorials/wonder/newsfeed.webp; (2) add a matching section for 'newsfeed' under tutorialChannels.wonder.sections in kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl points at /newsfeed (admin can run the Conductor 'Placements' button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full interactive experience for this project.
+- id: t-012
+  milestone: m2
+  title: "Polish and upgrade Newsfeed front-end surface"
+  status: done
+  owner:
+  passes: 0
+  stakes: reversible
+  note: |-
+    UI polish + upgrade for the newsfeed front end now that the scaffold page is live at /newsfeed. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/wonder/newsfeed.webp and tutorial art at public/images/tutorials/wonder/newsfeed.webp; (2) add a matching section for 'newsfeed' under tutorialChannels.wonder.sections in kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl points at /newsfeed (admin can run the Conductor 'Placements' button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full interactive experience for this project.
 
-      RAN 2026-07-19 (~13:15 UTC, claude-conductor-burst-20260719T1313Z): steps (2) and (4)
-      done in kind_robots PR #541 (branch claude/vigilant-edison-4umbno). (2) tutorialCards.ts
-      had no 'wonder' TutorialChannelKey at all (not a stale-but-present key) -- added it to
-      ExtraTutorialKey, added a wonder tutorialChannel with a newsfeed section, and added
-      wonder: '/newsfeed' to tutorialRouteMap, since resolveTutorialChannelFromRoute('/newsfeed')
-      previously returned null and the workspace sheet's "Show tutorial" toggle silently had
-      nothing to render on this page. (4) turned out to already be substantially done by prior
-      cycles -- newsfeed-feed.vue/newsfeed-filters.vue/newsfeed-preferences.vue/feedPreferenceStore.ts
-      already implement category filtering, source toggles, keyword include/exclude, sort mode,
-      and a Focused/Balanced/Broad perspective-balance UI; only newsfeed-page.vue's own
-      `deliverables.next` copy hadn't caught up, so moved those two items to `done` and left
-      "Custom per-bucket perspective weight sliders" (explicitly deferred in
-      newsfeed-filters.vue's own comment) as the one genuine remaining "next" item. (1) the
-      dashboard-tab image was already queued (kind-robots-newsfeed-image-4df00acf, pending);
-      added the missing tutorial-card queue entry (kind-robots-newsfeed-tutorial-fec66d78,
-      public/images/tutorials/wonder/newsfeed.webp) to art-prompts.yaml so the pipeline picks
-      it up too. (3) not verifiable from this sandbox -- no live DB access and no admin session
-      to run the Conductor "Placements" backfill; flagged as a soft follow-up in the PR rather
-      than blocking. Verified via `npm run test` (vue-tsc, clean), eslint/prettier, and
-      verifyNewsfeedAggregation/Filters/PerspectiveBalance + verifyNavigationRouteAccess/
-      verifyChannelResolver/auditChannelAssets (all pass). kind_robots PR #541 open, pending
-      review/merge this same cycle.
+    RAN 2026-07-19 (~13:15 UTC, claude-conductor-burst-20260719T1313Z): steps (2) and (4)
+    done in kind_robots PR #541 (branch claude/vigilant-edison-4umbno). (2) tutorialCards.ts
+    had no 'wonder' TutorialChannelKey at all (not a stale-but-present key) -- added it to
+    ExtraTutorialKey, added a wonder tutorialChannel with a newsfeed section, and added
+    wonder: '/newsfeed' to tutorialRouteMap, since resolveTutorialChannelFromRoute('/newsfeed')
+    previously returned null and the workspace sheet's "Show tutorial" toggle silently had
+    nothing to render on this page. (4) turned out to already be substantially done by prior
+    cycles -- newsfeed-feed.vue/newsfeed-filters.vue/newsfeed-preferences.vue/feedPreferenceStore.ts
+    already implement category filtering, source toggles, keyword include/exclude, sort mode,
+    and a Focused/Balanced/Broad perspective-balance UI; only newsfeed-page.vue's own
+    `deliverables.next` copy hadn't caught up, so moved those two items to `done` and left
+    "Custom per-bucket perspective weight sliders" (explicitly deferred in
+    newsfeed-filters.vue's own comment) as the one genuine remaining "next" item. (1) the
+    dashboard-tab image was already queued (kind-robots-newsfeed-image-4df00acf, pending);
+    added the missing tutorial-card queue entry (kind-robots-newsfeed-tutorial-fec66d78,
+    public/images/tutorials/wonder/newsfeed.webp) to art-prompts.yaml so the pipeline picks
+    it up too. (3) not verifiable from this sandbox -- no live DB access and no admin session
+    to run the Conductor "Placements" backfill; flagged as a soft follow-up in the PR rather
+    than blocking. Verified via `npm run test` (vue-tsc, clean), eslint/prettier, and
+    verifyNewsfeedAggregation/Filters/PerspectiveBalance + verifyNavigationRouteAccess/
+    verifyChannelResolver/auditChannelAssets (all pass). kind_robots PR #541 open, pending
+    review/merge this same cycle.
 
-      MERGED 2026-07-19 (~13:37 UTC): kind_robots PR #541 merged (squash f4ef6ca4). Steps (1)/(2)/(4) closed out per the note above; step (3) remains a soft, un-actioned follow-up documented above (no DB/admin access from this sandbox). Task closed done -- the remaining item doesn't block or need a dedicated follow-up task since it's a one-admin-click backfill (Conductor 'Placements' button), not code.
-    claimed_by: claude-conductor-burst-20260719T1313Z
-    claimed_at: '2026-07-19T13:13:50Z'
-    updated: '2026-07-19T13:13:50Z'
+    MERGED 2026-07-19 (~13:37 UTC): kind_robots PR #541 merged (squash f4ef6ca4). Steps (1)/(2)/(4) closed out per the note above; step (3) remains a soft, un-actioned follow-up documented above (no DB/admin access from this sandbox). Task closed done -- the remaining item doesn't block or need a dedicated follow-up task since it's a one-admin-click backfill (Conductor 'Placements' button), not code.
+  claimed_by: claude-conductor-burst-20260719T1313Z
+  claimed_at: '2026-07-19T13:13:50Z'
+  updated: '2026-07-19T13:13:50Z'
 
-  - id: t-014
-    milestone: m2
-    title: "Preview-deploy visual check of the / and /dashboard swap from t-003"
-    status: done
-    owner: reviewer
-    passes: 0
-    stakes: reversible
-    note: >
-      Kaizen from t-003 (Worker, kind_robots PR #391): the homepage settings-relocation
-      (content/index.md -> :home-feed-placeholder, settings preserved unchanged at
-      /dashboard) landed with vue-tsc/eslint/prettier verification only -- the sandbox
-      could not boot a working `nuxt dev` preview for either route (both served the
-      stock Nuxt welcome page regardless of branch content, a DB/session limitation of
-      that session, not a code defect). A session with a real preview-deploy connector
-      should visually confirm: (1) "/" renders home-feed-placeholder.vue correctly for
-      both guest and logged-in states, (2) "/dashboard" still renders the full
-      user-manager dashboard (avatars/friends/achievements/themes/chats/logout)
-      unchanged, (3) the header avatar link and the placeholder's CTA both land on
-      /dashboard correctly.
+- id: t-014
+  milestone: m2
+  title: "Preview-deploy visual check of the / and /dashboard swap from t-003"
+  status: done
+  owner: reviewer
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-003 (Worker, kind_robots PR #391): the homepage settings-relocation
+    (content/index.md -> :home-feed-placeholder, settings preserved unchanged at
+    /dashboard) landed with vue-tsc/eslint/prettier verification only -- the sandbox
+    could not boot a working `nuxt dev` preview for either route (both served the
+    stock Nuxt welcome page regardless of branch content, a DB/session limitation of
+    that session, not a code defect). A session with a real preview-deploy connector
+    should visually confirm: (1) "/" renders home-feed-placeholder.vue correctly for
+    both guest and logged-in states, (2) "/dashboard" still renders the full
+    user-manager dashboard (avatars/friends/achievements/themes/chats/logout)
+    unchanged, (3) the header avatar link and the placeholder's CTA both land on
+    /dashboard correctly.
 
-      DONE 2026-07-19 (Vercel MCP against the current production deployment
-      `kind-robots-9iifwx3fb-...vercel.app`, commit `981d366`, state READY -- per
-      AGENTS.md's documented list_teams/list_projects/list_deployments/
-      web_fetch_vercel_url method): (1) confirmed -- "/" returns HTTP 200 and its
-      rendered HTML contains `home-feed-placeholder` and `newsfeed`/
-      `newsfeed-manage-feeds-panel` markup, not the stock Nuxt welcome page; guest
-      state only (no authenticated session available from this sandbox, so the
-      logged-in variant is unverified here -- same class of soft limitation as
-      t-012's Dream-liveUrl check). (2) confirmed -- "/dashboard" returns HTTP 200,
-      renders the `user-manager` component, and its HTML contains friend/
-      achievement/theme/chat content; no explicit "logout"/"sign out" text was
-      present, consistent with an unauthenticated fetch (that control likely only
-      renders for a logged-in user) rather than a regression. (3) confirmed --
-      "/" contains 4 occurrences of `/dashboard` links, consistent with both the
-      header avatar and the placeholder's CTA pointing there. No code defect found;
-      no kind_robots PR needed since t-003 already merged correctly -- this task
-      was pure verification.
-    claimed_by: claude-conductor-burst-20260719T1605Z
-    claimed_at: '2026-07-19T16:22:56Z'
-    updated: '2026-07-19T16:25:00Z'
+    DONE 2026-07-19 (Vercel MCP against the current production deployment
+    `kind-robots-9iifwx3fb-...vercel.app`, commit `981d366`, state READY -- per
+    AGENTS.md's documented list_teams/list_projects/list_deployments/
+    web_fetch_vercel_url method): (1) confirmed -- "/" returns HTTP 200 and its
+    rendered HTML contains `home-feed-placeholder` and `newsfeed`/
+    `newsfeed-manage-feeds-panel` markup, not the stock Nuxt welcome page; guest
+    state only (no authenticated session available from this sandbox, so the
+    logged-in variant is unverified here -- same class of soft limitation as
+    t-012's Dream-liveUrl check). (2) confirmed -- "/dashboard" returns HTTP 200,
+    renders the `user-manager` component, and its HTML contains friend/
+    achievement/theme/chat content; no explicit "logout"/"sign out" text was
+    present, consistent with an unauthenticated fetch (that control likely only
+    renders for a logged-in user) rather than a regression. (3) confirmed --
+    "/" contains 4 occurrences of `/dashboard` links, consistent with both the
+    header avatar and the placeholder's CTA pointing there. No code defect found;
+    no kind_robots PR needed since t-003 already merged correctly -- this task
+    was pure verification.
+  claimed_by: claude-conductor-burst-20260719T1605Z
+  claimed_at: '2026-07-19T16:22:56Z'
+  updated: '2026-07-19T16:25:00Z'
 
-  - id: t-015
-    milestone: m3
-    title: "Regenerate public/components.json from a canonical environment and stabilize its sort order"
-    status: done
-    owner: null
-    passes: 0
-    stakes: reversible
-    note: >
-      Kaizen from t-006 (kind_robots PR #425): running node utils/scripts/create-component-json.mjs (or npm run test's nuxi prepare postinstall) in a sandbox reorders several unrelated existing entries (e.g. builder-card/builder-card-grid, ami-link) and surfaces several real components already missing from the committed file (packmaker-admin-panel, component-review-feed, wonderlab-preview-host, etc.) that predate t-006 -- looks like environment-dependent Array.prototype.sort/localeCompare collation, or the committed file has simply drifted from a stale generation. t-006 hand-added only its two new folder entries to stay scoped. Regenerate the file from a canonical (non-sandbox) environment and reconcile the drift, or make the generator's sort explicit and collation-stable (e.g. localeCompare(b, 'en') or a plain codepoint sort) so future sessions don't have to hand-patch it to avoid unrelated churn.
+- id: t-015
+  milestone: m3
+  title: "Regenerate public/components.json from a canonical environment and stabilize its sort order"
+  status: done
+  owner:
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-006 (kind_robots PR #425): running node utils/scripts/create-component-json.mjs (or npm run test's nuxi
+    prepare postinstall) in a sandbox reorders several unrelated existing entries (e.g. builder-card/builder-card-grid, ami-link)
+    and surfaces several real components already missing from the committed file (packmaker-admin-panel, component-review-feed,
+    wonderlab-preview-host, etc.) that predate t-006 -- looks like environment-dependent Array.prototype.sort/localeCompare
+    collation, or the committed file has simply drifted from a stale generation. t-006 hand-added only its two new folder
+    entries to stay scoped. Regenerate the file from a canonical (non-sandbox) environment and reconcile the drift, or make
+    the generator's sort explicit and collation-stable (e.g. localeCompare(b, 'en') or a plain codepoint sort) so future sessions
+    don't have to hand-patch it to avoid unrelated churn.
 
-      RESOLVED 2026-07-18 (conductor-agent-run, cross-project duplicate): this exact ask was independently tracked and completed under kind-robots/t-039 (sort stabilization -- confirmed all 3 sort call sites in create-component-json.mjs now use localeCompare(x, 'en'), kind_robots PR #429) and kind-robots/t-040 (regenerate + reconcile drift, kind_robots PR #434, merged 2026-07-18). Verified directly: grep for localeCompare in the script shows the 'en' locale pin at all three call sites, and the just-merged t-040 diff added exactly the missing components this note names (packmaker-admin-panel, component-review-feed, wonderlab-preview-host, plus packmaker-pack-editor/component-test-fixture-cleanup/wonderlab-selection-router) with no unrelated reordering churn. No further action needed here -- closing as done rather than duplicating the fix a second time. Cross-reference for CONTROL.md's cross-project same-task collision note (2026-07-17): this is another instance of the same task tracked in two project roadmaps with no depends_on link between them.
-    claimed_by: claude-conductor-agent-run-20260718
-    claimed_at: '2026-07-18T19:19:26Z'
-    updated: '2026-07-18T19:19:26Z'
+    RESOLVED 2026-07-18 (conductor-agent-run, cross-project duplicate): this exact ask was independently tracked and completed
+    under kind-robots/t-039 (sort stabilization -- confirmed all 3 sort call sites in create-component-json.mjs now use localeCompare(x,
+    'en'), kind_robots PR #429) and kind-robots/t-040 (regenerate + reconcile drift, kind_robots PR #434, merged 2026-07-18).
+    Verified directly: grep for localeCompare in the script shows the 'en' locale pin at all three call sites, and the just-merged
+    t-040 diff added exactly the missing components this note names (packmaker-admin-panel, component-review-feed, wonderlab-preview-host,
+    plus packmaker-pack-editor/component-test-fixture-cleanup/wonderlab-selection-router) with no unrelated reordering churn.
+    No further action needed here -- closing as done rather than duplicating the fix a second time. Cross-reference for CONTROL.md's
+    cross-project same-task collision note (2026-07-17): this is another instance of the same task tracked in two project
+    roadmaps with no depends_on link between them.
+  claimed_by: claude-conductor-agent-run-20260718
+  claimed_at: '2026-07-18T19:19:26Z'
+  updated: '2026-07-18T19:19:26Z'
 
-  - id: t-016
-    milestone: m3
-    title: "Kaizen: check same-project open PRs for touched-file overlap before merging the first one"
-    status: done
-    owner: reviewer
-    passes: 0
-    stakes: reversible
-    updated: '2026-07-19T11:20:56Z'
-    note: >
-      Kaizen from t-008/t-010 (Reviewer, kind_robots PR #484/#486, 2026-07-19):
-      two `claimed` newsfeed tasks both touched newsfeed-feed.vue and
-      contract-tests.yml and merged minutes apart, producing an avoidable merge
-      conflict discovered only when reviewing the second PR. Add a lightweight
-      step to the Reviewer flow (a script or a documented manual check) that,
-      before merging a PR, lists any other currently-open PR from the same
-      project and diffs their changed-file sets -- if they overlap, flag it in
-      the PR review so the conflict is anticipated rather than discovered at
-      merge time. Keep it advisory (a warning/note), not a merge blocker, since
-      overlapping files don't always conflict.
-
-
-      IN REVIEW 2026-07-19: added scripts/check_pr_file_overlap.py, a pure
-      no-network advisory check matching check_pr_kaizen.py's convention --
-      given the target PR's title/body/changed-files and a list of other
-      currently-open PRs' same, it infers each PR's project from the
-      `<project>/t-NNN` task id (same TASK_ID_RE approach as
-      check_pr_kaizen.py), and for any other open PR referencing the same
-      project, reports overlapping changed files. Advisory only (always exits
-      0); prints nothing for a clean PR. 14 unit tests in
-      tests/test_check_pr_file_overlap.py cover project extraction, overlap
-      detection, the target-excluded-from-its-own-others-list edge case, and
-      both text and --json CLI output. Full suite (392 tests) green;
-      `audit_roadmaps.py` clean. Not wired into CI (matches check_pr_kaizen.py,
-      which is also invoked manually during review, not automated) -- a
-      Reviewer session runs it with the GitHub MCP `list_pull_requests` /
-      `pull_request_read(method="get_files")` data it already has before
-      merging a same-project PR.
+- id: t-016
+  milestone: m3
+  title: "Kaizen: check same-project open PRs for touched-file overlap before merging the first one"
+  status: done
+  owner: reviewer
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-19T11:20:56Z'
+  note: >
+    Kaizen from t-008/t-010 (Reviewer, kind_robots PR #484/#486, 2026-07-19):
+    two `claimed` newsfeed tasks both touched newsfeed-feed.vue and
+    contract-tests.yml and merged minutes apart, producing an avoidable merge
+    conflict discovered only when reviewing the second PR. Add a lightweight
+    step to the Reviewer flow (a script or a documented manual check) that,
+    before merging a PR, lists any other currently-open PR from the same
+    project and diffs their changed-file sets -- if they overlap, flag it in
+    the PR review so the conflict is anticipated rather than discovered at
+    merge time. Keep it advisory (a warning/note), not a merge blocker, since
+    overlapping files don't always conflict.
 
 
-      DONE 2026-07-19: merged conductor PR #849 (squash afa6c79), CI green,
-      full suite 392 passed.
-    claimed_by: claude-conductor-agentrun-20260719T1114Z
-    claimed_at: '2026-07-19T11:14:15Z'
+    IN REVIEW 2026-07-19: added scripts/check_pr_file_overlap.py, a pure
+    no-network advisory check matching check_pr_kaizen.py's convention --
+    given the target PR's title/body/changed-files and a list of other
+    currently-open PRs' same, it infers each PR's project from the
+    `<project>/t-NNN` task id (same TASK_ID_RE approach as
+    check_pr_kaizen.py), and for any other open PR referencing the same
+    project, reports overlapping changed files. Advisory only (always exits
+    0); prints nothing for a clean PR. 14 unit tests in
+    tests/test_check_pr_file_overlap.py cover project extraction, overlap
+    detection, the target-excluded-from-its-own-others-list edge case, and
+    both text and --json CLI output. Full suite (392 tests) green;
+    `audit_roadmaps.py` clean. Not wired into CI (matches check_pr_kaizen.py,
+    which is also invoked manually during review, not automated) -- a
+    Reviewer session runs it with the GitHub MCP `list_pull_requests` /
+    `pull_request_read(method="get_files")` data it already has before
+    merging a same-project PR.
 
-  - id: t-017
-    milestone: m3
-    title: "Investigate a real rendered preview path (e.g. Vercel MCP) instead of the local nuxt dev wall"
-    status: done
-    owner: null
-    passes: 0
-    stakes: reversible
-    updated: '2026-07-19T10:24:25Z'
-    note: >
-      Kaizen from t-010 (a concurrent session's PR #486 review, cherry-picked from a since-superseded conductor PR #825 whose roadmap edits collided with this session's #827): at least three newsfeed tasks now (t-010, t-014, and this note itself) have independently hit the same sandbox wall -- `npm run dev` 500s immediately because DATABASE_URL points at an unreachable dummy MariaDB host, so SSR never reaches page markup and there is no way to visually or keyboard-nav verify a front-end change locally. Investigate whether the Vercel MCP connector (list_deployments / get_deployment / a preview URL for the PR's branch) can give a session an actual rendered page to check against, and if so document the concrete steps (which tool calls, what to look for) in AGENTS.md's cross-repo section so future front-end tasks stop rediscovering "no local nuxt dev" from scratch. If no such path exists yet, the deliverable is a clear note saying so instead of silence.
 
-      RAN 2026-07-19 (~10:12-10:35 UTC, claude-conductor-agentrun-20260719T1400Z): confirmed the Vercel MCP connector answers this fully. list_teams -> list_projects -> list_deployments (kind-robots, prj_x6HB2IPpQbvqNqiYVgu3IibJ6FZf) surfaces a real preview deployment URL for every open PR branch; web_fetch_vercel_url against it returned full SSR markup (real <title>, real app-shell classes), not the stock Nuxt welcome page -- confirmed with a live fetch, not just reading docs. Documented the concrete tool sequence in AGENTS.md's cross-repo section (new subsection right after provision_kind_robots_deps.sh). While checking a preview URL, list_deployments also showed the current production deployment in ERROR state -- a real, separate finding: unquoted `Character` (a reserved MariaDB word) in a raw SQL JOIN was failing every production build since PR #515, via repair-known-prisma-migrations.mjs's migration-repair step. Same unquoted shape existed in three other raw-SQL sites merged in the same PR cluster (component reaction reads, WonderLab rollout audit, review-draft repository) that would have hit the identical parse error the first time they ran. Fixed all four plus the one contract test asserting the old literal text; verified via the existing contract-test suite, eslint, and a full vue-tsc typecheck (all green) before merging kind_robots PR #517 (squash 7517ad2). No kind_robots front-end work needed for the newsfeed feature itself -- this task's deliverable is the AGENTS.md documentation plus the production-unblocking fix it surfaced.
-    claimed_by: claude-conductor-agentrun-20260719T1400Z
-    claimed_at: '2026-07-19T10:12:05Z'
+    DONE 2026-07-19: merged conductor PR #849 (squash afa6c79), CI green,
+    full suite 392 passed.
+  claimed_by: claude-conductor-agentrun-20260719T1114Z
+  claimed_at: '2026-07-19T11:14:15Z'
 
-  - id: t-018
-    milestone: m3
-    title: "Research and cite real source-perspective ratings for FEED_SOURCES, starting with the Activism feed"
-    status: done
-    owner: null
-    passes: 0
-    stakes: reversible
-    updated: '2026-07-19T19:13:03Z'
-    note: >
-      Kaizen from t-011 (kind_robots PR #505, merged): the new perspective-balance
-      UI (mode selector, badges) and ranking logic are real and tested, but every
-      FEED_SOURCES entry's `perspective` field is still empty, so there is nothing
-      for a normal user to see act yet. Per BIAS-CONTROLS.md, any rating assigned
-      must expose methodology and provenance and never be presented as objective
-      fact -- source it from an actual published media-bias methodology (e.g. a
-      named ratings organization) with a citation, not an invented judgment call.
-      Start with the Activism feed's sources (globalcitizen, devex-news, etc.),
-      the only feed currently flagged `topicPolitical: true`.
+- id: t-017
+  milestone: m3
+  title: "Investigate a real rendered preview path (e.g. Vercel MCP) instead of the local nuxt dev wall"
+  status: done
+  owner:
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-19T10:24:25Z'
+  note: >
+    Kaizen from t-010 (a concurrent session's PR #486 review, cherry-picked from a since-superseded conductor PR #825 whose
+    roadmap edits collided with this session's #827): at least three newsfeed tasks now (t-010, t-014, and this note itself)
+    have independently hit the same sandbox wall -- `npm run dev` 500s immediately because DATABASE_URL points at an unreachable
+    dummy MariaDB host, so SSR never reaches page markup and there is no way to visually or keyboard-nav verify a front-end
+    change locally. Investigate whether the Vercel MCP connector (list_deployments / get_deployment / a preview URL for the
+    PR's branch) can give a session an actual rendered page to check against, and if so document the concrete steps (which
+    tool calls, what to look for) in AGENTS.md's cross-repo section so future front-end tasks stop rediscovering "no local
+    nuxt dev" from scratch. If no such path exists yet, the deliverable is a clear note saying so instead of silence.
 
-      DONE 2026-07-19 (conductor scheduled session, claude-conductor-scheduled-20260719T-newsfeed-t018):
-      Media Bias/Fact Check rates Global Citizen "Left-Center" bias / "High"
-      factual reporting (mediabiasfactcheck.com/global-citizen) -- mapped to
-      `perspective: { label: 'center-left', source: 'Media Bias/Fact Check
-      (mediabiasfactcheck.com/global-citizen)', confidence: 'medium' }` on the
-      `globalcitizen` FEED_SOURCES entry. Devex has no Media Bias/Fact Check
-      profile and Ground News reports its bias/factuality as unknown too (no
-      AllSides/Ad Fontes/MBFC rating exists to cite) -- left unrated with an
-      inline comment explaining why, per the "unrated sources remain usable
-      and visibly unrated" guardrail, so a future cycle doesn't re-research
-      the same absence. Verified eslint/prettier clean and `npm run test`
-      (vue-tsc --noEmit) 0 errors on kind_robots (after parking pre-existing
-      untracked leftover files -- components/code/, components/composition/,
-      components/giftshop/social-publisher.vue -- unrelated to this diff, per
-      the same convention as ai-art-academy/t-010's 2026-07-15 note). kind_robots
-      PR #549 (branch claude/newsfeed-t018-perspective-sources): all 3 CI checks
-      green (TypeScript, Contract verifiers, GitGuardian) -- merged squash
-      5695852.
-    claimed_by: claude-conductor-scheduled-20260719T-newsfeed-t018
-    claimed_at: '2026-07-19T19:13:03Z'
+    RAN 2026-07-19 (~10:12-10:35 UTC, claude-conductor-agentrun-20260719T1400Z): confirmed the Vercel MCP connector answers
+    this fully. list_teams -> list_projects -> list_deployments (kind-robots, prj_x6HB2IPpQbvqNqiYVgu3IibJ6FZf) surfaces a
+    real preview deployment URL for every open PR branch; web_fetch_vercel_url against it returned full SSR markup (real <title>,
+    real app-shell classes), not the stock Nuxt welcome page -- confirmed with a live fetch, not just reading docs. Documented
+    the concrete tool sequence in AGENTS.md's cross-repo section (new subsection right after provision_kind_robots_deps.sh).
+    While checking a preview URL, list_deployments also showed the current production deployment in ERROR state -- a real,
+    separate finding: unquoted `Character` (a reserved MariaDB word) in a raw SQL JOIN was failing every production build
+    since PR #515, via repair-known-prisma-migrations.mjs's migration-repair step. Same unquoted shape existed in three other
+    raw-SQL sites merged in the same PR cluster (component reaction reads, WonderLab rollout audit, review-draft repository)
+    that would have hit the identical parse error the first time they ran. Fixed all four plus the one contract test asserting
+    the old literal text; verified via the existing contract-test suite, eslint, and a full vue-tsc typecheck (all green)
+    before merging kind_robots PR #517 (squash 7517ad2). No kind_robots front-end work needed for the newsfeed feature itself
+    -- this task's deliverable is the AGENTS.md documentation plus the production-unblocking fix it surfaced.
+  claimed_by: claude-conductor-agentrun-20260719T1400Z
+  claimed_at: '2026-07-19T10:12:05Z'
 
-  - id: t-019
-    milestone: m3
-    title: "kind_robots: wire tutorial-channel coverage for the rest of the wonder dashboard's routes"
-    status: done
-    owner: null
-    passes: 0
-    stakes: reversible
-    updated: '2026-07-19T15:14:27Z'
-    note: >
-      Kaizen from t-012 (kind_robots PR #541, merged): resolveTutorialChannelFromRoute
-      (stores/helpers/tutorialCards.ts) had no coverage at all for /newsfeed until this
-      task added a `wonder` tutorialChannel + tutorialRouteMap entry -- the workspace
-      sheet's "Show tutorial" toggle was silently inert on that page. The same gap
-      still exists for the rest of the `wonder` dashboard's tabs (dashboardHelper.ts's
-      `wonder` entry): /wonderlab (memory-dungeon, wonder-lab tabs), /screenfx,
-      /davinci, /watchlist, /ruler-hooked, /voice-lab -- none of these routes resolve
-      to a tutorial channel either (mural, challenges, and humboldt-scoop already have
-      their own separate tutorialChannels entries and routes, so skip those three).
-      Extend the `wonder` tutorialChannel's `sections` array with one section per
-      remaining route (mirroring the newsfeed section t-012 added) and add each
-      route to tutorialRouteMap, OR -- if a single-route tutorialChannel key can't map
-      to multiple distinct page routes cleanly (resolveTutorialChannelFromRoute
-      resolves one route per key) -- confirm whether a per-tab-key channel split is
-      needed instead of one shared 'wonder' key covering many unrelated pages, and
-      note the tradeoff either way before implementing.
+- id: t-018
+  milestone: m3
+  title: "Research and cite real source-perspective ratings for FEED_SOURCES, starting with the Activism feed"
+  status: done
+  owner:
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-19T19:13:03Z'
+  note: >
+    Kaizen from t-011 (kind_robots PR #505, merged): the new perspective-balance
+    UI (mode selector, badges) and ranking logic are real and tested, but every
+    FEED_SOURCES entry's `perspective` field is still empty, so there is nothing
+    for a normal user to see act yet. Per BIAS-CONTROLS.md, any rating assigned
+    must expose methodology and provenance and never be presented as objective
+    fact -- source it from an actual published media-bias methodology (e.g. a
+    named ratings organization) with a citation, not an invented judgment call.
+    Start with the Activism feed's sources (globalcitizen, devex-news, etc.),
+    the only feed currently flagged `topicPolitical: true`.
 
-      RESOLVED 2026-07-19 (conductor agent run): chose the single-channel,
-      multi-route-array design over a per-tab-key split -- widened tutorialRouteMap's
-      value type to `string | readonly string[]` and updated
-      resolveTutorialChannelFromRoute to check every route in a key's list. Added the
-      six missing sections (wonderlab, screenfx, davinci, watchlist, ruler-hooked,
-      voice-lab) to the `wonder` channel. kind_robots PR #542: eslint, prettier, and
-      vue-tsc (npm run test) all clean; merged squash `56b59a0`.
-    claimed_by: claude-conductor-19jul-1510
-    claimed_at: '2026-07-19T15:14:27Z'
+    DONE 2026-07-19 (conductor scheduled session, claude-conductor-scheduled-20260719T-newsfeed-t018):
+    Media Bias/Fact Check rates Global Citizen "Left-Center" bias / "High"
+    factual reporting (mediabiasfactcheck.com/global-citizen) -- mapped to
+    `perspective: { label: 'center-left', source: 'Media Bias/Fact Check
+    (mediabiasfactcheck.com/global-citizen)', confidence: 'medium' }` on the
+    `globalcitizen` FEED_SOURCES entry. Devex has no Media Bias/Fact Check
+    profile and Ground News reports its bias/factuality as unknown too (no
+    AllSides/Ad Fontes/MBFC rating exists to cite) -- left unrated with an
+    inline comment explaining why, per the "unrated sources remain usable
+    and visibly unrated" guardrail, so a future cycle doesn't re-research
+    the same absence. Verified eslint/prettier clean and `npm run test`
+    (vue-tsc --noEmit) 0 errors on kind_robots (after parking pre-existing
+    untracked leftover files -- components/code/, components/composition/,
+    components/giftshop/social-publisher.vue -- unrelated to this diff, per
+    the same convention as ai-art-academy/t-010's 2026-07-15 note). kind_robots
+    PR #549 (branch claude/newsfeed-t018-perspective-sources): all 3 CI checks
+    green (TypeScript, Contract verifiers, GitGuardian) -- merged squash
+    5695852.
+  claimed_by: claude-conductor-scheduled-20260719T-newsfeed-t018
+  claimed_at: '2026-07-19T19:13:03Z'
 
-  - id: t-020
-    milestone: m3
-    title: "Add a unit test asserting resolveTutorialChannelFromRoute picks exact-match over prefix-match across different channel keys"
-    status: done
-    owner: reviewer
-    passes: 0
-    stakes: reversible
-    updated: '2026-07-19T16:16:31Z'
-    note: >
-      Kaizen from t-019 (kind_robots PR #542, merged): resolveTutorialChannelFromRoute
-      now iterates multiple routes per channel key (the `wonder` key alone covers 7
-      routes) and picks the longest matching prefix via a cross-key `bestLen`
-      tie-break when no exact match hits first. No route in the current set is a
-      prefix of another channel's route, so this hasn't been exercised, but the
-      function has no test coverage at all today. Add unit tests in a
-      tutorialCards spec covering: (1) exact match always wins even when a shorter
-      route from a different key would also match as a prefix, (2) prefix match
-      picks the most specific (longest) route across different keys, (3) the
-      `wonder` key's multi-route array resolves correctly for each of its 7 routes.
+- id: t-019
+  milestone: m3
+  title: "kind_robots: wire tutorial-channel coverage for the rest of the wonder dashboard's routes"
+  status: done
+  owner:
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-19T15:14:27Z'
+  note: >
+    Kaizen from t-012 (kind_robots PR #541, merged): resolveTutorialChannelFromRoute
+    (stores/helpers/tutorialCards.ts) had no coverage at all for /newsfeed until this
+    task added a `wonder` tutorialChannel + tutorialRouteMap entry -- the workspace
+    sheet's "Show tutorial" toggle was silently inert on that page. The same gap
+    still exists for the rest of the `wonder` dashboard's tabs (dashboardHelper.ts's
+    `wonder` entry): /wonderlab (memory-dungeon, wonder-lab tabs), /screenfx,
+    /davinci, /watchlist, /ruler-hooked, /voice-lab -- none of these routes resolve
+    to a tutorial channel either (mural, challenges, and humboldt-scoop already have
+    their own separate tutorialChannels entries and routes, so skip those three).
+    Extend the `wonder` tutorialChannel's `sections` array with one section per
+    remaining route (mirroring the newsfeed section t-012 added) and add each
+    route to tutorialRouteMap, OR -- if a single-route tutorialChannel key can't map
+    to multiple distinct page routes cleanly (resolveTutorialChannelFromRoute
+    resolves one route per key) -- confirm whether a per-tab-key channel split is
+    needed instead of one shared 'wonder' key covering many unrelated pages, and
+    note the tradeoff either way before implementing.
 
-      RAN 2026-07-19 (~16:05-16:20 UTC, claude-conductor-burst-20260719T1605Z,
-      burst-mode project rotation): added `utils/scripts/verifyTutorialChannelResolver.ts`
-      covering all three requested cases. Since no real route pair currently overlaps
-      as a prefix (confirmed by inspecting the actual `footerRouteMap`/`tutorialRouteMap`
-      data -- same finding this note already recorded), gave
-      `resolveTutorialChannelFromRoute` two optional, defaulted parameters
-      (`routeMap`, `keys`) so tests can inject controlled overlapping route data
-      while every real call site (e.g. `workspace-sheet.vue`, which passes only
-      `route.path`) keeps its exact prior behavior via the defaults. Cases (1) and
-      (2) use a small synthetic `{ games: '/shop', art: '/shop/gallery' }` override
-      to force the overlap the real data doesn't have yet; case (3) runs against
-      the real, unmodified route map over all 7 wonder routes plus one sub-path
-      each. Also added a null-result and a query/hash-stripping-with-overrides
-      case. Wired `npm run test:tutorial-channel-resolver` into
-      `.github/workflows/contract-tests.yml` alongside the other newsfeed contract
-      checks. Verified locally: `npx eslint` clean, `npx prettier --check` clean,
-      the new test passes, full-project `vue-tsc --noEmit` 0 errors. kind_robots
-      PR #543 (branch `claude/keen-fermat-twud4v`): all 4 CI checks green
-      (Contract verifiers, TypeScript, facet-alias-smoke, GitGuardian), no review
-      comments -- merged squash `981d366`.
-    claimed_by: claude-conductor-burst-20260719T1605Z
-    claimed_at: '2026-07-19T16:06:48Z'
+    RESOLVED 2026-07-19 (conductor agent run): chose the single-channel,
+    multi-route-array design over a per-tab-key split -- widened tutorialRouteMap's
+    value type to `string | readonly string[]` and updated
+    resolveTutorialChannelFromRoute to check every route in a key's list. Added the
+    six missing sections (wonderlab, screenfx, davinci, watchlist, ruler-hooked,
+    voice-lab) to the `wonder` channel. kind_robots PR #542: eslint, prettier, and
+    vue-tsc (npm run test) all clean; merged squash `56b59a0`.
+  claimed_by: claude-conductor-19jul-1510
+  claimed_at: '2026-07-19T15:14:27Z'
 
-  - id: t-021
-    milestone: m3
-    title: "Visually verify feed-card.vue's perspective tooltip for both a rated and an unrated source via the Vercel preview flow"
-    status: done
-    owner: null
-    passes: 0
-    stakes: reversible
-    approved_by_human: true
-    note: >
-      Kaizen from t-018 (kind_robots PR #549, merged): the Activism feed now has one rated source (globalcitizen, perspective.label 'center-left') and one genuinely unrated source (devex-news, no perspective field at all) sitting side by side for the first time -- `feed-card.vue:64` already renders a `:title` tooltip citing `item.perspective?.source` when present, but this has only ever been checked by reading the template, never by looking at an actual rendered card for both the rated and the unrated case. Use the Vercel MCP connector flow documented in AGENTS.md's cross-repo section (list_teams -> list_projects -> list_deployments -> web_fetch_vercel_url) against a newsfeed page/preview to confirm: the rated source shows a tooltip citing Media Bias/Fact Check, the unrated source shows no political-lean badge/tooltip at all (not a blank or broken one), and neither state looks like objective fact per BIAS-CONTROLS.md's guardrail.
-      RAN 2026-07-19 (~20:07-20:20 UTC, claude-burst-hourly-20260719T2010Z): code-level trace confirms the wiring is correct end-to-end -- server/utils/newsfeed.ts:177-181 maps FeedSourceDefinition.perspective onto NewsFeedItem.perspective only when the source config carries one (globalcitizen does, devex-news doesn't), and feed-card.vue:64 binds `item.perspective?.source` straight into the badge's :title with no missing branch. Could not complete the actual visual check though: the Vercel MCP flow's web_fetch_vercel_url only returns pre-hydration SSR HTML -- newsfeed-feed.vue's loadFeed() runs onMounted only (client-fetch, not SSR/useAsyncData), so the fetched markup always shows the "Nothing here yet" placeholder regardless of real feed content. A direct Playwright/Chromium check against the vercel.app preview URL also isn't possible from this sandbox (net::ERR_CONNECTION_RESET -- that domain isn't on this session's egress allowlist, which is presumably why AGENTS.md's documented flow uses the MCP tool instead of a local browser in the first place). Fetched the live production API directly instead (`GET /api/newsfeed?feed=activism` via web_fetch_vercel_url, which does execute server-side): confirmed 0 items -- BOTH Activism sources are currently dead in production (globalcitizen: HTTP 404, its RSS feed no longer exists at all -- checked their homepage, no <link rel="alternate" type="application/rss+xml"> anywhere; devex-news: HTTP 403, looks like a blanket bot-block on the whole devex.com domain, independently reproduced via plain WebFetch too). So the tooltip literally cannot render for either case right now -- not a code bug, but there's no live data to visually confirm against. This is exactly what newsfeed/t-013 (batch-verify FEED_SOURCES reachability) exists to catch; while investigating I found and claimed t-013 too, but a concurrent session (claude-conductor-agentrun-20260719T201329Z) claimed it out from under me a few minutes into the file edit -- reverted my newsfeed.ts change unstaged rather than risk a duplicate-implementation collision (see conductor/t-040 precedent in AGENTS.md), so t-013's actual fix is left to that session. FOR SILAS: (soft gate, not blocking other work) even once t-013 lands, a REAL rated+unrated pair for the Activism feed specifically may still not be achievable without a working replacement source for globalcitizen (dead, no RSS at all) or devex-news (blanket 403) -- and BIAS-CONTROLS.md means any replacement needs a researched, cited Media Bias/Fact Check-style rating, not a guess, which I did not attempt here. This task should stay ready-but-blocked until t-013 (or a follow-up) lands a working rated source in the Activism feed specifically, not just any feed.
+- id: t-020
+  milestone: m3
+  title: "Add a unit test asserting resolveTutorialChannelFromRoute picks exact-match over prefix-match across different channel
+    keys"
+  status: done
+  owner: reviewer
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-19T16:16:31Z'
+  note: >
+    Kaizen from t-019 (kind_robots PR #542, merged): resolveTutorialChannelFromRoute
+    now iterates multiple routes per channel key (the `wonder` key alone covers 7
+    routes) and picks the longest matching prefix via a cross-key `bestLen`
+    tie-break when no exact match hits first. No route in the current set is a
+    prefix of another channel's route, so this hasn't been exercised, but the
+    function has no test coverage at all today. Add unit tests in a
+    tutorialCards spec covering: (1) exact match always wins even when a shorter
+    route from a different key would also match as a prefix, (2) prefix match
+    picks the most specific (longest) route across different keys, (3) the
+    `wonder` key's multi-route array resolves correctly for each of its 7 routes.
 
-      RESOLVED 2026-07-25: Silas — "guess you should find a better one then,
-      for what it's worth, the feed is working as requested, i do not really
-      care about any specific feed or source being available, just that it
-      works." Re-checked both sources live from this session (curl, not just
-      the config's stale flags): globalcitizen genuinely returns 200 right
-      now (its verified:true/rated status was already correct — the 404 this
-      task originally hit reading 2026-07-19 looks like it was transient,
-      reachability keeps varying by session/date across this whole repo).
-      devex-news is still 403 -- confirmed it's a domain-wide bot-block, not
-      a wrong-path issue (tried /rss/news and /feed, both 403). Swapped the
-      Activism feed's second source from devex-news to who-news (kind_robots
-      stores/helpers/newsfeed.ts) -- already verified:true, live-confirmed
-      200 right now, and correctly unrated (WHO is an international health
-      body, not a politically-rated outlet, so no perspective field is
-      correct, not a gap) -- giving a genuine rated+unrated pair again
-      without inventing a new source. Did NOT complete the literal
-      pixel-level visual check this task originally asked for (still
-      blocked on the same SSR/client-fetch mismatch noted above -- a real
-      tooling gap, not something this fix changes), but per Silas's explicit
-      "just that it works, don't care about the specific source" standard,
-      the underlying blocker (no live rated+unrated pair to check against)
-      is resolved. Closing as done rather than leaving it parked on a visual
-      check Silas said he doesn't need.
-    soft_gate: true
-    updated: '2026-07-25T00:00:00Z'
+    RAN 2026-07-19 (~16:05-16:20 UTC, claude-conductor-burst-20260719T1605Z,
+    burst-mode project rotation): added `utils/scripts/verifyTutorialChannelResolver.ts`
+    covering all three requested cases. Since no real route pair currently overlaps
+    as a prefix (confirmed by inspecting the actual `footerRouteMap`/`tutorialRouteMap`
+    data -- same finding this note already recorded), gave
+    `resolveTutorialChannelFromRoute` two optional, defaulted parameters
+    (`routeMap`, `keys`) so tests can inject controlled overlapping route data
+    while every real call site (e.g. `workspace-sheet.vue`, which passes only
+    `route.path`) keeps its exact prior behavior via the defaults. Cases (1) and
+    (2) use a small synthetic `{ games: '/shop', art: '/shop/gallery' }` override
+    to force the overlap the real data doesn't have yet; case (3) runs against
+    the real, unmodified route map over all 7 wonder routes plus one sub-path
+    each. Also added a null-result and a query/hash-stripping-with-overrides
+    case. Wired `npm run test:tutorial-channel-resolver` into
+    `.github/workflows/contract-tests.yml` alongside the other newsfeed contract
+    checks. Verified locally: `npx eslint` clean, `npx prettier --check` clean,
+    the new test passes, full-project `vue-tsc --noEmit` 0 errors. kind_robots
+    PR #543 (branch `claude/keen-fermat-twud4v`): all 4 CI checks green
+    (Contract verifiers, TypeScript, facet-alias-smoke, GitGuardian), no review
+    comments -- merged squash `981d366`.
+  claimed_by: claude-conductor-burst-20260719T1605Z
+  claimed_at: '2026-07-19T16:06:48Z'
 
-  - id: t-022
-    milestone: m3
-    title: 'Wire a pool of default placeholder images into feed-card.vue for items with no image'
-    status: done
-    owner: null
-    passes: 0
-    stakes: reversible
-    pr: https://github.com/silasfelinus/kind_robots/pull/1075
-    note: >
-      Filed 2026-07-25 (Silas: "a lot of blank images and so the feed is a
-      sea of empty boxes"). The 8 default placeholder illustrations
-      (kind-robots-newsfeed-default-01 through -08) are done and confirmed
-      live in production (direct HTTP fetch of all 8
-      public/images/newsfeed/defaults/default-0N.webp returned 200, not
-      just trusting art-prompts.yaml's own status: done field, per this
-      task's own prior caution).
+- id: t-021
+  milestone: m3
+  title: "Visually verify feed-card.vue's perspective tooltip for both a rated and an unrated source via the Vercel preview
+    flow"
+  status: done
+  owner:
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-018 (kind_robots PR #549, merged): the Activism feed now has one rated source (globalcitizen, perspective.label
+    'center-left') and one genuinely unrated source (devex-news, no perspective field at all) sitting side by side for the
+    first time -- `feed-card.vue:64` already renders a `:title` tooltip citing `item.perspective?.source` when present, but
+    this has only ever been checked by reading the template, never by looking at an actual rendered card for both the rated
+    and the unrated case. Use the Vercel MCP connector flow documented in AGENTS.md's cross-repo section (list_teams -> list_projects
+    -> list_deployments -> web_fetch_vercel_url) against a newsfeed page/preview to confirm: the rated source shows a tooltip
+    citing Media Bias/Fact Check, the unrated source shows no political-lean badge/tooltip at all (not a blank or broken one),
+    and neither state looks like objective fact per BIAS-CONTROLS.md's guardrail.
+    RAN 2026-07-19 (~20:07-20:20 UTC, claude-burst-hourly-20260719T2010Z): code-level trace confirms the wiring is correct
+    end-to-end -- server/utils/newsfeed.ts:177-181 maps FeedSourceDefinition.perspective onto NewsFeedItem.perspective only
+    when the source config carries one (globalcitizen does, devex-news doesn't), and feed-card.vue:64 binds `item.perspective?.source`
+    straight into the badge's :title with no missing branch. Could not complete the actual visual check though: the Vercel
+    MCP flow's web_fetch_vercel_url only returns pre-hydration SSR HTML -- newsfeed-feed.vue's loadFeed() runs onMounted only
+    (client-fetch, not SSR/useAsyncData), so the fetched markup always shows the "Nothing here yet" placeholder regardless
+    of real feed content. A direct Playwright/Chromium check against the vercel.app preview URL also isn't possible from this
+    sandbox (net::ERR_CONNECTION_RESET -- that domain isn't on this session's egress allowlist, which is presumably why AGENTS.md's
+    documented flow uses the MCP tool instead of a local browser in the first place). Fetched the live production API directly
+    instead (`GET /api/newsfeed?feed=activism` via web_fetch_vercel_url, which does execute server-side): confirmed 0 items
+    -- BOTH Activism sources are currently dead in production (globalcitizen: HTTP 404, its RSS feed no longer exists at all
+    -- checked their homepage, no <link rel="alternate" type="application/rss+xml"> anywhere; devex-news: HTTP 403, looks
+    like a blanket bot-block on the whole devex.com domain, independently reproduced via plain WebFetch too). So the tooltip
+    literally cannot render for either case right now -- not a code bug, but there's no live data to visually confirm against.
+    This is exactly what newsfeed/t-013 (batch-verify FEED_SOURCES reachability) exists to catch; while investigating I found
+    and claimed t-013 too, but a concurrent session (claude-conductor-agentrun-20260719T201329Z) claimed it out from under
+    me a few minutes into the file edit -- reverted my newsfeed.ts change unstaged rather than risk a duplicate-implementation
+    collision (see conductor/t-040 precedent in AGENTS.md), so t-013's actual fix is left to that session. FOR SILAS: (soft
+    gate, not blocking other work) even once t-013 lands, a REAL rated+unrated pair for the Activism feed specifically may
+    still not be achievable without a working replacement source for globalcitizen (dead, no RSS at all) or devex-news (blanket
+    403) -- and BIAS-CONTROLS.md means any replacement needs a researched, cited Media Bias/Fact Check-style rating, not a
+    guess, which I did not attempt here. This task should stay ready-but-blocked until t-013 (or a follow-up) lands a working
+    rated source in the Activism feed specifically, not just any feed.
 
-      DONE 2026-07-28 (conductor burst cycle): wired feed-card.vue's
-      `v-else` branch to a `fallbackImageSrc` computed that hashes
-      `item.id` into one of the 8 defaults (simple string hash, deterministic
-      per item so a card doesn't flicker between defaults across
-      re-renders), replacing the single static `kind-icon:news` icon box.
-      The existing `@error="imageFailed = true"` path (image URL present
-      but 404s) now falls through to the same `v-else` branch, landing on
-      the pool too, per the task's own scope note. Verified: `npx eslint
-      components/newsfeed/feed-card.vue` clean, `npm run test`
-      (`vue-tsc --noEmit`, full project) exit 0, `npx prettier --check`
-      clean. kind_robots PR #1075 merged squash `b951d4f4` with all 5 CI
-      checks green (Contract verifiers, TypeScript, facet-catalog, verify,
-      GitGuardian).
-    claimed_by: conductor-burst-20260728T0300Z-nf-t022
-    claimed_at: '2026-07-28T03:30:00Z'
-    updated: '2026-07-28T03:30:00Z'
+    RESOLVED 2026-07-25: Silas — "guess you should find a better one then,
+    for what it's worth, the feed is working as requested, i do not really
+    care about any specific feed or source being available, just that it
+    works." Re-checked both sources live from this session (curl, not just
+    the config's stale flags): globalcitizen genuinely returns 200 right
+    now (its verified:true/rated status was already correct — the 404 this
+    task originally hit reading 2026-07-19 looks like it was transient,
+    reachability keeps varying by session/date across this whole repo).
+    devex-news is still 403 -- confirmed it's a domain-wide bot-block, not
+    a wrong-path issue (tried /rss/news and /feed, both 403). Swapped the
+    Activism feed's second source from devex-news to who-news (kind_robots
+    stores/helpers/newsfeed.ts) -- already verified:true, live-confirmed
+    200 right now, and correctly unrated (WHO is an international health
+    body, not a politically-rated outlet, so no perspective field is
+    correct, not a gap) -- giving a genuine rated+unrated pair again
+    without inventing a new source. Did NOT complete the literal
+    pixel-level visual check this task originally asked for (still
+    blocked on the same SSR/client-fetch mismatch noted above -- a real
+    tooling gap, not something this fix changes), but per Silas's explicit
+    "just that it works, don't care about the specific source" standard,
+    the underlying blocker (no live rated+unrated pair to check against)
+    is resolved. Closing as done rather than leaving it parked on a visual
+    check Silas said he doesn't need.
+  soft_gate: true
+  updated: '2026-07-25T00:00:00Z'
+
+- id: t-022
+  milestone: m3
+  title: 'Wire a pool of default placeholder images into feed-card.vue for items with no image'
+  status: done
+  owner:
+  passes: 0
+  stakes: reversible
+  pr: https://github.com/silasfelinus/kind_robots/pull/1075
+  note: >
+    Filed 2026-07-25 (Silas: "a lot of blank images and so the feed is a
+    sea of empty boxes"). The 8 default placeholder illustrations
+    (kind-robots-newsfeed-default-01 through -08) are done and confirmed
+    live in production (direct HTTP fetch of all 8
+    public/images/newsfeed/defaults/default-0N.webp returned 200, not
+    just trusting art-prompts.yaml's own status: done field, per this
+    task's own prior caution).
+
+    DONE 2026-07-28 (conductor burst cycle): wired feed-card.vue's
+    `v-else` branch to a `fallbackImageSrc` computed that hashes
+    `item.id` into one of the 8 defaults (simple string hash, deterministic
+    per item so a card doesn't flicker between defaults across
+    re-renders), replacing the single static `kind-icon:news` icon box.
+    The existing `@error="imageFailed = true"` path (image URL present
+    but 404s) now falls through to the same `v-else` branch, landing on
+    the pool too, per the task's own scope note. Verified: `npx eslint
+    components/newsfeed/feed-card.vue` clean, `npm run test`
+    (`vue-tsc --noEmit`, full project) exit 0, `npx prettier --check`
+    clean. kind_robots PR #1075 merged squash `b951d4f4` with all 5 CI
+    checks green (Contract verifiers, TypeScript, facet-catalog, verify,
+    GitGuardian).
+  claimed_by: conductor-burst-20260728T0300Z-nf-t022
+  claimed_at: '2026-07-28T03:30:00Z'
+  updated: '2026-07-28T03:30:00Z'
+goal: Provide a useful, readable Kind Robots newsfeed that surfaces relevant updates and routes readers into the parts 
+  of the site those updates describe.

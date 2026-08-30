@@ -15,102 +15,104 @@ notes_from_silas: |
   The historical code copies under this Conductor directory are provenance only.
 
 milestones:
-  - id: m1
-    title: "Loop proven end-to-end on this repo"
-    weight: 10
-    status: done
-  - id: m2
-    title: "Existing site imported + building cleanly"
-    weight: 20
-    status: done
-  - id: m3
-    title: "Content + copy refresh / front-end foundation"
-    weight: 25
-    status: done
-  - id: m4
-    title: "Contact / quote-request foundation"
-    weight: 25
-    status: done
-  - id: m5
-    title: "SEO / analytics foundation handed to unified project"
-    weight: 20
-    status: done
+- id: m1
+  title: "Loop proven end-to-end on this repo"
+  weight: 10
+  status: done
+- id: m2
+  title: "Existing site imported + building cleanly"
+  weight: 20
+  status: done
+- id: m3
+  title: "Content + copy refresh / front-end foundation"
+  weight: 25
+  status: done
+- id: m4
+  title: "Contact / quote-request foundation"
+  weight: 25
+  status: done
+- id: m5
+  title: "SEO / analytics foundation handed to unified project"
+  weight: 20
+  status: done
 
 tasks:
-  - id: t-001
-    milestone: m1
-    title: "Confirm the loop: trivial no-op PR through the full cycle"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: "Completed loop smoke test."
+- id: t-001
+  milestone: m1
+  title: "Confirm the loop: trivial no-op PR through the full cycle"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: "Completed loop smoke test."
 
-  - id: t-002
-    milestone: m2
-    title: "Audit the imported site and report build/run steps"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: "Imported WordPress/Docker site audited; detailed historical note remains in Git history."
+- id: t-002
+  milestone: m2
+  title: "Audit the imported site and report build/run steps"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: "Imported WordPress/Docker site audited; detailed historical note remains in Git history."
 
-  - id: t-003
-    milestone: m2
-    title: "Add local Docker compose wrapper for the imported WordPress site"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: "Local compose/env wrapper delivered."
+- id: t-003
+  milestone: m2
+  title: "Add local Docker compose wrapper for the imported WordPress site"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: "Local compose/env wrapper delivered."
 
-  - id: t-004
-    milestone: m2
-    title: "Confirm imported theme, plugins, uploads, and database assets"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: >
-      Historical audit completed, but its guessed-path asset conclusions were later
-      disproved by live reconciliation. Canonical truth is now maintained in
-      humboldtscoopsolutions/docs/INVENTORY.md.
+- id: t-004
+  milestone: m2
+  title: "Confirm imported theme, plugins, uploads, and database assets"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >
+    Historical audit completed, but its guessed-path asset conclusions were later
+    disproved by live reconciliation. Canonical truth is now maintained in
+    humboldtscoopsolutions/docs/INVENTORY.md.
 
-  - id: t-005
-    milestone: m2
-    title: "Harden WordPress config defaults before staging"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: "Environment-provided auth material enforced; completed in Conductor PR #48."
+- id: t-005
+  milestone: m2
+  title: "Harden WordPress config defaults before staging"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: "Environment-provided auth material enforced; completed in Conductor PR #48."
 
-  - id: t-006
-    milestone: m2
-    title: "Remove fallback dev-credential defaults from compose auth material"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: "Fallback credential placeholders removed; completed in Conductor PR #50."
+- id: t-006
+  milestone: m2
+  title: "Remove fallback dev-credential defaults from compose auth material"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: "Fallback credential placeholders removed; completed in Conductor PR #50."
 
-  - id: t-007
-    milestone: m3
-    title: "Audit current site pages and draft a content refresh brief"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: "Content/service-area/tone audit delivered in CONTENT-BRIEF.md and later moved to the canonical HSS repo."
+- id: t-007
+  milestone: m3
+  title: "Audit current site pages and draft a content refresh brief"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: "Content/service-area/tone audit delivered in CONTENT-BRIEF.md and later moved to the canonical HSS repo."
 
-  - id: t-008
-    milestone: m3
-    title: "Polish and upgrade Humboldt Scoop front-end surface"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: >
-      Public-site project surface and Kind Robots bridge were completed. Subsequent live
-      website work is substantially beyond this task and now belongs to the unified
-      humboldt-scoop-cms roadmap rather than reopening this finished project.
+- id: t-008
+  milestone: m3
+  title: "Polish and upgrade Humboldt Scoop front-end surface"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >
+    Public-site project surface and Kind Robots bridge were completed. Subsequent live
+    website work is substantially beyond this task and now belongs to the unified
+    humboldt-scoop-cms roadmap rather than reopening this finished project.
+goal: Deliver the original Humboldt Scoop experience as a complete, coherent representation of the business and its 
+  services.

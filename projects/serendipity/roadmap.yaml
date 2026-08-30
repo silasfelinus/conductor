@@ -1,12 +1,11 @@
 project: serendipity
 kind: software
-notes_from_silas: "Serendipity is the fun one: a story-weaving experience inside kind_robots.\nThe Serendipity\
-  \ bot uses our task-manager systems to weave a narrative around\na theme the user picks (dream vibes,\
-  \ locations, genres). The user is the\nprotagonist of a colorful, engaging story \u2014 and the questions\
-  \ the story asks\nthem quietly advance the real honey-dos and human-gated tasks of a project.\nBuild\
-  \ on existing infrastructure: chat streams, Bots, Dreams (LOCATION/GENRE\ndream types), Todos (HONEYDO\
-  \ category), and the conductor roadmap task gates.\nThis project has write access to develop the Serendipity\
-  \ component in\nkind_robots. Delight first: the story should feel like a gift, not a chore list.\n"
+notes_from_silas: "Serendipity is the fun one: a story-weaving experience inside kind_robots.\nThe Serendipity bot uses our
+  task-manager systems to weave a narrative around\na theme the user picks (dream vibes, locations, genres). The user is the\n\
+  protagonist of a colorful, engaging story — and the questions the story asks\nthem quietly advance the real honey-dos and
+  human-gated tasks of a project.\nBuild on existing infrastructure: chat streams, Bots, Dreams (LOCATION/GENRE\ndream types),
+  Todos (HONEYDO category), and the conductor roadmap task gates.\nThis project has write access to develop the Serendipity
+  component in\nkind_robots. Delight first: the story should feel like a gift, not a chore list.\n"
 milestones:
 - id: m1
   title: Experience design and data contract
@@ -39,8 +38,8 @@ tasks:
   gate_human: true
   approved_by_human: true
   updated: '2026-07-03T06:45:00Z'
-  note: 'Approved by Silas in a Claude Code session on 2026-07-03 after reading the full brief (landed
-    on main via PR #107). Approval recorded on his explicit instruction. Unblocks t-002 and t-003.
+  note: 'Approved by Silas in a Claude Code session on 2026-07-03 after reading the full brief (landed on main via PR #107).
+    Approval recorded on his explicit instruction. Unblocks t-002 and t-003.
 
     '
 - id: t-002
@@ -53,7 +52,9 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: "Shipped the Kind Robots front end: the existing serendipity page component wired into a public scaffold-based page at /serendipity, registered as the 'serendipity' tab in the scenario channel with channelKey/tabKey. Reusable project-front-page scaffold in kind_robots/components/conductor/. kind_robots PR #204 merged 2026-07-12."
+  note: "Shipped the Kind Robots front end: the existing serendipity page component wired into a public scaffold-based page
+    at /serendipity, registered as the 'serendipity' tab in the scenario channel with channelKey/tabKey. Reusable project-front-page
+    scaffold in kind_robots/components/conductor/. kind_robots PR #204 merged 2026-07-12."
 - id: t-003
   milestone: m3
   title: Build theme picker from dream vibes, locations, and genres
@@ -64,8 +65,8 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Surface LOCATION and GENRE dreams (plus vibe/flavor text) as pickable story ingredients. A user
-    choice produces a story seed object the engine can expand. Include a "surprise me" serendipity roll.
+  note: 'Surface LOCATION and GENRE dreams (plus vibe/flavor text) as pickable story ingredients. A user choice produces a
+    story seed object the engine can expand. Include a "surprise me" serendipity roll.
 
     '
 - id: t-004
@@ -80,10 +81,10 @@ tasks:
   depends_on:
   - t-002
   - t-003
-  note: 'Merged. Momentum-phased prompts (young/rising/deep/resolving), a bounded recap so long stories
-    don''t grow prompts without limit, and a real ending: "Bring it to a close" (from beat 2) weaves a
-    finale beat with no question, sets status complete, and shows "The End". Verified via full-project
-    vue-tsc/eslint/prettier plus green CI (TypeScript, GitGuardian, Vercel).
+  note: 'Merged. Momentum-phased prompts (young/rising/deep/resolving), a bounded recap so long stories don''t grow prompts
+    without limit, and a real ending: "Bring it to a close" (from beat 2) weaves a finale beat with no question, sets status
+    complete, and shows "The End". Verified via full-project vue-tsc/eslint/prettier plus green CI (TypeScript, GitGuardian,
+    Vercel).
 
     '
 - id: t-005
@@ -96,9 +97,9 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-004
-  note: "Map open HONEYDO todos and needs-human conductor tasks for the chosen project into story beats:\
-    \ the story's questions present the real decision or action in-world. Read-only in this task \u2014\
-    \ surfacing and phrasing only, no writes back to todos or roadmaps yet.\n"
+  note: "Map open HONEYDO todos and needs-human conductor tasks for the chosen project into story beats: the story's questions
+    present the real decision or action in-world. Read-only in this task — surfacing and phrasing only, no writes back to
+    todos or roadmaps yet.\n"
 - id: t-006
   milestone: m4
   title: Write story answers back to task progress
@@ -111,11 +112,10 @@ tasks:
   gate_human: true
   approved_by_human: true
   depends_on: t-005
-  note: 'Wiring design (projects/serendipity/docs/write-back-design.md, demoed on kind_robots PR #77)
-    approved by Silas in a Claude Code session on 2026-07-03 on his explicit instruction ("update t-006
-    so we keep moving on it"). Implementation of the per-item Apply write path is now in progress under
-    this task: honey-do answers mark the todo done; needs-human task decisions become AGENT todos; the
-    app never edits roadmap YAML.
+  note: 'Wiring design (projects/serendipity/docs/write-back-design.md, demoed on kind_robots PR #77) approved by Silas in
+    a Claude Code session on 2026-07-03 on his explicit instruction ("update t-006 so we keep moving on it"). Implementation
+    of the per-item Apply write path is now in progress under this task: honey-do answers mark the todo done; needs-human
+    task decisions become AGENT todos; the app never edits roadmap YAML.
 
     '
 - id: t-007
@@ -127,7 +127,10 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-006
-  note: 'Completed in PR #133. Wrote projects/serendipity/reports/2026-07-03-playthrough-polish.md. Connector-only runtime could not capture live screenshots, so the report includes a screenshot checklist plus a grounded audit of the current source and merged PR trail. Recommended next pass: human/local browser playthrough with screenshots and backend Apply verification.'
+  note: 'Completed in PR #133. Wrote projects/serendipity/reports/2026-07-03-playthrough-polish.md. Connector-only runtime
+    could not capture live screenshots, so the report includes a screenshot checklist plus a grounded audit of the current
+    source and merged PR trail. Recommended next pass: human/local browser playthrough with screenshots and backend Apply
+    verification.'
 - id: t-008
   milestone: m3
   title: Expose the in-flight chat (pending chat id or ref) from kind_robots chatStore for streaming consumers
@@ -136,20 +139,18 @@ tasks:
   updated: '2026-07-18T20:13:13Z'
   passes: 0
   stakes: reversible
-  note: 'FOR SILAS: I claimed this task, read kind_robots stores/chatStore.ts and the current serendipityStore
-    streaming heuristic, and attempted the smallest safe helper file for exposing a pending chat reference.
-    The GitHub connector safety filter blocked the write to silasfelinus/kind_robots before a PR could
-    be opened. TO APPROVE: Either make the tiny helper manually in kind_robots or return this task to
-    status: ready for a local-code Worker/Claude session with patch access. The intended change is to
-    expose pendingChat, pendingChatId, and pendingText from chatStore so serendipityStore does not read
-    the last chat array entry while streaming.
+  note: 'FOR SILAS: I claimed this task, read kind_robots stores/chatStore.ts and the current serendipityStore streaming heuristic,
+    and attempted the smallest safe helper file for exposing a pending chat reference. The GitHub connector safety filter
+    blocked the write to silasfelinus/kind_robots before a PR could be opened. TO APPROVE: Either make the tiny helper manually
+    in kind_robots or return this task to status: ready for a local-code Worker/Claude session with patch access. The intended
+    change is to expose pendingChat, pendingChatId, and pendingText from chatStore so serendipityStore does not read the last
+    chat array entry while streaming.
 
-    IMPLEMENTED 2026-07-18 (conductor Agent session, full git+GitHub MCP patch access): landed exactly
-    the intended change in kind_robots PR #440 (branch claude/vigilant-edison-3a4jpp) -- pendingChatId/pendingChat/pendingText
-    exposed from chatStore, serendipityStore streamingText reads pendingText directly, weaveStartChatCount
-    removed as redundant. vue-tsc clean, eslint clean (2 pre-existing unrelated no-empty errors noted, not
-    introduced by this diff). PR also carries t-011''s implementation on the same branch. TO APPROVE: merge
-    PR #440 once CI is green (or note if you want it split first).
+    IMPLEMENTED 2026-07-18 (conductor Agent session, full git+GitHub MCP patch access): landed exactly the intended change
+    in kind_robots PR #440 (branch claude/vigilant-edison-3a4jpp) -- pendingChatId/pendingChat/pendingText exposed from chatStore,
+    serendipityStore streamingText reads pendingText directly, weaveStartChatCount removed as redundant. vue-tsc clean, eslint
+    clean (2 pre-existing unrelated no-empty errors noted, not introduced by this diff). PR also carries t-011''s implementation
+    on the same branch. TO APPROVE: merge PR #440 once CI is green (or note if you want it split first).
 
     '
   claimed_by: claude-conductor-agent-20260718T201310Z
@@ -162,9 +163,8 @@ tasks:
   updated: '2026-07-03T06:16:00-07:00'
   passes: 0
   stakes: reversible
-  note: 'Completed in PR #122. Added projects/serendipity/dreams/starter-ingredients.json with five LOCATION
-    and five GENRE starter Dream ingredients for the theme picker. No live database write or endpoint
-    call was performed.
+  note: 'Completed in PR #122. Added projects/serendipity/dreams/starter-ingredients.json with five LOCATION and five GENRE
+    starter Dream ingredients for the theme picker. No live database write or endpoint call was performed.
 
     '
 - id: t-010
@@ -176,10 +176,9 @@ tasks:
   passes: 0
   stakes: reversible
   pr: https://github.com/silasfelinus/kind_robots/pull/78
-  note: 'Completed in kind_robots PR #78. The Serendipity finale now shows a local session recap titled
-    "What the story learned," summarizing tone, place, genre, vibe tags, preference clues, and real-world
-    threads held for review. No backend writes, Todo writes, roadmap writes, live deploys, or publishing
-    actions.
+  note: 'Completed in kind_robots PR #78. The Serendipity finale now shows a local session recap titled "What the story learned,"
+    summarizing tone, place, genre, vibe tags, preference clues, and real-world threads held for review. No backend writes,
+    Todo writes, roadmap writes, live deploys, or publishing actions.
 
     '
 - id: t-011
@@ -190,14 +189,19 @@ tasks:
   updated: '2026-07-18T20:20:05Z'
   passes: 0
   stakes: reversible
-  note: 'FOR SILAS: I could not apply the actual Kind Robots UI patch because the GitHub connector safety filter blocked creating a worker branch in silasfelinus/kind_robots. I preserved the intended implementation at projects/serendipity/docs/t-011-serendipity-agent-todo-badge-filter.md. It explains the exact todoStore helpers, conductor-page.vue Story tab/filter, todo card badge, Serendipity metadata tweak, and verification checklist. TO APPROVE: apply that patch in a local-code/Claude session with kind_robots patch access, then set this task back to ready or done depending on whether you want another Worker pass. This is a soft tooling block; no live data, deploys, or roadmap YAML outside conductor were changed.
+  note: 'FOR SILAS: I could not apply the actual Kind Robots UI patch because the GitHub connector safety filter blocked creating
+    a worker branch in silasfelinus/kind_robots. I preserved the intended implementation at projects/serendipity/docs/t-011-serendipity-agent-todo-badge-filter.md.
+    It explains the exact todoStore helpers, conductor-page.vue Story tab/filter, todo card badge, Serendipity metadata tweak,
+    and verification checklist. TO APPROVE: apply that patch in a local-code/Claude session with kind_robots patch access,
+    then set this task back to ready or done depending on whether you want another Worker pass. This is a soft tooling block;
+    no live data, deploys, or roadmap YAML outside conductor were changed.
 
-    IMPLEMENTED 2026-07-18 (conductor Agent session, full git+GitHub MCP patch access): applied the preserved
-    patch essentially as drafted in kind_robots PR #440 (branch claude/vigilant-edison-3a4jpp) -- isSerendipityAgentTodo/serendipityAgentTodos/regularAgentTodos
-    added to todoStore, the story-decision createTodo call now sets icon kind-icon:sparkles, and conductor-page.vue
-    gained the Story tab + card badge (badge shown in all filters, not just non-OPEN, per this note''s own
-    verification checklist item 4). vue-tsc and eslint both clean. PR also carries t-008''s implementation on
-    the same branch. TO APPROVE: merge PR #440 once CI is green.
+    IMPLEMENTED 2026-07-18 (conductor Agent session, full git+GitHub MCP patch access): applied the preserved patch essentially
+    as drafted in kind_robots PR #440 (branch claude/vigilant-edison-3a4jpp) -- isSerendipityAgentTodo/serendipityAgentTodos/regularAgentTodos
+    added to todoStore, the story-decision createTodo call now sets icon kind-icon:sparkles, and conductor-page.vue gained
+    the Story tab + card badge (badge shown in all filters, not just non-OPEN, per this note''s own verification checklist
+    item 4). vue-tsc and eslint both clean. PR also carries t-008''s implementation on the same branch. TO APPROVE: merge
+    PR #440 once CI is green.
 
     '
   claimed_by: claude-conductor-agent-20260718T201310Z
@@ -205,14 +209,18 @@ tasks:
 - id: t-012
   milestone: m5
   title: Polish and upgrade Serendipity front-end surface
-  status: ready
-  owner: null
-  updated: '2026-07-22T04:20:00Z'
+  status: blocked
+  owner:
+  updated: '2026-08-29T23:59:00Z'
   passes: 0
   stakes: reversible
   note: |-
     UI polish + upgrade for the serendipity front end now that the scaffold page is live at /serendipity. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/scenario/serendipity.webp and tutorial art at public/images/tutorials/scenario/serendipity.webp; (2) add a matching section for 'serendipity' under tutorialChannels.scenario.sections in kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl points at /serendipity (admin can run the Conductor 'Placements' button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full interactive experience for this project. PROGRESS 2026-07-20 (conductor agent session, kind_robots PR #636 merged squash 650a2c9): step (2) done -- added a 'serendipity' section under tutorialChannels.scenario.sections in stores/helpers/tutorialCards.ts (Stories tutorial channel), resolving via the existing tutorialImage('scenario', 'serendipity') helper with a placeholder fallback until dedicated art lands. Step (4) is effectively covered, not actually a placeholder: components/pages/serendipity-page.vue already implements the full story-weaving loop (LOCATION Dreams, Facets, momentum-driven narrative beats, HONEYDO/needs-human task weaving, Story ledger Apply write-back) per milestones m2/m4/m5 already done. Remaining and kept ready: step (1) dashboard-tab + tutorial .webp art -- confirmed the art-generation relay is still down this session (job 816, queued 2026-07-20T00:14Z, still PENDING/unclaimed 8+ hours later, same as ai-art-academy/t-035's finding); and step (3) the liveUrl/channelKey/tabKey backfill -- confirmed via GET /api/projects that all three are still null for conductorSlug: serendipity, needs an admin Placements click. Verified before merge: eslint clean, prettier clean, full-project npm run test (vue-tsc --noEmit) exit 0. All 3 kind_robots PR checks green (TypeScript, Contract verifiers, GitGuardian). PROGRESS 2026-07-21 (~04:10-04:24 UTC, conductor scheduled agent run, claude-conductor-scheduled-20260721T0410Z): step (3) DONE -- added liveUrl: /serendipity, channelKey: scenario, tabKey: serendipity to project-overrides.yaml (tabKey mirrors the existing 'serendipity' section key under tutorialChannels.scenario.sections) and ran scripts/sync_projects.py; confirmed live via GET /api/projects that the Project row (id=23, conductorSlug: serendipity) now carries all three fields. Step (1) art still blocked, but with an important correction to the prior cycle's recheck heuristic: job 816 showing status DONE (checked this cycle) is STALE evidence -- its updatedAt is 2026-07-20T12:52:34Z, a one-off completion many hours in the past, not proof the relay is online now. Fresh jobs told the real story: queued job 1187 for the dashboard-tab image and it FAILED (connection reset by peer, relay never claimed it); a spot-check of jobs 1180-1186 (all created within the last ~40 minutes of this session) found every one still PENDING/unclaimed. Also queued job 1189 for a newly-added tutorial-art request (kind-robots-serendipity-tutorial-image-9f3a2c1d in art-prompts.yaml, prompt: glowing storybook door at dusk) -- also unclaimed, left pending for whenever the relay next comes online (no code/asset change needed to pick it up later, just a rerun of consume_art_requests.py). Future sessions: recheck a FRESH job's PENDING/claimed status (or queue a new one), not an old job's terminal status, to judge current relay availability. Steps (2) and (4) remain done per the 2026-07-20 cycle. Verified: project-overrides.yaml change is config-only, no schema/db migration; sync_projects.py run showed only serendipity as UPDATED (all other 30 active projects UNCHANGED), so no unintended side effects on other projects' Placements. PROGRESS 2026-07-22 (~04:07-04:20 UTC, conductor scheduled burst session, claude-conductor-burst-20260722T0400Z-serendipity-t012): re-checked relay availability with a sharper probe than prior cycles -- GET /api/art/queue/relay-status now reports a registered agent (Silas-PC, lastSeenAt 2026-07-22T04:03:25Z, engines A1111/COMFY), the first time any cycle this week has seen a non-empty agents list. This is a genuinely new signal (previously: {"agents":[]}), so re-ran consume_art_requests.py --id-prefix kind-robots-serendipity --live for the 3 outstanding serendipity/serendipity-voice image requests. All 3 still failed: job 1336 timed out after 600s still PENDING, jobs 1339/1341 hit connection-reset errors; direct GET on all three job ids afterward confirmed claimedAt: null, claimedBy: null, attempts: 0 -- the agent heartbeats but is not actually claiming queued jobs. Refined finding for future cycles: relay-status showing a registered agent is NOT sufficient evidence the relay is accepting work -- must confirm a freshly queued job transitions out of PENDING/claimedAt:null, not just that an agent is listed. Re-armed to ready (transient/external block, no pass consumed); no kind_robots code touched.
 
     SUPERSEDED 2026-07-29 (conductor burst-mode cycle): this note's claim that "components/pages/serendipity-page.vue already implements the full story-weaving loop" is no longer true and must not be trusted by a future cycle. kind_robots permanently renamed the entire story-weaving product to Taskmaster (docs/products/storybook-taskmaster-boundary.md; commit 5509ac4 "Complete permanent Taskmaster cutover" renamed serendipity-page.vue -> taskmaster-page.vue and serendipityStore.ts -> taskmasterStore.ts, deleting the old /serendipity route/content). This same morning, kind_robots commit 36a86bf ("refactor: make Serendipity the canonical voice route") reclaimed the freed /serendipity name and route for the unrelated Alexa voice-led surface, which is already correctly tracked under conductor's alexa-integration project. This conductor project is retired in project-overrides.yaml (see its note for the full citation trail); the renamed narrative product now has its own tracking at projects/taskmaster/roadmap.yaml. Do not pick up this task again -- it describes a page that no longer exists in this form.
-  claimed_by: null
-  claimed_at: null
+
+    CONSISTENCY HOLD 2026-08-29: this project is not active. Re-arm this task to ready if and when the project is explicitly reactivated.
+  claimed_by:
+  claimed_at:
+goal: Deliver Serendipity as a delightful story-weaving experience that turns project choices and real tasks into 
+  narrative beats without feeling like a chore list.

@@ -169,11 +169,16 @@ tasks:
   milestone: m3
   title: Build the pack generator admin view in kind_robots
   status: done
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
   depends_on: t-003
-  note: 'Completed. kind_robots PR #369 merged (squash 5a5d383): packmaker-admin-panel.vue (admin-only, gated on userStore.isAdmin) + packStore.ts + packManifests.ts seed data. Loads a pack manifest, creates/regenerates each item via existing dreams/facets/characters/rewards + art endpoints, shows per-item status, batch-creates remaining items, and a local ''mark ready'' toggle. All created items forced isPublic:false/isMature:false pending kind-robots t-008 (ACL) -- no live/public release wired, correctly deferred per the original note. Reviewed by Reviewer session (CI green: TypeScript/Contract verifiers/GitGuardian, scoped 4-file diff, no migrations/secrets/DNS/billing) and merged directly, no rejection pass.'
+  note: 'Completed. kind_robots PR #369 merged (squash 5a5d383): packmaker-admin-panel.vue (admin-only, gated on userStore.isAdmin)
+    + packStore.ts + packManifests.ts seed data. Loads a pack manifest, creates/regenerates each item via existing dreams/facets/characters/rewards
+    + art endpoints, shows per-item status, batch-creates remaining items, and a local ''mark ready'' toggle. All created
+    items forced isPublic:false/isMature:false pending kind-robots t-008 (ACL) -- no live/public release wired, correctly
+    deferred per the original note. Reviewed by Reviewer session (CI green: TypeScript/Contract verifiers/GitGuardian, scoped
+    4-file diff, no migrations/secrets/DNS/billing) and merged directly, no rejection pass.'
   claimed_by: claude-worker-packmaker-xuup66
   claimed_at: '2026-07-17T19:24:38Z'
   updated: '2026-07-17T20:15:00Z'
@@ -307,7 +312,8 @@ tasks:
   updated: '2026-07-17T22:05:00Z'
 - id: t-010
   milestone: m3
-  title: "Add a contract test for generatePackScaffold's JSON-extraction/validation path (fence stripping, brace slicing, invalid-JSON and schema-fail messages)"
+  title: "Add a contract test for generatePackScaffold's JSON-extraction/validation path (fence stripping, brace slicing,
+    invalid-JSON and schema-fail messages)"
   status: done
   passes: 0
   stakes: reversible
@@ -327,3 +333,5 @@ tasks:
   claimed_by: claude-conductor-hourly-20260717d
   claimed_at: '2026-07-17T21:55:09Z'
   updated: '2026-07-17T21:55:09Z'
+goal: Make creating and maintaining reusable Kind Robots packs straightforward, validated, and integrated with the 
+  objects and experiences that consume them.

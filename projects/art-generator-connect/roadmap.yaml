@@ -36,9 +36,8 @@ tasks:
   stakes: reversible
   gate_human: true
   approved_by_human: true
-  note: 'Read the existing kind_robots SD and ComfyUI art generation endpoints and document the request
-    fields, auth requirements, response shape, polling behavior, and failure modes in docs/art-api.md
-    for Silas to review.
+  note: 'Read the existing kind_robots SD and ComfyUI art generation endpoints and document the request fields, auth requirements,
+    response shape, polling behavior, and failure modes in docs/art-api.md for Silas to review.
 
     '
 - id: t-002
@@ -50,9 +49,8 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: "Created scripts/request_art.py \u2014 dry-run wrapper for /api/conductor/art-request endpoint.\
-    \ Accepts --prompt, --project-slug, --width, --height, --dry-run (default), --output-json. Uses KR_API_TOKEN\
-    \ for live mode. Merged via PR #74.\n"
+  note: "Created scripts/request_art.py — dry-run wrapper for /api/conductor/art-request endpoint. Accepts --prompt, --project-slug,
+    --width, --height, --dry-run (default), --output-json. Uses KR_API_TOKEN for live mode. Merged via PR #74.\n"
 - id: t-003
   milestone: m3
   title: Specify how generated URLs map back to projects
@@ -62,9 +60,9 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: "Created projects/art-generator-connect/URL-MAPPING.md \u2014 specifies the canonical URL pattern,\
-    \ project art flow (ART-PROMPTS.md \u2192 generation \u2192 projects/images/ commit), general image\
-    \ flow (URL reference only, no binary commit), and slug\u2192filename convention. Merged via PR #75.\n"
+  note: "Created projects/art-generator-connect/URL-MAPPING.md — specifies the canonical URL pattern, project art flow (ART-PROMPTS.md
+    → generation → projects/images/ commit), general image flow (URL reference only, no binary commit), and slug→filename
+    convention. Merged via PR #75.\n"
 - id: t-004
   milestone: m4
   title: Add a dry-run project image request flow
@@ -88,13 +86,12 @@ tasks:
   updated: '2026-06-30T00:00:00Z'
   passes: 0
   stakes: reversible
-  note: 'Written docs/art-request-status.md. Cross-referenced ART-PROMPTS.md against projects/images/
-    (conductor) and kind_robots/public/images/artcollections/. Findings: 18/20 project asset sets complete;
-    pinball-hero and career-transition are missing all 3 project images. 17/17 queued inspiration sets
-    complete (3-4 images each); pinball-hero and career-transition also have no artcollection dir or prompts
-    written yet. global-ui has no inspiration prompts queued either. Summary table and immediate actions
-    for Silas are in the doc. the Worker a clear picture of which art requests are queued vs. fulfilled
-    without needing the live art API contract.
+  note: 'Written docs/art-request-status.md. Cross-referenced ART-PROMPTS.md against projects/images/ (conductor) and kind_robots/public/images/artcollections/.
+    Findings: 18/20 project asset sets complete; pinball-hero and career-transition are missing all 3 project images. 17/17
+    queued inspiration sets complete (3-4 images each); pinball-hero and career-transition also have no artcollection dir
+    or prompts written yet. global-ui has no inspiration prompts queued either. Summary table and immediate actions for Silas
+    are in the doc. the Worker a clear picture of which art requests are queued vs. fulfilled without needing the live art
+    API contract.
 
     '
 - id: t-006
@@ -105,9 +102,9 @@ tasks:
   updated: '2026-07-03T15:17:00-07:00'
   passes: 0
   stakes: reversible
-  note: 'Completed in PR #138. Added tests/test_queue_missing_project_art.py covering skip-existing behavior,
-    prompt normalization, default icon/card/hero sizes, and dry-run queue YAML shape. Verification was limited
-    to source review because this connector runtime cannot execute the repo test suite.
+  note: 'Completed in PR #138. Added tests/test_queue_missing_project_art.py covering skip-existing behavior, prompt normalization,
+    default icon/card/hero sizes, and dry-run queue YAML shape. Verification was limited to source review because this connector
+    runtime cannot execute the repo test suite.
 
     '
 - id: t-007
@@ -174,7 +171,7 @@ tasks:
   milestone: m5
   title: Install pm2 supervision for ComfyUI and A1111 on the home server
   status: done
-  owner: null
+  owner:
   updated: '2026-07-05T23:30:00Z'
   passes: 0
   stakes: reversible
@@ -192,7 +189,7 @@ tasks:
   milestone: m5
   title: 'kind_robots ArtJob queue: model, enqueue/claim/complete endpoints, home relay agent'
   status: done
-  owner: null
+  owner:
   updated: '2026-07-05T13:30:00Z'
   passes: 0
   stakes: reversible
@@ -212,7 +209,7 @@ tasks:
   milestone: m5
   title: Accept user apiKey auth on comfy endpoints (machine-auth parity with /api/art/generate)
   status: done
-  owner: null
+  owner:
   updated: '2026-07-05T13:30:00Z'
   passes: 0
   stakes: reversible
@@ -273,7 +270,7 @@ tasks:
   milestone: m5
   title: Align image tooling with the canonical placement convention (context/slug nesting, iterated numbering)
   status: done
-  owner: null
+  owner:
   updated: '2026-07-05T00:00:00Z'
   passes: 0
   stakes: reversible
@@ -296,7 +293,7 @@ tasks:
   milestone: m5
   title: Add .http test coverage for the ArtJob queue contract (enqueue → claim → complete) against a dev DB
   status: done
-  owner: null
+  owner:
   updated: '2026-07-05T13:30:00Z'
   passes: 0
   stakes: reversible
@@ -309,7 +306,7 @@ tasks:
   milestone: m5
   title: Unify art endpoint machine auth on requireMachineUser (sweep remaining inline apiKey checks)
   status: done
-  owner: null
+  owner:
   updated: '2026-07-06T00:50:00Z'
   passes: 0
   stakes: reversible
@@ -328,7 +325,7 @@ tasks:
   milestone: m5
   title: 'Decide whether kind_robots PR #101 (Comfy direct smoke-test endpoints) may merge'
   status: done
-  owner: null
+  owner:
   updated: '2026-07-06T20:00:00Z'
   passes: 0
   stakes: outward-facing
@@ -447,7 +444,8 @@ tasks:
   claimed_at: '2026-07-20T12:18:43Z'
 - id: t-022
   milestone: m5
-  title: 'Investigate why the "Submit + wait + verify art requests" step in auto-art-generate.yml runs far longer than its --limit/--timeout should allow'
+  title: 'Investigate why the "Submit + wait + verify art requests" step in auto-art-generate.yml runs far longer than its
+    --limit/--timeout should allow'
   status: done
   owner: worker
   passes: 0
@@ -511,16 +509,29 @@ tasks:
   updated: '2026-07-20T13:21:55Z'
 - id: t-020
   milestone: m4
-  title: Re-tighten ArtQueueEntry.variant from string back to the ArtVariant union in kind_robots' server/utils/artRequestYaml.ts
+  title: Re-tighten ArtQueueEntry.variant from string back to the ArtVariant union in kind_robots' 
+    server/utils/artRequestYaml.ts
   status: done
   owner: reviewer
   updated: '2026-07-19T23:23:00Z'
   passes: 0
   stakes: reversible
   note: >
-    Kaizen from reviewing kind_robots PR #108 (t-008/t-017): when renderRequestEntry's YAML logic was extracted out of server/api/conductor/art-request.post.ts into server/utils/artRequestYaml.ts, ArtQueueEntry.variant was quietly widened from a specific ArtVariant union to plain string. Harmless today (CI/tsc green, all call sites still pass ArtVariant values) but it loosens the compile-time contract on a module whose whole purpose is enforcing a contract. Narrow it back to the ArtVariant union and confirm tsc + test:art-request-yaml stay green.
-    IMPLEMENTED 2026-07-19 (~23:20 UTC): moved `ArtVariant` ('icon'|'card'|'hero'| 'image') into artRequestYaml.ts as the canonical contract module and narrowed ArtQueueEntry.variant to it; art-request.post.ts now imports ArtVariant instead of re-declaring its own via `keyof typeof VARIANT_SIZES`, and VARIANT_SIZES is pinned to `Record<ArtVariant, string>` so the two can't drift apart again. Verified: test:art-request-yaml and full vue-tsc typecheck both clean. Merged kind_robots PR #581 (squash 984c412), all 3 CI checks green.
-    ROTATION COLLISION (separate session, 2026-07-19T23:15-23:29 UTC): a second session claimed this same task within the same minute (both landed the identical `claim_task.py` claim commit at f2d0405) and independently produced a functionally identical fix, opened as kind_robots PR #580 from the same main base (d06f365). PR #581 above merged first; #580 was closed unmerged as redundant once the collision surfaced via a dirty mergeable_state. No rework needed -- see root TALKBACK.md for the full collision writeup and a suggested claim_task.py hardening idea for cross-repo tasks.
+    Kaizen from reviewing kind_robots PR #108 (t-008/t-017): when renderRequestEntry's YAML logic was extracted out of server/api/conductor/art-request.post.ts
+    into server/utils/artRequestYaml.ts, ArtQueueEntry.variant was quietly widened from a specific ArtVariant union to plain
+    string. Harmless today (CI/tsc green, all call sites still pass ArtVariant values) but it loosens the compile-time contract
+    on a module whose whole purpose is enforcing a contract. Narrow it back to the ArtVariant union and confirm tsc + test:art-request-yaml
+    stay green.
+    IMPLEMENTED 2026-07-19 (~23:20 UTC): moved `ArtVariant` ('icon'|'card'|'hero'| 'image') into artRequestYaml.ts as the
+    canonical contract module and narrowed ArtQueueEntry.variant to it; art-request.post.ts now imports ArtVariant instead
+    of re-declaring its own via `keyof typeof VARIANT_SIZES`, and VARIANT_SIZES is pinned to `Record<ArtVariant, string>`
+    so the two can't drift apart again. Verified: test:art-request-yaml and full vue-tsc typecheck both clean. Merged kind_robots
+    PR #581 (squash 984c412), all 3 CI checks green.
+    ROTATION COLLISION (separate session, 2026-07-19T23:15-23:29 UTC): a second session claimed this same task within the
+    same minute (both landed the identical `claim_task.py` claim commit at f2d0405) and independently produced a functionally
+    identical fix, opened as kind_robots PR #580 from the same main base (d06f365). PR #581 above merged first; #580 was closed
+    unmerged as redundant once the collision surfaced via a dirty mergeable_state. No rework needed -- see root TALKBACK.md
+    for the full collision writeup and a suggested claim_task.py hardening idea for cross-repo tasks.
   claimed_by: claude-conductor-burst-20260719T2306Z
   claimed_at: '2026-07-19T23:06:07Z'
 - id: t-021
@@ -551,3 +562,5 @@ tasks:
     tests (22 total green); dry-run verified against the live 18-entry requests
     block. First live drain is the existing scheduled KR_API_TOKEN workflow run.
     This is the pipeline half the Alexa/Serendipity voice art path funnels into.
+goal: Keep Kind Robots art generation reliably connected to its generation backends, with queueing, execution, and 
+  delivery working end to end.

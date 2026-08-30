@@ -35,11 +35,10 @@ tasks:
   updated: '2026-06-30T00:00:00Z'
   passes: 0
   stakes: reversible
-  note: 'Written projects/media-watchlist/SCHEMA-PROPOSAL.md. Documents all format patterns across 7 media
-    types and 2 years (2025 and 2026). Identifies 10 edge cases (unknown dates, asterisk = starred, comics
-    have no dates, re-watches, multi-season TV, typo double-slash, duration format variations). Proposes
-    MediaEntry Prisma model with 15 fields + MediaType enum. Includes post-import validation checks and
-    5 recommended clarifying questions for Silas.
+  note: 'Written projects/media-watchlist/SCHEMA-PROPOSAL.md. Documents all format patterns across 7 media types and 2 years
+    (2025 and 2026). Identifies 10 edge cases (unknown dates, asterisk = starred, comics have no dates, re-watches, multi-season
+    TV, typo double-slash, duration format variations). Proposes MediaEntry Prisma model with 15 fields + MediaType enum.
+    Includes post-import validation checks and 5 recommended clarifying questions for Silas.
 
     '
 - id: t-002
@@ -51,10 +50,9 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Wrote projects/media-watchlist/PARSER-RULES.md. Covers all 7 media types (MOVIE, TV, BOOK, NOVELLA,
-    AUDIOBOOK, COMIC, VIDEO_GAME) with 2025 vs. 2026 format variants, field priority rules, ambiguous-entry
-    handling (double-slash typo, "(15th s)" duration, unknown dates, re-watches), and regex patterns.
-    Feeds into import_media.py implementation.
+  note: 'Wrote projects/media-watchlist/PARSER-RULES.md. Covers all 7 media types (MOVIE, TV, BOOK, NOVELLA, AUDIOBOOK, COMIC,
+    VIDEO_GAME) with 2025 vs. 2026 format variants, field priority rules, ambiguous-entry handling (double-slash typo, "(15th
+    s)" duration, unknown dates, re-watches), and regex patterns. Feeds into import_media.py implementation.
 
     '
 - id: t-003
@@ -66,11 +64,10 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Wrote projects/media-watchlist/BROWSE-UX.md. Covers 5 views: summary dashboard (stats bar + recent
-    entries + quick filter chips), browse/list (filter by year/type/starred/month/season, sort options,
-    compact cards), entry detail panel, stats view (yearly totals, by-type bars, month sparkline, audiobook
-    hours, pages read), and review editor (private-by-default markdown editor). Identifies 4 schema
-    additions needed: review, reviewPublic, rating, rewatch, externalId, externalUrl.
+  note: 'Wrote projects/media-watchlist/BROWSE-UX.md. Covers 5 views: summary dashboard (stats bar + recent entries + quick
+    filter chips), browse/list (filter by year/type/starred/month/season, sort options, compact cards), entry detail panel,
+    stats view (yearly totals, by-type bars, month sparkline, audiobook hours, pages read), and review editor (private-by-default
+    markdown editor). Identifies 4 schema additions needed: review, reviewPublic, rating, rewatch, externalId, externalUrl.
 
     '
 - id: t-004
@@ -82,11 +79,10 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Wrote projects/media-watchlist/INTEGRATIONS.md. Documents Letterboxd (CSV-only, no public REST
-    API), Goodreads (CSV-only, API shut down 2020), Comic Vine (REST API, free key, enrichment use case),
-    and Tautulli (local API, deferred). Defines per-service field mappings, rate limits, auth requirements,
-    and schema additions (externalId, externalUrl, publisher). All enrichment scripts are dry-run by
-    default with --commit flag for write operations.
+  note: 'Wrote projects/media-watchlist/INTEGRATIONS.md. Documents Letterboxd (CSV-only, no public REST API), Goodreads (CSV-only,
+    API shut down 2020), Comic Vine (REST API, free key, enrichment use case), and Tautulli (local API, deferred). Defines
+    per-service field mappings, rate limits, auth requirements, and schema additions (externalId, externalUrl, publisher).
+    All enrichment scripts are dry-run by default with --commit flag for write operations.
 
     '
 - id: t-005
@@ -98,11 +94,11 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Wrote projects/media-watchlist/FORMAT-COMPARISON.md. Compared Silas hand log against Letterboxd
-    CSV and Goodreads CSV export shapes. Key divergences: title punctuation (Letterboxd adds colons/subtitles),
-    release year vs. consumed year, Goodreads conflates NOVELLA/AUDIOBOOK as "book", rating scales differ
-    (LB: 0.5-5, GR: 0-5, log: none). Import rule: log is authoritative; external services fill gaps only,
-    never destructive overwrites. Recommends 2 schema additions (releaseYear, publisher).
+  note: 'Wrote projects/media-watchlist/FORMAT-COMPARISON.md. Compared Silas hand log against Letterboxd CSV and Goodreads
+    CSV export shapes. Key divergences: title punctuation (Letterboxd adds colons/subtitles), release year vs. consumed year,
+    Goodreads conflates NOVELLA/AUDIOBOOK as "book", rating scales differ (LB: 0.5-5, GR: 0-5, log: none). Import rule: log
+    is authoritative; external services fill gaps only, never destructive overwrites. Recommends 2 schema additions (releaseYear,
+    publisher).
 
     '
 - id: t-007
@@ -159,25 +155,115 @@ tasks:
   passes: 0
   stakes: reversible
   updated: '2026-08-18T16:52:00Z'
-  note: 'UI polish + upgrade for the media-watchlist front end now that the scaffold page is live at /watchlist. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/wonder/watchlist.webp and tutorial art at public/images/tutorials/wonder/watchlist.webp; (2) add a matching section for ''watchlist'' under tutorialChannels.wonder.sections in kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl points at /watchlist (admin can run the Conductor ''Placements'' button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full interactive experience for this project.
+  note: 'UI polish + upgrade for the media-watchlist front end now that the scaffold page is live at /watchlist. Steps: (1)
+    generate final dashboard-tab art at public/images/dashboard-tabs/wonder/watchlist.webp and tutorial art at public/images/tutorials/wonder/watchlist.webp;
+    (2) add a matching section for ''watchlist'' under tutorialChannels.wonder.sections in kind_robots/stores/helpers/tutorialCards.ts;
+    (3) verify the PROJECT Dream liveUrl points at /watchlist (admin can run the Conductor ''Placements'' button to backfill
+    channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full interactive experience for this project.
 
-    PROGRESS 2026-07-20 (conductor agent session claude-conductor-agent-20260720T1412Z, kind_robots PR #649 merged squash 5af699e): step (2) confirmed already done -- a ''watchlist'' section already existed under tutorialChannels.wonder.sections in stores/helpers/tutorialCards.ts, no action needed. Step (4) advanced within polish-pass scope: added real headline `stats` (2,440 entries logged, 12 years tracked, 60 starred favorites) to watchlist-page.vue''s fallback config, sourced from the validated media_list.md import (t-007, data/import-report.md), and corrected the `deliverables` list, which previously claimed a nonexistent "Watchlist data model and API" -- verified no MediaEntry Prisma model or server route exists in kind_robots yet. A full interactive browse/filter UI is NOT built: that needs the actual MediaEntry schema + API (SCHEMA-PROPOSAL.md/BROWSE-UX.md already spec it), which is materially larger than a polish pass -- same judgment call storybook/t-010 and davinci/t-014 made for their own live-data gaps. Remaining and kept ready: step (1) dashboard-tab + tutorial .webp art (already queued in art-prompts.yaml as kind-robots-watchlist-image-607fccd0, blocked on the art-generation relay -- confirmed still down this session, consistent with every other project that checked it today) and step (3) the liveUrl/channelKey/tabKey backfill (admin Placements click, not an agent action). Verified before merge: eslint clean, prettier clean, full-project vue-tsc --noEmit exit 0. All 3 kind_robots PR checks green (TypeScript, Contract verifiers, GitGuardian).
+    PROGRESS 2026-07-20 (conductor agent session claude-conductor-agent-20260720T1412Z, kind_robots PR #649 merged squash
+    5af699e): step (2) confirmed already done -- a ''watchlist'' section already existed under tutorialChannels.wonder.sections
+    in stores/helpers/tutorialCards.ts, no action needed. Step (4) advanced within polish-pass scope: added real headline
+    `stats` (2,440 entries logged, 12 years tracked, 60 starred favorites) to watchlist-page.vue''s fallback config, sourced
+    from the validated media_list.md import (t-007, data/import-report.md), and corrected the `deliverables` list, which previously
+    claimed a nonexistent "Watchlist data model and API" -- verified no MediaEntry Prisma model or server route exists in
+    kind_robots yet. A full interactive browse/filter UI is NOT built: that needs the actual MediaEntry schema + API (SCHEMA-PROPOSAL.md/BROWSE-UX.md
+    already spec it), which is materially larger than a polish pass -- same judgment call storybook/t-010 and davinci/t-014
+    made for their own live-data gaps. Remaining and kept ready: step (1) dashboard-tab + tutorial .webp art (already queued
+    in art-prompts.yaml as kind-robots-watchlist-image-607fccd0, blocked on the art-generation relay -- confirmed still down
+    this session, consistent with every other project that checked it today) and step (3) the liveUrl/channelKey/tabKey backfill
+    (admin Placements click, not an agent action). Verified before merge: eslint clean, prettier clean, full-project vue-tsc
+    --noEmit exit 0. All 3 kind_robots PR checks green (TypeScript, Contract verifiers, GitGuardian).
 
-    PROGRESS 2026-07-26 (conductor burst-mode session claude-conductor-burst-20260726T0820Z-mw-t006, kind_robots PR #1006 open): step (4) advanced -- built the last unbuilt piece of BROWSE-UX.md §4 (Stats view), CSV export. Added `GET /api/media-entries/export`, honoring the same search/mediaType/starred/sort filters the browse UI exposes, admin-gated like every other media-entries route; wired an "Export CSV" button into watchlist-browse.vue''s filter bar. Also found and fixed drift in watchlist-page.vue''s `deliverables` list: it still listed "Entry detail view + private review editor" under `next` even though t-010/t-011 shipped it weeks ago -- moved it (and CSV export) to `done`, so `next` is now empty. Steps (1) and (3) remain the same open items as every prior cycle (art-generation relay still down; liveUrl/channelKey/tabKey is an admin-only Placements click). Verified: eslint clean, prettier clean; full-project vue-tsc --noEmit reproduces identical pre-existing rewardFacet-related errors with these changes stashed out (unrelated files, confirmed pre-existing, not touched by this change) and zero new errors from the files touched here.
+    PROGRESS 2026-07-26 (conductor burst-mode session claude-conductor-burst-20260726T0820Z-mw-t006, kind_robots PR #1006
+    open): step (4) advanced -- built the last unbuilt piece of BROWSE-UX.md §4 (Stats view), CSV export. Added `GET /api/media-entries/export`,
+    honoring the same search/mediaType/starred/sort filters the browse UI exposes, admin-gated like every other media-entries
+    route; wired an "Export CSV" button into watchlist-browse.vue''s filter bar. Also found and fixed drift in watchlist-page.vue''s
+    `deliverables` list: it still listed "Entry detail view + private review editor" under `next` even though t-010/t-011
+    shipped it weeks ago -- moved it (and CSV export) to `done`, so `next` is now empty. Steps (1) and (3) remain the same
+    open items as every prior cycle (art-generation relay still down; liveUrl/channelKey/tabKey is an admin-only Placements
+    click). Verified: eslint clean, prettier clean; full-project vue-tsc --noEmit reproduces identical pre-existing rewardFacet-related
+    errors with these changes stashed out (unrelated files, confirmed pre-existing, not touched by this change) and zero new
+    errors from the files touched here.
 
-    PROGRESS 2026-07-27 (conductor burst-mode rotation, claude-conductor-burst-20260727T141647Z-mw-t006): step (4) advanced further -- wired the Year filter (BROWSE-UX.md §2) and two more Stats-view tiles (comics read, TV seasons; BROWSE-UX.md §4) into watchlist-browse.vue. The backend already computed/accepted all of this (stats.get.ts''s groupBy''s, index.get.ts''s ?year param); only the UI was missing it, so this was pure front-end wiring plus one small addition (stats.get.ts now returns a `years` list; export.get.ts now accepts `year` so CSV export matches the on-screen filter). kind_robots PR #1051 merged squash 8033fe9 after all 5 checks green (TypeScript, Contract verifiers, verify, facet-catalog, GitGuardian). Verified: eslint clean, prettier clean, full-project vue-tsc --noEmit exit 0. Not done yet -- Month/Season filters from BROWSE-UX.md §2 are still API-ready but UI-missing (see kaizen), and steps (1)/(3) remain the same open items as every prior cycle (art-generation relay backlog; liveUrl/channelKey/tabKey admin-only Placements click). Releasing the claim; kept at status: ready, same recurring-task convention as every other project''s "Polish and upgrade" task.
+    PROGRESS 2026-07-27 (conductor burst-mode rotation, claude-conductor-burst-20260727T141647Z-mw-t006): step (4) advanced
+    further -- wired the Year filter (BROWSE-UX.md §2) and two more Stats-view tiles (comics read, TV seasons; BROWSE-UX.md
+    §4) into watchlist-browse.vue. The backend already computed/accepted all of this (stats.get.ts''s groupBy''s, index.get.ts''s
+    ?year param); only the UI was missing it, so this was pure front-end wiring plus one small addition (stats.get.ts now
+    returns a `years` list; export.get.ts now accepts `year` so CSV export matches the on-screen filter). kind_robots PR #1051
+    merged squash 8033fe9 after all 5 checks green (TypeScript, Contract verifiers, verify, facet-catalog, GitGuardian). Verified:
+    eslint clean, prettier clean, full-project vue-tsc --noEmit exit 0. Not done yet -- Month/Season filters from BROWSE-UX.md
+    §2 are still API-ready but UI-missing (see kaizen), and steps (1)/(3) remain the same open items as every prior cycle
+    (art-generation relay backlog; liveUrl/channelKey/tabKey admin-only Placements click). Releasing the claim; kept at status:
+    ready, same recurring-task convention as every other project''s "Polish and upgrade" task.
 
-    PROGRESS 2026-07-29 (conductor burst-mode rotation, burst-20260729T0712Z-mw-t006): re-audited BROWSE-UX.md against the live components before picking a slice, since t-012 and t-016 (both merged since the last PROGRESS entry above) had already closed the Month/Season-filter gap this note used to point at -- confirmed nothing of that kaizen remains open. Found a different, still-open gap instead: Entry Detail (BROWSE-UX.md §3) specs a "Related entries -- same title, other years or formats" section that was never built. Added `GET /api/media-entries/:id/related` (admin-gated, same-title lookup excluding the current entry, newest first, capped at 10) and wired it into watchlist-entry-detail.vue as a small read-only list between the Review editor and External links. kind_robots PR #1140 merged squash c85f7d5 after all 12 checks green. Verified: eslint clean, prettier clean, full-project vue-tsc --noEmit exit 0. Steps (1) and (3) remain the same open items as every prior cycle (art-generation relay backlog; liveUrl/channelKey/tabKey admin-only Placements click); BROWSE-UX.md''s "Year-over-year comparison" (§4) is also still unbuilt and is a reasonable next slice for a future cycle. Releasing the claim; kept at status: ready, same recurring-task convention as every other project''s "Polish and upgrade" task.
+    PROGRESS 2026-07-29 (conductor burst-mode rotation, burst-20260729T0712Z-mw-t006): re-audited BROWSE-UX.md against the
+    live components before picking a slice, since t-012 and t-016 (both merged since the last PROGRESS entry above) had already
+    closed the Month/Season-filter gap this note used to point at -- confirmed nothing of that kaizen remains open. Found
+    a different, still-open gap instead: Entry Detail (BROWSE-UX.md §3) specs a "Related entries -- same title, other years
+    or formats" section that was never built. Added `GET /api/media-entries/:id/related` (admin-gated, same-title lookup excluding
+    the current entry, newest first, capped at 10) and wired it into watchlist-entry-detail.vue as a small read-only list
+    between the Review editor and External links. kind_robots PR #1140 merged squash c85f7d5 after all 12 checks green. Verified:
+    eslint clean, prettier clean, full-project vue-tsc --noEmit exit 0. Steps (1) and (3) remain the same open items as every
+    prior cycle (art-generation relay backlog; liveUrl/channelKey/tabKey admin-only Placements click); BROWSE-UX.md''s "Year-over-year
+    comparison" (§4) is also still unbuilt and is a reasonable next slice for a future cycle. Releasing the claim; kept at
+    status: ready, same recurring-task convention as every other project''s "Polish and upgrade" task.
 
-    PROGRESS 2026-07-29 (conductor burst-mode cycle, claude-conductor-burst-20260729T141009Z-mw-t006): built the "Year-over-year comparison" slice flagged in the previous entry, closing the last open item in BROWSE-UX.md §4 (Stats view). `stats.get.ts` now also returns `yearComparison` (per-year totals by media type + each year''s most-watched month, unfiltered by the active `?year=`, same precedent as the existing `years` list). `watchlist-browse.vue` renders it as a side-by-side DaisyUI table, gated to 2+ years of data (12 years exist in the real corpus, so it always shows in practice); reused the existing `MEDIA_TYPE_CHIPS`/`CHIP_GROUP_BY_VALUE` fold-in logic and factored month-name formatting into a shared `monthLabel()` helper. No new route, no new library. kind_robots PR #1156 open, watching CI. Verified: eslint clean, prettier clean, full-project vue-tsc --noEmit exit 0. Steps (1) and (3) remain the same open items as every prior cycle (art-generation relay backlog; liveUrl/channelKey/tabKey admin-only Placements click). PR #1156 merged squash c467bbf after all 12 checks green. Releasing the claim; kept at status: ready, same recurring-task convention as every other project''s "Polish and upgrade" task -- BROWSE-UX.md §4''s Stats view is now fully built (every tile, filter, and the year-over-year comparison), so a future cycle should re-audit BROWSE-UX.md in full to find the next remaining gap rather than assuming one exists in §4.
+    PROGRESS 2026-07-29 (conductor burst-mode cycle, claude-conductor-burst-20260729T141009Z-mw-t006): built the "Year-over-year
+    comparison" slice flagged in the previous entry, closing the last open item in BROWSE-UX.md §4 (Stats view). `stats.get.ts`
+    now also returns `yearComparison` (per-year totals by media type + each year''s most-watched month, unfiltered by the
+    active `?year=`, same precedent as the existing `years` list). `watchlist-browse.vue` renders it as a side-by-side DaisyUI
+    table, gated to 2+ years of data (12 years exist in the real corpus, so it always shows in practice); reused the existing
+    `MEDIA_TYPE_CHIPS`/`CHIP_GROUP_BY_VALUE` fold-in logic and factored month-name formatting into a shared `monthLabel()`
+    helper. No new route, no new library. kind_robots PR #1156 open, watching CI. Verified: eslint clean, prettier clean,
+    full-project vue-tsc --noEmit exit 0. Steps (1) and (3) remain the same open items as every prior cycle (art-generation
+    relay backlog; liveUrl/channelKey/tabKey admin-only Placements click). PR #1156 merged squash c467bbf after all 12 checks
+    green. Releasing the claim; kept at status: ready, same recurring-task convention as every other project''s "Polish and
+    upgrade" task -- BROWSE-UX.md §4''s Stats view is now fully built (every tile, filter, and the year-over-year comparison),
+    so a future cycle should re-audit BROWSE-UX.md in full to find the next remaining gap rather than assuming one exists
+    in §4.
 
-    PROGRESS 2026-08-14 (conductor scheduled Agent run, claude-conductor-scheduled-20260814T1640Z-mw-t006): re-audited BROWSE-UX.md §4 as the prior entry asked, since ai-art-academy/t-044 (the only higher-priority ready task) had just been rechecked 39 minutes earlier with nothing new to add. Found three remaining gaps, all rendering-only -- the data was already computed by `stats.get.ts` but never reached the UI: "By media type" horizontal bar chart and "Top starred" (top 5 titles) both had their backing fields (`countByType`, `topStarred`) in the API response but absent from the frontend''s `MediaEntryStats` type entirely; "By month" sparkline reused the same `countByMonth` breakdown the "most active month" line already read, just rendered as 12 relative-height bars instead of reduced to a single max. Added all three to `watchlist-browse.vue` with plain DaisyUI `<progress>` bars / CSS height percentages (no charting library). Generalized `countForChipGroup()` to take a plain count map instead of a `YearComparisonRow` so the new all-time breakdown and the existing per-year table share it. First pass used `sm:grid-cols-2` for the new panel and tripped `verifyLayoutContract.ts`''s viewport-grid rule (shared components must gate columns on container width, not a viewport breakpoint) -- fixed with `grid-cols-[repeat(auto-fit,minmax(16rem,1fr))]`, the intrinsic-grid pattern the contract script''s own comments document. Verified: full-project `vue-tsc --noEmit` exit 0, eslint clean, prettier clean, `verifyLayoutContract.ts` clean with no new violations. kind_robots PR #1887 merged squash caae3e0. Steps (1) and (3) remain the same open items as every prior cycle (art-generation relay backlog; liveUrl/channelKey/tabKey admin-only Placements click). BROWSE-UX.md §4 (Stats view) is now fully built end to end -- every tile, filter, chart, and list the spec calls for. Releasing the claim; kept at status: ready, same recurring-task convention -- a future cycle should re-audit §1-§3/§5 fresh (this is the first full re-read since §3''s Related-entries slice landed 2026-07-29) rather than assume §4''s completeness generalizes.
+    PROGRESS 2026-08-14 (conductor scheduled Agent run, claude-conductor-scheduled-20260814T1640Z-mw-t006): re-audited BROWSE-UX.md
+    §4 as the prior entry asked, since ai-art-academy/t-044 (the only higher-priority ready task) had just been rechecked
+    39 minutes earlier with nothing new to add. Found three remaining gaps, all rendering-only -- the data was already computed
+    by `stats.get.ts` but never reached the UI: "By media type" horizontal bar chart and "Top starred" (top 5 titles) both
+    had their backing fields (`countByType`, `topStarred`) in the API response but absent from the frontend''s `MediaEntryStats`
+    type entirely; "By month" sparkline reused the same `countByMonth` breakdown the "most active month" line already read,
+    just rendered as 12 relative-height bars instead of reduced to a single max. Added all three to `watchlist-browse.vue`
+    with plain DaisyUI `<progress>` bars / CSS height percentages (no charting library). Generalized `countForChipGroup()`
+    to take a plain count map instead of a `YearComparisonRow` so the new all-time breakdown and the existing per-year table
+    share it. First pass used `sm:grid-cols-2` for the new panel and tripped `verifyLayoutContract.ts`''s viewport-grid rule
+    (shared components must gate columns on container width, not a viewport breakpoint) -- fixed with `grid-cols-[repeat(auto-fit,minmax(16rem,1fr))]`,
+    the intrinsic-grid pattern the contract script''s own comments document. Verified: full-project `vue-tsc --noEmit` exit
+    0, eslint clean, prettier clean, `verifyLayoutContract.ts` clean with no new violations. kind_robots PR #1887 merged squash
+    caae3e0. Steps (1) and (3) remain the same open items as every prior cycle (art-generation relay backlog; liveUrl/channelKey/tabKey
+    admin-only Placements click). BROWSE-UX.md §4 (Stats view) is now fully built end to end -- every tile, filter, chart,
+    and list the spec calls for. Releasing the claim; kept at status: ready, same recurring-task convention -- a future cycle
+    should re-audit §1-§3/§5 fresh (this is the first full re-read since §3''s Related-entries slice landed 2026-07-29) rather
+    than assume §4''s completeness generalizes.
 
-    PROGRESS 2026-08-18 (conductor scheduled Agent run, session 2026-08-18T-scheduled-mw-t006): did the §1-§3/§5 re-audit the prior entry asked for. Checked each remaining spec item against the live components: Home dashboard (recent entries, quick filter chips, search bar -- all built, t-015), Browse filters (year/type/starred/month/season -- all built), Entry Detail (rating, external links, related entries, review editor with 4000-char limit and auto-save -- all built). Found one real gap: `rewatch` (Int?, "total watch count when the source marked a rewatch") is a genuine MediaEntry column returned by `GET /api/media-entries` (no `select` clause, so `findMany` returns every scalar) and already listed in the CSV export column set, but the frontend `MediaEntryDetail` type never declared it, so it silently never reached either the browse cards or the detail panel. Added `rewatch: number | null` to the type, an ordinal "Nth viewing" row in the detail panel (same conditional-dl pattern as Rating), and a small history-icon "Nx" badge on browse cards when rewatch >= 2. Read-only in the UI, matching its import/enrichment-only schema comment. Flagged in the PR: the real corpus (`media_list.md`) has no explicit rewatch markers today, so the field is null for every existing row -- this is forward-looking correctness, not a currently-visible bug fix. Verified: eslint clean, prettier clean, full-project vue-tsc --noEmit exit 0, diff scoped to exactly 2 files (31 insertions). kind_robots PR #1936 merged squash e6daedd after all 26 checks green. With this, BROWSE-UX.md is now fully implemented end to end across every section (§1-§5) -- kaizen filed to have the next cycle treat step (4) as exhausted against the current spec and either retire this recurring task or write a BROWSE-UX-v2 addendum before picking it up again, rather than searching for a shrinking-returns gap indefinitely. Steps (1) and (3) remain the same standing open items as every prior cycle (art-generation relay backlog; liveUrl/channelKey/tabKey admin-only Placements click). Releasing the claim; kept at status: ready per convention.
+    PROGRESS 2026-08-18 (conductor scheduled Agent run, session 2026-08-18T-scheduled-mw-t006): did the §1-§3/§5 re-audit
+    the prior entry asked for. Checked each remaining spec item against the live components: Home dashboard (recent entries,
+    quick filter chips, search bar -- all built, t-015), Browse filters (year/type/starred/month/season -- all built), Entry
+    Detail (rating, external links, related entries, review editor with 4000-char limit and auto-save -- all built). Found
+    one real gap: `rewatch` (Int?, "total watch count when the source marked a rewatch") is a genuine MediaEntry column returned
+    by `GET /api/media-entries` (no `select` clause, so `findMany` returns every scalar) and already listed in the CSV export
+    column set, but the frontend `MediaEntryDetail` type never declared it, so it silently never reached either the browse
+    cards or the detail panel. Added `rewatch: number | null` to the type, an ordinal "Nth viewing" row in the detail panel
+    (same conditional-dl pattern as Rating), and a small history-icon "Nx" badge on browse cards when rewatch >= 2. Read-only
+    in the UI, matching its import/enrichment-only schema comment. Flagged in the PR: the real corpus (`media_list.md`) has
+    no explicit rewatch markers today, so the field is null for every existing row -- this is forward-looking correctness,
+    not a currently-visible bug fix. Verified: eslint clean, prettier clean, full-project vue-tsc --noEmit exit 0, diff scoped
+    to exactly 2 files (31 insertions). kind_robots PR #1936 merged squash e6daedd after all 26 checks green. With this, BROWSE-UX.md
+    is now fully implemented end to end across every section (§1-§5) -- kaizen filed to have the next cycle treat step (4)
+    as exhausted against the current spec and either retire this recurring task or write a BROWSE-UX-v2 addendum before picking
+    it up again, rather than searching for a shrinking-returns gap indefinitely. Steps (1) and (3) remain the same standing
+    open items as every prior cycle (art-generation relay backlog; liveUrl/channelKey/tabKey admin-only Placements click).
+    Releasing the claim; kept at status: ready per convention.
 
     '
-  claimed_by: null
-  claimed_at: null
+  claimed_by:
+  claimed_at:
 - id: t-008
   milestone: m3
   title: Spec the MediaEntry Prisma model and minimal browse API from SCHEMA-PROPOSAL.md/BROWSE-UX.md
@@ -186,96 +272,65 @@ tasks:
   passes: 0
   stakes: reversible
   updated: '2026-07-20T15:30:00Z'
-  note: 'Kaizen from the 2026-07-20 t-006 cycle (kind_robots PR #649). The real
-    corpus is now imported and validated (2,440 entries, 12 years, t-007 done),
-    but no MediaEntry Prisma model or server API exists in kind_robots yet --
-    SCHEMA-PROPOSAL.md already proposes a 15-field model + MediaType enum
-    (extend with the 5 additional types t-007 discovered: ANIME, PODCAST,
-    THEATRE, SHORT, VIDEO_GAME_SHORT, plus releaseYear/issueRange/rewatch/sourceFile
-    fields the real import needed) and BROWSE-UX.md already specs the browse/filter/stats
-    UI this milestone (m3) targets. This task is docs/spec only: reconcile
-    SCHEMA-PROPOSAL.md against what import_media.py actually produced, write
-    the final Prisma model + a minimal GET /api/media-entries browse route
-    contract, and note a one-time seed/import path from data/media-entries.json.
-    Building the actual migration + route + UI is follow-on work once this
-    spec is settled.
+  note: 'Kaizen from the 2026-07-20 t-006 cycle (kind_robots PR #649). The real corpus is now imported and validated (2,440
+    entries, 12 years, t-007 done), but no MediaEntry Prisma model or server API exists in kind_robots yet -- SCHEMA-PROPOSAL.md
+    already proposes a 15-field model + MediaType enum (extend with the 5 additional types t-007 discovered: ANIME, PODCAST,
+    THEATRE, SHORT, VIDEO_GAME_SHORT, plus releaseYear/issueRange/rewatch/sourceFile fields the real import needed) and BROWSE-UX.md
+    already specs the browse/filter/stats UI this milestone (m3) targets. This task is docs/spec only: reconcile SCHEMA-PROPOSAL.md
+    against what import_media.py actually produced, write the final Prisma model + a minimal GET /api/media-entries browse
+    route contract, and note a one-time seed/import path from data/media-entries.json. Building the actual migration + route
+    + UI is follow-on work once this spec is settled.
 
-    DONE 2026-07-20 (conductor agent session claude-conductor-agent-20260720T1515Z):
-    wrote projects/media-watchlist/docs/t-008-final-schema-and-browse-api.md.
-    Reconciled SCHEMA-PROPOSAL.md against the real import (data/media-entries.json,
-    2440 entries): confirmed the 12-value MediaType enum, releaseYear, issueRange,
-    and sourceFile additions, and caught one real discrepancy against
-    BROWSE-UX.md''s proposal -- the importer''s `rewatch` field is an Int (total
-    watch count, e.g. "x2" -> 2; only 1/2440 entries populated) not the Boolean
-    BROWSE-UX.md specced, so the final model uses `rewatch Int?`. Wrote the final
-    Prisma model + MediaType enum (12 values, userId Int? @default(1) following
-    the existing Todo model precedent for single-user scoping), a GET
-    /api/media-entries browse contract (year/mediaType/starred/month/season/search/sort/take/skip,
-    findMany+count pattern) and GET /api/media-entries/stats contract (groupBy
-    pattern), both patterned on kind_robots server/api/facets/index.get.ts,
-    server/api/logs/index.get.ts, and server/api/art/queue/stats.get.ts
-    (researched live via GitHub MCP tools against current kind_robots main).
-    Documented the one-time createMany seed path from data/media-entries.json
-    with an idempotency guard (no unique constraint exists to dedupe genuine
-    same-day re-watches without an explicit rewatch marker). Docs-only change,
-    conductor repo; no kind_robots PR needed for this task. Filed the natural
-    next task as media-watchlist/t-009 (build the migration + route + minimal
-    browse UI from this spec) per the kaizen-compounding rule. `python
-    scripts/audit_roadmaps.py` -- 0 errors, no new warnings.'
+    DONE 2026-07-20 (conductor agent session claude-conductor-agent-20260720T1515Z): wrote projects/media-watchlist/docs/t-008-final-schema-and-browse-api.md.
+    Reconciled SCHEMA-PROPOSAL.md against the real import (data/media-entries.json, 2440 entries): confirmed the 12-value
+    MediaType enum, releaseYear, issueRange, and sourceFile additions, and caught one real discrepancy against BROWSE-UX.md''s
+    proposal -- the importer''s `rewatch` field is an Int (total watch count, e.g. "x2" -> 2; only 1/2440 entries populated)
+    not the Boolean BROWSE-UX.md specced, so the final model uses `rewatch Int?`. Wrote the final Prisma model + MediaType
+    enum (12 values, userId Int? @default(1) following the existing Todo model precedent for single-user scoping), a GET /api/media-entries
+    browse contract (year/mediaType/starred/month/season/search/sort/take/skip, findMany+count pattern) and GET /api/media-entries/stats
+    contract (groupBy pattern), both patterned on kind_robots server/api/facets/index.get.ts, server/api/logs/index.get.ts,
+    and server/api/art/queue/stats.get.ts (researched live via GitHub MCP tools against current kind_robots main). Documented
+    the one-time createMany seed path from data/media-entries.json with an idempotency guard (no unique constraint exists
+    to dedupe genuine same-day re-watches without an explicit rewatch marker). Docs-only change, conductor repo; no kind_robots
+    PR needed for this task. Filed the natural next task as media-watchlist/t-009 (build the migration + route + minimal browse
+    UI from this spec) per the kaizen-compounding rule. `python scripts/audit_roadmaps.py` -- 0 errors, no new warnings.'
   claimed_by: claude-conductor-agent-20260720T1515Z
   claimed_at: '2026-07-20T15:15:01Z'
 - id: t-009
   milestone: m3
-  title: Build the MediaEntry Prisma migration, GET /api/media-entries browse + stats routes, and a minimal browse UI from t-008's spec
+  title: Build the MediaEntry Prisma migration, GET /api/media-entries browse + stats routes, and a minimal browse UI 
+    from t-008's spec
   status: done
   owner: reviewer
   passes: 0
   stakes: reversible
   updated: '2026-07-20T20:18:00Z'
-  note: 'Kaizen from the 2026-07-20 t-008 cycle. projects/media-watchlist/docs/t-008-final-schema-and-browse-api.md
-    has the final Prisma model + MediaType enum, the GET /api/media-entries and
-    GET /api/media-entries/stats route contracts, and the one-time
-    data/media-entries.json seed path fully specced and reconciled against the
-    real 2440-entry corpus. This task implements it in kind_robots: (1) add the
-    MediaEntry model + MediaType enum to prisma/schema.prisma and migrate, (2)
-    write the one-time seed script and backfill the real corpus (idempotency
-    guard per the spec''s section 4), (3) implement the two GET routes per the
-    spec''s section 3, (4) wire watchlist-page.vue''s browse/filter/stats views
-    (BROWSE-UX.md) to the real API instead of the static fallback stats t-006
-    added. Verify with vue-tsc/eslint at minimum; live DB verification may need
-    the Vercel MCP preview-deployment path per AGENTS.md''s cross-repo section
-    if local DATABASE_URL is unreachable.
+  note: 'Kaizen from the 2026-07-20 t-008 cycle. projects/media-watchlist/docs/t-008-final-schema-and-browse-api.md has the
+    final Prisma model + MediaType enum, the GET /api/media-entries and GET /api/media-entries/stats route contracts, and
+    the one-time data/media-entries.json seed path fully specced and reconciled against the real 2440-entry corpus. This task
+    implements it in kind_robots: (1) add the MediaEntry model + MediaType enum to prisma/schema.prisma and migrate, (2) write
+    the one-time seed script and backfill the real corpus (idempotency guard per the spec''s section 4), (3) implement the
+    two GET routes per the spec''s section 3, (4) wire watchlist-page.vue''s browse/filter/stats views (BROWSE-UX.md) to the
+    real API instead of the static fallback stats t-006 added. Verify with vue-tsc/eslint at minimum; live DB verification
+    may need the Vercel MCP preview-deployment path per AGENTS.md''s cross-repo section if local DATABASE_URL is unreachable.
 
-    DONE 2026-07-20T20:32Z (conductor agent-run session, claude-conductor-agentrun-20260720T2015Z):
-    kind_robots PR #696 merged (squash 9d77ea2f). Added the MediaType enum (12
-    values) + MediaEntry model to prisma/schema.prisma with an additive-only
-    migration (one new table, no changes to existing tables/columns); no
-    User relation, matching the existing Todo model''s userId Int? @default(1)
-    precedent. Implemented GET /api/media-entries (year/mediaType/starred/
-    month/season/search/sort/take/skip, admin-gated) and GET
-    /api/media-entries/stats (counts by type/month, starred + top 5, audiobook
-    hours, pages read, comic issues, TV seasons), both patterned on
-    facets/logs/art-queue-stats routes. Wrote scripts/seed_media_entries.ts
-    (idempotency-guarded one-time backfill of the 2440-entry corpus, dry-run
-    by default). Built components/watchlist/watchlist-browse.vue (search,
-    type/starred filters, sort, pagination, live stats strip) wired into
-    watchlist-page.vue''s existing #interactive slot, replacing the static
-    fallback stats t-006 added. Verified: npx prisma validate + generate
-    clean; full-project vue-tsc --noEmit 0 errors; eslint 0 errors; prettier
-    clean; seed script dry-run validated all 2440 entries against the new
-    enum; ran 7 relevant existing contract scripts locally (channel-content,
-    conductor-api-auth-guards, no-prisma-json-cast,
-    no-unquoted-reserved-word-tables, existing-owner-id-nullability,
-    ownership-nullability, data-surface-manifest), all pass. No live
-    DATABASE_URL in this sandbox, so the migration/seed/routes were
-    typechecked and dry-run validated but not exercised against a real
-    database -- flagged in the PR for a future live-DB smoke pass. Known
-    limitation documented in the route: MySQL/MariaDB has no `nulls: last`
-    Prisma option (Postgres/CockroachDB/SQL Server only), so sort=date_asc
-    puts unwatched-date entries first rather than last (date_desc, the
-    default, is unaffected). Entry detail view, private review editor, and
-    CSV export (BROWSE-UX.md sections 3/5) are out of scope for this minimal
-    pass -- filed as this task''s kaizen suggestion below.'
+    DONE 2026-07-20T20:32Z (conductor agent-run session, claude-conductor-agentrun-20260720T2015Z): kind_robots PR #696 merged
+    (squash 9d77ea2f). Added the MediaType enum (12 values) + MediaEntry model to prisma/schema.prisma with an additive-only
+    migration (one new table, no changes to existing tables/columns); no User relation, matching the existing Todo model''s
+    userId Int? @default(1) precedent. Implemented GET /api/media-entries (year/mediaType/starred/ month/season/search/sort/take/skip,
+    admin-gated) and GET /api/media-entries/stats (counts by type/month, starred + top 5, audiobook hours, pages read, comic
+    issues, TV seasons), both patterned on facets/logs/art-queue-stats routes. Wrote scripts/seed_media_entries.ts (idempotency-guarded
+    one-time backfill of the 2440-entry corpus, dry-run by default). Built components/watchlist/watchlist-browse.vue (search,
+    type/starred filters, sort, pagination, live stats strip) wired into watchlist-page.vue''s existing #interactive slot,
+    replacing the static fallback stats t-006 added. Verified: npx prisma validate + generate clean; full-project vue-tsc
+    --noEmit 0 errors; eslint 0 errors; prettier clean; seed script dry-run validated all 2440 entries against the new enum;
+    ran 7 relevant existing contract scripts locally (channel-content, conductor-api-auth-guards, no-prisma-json-cast, no-unquoted-reserved-word-tables,
+    existing-owner-id-nullability, ownership-nullability, data-surface-manifest), all pass. No live DATABASE_URL in this sandbox,
+    so the migration/seed/routes were typechecked and dry-run validated but not exercised against a real database -- flagged
+    in the PR for a future live-DB smoke pass. Known limitation documented in the route: MySQL/MariaDB has no `nulls: last`
+    Prisma option (Postgres/CockroachDB/SQL Server only), so sort=date_asc puts unwatched-date entries first rather than last
+    (date_desc, the default, is unaffected). Entry detail view, private review editor, and CSV export (BROWSE-UX.md sections
+    3/5) are out of scope for this minimal pass -- filed as this task''s kaizen suggestion below.'
   claimed_by: claude-conductor-agentrun-20260720T2015Z
   claimed_at: '2026-07-20T20:18:00Z'
   pr: https://github.com/silasfelinus/kind_robots/pull/696
@@ -288,9 +343,25 @@ tasks:
   passes: 0
   stakes: reversible
   note: >
-    Kaizen from t-009 (kind_robots PR #696, 2026-07-20). The minimal browse UI (components/watchlist/watchlist-browse.vue) lists entries but has no detail view -- clicking an entry does nothing yet. The MediaEntry model already has review/reviewPublic/rating/externalId/externalUrl columns (t-008's spec) with no write path. Build the Entry Detail panel (BROWSE-UX.md section 3: title/type/year/starred header, a private markdown review editor with auto-save draft + explicit Publish action that only sets reviewPublic -- no external push per the MVP rule) and the two write routes it needs (e.g. PATCH /api/media-entries/:id for review/rating/starred edits). Admin-gated, same as the browse/stats routes. The Stats view's CSV export button (BROWSE-UX.md section 4) is a separate, smaller follow-on -- not part of this task's scope.
+    Kaizen from t-009 (kind_robots PR #696, 2026-07-20). The minimal browse UI (components/watchlist/watchlist-browse.vue)
+    lists entries but has no detail view -- clicking an entry does nothing yet. The MediaEntry model already has review/reviewPublic/rating/externalId/externalUrl
+    columns (t-008's spec) with no write path. Build the Entry Detail panel (BROWSE-UX.md section 3: title/type/year/starred
+    header, a private markdown review editor with auto-save draft + explicit Publish action that only sets reviewPublic --
+    no external push per the MVP rule) and the two write routes it needs (e.g. PATCH /api/media-entries/:id for review/rating/starred
+    edits). Admin-gated, same as the browse/stats routes. The Stats view's CSV export button (BROWSE-UX.md section 4) is a
+    separate, smaller follow-on -- not part of this task's scope.
 
-    DONE 2026-07-21 (conductor scheduled agent, claude-conductor-scheduled-20260721T0511Z): built components/watchlist/watchlist-entry-detail.vue (starred toggle, private markdown review editor with debounced auto-save + one-way Publish button setting reviewPublic=true, read-only external-links section) and server/api/media-entries/[id].patch.ts (admin-gated, validates review length <=4000, rating 1-10, starred boolean). Wired into watchlist-browse.vue: list rows are now clickable buttons opening the detail panel; MediaEntrySummary now reuses the full row type already returned by the existing list endpoint (no second fetch needed). No schema change required -- review/reviewPublic/rating/externalId/externalUrl already existed from t-008. Verified: npm run test (vue-tsc --noEmit) exit 0, eslint clean on all 3 files, prettier --write applied then confirmed via git diff that only self-authored lines changed. Live DB/browser smoke not possible in this sandbox (no reachable DATABASE_URL), relying on kind_robots CI. kind_robots PR #749, all 3 checks green (TypeScript, Contract verifiers, GitGuardian), merged squash 704bb43f. CSV export (BROWSE-UX.md section 4) remains out of scope, and a rating UI control is a natural follow-up (write path now exists, no widget yet).
+    DONE 2026-07-21 (conductor scheduled agent, claude-conductor-scheduled-20260721T0511Z): built components/watchlist/watchlist-entry-detail.vue
+    (starred toggle, private markdown review editor with debounced auto-save + one-way Publish button setting reviewPublic=true,
+    read-only external-links section) and server/api/media-entries/[id].patch.ts (admin-gated, validates review length <=4000,
+    rating 1-10, starred boolean). Wired into watchlist-browse.vue: list rows are now clickable buttons opening the detail
+    panel; MediaEntrySummary now reuses the full row type already returned by the existing list endpoint (no second fetch
+    needed). No schema change required -- review/reviewPublic/rating/externalId/externalUrl already existed from t-008. Verified:
+    npm run test (vue-tsc --noEmit) exit 0, eslint clean on all 3 files, prettier --write applied then confirmed via git diff
+    that only self-authored lines changed. Live DB/browser smoke not possible in this sandbox (no reachable DATABASE_URL),
+    relying on kind_robots CI. kind_robots PR #749, all 3 checks green (TypeScript, Contract verifiers, GitGuardian), merged
+    squash 704bb43f. CSV export (BROWSE-UX.md section 4) remains out of scope, and a rating UI control is a natural follow-up
+    (write path now exists, no widget yet).
   claimed_by: claude-conductor-scheduled-20260721T0511Z
   claimed_at: '2026-07-21T05:15:03Z'
   updated: '2026-07-21T05:46:13Z'
@@ -301,7 +372,17 @@ tasks:
   status: done
   passes: 0
   stakes: reversible
-  note: 'Kaizen from t-010 (kind_robots PR #749, 2026-07-21). server/api/media-entries/[id].patch.ts already accepts and validates a `rating` field (integer 1-10 or null), but watchlist-entry-detail.vue has no UI control to set it -- BROWSE-UX.md''s Entry Detail mockup doesn''t show one explicitly either, so this was left out of t-010''s scope rather than guessed at. Add a simple rating widget (e.g. a 1-10 number stepper or star-style picker consistent with the rest of the panel''s daisyUI styling) that PATCHes `rating` the same way the starred toggle does, and surface the current rating value somewhere in the browse list or detail header once set. DONE 2026-07-21 (conductor scheduled agent, claude-conductor-scheduled-20260721T0714Z): kind_robots PR #775 merged (squash 8037e267). Added a 1-10 +/-/clear stepper to watchlist-entry-detail.vue''s header dl, PATCHing the already-validated `rating` field the same way toggleStarred() does; surfaced the saved rating as a small star+number badge in watchlist-browse.vue''s list rows per the note''s own ask. No server change needed. Verified: eslint clean, prettier clean (fixed formatting drift from the new markup), full-project `npm run test` (vue-tsc --noEmit) exit 0. All 3 kind_robots PR checks green (TypeScript, Contract verifiers, GitGuardian) before merge.'
+  note: 'Kaizen from t-010 (kind_robots PR #749, 2026-07-21). server/api/media-entries/[id].patch.ts already accepts and validates
+    a `rating` field (integer 1-10 or null), but watchlist-entry-detail.vue has no UI control to set it -- BROWSE-UX.md''s
+    Entry Detail mockup doesn''t show one explicitly either, so this was left out of t-010''s scope rather than guessed at.
+    Add a simple rating widget (e.g. a 1-10 number stepper or star-style picker consistent with the rest of the panel''s daisyUI
+    styling) that PATCHes `rating` the same way the starred toggle does, and surface the current rating value somewhere in
+    the browse list or detail header once set. DONE 2026-07-21 (conductor scheduled agent, claude-conductor-scheduled-20260721T0714Z):
+    kind_robots PR #775 merged (squash 8037e267). Added a 1-10 +/-/clear stepper to watchlist-entry-detail.vue''s header dl,
+    PATCHing the already-validated `rating` field the same way toggleStarred() does; surfaced the saved rating as a small
+    star+number badge in watchlist-browse.vue''s list rows per the note''s own ask. No server change needed. Verified: eslint
+    clean, prettier clean (fixed formatting drift from the new markup), full-project `npm run test` (vue-tsc --noEmit) exit
+    0. All 3 kind_robots PR checks green (TypeScript, Contract verifiers, GitGuardian) before merge.'
   owner: reviewer
   claimed_by: claude-conductor-scheduled-20260721T0714Z
   claimed_at: '2026-07-21T07:14:48Z'
@@ -314,9 +395,23 @@ tasks:
   owner: worker
   passes: 0
   stakes: reversible
-  note: 'Kaizen from t-006 (kind_robots PR #1051, 2026-07-27). That cycle wired the Year pill selector and two Stats-view tiles (comics read, TV seasons) into watchlist-browse.vue -- both already computed/accepted by the API, just not reachable from the UI. The same gap exists for the two remaining BROWSE-UX.md §2 filters: Month (Jan-Dec multi-select) and Season (TV only, number range or "any"). server/api/media-entries/index.get.ts already accepts and validates both (`month` as a comma-separated int list, `season` as a single int) -- see the `months`/`season` handling already in that route -- so this is again pure front-end wiring, not new backend scope. Thread both through the same pattern activeYear used: a ref, into the loadEntries() query, and into exportCsv()''s params (export.get.ts does NOT yet accept month/season either -- add that alongside the UI, mirroring how year was added there in t-006). Season only makes sense when the TV type chip is active or no type filter is set; consider gating its visibility on that rather than always showing it.
+  note: 'Kaizen from t-006 (kind_robots PR #1051, 2026-07-27). That cycle wired the Year pill selector and two Stats-view
+    tiles (comics read, TV seasons) into watchlist-browse.vue -- both already computed/accepted by the API, just not reachable
+    from the UI. The same gap exists for the two remaining BROWSE-UX.md §2 filters: Month (Jan-Dec multi-select) and Season
+    (TV only, number range or "any"). server/api/media-entries/index.get.ts already accepts and validates both (`month` as
+    a comma-separated int list, `season` as a single int) -- see the `months`/`season` handling already in that route -- so
+    this is again pure front-end wiring, not new backend scope. Thread both through the same pattern activeYear used: a ref,
+    into the loadEntries() query, and into exportCsv()''s params (export.get.ts does NOT yet accept month/season either --
+    add that alongside the UI, mirroring how year was added there in t-006). Season only makes sense when the TV type chip
+    is active or no type filter is set; consider gating its visibility on that rather than always showing it.
 
-    DONE 2026-07-27 (conductor scheduled agent, burst-20260727T181522Z-mw-t012): added a Month multi-select dropdown (Jan-Dec toggle chips) and a Season number input to watchlist-browse.vue''s filter bar, threaded into loadEntries() and exportCsv() the same way activeYear/activeTypes already were. Season is gated on showSeasonFilter (TV active, or no type filter set) and resets when hidden, since the backend only supports a single season int, not a range. Added matching month/season query parsing to export.get.ts, which did not accept either yet. Verified: eslint clean, prettier clean, full-project vue-tsc --noEmit exit 0. Live browser smoke deferred (no reachable DATABASE_URL in this sandbox). kind_robots PR #1057, all 5 checks green (facet-catalog, TypeScript, Contract verifiers, verify, GitGuardian), merged squash 4097e98f.'
+    DONE 2026-07-27 (conductor scheduled agent, burst-20260727T181522Z-mw-t012): added a Month multi-select dropdown (Jan-Dec
+    toggle chips) and a Season number input to watchlist-browse.vue''s filter bar, threaded into loadEntries() and exportCsv()
+    the same way activeYear/activeTypes already were. Season is gated on showSeasonFilter (TV active, or no type filter set)
+    and resets when hidden, since the backend only supports a single season int, not a range. Added matching month/season
+    query parsing to export.get.ts, which did not accept either yet. Verified: eslint clean, prettier clean, full-project
+    vue-tsc --noEmit exit 0. Live browser smoke deferred (no reachable DATABASE_URL in this sandbox). kind_robots PR #1057,
+    all 5 checks green (facet-catalog, TypeScript, Contract verifiers, verify, GitGuardian), merged squash 4097e98f.'
   claimed_by: burst-20260727T181522Z-mw-t012
   claimed_at: '2026-07-27T18:15:22Z'
   updated: '2026-07-27T18:30:00Z'
@@ -328,7 +423,12 @@ tasks:
   owner: worker
   passes: 0
   stakes: reversible
-  note: 'DONE 2026-07-28: kind_robots PR #1093 squash-merged bf3c707. Confirmed server/api/media-entries/stats.get.ts already computed countByMonth (t-006-era addition), so this was front-end-only wiring: a computed mostActiveMonth in watchlist-browse.vue picks the max-count month from the existing breakdown and renders "You consumed the most in [Month]: N entries" above the stats strip, hidden when there is no data. All 6 required checks green (TypeScript, Contract Tests, and 3 contract workflows). Fifth consecutive cycle on this file finding already-computed server data needing only UI wiring (t-006, t-010, t-012, t-013) -- see kaizen task t-014.'
+  note: 'DONE 2026-07-28: kind_robots PR #1093 squash-merged bf3c707. Confirmed server/api/media-entries/stats.get.ts already
+    computed countByMonth (t-006-era addition), so this was front-end-only wiring: a computed mostActiveMonth in watchlist-browse.vue
+    picks the max-count month from the existing breakdown and renders "You consumed the most in [Month]: N entries" above
+    the stats strip, hidden when there is no data. All 6 required checks green (TypeScript, Contract Tests, and 3 contract
+    workflows). Fifth consecutive cycle on this file finding already-computed server data needing only UI wiring (t-006, t-010,
+    t-012, t-013) -- see kaizen task t-014.'
   claimed_by: claude-conductor-burst-20260728T-mw-t013
   claimed_at: '2026-07-28T10:08:44Z'
   updated: '2026-07-28T11:20:00Z'
@@ -340,23 +440,53 @@ tasks:
   owner: reviewer
   passes: 0
   stakes: reversible
-  note: 'Kaizen from t-013 (kind_robots PR #1093, 2026-07-28). BROWSE-UX.md §1 also specs "Recent entries (last 10, reverse-chronological; grouped by media type icon)" and "Quick filter chips" for a dedicated Home/Summary Dashboard view. Currently /watchlist only renders the Browse view (watchlist-browse.vue) -- there is no separate Home dashboard page. Three stats-bar items (audiobook hours/pages/comics-TV from t-006/t-012, now most-active-month from t-013) live inside the Browse view''s stats strip, but the other §1 elements (recent-entries list, quick-filter chips as their own affordance distinct from Browse''s existing filters) still do not exist anywhere. Determine whether §1 needs its own route/component or whether the remaining elements should also fold into watchlist-browse.vue, then scope the actual implementation task(s).
+  note: 'Kaizen from t-013 (kind_robots PR #1093, 2026-07-28). BROWSE-UX.md §1 also specs "Recent entries (last 10, reverse-chronological;
+    grouped by media type icon)" and "Quick filter chips" for a dedicated Home/Summary Dashboard view. Currently /watchlist
+    only renders the Browse view (watchlist-browse.vue) -- there is no separate Home dashboard page. Three stats-bar items
+    (audiobook hours/pages/comics-TV from t-006/t-012, now most-active-month from t-013) live inside the Browse view''s stats
+    strip, but the other §1 elements (recent-entries list, quick-filter chips as their own affordance distinct from Browse''s
+    existing filters) still do not exist anywhere. Determine whether §1 needs its own route/component or whether the remaining
+    elements should also fold into watchlist-browse.vue, then scope the actual implementation task(s).
 
-    DONE 2026-07-28 (conductor scheduled burst, claude-conductor-scheduled-20260728T1740Z-mw-t014-burst): Read components/conductor/watchlist-page.vue and watchlist-browse.vue against BROWSE-UX.md §1. Decision: NO new route. media-watchlist ships as a single-route scaffold (ProjectFrontPage at /watchlist rendering one interactive component), matching every other conductor-scaffolded mini-app''s one-page pattern -- and t-006/t-012/t-013 already established the precedent of folding every other §1 stats-bar element directly into watchlist-browse.vue rather than a separate Home page. Of the two remaining §1 elements: (1) "Quick filter chips: Movies | Books | TV | Games | Audiobooks | Comics | All" is already fully covered -- watchlist-browse.vue''s existing MEDIA_TYPE_CHIPS filter (Movies/TV/Books/Comics/Audiobooks/Games) IS that exact affordance, just living in the Filters row instead of a separate section, so no new component is needed for it. (2) "Recent entries (last 10, reverse-chronological; grouped by media type icon)" has no equivalent anywhere -- Browse''s list reflects the user''s active filters, not a fixed unfiltered "last 10" view, so this is genuinely new UI. Scoped the recent-entries gap as new task t-015 (front-end only, same shape as t-006/t-010/t-012/t-013). No kind_robots code touched by this task -- scoping/decision only.'
+    DONE 2026-07-28 (conductor scheduled burst, claude-conductor-scheduled-20260728T1740Z-mw-t014-burst): Read components/conductor/watchlist-page.vue
+    and watchlist-browse.vue against BROWSE-UX.md §1. Decision: NO new route. media-watchlist ships as a single-route scaffold
+    (ProjectFrontPage at /watchlist rendering one interactive component), matching every other conductor-scaffolded mini-app''s
+    one-page pattern -- and t-006/t-012/t-013 already established the precedent of folding every other §1 stats-bar element
+    directly into watchlist-browse.vue rather than a separate Home page. Of the two remaining §1 elements: (1) "Quick filter
+    chips: Movies | Books | TV | Games | Audiobooks | Comics | All" is already fully covered -- watchlist-browse.vue''s existing
+    MEDIA_TYPE_CHIPS filter (Movies/TV/Books/Comics/Audiobooks/Games) IS that exact affordance, just living in the Filters
+    row instead of a separate section, so no new component is needed for it. (2) "Recent entries (last 10, reverse-chronological;
+    grouped by media type icon)" has no equivalent anywhere -- Browse''s list reflects the user''s active filters, not a fixed
+    unfiltered "last 10" view, so this is genuinely new UI. Scoped the recent-entries gap as new task t-015 (front-end only,
+    same shape as t-006/t-010/t-012/t-013). No kind_robots code touched by this task -- scoping/decision only.'
   claimed_by: claude-conductor-scheduled-20260728T1740Z-mw-t014-burst
   claimed_at: '2026-07-28T18:06:41Z'
   updated: '2026-07-28T18:06:41Z'
 
 - id: t-015
   milestone: m3
-  title: Add a "Recent entries" list (last 10, reverse-chronological, grouped by media-type icon) to watchlist-browse.vue
+  title: Add a "Recent entries" list (last 10, reverse-chronological, grouped by media-type icon) to 
+    watchlist-browse.vue
   status: done
   owner: worker
   passes: 0
   stakes: reversible
-  note: 'Scope output of t-014 (kept ready, not yet implemented). BROWSE-UX.md §1''s last remaining gap after t-006/t-012/t-013 folded the stats strip and t-014''s decision confirmed MEDIA_TYPE_CHIPS already covers the "quick filter chips" element. Add a compact "Recent entries" section to watchlist-browse.vue (above or beside the Stats strip): fetch the 10 most recent entries sorted by watchedMonth/watchedDay desc with NO other filters applied (a separate, unfiltered query -- do not reuse the user''s active search/year/type/starred/month/season state, since BROWSE-UX.md §1 specs this as a fixed global view, not a filtered one), and render each grouped/tagged by media-type icon per §1 (reuse the same MediaType -> icon mapping watchlist-entry-detail.vue or the MEDIA_TYPE_CHIPS labels already use, for icons see kind-icon: usage elsewhere in the two watchlist components). Check whether GET /api/media-entries already supports a plain limit=10+sort=date_desc call with year/type/month/season all unset returning the true global recent list -- t-006/t-012 added those filter params on top of an unfiltered base, so this is very likely a zero-backend-change UI addition; if the route needs a small tweak, keep it additive. No new route (per t-014).
+  note: 'Scope output of t-014 (kept ready, not yet implemented). BROWSE-UX.md §1''s last remaining gap after t-006/t-012/t-013
+    folded the stats strip and t-014''s decision confirmed MEDIA_TYPE_CHIPS already covers the "quick filter chips" element.
+    Add a compact "Recent entries" section to watchlist-browse.vue (above or beside the Stats strip): fetch the 10 most recent
+    entries sorted by watchedMonth/watchedDay desc with NO other filters applied (a separate, unfiltered query -- do not reuse
+    the user''s active search/year/type/starred/month/season state, since BROWSE-UX.md §1 specs this as a fixed global view,
+    not a filtered one), and render each grouped/tagged by media-type icon per §1 (reuse the same MediaType -> icon mapping
+    watchlist-entry-detail.vue or the MEDIA_TYPE_CHIPS labels already use, for icons see kind-icon: usage elsewhere in the
+    two watchlist components). Check whether GET /api/media-entries already supports a plain limit=10+sort=date_desc call
+    with year/type/month/season all unset returning the true global recent list -- t-006/t-012 added those filter params on
+    top of an unfiltered base, so this is very likely a zero-backend-change UI addition; if the route needs a small tweak,
+    keep it additive. No new route (per t-014).
 
-    DONE 2026-07-28 (conductor agent run): kind_robots PR #1115 squash-merged 58edf2e. Added an unfiltered "Recent entries" section (last 10, date_desc) above the Stats strip, a 12-value MediaType -> icon map (vs MEDIA_TYPE_CHIPS'' 6), and synced handleEntryUpdated to patch both lists. Verified GET /api/media-entries already supported the unfiltered take/sort call with zero backend changes needed. All 9 required checks green.'
+    DONE 2026-07-28 (conductor agent run): kind_robots PR #1115 squash-merged 58edf2e. Added an unfiltered "Recent entries"
+    section (last 10, date_desc) above the Stats strip, a 12-value MediaType -> icon map (vs MEDIA_TYPE_CHIPS'' 6), and synced
+    handleEntryUpdated to patch both lists. Verified GET /api/media-entries already supported the unfiltered take/sort call
+    with zero backend changes needed. All 9 required checks green.'
   claimed_by: claude-conductor-agentrun-20260728T200742-mw-t015
   claimed_at: '2026-07-28T20:07:44Z'
   updated: '2026-07-28T20:07:44Z'
@@ -368,7 +498,20 @@ tasks:
   owner: worker
   passes: 0
   stakes: reversible
-  note: 'Kaizen from t-015 (kind_robots PR #1115, 2026-07-28). MEDIA_TYPE_CHIPS (the Browse filter-chip list) only covers 6 of the 12 MediaType enum values (MOVIE, TV, BOOK, COMIC, AUDIOBOOK, VIDEO_GAME). The other 6 (NOVELLA, ANIME, PODCAST, THEATRE, SHORT, VIDEO_GAME_SHORT) can now be seen (via the new Recent entries list, t-015) and stored, but cannot be filtered on directly. Either add dedicated chips for the missing 6, or explicitly fold each into its nearest sibling chip''s filter value (matching the icon-grouping judgment calls already made in t-015''s MEDIA_TYPE_ICON map) so every stored entry is filterable. PROGRESS 2026-07-28 (conductor scheduled Agent run, claude-conductor-agentrun-20260728T212607-mw-t016): implemented on kind_robots branch claude/confident-bardeen-kbvai8, kind_robots PR #1120 (open, CI running) -- folded the 5 rare types with an icon sibling into their nearest chip (NOVELLA -> Books, ANIME -> TV, PODCAST -> Audiobooks, SHORT -> Movies, VIDEO_GAME_SHORT -> Games) via a new group field on each MEDIA_TYPE_CHIPS entry, and added a THEATRE-only chip since it has no sibling. Added expandActiveTypes() to expand a toggled chip into its full group before building the mediaType query param, wired into both the live filter and CSV export. No backend change needed. Verified: eslint clean, prettier --check clean (ran --write once for the new multi-line const), full-project vue-tsc --noEmit exit 0. DONE 2026-07-28 (conductor scheduled Agent run): kind_robots PR #1120 merged (all 12 checks green, squash 1c3b38c), conductor PR #1366 merged (all 23 checks green, squash 7632a18).'
+  note: 'Kaizen from t-015 (kind_robots PR #1115, 2026-07-28). MEDIA_TYPE_CHIPS (the Browse filter-chip list) only covers
+    6 of the 12 MediaType enum values (MOVIE, TV, BOOK, COMIC, AUDIOBOOK, VIDEO_GAME). The other 6 (NOVELLA, ANIME, PODCAST,
+    THEATRE, SHORT, VIDEO_GAME_SHORT) can now be seen (via the new Recent entries list, t-015) and stored, but cannot be filtered
+    on directly. Either add dedicated chips for the missing 6, or explicitly fold each into its nearest sibling chip''s filter
+    value (matching the icon-grouping judgment calls already made in t-015''s MEDIA_TYPE_ICON map) so every stored entry is
+    filterable. PROGRESS 2026-07-28 (conductor scheduled Agent run, claude-conductor-agentrun-20260728T212607-mw-t016): implemented
+    on kind_robots branch claude/confident-bardeen-kbvai8, kind_robots PR #1120 (open, CI running) -- folded the 5 rare types
+    with an icon sibling into their nearest chip (NOVELLA -> Books, ANIME -> TV, PODCAST -> Audiobooks, SHORT -> Movies, VIDEO_GAME_SHORT
+    -> Games) via a new group field on each MEDIA_TYPE_CHIPS entry, and added a THEATRE-only chip since it has no sibling.
+    Added expandActiveTypes() to expand a toggled chip into its full group before building the mediaType query param, wired
+    into both the live filter and CSV export. No backend change needed. Verified: eslint clean, prettier --check clean (ran
+    --write once for the new multi-line const), full-project vue-tsc --noEmit exit 0. DONE 2026-07-28 (conductor scheduled
+    Agent run): kind_robots PR #1120 merged (all 12 checks green, squash 1c3b38c), conductor PR #1366 merged (all 23 checks
+    green, squash 7632a18).'
   claimed_by: claude-conductor-agentrun-20260728T212607-mw-t016
   claimed_at: '2026-07-28T21:26:07Z'
   updated: '2026-07-28T21:41:00Z'
@@ -380,8 +523,20 @@ tasks:
   owner: worker
   passes: 0
   stakes: reversible
-  note: 'FOR SILAS: media-watchlist/t-017 asks whether the BROWSE-UX.md v1 recurring polish task (t-006) should retire or get a v2 addendum. Re-confirmed this cycle: every BROWSE-UX.md v1 spec item is already built on the live site (search, all filters, all sort modes, full Stats view, CSV export, review editor with auto-save/publish, related entries, external links, rating, rewatch) -- nothing left in v1 scope. The only two items ever open across ~10 prior cycles are outside agent control: dashboard-tab/tutorial art (art-generation relay dependent, already queued) and liveUrl/channelKey/tabKey placement (already resolved in a prior cycle, not an admin action). TO APPROVE: pick one -- (a) if you have a real v2 direction in mind (image covers, a recommendations surface, social features, etc.), say so and the next Worker cycle will write BROWSE-UX-v2.md and re-open t-006 against it; (b) if not, reply here or edit the roadmap to flip t-006 to status: done and stop treating media-watchlist as a standing recurring polish task -- any remaining art-relay backlog becomes a one-off task instead of recurring churn. What unblocks: whichever you pick, the next cycle stops guessing at marginal filler UI for a project that is, by its own spec, already complete.'
+  note: 'FOR SILAS: media-watchlist/t-017 asks whether the BROWSE-UX.md v1 recurring polish task (t-006) should retire or
+    get a v2 addendum. Re-confirmed this cycle: every BROWSE-UX.md v1 spec item is already built on the live site (search,
+    all filters, all sort modes, full Stats view, CSV export, review editor with auto-save/publish, related entries, external
+    links, rating, rewatch) -- nothing left in v1 scope. The only two items ever open across ~10 prior cycles are outside
+    agent control: dashboard-tab/tutorial art (art-generation relay dependent, already queued) and liveUrl/channelKey/tabKey
+    placement (already resolved in a prior cycle, not an admin action). TO APPROVE: pick one -- (a) if you have a real v2
+    direction in mind (image covers, a recommendations surface, social features, etc.), say so and the next Worker cycle will
+    write BROWSE-UX-v2.md and re-open t-006 against it; (b) if not, reply here or edit the roadmap to flip t-006 to status:
+    done and stop treating media-watchlist as a standing recurring polish task -- any remaining art-relay backlog becomes
+    a one-off task instead of recurring churn. What unblocks: whichever you pick, the next cycle stops guessing at marginal
+    filler UI for a project that is, by its own spec, already complete.'
   updated: '2026-08-19T19:50:17Z'
   claimed_by: 20260819T194500Z-watchlist-t017-sched
   claimed_at: '2026-08-19T19:49:53Z'
   soft_gate: true
+goal: Provide a useful media watchlist that makes it easy to save, understand, revisit, and act on things the user wants
+  to watch.

@@ -1,17 +1,15 @@
 project: mermaids-of-venice
 kind: content
-notes_from_silas: "REWRITTEN 2026-07-05 from my session direction. Scrap the earlier plans: this project\
-  \ has NO AI in the front end, and no selective ordering of parts. The book's prose is mine \u2014 every\
-  \ word is my craftsmanship and I won't give it up, culturally it's important. AI may act as an editor\
-  \ (insights, notes, catches), but never drafts prose intended for the book. What I need: (1) a simple\
-  \ kind_robots landing page that offers the book, with a personal note I will write myself, plus a note\
-  \ that no AI was used to write the book other than the words of that paragraph itself \u2014 ending\
-  \ on a punchline about reality/existence/originality; (2) when I drop the manuscript PDF into manuscript/,\
-  \ produce editorial outputs: general impressions, editorial notes, cultural-awareness notes (gaps in\
-  \ gaze or privilege), and a VERY-IMPORTANT.md for actual typos and grammar errors (I edited by hand\
-  \ and caught many between printings \u2014 there will be more); (3) later, build/expand the full site\
-  \ at mermaidsofvenice.com \u2014 currently a parked WordPress address; it stays parked until I'm comfortable\
-  \ selling the book as-is. The PDF edition is also the digital-storefront's first product.\n"
+notes_from_silas: "REWRITTEN 2026-07-05 from my session direction. Scrap the earlier plans: this project has NO AI in the
+  front end, and no selective ordering of parts. The book's prose is mine — every word is my craftsmanship and I won't give
+  it up, culturally it's important. AI may act as an editor (insights, notes, catches), but never drafts prose intended for
+  the book. What I need: (1) a simple kind_robots landing page that offers the book, with a personal note I will write myself,
+  plus a note that no AI was used to write the book other than the words of that paragraph itself — ending on a punchline
+  about reality/existence/originality; (2) when I drop the manuscript PDF into manuscript/, produce editorial outputs: general
+  impressions, editorial notes, cultural-awareness notes (gaps in gaze or privilege), and a VERY-IMPORTANT.md for actual typos
+  and grammar errors (I edited by hand and caught many between printings — there will be more); (3) later, build/expand the
+  full site at mermaidsofvenice.com — currently a parked WordPress address; it stays parked until I'm comfortable selling
+  the book as-is. The PDF edition is also the digital-storefront's first product.\n"
 milestones:
 - id: m1
   title: Kind Robots landing page (book offer, personal note, no-AI note)
@@ -40,7 +38,9 @@ tasks:
   stakes: reversible
   gate_human: true
   approved_by_human: true
-  note: "Shipped the Kind Robots front end: a public scaffold-based page at /mermaids, registered as the 'mermaids' tab in the giftshop channel with channelKey/tabKey. Reusable project-front-page scaffold in kind_robots/components/conductor/. kind_robots PR #204 merged 2026-07-12."
+  note: "Shipped the Kind Robots front end: a public scaffold-based page at /mermaids, registered as the 'mermaids' tab in
+    the giftshop channel with channelKey/tabKey. Reusable project-front-page scaffold in kind_robots/components/conductor/.
+    kind_robots PR #204 merged 2026-07-12."
 - id: t-002
   milestone: m1
   title: Personal note for the landing page (Silas writes it)
@@ -67,18 +67,17 @@ tasks:
   milestone: m2
   title: 'Manuscript intake: Silas drops the PDF into manuscript/'
   status: done
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
   gate_human: true
   approved_by_human: true
   updated: 2026-07-05
-  note: "CLEARED by Silas in session 2026-07-05: both files committed to manuscript/ \u2014 \"mermaids\
-    \ of venice second edition.pdf\" (the sellable, finished text; feeds digital-storefront t-010 at $9.99)\
-    \ and \"Mermaids of Venice Revision.doc\" (Silas's in-progress edition-3 revision work). SACROSANCT\
-    \ RULE (Silas, verbatim intent): NEITHER file is ever edited by any agent \u2014 advise as editors\
-    \ in separate files only; editorial output references the second-edition PDF. The revision .doc is\
-    \ context for where edition 3 is heading, not a target for changes. Unblocks t-004..t-007.\n"
+  note: "CLEARED by Silas in session 2026-07-05: both files committed to manuscript/ — \"mermaids of venice second edition.pdf\"\
+    \ (the sellable, finished text; feeds digital-storefront t-010 at $9.99) and \"Mermaids of Venice Revision.doc\" (Silas's
+    in-progress edition-3 revision work). SACROSANCT RULE (Silas, verbatim intent): NEITHER file is ever edited by any agent
+    — advise as editors in separate files only; editorial output references the second-edition PDF. The revision .doc is context
+    for where edition 3 is heading, not a target for changes. Unblocks t-004..t-007.\n"
 - id: t-004
   milestone: m2
   title: Write general impressions of the manuscript
@@ -132,7 +131,7 @@ tasks:
     RECONCILIATION (conductor sweep, 2026-08-08): moved back to needs-human from ready — same reply-received bookkeeping gap as t-004/t-005/t-007/t-008/t-010 (root TALKBACK.md 2026-08-08). Same mid-word cutoff as t-005, right at "approved_by_human" — reads like it was truncated before completing this task's own TO APPROVE phrase. No agent has set the field; that stays yours alone. TO APPROVE: if that was your approval, set approved_by_human: true and status: done — otherwise let us know what got cut off.
 - id: t-007
   milestone: m2
-  title: "Write VERY-IMPORTANT.md \u2014 actual typos and grammar errors"
+  title: "Write VERY-IMPORTANT.md — actual typos and grammar errors"
   status: needs-human
   updated: '2026-08-08T07:00:00Z'
   passes: 0
@@ -166,7 +165,7 @@ tasks:
     RECONCILIATION (conductor sweep, 2026-08-08): moved back to needs-human from ready — same reply-received bookkeeping gap as t-004/t-005/t-006/t-007/t-008 (root TALKBACK.md 2026-08-08). Your new daily-review request in the reply above was already turned into its own task (t-013, recurring, shipped and running since 2026-08-04 — see editorial/character-reviews/). This task's own deliverable (the three guest reviews) reads as satisfied by "I've read them, excellent," with no changes requested. TO APPROVE: if the guest reviews themselves need nothing further, set approved_by_human: true and status: done.
 - id: t-008
   milestone: m3
-  title: "Revision dialogue prep \u2014 keep docs/revision-questions.md current"
+  title: "Revision dialogue prep — keep docs/revision-questions.md current"
   status: needs-human
   updated: '2026-08-08T07:00:00Z'
   passes: 0
@@ -209,16 +208,14 @@ tasks:
   updated: '2026-07-15T00:00:00Z'
   passes: 0
   stakes: reversible
-  note: "DONE 2026-07-15 (conductor burst cycle): wrote docs/subagent-fanout-notes.md — describes\
-    \ the harness limitation (subagents can't reliably persist files directly; only their returned text\
-    \ is trustworthy), the four-step workaround (section the source, fan out one subagent per section\
-    \ with a narrow prompt, parent collects all returned text, parent itself writes/synthesizes the final\
-    \ file), and practical guidance for the next large fan-out pass (narrow prompts, optional synthesis\
-    \ pass, verify writes with Read/Glob, applies beyond manuscripts). Original spec follows: Kaizen task\
-    \ from Reviewer review of PR #229: subagents in this harness can't write report files directly, so\
-    \ the t-004..t-007/t-010 editorial pass had the parent session collect each subagent's text findings\
-    \ and persist them itself. Write a short note (e.g. docs/subagent-fanout-notes.md) describing this\
-    \ pattern so a future large-manuscript or large-document pass doesn't rediscover it from scratch."
+  note: "DONE 2026-07-15 (conductor burst cycle): wrote docs/subagent-fanout-notes.md — describes the harness limitation (subagents
+    can't reliably persist files directly; only their returned text is trustworthy), the four-step workaround (section the
+    source, fan out one subagent per section with a narrow prompt, parent collects all returned text, parent itself writes/synthesizes
+    the final file), and practical guidance for the next large fan-out pass (narrow prompts, optional synthesis pass, verify
+    writes with Read/Glob, applies beyond manuscripts). Original spec follows: Kaizen task from Reviewer review of PR #229:
+    subagents in this harness can't write report files directly, so the t-004..t-007/t-010 editorial pass had the parent session
+    collect each subagent's text findings and persist them itself. Write a short note (e.g. docs/subagent-fanout-notes.md)
+    describing this pattern so a future large-manuscript or large-document pass doesn't rediscover it from scratch."
 - id: t-012
   milestone: m1
   title: "Polish and upgrade Mermaids of Venice front-end surface"
@@ -271,45 +268,89 @@ tasks:
     Pacific date, and selected character IDs/slugs in state.yaml. Re-arm this task
     after either a successful batch or a verified no-op.
 
-    Prepared the first progress-gated character-review batch for manuscript blob 11d896012566c53853d935c8f7fb31387d240f25 using AMI, the Old Komodo, and Squiddy Coltrane.
+    Prepared the first progress-gated character-review batch for manuscript blob 11d896012566c53853d935c8f7fb31387d240f25
+    using AMI, the Old Komodo, and Squiddy Coltrane.
 
     NO-OP 2026-08-19: `git hash-object` on the current manuscript file is
     11d896012566c53853d935c8f7fb31387d240f25, identical to state.yaml's recorded
     last_successful_review.source_blob (2026-08-04) — the manuscript hasn't changed
     since the last batch. Per contract, produced no review file. Re-armed to `ready`.
 
-    Merged PR #1673 with three progress-gated character reviews for manuscript blob 11d896012566c53853d935c8f7fb31387d240f25 and recorded reviewer history for AMI, the Old Komodo, and Squiddy Coltrane.
+    Merged PR #1673 with three progress-gated character reviews for manuscript blob 11d896012566c53853d935c8f7fb31387d240f25
+    and recorded reviewer history for AMI, the Old Komodo, and Squiddy Coltrane.
 
-    Verified no-op on 2026-08-11 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical to state.yaml's last successful review source from 2026-08-04. Per the daily/progress-gated contract, produced no review file and no notification.
+    Verified no-op on 2026-08-11 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical
+    to state.yaml's last successful review source from 2026-08-04. Per the daily/progress-gated contract, produced no review
+    file and no notification.
 
-    Verified no-op on 2026-08-12 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical to state.yaml's last successful review source from 2026-08-04. Per the daily/progress-gated contract, produced no review file and no notification.
+    Verified no-op on 2026-08-12 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical
+    to state.yaml's last successful review source from 2026-08-04. Per the daily/progress-gated contract, produced no review
+    file and no notification.
 
-    Verified no-op on 2026-08-13 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical to state.yaml's last successful review source from 2026-08-04. Per the daily/progress-gated contract, produced no review file and no notification.
+    Verified no-op on 2026-08-13 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical
+    to state.yaml's last successful review source from 2026-08-04. Per the daily/progress-gated contract, produced no review
+    file and no notification.
 
-    Verified no-op on 2026-08-14 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical to state.yaml's last successful review source from 2026-08-04. Per the daily/progress-gated contract, produced no review file and no notification.
+    Verified no-op on 2026-08-14 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical
+    to state.yaml's last successful review source from 2026-08-04. Per the daily/progress-gated contract, produced no review
+    file and no notification.
 
-    Verified no-op on 2026-08-15 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical to state.yaml's last successful review source from 2026-08-04 (confirmed via `git hash-object` against the tracked file, matching state.yaml's recorded source_blob). Per the daily/progress-gated contract, produced no review file and no notification.
+    Verified no-op on 2026-08-15 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical
+    to state.yaml's last successful review source from 2026-08-04 (confirmed via `git hash-object` against the tracked file,
+    matching state.yaml's recorded source_blob). Per the daily/progress-gated contract, produced no review file and no notification.
 
-    Verified no-op on 2026-08-16 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical to state.yaml's last successful review source from 2026-08-04 (confirmed via `git hash-object` against the tracked file, matching state.yaml's recorded source_blob). Per the daily/progress-gated contract, produced no review file and no notification.
+    Verified no-op on 2026-08-16 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical
+    to state.yaml's last successful review source from 2026-08-04 (confirmed via `git hash-object` against the tracked file,
+    matching state.yaml's recorded source_blob). Per the daily/progress-gated contract, produced no review file and no notification.
 
-    Verified no-op on 2026-08-17 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical to state.yaml's last successful review source from 2026-08-04 (confirmed via `git hash-object` against the tracked file, matching state.yaml's recorded source_blob). Per the daily/progress-gated contract, produced no review file and no notification.
+    Verified no-op on 2026-08-17 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical
+    to state.yaml's last successful review source from 2026-08-04 (confirmed via `git hash-object` against the tracked file,
+    matching state.yaml's recorded source_blob). Per the daily/progress-gated contract, produced no review file and no notification.
 
-    Verified no-op on 2026-08-18 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical to state.yaml's last successful review source from 2026-08-04 (confirmed via `git hash-object` against the tracked file, matching state.yaml's recorded source_blob). Per the daily/progress-gated contract, produced no review file and no notification.
+    Verified no-op on 2026-08-18 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical
+    to state.yaml's last successful review source from 2026-08-04 (confirmed via `git hash-object` against the tracked file,
+    matching state.yaml's recorded source_blob). Per the daily/progress-gated contract, produced no review file and no notification.
 
-    Verified no-op on 2026-08-19 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical to state.yaml's last successful review source from 2026-08-04 (confirmed via `git hash-object` against the tracked file, matching state.yaml's recorded source_blob). Per the daily/progress-gated contract, produced no review file and no notification.
-    Verified no-op on 2026-08-20 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical to state.yaml's last successful review source from 2026-08-04 (confirmed via `git hash-object` against the tracked file, matching state.yaml's recorded source_blob). Per the daily/progress-gated contract, produced no review file and no notification.
+    Verified no-op on 2026-08-19 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical
+    to state.yaml's last successful review source from 2026-08-04 (confirmed via `git hash-object` against the tracked file,
+    matching state.yaml's recorded source_blob). Per the daily/progress-gated contract, produced no review file and no notification.
+    Verified no-op on 2026-08-20 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical
+    to state.yaml's last successful review source from 2026-08-04 (confirmed via `git hash-object` against the tracked file,
+    matching state.yaml's recorded source_blob). Per the daily/progress-gated contract, produced no review file and no notification.
 
-    Verified no-op on 2026-08-21 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical to state.yaml's last successful review source from 2026-08-04 (confirmed via `git hash-object` against the tracked file, matching state.yaml's recorded source_blob). Per the daily/progress-gated contract, produced no review file and no notification.
+    Verified no-op on 2026-08-21 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical
+    to state.yaml's last successful review source from 2026-08-04 (confirmed via `git hash-object` against the tracked file,
+    matching state.yaml's recorded source_blob). Per the daily/progress-gated contract, produced no review file and no notification.
 
-    Verified no-op on 2026-08-22 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical to state.yaml's last successful review source from 2026-08-04 (confirmed via `git hash-object` against the tracked file, matching state.yaml's recorded source_blob). Per the daily/progress-gated contract, produced no review file and no notification. This is now 19 consecutive no-op days with no manuscript change since 2026-08-04 -- likely explained by the project's own open hard needs-human gates (t-004 through t-010) waiting on Silas to write editorial notes/impressions/corrections into the v3 manuscript himself.
+    Verified no-op on 2026-08-22 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical
+    to state.yaml's last successful review source from 2026-08-04 (confirmed via `git hash-object` against the tracked file,
+    matching state.yaml's recorded source_blob). Per the daily/progress-gated contract, produced no review file and no notification.
+    This is now 19 consecutive no-op days with no manuscript change since 2026-08-04 -- likely explained by the project's
+    own open hard needs-human gates (t-004 through t-010) waiting on Silas to write editorial notes/impressions/corrections
+    into the v3 manuscript himself.
 
-    Verified no-op on 2026-08-23 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical to state.yaml's last successful review source from 2026-08-04 (confirmed via `git hash-object` against the tracked file, matching state.yaml's recorded source_blob). Per the daily/progress-gated contract, produced no review file and no notification. Now 20 consecutive no-op days -- the underlying blocker is unchanged from 2026-08-22's note (open hard gates t-004 through t-010 awaiting Silas's editorial passes into the v3 manuscript).
+    Verified no-op on 2026-08-23 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical
+    to state.yaml's last successful review source from 2026-08-04 (confirmed via `git hash-object` against the tracked file,
+    matching state.yaml's recorded source_blob). Per the daily/progress-gated contract, produced no review file and no notification.
+    Now 20 consecutive no-op days -- the underlying blocker is unchanged from 2026-08-22's note (open hard gates t-004 through
+    t-010 awaiting Silas's editorial passes into the v3 manuscript).
 
-    Released claim same-day (2026-08-23 Pacific, scheduled sweep session claude-scheduled-20260823T122905Z-mv-t013): today's no-op was already verified and recorded by an earlier session this Pacific day (manuscript blob unchanged, 11d896012566c53853d935c8f7fb31387d240f25). Re-confirmed the blob is still unchanged before releasing -- not re-running the daily contract a second time in the same Pacific day. Re-armed to ready for tomorrow's check.
+    Released claim same-day (2026-08-23 Pacific, scheduled sweep session claude-scheduled-20260823T122905Z-mv-t013): today's
+    no-op was already verified and recorded by an earlier session this Pacific day (manuscript blob unchanged, 11d896012566c53853d935c8f7fb31387d240f25).
+    Re-confirmed the blob is still unchanged before releasing -- not re-running the daily contract a second time in the same
+    Pacific day. Re-armed to ready for tomorrow's check.
 
-    Verified no-op on 2026-08-24 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical to state.yaml's last successful review source from 2026-08-04 (confirmed via `git hash-object` against the tracked file, matching state.yaml's recorded source_blob). Per the daily/progress-gated contract, produced no review file and no notification. Now 21 consecutive no-op days -- the underlying blocker is unchanged (open hard gates t-004 through t-010 awaiting Silas's editorial passes into the v3 manuscript). Re-armed to ready for tomorrow's check.
+    Verified no-op on 2026-08-24 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical
+    to state.yaml's last successful review source from 2026-08-04 (confirmed via `git hash-object` against the tracked file,
+    matching state.yaml's recorded source_blob). Per the daily/progress-gated contract, produced no review file and no notification.
+    Now 21 consecutive no-op days -- the underlying blocker is unchanged (open hard gates t-004 through t-010 awaiting Silas's
+    editorial passes into the v3 manuscript). Re-armed to ready for tomorrow's check.
 
-    Verified no-op on 2026-08-25 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical to state.yaml's last successful review source from 2026-08-04 (confirmed via `git hash-object` against the tracked file, matching state.yaml's recorded source_blob). Per the daily/progress-gated contract, produced no review file and no notification. Now 22 consecutive no-op days -- the underlying blocker is unchanged (open hard gates t-004 through t-010 awaiting Silas's editorial passes into the v3 manuscript). Re-armed to ready for tomorrow's check.
+    Verified no-op on 2026-08-25 Pacific: the watched manuscript blob is still 11d896012566c53853d935c8f7fb31387d240f25, identical
+    to state.yaml's last successful review source from 2026-08-04 (confirmed via `git hash-object` against the tracked file,
+    matching state.yaml's recorded source_blob). Per the daily/progress-gated contract, produced no review file and no notification.
+    Now 22 consecutive no-op days -- the underlying blocker is unchanged (open hard gates t-004 through t-010 awaiting Silas's
+    editorial passes into the v3 manuscript). Re-armed to ready for tomorrow's check.
 
     Verified no-op on 2026-08-26 Pacific: the watched manuscript blob is still
     11d896012566c53853d935c8f7fb31387d240f25, identical to state.yaml's last successful
@@ -345,3 +386,5 @@ tasks:
   owner: worker
   claimed_by: claude-scheduled-20260829-mov-t013
   claimed_at: '2026-08-29T01:35:53Z'
+goal: Bring Mermaids of Venice to a complete, polished manuscript and supporting publication package while preserving 
+  its open-sharing intent.

@@ -1,7 +1,6 @@
 project: sketchy
 kind: software
-notes_from_silas: 'Sketchy is a web app that gives drawing assignments adjusted for the user''s skill
-  level,
+notes_from_silas: 'Sketchy is a web app that gives drawing assignments adjusted for the user''s skill level,
 
   then uses AI to judge the submitted result and offer the next assignment. Free users get
 
@@ -51,12 +50,11 @@ tasks:
   stakes: reversible
   gate_human: true
   approved_by_human: true
-  note: 'FOR SILAS: projects/sketchy/PRODUCT-SPEC.md contains the product spec and app-owned schema. It
-    covers the drawing assignment loop, user skill calibration, AI critique flow (Claude Vision as primary
-    engine per docs/ai-critique-apis.md), free/paid request limits, and Kind Robots token integration.
-    Any shared-backend changes are flagged as pitches, not direct edits. TO APPROVE: Read projects/sketchy/PRODUCT-SPEC.md.
-    Set approved_by_human: true and status: done here. Unblocks: sketchy/t-002 (skill ladder), t-003 (AI
-    critique rubric), t-004 (token tiers).
+  note: 'FOR SILAS: projects/sketchy/PRODUCT-SPEC.md contains the product spec and app-owned schema. It covers the drawing
+    assignment loop, user skill calibration, AI critique flow (Claude Vision as primary engine per docs/ai-critique-apis.md),
+    free/paid request limits, and Kind Robots token integration. Any shared-backend changes are flagged as pitches, not direct
+    edits. TO APPROVE: Read projects/sketchy/PRODUCT-SPEC.md. Set approved_by_human: true and status: done here. Unblocks:
+    sketchy/t-002 (skill ladder), t-003 (AI critique rubric), t-004 (token tiers).
 
     '
 - id: t-002
@@ -81,28 +79,22 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Define how uploaded drawings are evaluated, what dimensions the critique scores, how the assistant
-    stays encouraging, and how critique results select the next assignment. Include safety/privacy notes
-    for image uploads.
+  note: 'Define how uploaded drawings are evaluated, what dimensions the critique scores, how the assistant stays encouraging,
+    and how critique results select the next assignment. Include safety/privacy notes for image uploads.
 
-    DONE 2026-07-20 (conductor agent session claude-conductor-agent-20260720T1620Z): added
-    projects/sketchy/CRITIQUE-RUBRIC.md. Read PRODUCT-SPEC.md''s existing 5-dimension critique
-    table + JSON output shape, SKILL-LADDER.md''s illustrative routing examples + friendly
-    progression rules, and docs/ai-critique-apis.md''s integration notes before writing, to build
-    on what already existed instead of duplicating it. New doc adds: (1) 1-10 scoring anchors
-    (low/mid/high) per dimension so two critique calls score consistently; (2) a full
-    dimension-applicability table across all 9 SKILL-LADDER categories, formalizing the
-    "some dimensions get skipped" rule PRODUCT-SPEC.md only gestured at; (3) a deterministic
-    weakest-skill routing algorithm (tie-break order, dimension-to-category map, the
-    friendly-progression override so two corrections never run back to back, an all-dimensions-high
-    branch) that turns SKILL-LADDER''s illustrative examples into something implementable; (4) the
-    actual critique-call system prompt template (tone rules, cacheable rubric portion per
-    ai-critique-apis.md''s note to cache the rubric and vary only image/skill-level) plus edge-case
-    handling for blank submissions, off-topic images, and API content-policy refusals; (5) explicit
-    acceptance criteria. Safety/privacy is cross-referenced to PRODUCT-SPEC.md and
-    ai-critique-apis.md rather than duplicated, since both already cover it adequately. No
-    gate_human -- this elaborates an already-approved product spec (t-001) rather than setting new
-    product direction, matching how t-002''s SKILL-LADDER.md closed.'
+    DONE 2026-07-20 (conductor agent session claude-conductor-agent-20260720T1620Z): added projects/sketchy/CRITIQUE-RUBRIC.md.
+    Read PRODUCT-SPEC.md''s existing 5-dimension critique table + JSON output shape, SKILL-LADDER.md''s illustrative routing
+    examples + friendly progression rules, and docs/ai-critique-apis.md''s integration notes before writing, to build on what
+    already existed instead of duplicating it. New doc adds: (1) 1-10 scoring anchors (low/mid/high) per dimension so two
+    critique calls score consistently; (2) a full dimension-applicability table across all 9 SKILL-LADDER categories, formalizing
+    the "some dimensions get skipped" rule PRODUCT-SPEC.md only gestured at; (3) a deterministic weakest-skill routing algorithm
+    (tie-break order, dimension-to-category map, the friendly-progression override so two corrections never run back to back,
+    an all-dimensions-high branch) that turns SKILL-LADDER''s illustrative examples into something implementable; (4) the
+    actual critique-call system prompt template (tone rules, cacheable rubric portion per ai-critique-apis.md''s note to cache
+    the rubric and vary only image/skill-level) plus edge-case handling for blank submissions, off-topic images, and API content-policy
+    refusals; (5) explicit acceptance criteria. Safety/privacy is cross-referenced to PRODUCT-SPEC.md and ai-critique-apis.md
+    rather than duplicated, since both already cover it adequately. No gate_human -- this elaborates an already-approved product
+    spec (t-001) rather than setting new product direction, matching how t-002''s SKILL-LADDER.md closed.'
   claimed_by: claude-conductor-agent-20260720T1620Z
   claimed_at: '2026-07-20T16:33:09Z'
   updated: '2026-07-20T16:33:09Z'
@@ -114,33 +106,24 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: "Define practical request limits for free and paid tiers, how critique and assignment generation\
-    \ consume tokens, and how Sketchy should display remaining usage without adding a competing token system.\n\
-    DONE 2026-07-21 (conductor burst session, claude-conductor-burst-20260721T191532Z-sketchy-t004):\
-    \ added projects/sketchy/TOKEN-TIERS.md, replacing PRODUCT-SPEC.md's placeholder\
-    \ tier table with one grounded in the actual kind_robots mana implementation (read\
-    \ prisma/schema.prisma's User/ManaTransaction/KarmaTransaction models, server/utils/mana.ts,\
-    \ manaGate.ts, manaCost.ts, comfyGate.ts, generationMana.ts, and the Stripe webhook\
-    \ handlers before writing, rather than guessing). Corrected two wrong claims in\
-    \ the original spec: (1) critique calls belong with withTextMana/kind:'text', not\
-    \ withArtMana, since a critique is a vision+text call, not image generation; (2)\
-    \ there is no tier-based manaCap override anywhere in the codebase, so \"higher\
-    \ mana ceiling for paid\" was aspirational, not real. Resolved the actual blocker\
-    \ (guests have no mana account at all, and mana has no daily-reset cron) by splitting\
-    \ the job: real mana debit still gates every call (currency check, same as every\
-    \ other AI action in Kind Robots), while the per-tier daily ceiling (2/5/20 etc.)\
-    \ is enforced by Sketchy's own app-owned SketchyCritique/SketchyAssignment row counts\
-    \ -- zero kind_robots changes needed for tiering itself. Set concrete flat mana\
-    \ costs (8/critique, 1/assignment) from docs/ai-critique-apis.md's own $0.005-0.01\
-    \ cost survey via the real manaGate.ts formula (cost = ceil(estCostUsd * 1000)).\
-    \ Narrowed PRODUCT-SPEC.md's 3-item backend-pitch table down to one real gap: Sketchy\
-    \ is a separate app with its own DB that cannot call withTextMana in-process, so\
-    \ there's no existing way for it to debit mana for work performed on its own infrastructure\
-    \ -- filed pitches/2026-07-21-sketchy-cross-app-mana-charge-endpoint.md and kind-robots/t-043\
-    \ (needs-human) for the one small endpoint that closes that gap, reusing manaGate/applyMana/requireMachineUser\
-    \ verbatim. No gate_human on this task itself -- it elaborates the already-approved\
-    \ t-001 product spec rather than setting new product direction, matching how t-002/t-003\
-    \ closed.\n"
+  note: "Define practical request limits for free and paid tiers, how critique and assignment generation consume tokens, and
+    how Sketchy should display remaining usage without adding a competing token system.\nDONE 2026-07-21 (conductor burst
+    session, claude-conductor-burst-20260721T191532Z-sketchy-t004): added projects/sketchy/TOKEN-TIERS.md, replacing PRODUCT-SPEC.md's
+    placeholder tier table with one grounded in the actual kind_robots mana implementation (read prisma/schema.prisma's User/ManaTransaction/KarmaTransaction
+    models, server/utils/mana.ts, manaGate.ts, manaCost.ts, comfyGate.ts, generationMana.ts, and the Stripe webhook handlers
+    before writing, rather than guessing). Corrected two wrong claims in the original spec: (1) critique calls belong with
+    withTextMana/kind:'text', not withArtMana, since a critique is a vision+text call, not image generation; (2) there is
+    no tier-based manaCap override anywhere in the codebase, so \"higher mana ceiling for paid\" was aspirational, not real.
+    Resolved the actual blocker (guests have no mana account at all, and mana has no daily-reset cron) by splitting the job:
+    real mana debit still gates every call (currency check, same as every other AI action in Kind Robots), while the per-tier
+    daily ceiling (2/5/20 etc.) is enforced by Sketchy's own app-owned SketchyCritique/SketchyAssignment row counts -- zero
+    kind_robots changes needed for tiering itself. Set concrete flat mana costs (8/critique, 1/assignment) from docs/ai-critique-apis.md's
+    own $0.005-0.01 cost survey via the real manaGate.ts formula (cost = ceil(estCostUsd * 1000)). Narrowed PRODUCT-SPEC.md's
+    3-item backend-pitch table down to one real gap: Sketchy is a separate app with its own DB that cannot call withTextMana
+    in-process, so there's no existing way for it to debit mana for work performed on its own infrastructure -- filed pitches/2026-07-21-sketchy-cross-app-mana-charge-endpoint.md
+    and kind-robots/t-043 (needs-human) for the one small endpoint that closes that gap, reusing manaGate/applyMana/requireMachineUser
+    verbatim. No gate_human on this task itself -- it elaborates the already-approved t-001 product spec rather than setting
+    new product direction, matching how t-002/t-003 closed.\n"
   claimed_by: claude-conductor-burst-20260721T191532Z-sketchy-t004
   claimed_at: '2026-07-21T19:15:33Z'
   updated: '2026-07-21T19:35:00Z'
@@ -152,9 +135,9 @@ tasks:
   updated: '2026-06-30T00:00:00Z'
   passes: 0
   stakes: reversible
-  note: 'Icon/card/hero images already exist in projects/images/ (sketchy-icon.webp, sketchy-card.webp,
-    sketchy-hero.webp). Added icon/card/hero prompts to the ART-PROMPTS.md backlog under the sketchy section
-    for documentation and future regeneration reference. Inspiration prompts were already present.
+  note: 'Icon/card/hero images already exist in projects/images/ (sketchy-icon.webp, sketchy-card.webp, sketchy-hero.webp).
+    Added icon/card/hero prompts to the ART-PROMPTS.md backlog under the sketchy section for documentation and future regeneration
+    reference. Inspiration prompts were already present.
 
     '
 - id: t-006
@@ -165,12 +148,11 @@ tasks:
   updated: '2026-06-30T00:00:00Z'
   passes: 0
   stakes: reversible
-  note: "Wrote docs/ai-critique-apis.md. Compared Claude Vision, GPT-4o Vision, Gemini 1.5 Pro, and Google\
-    \ Vision AI across: drawing critique quality, cost per image call, latency, privacy/training data\
-    \ policies, and content-policy fit for figure drawing. Recommendation: Claude (claude-sonnet-4-6)\
-    \ as primary critique engine for quality and encouraging tone; GPT-4o as fallback/A-B test. Google\
-    \ Vision AI excluded (object detection only). Cost estimate: ~$0.005\u20130.01/critique at Sketchy's\
-    \ expected scale.\n"
+  note: "Wrote docs/ai-critique-apis.md. Compared Claude Vision, GPT-4o Vision, Gemini 1.5 Pro, and Google Vision AI across:
+    drawing critique quality, cost per image call, latency, privacy/training data policies, and content-policy fit for figure
+    drawing. Recommendation: Claude (claude-sonnet-4-6) as primary critique engine for quality and encouraging tone; GPT-4o
+    as fallback/A-B test. Google Vision AI excluded (object detection only). Cost estimate: ~$0.005–0.01/critique at Sketchy's
+    expected scale.\n"
 - id: t-007
   milestone: m5
   title: Polish and upgrade Sketchy front-end surface
@@ -328,3 +310,5 @@ tasks:
     superkate-services-calculator/t-037 for that pre-existing hang (and the
     shared-job blast-radius design question) rather than fixing an unrelated
     app's test inside this task.
+goal: Bring Sketchy to its intended finished product state, with its core creative interaction, presentation, and 
+  delivery polished and dependable.

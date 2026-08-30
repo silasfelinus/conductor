@@ -35,12 +35,11 @@ tasks:
   stakes: reversible
   gate_human: true
   approved_by_human: true
-  note: "FOR SILAS: projects/conductor-app/app-architecture.md contains the Flutter app architecture and\
-    \ API contract. It covers the screen list (dashboard, project detail, todo management, art requests,\
-    \ approvals), data flow, and the kind_robots REST endpoints the app needs (informed by docs/kr-api-surface.md).\
-    \ No implementation was done \u2014 design only. TO APPROVE: Read projects/conductor-app/app-architecture.md.\
-    \ Set approved_by_human: true and status: done here. Unblocks: conductor-app/t-002 (dashboard shell),\
-    \ t-003 (mobile flows), t-004 (notifications).\n"
+  note: "FOR SILAS: projects/conductor-app/app-architecture.md contains the Flutter app architecture and API contract. It
+    covers the screen list (dashboard, project detail, todo management, art requests, approvals), data flow, and the kind_robots
+    REST endpoints the app needs (informed by docs/kr-api-surface.md). No implementation was done — design only. TO APPROVE:
+    Read projects/conductor-app/app-architecture.md. Set approved_by_human: true and status: done here. Unblocks: conductor-app/t-002
+    (dashboard shell), t-003 (mobile flows), t-004 (notifications).\n"
 - id: t-002
   milestone: m2
   title: Scaffold first dashboard shell
@@ -50,10 +49,10 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Merged to main via PR #90 (2026-07-02, merged by silasfelinus). Flutter app scaffolded in app/
-    at the repo root: server picker (hosted/self-hosted/local), login, projects dashboard, project detail
-    with waypoints, todos, approvals (Agent Ops), settings. See projects/conductor-app/app-architecture-v2.md.
-    Roadmap status was left at review after the merge; closed out here.
+  note: 'Merged to main via PR #90 (2026-07-02, merged by silasfelinus). Flutter app scaffolded in app/ at the repo root:
+    server picker (hosted/self-hosted/local), login, projects dashboard, project detail with waypoints, todos, approvals (Agent
+    Ops), settings. See projects/conductor-app/app-architecture-v2.md. Roadmap status was left at review after the merge;
+    closed out here.
 
     '
 - id: t-003
@@ -65,10 +64,10 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Completed in PR #128. Added projects/conductor-app/mobile-action-flows.md, refining mobile flows
-    for global/project-scoped todos, gated approvals via conductor inbox messages, admin-only pitch voting,
-    and queue-only art request submission. Design-only: no backend behavior, roadmap YAML writes from
-    the app, image generation, publishing, secrets, store submission, production data, or deploys.
+  note: 'Completed in PR #128. Added projects/conductor-app/mobile-action-flows.md, refining mobile flows for global/project-scoped
+    todos, gated approvals via conductor inbox messages, admin-only pitch voting, and queue-only art request submission. Design-only:
+    no backend behavior, roadmap YAML writes from the app, image generation, publishing, secrets, store submission, production
+    data, or deploys.
 
     '
 - id: t-004
@@ -80,10 +79,9 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Completed in PR #145. Added projects/conductor-app/notification-strategy.md. The MVP strategy
-    is local polling, local notifications, and badge counts; server push via FCM/APNs is deferred until
-    event types, usage, and auth boundaries are proven. No live notification service, app store setup,
-    deploy, secrets, billing, DNS, or production data were touched.
+  note: 'Completed in PR #145. Added projects/conductor-app/notification-strategy.md. The MVP strategy is local polling, local
+    notifications, and badge counts; server push via FCM/APNs is deferred until event types, usage, and auth boundaries are
+    proven. No live notification service, app store setup, deploy, secrets, billing, DNS, or production data were touched.
 
     '
 - id: t-005
@@ -94,12 +92,11 @@ tasks:
   updated: '2026-06-30T00:00:00Z'
   passes: 0
   stakes: reversible
-  note: "Wrote docs/kr-api-surface.md. Full map across 8 feature areas: auth, projects (conductor), todos,\
-    \ dreams, art requests, pitch voting, user profile, notifications. Key findings: projects/todos/dreams/auth/pitch-voting\
-    \ all exist and are sufficient. Three gaps: (1) todos have no projectSlug field (pitch needed for\
-    \ project-scoped todos), (2) no pending art requests endpoint (YAML-only, not DB), (3) no push notification\
-    \ infrastructure (polling for MVP, as v1 planned). Task state is YAML/GitHub-only \u2014 the app can\
-    \ read but not write task status directly.\n"
+  note: "Wrote docs/kr-api-surface.md. Full map across 8 feature areas: auth, projects (conductor), todos, dreams, art requests,
+    pitch voting, user profile, notifications. Key findings: projects/todos/dreams/auth/pitch-voting all exist and are sufficient.
+    Three gaps: (1) todos have no projectSlug field (pitch needed for project-scoped todos), (2) no pending art requests endpoint
+    (YAML-only, not DB), (3) no push notification infrastructure (polling for MVP, as v1 planned). Task state is YAML/GitHub-only
+    — the app can read but not write task status directly.\n"
 - id: t-006
   milestone: m1
   title: 'Approve architecture v2: multi-user auth, server modes, app placement'
@@ -110,11 +107,10 @@ tasks:
   stakes: reversible
   gate_human: true
   approved_by_human: true
-  note: "APPROVED by Silas 2026-07-04 (\"make it so\") \u2014 all three decisions confirmed: (1) app lives\
-    \ at apps/conductor/ in the conductor repo, (2) no admin token in the binary; privileged actions ride\
-    \ the signed-in user's JWT with server-side role checks, (3) three server modes: hosted kindrobots.org,\
-    \ bring-your-own-server URL, local-only on-device. Architecture doc: projects/conductor-app/app-architecture-v2.md.\
-    \ Unblocks t-008/t-009/t-010.\n"
+  note: "APPROVED by Silas 2026-07-04 (\"make it so\") — all three decisions confirmed: (1) app lives at apps/conductor/ in
+    the conductor repo, (2) no admin token in the binary; privileged actions ride the signed-in user's JWT with server-side
+    role checks, (3) three server modes: hosted kindrobots.org, bring-your-own-server URL, local-only on-device. Architecture
+    doc: projects/conductor-app/app-architecture-v2.md. Unblocks t-008/t-009/t-010.\n"
 - id: t-007
   milestone: m3
   title: Move pitch votes and project priorities from localStorage to per-user DB state in kind_robots
@@ -122,26 +118,22 @@ tasks:
   owner: reviewer
   passes: 0
   stakes: reversible
-  note: 'conductorStore keeps pitch votes (kr.workspacePitchVotes) and project priorities (kr.projectPriorities)
-    in browser localStorage, so they are per-browser, not per-user, and invisible to the Flutter app.
-    Design per-user persistence (or fold into Dream.priority for priorities) and migrate the workspace
-    + app to it.
+  note: 'conductorStore keeps pitch votes (kr.workspacePitchVotes) and project priorities (kr.projectPriorities) in browser
+    localStorage, so they are per-browser, not per-user, and invisible to the Flutter app. Design per-user persistence (or
+    fold into Dream.priority for priorities) and migrate the workspace + app to it.
 
-    DONE 2026-07-20 (conductor agent session claude-conductor-agent-20260720T1620Z): researched
-    current kind_robots main via an Explore agent before writing any code, and found this task''s
-    premise is stale -- the migration already happened, just not through this roadmap task.
-    `kr.projectPriorities` has zero references anywhere in the repo; project priority is already a
-    real Prisma column (`Project.priority: ProjectPriority`, indexed), set via `PATCH
-    /api/projects/[id]` -- DB-backed and already visible to the Flutter app via the same REST API it
-    already calls. `stores/conductorStore.ts` still references `kr.workspacePitchVotes`, but only to
-    `localStorage.removeItem()` it as one-time legacy cleanup on load -- actual voting already goes
-    through `POST /api/conductor/pitch-vote` (admin-gated via `requireAdminApiUser`), which sets a
-    canonical `status:` field on the pitch''s markdown file in this (conductor) repo. That''s a
-    real, non-localStorage, per-pitch status -- not per-browser -- so the literal "move off
-    localStorage" objective is done. It is NOT a per-user multi-voter table (one canonical status per
-    pitch, admin-set), which is a different, larger feature than what this task described; see t-014
-    for that as a separate, explicitly-scoped follow-up rather than building it speculatively here.
-    No kind_robots code change needed -- this is a roadmap-accuracy close, not an implementation.'
+    DONE 2026-07-20 (conductor agent session claude-conductor-agent-20260720T1620Z): researched current kind_robots main via
+    an Explore agent before writing any code, and found this task''s premise is stale -- the migration already happened, just
+    not through this roadmap task. `kr.projectPriorities` has zero references anywhere in the repo; project priority is already
+    a real Prisma column (`Project.priority: ProjectPriority`, indexed), set via `PATCH /api/projects/[id]` -- DB-backed and
+    already visible to the Flutter app via the same REST API it already calls. `stores/conductorStore.ts` still references
+    `kr.workspacePitchVotes`, but only to `localStorage.removeItem()` it as one-time legacy cleanup on load -- actual voting
+    already goes through `POST /api/conductor/pitch-vote` (admin-gated via `requireAdminApiUser`), which sets a canonical
+    `status:` field on the pitch''s markdown file in this (conductor) repo. That''s a real, non-localStorage, per-pitch status
+    -- not per-browser -- so the literal "move off localStorage" objective is done. It is NOT a per-user multi-voter table
+    (one canonical status per pitch, admin-set), which is a different, larger feature than what this task described; see t-014
+    for that as a separate, explicitly-scoped follow-up rather than building it speculatively here. No kind_robots code change
+    needed -- this is a roadmap-accuracy close, not an implementation.'
   claimed_by: claude-conductor-agent-20260720T1620Z
   claimed_at: '2026-07-20T16:22:32Z'
   updated: '2026-07-20T16:22:32Z'
@@ -154,29 +146,23 @@ tasks:
   stakes: reversible
   depends_on: t-006
   updated: '2026-07-20T21:00:00Z'
-  note: 'Port the remaining conductor-page project-detail powers to the app: goal/pitch/flavorText/liveUrl/repoUrl
-    autosave editing, and the ordered DESIRED_FEATURE wishlist with promote-to-AGENT and retire actions.
+  note: 'Port the remaining conductor-page project-detail powers to the app: goal/pitch/flavorText/liveUrl/repoUrl autosave
+    editing, and the ordered DESIRED_FEATURE wishlist with promote-to-AGENT and retire actions.
 
-    FOUND DONE 2026-07-20 (conductor-burst rotation): this was already fully implemented and
-    wired but never flipped from ready. Verified by reading the actual code, not just the
-    roadmap: apps/conductor/lib/features/projects/widgets/intent_editor_sheet.dart is a
-    bottom sheet editing title/goal/description/pitch/flavorText/liveUrl/repoUrl and
-    returning a diff-only patch map; wishlist_section.dart lists DESIRED_FEATURE todos
-    scoped to dreamId, sorted by order, with up/down reorder (rewrites order to list
-    position), a popup menu with "Promote to agent task" (patches category to AGENT,
-    priority to HIGH) and "Retire" (status ARCHIVED), and an "Add to wishlist" dialog that
-    creates a new DESIRED_FEATURE todo at the end of the list. Both widgets are imported
-    and rendered from project_detail_screen.dart (edit-details IconButton opens
-    IntentEditorSheet; WishlistSection is rendered in the body). Project.toJson/fromJson in
-    project_models.dart carries every field the editor touches, and both
-    RemoteProjectsRepository.update (PATCH /api/dreams/:id) and LocalProjectsRepository.update
-    apply the patch. docs/app-architecture-v2.md''s feature-parity table already lists
-    "Project status/priority/intent editing" as "scaffolded (status, priority, full intent
-    editor)" and "Feature wishlist (DESIRED_FEATURE + order, promote/retire)" as
-    "scaffolded" -- the doc was ahead of this roadmap file. No functional gap found; not
-    re-implemented. flutter analyze/test were not re-run in this sandbox (no flutter
-    toolchain available here) -- this is a bookkeeping-only correction, the code itself was
-    already live on main pre-dating this session, so no new risk is introduced.
+    FOUND DONE 2026-07-20 (conductor-burst rotation): this was already fully implemented and wired but never flipped from
+    ready. Verified by reading the actual code, not just the roadmap: apps/conductor/lib/features/projects/widgets/intent_editor_sheet.dart
+    is a bottom sheet editing title/goal/description/pitch/flavorText/liveUrl/repoUrl and returning a diff-only patch map;
+    wishlist_section.dart lists DESIRED_FEATURE todos scoped to dreamId, sorted by order, with up/down reorder (rewrites order
+    to list position), a popup menu with "Promote to agent task" (patches category to AGENT, priority to HIGH) and "Retire"
+    (status ARCHIVED), and an "Add to wishlist" dialog that creates a new DESIRED_FEATURE todo at the end of the list. Both
+    widgets are imported and rendered from project_detail_screen.dart (edit-details IconButton opens IntentEditorSheet; WishlistSection
+    is rendered in the body). Project.toJson/fromJson in project_models.dart carries every field the editor touches, and both
+    RemoteProjectsRepository.update (PATCH /api/dreams/:id) and LocalProjectsRepository.update apply the patch. docs/app-architecture-v2.md''s
+    feature-parity table already lists "Project status/priority/intent editing" as "scaffolded (status, priority, full intent
+    editor)" and "Feature wishlist (DESIRED_FEATURE + order, promote/retire)" as "scaffolded" -- the doc was ahead of this
+    roadmap file. No functional gap found; not re-implemented. flutter analyze/test were not re-run in this sandbox (no flutter
+    toolchain available here) -- this is a bookkeeping-only correction, the code itself was already live on main pre-dating
+    this session, so no new risk is introduced.
 
     '
 - id: t-009
@@ -188,10 +174,9 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-006
-  note: 'Merged to main via PR #104 (2026-07-03): per-project assistant chat (dream-<id>-assistant channel,
-    streaming replies, history persistence) and project artwork (dashboard thumbnails, detail hero banners).
-    Split from the original scope: the ArtCollection inspiration gallery and admin art-request submission
-    form move to t-012.
+  note: 'Merged to main via PR #104 (2026-07-03): per-project assistant chat (dream-<id>-assistant channel, streaming replies,
+    history persistence) and project artwork (dashboard thumbnails, detail hero banners). Split from the original scope: the
+    ArtCollection inspiration gallery and admin art-request submission form move to t-012.
 
     '
 - id: t-012
@@ -202,7 +187,23 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-009
-  note: 'Merged to main via PR #983 (2026-07-21). Implemented entirely client-side in apps/conductor (no kind_robots backend changes needed -- both endpoints already existed): GET /api/dreams/:id already embeds up to 12 linked ArtCollections (primary + many-to-many), each with up to 12 ArtImages, and POST /api/conductor/art-request (admin-gated server-side via userIsAdmin) already appends a queue entry to art-prompts.yaml. Added: art_models.dart (ArtImageSummary, ArtCollectionSummary), art_repository.dart (ArtRepository/RemoteArtRepository + artCollectionsForProjectProvider, mirrors the existing local/remote-null pattern -- provider is null in local mode, matching apiClientProvider), widgets/art_inspiration_section.dart (horizontal image-strip per collection, tap-to-enlarge dialog with prompt text, hidden entirely in local mode), widgets/art_request_form_sheet.dart (admin-only bottom sheet -- image path/label/prompt/variant/pageUrl -- gated in the UI by AppUser.isAdmin, submits via the existing endpoint, snackbar on success/failure mirroring the appmaker_screen.dart pattern). Wired into project_detail_screen.dart below WishlistSection. Verification note for future sessions: this sandbox''s scripts/provision_flutter.sh pins FLUTTER_VERSION=3.32.5 (mid-2025), which is now stale against app-ci.yml''s unpinned `channel: stable` -- flutter analyze under 3.32.5 threw 4 false-positive `initialValue` undefined-parameter errors, including on pre-existing unrelated code (todos_screen.dart) never touched this cycle. Ran `flutter upgrade` to the actual current stable (3.44.7) before verifying; analyze was clean (0 issues) and all 20 tests passed (incl. 2 new ArtCollectionSummary parsing tests in models_test.dart) under that version. Did not bump provision_flutter.sh''s pin this cycle (out of scope for t-012; filed as a fresh kaizen task, conductor/t-076, since PR #945''s body already flagged this as deferred/speculative and it just cost a real cycle here). Added test: models_test.dart ''ArtCollectionSummary'' group (dream-embedded nested-image parsing + missing-field tolerance).'
+  note: 'Merged to main via PR #983 (2026-07-21). Implemented entirely client-side in apps/conductor (no kind_robots backend
+    changes needed -- both endpoints already existed): GET /api/dreams/:id already embeds up to 12 linked ArtCollections (primary
+    + many-to-many), each with up to 12 ArtImages, and POST /api/conductor/art-request (admin-gated server-side via userIsAdmin)
+    already appends a queue entry to art-prompts.yaml. Added: art_models.dart (ArtImageSummary, ArtCollectionSummary), art_repository.dart
+    (ArtRepository/RemoteArtRepository + artCollectionsForProjectProvider, mirrors the existing local/remote-null pattern
+    -- provider is null in local mode, matching apiClientProvider), widgets/art_inspiration_section.dart (horizontal image-strip
+    per collection, tap-to-enlarge dialog with prompt text, hidden entirely in local mode), widgets/art_request_form_sheet.dart
+    (admin-only bottom sheet -- image path/label/prompt/variant/pageUrl -- gated in the UI by AppUser.isAdmin, submits via
+    the existing endpoint, snackbar on success/failure mirroring the appmaker_screen.dart pattern). Wired into project_detail_screen.dart
+    below WishlistSection. Verification note for future sessions: this sandbox''s scripts/provision_flutter.sh pins FLUTTER_VERSION=3.32.5
+    (mid-2025), which is now stale against app-ci.yml''s unpinned `channel: stable` -- flutter analyze under 3.32.5 threw
+    4 false-positive `initialValue` undefined-parameter errors, including on pre-existing unrelated code (todos_screen.dart)
+    never touched this cycle. Ran `flutter upgrade` to the actual current stable (3.44.7) before verifying; analyze was clean
+    (0 issues) and all 20 tests passed (incl. 2 new ArtCollectionSummary parsing tests in models_test.dart) under that version.
+    Did not bump provision_flutter.sh''s pin this cycle (out of scope for t-012; filed as a fresh kaizen task, conductor/t-076,
+    since PR #945''s body already flagged this as deferred/speculative and it just cost a real cycle here). Added test: models_test.dart
+    ''ArtCollectionSummary'' group (dream-embedded nested-image parsing + missing-field tolerance).'
   claimed_by: claude-conductor-burst-20260721T1505Z-conductorapp
   claimed_at: '2026-07-21T15:12:58Z'
   updated: '2026-07-21T15:34:40Z'
@@ -217,49 +218,42 @@ tasks:
   approved_by_human: false
   soft_gate: false
   depends_on: t-006
-  note: 'Prepare (do NOT submit) App Store / Play Store release: bundle ids, signing docs (secrets stay
-    out of source control), privacy nutrition labels (local mode = zero collection), Apple-required account
-    deletion flow, TestFlight/internal-track plan. Submission itself is a separate needs-human action
-    by Silas.
+  note: 'Prepare (do NOT submit) App Store / Play Store release: bundle ids, signing docs (secrets stay out of source control),
+    privacy nutrition labels (local mode = zero collection), Apple-required account deletion flow, TestFlight/internal-track
+    plan. Submission itself is a separate needs-human action by Silas.
 
-    PROGRESS 2026-08-16 (scheduled conductor sweep, session scheduled-conductor-20260816T2130Z-conductorapp-t010):
-    wrote projects/conductor-app/store-readiness.md covering all five checklist items. Bundle ids already
-    set and consistent (org.kindrobots.conductor_app / org.kindrobots.conductorApp) -- no action needed.
-    Implemented and shipped the Apple-required in-app account-deletion flow: Settings screen now has a
-    destructive "Delete account" tile (confirmation dialog, only shown for real signed-in server accounts,
-    never in local mode) wired to AuthController.deleteAccount(), which calls kind_robots'' existing
-    DELETE /api/users/:id self-delete cascade (deleteUserWithOwnedData) and then resets the app to the
-    welcome screen. Added test/auth_controller_test.dart (2 tests: delete fires against the right user id
-    and resets local state; throws with no request when nobody is signed in) using an in-memory AppStorage
-    fake + http.testing.MockClient so the test never touches the real secure-storage platform channel.
-    Drafted a data-collection inventory table for the store privacy-label forms, grounded in the same
-    tables the server''s own purge cascade touches. Verified: flutter analyze --fatal-infos clean (matches
-    app-ci.yml exactly), dart format clean on all touched files, all 7 apps/conductor test files pass when
-    run individually (32 tests total, 2 new) -- note bare `flutter test` with no args silently drops 2 of
-    7 files (appmaker_test.dart and this cycle''s new auth_controller_test.dart) in this sandbox specifically
-    (root-user warning printed each run); pre-existing on appmaker_test.dart before this cycle touched
-    anything, confirmed each file passes standalone and via flutter test on the real (non-root) GitHub
-    Actions runner is expected to differ -- not blocking, but worth a kaizen if it recurs in CI.
+    PROGRESS 2026-08-16 (scheduled conductor sweep, session scheduled-conductor-20260816T2130Z-conductorapp-t010): wrote projects/conductor-app/store-readiness.md
+    covering all five checklist items. Bundle ids already set and consistent (org.kindrobots.conductor_app / org.kindrobots.conductorApp)
+    -- no action needed. Implemented and shipped the Apple-required in-app account-deletion flow: Settings screen now has
+    a destructive "Delete account" tile (confirmation dialog, only shown for real signed-in server accounts, never in local
+    mode) wired to AuthController.deleteAccount(), which calls kind_robots'' existing DELETE /api/users/:id self-delete cascade
+    (deleteUserWithOwnedData) and then resets the app to the welcome screen. Added test/auth_controller_test.dart (2 tests:
+    delete fires against the right user id and resets local state; throws with no request when nobody is signed in) using
+    an in-memory AppStorage fake + http.testing.MockClient so the test never touches the real secure-storage platform channel.
+    Drafted a data-collection inventory table for the store privacy-label forms, grounded in the same tables the server''s
+    own purge cascade touches. Verified: flutter analyze --fatal-infos clean (matches app-ci.yml exactly), dart format clean
+    on all touched files, all 7 apps/conductor test files pass when run individually (32 tests total, 2 new) -- note bare
+    `flutter test` with no args silently drops 2 of 7 files (appmaker_test.dart and this cycle''s new auth_controller_test.dart)
+    in this sandbox specifically (root-user warning printed each run); pre-existing on appmaker_test.dart before this cycle
+    touched anything, confirmed each file passes standalone and via flutter test on the real (non-root) GitHub Actions runner
+    is expected to differ -- not blocking, but worth a kaizen if it recurs in CI.
 
-    Genuine gap found and left for Silas rather than worked around: android/app/build.gradle.kts''s
-    release build type still signs with the debug keystore (no production signing config exists yet), and
-    there is no reachable privacy-policy URL for either store''s listing. Both require Silas''s own
-    developer-account credentials/decisions and cannot be generated by an agent. TestFlight/internal-track
-    plan is drafted but not run. See store-readiness.md''s "Summary" section for the full needs-human list.
-    Remains gate_human/outward-facing overall (submission itself, per the task''s own note) -- rearming to
-    needs-human after this slice''s PR merges, not done, since real scope (signing + privacy URL +
-    submission) is still blocked on Silas.
+    Genuine gap found and left for Silas rather than worked around: android/app/build.gradle.kts''s release build type still
+    signs with the debug keystore (no production signing config exists yet), and there is no reachable privacy-policy URL
+    for either store''s listing. Both require Silas''s own developer-account credentials/decisions and cannot be generated
+    by an agent. TestFlight/internal-track plan is drafted but not run. See store-readiness.md''s "Summary" section for the
+    full needs-human list. Remains gate_human/outward-facing overall (submission itself, per the task''s own note) -- rearming
+    to needs-human after this slice''s PR merges, not done, since real scope (signing + privacy URL + submission) is still
+    blocked on Silas.
 
-    MERGED 2026-08-16 (scheduled conductor sweep, session claude/blissful-curie-m5b1va): reviewed PR #2345
-    (all 24 CI checks green, mergeable_state clean, scoped 5-file/351+/3- diff) and squash-merged
-    d9c5541. FOR SILAS: projects/conductor-app/store-readiness.md has the full checklist. TO APPROVE /
-    ACT: (1) decide on Android release signing (keystore vs. Play App Signing) -- build.gradle.kts still
-    signs release with the debug keystore, (2) get a reachable privacy-policy URL for both store
-    listings, (3) enroll/confirm Apple Developer Program + iOS distribution cert, (4) review the drafted
-    privacy data-collection table against the live Prisma schema, (5) run the TestFlight/internal-track
-    plan and the actual store submissions. Nothing here can be done by an agent -- all five need your
-    credentials or judgment call. Set approved_by_human: true and status: done once submission is
-    actually complete (or once you decide this task''s remaining scope is handled elsewhere).
+    MERGED 2026-08-16 (scheduled conductor sweep, session claude/blissful-curie-m5b1va): reviewed PR #2345 (all 24 CI checks
+    green, mergeable_state clean, scoped 5-file/351+/3- diff) and squash-merged d9c5541. FOR SILAS: projects/conductor-app/store-readiness.md
+    has the full checklist. TO APPROVE / ACT: (1) decide on Android release signing (keystore vs. Play App Signing) -- build.gradle.kts
+    still signs release with the debug keystore, (2) get a reachable privacy-policy URL for both store listings, (3) enroll/confirm
+    Apple Developer Program + iOS distribution cert, (4) review the drafted privacy data-collection table against the live
+    Prisma schema, (5) run the TestFlight/internal-track plan and the actual store submissions. Nothing here can be done by
+    an agent -- all five need your credentials or judgment call. Set approved_by_human: true and status: done once submission
+    is actually complete (or once you decide this task''s remaining scope is handled elsewhere).
 
     '
   claimed_by: scheduled-conductor-20260816T2130Z-conductorapp-t010
@@ -270,31 +264,72 @@ tasks:
   milestone: m1
   title: Add CI guard that every conductor write endpoint in kind_robots calls an auth guard
   status: done
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
-  note: 'Kaizen from Reviewer on the kind_robots PR #70 security-fix merge (2026-07-02): a lint or test check over server/api/conductor/*.post.ts that fails CI if a route does not call requireApiUser or requireAdminApiUser, so a missing auth guard on a new endpoint is caught before merge instead of by manual audit. RAN 2026-07-20 (claude-burst-hourly-20260720-0203, burst-mode project rotation): added utils/scripts/verifyConductorApiAuthGuards.ts, a CI contract check over server/api/conductor/*.{post,put,patch,delete}.ts. Broadened beyond the two named functions to also accept the validateApiKey(...)+userIsAdmin(...) manual pattern already used by art-request.post.ts and curate-request.post.ts (same JWT/user-api-key/beta-admin-token resolution as requireAdminApiUser, just not routed through that helper) -- a guard scoped only to the two named functions would have false-flagged both of those already-secured endpoints. Self-test in verifyConductorApiAuthGuards.test.ts covers both guard shapes plus an unguarded case and a guard-less .get.ts that must be ignored. Wired into contract-tests.yml. Verified: npm run test:conductor-api-auth-guards passes (7 endpoints, 0 unguarded), self-test 8/8 pass, eslint/prettier clean, full npm run test (vue-tsc --noEmit) 0 errors. kind_robots PR #602 (branch claude/keen-fermat-ulch6b), CI running at review time. DONE 2026-07-20 (~03:11 UTC): kind_robots PR #602 merged by Silas.'
+  note: 'Kaizen from Reviewer on the kind_robots PR #70 security-fix merge (2026-07-02): a lint or test check over server/api/conductor/*.post.ts
+    that fails CI if a route does not call requireApiUser or requireAdminApiUser, so a missing auth guard on a new endpoint
+    is caught before merge instead of by manual audit. RAN 2026-07-20 (claude-burst-hourly-20260720-0203, burst-mode project
+    rotation): added utils/scripts/verifyConductorApiAuthGuards.ts, a CI contract check over server/api/conductor/*.{post,put,patch,delete}.ts.
+    Broadened beyond the two named functions to also accept the validateApiKey(...)+userIsAdmin(...) manual pattern already
+    used by art-request.post.ts and curate-request.post.ts (same JWT/user-api-key/beta-admin-token resolution as requireAdminApiUser,
+    just not routed through that helper) -- a guard scoped only to the two named functions would have false-flagged both of
+    those already-secured endpoints. Self-test in verifyConductorApiAuthGuards.test.ts covers both guard shapes plus an unguarded
+    case and a guard-less .get.ts that must be ignored. Wired into contract-tests.yml. Verified: npm run test:conductor-api-auth-guards
+    passes (7 endpoints, 0 unguarded), self-test 8/8 pass, eslint/prettier clean, full npm run test (vue-tsc --noEmit) 0 errors.
+    kind_robots PR #602 (branch claude/keen-fermat-ulch6b), CI running at review time. DONE 2026-07-20 (~03:11 UTC): kind_robots
+    PR #602 merged by Silas.'
   updated: '2026-07-20T03:12:00Z'
 - id: t-013
   milestone: m1
   title: Polish and upgrade Conductor App front-end surface
   status: done
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
-  note: 'UI polish + upgrade for the conductor-app front end now that the scaffold page is live at /conductor-app. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/conductor/conductor-app.webp and tutorial art at public/images/tutorials/conductor/conductor-app.webp; (2) add a matching section for ''conductor-app'' under tutorialChannels.conductor.sections in kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl points at /conductor-app (admin can run the Conductor ''Placements'' button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full interactive experience for this project. PROGRESS 2026-07-20 (conductor agent session claude-conductor-agent-20260720T-run2, kind_robots PR #647 merged squash bb093c2): step (2) done -- added a ''conductor-app'' section under tutorialChannels.conductor.sections in stores/helpers/tutorialCards.ts, resolving via tutorialImage(''conductor'', ''conductor-app'') with a placeholder fallback until dedicated art lands. Step (4) advanced: the scaffold (ProjectFrontPage + fallback config) already existed but had no #interactive slot; added one showing live done/total task counts and the next ready tasks for this project, sourced from conductorStore.projects, mirroring appmaker-page.vue''s use of the same store and the #interactive pattern storybook/serendipity/davinci already use. Remaining and kept ready: step (1) dashboard-tab + tutorial art (art-generation relay confirmed still slow to drain this session -- see art-generator-connect/t-019 and t-022) and step (3) the liveUrl/channelKey/tabKey backfill (needs an admin Placements click, not independently verifiable from this session). Verified before merge: eslint clean, prettier clean, full-project npm run test (vue-tsc --noEmit) exit 0. All 3 kind_robots PR checks green (TypeScript, Contract verifiers, GitGuardian). CLOSED 2026-08-14 (scheduled conductor sweep session 2026-08-14T19-30-00Z-sched-conductor-appt013): re-audited all four steps against live state rather than assuming the 2026-07-20 gaps still held. Step (1): confirmed via curl that both art assets are now live at the CDN (media.acrocatranch.com/images/dashboard-tabs/conductor/conductor-app.webp and .../tutorials/conductor/conductor-app.webp, both 200) -- drained by taskmaster/t-004''s ArtJob 8240 (tutorial) plus an earlier already-healthy dashboard-tab image, per art-prompts.yaml''s requests: ledger. Step (2): confirmed still in place from 2026-07-20. Step (3): fetched kind_robots'' utils/projectPlacements.ts fresh -- conductor-app: {channelKey: plan, tabKey: conductor-app} matches this roadmap''s own project-overrides.yaml exactly, so the placement backfill already happened; no drift to fix (unlike the 8-project stale-channelKey sweep coat-dance/t-010 needed the same day). While verifying step (3) against content/channels/plan/conductor-app.md, found and fixed a real but separate bug: conductor-app-page.vue''s own fallback `config.channelKey` was hardcoded to ''conductor'' -- not a real nav channel (only home/play/plan/admin exist) -- while its sibling content doc, projectPlacements.ts, and this roadmap''s override all agree on ''plan''. Fixed in kind_robots PR #1889 (squash 77a7690), verified eslint/prettier/vue-tsc/layout-contract clean, 20/20 CI checks green, merged. Currently dead code at runtime (project-front-page.vue''s view computed doesn''t read fallback.channelKey yet) but correct for any future consumer (e.g. a "back to channel" link). Step (4): the existing #interactive slot (live task-progress bar + next-3-ready-tasks list) is a reasonable, working interactive experience for what this project fundamentally is -- a companion-app status/launch page, not a complex in-app tool -- matching the pattern used by davinci/storybook/appmaker''s own front pages. No further open-ended polish identified as blocking. All four steps verified complete; closing to done.'
+  note: 'UI polish + upgrade for the conductor-app front end now that the scaffold page is live at /conductor-app. Steps:
+    (1) generate final dashboard-tab art at public/images/dashboard-tabs/conductor/conductor-app.webp and tutorial art at
+    public/images/tutorials/conductor/conductor-app.webp; (2) add a matching section for ''conductor-app'' under tutorialChannels.conductor.sections
+    in kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl points at /conductor-app (admin can
+    run the Conductor ''Placements'' button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page
+    into the full interactive experience for this project. PROGRESS 2026-07-20 (conductor agent session claude-conductor-agent-20260720T-run2,
+    kind_robots PR #647 merged squash bb093c2): step (2) done -- added a ''conductor-app'' section under tutorialChannels.conductor.sections
+    in stores/helpers/tutorialCards.ts, resolving via tutorialImage(''conductor'', ''conductor-app'') with a placeholder fallback
+    until dedicated art lands. Step (4) advanced: the scaffold (ProjectFrontPage + fallback config) already existed but had
+    no #interactive slot; added one showing live done/total task counts and the next ready tasks for this project, sourced
+    from conductorStore.projects, mirroring appmaker-page.vue''s use of the same store and the #interactive pattern storybook/serendipity/davinci
+    already use. Remaining and kept ready: step (1) dashboard-tab + tutorial art (art-generation relay confirmed still slow
+    to drain this session -- see art-generator-connect/t-019 and t-022) and step (3) the liveUrl/channelKey/tabKey backfill
+    (needs an admin Placements click, not independently verifiable from this session). Verified before merge: eslint clean,
+    prettier clean, full-project npm run test (vue-tsc --noEmit) exit 0. All 3 kind_robots PR checks green (TypeScript, Contract
+    verifiers, GitGuardian). CLOSED 2026-08-14 (scheduled conductor sweep session 2026-08-14T19-30-00Z-sched-conductor-appt013):
+    re-audited all four steps against live state rather than assuming the 2026-07-20 gaps still held. Step (1): confirmed
+    via curl that both art assets are now live at the CDN (media.acrocatranch.com/images/dashboard-tabs/conductor/conductor-app.webp
+    and .../tutorials/conductor/conductor-app.webp, both 200) -- drained by taskmaster/t-004''s ArtJob 8240 (tutorial) plus
+    an earlier already-healthy dashboard-tab image, per art-prompts.yaml''s requests: ledger. Step (2): confirmed still in
+    place from 2026-07-20. Step (3): fetched kind_robots'' utils/projectPlacements.ts fresh -- conductor-app: {channelKey:
+    plan, tabKey: conductor-app} matches this roadmap''s own project-overrides.yaml exactly, so the placement backfill already
+    happened; no drift to fix (unlike the 8-project stale-channelKey sweep coat-dance/t-010 needed the same day). While verifying
+    step (3) against content/channels/plan/conductor-app.md, found and fixed a real but separate bug: conductor-app-page.vue''s
+    own fallback `config.channelKey` was hardcoded to ''conductor'' -- not a real nav channel (only home/play/plan/admin exist)
+    -- while its sibling content doc, projectPlacements.ts, and this roadmap''s override all agree on ''plan''. Fixed in kind_robots
+    PR #1889 (squash 77a7690), verified eslint/prettier/vue-tsc/layout-contract clean, 20/20 CI checks green, merged. Currently
+    dead code at runtime (project-front-page.vue''s view computed doesn''t read fallback.channelKey yet) but correct for any
+    future consumer (e.g. a "back to channel" link). Step (4): the existing #interactive slot (live task-progress bar + next-3-ready-tasks
+    list) is a reasonable, working interactive experience for what this project fundamentally is -- a companion-app status/launch
+    page, not a complex in-app tool -- matching the pattern used by davinci/storybook/appmaker''s own front pages. No further
+    open-ended polish identified as blocking. All four steps verified complete; closing to done.'
   updated: '2026-08-14T19:38:38Z'
-  claimed_by: null
-  claimed_at: null
+  claimed_by:
+  claimed_at:
   implementation_pr: 'silasfelinus/kind_robots#1889'
 
 - id: t-014
   milestone: m3
   title: 'Design true per-user multi-voter pitch voting (if actually wanted)'
   status: done
-  approved_by_human: true
   soft_gate: true
-  owner: null
+  owner:
   passes: 0
   stakes: reversible
   note: >
@@ -355,3 +390,5 @@ tasks:
   claimed_by: ''
   claimed_at: ''
   updated: '2026-08-15T10:40:00Z'
+goal: Provide a usable application surface for Conductor so project state, tasks, gates, and progress can be understood 
+  and acted on without living in YAML.

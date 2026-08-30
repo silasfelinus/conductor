@@ -8,682 +8,760 @@ notes_from_silas: |
   Da Vinci is a life simulator app/game/webgame: a branching life narrative with pass/fail victory conditions and 1024 achievements/endpoints. It integrates with Kind Robots characters, Dreams, Chat, generated art collections, and the existing milestone system. Focus development on milestone/achievement/ending generation first, so narrative generation has concrete targets. This may later share pieces with Storybook, but do not merge it prematurely.
 
 milestones:
-  - id: m1
-    title: "SHAPE — endpoint framework and design brief"
-    weight: 25
-    status: done
+- id: m1
+  title: "SHAPE — endpoint framework and design brief"
+  weight: 25
+  status: done
 
-  - id: m2
-    title: "BUILD — life run, choice, and ending engine"
-    weight: 35
-    status: done
+- id: m2
+  title: "BUILD — life run, choice, and ending engine"
+  weight: 35
+  status: done
 
-  - id: m3
-    title: "INTEGRATE — milestones, Dreams, characters, Chat, and art collections"
-    weight: 25
-    status: done
+- id: m3
+  title: "INTEGRATE — milestones, Dreams, characters, Chat, and art collections"
+  weight: 25
+  status: done
 
-  - id: m4
-    title: "POLISH — ending reveal, achievement gallery, and Storybook alignment"
-    weight: 15
-    status: done
-  - id: m5
-    title: "VERIFY — playtest the real experience across devices"
-    weight: 20
-    status: in-progress
+- id: m4
+  title: "POLISH — ending reveal, achievement gallery, and Storybook alignment"
+  weight: 15
+  status: done
+- id: m5
+  title: "VERIFY — playtest the real experience across devices"
+  weight: 20
+  status: in-progress
 
-  - id: m6
-    title: "ART & POLISH — coherent styling, run art, and all 1,024 ending assets"
-    weight: 30
-    status: in-progress
+- id: m6
+  title: "ART & POLISH — coherent styling, run art, and all 1,024 ending assets"
+  weight: 30
+  status: in-progress
 
 tasks:
-  - id: t-001
-    milestone: m1
-    title: "Write Da Vinci design brief and endpoint plan"
-    status: done
-    owner: worker
-    updated: '2026-07-04T15:00:00-07:00'
-    passes: 0
-    stakes: reversible
-    note: >
-      Added projects/davinci/docs/design-brief.md with the product shape, core loop,
-      1024 endpoint strategy, milestone integration, art collection flow, and first
-      implementation slices. Spec only — no schema, API, live data, deploy, or
-      publishing changes.
+- id: t-001
+  milestone: m1
+  title: "Write Da Vinci design brief and endpoint plan"
+  status: done
+  owner: worker
+  updated: '2026-07-04T15:00:00-07:00'
+  passes: 0
+  stakes: reversible
+  note: >
+    Added projects/davinci/docs/design-brief.md with the product shape, core loop,
+    1024 endpoint strategy, milestone integration, art collection flow, and first
+    implementation slices. Spec only — no schema, API, live data, deploy, or
+    publishing changes.
 
-  - id: t-002
-    milestone: m1
-    title: "Confirm Da Vinci scope with Silas"
-    status: done
-    owner: null
-    updated: '2026-07-06T20:00:00Z'
-    passes: 0
-    stakes: reversible
-    approved_by_human: true
-    note: >
-      CLEARED 2026-07-06 (Silas in-session, daily standup): scope confirmed —
-      Da Vinci stays a separate playable ruleset from Storybook for now.
-      approved_by_human set per the CONTROL.md in-session clearance rule.
-      FOR SILAS: soft checkpoint, nothing is blocked on it. Read
-      projects/davinci/docs/design-brief.md and confirm whether Da Vinci should remain
-      a separate playable ruleset from Storybook for now. TO APPROVE: set
-      approved_by_human: true and status: done, or add corrections in this note.
-      Development can continue while this is open.
+- id: t-002
+  milestone: m1
+  title: "Confirm Da Vinci scope with Silas"
+  status: done
+  owner:
+  updated: '2026-07-06T20:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: >
+    CLEARED 2026-07-06 (Silas in-session, daily standup): scope confirmed —
+    Da Vinci stays a separate playable ruleset from Storybook for now.
+    approved_by_human set per the CONTROL.md in-session clearance rule.
+    FOR SILAS: soft checkpoint, nothing is blocked on it. Read
+    projects/davinci/docs/design-brief.md and confirm whether Da Vinci should remain
+    a separate playable ruleset from Storybook for now. TO APPROVE: set
+    approved_by_human: true and status: done, or add corrections in this note.
+    Development can continue while this is open.
 
-  - id: t-003
-    milestone: m1
-    title: "Define Da Vinci ending dimensions and deterministic endpoint keys"
-    status: done
-    owner: worker
-    updated: '2026-07-04T16:10:00-07:00'
-    passes: 0
-    stakes: reversible
-    note: >
-      Added projects/davinci/data/ending-dimensions.yaml and
-      scripts/generate_davinci_endings.py. The dimension order, threshold notes,
-      victory classification, 10-bit outcomeKey format, DB seed payload, milestone
-      mapping payload, achievement payload, and optional local-generator queue output
-      are now deterministic. This does not generate images or enqueue all 1024 images.
+- id: t-003
+  milestone: m1
+  title: "Define Da Vinci ending dimensions and deterministic endpoint keys"
+  status: done
+  owner: worker
+  updated: '2026-07-04T16:10:00-07:00'
+  passes: 0
+  stakes: reversible
+  note: >
+    Added projects/davinci/data/ending-dimensions.yaml and
+    scripts/generate_davinci_endings.py. The dimension order, threshold notes,
+    victory classification, 10-bit outcomeKey format, DB seed payload, milestone
+    mapping payload, achievement payload, and optional local-generator queue output
+    are now deterministic. This does not generate images or enqueue all 1024 images.
 
-  - id: t-004
-    milestone: m2
-    title: "Draft LifeRun, LifeChoice, LifeStat, LifeEnding, and LifeRunArt schema pitch"
-    status: done
-    owner: reviewer
-    updated: '2026-07-04T23:30:00-07:00'
-    passes: 0
-    stakes: reversible
-    note: >
-      Completed out-of-band: a duplicate project folder (projects/da-vinci/, now folded
-      back into this one — see TALKBACK) scaffolded the same schema and it was applied
-      directly in kind_robots PR #87 (LifeRun/LifeChoice/LifeStat/LifeEnding/
-      LifeAchievement/LifeAchievementUnlock/LifeRunArt + 4 enums, all additive/nullable
-      except run-ownership FKs). Milestone's existing icon/artImageId/artPrompt fields
-      were reused as planned — no schema upgrade needed there. Known follow-up:
-      LifeAchievementUnlock's unique (userId, achievementId, lifeRunId) allows repeat
-      unlocks when lifeRunId is NULL (MySQL treats NULLs as distinct) — global
-      achievements need an upsert-guard in the API layer when that endpoint is built.
+- id: t-004
+  milestone: m2
+  title: "Draft LifeRun, LifeChoice, LifeStat, LifeEnding, and LifeRunArt schema pitch"
+  status: done
+  owner: reviewer
+  updated: '2026-07-04T23:30:00-07:00'
+  passes: 0
+  stakes: reversible
+  note: >
+    Completed out-of-band: a duplicate project folder (projects/da-vinci/, now folded
+    back into this one — see TALKBACK) scaffolded the same schema and it was applied
+    directly in kind_robots PR #87 (LifeRun/LifeChoice/LifeStat/LifeEnding/
+    LifeAchievement/LifeAchievementUnlock/LifeRunArt + 4 enums, all additive/nullable
+    except run-ownership FKs). Milestone's existing icon/artImageId/artPrompt fields
+    were reused as planned — no schema upgrade needed there. Known follow-up:
+    LifeAchievementUnlock's unique (userId, achievementId, lifeRunId) allows repeat
+    unlocks when lifeRunId is NULL (MySQL treats NULLs as distinct) — global
+    achievements need an upsert-guard in the API layer when that endpoint is built.
 
-  - id: t-005
-    milestone: m3
-    title: "Map Da Vinci endings to existing Kind Robots milestones"
-    status: done
-    owner: worker
-    updated: '2026-07-04T16:10:00-07:00'
-    passes: 0
-    stakes: reversible
-    depends_on: t-004
-    note: >
-      Documented in projects/davinci/docs/ending-seed-and-art-flow.md and encoded in
-      scripts/generate_davinci_endings.py. Each ending maps to a Milestone using
-      triggerCode davinci-ending-{outcomeKey}, icon path, imagePath hero path,
-      artPrompt, non-repeatable status, and linked LifeAchievement metadata. The
-      importer should upsert LifeEnding by outcomeKey, Milestone by triggerCode, and
-      LifeAchievement by slug or conditionKey.
+- id: t-005
+  milestone: m3
+  title: "Map Da Vinci endings to existing Kind Robots milestones"
+  status: done
+  owner: worker
+  updated: '2026-07-04T16:10:00-07:00'
+  passes: 0
+  stakes: reversible
+  depends_on: t-004
+  note: >
+    Documented in projects/davinci/docs/ending-seed-and-art-flow.md and encoded in
+    scripts/generate_davinci_endings.py. Each ending maps to a Milestone using
+    triggerCode davinci-ending-{outcomeKey}, icon path, imagePath hero path,
+    artPrompt, non-repeatable status, and linked LifeAchievement metadata. The
+    importer should upsert LifeEnding by outcomeKey, Milestone by triggerCode, and
+    LifeAchievement by slug or conditionKey.
 
-  - id: t-006
-    milestone: m3
-    title: "Define generated art collection flow for life runs"
-    status: done
-    owner: worker
-    updated: '2026-07-04T16:10:00-07:00'
-    passes: 0
-    stakes: reversible
-    depends_on: t-004
-    note: >
-      Documented in projects/davinci/docs/ending-seed-and-art-flow.md. Ending icon and
-      hero path strings are seeded immediately, but iconArtImageId and heroArtImageId
-      stay null until local generator files exist. The script can emit small explicit
-      local-generator queue batches with --format art-queue; it intentionally does not
-      write all 1024 endings into projects/art-generate.yaml or create empty ArtImage
-      rows.
+- id: t-006
+  milestone: m3
+  title: "Define generated art collection flow for life runs"
+  status: done
+  owner: worker
+  updated: '2026-07-04T16:10:00-07:00'
+  passes: 0
+  stakes: reversible
+  depends_on: t-004
+  note: >
+    Documented in projects/davinci/docs/ending-seed-and-art-flow.md. Ending icon and
+    hero path strings are seeded immediately, but iconArtImageId and heroArtImageId
+    stay null until local generator files exist. The script can emit small explicit
+    local-generator queue batches with --format art-queue; it intentionally does not
+    write all 1024 endings into projects/art-generate.yaml or create empty ArtImage
+    rows.
 
-  - id: t-007
-    milestone: m4
-    title: "Compare Da Vinci and Storybook boundaries after endpoint engine exists"
-    status: done
-    owner: reviewer
-    updated: '2026-07-05T07:45:00-07:00'
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-003
-      - t-005
-      - t-006
-    note: >
-      FOR SILAS: written now that the endpoint engine is real —
-      projects/davinci/docs/storybook-boundary-comparison.md. Recommendation:
-      keep the projects separate through Da Vinci's play-loop MVP and
-      Storybook's m1 schema; share only via existing KR models now and small
-      extracted utilities later (narration prompt assembly is the first real
-      duplication risk); never merged tables. The merge question re-opens only
-      after both MVPs land. Soft decision point: if you instead want Da Vinci
-      as a Storybook mode from day one, say so before the play-loop task is
-      scoped — otherwise no action needed.
+- id: t-007
+  milestone: m4
+  title: "Compare Da Vinci and Storybook boundaries after endpoint engine exists"
+  status: done
+  owner: reviewer
+  updated: '2026-07-05T07:45:00-07:00'
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-003
+  - t-005
+  - t-006
+  note: >
+    FOR SILAS: written now that the endpoint engine is real —
+    projects/davinci/docs/storybook-boundary-comparison.md. Recommendation:
+    keep the projects separate through Da Vinci's play-loop MVP and
+    Storybook's m1 schema; share only via existing KR models now and small
+    extracted utilities later (narration prompt assembly is the first real
+    duplication risk); never merged tables. The merge question re-opens only
+    after both MVPs land. Soft decision point: if you instead want Da Vinci
+    as a Storybook mode from day one, say so before the play-loop task is
+    scoped — otherwise no action needed.
 
-  - id: t-008
-    milestone: m2
-    title: "Build Da Vinci seed importer in kind_robots"
-    status: done
-    owner: reviewer
-    updated: '2026-07-05T03:30:00-07:00'
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-003
-      - t-004
-      - t-005
-    note: >
-      Done in kind_robots (Silas-directed session work): utils/scripts/seedDaVinciEndings.ts
-      (npm run seed:davinci), an idempotent tsx importer that consumes the
-      generate_davinci_endings.py JSON/JSONL output and upserts Milestone by
-      triggerCode, LifeEnding by outcomeKey, and LifeAchievement by conditionKey,
-      linking milestoneId/endingId. Verified end-to-end against a throwaway MariaDB:
-      1024/1024/1024 rows, all links populated, zero ArtImage rows, re-run confirmed
-      idempotent (counts unchanged). Note: LifeAchievement has no artPrompt column —
-      prompts live on Milestone and LifeEnding only. Used .ts+tsx instead of the
-      suggested .mjs because the generated Prisma client is TypeScript.
+- id: t-008
+  milestone: m2
+  title: "Build Da Vinci seed importer in kind_robots"
+  status: done
+  owner: reviewer
+  updated: '2026-07-05T03:30:00-07:00'
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-003
+  - t-004
+  - t-005
+  note: >
+    Done in kind_robots (Silas-directed session work): utils/scripts/seedDaVinciEndings.ts
+    (npm run seed:davinci), an idempotent tsx importer that consumes the
+    generate_davinci_endings.py JSON/JSONL output and upserts Milestone by
+    triggerCode, LifeEnding by outcomeKey, and LifeAchievement by conditionKey,
+    linking milestoneId/endingId. Verified end-to-end against a throwaway MariaDB:
+    1024/1024/1024 rows, all links populated, zero ArtImage rows, re-run confirmed
+    idempotent (counts unchanged). Note: LifeAchievement has no artPrompt column —
+    prompts live on Milestone and LifeEnding only. Used .ts+tsx instead of the
+    suggested .mjs because the generated Prisma client is TypeScript.
 
-  - id: t-009
-    milestone: m2
-    title: "Build minimal Da Vinci ending resolution API"
-    status: done
-    owner: reviewer
-    updated: '2026-07-05T06:00:00-07:00'
-    passes: 0
-    stakes: reversible
-    depends_on: t-008
-    note: >
-      Done in kind_robots (Silas-directed session work): server/utils/davinci.ts
-      (dimension order, resolveOutcomeKey, resolveLifeRunEnding transaction) and
-      POST /api/davinci/runs/:id/resolve. Resolves LifeStat rows into the 10-bit
-      outcomeKey, marks the run COMPLETE with endingId + statsSnapshot, awards the
-      linked Milestone (MilestoneRecord) and LifeAchievement (LifeAchievementUnlock)
-      once per user — explicit (userId, achievementId) API-layer guard covers the
-      MySQL NULL-lifeRunId unique-constraint gap from t-004. Verified against the
-      seeded throwaway MariaDB: 24 helper assertions (idempotent re-resolve, cross-run
-      duplicate-award prevention, SECRET/MIXED/VICTORY classification, 403/404 guards)
-      plus live HTTP checks on the dev server (200/401/400/403/404).
+- id: t-009
+  milestone: m2
+  title: "Build minimal Da Vinci ending resolution API"
+  status: done
+  owner: reviewer
+  updated: '2026-07-05T06:00:00-07:00'
+  passes: 0
+  stakes: reversible
+  depends_on: t-008
+  note: >
+    Done in kind_robots (Silas-directed session work): server/utils/davinci.ts
+    (dimension order, resolveOutcomeKey, resolveLifeRunEnding transaction) and
+    POST /api/davinci/runs/:id/resolve. Resolves LifeStat rows into the 10-bit
+    outcomeKey, marks the run COMPLETE with endingId + statsSnapshot, awards the
+    linked Milestone (MilestoneRecord) and LifeAchievement (LifeAchievementUnlock)
+    once per user — explicit (userId, achievementId) API-layer guard covers the
+    MySQL NULL-lifeRunId unique-constraint gap from t-004. Verified against the
+    seeded throwaway MariaDB: 24 helper assertions (idempotent re-resolve, cross-run
+    duplicate-award prevention, SECRET/MIXED/VICTORY classification, 403/404 guards)
+    plus live HTTP checks on the dev server (200/401/400/403/404).
 
-  - id: t-010
-    milestone: m2
-    title: "Add an automated regression check for the Da Vinci seed importer's row counts and link integrity"
-    status: done
-    owner: reviewer
-    updated: '2026-07-05T07:15:00-07:00'
-    passes: 0
-    stakes: reversible
-    note: >
-      Done in kind_robots PR #93 (Silas-directed session work):
-      utils/scripts/verifyDaVinciSeed.ts (npm run seed:davinci:verify), a 15-check
-      pass/fail suite covering payload shape, import counts, link integrity with a
-      matching-row spot-check, the no-ArtImage boundary, and double-import
-      idempotency; exits non-zero on failure. seedDaVinciEndings.ts refactored to
-      export shared pieces behind a direct-execution guard (CLI unchanged) and now
-      documents its single-invocation boundary per the t-008 TALKBACK critique.
-      Verified green against the seeded throwaway MariaDB; failure path verified
-      with a truncated seed file (exit 1).
+- id: t-010
+  milestone: m2
+  title: "Add an automated regression check for the Da Vinci seed importer's row counts and link integrity"
+  status: done
+  owner: reviewer
+  updated: '2026-07-05T07:15:00-07:00'
+  passes: 0
+  stakes: reversible
+  note: >
+    Done in kind_robots PR #93 (Silas-directed session work):
+    utils/scripts/verifyDaVinciSeed.ts (npm run seed:davinci:verify), a 15-check
+    pass/fail suite covering payload shape, import counts, link integrity with a
+    matching-row spot-check, the no-ArtImage boundary, and double-import
+    idempotency; exits non-zero on failure. seedDaVinciEndings.ts refactored to
+    export shared pieces behind a direct-execution guard (CLI unchanged) and now
+    documents its single-invocation boundary per the t-008 TALKBACK critique.
+    Verified green against the seeded throwaway MariaDB; failure path verified
+    with a truncated seed file (exit 1).
 
-  - id: t-011
-    milestone: m2
-    title: "Add LifeRun status-transition guard and an end-to-end play-loop API test"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-009
-      - t-013
-    note: >
-      Kaizen from t-009 merge: resolveLifeRunEnding currently recomputes on every
-      call, including for runs already COMPLETE. Now unblocked (t-013 landed a
-      play loop that already guards the CHOICE side — choices on a non-ACTIVE run
-      return 409). Remaining scope: guard/document the RESOLVE side's
-      recompute-on-COMPLETE behavior, and add a headless tsx driver that runs
-      create-run -> record-choices -> resolve against the scratch DB, wired into
-      the davinci-seed-verify CI job so the whole play loop gets coverage without
-      dev-server auth (folds in the t-012 kaizen).
+- id: t-011
+  milestone: m2
+  title: "Add LifeRun status-transition guard and an end-to-end play-loop API test"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-009
+  - t-013
+  note: >
+    Kaizen from t-009 merge: resolveLifeRunEnding currently recomputes on every
+    call, including for runs already COMPLETE. Now unblocked (t-013 landed a
+    play loop that already guards the CHOICE side — choices on a non-ACTIVE run
+    return 409). Remaining scope: guard/document the RESOLVE side's
+    recompute-on-COMPLETE behavior, and add a headless tsx driver that runs
+    create-run -> record-choices -> resolve against the scratch DB, wired into
+    the davinci-seed-verify CI job so the whole play loop gets coverage without
+    dev-server auth (folds in the t-012 kaizen).
 
-      DONE 2026-07-19 (conductor-burst rotation, claude-conductor-burst-20260719-rotation-davinci):
-      resolveLifeRunEnding (server/utils/davinci.ts) now short-circuits on an already-COMPLETE
-      run via a new resolveCompletedLifeRun helper -- reads the stored outcomeKey/ending/award
-      ids back instead of recomputing stats and re-running the award transaction, so a repeat
-      resolve call is a read, not a wasted write. Added utils/scripts/verifyDaVinciPlayLoop.ts,
-      a headless tsx driver exercising create-run -> record-choice -> resolve -> re-resolve ->
-      choice-rejected-on-COMPLETE directly against server/utils/davinci.ts (no dev server/auth),
-      wired into .github/workflows/davinci-seed-verify.yml as a new "Run play-loop regression
-      suite" step so it runs nightly/on workflow_dispatch against the same scratch DB the seed
-      importer already populates. eslint, prettier --check, and full-project vue-tsc --noEmit
-      (0 errors) all clean locally; the new CI step itself needs a live scratch MariaDB (not
-      available in this sandbox) so its first real run is the next nightly/dispatched Da Vinci
-      Seed Verify workflow -- flag t-011a if that run surfaces a failure. kind_robots PR #516
-      (branch claude/keen-fermat-bn9vk5): TypeScript, Contract verifiers, facet-alias-smoke, and
-      GitGuardian all green; merged squash 9e2579b8.
+    DONE 2026-07-19 (conductor-burst rotation, claude-conductor-burst-20260719-rotation-davinci):
+    resolveLifeRunEnding (server/utils/davinci.ts) now short-circuits on an already-COMPLETE
+    run via a new resolveCompletedLifeRun helper -- reads the stored outcomeKey/ending/award
+    ids back instead of recomputing stats and re-running the award transaction, so a repeat
+    resolve call is a read, not a wasted write. Added utils/scripts/verifyDaVinciPlayLoop.ts,
+    a headless tsx driver exercising create-run -> record-choice -> resolve -> re-resolve ->
+    choice-rejected-on-COMPLETE directly against server/utils/davinci.ts (no dev server/auth),
+    wired into .github/workflows/davinci-seed-verify.yml as a new "Run play-loop regression
+    suite" step so it runs nightly/on workflow_dispatch against the same scratch DB the seed
+    importer already populates. eslint, prettier --check, and full-project vue-tsc --noEmit
+    (0 errors) all clean locally; the new CI step itself needs a live scratch MariaDB (not
+    available in this sandbox) so its first real run is the next nightly/dispatched Da Vinci
+    Seed Verify workflow -- flag t-011a if that run surfaces a failure. kind_robots PR #516
+    (branch claude/keen-fermat-bn9vk5): TypeScript, Contract verifiers, facet-alias-smoke, and
+    GitGuardian all green; merged squash 9e2579b8.
 
-  - id: t-012
-    milestone: m2
-    title: "Nightly CI job running the Da Vinci generator + seed verifier end-to-end"
-    status: done
-    owner: reviewer
-    updated: '2026-07-05T07:40:00-07:00'
-    passes: 0
-    stakes: reversible
-    depends_on: t-010
-    note: >
-      Done in kind_robots PR #94 (Silas-directed session work). Hosting decision:
-      kind_robots owns the workflow (.github/workflows/davinci-seed-verify.yml)
-      since it has the schema, npm scripts, and Prisma tooling; conductor's
-      generator arrives via public checkout. Nightly 09:17 UTC + workflow_dispatch,
-      MariaDB 11 service container, prisma db push, then seed:davinci:verify.
-      Verified live: dispatched run #1 on main completed green in ~2 minutes.
+- id: t-012
+  milestone: m2
+  title: "Nightly CI job running the Da Vinci generator + seed verifier end-to-end"
+  status: done
+  owner: reviewer
+  updated: '2026-07-05T07:40:00-07:00'
+  passes: 0
+  stakes: reversible
+  depends_on: t-010
+  note: >
+    Done in kind_robots PR #94 (Silas-directed session work). Hosting decision:
+    kind_robots owns the workflow (.github/workflows/davinci-seed-verify.yml)
+    since it has the schema, npm scripts, and Prisma tooling; conductor's
+    generator arrives via public checkout. Nightly 09:17 UTC + workflow_dispatch,
+    MariaDB 11 service container, prisma db push, then seed:davinci:verify.
+    Verified live: dispatched run #1 on main completed green in ~2 minutes.
 
-  - id: t-013
-    milestone: m2
-    title: "Build minimal Da Vinci play-loop API (create run, record choice, update stats)"
-    status: done
-    owner: reviewer
-    updated: '2026-07-06T01:30:00-07:00'
-    passes: 0
-    stakes: reversible
-    depends_on: t-009
-    note: >
-      Done in kind_robots PR #103 (Silas-directed session work). server/utils/davinci.ts
-      gains createLifeRun, recordLifeChoice, getLifeRunForUser; handlers:
-      POST /api/davinci/runs, GET /api/davinci/runs/:id, POST /api/davinci/runs/:id/choices.
-      recordLifeChoice applies stat effects atomically (LifeStat upsert-increment in a
-      transaction), stores effects on the LifeChoice, advances currentChapter, and rejects
-      choices on non-ACTIVE runs (409). Completes the m2 run/choice half; composes with the
-      t-009 resolver (outcomeKey from accumulated play-loop stats matches resolve). AI
-      narration out of scope; stays inside Life* models per the Storybook boundary doc.
-      Verified: 28 helper assertions + live HTTP matrix (201/200/401/400/404/409) against
-      the seeded MariaDB; vue-tsc + lint clean. Docs: docs/notes/davinci-play-loop-api.md.
+- id: t-013
+  milestone: m2
+  title: "Build minimal Da Vinci play-loop API (create run, record choice, update stats)"
+  status: done
+  owner: reviewer
+  updated: '2026-07-06T01:30:00-07:00'
+  passes: 0
+  stakes: reversible
+  depends_on: t-009
+  note: >
+    Done in kind_robots PR #103 (Silas-directed session work). server/utils/davinci.ts
+    gains createLifeRun, recordLifeChoice, getLifeRunForUser; handlers:
+    POST /api/davinci/runs, GET /api/davinci/runs/:id, POST /api/davinci/runs/:id/choices.
+    recordLifeChoice applies stat effects atomically (LifeStat upsert-increment in a
+    transaction), stores effects on the LifeChoice, advances currentChapter, and rejects
+    choices on non-ACTIVE runs (409). Completes the m2 run/choice half; composes with the
+    t-009 resolver (outcomeKey from accumulated play-loop stats matches resolve). AI
+    narration out of scope; stays inside Life* models per the Storybook boundary doc.
+    Verified: 28 helper assertions + live HTTP matrix (201/200/401/400/404/409) against
+    the seeded MariaDB; vue-tsc + lint clean. Docs: docs/notes/davinci-play-loop-api.md.
 
-  - id: t-014
-    milestone: m4
-    title: "Polish and upgrade Da Vinci front-end surface"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: >
-      UI polish + upgrade for the davinci front end now that the scaffold page is live at /davinci. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/wonder/davinci.webp and tutorial art at public/images/tutorials/wonder/davinci.webp; (2) add a matching section for 'davinci' under tutorialChannels.wonder.sections in kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl points at /davinci (admin can run the Conductor 'Placements' button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full interactive experience for this project.
+- id: t-014
+  milestone: m4
+  title: "Polish and upgrade Da Vinci front-end surface"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >
+    UI polish + upgrade for the davinci front end now that the scaffold page is live at /davinci. Steps: (1) generate final
+    dashboard-tab art at public/images/dashboard-tabs/wonder/davinci.webp and tutorial art at public/images/tutorials/wonder/davinci.webp;
+    (2) add a matching section for 'davinci' under tutorialChannels.wonder.sections in kind_robots/stores/helpers/tutorialCards.ts;
+    (3) verify the PROJECT Dream liveUrl points at /davinci (admin can run the Conductor 'Placements' button to backfill channelKey/tabKey/liveUrl);
+    (4) evolve the placeholder scaffold page into the full interactive experience for this project.
 
-      PROGRESS 2026-07-20 (conductor agent session claude-conductor-agent-20260720T-run1, kind_robots PR #645): step (2) confirmed already done -- a 'davinci' section already exists under tutorialChannels.wonder.sections in stores/helpers/tutorialCards.ts, no action needed. Step (4) advanced within polish-pass scope rather than built in full: added a #interactive slot to davinci-page.vue that fetches achievements client-side and lists the seeded davinci-ending-* achievements (title + live count), mirroring the storybook-page.vue pattern of wiring live store data into the front page. A full playable run UI is NOT built -- the play-loop API (POST /api/davinci/runs, choices, resolve) exists server-side but there is no AI-narration layer yet to generate actual chapter content, so a playable UI would have nothing real to show; same judgment call storybook/t-010 made. Filed a kaizen suggestion (in the PR body) to spec that narration layer next. Remaining and kept ready: step (1) dashboard-tab + hero art (already queued in art-prompts.yaml as kind-robots-davinci-image-* / conductor-davinci-hero-*, blocked on the art-generation relay -- confirmed still down this session via the same relay-status pattern serendipity/t-012 and storybook/t-010 found today) and step (3) the liveUrl/channelKey/tabKey backfill (confirmed still null via GET /api/projects, needs an admin Placements click). Verified before opening the PR: npm run test (vue-tsc --noEmit) exit 0, eslint clean, prettier clean. Full CI check status pending on kind_robots PR #645.
+    PROGRESS 2026-07-20 (conductor agent session claude-conductor-agent-20260720T-run1, kind_robots PR #645): step (2) confirmed
+    already done -- a 'davinci' section already exists under tutorialChannels.wonder.sections in stores/helpers/tutorialCards.ts,
+    no action needed. Step (4) advanced within polish-pass scope rather than built in full: added a #interactive slot to davinci-page.vue
+    that fetches achievements client-side and lists the seeded davinci-ending-* achievements (title + live count), mirroring
+    the storybook-page.vue pattern of wiring live store data into the front page. A full playable run UI is NOT built -- the
+    play-loop API (POST /api/davinci/runs, choices, resolve) exists server-side but there is no AI-narration layer yet to
+    generate actual chapter content, so a playable UI would have nothing real to show; same judgment call storybook/t-010
+    made. Filed a kaizen suggestion (in the PR body) to spec that narration layer next. Remaining and kept ready: step (1)
+    dashboard-tab + hero art (already queued in art-prompts.yaml as kind-robots-davinci-image-* / conductor-davinci-hero-*,
+    blocked on the art-generation relay -- confirmed still down this session via the same relay-status pattern serendipity/t-012
+    and storybook/t-010 found today) and step (3) the liveUrl/channelKey/tabKey backfill (confirmed still null via GET /api/projects,
+    needs an admin Placements click). Verified before opening the PR: npm run test (vue-tsc --noEmit) exit 0, eslint clean,
+    prettier clean. Full CI check status pending on kind_robots PR #645.
 
-      PROGRESS 2026-07-21 (conductor agent session claude-conductor-agentrun-20260721T2000Z-davinci-t014): step (4) built for real this cycle, closing the gap the 2026-07-20 cycle deliberately left open. Rather than wait on the still-unspecced AI-narration layer, built a self-contained playable life-run UI against the existing play-loop API (POST /api/davinci/runs, POST .../choices, POST .../resolve, GET .../:id) using a curated 8-chapter pool of narrative scenes/choices (one per design-brief.md narrative device: temptation, sacrifice, mentor encounter, dream gate, false victory, return, inheritance, collapse), each choice posting real effects to the server's LifeStat model -- the app still owns all durable state and outcome math, per the design brief's boundary rule; the curated content is flavor, not a second source of truth. Covers: start-a-life form (protagonist name/genre), a live 10-dimension pass/fail stat grid, chapter-by-chapter choice UI, resolve-to-ending screen (title/summary/victory badge, achievement-awarded note), resume-in-progress-run via localStorage + GET, and a logged-out gate. This is a genuinely playable first slice per design-brief.md's 'First build slice' section, not the full AI-narrated experience -- narration-layer work (spec already done, davinci/t-015) remains a separate future upgrade that can swap the curated pool for generated content without changing the state/API contract. Verified: npm run test (vue-tsc --noEmit) exit 0, eslint clean, prettier --check clean (after --write). Remaining and kept ready: step (1) dashboard-tab + hero art still blocked on the art-generation relay (not rechecked this cycle -- no new signal expected since every other session today found it still down) and step (3) the liveUrl/channelKey/tabKey admin Placements backfill. kind_robots PR pending open this cycle.
-    claimed_by: claude-conductor-agentrun-20260721T2000Z-davinci-t014
-    claimed_at: '2026-07-21T20:13:36Z'
-    updated: '2026-07-21T20:34:23Z'
+    PROGRESS 2026-07-21 (conductor agent session claude-conductor-agentrun-20260721T2000Z-davinci-t014): step (4) built for
+    real this cycle, closing the gap the 2026-07-20 cycle deliberately left open. Rather than wait on the still-unspecced
+    AI-narration layer, built a self-contained playable life-run UI against the existing play-loop API (POST /api/davinci/runs,
+    POST .../choices, POST .../resolve, GET .../:id) using a curated 8-chapter pool of narrative scenes/choices (one per design-brief.md
+    narrative device: temptation, sacrifice, mentor encounter, dream gate, false victory, return, inheritance, collapse),
+    each choice posting real effects to the server's LifeStat model -- the app still owns all durable state and outcome math,
+    per the design brief's boundary rule; the curated content is flavor, not a second source of truth. Covers: start-a-life
+    form (protagonist name/genre), a live 10-dimension pass/fail stat grid, chapter-by-chapter choice UI, resolve-to-ending
+    screen (title/summary/victory badge, achievement-awarded note), resume-in-progress-run via localStorage + GET, and a logged-out
+    gate. This is a genuinely playable first slice per design-brief.md's 'First build slice' section, not the full AI-narrated
+    experience -- narration-layer work (spec already done, davinci/t-015) remains a separate future upgrade that can swap
+    the curated pool for generated content without changing the state/API contract. Verified: npm run test (vue-tsc --noEmit)
+    exit 0, eslint clean, prettier --check clean (after --write). Remaining and kept ready: step (1) dashboard-tab + hero
+    art still blocked on the art-generation relay (not rechecked this cycle -- no new signal expected since every other session
+    today found it still down) and step (3) the liveUrl/channelKey/tabKey admin Placements backfill. kind_robots PR pending
+    open this cycle.
+  claimed_by: claude-conductor-agentrun-20260721T2000Z-davinci-t014
+  claimed_at: '2026-07-21T20:13:36Z'
+  updated: '2026-07-21T20:34:23Z'
 
-  - id: t-015
-    milestone: m2
-    title: "Spec the AI-narration layer that generates Da Vinci chapter prompts/choices"
-    status: done
-    owner: worker
-    passes: 1
-    stakes: reversible
-    note: >
-      Kaizen from t-014 (kind_robots PR #645). The play-loop API
-      (POST /api/davinci/runs, GET /api/davinci/runs/:id,
-      POST /api/davinci/runs/:id/choices, POST /api/davinci/runs/:id/resolve) and
-      the ending/achievement seed (davinci-ending-* triggerCodes) are both built
-      and live, but nothing yet generates the actual chapter prose, choice text,
-      or effect deltas a player would see -- docs/notes/davinci-play-loop-api.md
-      explicitly scopes narration as "a separate layer that calls these; it never
-      owns state" and defers it. Write the design brief for that layer: what
-      calls into the play-loop endpoints (a Chat-backed narrator? a bot?), how it
-      derives `effects` deltas per choice from the DAVINCI_DIMENSIONS stat model,
-      how many choices/chapter and how resolution timing works, and how it reuses
-      or diverges from Storybook's narrator pattern (see
-      projects/davinci/docs/storybook-boundary-comparison.md). This is the
-      actual blocker between the existing backend and a real playable run UI --
-      not front-end polish (see t-014's note for why a UI build was deferred
-      instead of attempted this cycle).
+- id: t-015
+  milestone: m2
+  title: "Spec the AI-narration layer that generates Da Vinci chapter prompts/choices"
+  status: done
+  owner: worker
+  passes: 1
+  stakes: reversible
+  note: >
+    Kaizen from t-014 (kind_robots PR #645). The play-loop API
+    (POST /api/davinci/runs, GET /api/davinci/runs/:id,
+    POST /api/davinci/runs/:id/choices, POST /api/davinci/runs/:id/resolve) and
+    the ending/achievement seed (davinci-ending-* triggerCodes) are both built
+    and live, but nothing yet generates the actual chapter prose, choice text,
+    or effect deltas a player would see -- docs/notes/davinci-play-loop-api.md
+    explicitly scopes narration as "a separate layer that calls these; it never
+    owns state" and defers it. Write the design brief for that layer: what
+    calls into the play-loop endpoints (a Chat-backed narrator? a bot?), how it
+    derives `effects` deltas per choice from the DAVINCI_DIMENSIONS stat model,
+    how many choices/chapter and how resolution timing works, and how it reuses
+    or diverges from Storybook's narrator pattern (see
+    projects/davinci/docs/storybook-boundary-comparison.md). This is the
+    actual blocker between the existing backend and a real playable run UI --
+    not front-end polish (see t-014's note for why a UI build was deferred
+    instead of attempted this cycle).
 
-      PROGRESS 2026-07-20 (conductor burst session, docs-only, conductor repo):
-      wrote projects/davinci/docs/narration-layer-spec.md. Narrator selection
-      reuses the existing GET /api/narrators/[type]/[slug] route via LifeRun's
-      existing botId/characterId links (no new lookup subsystem). Contract:
-      a new server/utils/davinciNarration.ts + POST /api/davinci/runs/:id/narrate
-      route that only *proposes* DaVinciNarrationResult (narrativeText, 2-4
-      choices with DAVINCI_DIMENSIONS-keyed effect deltas clamped to [-2,2],
-      optional artPrompt, display-only milestoneCandidate) -- the client still
-      calls the existing /choices and /resolve endpoints separately, so no new
-      state ownership is introduced. Validation follows the existing
-      requestOpenAiReview/validateGeneratedPayload pattern already live in
-      server/utils/wonderLabReviewDraftGenerator.ts (json_schema strict mode +
-      server-side re-validation + one retry) rather than inventing a new
-      contract style. Freeform text input explicitly deferred past the first
-      build slice to keep the validation surface to a small choice enum.
-      Cross-referenced storybook-boundary-comparison.md and shaped the request
-      contract to stay extraction-ready (plain values, no LifeRun-specific
-      fields) without extracting anything now, per that doc's "revisit after
-      both MVPs" rule. One open question flagged for Silas in the doc: the
-      [-2,2] effect clamp and the chapter>=3 end-run gate are both design
-      defaults to revisit after the first slice sees real playtesting, not
-      values pulled from an existing spec. This unblocks a follow-up build
-      task for the actual narrate endpoint + minimal run-screen UI (not filed
-      yet -- left for Silas/next cycle to scope as its own task rather than
-      bundling a large implementation into this spec-only pass).
+    PROGRESS 2026-07-20 (conductor burst session, docs-only, conductor repo):
+    wrote projects/davinci/docs/narration-layer-spec.md. Narrator selection
+    reuses the existing GET /api/narrators/[type]/[slug] route via LifeRun's
+    existing botId/characterId links (no new lookup subsystem). Contract:
+    a new server/utils/davinciNarration.ts + POST /api/davinci/runs/:id/narrate
+    route that only *proposes* DaVinciNarrationResult (narrativeText, 2-4
+    choices with DAVINCI_DIMENSIONS-keyed effect deltas clamped to [-2,2],
+    optional artPrompt, display-only milestoneCandidate) -- the client still
+    calls the existing /choices and /resolve endpoints separately, so no new
+    state ownership is introduced. Validation follows the existing
+    requestOpenAiReview/validateGeneratedPayload pattern already live in
+    server/utils/wonderLabReviewDraftGenerator.ts (json_schema strict mode +
+    server-side re-validation + one retry) rather than inventing a new
+    contract style. Freeform text input explicitly deferred past the first
+    build slice to keep the validation surface to a small choice enum.
+    Cross-referenced storybook-boundary-comparison.md and shaped the request
+    contract to stay extraction-ready (plain values, no LifeRun-specific
+    fields) without extracting anything now, per that doc's "revisit after
+    both MVPs" rule. One open question flagged for Silas in the doc: the
+    [-2,2] effect clamp and the chapter>=3 end-run gate are both design
+    defaults to revisit after the first slice sees real playtesting, not
+    values pulled from an existing spec. This unblocks a follow-up build
+    task for the actual narrate endpoint + minimal run-screen UI (not filed
+    yet -- left for Silas/next cycle to scope as its own task rather than
+    bundling a large implementation into this spec-only pass).
 
-  - id: t-016
-    milestone: m2
-    title: "Build the Da Vinci AI-narration layer (narrate endpoint + run-screen wiring)"
-    status: done
-    owner: worker
-    updated: '2026-07-31T20:10:00Z'
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-013
-      - t-015
-    note: >
-      The build task t-015 specced but deliberately left unfiled. t-013 landed the
-      play loop (create run / record choice / resolve) and t-008 seeded all 1024
-      endings, but nothing generated the chapter prose, choice text, or effect
-      deltas a player actually reads -- the project was flipped `finished` on
-      2026-07-26 with that gap still open.
+- id: t-016
+  milestone: m2
+  title: "Build the Da Vinci AI-narration layer (narrate endpoint + run-screen wiring)"
+  status: done
+  owner: worker
+  updated: '2026-07-31T20:10:00Z'
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-013
+  - t-015
+  note: >
+    The build task t-015 specced but deliberately left unfiled. t-013 landed the
+    play loop (create run / record choice / resolve) and t-008 seeded all 1024
+    endings, but nothing generated the chapter prose, choice text, or effect
+    deltas a player actually reads -- the project was flipped `finished` on
+    2026-07-26 with that gap still open.
 
-      DONE 2026-07-31 (Silas-directed session claude/conductor-davinci-sync-0kyzzf,
-      kind_robots commit fa7db9c). Implements projects/davinci/docs/narration-layer-spec.md
-      as written:
+    DONE 2026-07-31 (Silas-directed session claude/conductor-davinci-sync-0kyzzf,
+    kind_robots commit fa7db9c). Implements projects/davinci/docs/narration-layer-spec.md
+    as written:
 
-      (1) server/utils/davinciNarration.ts -- strict json_schema request against the
-      requestOpenAiReview/validateGeneratedPayload pattern already live in
-      wonderLabReviewDraftGenerator.ts, AbortController with a 20s budget (tighter
-      than WonderLab's 30s because the player is waiting on this call, per the
-      spec), one retry on a parse/validation failure, then a visible error rather
-      than a synthetic chapter. validateNarrationPayload enforces every app-owned
-      bound the model could violate: the DAVINCI_DIMENSIONS allowlist (an invented
-      eleventh stat is rejected, not passed through -- recordLifeChoice accepts
-      arbitrary stat keys by design, so this is the only thing standing between
-      narrator output and a junk LifeStat row), the [-2,2] per-choice clamp, the
-      2-4 choice band, and prose word bounds. Deviation from the spec worth noting:
-      the effects map is expressed as all ten dimensions typed nullable-integer and
-      all required, rather than as optional keys -- OpenAI strict mode forbids
-      optional properties, and nulls are dropped during validation, which preserves
-      the spec's "an option can be flavor with zero mechanical effect" rule. Range
-      and item-count bounds are enforced server-side rather than via
-      minimum/maximum/minItems/maxItems, whose strict-mode support is uneven.
+    (1) server/utils/davinciNarration.ts -- strict json_schema request against the
+    requestOpenAiReview/validateGeneratedPayload pattern already live in
+    wonderLabReviewDraftGenerator.ts, AbortController with a 20s budget (tighter
+    than WonderLab's 30s because the player is waiting on this call, per the
+    spec), one retry on a parse/validation failure, then a visible error rather
+    than a synthetic chapter. validateNarrationPayload enforces every app-owned
+    bound the model could violate: the DAVINCI_DIMENSIONS allowlist (an invented
+    eleventh stat is rejected, not passed through -- recordLifeChoice accepts
+    arbitrary stat keys by design, so this is the only thing standing between
+    narrator output and a junk LifeStat row), the [-2,2] per-choice clamp, the
+    2-4 choice band, and prose word bounds. Deviation from the spec worth noting:
+    the effects map is expressed as all ten dimensions typed nullable-integer and
+    all required, rather than as optional keys -- OpenAI strict mode forbids
+    optional properties, and nulls are dropped during validation, which preserves
+    the spec's "an option can be flavor with zero mechanical effect" rule. Range
+    and item-count bounds are enforced server-side rather than via
+    minimum/maximum/minItems/maxItems, whose strict-mode support is uneven.
 
-      (2) POST /api/davinci/runs/:id/narrate -- a thin route that writes nothing.
-      Owner-only, 409 on a non-ACTIVE run (matching the choices guard). The client
-      still posts the chosen option's validated effects to /choices as a separate
-      step, so LifeChoice/LifeStat writes and all outcome math stay in
-      server/utils/davinci.ts. Narrator selection is the spec's two-branch
-      botId -> characterId -> default-bot-433 lookup, read from prisma directly
-      instead of via a self-HTTP hop to /api/narrators/[type]/[slug]; same columns,
-      same normalized shape.
+    (2) POST /api/davinci/runs/:id/narrate -- a thin route that writes nothing.
+    Owner-only, 409 on a non-ACTIVE run (matching the choices guard). The client
+    still posts the chosen option's validated effects to /choices as a separate
+    step, so LifeChoice/LifeStat writes and all outcome math stay in
+    server/utils/davinci.ts. Narrator selection is the spec's two-branch
+    botId -> characterId -> default-bot-433 lookup, read from prisma directly
+    instead of via a self-HTTP hop to /api/narrators/[type]/[slug]; same columns,
+    same normalized shape.
 
-      (3) components/conductor/davinci-page.vue plays narrated chapters, with the
-      end-the-run action gated on chapter >= 3 per the spec. The curated 8-chapter
-      pool from t-014 is kept but is no longer the default -- it is offered as an
-      explicit, labelled choice after a narration failure, so a player always knows
-      which mode they are in.
+    (3) components/conductor/davinci-page.vue plays narrated chapters, with the
+    end-the-run action gated on chapter >= 3 per the spec. The curated 8-chapter
+    pool from t-014 is kept but is no longer the default -- it is offered as an
+    explicit, labelled choice after a narration failure, so a player always knows
+    which mode they are in.
 
-      Verified: vue-tsc --noEmit 0 errors, eslint clean on every changed file, and a
-      new 35-check contract suite (npm run test:davinci-narration, wired into
-      .github/workflows/contract-tests.yml) covering the dimension allowlist, the
-      clamp, the choice band, null/zero-delta dropping, schema strict-mode shape,
-      and request assembly. No live model call was made from this sandbox, so the
-      first real end-to-end narration happens on the preview deploy -- the failure
-      path is a visible retry, not a broken run, so this is safe to land unproven.
+    Verified: vue-tsc --noEmit 0 errors, eslint clean on every changed file, and a
+    new 35-check contract suite (npm run test:davinci-narration, wired into
+    .github/workflows/contract-tests.yml) covering the dimension allowlist, the
+    clamp, the choice band, null/zero-delta dropping, schema strict-mode shape,
+    and request assembly. No live model call was made from this sandbox, so the
+    first real end-to-end narration happens on the preview deploy -- the failure
+    path is a visible retry, not a broken run, so this is safe to land unproven.
 
-      Explicitly still deferred (unchanged from the spec): freeform choice input,
-      the milestoneCandidate "heading toward..." UI treatment beyond the small hint
-      line, LifeRunArt generation from artPrompt (the narrator proposes the string;
-      nothing consumes it yet), and the shared Storybook narration utility.
+    Explicitly still deferred (unchanged from the spec): freeform choice input,
+    the milestoneCandidate "heading toward..." UI treatment beyond the small hint
+    line, LifeRunArt generation from artPrompt (the narrator proposes the string;
+    nothing consumes it yet), and the shared Storybook narration utility.
 
-  - id: t-017
-    milestone: m5
-    title: "Audit and playtest Da Vinci end-to-end on phone, tablet, and desktop"
-    status: done
-    owner: null
-    passes: 0
-    stakes: reversible
-    note: >
-      DONE (conductor scheduled sweep, 2026-08-10). Verified /play/davinci renders correctly
-      via web_fetch_vercel_url against production (full SSR markup, no runtime errors --
-      Vercel get_runtime_errors clean over the last 7d) and read davinci-page.vue end to end
-      against the full play-loop state machine (start -> playing -> narrating/curated ->
-      ending, including the localStorage resume path). Dispatched
-      responsive-layout-audit.yml (workflow_dispatch, routes=/play/davinci) twice for real
-      cross-width geometry via headless Chromium against the production deployment (this
-      sandbox's own Chromium cannot reach any HTTPS host through the proxy, a pre-existing
-      documented limitation) -- both runs (31419377489, 31419543071) sat queued/pending
-      behind the shared responsive-layout-audit-database concurrency group without
-      completing in this session's window (consistent with several other recent manual
-      dispatches in this repo's run history also cancelling/failing under the same
-      contention, not something specific to this dispatch). No rendered-geometry defect is
-      confirmed either way -- if the next cycle has spare capacity, check run 31419543071's
-      outcome or re-dispatch and inspect the screenshot artifacts.
-      Two concrete findings from the code-level audit, converted to scoped follow-up tasks
-      per this task's own instruction rather than blocking closure on them: t-023 (no
-      in-progress-run exit control) and t-024 (narration effect-bound tuning, explicitly
-      flagged as deferred-to-playtesting in the source itself). No hidden/unreachable
-      controls or broken transitions found beyond those two; the empty/decorative-region and
-      "only 3 recent endings shown" concerns considered and set aside -- the endings list is
-      already accurate (achievementStore's catalog, not a placeholder count) and a full
-      gallery is already tracked as the separate "next" deliverable this project's own config
-      lists, not a defect of this run.
+- id: t-017
+  milestone: m5
+  title: "Audit and playtest Da Vinci end-to-end on phone, tablet, and desktop"
+  status: done
+  owner:
+  passes: 0
+  stakes: reversible
+  note: >
+    DONE (conductor scheduled sweep, 2026-08-10). Verified /play/davinci renders correctly
+    via web_fetch_vercel_url against production (full SSR markup, no runtime errors --
+    Vercel get_runtime_errors clean over the last 7d) and read davinci-page.vue end to end
+    against the full play-loop state machine (start -> playing -> narrating/curated ->
+    ending, including the localStorage resume path). Dispatched
+    responsive-layout-audit.yml (workflow_dispatch, routes=/play/davinci) twice for real
+    cross-width geometry via headless Chromium against the production deployment (this
+    sandbox's own Chromium cannot reach any HTTPS host through the proxy, a pre-existing
+    documented limitation) -- both runs (31419377489, 31419543071) sat queued/pending
+    behind the shared responsive-layout-audit-database concurrency group without
+    completing in this session's window (consistent with several other recent manual
+    dispatches in this repo's run history also cancelling/failing under the same
+    contention, not something specific to this dispatch). No rendered-geometry defect is
+    confirmed either way -- if the next cycle has spare capacity, check run 31419543071's
+    outcome or re-dispatch and inspect the screenshot artifacts.
+    Two concrete findings from the code-level audit, converted to scoped follow-up tasks
+    per this task's own instruction rather than blocking closure on them: t-023 (no
+    in-progress-run exit control) and t-024 (narration effect-bound tuning, explicitly
+    flagged as deferred-to-playtesting in the source itself). No hidden/unreachable
+    controls or broken transitions found beyond those two; the empty/decorative-region and
+    "only 3 recent endings shown" concerns considered and set aside -- the endings list is
+    already accurate (achievementStore's catalog, not a placeholder count) and a full
+    gallery is already tracked as the separate "next" deliverable this project's own config
+    lists, not a defect of this run.
 
-  - id: t-018
-    milestone: m6
-    title: "Audit actual art coverage for all 1,024 Da Vinci endings"
-    status: needs-human
-    owner: null
-    passes: 0
-    stakes: reversible
-    note: 'kind_robots PR #1836 merged (852f02e5, all 19 checks green): new admin-only GET /api/davinci/endings/coverage endpoint. Classifies every LifeEnding''s icon/hero art as resolved (real ArtImage row), queued (path-string only -- per seedDaVinciEndings.ts/docs/notes/davinci-ending-seed.md the importer never sets the ArtImage id fields), or missing; cross-checks dangling ArtImage refs; reports seeded-vs-expected (1024) count; inventories contextual LifeRunArt (by sceneType, runs with/without art). vue-tsc/eslint/prettier clean before merge. BLOCKED on gathering the actual counts: kind_robots production (kindrobots.org) is self-hosted on Unraid and only updates via a manual Force Update in the Unraid UI (docs/runbooks/migration-credential-boundary.md) -- there is no auto-deploy-on-merge. Confirmed the endpoint is not yet live: GET /api/davinci/endings/coverage with a valid KR_API_TOKEN currently returns the SPA shell (route not found in the running build), not JSON. FOR SILAS: next Force Update on Alexandria will pick up this endpoint; once live, a future session (or Silas directly) can call it and record the real icon/hero/contextual-art counts here. TO APPROVE: no decision needed -- this is a deploy-timing gate, not a judgment call; the task will self-resolve once the endpoint answers with real data. set status: ready (or done, if you or a future session records the counts directly) once verified live.'
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-13T02:44:06Z'
-    implementation_pr: 'silasfelinus/kind_robots#1836'
-    soft_gate: true
+- id: t-018
+  milestone: m6
+  title: "Audit actual art coverage for all 1,024 Da Vinci endings"
+  status: needs-human
+  owner:
+  passes: 0
+  stakes: reversible
+  note: 'kind_robots PR #1836 merged (852f02e5, all 19 checks green): new admin-only GET /api/davinci/endings/coverage endpoint.
+    Classifies every LifeEnding''s icon/hero art as resolved (real ArtImage row), queued (path-string only -- per seedDaVinciEndings.ts/docs/notes/davinci-ending-seed.md
+    the importer never sets the ArtImage id fields), or missing; cross-checks dangling ArtImage refs; reports seeded-vs-expected
+    (1024) count; inventories contextual LifeRunArt (by sceneType, runs with/without art). vue-tsc/eslint/prettier clean before
+    merge. BLOCKED on gathering the actual counts: kind_robots production (kindrobots.org) is self-hosted on Unraid and only
+    updates via a manual Force Update in the Unraid UI (docs/runbooks/migration-credential-boundary.md) -- there is no auto-deploy-on-merge.
+    Confirmed the endpoint is not yet live: GET /api/davinci/endings/coverage with a valid KR_API_TOKEN currently returns
+    the SPA shell (route not found in the running build), not JSON. FOR SILAS: next Force Update on Alexandria will pick up
+    this endpoint; once live, a future session (or Silas directly) can call it and record the real icon/hero/contextual-art
+    counts here. TO APPROVE: no decision needed -- this is a deploy-timing gate, not a judgment call; the task will self-resolve
+    once the endpoint answers with real data. set status: ready (or done, if you or a future session records the counts directly)
+    once verified live.'
+  claimed_by:
+  claimed_at:
+  updated: '2026-08-13T02:44:06Z'
+  implementation_pr: 'silasfelinus/kind_robots#1836'
+  soft_gate: true
 
-  - id: t-019
-    milestone: m6
-    title: "Generate, distribute, and verify every missing Da Vinci ending asset"
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on: t-018
-    note: >
-      Consume t-018's exact missing list in bounded idempotent batches through the existing
-      ArtJob pipeline. Do not create duplicate jobs for already-rendered or already-queued
-      endings. Close only when all 1,024 endings have the required delivered art and the
-      verifier reports zero gaps.
+- id: t-019
+  milestone: m6
+  title: "Generate, distribute, and verify every missing Da Vinci ending asset"
+  status: waiting
+  owner:
+  passes: 0
+  stakes: reversible
+  depends_on: t-018
+  note: >
+    Consume t-018's exact missing list in bounded idempotent batches through the existing
+    ArtJob pipeline. Do not create duplicate jobs for already-rendered or already-queued
+    endings. Close only when all 1,024 endings have the required delivered art and the
+    verifier reports zero gaps.
 
-  - id: t-020
-    milestone: m6
-    title: "Integrate contextual art throughout the playable Da Vinci run"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-017
-    note: 'DONE 2026-08-13 (session 20260813T0335Z-davinci-t020-r7k2). Built the first real in-run art treatment by reusing the shared narrative-art request pipeline Storybook/Taskmaster already use (server/api/art/enqueue.post.ts narrativeContext, stores/helpers/narrativeArtJobsHelper.ts, NarrativeArtStatus) rather than inventing a parallel store -- confirmed LifeRunArt had zero prior server/component call sites via grep before starting. Added a davinci NarrativeProduct + profile (utils/narrativeArtProfiles.ts, krea2, interactive priority 100 -- does NOT touch the reserved priority-200 dream-cycle tier) and extended the storybook/taskmaster product allowlists in enqueue.post.ts, queue/narrative.get.ts, and artStore.ts to include davinci. server/utils/davinci.ts gained attachLifeRunArt() (idempotent per lifeRunId+chapter+sceneType, since the table has no unique constraint on that triple) and getLifeRunForUser() now includes Art so a resumed run redisplays already-attached art without a second round trip; new owner-gated POST /api/davinci/runs/:id/art wraps it. components/conductor/davinci-page.vue requests art through the shared controller keyed directly off the narrators own per-chapter artPrompt cadence -- sceneType THRESHOLD for each narrated chapter transition, sceneType ENDING for a personalized illustration of this runs specific outcome (distinct from the shared per-outcomeKey ending art the seed importer already seeds onto Milestone/LifeEnding), with a synthesized fallback prompt when no chapter proposed one. Renders via the existing NarrativeArtStatus component for pending/queued/rendering/failed/done states so reading and choosing never block on art generation. No schema migration -- LifeRunArt already had every field needed. Verified: npx vue-tsc --noEmit (full project) 0 errors; eslint clean on every changed/added file (pre-existing unrelated errors on davinci.ts:14 and artStore.ts confirmed via git stash to predate this change); prettier --check clean except confirmed pre-existing drift (git-stash-verified) in narrative.get.ts/artStore.ts/narrativeArtProfiles.ts/davinci.ts, none in touched lines; npm run test:davinci-narration 35/35 unaffected. Live browser smoke test of the full queue-relay-resolve-attach-display flow deferred -- no reachable DATABASE_URL in this sandbox, the same standing limitation documented for every prior davinci/animation-manager/model-builder task. kind_robots PR #1837 merged squash (69296e3), all 23 CI checks green. t-021 (visual/interaction polish) is now unblocked.'
-    claimed_by: 20260813T0335Z-davinci-t020-r7k2
-    claimed_at: '2026-08-13T03:34:19Z'
-    updated: '2026-08-13T03:52:51Z'
-    implementation_pr: 'silasfelinus/kind_robots#1837'
+- id: t-020
+  milestone: m6
+  title: "Integrate contextual art throughout the playable Da Vinci run"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-017
+  note: 'DONE 2026-08-13 (session 20260813T0335Z-davinci-t020-r7k2). Built the first real in-run art treatment by reusing
+    the shared narrative-art request pipeline Storybook/Taskmaster already use (server/api/art/enqueue.post.ts narrativeContext,
+    stores/helpers/narrativeArtJobsHelper.ts, NarrativeArtStatus) rather than inventing a parallel store -- confirmed LifeRunArt
+    had zero prior server/component call sites via grep before starting. Added a davinci NarrativeProduct + profile (utils/narrativeArtProfiles.ts,
+    krea2, interactive priority 100 -- does NOT touch the reserved priority-200 dream-cycle tier) and extended the storybook/taskmaster
+    product allowlists in enqueue.post.ts, queue/narrative.get.ts, and artStore.ts to include davinci. server/utils/davinci.ts
+    gained attachLifeRunArt() (idempotent per lifeRunId+chapter+sceneType, since the table has no unique constraint on that
+    triple) and getLifeRunForUser() now includes Art so a resumed run redisplays already-attached art without a second round
+    trip; new owner-gated POST /api/davinci/runs/:id/art wraps it. components/conductor/davinci-page.vue requests art through
+    the shared controller keyed directly off the narrators own per-chapter artPrompt cadence -- sceneType THRESHOLD for each
+    narrated chapter transition, sceneType ENDING for a personalized illustration of this runs specific outcome (distinct
+    from the shared per-outcomeKey ending art the seed importer already seeds onto Milestone/LifeEnding), with a synthesized
+    fallback prompt when no chapter proposed one. Renders via the existing NarrativeArtStatus component for pending/queued/rendering/failed/done
+    states so reading and choosing never block on art generation. No schema migration -- LifeRunArt already had every field
+    needed. Verified: npx vue-tsc --noEmit (full project) 0 errors; eslint clean on every changed/added file (pre-existing
+    unrelated errors on davinci.ts:14 and artStore.ts confirmed via git stash to predate this change); prettier --check clean
+    except confirmed pre-existing drift (git-stash-verified) in narrative.get.ts/artStore.ts/narrativeArtProfiles.ts/davinci.ts,
+    none in touched lines; npm run test:davinci-narration 35/35 unaffected. Live browser smoke test of the full queue-relay-resolve-attach-display
+    flow deferred -- no reachable DATABASE_URL in this sandbox, the same standing limitation documented for every prior davinci/animation-manager/model-builder
+    task. kind_robots PR #1837 merged squash (69296e3), all 23 CI checks green. t-021 (visual/interaction polish) is now unblocked.'
+  claimed_by: 20260813T0335Z-davinci-t020-r7k2
+  claimed_at: '2026-08-13T03:34:19Z'
+  updated: '2026-08-13T03:52:51Z'
+  implementation_pr: 'silasfelinus/kind_robots#1837'
 
-  - id: t-021
-    milestone: m6
-    title: "Da Vinci visual style and interaction polish pass"
-    status: done
-    owner: reviewer
-    passes: 0
-    stakes: reversible
-    depends_on: [t-017, t-020]
-    implementation_pr: 'silasfelinus/kind_robots#2074'
-    note: 'Fixed a real, previously-untraced async-race gap: recordLifeChoice had no idempotency guard on (lifeRunId, chapter), so two open tabs on the same run (or a client retry after a dropped response) would each create a LifeChoice row and double-apply stat effects via the LifeStat increment upsert. Added a check-existing-choice-first guard inside the transaction, mirroring resolveCompletedLifeRun''s read-back-don''t-recompute idiom. Extended utils/scripts/verifyDaVinciPlayLoop.ts with a duplicate-submission regression case. Verified: vue-tsc --noEmit repo-wide exit 0, eslint/prettier clean on both changed files (one pre-existing unrelated eslint warning on davinci.ts confirmed present on main before this change, left untouched), exactly 2 files touched. Could not run the new live-DB test case itself in this sandbox (no live DATABASE_URL) -- flagged in the PR. Merged silasfelinus/kind_robots#2074 (squash 3794af9). Kaizen: audit production LifeChoice rows for existing (lifeRunId, chapter) duplicates, then land a DB-level @@unique([lifeRunId, chapter]) constraint to close the remaining sub-millisecond concurrent-transaction sliver the application-layer guard cannot.'
-    updated: '2026-08-24T20:41:12Z'
-    claimed_by: 20260824T202905-dv-t021-scheduled
-    claimed_at: '2026-08-24T20:29:06Z'
+- id: t-021
+  milestone: m6
+  title: "Da Vinci visual style and interaction polish pass"
+  status: done
+  owner: reviewer
+  passes: 0
+  stakes: reversible
+  depends_on: [t-017, t-020]
+  implementation_pr: 'silasfelinus/kind_robots#2074'
+  note: 'Fixed a real, previously-untraced async-race gap: recordLifeChoice had no idempotency guard on (lifeRunId, chapter),
+    so two open tabs on the same run (or a client retry after a dropped response) would each create a LifeChoice row and double-apply
+    stat effects via the LifeStat increment upsert. Added a check-existing-choice-first guard inside the transaction, mirroring
+    resolveCompletedLifeRun''s read-back-don''t-recompute idiom. Extended utils/scripts/verifyDaVinciPlayLoop.ts with a duplicate-submission
+    regression case. Verified: vue-tsc --noEmit repo-wide exit 0, eslint/prettier clean on both changed files (one pre-existing
+    unrelated eslint warning on davinci.ts confirmed present on main before this change, left untouched), exactly 2 files
+    touched. Could not run the new live-DB test case itself in this sandbox (no live DATABASE_URL) -- flagged in the PR. Merged
+    silasfelinus/kind_robots#2074 (squash 3794af9). Kaizen: audit production LifeChoice rows for existing (lifeRunId, chapter)
+    duplicates, then land a DB-level @@unique([lifeRunId, chapter]) constraint to close the remaining sub-millisecond concurrent-transaction
+    sliver the application-layer guard cannot.'
+  updated: '2026-08-24T20:41:12Z'
+  claimed_by: 20260824T202905-dv-t021-scheduled
+  claimed_at: '2026-08-24T20:29:06Z'
 
-  - id: t-022
-    milestone: m5
-    title: "FOR SILAS: visually accept the finished Da Vinci experience"
-    status: waiting
-    owner: silas
-    passes: 0
-    stakes: reversible
-    gate_human: true
-    approved_by_human: false
-    depends_on: [t-019, t-021]
-    note: >
-      FOR SILAS: after the automated playtest, 1,024-ending art audit/generation, and polish
-      tasks are complete, review a short phone/tablet/desktop screenshot set and play one run.
-      TO APPROVE: confirm the experience now feels finished, or leave concrete visual/gameplay
-      notes. This is the product-completion gate; 16/16 historical tasks was not one.
+- id: t-022
+  milestone: m5
+  title: "FOR SILAS: visually accept the finished Da Vinci experience"
+  status: waiting
+  owner: silas
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  approved_by_human: false
+  depends_on: [t-019, t-021]
+  note: >
+    FOR SILAS: after the automated playtest, 1,024-ending art audit/generation, and polish
+    tasks are complete, review a short phone/tablet/desktop screenshot set and play one run.
+    TO APPROVE: confirm the experience now feels finished, or leave concrete visual/gameplay
+    notes. This is the product-completion gate; 16/16 historical tasks was not one.
 
-  - id: t-023
-    milestone: m5
-    title: "Add an exit control for an in-progress Da Vinci life run"
-    status: done
-    owner: null
-    passes: 0
-    stakes: reversible
-    note: >
-      Kaizen from t-017's playtest audit (kind_robots components/conductor/davinci-page.vue). Once phase === 'playing', the only way out is finishing the run (reach the resolve screen, click "Live another life" -> playAgain()) -- there is no visible control to abandon an in-progress run and start a different one before MIN_CHAPTERS_BEFORE_ENDING (3 chapters). The only actual exit is manually clearing the davinci-active-life-run-id localStorage key, which is never exposed in the UI. Add a low-key "Abandon this life and start over" action to the playing view that clears the stored run id and resets to phase 'start', reusing playAgain()'s reset logic, gated behind a lightweight confirm since it discards real progress.
+- id: t-023
+  milestone: m5
+  title: "Add an exit control for an in-progress Da Vinci life run"
+  status: done
+  owner:
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-017's playtest audit (kind_robots components/conductor/davinci-page.vue). Once phase === 'playing', the
+    only way out is finishing the run (reach the resolve screen, click "Live another life" -> playAgain()) -- there is no
+    visible control to abandon an in-progress run and start a different one before MIN_CHAPTERS_BEFORE_ENDING (3 chapters).
+    The only actual exit is manually clearing the davinci-active-life-run-id localStorage key, which is never exposed in the
+    UI. Add a low-key "Abandon this life and start over" action to the playing view that clears the stored run id and resets
+    to phase 'start', reusing playAgain()'s reset logic, gated behind a lightweight confirm since it discards real progress.
 
-      Done (kind_robots PR #1732, merged f423f50): added a low-key "Abandon this life" button to the phase === 'playing' header row in components/conductor/davinci-page.vue. abandonRun() gates behind window.confirm (matches the existing confirm pattern used elsewhere, e.g. art-gallery.vue), then delegates to playAgain()'s existing reset logic rather than duplicating it. Verified via vue-tsc --noEmit, eslint, and prettier --check (all clean) -- no browser available in this sandbox (documented Chromium-through-proxy limitation).
-    claimed_by: 20260810T233500Z-davinci-t023-x7qk
-    claimed_at: '2026-08-10T23:33:07Z'
-    updated: '2026-08-10T23:45:47Z'
-    implementation_pr: 'silasfelinus/kind_robots#1732'
+    Done (kind_robots PR #1732, merged f423f50): added a low-key "Abandon this life" button to the phase === 'playing' header
+    row in components/conductor/davinci-page.vue. abandonRun() gates behind window.confirm (matches the existing confirm pattern
+    used elsewhere, e.g. art-gallery.vue), then delegates to playAgain()'s existing reset logic rather than duplicating it.
+    Verified via vue-tsc --noEmit, eslint, and prettier --check (all clean) -- no browser available in this sandbox (documented
+    Chromium-through-proxy limitation).
+  claimed_by: 20260810T233500Z-davinci-t023-x7qk
+  claimed_at: '2026-08-10T23:33:07Z'
+  updated: '2026-08-10T23:45:47Z'
+  implementation_pr: 'silasfelinus/kind_robots#1732'
 
-  - id: t-024
-    milestone: m5
-    title: "Playtest-driven tuning of Da Vinci narration effect bounds"
-    status: done
-    owner: reviewer
-    passes: 0
-    stakes: reversible
-    note: >
-      Original: Kaizen from t-017's playtest audit (kind_robots
-      server/utils/davinciNarration.ts). NARRATION_EFFECT_MIN/MAX (+-2 per choice)
-      against DAVINCI_PASS_VALUE (1 -- a binary pass/fail threshold per dimension) are
-      explicitly marked in the source as a "design default from the spec's open
-      question -- revisit after real playtesting." Play at least 2-3 full runs end to
-      end (both AI-narrated and the curated fallback pool), record how many chapters it
-      actually takes to swing a dimension between fail/pass, and decide whether the +-2
-      swing or the 3-chapter minimum-before-ending need adjusting so a run has real room
-      for reversal instead of being effectively decided in chapter 1-2.
-
-
-      DONE (conductor scheduled sweep, 2026-08-15, kind_robots PR #1897). This sandbox
-      cannot authenticate as a live user against the OpenAI-backed narration endpoint,
-      so substituted a Monte Carlo simulation of 20k+ runs against the actual
-      production constants and effect distribution (each choice touches 2-3 of the 10
-      dimensions per davinciNarration.ts's own system prompt, deltas uniform over
-      [-2,-1,1,2]) to directly answer the task's question. Findings: the +-2 swing is
-      NOT the driver of early lock-in -- DAVINCI_PASS_VALUE is 1, so any single nonzero
-      positive touch already crosses the pass threshold whether the max swing is 1 or
-      2; left NARRATION_EFFECT_MIN/MAX unchanged. The real lever is chapter count: at
-      the original chapter-3 gate, an average of 4.2/10 dimensions had never been
-      touched by any choice at all (guaranteed-fail, not a player decision); at chapter
-      6 that drops to ~1.8/10 untouched on average. Raised MIN_CHAPTERS_BEFORE_ENDING
-      from 3 to 6 in components/conductor/davinci-page.vue (single constant, easily
-      re-tuned), updated the adjacent UI comment and verifyDaVinciResolvePanelGuard.ts's
-      descriptive error string to match, and updated
-      projects/davinci/docs/narration-layer-spec.md's "still open" section to record
-      the resolution and methodology. Verified: vue-tsc --noEmit clean, eslint clean,
-      prettier clean, test:davinci-narration (30/30), test:davinci-resolve-panel-guard
-      + its selftest both pass, test:layout-contract holds. seed:davinci:playloop-verify
-      could not run locally (sandbox has no live DB) -- confirmed via kind_robots CI
-      instead before merging.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-15T11:53:00Z'
-    implementation_pr: 'silasfelinus/kind_robots#1897'
-
-  - id: t-025
-    milestone: m6
-    title: "Extract narrativeArtJobsHelper's resume/cache pattern into a shared composable"
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: >
-      Kaizen from t-021 slice 14 (kind_robots#2046, merged). storybookStore.ts and
-      davinci-page.vue now both hand-roll the same shape independently: persist a
-      long-lived async job's in-flight state (chapter/beat art from
-      narrativeArtJobsHelper's enqueue()/resume(), which can poll for up to 10
-      minutes) to localStorage so a page reload/remount can find it again, then call
-      narrativeArtJobsHelper.resume() unconditionally on whatever the cache holds
-      (it already no-ops safely for a terminal state). davinci-page.vue's version
-      (persistArtJobs()/resumePendingArtJobs(), added in t-021 slice 14) is the
-      second independent implementation of storybookStore.ts's
-      resumeNarrativeArtJobs() pattern. If a third narrative surface needs the same
-      resume-on-reload behavior, extract both into a shared composable (e.g.
-      usePersistedNarrativeArtJobs(storageKey, runId)) that owns the
-      cache-read/cache-write/resume wiring, and migrate both existing call sites to
-      it -- removing the duplication rather than adding a third copy. Not urgent
-      while there are only two call sites; scope this task down to "just add the
-      composable" if a third surface arrives before this is picked up, rather than
-      also doing a speculative refactor of the two existing ones as a separate
-      concern.
+- id: t-024
+  milestone: m5
+  title: "Playtest-driven tuning of Da Vinci narration effect bounds"
+  status: done
+  owner: reviewer
+  passes: 0
+  stakes: reversible
+  note: >
+    Original: Kaizen from t-017's playtest audit (kind_robots
+    server/utils/davinciNarration.ts). NARRATION_EFFECT_MIN/MAX (+-2 per choice)
+    against DAVINCI_PASS_VALUE (1 -- a binary pass/fail threshold per dimension) are
+    explicitly marked in the source as a "design default from the spec's open
+    question -- revisit after real playtesting." Play at least 2-3 full runs end to
+    end (both AI-narrated and the curated fallback pool), record how many chapters it
+    actually takes to swing a dimension between fail/pass, and decide whether the +-2
+    swing or the 3-chapter minimum-before-ending need adjusting so a run has real room
+    for reversal instead of being effectively decided in chapter 1-2.
 
 
-      Done (kind_robots#2051, merged): added stores/helpers/persistedNarrativeArtJobsHelper.ts
-      (createPersistedNarrativeArtJobsController()), wrapping
-      createNarrativeArtJobsController() with an owner-scoped best-effort localStorage
-      cache (readCache/writeCache) and a resumeEntries() loop over a keyed collection of
-      cached job states. CI on the first push caught something the initial investigation
-      missed: taskmasterStore.ts is a byte-for-byte identical third copy of
-      storybookStore.ts's resumeNarrativeArtJobs() pattern
-      (verifyNarrativeArtPersistence.mjs keeps the two stores in lockstep) -- the exact
-      "third narrative surface" this task's own note named as the trigger for doing the
-      full extraction, so it turned out to already exist. Migrated all three call sites
-      (storybookStore.ts, taskmasterStore.ts, davinci-page.vue); davinci-page.vue also
-      uses the cache read/write half since its art jobs have no server-side row until
-      done. Updated verifyDaVinciArtResumeGuard.ts's textual checks (and self-test) and
-      verifyNarrativeArtPersistence.mjs's store-contract checks to match, preserving the
-      same protected invariants. Verified: all 27 test:davinci-* + 23 test:storybook-*
-      contract scripts pass, verifyNarrativeArtPersistence.mjs passes, eslint/prettier
-      clean except two pre-existing unrelated issues confirmed present on main before
-      this change (storybookStore.ts eslint errors; taskmasterStore.ts/
-      verifyNarrativeArtPersistence.mjs prettier-noncompliance) -- kept the diff scoped to
-      exactly this task's lines rather than letting a full-file prettier --write
-      introduce unrelated reformatting. vue-tsc clean except one pre-existing unrelated
-      error (BUTTERFLY missing from a Reaction_reactionCategory map in
-      server/api/reactions/index.post.ts), filed as kaizen davinci/t-026.
-    implementation_pr: silasfelinus/kind_robots#2051
-    claimed_by: claude-conductor-scheduled-20260823T-davinci-t025
-    claimed_at: '2026-08-23T19:43:03Z'
-    updated: '2026-08-23T20:02:29Z'
+    DONE (conductor scheduled sweep, 2026-08-15, kind_robots PR #1897). This sandbox
+    cannot authenticate as a live user against the OpenAI-backed narration endpoint,
+    so substituted a Monte Carlo simulation of 20k+ runs against the actual
+    production constants and effect distribution (each choice touches 2-3 of the 10
+    dimensions per davinciNarration.ts's own system prompt, deltas uniform over
+    [-2,-1,1,2]) to directly answer the task's question. Findings: the +-2 swing is
+    NOT the driver of early lock-in -- DAVINCI_PASS_VALUE is 1, so any single nonzero
+    positive touch already crosses the pass threshold whether the max swing is 1 or
+    2; left NARRATION_EFFECT_MIN/MAX unchanged. The real lever is chapter count: at
+    the original chapter-3 gate, an average of 4.2/10 dimensions had never been
+    touched by any choice at all (guaranteed-fail, not a player decision); at chapter
+    6 that drops to ~1.8/10 untouched on average. Raised MIN_CHAPTERS_BEFORE_ENDING
+    from 3 to 6 in components/conductor/davinci-page.vue (single constant, easily
+    re-tuned), updated the adjacent UI comment and verifyDaVinciResolvePanelGuard.ts's
+    descriptive error string to match, and updated
+    projects/davinci/docs/narration-layer-spec.md's "still open" section to record
+    the resolution and methodology. Verified: vue-tsc --noEmit clean, eslint clean,
+    prettier clean, test:davinci-narration (30/30), test:davinci-resolve-panel-guard
+    + its selftest both pass, test:layout-contract holds. seed:davinci:playloop-verify
+    could not run locally (sandbox has no live DB) -- confirmed via kind_robots CI
+    instead before merging.
+  claimed_by:
+  claimed_at:
+  updated: '2026-08-15T11:53:00Z'
+  implementation_pr: 'silasfelinus/kind_robots#1897'
 
-  - id: t-026
-    milestone: m6
-    title: Fix stale prisma/generated client missing BUTTERFLY from Reaction_reactionCategory's ExpectedTargetField map
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    note: >
-      Kaizen from t-025 (kind_robots#2051). vue-tsc --noEmit fails on
-      server/api/reactions/index.post.ts:220 with "Property 'BUTTERFLY' is missing in
-      type ... but required in type 'Record<Reaction_reactionCategory,
-      ExpectedTargetField>'" -- confirmed pre-existing on kind_robots main (reproduced
-      via git stash before t-025's own diff, unrelated to it). Likely cause: the
-      Butterfly-retirement commit (a09a56b, "Retire DB-driven Butterfly remnants and
-      Challenge Center reviews") removed BUTTERFLY handling from
-      server/api/reactions/index.post.ts's ExpectedTargetField map, but the checked-in
-      prisma/generated Prisma client (prisma/generated/prisma/**) still carries
-      BUTTERFLY as a Reaction_reactionCategory enum member, or vice versa -- the two are
-      out of sync. Run `npx prisma generate` and diff against the checked-in
-      prisma/generated/ files to confirm which side is stale, then either regenerate and
-      commit the client, or update the schema/reaction-category enum and its
-      migration, whichever actually matches production. Root-cause and fix
-      before the next session hits this drift again -- this repo's provisioning script
-      (provision_kind_robots_deps.sh) runs `prisma generate` fresh each session, so a
-      stale checked-in client silently diverges from what CI/local sessions
-      actually see depending on whether prisma generate ran.
-    claimed_by: claude-scheduled-20260824T022816Z-davinci-t026
-    claimed_at: '2026-08-24T02:28:21Z'
-    updated: '2026-08-24T02:41:47Z'
-    implementation_pr: 'silasfelinus/kind_robots#2057'
+- id: t-025
+  milestone: m6
+  title: "Extract narrativeArtJobsHelper's resume/cache pattern into a shared composable"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-021 slice 14 (kind_robots#2046, merged). storybookStore.ts and
+    davinci-page.vue now both hand-roll the same shape independently: persist a
+    long-lived async job's in-flight state (chapter/beat art from
+    narrativeArtJobsHelper's enqueue()/resume(), which can poll for up to 10
+    minutes) to localStorage so a page reload/remount can find it again, then call
+    narrativeArtJobsHelper.resume() unconditionally on whatever the cache holds
+    (it already no-ops safely for a terminal state). davinci-page.vue's version
+    (persistArtJobs()/resumePendingArtJobs(), added in t-021 slice 14) is the
+    second independent implementation of storybookStore.ts's
+    resumeNarrativeArtJobs() pattern. If a third narrative surface needs the same
+    resume-on-reload behavior, extract both into a shared composable (e.g.
+    usePersistedNarrativeArtJobs(storageKey, runId)) that owns the
+    cache-read/cache-write/resume wiring, and migrate both existing call sites to
+    it -- removing the duplication rather than adding a third copy. Not urgent
+    while there are only two call sites; scope this task down to "just add the
+    composable" if a third surface arrives before this is picked up, rather than
+    also doing a speculative refactor of the two existing ones as a separate
+    concern.
+
+
+    Done (kind_robots#2051, merged): added stores/helpers/persistedNarrativeArtJobsHelper.ts
+    (createPersistedNarrativeArtJobsController()), wrapping
+    createNarrativeArtJobsController() with an owner-scoped best-effort localStorage
+    cache (readCache/writeCache) and a resumeEntries() loop over a keyed collection of
+    cached job states. CI on the first push caught something the initial investigation
+    missed: taskmasterStore.ts is a byte-for-byte identical third copy of
+    storybookStore.ts's resumeNarrativeArtJobs() pattern
+    (verifyNarrativeArtPersistence.mjs keeps the two stores in lockstep) -- the exact
+    "third narrative surface" this task's own note named as the trigger for doing the
+    full extraction, so it turned out to already exist. Migrated all three call sites
+    (storybookStore.ts, taskmasterStore.ts, davinci-page.vue); davinci-page.vue also
+    uses the cache read/write half since its art jobs have no server-side row until
+    done. Updated verifyDaVinciArtResumeGuard.ts's textual checks (and self-test) and
+    verifyNarrativeArtPersistence.mjs's store-contract checks to match, preserving the
+    same protected invariants. Verified: all 27 test:davinci-* + 23 test:storybook-*
+    contract scripts pass, verifyNarrativeArtPersistence.mjs passes, eslint/prettier
+    clean except two pre-existing unrelated issues confirmed present on main before
+    this change (storybookStore.ts eslint errors; taskmasterStore.ts/
+    verifyNarrativeArtPersistence.mjs prettier-noncompliance) -- kept the diff scoped to
+    exactly this task's lines rather than letting a full-file prettier --write
+    introduce unrelated reformatting. vue-tsc clean except one pre-existing unrelated
+    error (BUTTERFLY missing from a Reaction_reactionCategory map in
+    server/api/reactions/index.post.ts), filed as kaizen davinci/t-026.
+  implementation_pr: silasfelinus/kind_robots#2051
+  claimed_by: claude-conductor-scheduled-20260823T-davinci-t025
+  claimed_at: '2026-08-23T19:43:03Z'
+  updated: '2026-08-23T20:02:29Z'
+
+- id: t-026
+  milestone: m6
+  title: Fix stale prisma/generated client missing BUTTERFLY from Reaction_reactionCategory's ExpectedTargetField map
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-025 (kind_robots#2051). vue-tsc --noEmit fails on
+    server/api/reactions/index.post.ts:220 with "Property 'BUTTERFLY' is missing in
+    type ... but required in type 'Record<Reaction_reactionCategory,
+    ExpectedTargetField>'" -- confirmed pre-existing on kind_robots main (reproduced
+    via git stash before t-025's own diff, unrelated to it). Likely cause: the
+    Butterfly-retirement commit (a09a56b, "Retire DB-driven Butterfly remnants and
+    Challenge Center reviews") removed BUTTERFLY handling from
+    server/api/reactions/index.post.ts's ExpectedTargetField map, but the checked-in
+    prisma/generated Prisma client (prisma/generated/prisma/**) still carries
+    BUTTERFLY as a Reaction_reactionCategory enum member, or vice versa -- the two are
+    out of sync. Run `npx prisma generate` and diff against the checked-in
+    prisma/generated/ files to confirm which side is stale, then either regenerate and
+    commit the client, or update the schema/reaction-category enum and its
+    migration, whichever actually matches production. Root-cause and fix
+    before the next session hits this drift again -- this repo's provisioning script
+    (provision_kind_robots_deps.sh) runs `prisma generate` fresh each session, so a
+    stale checked-in client silently diverges from what CI/local sessions
+    actually see depending on whether prisma generate ran.
+  claimed_by: claude-scheduled-20260824T022816Z-davinci-t026
+  claimed_at: '2026-08-24T02:28:21Z'
+  updated: '2026-08-24T02:41:47Z'
+  implementation_pr: 'silasfelinus/kind_robots#2057'

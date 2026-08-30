@@ -22,157 +22,168 @@ notes_from_silas: |
   supporting composable/endpoint in kind_robots.
 
 milestones:
-  - id: m1
-    title: "SHAPE — outline, brainstorm, design brief"
-    weight: 25
-    status: done
+- id: m1
+  title: "SHAPE — outline, brainstorm, design brief"
+  weight: 25
+  status: done
 
-  - id: m2
-    title: "BUILD — actualize, adjust, test"
-    weight: 50
-    status: done
+- id: m2
+  title: "BUILD — actualize, adjust, test"
+  weight: 50
+  status: done
 
-  - id: m3
-    title: "POLISH & SHIP — aesthetics, performance, delivery"
-    weight: 25
-    status: in-progress
+- id: m3
+  title: "POLISH & SHIP — aesthetics, performance, delivery"
+  weight: 25
+  status: in-progress
 
 tasks:
-  - id: t-001
-    milestone: m1
-    title: "Write the design brief and start building"
-    status: done
-    owner: claude
-    passes: 0
-    stakes: reversible
-    updated: 2026-07-23T00:00:00Z
-    note: >
-      DESIGN-BRIEF.md written (what it is, who it serves, creative direction,
-      MVP shape). Silas-directed session; build started immediately.
+- id: t-001
+  milestone: m1
+  title: "Write the design brief and start building"
+  status: done
+  owner: claude
+  passes: 0
+  stakes: reversible
+  updated: 2026-07-23T00:00:00Z
+  note: >
+    DESIGN-BRIEF.md written (what it is, who it serves, creative direction,
+    MVP shape). Silas-directed session; build started immediately.
 
-  - id: t-002
-    milestone: m1
-    title: "Confirm scope with Silas"
-    status: done
-    owner: claude
-    passes: 0
-    stakes: reversible
-    updated: 2026-07-23T00:00:00Z
-    note: >
-      Scope confirmed live with Silas: slug music-mentor, four feedback
-      dimensions (intonation, timing, dynamics, arrangement), ephemeral
-      (audio never uploaded, nothing persisted).
+- id: t-002
+  milestone: m1
+  title: "Confirm scope with Silas"
+  status: done
+  owner: claude
+  passes: 0
+  stakes: reversible
+  updated: 2026-07-23T00:00:00Z
+  note: >
+    Scope confirmed live with Silas: slug music-mentor, four feedback
+    dimensions (intonation, timing, dynamics, arrangement), ephemeral
+    (audio never uploaded, nothing persisted).
 
-  - id: t-003
-    milestone: m2
-    title: "Client-side Web Audio feature extraction (composable)"
-    status: done
-    owner: claude
-    passes: 0
-    stakes: reversible
-    updated: 2026-07-24T00:00:00Z
-    pr: "https://github.com/silasfelinus/kind_robots/pull/920"
-    note: >
-      stores/helpers/audioAnalysisHelper.ts — store-owned helper that decodes audio to AudioBuffer and computes a
-      compact feature summary: pitch/intonation (median pitch, voiced %, cents
-      deviation, estimated key, vibrato), timing (tempo + stability), dynamics
-      (loudness range, contrast), structure (section count). Dependency-free.
+- id: t-003
+  milestone: m2
+  title: "Client-side Web Audio feature extraction (composable)"
+  status: done
+  owner: claude
+  passes: 0
+  stakes: reversible
+  updated: 2026-07-24T00:00:00Z
+  pr: "https://github.com/silasfelinus/kind_robots/pull/920"
+  note: >
+    stores/helpers/audioAnalysisHelper.ts — store-owned helper that decodes audio to AudioBuffer and computes a
+    compact feature summary: pitch/intonation (median pitch, voiced %, cents
+    deviation, estimated key, vibrato), timing (tempo + stability), dynamics
+    (loudness range, contrast), structure (section count). Dependency-free.
 
-  - id: t-004
-    milestone: m2
-    title: "Analyze endpoint + Pinia store"
-    status: done
-    owner: claude
-    passes: 0
-    stakes: reversible
-    updated: 2026-07-24T00:00:00Z
-    pr: "https://github.com/silasfelinus/kind_robots/pull/920"
-    note: >
-      server/api/music-mentor/analyze.post.ts (manaGate + callSuggestProvider,
-      reusing the suggest provider plumbing) and stores/musicMentorStore.ts
-      (runs extraction locally, POSTs the summary + setlist + selected
-      dimensions, returns feedback). Ephemeral — no DB write.
+- id: t-004
+  milestone: m2
+  title: "Analyze endpoint + Pinia store"
+  status: done
+  owner: claude
+  passes: 0
+  stakes: reversible
+  updated: 2026-07-24T00:00:00Z
+  pr: "https://github.com/silasfelinus/kind_robots/pull/920"
+  note: >
+    server/api/music-mentor/analyze.post.ts (manaGate + callSuggestProvider,
+    reusing the suggest provider plumbing) and stores/musicMentorStore.ts
+    (runs extraction locally, POSTs the summary + setlist + selected
+    dimensions, returns feedback). Ephemeral — no DB write.
 
-  - id: t-005
-    milestone: m2
-    title: "/music-mentor page"
-    status: done
-    owner: claude
-    passes: 0
-    stakes: reversible
-    updated: 2026-07-24T00:00:00Z
-    pr: "https://github.com/silasfelinus/kind_robots/pull/920"
-    note: >
-      pages/music-mentor.vue — DaisyUI page: audio file-input, setlist textarea,
-      four dimension toggles, analyze button, feedback panel, collapsible
-      feature-summary. Soft-gated on userStore.isLoggedIn, mirrors
-      pages/video-generator.vue conventions.
+- id: t-005
+  milestone: m2
+  title: "/music-mentor page"
+  status: done
+  owner: claude
+  passes: 0
+  stakes: reversible
+  updated: 2026-07-24T00:00:00Z
+  pr: "https://github.com/silasfelinus/kind_robots/pull/920"
+  note: >
+    pages/music-mentor.vue — DaisyUI page: audio file-input, setlist textarea,
+    four dimension toggles, analyze button, feedback panel, collapsible
+    feature-summary. Soft-gated on userStore.isLoggedIn, mirrors
+    pages/video-generator.vue conventions.
 
-  - id: t-006
-    milestone: m3
-    title: "Frontend nav placement for /music-mentor"
-    status: done
-    owner: claude
-    passes: 0
-    stakes: reversible
-    updated: 2026-07-24T00:00:00Z
-    pr: "https://github.com/silasfelinus/kind_robots/pull/922"
-    note: >
-      Added a canonical PROJECT_PLACEMENTS entry in kind_robots
-      utils/projectPlacements.ts (channelKey: play, tabKey: music-mentor,
-      route: /music-mentor) and mirrored liveUrl/channelKey/tabKey into
-      project-overrides.yaml.
+- id: t-006
+  milestone: m3
+  title: "Frontend nav placement for /music-mentor"
+  status: done
+  owner: claude
+  passes: 0
+  stakes: reversible
+  updated: 2026-07-24T00:00:00Z
+  pr: "https://github.com/silasfelinus/kind_robots/pull/922"
+  note: >
+    Added a canonical PROJECT_PLACEMENTS entry in kind_robots
+    utils/projectPlacements.ts (channelKey: play, tabKey: music-mentor,
+    route: /music-mentor) and mirrored liveUrl/channelKey/tabKey into
+    project-overrides.yaml.
 
-  - id: t-008
-    milestone: m3
-    title: "Submit project art (icon/card/hero) via ArtJob"
-    status: done
-    owner: claude
-    passes: 0
-    stakes: reversible
-    updated: 2026-07-24T00:00:00Z
-    note: >
-      All three art requests submitted to /api/conductor/art-request (HTTP 201
-      each: music-mentor icon/card/hero) — the endpoint committed the queue
-      entries to conductor main. Root cause of the earlier 401 was NOT an expired
-      token: request_art.py sent the token in the legacy X-KR-API-Token header,
-      but the endpoint's validateApiKey reads x-api-key / authorization /
-      x-admin-token. Fixed request_art.py to send x-api-key (see this PR).
-      Downstream generation of the actual .webp files happens via the art
-      consumer; on-page card/hero appear once those land.
+- id: t-008
+  milestone: m3
+  title: "Submit project art (icon/card/hero) via ArtJob"
+  status: done
+  owner: claude
+  passes: 0
+  stakes: reversible
+  updated: 2026-07-24T00:00:00Z
+  note: >
+    All three art requests submitted to /api/conductor/art-request (HTTP 201
+    each: music-mentor icon/card/hero) — the endpoint committed the queue
+    entries to conductor main. Root cause of the earlier 401 was NOT an expired
+    token: request_art.py sent the token in the legacy X-KR-API-Token header,
+    but the endpoint's validateApiKey reads x-api-key / authorization /
+    x-admin-token. Fixed request_art.py to send x-api-key (see this PR).
+    Downstream generation of the actual .webp files happens via the art
+    consumer; on-page card/hero appear once those land.
 
-  - id: t-007
-    milestone: m3
-    title: "Accuracy pass — evaluate a heavier pitch model"
-    status: done
-    owner: null
-    passes: 0
-    stakes: reversible
-    updated: '2026-07-27T03:07:49Z'
-    note: >
-      The MVP uses a dependency-free autocorrelation pitch tracker (good for monophonic takes, degrades on mixed/polyphonic audio). Evaluate a stronger option (e.g. pitchy / a YIN lib / CREPE) behind the same feature-summary shape so the endpoint and page don't change.
+- id: t-007
+  milestone: m3
+  title: "Accuracy pass — evaluate a heavier pitch model"
+  status: done
+  owner:
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-27T03:07:49Z'
+  note: >
+    The MVP uses a dependency-free autocorrelation pitch tracker (good for monophonic takes, degrades on mixed/polyphonic
+    audio). Evaluate a stronger option (e.g. pitchy / a YIN lib / CREPE) behind the same feature-summary shape so the endpoint
+    and page don't change.
 
-      DONE 2026-07-27 (claude-scheduled-20260727T030748Z-mm-t007): implemented a YIN pitch detector (de Cheveigne & Kawahara 2002), now owned by kind_robots stores/helpers/audioAnalysisHelper.ts, kept the old tracker as detectPitchAutocorrelation for reference, and added a synthetic accuracy suite (utils/scripts/verifyPitchDetectorAccuracy.test.ts) comparing them on pure/harmonic-rich/noisy tones across 75-1046Hz. Results: YIN detected 35/35 test frames vs. autocorrelation's 32/35 (missed low-register 75-82Hz tones specifically), both 0 octave errors, YIN median 0.7c error vs 0.9c. Switched analyzeAudioFile to YIN. No change to AudioFeatureSummary, the endpoint, or the page. Did not pursue CREPE (would need TensorFlow.js + model weights, at odds with the project's dependency-free client-side design) or pitchy (an npm dependency) since a hand-rolled YIN matched the existing code's style and closed the gap already found. Merged via kind_robots PR #1036.
-    claimed_by: claude-scheduled-20260727T030748Z-mm-t007
-    claimed_at: '2026-07-27T03:07:49Z'
+    DONE 2026-07-27 (claude-scheduled-20260727T030748Z-mm-t007): implemented a YIN pitch detector (de Cheveigne & Kawahara
+    2002), now owned by kind_robots stores/helpers/audioAnalysisHelper.ts, kept the old tracker as detectPitchAutocorrelation
+    for reference, and added a synthetic accuracy suite (utils/scripts/verifyPitchDetectorAccuracy.test.ts) comparing them
+    on pure/harmonic-rich/noisy tones across 75-1046Hz. Results: YIN detected 35/35 test frames vs. autocorrelation's 32/35
+    (missed low-register 75-82Hz tones specifically), both 0 octave errors, YIN median 0.7c error vs 0.9c. Switched analyzeAudioFile
+    to YIN. No change to AudioFeatureSummary, the endpoint, or the page. Did not pursue CREPE (would need TensorFlow.js +
+    model weights, at odds with the project's dependency-free client-side design) or pitchy (an npm dependency) since a hand-rolled
+    YIN matched the existing code's style and closed the gap already found. Merged via kind_robots PR #1036.
+  claimed_by: claude-scheduled-20260727T030748Z-mm-t007
+  claimed_at: '2026-07-27T03:07:49Z'
 
-  - id: t-009
-    milestone: m3
-    title: "Add a small real-vocal-clip fixture corpus for pitch-detector accuracy testing"
-    status: ready
-    owner: null
-    passes: 0
-    stakes: reversible
-    updated: '2026-07-27T03:07:49Z'
-    note: >
-      Kaizen from t-007 (2026-07-27): the YIN-vs-autocorrelation accuracy comparison in
-      utils/scripts/verifyPitchDetectorAccuracy.test.ts is necessarily synthetic (sine
-      tones + synthetic harmonics/noise) — no real vocal audio was available in-sandbox.
-      Synthetic tones can't capture breathiness, vibrato depth, or true polyphonic bleed,
-      which is where a real accuracy difference between trackers would actually show up.
-      Source 2-4 short (5-15s) public-domain a cappella or solo-vocal clips (respecting
-      the same PUBLIC-DOMAIN-POLICY.md standard used elsewhere), commit them as test
-      fixtures, and extend the accuracy suite to run both detectors against them —
-      reporting median/max cents drift and voiced-percent rather than a pass/fail
-      assertion, since there's no absolute ground-truth pitch track for real recordings
-      without a reference annotation tool.
+- id: t-009
+  milestone: m3
+  title: "Add a small real-vocal-clip fixture corpus for pitch-detector accuracy testing"
+  status: blocked
+  owner:
+  passes: 0
+  stakes: reversible
+  updated: '2026-08-29T23:59:00Z'
+  note: >-
+    Kaizen from t-007 (2026-07-27): the YIN-vs-autocorrelation accuracy comparison in utils/scripts/verifyPitchDetectorAccuracy.test.ts
+    is necessarily synthetic (sine tones + synthetic harmonics/noise) — no real vocal audio was available in-sandbox. Synthetic
+    tones can't capture breathiness, vibrato depth, or true polyphonic bleed, which is where a real accuracy difference between
+    trackers would actually show up. Source 2-4 short (5-15s) public-domain a cappella or solo-vocal clips (respecting the
+    same PUBLIC-DOMAIN-POLICY.md standard used elsewhere), commit them as test fixtures, and extend the accuracy suite to
+    run both detectors against them — reporting median/max cents drift and voiced-percent rather than a pass/fail assertion,
+    since there's no absolute ground-truth pitch track for real recordings without a reference annotation tool.
+
+
+    CONSISTENCY HOLD 2026-08-29: this project is not active. Re-arm this task to ready if and when the project is explicitly
+    reactivated.
+goal: Provide practical singing and arrangement feedback from local audio analysis plus LLM reasoning, while keeping 
+  uploaded audio private to the browser.
