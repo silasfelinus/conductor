@@ -11643,3 +11643,19 @@ records:
   outcome: done
   failure_category: null
   lesson: "Slice 55: the kr-surface root-wrapper pool (hand-rolled 'flex h-full min-h-0 ... overflow-hidden') is a parallel-but-unswept sibling of the kr-container mx-auto/max-w- pool -- most *-manager.vue hits are false positives (root is <kr-manager>), but user-manager.vue's root was a genuine byte-exact-apart-from-gap-override match. Worth a dedicated future slice checking the kr-surface pool specifically, the way max-w-N overrides already work for kr-container."
+- date: '2026-08-30'
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Slice 56: swept the kr-surface pool slice 55 flagged. The highest-leverage single conversion
+    was components/manager/kr-manager.vue itself -- the shared shell every primary-model dashboard (bot/character/reward/facet/scenario/giftshop
+    managers) delegates its root to via <kr-manager>, so fixing its one root class reaches all of them
+    transitively instead of needing per-manager edits. 6 more standalone managers (art-manager, artjob-queue-browser,
+    art-studio, stylist-relay-status, animation-manager, giftshop-manager) shared the identical hand-rolled
+    root and converted the same way. A useful check before assuming a *-manager.vue hit needs its own
+    edit: verify whether its root actually delegates to <kr-manager> first -- most do, and editing the
+    shell once is strictly better than editing each call site.'
