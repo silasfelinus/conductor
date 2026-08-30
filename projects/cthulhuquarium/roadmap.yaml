@@ -2806,7 +2806,7 @@ tasks:
 - id: t-058
   milestone: m3
   title: Author a BREEDING-evolution species pair in the fish bible
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   depends_on: t-055
@@ -2814,7 +2814,10 @@ tasks:
     FOR SILAS: Split out of t-055 (surface breeding as a real player action in the tank UI). t-055's own task note asked for two things: (1) the store/UI breeding flow, and (2) authoring at least one species in the fish bible with `evolutionKind: BREEDING` + `evolvesToId` set so the secret- evolution path (schema-ready since t-029/t-042, but inert -- no seed data exercises it) has something real to reveal end-to-end. Part 1 shipped (kind_robots PR #2176). Part 2 is this task -- it requires editing `silasfelinus/cthulhuquarium` (the fish bible, `fish/*.yaml`), a SEPARATE GitHub repository from `conductor`/`kind_robots`, which was outside the implementing session's GitHub access scope and not locally cloned. FOR SILAS or a differently-scoped session: full handoff -- which fields to set, which script to run, what to sanity-check -- is at `projects/cthulhuquarium/docs/t-058-breeding-evolution-species.md`. Soft gate: this is a repo-access limitation, not a design decision awaiting approval, so other cthulhuquarium work is unaffected and continues normally. `evolutionKind: SECRET` species may exist already; this task is specifically about the `BREEDING` kind, distinct from those.
 
     The prior soft gate was a repository-access limitation, not a product decision. This OpenAI scheduled session has verified connected GitHub push access to silasfelinus/cthulhuquarium and read the canonical fish/SCHEMA.md plus the t-058 handoff, so the limitation is cleared and the task is actionable.
-  updated: '2026-08-30T05:11:27Z'
+  updated: '2026-08-30T05:15:00Z'
+  owner: worker
+  claimed_by: openai-scheduled-20260830T051127Z-t058-q4n8
+  claimed_at: '2026-08-30T05:15:00Z'
 
 - id: t-059
   milestone: m3
