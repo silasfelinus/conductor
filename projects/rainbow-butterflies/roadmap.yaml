@@ -170,8 +170,7 @@ tasks:
 - id: t-018
   milestone: m2
   title: "Wire Rainbow Butterflies single-login sessions through the BFF"
-  status: review
-  owner: worker
+  status: done
   passes: 0
   stakes: reversible
   depends_on: t-017
@@ -180,14 +179,16 @@ tasks:
 
 
     Implemented Rainbow Butterflies first-party sign-in on worker/rainbow-butterflies-t-018-20260830-055000-bff1: server-generated state and PKCE, signed HttpOnly pending-flow and session cookies, server-to-server Kind Robots code exchange, minimal id/username current-user API, logout/expiry handling, same-origin return validation, a responsive Kind Robots identity control, documentation, and focused session-contract tests. No Kind Robots passwords, JWTs, API keys, or agent credentials are stored by Rainbow or placed in browser storage. Ready for PR verification.
+
+    Merged silasfelinus/rainbowbutterflies#10 as 9db47a10df9fa30605d8429cfe5656164ca36f2a after fixing Nuxt 4 server/root alias resolution with explicit relative imports. Final PR-head checks were green: CI run 33298921865, Rainbow Auth Session Contract run 33298921868, and Publish Production Container PR build run 33298921906. Post-merge main verification was also green: CI run 33299012344, Rainbow Auth Session Contract run 33299012325, and production container publish run 33299012338, including successful GHCR login and Build and publish. The implementation branch was automatically deleted. Silas explicitly authorized this production-image publication in the 2026-08-30 ChatGPT session.
   claimed_by: 2026-08-30T055000Z-rainbow-butterflies-t-018-bff1
   claimed_at: '2026-08-30T05:50:00Z'
-  updated: '2026-08-30T06:02:00Z'
+  updated: '2026-08-30 07:24:00+00:00'
 
 - id: t-019
   milestone: m2
   title: "Build public forum boards, thread lists, and thread reading"
-  status: waiting
+  status: ready
   owner:
   passes: 0
   stakes: reversible
