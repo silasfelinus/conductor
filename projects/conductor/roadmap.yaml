@@ -4724,7 +4724,7 @@ tasks:
   owner:
   stakes: reversible
   passes: 0
-  note: >
+  note: >-
     FOR SILAS: Observed 2026-08-27 on silasfelinus/kind_robots#2141 (interface-vision/t-121, a trivial 2-file template-only
     header polish -- pages/music-mentor.vue and pages/coloring-page.vue). `Contract verifiers` is a required check on kind_robots
     (unlike conductor's own non-required `Python test suite`/`Analyze (javascript-typescript)` stalls documented in t-124/t-106
@@ -4767,7 +4767,36 @@ tasks:
     try; kind_robots#2161 was left open, unmerged, for a later session or Silas to just re-check CI and merge once green --
     the PR's actual content was already fully verified locally (vue-tsc, eslint, prettier, and the relevant unit test suite
     all clean) before this stall, same as every prior occurrence's PR.
-  updated: '2026-08-27T22:52:00Z'
+
+    Third data point (2026-08-30, scheduled conductor sweep session): kind_robots#2234
+    (interface-vision/t-104 slice 70, a trivial 7-file class-rename-only PR, zero behavior
+    change). Attempt 1 (job 99295054115, run 33325602115) sat `in_progress` for ~25 minutes
+    with zero step progress after all other 36 checks on the PR had gone green -- this was
+    the ONLY outstanding check, and it is required, so it fully blocked the merge (conductor
+    PR #3250, the paired roadmap-status-review PR, merged cleanly in the same session with
+    no stall at all, underlining this is kind_robots-repo/workflow-specific, not a general
+    GitHub Actions outage at the time). Cancelled and reran once via `rerun_workflow_run`
+    (the `cancel_workflow_run` + `rerun_workflow_run` pair, since `rerun_failed_jobs` doesn't
+    apply to a run with no failed jobs yet -- everything else on it was still green, only
+    this one job was stuck). Attempt 2 (job 99295459787, started 17:37:03Z) also stalled --
+    sat `in_progress` for 23+ minutes with zero step progress, the same duration order as
+    attempt 1 and every prior occurrence documented above. Per the established "re-run at
+    most once" rule, did not attempt a third try. PR content was already fully verified
+    locally before either attempt (eslint, prettier --check, vue-tsc --noEmit, and
+    test:layout-contract all clean) -- this is purely a CI-infrastructure stall, not a
+    content issue, consistent with every prior occurrence's own local verification. Left
+    kind_robots#2234 open, unmerged, for a later session or Silas to re-check CI and merge
+    once green; interface-vision/t-104 itself is unaffected (recurring task, already
+    correctly back at status: review on the conductor side per PR #3250, independent of
+    this specific slice's kind_robots-side merge).
+
+    This is now 3 independent occurrences across 3 different PRs/days (2026-08-27 x2,
+    2026-08-30 x1), all showing the same "sits in_progress with zero step-level progress
+    for 15-25+ minutes; a fresh rerun sometimes but not reliably clears it" signature. The
+    open investigation items in the first note (timeout-minutes on the job/step, ESLint
+    --cache) remain unactioned -- worth prioritizing now that a rerun has been shown to NOT
+    reliably self-heal (this session's rerun stalled again, unlike the mixed record above).
+  updated: '2026-08-30T17:38:44Z'
 
 - id: t-133
   milestone: m2
