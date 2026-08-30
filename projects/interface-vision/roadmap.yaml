@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -3306,7 +3306,7 @@ tasks:
     Slice 70 moves the root error page's Lost & Found content card onto the shared kr-panel primitive while preserving its deliberate rounded-3xl, translucent background, shadow-xl, backdrop blur, responsive padding, and geometry overrides.
 
     Slice 70 merged as silasfelinus/kind_robots#2233 (squash 1e0c56a0306f7817ce0d409b204e63d2d287f7af) from exact head 71b5970fb2896805caeadfbc282bc1723c75bd4d. error.vue now composes its Lost & Found content card from kr-panel while preserving the deliberate rounded-3xl, bg-base-100/95, shadow-xl, backdrop-blur, max-width, centered text, and sm:p-8 overrides. One file, +1/-1, no script/routing/API/schema/data behavior change. Exact-head TypeScript #33324800286, Layout Contract #33324800332, Schema Migration Parity #33324800267, Facet Catalog #33324800410, Project Architecture #33324800217, and Contract Tests #33324800347 all completed successfully, along with the full returned Storybook/Narrative contract fleet. Re-arm the recurring consistency umbrella for the next bounded slice.
-  updated: '2026-08-30T17:27:27Z'
+  updated: '2026-08-30T17:33:29Z'
   implementation_pr: 'silasfelinus/kind_robots#2232'
   owner: worker
   claimed_by: 20260830T172726Z-interface-vision-t104-slice70
