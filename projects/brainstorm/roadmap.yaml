@@ -852,9 +852,8 @@ tasks:
   - id: t-032
     milestone: m6
     title: Reconcile milestone status fields against actual task completion
-    status: review
+    status: ready
     gate_human: false
-    owner: worker
     stakes: reversible
     passes: 0
     note: |-
@@ -863,6 +862,6 @@ tasks:
       Fix: edit each milestone's `status:` field in `projects/brainstorm/roadmap.yaml` to the target value above. No task-list or dependency changes needed -- this is a pure bookkeeping correction so the kind_robots front-end's portfolio-percentage math (which reads milestone status, per CONTROL.md) stops under-reporting a project that is in fact almost entirely finished.
 
       Implementing the remaining deterministic drift only: Brainstorm milestone m6 is still planned although t-022 is done and t-023 is needs-human. The branch changes m6 to in-progress; m0-m5 were already corrected by intervening work and are intentionally untouched.
-    claimed_by: openai-scheduled-20260830T151755Z-brainstorm-t032-z9c4
-    claimed_at: '2026-08-30T15:17:55Z'
-    updated: '2026-08-30T15:23:10Z'
+
+      Connector-only pass confirmed the remaining correction is exactly m6 status planned -> in-progress. No safe line-patch primitive is available for this large roadmap; a branch-only helper workflow was tested, did not activate, and was removed before merge. PR #3245 was closed with zero net changed files. Returning the task to ready rather than falsely completing it; the finding remains deterministic and suitable for a shell-capable worker.
+    updated: '2026-08-30T15:27:20Z'
