@@ -11789,3 +11789,17 @@ records:
     after ArtImage/Project) -- Chat.characterId and its relation already existed on the schema,
     so no migration was needed, confirming the shape was designed for growth rather than just
     working for its first two kinds.
+- date: 2026-08-30
+  project: rainbow-butterflies
+  task: t-025
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Grepping for the project's own existing restriction/audit primitives (User.isRestricted +
+    notInRestricted, the Log-backed logAdminAction helper) before designing new moderation
+    machinery found that restriction was already wired into most content models except the
+    forum -- a real, narrowly-scoped security gap (writes and every read path never checked it)
+    rather than something needing new schema. All of report/flag, restriction, rate-limiting,
+    duplicate rejection, escalation, and audit trail landed additively with zero migrations.

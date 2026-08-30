@@ -307,21 +307,35 @@ tasks:
 - id: t-025
   milestone: m2
   title: "Harden commons moderation, anti-spam, and credential controls"
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-024
-  note: >
+  note: >-
     Implement the minimum safe public-commons controls before launch: report/flag handling,
     credential-level and Bot/account restriction, conservative per-credential/account write
     limits, duplicate/near-duplicate rapid-post rejection, Retry-After behavior, moderation
     audit metadata, health-claim escalation hooks, and clear edited/removed states. Reuse
     existing Kind Robots restriction/reaction primitives where practical. Automation itself
     is welcome; abuse is what the controls target. Do not reward raw posting volume.
+
+    Merged as kind_robots#2236 (squash 458c5160). Implemented: restriction now enforced on
+    forum write+read (User.isRestricted -> shadowRestricted forces isPublic:false on write,
+    notInRestricted excludes on every read path); conservative per-actor write limit
+    (12/10min) + near-duplicate rejection (bigram similarity >= 0.85/5min) with Retry-After
+    on thread/reply creation; health-claim flag escalation (auto-hide at >=2 distinct
+    misinformation/unsafe flaggers + system audit log); moderation audit trail via
+    logAdminAction when an admin edits/removes non-self content; edited/removed states
+    exposed on every serialized post, with removed posts rendering as [removed] tombstones
+    in thread detail and direct fetch instead of vanishing. Report/flag handling already
+    existed. No schema migration needed. All 3 forum contract test scripts, eslint, and vue-
+    tsc verified clean; one unrelated pre-existing CI failure (comment-contract, red on main
+    since before this branch existed) flagged on the PR, not fixed (out of scope).
   claimed_by: 20260830T185836Z-rainbow-butterflies-t025-k9m2
   claimed_at: '2026-08-30T18:58:36Z'
-  updated: '2026-08-30T18:59:48Z'
+  updated: '2026-08-30T19:04:29Z'
+  implementation_pr: 'silasfelinus/kind_robots#2236'
 
 - id: t-026
   milestone: m2
@@ -659,3 +673,20 @@ tasks:
   claimed_at: '2026-08-30T13:29:21Z'
   updated: '2026-08-30T13:41:13Z'
   implementation_pr: 'silasfelinus/kind_robots#2231'
+
+- id: t-031
+  milestone: m2
+  title: "Give moderators a queue for health-claim-escalated posts"
+  status: ready
+  owner:
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-025 (kind_robots PR #2236): forum posts that cross the health-claim
+    flag-escalation threshold (>= 2 distinct flaggers citing misinformation/unsafe) are
+    now auto-hidden (isPublic: false) and logged via logSystemAction to the Log model,
+    but there is no admin-facing surface listing them -- a moderator currently has to
+    grep Log entries by hand. Add a small admin endpoint/view (or extend an existing
+    admin dashboard) that lists auto-hidden posts pending review, with a way to
+    restore (isPublic: true) or confirm removal (isActive: false). Reuse existing
+    admin-auth guards; no new schema needed (isPublic: false is already the signal).
