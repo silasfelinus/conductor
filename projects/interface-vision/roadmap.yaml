@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3304,11 +3304,10 @@ tasks:
     Slice 69 detail (conflict-resolved merge of this note with the close-out PR's own account, conductor#3247): consolidated the exact min-h-0 flex-1 overflow-y-auto overscroll-contain idiom into .kr-scroll across 6 files (dream-maker.vue, home-object-sheet.vue, artjob-feedback-manager.vue, stylist-manager.vue, hair-studio-manager.vue, kr-manager.vue). Every candidate matched kr-scroll's exact @apply rule byte-for-byte; no geometry/behavior change. Checked .kr-toolbar candidates too (4 files matching 'flex shrink-0 flex-wrap items-center gap-2') but excluded all: one lacked kr-toolbar's 'relative z-20' alongside extra unrelated classes (not a match), the other three would have added 'relative z-20' -- a genuine new stacking-context behavior, not a pure consolidation -- left for a slice that verifies no positioning/overlap side effects first. Verified: eslint/prettier clean on changed lines (two pre-existing unrelated issues elsewhere in dream-maker.vue and artjob-feedback-manager.vue confirmed present on main via git stash before this change); vue-tsc --noEmit clean repo-wide; test:layout-contract holds at 207-violation baseline, zero new violations.
 
     Slice 70 moves the root error page's Lost & Found content card onto the shared kr-panel primitive while preserving its deliberate rounded-3xl, translucent background, shadow-xl, backdrop blur, responsive padding, and geometry overrides.
-  updated: '2026-08-30T17:16:50Z'
+
+    Slice 70 merged as silasfelinus/kind_robots#2233 (squash 1e0c56a0306f7817ce0d409b204e63d2d287f7af) from exact head 71b5970fb2896805caeadfbc282bc1723c75bd4d. error.vue now composes its Lost & Found content card from kr-panel while preserving the deliberate rounded-3xl, bg-base-100/95, shadow-xl, backdrop-blur, max-width, centered text, and sm:p-8 overrides. One file, +1/-1, no script/routing/API/schema/data behavior change. Exact-head TypeScript #33324800286, Layout Contract #33324800332, Schema Migration Parity #33324800267, Facet Catalog #33324800410, Project Architecture #33324800217, and Contract Tests #33324800347 all completed successfully, along with the full returned Storybook/Narrative contract fleet. Re-arm the recurring consistency umbrella for the next bounded slice.
+  updated: '2026-08-30T17:21:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2232'
-  owner: worker
-  claimed_by: openai-scheduled-20260830T171336Z-t104-k4m8
-  claimed_at: '2026-08-30T17:13:36Z'
 
 - id: t-105
   milestone: m6
