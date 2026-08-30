@@ -361,8 +361,8 @@ tasks:
 - id: t-032
   milestone: m2
   title: "Add a max reply-nesting-depth guard to the forum reply endpoint"
-  status: ready
-  owner:
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >
@@ -377,6 +377,9 @@ tasks:
     Add an explicit max-depth check in requireForumReplyParent (walk previousEntryId back
     from the proposed parent, or track a stored depth column) and pick a sane limit
     (e.g. 5-10 levels) with a clear 400 error when exceeded.
+  claimed_by: claude-20260830T2027Z-rb-t032
+  claimed_at: '2026-08-30T20:29:33Z'
+  updated: '2026-08-30T20:29:33Z'
 
 - id: t-033
   milestone: m2
