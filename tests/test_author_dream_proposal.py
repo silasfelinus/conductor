@@ -25,9 +25,15 @@ def _valid_bundle(brief):
         },
         "locations": [{
             "title": "Stormglass Arena",
-            "known_for": "floating fruit trees whose roots braid through captive lightning",
-            "local_rule": "touching the ground wakes the lightning predators below",
-            "best_scene": "three trees collide overhead and loose a rolling sphere of blue fire",
+            "known_for": (
+                "Floating fruit trees braid their exposed roots through captive lightning above the arena."
+            ),
+            "local_rule": (
+                "Touching the ground wakes the lightning predators sleeping below the grass."
+            ),
+            "best_scene": (
+                "Three trees collide overhead and release a rolling sphere of blue fire across the canopy."
+            ),
             "art_direction": (
                 "A broken ring of levitating black-barked trees above waist-high grass, forked "
                 "lightning trapped in transparent roots, a bruised purple sky."

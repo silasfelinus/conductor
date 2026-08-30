@@ -29,6 +29,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 import build_dream_proposal as dreams  # noqa: E402
 import dream_creative_ruts as ruts  # noqa: E402
+import dream_prose_quality as prose  # noqa: E402
 
 API_URL = "https://api.anthropic.com/v1/messages"
 API_VERSION = "2023-06-01"
@@ -129,6 +130,18 @@ Shape:
 
 Exactly one location, one character, two rewards (one ITEM, one SKILL), one
 scenario. No narrator. rarity is one of COMMON, UNCOMMON, RARE, EPIC, LEGENDARY.
+
+USER-FACING COPY IS A HARD CONTRACT, NOT DATABASE SHORTHAND.
+The `idea`, `vibe.line`, every location's `known_for`, `local_rule`, and
+`best_scene`, and the Scenario `setup` are displayed to people as prose. Write
+them as complete, properly capitalized sentences with terminal punctuation, not
+telegraphic labels or noun phrases. They must explain enough to make sense when
+a card shows the field by itself. Keep the sharpness of a good tagline, but do
+not confuse brevity with incompleteness: the vibe line should communicate the
+world's governing mood, pressure, or strange rule; each location field should
+add a distinct piece of concrete world logic, consequence, or scene. Prefer one
+substantial sentence to a tiny fragment. Do not omit punctuation merely because
+the JSON key already names the field.
 
 VARIETY IS A PRIMARY REQUIREMENT, NOT A POLISH STEP.
 The Facets must change the ontology and story machinery of the world, not merely
@@ -456,7 +469,7 @@ def story_diversity_complaints(
     facet_text = json.dumps(seed_facets or {}, ensure_ascii=False).casefold()
     creative_words = set(re.findall(r"[a-z]+", creative_text))
     facet_words = set(re.findall(r"[a-z]+", facet_text))
-    complaints: list[str] = []
+    complaints: list[str] = prose.complaints(proposal)
 
     bureaucratic_hits = creative_words & BUREAUCRACY_MARKERS
     facets_request_bureaucracy = bool(facet_words & BUREAUCRACY_FACET_MARKERS)
