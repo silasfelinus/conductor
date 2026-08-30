@@ -152,8 +152,7 @@ tasks:
 - id: t-017
   milestone: m2
   title: "Add first-party Kind Robots authorization-code SSO"
-  status: review
-  owner: worker
+  status: done
   passes: 0
   stakes: reversible
   depends_on: t-016
@@ -162,14 +161,16 @@ tasks:
 
 
     Implemented the Kind Robots side of first-party authorization-code SSO on worker/rainbow-butterflies-t-017-20260830-052900-91e4: exact registered redirect allowlists, high-entropy state round-trip, PKCE S256, a two-minute single-use hashed authorization-code table, browser session ownership, safe login return handling, transactional replay protection, minimum identity-only exchange, docs, and a focused contract check. Ready for PR verification.
+
+    Merged silasfelinus/kind_robots#2217 as 43b9fe345c06b0259d27f0e01fb41cb6e6e2eb84. Kind Robots now provides a first-party authorization-code handoff with exact registered redirects, high-entropy state round-trip, PKCE S256, two-minute single-use hashed codes, transactional replay protection, session-derived identity, and minimum id/username exchange only. Required checks were green on head 2b0735c44bb58ab3f8bf620f8165cc14ea2da63a: TypeScript run 33295342670, Contract verifiers run 33295342517, and First-Party SSO Contract verify run 33295342627. No reviews or review threads were outstanding, and the implementation branch was automatically deleted after merge.
   claimed_by: 2026-08-30T052900Z-rainbow-butterflies-t-017-91e4
   claimed_at: '2026-08-30T05:29:00Z'
-  updated: '2026-08-30T05:37:00Z'
+  updated: '2026-08-30T05:46:00Z'
 
 - id: t-018
   milestone: m2
   title: "Wire Rainbow Butterflies single-login sessions through the BFF"
-  status: waiting
+  status: ready
   owner:
   passes: 0
   stakes: reversible
