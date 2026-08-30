@@ -16,7 +16,7 @@ it only skews the digest's portfolio-percentage math -- so this is advisory
 only, like audit_roadmaps.py's own advisory findings: it never fails CI, it
 just reports.
 
-Two mismatch shapes, symmetric with check_pr_merged_drift.py's "roadmap state
+Three mismatch shapes, symmetric with check_pr_merged_drift.py's "roadmap state
 must reflect live reality" principle:
 
   NOT-STARTED WITH DONE WORK: milestone status is a not-yet-started value
@@ -30,6 +30,12 @@ must reflect live reality" principle:
   tasks" section) and are excluded from this side of the check -- a milestone
   can legitimately be "done" while a recurring polish/upkeep task under it
   keeps cycling forever.
+
+  NON-DONE STATUS WITH ALL WORK DONE: milestone status is anything other than
+  a done value while every non-recurring task under it is already `done`.
+  This catches stale in-progress/planned/custom status values after their
+  finite work has actually finished. Recurring tasks are ignored here for the
+  same reason as above: they are standing work and never become `done`.
 
 Excludes paused, retired, and finished projects by default according to
 project-overrides.yaml, matching check_pr_merged_drift.py,
@@ -63,10 +69,9 @@ ACTIVE_STATUS = "active"
 
 # Vocabulary is not fully standardized across roadmaps (seen in the wild:
 # not-started/pending/waiting, in-progress/planned/ready, done/complete) --
-# stay tolerant rather than hard-failing on an unrecognized value. Anything
-# not in one of these two sets (e.g. "in-progress") is left alone: there is
-# no task-count shape that makes "in-progress" clearly wrong the way there is
-# for the not-started/done extremes.
+# stay tolerant rather than hard-failing on an unrecognized value. The third
+# finding shape below deliberately treats any non-done status as stale only
+# when every finite task under the milestone is already done.
 NOT_STARTED_STATUSES = {"not-started", "pending", "waiting"}
 DONE_STATUSES = {"done", "complete"}
 
@@ -135,10 +140,11 @@ def milestone_findings(project: str, roadmap: dict[str, Any]) -> list[dict[str, 
             continue
         status = str(milestone.get("status") or "").strip().lower()
         done_tasks = [t for t in tasks if str(t.get("status") or "").strip().lower() == "done"]
+        finite_tasks = [t for t in tasks if not t.get("recurring")]
         open_non_recurring = [
             t
-            for t in tasks
-            if str(t.get("status") or "").strip().lower() != "done" and not t.get("recurring")
+            for t in finite_tasks
+            if str(t.get("status") or "").strip().lower() != "done"
         ]
 
         if status in NOT_STARTED_STATUSES and done_tasks:
@@ -171,6 +177,26 @@ def milestone_findings(project: str, roadmap: dict[str, Any]) -> list[dict[str, 
                         f"milestone status is {milestone.get('status')!r} but "
                         f"{len(open_non_recurring)}/{len(tasks)} of its non-recurring "
                         "tasks are not done"
+                    ),
+                }
+            )
+        elif (
+            status not in DONE_STATUSES
+            and finite_tasks
+            and not open_non_recurring
+        ):
+            findings.append(
+                {
+                    "project": project,
+                    "milestone": milestone_id,
+                    "title": milestone.get("title"),
+                    "milestone_status": milestone.get("status"),
+                    "shape": "not-done-status-with-all-work-done",
+                    "done_task_count": len(finite_tasks),
+                    "total_task_count": len(tasks),
+                    "detail": (
+                        f"milestone status is {milestone.get('status')!r} but all "
+                        f"{len(finite_tasks)} non-recurring task(s) are already done"
                     ),
                 }
             )
