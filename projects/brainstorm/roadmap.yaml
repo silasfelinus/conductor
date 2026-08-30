@@ -852,9 +852,9 @@ tasks:
   - id: t-032
     milestone: m6
     title: Reconcile milestone status fields against actual task completion
-    status: ready
+    status: claimed
     gate_human: false
-    owner: null
+    owner: worker
     stakes: reversible
     passes: 0
     note: >-
@@ -878,6 +878,6 @@ tasks:
       this is a pure bookkeeping correction so the kind_robots front-end's
       portfolio-percentage math (which reads milestone status, per CONTROL.md)
       stops under-reporting a project that is in fact almost entirely finished.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-30T01:00:00Z'
+    claimed_by: openai-scheduled-20260830T151755Z-brainstorm-t032-z9c4
+    claimed_at: '2026-08-30T15:17:55Z'
+    updated: '2026-08-30T15:17:55Z'
