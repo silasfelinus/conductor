@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-30T09:28:18Z
+Generated: 2026-08-30T09:43:07Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **831**
-- Outcomes: blocked: 16, cancelled: 1, done: 814
+- Closed tasks recorded: **832**
+- Outcomes: blocked: 16, cancelled: 1, done: 815
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
-| interface-vision | 92 | 100% |
+| interface-vision | 93 | 100% |
 | kapowarr | 48 | 100% |
 | kind-economy | 6 | 100% |
 | kind-robots | 53 | 98% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 815 | 99% |
+| software | 816 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-30 `interface-vision/t-104` — Slice 64 (kind_robots#2224) picked up the ~150-instance kr-note status-callout pool flagged exhausted-of-easy-wins by slice 62: found a sub-pool of 8 instances across 5 files that already matched the canonical border-{status}/40 bg-{status}/10 opacity values but omitted font-semibold, and used a trailing font-normal override to convert them without silently adding weight that wasn't there before. Also surfaced and correctly excluded a look-alike but unsafe sub-pool: several admin/*.vue "admin access required" gate panels share the same border+bg color classes but wrap a heading with no explicit text color of its own -- converting the wrapper would recolor the heading via CSS inheritance, a real visual change disguised as a mechanical one. Checking whether a matching-color-class instance's text color is stated explicitly (vs. inherited from the wrapper) is now a general filter worth applying before any kr-note/kr-panel conversion, not just this pool.
 - 2026-08-30 `rainbow-butterflies/t-020` — forum-thread.vue had drifted entirely off the canonical /api/v1/forum/* endpoints onto a legacy chatStore path with a hardcoded, wrong channel list and an unimplemented reply handler -- the backend (server/utils/forumApi.ts) was already built and unused by any client. Worth checking, before starting a "build X" task, whether the backend already exists and only the frontend wiring is missing; the task note's own framing ("let humans and agents post through the same API") was the tell that a real API already existed to point at. Also: not every authorship kind a task note names has to be invented in the same slice -- HUMAN_AI and SYSTEM had no schema/backend concept behind them, so they were flagged as a follow-up needing a product decision rather than guessed at.
 - 2026-08-30 `interface-vision/t-104` — Slice 63 (kind_robots#2220) was a clean, exact-match kr-panel substitution on project-front-page.vue's two raised-surface sections, following the same override convention prior slices established (kr-panel + trailing rounded-3xl/p-5 overrides for values that differ from kr-panel's rounded-2xl/p-6 defaults). Verified the CSS definition (assets/css/tailwind.css .kr-panel) before merging to confirm the override convention actually produces the same computed classes, rather than trusting the PR description's claim alone.
 - 2026-08-30 `interface-vision/t-104` — Slice 62: the kr-note family (border-{status}/N + bg-{status}/M + text-{status}) is a much bigger candidate pool (~150+ raw grep hits) than any prior mechanical sweep, but padding/opacity/text-size/font-weight vary too widely across it to convert blindly -- unlike kr-container/kr-surface/kr-panel-flat, where near-total instances matched the canonical shape exactly. Scoping the slice to only instances where every differing attribute was explicit in the original class list (never inferring an ambient/inherited text-size or font-weight) kept the substitution provably byte-for-visual-identical at the cost of converting only 7 of ~150 instances this slice. Also worth noting: a family of otherwise-identical pills/badges sharing one non-kr-note color (stage-manager.vue's primary/success/warning trio) should be skipped as a set rather than partially converted, since fixing two of three fragments what was a visually consistent group.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-30 `cthulhuquarium/t-064` — Milestone status drift can also hide behind non-extreme values (in-progress/planned) with 100% task completion underneath, not just the not-started/done extremes check_milestone_status_drift.py originally checked -- conductor/t-138 (merged same day) widens that check so this class of drift surfaces automatically going forward.
 - 2026-08-29 `interface-vision/t-104` — A recurring mechanical-sweep task's 'exhausted against main@<SHA>' note goes stale the moment main moves, even by unrelated commits -- several same-day sessions treated the note as still valid without re-running the actual grep, and a fresh full-repo search turned up six real unconverted candidates. Re-verify against the exact current SHA before trusting a same-day exhaustion claim, don't just check whether the SHA moved.
 - 2026-08-29 `brainstorm/t-025` — Reusing ART_ENGINE_PROFILES keeps prompt-only engine availability centralized and naturally excludes source-image-only engines from Brainstorm's fresh text-to-image flow.
-- 2026-08-29 `rainbow-butterflies/t-012` — Once one of DESIGN-BRIEF.md's five 'fundraising experiments worth testing' has already been picked for the calendar (Butterfly bounties, t-008/CONTENT-CALENDAR.md), a sibling task asking to 'prepare' a different named experiment (t-012, Why I donated + skeptics build too) should be scoped as a second ready-to-launch alternative, not a competing Week-6 proposal -- state the relationship explicitly rather than silently overwriting the calendar's existing recommendation.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-30T09:28:18Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-30T09:43:07Z_
