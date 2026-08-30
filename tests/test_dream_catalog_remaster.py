@@ -80,9 +80,9 @@ CLEAN_PROPOSAL = {
     "locations": [
         {
             "title": "Regrowth Yards",
-            "known_for": "hulls that regrow themselves overnight",
-            "local_rule": "never wake a hull that is still knitting",
-            "best_scene": "a scar in the hull hums, flushes pink, and closes over",
+            "known_for": "The yards are known for hulls that regrow torn steel plates overnight.",
+            "local_rule": "Never wake a hull while its living seams are still knitting shut.",
+            "best_scene": "A scar in the hull hums, flushes pink, and closes over while the tide rises.",
             "art_direction": "A coral-pink dry-dock of wet iron ribs and glowing resin "
             "veins, cold blue worklight raking across barnacled steel plate.",
         }
