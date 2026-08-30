@@ -67,15 +67,15 @@ def proposal() -> dict:
         "idea": "At impossible low tide, a transformed scout races a returning wall of sea to relight a stranded village beacon.",
         "vibe": {
             "title": "Starwake Scouts",
-            "line": "Transformation is a flare fired into weather.",
+            "line": "Transformation is a flare fired directly into hostile weather.",
             "art_direction": "A tide-light scout standing on exposed seabed as a silver wall of ocean rises behind her.",
         },
         "locations": [
             {
                 "title": "The Boneglass Reach",
-                "known_for": "a seabed road exposed for six minutes at impossible low tide",
-                "local_rule": "follow the sea cucumbers when the horizon goes silent",
-                "best_scene": "the returning ocean rises into a vertical wall beyond the last beacon",
+                "known_for": "A seabed road appears for six minutes whenever impossible low tide exposes the reach.",
+                "local_rule": "Follow the sea cucumbers whenever the horizon suddenly goes silent.",
+                "best_scene": "The returning ocean rises into a vertical wall beyond the final beacon on the road.",
                 "art_direction": "Black demonic-bone ribs arch over wet mirror-bright sand while luminous sea cucumbers form a winding trail.",
             }
         ],
