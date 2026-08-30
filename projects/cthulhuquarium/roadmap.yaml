@@ -2688,19 +2688,32 @@ tasks:
 - id: t-054
   milestone: m3
   title: Swap the finale's placeholder reveal for the real screen-finale/set-last-aquarium plates
-  status: claimed
+  status: done
   passes: 0
   stakes: reversible
   depends_on: t-039
-  note: |-
+  note: >-
     Kaizen from t-039 (the last aquarium / finale purchase, kind_robots PR #2166). t-039 shipped the mechanical gate -- the terminal purchase, the one-time reveal dialog, and a permanent code-only canvas vignette/cool-wash "reframe" of the existing tank -- but the two art plates the design note calls for were not yet generated: `screen-finale` (the eye "mid-drift and incurious" beyond a window pane, same albumen interior stock as screen-shop/screen-bestiary) and `set-last-aquarium` (the shop plate). Both are already queued in `projects/art-generate.yaml` (`scripts/build_cthulhuquarium_art_queue.py`), so this task does NOT need to invent new prompts -- it needs the render pipeline to actually run them (the render-box healthcheck fixes in conductor PR #3037 should help here) and the resulting images to land somewhere the kind_robots app can read them, then: (1) wire `screen-finale` into the finale reveal dialog in `components/cthulhuquarium/cthulhuquarium-game.vue` (currently a text-only `<Icon name="kind-icon:eye">` placeholder), replacing or supplementing the vignette-only canvas reframe with the real plate; (2) wire `set-last-aquarium` into the shop row for the purchase (currently no art, text-only title/description/button). Do not touch the purchase/economy logic itself -- t-039 already ships that correctly; this is presentation-only.
     Reconciliation (scheduled sweep): task was stuck at status: review (claimed_by 20260828T032900Z-scheduled-cq-t054, claimed_at 2026-08-28T03:32:43Z, ~2.4 days stale) with no corresponding PR or branch found on kind_robots (checked list_pull_requests, list_branches, and search_issues/search_code for t-054/screen-finale/set-last-aquarium -- nothing). Code search confirms the underlying work genuinely never landed: components/cthulhuquarium/cthulhuquarium-game.vue still carries the PLACEHOLDER PRESENTATION comment and server/utils/aquariumEconomy.ts still notes the finale dialog is 'still waiting on its own screen-finale plate.' Whatever session set status: review evidently never opened the PR (crashed, or a status write raced ahead of the actual push). Resetting to ready so this can be reclaimed and actually implemented -- the render/wiring work described in this task's existing note is still needed.
 
     Roadmap audit corrected the stale render premise: both authored plates already exist on Conductor main at projects/cthulhuquarium/art/cthulhuquarium-screen-finale.webp (blob 83019542a5ae025d65ade2c201304c2938eba88f, 121978 bytes) and cthulhuquarium-set-last-aquarium.webp (blob 7c5440cb6679e5974705829aff51a59583d7408d, 239382 bytes). The remaining work is only delivery into a Kind Robots-readable asset location and presentation wiring in cthulhuquarium-game.vue; no new render should be queued. Connector inspection also reconfirmed the current placeholder icon/text and text-only shop row are still present. Returning ready with the blocker narrowed rather than generating duplicate art.
-  updated: '2026-08-30T21:27:20Z'
+
+    IMPLEMENTED (conductor scheduled Agent run, 20260830T212719-scheduled-cq-t054b): wired
+    both plates as bundled Vite assets (assets/images/cthulhuquarium/) rather than through
+    distribute_images.py's media pipeline, which is a manual step on Silas's home network
+    unreachable from CI/agents. screenFinaleArt renders at the top of the finale reveal
+    dialog; setLastAquariumArt renders in the shop row via kr-art-plate, matching the fish
+    catalog's icon-plus-text layout. Verified: vue-tsc clean, eslint+prettier clean,
+    test:layout-contract holds baseline. kind_robots PR #2239 open, awaiting CI.
+
+    MERGED (conductor scheduled Agent run, 20260830T212719-scheduled-cq-t054b): kind_robots
+    PR #2239 merged squash 1c1aea43 -- all 38 checks green, mergeable_state clean. Both
+    plates now live in cthulhuquarium-game.vue's finale dialog and shop row.
+  updated: '2026-08-30T21:40:53Z'
   owner: reviewer
   claimed_by: 20260830T212719-scheduled-cq-t054b
   claimed_at: '2026-08-30T21:27:20Z'
+  implementation_pr: 'silasfelinus/kind_robots#2239'
 - id: t-055
   milestone: m3
   title: Surface breeding as a real player action in the tank UI
