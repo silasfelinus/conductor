@@ -340,7 +340,7 @@ tasks:
 - id: t-026
   milestone: m2
   title: "Verify the complete forum MVP across security, accessibility, and responsive UX"
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
@@ -352,9 +352,95 @@ tasks:
     basic accessibility, and phone/tablet/desktop visual checks. Fix reversible findings and
     document any true human gates. Do not call the user-facing software project finished on
     task count alone.
+
+    Full pass completed against all 8 checklist dimensions with file:line evidence (deep-read
+    of server/api/v1/forum/**, forumApi.ts, agentCredentials.ts, comfyGate.ts, manaGate.ts,
+    contentAccess.ts, restriction.ts, and the forum Vue components). Results:
+    auth/key security CORRECT (every write route requires forum:write scope via
+    requireScopedApiUser, no bypass found; one unrelated dead-code note -- forumApiContract's
+    credentialHasForumScope is unit-tested but never called, real enforcement all goes through
+    authHasScope); credential revocation CORRECT (validateAgentCredential does a live DB lookup
+    + revokedAt/expiresAt check on every request, no caching layer); object embeds CORRECT
+    (attach-time and read-time both re-check the embedded object's live isPublic/isActive/
+    isMature state, so a later-privatized embed disappears rather than leaking); generation
+    permission boundaries CORRECT (only the post's own author/bot can trigger generation,
+    balance always charges the authenticated caller, cross-checked at both request time and
+    async-completion time); forum nesting -- cycles structurally impossible (auto-increment IDs),
+    but no explicit max-depth guard, only indirect rate-limiting (12 posts/10min/actor); public/
+    private/maturity access -- thread-root visibility consistent between list and detail routes,
+    but found and FIXED a real gap: a reply fetched directly by ID never re-checked whether its
+    own thread root was still visible, so a removed/privatized/restricted-author root's replies
+    kept resolving individually via GET even though threads/[id] correctly 404s the whole thread
+    -- fixed in posts/[id].get.ts by re-checking the origin post's visibility with the same
+    filter requireForumThreadRoot uses; keyboard/accessibility -- every interactive control is a
+    real button/a, no keyboard traps, but the load-error banner and "Loading replies..." state
+    had no role="alert"/role="status" (forum-art-generation-context.vue already had this
+    pattern) -- fixed; also found avatarImage is defined in every author type but never
+    rendered anywhere in the forum UI (emoji-only identity today), filed as t-033;
+    direct-load/refresh -- backend is fully self-contained/SSR-fetchable, but there is no
+    useAsyncData/SSR wiring on the forum listing and no dedicated per-thread permalink
+    page/route (thread expansion is pure client-side state) -- not a bug, nothing breaks on
+    refresh, but a real product-scope question worth flagging for Silas if "share a link to a
+    specific thread" is expected for MVP (not filed as a task pending that read).
+
+    Phone/tablet/desktop visual checks: this pass changed no layout/CSS (only `role`
+    attributes), and `npm run test:layout-contract` holds at the existing 207-violation
+    baseline with zero new violations. Per this repo's own documented constraint (kind_robots
+    migrated off Vercel, no PR-preview deploys exist anymore), real cross-width pixel
+    verification isn't possible pre-merge in this sandbox -- that is covered by the scheduled
+    responsive-layout-audit.yml `audit` check against production post-deploy, and final human
+    visual sign-off is t-027 (already a hard needs-human gate). Not claiming a pixel-level check
+    was performed here.
+
+    Verified: eslint + prettier --check clean on both changed files; vue-tsc --noEmit clean
+    repo-wide; all three forum contract test scripts (verifyForumApi/verifyForumGeneration/
+    verifyForumOpenApi) pass; test:layout-contract holds. Opened kind_robots#2237.
+
+    The two real-but-non-blocking gaps found (nesting-depth guard, avatarImage never rendered)
+    are filed as t-032 and t-033 rather than fixed unreviewed here, since one needs a policy
+    decision (what max depth) and the other is a real feature addition (image sizing/fallback),
+    not a one-line reversible fix.
   claimed_by: 20260830T194500Z-rainbow-butterflies-t026-claude
   claimed_at: '2026-08-30T19:42:08Z'
   updated: '2026-08-30T19:42:08Z'
+  implementation_pr: 'silasfelinus/kind_robots#2237'
+
+- id: t-032
+  milestone: m2
+  title: "Add a max reply-nesting-depth guard to the forum reply endpoint"
+  status: ready
+  owner:
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen/finding from t-026's forum MVP acceptance pass. requireForumReplyParent
+    (server/utils/forumApi.ts) accepts any parentId as long as it belongs to the thread --
+    cycles are structurally impossible (auto-increment Chat IDs, previousEntryId must
+    reference an already-existing row), but there is no explicit max-nesting-depth check.
+    Depth today is bounded only indirectly by the per-actor write rate limit (12 posts/
+    10min). Not exploitable as a crash/DoS today (forum-thread.vue renders replies as a
+    flat list, not a recursive tree), but a determined actor with multiple accounts/
+    credentials could still build an arbitrarily deep previousEntryId chain over time.
+    Add an explicit max-depth check in requireForumReplyParent (walk previousEntryId back
+    from the proposed parent, or track a stored depth column) and pick a sane limit
+    (e.g. 5-10 levels) with a clear 400 error when exceeded.
+
+- id: t-033
+  milestone: m2
+  title: "Render avatarImage in the forum UI instead of emoji-only author identity"
+  status: ready
+  owner:
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen/finding from t-026's forum MVP acceptance pass. Every ForumAuthor type
+    (components/user/forum-author-badge.vue, forum-thread.vue) already carries
+    user.avatarImage / bot.avatarImage, but forum-author-badge.vue never renders an
+    <img> -- author identity is emoji-only (🤖/👤) today. Not an accessibility defect
+    (no missing-alt issue since no image is rendered), but an incomplete feature: wire
+    avatarImage into forum-author-badge.vue with sane sizing/fallback (reuse whatever
+    avatar-rendering pattern the rest of the site already uses, e.g. resolveArtVariantSrc-
+    style fallback chain) rather than a one-off implementation.
 
 - id: t-029
   milestone: m2
