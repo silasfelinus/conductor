@@ -152,21 +152,19 @@ tasks:
 - id: t-017
   milestone: m2
   title: "Add first-party Kind Robots authorization-code SSO"
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-016
-  note: >
-    Add the Kind Robots side of cross-domain first-party sign-in for Rainbow Butterflies:
-    authorize route, anti-forgery state, PKCE/equivalent verifier, short-lived single-use
-    authorization code, safe return-url allowlist, exchange endpoint, expiry/consumption,
-    and tests for replay/open-redirect/cross-user failure cases. Kind Robots remains the
-    identity authority and Rainbow never receives or stores a Kind Robots password. Keep
-    the implementation reusable by future first-party Kind Robots-powered sites.
+  note: |-
+    Add the Kind Robots side of cross-domain first-party sign-in for Rainbow Butterflies: authorize route, anti-forgery state, PKCE/equivalent verifier, short-lived single-use authorization code, safe return-url allowlist, exchange endpoint, expiry/consumption, and tests for replay/open-redirect/cross-user failure cases. Kind Robots remains the identity authority and Rainbow never receives or stores a Kind Robots password. Keep the implementation reusable by future first-party Kind Robots-powered sites.
+
+
+    Implemented the Kind Robots side of first-party authorization-code SSO on worker/rainbow-butterflies-t-017-20260830-052900-91e4: exact registered redirect allowlists, high-entropy state round-trip, PKCE S256, a two-minute single-use hashed authorization-code table, browser session ownership, safe login return handling, transactional replay protection, minimum identity-only exchange, docs, and a focused contract check. Ready for PR verification.
   claimed_by: 2026-08-30T052900Z-rainbow-butterflies-t-017-91e4
   claimed_at: '2026-08-30T05:29:00Z'
-  updated: '2026-08-30T05:29:00Z'
+  updated: '2026-08-30T05:37:00Z'
 
 - id: t-018
   milestone: m2
