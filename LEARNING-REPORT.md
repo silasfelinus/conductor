@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-30T02:35:33Z
+Generated: 2026-08-30T02:47:09Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **824**
-- Outcomes: blocked: 16, cancelled: 1, done: 807
+- Closed tasks recorded: **825**
+- Outcomes: blocked: 16, cancelled: 1, done: 808
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 87 | 100% |
 | conductor-app | 4 | 100% |
-| cthulhuquarium | 40 | 98% |
+| cthulhuquarium | 41 | 98% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 19 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 808 | 99% |
+| software | 809 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-30 `cthulhuquarium/t-064` — Milestone status drift can also hide behind non-extreme values (in-progress/planned) with 100% task completion underneath, not just the not-started/done extremes check_milestone_status_drift.py originally checked -- conductor/t-138 (merged same day) widens that check so this class of drift surfaces automatically going forward.
 - 2026-08-29 `interface-vision/t-104` — A recurring mechanical-sweep task's 'exhausted against main@<SHA>' note goes stale the moment main moves, even by unrelated commits -- several same-day sessions treated the note as still valid without re-running the actual grep, and a fresh full-repo search turned up six real unconverted candidates. Re-verify against the exact current SHA before trusting a same-day exhaustion claim, don't just check whether the SHA moved.
 - 2026-08-29 `brainstorm/t-025` — Reusing ART_ENGINE_PROFILES keeps prompt-only engine availability centralized and naturally excludes source-image-only engines from Brainstorm's fresh text-to-image flow.
 - 2026-08-29 `rainbow-butterflies/t-012` — Once one of DESIGN-BRIEF.md's five 'fundraising experiments worth testing' has already been picked for the calendar (Butterfly bounties, t-008/CONTENT-CALENDAR.md), a sibling task asking to 'prepare' a different named experiment (t-012, Why I donated + skeptics build too) should be scoped as a second ready-to-launch alternative, not a competing Week-6 proposal -- state the relationship explicitly rather than silently overwriting the calendar's existing recommendation.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-29 `rainbow-butterflies/t-006` — A Worker session had already set status: review and finished the actual content (AMI-IDENTITY.md) but never opened the PR, so the branch (worker/rainbow-t006-ami- identity-20260829) sat unreviewed. Opening a PR from an existing worker/* branch without pushing any new commits to it is within the Reviewer's scope; a clean three-way merge onto current main showed only the new file as the diff once the branch's own stale roadmap.yaml edit was superseded by a later main commit. Worth checking for stranded no-PR worker branches (not just open PRs) at session start, since select_role.py's candidate_worker_branches surfaces them even when list_pull_requests shows nothing to review.
 - 2026-08-29 `rainbow-butterflies/t-003` — Kind Robots already contains a surprisingly complete forum substrate in Chat/ToForum/channel/thread relations and supports JWT plus legacy user API keys. Reusing those primitives reduces duplication, but public agent onboarding needs a narrower credential lifecycle with scopes, expiry, revocation, Bot identity, and operator provenance.
 - 2026-08-29 `conductor/t-137` — A PR's own "Flags for Reviewer" section can double as a complete kaizen brief -- PR #3113 named both follow-up gaps (stale Vercel default in healthcheck.ps1 itself, a share-recovery double-restart race) precisely enough that filing t-137 needed no independent investigation, only transcription. Fixing a config-default drift class (this is the second stale Vercel-host default found in this file's history) is only durably closed by a structural regression test, not just the value change -- added two to test_home_server_share_watchdog.py so a future edit can't silently reintroduce either bug.
-- 2026-08-28 `ruler-hooked/t-018` — A task can go stale purely because the asset it's tracking outlived the rolling window of the file used to check it -- art-prompts.yaml only retains a recent slice of requests, so the 37-piece matrix's original job ids (10020-10056) had aged out entirely by the time this session looked, even though the renders themselves had long since landed. Direct HTTP verification against the actual delivery host (media.acrocatranch.com) was the reliable check; the tracking file's absence of an entry was not evidence of non-delivery.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-30T02:35:33Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-30T02:47:09Z_
