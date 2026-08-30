@@ -10,10 +10,13 @@ import scripts.repair_dream_prose_catalog as repair
 
 def _proposal() -> dict:
     proposal = copy.deepcopy(proposals.SAMPLE_PROPOSAL)
+    proposal["title"] = "Monsoon Static"
+    proposal["slug"] = "monsoon-static"
     proposal["idea"] = (
         "A storm-battered neighborhood powers its flood barrier with live rooftop songs, "
         "forcing every block to choose what it will sing when the water rises."
     )
+    proposal["vibe"]["title"] = "Monsoon Static"
     proposal["vibe"]["line"] = "The storm only spares the block that out-sings it."
     proposal["locations"][0].update(
         title="The Roofline Circuit",
@@ -24,8 +27,9 @@ def _proposal() -> dict:
             "back up hand over hand"
         ),
     )
+    proposal["characters"][0]["name"] = "Mast Crew"
     proposal["scenarios"][0]["setup"] = (
-        "In Monsoon Static at The Roofline Circuit, the mast crew races a rising surge "
+        "In Monsoon Static at The Roofline Circuit, Mast Crew races a rising surge "
         "while the whole block sings current into a failing barrier."
     )
     return proposal
