@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 48
     stakes: reversible
@@ -651,9 +651,9 @@ tasks:
 
       Static reading against the current feature set remains exhausted across every angle tried across cycles 51-65 (races/in-flight guards, aria-busy/aria-hidden, form-control labeling, keyboard/ARIA semantics, and access control -- twice now, cycles 52 and 65, same clean result both times). Re-armed to `ready`; a future cycle should treat the access-control lens as already covered (cycles 52 and 65) rather than a candidate to re-try, and should expect another no-op unless new kind_robots commits touch model-builder, model-builder/t-031's live-smoke-test path unblocks (still needs-human/soft_gate -- no live-browser fallback in this sandbox), or a genuinely new lens is found.
     owner: worker
-    claimed_by: 20260824T112831Z-mb-t029-cycle53
-    claimed_at: '2026-08-24T11:28:32Z'
-    updated: '2026-08-24T11:38:21Z'
+    claimed_by: claude-scheduled-20260830T1500Z-mb-t029-cycle66
+    claimed_at: '2026-08-30T14:28:04Z'
+    updated: '2026-08-30T14:28:04Z'
 
   - id: t-030
     milestone: m6
