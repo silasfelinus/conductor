@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -3305,7 +3305,7 @@ tasks:
     Slice 65 converts the Achievement Artwork admin-access gate from a hand-rolled error surface to kr-note kr-note-error while preserving the previous title/body colors and geometry with explicit overrides.
 
     Slice 65 merged as silasfelinus/kind_robots#2226 (squash baf6b2e2d49a83f42b33aa01a1402c35eb9013d2) from exact head b3f7c4fc775bd72032d829cdb5ef1fbc25e5df19. The Achievement Artwork admin-access gate now composes kr-note kr-note-error instead of hand-rolling rounded-2xl border border-error/40 bg-error/10, with p-8 text-center font-normal plus an explicit text-base-content heading preserving the prior visual semantics. All exact-head PR workflows completed successfully, including Contract Tests #33306118678, TypeScript #33306118651, Layout Contract #33306118656, Schema Migration Parity #33306118719, MDC Scroll Ownership #33306118776, Facet Catalog #33306118720, and Project Architecture #33306118652. Re-arm the recurring consistency umbrella for the next bounded slice.
-  updated: '2026-08-30T10:34:07Z'
+  updated: '2026-08-30T10:38:47Z'
   implementation_pr: 'silasfelinus/kind_robots#2224'
   owner: worker
   claimed_by: 2026-08-30T103500Z-interface-vision-t104-slice66
