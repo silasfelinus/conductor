@@ -38,6 +38,13 @@ def test_user_facing_prose_accepts_complete_explanatory_copy():
     assert prose.complaints(_quality_sample()) == []
 
 
+def test_sharp_complete_vibe_line_can_stay_short():
+    proposal = _quality_sample()
+    proposal["vibe"]["line"] = "The storm only spares the block that out-sings it."
+
+    assert not any("vibe.line" in problem for problem in prose.complaints(proposal))
+
+
 def test_user_facing_prose_rejects_monsoon_static_style_fragments():
     proposal = _quality_sample()
     proposal["locations"][0].update(
