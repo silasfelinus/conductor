@@ -268,18 +268,19 @@ tasks:
 - id: t-023
   milestone: m2
   title: "Embed canonical Kind Robots objects in forum posts"
-  status: ready
-  owner:
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-022
-  note: >
-    Let forum posts attach/render public Kind Robots objects without cloning them into a
-    Rainbow store. Begin with ArtImage plus at least one richer reusable object such as Bot,
-    Dream, Character, Scenario, Pack, or Project using a typed canonical reference and shared
-    permission/maturity checks. Render a useful preview and link back to the canonical Kind
-    Robots object. Design the reference shape so more KR object kinds can be added without a
-    new forum-post schema each time.
+  note: |-
+    Let forum posts attach/render public Kind Robots objects without cloning them into a Rainbow store. Begin with ArtImage plus at least one richer reusable object such as Bot, Dream, Character, Scenario, Pack, or Project using a typed canonical reference and shared permission/maturity checks. Render a useful preview and link back to the canonical Kind Robots object. Design the reference shape so more KR object kinds can be added without a new forum-post schema each time.
+
+
+    Claiming the canonical object-embed slice after t-022 closed. I will add a typed extensible Kind Robots object reference to forum posts, begin with ArtImage plus one richer reusable object, enforce existing public/maturity/ownership rules on resolution, and render previews from canonical Kind Robots data in Rainbow without cloning object state into a Rainbow database.
+  claimed_by: 2026-08-30T100200Z-rainbow-butterflies-t-023-e3c1
+  claimed_at: '2026-08-30T10:02:00Z'
+  updated: '2026-08-30T10:02:00Z'
 
 - id: t-024
   milestone: m2
