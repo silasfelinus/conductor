@@ -2,15 +2,21 @@
 // Paths and args below are taken from the real launcher bats (startcomfyfast.bat,
 // webui-user.bat, 2026-07-05) — verify they still match, then: pm2 start ecosystem.config.js
 //
-// Each app points pm2 at the SAME Python command the launcher .bat runs, so pm2
-// supervises the real process (crash detection + clean restarts) instead of a
-// cmd.exe wrapper. Tailscale Serve is NOT managed here — `tailscale serve --bg`
-// config persists across reboots; see README "Tailscale Serve" for the one-time
-// setup. The pip-repair bootstrap from webui-user.bat is also intentionally not
-// here (one-time repair job — keep the old bat around for that).
+// Each app points pm2 at the real long-running process so pm2 supervises crash
+// detection + clean restarts instead of a cmd.exe wrapper. ComfyUI is a special
+// case on Windows: its venv python.exe is a redirector that can create a visible
+// child console even when pm2 uses windowsHide. Launch the base interpreter
+// directly and set __PYVENV_LAUNCHER__ so Python still adopts the Comfy venv.
+// Tailscale Serve is NOT managed here — `tailscale serve --bg` config persists
+// across reboots; see README "Tailscale Serve" for the one-time setup. The
+// pip-repair bootstrap from webui-user.bat is also intentionally not here
+// (one-time repair job — keep the old bat around for that).
 
 // ---- VERIFY THESE PATHS ----------------------------------------------------
 const COMFY_DIR = 'D:/comfy/comfy-fast'
+const COMFY_BASE_PYTHON =
+  process.env.COMFY_BASE_PYTHON ||
+  'C:/Users/silasfelinus/AppData/Local/Programs/Python/Python310/python.exe'
 const LOG_DIR = `${__dirname}/logs`
 
 // The SMB share on alexandria, reached from this box. Every model path below is
@@ -40,17 +46,25 @@ module.exports = {
   apps: [
     {
       // ComfyUI — venv install at D:\comfy\comfy-fast.
-      // Mirrors startcomfyfast.bat:
-      //   call venv\Scripts\activate
+      // The original launcher activates the venv and runs:
       //   python main.py --listen 127.0.0.1 --port 8188 --enable-cors-header
+      // On Windows, venv\Scripts\python.exe is itself a redirector process. It
+      // can spawn the base interpreter with a visible conhost even though pm2
+      // started the redirector hidden. Point pm2 at the base interpreter instead,
+      // then set __PYVENV_LAUNCHER__ to the venv executable: Python uses the same
+      // venv sys.prefix/site-packages while pm2's windowsHide applies to the real
+      // interpreter. COMFY_BASE_PYTHON is overrideable if the base Python moves.
       // Binds 127.0.0.1 on purpose: Tailscale Serve (443) fronts it for remote
       // access, and the relay agent talks to localhost directly.
       name: 'comfyui',
       cwd: COMFY_DIR,
-      script: `${COMFY_DIR}/venv/Scripts/python.exe`,
+      script: COMFY_BASE_PYTHON,
       args: 'main.py --listen 127.0.0.1 --port 8188 --enable-cors-header',
       interpreter: 'none',
       windowsHide: true,
+      env: {
+        __PYVENV_LAUNCHER__: `${COMFY_DIR}/venv/Scripts/python.exe`
+      },
       autorestart: true,
       restart_delay: 5000,
       max_restarts: 50,
