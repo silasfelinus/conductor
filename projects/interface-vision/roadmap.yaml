@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -3330,7 +3330,25 @@ tasks:
     storybook-library-page.vue, scene-animator.vue x2, narrative-ingredient-picker.vue,
     narrative-ingredient-multi-picker.vue) once someone confirms whether the opacity is
     deliberate or drift.
-  updated: '2026-08-30T05:29:23Z'
+
+    Slice 59 (translucent kr-panel-flat dashed empty-state pool, the fourth mechanical pool
+    flagged in slice 57s own note). 10 occurrences across 8 files: narrative-ingredient-
+    picker.vue (x3), narrative-ingredient-multi-picker.vue (x3), cthulhuquarium-
+    curation.vue, coloring-book-curation.vue, conductor-pitch-manager.vue, conductor-
+    page.vue, storybook-library-page.vue, scene-animator.vue (x2). Converted rounded-Nxl
+    border border-dashed border-base-300 bg-base-100/N to kr-panel-flat border-dashed
+    [rounded-Nxl override] bg-base-100/N, preserving each panels exact prior translucency
+    via the trailing utility override -- same convention #2213/#2214 already used for
+    rounded-3xl overrides on the opaque variant. This resolves the "deliberate or drift"
+    ambiguity the prior note flagged without needing to answer it: the substitution is byte-
+    for-visual-effect identical regardless of whether the opacity itself was intentional. No
+    geometry/behavior change. Verified: eslint clean (one pre-existing conductor-pitch-
+    manager.vue no-unused-vars error reproduces identically on main), prettier --check flags
+    all 8 files but confirmed pre-existing on main via git stash before editing (baseline
+    drift, not introduced here), vue-tsc --noEmit repo-wide clean, test:layout-contract
+    holds (207 baseline unchanged, 0 new violations). Opened silasfelinus/kind_robots PR
+    from claude/eager-bohr-50o980.
+  updated: '2026-08-30T05:34:57Z'
   implementation_pr: 'silasfelinus/kind_robots#2214'
   owner: worker
   claimed_by: claude-20260830T0533Z-ivt104-sched6
