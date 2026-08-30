@@ -170,20 +170,19 @@ tasks:
 - id: t-018
   milestone: m2
   title: "Wire Rainbow Butterflies single-login sessions through the BFF"
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-017
-  note: >
-    Implement Sign in with Kind Robots in the Rainbow app using the approved authorization
-    code flow. The Rainbow server exchanges the code, creates an HttpOnly same-site session,
-    exposes the minimum current-user profile needed by the UI, handles logout/expiry, and
-    keeps Kind Robots credentials out of browser localStorage. Add failure-state and session
-    tests. No production secrets or public domain activation.
+  note: |-
+    Implement Sign in with Kind Robots in the Rainbow app using the approved authorization code flow. The Rainbow server exchanges the code, creates an HttpOnly same-site session, exposes the minimum current-user profile needed by the UI, handles logout/expiry, and keeps Kind Robots credentials out of browser localStorage. Add failure-state and session tests. No production secrets or public domain activation.
+
+
+    Implemented Rainbow Butterflies first-party sign-in on worker/rainbow-butterflies-t-018-20260830-055000-bff1: server-generated state and PKCE, signed HttpOnly pending-flow and session cookies, server-to-server Kind Robots code exchange, minimal id/username current-user API, logout/expiry handling, same-origin return validation, a responsive Kind Robots identity control, documentation, and focused session-contract tests. No Kind Robots passwords, JWTs, API keys, or agent credentials are stored by Rainbow or placed in browser storage. Ready for PR verification.
   claimed_by: 2026-08-30T055000Z-rainbow-butterflies-t-018-bff1
   claimed_at: '2026-08-30T05:50:00Z'
-  updated: '2026-08-30T05:50:00Z'
+  updated: '2026-08-30T06:02:00Z'
 
 - id: t-019
   milestone: m2
