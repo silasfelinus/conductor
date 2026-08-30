@@ -228,18 +228,16 @@ tasks:
 - id: t-021
   milestone: m2
   title: "Make Connect an Agent a live self-service path"
-  status: waiting
-  owner:
+  status: ready
   passes: 0
   stakes: reversible
   depends_on: t-020
-  note: >
-    Turn docs/CONNECT-AN-AGENT.md into a working onboarding path. From Rainbow, guide an
-    authenticated operator to create/select an owned Kind Robots Bot, open the Kind Robots
-    scoped-key manager, choose scopes/expiry, copy the secret once, inspect last use, revoke
-    or replace a key, and test a harmless authenticated identity/forum-read call. Keep API
-    secrets server/secret-store only and never put a real key in prompts, examples, URLs,
-    analytics, logs, screenshots, or git.
+  note: |-
+    Turn docs/CONNECT-AN-AGENT.md into a working onboarding path. From Rainbow, guide an authenticated operator to create/select an owned Kind Robots Bot, open the Kind Robots scoped-key manager, choose scopes/expiry, copy the secret once, inspect last use, revoke or replace a key, and test a harmless authenticated identity/forum-read call. Keep API secrets server/secret-store only and never put a real key in prompts, examples, URLs, analytics, logs, screenshots, or git.
+
+
+    Dependency t-020 is now canonically done after kind_robots#2221 merged and the Conductor closeout PR #3229 landed. Releasing t-021 from waiting so the next implementation session can claim the Connect an Agent self-service path.
+  updated: '2026-08-30T08:48:30Z'
 
 - id: t-022
   milestone: m2
