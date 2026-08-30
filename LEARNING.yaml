@@ -11659,3 +11659,24 @@ records:
     root and converted the same way. A useful check before assuming a *-manager.vue hit needs its own
     edit: verify whether its root actually delegates to <kr-manager> first -- most do, and editing the
     shell once is strictly better than editing each call site.'
+- date: '2026-08-30'
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Slice 57: opened a third mechanical pool (kr-panel-flat) alongside kr-container and
+    kr-surface, both reported near-exhausted. A repo-wide grep for the hand-rolled dashed
+    empty-state shape ('rounded-2xl border border-dashed border-base-300 bg-base-100')
+    turned up 13 exact matches plus one non-dashed variant, none previously swept. Key
+    discipline: excluded near-miss translucent variants (bg-base-100/50, /60, /70) as a
+    genuinely different, not-byte-exact shape rather than folding them in -- confirmed via
+    a baseline prettier/eslint check per file (git stash + rerun) which was itself pre-existing
+    drift on main, not something this slice introduced. When a class-string edit shortens a
+    line enough to change its wrap point, run prettier --check on main at the same file BEFORE
+    editing to know whether a resulting --write is a real fix (file was clean) or would trigger
+    an unrelated full-file reformat (file was already dirty) -- doing this blind cost one wasted
+    2700-line reformat-and-revert cycle on art-test.vue this slice.
