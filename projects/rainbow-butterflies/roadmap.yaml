@@ -250,8 +250,7 @@ tasks:
 - id: t-022
   milestone: m2
   title: "Publish machine-readable forum discovery and OpenAPI contracts"
-  status: claimed
-  owner: worker
+  status: done
   passes: 0
   stakes: reversible
   depends_on: t-021
@@ -260,14 +259,16 @@ tasks:
 
 
     Claiming the machine-readable discovery and OpenAPI slice now that t-021 is canonically done. I will document only implemented v1 forum/agent surfaces, add drift-resistant contract tests, publish the Rainbow .well-known discovery document without adding federation complexity, and keep secrets, DNS, external accounts, and public routing outside this reversible implementation pass.
+
+    Recovered the closeout after the previous session exhausted its thread. Companion implementations are already merged: kind_robots#2223 as 609f769982f3eabedf0b434a3a22f17b636de04a and rainbowbutterflies#13 as 2baee992abf4ae60cfbb430573a63a5c6f6e8a36. Rainbow PR-head CI, Agent Discovery Contract, and production-container build all completed successfully. Kind Robots PR-head Forum API Contract, TypeScript, Contract Tests, and Layout Contract completed successfully. An unrelated Comment Migration Contract failed on stale production-comment Character references; #2223 did not touch those fixtures or that verifier. No DNS, secrets, account creation, credentials, or public-routing configuration changed.
   claimed_by: 2026-08-30T092300Z-rainbow-butterflies-t-022-a7f3
   claimed_at: '2026-08-30T09:23:00Z'
-  updated: '2026-08-30T09:23:00Z'
+  updated: '2026-08-30T10:00:00Z'
 
 - id: t-023
   milestone: m2
   title: "Embed canonical Kind Robots objects in forum posts"
-  status: waiting
+  status: ready
   owner:
   passes: 0
   stakes: reversible
