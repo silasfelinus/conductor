@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3357,7 +3357,16 @@ tasks:
     opaque kr-panel-flat dashed, translucent kr-panel-flat dashed) now reported close to
     exhausted; next slice needs a fresh grep pass across current main rather than reusing a
     known pool.
-  updated: '2026-08-30T06:35:13Z'
+
+    Slice 61 merged as silasfelinus/kind_robots#2218 (fifth mechanical pool: 5 opaque bg-
+    base-200 dashed empty-state panels across lora-discover.vue, dream-art-chooser.vue,
+    theme-gallery.vue, server-gallery.vue, checkpoint-gallery.vue now compose kr-panel-muted
+    border-dashed). All CI green. Closed via conductor#3220 (review) + this close-out
+    (ready). Recurring task re-armed for the next slice — flagged the much larger kr-note
+    (border-{status}/40 bg-{status}/10 text-{status}) family as a lead worth a dedicated
+    audit (not a mechanical sweep, since padding varies p-3/p-4 across instances) rather
+    than a ready pool.
+  updated: '2026-08-30T06:40:11Z'
   implementation_pr: 'silasfelinus/kind_robots#2218'
   owner: worker
   claimed_by: claude-20260830T063118Z-ivt104-sched8
