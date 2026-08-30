@@ -2901,9 +2901,9 @@ tasks:
   - id: t-064
     milestone: m1
     title: "Flip m1's own status field from in-progress to done -- all 10 of its tasks are done"
-    status: ready
+    status: claimed
     gate_human: false
-    owner: null
+    owner: worker
     stakes: reversible
     passes: 0
     note: >-
@@ -2922,7 +2922,7 @@ tasks:
       from `in-progress` to `done`. Pure bookkeeping -- no task-list or
       dependency changes needed. m2 (done) and m3 (in-progress, correctly per
       t-063's own reasoning) are unaffected.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-08-30T01:00:00Z'
+    claimed_by: claude-20260830T022829Z-cq-t064
+    claimed_at: '2026-08-30T02:28:30Z'
+    updated: '2026-08-30T02:28:30Z'
 
