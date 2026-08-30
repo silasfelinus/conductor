@@ -848,3 +848,36 @@ tasks:
     claimed_at: '2026-08-24T06:53:16Z'
     updated: '2026-08-24T07:09:20Z'
     implementation_pr: 'silasfelinus/kind_robots#2061'
+
+  - id: t-032
+    milestone: m6
+    title: Reconcile milestone status fields against actual task completion
+    status: ready
+    gate_human: false
+    owner: null
+    stakes: reversible
+    passes: 0
+    note: >-
+      Filed from the 2026-08-30 weekly site audit
+      (`projects/global-ui/AUDIT-REPORT-2026-08-30.md`). This roadmap's milestone
+      `status:` fields are almost entirely desynced from actual task completion --
+      `check_milestone_status_drift.py` doesn't currently catch this shape (see
+      conductor/t-138, filed alongside this task) because every one of these reads
+      as `in-progress`/`planned` rather than the `not-started`/`done` extremes it
+      checks for.
+
+      Confirmed task counts as of this audit: m0 (in-progress) 3/3 done -> done;
+      m1 (planned) 5/5 done -> done; m2 (planned) 3/3 done -> done; m3 (planned)
+      3/3 done -> done; m4 (planned) 6/6 done (t-015/016/017/025/026/031) -> done;
+      m5 (planned) 9/9 done (t-018/019/020/021/024/027/028/029/030) -> done; m6
+      (planned) 1/2 done, t-023 still `needs-human` -> in-progress (not done --
+      leave as the one milestone still open).
+
+      Fix: edit each milestone's `status:` field in `projects/brainstorm/roadmap.yaml`
+      to the target value above. No task-list or dependency changes needed --
+      this is a pure bookkeeping correction so the kind_robots front-end's
+      portfolio-percentage math (which reads milestone status, per CONTROL.md)
+      stops under-reporting a project that is in fact almost entirely finished.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-30T01:00:00Z'

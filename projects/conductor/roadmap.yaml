@@ -4774,3 +4774,48 @@ tasks:
     claimed_by: claude-conductor-scheduled-20260829T0035-t137
     claimed_at: '2026-08-29T00:35:49Z'
     updated: '2026-08-29T00:44:17Z'
+
+  - id: t-138
+    milestone: m2
+    title: "check_milestone_status_drift.py misses a third mismatch shape: an in-progress/planned milestone whose tasks are already 100% done"
+    status: ready
+    gate_human: false
+    owner: null
+    stakes: reversible
+    passes: 0
+    note: >-
+      Filed from the 2026-08-30 weekly site audit (`projects/global-ui/AUDIT-REPORT-2026-08-30.md`).
+      `check_milestone_status_drift.py` (t-135) deliberately only flags two mismatch
+      shapes -- NOT-STARTED WITH DONE WORK and DONE WITH OPEN WORK -- reasoning in its
+      own docstring that "there is no task-count shape that makes 'in-progress' clearly
+      wrong the way there is for the not-started/done extremes." This audit found that
+      reasoning has a real gap: a milestone whose status is anything OTHER than a
+      done-status (in-progress, planned, or any other non-done vocabulary word) while
+      every one of its non-recurring tasks is already `done` is exactly as wrong as the
+      DONE WITH OPEN WORK case, just inverted, and the script currently reports the
+      run as clean while missing it.
+
+      Four confirmed instances the script's current logic silently passed over in this
+      one audit cycle alone: appmaker/m1 (in-progress, t-001+t-006 both done),
+      cthulhuquarium/m1 (in-progress, all 10 tasks done), model-builder/m5 (in-progress,
+      all 5 tasks done), rainbow-butterflies/m1 (in-progress, all 4 tasks done) -- plus
+      brainstorm's entire roadmap (m0/m1/m2/m3/m4/m5 all in-progress or planned despite
+      100% task completion under each; see brainstorm/t-032, filed alongside this task).
+      Two of those four single-milestone instances (appmaker/m1, model-builder/m5,
+      rainbow-butterflies/m1) are left undocumented as their own tasks given this
+      audit's 3-task cap -- a future session picking up this task should fix them
+      directly as part of the same PR once the detection exists, alongside re-running
+      the widened check across every active project to catch any others.
+
+      Fix: add a third finding shape -- milestone status not in DONE_STATUSES (and,
+      symmetrically with the existing recurring-task exclusion, only when the
+      milestone has at least one task at all) but every non-recurring task under it is
+      `done` -- with its own JSON key (e.g. `not_done_status_with_all_work_done`) and
+      report line, matching the existing two shapes' structure and test coverage in
+      `tests/test_check_milestone_status_drift.py`. This will surface immediately as a
+      non-zero exit given the instances above still sitting in the live roadmaps at
+      filing time, unless a session fixes them first -- expected, not a bug in the new
+      check.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-30T01:00:00Z'

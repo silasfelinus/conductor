@@ -2898,3 +2898,31 @@ tasks:
     claimed_at: '2026-08-28T14:32:11Z'
     updated: '2026-08-28T14:32:11Z'
 
+  - id: t-064
+    milestone: m1
+    title: "Flip m1's own status field from in-progress to done -- all 10 of its tasks are done"
+    status: ready
+    gate_human: false
+    owner: null
+    stakes: reversible
+    passes: 0
+    note: >-
+      Filed from the 2026-08-30 weekly site audit
+      (`projects/global-ui/AUDIT-REPORT-2026-08-30.md`). m1 ("SHAPE -- bestiary
+      canon, economy spec, asset pipeline proof") is still marked `status:
+      in-progress`, but all 10 of its tasks (t-001, t-002, t-003, t-004, t-005,
+      t-006, t-025, t-033, t-036, t-040) are `status: done`. This is the same
+      "milestone status never bumped as work landed" pattern t-063 already fixed
+      for m3 -- `check_milestone_status_drift.py` doesn't flag this particular
+      instance today because the milestone reads `in-progress` rather than the
+      `not-started`/`done` extremes the script currently checks (see
+      conductor/t-138, filed alongside this task, to widen that check).
+
+      Fix: edit m1's `status:` field in `projects/cthulhuquarium/roadmap.yaml`
+      from `in-progress` to `done`. Pure bookkeeping -- no task-list or
+      dependency changes needed. m2 (done) and m3 (in-progress, correctly per
+      t-063's own reasoning) are unaffected.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-30T01:00:00Z'
+
