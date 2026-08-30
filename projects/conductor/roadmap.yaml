@@ -4778,9 +4778,8 @@ tasks:
   - id: t-138
     milestone: m2
     title: "check_milestone_status_drift.py misses a third mismatch shape: an in-progress/planned milestone whose tasks are already 100% done"
-    status: review
+    status: done
     gate_human: false
-    owner: worker
     stakes: reversible
     passes: 0
     note: |-
@@ -4789,6 +4788,8 @@ tasks:
       Fix: add a third finding shape -- milestone status not in DONE_STATUSES (and, symmetrically with the existing recurring-task exclusion, only when the milestone has at least one task at all) but every non-recurring task under it is `done` -- with its own JSON key (e.g. `not_done_status_with_all_work_done`) and report line, matching the existing two shapes' structure and test coverage in `tests/test_check_milestone_status_drift.py`. This will surface immediately as a non-zero exit given the instances above still sitting in the live roadmaps at filing time, unless a session fixes them first -- expected, not a bug in the new check.
 
       Implemented the third milestone-drift finding shape on a focused worker branch with regression coverage for fully-complete finite work, recurring siblings, and recurring-only milestones. Opening the implementation PR for CI review.
+
+      DONE via silasfelinus/conductor#3205 (squash da840fa86b8020b8d4f40ebffa8a0f3c1fd0961b). check_milestone_status_drift.py now flags a third mismatch shape when every finite/non-recurring task is done but the milestone remains in-progress, planned, or another non-done status. Recurring tasks are excluded symmetrically from completion semantics; recurring-only milestones do not imply completion. Added focused regression coverage. Exact-head Process task events #33287847367, Security Audit #33287847333, and Worker PR CI #33287847322 all completed successfully before merge. Existing stale milestone rows remain actionable findings rather than being bulk-rewritten in this connector-only cycle; cthulhuquarium/t-064 already owns the m1 correction.
     claimed_by: openai-scheduled-20260830T021407Z-conductor-t138-a91c
     claimed_at: '2026-08-30T02:14:07Z'
-    updated: '2026-08-30T02:23:00Z'
+    updated: '2026-08-30T02:27:00Z'
