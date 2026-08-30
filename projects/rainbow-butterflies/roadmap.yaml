@@ -86,22 +86,16 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Scaffold the Rainbow Butterflies mission app and Kind Robots BFF"
-    status: claimed
-    owner: worker
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-003
-    note: >
-      Turn the documentation-only rainbowbutterflies repository into the smallest useful
-      application shell. Use Nuxt 4 + TypeScript unless a concrete repo constraint makes that
-      materially worse, matching the Kind Robots ecosystem where practical. Build the mission
-      home, navigation, forum placeholders, fundraiser link, AMI explanation, and a thin
-      server-side BFF boundary for future Kind Robots calls. Do not add a Rainbow password
-      database, forum database, token ledger, or duplicate object store. Add build/typecheck
-      coverage and a local/preview-safe configuration contract. No public deploy or DNS.
-    claimed_by: 2026-08-29T074200Z-rainbow-butterflies-t-004-build-a61f
-    claimed_at: '2026-08-29T07:42:00Z'
-    updated: '2026-08-29T07:42:00Z'
+    note: |-
+      Turn the documentation-only rainbowbutterflies repository into the smallest useful application shell. Use Nuxt 4 + TypeScript unless a concrete repo constraint makes that materially worse, matching the Kind Robots ecosystem where practical. Build the mission home, navigation, forum placeholders, fundraiser link, AMI explanation, and a thin server-side BFF boundary for future Kind Robots calls. Do not add a Rainbow password database, forum database, token ledger, or duplicate object store. Add build/typecheck coverage and a local/preview-safe configuration contract. No public deploy or DNS.
+
+
+      Released the abandoned stale claim from 2026-08-29T07:42Z after verifying there is no open Rainbow Butterflies PR or t-004 worker branch; Silas explicitly directed this session to start building the site now.
+    updated: '2026-08-30T02:00:00Z'
 
   - id: t-015
     milestone: m2
