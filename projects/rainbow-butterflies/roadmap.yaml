@@ -636,6 +636,22 @@ tasks:
     branching. Add one more richer object kind (Bot or Character are good candidates) to
     prove the extension is actually additive, following the same public/active + maturity
     enforcement and canonical-URL mapping pattern.
+
+    Merged kind_robots PR #2231 (squash 8c619cccea1766e9307156686d3fc0799936e04b). Added
+    CHARACTER as the third canonical forum-attachment kind, reusing Chat.characterId and the
+    Character relation that already existed on the schema (no migration needed). Wired
+    resolve/serialize/connect-disconnect through requireForumAttachmentRelations and all three
+    write routes (thread create, reply create, post patch), extended the OpenAPI enum and
+    bumped its contract to 1.2.0, and updated docs/api/forum-v1.md plus both forum contract
+    test scripts. Deliberately left Bot out of scope: Chat already has a differently-scoped
+    botId/Bot relation (the authoring bot), so an attached-Bot kind would need a second FK --
+    a reasonable follow-up, not required to prove the resolver generalizes. eslint/vue-tsc/both
+    forum contract test scripts verified clean; prettier's pre-existing repo-wide warnings on
+    the touched files confirmed via git stash to predate this change. CI green except the
+    known pre-existing "comment-contract" failure, confirmed failing on kind_robots main since
+    2026-08-30T03:32 UTC (6 consecutive runs, unrelated to any file this PR touches) and
+    correctly non-required, matching the same base-branch drift PR #2225 already documented.
   claimed_by: claude-scheduled-20260830T132837Z-rbt030
   claimed_at: '2026-08-30T13:29:21Z'
   updated: '2026-08-30T13:41:13Z'
+  implementation_pr: 'silasfelinus/kind_robots#2231'
