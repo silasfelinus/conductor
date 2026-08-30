@@ -1,14 +1,14 @@
 # Conductor Portfolio Oversight
 
-Generated: `2026-08-29T20:59:02.441104+00:00`
+Generated: `2026-08-30T05:33:32.837993+00:00`
 
-Overall status: **action-needed**
+Overall status: **clean**
 
 This is a deterministic sensor. For semantic roadmap/progress intent review, follow `projects/conductor/OVERSIGHT-AGENT.md`.
 
 ## OpenAI scheduled-agent heartbeat
 
-- Latest visible OpenAI scheduled-Agent activity: `2026-08-29T20:36:35+00:00` (0.37h ago; overdue at 6.0h).
+- Latest visible OpenAI scheduled-Agent activity: `2026-08-30T05:15:40+00:00` (0.3h ago; overdue at 6.0h).
 - Overdue: **false**
 - Note: OpenAI commit activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit.
 
@@ -19,16 +19,12 @@ This is a deterministic sensor. For semantic roadmap/progress intent review, fol
 
 ## Roadmap/CONTROL structural audit
 
-- Errors: **3**
-- Warnings: **9**
-  - **CONTROL_PRIORITY_DRIFT** — `_global`: CONTROL.md priority band ['interface-vision', 'ai-art-academy', 'coloring-book', 'humboldt-scoop-cms', 'digital-storefront', 'mermaids-of-venice', 'kind-robots', 'kindrobots-unraid'] does not match priority.yaml prefix ['mandarin-tutor', 'cthulhuquarium', 'kapowarr', 'kind-economy', 'interface-vision', 'ai-art-academy', 'coloring-book', 'humboldt-scoop-cms'].
-  - **READY_WITH_UNMET_DEPS** — `interface-vision` / `t-105`: Ready task has unmet dependencies: t-104.
-  - **GATED_DONE_WITHOUT_APPROVAL** — `kind-robots` / `t-071`: Human-gated task is done without approved_by_human: true.
-- Warning details remain in `ROADMAP-AUDIT.md`; errors above take precedence for this sensor.
+- Errors: **0**
+- Warnings: **0**
 
 ## Semantic intent review
 
-- Latest: `INTENT-AUDIT-2026-08-29.md` (0 day(s) ago; due at 3.0 days).
+- Latest: `INTENT-AUDIT-2026-08-29.md` (1 day(s) ago; due at 3.0 days).
 - Due: **false**
 
 ## Agent routing
