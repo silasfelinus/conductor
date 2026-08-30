@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 48
     stakes: reversible
@@ -621,10 +621,9 @@ tasks:
       Cycle 66 (no-op, real investigation, conductor scheduled Agent run 2026-08-30T15:00Z session): checked for new kind_robots activity since cycle 65's own check (960f1c2/#2070, 2026-08-24) per cycle 56's established method -- found one: kind_robots#2214 (a7df207, 2026-08-29, interface-vision/t-104's kr-panel-flat sweep) touched three of this task's own tracked components (model-builder-run-history.vue, model-builder-source-picker.vue, model-builder-progress-matrix.vue), replacing each file's one hand-rolled 'rounded-2xl border border-dashed border-base-300 bg-base-100' empty-state panel with 'kr-panel-flat border-dashed'. Verified this is not a regression rather than assuming the PR's own commit message: read kr-panel-flat's definition directly in assets/css/tailwind.css (line 537, '@apply rounded-2xl border border- base-300 bg-base-100' -- a byte-exact match for what it replaced) and confirmed border- dashed only overrides border-style, independent of the width/color utilities kr-panel- flat already carries. No behavior, markup structure, or event-handler change in any of the three files -- purely a class-list consolidation. Did not re-run the full static- reading sweep across the whole component family this cycle since the only new activity was this single cosmetic-equivalence-verified commit; re-scoping into a fresh functional lens on unchanged code would just repeat cycles 51-65's now-exhausted territory per their own notes. No new bug found; no code change. git status --porcelain clean throughout (read-only cycle). Re-armed to ready; a future cycle should expect another no-op unless new kind_robots commits touch model-builder with actual logic changes (not just class-list/style consolidation), model-builder/t-031's live-smoke-test path unblocks (still needs-human/soft_gate), or a genuinely new lens is found.
 
       Cycle 67: current roadmap already contains cycle 66's fresh 2026-08-30 logic-change check. No newer Model Builder logic change exists to justify re-walking the static audit territory that cycles 51-66 document as exhausted; the remaining t-031 live ArtJob smoke path is a separate soft human/tooling gate. No code changed in this pass. Re-arm this recurring task and rotate to the next eligible ready software task rather than manufacture a no-op patch.
-    updated: '2026-08-30T16:19:00Z'
-    owner: worker
-    claimed_by: openai-scheduled-20260830T161643Z-pr3247-k7q2
-    claimed_at: '2026-08-30T16:19:00Z'
+
+      Cycle 55 investigation: followed the remaining source-picker data-fetch/error-handling lead. The explicit loading and sourcesError branches are sound and Retry delegates to store.loadSources(), but a successful empty response has no empty-state branch: after loading finishes with sourcesError unset and store.sources empty, the gallery/grid/list containers render zero records and leave a blank panel. This is a concrete user-facing polish gap, distinct from the already-audited request-failure path. No code change was made in this connector-only pass because the component is a large whole-file replacement through the available contents API; preserve this as the next bounded implementation slice: add a store.sources.length === 0 empty state between error and view-mode branches, then cover it with the existing Model Builder contract-verifier pattern.
+    updated: '2026-08-30T16:23:00Z'
 
   - id: t-030
     milestone: m6
