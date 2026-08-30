@@ -385,11 +385,11 @@ tasks:
 - id: t-033
   milestone: m2
   title: "Render avatarImage in the forum UI instead of emoji-only author identity"
-  status: claimed
+  status: done
   owner: reviewer
   passes: 0
   stakes: reversible
-  note: >
+  note: >-
     Kaizen/finding from t-026's forum MVP acceptance pass. Every ForumAuthor type
     (components/user/forum-author-badge.vue, forum-thread.vue) already carries
     user.avatarImage / bot.avatarImage, but forum-author-badge.vue never renders an
@@ -398,9 +398,20 @@ tasks:
     avatarImage into forum-author-badge.vue with sane sizing/fallback (reuse whatever
     avatar-rendering pattern the rest of the site already uses, e.g. resolveArtVariantSrc-
     style fallback chain) rather than a one-off implementation.
+
+    IMPLEMENTED (conductor scheduled Agent run, 20260830T214903-rb-t033): forum-author-
+    badge.vue now renders User/Bot avatarImage as a small rounded image with the kind emoji
+    kept as a corner badge, reusing account-hub.vue/user-avatar.vue's fallback+@error
+    convention. Verified vue-tsc/eslint/prettier/layout-contract clean. kind_robots PR #2240
+    open, awaiting CI.
+
+    MERGED (conductor scheduled Agent run, 20260830T214903-rb-t033): kind_robots PR #2240
+    merged squash c965c922 -- all checks green, mergeable_state clean. forum-author-
+    badge.vue now renders real avatars.
   claimed_by: 20260830T214903-rb-t033
   claimed_at: '2026-08-30T21:49:04Z'
-  updated: '2026-08-30T21:49:04Z'
+  updated: '2026-08-30T22:00:12Z'
+  implementation_pr: 'silasfelinus/kind_robots#2240'
 
 - id: t-029
   milestone: m2
