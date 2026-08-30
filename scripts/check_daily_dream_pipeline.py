@@ -244,12 +244,12 @@ def check_pipeline(root: Path = ROOT) -> list[str]:
     if "page_url = kr_base_url" not in builder.casefold():
         errors.append("object builder must not emit the removed /daily-dream page URL")
 
-    t020_start = roadmap.find("  - id: t-020")
-    t020_end = roadmap.find("  - id: t-021", t020_start)
+    t020_start = roadmap.find("- id: t-020")
+    t020_end = roadmap.find("- id: t-021", t020_start)
     if t020_start < 0 or "status: done" not in roadmap[t020_start:t020_end]:
         errors.append("roadmap t-020 must be closed after correcting the removed page reference")
-    t006_start = roadmap.find("  - id: t-006")
-    t006_end = roadmap.find("  - id: t-007", t006_start)
+    t006_start = roadmap.find("- id: t-006")
+    t006_end = roadmap.find("- id: t-007", t006_start)
     t006 = roadmap[t006_start:t006_end].casefold()
     if "advance it exactly one stage" in t006 or "stage 3" in t006:
         errors.append("roadmap t-006 still contains executable retired stage instructions")
