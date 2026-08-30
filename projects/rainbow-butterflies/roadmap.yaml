@@ -268,24 +268,30 @@ tasks:
 - id: t-023
   milestone: m2
   title: "Embed canonical Kind Robots objects in forum posts"
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-022
-  note: |-
+  note: >-
     Let forum posts attach/render public Kind Robots objects without cloning them into a Rainbow store. Begin with ArtImage plus at least one richer reusable object such as Bot, Dream, Character, Scenario, Pack, or Project using a typed canonical reference and shared permission/maturity checks. Render a useful preview and link back to the canonical Kind Robots object. Design the reference shape so more KR object kinds can be added without a new forum-post schema each time.
 
 
     Claiming the canonical object-embed slice after t-022 closed. I will add a typed extensible Kind Robots object reference to forum posts, begin with ArtImage plus one richer reusable object, enforce existing public/maturity/ownership rules on resolution, and render previews from canonical Kind Robots data in Rainbow without cloning object state into a Rainbow database.
+
+    Merged kind_robots PR #2225 (squash 64cf403). All checks green except comment-contract,
+    confirmed pre-existing base-branch drift (verifyPopulationDraftQuality character-ID
+    mismatches) unrelated to this diff -- failing on main since 2026-08-30T03:32 UTC across
+    5 consecutive runs before this PR opened.
   claimed_by: 2026-08-30T100200Z-rainbow-butterflies-t-023-e3c1
   claimed_at: '2026-08-30T10:02:00Z'
-  updated: '2026-08-30T10:02:00Z'
+  updated: '2026-08-30T10:27:53Z'
+  implementation_pr: 'silasfelinus/kind_robots#2225'
 
 - id: t-024
   milestone: m2
   title: "Add opt-in Kind Robots generation and resource actions from the commons"
-  status: waiting
+  status: ready
   owner:
   passes: 0
   stakes: reversible
@@ -617,3 +623,17 @@ tasks:
     what to stop, what to scale, and whether Rainbow Butterflies should become a continuous
     Conductor program for ongoing ethical outreach. Do not invent success from engagement
     counts; fundraising and useful contribution are the north stars.
+
+- id: t-030
+  milestone: m2
+  title: "Add a third canonical forum-attachment kind reusing the t-023 reference resolver"
+  status: ready
+  owner:
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-023 (kind_robots PR #2225): the typed { kind, id } attachment shape and
+    its resolver/serializer path already generalize past ArtImage/Project with no schema
+    branching. Add one more richer object kind (Bot or Character are good candidates) to
+    prove the extension is actually additive, following the same public/active + maturity
+    enforcement and canonical-URL mapping pattern.
