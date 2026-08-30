@@ -2688,7 +2688,7 @@ tasks:
 - id: t-054
   milestone: m3
   title: Swap the finale's placeholder reveal for the real screen-finale/set-last-aquarium plates
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   depends_on: t-039
@@ -2697,7 +2697,10 @@ tasks:
     Reconciliation (scheduled sweep): task was stuck at status: review (claimed_by 20260828T032900Z-scheduled-cq-t054, claimed_at 2026-08-28T03:32:43Z, ~2.4 days stale) with no corresponding PR or branch found on kind_robots (checked list_pull_requests, list_branches, and search_issues/search_code for t-054/screen-finale/set-last-aquarium -- nothing). Code search confirms the underlying work genuinely never landed: components/cthulhuquarium/cthulhuquarium-game.vue still carries the PLACEHOLDER PRESENTATION comment and server/utils/aquariumEconomy.ts still notes the finale dialog is 'still waiting on its own screen-finale plate.' Whatever session set status: review evidently never opened the PR (crashed, or a status write raced ahead of the actual push). Resetting to ready so this can be reclaimed and actually implemented -- the render/wiring work described in this task's existing note is still needed.
 
     Roadmap audit corrected the stale render premise: both authored plates already exist on Conductor main at projects/cthulhuquarium/art/cthulhuquarium-screen-finale.webp (blob 83019542a5ae025d65ade2c201304c2938eba88f, 121978 bytes) and cthulhuquarium-set-last-aquarium.webp (blob 7c5440cb6679e5974705829aff51a59583d7408d, 239382 bytes). The remaining work is only delivery into a Kind Robots-readable asset location and presentation wiring in cthulhuquarium-game.vue; no new render should be queued. Connector inspection also reconfirmed the current placeholder icon/text and text-only shop row are still present. Returning ready with the blocker narrowed rather than generating duplicate art.
-  updated: '2026-08-30T21:23:00Z'
+  updated: '2026-08-30T21:27:20Z'
+  owner: reviewer
+  claimed_by: 20260830T212719-scheduled-cq-t054b
+  claimed_at: '2026-08-30T21:27:20Z'
 - id: t-055
   milestone: m3
   title: Surface breeding as a real player action in the tank UI
