@@ -1,0 +1,96 @@
+name: Daily Dream Identity Rebuild
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "projects/dream-cycle/record-repairs/*-request.json"
+  workflow_dispatch:
+
+concurrency:
+  group: conductor-main-writers
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    env:
+      KR_BASE_URL: https://kindrobots.org
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install pyyaml
+
+      - name: Locate identity-rebuild request
+        id: pending
+        shell: bash
+        run: |
+          shopt -s nullglob
+          files=(projects/dream-cycle/record-repairs/*-request.json)
+          if (( ${#files[@]} == 0 )); then
+            echo "found=false" >> "$GITHUB_OUTPUT"
+            echo "No pending Daily Dream identity rebuild."
+            exit 0
+          fi
+          if (( ${#files[@]} != 1 )); then
+            echo "::error::Expected exactly one identity-rebuild request, found ${#files[@]}."
+            exit 1
+          fi
+          echo "found=true" >> "$GITHUB_OUTPUT"
+          echo "request=${files[0]}" >> "$GITHUB_OUTPUT"
+
+      - name: Verify source catalog identity is collision-free before rebuild
+        if: steps.pending.outputs.found == 'true'
+        run: python scripts/audit_dream_record_identity.py --strict
+
+      - name: Rebuild stale bundles onto fresh live records
+        if: steps.pending.outputs.found == 'true'
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: python scripts/rebuild_dream_identity_collision.py "${{ steps.pending.outputs.request }}"
+
+      - name: Verify unique live-record ownership
+        if: steps.pending.outputs.found == 'true'
+        run: python scripts/audit_dream_record_identity.py --strict
+
+      - name: Verify catalog prose remains clean
+        if: steps.pending.outputs.found == 'true'
+        run: python scripts/repair_dream_prose_catalog.py --audit --strict
+
+      - name: Verify Daily Dream pipeline
+        if: steps.pending.outputs.found == 'true'
+        run: python scripts/check_daily_dream_pipeline.py
+
+      - name: Commit identity-rebuild evidence
+        if: steps.pending.outputs.found == 'true'
+        shell: bash
+        run: |
+          git config user.name "kind-robots-bot"
+          git config user.email "noreply@kindrobots.app"
+          git add projects/dream-cycle/backlog/ projects/dream-cycle/record-repairs/
+          if git diff --staged --quiet; then
+            echo "Identity rebuild produced no repository changes."
+            exit 0
+          fi
+          git commit -m "daily dream: rebuild stale record identities [skip ci]"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if git rebase origin/main && git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "Identity-rebuild evidence push attempt ${attempt}/3 lost a race; retrying."
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 2))
+          done
+          echo "::error::Unable to persist Daily Dream identity-rebuild evidence after 3 attempts."
+          exit 1
