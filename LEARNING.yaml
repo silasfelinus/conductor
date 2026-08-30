@@ -11777,3 +11777,15 @@ records:
   lesson: An extensible typed reference shape ({ kind, id }) for cross-object embeds paid off immediately --
     ArtImage and Project shared one resolver/serializer path with no per-kind schema branching, so the next
     object kind (t-030) is additive rather than a redesign.
+- date: 2026-08-30
+  project: rainbow-butterflies
+  task: t-030
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: The { kind, id } resolver stayed additive for a second extension in a row (CHARACTER
+    after ArtImage/Project) -- Chat.characterId and its relation already existed on the schema,
+    so no migration was needed, confirming the shape was designed for growth rather than just
+    working for its first two kinds.
