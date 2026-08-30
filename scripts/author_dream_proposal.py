@@ -29,6 +29,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 import build_dream_proposal as dreams  # noqa: E402
 import dream_creative_ruts as ruts  # noqa: E402
+import dream_prose_quality as prose  # noqa: E402
 
 API_URL = "https://api.anthropic.com/v1/messages"
 API_VERSION = "2023-06-01"
@@ -468,7 +469,7 @@ def story_diversity_complaints(
     facet_text = json.dumps(seed_facets or {}, ensure_ascii=False).casefold()
     creative_words = set(re.findall(r"[a-z]+", creative_text))
     facet_words = set(re.findall(r"[a-z]+", facet_text))
-    complaints: list[str] = []
+    complaints: list[str] = prose.complaints(proposal)
 
     bureaucratic_hits = creative_words & BUREAUCRACY_MARKERS
     facets_request_bureaucracy = bool(facet_words & BUREAUCRACY_FACET_MARKERS)
