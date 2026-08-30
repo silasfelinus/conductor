@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3315,8 +3315,27 @@ tasks:
     consistent with the established kr-panel override convention (#2213/#2214/#2216). All 37
     CI checks green, mergeable_state clean. Reviewed and merged by Reviewer (Claude,
     scheduled conductor run). Re-armed to ready for the next slice.
-  updated: '2026-08-30T09:27:46Z'
-  implementation_pr: 'silasfelinus/kind_robots#2220'
+
+    Slice 64 merged as silasfelinus/kind_robots#2224 (8 hand-rolled border-{status}/40
+    bg-{status}/10 text-sm text-{status} status-message blocks across 5 files converted to
+    kr-note kr-note-{status}: components/user/user-manager-directory.vue
+    lastMessage/lastError, components/art/artjob-editor.vue localError,
+    components/art/artjob-queue-browser.vue error/oldestPending, pages/admin/lora-triage.vue
+    saveMessage/saveError, pages/admin/social-drafts.vue error). Each converted instance is
+    a self-contained leaf status-text node with no nested heading carrying its own unstated
+    color -- the exact shape kr-note targets. None of the five files stated font-semibold
+    explicitly, so each carries a trailing font-normal override to keep the pre-existing
+    non-bold weight identical rather than silently adding weight that wasn't there before;
+    padding/rounding/text-size overrides preserved the same way. Excluded (checked, not
+    converted): several admin/*.vue 'admin access required' gate panels that wrap a heading
+    with no explicit text color of its own -- converting those would silently recolor the
+    heading via inherited text-error, a real visual change, not a mechanical substitution.
+    All 38 CI checks green, mergeable_state clean before merge. Re-armed to ready for the
+    next slice -- future lead: give the excluded gate-panel headings their own explicit
+    text-base-content class first, then the wrapper becomes convertible as a two-step,
+    visually-neutral change.
+  updated: '2026-08-30T09:38:39Z'
+  implementation_pr: 'silasfelinus/kind_robots#2224'
   owner: worker
   claimed_by: 20260830T092718Z-scheduled-ivt104-b3d9
   claimed_at: '2026-08-30T09:27:46Z'
