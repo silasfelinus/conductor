@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3323,8 +3323,26 @@ tasks:
     confirmed merged (verified via GitHub MCP). Claim was ~2h13m past the 90-minute TTL with
     no further activity -- the claiming session merged its PR but never re-armed the
     recurring task back to ready. Re-arming now per this recurring task's own convention.
-  updated: '2026-08-30T22:46:45Z'
-  implementation_pr: 'silasfelinus/kind_robots#2234'
+
+    Slice 71 merged as silasfelinus/kind_robots#2241 (squash
+    29d5f53fe8a2d71d557b6e8dbd0d6fe28482f720) from exact head
+    a375f25ef22bc88691f0334fb00685ff80ac49f5. Adopted kr-scroll on 3 more scroll regions
+    carrying the exact base utility set (min-h-0 flex-1 overflow-y-auto overscroll-contain)
+    mixed with unrelated sibling utilities: components/scenarios/scenario-story.vue
+    (configure-phase root section, mutually exclusive with a v-else grid branch),
+    components/art/stylist-relay-status.vue and components/art/artjob-queue-browser.vue
+    (admin-only v-else branches, non-admin v-if branches have no overflow-y-auto). Pure
+    rename, no geometry/behavior change. Verified: eslint clean, prettier clean (after
+    --write collapsed 2 lines, diffed to confirm only the class-attribute shortened), vue-
+    tsc --noEmit clean repo-wide, test:layout-contract holds (0 multi-scroll violations,
+    unchanged). All 37 kind_robots PR checks passed. Also grepped .kr-toolbar's exact base
+    string and found 6 more candidates (model-builder-recipe-selector.vue, stage-manager.vue
+    [previously excluded for lacking relative z-20], kr-manager.vue, giftshop-manager.vue,
+    home-object-sheet.vue, art-manager.vue) -- none yet checked for absolutely-positioned
+    descendants/z-index-sensitive siblings before adopting kr-toolbar's baked-in relative
+    z-20, left for a future slice. Re-arming to ready per recurring-task convention.
+  updated: '2026-08-30T22:51:29Z'
+  implementation_pr: 'silasfelinus/kind_robots#2241'
   owner: worker
   claimed_by: claude-sched-20260830-2255-iv-t104-slice71
   claimed_at: '2026-08-30T22:46:45Z'
