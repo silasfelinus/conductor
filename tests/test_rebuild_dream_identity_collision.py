@@ -102,7 +102,8 @@ def test_validate_request_is_explicitly_bounded_and_approved():
         repair.validate_request(too_broad)
 
 
-def test_current_source_must_be_collision_reset_and_unbuilt(tmp_path):
+def test_current_source_must_be_collision_reset_and_unbuilt(tmp_path, monkeypatch):
+    monkeypatch.setattr(repair, "_relative", lambda path: path.name)
     proposal = {
         "vibe": {"title": "Vibe", "line": "A complete enough line."},
         "locations": [{"title": "Place"}],
