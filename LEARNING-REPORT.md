@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-30T23:51:19Z
+Generated: 2026-08-30T23:59:55Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **836**
-- Outcomes: blocked: 16, cancelled: 1, done: 819
+- Closed tasks recorded: **837**
+- Outcomes: blocked: 16, cancelled: 1, done: 820
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -31,7 +31,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | cthulhuquarium | 41 | 98% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
-| dream-cycle | 19 | 100% |
+| dream-cycle | 20 | 100% |
 | ecosystem-map | 5 | 100% |
 | global-ui | 13 | 100% |
 | humboldt-impropriety-calendar | 1 | 0% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 820 | 99% |
+| software | 821 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-30 `dream-cycle/t-006` — A backlog bundle's built-data block being internally self-consistent (its own art-request IDs, facet_assignments, and Build log all agreeing with each other) is not proof it still matches live reality -- an earlier remaster/revision pass can silently overwrite a different, already-published bundle's rows, leaving the victim's file looking coherent while actually pointing at someone else's live content. The tell is only visible by fetching the live API and comparing title/slug/description against the file, not by reading the file in isolation. Added a catalog-wide (model, entity_id) uniqueness CI guard (scripts/audit_dream_record_identity.py) so a future recurrence surfaces as a red required check instead of silent drift.
 - 2026-08-30 `rainbow-butterflies/t-025` — Grepping for the project's own existing restriction/audit primitives (User.isRestricted + notInRestricted, the Log-backed logAdminAction helper) before designing new moderation machinery found that restriction was already wired into most content models except the forum -- a real, narrowly-scoped security gap (writes and every read path never checked it) rather than something needing new schema. All of report/flag, restriction, rate-limiting, duplicate rejection, escalation, and audit trail landed additively with zero migrations.
 - 2026-08-30 `rainbow-butterflies/t-030` — The { kind, id } resolver stayed additive for a second extension in a row (CHARACTER after ArtImage/Project) -- Chat.characterId and its relation already existed on the schema, so no migration was needed, confirming the shape was designed for growth rather than just working for its first two kinds.
 - 2026-08-30 `rainbow-butterflies/t-023` — An extensible typed reference shape ({ kind, id }) for cross-object embeds paid off immediately -- ArtImage and Project shared one resolver/serializer path with no per-kind schema branching, so the next object kind (t-030) is additive rather than a redesign.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-30 `interface-vision/t-104` — Slice 57: opened a third mechanical pool (kr-panel-flat) alongside kr-container and kr-surface, both reported near-exhausted. A repo-wide grep for the hand-rolled dashed empty-state shape ('rounded-2xl border border-dashed border-base-300 bg-base-100') turned up 13 exact matches plus one non-dashed variant, none previously swept. Key discipline: excluded near-miss translucent variants (bg-base-100/50, /60, /70) as a genuinely different, not-byte-exact shape rather than folding them in -- confirmed via a baseline prettier/eslint check per file (git stash + rerun) which was itself pre-existing drift on main, not something this slice introduced. When a class-string edit shortens a line enough to change its wrap point, run prettier --check on main at the same file BEFORE editing to know whether a resulting --write is a real fix (file was clean) or would trigger an unrelated full-file reformat (file was already dirty) -- doing this blind cost one wasted 2700-line reformat-and-revert cycle on art-test.vue this slice.
 
-- 2026-08-30 `interface-vision/t-104` — Slice 56: swept the kr-surface pool slice 55 flagged. The highest-leverage single conversion was components/manager/kr-manager.vue itself -- the shared shell every primary-model dashboard (bot/character/reward/facet/scenario/giftshop managers) delegates its root to via <kr-manager>, so fixing its one root class reaches all of them transitively instead of needing per-manager edits. 6 more standalone managers (art-manager, artjob-queue-browser, art-studio, stylist-relay-status, animation-manager, giftshop-manager) shared the identical hand-rolled root and converted the same way. A useful check before assuming a *-manager.vue hit needs its own edit: verify whether its root actually delegates to <kr-manager> first -- most do, and editing the shell once is strictly better than editing each call site.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-30T23:51:19Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-30T23:59:55Z_
