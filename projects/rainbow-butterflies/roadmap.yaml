@@ -170,8 +170,8 @@ tasks:
 - id: t-018
   milestone: m2
   title: "Wire Rainbow Butterflies single-login sessions through the BFF"
-  status: ready
-  owner:
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-017
@@ -181,6 +181,9 @@ tasks:
     exposes the minimum current-user profile needed by the UI, handles logout/expiry, and
     keeps Kind Robots credentials out of browser localStorage. Add failure-state and session
     tests. No production secrets or public domain activation.
+  claimed_by: 2026-08-30T055000Z-rainbow-butterflies-t-018-bff1
+  claimed_at: '2026-08-30T05:50:00Z'
+  updated: '2026-08-30T05:50:00Z'
 
 - id: t-019
   milestone: m2
