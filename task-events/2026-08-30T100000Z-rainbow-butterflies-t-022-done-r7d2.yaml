@@ -1,0 +1,18 @@
+version: 1
+project: rainbow-butterflies
+task: t-022
+operation: done
+owner: worker
+session: 2026-08-30T092300Z-rainbow-butterflies-t-022-a7f3
+updated: '2026-08-30T10:00:00Z'
+note: >-
+  Recovered the closeout after the previous session exhausted its thread. Companion implementations are already merged: kind_robots#2223 as 609f769982f3eabedf0b434a3a22f17b636de04a and rainbowbutterflies#13 as 2baee992abf4ae60cfbb430573a63a5c6f6e8a36. Rainbow PR-head CI, Agent Discovery Contract, and production-container build all completed successfully. Kind Robots PR-head Forum API Contract, TypeScript, Contract Tests, and Layout Contract completed successfully. An unrelated Comment Migration Contract failed on stale production-comment Character references; #2223 did not touch those fixtures or that verifier. No DNS, secrets, account creation, credentials, or public-routing configuration changed.
+verify_pr: silasfelinus/rainbowbutterflies#13
+learning:
+  date: 2026-08-30
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Companion API/discovery work should close only after both implementations are merged and task-specific contracts are verified separately from unrelated base-repository data failures.
