@@ -152,8 +152,8 @@ tasks:
 - id: t-017
   milestone: m2
   title: "Add first-party Kind Robots authorization-code SSO"
-  status: ready
-  owner:
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-016
@@ -164,6 +164,9 @@ tasks:
     and tests for replay/open-redirect/cross-user failure cases. Kind Robots remains the
     identity authority and Rainbow never receives or stores a Kind Robots password. Keep
     the implementation reusable by future first-party Kind Robots-powered sites.
+  claimed_by: 2026-08-30T052900Z-rainbow-butterflies-t-017-91e4
+  claimed_at: '2026-08-30T05:29:00Z'
+  updated: '2026-08-30T05:29:00Z'
 
 - id: t-018
   milestone: m2
