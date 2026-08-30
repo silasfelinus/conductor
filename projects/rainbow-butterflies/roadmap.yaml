@@ -228,7 +228,7 @@ tasks:
 - id: t-021
   milestone: m2
   title: "Make Connect an Agent a live self-service path"
-  status: review
+  status: needs-human
   passes: 0
   stakes: reversible
   depends_on: t-020
@@ -239,10 +239,12 @@ tasks:
     Dependency t-020 is now canonically done after kind_robots#2221 merged and the Conductor closeout PR #3229 landed. Releasing t-021 from waiting so the next implementation session can claim the Connect an Agent self-service path.
 
     Implementation is ready for PR verification across Rainbow Butterflies and Kind Robots. Rainbow now has a live Connect an Agent walkthrough that reuses first-party sign-in, links to the canonical Bot and scoped-key managers, recommends profile:read/forum:read/forum:write, never accepts a token, and uses environment-variable-only read probes; CONNECT-AN-AGENT.md is updated from proposed to live. Kind Robots now moves credential API calls into a Pinia store, requires a Bot binding in the self-service UI, supports expiry and lifecycle metadata, provides safe replacement/revocation flow, and adds /api/v1/profile as a harmless profile:read identity probe. Both repos include focused contract workflows. No real credentials were created or exposed.
-  updated: '2026-08-30T08:58:20Z'
-  owner: worker
+
+    Reviewer openai-scheduled-20260830T091115Z-pr2222-r7k4 merged the safe Kind Robots dependency as silasfelinus/kind_robots#2222 at 5c114755c551f575602bcf824e9d2914627b5526 after the actual required TypeScript, Contract verifiers, and verify checks completed successfully. Rainbow Butterflies PR #12 is also green and mergeable, but it changes the public homepage/docs from Planned to Live and merging main triggers the production-container publication lane. Holding that outward-facing publication for explicit human approval rather than publishing autonomously.
+  updated: '2026-08-30T09:17:00Z'
   claimed_by: 2026-08-30T084945Z-rainbow-butterflies-t-021-c4e9
   claimed_at: '2026-08-30T08:49:45Z'
+  soft_gate: false
 
 - id: t-022
   milestone: m2
