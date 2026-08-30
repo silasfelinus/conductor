@@ -1,6 +1,6 @@
 # Conductor Portfolio Oversight
 
-Generated: `2026-08-30T05:33:32.837993+00:00`
+Generated: `2026-08-30T12:00:53.774427+00:00`
 
 Overall status: **clean**
 
@@ -8,7 +8,7 @@ This is a deterministic sensor. For semantic roadmap/progress intent review, fol
 
 ## OpenAI scheduled-agent heartbeat
 
-- Latest visible OpenAI scheduled-Agent activity: `2026-08-30T05:15:40+00:00` (0.3h ago; overdue at 6.0h).
+- Latest visible OpenAI scheduled-Agent activity: `2026-08-30T11:15:20+00:00` (0.76h ago; overdue at 6.0h).
 - Overdue: **false**
 - Note: OpenAI commit activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit.
 
