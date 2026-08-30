@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3348,8 +3348,17 @@ tasks:
     drift, not introduced here), vue-tsc --noEmit repo-wide clean, test:layout-contract
     holds (207 baseline unchanged, 0 new violations). Opened silasfelinus/kind_robots PR
     from claude/eager-bohr-50o980.
-  updated: '2026-08-30T05:34:57Z'
-  implementation_pr: 'silasfelinus/kind_robots#2214'
+
+    Slice 60 merged as silasfelinus/kind_robots#2216 (fourth mechanical pool: 10 translucent
+    bg-base-100/N dashed empty/loading-state panels across 8 files now compose kr-panel-flat
+    border-dashed, preserving the bg-base-100/N opacity override verbatim). All CI green (41
+    checks). Closed via conductor#3218 (review) + this close-out (ready). Recurring task re-
+    armed for the next slice — all four known mechanical pools (kr-container, kr-surface,
+    opaque kr-panel-flat dashed, translucent kr-panel-flat dashed) now reported close to
+    exhausted; next slice needs a fresh grep pass across current main rather than reusing a
+    known pool.
+  updated: '2026-08-30T06:27:21Z'
+  implementation_pr: 'silasfelinus/kind_robots#2216'
   owner: worker
   claimed_by: claude-20260830T0533Z-ivt104-sched6
   claimed_at: '2026-08-30T05:29:23Z'
