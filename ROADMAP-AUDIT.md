@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-08-29T23:56:20.476417+00:00`
+Generated: `2026-08-30T01:40:30.527096+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **52** roadmaps, **29** active + **2** continuous projects, **1329** tasks
-- **18 ready**, **73 waiting**, **82 needs-human**, **2 claimed/review**, **1145 done**
+- **52** roadmaps, **29** active + **2** continuous projects, **1332** tasks
+- **21 ready**, **73 waiting**, **82 needs-human**, **2 claimed/review**, **1144 done**
 - Findings: **0 errors**, **0 warnings**, **93 informational**
 
 ## Project inventory
@@ -15,10 +15,10 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `mandarin-tutor` | active | software | 0 | 0 | 3 | 0 | 17 / 20 |
-| 2 | `cthulhuquarium` | active | software | 0 | 0 | 5 | 1 | 57 / 63 |
+| 2 | `cthulhuquarium` | active | software | 1 | 0 | 5 | 1 | 57 / 64 |
 | 3 | `kapowarr` | active | software | 0 | 0 | 4 | 0 | 65 / 69 |
 | 4 | `kind-economy` | active | software | 0 | 3 | 10 | 0 | 14 / 27 |
-| 5 | `interface-vision` | active | software | 1 | 1 | 0 | 0 | 121 / 123 |
+| 5 | `interface-vision` | active | software | 1 | 1 | 0 | 0 | 120 / 123 |
 | 6 | `ai-art-academy` | active | software | 0 | 3 | 4 | 0 | 70 / 77 |
 | 7 | `coloring-book` | active | software | 0 | 9 | 2 | 0 | 27 / 38 |
 | 8 | `humboldt-scoop-cms` | active | software | 0 | 0 | 4 | 0 | 35 / 39 |
@@ -31,7 +31,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 15 | `kindrobots-unraid` | active | software | 0 | 6 | 1 | 0 | 6 / 13 |
 | 16 | `model-builder` | active | software | 1 | 0 | 1 | 0 | 43 / 45 |
 | 17 | `lora-ingestion` | active | infrastructure | 0 | 0 | 1 | 0 | 7 / 8 |
-| 18 | `conductor` | active | software | 0 | 0 | 5 | 0 | 132 / 137 |
+| 18 | `conductor` | active | software | 1 | 0 | 5 | 0 | 132 / 138 |
 | 19 | `taskmaster` | active | software | 0 | 0 | 1 | 0 | 3 / 4 |
 | 20 | `storybook` | active | software | 1 | 0 | 2 | 0 | 20 / 23 |
 | 21 | `davinci` | active | software | 0 | 2 | 1 | 0 | 23 / 26 |
@@ -41,7 +41,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 25 | `conductor-app` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
 | 26 | `appmaker` | active | software | 0 | 0 | 2 | 0 | 12 / 14 |
 | 27 | `media-watchlist` | active | software | 1 | 0 | 1 | 0 | 15 / 17 |
-| 28 | `brainstorm` | active | software | 0 | 0 | 1 | 0 | 30 / 31 |
+| 28 | `brainstorm` | active | software | 1 | 0 | 1 | 0 | 30 / 32 |
 | 29 | `wishmaster` | retired | software | 1 | 0 | 1 | 0 | 2 / 4 |
 | 30 | `ruler-hooked` | active | software | 0 | 0 | 1 | 0 | 21 / 22 |
 | 31 | `music-mentor` | finished | software | 1 | 0 | 0 | 0 | 8 / 9 |
