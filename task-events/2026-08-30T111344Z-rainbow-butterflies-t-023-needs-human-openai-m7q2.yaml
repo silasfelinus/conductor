@@ -1,0 +1,8 @@
+version: 1
+project: rainbow-butterflies
+task: t-023
+operation: needs-human
+owner: reviewer
+updated: '2026-08-30T11:13:44Z'
+note: >-
+  FOR SILAS: Kind Robots PR #2225 is merged, but the required Rainbow rendering half remains in silasfelinus/rainbowbutterflies#14. The PR is reviewed, mergeable, and its exact-head CI, forum-browser contract, and production-container PR build all completed successfully. Merging Rainbow main crosses the outward-facing production-container publication gate, so t-023 cannot honestly remain done before that concrete publication is approved and merged. TO APPROVE: explicitly approve merging rainbowbutterflies#14; after it lands and main verification passes, set approved_by_human: true/status: done (or allow the connector closeout to record that approval). This also keeps downstream t-024 from treating the incomplete embed UI as a satisfied dependency.
