@@ -2688,7 +2688,7 @@ tasks:
 - id: t-054
   milestone: m3
   title: Swap the finale's placeholder reveal for the real screen-finale/set-last-aquarium plates
-  status: review
+  status: done
   passes: 0
   stakes: reversible
   depends_on: t-039
@@ -2705,7 +2705,11 @@ tasks:
     dialog; setLastAquariumArt renders in the shop row via kr-art-plate, matching the fish
     catalog's icon-plus-text layout. Verified: vue-tsc clean, eslint+prettier clean,
     test:layout-contract holds baseline. kind_robots PR #2239 open, awaiting CI.
-  updated: '2026-08-30T21:36:51Z'
+
+    MERGED (conductor scheduled Agent run, 20260830T212719-scheduled-cq-t054b): kind_robots
+    PR #2239 merged squash 1c1aea43 -- all 38 checks green, mergeable_state clean. Both
+    plates now live in cthulhuquarium-game.vue's finale dialog and shop row.
+  updated: '2026-08-30T21:40:53Z'
   owner: reviewer
   claimed_by: 20260830T212719-scheduled-cq-t054b
   claimed_at: '2026-08-30T21:27:20Z'
