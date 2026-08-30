@@ -3307,26 +3307,25 @@ tasks:
 
     Merged Kind Robots PR #2229 as 1c7b80d184e0e7349dc3e531c423db455fd58659 after all 37 exact-head workflows completed successfully. Achievement Artwork's no-search-results empty state now uses kr-panel-flat plus border-dashed, preserving p-6 and text treatment while normalizing the bespoke rounded-xl radius to the shared rounded-2xl panel vocabulary. One file, +1/-3; no script, store, API, schema, migration, production-data, or deployment changes. Return recurring consistency umbrella to ready for the next bounded slice.
 
-    Slice 69: consolidated the exact min-h-0 flex-1 overflow-y-auto overscroll-contain idiom
-    into .kr-scroll across 6 files (dream-maker.vue, home-object-sheet.vue, artjob-feedback-
-    manager.vue, stylist-manager.vue, hair-studio-manager.vue, kr-manager.vue). Every
-    candidate matched kr-scroll's exact @apply rule byte-for-byte; no geometry/behavior
-    change. Checked .kr-toolbar candidates too (4 files matching 'flex shrink-0 flex-wrap
-    items-center gap-2') but excluded all: one lacked kr-toolbar's 'relative z-20' alongside
-    extra unrelated classes (not a match), the other three would have added 'relative z-20'
-    -- a genuine new stacking-context behavior, not a pure consolidation -- left for a slice
-    that verifies no positioning/overlap side effects first. Verified: eslint/prettier clean
-    on changed lines (two pre-existing unrelated issues elsewhere in dream-maker.vue and
-    artjob-feedback-manager.vue confirmed present on main via git stash before this change);
-    vue-tsc --noEmit clean repo-wide; test:layout-contract holds at 207-violation baseline,
-    zero new violations. Merged as silasfelinus/kind_robots#2232 (squash 373f732) after all
-    37 CI checks passed. Return recurring consistency umbrella to ready for the next bounded
-    slice.
-  updated: '2026-08-30T15:39:33Z'
+    Kind Robots PR #2232 merged as 373f732a12b6e927972000865077523480022699 after exact-head TypeScript, Contract Tests, Layout Contract, MDC Scroll Ownership, Schema Migration Parity, Project Architecture, Facet Catalog, and the remaining PR workflow fleet completed successfully. Reviewed by openai-scheduled-20260830T153811Z-review3246-x7p4; recurring consistency task is ready for the next bounded slice.
+
+    Slice 69 detail (conflict-resolved merge of this note with the close-out PR's own
+    account, conductor#3247): consolidated the exact min-h-0 flex-1 overflow-y-auto
+    overscroll-contain idiom into .kr-scroll across 6 files (dream-maker.vue,
+    home-object-sheet.vue, artjob-feedback-manager.vue, stylist-manager.vue,
+    hair-studio-manager.vue, kr-manager.vue). Every candidate matched kr-scroll's exact
+    @apply rule byte-for-byte; no geometry/behavior change. Checked .kr-toolbar candidates
+    too (4 files matching 'flex shrink-0 flex-wrap items-center gap-2') but excluded all:
+    one lacked kr-toolbar's 'relative z-20' alongside extra unrelated classes (not a
+    match), the other three would have added 'relative z-20' -- a genuine new
+    stacking-context behavior, not a pure consolidation -- left for a slice that verifies
+    no positioning/overlap side effects first. Verified: eslint/prettier clean on changed
+    lines (two pre-existing unrelated issues elsewhere in dream-maker.vue and
+    artjob-feedback-manager.vue confirmed present on main via git stash before this
+    change); vue-tsc --noEmit clean repo-wide; test:layout-contract holds at
+    207-violation baseline, zero new violations.
+  updated: '2026-08-30T15:40:50Z'
   implementation_pr: 'silasfelinus/kind_robots#2232'
-  owner: null
-  claimed_by: null
-  claimed_at: '2026-08-30T15:28:53Z'
 
 - id: t-105
   milestone: m6
