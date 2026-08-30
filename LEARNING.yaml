@@ -11735,3 +11735,24 @@ records:
     kind a task note names has to be invented in the same slice -- HUMAN_AI and SYSTEM
     had no schema/backend concept behind them, so they were flagged as a follow-up
     needing a product decision rather than guessed at.
+- date: "2026-08-30"
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Slice 64 (kind_robots#2224) picked up the ~150-instance kr-note status-callout
+    pool flagged exhausted-of-easy-wins by slice 62: found a sub-pool of 8 instances
+    across 5 files that already matched the canonical border-{status}/40 bg-{status}/10
+    opacity values but omitted font-semibold, and used a trailing font-normal override
+    to convert them without silently adding weight that wasn't there before. Also
+    surfaced and correctly excluded a look-alike but unsafe sub-pool: several
+    admin/*.vue "admin access required" gate panels share the same border+bg color
+    classes but wrap a heading with no explicit text color of its own -- converting
+    the wrapper would recolor the heading via CSS inheritance, a real visual change
+    disguised as a mechanical one. Checking whether a matching-color-class instance's
+    text color is stated explicitly (vs. inherited from the wrapper) is now a general
+    filter worth applying before any kr-note/kr-panel conversion, not just this pool.
