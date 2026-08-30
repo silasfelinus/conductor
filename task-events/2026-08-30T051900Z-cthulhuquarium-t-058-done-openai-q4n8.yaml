@@ -1,0 +1,8 @@
+version: 1
+project: cthulhuquarium
+task: t-058
+operation: done
+session: openai-scheduled-20260830T051127Z-t058-q4n8
+updated: '2026-08-30T05:19:00Z'
+note: >-
+  Completed in silasfelinus/cthulhuquarium#15, squash b038363a394d810527dd2554368fbaa76bca0bd5. The canonical Gutter Minnow -> Choirfish edge now uses evolution_kind: breeding, activating the already-shipped generic breeding-evolution path without changing pricing, ownership, schema, or production data. Choirfish already supplies the reciprocal evolves_from edge, is higher tier, and has unlock_cost: 0. The companion repository has no PR workflow runs configured for this head, so there were no required CI runs to wait on; GitHub reported the exact head mergeable before merge. Deliberately did not run seed_bestiary.ts --write because that is a production database mutation outside this task's safe content-authoring scope.
