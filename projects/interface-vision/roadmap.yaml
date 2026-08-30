@@ -2935,7 +2935,7 @@ tasks:
   - id: t-104
     milestone: m5
     title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     recurring: true
@@ -2955,9 +2955,9 @@ tasks:
       OVERSIGHT RECONCILIATION 2026-08-29: retire this consistency sweep as complete. Its latest slice re-checked the proposed kr-scroll candidate pool and found no safe mechanical substitution class remaining; prior notes likewise record the mx-auto/max-w and panel candidate pools as exhausted. Leaving this recurring task at ready made t-105's depends_on: t-104 structurally impossible, because recurring tasks are ordinarily re-armed rather than reaching done. The consistency phase has delivered its bounded mechanical sweep work; closing it now satisfies the phase dependency and lets the separate recurring visual-polish task t-105 continue without agents bypassing a declared gate.
 
       Oversight repair: t-104 is recurring but had drifted to status done. Re-arm it so recurring consistency work remains explicitly open and dependency resolution reflects the real lifecycle rather than treating a never-ending umbrella as completed.
-    updated: '2026-08-30T00:28:56Z'
+    updated: '2026-08-30T00:33:52Z'
     approved_by_human: true
-    implementation_pr: 'silasfelinus/kind_robots#2206'
+    implementation_pr: 'silasfelinus/kind_robots#2208'
     owner: reviewer
     claimed_by: claude-scheduled-20260830T002856Z-t104-music-mentor
     claimed_at: '2026-08-30T00:28:56Z'
