@@ -46,6 +46,13 @@ ALLOWED = {
         "written the turn the digest is sent ... that's very high on automated "
         "tasks.\""
     ),
+    "daily-dream-prose-repair.yml": (
+        "One-shot human-requested catalog prose repair, triggered only by an explicit "
+        "request file on main and never by a schedule. It edits model-authored Daily "
+        "Dream card copy rather than replacing human judgement. Calls are bounded to "
+        "at most two attempts per built bundle that actually fails the prose contract; "
+        "the current catalog is finite and the request is consumed after one successful run."
+    ),
 }
 
 
