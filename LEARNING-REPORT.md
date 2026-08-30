@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-30T03:23:11Z
+Generated: 2026-08-30T03:27:28Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **825**
-- Outcomes: blocked: 16, cancelled: 1, done: 808
+- Closed tasks recorded: **826**
+- Outcomes: blocked: 16, cancelled: 1, done: 809
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
-| interface-vision | 87 | 100% |
+| interface-vision | 88 | 100% |
 | kapowarr | 48 | 100% |
 | kind-economy | 6 | 100% |
 | kind-robots | 53 | 98% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 809 | 99% |
+| software | 810 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-30 `interface-vision/t-104` — Slice 55: the kr-surface root-wrapper pool (hand-rolled 'flex h-full min-h-0 ... overflow-hidden') is a parallel-but-unswept sibling of the kr-container mx-auto/max-w- pool -- most *-manager.vue hits are false positives (root is <kr-manager>), but user-manager.vue's root was a genuine byte-exact-apart-from-gap-override match. Worth a dedicated future slice checking the kr-surface pool specifically, the way max-w-N overrides already work for kr-container.
 - 2026-08-30 `cthulhuquarium/t-064` — Milestone status drift can also hide behind non-extreme values (in-progress/planned) with 100% task completion underneath, not just the not-started/done extremes check_milestone_status_drift.py originally checked -- conductor/t-138 (merged same day) widens that check so this class of drift surfaces automatically going forward.
 - 2026-08-29 `interface-vision/t-104` — A recurring mechanical-sweep task's 'exhausted against main@<SHA>' note goes stale the moment main moves, even by unrelated commits -- several same-day sessions treated the note as still valid without re-running the actual grep, and a fresh full-repo search turned up six real unconverted candidates. Re-verify against the exact current SHA before trusting a same-day exhaustion claim, don't just check whether the SHA moved.
 - 2026-08-29 `brainstorm/t-025` — Reusing ART_ENGINE_PROFILES keeps prompt-only engine availability centralized and naturally excludes source-image-only engines from Brainstorm's fresh text-to-image flow.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-29 `rainbow-butterflies/t-007` — Straightforward first-pass success: turned RESEARCH.md's existing prose channel matrix into a concrete per-channel checklist (handles, profile fields, API/app requirements, verification, fees, required human inputs, wave) by systematically walking every network RESEARCH.md already covered rather than starting fresh, and reusing AMI-IDENTITY.md's existing bios instead of inventing new copy. Marking genuinely unresolved research items "recheck before launch" (rather than guessing) kept the document honest about what it doesn't know yet.
 - 2026-08-29 `rainbow-butterflies/t-006` — A Worker session had already set status: review and finished the actual content (AMI-IDENTITY.md) but never opened the PR, so the branch (worker/rainbow-t006-ami- identity-20260829) sat unreviewed. Opening a PR from an existing worker/* branch without pushing any new commits to it is within the Reviewer's scope; a clean three-way merge onto current main showed only the new file as the diff once the branch's own stale roadmap.yaml edit was superseded by a later main commit. Worth checking for stranded no-PR worker branches (not just open PRs) at session start, since select_role.py's candidate_worker_branches surfaces them even when list_pull_requests shows nothing to review.
 - 2026-08-29 `rainbow-butterflies/t-003` — Kind Robots already contains a surprisingly complete forum substrate in Chat/ToForum/channel/thread relations and supports JWT plus legacy user API keys. Reusing those primitives reduces duplication, but public agent onboarding needs a narrower credential lifecycle with scopes, expiry, revocation, Bot identity, and operator provenance.
-- 2026-08-29 `conductor/t-137` — A PR's own "Flags for Reviewer" section can double as a complete kaizen brief -- PR #3113 named both follow-up gaps (stale Vercel default in healthcheck.ps1 itself, a share-recovery double-restart race) precisely enough that filing t-137 needed no independent investigation, only transcription. Fixing a config-default drift class (this is the second stale Vercel-host default found in this file's history) is only durably closed by a structural regression test, not just the value change -- added two to test_home_server_share_watchdog.py so a future edit can't silently reintroduce either bug.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-30T03:23:11Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-30T03:27:28Z_
