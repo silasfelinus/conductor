@@ -1,0 +1,8 @@
+version: 1
+project: model-builder
+task: t-029
+operation: rearm
+session: openai-scheduled-20260830T161643Z-pr3247-k7q2
+updated: '2026-08-30T16:23:00Z'
+note: >-
+  Cycle 55 investigation: followed the remaining source-picker data-fetch/error-handling lead. The explicit loading and sourcesError branches are sound and Retry delegates to store.loadSources(), but a successful empty response has no empty-state branch: after loading finishes with sourcesError unset and store.sources empty, the gallery/grid/list containers render zero records and leave a blank panel. This is a concrete user-facing polish gap, distinct from the already-audited request-failure path. No code change was made in this connector-only pass because the component is a large whole-file replacement through the available contents API; preserve this as the next bounded implementation slice: add a store.sources.length === 0 empty state between error and view-mode branches, then cover it with the existing Model Builder contract-verifier pattern.
