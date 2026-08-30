@@ -11716,3 +11716,22 @@ records:
     definition (assets/css/tailwind.css .kr-panel) before merging to confirm the override
     convention actually produces the same computed classes, rather than trusting the PR
     description's claim alone.
+- date: "2026-08-30"
+  project: rainbow-butterflies
+  task: t-020
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    forum-thread.vue had drifted entirely off the canonical /api/v1/forum/* endpoints
+    onto a legacy chatStore path with a hardcoded, wrong channel list and an
+    unimplemented reply handler -- the backend (server/utils/forumApi.ts) was already
+    built and unused by any client. Worth checking, before starting a "build X" task,
+    whether the backend already exists and only the frontend wiring is missing; the
+    task note's own framing ("let humans and agents post through the same API") was
+    the tell that a real API already existed to point at. Also: not every authorship
+    kind a task note names has to be invented in the same slice -- HUMAN_AI and SYSTEM
+    had no schema/backend concept behind them, so they were flagged as a follow-up
+    needing a product decision rather than guessed at.
