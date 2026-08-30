@@ -1,9 +1,0 @@
-version: 1
-project: dream-cycle
-task: t-006
-operation: review
-owner: worker
-session: 2026-08-30T221300Z-dream-cycle-t006-prose-7f4c
-updated: '2026-08-30T22:21:00Z'
-note: >-
-  Root cause: Daily Dream structural validation accepted any non-empty prose field, and the author prompt did not state that location card fields must be complete explanatory copy. Added an explicit user-facing prose contract, a shared creative-quality guard for authoring/revisions/manual proposal CI, and regression coverage using the Monsoon Static / Roofline Circuit fragment shape. Implementation branch worker/dream-cycle-t006-prose-7f4c is ready for PR checks.
