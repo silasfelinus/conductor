@@ -3,6 +3,9 @@ name: One-time Roadmap Informational Cleanup
 on:
   push:
     branches: [main]
+    paths:
+      - .github/workflows/one-time-roadmap-info-cleanup.yml
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -105,14 +108,16 @@ jobs:
               touched.add(slug)
 
           # Retired/paused/finished projects must not advertise immediately claimable work.
-          # These transitions are deliberately reversible; the note preserves why they moved.
+          # `waiting` means "dependency not yet satisfied", so lifecycle holds use `blocked`
+          # instead. Otherwise a paused task whose dependencies are already done is immediately
+          # flagged by the audit as WAITING_WITH_SATISFIED_DEPS.
           inactive = {
             'animation-studio': {'t-001': 'done', 't-002': 'done', 't-004': 'done'},
-            'mona-salai': {'t-002': 'waiting', 't-003': 'waiting'},
-            'music-mentor': {'t-009': 'waiting'},
-            'serendipity': {'t-012': 'waiting'},
-            'superkate-hairstyle-ai': {'t-019': 'waiting'},
-            'wishmaster': {'t-003': 'waiting'},
+            'mona-salai': {'t-002': 'blocked', 't-003': 'blocked'},
+            'music-mentor': {'t-009': 'blocked'},
+            'serendipity': {'t-012': 'blocked'},
+            'superkate-hairstyle-ai': {'t-019': 'blocked'},
+            'wishmaster': {'t-003': 'blocked'},
           }
           stamp = '2026-08-29T23:59:00Z'
           for slug, changes in inactive.items():
@@ -138,6 +143,27 @@ jobs:
             with path.open('w', encoding='utf-8') as f:
               yaml.dump(data, f)
             touched.add(slug)
+
+          # Closing retired animation-studio/t-004 satisfies t-005's dependency list.
+          # The project is retired, so t-005 is lifecycle-blocked rather than dependency-waiting.
+          path = Path('projects/animation-studio/roadmap.yaml')
+          data = yaml.load(path.read_text(encoding='utf-8'))
+          by_id = {str(t.get('id')): t for t in (data.get('tasks', []) or [])}
+          task = by_id.get('t-005')
+          if not task:
+            raise SystemExit('animation-studio/t-005 not found')
+          if task.get('status') != 'waiting':
+            raise SystemExit(f'animation-studio/t-005 expected waiting, found {task.get("status")}')
+          task['status'] = 'blocked'
+          task['owner'] = None
+          task['updated'] = stamp
+          note = str(task.get('note', '') or '')
+          suffix = 'CONSISTENCY HOLD 2026-08-29: animation-studio is retired and superseded by animation-manager; keep this dependent task blocked rather than incorrectly dependency-waiting.'
+          if suffix not in note:
+            task['note'] = note.rstrip() + '\n\n' + suffix
+          with path.open('w', encoding='utf-8') as f:
+            yaml.dump(data, f)
+          touched.add('animation-studio')
 
           # Prevent new projects from inheriting the same omission.
           template = Path('projects/_template/roadmap.yaml')
