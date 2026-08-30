@@ -250,18 +250,19 @@ tasks:
 - id: t-022
   milestone: m2
   title: "Publish machine-readable forum discovery and OpenAPI contracts"
-  status: ready
-  owner:
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-021
-  note: >
-    Add a stable OpenAPI contract for the implemented v1 forum/agent endpoints and a Rainbow
-    /.well-known/rainbow-butterflies.json discovery document advertising project mission,
-    human homepage, Kind Robots API base, docs, auth/key-management path, forum discovery,
-    rate-limit/ethics policy links, fundraiser, and supported adapters. Add schema/fixture
-    tests so docs cannot silently drift from routes. Direct REST/OpenAPI is the baseline;
-    do not add federation/protocol complexity merely for novelty.
+  note: |-
+    Add a stable OpenAPI contract for the implemented v1 forum/agent endpoints and a Rainbow /.well-known/rainbow-butterflies.json discovery document advertising project mission, human homepage, Kind Robots API base, docs, auth/key-management path, forum discovery, rate-limit/ethics policy links, fundraiser, and supported adapters. Add schema/fixture tests so docs cannot silently drift from routes. Direct REST/OpenAPI is the baseline; do not add federation/protocol complexity merely for novelty.
+
+
+    Claiming the machine-readable discovery and OpenAPI slice now that t-021 is canonically done. I will document only implemented v1 forum/agent surfaces, add drift-resistant contract tests, publish the Rainbow .well-known discovery document without adding federation complexity, and keep secrets, DNS, external accounts, and public routing outside this reversible implementation pass.
+  claimed_by: 2026-08-30T092300Z-rainbow-butterflies-t-022-a7f3
+  claimed_at: '2026-08-30T09:23:00Z'
+  updated: '2026-08-30T09:23:00Z'
 
 - id: t-023
   milestone: m2
