@@ -1,0 +1,89 @@
+name: Daily Dream Prose Repair
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "projects/dream-cycle/prose-repairs/*-request.json"
+  workflow_dispatch:
+
+concurrency:
+  group: conductor-main-writers
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    env:
+      KR_BASE_URL: https://kindrobots.org
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install pyyaml Pillow
+
+      - name: Locate prose-repair request
+        id: pending
+        shell: bash
+        run: |
+          shopt -s nullglob
+          files=(projects/dream-cycle/prose-repairs/*-request.json)
+          if (( ${#files[@]} == 0 )); then
+            echo "found=false" >> "$GITHUB_OUTPUT"
+            echo "No pending Daily Dream prose repair."
+            exit 0
+          fi
+          if (( ${#files[@]} != 1 )); then
+            echo "::error::Expected exactly one prose-repair request, found ${#files[@]}."
+            exit 1
+          fi
+          echo "found=true" >> "$GITHUB_OUTPUT"
+          echo "request=${files[0]}" >> "$GITHUB_OUTPUT"
+
+      - name: Audit catalog before repair
+        if: steps.pending.outputs.found == 'true'
+        run: python scripts/repair_dream_prose_catalog.py --audit
+
+      - name: Author, validate, and apply prose repairs
+        if: steps.pending.outputs.found == 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: python scripts/repair_dream_prose_catalog.py "${{ steps.pending.outputs.request }}"
+
+      - name: Verify catalog prose contract
+        if: steps.pending.outputs.found == 'true'
+        run: python scripts/repair_dream_prose_catalog.py --audit --strict
+
+      - name: Commit prose-repair evidence
+        if: steps.pending.outputs.found == 'true'
+        shell: bash
+        run: |
+          git config user.name "kind-robots-bot"
+          git config user.email "noreply@kindrobots.app"
+          git add projects/dream-cycle/backlog/ projects/dream-cycle/prose-repairs/
+          if git diff --staged --quiet; then
+            echo "Prose repair produced no repository changes."
+            exit 0
+          fi
+          git commit -m "daily dream: repair catalog prose [skip ci]"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if git rebase origin/main && git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "Prose-repair evidence push attempt ${attempt}/3 lost a race; retrying."
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 2))
+          done
+          echo "::error::Unable to persist Daily Dream prose-repair evidence after 3 attempts."
+          exit 1
