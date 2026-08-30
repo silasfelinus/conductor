@@ -852,7 +852,7 @@ tasks:
   - id: t-032
     milestone: m6
     title: Reconcile milestone status fields against actual task completion
-    status: ready
+    status: claimed
     gate_human: false
     stakes: reversible
     passes: 0
@@ -864,4 +864,7 @@ tasks:
       Implementing the remaining deterministic drift only: Brainstorm milestone m6 is still planned although t-022 is done and t-023 is needs-human. The branch changes m6 to in-progress; m0-m5 were already corrected by intervening work and are intentionally untouched.
 
       Connector-only pass confirmed the remaining correction is exactly m6 status planned -> in-progress. No safe line-patch primitive is available for this large roadmap; a branch-only helper workflow was tested, did not activate, and was removed before merge. PR #3245 was closed with zero net changed files. Returning the task to ready rather than falsely completing it; the finding remains deterministic and suitable for a shell-capable worker.
-    updated: '2026-08-30T15:27:20Z'
+    updated: '2026-08-30T16:28:51Z'
+    owner: worker
+    claimed_by: 20260830T162851Z-brainstorm-t032-cds1
+    claimed_at: '2026-08-30T16:28:51Z'
