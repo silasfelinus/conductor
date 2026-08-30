@@ -163,6 +163,21 @@ tasks:
     test_dream_catalog_remaster.py. All 23 other checks were green (commit c01f3579). Left
     PR #3268 open with a review comment describing the exact fix; see retry_context field on
     this task.
+  retry_context: >
+    pass 1 failed (quality): PR #3268 (branch worker/dream-cycle-t006-prose-7f4c, commit
+    c01f3579) added scripts/dream_prose_quality.py and wired it into
+    story_diversity_complaints(), then fixed the two fixtures it broke in
+    tests/test_author_dream_proposal.py and tests/test_dream_catalog_remaster.py -- but
+    missed a third: tests/test_apply_dream_revision.py's shared proposal() fixture still
+    has vibe.line at 7 words (needs >= 8) and locations[0].known_for/local_rule/best_scene
+    as lowercase fragments with no terminal punctuation, so
+    test_valid_revision_passes_creative_guard fails in the Python test suite check. Do
+    differently: apply the identical prose fix already used in the other two fixtures --
+    capitalize each field, add terminal punctuation, and pad vibe.line to at least 8 words
+    (e.g. "Transformation is a flare that fires straight into the weather.") -- then run
+    `pytest tests/test_apply_dream_revision.py` locally (all 6 tests in that file) before
+    pushing, since the other three tests in the file reuse the same proposal() fixture and
+    must keep passing too.
   implementation_pr: 'silasfelinus/conductor#2996'
   owner: worker
   claimed_by: 2026-08-30T221300Z-dream-cycle-t006-prose-7f4c
