@@ -86,7 +86,7 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Scaffold the Rainbow Butterflies mission app and Kind Robots BFF"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-003
@@ -97,15 +97,16 @@ tasks:
       Released the abandoned stale claim from 2026-08-29T07:42Z after verifying there is no open Rainbow Butterflies PR or t-004 worker branch; Silas explicitly directed this session to start building the site now.
 
       Implemented the first Rainbow Butterflies mission-home slice on a worker branch: polished responsive landing page using the approved butterfly artwork and logo, honest mission/commons/impact placeholders, direct Against Malaria CTA, server-side Kind Robots BFF boundary, and Nuxt typecheck/build CI. Ready for implementation PR review.
-    updated: '2026-08-30T02:05:00Z'
-    owner: worker
+
+      Merged rainbowbutterflies PR #9 (b1998d462fd777bff6f1e25c027a1506c1458dad). The Nuxt mission homepage now uses the approved logo/background, exposes honest mission/commons/experiment/impact surfaces and direct Against Malaria CTAs, adds a thin server-side Kind Robots BFF boundary, and adds Nuxt typecheck/build CI. PR head 9139709561774fde3674b2793e8e6da843aab042 passed CI run 33287205029 and production-container build run 33287205031. No DNS, Traefik, Unraid, secrets, accounts, payments, or duplicate application databases were changed.
+    updated: '2026-08-30T02:09:00Z'
     claimed_by: 2026-08-30T020100Z-rainbow-butterflies-t-004-home-f3a7
     claimed_at: '2026-08-30T02:01:00Z'
 
   - id: t-015
     milestone: m2
     title: "Add scoped per-agent credentials to Kind Robots"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
