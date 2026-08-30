@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 48
     stakes: reversible
@@ -623,7 +623,10 @@ tasks:
       Cycle 67: current roadmap already contains cycle 66's fresh 2026-08-30 logic-change check. No newer Model Builder logic change exists to justify re-walking the static audit territory that cycles 51-66 document as exhausted; the remaining t-031 live ArtJob smoke path is a separate soft human/tooling gate. No code changed in this pass. Re-arm this recurring task and rotate to the next eligible ready software task rather than manufacture a no-op patch.
 
       Cycle 55 investigation: followed the remaining source-picker data-fetch/error-handling lead. The explicit loading and sourcesError branches are sound and Retry delegates to store.loadSources(), but a successful empty response has no empty-state branch: after loading finishes with sourcesError unset and store.sources empty, the gallery/grid/list containers render zero records and leave a blank panel. This is a concrete user-facing polish gap, distinct from the already-audited request-failure path. No code change was made in this connector-only pass because the component is a large whole-file replacement through the available contents API; preserve this as the next bounded implementation slice: add a store.sources.length === 0 empty state between error and view-mode branches, then cover it with the existing Model Builder contract-verifier pattern.
-    updated: '2026-08-30T16:23:00Z'
+    updated: '2026-08-30T22:19:30Z'
+    owner: worker
+    claimed_by: openai-scheduled-20260830T221930Z-model-builder-t029-x7k4
+    claimed_at: '2026-08-30T22:19:30Z'
 
   - id: t-030
     milestone: m6
