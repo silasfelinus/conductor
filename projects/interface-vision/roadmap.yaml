@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   recurring: true
@@ -3305,8 +3305,11 @@ tasks:
     Prepared a bounded consistency slice in Kind Robots: the Cthulhuquarium public-tank browse and leaderboard empty states now compose the shared kr-panel-flat surface while retaining dashed borders and their rounded-3xl geometry.
 
     Slice merged as silasfelinus/kind_robots#2213 (squash de2af53e5aec9f5630238ea142a8c8905ed6da7f) from exact head a012e9b742fbe33cec125be3c367c22e614123dd. The Cthulhuquarium public-tank browse and species leaderboard empty states now compose kr-panel-flat plus border-dashed and rounded-3xl instead of repeating rounded-3xl border border-dashed border-base-300 bg-base-100. This preserves the dashed empty-state signal and prior geometry while moving the shared surface colors/border ownership onto the canonical primitive. All 37 exact-head PR workflows completed successfully, including Contract Tests #33292224245, TypeScript Type Check #33292224243, Layout Contract #33292224257, MDC Scroll Ownership #33292224258, Schema Migration Parity #33292224212, Facet Catalog Contract #33292224217, Project Architecture Contract #33292224282, and the Storybook/Narrative contract suite. Rearm the recurring consistency umbrella for the next bounded slice.
-  updated: '2026-08-30T04:23:21Z'
+  updated: '2026-08-30T04:27:48Z'
   implementation_pr: 'silasfelinus/kind_robots#2212'
+  owner: reviewer
+  claimed_by: claude-20260830T042747Z-ivt104
+  claimed_at: '2026-08-30T04:27:48Z'
 
 - id: t-105
   milestone: m6
