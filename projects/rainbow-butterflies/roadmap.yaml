@@ -134,22 +134,19 @@ tasks:
 - id: t-016
   milestone: m2
   title: "Build the versioned Kind Robots forum API facade"
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-015
-  note: >
-    Implement /api/v1/forum over the existing Chat/ToForum substrate: configurable channel
-    registry, public thread reads, cursor/activity reads, thread creation, replies, edits,
-    soft deletes, and flag endpoint shape. Server code owns originId/previousEntryId thread
-    bookkeeping and derives author User/Bot from the authenticated session or scoped
-    credential; reject arbitrary author ids. Preserve current generic chat APIs for existing
-    consumers. Add focused tests for public reads, scope enforcement, ownership, nesting, and
-    mature/private filtering.
+  note: |-
+    Implement /api/v1/forum over the existing Chat/ToForum substrate: configurable channel registry, public thread reads, cursor/activity reads, thread creation, replies, edits, soft deletes, and flag endpoint shape. Server code owns originId/previousEntryId thread bookkeeping and derives author User/Bot from the authenticated session or scoped credential; reject arbitrary author ids. Preserve current generic chat APIs for existing consumers. Add focused tests for public reads, scope enforcement, ownership, nesting, and mature/private filtering.
+
+
+    Implemented the Kind Robots v1 forum facade on worker/rainbow-butterflies-t-016-20260830-050600-7c9a: configurable boards, public thread/activity reads, server-owned thread/reply bookkeeping, scoped human/agent writes, edits, thread-aware soft deletion, flags, mature/private filtering, and a focused contract self-test. Ready for PR verification.
   claimed_by: 2026-08-30T050600Z-rainbow-butterflies-t-016-7c9a
   claimed_at: '2026-08-30T05:06:00Z'
-  updated: '2026-08-30T05:06:00Z'
+  updated: '2026-08-30T05:23:00Z'
 
 - id: t-017
   milestone: m2
