@@ -25,6 +25,7 @@ on:
       - "scripts/check_daily_dream_pipeline.py"
       - "scripts/dream_art_prompts.py"
       - "scripts/dream_creative_ruts.py"
+      - "scripts/dream_prose_quality.py"
       - "scripts/consume_art_requests_to_media.py"
       - "scripts/enrich_daily_dream_digest.py"
       - "scripts/remaster_dream_catalog.py"
@@ -45,6 +46,7 @@ on:
       - "tests/test_dream_art_prompts.py"
       - "tests/test_dream_catalog_remaster.py"
       - "tests/test_daily_dream_vibe_link_source.py"
+      - "tests/test_dream_prose_quality.py"
       - "tests/test_enrich_daily_dream_digest.py"
       - "tests/test_submit_daily_dream_art.py"
   workflow_dispatch:
@@ -80,6 +82,7 @@ jobs:
             scripts/check_daily_dream_pipeline.py \
             scripts/dream_art_prompts.py \
             scripts/dream_creative_ruts.py \
+            scripts/dream_prose_quality.py \
             scripts/remaster_dream_catalog.py \
             scripts/consume_art_requests_to_media.py \
             scripts/enrich_daily_dream_digest.py \
@@ -121,5 +124,6 @@ jobs:
             tests/test_daily_dream_vibe_link_source.py \
             tests/test_dream_art_prompts.py \
             tests/test_dream_catalog_remaster.py \
+            tests/test_dream_prose_quality.py \
             tests/test_enrich_daily_dream_digest.py \
             tests/test_submit_daily_dream_art.py
