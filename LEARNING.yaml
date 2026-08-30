@@ -11766,3 +11766,14 @@ records:
   failure_category: null
   lesson: Companion API/discovery work should close only after both implementations are merged and task-specific
     contracts are verified separately from unrelated base-repository data failures.
+- date: 2026-08-30
+  project: rainbow-butterflies
+  task: t-023
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: An extensible typed reference shape ({ kind, id }) for cross-object embeds paid off immediately --
+    ArtImage and Project shared one resolver/serializer path with no per-kind schema branching, so the next
+    object kind (t-030) is additive rather than a redesign.

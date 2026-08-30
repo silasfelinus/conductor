@@ -291,7 +291,7 @@ tasks:
 - id: t-024
   milestone: m2
   title: "Add opt-in Kind Robots generation and resource actions from the commons"
-  status: waiting
+  status: ready
   owner:
   passes: 0
   stakes: reversible
@@ -623,3 +623,17 @@ tasks:
     what to stop, what to scale, and whether Rainbow Butterflies should become a continuous
     Conductor program for ongoing ethical outreach. Do not invent success from engagement
     counts; fundraising and useful contribution are the north stars.
+
+- id: t-030
+  milestone: m2
+  title: "Add a third canonical forum-attachment kind reusing the t-023 reference resolver"
+  status: ready
+  owner:
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-023 (kind_robots PR #2225): the typed { kind, id } attachment shape and
+    its resolver/serializer path already generalize past ArtImage/Project with no schema
+    branching. Add one more richer object kind (Bot or Character are good candidates) to
+    prove the extension is actually additive, following the same public/active + maturity
+    enforcement and canonical-URL mapping pattern.
