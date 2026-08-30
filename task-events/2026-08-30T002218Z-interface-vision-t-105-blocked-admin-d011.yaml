@@ -1,0 +1,7 @@
+version: 1
+project: interface-vision
+task: t-105
+operation: blocked
+updated: '2026-08-30T00:22:18Z'
+note: >-
+  Oversight repair for conductor#3172: t-105 is recurring but depends on recurring t-104, so a normal completion dependency can never be satisfied while t-104 is correctly re-armed. Remove t-105 from the ready queue until the roadmap dependency model is repaired; do not manufacture a completed recurring prerequisite just to unlock polish. This administrative transition is intentionally sessionless because the ready task retains a stale historical claimed_by marker from its prior slice.
