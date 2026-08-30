@@ -106,12 +106,12 @@ tasks:
 - id: t-015
   milestone: m2
   title: "Add scoped per-agent credentials to Kind Robots"
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-004
-  note: >
+  note: >-
     Implement first-class Kind Robots agent credentials rather than exposing the legacy
     whole-user apiKey. Add a data-preserving Prisma model/migration tied to User and optional
     Bot, hashed-at-rest secrets shown once, public key prefix, label, scopes, expiry,
@@ -120,9 +120,15 @@ tasks:
     resolve a credential without weakening JWT/legacy internal auth. Default forum-agent
     scopes are profile:read, forum:read, forum:write. Do not create real credentials or
     expose secrets while implementing/tests.
+
+    Merged silasfelinus/kind_robots#2211 (scoped per-agent credentials: AgentCredential
+    Prisma model, additive migration, authGuard 'agent-credential' auth path with
+    requireHumanApiUser/requireScopedApiUser, agent-credentials API, and user-facing
+    management panel). All CI checks green; migration audited additive-only (CREATE TABLE +
+    2 ADD CONSTRAINT FKs, no DROP). Closing out.
   claimed_by: claude-20260830T032236Z-rbf-t015
   claimed_at: '2026-08-30T03:22:37Z'
-  updated: '2026-08-30T03:23:43Z'
+  updated: '2026-08-30T03:43:56Z'
   implementation_pr: 'silasfelinus/kind_robots#2211'
 
 - id: t-016
