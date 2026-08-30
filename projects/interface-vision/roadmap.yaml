@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3317,7 +3317,28 @@ tasks:
     checks green (Contract verifiers took ~3.5 minutes once it started, consistent with its
     documented normal range). Re-arm the recurring consistency umbrella for the next bounded
     slice.
-  updated: '2026-08-30T11:30:03Z'
+
+    Slice 67 merged as silasfelinus/kind_robots#2228 (squash
+    665743d54af2e2c834e7cb1bbd3e3a444829d850) from exact head
+    bd5b9084d0af6c9a5a12a3121d3823aaaed34f52. Converted 13 hand-rolled/half-converted
+    error/success/warning status-message leaf blocks to compose kr-note with kr-note-
+    error/kr-note-success/kr-note-warning: dream-brainstorm.vue, add-reward.vue, character-
+    flip-card.vue, reaction-card.vue, reward-encounter.vue, dream-maker.vue, resource-
+    gallery.vue (none stated font-semibold, each carries a trailing font-normal override);
+    password-reset.vue, user-panel.vue (already stated font-semibold explicitly, pure no-op
+    on weight); generate-button.vue, art-generator.vue, add-collection.vue (already used the
+    kr-note-error/success modifier classes but with a hand-rolled base -- pure redundancy
+    cleanup); kr-manager.vue unknown-tab recovery panel (already p-4, matching kr-note
+    exactly, plus font-normal). All 13 preserve p-3/p-4 and every other pre-existing layout
+    utility verbatim. Excluded (checked, not converted): scenario-interact.vue (text-smart
+    responsive class, not plain text-sm), kr-manager.vue loading/error banner (~line 68,
+    toggles error vs. a neutral border-base-300/bg-base-100 state kr-note has no tone for,
+    plus a shadow kr-note does not apply), character-flip-card.vue chat-bubble message
+    (primary/base-300 tones, a different two-party-chat pattern). All 38 CI checks green,
+    mergeable_state clean before merge. Re-armed to ready for the next slice -- kaizen lead:
+    give kr-manager.vue loading/error banner an explicit neutral kr-note tone (or a
+    documented neutral convention) so it becomes convertible too.
+  updated: '2026-08-30T11:36:30Z'
   implementation_pr: 'silasfelinus/kind_robots#2227'
   owner: reviewer
   claimed_by: claude-scheduled-20260830-slice67
