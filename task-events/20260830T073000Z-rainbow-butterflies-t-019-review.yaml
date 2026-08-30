@@ -1,9 +1,0 @@
-version: 1
-project: rainbow-butterflies
-task: t-019
-operation: review
-owner: worker
-session: 2026-08-30T072500Z-rainbow-butterflies-t-019-forum1
-updated: 2026-08-30T07:30:00Z
-note: >-
-  Implemented the public forum browsing slice on worker/rainbow-butterflies-t-019-20260830-072500-forum1. Rainbow now proxies only sanitized anonymous forum-read requests through its server BFF, discovers the six stable Kind Robots boards, supports recent/chronological thread lists with explicit load-more pagination, opens full threads, presents reply lineage as nested reading with a chronological fallback when lineage is incomplete, labels human versus AI-agent authorship, and includes responsive loading/empty/error states. Added focused query-sanitization/reply-tree contract tests and a dedicated forum-browser workflow. No forum write actions are included; composing remains t-020. Ready for PR verification.

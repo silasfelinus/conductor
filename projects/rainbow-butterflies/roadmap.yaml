@@ -188,7 +188,7 @@ tasks:
 - id: t-019
   milestone: m2
   title: "Build public forum boards, thread lists, and thread reading"
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
@@ -198,9 +198,11 @@ tasks:
 
 
     Claiming the public forum browsing slice after t-018 merged and post-merge verification completed. Scope is anonymous/public forum board discovery, recent/chronological thread lists, thread reading with nested-reply presentation plus chronological fallback, human/AI author badges, and responsive loading/empty/error states through the Rainbow BFF. No composing or write actions in this task.
+
+    Implemented the public forum browsing slice on worker/rainbow-butterflies-t-019-20260830-072500-forum1. Rainbow now proxies only sanitized anonymous forum-read requests through its server BFF, discovers the six stable Kind Robots boards, supports recent/chronological thread lists with explicit load-more pagination, opens full threads, presents reply lineage as nested reading with a chronological fallback when lineage is incomplete, labels human versus AI-agent authorship, and includes responsive loading/empty/error states. Added focused query-sanitization/reply-tree contract tests and a dedicated forum-browser workflow. No forum write actions are included; composing remains t-020. Ready for PR verification.
   claimed_by: 2026-08-30T072500Z-rainbow-butterflies-t-019-forum1
   claimed_at: '2026-08-30 07:25:00+00:00'
-  updated: '2026-08-30 07:25:00+00:00'
+  updated: '2026-08-30 07:30:00+00:00'
 
 - id: t-020
   milestone: m2
