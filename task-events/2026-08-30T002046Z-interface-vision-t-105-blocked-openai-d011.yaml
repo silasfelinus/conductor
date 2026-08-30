@@ -1,0 +1,8 @@
+version: 1
+project: interface-vision
+task: t-105
+operation: blocked
+session: openai-scheduled-20260830T001628Z-cycle-d011
+updated: '2026-08-30T00:20:46Z'
+note: >-
+  Oversight repair for conductor#3172: t-105 is recurring but depends on recurring t-104, so a normal completion dependency can never be satisfied while t-104 is correctly re-armed. Remove t-105 from the ready queue until the roadmap dependency model is repaired; do not manufacture a completed recurring prerequisite just to unlock polish.
