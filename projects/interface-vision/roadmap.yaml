@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3366,8 +3366,22 @@ tasks:
     (border-{status}/40 bg-{status}/10 text-{status}) family as a lead worth a dedicated
     audit (not a mechanical sweep, since padding varies p-3/p-4 across instances) rather
     than a ready pool.
-  updated: '2026-08-30T07:35:53Z'
-  implementation_pr: 'silasfelinus/kind_robots#2218'
+
+    Slice 62 merged as silasfelinus/kind_robots#2219 (kr-note status-callout conversion: 7
+    hand-rolled info/success/warning/error border+bg+text triples across 6 files -- login-
+    page.vue, theme-gallery.vue, for-you-manager.vue, account-hub.vue, art-gallery.vue x2,
+    art-test.vue -- now compose kr-note kr-note-{status} with trailing overrides for
+    padding/radius/text-size/font-weight/opacity that differed from kr-note's defaults). All
+    40 CI checks green. Closed via conductor#3222 (review) + this close-out (ready).
+    Recurring task re-armed for the next slice -- excluded stage-manager.vue's
+    success/warning pill badges (sit beside a third primary-colored pill in the identical
+    pattern, and kr-note has no primary variant, so partial conversion would fragment an
+    otherwise-consistent trio) and skipped every instance relying on an unstated/ambient
+    text-size or font-weight rather than guessing. The much larger (~150-instance) kr-note
+    candidate pool still needs a dedicated audit pass (grouped by exact override-set, pill-
+    vs-block distinguished) rather than a single mechanical sweep -- a good next-slice lead.
+  updated: '2026-08-30T07:41:06Z'
+  implementation_pr: 'silasfelinus/kind_robots#2219'
   owner: worker
   claimed_by: 20260830T072900Z-interface-vision-t-104-slice32
   claimed_at: '2026-08-30T07:28:18Z'
