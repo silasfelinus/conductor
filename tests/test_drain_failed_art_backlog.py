@@ -199,3 +199,107 @@ def test_an_unreadable_registry_holds_missing_models_back():
     job = {"id": 9542, "error": VANISHED_MODEL_ERROR}
     assert drain.classify_failure(job, registered=None) == "payload-model-missing"
     assert drain.classify_failure(job, registered=set()) == "payload-model-missing"
+
+
+# --- already-rendered guard -------------------------------------------------
+#
+# 2026-08-29: 22 FAILED jobs, all retryable host faults, but eleven of them were
+# a duplicate enqueue of a ruler-hooked batch whose originals had already
+# rendered three days earlier. The relay writes to the job's imagePath, so
+# draining those would have overwritten eleven existing images with new seeds.
+
+RENDERED_JOB = {
+    "id": 10124,
+    "projectSlug": "ruler-hooked",
+    "payload": {"imagePath": "public/images/ruler-hooked/characters/bard-fen.webp"},
+}
+MISSING_JOB = {
+    "id": 10252,
+    "projectSlug": "ruler-hooked",
+    "payload": {"imagePath": "public/images/ruler-hooked/cards/warlock-druid-north.webp"},
+}
+
+
+def _stub_media(monkeypatch, states):
+    """states: {job id -> 'present'|'absent'|'unknown'}"""
+    monkeypatch.setattr(
+        drain,
+        "target_media_state",
+        lambda job: (states[job["id"]], f"https://media.example/{job['id']}"),
+    )
+
+
+def test_already_rendered_jobs_are_held_back_from_the_drain(monkeypatch):
+    _stub_media(monkeypatch, {10124: "present", 10252: "absent"})
+    wanted, rendered, unknown = drain.partition_already_rendered(
+        [RENDERED_JOB, MISSING_JOB]
+    )
+    assert [job["id"] for job in wanted] == [10252]
+    assert [job["id"] for job, _url in rendered] == [10124]
+    assert unknown == []
+
+
+def test_an_unreachable_media_origin_does_not_drop_work(monkeypatch):
+    # "unknown" is not evidence the image is there. The job stays in the drain
+    # and is reported, because a wrongly-skipped job is a missing image that
+    # nothing will queue again.
+    _stub_media(monkeypatch, {10124: "unknown", 10252: "absent"})
+    wanted, rendered, unknown = drain.partition_already_rendered(
+        [RENDERED_JOB, MISSING_JOB]
+    )
+    assert [job["id"] for job in wanted] == [10124, 10252]
+    assert rendered == []
+    assert [job["id"] for job in unknown] == [10124]
+
+
+class _FakeResponse:
+    def __init__(self, status):
+        self.status = status
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *_exc):
+        return False
+
+
+def test_target_media_state_reads_a_2xx_as_present(monkeypatch):
+    monkeypatch.setattr(
+        drain.urllib.request, "urlopen", lambda *_a, **_k: _FakeResponse(200)
+    )
+    state, url = drain.target_media_state(RENDERED_JOB)
+    assert state == "present"
+    assert url.endswith("/images/ruler-hooked/characters/bard-fen.webp")
+
+
+def test_target_media_state_reads_a_404_as_absent(monkeypatch):
+    def _raise(*_a, **_k):
+        raise drain.urllib.error.HTTPError(
+            "https://media.example", 404, "Not Found", None, None
+        )
+
+    monkeypatch.setattr(drain.urllib.request, "urlopen", _raise)
+    assert drain.target_media_state(MISSING_JOB)[0] == "absent"
+
+
+def test_target_media_state_reads_an_origin_error_as_unknown(monkeypatch):
+    def _raise(*_a, **_k):
+        raise drain.urllib.error.HTTPError(
+            "https://media.example", 502, "Bad Gateway", None, None
+        )
+
+    monkeypatch.setattr(drain.urllib.request, "urlopen", _raise)
+    assert drain.target_media_state(MISSING_JOB)[0] == "unknown"
+
+
+def test_target_media_state_reads_a_network_failure_as_unknown(monkeypatch):
+    def _raise(*_a, **_k):
+        raise drain.urllib.error.URLError("dns went away")
+
+    monkeypatch.setattr(drain.urllib.request, "urlopen", _raise)
+    assert drain.target_media_state(MISSING_JOB)[0] == "unknown"
+
+
+def test_target_media_state_has_no_opinion_on_a_non_media_target():
+    # Nothing to HEAD, so this check must not claim the image is missing.
+    assert drain.target_media_state({"id": 1, "payload": {}}) == ("unknown", "")

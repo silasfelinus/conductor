@@ -23,6 +23,11 @@ to fire into a host that is still down". That is the whole point of this script:
      the box does not have is not, and is reported instead of resubmitted.
   2. Requeue a small canary batch first and poll it to a terminal state.
   3. Only drain the rest if the canary actually rendered.
+  4. Skip any job whose target image already exists (see target_media_state).
+     "Retryable" says the payload is sound; it does not say the work is still
+     wanted, and the relay writes to the job's imagePath either way -- so
+     requeuing a job a later render already satisfied silently replaces a good
+     image with a different one. Pass --include-rendered to re-roll on purpose.
 
 A canary that fails is a success for this script: it means the backlog was left
 intact, with its error text, for whoever fixes the host.
@@ -32,6 +37,7 @@ Usage:
     python scripts/drain_failed_art_backlog.py --live           # canary, then drain
     python scripts/drain_failed_art_backlog.py --live --canary 5
     python scripts/drain_failed_art_backlog.py --live --skip-canary   # see below
+    python scripts/drain_failed_art_backlog.py --include-rendered     # re-roll too
 
 --skip-canary exists for the case where the host was *just* confirmed healthy by
 other means (a fresh DONE in the queue, Silas saying the drive is back). It is
@@ -44,10 +50,16 @@ import argparse
 import re
 import sys
 import time
+import urllib.error
+import urllib.request
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 import consume_art_queue as consumer  # noqa: E402
+from media_direct_consumer import (  # noqa: E402
+    _media_url,
+    normalize_kindrobots_image_path,
+)
 
 PAGE_SIZE = 200
 REQUEUE_BATCH_SIZE = 100
@@ -60,6 +72,11 @@ CANARY_POLL_SECONDS = 20
 CANARY_TIMEOUT_SECONDS = 25 * 60
 
 TERMINAL_STATUSES = ("DONE", "FAILED", "CANCELLED")
+
+# How long to wait on the HEAD that asks whether a job's target image already
+# exists. Same budget as media_direct_consumer.MEDIA_EXISTS_TIMEOUT_SECONDS --
+# this is a static file host, not a render.
+MEDIA_EXISTS_TIMEOUT_SECONDS = 8
 
 # Failure classes. The first element of each pair is the class name; jobs land in
 # the first class whose pattern matches, so order is specificity order -- a
@@ -228,6 +245,72 @@ def failure_diagnostic(job):
     return f"ArtJob {job_id} [{slug}] engine={engine}: {error}"
 
 
+def target_media_state(job):
+    """Does this FAILED job's target image already exist? -> present/absent/unknown.
+
+    Why this exists (2026-08-29). Every one of the 22 FAILED jobs classified
+    retryable, and correctly so: eleven died with `[WinError 3] ... 'Z:\\'`
+    (the media share unmounted) and eleven with `WinError 10061` at
+    127.0.0.1:8188 (ComfyUI not listening). Both are host faults with clean
+    payloads. But half of them had *already been rendered* -- a duplicate
+    enqueue on 2026-08-27T11:46 re-queued a whole ruler-hooked batch whose
+    originals rendered on 08-26, so ArtJob 10124 was a second attempt at
+    `characters/bard-fen.webp`, which ArtJob 9931 had already written.
+
+    Draining those is not a harmless no-op. The relay writes the render to the
+    same imagePath, so a blind requeue overwrites eleven images that already
+    exist -- at a different seed, and therefore a different picture -- with
+    nobody having asked for a re-roll. "Retryable" answers whether the payload
+    is sound; it does not answer whether the work is still wanted.
+
+    Deliberately tri-state. `present` needs a positive 2xx from the media
+    origin; a 404 is `absent`; a timeout, DNS failure, or 5xx is `unknown` and
+    is treated as still-wanted by the caller, because a media origin we cannot
+    reach is not evidence that the image is there. The bias is on purpose: a
+    wrongly-requeued job costs one render, a wrongly-skipped one costs a
+    missing image that nothing will queue again.
+    """
+    payload = (job or {}).get("payload")
+    payload = payload if isinstance(payload, dict) else {}
+    image_path = normalize_kindrobots_image_path(payload.get("imagePath"))
+    if not image_path.startswith("public/images/"):
+        # Not a Kind Robots media target -- there is no URL to ask about, so
+        # this check has no opinion on it.
+        return "unknown", ""
+
+    url = _media_url(image_path)
+    request = urllib.request.Request(url, method="HEAD")
+    try:
+        with urllib.request.urlopen(
+            request, timeout=MEDIA_EXISTS_TIMEOUT_SECONDS
+        ) as response:
+            return ("present" if 200 <= response.status < 300 else "absent"), url
+    except urllib.error.HTTPError as exc:
+        # 404/410 is a real answer: the file is not there. Anything else the
+        # origin says (403, 500, 502) is the origin having a bad day.
+        return ("absent" if exc.code in (404, 410) else "unknown"), url
+    except (urllib.error.URLError, TimeoutError, OSError):
+        return "unknown", url
+
+
+def partition_already_rendered(jobs):
+    """Split retryable jobs into (still_wanted, already_rendered, unknown_urls).
+
+    `unknown_urls` is only for the report -- those jobs stay in `still_wanted`,
+    since an unreachable media origin must not silently drop work.
+    """
+    still_wanted, already_rendered, unknown = [], [], []
+    for job in jobs:
+        state, url = target_media_state(job)
+        if state == "present":
+            already_rendered.append((job, url))
+        else:
+            still_wanted.append(job)
+            if state == "unknown":
+                unknown.append(job)
+    return still_wanted, already_rendered, unknown
+
+
 def chunks(values, size):
     for index in range(0, len(values), size):
         yield values[index : index + size]
@@ -366,6 +449,14 @@ def main() -> int:
         default=0,
         help="requeue at most this many jobs (0 = no limit)",
     )
+    parser.add_argument(
+        "--include-rendered",
+        action="store_true",
+        help=(
+            "also requeue jobs whose target image already exists on the media "
+            "origin (they are skipped by default; this re-rolls the art)"
+        ),
+    )
     args = parser.parse_args()
 
     if args.live and not consumer.KR_API_TOKEN:
@@ -398,6 +489,33 @@ def main() -> int:
     if not retryable:
         print("\nNothing is safe to resubmit.")
         return 0
+
+    if args.include_rendered:
+        print(
+            "\n--include-rendered: not checking the media origin. Any job whose "
+            "image already exists will be re-rendered over the top of it."
+        )
+    else:
+        retryable, already_rendered, unknown = partition_already_rendered(retryable)
+        if already_rendered:
+            print(
+                f"\nSkipping ({len(already_rendered)}) — the target image already "
+                f"exists, so a requeue would overwrite it with a new render:"
+            )
+            for job, url in already_rendered:
+                print(f"  ArtJob {job.get('id')} [{job.get('projectSlug') or '-'}] {url}")
+            print("  Pass --include-rendered to re-roll them anyway.")
+        if unknown:
+            print(
+                f"\nWARNING: could not reach the media origin for "
+                f"{len(unknown)} job(s) — requeuing them rather than assuming "
+                f"their image is already there: "
+                f"{sorted(job.get('id') for job in unknown)}",
+                file=sys.stderr,
+            )
+        if not retryable:
+            print("\nEvery retryable job has already been rendered. Nothing to do.")
+            return 0
 
     ids = sorted(job["id"] for job in retryable)
     if args.limit > 0:
