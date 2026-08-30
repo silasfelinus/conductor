@@ -11700,3 +11700,19 @@ records:
     of otherwise-identical pills/badges sharing one non-kr-note color (stage-manager.vue's
     primary/success/warning trio) should be skipped as a set rather than partially converted,
     since fixing two of three fragments what was a visually consistent group.
+- date: "2026-08-30"
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Slice 63 (kind_robots#2220) was a clean, exact-match kr-panel substitution on
+    project-front-page.vue's two raised-surface sections, following the same override
+    convention prior slices established (kr-panel + trailing rounded-3xl/p-5 overrides
+    for values that differ from kr-panel's rounded-2xl/p-6 defaults). Verified the CSS
+    definition (assets/css/tailwind.css .kr-panel) before merging to confirm the override
+    convention actually produces the same computed classes, rather than trusting the PR
+    description's claim alone.
