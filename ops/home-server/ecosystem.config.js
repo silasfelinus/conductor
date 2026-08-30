@@ -27,11 +27,11 @@ const LOG_DIR = `${__dirname}/logs`
 // Windows logon session: a service, an elevated shell, and a desktop shell can
 // each see a different Z: -- or none. That is not theoretical here. On
 // 2026-08-25 renders failed for ~15 hours with
-//   [WinError 1117] ... I/O device error: 'Z:\\ai\\models\\unet'
+//   [WinError 1117] ... I/O device error: 'Z:\ai\models\unet'
 // from ComfyUI (a dead connection object the process still held), degraded into
 // ComfyUI reporting registered models as "no matching file" (folder_paths
 // re-enumerated a half-readable share into a short list), while an interactive
-// `dir Z:\\ai\\models\\unet` in the same hour answered "The system cannot find
+// `dir Z:\ai\models\unet` in the same hour answered "The system cannot find
 // the path specified" -- three different views of one share. A UNC path has no
 // per-session mapping to lose:
 //   setx KR_SHARE_ROOT "//alexandria/<share>"
@@ -45,10 +45,10 @@ const KR_MEDIA_IMAGES_DIR =
 module.exports = {
   apps: [
     {
-      // ComfyUI — venv install at D:\\comfy\\comfy-fast.
+      // ComfyUI — venv install at D:\comfy\comfy-fast.
       // The original launcher activates the venv and runs:
       //   python main.py --listen 127.0.0.1 --port 8188 --enable-cors-header
-      // On Windows, venv\\Scripts\\python.exe is itself a redirector process. It
+      // On Windows, venv\Scripts\python.exe is itself a redirector process. It
       // can spawn the base interpreter with a visible conhost even though pm2
       // started the redirector hidden. Point pm2 at the base interpreter instead,
       // then set __PYVENV_LAUNCHER__ to the venv executable: Python uses the same
