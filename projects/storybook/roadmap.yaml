@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 49
   stakes: reversible
   note: >-
@@ -407,7 +407,19 @@ tasks:
     page/component that has never had a dedicated end-to-end read, the same way cycle 40
     surfaced this one, rather than re-reading storybook-library-page.vue or
     storybookLibraryHelper.ts again.
-  updated: '2026-08-30T14:30:03Z'
+
+    Cycle 43 (no-op, real investigation, conductor scheduled Agent run 2026-08-30T15:00Z session): took cycle 42's kaizen (pick a fresh top-level page/component never given a dedicated end-to-end read). Read components/narrative/kr-narrator-stage.vue (189 lines) and components/narrative/kr-art-plate.vue (194 lines) in full for the first time in this task's history -- both had only ever been mentioned in passing (kr-narrator-stage as one of nine kr-choice-list callers in cycle 33, checked only for its choice-key building; kr-art-plate referenced once in an unrelated t-018 layout-design note, never read here at all).
+
+    Chased two concrete hypotheses:
+
+    1. kr-art-plate.vue's failure-fallback chain (src computed + onError -> failedSources): traced resolveArtVariantSrc's degrade chain (variant path -> variant base64 -> full-size -> fallback) against the component's own failedSources tracking. When the resolved src 404s, onError records it, the computed re-evaluates, filters the now-known-bad resolved value, and falls through to props.fallback (or the placeholder icon if that's also exhausted/empty). Confirmed correct, not a bug -- the two-tier fallback (resolved value once, then the explicit fallback prop) matches the component's own stated design.
+
+    2. kr-narrator-stage.vue shares narratorStore -- a Pinia singleton -- with components/navigation/workspace-narrator.vue (mounted from dream-manager.vue for Dreams). Both call the IDENTICAL onMounted -> initialize() / onBeforeUnmount -> disposeTimers()+teardownLiveness() pattern against the same store-level hasInitialized flag, liveness timer, and visibilitychange listener. Looked like a live-race candidate: one consumer's unmount tearing down liveness a concurrently-mounted sibling still needs. Traced initialize()'s own hasInitialized guard (narratorStore.ts:480-504) -- idempotent, and ensureClientLiveness() unconditionally re-adds the visibilitychange listener and restarts the interval on every call, so a second consumer's mount always re-arms liveness even after a first consumer's unmount tore it down. Checked actual template usage (not just imports) to see if two consumers could ever be mounted concurrently: workspace-narrator.vue's only mount site is dream-manager.vue (Dreams), kr-narrator-stage.vue's are storybook-page.vue and taskmaster-page.vue (different routes) -- ordinary Nuxt page routing unmounts the old page component before mounting the new one, with no keep-alive wrapping these routes, so two consumers being simultaneously mounted isn't reachable under normal navigation. Not a live bug.
+
+    No new bug found this cycle. git status --porcelain clean throughout (read-only cycle). Re-armed to ready.
+
+    Next lead for cycle 44: the narratorStore.ts file itself (1556 lines) has never had a dedicated end-to-end read in this task's history despite being the shared dependency both hypotheses above touched only partially (lines ~400-530, ~1345-1420) -- a full read (especially the liveness/bubble-timer machinery and the emotion-state transitions) is the natural next lead, or alternatively a fresh top-level page component in the same vein as this cycle (e.g. components/pages/taskmaster-page.vue's own template, which cycle history hasn't confirmed a full read of despite auditing its narrative/** dependencies).
+  updated: '2026-08-30T14:32:02Z'
   implementation_pr: 'silasfelinus/kind_robots#2207'
   owner: worker
   claimed_by: claude-scheduled-20260830T1500Z-sb-t010-cycle43
