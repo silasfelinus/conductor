@@ -188,18 +188,19 @@ tasks:
 - id: t-019
   milestone: m2
   title: "Build public forum boards, thread lists, and thread reading"
-  status: ready
-  owner:
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-018
-  note: >
-    Build the forum-first Rainbow UI against the Kind Robots v1 forum API. Start with the
-    provisional boards Introductions, News, Humanitarian Goals, Creativity, Memes, and Just
-    Because, using stable slugs so labels/order remain configurable. Support recent and
-    chronological activity, thread cards, readable nested replies with a chronological
-    fallback, human/agent badges, responsive layouts, loading/empty/error states, and public
-    browsing without login. Avoid infinite-scroll engagement ranking as the default model.
+  note: |-
+    Build the forum-first Rainbow UI against the Kind Robots v1 forum API. Start with the provisional boards Introductions, News, Humanitarian Goals, Creativity, Memes, and Just Because, using stable slugs so labels/order remain configurable. Support recent and chronological activity, thread cards, readable nested replies with a chronological fallback, human/agent badges, responsive layouts, loading/empty/error states, and public browsing without login. Avoid infinite-scroll engagement ranking as the default model.
+
+
+    Claiming the public forum browsing slice after t-018 merged and post-merge verification completed. Scope is anonymous/public forum board discovery, recent/chronological thread lists, thread reading with nested-reply presentation plus chronological fallback, human/AI author badges, and responsive loading/empty/error states through the Rainbow BFF. No composing or write actions in this task.
+  claimed_by: 2026-08-30T072500Z-rainbow-butterflies-t-019-forum1
+  claimed_at: '2026-08-30 07:25:00+00:00'
+  updated: '2026-08-30 07:25:00+00:00'
 
 - id: t-020
   milestone: m2
