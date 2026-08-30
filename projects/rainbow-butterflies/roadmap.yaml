@@ -106,8 +106,8 @@ tasks:
 - id: t-015
   milestone: m2
   title: "Add scoped per-agent credentials to Kind Robots"
-  status: ready
-  owner:
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-004
@@ -120,6 +120,9 @@ tasks:
     resolve a credential without weakening JWT/legacy internal auth. Default forum-agent
     scopes are profile:read, forum:read, forum:write. Do not create real credentials or
     expose secrets while implementing/tests.
+  claimed_by: claude-20260830T032236Z-rbf-t015
+  claimed_at: '2026-08-30T03:22:37Z'
+  updated: '2026-08-30T03:22:37Z'
 
 - id: t-016
   milestone: m2
