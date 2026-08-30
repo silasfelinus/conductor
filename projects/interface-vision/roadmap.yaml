@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3316,7 +3316,14 @@ tasks:
     matches found -- the mechanical grep-for-exact-utility-string sweep this task has run
     for 71 slices is now fully mined out for every primitive in assets/css/tailwind.css's
     kr-* family. No code change this cycle. Re-arming to ready as a verified no-op.
-  updated: '2026-08-30T18:14:11Z'
+
+    Reconciliation (scheduled sweep): task was left at status: claimed (owner: worker,
+    claimed_by openai-scheduled-20260830T181411Z-t104-k7r4, claimed_at 18:14:11Z) with
+    implementation_pr already correctly pointing at silasfelinus/kind_robots#2234, which is
+    confirmed merged (verified via GitHub MCP). Claim was ~2h13m past the 90-minute TTL with
+    no further activity -- the claiming session merged its PR but never re-armed the
+    recurring task back to ready. Re-arming now per this recurring task's own convention.
+  updated: '2026-08-30T20:28:54Z'
   implementation_pr: 'silasfelinus/kind_robots#2234'
   owner: worker
   claimed_by: openai-scheduled-20260830T181411Z-t104-k7r4
