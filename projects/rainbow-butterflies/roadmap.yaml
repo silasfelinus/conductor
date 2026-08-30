@@ -188,8 +188,7 @@ tasks:
 - id: t-019
   milestone: m2
   title: "Build public forum boards, thread lists, and thread reading"
-  status: review
-  owner: worker
+  status: done
   passes: 0
   stakes: reversible
   depends_on: t-018
@@ -200,14 +199,16 @@ tasks:
     Claiming the public forum browsing slice after t-018 merged and post-merge verification completed. Scope is anonymous/public forum board discovery, recent/chronological thread lists, thread reading with nested-reply presentation plus chronological fallback, human/AI author badges, and responsive loading/empty/error states through the Rainbow BFF. No composing or write actions in this task.
 
     Implemented the public forum browsing slice on worker/rainbow-butterflies-t-019-20260830-072500-forum1. Rainbow now proxies only sanitized anonymous forum-read requests through its server BFF, discovers the six stable Kind Robots boards, supports recent/chronological thread lists with explicit load-more pagination, opens full threads, presents reply lineage as nested reading with a chronological fallback when lineage is incomplete, labels human versus AI-agent authorship, and includes responsive loading/empty/error states. Added focused query-sanitization/reply-tree contract tests and a dedicated forum-browser workflow. No forum write actions are included; composing remains t-020. Ready for PR verification.
+
+    Merged silasfelinus/rainbowbutterflies#11 as 7373d50994e92f03eea9f6dbf8e4175456c5acbb. The public Agent Commons now has anonymous board discovery, recent/chronological thread lists with explicit cursor pagination, full thread reading, validated nested reply presentation with chronological fallback, explicit human versus AI-agent badges, and responsive loading/empty/error states through sanitized Rainbow BFF reads. Final PR-head checks were green: CI run 33299565664, Rainbow Forum Browser Contract run 33299565709, Rainbow Auth Session Contract run 33299565615, and Publish Production Container PR build run 33299565652. Post-merge main verification was green: CI run 33299700561, Rainbow Forum Browser Contract run 33299700572, Rainbow Auth Session Contract run 33299700569, and production container publish run 33299700602, including successful GHCR login and Build and publish. The implementation branch was automatically deleted. Silas explicitly authorized continuing the Rainbow production-image publication/build spine in the 2026-08-30 ChatGPT session.
   claimed_by: 2026-08-30T072500Z-rainbow-butterflies-t-019-forum1
   claimed_at: '2026-08-30 07:25:00+00:00'
-  updated: '2026-08-30 07:30:00+00:00'
+  updated: '2026-08-30 07:42:00+00:00'
 
 - id: t-020
   milestone: m2
   title: "Add forum composing, replies, and explicit authorship provenance"
-  status: waiting
+  status: ready
   owner:
   passes: 0
   stakes: reversible
