@@ -84,6 +84,99 @@ def test_done_with_open_non_recurring_work_is_flagged(tmp_path):
     assert finding["total_task_count"] == 2
 
 
+def test_in_progress_with_all_non_recurring_work_done_is_flagged(tmp_path):
+    write_roadmap(
+        tmp_path,
+        "cthulhuquarium",
+        """\
+        milestones:
+          - id: m1
+            title: "SHAPE"
+            status: in-progress
+        tasks:
+          - id: t-001
+            milestone: m1
+            status: done
+          - id: t-002
+            milestone: m1
+            status: done
+        """,
+    )
+    write_overrides(tmp_path, [("cthulhuquarium", "active")])
+
+    result = drift.scan(
+        projects_dir=tmp_path / "projects",
+        overrides_path=tmp_path / "project-overrides.yaml",
+    )
+
+    assert len(result["findings"]) == 1
+    finding = result["findings"][0]
+    assert finding["project"] == "cthulhuquarium"
+    assert finding["milestone"] == "m1"
+    assert finding["shape"] == "not-done-status-with-all-work-done"
+    assert finding["done_task_count"] == 2
+    assert finding["total_task_count"] == 2
+
+
+def test_recurring_tasks_dont_prevent_fully_complete_stale_status_finding(tmp_path):
+    write_roadmap(
+        tmp_path,
+        "interface-vision",
+        """\
+        milestones:
+          - id: m5
+            title: "Consistent"
+            status: in-progress
+        tasks:
+          - id: t-001
+            milestone: m5
+            status: done
+          - id: t-002
+            milestone: m5
+            status: ready
+            recurring: true
+        """,
+    )
+    write_overrides(tmp_path, [("interface-vision", "active")])
+
+    result = drift.scan(
+        projects_dir=tmp_path / "projects",
+        overrides_path=tmp_path / "project-overrides.yaml",
+    )
+
+    assert len(result["findings"]) == 1
+    finding = result["findings"][0]
+    assert finding["shape"] == "not-done-status-with-all-work-done"
+    assert finding["done_task_count"] == 1
+    assert finding["total_task_count"] == 2
+
+
+def test_only_recurring_tasks_do_not_imply_milestone_completion(tmp_path):
+    write_roadmap(
+        tmp_path,
+        "animation-manager",
+        """\
+        milestones:
+          - id: m1
+            title: "Standing work"
+            status: in-progress
+        tasks:
+          - id: t-001
+            milestone: m1
+            status: ready
+            recurring: true
+        """,
+    )
+    write_overrides(tmp_path, [("animation-manager", "active")])
+
+    result = drift.scan(
+        projects_dir=tmp_path / "projects",
+        overrides_path=tmp_path / "project-overrides.yaml",
+    )
+
+    assert result["findings"] == []
+
+
 def test_recurring_tasks_dont_count_against_a_done_milestone(tmp_path):
     """Recurring tasks never reach done by design -- a milestone can legitimately
     be done while one keeps cycling under it."""
