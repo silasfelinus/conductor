@@ -42,12 +42,28 @@ import apply_dream_revision as revision  # noqa: E402
 ROOT = Path(__file__).resolve().parents[1]
 BACKLOG = ROOT / "projects" / "dream-cycle" / "backlog"
 
+# A reward's index is not fixed by the schema (only "exactly one ITEM and one
+# SKILL" is), so reward paths address the row by type and resolve to an index at
+# access time. Keys must match the labels dream_prose_quality.complaints() emits,
+# because _complaint_fields() maps complaint -> field through this table.
+ITEM = {"reward_type": "ITEM"}
+SKILL = {"reward_type": "SKILL"}
+
 FIELD_PATHS = {
     "idea": ("idea",),
     "vibe.line": ("vibe", "line"),
     "locations[0].known_for": ("locations", 0, "known_for"),
     "locations[0].local_rule": ("locations", 0, "local_rule"),
     "locations[0].best_scene": ("locations", 0, "best_scene"),
+    "characters[0].role_drive": ("characters", 0, "role_drive"),
+    "characters[0].carries": ("characters", 0, "carries"),
+    "characters[0].complication": ("characters", 0, "complication"),
+    "rewards[item].grants": ("rewards", ITEM, "grants"),
+    "rewards[item].best_used_when": ("rewards", ITEM, "best_used_when"),
+    "rewards[item].catch": ("rewards", ITEM, "catch"),
+    "rewards[skill].grants": ("rewards", SKILL, "grants"),
+    "rewards[skill].best_used_when": ("rewards", SKILL, "best_used_when"),
+    "rewards[skill].catch": ("rewards", SKILL, "catch"),
     "scenarios[0].setup": ("scenarios", 0, "setup"),
 }
 RESPONSE_KEYS = {
@@ -56,22 +72,42 @@ RESPONSE_KEYS = {
     "locations[0].known_for": "known_for",
     "locations[0].local_rule": "local_rule",
     "locations[0].best_scene": "best_scene",
+    "characters[0].role_drive": "character_role_drive",
+    "characters[0].carries": "character_carries",
+    "characters[0].complication": "character_complication",
+    "rewards[item].grants": "item_grants",
+    "rewards[item].best_used_when": "item_best_used_when",
+    "rewards[item].catch": "item_catch",
+    "rewards[skill].grants": "skill_grants",
+    "rewards[skill].best_used_when": "skill_best_used_when",
+    "rewards[skill].catch": "skill_catch",
     "scenarios[0].setup": "scenario_setup",
 }
+
+
+def _resolve_key(container: Any, key: Any) -> Any:
+    """Resolve a reward-type selector to a concrete list index."""
+    if not isinstance(key, dict):
+        return key
+    wanted = str(key["reward_type"]).upper()
+    for index, row in enumerate(container):
+        if isinstance(row, dict) and str(row.get("reward_type") or "").upper() == wanted:
+            return index
+    raise KeyError(f"no reward with reward_type={wanted}")
 
 
 def _get(value: Any, path: tuple[Any, ...]) -> Any:
     current = value
     for key in path:
-        current = current[key]
+        current = current[_resolve_key(current, key)]
     return current
 
 
 def _set(value: Any, path: tuple[Any, ...], new_value: Any) -> None:
     current = value
     for key in path[:-1]:
-        current = current[key]
-    current[path[-1]] = new_value
+        current = current[_resolve_key(current, key)]
+    current[_resolve_key(current, path[-1])] = new_value
 
 
 def _complaint_fields(proposal: dict[str, Any]) -> list[str]:
@@ -128,6 +164,8 @@ def _prompt(proposal: dict[str, Any], fields: list[str], complaints: list[str]) 
         "idea": proposal.get("idea"),
         "vibe": proposal.get("vibe"),
         "location": (proposal.get("locations") or [{}])[0],
+        "character": (proposal.get("characters") or [{}])[0],
+        "rewards": proposal.get("rewards") or [],
         "scenario": (proposal.get("scenarios") or [{}])[0],
     }
     return f"""Repair only the weak user-facing prose fields in this Daily Dream.
@@ -137,6 +175,12 @@ new premise, rename anything, alter continuity, or add unrelated lore. Expand fr
 just enough that each field explains itself when shown alone on a card. Use complete,
 properly capitalized sentences with terminal punctuation. Prefer one vivid substantial
 sentence per field. Preserve the voice and concrete imagery already present.
+
+Do NOT write a field as a grammatical continuation of its own name. The card already
+prints a label, so `known_for` must not be phrased to follow "known for", `carries` must
+not be phrased to follow "carries", and `best_used_when` must not be phrased to follow
+"best used when" (nor restate it as "Use it when ..."). Each value has to stand on its
+own as a sentence. Referring to other objects in this same bundle by name is fine.
 
 Fields that failed the current quality contract:
 {json.dumps(complaints, ensure_ascii=False, indent=2)}
@@ -193,6 +237,8 @@ def _patch_live(old: dict[str, Any], new: dict[str, Any], built: dict[str, Any],
     world = built_records.get("world") or {}
     locations = built_records.get("locations") or []
     scenarios = built_records.get("scenarios") or []
+    characters = built_records.get("characters") or []
+    reward_rows = built_records.get("rewards") or []
     if not world or len(locations) != 1 or len(scenarios) != 1:
         raise ValueError("prose repair requires a canonical built world/location/scenario ledger")
 
@@ -212,15 +258,66 @@ def _patch_live(old: dict[str, Any], new: dict[str, Any], built: dict[str, Any],
     }
     if field_set & location_fields:
         loc = new["locations"][0]
-        description = (
-            f"Known for: {loc['known_for']} Local rule: {loc['local_rule']} "
-            f"Best scene: {loc['best_scene']}"
+        # Same shape build_dream_records writes for a fresh build: three complete
+        # sentences joined as prose, no "Known for:"/"Local rule:" stems. The
+        # labelled breakdown lives on the PitchSheet highlights below.
+        description = " ".join(
+            str(loc[key]).strip()
+            for key in ("known_for", "local_rule", "best_scene")
+            if str(loc.get(key) or "").strip()
         )
         revision._patch(
             "/api/dreams",
             _record_id(locations[0]),
             {"description": description, "flavorText": loc["local_rule"]},
         )
+
+    character_fields = {
+        "characters[0].role_drive",
+        "characters[0].carries",
+        "characters[0].complication",
+    }
+    if field_set & character_fields:
+        if len(characters) != 1:
+            raise ValueError("prose repair requires exactly one built character row")
+        ch = new["characters"][0]
+        revision._patch(
+            "/api/characters",
+            _record_id(characters[0]),
+            {
+                "drive": ch["role_drive"],
+                "quirks": ch["complication"],
+                "backstory": " ".join(
+                    str(ch[key]).strip()
+                    for key in ("carries", "complication")
+                    if str(ch.get(key) or "").strip()
+                ),
+            },
+        )
+
+    # `best_used_when` is deliberately absent: build_dream_records never writes it
+    # to a Reward row, so it is repaired in the source proposal only.
+    for kind in ("ITEM", "SKILL"):
+        label = kind.lower()
+        if not field_set & {f"rewards[{label}].grants", f"rewards[{label}].catch",
+                            f"rewards[{label}].best_used_when"}:
+            continue
+        row = next(
+            (r for r in reward_rows
+             if str(r.get("reward_type") or "").upper() == kind), None)
+        reward = next(
+            (r for r in new.get("rewards", [])
+             if str(r.get("reward_type") or "").upper() == kind), None)
+        if row is None or reward is None:
+            raise ValueError(f"prose repair requires a built {kind} reward row")
+        body: dict[str, Any] = {}
+        if f"rewards[{label}].grants" in field_set:
+            body["description"] = reward["grants"]
+            body["effect"] = reward["grants"]
+        if f"rewards[{label}].catch" in field_set:
+            body["flavorText"] = str(reward["catch"])[:500]
+        if body:
+            revision._patch("/api/rewards", _record_id(row), body)
 
     if "scenarios[0].setup" in field_set:
         setup = new["scenarios"][0]["setup"]
