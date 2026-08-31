@@ -294,4 +294,25 @@ def test_asset_summary_skips_missing_and_duplicate_fields(tmp_path):
         entry, probe_images=False)["assets"]}
 
     assert rows["vibe"] == "A connected bundle."
-    assert rows["location"] == "wonder"  # no local_rule in the fixture
+    # Terminated before comparison, so "x" and "x." are recognised as duplicates.
+    assert rows["location"] == "wonder."  # no local_rule in the fixture
+
+
+def test_asset_summary_terminates_unpunctuated_legacy_fields(tmp_path):
+    # Joining two unpunctuated fragments with a space produced the run-on card
+    # copy in the 2026-08-31 20:53 digest, in exactly the three rows whose fields
+    # had no quality floor at the time. Compose defensively regardless of catalog age.
+    entry = proposal(tmp_path / "today.md", "2026-07-31", built=True)
+    data = entry["data"]
+    data["characters"][0].update(
+        role_drive="keep her cactus herd calm through the quakes",
+        complication="her herd is bred from the last wild cactus line",
+    )
+
+    rows = {row["key"]: row["summary"] for row in enrich.proposal_payload(
+        entry, probe_images=False)["assets"]}
+
+    assert rows["character"] == (
+        "keep her cactus herd calm through the quakes. "
+        "her herd is bred from the last wild cactus line."
+    )

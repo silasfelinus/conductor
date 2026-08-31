@@ -4,6 +4,10 @@ name: Hourly Conductor
 # scans local roadmaps for blockers, fetches open todos, and uses Claude to
 # produce a brief actionable summary written to CONDUCTOR-REPORT.md.
 #
+# It also carries a second daily-digest watchdog pass (see the digest-watchdog
+# job), because the dedicated watchdog is schedule-triggered and dies in the
+# same GitHub scheduling outages it is supposed to cover.
+#
 # Daily Dream creation deliberately does NOT happen here anymore. The morning
 # daily-digest workflow owns one ordered cycle: author -> build -> Facets ->
 # submit ArtJobs -> commit -> digest. Keeping the hourly assessment read-only
@@ -25,6 +29,32 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  digest-watchdog:
+    # A second carrier for the daily digest. daily-digest-retry.yml is the
+    # dedicated watchdog, but it is schedule-triggered and therefore shares the
+    # exact failure it guards against: on 2026-08-31 the digest and both of its
+    # watchdog passes were undelivered together. This cron fires far more often,
+    # so it catches the case where the dedicated passes never ran.
+    #
+    # Read-only with respect to the repo -- it only dispatches or re-runs a
+    # workflow, so it does not violate this workflow's "hourly assessment stays
+    # read-only" rule above.
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Ensure today's daily digest ran
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          WORKFLOW_FILE: daily-digest.yml
+          MAX_ATTEMPTS: "3"
+        run: bash scripts/ensure_daily_digest.sh
+
   conductor:
     runs-on: ubuntu-latest
     permissions:
