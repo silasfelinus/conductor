@@ -250,3 +250,84 @@ def test_live_location_description_carries_no_stems(monkeypatch):
     assert description.startswith("Its rooftop stages")
     assert "Known for" not in description
     assert "Local rule:" not in description
+
+
+def test_typography_pass_is_deterministic_and_semantics_free(tmp_path: Path, monkeypatch):
+    monkeypatch.setattr(repair, "ROOT", tmp_path)
+    backlog = tmp_path / "projects" / "dream-cycle" / "backlog"
+    backlog.mkdir(parents=True)
+    proposal = _proposal()
+    proposal["locations"][0].update(
+        known_for="Its rooftop stages turn every live chorus into emergency power for the barriers.",
+        local_rule="No verse, no current -- the loudest rooftop is the one that stays lit.",
+        best_scene="Floodwater reaches the stairwell while the crowd keeps singing into the mast.",
+    )
+    text = proposals.render_markdown(proposal, "2026-08-30").replace("status: outline", "status: built")
+    text += "\n<!-- built-data\n" + json.dumps({"records": {"world": {"id": 1}}}) + "\n-->\n"
+    (backlog / "2026-08-30-monsoon-static.md").write_text(text, encoding="utf-8")
+
+    rows = repair.typography_findings(backlog)
+
+    assert len(rows) == 1
+    assert rows[0]["fields"] == ["locations[0].local_rule"]
+    fixed = proposals.normalize_typography(rows[0]["proposal"]["locations"][0]["local_rule"])
+    assert " -- " not in fixed
+    assert fixed == "No verse, no current — the loudest rooftop is the one that stays lit."
+
+
+def test_typography_pass_finds_nothing_once_copy_is_clean(tmp_path: Path, monkeypatch):
+    monkeypatch.setattr(repair, "ROOT", tmp_path)
+    backlog = tmp_path / "projects" / "dream-cycle" / "backlog"
+    backlog.mkdir(parents=True)
+    proposal = _proposal()
+    proposal["locations"][0].update(
+        known_for="Its rooftop stages turn every live chorus into emergency power for the barriers.",
+        local_rule="No verse, no current — the loudest rooftop is the one that stays lit.",
+        best_scene="Floodwater reaches the stairwell while the crowd keeps singing into the mast.",
+    )
+    text = proposals.render_markdown(proposal, "2026-08-30").replace("status: outline", "status: built")
+    text += "\n<!-- built-data\n" + json.dumps({"records": {"world": {"id": 1}}}) + "\n-->\n"
+    (backlog / "2026-08-30-monsoon-static.md").write_text(text, encoding="utf-8")
+
+    assert repair.typography_findings(backlog) == []
+
+
+def test_typography_apply_patches_live_and_rewrites_source(tmp_path: Path, monkeypatch):
+    monkeypatch.setattr(repair, "ROOT", tmp_path)
+    backlog = tmp_path / "projects" / "dream-cycle" / "backlog"
+    backlog.mkdir(parents=True)
+    monkeypatch.setattr(repair, "BACKLOG", backlog)
+    proposal = _proposal()
+    proposal["locations"][0].update(
+        known_for="Its rooftop stages turn every live chorus into emergency power for the barriers.",
+        local_rule="No verse, no current -- the loudest rooftop is the one that stays lit.",
+        best_scene="Floodwater reaches the stairwell while the crowd keeps singing into the mast.",
+    )
+    built = {
+        "records": {"world": {"id": 10}, "locations": [{"id": 11}], "scenarios": [{"id": 12}]},
+        "sheets": {}, "art": [{"request_id": "keep-this-art", "attached": True}],
+    }
+    text = proposals.render_markdown(proposal, "2026-08-30").replace("status: outline", "status: built")
+    text += "\n<!-- built-data\n" + json.dumps(built) + "\n-->\n"
+    path = backlog / "2026-08-30-monsoon-static.md"
+    path.write_text(text, encoding="utf-8")
+
+    calls = []
+    monkeypatch.setattr(repair.records, "KR_API_TOKEN", "test-token")
+    monkeypatch.setattr(repair.revision, "_patch",
+                        lambda endpoint, entity_id, body: calls.append((endpoint, entity_id, body)))
+    monkeypatch.setattr(repair.author, "call_claude",
+                        lambda *a, **k: pytest.fail("typography mode must not call a model"))
+    request_path = tmp_path / "2026-08-30-typography-request.json"
+    request_path.write_text(json.dumps({"mode": "typography", "scope": "all-built"}), encoding="utf-8")
+
+    results = repair._apply_batch(request_path, json.loads(request_path.read_text()))
+
+    assert len(results) == 1
+    assert results[0]["fields"] == ["locations[0].local_rule"]
+    assert " -- " not in path.read_text(encoding="utf-8")
+    assert calls and calls[0][0] == "/api/dreams"
+    # The request is consumed into a receipt, and the art ledger is untouched.
+    assert not request_path.exists()
+    assert (tmp_path / "2026-08-30-typography-applied.json").exists()
+    assert repair.typography_findings(backlog) == []

@@ -119,7 +119,11 @@ def _complaint_fields(proposal: dict[str, Any]) -> list[str]:
     return fields
 
 
-def _load_built_catalog(backlog: Path = BACKLOG) -> list[dict[str, Any]]:
+def _load_built_catalog(backlog: Path | None = None) -> list[dict[str, Any]]:
+    # Resolved at call time, never frozen as a default: a default argument binds
+    # BACKLOG at import, so redirecting the module attribute silently had no
+    # effect and a test once wrote to the real catalog through this path.
+    backlog = BACKLOG if backlog is None else backlog
     bundles: list[dict[str, Any]] = []
     for path in sorted(backlog.glob("*.md")):
         text = path.read_text(encoding="utf-8")
@@ -134,7 +138,7 @@ def _load_built_catalog(backlog: Path = BACKLOG) -> list[dict[str, Any]]:
     return bundles
 
 
-def audit(backlog: Path = BACKLOG) -> list[dict[str, Any]]:
+def audit(backlog: Path | None = None) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for bundle in _load_built_catalog(backlog):
         proposal = bundle["proposal"]
@@ -374,7 +378,88 @@ def _render_source(proposal: dict[str, Any], day: str, built: dict[str, Any]) ->
     ) + "\n-->\n"
 
 
+def typography_findings(backlog: Path | None = None) -> list[dict[str, Any]]:
+    """Built bundles whose card copy needs the deterministic typography pass.
+
+    `backlog` resolves at call time rather than as a default argument, so the
+    module-level BACKLOG is not frozen at import and callers (and tests) can
+    redirect it.
+    """
+    rows: list[dict[str, Any]] = []
+    for bundle in _load_built_catalog(BACKLOG if backlog is None else backlog):
+        proposal = bundle["proposal"]
+        fields = [
+            label for label in FIELD_PATHS
+            if _get_or_none(proposal, label) is not None
+            and proposals.normalize_typography(_get_or_none(proposal, label))
+            != _get_or_none(proposal, label)
+        ]
+        if fields:
+            rows.append({**bundle, "fields": fields})
+    return rows
+
+
+def _get_or_none(proposal: dict[str, Any], label: str) -> Any:
+    try:
+        return _get(proposal, FIELD_PATHS[label])
+    except (KeyError, IndexError, TypeError):
+        return None
+
+
+def _apply_typography(request_path: Path, request: dict[str, Any]) -> list[dict[str, Any]]:
+    """Deterministic, model-free presentational pass over built card copy.
+
+    Kept separate from the authored repair because nothing here is a judgement
+    call: no ANTHROPIC_API_KEY is needed, no wording changes, and the diff is
+    reproducible. Only fields that actually change are patched live.
+    """
+    results: list[dict[str, Any]] = []
+    reason = str(request.get("reason") or "card-copy typography normalisation")
+    now = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    for bundle in typography_findings():
+        old = bundle["proposal"]
+        new = copy.deepcopy(old)
+        for label in bundle["fields"]:
+            _set(new, FIELD_PATHS[label], proposals.normalize_typography(_get(old, FIELD_PATHS[label])))
+        structural = proposals.validate_proposal(proposals.normalize(copy.deepcopy(new), set()))
+        remaining = prose.complaints(new)
+        if structural or remaining:
+            raise RuntimeError(
+                f"{bundle['path'].name}: typography pass would break the contract: "
+                + "; ".join(structural + remaining)
+            )
+        built = bundle["built"]
+        _patch_live(old, new, built, bundle["fields"])
+        built.setdefault("prose_repairs", []).append(
+            {"repaired_at": now, "reason": reason, "fields": list(bundle["fields"]),
+             "art_unchanged": True, "deterministic": True}
+        )
+        bundle["path"].write_text(_render_source(new, bundle["day"], built), encoding="utf-8")
+        results.append({
+            "path": str(bundle["path"].relative_to(ROOT)),
+            "day": bundle["day"],
+            "title": new.get("title"),
+            "fields": bundle["fields"],
+            "before": {RESPONSE_KEYS[x]: _get(old, FIELD_PATHS[x]) for x in bundle["fields"]},
+            "after": {RESPONSE_KEYS[x]: _get(new, FIELD_PATHS[x]) for x in bundle["fields"]},
+        })
+        print(f"normalised typography: {new.get('title')} ({', '.join(bundle['fields'])})")
+
+    receipt = dict(request)
+    receipt.update({"status": "applied", "applied_at": now,
+                    "repaired_bundles": len(results), "results": results,
+                    "remaining_typography": [r["day"] for r in typography_findings()]})
+    receipt_path = request_path.with_name(request_path.name.replace("-request.json", "-applied.json"))
+    receipt_path.write_text(json.dumps(receipt, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    request_path.unlink()
+    if receipt["remaining_typography"]:
+        raise RuntimeError("catalog still has typography findings after the pass")
+    return results
+
+
 def _apply_batch(request_path: Path, request: dict[str, Any]) -> list[dict[str, Any]]:
+    if str(request.get("mode") or "") == "typography":
+        return _apply_typography(request_path, request)
     if request.get("scope") != "all-built":
         raise ValueError("only scope='all-built' is supported")
     api_key = os.getenv("ANTHROPIC_API_KEY", "").strip()

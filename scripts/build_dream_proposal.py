@@ -143,8 +143,34 @@ def build_brief(day: str | None = None, catalog=None) -> dict[str, Any]:
       "required_counts": {"vibe": 1, "locations": 1, "characters": 1, "reward_item": 1, "reward_skill": 1, "scenarios": 1}}
 
 
+# Card copy is mixed-typography otherwise: the model writes " -- " for a dash in
+# some fields and a real em-dash in others, and the two land side by side in one
+# email (2026-08-31: The Continental Courtship showed " -- " directly above The
+# Deep Shift's proper em-dashes). Purely presentational and semantics-free, so it
+# is normalised deterministically here rather than by asking a model to rewrite
+# good prose. `look`/`art_direction` are excluded as Krea prompt material.
+TYPOGRAPHY_SUBS = ((re.compile(r"\s--\s"), " — "),)
+_TYPOGRAPHY_SKIP_KEYS = {"look", "art_direction", "slug", "title", "name", "reward_type", "rarity"}
+
+
+def normalize_typography(value: Any) -> Any:
+    """Apply presentational text fixes to card copy, leaving structure untouched."""
+    if isinstance(value, str):
+        for pattern, replacement in TYPOGRAPHY_SUBS:
+            value = pattern.sub(replacement, value)
+        return value
+    if isinstance(value, list):
+        return [normalize_typography(item) for item in value]
+    if isinstance(value, dict):
+        return {
+            key: (item if key in _TYPOGRAPHY_SKIP_KEYS else normalize_typography(item))
+            for key, item in value.items()
+        }
+    return value
+
+
 def normalize(proposal: dict[str, Any], avoid: set[str] | None = None) -> dict[str, Any]:
-    out = copy.deepcopy(proposal); out["title"] = str(out.get("title") or "Untitled Daily Dream").strip()
+    out = normalize_typography(copy.deepcopy(proposal)); out["title"] = str(out.get("title") or "Untitled Daily Dream").strip()
     base = slugify(out.get("slug") or out["title"]); used = {x.casefold() for x in (avoid or set())}; out["slug"] = base
     n = 2
     while out["slug"].casefold() in used: out["slug"], n = f"{base}-{n}", n + 1
