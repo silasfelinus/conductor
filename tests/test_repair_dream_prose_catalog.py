@@ -123,3 +123,130 @@ def test_live_prose_patch_does_not_queue_or_replace_art(monkeypatch):
 
     assert [call[:2] for call in calls] == [("/api/dreams", 11), ("/api/sheets", 21)]
     assert built["art"] == [{"request_id": "keep-this-art", "attached": True}]
+
+
+def test_reward_paths_resolve_by_type_not_list_position():
+    # Only "exactly one ITEM and one SKILL" is guaranteed; order is not. A path
+    # that assumed rewards[0] was the ITEM would repair the wrong row.
+    proposal = _proposal()
+    proposal["rewards"].reverse()
+    assert proposal["rewards"][0]["reward_type"] == "SKILL"
+
+    repair._set(proposal, repair.FIELD_PATHS["rewards[item].grants"], "It does the item thing.")
+    repair._set(proposal, repair.FIELD_PATHS["rewards[skill].grants"], "It does the skill thing.")
+
+    item = next(r for r in proposal["rewards"] if r["reward_type"] == "ITEM")
+    skill = next(r for r in proposal["rewards"] if r["reward_type"] == "SKILL")
+    assert item["grants"] == "It does the item thing."
+    assert skill["grants"] == "It does the skill thing."
+    assert repair._get(proposal, repair.FIELD_PATHS["rewards[item].catch"]) == item["catch"]
+
+
+def test_audit_reaches_character_and_reward_fragments(tmp_path: Path, monkeypatch):
+    # The 2026-08-30 hand repair fixed every field this lane could address and
+    # left the character/reward copy untouched, because the lane could not name
+    # those fields at all. Regression guard for that blind spot.
+    monkeypatch.setattr(repair, "ROOT", tmp_path)
+    backlog = tmp_path / "projects" / "dream-cycle" / "backlog"
+    backlog.mkdir(parents=True)
+    proposal = _proposal()
+    proposal["locations"][0].update(
+        known_for="Its rooftop stages turn every live chorus into emergency power for the barriers below.",
+        local_rule="During a surge the strongest live chorus receives the circuit's power first.",
+        best_scene="Floodwater reaches the stairwell as the mast crew hauls a glowing silk cable up.",
+    )
+    proposal["characters"][0].update(
+        role_drive="keep the barrier lit",
+        carries="a coil of silk line",
+        complication="her verse is failing",
+    )
+    text = proposals.render_markdown(proposal, "2026-08-30").replace("status: outline", "status: built")
+    text += "\n<!-- built-data\n" + json.dumps({"records": {"world": {"id": 1}}}) + "\n-->\n"
+    (backlog / "2026-08-30-monsoon-static.md").write_text(text, encoding="utf-8")
+
+    rows = repair.audit(backlog)
+
+    assert len(rows) == 1
+    assert set(rows[0]["fields"]) == {
+        "characters[0].role_drive",
+        "characters[0].carries",
+        "characters[0].complication",
+    }
+    assert rows[0]["current"]["character_role_drive"] == "keep the barrier lit"
+
+
+def test_live_patch_updates_character_and_reward_rows(monkeypatch):
+    old = _proposal()
+    new = copy.deepcopy(old)
+    new["characters"][0].update(
+        role_drive="She has to keep the block's barrier lit through the whole surge.",
+        carries="A coil of glowing silk line is looped across her shoulder.",
+        complication="Her own verse is the one the circuit keeps refusing.",
+    )
+    item = next(r for r in new["rewards"] if r["reward_type"] == "ITEM")
+    item["grants"] = "It gives back the ten seconds you have just spent."
+    item["catch"] = "Everyone else remembers the ten seconds you took back."
+    built = {
+        "records": {
+            "world": {"id": 10},
+            "locations": [{"id": 11}],
+            "scenarios": [{"id": 12}],
+            "characters": [{"id": 13}],
+            "rewards": [{"id": 14, "reward_type": "ITEM"}, {"id": 15, "reward_type": "SKILL"}],
+        },
+        "sheets": {},
+        "art": [{"request_id": "keep-this-art", "attached": True}],
+    }
+    calls = []
+    monkeypatch.setattr(repair.records, "KR_API_TOKEN", "test-token")
+    monkeypatch.setattr(repair.revision, "_patch",
+                        lambda endpoint, entity_id, body: calls.append((endpoint, entity_id, body)))
+
+    repair._patch_live(old, new, built, [
+        "characters[0].role_drive",
+        "characters[0].carries",
+        "characters[0].complication",
+        "rewards[item].grants",
+        "rewards[item].catch",
+    ])
+
+    by_endpoint = {(c[0], c[1]): c[2] for c in calls}
+    assert ("/api/characters", 13) in by_endpoint
+    assert ("/api/rewards", 14) in by_endpoint
+    assert ("/api/rewards", 15) not in by_endpoint  # SKILL was not in the field set
+    character = by_endpoint[("/api/characters", 13)]
+    assert character["drive"] == new["characters"][0]["role_drive"]
+    assert character["quirks"] == new["characters"][0]["complication"]
+    assert character["backstory"].startswith("A coil of glowing silk line")
+    assert not character["backstory"].startswith("Carries ")
+    reward = by_endpoint[("/api/rewards", 14)]
+    assert reward["description"] == item["grants"]
+    assert reward["effect"] == item["grants"]
+    assert reward["flavorText"] == item["catch"]
+    assert built["art"] == [{"request_id": "keep-this-art", "attached": True}]
+
+
+def test_live_location_description_carries_no_stems(monkeypatch):
+    old = _proposal()
+    new = copy.deepcopy(old)
+    new["locations"][0].update(
+        known_for="Its rooftop stages turn every live chorus into emergency power.",
+        local_rule="The strongest chorus receives the circuit's power first.",
+        best_scene="Floodwater reaches the stairwell while the crowd keeps singing.",
+    )
+    built = {
+        "records": {"world": {"id": 10}, "locations": [{"id": 11}], "scenarios": [{"id": 12}]},
+        "sheets": {},
+        "art": [],
+    }
+    calls = []
+    monkeypatch.setattr(repair.records, "KR_API_TOKEN", "test-token")
+    monkeypatch.setattr(repair.revision, "_patch",
+                        lambda endpoint, entity_id, body: calls.append((endpoint, entity_id, body)))
+
+    repair._patch_live(old, new, built, ["locations[0].known_for"])
+
+    description = calls[0][2]["description"]
+    assert description.startswith("Its rooftop stages")
+    assert "Known for" not in description
+    assert "Local rule:" not in description
