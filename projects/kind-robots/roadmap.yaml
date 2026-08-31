@@ -3698,11 +3698,11 @@ tasks:
 - id: t-085
   milestone: m6
   title: "comment-migration-contract's comment-contract check has been red on main since before 2026-08-30"
-  status: claimed
+  status: done
   owner: reviewer
   passes: 0
   stakes: reversible
-  note: >
+  note: >-
     Found while merging rainbow-butterflies/t-034 (kind_robots#2252, a small
     forum posting-guidance change unrelated to comments): the
     `comment-migration-contract.yml` workflow's `comment-contract` job has
@@ -3727,8 +3727,27 @@ tasks:
     passes clean before closing. Until fixed, treat this job's failure as
     known/pre-existing on every PR (per docs/state-reconciliation.md's
     CI-red handling) rather than re-diagnosing it each time.
+
+    RESOLVED: silasfelinus/kind_robots#2254 (squash 0b5c5d9) pruned the 42 violating items
+    from config/population-comment-drafts/. Checked every stale character name (Iso, Whisk
+    Tallow, Corvid Ames, Nix Farrow, Corvin Pell, Undersecretary Wrenna Vail, Cobb Fenwick,
+    Mother Spindle, The Windreader, Odalys Kade, Bailiff Pell, Mortlake Vane, Fen Corrigan,
+    Perrin Voss, Vex Thistlewick, Bailiff Ashorn, Corra Finnwake) against the live
+    /api/characters roster (240 rows): none exist under any id, confirming these were
+    deleted/replaced outright rather than renumbered, so no mechanical id remap was
+    available. Dropped the 42 flagged items rather than inventing new voice-matched dialogue
+    for characters this session has no context for -- those specific
+    Bot/Character/Dream/Scenario targets simply won't get a comment from this corpus; a
+    follow-up slice can re-author fresh exchanges for them with currently-valid speakers if
+    desired. Ran the full comment-migration-contract.yml step list locally: all 10 steps
+    (verifyCommentMigrationFoundation, verifyCommentSignals, verifyCommentCalibrationBatch,
+    runCommentCalibrationBatch002Contract, verifyCommentCalibrationBatch003,
+    verifyPartialPublishPrefix, verifyCommentDraftQuality, verifyPopulationDraftQuality,
+    verifyPopulationCasting, verifyReactionTargetCoverage) pass clean. All 38 PR checks
+    green including comment-contract itself.
   claimed_by: claude-scheduled-20260831T083000Z-kr-t085
   claimed_at: '2026-08-31T08:29:45Z'
-  updated: '2026-08-31T08:29:45Z'
+  updated: '2026-08-31T08:40:36Z'
+  implementation_pr: 'silasfelinus/kind_robots#2254'
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination 
   surfaces grow into one dependable application.
