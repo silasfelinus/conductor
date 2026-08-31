@@ -90,9 +90,9 @@ CLEAN_PROPOSAL = {
     "characters": [
         {
             "name": "Odalys Nunes",
-            "role_drive": "wake the last temple engine before the tide turns",
-            "carries": "a pressure wrench grown from living coral",
-            "complication": "the engines answer her in her mother's voice",
+            "role_drive": "She has to wake the last temple engine before the tide turns and seals the shrine.",
+            "carries": "A pressure wrench grown from living coral hangs from her belt.",
+            "complication": "The engines answer her in her mother's voice, and she has never learned to ignore it.",
             "look": "A wiry engineer in a patched grey drysuit, copper bio-lamps stitched "
             "along both sleeves, wet dark hair flattened under a cracked visor.",
         }
@@ -102,9 +102,9 @@ CLEAN_PROPOSAL = {
             "name": "Tide Wrench",
             "reward_type": "ITEM",
             "rarity": "RARE",
-            "grants": "loosens any fitting that has rusted shut",
-            "best_used_when": "a hull seam refuses to open",
-            "catch": "it rusts a little further every time",
+            "grants": "It loosens any fitting that has rusted shut.",
+            "best_used_when": "Use it when a hull seam refuses to open.",
+            "catch": "The wrench rusts a little further every time it is used.",
             "look": "A forearm-length wrench of pitted brass and pink coral, its jaws "
             "worn mirror-bright, handle wrapped in salt-stiffened cord.",
         },
@@ -112,9 +112,9 @@ CLEAN_PROPOSAL = {
             "name": "Deep Listening",
             "reward_type": "SKILL",
             "rarity": "UNCOMMON",
-            "grants": "hears which machine in a flooded room is still alive",
-            "best_used_when": "the water is too dark to see",
-            "catch": "living voices and engine noise become indistinguishable",
+            "grants": "It hears which machine in a flooded room is still alive.",
+            "best_used_when": "Use it when the water is too dark to see through.",
+            "catch": "Living voices and engine noise become impossible to tell apart.",
             "look": "Pale green concentric ripples spreading outward through dark water "
             "from a single lifted palm, silt glittering in the wavefront.",
         },

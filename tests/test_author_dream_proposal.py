@@ -41,9 +41,17 @@ def _valid_bundle(brief):
         }],
         "characters": [{
             "name": "Mira Sol",
-            "role_drive": "deliver a living storm-seed before the canopy collapses",
-            "carries": "a copper sling holding a fist-sized blue storm-seed",
-            "complication": "each burst of speed makes the seed hatch a little further",
+            "role_drive": (
+                "She has to deliver a living storm-seed across the canopy before the whole "
+                "arena collapses under it."
+            ),
+            "carries": (
+                "A copper sling at her back holds a fist-sized blue storm-seed."
+            ),
+            "complication": (
+                "Every burst of speed she needs to make the run hatches the seed a little "
+                "further open."
+            ),
             "look": (
                 "A lean courier in a rain-dark flight suit with copper knee braces, close-cropped "
                 "hair blown sideways, translucent goggles lit blue from below."
@@ -54,9 +62,9 @@ def _valid_bundle(brief):
                 "name": "Stormseed Sling",
                 "reward_type": "ITEM",
                 "rarity": "RARE",
-                "grants": "catches one bolt of lightning and redirects its momentum",
-                "best_used_when": "a jump falls short or a predator closes from below",
-                "catch": "the sling grows hot enough to scorch its next carrier",
+                "grants": "It catches one bolt of lightning and redirects its momentum.",
+                "best_used_when": "Use it when a jump falls short or a predator closes from below.",
+                "catch": "The sling grows hot enough to scorch whoever carries it next.",
                 "look": (
                     "A forearm-length copper sling with braided black cord, its cup holding a "
                     "glass-blue seed veined by tiny internal lightning."
@@ -66,9 +74,9 @@ def _valid_bundle(brief):
                 "name": "Branchstep",
                 "reward_type": "SKILL",
                 "rarity": "UNCOMMON",
-                "grants": "turns a falling branch into one extra midair step",
-                "best_used_when": "crossing a gap with nothing solid beneath it",
-                "catch": "the branch explodes into sparks after the step",
+                "grants": "It turns any falling branch into one extra midair step.",
+                "best_used_when": "Use it when crossing a gap with nothing solid beneath it.",
+                "catch": "The branch explodes into sparks the moment the step lands.",
                 "look": (
                     "A boot sole meeting a falling black branch in midair as the impact blooms "
                     "into a bright circular shockwave of blue sparks."

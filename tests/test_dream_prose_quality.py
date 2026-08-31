@@ -70,3 +70,58 @@ def test_story_diversity_contract_includes_prose_quality_gate(monkeypatch):
     problems = author.story_diversity_complaints(proposal, [], proposal["seed_facets"])
 
     assert any("known_for is too terse" in problem for problem in problems)
+
+
+def test_canonical_sample_proposal_satisfies_the_contract_it_documents():
+    # The --sample fixture is the worked example of the card-copy contract, so it
+    # must not itself be the telegraphic style the gate exists to reject.
+    assert prose.complaints(proposals.SAMPLE_PROPOSAL) == []
+
+
+def test_character_fields_are_card_copy_and_reject_stem_completion_fragments():
+    # The 2026-08-16 bundle shipped "keep her cactus herd calm through the quakes
+    # so the circus can perform" as a character's whole digest summary: the field
+    # was written to complete "**Name** — ", not to be read on its own.
+    proposal = _quality_sample()
+    proposal["characters"][0].update(
+        role_drive="keep her cactus herd calm through the quakes",
+        carries="a coil of dragon-scale rope",
+        complication="her herd is bred from the last wild line",
+    )
+
+    problems = prose.complaints(proposal)
+
+    assert any("characters[0].role_drive must begin" in problem for problem in problems)
+    assert any("characters[0].role_drive must end" in problem for problem in problems)
+    assert any("characters[0].carries is too terse" in problem for problem in problems)
+    assert any("characters[0].complication must begin" in problem for problem in problems)
+
+
+def test_reward_fields_are_card_copy_and_reject_stem_completion_fragments():
+    proposal = _quality_sample()
+    for reward in proposal["rewards"]:
+        reward.update(
+            grants="reveals omissions",
+            best_used_when="a story is too neat",
+            catch="it reveals yours",
+        )
+
+    problems = prose.complaints(proposal)
+
+    for label in ("item", "skill"):
+        assert any(f"rewards[{label}].grants is too terse" in p for p in problems)
+        assert any(f"rewards[{label}].best_used_when must begin" in p for p in problems)
+        assert any(f"rewards[{label}].catch must end" in p for p in problems)
+
+
+def test_art_prompt_fields_stay_exempt_from_the_sentence_contract():
+    # `look` and `art_direction` feed Krea and are supposed to be visual noun
+    # phrases; forcing them into sentences would degrade the render prompts.
+    proposal = _quality_sample()
+    proposal["characters"][0]["look"] = "mantis-shrimp advocate in a midnight suit"
+    proposal["locations"][0]["art_direction"] = "prismatic courtroom"
+
+    problems = prose.complaints(proposal)
+
+    assert not any("look" in problem for problem in problems)
+    assert not any("art_direction" in problem for problem in problems)
