@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-31T08:43:41Z
+Generated: 2026-08-31T09:30:39Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **841**
-- Outcomes: blocked: 16, cancelled: 1, done: 824
+- Closed tasks recorded: **842**
+- Outcomes: blocked: 16, cancelled: 1, done: 825
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -52,7 +52,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | music-mentor | 1 | 100% |
 | newsfeed | 20 | 100% |
 | packmaker | 10 | 100% |
-| rainbow-butterflies | 13 | 100% |
+| rainbow-butterflies | 14 | 100% |
 | ruler-hooked | 11 | 100% |
 | scene-animator | 2 | 100% |
 | serendipity | 3 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 825 | 99% |
+| software | 826 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-31 `rainbow-butterflies/t-011` — A useful mission funnel can stay decision-grade without a visitor graph: bucket attribution into a fixed vocabulary, store event time only at the precision the decision needs, derive product activity from canonical records, and keep return-visit state browser-local instead of transmitting an identifier.
 - 2026-08-31 `kind-robots/t-085` — A CI check flagging stale foreign-key-shaped ids (CHARACTER/BOT references in authored content batches) is worth checking against the live roster by name, not just id, before assuming a mechanical remap exists -- none of the 17 stale character names in this corpus existed anywhere in production's 240-row roster, meaning they were deleted/replaced outright rather than renumbered. When no remap exists and the content is voice-authored dialogue this session has no context for, pruning the specific violating items (rather than inventing new dialogue under time pressure) is the safer fix -- it gets CI green without risking a second round of creative-contract-shaped violations, and the dropped targets are recorded as a follow-up kaizen task (t-086) for a session that can invest in matching voice properly.
 - 2026-08-31 `interface-vision/t-104` — Slice 80 of the recurring kr-panel-flat consistency sweep -- academy-timeline.vue's header and card-toggle surfaces swapped hand-rolled "border border-base-300 bg-base-100" for the shared primitive, no geometry/behavior change. Found via a fresh select_role.py run that flagged the sandbox's direct GitHub API calls all 403'ing (expected, MCP-only transport) but the underlying worker/reviewer signal was still readable once cross-checked against the MCP connector directly -- one open PR (kind_robots#2253), 37/37 checks green, posted a review-claim marker before merging per the rotation-collision protocol.
 - 2026-08-31 `rainbow-butterflies/t-031` — A kaizen task that says "no new schema needed" is worth taking literally and verifying, not just trusting -- confirmed escalateHealthClaimFlagsIfNeeded() is the only code path that ever flips isPublic:false on a ToForum Chat row before building the admin queue query around that invariant, rather than adding a dedicated flag/reason column. Following an existing sibling admin review-queue (social-drafts) for the fetch/approve-reject store and page shape kept the new surface consistent with house style with no new conventions invented.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-30 `rainbow-butterflies/t-030` — The { kind, id } resolver stayed additive for a second extension in a row (CHARACTER after ArtImage/Project) -- Chat.characterId and its relation already existed on the schema, so no migration was needed, confirming the shape was designed for growth rather than just working for its first two kinds.
 - 2026-08-30 `rainbow-butterflies/t-023` — An extensible typed reference shape ({ kind, id }) for cross-object embeds paid off immediately -- ArtImage and Project shared one resolver/serializer path with no per-kind schema branching, so the next object kind (t-030) is additive rather than a redesign.
 - 2026-08-30 `rainbow-butterflies/t-022` — Companion API/discovery work should close only after both implementations are merged and task-specific contracts are verified separately from unrelated base-repository data failures.
-- 2026-08-30 `interface-vision/t-104` — Slice 64 (kind_robots#2224) picked up the ~150-instance kr-note status-callout pool flagged exhausted-of-easy-wins by slice 62: found a sub-pool of 8 instances across 5 files that already matched the canonical border-{status}/40 bg-{status}/10 opacity values but omitted font-semibold, and used a trailing font-normal override to convert them without silently adding weight that wasn't there before. Also surfaced and correctly excluded a look-alike but unsafe sub-pool: several admin/*.vue "admin access required" gate panels share the same border+bg color classes but wrap a heading with no explicit text color of its own -- converting the wrapper would recolor the heading via CSS inheritance, a real visual change disguised as a mechanical one. Checking whether a matching-color-class instance's text color is stated explicitly (vs. inherited from the wrapper) is now a general filter worth applying before any kr-note/kr-panel conversion, not just this pool.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-31T08:43:41Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-31T09:30:39Z_
