@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   recurring: true
@@ -3309,8 +3309,11 @@ tasks:
     Bounded consistency slice: the Cthulhuquarium public-tank loading state now uses the shared kr-panel-flat primitive for its existing border/base-100 surface while preserving its rounded-3xl geometry and behavior. Implementation head silasfelinus/kind_robots@f72494b188e12a1d20562c34af857bab9549a914.
 
     Merged silasfelinus/kind_robots#2244 as 0b4ec37e4d55f803b4f578c5515cee89f4fb894f from exact head f72494b188e12a1d20562c34af857bab9549a914. The Cthulhuquarium public-tank loading state now uses kr-panel-flat instead of duplicating border border-base-300 bg-base-100, while preserving rounded-3xl, min-height, centering, copy, and behavior. All 38 exact-head check runs completed with no queued/in-progress/null/failure conclusions; Contract Tests #33350032950 completed successfully, including all verifier stages, and layout-contract completed successfully. Return this recurring consistency umbrella to ready for the next bounded slice.
-  updated: '2026-08-31T02:19:00Z'
+  updated: '2026-08-31T02:40:01Z'
   implementation_pr: 'silasfelinus/kind_robots#2243'
+  owner: reviewer
+  claimed_by: 2026-08-31T024000Z-interface-vision-t104-kstage
+  claimed_at: '2026-08-31T02:40:01Z'
 
 - id: t-105
   milestone: m6
