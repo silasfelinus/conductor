@@ -5,11 +5,13 @@ on:
     paths:
       - ".github/workflows/daily-dream-contract.yml"
       - ".github/workflows/daily-digest.yml"
+      - ".github/workflows/daily-dream-identity-rebuild.yml"
       - ".github/workflows/hourly-conductor.yml"
       - "projects/dream-cycle/PIPELINE.md"
       - "projects/dream-cycle/specs/**"
       - "projects/dream-cycle/backlog/**"
       - "projects/dream-cycle/remaster/**"
+      - "projects/dream-cycle/record-repairs/**"
       - "scripts/annotate_daily_dream_art_queue.py"
       - "scripts/audit_dream_catalog.py"
       - "scripts/audit_dream_record_identity.py"
@@ -29,6 +31,7 @@ on:
       - "scripts/dream_prose_quality.py"
       - "scripts/consume_art_requests_to_media.py"
       - "scripts/enrich_daily_dream_digest.py"
+      - "scripts/rebuild_dream_identity_collision.py"
       - "scripts/remaster_dream_catalog.py"
       - "scripts/submit_daily_dream_art.py"
       - "scripts/validate_digest.py"
@@ -50,6 +53,7 @@ on:
       - "tests/test_dream_prose_quality.py"
       - "tests/test_dream_record_identity.py"
       - "tests/test_enrich_daily_dream_digest.py"
+      - "tests/test_rebuild_dream_identity_collision.py"
       - "tests/test_submit_daily_dream_art.py"
   workflow_dispatch:
 
@@ -86,6 +90,7 @@ jobs:
             scripts/dream_art_prompts.py \
             scripts/dream_creative_ruts.py \
             scripts/dream_prose_quality.py \
+            scripts/rebuild_dream_identity_collision.py \
             scripts/remaster_dream_catalog.py \
             scripts/consume_art_requests_to_media.py \
             scripts/enrich_daily_dream_digest.py \
@@ -100,6 +105,7 @@ jobs:
           for path in (
               ".github/workflows/daily-dream-contract.yml",
               ".github/workflows/daily-digest.yml",
+              ".github/workflows/daily-dream-identity-rebuild.yml",
               ".github/workflows/hourly-conductor.yml",
           ):
               yaml.safe_load(Path(path).read_text(encoding="utf-8"))
@@ -132,4 +138,5 @@ jobs:
             tests/test_dream_prose_quality.py \
             tests/test_dream_record_identity.py \
             tests/test_enrich_daily_dream_digest.py \
+            tests/test_rebuild_dream_identity_collision.py \
             tests/test_submit_daily_dream_art.py
