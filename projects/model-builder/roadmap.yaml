@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
+    status: ready
     recurring: true
     passes: 48
     stakes: reversible
@@ -632,7 +632,20 @@ tasks:
       silasfelinus/kind_robots#2070 was already merged 2026-08-24 and is unrelated to this
       stale claim (it belongs to cycle 65, several cycles before this one). No code change;
       released the stale claim and re-armed to ready per the note history's own stated intent.
-    updated: '2026-08-31T14:38:55Z'
+
+      Cycle 68: landed cycle 55's remaining lead. components/model-builder/model-builder-
+      source-picker.vue gained an explicit empty-state branch (v-else-if
+      !store.sources.length) between the sourcesError branch and the viewMode branches,
+      matching the dashed kr-panel-flat treatment already used for the no-source-type-selected
+      state -- a successful load resolving to zero records previously fell through to a blank
+      panel. Added verifyModelBuilderSourceEmptyStateGuard.ts + self-test, wired into
+      package.json/contract-tests.yml. All test:model-builder-* scripts, eslint, prettier
+      (scoped diff), vue-tsc, and test:layout-contract (207 baseline, zero new) verified
+      clean. kind_robots PR silasfelinus/kind_robots#2265 merged squash
+      f19599cb3600954b60be56afc2d510a07242f2cc, all required checks green (only the non-
+      required Publish Production Container job still in flight at merge time, matching
+      established precedent). Re-arming to ready for the next bounded slice.
+    updated: '2026-08-31T14:46:11Z'
     owner: reviewer
     claimed_by: claude-scheduled-20260831T1427Z-mb-t029-empty
     claimed_at: '2026-08-31T14:30:35Z'
