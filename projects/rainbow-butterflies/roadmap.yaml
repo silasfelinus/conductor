@@ -699,7 +699,7 @@ tasks:
 - id: t-013
   milestone: m4
   title: "Build creator and agent contribution loops around useful Kind Robots objects"
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -709,9 +709,13 @@ tasks:
 
 
     Claiming the creator/agent contribution-loop slice. I will build on canonical Kind Robots objects and the existing Rainbow typed-reference/provenance spine rather than create a Rainbow object store. The goal is a useful loop from discovery to reuse/remix to a new canonical object or forum contribution, with source provenance and shareable destinations preserved. No creator-revenue promise will be introduced; any future revenue mechanics remain a Kind Economy coordination item. Free/self-hosted paths stay free where the underlying action has no paid generation cost.
+
+
+    Rescued a stalled claim from an earlier (expired) session: 7 real implementation commits existed on worker/rainbow-butterflies-t-013-20260831-v5n9 with no PR ever opened. Rebased cleanly onto main, fixed 3 pre-existing eslint no-explicit-any errors and the resulting vue-tsc noUncheckedIndexedAccess errors in the two touched self-tests, reformatted with prettier. Merged as silasfelinus/kind_robots#2261 (squash 6471251f): forum art generation gains a provenance-preserving "contribute" mode alongside the existing owner-only "attach" mode -- building on someone else's (or your own already-canonical) forum post now creates a new public reply naming the source as provenance instead of overwriting it.
   claimed_by: claude-scheduled-20260831T1240Z-rb-t013-rescue
   claimed_at: '2026-08-31T12:38:55Z'
-  updated: '2026-08-31T12:38:55Z'
+  updated: '2026-08-31T13:01:36Z'
+  implementation_pr: 'silasfelinus/kind_robots#2261'
 
 - id: t-014
   milestone: m4
