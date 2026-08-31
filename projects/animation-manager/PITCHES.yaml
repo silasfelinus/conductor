@@ -1003,3 +1003,249 @@ pitches:
       the constraint solver runs the stones through a short scatter-and-settle fall onto the
       ground plane. A brief pause once every stone is at rest, then the ground layer fades the
       scattered stones out and a new stack begins with a freshly shuffled order from the same
+      stone pool.
+    optional_interaction: >
+      Pointer proximity to the stack applies a small continuous horizontal force scaled by
+      distance, as if a breeze were nudging it -- visibly increasing wobble and pulling the
+      topple threshold closer without forcing an instant collapse. A click on an already-
+      standing stack forces an immediate topple, rate-limited so a click spam cannot restart
+      the cycle faster than one topple-and-rebuild pass.
+    technique: >
+      Canvas 2D. Stone silhouettes are a small fixed set of pre-defined convex polygon
+      outlines (not per-frame procedural geometry), so contact resolution stays cheap. Physics
+      is a minimal position-based-dynamics step: gravity integration plus a fixed small number
+      of constraint-solver iterations per frame for contact/penetration resolution, same
+      bounded-iteration approach as strandbeest-migration's leg-linkage solve rather than a
+      general physics engine. Only the handful of stones currently in play are ever simulated;
+      scattered stones past a settle-velocity threshold freeze into static sprites so the
+      solver's per-frame cost never grows with cycle count.
+    reduced_motion: >
+      A single static frame of a complete, stable five-stone cairn at rest in the clearing,
+      with no placement, wobble, or topple animation -- only a very slow, subtle ambient
+      shadow drift to confirm the piece is alive.
+    performance_risk: >
+      An unbounded constraint-solver iteration count, or a topple that never actually settles
+      (stones jittering indefinitely near a rest threshold), would leave the simulation
+      running forever. Cap solver iterations per frame regardless of stack height, force-
+      freeze any stone below a velocity/rotation-delta threshold for N consecutive frames into
+      a static sprite, and cap the total stones in play at the fixed per-cycle pool size so
+      cost never scales with how many cycles have run this session.
+    novelty: >
+      The core loop is discrete, one-at-a-time rigid-body stacking of a small fixed pool of
+      distinct stone shapes, building toward a genuine catastrophic collapse that scatters the
+      pieces before a full rebuild -- distinct from every existing pitch. Celestial-mobile is
+      continuous suspended-arm equilibrium under a rigid-body solver, never adding or removing
+      pieces and never fully collapsing. Marble-run-contraption moves discrete objects along a
+      fixed pre-built track, not building and toppling the structure itself. Geode-bloom and
+      frost-window-etching both grow a single connected structure outward from a
+      nucleation/edge seed via continuous accretion, not discrete separate rigid bodies
+      stacking then scattering apart. Hourglass-cascade and candlelit-reliquary both
+      accumulate many small particles into a height-map via gravity, never a small number of
+      individually shaped, individually resting rigid bodies. Harmonograph-sand-table traces a
+      single continuous parametric curve rather than placing discrete objects. No existing
+      pitch uses discrete rigid-body stacking toward an intentional catastrophic-collapse
+      event.
+    acceptance:
+      - each stone placement visibly falls, contacts, and settles with a small physical wobble before the next stone is added, and no two cycles place stones in the same order
+      - the stack's lean visibly increases as it grows, and the eventual topple reads as a genuine physical failure rather than an instant swap to a "scattered" state
+      - the scatter-and-settle phase brings every stone to a full stop before the clearing fade-and-rebuild begins, and pointer-nudge/click-triggered topples never block underlying page input
+      - solver iteration count, stone pool size, and per-frame simulation cost stay fixed regardless of viewport size or how many topple cycles have run this session
+  - id: zoetrope-lantern-drum
+    title: Zoetrope Lantern Drum
+    status: pitched
+    priority: 25
+    surprise: >
+      A squat cylindrical drum of vertical slats slowly turns in place, warm light glowing
+      from within. Through the passing gaps a tiny figure inside appears to walk, or wing-beat,
+      or juggle -- a genuine persistence-of-vision illusion built from a short strip of still
+      poses, not a single sprite sliding across the screen. Every few full turns the drum
+      briefly dims, its interior strip swaps for a different figure and a different loop of
+      motion, and the light and turning resume.
+    passive_loop: >
+      A fixed ring of N evenly spaced opaque slats rotates at a slow constant angular velocity
+      around a lit interior. The interior holds a short ordered strip of pose frames (a walk
+      cycle, a wingbeat, a juggling loop -- 6-10 poses) for the current figure. Each slat gap,
+      as it sweeps past the viewer-facing arc, samples and displays exactly one pose from the
+      strip, advancing to the next pose in sequence on each successive gap; because the drum
+      turns slowly and steadily rather than strobing at high frequency, the sampled sequence
+      reads as a continuous, unhurried figure in motion rather than a flicker. After a set
+      number of full rotations the drum's glow dims to embers over roughly a second, the pose
+      strip swaps to the next figure in a small fixed rotation of figures, and the glow and
+      turn resume from the top of a fresh cycle.
+    optional_interaction: >
+      Pointer proximity along the drum's rim applies a small tangential drag that speeds or
+      slows the rotation without ever reversing it or exceeding a capped rate, as if brushing
+      the rim by hand. A click forces an immediate dim-and-swap to the next figure in the
+      rotation, rate-limited so repeated clicks cannot cycle figures faster than the natural
+      dim transition allows.
+    technique: >
+      Canvas 2D. The drum is drawn as a fixed ring of slat polygons at a constant angular
+      velocity (simple rotation-matrix placement, no physics solver). Each figure's pose strip
+      is a small set of pre-authored silhouette frames (not per-frame procedural geometry or
+      a video/sprite-sheet asset); the currently visible pose is chosen by mapping each
+      viewer-facing slat gap's instantaneous angle to a pose index, so the illusion is driven
+      entirely by rotation angle rather than a wall-clock frame timer -- pausing or resuming
+      the animation loop (e.g. tab backgrounding) cannot desync the apparent motion. Only the
+      1-3 slat gaps currently within the viewer-facing arc are ever composited per frame.
+    reduced_motion: >
+      The drum stops turning and shows a single held pose from the current figure's strip
+      (mid-cycle, not the neutral/rest pose) through the interior gaps, with only a very slow
+      ember-glow breathing pulse -- no rotation, no slat-driven pose stepping, no strobe-like
+      sampling of any kind.
+    performance_risk: >
+      Naively redrawing every slat every frame regardless of visibility, or resampling a pose
+      on every animation frame instead of only on angle-driven gap transitions, would waste
+      cycles and risk a rapid-looking flicker on very small viewports. Composite only the
+      handful of gaps currently in the viewer-facing arc, advance the sampled pose strictly
+      on angle thresholds (never on a frame-rate-dependent timer), and enforce a minimum
+      rotation period floor so the rig can never be sped up (via pointer drag) into an actual
+      high-frequency strobe.
+    novelty: >
+      The core loop is a persistence-of-vision illusion: a slow-turning slotted drum samples
+      one still pose per slat gap from a short pre-authored pose strip, so a walking/flying/
+      juggling figure emerges from angle-driven frame-stepping rather than any continuous
+      procedural simulation -- distinct from every existing pitch. Marble-run-contraption and
+      cairn-balancing move or place discrete rigid objects under simulated physics; this rig
+      has no physics at all, only fixed poses sampled by rotation angle. Strandbeest-migration
+      and celestial-mobile both animate continuous-motion linkages/rigid bodies frame by frame
+      rather than stepping between discrete pre-authored poses. Shadow-puppet-theater is the
+      closest in spirit (backlit figures, joint-driven blocking) but drives its figures with a
+      continuous joint-animation timeline behind a static backlight, never a rotating physical
+      occluder sampling discrete poses, and never swaps its entire figure identity mid-cycle.
+      Clockwork-greenhouse and geode-bloom both grow one persistent structure via a state
+      machine; here nothing grows or accretes, the drum simply resamples a fixed strip. No
+      existing pitch uses a rotating slotted occluder to build motion from discrete pose
+      sampling, or swaps its subject's identity entirely between cycles rather than resetting
+      the same subject.
+    acceptance:
+      - the interior figure's motion reads as a continuous walk/wingbeat/juggle cycle through the passing slats, not a visible flicker or strobe, at the rig's normal rotation speed
+      - pointer-drag speed changes and click-triggered figure swaps never block underlying page input, and drag can never reverse or exceed the capped rotation rate
+      - the dim-and-swap transition between figures completes fully (old figure fully dimmed) before the next figure's first pose is ever sampled
+      - pose sampling is driven by rotation angle, not a frame-rate timer, so backgrounding and resuming the tab cannot desync or accelerate the apparent walk cycle
+  - id: soap-film-membrane
+    title: Soap-Film Membrane
+    status: pitched
+    priority: 26
+    surprise: >
+      A translucent rectangular soap-film membrane hangs stretched across a wire loop,
+      catching the light in slow, colorful swirls -- the same shifting rainbow sheen a real
+      bubble film shows -- as if the world's iridescence is happening in real time. Then,
+      imperceptibly, one patch of the film looks perilously thin, and gives way in a rushing,
+      radial tear that clears the frame in an instant, before, a beat later, a fresh clean
+      film stretches back across the loop and the color swirl begins anew.
+    passive_loop: >
+      A small fixed-resolution thickness grid spanning the loop is updated each frame by a
+      lightweight gravity-drainage-plus-diffusion pass -- thickness slowly migrates downward
+      (drainage) while diffusing outward to smooth sharp edges, the way a real thinning soap
+      film behaves. Each grid cell's thickness feeds a compact thin-film interference color
+      approximation (a periodic hue function of thickness, not a physically exact spectral
+      integral), rendered as a smooth gradient image scaled up to the loop's full size,
+      producing the continuously drifting rainbow-swirl look real soap films show. Once any
+      region's thickness drains below a rupture threshold, a rupture point seeds there and a
+      radial tear front expands outward frame by frame (an expanding transparent disc masked
+      against the color buffer) until the whole loop is clear; a brief pause, then the
+      thickness grid reseeds to a fresh, near-uniform starting state and drainage resumes.
+    optional_interaction: >
+      Pointer position over the loop applies a small local thinning nudge to the thickness
+      grid beneath it, as if a fingertip brushed the film, visibly disturbing the color swirl
+      without forcing a rupture on its own. A click forces an immediate rupture at the
+      pointer's position, rate-limited so repeated clicks cannot restart the cycle faster than
+      the tear-and-reseed sequence allows.
+    technique: >
+      Canvas 2D. The thickness field is a small fixed-size grid (e.g. 24x16) updated with a
+      handful of cheap explicit diffusion/drainage steps per frame -- no fluid solver, no
+      per-pixel simulation. Thickness-to-color is a closed-form periodic function (a small
+      number of stacked sinusoids over the visible spectrum's rough hue range), evaluated once
+      per grid cell and upscaled via drawImage rather than per-pixel canvas writes. The
+      rupture tear is a single expanding radius value masked against the color buffer, not a
+      particle or fragment system, so its cost stays flat regardless of loop size.
+    reduced_motion: >
+      A single static frame of a mostly-intact film mid-swirl, holding one representative
+      thickness-color gradient with no drainage drift, no pointer disturbance, and no rupture
+      -- only a very slow, subtle hue-cycle breathing to confirm the piece is alive.
+    performance_risk: >
+      An unbounded thickness-grid resolution tied to viewport size, or a drainage rate low
+      enough that rupture never actually triggers, would waste cycles or stall the cycle
+      indefinitely. Keep the thickness grid a small fixed resolution independent of the loop's
+      rendered size, force a rupture once elapsed cycle time exceeds a cap even if no cell has
+      drained naturally, and bound the tear front's per-frame growth so the clearing phase
+      always completes in a fixed number of frames regardless of loop size.
+    novelty: >
+      The core loop is a diffusion-drainage thickness field mapped through a thin-film
+      interference color function, ending in a radial rupture-and-reseed rather than any
+      particle accumulation, rigid-body physics, or discrete pose stepping -- distinct from
+      every existing pitch. Magnetic-sand-garden's low-resolution buffer aggregates discrete
+      grains into topographic islands under raking, not a continuous liquid-thickness field
+      mapped to interference color. Hourglass-cascade and candlelit-reliquary both accumulate
+      settling particles into a height-map, never a drainage field whose color, not height, is
+      the visible signal. Harmonograph-sand-table traces a single parametric stylus path;
+      cairn-balancing and marble-run-contraption move discrete rigid objects; none of them
+      render color as a function of a continuously thinning field. Bioluminescent-tide,
+      koi-memory-pond, and impossible-terrarium are aquatic or terrarium scenes with swimming
+      or growing life, not an airborne membrane defined purely by a thickness-to-color
+      mapping. No existing pitch uses thin-film-interference coloring or a drainage-triggered
+      rupture-and-reseed cycle.
+    acceptance:
+      - the film's color swirl visibly and continuously drifts from the drainage/diffusion simulation, and no two cycles trace an identical color pattern before rupturing
+      - the rupture tear expands smoothly across the full loop and clears it completely before the reseed begins, never leaving a partially-torn film stuck mid-cycle
+      - pointer-driven local thinning and click-triggered ruptures never block underlying page input, and the forced rupture is rate-limited
+      - thickness-grid resolution and tear-front growth rate stay fixed regardless of viewport size or how many rupture cycles have run this session
+  - id: kaleidoscope-bloom
+    title: Kaleidoscope Bloom
+    status: pitched
+    priority: 27
+    surprise: >
+      A softly rotating kaleidoscope window reveals drifting jewel-toned shard clusters
+      blooming outward from the center in perfect radial symmetry, each cluster's colors and
+      shapes subtly different from the last, before slowly dissolving so a fresh cluster can
+      begin forming again.
+    passive_loop: >
+      A small number of colored polygon shard particles drift and slowly rotate within a
+      single wedge sector (e.g. one-eighth of the full circle). Each frame that one wedge is
+      simulated and rendered once to a small offscreen buffer, then composited onto the main
+      canvas N times via alternating rotate and mirror transforms around the canvas center to
+      build the full N-fold symmetric image -- the simulation runs once per particle no matter
+      how many-fold the pattern is, with the symmetry produced entirely by the rendering pass.
+      Shards spawn near the wedge's inner apex, drift outward along a gentle spiral while
+      fading in, hold near full bloom, then fade out and are recycled; a slow overall rotation
+      of the wedge geometry keeps the whole pattern gently turning.
+    optional_interaction: >
+      Pointer distance from the canvas center scales spawn rate and outward drift speed
+      (closer in slows and thickens the churn, the way leaning into a real kaleidoscope's
+      eyepiece changes what you see). A click seeds an immediate fresh burst of shards and
+      briefly raises the fold count (e.g. from six-fold to twelve-fold) for a few seconds
+      before it settles back to the base count.
+    technique: >
+      Canvas 2D. One small offscreen buffer holds the single simulated wedge sector; the main
+      draw pass composites it via paired ctx.rotate() and ctx.scale(-1, 1) transforms around
+      the canvas center, alternating mirrored and unmirrored copies for true dihedral (both
+      rotational and reflective) symmetry so adjacent wedge edges line up seamlessly. Shard
+      particles are simple 3-6 vertex polygons with independent hue, rotation, and alpha,
+      capped at a small fixed count per wedge regardless of the current fold count.
+    reduced_motion: >
+      A single static N-fold symmetric bloom frame, no drift, no rotation, and no pointer
+      response, held at roughly 70% bloom density so the piece reads as complete rather than
+      caught mid-formation.
+    performance_risk: >
+      Simulating shard particles once per full-circle copy instead of once per wedge would
+      multiply particle-update cost by the fold count for no visual benefit, and an uncapped
+      interactive fold-count boost could make the offscreen-to-main composite pass itself the
+      bottleneck. Simulate strictly once per wedge regardless of fold count, cap the
+      interactive fold-count boost (e.g. twelve-fold maximum) and its duration, and keep the
+      offscreen buffer's resolution fixed independent of the main canvas size.
+    novelty: >
+      The core mechanic is single-wedge simulation composited via rotate-and-mirror transforms
+      into full dihedral symmetry -- no existing pitch renders through geometric symmetry
+      compositing. Stained-glass-rain refracts the desktop into unsymmetric drifting polygon
+      fragments, not a radially mirrored bloom. Magnetic-sand-garden and geode-bloom each grow
+      a single asymmetric structure via raking or lattice accretion, not mirrored-sector
+      compositing. Ink-oracle's reaction-diffusion buffer is one unsymmetric field.
+      Zoetrope-lantern-drum samples discrete poses by rotation angle from a fixed pose strip,
+      not mirror-composited particles, and soap-film-membrane's thickness-to-color field has
+      no radial symmetry at all. No existing pitch uses dihedral mirror-symmetry rendering to
+      multiply a single simulated region into a full radial pattern.
+    acceptance:
+      - the full kaleidoscope image is always exactly N-fold dihedral symmetric (every wedge is an exact rotated or mirrored copy of the simulated wedge) with no visible seams at wedge boundaries
+      - shard particles are simulated exactly once per wedge regardless of the current fold count, never once per full-circle copy
+      - pointer proximity to center visibly and continuously changes spawn rate and drift speed, and a click's fold-count boost always settles back to the base count within a few seconds
+      - offscreen wedge-buffer resolution and shard particle cap stay fixed regardless of main canvas or viewport size
