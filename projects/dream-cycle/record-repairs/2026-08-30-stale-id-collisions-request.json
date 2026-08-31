@@ -4,7 +4,15 @@
   "approved_by_user": "Silas explicitly approved the live collision repair in ChatGPT on 2026-08-30.",
   "reason": "Rebuild the two backlog bundles whose built-data was reset after their six recorded entity IDs were proven to belong to different live Daily Dreams.",
   "retry_after_run": 33343607764,
-  "retry_note": "First production attempt rebuilt Fault Line Follies live, then The Deep Shift encountered one pre-existing unclaimed PITCH with stale content. Its six newly attempted child rows were rolled back. Retry adopts exact prior-attempt rows and may adopt only one unprotected same-title/slug/type/designer PITCH, refreshing its current prose before continuing.",
+  "retry_note": "Run 33343607764 completed Fault Line Follies live before The Deep Shift failed. Run 33343926831 confirmed five of those rows are normally rediscoverable and the remaining Vex Thistlemaw row exists as Character 3314. Retry adopts the exact six first-run rows by recorded IDs, then handles the unclaimed stale Deep Shift PITCH under the narrow recovery rule.",
+  "retry_adoptions": [
+    {"endpoint": "/api/dreams", "id": 5694, "title": "Fault Line Follies"},
+    {"endpoint": "/api/dreams", "id": 5695, "title": "The Suture Circus"},
+    {"endpoint": "/api/characters", "id": 3314, "name": "Vex Thistlemaw"},
+    {"endpoint": "/api/rewards", "id": 2876, "name": "Wrangler's Prod"},
+    {"endpoint": "/api/rewards", "id": 2877, "name": "Seismic Call-and-Response"},
+    {"endpoint": "/api/scenarios", "id": 2195, "title": "Encore Before the Fault Slips"}
+  ],
   "bundles": [
     "projects/dream-cycle/backlog/2026-08-16-fault-line-follies.md",
     "projects/dream-cycle/backlog/2026-08-21-kelp-ink-transfer.md"
