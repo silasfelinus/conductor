@@ -11893,7 +11893,7 @@ records:
   stakes: reversible
   passes: 2
   outcome: done
-  failure_category: implementation
+  failure_category: quality
   lesson: 'A useful mission funnel can stay decision-grade without a visitor graph: bucket attribution
     into a fixed vocabulary, store event time only at the precision the decision needs, derive product
     activity from canonical records, and keep return-visit state browser-local instead of transmitting
@@ -11906,7 +11906,8 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: Slice 32 of the recurring kr-panel-flat consistency sweep -- pages/music-mentor.vue's
+  lesson: >-
+    Slice 32 of the recurring kr-panel-flat consistency sweep -- pages/music-mentor.vue's
     feature-row div swapped hand-rolled "border border-base-300 bg-base-100" for the shared
     primitive, no geometry/behavior change; kind_robots#2256, 38/38 checks green. Also caught
     that check_pr_merged_drift.py's API-403 output was masking a genuine unreconciled gap, not
