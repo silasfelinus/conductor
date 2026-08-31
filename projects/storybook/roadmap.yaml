@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: ready
+  status: claimed
   passes: 49
   stakes: reversible
   note: >-
@@ -419,11 +419,11 @@ tasks:
     No new bug found this cycle. git status --porcelain clean throughout (read-only cycle). Re-armed to ready.
 
     Next lead for cycle 44: the narratorStore.ts file itself (1556 lines) has never had a dedicated end-to-end read in this task's history despite being the shared dependency both hypotheses above touched only partially (lines ~400-530, ~1345-1420) -- a full read (especially the liveness/bubble-timer machinery and the emotion-state transitions) is the natural next lead, or alternatively a fresh top-level page component in the same vein as this cycle (e.g. components/pages/taskmaster-page.vue's own template, which cycle history hasn't confirmed a full read of despite auditing its narrative/** dependencies).
-  updated: '2026-08-30T14:32:02Z'
+  updated: '2026-08-31T17:29:25Z'
   implementation_pr: 'silasfelinus/kind_robots#2207'
-  owner: worker
-  claimed_by: claude-scheduled-20260830T1500Z-sb-t010-cycle43
-  claimed_at: '2026-08-30T14:30:03Z'
+  owner: reviewer
+  claimed_by: claude-scheduled-20260831T172925Z-sb-t010-cycle44
+  claimed_at: '2026-08-31T17:29:25Z'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
