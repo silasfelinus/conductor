@@ -11803,3 +11803,20 @@ records:
     forum -- a real, narrowly-scoped security gap (writes and every read path never checked it)
     rather than something needing new schema. All of report/flag, restriction, rate-limiting,
     duplicate rejection, escalation, and audit trail landed additively with zero migrations.
+- date: 2026-08-30
+  project: dream-cycle
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A backlog bundle's built-data block being internally self-consistent (its own
+    art-request IDs, facet_assignments, and Build log all agreeing with each other) is not
+    proof it still matches live reality -- an earlier remaster/revision pass can silently
+    overwrite a different, already-published bundle's rows, leaving the victim's file looking
+    coherent while actually pointing at someone else's live content. The tell is only visible
+    by fetching the live API and comparing title/slug/description against the file, not by
+    reading the file in isolation. Added a catalog-wide (model, entity_id) uniqueness CI guard
+    (scripts/audit_dream_record_identity.py) so a future recurrence surfaces as a red required
+    check instead of silent drift.
