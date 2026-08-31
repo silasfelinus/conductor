@@ -205,11 +205,13 @@ def find_proposals() -> list[tuple[Path, dict, str]]:
 
 
 def eligible_proposal(date_override: Optional[str]) -> tuple[Optional[Path], str]:
-    """Choose the proposal to build.
+    """Choose the proposal to build: the oldest one past its steering day.
 
     A proposal whose previous attempt failed stays at the head of the line until it
     succeeds.  Otherwise a new calendar day could strand yesterday's creation simply
-    because a newer proposal now exists.
+    because a newer proposal now exists — which is exactly what newest-first
+    selection did here until 2026-08-31 (see run_daily_dream_build's module
+    docstring for the five proposals it orphaned).
     """
     today = datetime.datetime.now(_TZ).date().isoformat()
     best: Optional[tuple[str, Path]] = None
@@ -240,7 +242,7 @@ def eligible_proposal(date_override: Optional[str]) -> tuple[Optional[Path], str
             if retry is None or pdate < retry[0]:
                 retry = (pdate, p)
             continue
-        if best is None or pdate > best[0]:
+        if best is None or pdate < best[0]:
             best = (pdate, p)
     if retry:
         return retry[1], ""

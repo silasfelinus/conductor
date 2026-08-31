@@ -297,3 +297,46 @@ def test_recent_premise_history_reads_story_fields_not_just_titles(tmp_path: Pat
     assert len(history) == 1
     assert "lightning predators" in history[0]
     assert "Stormglass Arena" in history[0]
+
+
+def test_authoring_is_skipped_while_the_docket_is_already_deep(monkeypatch, capsys):
+    # Silas, 2026-08-31: don't spend a cycle writing a new proposal when a
+    # backlog already exists -- spend it on other work or on improving the docket.
+    monkeypatch.setattr(dreams, "proposal_exists_for", lambda day: False)
+    monkeypatch.setattr(dreams, "fetch_main", lambda quiet=True: False)
+    monkeypatch.setattr(
+        dreams, "unbuilt_backlog",
+        lambda: [f"2026-08-2{n}" for n in range(dreams.TARGET_BUFFER_DAYS)],
+    )
+    monkeypatch.setattr(authoring, "call_claude", lambda *a, **k: pytest.fail("must not author"))
+    monkeypatch.setattr(dreams, "write_proposal", lambda *a, **k: pytest.fail("must not write"))
+
+    assert authoring.main(["--date", DAY, "--no-fetch"]) == 0
+    out = capsys.readouterr().out
+    assert f"at or above the {dreams.TARGET_BUFFER_DAYS}-day buffer" in out
+
+
+def test_a_shallow_docket_still_authors(monkeypatch, brief, no_history):
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
+    monkeypatch.setattr(dreams, "proposal_exists_for", lambda day: False)
+    monkeypatch.setattr(dreams, "fetch_main", lambda quiet=True: False)
+    monkeypatch.setattr(dreams, "unbuilt_backlog", lambda: ["2026-08-29", "2026-08-30"])
+    monkeypatch.setattr(authoring, "call_claude", lambda *a, **k: json.dumps(_valid_bundle(brief)))
+    written = {}
+    monkeypatch.setattr(dreams, "write_proposal",
+                        lambda proposal, **kwargs: written.setdefault("proposal", proposal) or Path("x.md"))
+
+    assert authoring.main(["--date", DAY, "--no-fetch"]) == 0
+    assert written["proposal"]["title"] == "Thunder Orchard Run"
+
+
+def test_force_authors_even_with_a_full_docket(monkeypatch, brief, no_history):
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
+    monkeypatch.setattr(
+        dreams, "unbuilt_backlog",
+        lambda: [f"2026-08-2{n}" for n in range(dreams.TARGET_BUFFER_DAYS)],
+    )
+    monkeypatch.setattr(authoring, "call_claude", lambda *a, **k: json.dumps(_valid_bundle(brief)))
+    monkeypatch.setattr(dreams, "write_proposal", lambda proposal, **kwargs: Path("x.md"))
+
+    assert authoring.main(["--date", DAY, "--no-fetch", "--force"]) == 0

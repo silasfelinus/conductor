@@ -209,6 +209,37 @@ def proposal_exists_for(day: str) -> bool: return any(str(_frontmatter(p).get("p
 def existing_slugs() -> set[str]: return {str(_frontmatter(p).get("slug")) for p in _files() if _frontmatter(p).get("slug")}
 
 
+# How many unbuilt proposals are enough. The builder drains one a day, so this is
+# roughly "days of runway" -- deep enough to absorb a failed digest run or a
+# blocked build, shallow enough that the docket stays fresh and reviewable.
+# Silas, 2026-08-31: "we don't need to spend effort writing new proposals if we
+# have a backlog (though a 5 day or so buffer seems reasonable, just in case)."
+TARGET_BUFFER_DAYS = 5
+
+
+def unbuilt_backlog() -> list[str]:
+    """Proposal dates authored but not yet built, oldest first — the build docket.
+
+    Legacy pre-v2 outlines carry `proposal: false` and are idea inventory rather
+    than docket entries, so they are excluded. `_template-proposal.md` is also
+    excluded despite carrying `proposal: true` and a 2026-01-01 placeholder date
+    — the same skip build_dream_records.find_proposals() applies, without which
+    the template silently inflates the docket by one and stops authoring a day
+    early.
+    """
+    days: list[str] = []
+    for path in _files():
+        if path.name.startswith("_") or path.name == "README.md":
+            continue
+        fm = _frontmatter(path)
+        if not fm.get("proposal"):
+            continue
+        if re.search(r"<!--\s*built-data", path.read_text(encoding="utf-8")):
+            continue
+        days.append(str(fm.get("proposal_date") or fm.get("created") or path.name[:10]))
+    return sorted(days)
+
+
 def fetch_main(quiet: bool=True) -> bool:
     try: return subprocess.run(["git","fetch","origin","main"],cwd=ROOT,check=False,capture_output=quiet,text=True).returncode == 0
     except OSError: return False
@@ -263,11 +294,21 @@ def main(argv=None) -> int:
     ap.add_argument("--force",action="store_true",help="write even if the date exists")
     a=ap.parse_args(argv); day=a.date or _target_date()
     if a.check:
-        exists=proposal_exists_for(day)
-        if not exists and a.fetch and fetch_main(): exists=remote_proposal_for(day) is not None
-        print(f"Proposal for {day} exists." if exists else
-              f"No proposal for {day}. Run --brief, author the six-asset JSON, then pass it to --from-json.")
-        return 0 if exists else 1
+        # The docket, not the calendar, is what "healthy" means now: authoring
+        # pauses while the buffer is deep, so a missing proposal dated today is
+        # expected and is not a failure. An EMPTY docket is the real alarm --
+        # that is the state where tomorrow has nothing to build.
+        if a.fetch: fetch_main()
+        backlog=unbuilt_backlog()
+        if not backlog:
+            print("Dream docket is EMPTY: nothing is queued to build. "
+                  "Run --brief, author the six-asset JSON, then pass it to --from-json.")
+            return 1
+        span=f"{backlog[0]}..{backlog[-1]}" if len(backlog) > 1 else backlog[0]
+        note=("" if len(backlog) >= TARGET_BUFFER_DAYS
+              else f" Below the {TARGET_BUFFER_DAYS}-day buffer; the next digest run will top it up.")
+        print(f"Dream docket holds {len(backlog)} unbuilt proposal(s) ({span}).{note}")
+        return 0
     if a.brief: print(json.dumps(build_brief(day),indent=2,ensure_ascii=False)); return 0
     if a.sample:
         return 0 if write_proposal(copy.deepcopy(SAMPLE_PROPOSAL),date=day,fetch=False,

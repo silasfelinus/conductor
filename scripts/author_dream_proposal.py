@@ -699,6 +699,15 @@ def main(argv=None) -> int:
         if exists:
             print(f"Proposal for {day} already exists; nothing to author.")
             return 0
+        backlog = dreams.unbuilt_backlog()
+        if len(backlog) >= dreams.TARGET_BUFFER_DAYS:
+            print(
+                f"Docket already holds {len(backlog)} unbuilt proposals "
+                f"({backlog[0]}..{backlog[-1]}), at or above the "
+                f"{dreams.TARGET_BUFFER_DAYS}-day buffer; skipping authoring. "
+                "Spend the cycle on other work or on improving what is queued."
+            )
+            return 0
 
     api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
     if not api_key:
