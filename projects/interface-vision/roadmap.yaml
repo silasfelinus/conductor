@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3341,8 +3341,28 @@ tasks:
     home-object-sheet.vue, art-manager.vue) -- none yet checked for absolutely-positioned
     descendants/z-index-sensitive siblings before adopting kr-toolbar's baked-in relative
     z-20, left for a future slice. Re-arming to ready per recurring-task convention.
-  updated: '2026-08-31T00:29:07Z'
-  implementation_pr: 'silasfelinus/kind_robots#2241'
+
+    Slice 72 merged as silasfelinus/kind_robots#2242 (squash
+    eb00ab87b56f8b83022d5a1be690378a4448c42d) from exact head
+    d6d787adce8948d28935188a198bebccf8e65c6c. Checked all 6 remaining kr-toolbar candidates
+    left by slice 71 (model-builder-recipe-selector.vue, stage-manager.vue, kr-manager.vue,
+    giftshop-manager.vue, home-object-sheet.vue, art-manager.vue) for the z-20/stacking-
+    context safety condition -- none had an absolutely-positioned descendant anchored to an
+    ancestor above the toolbar or a z-index-sensitive sibling, so all 6 converted to kr-
+    toolbar (plus their genuinely-extra utilities: justify-between, borders, backgrounds,
+    padding, backdrop-blur -- nothing dropped or added). Verified: eslint clean (2 pre-
+    existing unrelated errors confirmed present on originals), prettier clean against
+    pristine originals (3 files already failed unrelated lines pre-change), vue-tsc --noEmit
+    clean repo-wide, test:layout-contract holds at the 207-violation baseline with zero new
+    violations. All 39 kind_robots CI checks green. One incidental cosmetic byte-diff in kr-
+    manager.vue: a console.warn's warning-glyph is now the literal Unicode character instead
+    of its backslash-escape form -- identical runtime string, not one of the six toolbar
+    lines, documented in the PR body. Bonus lead for a future slice: art-manager.vue's
+    line-18 error banner (flex flex-wrap items-center justify-between gap-3) is close to kr-
+    toolbar's base set but missing shrink-0 -- not an exact/near-exact match this slice,
+    left alone. Re-arming the recurring consistency umbrella for the next bounded slice.
+  updated: '2026-08-31T01:11:50Z'
+  implementation_pr: 'silasfelinus/kind_robots#2242'
   owner: worker
   claimed_by: claude-sched-20260831T002906Z-iv-t104-slice72
   claimed_at: '2026-08-31T00:29:07Z'
