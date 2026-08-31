@@ -780,11 +780,11 @@ tasks:
 - id: t-034
   milestone: m2
   title: "Load FORUM-LAUNCH-PREP.md's per-board posting guidance into the real board config"
-  status: claimed
+  status: done
   owner: reviewer
   passes: 0
   stakes: reversible
-  note: >
+  note: >-
     Kaizen from t-029 (conductor PR #3291): FORUM-LAUNCH-PREP.md's section 1 defines a
     one-line posting-guidance string for each of the 6 MVP boards (introductions, news,
     humanitarian-goals, creativity, memes, just-because), matching the "optional posting
@@ -792,6 +792,17 @@ tasks:
     exists as a markdown reference. Once the forum's board-config table/admin UI exists
     (COMMONS-SPEC.md Phase A), load these strings into that real config instead of leaving
     them to be manually copied at launch time.
+
+    Merged silasfelinus/kind_robots#2252 (squash 71a3715fe8ec9c31b3f3d184fe7b31ebd1cfaf60).
+    Extended ForumChannel with postingGuidance, populated the 6 defaults from FORUM-LAUNCH-
+    PREP.md section 1, kept FORUM_CHANNELS_JSON backward-compatible (defaults missing
+    guidance to ''), and surfaced the line in forum-thread.vue's compose box. No board-
+    config DB table/admin UI exists yet, so the existing DEFAULT_FORUM_CHANNELS constant is
+    the real config for now -- a future migration to a DB-backed table remains separate
+    scope. PR's comment-contract check failed on an unrelated pre-existing main-branch drift
+    (52 stale comment-batch character ids); filed kind-robots/t-085 to track it and merged
+    past it per docs/state-reconciliation.md's CI-red handling.
   claimed_by: claude-scheduled-20260831T0740Z-rb-t034
   claimed_at: '2026-08-31T07:47:29Z'
-  updated: '2026-08-31T07:47:29Z'
+  updated: '2026-08-31T07:56:30Z'
+  implementation_pr: 'silasfelinus/kind_robots#2252'
