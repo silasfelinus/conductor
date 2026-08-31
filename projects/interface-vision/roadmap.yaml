@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3361,8 +3361,30 @@ tasks:
     line-18 error banner (flex flex-wrap items-center justify-between gap-3) is close to kr-
     toolbar's base set but missing shrink-0 -- not an exact/near-exact match this slice,
     left alone. Re-arming the recurring consistency umbrella for the next bounded slice.
-  updated: '2026-08-31T01:28:10Z'
-  implementation_pr: 'silasfelinus/kind_robots#2242'
+
+    Slice 73 merged as silasfelinus/kind_robots#2243 (squash
+    3cda701dd19d688a15618a3ab7c6c27233ba7c0d) from exact head
+    ccee28538cef1abebfb88b3834d5fd20753c3b0a. Ran a repo-wide scan for class attributes that
+    are an exact superset of the .kr-scroll/.kr-toolbar base token sets and don't already
+    carry the shorthand class (not just grepping for one distinctive substring like prior
+    slices) -- found exactly one remaining candidate: app.vue's workspace-sheet scroll
+    region ('min-h-0 flex-1 overflow-y-auto overscroll-contain p-3'), the sheet body opened
+    by the header's '?' button. Swapped to 'kr-scroll p-3'. No remaining kr-toolbar exact
+    matches exist (slice 72 cleared the last 6). Checked two near-miss kr-toolbar candidates
+    the scan also surfaced (taskmaster-page.vue's error-alert row, memory-dungeon.vue's
+    header bar) -- neither carries the full base utility set (missing flex/flex-wrap/items-
+    center/gap-2 or relative/z-20 respectively), so left alone per the established
+    exact/near-exact-only convention. Also confirmed dream-gallery.vue's 'min-h-0 flex-1
+    overflow-auto overscroll-contain' region is NOT a match (overflow-auto, not overflow-y-
+    auto -- behaviorally different, allows horizontal scroll). Verified: eslint clean (1
+    pre-existing unrelated warning), prettier clean, vue-tsc --noEmit clean repo-wide,
+    test:layout-contract holds (207-violation baseline, zero new violations). All 36
+    kind_robots PR checks green. Re-arming to ready per recurring-task convention. With this
+    scan method now exhaustive against the current tree, a future slice needs either new
+    kr-* primitives to scan for, or new code that introduces a fresh exact-match candidate
+    -- the current .kr-scroll/.kr-toolbar backlog is empty.
+  updated: '2026-08-31T01:38:40Z'
+  implementation_pr: 'silasfelinus/kind_robots#2243'
   owner: worker
   claimed_by: claude-sched-20260831T012809Z-iv-t104-slice73
   claimed_at: '2026-08-31T01:28:10Z'
