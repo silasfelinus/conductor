@@ -3698,8 +3698,8 @@ tasks:
 - id: t-085
   milestone: m6
   title: "comment-migration-contract's comment-contract check has been red on main since before 2026-08-30"
-  status: ready
-  owner:
+  status: claimed
+  owner: reviewer
   passes: 0
   stakes: reversible
   note: >
@@ -3727,5 +3727,8 @@ tasks:
     passes clean before closing. Until fixed, treat this job's failure as
     known/pre-existing on every PR (per docs/state-reconciliation.md's
     CI-red handling) rather than re-diagnosing it each time.
+  claimed_by: claude-scheduled-20260831T083000Z-kr-t085
+  claimed_at: '2026-08-31T08:29:45Z'
+  updated: '2026-08-31T08:29:45Z'
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination 
   surfaces grow into one dependable application.
