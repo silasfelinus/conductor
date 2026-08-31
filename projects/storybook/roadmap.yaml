@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: ready
+  status: claimed
   passes: 49
   stakes: reversible
   note: |-
@@ -191,7 +191,10 @@ tasks:
     Next lead for cycle 45: stores/helpers/narratorHelper.ts, imported wholesale at the top of narratorStore.ts (18+ named exports feeding nearly every bubble-text/lore/animation-routing computed in the store) has never had a dedicated full read -- this cycle only spot-checked normalizeEmotion and fallbackNarratorEmotions in it. A good target for a dedicated full read of the bubble-phrase selection, lore-matching, and animation-intent-parsing logic it backs.
 
     Cycle 45 audit followed cycle 44's explicit lead and read stores/helpers/narratorHelper.ts end to end plus the answerLore call site in narratorStore.ts. Found one concrete correctness bug: matchLoreTopic uses raw substring matching for every keyword, and the Purpose topic includes the keyword "why". That means unrelated narrator messages containing "why" anywhere, including ordinary story questions such as "why did the captain leave?", are intercepted by answerLore and replaced with the static Kind Robots mission answer instead of reaching the narrator/chat path. This is not hypothetical: answerLore calls matchLoreTopic directly before returning success. The safe repair is to make short generic lore triggers such as "why" require a whole-query/word-boundary intent shape (or remove that generic keyword) while preserving multiword lore phrases. No code PR was opened in this connector-only cycle because the GitHub contents writer replaces whole files and narratorHelper.ts is ~830 lines; the connector runbook explicitly forbids reconstructing a replacement from truncated reads. Re-armed with the exact root cause and repair shape rather than risking a truncated overwrite. Next capable local/full-file cycle should patch matchLoreTopic and add a narrow regression contract proving "why did the captain leave?" does not match Purpose while "why does Kind Robots exist?" or an explicit mission query still does.
-  updated: '2026-08-31T18:21:00Z'
+  updated: '2026-08-31T18:31:21Z'
+  owner: reviewer
+  claimed_by: claude-scheduled-20260831T1830Z-sb-t010-cycle46
+  claimed_at: '2026-08-31T18:31:21Z'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
