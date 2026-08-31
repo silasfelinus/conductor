@@ -9,7 +9,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import retry_dream_identity_collision_by_slug as slug_retry  # noqa: E402
 
 
-def test_slug_fallback_finds_old_title_and_refreshes_current_prose(monkeypatch):
+def test_slug_fallback_finds_old_title_and_designer_then_refreshes_prose(monkeypatch):
     calls = []
 
     def base(endpoint, identity):
@@ -27,7 +27,7 @@ def test_slug_fallback_finds_old_title_and_refreshes_current_prose(monkeypatch):
                         "title": "The Kelp-Ink Transfer",
                         "slug": "kelp-ink-transfer",
                         "dreamType": "PITCH",
-                        "designer": "dream-cycle",
+                        "designer": "legacy-daily-dream",
                         "description": "historical prose",
                     }
                 ]
@@ -77,7 +77,7 @@ def test_slug_fallback_never_adopts_protected_owner(monkeypatch):
                         "title": "The Silk Bargain",
                         "slug": "kelp-ink-transfer",
                         "dreamType": "PITCH",
-                        "designer": "dream-cycle",
+                        "designer": "anything",
                     }
                 ]
             },
@@ -100,32 +100,15 @@ def test_slug_fallback_rejects_ambiguous_rows(monkeypatch):
         return None
 
     rows = [
-        {
-            "id": 600,
-            "title": "Old A",
-            "slug": "kelp-ink-transfer",
-            "dreamType": "PITCH",
-            "designer": "dream-cycle",
-        },
-        {
-            "id": 601,
-            "title": "Old B",
-            "slug": "kelp-ink-transfer",
-            "dreamType": "PITCH",
-            "designer": "dream-cycle",
-        },
+        {"id": 600, "title": "Old A", "slug": "kelp-ink-transfer", "dreamType": "PITCH", "designer": "a"},
+        {"id": 601, "title": "Old B", "slug": "kelp-ink-transfer", "dreamType": "PITCH", "designer": "b"},
     ]
     monkeypatch.setattr(slug_retry.records, "http_json", lambda *args, **kwargs: (200, {"data": rows}))
     matcher = slug_retry.make_slug_recovery_matcher(base, set())
     with pytest.raises(RuntimeError, match="ambiguous"):
         matcher(
             "/api/dreams",
-            {
-                "title": "The Deep Shift",
-                "slug": "kelp-ink-transfer",
-                "dreamType": "PITCH",
-                "designer": "dream-cycle",
-            },
+            {"title": "The Deep Shift", "slug": "kelp-ink-transfer", "dreamType": "PITCH", "designer": "dream-cycle"},
         )
 
 

@@ -3,13 +3,13 @@
 
 Kind Robots enforces Dream.slug as globally unique, but the Dream browse endpoint's
 `search` parameter does not search slugs. Earlier recovery attempts therefore saw a
-409 for `kelp-ink-transfer` yet could not rediscover the older row when its title no
-longer matched `The Deep Shift`.
+409 for `kelp-ink-transfer` yet could not rediscover the older row when its title or
+historical designer metadata no longer matched the current proposal.
 
 This wrapper preserves every guard in retry_dream_identity_collision.py. It only adds
 one last PITCH-only fallback: page through the visible PITCH index, find exactly one
-unprotected row whose slug and designer match the canonical identity, refresh only
-its current user-facing prose, and hand that row back to the strict builder.
+unprotected row whose globally unique slug matches the canonical identity, refresh
+only its current user-facing prose, and hand that row back to the strict builder.
 """
 from __future__ import annotations
 
@@ -41,7 +41,7 @@ def _rows(response: Any) -> list[dict[str, Any]]:
     return [row for row in data if isinstance(row, dict)] if isinstance(data, list) else []
 
 
-def _slug_candidates(slug: str, designer: str, protected: set[tuple[str, int]]) -> list[dict[str, Any]]:
+def _slug_candidates(slug: str, protected: set[tuple[str, int]]) -> list[dict[str, Any]]:
     found: list[dict[str, Any]] = []
     skip = 0
     page_size = 200
@@ -64,7 +64,6 @@ def _slug_candidates(slug: str, designer: str, protected: set[tuple[str, int]]) 
             for row in page
             if str(row.get("slug") or "") == slug
             and str(row.get("dreamType") or "").upper() == "PITCH"
-            and str(row.get("designer") or "") == designer
             and isinstance(row.get("id"), int)
             and ("/api/dreams", int(row["id"])) not in protected
         )
@@ -85,12 +84,11 @@ def make_slug_recovery_matcher(base_matcher, protected: set[tuple[str, int]]):
         if endpoint != "/api/dreams" or str(identity.get("dreamType") or "").upper() != "PITCH":
             return None
         slug = str(identity.get("slug") or "").strip()
-        designer = str(identity.get("designer") or "").strip()
         title = str(identity.get("title") or "").strip()
-        if not slug or not designer or not title:
+        if not slug or not title:
             return None
 
-        candidates = _slug_candidates(slug, designer, protected)
+        candidates = _slug_candidates(slug, protected)
         if len(candidates) != 1:
             if len(candidates) > 1:
                 raise RuntimeError(f"ambiguous unprotected PITCH slug recovery for {slug!r}: {len(candidates)} rows")
