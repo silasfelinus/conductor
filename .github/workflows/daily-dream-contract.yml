@@ -32,6 +32,9 @@ on:
       - "scripts/consume_art_requests_to_media.py"
       - "scripts/enrich_daily_dream_digest.py"
       - "scripts/rebuild_dream_identity_collision.py"
+      - "scripts/retry_dream_identity_collision.py"
+      - "scripts/retry_dream_identity_collision_by_slug.py"
+      - "scripts/retry_dream_identity_collision_new_slug.py"
       - "scripts/remaster_dream_catalog.py"
       - "scripts/submit_daily_dream_art.py"
       - "scripts/validate_digest.py"
@@ -54,6 +57,9 @@ on:
       - "tests/test_dream_record_identity.py"
       - "tests/test_enrich_daily_dream_digest.py"
       - "tests/test_rebuild_dream_identity_collision.py"
+      - "tests/test_retry_dream_identity_collision.py"
+      - "tests/test_retry_dream_identity_collision_by_slug.py"
+      - "tests/test_retry_dream_identity_collision_new_slug.py"
       - "tests/test_submit_daily_dream_art.py"
   workflow_dispatch:
 
@@ -91,6 +97,9 @@ jobs:
             scripts/dream_creative_ruts.py \
             scripts/dream_prose_quality.py \
             scripts/rebuild_dream_identity_collision.py \
+            scripts/retry_dream_identity_collision.py \
+            scripts/retry_dream_identity_collision_by_slug.py \
+            scripts/retry_dream_identity_collision_new_slug.py \
             scripts/remaster_dream_catalog.py \
             scripts/consume_art_requests_to_media.py \
             scripts/enrich_daily_dream_digest.py \
@@ -139,4 +148,7 @@ jobs:
             tests/test_dream_record_identity.py \
             tests/test_enrich_daily_dream_digest.py \
             tests/test_rebuild_dream_identity_collision.py \
+            tests/test_retry_dream_identity_collision.py \
+            tests/test_retry_dream_identity_collision_by_slug.py \
+            tests/test_retry_dream_identity_collision_new_slug.py \
             tests/test_submit_daily_dream_art.py
