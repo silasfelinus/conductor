@@ -9,7 +9,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import retry_dream_identity_collision_by_slug as slug_retry  # noqa: E402
 
 
-def test_slug_fallback_finds_old_title_and_designer_then_refreshes_prose(monkeypatch):
+def test_slug_fallback_converts_old_non_pitch_owner(monkeypatch):
     calls = []
 
     def base(endpoint, identity):
@@ -18,7 +18,7 @@ def test_slug_fallback_finds_old_title_and_designer_then_refreshes_prose(monkeyp
     def http_json(method, url, body=None, timeout=60):
         calls.append((method, url, body))
         if method == "GET":
-            assert "dreamType=PITCH" in url
+            assert "dreamType=" not in url
             assert "search=" not in url
             return 200, {
                 "data": [
@@ -26,7 +26,7 @@ def test_slug_fallback_finds_old_title_and_designer_then_refreshes_prose(monkeyp
                         "id": 555,
                         "title": "The Kelp-Ink Transfer",
                         "slug": "kelp-ink-transfer",
-                        "dreamType": "PITCH",
+                        "dreamType": "LOCATION",
                         "designer": "legacy-daily-dream",
                         "description": "historical prose",
                     }
@@ -36,9 +36,9 @@ def test_slug_fallback_finds_old_title_and_designer_then_refreshes_prose(monkeyp
         assert url.endswith("/api/dreams/555")
         assert body == {
             "title": "The Deep Shift",
+            "dreamType": "PITCH",
+            "designer": "dream-cycle",
             "description": "current prose",
-            "flavorText": "current vibe",
-            "artPrompt": "current prompt",
         }
         return 200, {"success": True}
 
@@ -52,12 +52,11 @@ def test_slug_fallback_finds_old_title_and_designer_then_refreshes_prose(monkeyp
             "dreamType": "PITCH",
             "designer": "dream-cycle",
             "description": "current prose",
-            "flavorText": "current vibe",
-            "artPrompt": "current prompt",
         },
     )
     assert row["id"] == 555
     assert row["title"] == "The Deep Shift"
+    assert row["dreamType"] == "PITCH"
     assert [call[0] for call in calls] == ["GET", "PATCH"]
 
 
@@ -76,8 +75,7 @@ def test_slug_fallback_never_adopts_protected_owner(monkeypatch):
                         "id": 5670,
                         "title": "The Silk Bargain",
                         "slug": "kelp-ink-transfer",
-                        "dreamType": "PITCH",
-                        "designer": "anything",
+                        "dreamType": "LOCATION",
                     }
                 ]
             },
@@ -86,12 +84,7 @@ def test_slug_fallback_never_adopts_protected_owner(monkeypatch):
     matcher = slug_retry.make_slug_recovery_matcher(base, {("/api/dreams", 5670)})
     assert matcher(
         "/api/dreams",
-        {
-            "title": "The Deep Shift",
-            "slug": "kelp-ink-transfer",
-            "dreamType": "PITCH",
-            "designer": "dream-cycle",
-        },
+        {"title": "The Deep Shift", "slug": "kelp-ink-transfer", "dreamType": "PITCH", "designer": "dream-cycle"},
     ) is None
 
 
@@ -100,8 +93,8 @@ def test_slug_fallback_rejects_ambiguous_rows(monkeypatch):
         return None
 
     rows = [
-        {"id": 600, "title": "Old A", "slug": "kelp-ink-transfer", "dreamType": "PITCH", "designer": "a"},
-        {"id": 601, "title": "Old B", "slug": "kelp-ink-transfer", "dreamType": "PITCH", "designer": "b"},
+        {"id": 600, "title": "Old A", "slug": "kelp-ink-transfer", "dreamType": "LOCATION"},
+        {"id": 601, "title": "Old B", "slug": "kelp-ink-transfer", "dreamType": "PITCH"},
     ]
     monkeypatch.setattr(slug_retry.records, "http_json", lambda *args, **kwargs: (200, {"data": rows}))
     matcher = slug_retry.make_slug_recovery_matcher(base, set())
@@ -112,7 +105,7 @@ def test_slug_fallback_rejects_ambiguous_rows(monkeypatch):
         )
 
 
-def test_slug_fallback_does_not_relax_non_pitch_models(monkeypatch):
+def test_slug_fallback_does_not_relax_non_pitch_create_conflicts(monkeypatch):
     def base(endpoint, identity):
         return None
 
