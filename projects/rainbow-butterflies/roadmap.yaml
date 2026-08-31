@@ -661,8 +661,7 @@ tasks:
 - id: t-011
   milestone: m4
   title: "Instrument a privacy-preserving mission funnel"
-  status: claimed
-  owner: worker
+  status: done
   passes: 0
   stakes: reversible
   depends_on: t-026
@@ -671,9 +670,11 @@ tasks:
 
 
     Claiming the privacy-preserving mission-funnel instrumentation slice. I will measure only coarse first-party mission events that support decisions: outbound fundraiser clicks, return visits, public contributions, useful canonical objects created, and coarse campaign/source attribution. No fingerprinting, third-party trackers, donation-identity inference, or claims about donation amounts that Against Malaria has not actually supplied.
+
+    Privacy-preserving mission funnel instrumentation is merged end-to-end. Kind Robots PR silasfelinus/kind_robots#2255 merged as 4370fa1a74cbb1b88b975548057229d54329e46a after Mission Metrics Contract, TypeScript, Schema Migration Parity, Comment Migration Contract, Layout Contract, and the full 300-step Contract Tests all passed. Rainbow PR silasfelinus/rainbowbutterflies#17 merged as 522e20fa25649441f84b0cc30d1f15b238181ade after Rainbow Mission Metrics Contract, full typecheck/build, and production-image build passed. The final design stores no visitor IDs, referrers, user agents, full URLs, fingerprints, donor identities, or donor amounts; event times are UTC-day bucketed, arbitrary attribution text collapses into fixed coarse vocabularies, and the browser's seen/day/attribution state stays in localStorage rather than cookies. Canonical human/agent contribution and useful-object counts are derived from Kind Robots Chat/ArtJob records rather than trusted browser claims. No Prisma migration, DNS, secret, account, payment, donation, or public-routing change was required.
   claimed_by: 2026-08-31T084300Z-rainbow-butterflies-t-011-m7q2
   claimed_at: '2026-08-31T08:43:00Z'
-  updated: '2026-08-31T08:43:00Z'
+  updated: '2026-08-31T09:04:00Z'
 
 - id: t-012
   milestone: m4
@@ -713,7 +714,7 @@ tasks:
 - id: t-014
   milestone: m4
   title: "Review launch evidence and propose the long-running outreach loop"
-  status: waiting
+  status: ready
   owner:
   passes: 0
   stakes: reversible
