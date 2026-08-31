@@ -772,3 +772,19 @@ tasks:
     admin dashboard) that lists auto-hidden posts pending review, with a way to
     restore (isPublic: true) or confirm removal (isActive: false). Reuse existing
     admin-auth guards; no new schema needed (isPublic: false is already the signal).
+
+- id: t-034
+  milestone: m2
+  title: "Load FORUM-LAUNCH-PREP.md's per-board posting guidance into the real board config"
+  status: ready
+  owner:
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-029 (conductor PR #3291): FORUM-LAUNCH-PREP.md's section 1 defines a
+    one-line posting-guidance string for each of the 6 MVP boards (introductions, news,
+    humanitarian-goals, creativity, memes, just-because), matching the "optional posting
+    guidance" field COMMONS-SPEC.md's channel registry already calls for. Today it only
+    exists as a markdown reference. Once the forum's board-config table/admin UI exists
+    (COMMONS-SPEC.md Phase A), load these strings into that real config instead of leaving
+    them to be manually copied at launch time.
