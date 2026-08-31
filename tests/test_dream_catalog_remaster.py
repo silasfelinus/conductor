@@ -80,7 +80,7 @@ CLEAN_PROPOSAL = {
     "locations": [
         {
             "title": "Regrowth Yards",
-            "known_for": "The yards are known for hulls that regrow torn steel plates overnight.",
+            "known_for": "Hulls berthed here regrow their torn steel plates overnight, unaided.",
             "local_rule": "Never wake a hull while its living seams are still knitting shut.",
             "best_scene": "A scar in the hull hums, flushes pink, and closes over while the tide rises.",
             "art_direction": "A coral-pink dry-dock of wet iron ribs and glowing resin "
@@ -103,7 +103,7 @@ CLEAN_PROPOSAL = {
             "reward_type": "ITEM",
             "rarity": "RARE",
             "grants": "It loosens any fitting that has rusted shut.",
-            "best_used_when": "Use it when a hull seam refuses to open.",
+            "best_used_when": "A hull seam has rusted shut and refuses to open at all.",
             "catch": "The wrench rusts a little further every time it is used.",
             "look": "A forearm-length wrench of pitted brass and pink coral, its jaws "
             "worn mirror-bright, handle wrapped in salt-stiffened cord.",
@@ -113,7 +113,7 @@ CLEAN_PROPOSAL = {
             "reward_type": "SKILL",
             "rarity": "UNCOMMON",
             "grants": "It hears which machine in a flooded room is still alive.",
-            "best_used_when": "Use it when the water is too dark to see through.",
+            "best_used_when": "The water has gone too dark to see anything through.",
             "catch": "Living voices and engine noise become impossible to tell apart.",
             "look": "Pale green concentric ripples spreading outward through dark water "
             "from a single lifted palm, silt glittering in the wavefront.",

@@ -154,6 +154,14 @@ and complete, with no loose ends." is usable for `best_used_when`; "a story is
 too neat" is not, and neither is "Use it when a story is too neat" — the card
 already prints the label, so restating it reads as a stutter.
 
+The same stutter rule applies to `known_for`, `local_rule` and `best_scene`,
+which are shown as values under the labels "Known For", "Local Rule" and "Best
+Scene". Do not open them with "known for", "the local rule is", or "the best
+scene is", and do not open `known_for` by naming the location again — the card
+prints its name directly above. "Its prismatic chambers turn spoken testimony
+into color." is usable; "The Refracted Court is known for turning testimony
+into color." is not.
+
 They must explain enough to make sense when a card shows the field by itself.
 Keep the sharpness of a good tagline, but do not confuse brevity with
 incompleteness: the vibe line should communicate the world's governing mood,

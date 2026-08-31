@@ -116,11 +116,23 @@ def _facet_label(facet: dict[str, Any]) -> str:
 
 
 def _summary(*parts: Any) -> str:
-    """Join card-copy fields into one readable blurb, skipping blanks and repeats."""
+    """Join card-copy fields into one readable blurb, skipping blanks and repeats.
+
+    Each part is terminated if it is not already. The prose contract requires
+    terminal punctuation, but this composes whatever the catalog actually holds,
+    including bundles authored before that contract existed — and joining two
+    unpunctuated fragments with a space produced exactly the run-on card copy
+    Silas saw in the 2026-08-31 20:53 digest, in the three rows (character, item,
+    skill) whose fields had no quality floor at the time.
+    """
     seen: list[str] = []
     for part in parts:
         text = str(part or "").strip()
-        if text and text not in seen:
+        if not text:
+            continue
+        if not re.search(r"""[.!?]["'”’)\]]*$""", text):
+            text += "."
+        if text not in seen:  # terminate before comparing, so "x" and "x." dedupe
             seen.append(text)
     return " ".join(seen)
 

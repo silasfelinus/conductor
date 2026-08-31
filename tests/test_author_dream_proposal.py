@@ -63,7 +63,7 @@ def _valid_bundle(brief):
                 "reward_type": "ITEM",
                 "rarity": "RARE",
                 "grants": "It catches one bolt of lightning and redirects its momentum.",
-                "best_used_when": "Use it when a jump falls short or a predator closes from below.",
+                "best_used_when": "A jump falls short, or a predator closes in from somewhere below.",
                 "catch": "The sling grows hot enough to scorch whoever carries it next.",
                 "look": (
                     "A forearm-length copper sling with braided black cord, its cup holding a "
@@ -75,7 +75,7 @@ def _valid_bundle(brief):
                 "reward_type": "SKILL",
                 "rarity": "UNCOMMON",
                 "grants": "It turns any falling branch into one extra midair step.",
-                "best_used_when": "Use it when crossing a gap with nothing solid beneath it.",
+                "best_used_when": "A gap opens up with nothing solid anywhere beneath it.",
                 "catch": "The branch explodes into sparks the moment the step lands.",
                 "look": (
                     "A boot sole meeting a falling black branch in midair as the impact blooms "

@@ -125,3 +125,51 @@ def test_art_prompt_fields_stay_exempt_from_the_sentence_contract():
 
     assert not any("look" in problem for problem in problems)
     assert not any("art_direction" in problem for problem in problems)
+
+
+def test_label_echo_is_flagged_where_a_label_sits_beside_the_value():
+    # "Best scene: The best scene is ..." on a PitchSheet highlight.
+    proposal = _quality_sample()
+    proposal["locations"][0].update(
+        known_for="The Refracted Court is known for turning testimony into staining color.",
+        best_scene="The best scene is a disputed memory turning the whole courtroom black.",
+        local_rule="The local rule is simple: no witness may repeat a hue they changed.",
+    )
+    for reward in proposal["rewards"]:
+        reward["best_used_when"] = "Use it when a story arrives suspiciously clean and complete."
+
+    problems = prose.complaints(proposal)
+
+    assert any("locations[0].known_for restates its own label" in p for p in problems)
+    assert any("locations[0].best_scene restates its own label" in p for p in problems)
+    assert any("locations[0].local_rule restates its own label" in p for p in problems)
+    assert any("rewards[item].best_used_when restates its own label" in p for p in problems)
+
+
+def test_carries_is_not_treated_as_a_label_echo():
+    # Its only user-facing home is the unlabelled Character backstory, where
+    # "She carries a cracked spectrum lens" is exactly the right sentence.
+    proposal = _quality_sample()
+    proposal["characters"][0]["carries"] = (
+        "She carries a cracked spectrum lens that still holds her deleted testimony."
+    )
+
+    assert not any("carries restates" in p for p in prose.complaints(proposal))
+
+
+def test_grants_may_open_with_ordinary_english():
+    proposal = _quality_sample()
+    for reward in proposal["rewards"]:
+        reward["grants"] = "It grants the bearer one honest answer per hearing."
+
+    assert not any("grants restates" in p for p in prose.complaints(proposal))
+
+
+def test_label_words_later_in_a_sentence_are_not_an_echo():
+    proposal = _quality_sample()
+    proposal["locations"][0]["best_scene"] = (
+        "A disputed childhood memory turns the courtroom black, which is the best scene "
+        "the building has staged in a decade."
+    )
+
+    assert not any("best_scene restates" in p for p in prose.complaints(proposal))

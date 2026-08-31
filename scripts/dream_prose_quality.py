@@ -43,6 +43,48 @@ def _check(label: str, value: Any, minimum_words: int) -> list[str]:
     return problems
 
 
+# Phrases that mean a field is restating a label printed right next to it,
+# producing "Best scene: The best scene is ...". Keyed by the field's bare name
+# and checked only against the opening of the value, so a later legitimate use of
+# the same words is not flagged.
+#
+# Only fields that actually appear beside a label are listed. `known_for`,
+# `local_rule` and `best_scene` are PitchSheet highlight values under "Known For"
+# / "Local Rule" / "Best Scene"; `best_used_when` and `catch` follow explicit
+# stems in the proposal markdown. Deliberately absent: `grants` ("It grants ..."
+# is ordinary English, not an echo) and `carries`, whose only user-facing home is
+# the unlabelled Character backstory, where "She carries a coil of rope" is
+# exactly right — the redundancy there was the markdown template's "Carries:"
+# label, which was removed rather than rewriting 28 bundles of good prose.
+LABEL_ECHOES = {
+    "known_for": ("known for",),
+    "local_rule": ("local rule", "the rule here is", "the rule is"),
+    "best_scene": ("best scene",),
+    "complication": ("the complication is",),
+    "best_used_when": ("best used when", "use it when", "used when"),
+    "catch": ("the catch is",),
+}
+ECHO_WINDOW_WORDS = 8
+
+
+def _label_echo(label: str, value: Any) -> list[str]:
+    """Flag copy whose opening restates its own field label."""
+    if not isinstance(value, str) or not value.strip():
+        return []
+    field = label.rsplit(".", 1)[-1]
+    phrases = LABEL_ECHOES.get(field)
+    if not phrases:
+        return []
+    opening = " ".join(re.findall(r"[\w’'-]+", value.casefold())[:ECHO_WINDOW_WORDS])
+    for phrase in phrases:
+        if phrase in opening:
+            return [
+                f"{label} restates its own label ({phrase!r}); the card already prints "
+                "it, so write the value as a sentence that stands without the label"
+            ]
+    return []
+
+
 def _first_mapping(value: Any) -> dict:
     if not isinstance(value, list):
         return {}
@@ -94,4 +136,5 @@ def complaints(proposal: Any) -> list[str]:
     problems: list[str] = []
     for label, value, minimum_words in checks:
         problems.extend(_check(label, value, minimum_words))
+        problems.extend(_label_echo(label, value))
     return problems
