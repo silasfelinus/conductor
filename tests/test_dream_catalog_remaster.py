@@ -69,8 +69,8 @@ def seed_facets(day: str) -> dict:
 CLEAN_PROPOSAL = {
     "title": "Salt Memory",
     "slug": "salt-memory",
-    "idea": "A bioluminescent engineer wades through a flooded gearworks temple where "
-    "every drowned machine still hums the god that built it.",
+    "idea": "A bioluminescent engineer wades through a flooded gearworks temple, hunting "
+    "the one engine that still answers to a voice she recognises.",
     "vibe": {
         "title": "Salt Memory",
         "line": "Every drowned machine remembers the god that built it.",

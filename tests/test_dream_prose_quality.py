@@ -143,7 +143,9 @@ def test_label_echo_is_flagged_where_a_label_sits_beside_the_value():
     assert any("locations[0].known_for restates its own label" in p for p in problems)
     assert any("locations[0].best_scene restates its own label" in p for p in problems)
     assert any("locations[0].local_rule restates its own label" in p for p in problems)
-    assert any("rewards[item].best_used_when restates its own label" in p for p in problems)
+    # "Use it when ..." now reports under the more precise construction message.
+    assert any("rewards[item].best_used_when is written as an instruction" in p
+               for p in problems)
 
 
 def test_carries_is_not_treated_as_a_label_echo():
@@ -173,3 +175,80 @@ def test_label_words_later_in_a_sentence_are_not_an_echo():
     )
 
     assert not any("best_scene restates" in p for p in prose.complaints(proposal))
+
+
+def test_best_used_when_rejects_any_verb_it_when_opening():
+    # The phrase list only knew "use it when". The catalog was full of the same
+    # construction under different verbs, which sailed straight past it.
+    proposal = _quality_sample()
+    for opening in ("Reach for it when", "Call on it when", "Rely on it when",
+                    "Turn to it once", "Use it when"):
+        for reward in proposal["rewards"]:
+            reward["best_used_when"] = f"{opening} the courtroom has already gone dark."
+        problems = prose.complaints(proposal)
+        assert any("is written as an instruction to the reader" in p for p in problems), opening
+
+
+def test_best_used_when_accepts_a_plain_situation():
+    proposal = _quality_sample()
+    for reward in proposal["rewards"]:
+        reward["best_used_when"] = "A story arrives suspiciously clean, with no loose ends at all."
+
+    assert not any("best_used_when" in p for p in prose.complaints(proposal))
+
+
+def test_a_reward_whose_grants_opens_with_it_is_not_flagged():
+    # "It gives ..." must not trip the "<verb> it when" construction check.
+    proposal = _quality_sample()
+    for reward in proposal["rewards"]:
+        reward["grants"] = "It gives a spent voice one more full verse."
+
+    assert not any("instruction to the reader" in p for p in prose.complaints(proposal))
+
+
+def test_grants_padding_is_flagged():
+    proposal = _quality_sample()
+    for reward in proposal["rewards"]:
+        reward["grants"] = "It grants the ability to infer what a blank card once said."
+
+    problems = prose.complaints(proposal)
+
+    assert any("pads the verb that matters" in p for p in problems)
+
+
+def test_idea_restating_the_vibe_line_is_flagged():
+    # The digest prints these two back to back in the vibe row.
+    proposal = _quality_sample()
+    proposal["vibe"]["line"] = "The whole town's work is keeping one enormous thing asleep."
+    proposal["idea"] = (
+        "A coastal town's whole economy is keeping one enormous sleeping thing asleep, "
+        "and the crop-duster pilot who flies between its ribs has been told to wake it."
+    )
+
+    problems = prose.complaints(proposal)
+
+    assert any("idea opens by restating vibe.line" in p for p in problems)
+
+
+def test_an_idea_that_complements_the_line_is_not_flagged():
+    proposal = _quality_sample()
+    proposal["vibe"]["line"] = (
+        "Every flower here is armed, and so is every heart that lingers too long."
+    )
+    proposal["idea"] = (
+        "In a brimstone-vented greenhouse where bred orchid mantises guard a black market "
+        "of grafted cacti, a duelist-wrangler falls for someone she keeps testing."
+    )
+
+    assert not any("restating vibe.line" in p for p in prose.complaints(proposal))
+
+
+def test_a_line_echoed_late_in_a_long_idea_is_not_flagged():
+    proposal = _quality_sample()
+    proposal["vibe"]["line"] = "Every answer changes the room that asked it."
+    proposal["idea"] = (
+        "A courthouse refracts testimony into living color across its prismatic chambers, "
+        "and witnesses learn the hard way that every answer changes the room that asked it."
+    )
+
+    assert not any("restating vibe.line" in p for p in prose.complaints(proposal))

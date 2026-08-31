@@ -61,10 +61,43 @@ LABEL_ECHOES = {
     "local_rule": ("local rule", "the rule here is", "the rule is"),
     "best_scene": ("best scene",),
     "complication": ("the complication is",),
-    "best_used_when": ("best used when", "use it when", "used when"),
+    "best_used_when": ("best used when", "used when"),
     "catch": ("the catch is",),
 }
 ECHO_WINDOW_WORDS = 8
+
+# `best_used_when` names a SITUATION; the card prints "Best used when:" in front
+# of it. Any "<verb> it when ..." opening therefore stutters, not just the
+# literal "use it when" this list originally spelled out -- the catalog was full
+# of "Reach for it when", "Call on it when" and "Rely on it when", which the
+# phrase list sailed past. Matching the construction instead of the phrasing is
+# the difference between fixing an instance and fixing the class.
+ECHO_PATTERNS = {
+    "best_used_when": re.compile(
+        r"^(?!it\b)\w+(?:\s+(?:on|for|to|upon))?\s+it\s+(?:when|once|if|the moment)\b",
+        re.IGNORECASE,
+    ),
+}
+
+# "It grants the ability to infer ..." is three words of scaffolding in front of
+# the verb that matters. "It infers ..." says the same thing and reads better.
+PADDING_PATTERN = re.compile(
+    r"\b(?:grants|gives|confers|provides|bestows)\s+(?:the\s+|an?\s+)?"
+    r"(?:ability|power|capacity|means|option)\s+to\b",
+    re.IGNORECASE,
+)
+
+# The digest renders vibe.line and idea back to back in the vibe row, so an idea
+# that opens by restating the line reads as immediate self-repetition:
+# "The whole town's work is keeping one enormous thing asleep. A coastal town's
+# whole economy is keeping one enormous sleeping thing asleep, and ..."
+# Measured over the idea's opening only; a later callback is fine. Observed
+# separation is wide -- offending bundles score 0.60-0.86, sound ones 0.00-0.12.
+VIBE_ECHO_THRESHOLD = 0.5
+
+
+def _significant_words(value: str) -> set[str]:
+    return set(re.findall(r"[a-z]{4,}", value.lower()))
 
 
 def _label_echo(label: str, value: Any) -> list[str]:
@@ -72,17 +105,50 @@ def _label_echo(label: str, value: Any) -> list[str]:
     if not isinstance(value, str) or not value.strip():
         return []
     field = label.rsplit(".", 1)[-1]
-    phrases = LABEL_ECHOES.get(field)
-    if not phrases:
-        return []
+    pattern = ECHO_PATTERNS.get(field)
+    if pattern is not None and pattern.match(value.strip()):
+        return [
+            f"{label} is written as an instruction to the reader rather than the "
+            "situation the label names; drop the '<verb> it when' opening and state "
+            "the circumstance on its own"
+        ]
     opening = " ".join(re.findall(r"[\w’'-]+", value.casefold())[:ECHO_WINDOW_WORDS])
-    for phrase in phrases:
+    for phrase in LABEL_ECHOES.get(field, ()):
         if phrase in opening:
             return [
                 f"{label} restates its own label ({phrase!r}); the card already prints "
                 "it, so write the value as a sentence that stands without the label"
             ]
     return []
+
+
+def _padding(label: str, value: Any) -> list[str]:
+    if isinstance(value, str) and PADDING_PATTERN.search(value):
+        return [
+            f"{label} pads the verb that matters behind 'grants the ability to'; "
+            "say what it does directly"
+        ]
+    return []
+
+
+def _vibe_echo(proposal: dict) -> list[str]:
+    """Flag an idea whose opening restates the vibe line it is rendered beside."""
+    line = str((proposal.get("vibe") or {}).get("line") or "").strip()
+    idea = str(proposal.get("idea") or "").strip()
+    if not line or not idea:
+        return []
+    line_words = _significant_words(line)
+    if not line_words:
+        return []
+    opening = " ".join(idea.split()[: len(line.split()) + 4])
+    shared = line_words & _significant_words(opening)
+    if len(shared) / len(line_words) < VIBE_ECHO_THRESHOLD:
+        return []
+    return [
+        "idea opens by restating vibe.line, which the digest prints immediately "
+        f"above it ({', '.join(sorted(shared)[:5])}); let the idea carry the concrete "
+        "premise the line only gestures at"
+    ]
 
 
 def _first_mapping(value: Any) -> dict:
@@ -137,4 +203,7 @@ def complaints(proposal: Any) -> list[str]:
     for label, value, minimum_words in checks:
         problems.extend(_check(label, value, minimum_words))
         problems.extend(_label_echo(label, value))
+        if label.endswith(".grants"):
+            problems.extend(_padding(label, value))
+    problems.extend(_vibe_echo(proposal))
     return problems
