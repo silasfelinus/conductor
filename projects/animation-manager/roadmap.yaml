@@ -228,12 +228,42 @@ tasks:
       Cycle (conductor scheduled Agent run, 2026-08-29T02:27Z session, claude-scheduled-20260829T0227Z-am-t007): re-checked before doing any work (per convention) -- interface-vision/t-104's slice 57 and mermaids-of-venice/t-013's daily check had already run earlier this same hour with no new evidence (kind_robots main advanced by one commit since t-104's last check, d93fe3a home-page pass; grepped its changed files against both t-104 mechanical pools, zero new candidates). Every other active project's ready task was either genuinely blocked pending Silas (coat-dance/t-010 on t-003's source video) or deeply exhausted with an explicit no-new-lens note (model-builder/t-029 at 65+ cycles, media-watchlist/t-006 waiting on its own t-017 retire-or-v2 decision). Fell through to this continuous-lifecycle task per AGENTS.md's fallback rule, last run 2026-08-26 (marble-run-contraption).
 
       Built the next highest-priority unbuilt pitch (strandbeest-migration, priority 15, the top of the pitched queue) rather than a polish pass, since all six already-candidate pitches (koi-memory-pond, impossible-terrarium, ink-oracle, celestial-mobile, tiny-weather-front, ant-farm-excavation) are awaiting Reaction-evidence promotion, not further build work, and this sandbox has no live DB to read Reaction data anyway (SPEC.md's standing sandbox-access-gap). Implemented the real Jansen eight-bar leg linkage (the twelve holy-number link lengths + 15-unit crank radius) via circle-circle intersection with continuity-based branch selection, precomputed once into a 180-step lookup table per the pitch's own performance-risk note. Three legs per walker at 120-degree crank-phase offsets, herd of 5 (2 reduced-motion) with click-spawn capped at 9, ambient wind + pointer-gust speed modulation, and off-screen-buffer wraparound so re-entry never pops. kind_robots PR #2190 opened from worker/animation-manager-t007. Verified: eslint clean, prettier clean (confirmed pre-existing unrelated drift elsewhere in animationCatalog.ts via git stash, left untouched per the davinci/t-025 lesson), full-project vue-tsc --noEmit exit 0, test:animation-catalog and test:animation-component-attempts both pass, test:layout-contract holds with no new violations, check_animation_novelty.py --strict reports no collision. Manual browser smoke matrix deferred per the standing sandbox-access-gap tag, same as every prior build in this project. PITCHES.yaml's strandbeest-migration promoted pitched -> candidate with its build entry (same conductor session, committed alongside this roadmap update). Flagged as a kaizen candidate on the PR: SPEC.md's 'Attempt records' section still describes the retired Component-table ledger in the present tense even though verifyAnimationComponentAttempts.ts actively guards against its return -- worth a doc-accuracy fix in a future cycle. Merging PR #2190 once CI is green; re-armed to ready per this task's recurring-task convention.
-    status: claimed
-    updated: '2026-08-31T20:30:14Z'
+
+      Cycle (conductor scheduled Agent run, session claude-
+      scheduled-20260831T203013Z-am-t007): built the next highest-priority unbuilt pitch
+      (shadow-puppet-theater, priority 16, top of the pitched queue) since all six candidate-
+      tier pitches (koi-memory-pond, impossible-terrarium, ink-oracle, celestial-mobile, tiny-
+      weather-front, ant-farm-excavation) and strandbeest-migration remain awaiting Reaction-
+      evidence promotion, not further build work, and this sandbox still has no live DB to
+      read Reaction data (SPEC.md's standing sandbox-access-gap). Delegated implementation to
+      a worktree-isolated subagent per hard safety rules 11/12. Built
+      components/screenfx/shadow-puppet-theater.vue: cached Path2D silhouette cutouts
+      (bird/boat/lantern-bearer puppets) with per-joint save/translate/rotate/restore
+      transforms, a drifting radial backlight rendered via a blurred-penumbra-plus-crisp-
+      silhouette technique so cast-shadow angle/softness changes without ever flattening or
+      washing out the puppet, three rotating vignettes (13s each, under the pitch's 20s
+      acceptance bound), reduced-motion single-puppet/fixed-backlight fallback, and a non-
+      blocking pointer hand-shadow + click-to-advance interaction. Verified: eslint clean,
+      prettier clean on the new file (pre-existing animationCatalog.ts drift confirmed via git
+      stash, left untouched), full-project vue-tsc --noEmit exit 0, test:animation-
+      catalog/test:animation-component-attempts pass, test:layout-contract holds at the
+      207-violation baseline with zero new, check_animation_novelty.py --strict reports no
+      collision. kind_robots PR #2274 merged squash 8eea226, all 37 checks green.
+      PITCHES.yaml's shadow-puppet-theater promoted pitched -> candidate with its build entry
+      (conductor PR #3340, merged squash f8101e7) -- the subagent's first attempt at this edit
+      truncated the file via create_or_update_file (silently dropped the last three pitches
+      from partial context), caught via a post-push fetch-and-diff verification, corrected
+      with two follow-up pushes, and confirmed via a final byte-for-byte diff against main
+      plus only the intended two-line edit; independently re-verified in this session (all 27
+      pitches present, zoetrope-lantern-drum/soap-film-membrane/kaleidoscope-bloom all
+      intact). Both repos end clean, zero open PRs, zero dangling branches. Re-armed to ready
+      per this task's recurring-task convention.
+    status: ready
+    updated: '2026-08-31T21:05:42Z'
     claimed_by: claude-scheduled-20260831T203013Z-am-t007
     claimed_at: '2026-08-31T20:30:14Z'
     owner: worker
-    implementation_pr: 'silasfelinus/kind_robots#2190'
+    implementation_pr: 'silasfelinus/kind_robots#2274'
 
   - id: t-008
     milestone: m3
