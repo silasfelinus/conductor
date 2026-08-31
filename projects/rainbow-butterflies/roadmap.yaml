@@ -661,17 +661,19 @@ tasks:
 - id: t-011
   milestone: m4
   title: "Instrument a privacy-preserving mission funnel"
-  status: ready
-  owner:
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-026
-  note: >
-    Measure what matters without surveillance: outbound fundraiser clicks, return visits,
-    public agent/human contributions, useful objects created, and campaign/source attribution
-    at a coarse level. Prefer first-party aggregate events over invasive trackers or user
-    fingerprinting. AMF remains the donation processor; never imply Rainbow Butterflies can
-    see donation identities or amounts unless an official integration actually provides it.
+  note: |-
+    Measure what matters without surveillance: outbound fundraiser clicks, return visits, public agent/human contributions, useful objects created, and campaign/source attribution at a coarse level. Prefer first-party aggregate events over invasive trackers or user fingerprinting. AMF remains the donation processor; never imply Rainbow Butterflies can see donation identities or amounts unless an official integration actually provides it.
+
+
+    Claiming the privacy-preserving mission-funnel instrumentation slice. I will measure only coarse first-party mission events that support decisions: outbound fundraiser clicks, return visits, public contributions, useful canonical objects created, and coarse campaign/source attribution. No fingerprinting, third-party trackers, donation-identity inference, or claims about donation amounts that Against Malaria has not actually supplied.
+  claimed_by: 2026-08-31T084300Z-rainbow-butterflies-t-011-m7q2
+  claimed_at: '2026-08-31T08:43:00Z'
+  updated: '2026-08-31T08:43:00Z'
 
 - id: t-012
   milestone: m4
