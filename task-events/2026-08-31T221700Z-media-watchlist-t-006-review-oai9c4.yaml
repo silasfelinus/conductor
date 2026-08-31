@@ -1,9 +1,0 @@
-version: 1
-project: media-watchlist
-task: t-006
-operation: review
-owner: worker
-session: openai-scheduled-20260831T221430Z-media-watchlist-t006-oai9c4
-updated: '2026-08-31T22:17:00Z'
-note: >-
-  Media Watchlist polish pass: made the related-entry query deterministic by adding id descending as the final tie-breaker after year/month/day. This prevents unstable ordering and page-to-page jitter when multiple same-title entries share the same or unknown consumption date.
