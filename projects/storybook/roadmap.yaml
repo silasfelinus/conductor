@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 49
   stakes: reversible
   note: >-
@@ -207,11 +207,36 @@ tasks:
     baseline, zero new). kind_robots PR #2271 merged squash d8107835, all required checks
     green (only the non-required Build production image job still in flight at merge time,
     matching established precedent). Re-arming to ready for the next cycle.
-  updated: '2026-08-31T22:28:37Z'
+
+    Cycle 48 (real fix): full end-to-end read of components/navigation/workspace-
+    narrator.vue (1,418 lines). Found and fixed a real bug: seededMessages (Dream-scoped
+    topic cards pushed by selectTopic()/selectStarter()) had no reset on Dream switch,
+    unlike narratorStore's own activeDream watcher. Reachable via dream-relationship-
+    gallery.vue's in-place selectDreamById() while dream-interact.vue's
+    v-if="dreamStore.selectedDream" keeps the dock mounted across the swap -- so opening a
+    connected Dream left the previous Dream's topic cards (with follow-up buttons still
+    resolving through findStarter()) at the top of the new Dream's thread. Fix: added a
+    watch(() => activeDream.value?.id, ...) clearing seededMessages, mirroring
+    clearNarratorThread()'s existing pairing. Added
+    utils/scripts/verifyNarratorDreamSwitchSeedResetGuard.mjs (verified it fails on main,
+    passes with fix), wired as npm run test:narrator-dream-switch-seed-reset-guard, folded
+    into test:storybook and added to contract-tests.yml next to the cycle 45/46 narrator
+    guard. Verified: eslint clean (no new violations), vue-tsc --noEmit repo-wide clean, all
+    24 test:storybook guards pass, test:lint-ratchet holds, test:layout-contract holds (207
+    baseline, zero new). kind_robots PR #2276 merged squash 8cd0443, all 40 checks green.
+    Ruled out three other hypotheses with reasoning (mid-flip FlipCard commit loss on H2,
+    double-flip-per-emotion-change on H3, dead-code branch on H4) plus one out-of-scope lead
+    (kr:card-back-change event has zero listeners, H5). Re-arming to ready. Cycle 49 lead:
+    components/narrative/kr-narrator-stage.vue (189 lines, the other useNarratorStore
+    consumer -- worth checking whether workspace-narrator's onBeforeUnmount
+    teardownLiveness()/disposeTimers() on the singleton store affects a concurrently-mounted
+    stage) or stores/storybookStore.ts (950 lines, never confirmed fully read despite 20+
+    guards touching it).
+  updated: '2026-08-31T22:51:59Z'
   owner: reviewer
   claimed_by: claude-scheduled-20260831T222837Z-sb-t010-cycle48
   claimed_at: '2026-08-31T22:28:37Z'
-  implementation_pr: 'silasfelinus/kind_robots#2271'
+  implementation_pr: 'silasfelinus/kind_robots#2276'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
