@@ -3753,7 +3753,7 @@ tasks:
 - id: t-086
   milestone: m6
   title: "Re-author fresh population comments for the 42 targets t-085 dropped"
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -3776,8 +3776,26 @@ tasks:
     4-120 words, no reviewer/museum language, etc.). Run
     `npx tsx utils/scripts/verifyPopulationDraftQuality.ts` locally before
     opening the PR -- don't rely on CI to discover a fresh violation.
+
+    Implementation merged as silasfelinus/kind_robots#2259 (squash
+    a241422bf01510f5bc1e26690be45e2edbb3972e) from head
+    f2a492796d9fa75770a5e732cf7a742c46ee45b1. Re-authored 30 of the 42 pruned population-
+    comment-drafts targets after checking every id against live /api/bots, /api/characters,
+    /api/dreams, and /api/scenarios: BOT:306 and BOT:957 (original visitor was stale, not
+    the bot itself), 12 of 20 CHARACTER targets (9 with a reused id now naming a different
+    live character -- self-replies written in that character's current voice; 3 unchanged),
+    all 7 DREAM targets (still public/active, cast the matching dream-cycle character), and
+    9 of 13 SCENARIO targets (still public/active, cast the character named in the
+    scenario's own description). Skipped 12 with no valid path:
+    CHARACTER:983/984/1025/1026/1068/1069/2824/2825 confirmed deleted from production under
+    any name/id; SCENARIO:878/935/1003/1865 still resolve but are
+    isPublic:false/isActive:false, failing the population pass's own eligibility filter
+    regardless of casting. verifyPopulationDraftQuality.ts passed clean first try (772
+    comments across 21 batch files, 484 targets). All 38 kind_robots CI checks green
+    including comment-contract and the ~5min Contract verifiers run.
   claimed_by: claude-bg-20260831T000000Z-kr-t086
   claimed_at: '2026-08-31T11:33:41Z'
-  updated: '2026-08-31T11:33:41Z'
+  updated: '2026-08-31T11:50:44Z'
+  implementation_pr: 'silasfelinus/kind_robots#2259'
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
