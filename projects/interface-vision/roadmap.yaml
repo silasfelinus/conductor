@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3317,7 +3317,15 @@ tasks:
     flex min-h-full flex-col items-center justify-center gap-5 px-4 py-8 text-center instead
     of hand-rolled mx-auto ... max-w-3xl; no geometry or behavior change. kind_robots PR
     silasfelinus/kind_robots#2263 open.
-  updated: '2026-08-31T13:37:19Z'
+
+    Slice 33 merged as silasfelinus/kind_robots#2263 (squash
+    cfe3320fc95431c0ddbfca8339d795a64934d26f) from exact head
+    e269905c88e8a0ad95957c04f6624231dc9440b6. components/giftshop/checkout-success.vue root
+    now uses kr-container max-w-3xl flex min-h-full flex-col items-center justify-center
+    gap-5 px-4 py-8 text-center instead of hand-rolled mx-auto ... max-w-3xl; no geometry or
+    behavior change. All 37 checks green. Return the non-recurring consistency umbrella to
+    ready for the next bounded slice.
+  updated: '2026-08-31T13:40:59Z'
   implementation_pr: 'silasfelinus/kind_robots#2263'
   owner: worker
   claimed_by: claude-scheduled-20260831T1330Z-iv-t104-checkout-success
