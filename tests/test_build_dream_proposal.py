@@ -262,3 +262,17 @@ def test_unbuilt_backlog_excludes_the_template_and_readme(tmp_path, monkeypatch)
     (backlog / "README.md").write_text("---\nproposal: true\n---\n", encoding="utf-8")
 
     assert bdp.unbuilt_backlog() == ["2026-08-31"]
+
+
+def test_normalize_converts_ascii_dashes_in_card_copy_only():
+    proposal = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
+    proposal["idea"] = "A courthouse refracts testimony -- and the room answers back in colour."
+    proposal["characters"][0]["look"] = "a mantis-shrimp advocate -- midnight suit, cracked lens"
+    proposal["title"] = "Prism -- Appeal"
+
+    out = bdp.normalize(proposal)
+
+    assert out["idea"] == "A courthouse refracts testimony — and the room answers back in colour."
+    # Krea prompt material and identity fields are left exactly as authored.
+    assert out["characters"][0]["look"] == "a mantis-shrimp advocate -- midnight suit, cracked lens"
+    assert out["title"] == "Prism -- Appeal"
