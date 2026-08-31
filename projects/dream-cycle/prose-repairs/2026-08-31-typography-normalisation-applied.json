@@ -1,0 +1,77 @@
+{
+  "mode": "typography",
+  "scope": "all-built",
+  "reason": "Normalise ' -- ' to a real em-dash in built card copy. The catalog is mixed: 14 fields already carry an em-dash (the authored repair passes wrote them that way) while 7 fields the passes never touched still carry the ASCII form, and the two land side by side in one email -- on 2026-08-31 The Continental Courtship showed ' -- ' directly above The Deep Shift's em-dashes. Deterministic and semantics-free, so this runs model-free rather than asking for a rewrite of good prose. Affects 4 bundles: 2026-08-01, 2026-08-03, 2026-08-16, 2026-08-28.",
+  "send_digest": false,
+  "status": "applied",
+  "applied_at": "2026-08-31T22:31:41.977359+00:00",
+  "repaired_bundles": 4,
+  "results": [
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-01-the-filing-echidna.md",
+      "day": "2026-08-01",
+      "title": "The Filing Echidna",
+      "fields": [
+        "idea",
+        "vibe.line",
+        "locations[0].local_rule"
+      ],
+      "before": {
+        "idea": "A vast echidna-shaped kaiju has spent a century growing a living coral cathedral across her spine, and twice a year she surfaces so an unlicensed reef exorcist can renew the improvised paperwork that keeps her spirits, tides, and tenants from spilling into chaos. Officially, kaiju do not qualify for wilderness permits and neither does the exorcist who issues them -- until the real Bureau finally notices.",
+        "vibe_line": "Told from the kaiju's own drowsy, contented perspective -- being worshipped less than being properly filed.",
+        "local_rule": "No permit, no passage -- every migrating spirit, crab, or tourist must be logged in the wet, spine-bound ledger before crossing the transept arch."
+      },
+      "after": {
+        "idea": "A vast echidna-shaped kaiju has spent a century growing a living coral cathedral across her spine, and twice a year she surfaces so an unlicensed reef exorcist can renew the improvised paperwork that keeps her spirits, tides, and tenants from spilling into chaos. Officially, kaiju do not qualify for wilderness permits and neither does the exorcist who issues them — until the real Bureau finally notices.",
+        "vibe_line": "Told from the kaiju's own drowsy, contented perspective — being worshipped less than being properly filed.",
+        "local_rule": "No permit, no passage — every migrating spirit, crab, or tourist must be logged in the wet, spine-bound ledger before crossing the transept arch."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-03-undermoon-bloom.md",
+      "day": "2026-08-03",
+      "title": "Undermoon Bloom",
+      "fields": [
+        "scenarios[0].setup"
+      ],
+      "before": {
+        "scenario_setup": "In Undermoon Bloom at The Sporeline Reclamation Yard, Grudge Fenrik races the last drone home before the too-close moon's nightly bloom swallows the salvage route -- an existential swashbuckling dash across a post-apocalyptic wasteland gone quiet with the hush of an ordinary evening chore, where losing means the whole yard goes dark for good."
+      },
+      "after": {
+        "scenario_setup": "In Undermoon Bloom at The Sporeline Reclamation Yard, Grudge Fenrik races the last drone home before the too-close moon's nightly bloom swallows the salvage route — an existential swashbuckling dash across a post-apocalyptic wasteland gone quiet with the hush of an ordinary evening chore, where losing means the whole yard goes dark for good."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-16-fault-line-follies.md",
+      "day": "2026-08-16",
+      "title": "Fault Line Follies",
+      "fields": [
+        "idea",
+        "scenarios[0].setup"
+      ],
+      "before": {
+        "idea": "A traveling circus stakes its big top directly over active fault lines, timing its bioengineered-cactus acts to the tectonic plates' slow, romantic collisions -- until a goblin wrangler feels the courtship reach its final beat mid-show.",
+        "scenario_setup": "In The Continental Courtship, at The Suture Circus, Oleta Kanu feels the ground hum a half-beat early -- the plates are done courting, and the show has one number left before the fault slips for real."
+      },
+      "after": {
+        "idea": "A traveling circus stakes its big top directly over active fault lines, timing its bioengineered-cactus acts to the tectonic plates' slow, romantic collisions — until a goblin wrangler feels the courtship reach its final beat mid-show.",
+        "scenario_setup": "In The Continental Courtship, at The Suture Circus, Oleta Kanu feels the ground hum a half-beat early — the plates are done courting, and the show has one number left before the fault slips for real."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-28-tasting-menu-eats-back.md",
+      "day": "2026-08-28",
+      "title": "The Tasting Menu Eats Back",
+      "fields": [
+        "scenarios[0].setup"
+      ],
+      "before": {
+        "scenario_setup": "At The Petitioner's Larder behind Sable & Bone, Wendell Hobb is halfway through The Tasting Menu Eats Back's seventh course when the evening's ingredient -- a small drifting knot of starlight meant to become dessert -- announces it has decided not to leave the mortal world once it's plated, and the whole dining room is waiting on him to talk it back into what it already promised."
+      },
+      "after": {
+        "scenario_setup": "At The Petitioner's Larder behind Sable & Bone, Wendell Hobb is halfway through The Tasting Menu Eats Back's seventh course when the evening's ingredient — a small drifting knot of starlight meant to become dessert — announces it has decided not to leave the mortal world once it's plated, and the whole dining room is waiting on him to talk it back into what it already promised."
+      }
+    }
+  ],
+  "remaining_typography": []
+}
