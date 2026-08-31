@@ -11853,3 +11853,18 @@ records:
     column. Following an existing sibling admin review-queue (social-drafts) for the
     fetch/approve-reject store and page shape kept the new surface consistent with house
     style with no new conventions invented.
+- date: '2026-08-31'
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Slice 80 of the recurring kr-panel-flat consistency sweep -- academy-timeline.vue's
+    header and card-toggle surfaces swapped hand-rolled "border border-base-300 bg-base-100"
+    for the shared primitive, no geometry/behavior change. Found via a fresh select_role.py
+    run that flagged the sandbox's direct GitHub API calls all 403'ing (expected, MCP-only
+    transport) but the underlying worker/reviewer signal was still readable once cross-checked
+    against the MCP connector directly -- one open PR (kind_robots#2253), 37/37 checks green,
+    posted a review-claim marker before merging per the rotation-collision protocol.
