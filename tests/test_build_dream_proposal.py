@@ -157,13 +157,15 @@ def test_invalid_proposal_raises_before_file_write(
         )
 
 
-def test_check_cli_preserves_startup_contract(
+def test_check_cli_reports_docket_depth_not_a_calendar_hit(
     tmp_path, monkeypatch, capsys
 ):
+    # Authoring pauses while the buffer is deep, so "no proposal dated today" is
+    # expected and must not read as a failure. An empty docket is the real alarm.
     monkeypatch.setattr(bdp, "BACKLOG", tmp_path)
 
     assert bdp.main(["--check", "--date", "2026-07-31"]) == 1
-    assert "No proposal for 2026-07-31" in capsys.readouterr().out
+    assert "docket is EMPTY" in capsys.readouterr().out
 
     (tmp_path / "2026-07-31-existing.md").write_text(
         "---\nslug: existing\nproposal: true\n"
@@ -171,24 +173,38 @@ def test_check_cli_preserves_startup_contract(
         encoding="utf-8",
     )
     assert bdp.main(["--check", "--date", "2026-07-31"]) == 0
-    assert "Proposal for 2026-07-31 exists." in capsys.readouterr().out
+    out = capsys.readouterr().out
+    assert "docket holds 1 unbuilt proposal(s) (2026-07-31)" in out
+    assert f"Below the {bdp.TARGET_BUFFER_DAYS}-day buffer" in out
 
 
-def test_check_cli_fetches_remote_when_requested(
-    tmp_path, monkeypatch
-):
+def test_check_cli_is_quiet_once_the_buffer_is_full(tmp_path, monkeypatch, capsys):
     monkeypatch.setattr(bdp, "BACKLOG", tmp_path)
-    monkeypatch.setattr(bdp, "fetch_main", lambda quiet=True: True)
-    monkeypatch.setattr(
-        bdp, "remote_proposal_for", lambda date: "remote.md"
+    for day in range(1, bdp.TARGET_BUFFER_DAYS + 1):
+        (tmp_path / f"2026-07-0{day}-entry.md").write_text(
+            f"---\nslug: entry{day}\nproposal: true\n"
+            f"proposal_date: '2026-07-0{day}'\n---\n",
+            encoding="utf-8",
+        )
+
+    assert bdp.main(["--check"]) == 0
+    out = capsys.readouterr().out
+    assert f"docket holds {bdp.TARGET_BUFFER_DAYS} unbuilt proposal(s)" in out
+    assert "Below the" not in out
+
+
+def test_check_cli_fetches_before_reading_the_docket(tmp_path, monkeypatch):
+    monkeypatch.setattr(bdp, "BACKLOG", tmp_path)
+    calls = []
+    monkeypatch.setattr(bdp, "fetch_main", lambda quiet=True: calls.append("fetch") or True)
+    (tmp_path / "2026-07-31-existing.md").write_text(
+        "---\nslug: existing\nproposal: true\n"
+        "proposal_date: '2026-07-31'\n---\n",
+        encoding="utf-8",
     )
 
-    assert (
-        bdp.main(
-            ["--check", "--fetch", "--date", "2026-07-31"]
-        )
-        == 0
-    )
+    assert bdp.main(["--check", "--fetch"]) == 0
+    assert calls == ["fetch"]
 
 
 def test_dry_run_renders_without_writing(tmp_path, monkeypatch, capsys):
@@ -204,3 +220,45 @@ def test_dry_run_renders_without_writing(tmp_path, monkeypatch, capsys):
     assert "## Dream vibe (1)" in output.out
     assert "# would write:" in output.err
     assert list(tmp_path.iterdir()) == []
+
+def _docket_file(backlog, name, *, proposal=True, built=False, day=None):
+    day = day or name[:10]
+    text = (
+        "---\n"
+        f"slug: {name[11:-3]}\n"
+        "title: Docket Entry\n"
+        "type: dream\n"
+        "status: outline\n"
+        f"proposal: {'true' if proposal else 'false'}\n"
+        f"proposal_date: '{day}'\n"
+        "---\n\n## Build log\n- proposed\n\n"
+        "<!-- proposal-data\n{}\n-->\n"
+    )
+    if built:
+        text += "\n<!-- built-data\n{}\n-->\n"
+    (backlog / name).write_text(text, encoding="utf-8")
+
+
+def test_unbuilt_backlog_is_the_build_docket_oldest_first(tmp_path, monkeypatch):
+    backlog = tmp_path / "backlog"
+    backlog.mkdir()
+    monkeypatch.setattr(bdp, "BACKLOG", backlog)
+    _docket_file(backlog, "2026-08-31-newer.md")
+    _docket_file(backlog, "2026-08-29-older.md")
+    _docket_file(backlog, "2026-08-20-already-built.md", built=True)
+    _docket_file(backlog, "2026-07-15-legacy-outline.md", proposal=False)
+
+    assert bdp.unbuilt_backlog() == ["2026-08-29", "2026-08-31"]
+
+
+def test_unbuilt_backlog_excludes_the_template_and_readme(tmp_path, monkeypatch):
+    # _template-proposal.md carries `proposal: true` and a 2026-01-01 placeholder
+    # date. Counting it inflates the docket by one and stops authoring a day early.
+    backlog = tmp_path / "backlog"
+    backlog.mkdir()
+    monkeypatch.setattr(bdp, "BACKLOG", backlog)
+    _docket_file(backlog, "2026-08-31-real.md")
+    _docket_file(backlog, "_template-proposal.md", day="2026-01-01")
+    (backlog / "README.md").write_text("---\nproposal: true\n---\n", encoding="utf-8")
+
+    assert bdp.unbuilt_backlog() == ["2026-08-31"]

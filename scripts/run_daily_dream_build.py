@@ -1,9 +1,25 @@
 #!/usr/bin/env python3
-"""Run the Daily Dream builder with freshness and creative-consumption gates.
+"""Run the Daily Dream builder with creative-consumption gates.
 
 The transactional writer remains in build_dream_records.py. This scheduled
 entrypoint owns automatic candidate policy so old steering proposals cannot
 quietly resurface after newer creativity rules land.
+
+Candidates are drained OLDEST FIRST, and there is deliberately no age cutoff.
+Both used to be the other way round, and together they silently destroyed
+creative work: selection took the newest eligible proposal, so any day the
+build was blocked (Notes from Silas pending, a contract failure, a retry pin)
+the next run reached past that day's proposal to a newer one, and a two-day
+age cap then made the skipped proposal permanently ineligible. Five proposals
+were stranded that way between 2026-08-12 and 2026-08-21 and had to be
+rescued by hand with --date on 2026-08-27..30, which is why a two-week-old
+world surfaced in the 2026-08-31 digest.
+
+Dropping the age cap does not let stale creativity through the back door:
+every candidate is re-validated against the CURRENT creative contract at
+build time below, which is the check that actually enforces "newer creativity
+rules land". The age cap was only ever a blunt proxy for that, and it cost
+more than it bought.
 """
 
 from __future__ import annotations
@@ -17,19 +33,15 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build_dream_records as core  # noqa: E402
 import check_dream_creative_contract as creative_contract  # noqa: E402
 
-MAX_AUTOBUILD_AGE_DAYS = 2
-
 
 def eligible_proposal(date_override: Optional[str]) -> tuple[Optional[Path], str]:
-    """Select a fresh proposal that also clears today's creative contract.
+    """Select the oldest proposal past its steering day that clears the contract.
 
-    Ordinary automatic candidates age out after two Pacific calendar days.
-    Pinned transaction retries may be older, and explicit --date builds may
-    intentionally backfill an older proposal, but both still re-run the current
-    creative contract before any live records are created.
+    Pinned transaction retries take priority, and explicit --date builds may
+    target any proposal, but every candidate re-runs the current creative
+    contract before any live records are created.
     """
-    today_date = datetime.datetime.now(core._TZ).date()
-    today = today_date.isoformat()
+    today = datetime.datetime.now(core._TZ).date().isoformat()
     best: Optional[tuple[str, Path]] = None
     retry: Optional[tuple[str, Path]] = None
     reason = "no unbuilt proposal ready (none past its steering day)"
@@ -65,21 +77,6 @@ def eligible_proposal(date_override: Optional[str]) -> tuple[Optional[Path], str
         attempt = core._data_block(text, "build-attempt-data")
         is_retry = isinstance(attempt, dict) and attempt.get("status") == "retry"
 
-        if not date_override and not is_retry:
-            try:
-                age_days = (
-                    today_date - datetime.date.fromisoformat(proposal_date)
-                ).days
-            except ValueError:
-                reason = f"{path.name}: invalid proposal date {proposal_date!r}"
-                continue
-            if age_days > MAX_AUTOBUILD_AGE_DAYS:
-                reason = (
-                    f"{path.name}: stale proposal ({age_days} days old); automatic "
-                    f"builds accept at most {MAX_AUTOBUILD_AGE_DAYS} days of backlog"
-                )
-                continue
-
         creative_errors = creative_contract.validate_path(path)
         if creative_errors:
             reason = (
@@ -92,7 +89,9 @@ def eligible_proposal(date_override: Optional[str]) -> tuple[Optional[Path], str
             if retry is None or proposal_date < retry[0]:
                 retry = (proposal_date, path)
             continue
-        if best is None or proposal_date > best[0]:
+        # Oldest first: drain the docket in the order it was written so a day
+        # that could not build is picked up on the next run instead of orphaned.
+        if best is None or proposal_date < best[0]:
             best = (proposal_date, path)
 
     if retry:

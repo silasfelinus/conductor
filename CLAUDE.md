@@ -40,24 +40,41 @@ At the start of every session, before responding to any task, run a conductor sw
    supplied.
 6. Check `TALKBACK.md` tail for any unresolved escalations or security flags
 7. Run `python scripts/build_dream_proposal.py --check --fetch`. **This is now a
-   backstop, not the primary path.** `daily-digest.yml` authors the day's proposal
+   backstop, not the primary path.** `daily-digest.yml` authors proposals
    automatically in the step after the email goes out
    (`scripts/author_dream_proposal.py`), so on a normal day `--check` passes and
    there is nothing to do (Silas, 2026-08-09: *"I'm not sure why the next dreams
    aren't written the turn the digest is sent, or a step later if there isn't
    enough process. As progress goes, that's very high on automated tasks."*).
 
-   If a proposal IS missing — the digest run failed, the model hiccuped, or it is
-   a date the cron never covered — author it yourself, exactly as before: run
-   `--brief` for the deterministic seed plan, then create exactly one dream vibe,
-   one dream location, one Character, one ITEM Reward, one SKILL Reward, and one
-   Scenario, with no narrator. Preserve the brief's `seed_facets` unchanged; the
-   vibe is the umbrella, every dependent asset must follow its assigned Facets,
-   and the Scenario is authored last and explicitly names the vibe, location, and
-   Character. Write it with `--from-json` and commit it with the session's log
-   commits. A missing proposal two days running means the automated step is
-   broken — check the `daily-digest` run's "Author tomorrow's daily dream" step
-   rather than just papering over it by hand each session.
+   **`--check` measures the docket, not the calendar** (changed 2026-08-31). It
+   reports how many unbuilt proposals are queued and exits 0 whenever at least
+   one is. A day with no proposal dated today is NORMAL and is not a failure:
+   authoring pauses while the docket is `TARGET_BUFFER_DAYS` (5) deep, because
+   Silas would rather spend that cycle elsewhere (2026-08-31: *"we don't need to
+   spend effort writing new proposals if we have a backlog (though a 5 day or so
+   buffer seems reasonable, just in case). It would be better spent to either
+   take on a new task, or improve the current proposals in the docket."*). Do not
+   "fix" a shallow docket by hand-authoring — the next digest run tops it up.
+
+   Exit 1 means the docket is **empty**, which is the real alarm: nothing is
+   queued for tomorrow. Author one yourself then: run `--brief` for the
+   deterministic seed plan, then create exactly one dream vibe, one dream
+   location, one Character, one ITEM Reward, one SKILL Reward, and one Scenario,
+   with no narrator. Preserve the brief's `seed_facets` unchanged; the vibe is
+   the umbrella, every dependent asset must follow its assigned Facets, and the
+   Scenario is authored last and explicitly names the vibe, location, and
+   Character. All user-facing card copy must be complete sentences that parse on
+   their own — `scripts/dream_prose_quality.py` is the contract. Write it with
+   `--from-json` and commit it with the session's log commits. An empty docket
+   two days running means the automated step is broken — check the
+   `daily-digest` run's "Author tomorrow's daily dream" step rather than just
+   papering over it by hand each session.
+
+   Builds drain the docket **oldest first, with no age cutoff**. A proposal that
+   could not build on its day is picked up by the next run instead of being
+   orphaned; the current creative contract is re-checked at build time, which is
+   what actually keeps stale creativity out.
 
 Then report:
 - **Branch** and whether the working tree is clean

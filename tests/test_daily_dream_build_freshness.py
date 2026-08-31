@@ -111,23 +111,54 @@ def _today() -> datetime.date:
     return datetime.datetime.now(runner.core._TZ).date()
 
 
-def test_automatic_selection_rejects_twelve_day_old_orphan(backlog):
+def test_twelve_day_old_orphan_is_built_rather_than_stranded(backlog):
+    # Until 2026-08-31 a two-day age cap made this proposal permanently
+    # ineligible, so a day the build could not run silently destroyed that day's
+    # creative work. Five real proposals were orphaned that way in August.
     old = _write_proposal(backlog, _today() - datetime.timedelta(days=12), "old-orphan")
 
     path, reason = runner.eligible_proposal(None)
 
+    assert path == old
+    assert reason == ""
+
+
+def test_backlog_drains_oldest_first(backlog):
+    older = _write_proposal(backlog, _today() - datetime.timedelta(days=4), "older")
+    _write_proposal(backlog, _today() - datetime.timedelta(days=1), "newer")
+
+    path, reason = runner.eligible_proposal(None)
+
+    # Newest-first was the other half of the stranding bug: it reached past a
+    # blocked day to a fresher proposal, which the age cap then expired.
+    assert path == older
+    assert reason == ""
+
+
+def test_stale_backlog_entry_still_faces_the_current_creative_contract(backlog, monkeypatch):
+    # Removing the age cap must not let old creativity in through the back door;
+    # the contract check is what actually enforces newer creative rules.
+    _write_proposal(backlog, _today() - datetime.timedelta(days=30), "ancient")
+    monkeypatch.setattr(
+        runner.creative_contract,
+        "validate_path",
+        lambda path: ["story falls back into the overused bureaucracy/record-keeping motif"],
+    )
+
+    path, reason = runner.eligible_proposal(None)
+
     assert path is None
-    assert old.name in reason
-    assert "stale proposal (12 days old)" in reason
+    assert "creative contract failed at build time" in reason
 
 
-def test_pinned_retry_can_be_older_than_freshness_window(backlog):
+def test_pinned_retry_takes_priority_over_an_older_ordinary_candidate(backlog):
     old_retry = _write_proposal(
         backlog,
         _today() - datetime.timedelta(days=12),
         "old-retry",
         retry=True,
     )
+    _write_proposal(backlog, _today() - datetime.timedelta(days=20), "even-older")
 
     path, reason = runner.eligible_proposal(None)
 
@@ -144,7 +175,7 @@ def test_recent_proposal_still_builds_automatically(backlog):
     assert reason == ""
 
 
-def test_explicit_date_bypasses_freshness_but_not_creative_contract(backlog, monkeypatch):
+def test_explicit_date_selects_that_day_but_not_past_the_creative_contract(backlog, monkeypatch):
     day = _today() - datetime.timedelta(days=12)
     old = _write_proposal(backlog, day, "manual-old")
 
