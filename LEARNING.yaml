@@ -11820,3 +11820,21 @@ records:
     reading the file in isolation. Added a catalog-wide (model, entity_id) uniqueness CI guard
     (scripts/audit_dream_record_identity.py) so a future recurrence surfaces as a red required
     check instead of silent drift.
+- date: '2026-08-31'
+  project: rainbow-butterflies
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A "prepare launch content" task with real health/malaria claims in scope is a
+    sourcing task before it is a writing task -- fetching WHO's fact sheet and the AMF/AMI
+    fundraiser page live (rather than recalling figures from training) surfaced that the
+    fundraiser's donation total/net count is itself live and would go stale within hours,
+    so the draft cites the WHO figures directly but points at the live fundraiser page as
+    the source of truth instead of a point-in-time dollar figure. Restating an existing
+    ethics/moderation contract as an operational runbook (mapping ETHICS.md's autonomous-
+    vs-human-gated boundaries onto concrete triage steps) is worth doing as its own
+    deliverable even with zero new policy -- the contract existed but no one had turned it
+    into a checklist a moderator could follow directly.

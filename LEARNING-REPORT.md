@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-31T03:37:56Z
+Generated: 2026-08-31T03:39:28Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **837**
-- Outcomes: blocked: 16, cancelled: 1, done: 820
+- Closed tasks recorded: **838**
+- Outcomes: blocked: 16, cancelled: 1, done: 821
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -52,7 +52,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | music-mentor | 1 | 100% |
 | newsfeed | 20 | 100% |
 | packmaker | 10 | 100% |
-| rainbow-butterflies | 11 | 100% |
+| rainbow-butterflies | 12 | 100% |
 | ruler-hooked | 11 | 100% |
 | scene-animator | 2 | 100% |
 | serendipity | 3 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 821 | 99% |
+| software | 822 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-31 `rainbow-butterflies/t-029` — A "prepare launch content" task with real health/malaria claims in scope is a sourcing task before it is a writing task -- fetching WHO's fact sheet and the AMF/AMI fundraiser page live (rather than recalling figures from training) surfaced that the fundraiser's donation total/net count is itself live and would go stale within hours, so the draft cites the WHO figures directly but points at the live fundraiser page as the source of truth instead of a point-in-time dollar figure. Restating an existing ethics/moderation contract as an operational runbook (mapping ETHICS.md's autonomous- vs-human-gated boundaries onto concrete triage steps) is worth doing as its own deliverable even with zero new policy -- the contract existed but no one had turned it into a checklist a moderator could follow directly.
 - 2026-08-30 `dream-cycle/t-006` — A backlog bundle's built-data block being internally self-consistent (its own art-request IDs, facet_assignments, and Build log all agreeing with each other) is not proof it still matches live reality -- an earlier remaster/revision pass can silently overwrite a different, already-published bundle's rows, leaving the victim's file looking coherent while actually pointing at someone else's live content. The tell is only visible by fetching the live API and comparing title/slug/description against the file, not by reading the file in isolation. Added a catalog-wide (model, entity_id) uniqueness CI guard (scripts/audit_dream_record_identity.py) so a future recurrence surfaces as a red required check instead of silent drift.
 - 2026-08-30 `rainbow-butterflies/t-025` — Grepping for the project's own existing restriction/audit primitives (User.isRestricted + notInRestricted, the Log-backed logAdminAction helper) before designing new moderation machinery found that restriction was already wired into most content models except the forum -- a real, narrowly-scoped security gap (writes and every read path never checked it) rather than something needing new schema. All of report/flag, restriction, rate-limiting, duplicate rejection, escalation, and audit trail landed additively with zero migrations.
 - 2026-08-30 `rainbow-butterflies/t-030` — The { kind, id } resolver stayed additive for a second extension in a row (CHARACTER after ArtImage/Project) -- Chat.characterId and its relation already existed on the schema, so no migration was needed, confirming the shape was designed for growth rather than just working for its first two kinds.
@@ -101,8 +102,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-30 `interface-vision/t-104` — Slice 63 (kind_robots#2220) was a clean, exact-match kr-panel substitution on project-front-page.vue's two raised-surface sections, following the same override convention prior slices established (kr-panel + trailing rounded-3xl/p-5 overrides for values that differ from kr-panel's rounded-2xl/p-6 defaults). Verified the CSS definition (assets/css/tailwind.css .kr-panel) before merging to confirm the override convention actually produces the same computed classes, rather than trusting the PR description's claim alone.
 - 2026-08-30 `interface-vision/t-104` — Slice 62: the kr-note family (border-{status}/N + bg-{status}/M + text-{status}) is a much bigger candidate pool (~150+ raw grep hits) than any prior mechanical sweep, but padding/opacity/text-size/font-weight vary too widely across it to convert blindly -- unlike kr-container/kr-surface/kr-panel-flat, where near-total instances matched the canonical shape exactly. Scoping the slice to only instances where every differing attribute was explicit in the original class list (never inferring an ambient/inherited text-size or font-weight) kept the substitution provably byte-for-visual-identical at the cost of converting only 7 of ~150 instances this slice. Also worth noting: a family of otherwise-identical pills/badges sharing one non-kr-note color (stage-manager.vue's primary/success/warning trio) should be skipped as a set rather than partially converted, since fixing two of three fragments what was a visually consistent group.
 
-- 2026-08-30 `interface-vision/t-104` — Slice 57: opened a third mechanical pool (kr-panel-flat) alongside kr-container and kr-surface, both reported near-exhausted. A repo-wide grep for the hand-rolled dashed empty-state shape ('rounded-2xl border border-dashed border-base-300 bg-base-100') turned up 13 exact matches plus one non-dashed variant, none previously swept. Key discipline: excluded near-miss translucent variants (bg-base-100/50, /60, /70) as a genuinely different, not-byte-exact shape rather than folding them in -- confirmed via a baseline prettier/eslint check per file (git stash + rerun) which was itself pre-existing drift on main, not something this slice introduced. When a class-string edit shortens a line enough to change its wrap point, run prettier --check on main at the same file BEFORE editing to know whether a resulting --write is a real fix (file was clean) or would trigger an unrelated full-file reformat (file was already dirty) -- doing this blind cost one wasted 2700-line reformat-and-revert cycle on art-test.vue this slice.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-31T03:37:56Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-31T03:39:28Z_
