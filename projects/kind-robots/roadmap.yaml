@@ -3749,5 +3749,32 @@ tasks:
   claimed_at: '2026-08-31T08:29:45Z'
   updated: '2026-08-31T08:40:36Z'
   implementation_pr: 'silasfelinus/kind_robots#2254'
-goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination 
+
+- id: t-086
+  milestone: m6
+  title: "Re-author fresh population comments for the 42 targets t-085 dropped"
+  status: ready
+  owner:
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from t-085 (kind_robots#2254): to get `comment-migration-contract`
+    green again, t-085 pruned 42 population-comment-drafts items rather than
+    inventing new voice-matched dialogue for characters that no longer exist
+    in production. The affected targets: BOT:306 (Weirdlandia, batch-0012),
+    BOT:957 (batch-0060), CHARACTER:982/983/984 (batch-0252),
+    CHARACTER:1024/1025/1026/1067/1068/1069/2800/2813/2823/2824/2825/2853/2931/
+    3104/3291/3292/3294 (batch-0276), DREAM:2329/2619/4992 (batch-0300),
+    DREAM:5045/5384/5638/5642 (batch-0324), SCENARIO:877/878/934 (batch-0420),
+    and SCENARIO:935/1002/1003/1857/1864/1865/1884/2050/2175/2177 (batch-0444).
+
+    This task is to re-author a fresh visit/reply exchange for as many of
+    these targets as practical, casting currently-valid Bots/Characters
+    (checked against live /api/bots and /api/characters) instead of the
+    stale ones, following the same voice/quality rules
+    `verifyPopulationDraftQuality.ts` already enforces (no reused phrases,
+    4-120 words, no reviewer/museum language, etc.). Run
+    `npx tsx utils/scripts/verifyPopulationDraftQuality.ts` locally before
+    opening the PR -- don't rely on CI to discover a fresh violation.
+goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.

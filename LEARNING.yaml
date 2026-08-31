@@ -11868,3 +11868,21 @@ records:
     transport) but the underlying worker/reviewer signal was still readable once cross-checked
     against the MCP connector directly -- one open PR (kind_robots#2253), 37/37 checks green,
     posted a review-claim marker before merging per the rotation-collision protocol.
+- date: '2026-08-31'
+  project: kind-robots
+  task: t-085
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A CI check flagging stale foreign-key-shaped ids (CHARACTER/BOT references in
+    authored content batches) is worth checking against the live roster by name, not just
+    id, before assuming a mechanical remap exists -- none of the 17 stale character names
+    in this corpus existed anywhere in production's 240-row roster, meaning they were
+    deleted/replaced outright rather than renumbered. When no remap exists and the content
+    is voice-authored dialogue this session has no context for, pruning the specific
+    violating items (rather than inventing new dialogue under time pressure) is the safer
+    fix -- it gets CI green without risking a second round of creative-contract-shaped
+    violations, and the dropped targets are recorded as a follow-up kaizen task (t-086)
+    for a session that can invest in matching voice properly.
