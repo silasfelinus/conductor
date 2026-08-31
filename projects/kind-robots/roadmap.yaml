@@ -3698,11 +3698,11 @@ tasks:
 - id: t-085
   milestone: m6
   title: "comment-migration-contract's comment-contract check has been red on main since before 2026-08-30"
-  status: claimed
+  status: done
   owner: reviewer
   passes: 0
   stakes: reversible
-  note: >
+  note: >-
     Found while merging rainbow-butterflies/t-034 (kind_robots#2252, a small
     forum posting-guidance change unrelated to comments): the
     `comment-migration-contract.yml` workflow's `comment-contract` job has
@@ -3727,8 +3727,54 @@ tasks:
     passes clean before closing. Until fixed, treat this job's failure as
     known/pre-existing on every PR (per docs/state-reconciliation.md's
     CI-red handling) rather than re-diagnosing it each time.
+
+    RESOLVED: silasfelinus/kind_robots#2254 (squash 0b5c5d9) pruned the 42 violating items
+    from config/population-comment-drafts/. Checked every stale character name (Iso, Whisk
+    Tallow, Corvid Ames, Nix Farrow, Corvin Pell, Undersecretary Wrenna Vail, Cobb Fenwick,
+    Mother Spindle, The Windreader, Odalys Kade, Bailiff Pell, Mortlake Vane, Fen Corrigan,
+    Perrin Voss, Vex Thistlewick, Bailiff Ashorn, Corra Finnwake) against the live
+    /api/characters roster (240 rows): none exist under any id, confirming these were
+    deleted/replaced outright rather than renumbered, so no mechanical id remap was
+    available. Dropped the 42 flagged items rather than inventing new voice-matched dialogue
+    for characters this session has no context for -- those specific
+    Bot/Character/Dream/Scenario targets simply won't get a comment from this corpus; a
+    follow-up slice can re-author fresh exchanges for them with currently-valid speakers if
+    desired. Ran the full comment-migration-contract.yml step list locally: all 10 steps
+    (verifyCommentMigrationFoundation, verifyCommentSignals, verifyCommentCalibrationBatch,
+    runCommentCalibrationBatch002Contract, verifyCommentCalibrationBatch003,
+    verifyPartialPublishPrefix, verifyCommentDraftQuality, verifyPopulationDraftQuality,
+    verifyPopulationCasting, verifyReactionTargetCoverage) pass clean. All 38 PR checks
+    green including comment-contract itself.
   claimed_by: claude-scheduled-20260831T083000Z-kr-t085
   claimed_at: '2026-08-31T08:29:45Z'
-  updated: '2026-08-31T08:29:45Z'
-goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination 
+  updated: '2026-08-31T08:40:36Z'
+  implementation_pr: 'silasfelinus/kind_robots#2254'
+
+- id: t-086
+  milestone: m6
+  title: "Re-author fresh population comments for the 42 targets t-085 dropped"
+  status: ready
+  owner:
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from t-085 (kind_robots#2254): to get `comment-migration-contract`
+    green again, t-085 pruned 42 population-comment-drafts items rather than
+    inventing new voice-matched dialogue for characters that no longer exist
+    in production. The affected targets: BOT:306 (Weirdlandia, batch-0012),
+    BOT:957 (batch-0060), CHARACTER:982/983/984 (batch-0252),
+    CHARACTER:1024/1025/1026/1067/1068/1069/2800/2813/2823/2824/2825/2853/2931/
+    3104/3291/3292/3294 (batch-0276), DREAM:2329/2619/4992 (batch-0300),
+    DREAM:5045/5384/5638/5642 (batch-0324), SCENARIO:877/878/934 (batch-0420),
+    and SCENARIO:935/1002/1003/1857/1864/1865/1884/2050/2175/2177 (batch-0444).
+
+    This task is to re-author a fresh visit/reply exchange for as many of
+    these targets as practical, casting currently-valid Bots/Characters
+    (checked against live /api/bots and /api/characters) instead of the
+    stale ones, following the same voice/quality rules
+    `verifyPopulationDraftQuality.ts` already enforces (no reused phrases,
+    4-120 words, no reviewer/museum language, etc.). Run
+    `npx tsx utils/scripts/verifyPopulationDraftQuality.ts` locally before
+    opening the PR -- don't rely on CI to discover a fresh violation.
+goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
