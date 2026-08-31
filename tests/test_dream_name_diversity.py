@@ -136,3 +136,40 @@ def test_archive_echo_is_retried_with_a_specific_naming_complaint(monkeypatch):
     assert "failed validation" in prompts[1]
     assert "different given-name root" in prompts[1]
     assert "different surname construction" in prompts[1]
+
+
+def _named_proposal(character_name: str):
+    """A prose-clean proposal whose only defect can be its character name."""
+    import copy
+
+    import scripts.build_dream_proposal as proposals
+
+    proposal = copy.deepcopy(proposals.SAMPLE_PROPOSAL)
+    proposal["characters"][0]["name"] = character_name
+    return proposal
+
+
+def test_surname_factory_detector_gates_authoring_not_just_the_catalog_audit():
+    # ruts.surname_factory_complaint() has always known about this name, but it
+    # was only ever called by audit_dream_catalog, so the authoring retry never
+    # saw it: Vex Thistlewick shipped 2026-08-05 and Vex Thistlemaw 2026-08-16.
+    proposal = _named_proposal("Vex Thistlemaw")
+
+    problems = authoring.story_diversity_complaints(proposal, [], {"version": 2})
+
+    assert any("Thistlemaw" in problem for problem in problems)
+    assert any("recurring noun stem" in problem for problem in problems)
+
+
+def test_plausible_surname_still_passes_the_authoring_gate():
+    proposal = _named_proposal("Odalys Nunes")
+
+    assert authoring.story_diversity_complaints(proposal, [], {"version": 2}) == []
+
+
+def test_civil_service_honorifics_are_rejected_during_authoring():
+    proposal = _named_proposal("Undersecretary Pell")
+
+    problems = authoring.story_diversity_complaints(proposal, [], {"version": 2})
+
+    assert any("honorific" in problem for problem in problems)

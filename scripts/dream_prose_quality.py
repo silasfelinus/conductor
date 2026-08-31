@@ -43,25 +43,54 @@ def _check(label: str, value: Any, minimum_words: int) -> list[str]:
     return problems
 
 
+def _first_mapping(value: Any) -> dict:
+    if not isinstance(value, list):
+        return {}
+    return next((row for row in value if isinstance(row, dict)), {})
+
+
+def _reward_of_type(proposal: Any, wanted: str) -> dict:
+    rewards = proposal.get("rewards") if isinstance(proposal.get("rewards"), list) else []
+    for row in rewards:
+        if isinstance(row, dict) and str(row.get("reward_type") or "").upper() == wanted:
+            return row
+    return {}
+
+
 def complaints(proposal: Any) -> list[str]:
     """Return human-readable complaints for prose that is too fragmentary for UI cards."""
     if not isinstance(proposal, dict):
         return []
 
     vibe = proposal.get("vibe") if isinstance(proposal.get("vibe"), dict) else {}
-    locations = proposal.get("locations") if isinstance(proposal.get("locations"), list) else []
-    location = locations[0] if locations and isinstance(locations[0], dict) else {}
-    scenarios = proposal.get("scenarios") if isinstance(proposal.get("scenarios"), list) else []
-    scenario = scenarios[0] if scenarios and isinstance(scenarios[0], dict) else {}
+    location = _first_mapping(proposal.get("locations"))
+    character = _first_mapping(proposal.get("characters"))
+    scenario = _first_mapping(proposal.get("scenarios"))
+    item = _reward_of_type(proposal, "ITEM")
+    skill = _reward_of_type(proposal, "SKILL")
 
-    checks = (
+    # `look` and `art_direction` are deliberately excluded: they are Krea prompt
+    # material, not card copy, and are supposed to read as visual noun phrases.
+    checks = [
         ("idea", proposal.get("idea"), 14),
         ("vibe.line", vibe.get("line"), 8),
         ("locations[0].known_for", location.get("known_for"), 10),
         ("locations[0].local_rule", location.get("local_rule"), 8),
         ("locations[0].best_scene", location.get("best_scene"), 10),
+        ("characters[0].role_drive", character.get("role_drive"), 10),
+        ("characters[0].carries", character.get("carries"), 8),
+        ("characters[0].complication", character.get("complication"), 10),
         ("scenarios[0].setup", scenario.get("setup"), 14),
-    )
+    ]
+    for label, reward in (("item", item), ("skill", skill)):
+        checks.extend(
+            [
+                (f"rewards[{label}].grants", reward.get("grants"), 8),
+                (f"rewards[{label}].best_used_when", reward.get("best_used_when"), 8),
+                (f"rewards[{label}].catch", reward.get("catch"), 8),
+            ]
+        )
+
     problems: list[str] = []
     for label, value, minimum_words in checks:
         problems.extend(_check(label, value, minimum_words))

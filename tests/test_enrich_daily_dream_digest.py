@@ -245,3 +245,53 @@ def test_only_one_completed_bundle_is_current_not_art_rich(tmp_path):
     assert result["current_dream_output"]["title"] == "First Completed"
     assert result["previous_dream_output"] is None
     assert "no earlier completed bundle" in result["daily_dream_output_status"]
+
+
+def test_asset_summaries_are_composed_not_a_single_stem_fragment(tmp_path):
+    # Each card is read on its own. Before this, the vibe row showed only
+    # `vibe.line` (never the bundle's `idea`) and the character row showed only
+    # `role_drive` -- a fragment written to complete "**Name** -- ".
+    entry = proposal(tmp_path / "today.md", "2026-07-31", built=True)
+    data = entry["data"]
+    data["idea"] = "A traveling circus stakes its big top directly over active fault lines."
+    data["vibe"]["line"] = "The tectonic plates are getting married."
+    data["locations"][0].update(
+        known_for="It pitches its tents over active fault lines.",
+        local_rule="No show starts until the ground stops humming.",
+    )
+    data["characters"][0].update(
+        role_drive="She keeps her cactus herd calm through the quakes.",
+        complication="Her herd is bred from the last wild cactus line.",
+    )
+    data["rewards"][0].update(
+        grants="It calms panicked creatures.", catch="Overuse silences it for good."
+    )
+
+    rows = {row["key"]: row["summary"] for row in enrich.proposal_payload(
+        entry, probe_images=False)["assets"]}
+
+    assert rows["vibe"] == (
+        "The tectonic plates are getting married. "
+        "A traveling circus stakes its big top directly over active fault lines."
+    )
+    assert rows["location"] == (
+        "It pitches its tents over active fault lines. "
+        "No show starts until the ground stops humming."
+    )
+    assert rows["character"] == (
+        "She keeps her cactus herd calm through the quakes. "
+        "Her herd is bred from the last wild cactus line."
+    )
+    assert rows["reward_item"] == "It calms panicked creatures. Overuse silences it for good."
+
+
+def test_asset_summary_skips_missing_and_duplicate_fields(tmp_path):
+    entry = proposal(tmp_path / "today.md", "2026-07-31", built=True)
+    data = entry["data"]
+    data["vibe"]["line"] = "A connected bundle."  # identical to `idea` in the fixture
+
+    rows = {row["key"]: row["summary"] for row in enrich.proposal_payload(
+        entry, probe_images=False)["assets"]}
+
+    assert rows["vibe"] == "A connected bundle."
+    assert rows["location"] == "wonder"  # no local_rule in the fixture

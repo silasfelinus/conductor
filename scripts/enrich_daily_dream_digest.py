@@ -115,6 +115,16 @@ def _facet_label(facet: dict[str, Any]) -> str:
     return f"{taxonomy}: {title}"
 
 
+def _summary(*parts: Any) -> str:
+    """Join card-copy fields into one readable blurb, skipping blanks and repeats."""
+    seen: list[str] = []
+    for part in parts:
+        text = str(part or "").strip()
+        if text and text not in seen:
+            seen.append(text)
+    return " ".join(seen)
+
+
 def _asset_rows(proposal: dict[str, Any], *, probe_images: bool = True) -> list[dict[str, Any]]:
     data = proposal["data"]
     built = proposal.get("built") or {}
@@ -146,13 +156,27 @@ def _asset_rows(proposal: dict[str, Any], *, probe_images: bool = True) -> list[
     character = characters[0] if characters else {}
     scenario = scenarios[0] if scenarios else {}
 
+    # Each card is read on its own, so a row's summary is composed from the
+    # fields that make the object self-explanatory rather than from the single
+    # shortest one. The vibe in particular carries the bundle's `idea` — the
+    # outline — not just its one-line hook.
     specs = [
-        ("vibe", "Dream vibe", vibe.get("title") or data.get("title"), vibe.get("line") or data.get("idea"), data.get("slug")),
-        ("location", "Dream location", location.get("title"), location.get("known_for"), builder_slugify(location.get("title") or "")),
-        ("character", "Character", character.get("name"), character.get("role_drive"), builder_slugify(character.get("name") or "")),
-        ("reward_item", "Reward item", item.get("name"), item.get("grants"), builder_slugify(item.get("name") or "")),
-        ("reward_skill", "Reward skill", skill.get("name"), skill.get("grants"), builder_slugify(skill.get("name") or "")),
-        ("scenario", "Scenario", scenario.get("title"), scenario.get("setup"), builder_slugify(scenario.get("title") or "")),
+        ("vibe", "Dream vibe", vibe.get("title") or data.get("title"),
+         _summary(vibe.get("line"), data.get("idea")), data.get("slug")),
+        ("location", "Dream location", location.get("title"),
+         _summary(location.get("known_for"), location.get("local_rule")),
+         builder_slugify(location.get("title") or "")),
+        ("character", "Character", character.get("name"),
+         _summary(character.get("role_drive"), character.get("complication")),
+         builder_slugify(character.get("name") or "")),
+        ("reward_item", "Reward item", item.get("name"),
+         _summary(item.get("grants"), item.get("catch")),
+         builder_slugify(item.get("name") or "")),
+        ("reward_skill", "Reward skill", skill.get("name"),
+         _summary(skill.get("grants"), skill.get("catch")),
+         builder_slugify(skill.get("name") or "")),
+        ("scenario", "Scenario", scenario.get("title"), _summary(scenario.get("setup")),
+         builder_slugify(scenario.get("title") or "")),
     ]
     rows: list[dict[str, Any]] = []
     for key, label, title, summary, element_slug in specs:

@@ -769,9 +769,16 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
     location_ids: list[int] = []
     for loc in proposal.get("locations", []):
         el = slugify(loc.get("title", "location"))
-        desc = (f"Known for {loc.get('known_for', '')} "
-                f"Local rule: {loc.get('local_rule', '')} "
-                f"Best scene: {loc.get('best_scene', '')}").strip()
+        # These three fields are complete sentences under the card-copy contract
+        # (dream_prose_quality), so they are joined as prose. Prepending "Known
+        # for "/"Local rule: " stems here produced the capital-mid-sentence and
+        # unpunctuated run-on copy that had to be hand-repaired on 2026-08-30.
+        desc = " ".join(
+            str(part).strip()
+            for part in (loc.get("known_for", ""), loc.get("local_rule", ""),
+                         loc.get("best_scene", ""))
+            if str(part).strip()
+        )
         loc_art = location_prompt(
             loc.get("title", "Location"), loc.get("art_direction", ""),
             loc.get("known_for", ""), loc.get("best_scene", ""), title, vibe_line)
@@ -809,7 +816,11 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
             "name": ch.get("name", "Character"), "designer": DESIGNER, "isPublic": True,
             "drive": ch.get("role_drive", ""),
             "quirks": ch.get("complication", ""),
-            "backstory": f"Carries {ch.get('carries', '')}. {ch.get('complication', '')}".strip(),
+            "backstory": " ".join(
+                str(part).strip()
+                for part in (ch.get("carries", ""), ch.get("complication", ""))
+                if str(part).strip()
+            ),
             "artPrompt": ch_art,
             "genre": vibe.get("title", ""),
             "dreamIds": link_ids,

@@ -132,16 +132,41 @@ Exactly one location, one character, two rewards (one ITEM, one SKILL), one
 scenario. No narrator. rarity is one of COMMON, UNCOMMON, RARE, EPIC, LEGENDARY.
 
 USER-FACING COPY IS A HARD CONTRACT, NOT DATABASE SHORTHAND.
-The `idea`, `vibe.line`, every location's `known_for`, `local_rule`, and
-`best_scene`, and the Scenario `setup` are displayed to people as prose. Write
-them as complete, properly capitalized sentences with terminal punctuation, not
-telegraphic labels or noun phrases. They must explain enough to make sense when
-a card shows the field by itself. Keep the sharpness of a good tagline, but do
-not confuse brevity with incompleteness: the vibe line should communicate the
-world's governing mood, pressure, or strange rule; each location field should
-add a distinct piece of concrete world logic, consequence, or scene. Prefer one
+These fields are displayed to people as prose, on cards that show one field by
+itself with no surrounding sentence to complete:
+
+  `idea`, `vibe.line`;
+  every location's `known_for`, `local_rule`, `best_scene`;
+  the character's `role_drive`, `carries`, `complication`;
+  each reward's `grants`, `best_used_when`, `catch`;
+  the Scenario `setup`.
+
+Write every one of them as a complete, properly capitalized sentence with
+terminal punctuation, not a telegraphic label or noun phrase. Critically, do NOT
+write a field as a grammatical continuation of its own key: `known_for` must not
+be phrased to follow the words "known for", `carries` must not be phrased to
+follow "carries", `best_used_when` must not be phrased to follow "best used
+when". Each value has to stand on its own as a sentence, because that is how it
+is rendered. "Her herd is bred from the last wild cactus line, and every
+hardened prod risks becoming their apocalypse." is usable; "keep her cactus herd
+calm through the quakes" is not. Likewise "A story arrives suspiciously clean
+and complete, with no loose ends." is usable for `best_used_when`; "a story is
+too neat" is not, and neither is "Use it when a story is too neat" — the card
+already prints the label, so restating it reads as a stutter.
+
+They must explain enough to make sense when a card shows the field by itself.
+Keep the sharpness of a good tagline, but do not confuse brevity with
+incompleteness: the vibe line should communicate the world's governing mood,
+pressure, or strange rule; each location field should add a distinct piece of
+concrete world logic, consequence, or scene; the character fields should make
+the person legible without the reader having seen any other card. Prefer one
 substantial sentence to a tiny fragment. Do not omit punctuation merely because
 the JSON key already names the field.
+
+Naming another asset from this same bundle is allowed and encouraged where it
+helps — the Scenario in particular is a synthesis piece and must name the vibe,
+location, and character. What is forbidden is copy that cannot be understood as
+a sentence on its own.
 
 VARIETY IS A PRIMARY REQUIREMENT, NOT A POLISH STEP.
 The Facets must change the ontology and story machinery of the world, not merely
@@ -459,6 +484,16 @@ def _proposal_names(proposal: dict) -> list[str]:
     return [name for name in names if name]
 
 
+def _proposal_character_names(proposal: dict) -> list[str]:
+    """Character names only — the surface the surname-factory detector guards."""
+    names = [
+        str(row.get("name") or "")
+        for row in proposal.get("characters") or []
+        if isinstance(row, dict)
+    ]
+    return [name for name in names if name]
+
+
 def story_diversity_complaints(
     proposal: dict,
     recent_premises: list[str],
@@ -481,7 +516,27 @@ def story_diversity_complaints(
             "institution, conflict engine, and signature objects with a different kind of story"
         )
 
-    complaints.extend(ruts.name_rut_complaints(_proposal_names(proposal), facet_text))
+    all_names = _proposal_names(proposal)
+    complaints.extend(ruts.name_rut_complaints(all_names, facet_text))
+
+    # These two detectors already existed but were only ever consulted by the
+    # after-the-fact catalog audit, so the authoring retry never saw them and
+    # ornamental compound surnames kept shipping (Vex Thistlewick on 2026-08-05,
+    # then Vex Thistlemaw on 2026-08-16). Same call shape as audit_dream_catalog.
+    for character_name in _proposal_character_names(proposal):
+        surname = ruts.surname_factory_complaint(character_name)
+        if surname:
+            complaints.append(
+                f"character name {character_name!r}: {surname}; rename with a plausible "
+                "family name instead of a noun-compound built from the recurring stem list"
+            )
+    honorifics = ruts.honorific_hits(all_names)
+    if honorifics:
+        complaints.append(
+            "civil-service honorific in an asset name ("
+            + ", ".join(sorted(honorifics))
+            + "); drop the rank/title and name the character as a person"
+        )
 
     candidate_terms = _word_set(creative_text)
     for recent in recent_premises[-PREMISE_HISTORY_LIMIT:]:

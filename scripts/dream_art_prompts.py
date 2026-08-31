@@ -183,12 +183,16 @@ def world_prompt(title: str, idea: str, vibe_line: str, vibe_art: str = "",
     )
 
 
+# `known_for`, `carries`, and `role_drive` are complete sentences under the
+# card-copy contract (dream_prose_quality), so they are introduced with a colon
+# rather than spliced into a grammatical stem — "a place known for Its prismatic
+# chambers turn ..." is not a phrase an image model can use.
 def location_prompt(title: str, art_direction: str, known_for: str,
                     best_scene: str, world_title: str, vibe_line: str,
                     style: str | None = None) -> str:
     return _join(
         f"{_clean(art_direction)} — {_the(title)}",
-        f"a place known for {_clean(known_for)}" if known_for else "",
+        f"known for: {_clean(known_for)}" if known_for else "",
         f"staged at its most telling moment: {_clean(best_scene)}" if best_scene else "",
         _world_context(world_title, vibe_line),
         CARD_FRAMING,
@@ -205,8 +209,8 @@ def character_prompt(name: str, look: str, role_drive: str, carries: str,
     return _join(
         f"character portrait of {_clean(name)}",
         _clean(look),
-        f"visibly carrying {_clean(carries)}" if carries else "",
-        f"bearing of someone whose purpose is to {_clean(role_drive).lower()}" if role_drive else "",
+        f"visibly carrying: {_clean(carries)}" if carries else "",
+        f"the bearing of someone driven by this: {_clean(role_drive)}" if role_drive else "",
         _world_context(world_title, vibe_line),
         CARD_FRAMING,
         "single figure, three-quarter view from the waist up, filling most of the frame, "
