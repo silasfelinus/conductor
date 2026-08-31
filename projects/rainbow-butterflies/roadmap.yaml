@@ -759,8 +759,8 @@ tasks:
 - id: t-031
   milestone: m2
   title: "Give moderators a queue for health-claim-escalated posts"
-  status: ready
-  owner:
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >
@@ -772,6 +772,9 @@ tasks:
     admin dashboard) that lists auto-hidden posts pending review, with a way to
     restore (isPublic: true) or confirm removal (isActive: false). Reuse existing
     admin-auth guards; no new schema needed (isPublic: false is already the signal).
+  claimed_by: claude-scheduled-20260831T042737Z-rb-t031
+  claimed_at: '2026-08-31T04:30:08Z'
+  updated: '2026-08-31T04:30:08Z'
 
 - id: t-034
   milestone: m2
