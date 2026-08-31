@@ -512,7 +512,7 @@ pitches:
 
   - id: shadow-puppet-theater
     title: Shadow Puppet Theater
-    status: pitched
+    status: candidate
     priority: 16
     surprise: >
       A backlit paper screen where jointed shadow-puppet cutouts (a bird, a boat, a
@@ -542,6 +542,46 @@ pitches:
       - at least one full vignette (start pose to resolution pose) completes within twenty seconds
       - backlight drift is visible across a loop without ever fully silhouette-flattening or washing out a puppet
       - hand-shadow interaction never blocks or offsets the actual page pointer
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/shadow-puppet-theater.vue
+        pull_request: silasfelinus/kind_robots#2274
+        commit: 2b2e1d6491adf3fa928ccdd16043244d76d06131
+        verification:
+          - eslint
+          - prettier
+          - vue-tsc (full project)
+          - test:animation-catalog
+          - test:animation-component-attempts
+          - test:layout-contract
+          - check_animation_novelty.py --strict
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
+        notes: >-
+          Three vignettes (bird released from a cage, boat crossing choppy
+          water, lantern-bearer climbing a hill) cycle on a shared 13s active
+          + 1.8s hold timer, each well under the pitch's 20s per-vignette
+          acceptance bound. Puppets are built from a handful of cached
+          Path2D silhouette parts (tapered limb/wing/rod capsules, ovals,
+          a polygon lantern/hull/hand) driven purely by per-joint
+          save()/translate()/rotate()/restore() calls each frame -- no path
+          is rebuilt per frame. The backlight is a drifting radial gradient;
+          cast-shadow angle/softness is sold by drawing each puppet twice
+          (a blurred, backlight-offset penumbra duplicate, then a crisp
+          constant-alpha copy on top), so legibility never depends on the
+          light's position. Scenery (cage, water, hill) is recomputed per
+          frame from width/height directly, matching the existing
+          dune-horizon/wave-band precedent in strandbeest-migration and
+          moth-constellation rather than being cached as Path2D, since it
+          is cheap procedural geometry, not articulated puppet parts.
+          Reduced motion renders only the bird puppet doing a single slow
+          wing-flap loop against a fixed backlight, with no hand-shadow and
+          no vignette switching. Manual browser smoke matrix (docs/
+          architecture/animation-catalog-smoke-matrix.md) and the Component
+          attempt record are deferred per the standing sandbox gap -- no
+          live DB-backed server or authenticated interactive browser
+          available in this session.
 
   - id: kintsugi-weather
     title: Kintsugi Weather
