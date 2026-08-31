@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: ready
+  status: claimed
   passes: 49
   stakes: reversible
   note: >-
@@ -435,11 +435,11 @@ tasks:
     No new bug found this cycle (one real design fragility noted for future awareness, not currently triggerable). git status --porcelain clean throughout (read-only cycle). Re-armed to ready.
 
     Next lead for cycle 45: stores/helpers/narratorHelper.ts, imported wholesale at the top of narratorStore.ts (18+ named exports feeding nearly every bubble-text/lore/animation-routing computed in the store) has never had a dedicated full read -- this cycle only spot-checked normalizeEmotion and fallbackNarratorEmotions in it. A good target for a dedicated full read of the bubble-phrase selection, lore-matching, and animation-intent-parsing logic it backs.
-  updated: '2026-08-31T17:35:24Z'
+  updated: '2026-08-31T18:12:34Z'
   implementation_pr: 'silasfelinus/kind_robots#2207'
-  owner: reviewer
-  claimed_by: claude-scheduled-20260831T172925Z-sb-t010-cycle44
-  claimed_at: '2026-08-31T17:29:25Z'
+  owner: worker
+  claimed_by: openai-scheduled-20260831T181234Z-storybook-t010-oai11f3
+  claimed_at: '2026-08-31T18:12:34Z'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
