@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 49
   stakes: reversible
   note: >-
@@ -419,7 +419,23 @@ tasks:
     No new bug found this cycle. git status --porcelain clean throughout (read-only cycle). Re-armed to ready.
 
     Next lead for cycle 44: the narratorStore.ts file itself (1556 lines) has never had a dedicated end-to-end read in this task's history despite being the shared dependency both hypotheses above touched only partially (lines ~400-530, ~1345-1420) -- a full read (especially the liveness/bubble-timer machinery and the emotion-state transitions) is the natural next lead, or alternatively a fresh top-level page component in the same vein as this cycle (e.g. components/pages/taskmaster-page.vue's own template, which cycle history hasn't confirmed a full read of despite auditing its narrative/** dependencies).
-  updated: '2026-08-31T17:29:25Z'
+
+    Cycle 44 (no-op, real investigation): read stores/narratorStore.ts (1556 lines) in full end to end for the first time in this task's history, per cycle 43's stated next lead, plus traced call sites into kr-narrator-stage.vue, workspace-narrator.vue, kr-manager.vue, dream-manager.vue, app.vue, and chatStore.ts.
+
+    Chased four concrete hypotheses:
+
+    1. Concurrent narrator instances racing on shared liveness/timer state: bubbleTimer/livenessTimer/livenessPausedUntil/tabHidden are module-scope lets on the default Pinia singleton, not per-instance -- genuinely global. kr-narrator-stage.vue and workspace-narrator.vue both call disposeTimers()+teardownLiveness() on unmount and initialize() (which arms ensureClientLiveness()) on mount, with no reference counting, so one consumer unmounting would silently kill a concurrently-mounted sibling's liveness heartbeat. Traced whether two consumers can ever be mounted simultaneously today: app.vue's own comment (lines 319-330) confirms the narrator was deliberately made route-scoped rather than persistent chrome; kr-manager.vue's tab shell renders exactly one v-if="renderedTab" :key="renderedTab" slot at a time; dream-manager.vue only wires workspace-narrator under its #dreams tab; kr-narrator-stage.vue's only mounts (storybook-page.vue, taskmaster-page.vue) are both behind the same catch-all route. So under the current routing/shell architecture this is unreachable -- ruled out as a live bug, but flagged as a real design fragility (no ownership/refcounting on shared global timers) that becomes live the moment a persistent narrator dock is reintroduced alongside a page-level stage.
+
+    2. hasInitialized guard race on near-simultaneous mounts: initialize() sets hasInitialized.value = true synchronously before its first await, so no double-init is possible even in the same tick. Ruled out.
+
+    3. sendNarratorMessage leaving isNarratorResponding stuck true forever after a stream failure (narratorSessionIds gets the chat id pushed before the await, and the catch block never removes it): traced into chatStore.ts's streamResponse, whose own catch always calls updateChat(chatId, { botResponse: `warning-prefixed message` }) before rethrowing, so botResponse ends up truthy on failure and isNarratorResponding correctly flips back to false. Ruled out.
+
+    4. showMoodRing/cycleEmotion asymmetric reset: driftMood() schedules an untracked bare setTimeout to clear showMoodRing (not registered in bubbleTimer/livenessTimer, not cleared by disposeTimers()/teardownLiveness()), while cycleEmotion() sets showMoodRing true with no reset path at all. Grepped the whole repo: showMoodRing and cycleEmotion have zero consumers outside the store itself -- no template reads it, nothing calls cycleEmotion. Currently inert dead code, not a user-visible bug; worth a note for whoever eventually wires a mood-ring UI onto cycleEmotion.
+
+    No new bug found this cycle (one real design fragility noted for future awareness, not currently triggerable). git status --porcelain clean throughout (read-only cycle). Re-armed to ready.
+
+    Next lead for cycle 45: stores/helpers/narratorHelper.ts, imported wholesale at the top of narratorStore.ts (18+ named exports feeding nearly every bubble-text/lore/animation-routing computed in the store) has never had a dedicated full read -- this cycle only spot-checked normalizeEmotion and fallbackNarratorEmotions in it. A good target for a dedicated full read of the bubble-phrase selection, lore-matching, and animation-intent-parsing logic it backs.
+  updated: '2026-08-31T17:35:24Z'
   implementation_pr: 'silasfelinus/kind_robots#2207'
   owner: reviewer
   claimed_by: claude-scheduled-20260831T172925Z-sb-t010-cycle44
