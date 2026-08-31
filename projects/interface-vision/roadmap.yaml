@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3309,7 +3309,16 @@ tasks:
     base-300/bg-base-100; rounded-xl and existing spacing (mx-0.5/mt-2.5/p-2.5) preserved,
     no geometry/behavior change. Verified locally: eslint, vue-tsc --noEmit, test:layout-
     contract (207 baseline, zero new). PR silasfelinus/kind_robots#2257.
-  updated: '2026-08-31T10:33:59Z'
+
+    Slice merged as silasfelinus/kind_robots#2257 (squash
+    9f947d9c2f839d65cde221bf3562921b05945d29) from head
+    c7c24725aba4bb264f7c987f261aedd6988841b6. components/scenarios/scenario-card.vue
+    inspirations-summary panel now uses kr-panel-flat instead of hand-rolled border-
+    base-300/bg-base-100; rounded-xl and existing spacing (mx-0.5/mt-2.5/p-2.5) preserved --
+    no geometry or behavior change. All 37 PR checks green (TypeScript, layout-contract,
+    facet-catalog, verify x3, Contract verifiers, full Storybook contract suite). Return the
+    recurring umbrella to ready for the next bounded slice.
+  updated: '2026-08-31T10:38:04Z'
   implementation_pr: 'silasfelinus/kind_robots#2257'
   owner: worker
   claimed_by: claude-scheduled-20260831T102908Z-iv-t104
