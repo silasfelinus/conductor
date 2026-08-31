@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 49
   stakes: reversible
   note: >-
@@ -232,7 +232,37 @@ tasks:
     teardownLiveness()/disposeTimers() on the singleton store affects a concurrently-mounted
     stage) or stores/storybookStore.ts (950 lines, never confirmed fully read despite 20+
     guards touching it).
-  updated: '2026-08-31T23:27:49Z'
+
+    Cycle 49 (no-op, re-armed): read components/narrative/kr-narrator-stage.vue (189 lines)
+    end to end and stores/storybookStore.ts in full (950 lines, now confirmed fully read
+    despite 20+ guards touching it). Chased cycle 48's lead: does workspace-narrator.vue's
+    onBeforeUnmount teardown of the shared narratorStore singleton
+    (teardownLiveness()/disposeTimers()) affect a concurrently-mounted kr-narrator-
+    stage.vue? Ruled out -- traced actual mount topology (kr-narrator-stage only mounts via
+    storybook-page.vue/taskmaster-page.vue/davinci-page.vue; workspace-narrator only via
+    dream-interact.vue on the separate /dreams route) and confirmed no <KeepAlive> in
+    app.vue; pages/[...slug].vue's activePage computed flips to null synchronously on route
+    change (hasResolvedCurrentPath false the instant contentPath changes), tearing down the
+    old route's content -- and workspace-narrator with it -- strictly before the new route's
+    content can mount, so no overlap window exists across navigation. Within-route Dream
+    switching (where workspace-narrator does stay mounted) never touches
+    teardownLiveness()/disposeTimers() since the component itself doesn't unmount. Secondary
+    lower-confidence finding, not fixed (below the reachability/impact bar):
+    narratorStore.initialize() sets hasInitialized=true synchronously before its await, then
+    calls ensureClientLiveness() only after -- a reader navigating away before first-ever
+    initialize() resolves arms a liveness timer/visibilitychange listener with nothing
+    displaying the narrator; self-healing (next mount's ensureClientLiveness() clears-then-
+    resets, no duplication), no user-visible symptom, so left as a note rather than a fix.
+    No new bug found this cycle. Verified: npm run test:storybook (24/24 guards pass), npm
+    run test:layout-contract (0 violations), npx vue-tsc --noEmit (clean, repo-wide). No
+    commit/branch/PR needed -- working tree left clean. Re-arming to ready. Cycle 50 lead:
+    stores/helpers/storybookLibraryHelper.ts (420 lines) -- the controller storybookStore.ts
+    delegates all library/session-management logic to (createStorybookLibraryController),
+    backing most of this cycle's library guards (verifyStorybookLibraryPhantomSessionGuard,
+    verifyStorybookDuplicateResumeGuard, verifyStorybookLibrarySessionConsistencyGuard);
+    read call sites into it this cycle but not its internals -- worth a full end-to-end read
+    to confirm those guards' assumptions hold against the real implementation.
+  updated: '2026-08-31T23:38:47Z'
   owner: worker
   claimed_by: claude-scheduled-20260831T232749Z-sb-t010-cycle49
   claimed_at: '2026-08-31T23:27:49Z'
