@@ -3694,5 +3694,38 @@ tasks:
     while moving the heading into the feed's control row.
 
     Merged as squash b847fb12ce1a964d62cd52077675099055fe79cc.
+
+- id: t-085
+  milestone: m6
+  title: "comment-migration-contract's comment-contract check has been red on main since before 2026-08-30"
+  status: ready
+  owner:
+  passes: 0
+  stakes: reversible
+  note: >
+    Found while merging rainbow-butterflies/t-034 (kind_robots#2252, a small
+    forum posting-guidance change unrelated to comments): the
+    `comment-migration-contract.yml` workflow's `comment-contract` job has
+    been failing on `main` itself for at least the several runs preceding
+    2026-08-30T20:44Z (checked via `list_workflow_runs` filtered to
+    `head_branch: main` -- all recent runs `failure`), so every PR now
+    inherits a pre-existing red check regardless of what it touches.
+
+    Root cause per the job's own output (`verifyPopulationDraftQuality.ts`):
+    52 mismatches across 21 comment batch JSON files where a batch's
+    CHARACTER/DREAM/SCENARIO id either does not exist in production or now
+    names a different character than the batch's own hardcoded name (e.g.
+    `batch-0276.json CHARACTER:1024 -- Undersecretary Wrenna Vail: CHARACTER:1024
+    is "Ilkay Demirci" in production`). The script's own comment says every one
+    of these would abort the actual comment-population production run, one at
+    a time -- so this isn't just a CI annoyance, the batches are stale against
+    whatever reseeded/renumbered those Character/Dream/Scenario rows.
+
+    Needs someone to reconcile the batch files against current production
+    data (re-point each stale id to its current row, or regenerate the
+    batches) and confirm `npx tsx utils/scripts/verifyPopulationDraftQuality.ts`
+    passes clean before closing. Until fixed, treat this job's failure as
+    known/pre-existing on every PR (per docs/state-reconciliation.md's
+    CI-red handling) rather than re-diagnosing it each time.
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination 
   surfaces grow into one dependable application.
