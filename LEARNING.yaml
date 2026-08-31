@@ -11838,3 +11838,18 @@ records:
     vs-human-gated boundaries onto concrete triage steps) is worth doing as its own
     deliverable even with zero new policy -- the contract existed but no one had turned it
     into a checklist a moderator could follow directly.
+- date: '2026-08-31'
+  project: rainbow-butterflies
+  task: t-031
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A kaizen task that says "no new schema needed" is worth taking literally and
+    verifying, not just trusting -- confirmed escalateHealthClaimFlagsIfNeeded() is the
+    only code path that ever flips isPublic:false on a ToForum Chat row before building
+    the admin queue query around that invariant, rather than adding a dedicated flag/reason
+    column. Following an existing sibling admin review-queue (social-drafts) for the
+    fetch/approve-reject store and page shape kept the new surface consistent with house
+    style with no new conventions invented.
