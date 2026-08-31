@@ -57,7 +57,7 @@ jobs:
         if: steps.pending.outputs.found == 'true'
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
-        run: python scripts/retry_dream_identity_collision_by_slug.py "${{ steps.pending.outputs.request }}"
+        run: python scripts/retry_dream_identity_collision_new_slug.py "${{ steps.pending.outputs.request }}"
 
       - name: Verify unique live-record ownership
         if: steps.pending.outputs.found == 'true'
