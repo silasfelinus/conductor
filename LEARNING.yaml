@@ -1,4 +1,27 @@
 records:
+- date: 2026-08-31
+  project: animation-manager
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: transient
+  lesson: >-
+    A worktree-isolated subagent's first attempt to edit PITCHES.yaml (append a build-lineage
+    block to one pitch entry) via the GitHub `create_or_update_file` API silently truncated the
+    1213-line file after an earlier entry, dropping three unrelated pitches, because it only had
+    partial file content in its own context when it constructed the update payload. It caught this
+    itself by fetching the pushed content back and diffing it against the pre-edit file immediately
+    after pushing (rather than trusting the push succeeded because the API call returned success),
+    corrected it with two follow-up pushes, and a final byte-for-byte diff confirmed only the
+    intended two-line change landed. The coordinating session independently re-verified the merged
+    result before closing the task, rather than trusting the subagent's self-report alone. Lesson
+    for future multi-file/whole-file edits made via a content-replacing API (not a diff/patch API):
+    always fetch-and-diff the actual pushed/committed content against the pre-edit version before
+    reporting success, especially when the edit was constructed from partial context of a large
+    file -- and the coordinating/reviewing session should independently re-verify a subagent's
+    "I caught and fixed my own mistake" claim on shared state rather than taking it at face value.
 - date: 2026-08-01
   project: interface-vision
   task: t-012
