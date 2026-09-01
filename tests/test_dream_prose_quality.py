@@ -144,7 +144,7 @@ def test_label_echo_is_flagged_where_a_label_sits_beside_the_value():
     assert any("locations[0].best_scene restates its own label" in p for p in problems)
     assert any("locations[0].local_rule restates its own label" in p for p in problems)
     # "Use it when ..." now reports under the more precise construction message.
-    assert any("rewards[item].best_used_when is written as an instruction" in p
+    assert any("rewards[item].best_used_when is an instruction to the reader" in p
                for p in problems)
 
 
@@ -186,7 +186,8 @@ def test_best_used_when_rejects_any_verb_it_when_opening():
         for reward in proposal["rewards"]:
             reward["best_used_when"] = f"{opening} the courtroom has already gone dark."
         problems = prose.complaints(proposal)
-        assert any("is written as an instruction to the reader" in p for p in problems), opening
+        assert any("best_used_when is an instruction to the reader" in p
+                   or "best_used_when spends the sentence" in p for p in problems), opening
 
 
 def test_best_used_when_accepts_a_plain_situation():
@@ -264,7 +265,7 @@ def test_best_used_when_rejects_the_it_verb_when_form_too():
         for reward in proposal["rewards"]:
             reward["best_used_when"] = f"{opening} the courtroom has already gone dark."
         problems = prose.complaints(proposal)
-        assert any("is written as an instruction to the reader" in p for p in problems), opening
+        assert any("best_used_when spends the sentence" in p for p in problems), opening
 
 
 def test_a_situation_that_merely_begins_with_it_is_left_alone():
@@ -275,3 +276,66 @@ def test_a_situation_that_merely_begins_with_it_is_left_alone():
         )
 
     assert not any("best_used_when" in p for p in prose.complaints(proposal))
+
+
+def test_best_used_when_rejects_the_claim_moved_to_the_end():
+    # Round four, and the first defect this file caught its own repair lane
+    # creating. Told to drop the opening frame, the repair model moved it to the
+    # tail: "... is exactly the moment this ladle earns its keep." Same sentence,
+    # same wasted clause, and a leading-only check reports it clean.
+    proposal = _quality_sample()
+    for tail in ("is exactly the moment this ladle earns its keep",
+                 "is when this treaty proves most valuable",
+                 "is precisely the situation this was made for",
+                 "is exactly where this draw belongs",
+                 "is the moment this locket's promise takes hold"):
+        for reward in proposal["rewards"]:
+            reward["best_used_when"] = f"A disputed memory turns the courtroom black, which {tail}."
+        problems = prose.complaints(proposal)
+        assert any("best_used_when spends the sentence" in p for p in problems), tail
+
+
+def test_best_used_when_rejects_a_when_opening_and_an_imperative():
+    proposal = _quality_sample()
+    for reward in proposal["rewards"]:
+        reward["best_used_when"] = "When the courtroom has gone dark, this keeps the peace."
+    assert any("opens with 'when'" in p for p in prose.complaints(proposal))
+
+    for reward in proposal["rewards"]:
+        reward["best_used_when"] = "Study the disputed memory up close without entering the chamber."
+    assert any("is an instruction to the reader" in p for p in prose.complaints(proposal))
+
+
+def test_reward_and_location_copy_may_not_hard_code_the_character():
+    # Every asset is meant to be liftable into another story on its own, so a
+    # reward welded to one name cannot be mixed. The Scenario is exempt by design.
+    proposal = _quality_sample()
+    name = proposal["characters"][0]["name"].split()[0]
+    proposal["rewards"][0]["grants"] = f"It lets {name} read a hearing before the first word lands."
+    proposal["locations"][0]["best_scene"] = f"At dusk {name} balances on the witness rail, testing a hue."
+
+    problems = prose.complaints(proposal)
+    assert any("rewards[item].grants hard-codes the character name" in p for p in problems)
+    assert any("locations[0].best_scene hard-codes the character name" in p for p in problems)
+    assert not any("scenarios" in p and "hard-codes" in p for p in problems)
+
+
+def test_a_scenario_may_name_the_character_freely():
+    proposal = _quality_sample()
+    name = proposal["characters"][0]["name"]
+    proposal["scenarios"][0]["setup"] = (
+        f"{name} must prove a hue was never spoken while the court repaints itself around the claim, "
+        "and every honest answer costs another shade of the room."
+    )
+
+    assert not any("hard-codes" in p for p in prose.complaints(proposal))
+
+
+def test_schema_vocabulary_never_reaches_card_copy():
+    proposal = _quality_sample()
+    proposal["scenarios"][0]["setup"] = (
+        "Under the vibe Paperwork for a God, a clerk is mid-stamp when the real inspector "
+        "wades ashore on the tide, holding a decade of forged authorizations."
+    )
+
+    assert any("names the schema out loud" in p for p in prose.complaints(proposal))

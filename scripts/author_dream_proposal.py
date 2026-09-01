@@ -162,6 +162,28 @@ prints its name directly above. "Its prismatic chambers turn spoken testimony
 into color." is usable; "The Refracted Court is known for turning testimony
 into color." is not.
 
+`best_used_when` names a CIRCUMSTANCE and nothing else. Never claim the reward is
+useful anywhere inside it. Not at the front — "It proves most valuable when the
+clue was spoken once", "The shawl earns its keep in a room where..." — and not at
+the end, which is where the claim migrates when only the opening is policed:
+"...is exactly the moment this ladle earns its keep", "...is when this treaty
+proves most valuable". Both halves are the label talking to itself. Delete the
+claim and let the circumstance be the entire sentence. Do not open with "When"
+(the label supplied it) and do not write an instruction to the reader ("Study the
+bloom up close..."). The register to hit: "The loudest person in the room is not
+the injured one." "Everyone agrees on what happened but not on when it happened."
+"There is nowhere flat for a hundred kilometres."
+
+Reward and location copy must never name the character. Every asset is built to be
+liftable into a different story on its own, and "It lets Bramble draft, stamp, and
+cross-reference an invented form" is welded to one person — say "its holder" or "a
+clerk" instead. The Scenario is exempt: it is the synthesis piece and names the
+vibe, location, character, and rewards on purpose.
+
+Never name the schema in copy a reader sees. No "the vibe", "this facet", "the
+proposal", "the bundle". A Scenario opens inside the story, never with "Under the
+vibe Paperwork for a God, ...".
+
 They must explain enough to make sense when a card shows the field by itself.
 Keep the sharpness of a good tagline, but do not confuse brevity with
 incompleteness: the vibe line should communicate the world's governing mood,

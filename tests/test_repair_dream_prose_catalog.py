@@ -4,6 +4,8 @@ import copy
 import json
 from pathlib import Path
 
+import pytest
+
 import scripts.build_dream_proposal as proposals
 import scripts.repair_dream_prose_catalog as repair
 
@@ -422,3 +424,56 @@ def test_publish_phase_patches_live_and_is_idempotent(tmp_path, monkeypatch):
     before = len(calls)
     assert repair.publish_live(receipt_path) == 0
     assert len(calls) == before
+
+
+def test_extra_fields_repairs_a_sentence_no_check_generalizes(tmp_path, monkeypatch):
+    # The contract catches defect classes. An editor reading the catalog also
+    # finds one-offs -- a local_rule whose second clause restates its first, a
+    # definite reference to someone never introduced -- that no honest regex
+    # generalizes. Without this lane the only way to repair a sentence you can
+    # see is wrong is to invent a detector for its whole class.
+    monkeypatch.setattr(repair, "ROOT", tmp_path)
+    backlog = tmp_path / "projects" / "dream-cycle" / "backlog"
+    backlog.mkdir(parents=True)
+    monkeypatch.setattr(repair, "BACKLOG", backlog)
+    path = _built_bundle(backlog)
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
+    monkeypatch.setattr(repair.records, "KR_API_TOKEN", "test-token")
+    monkeypatch.setattr(repair.revision, "_patch", lambda *a, **k: None)
+    fixed = "The barrier lamps are already dimming and the crowd has gone quiet."
+    rule = "No performance may finish the final aria, and none ever has."
+    seen: dict = {}
+
+    def _call(prompt, system, key):
+        seen["prompt"] = prompt
+        return json.dumps({"item_best_used_when": fixed, "skill_best_used_when": fixed,
+                           "local_rule": rule})
+
+    monkeypatch.setattr(repair.author, "call_claude", _call)
+    request_path = tmp_path / "2026-09-01-extra-request.json"
+    request_path.write_text(json.dumps({
+        "scope": "all-built",
+        "extra_fields": {"2026-08-30": ["locations[0].local_rule"]},
+    }), encoding="utf-8")
+
+    repair._apply_batch(request_path, json.loads(request_path.read_text()))
+
+    assert "local_rule" in seen["prompt"], "the hand-picked field must reach the model"
+    assert rule in path.read_text(encoding="utf-8")
+
+
+def test_extra_fields_rejects_a_field_the_repair_lane_cannot_resolve(tmp_path, monkeypatch):
+    # A label with no FIELD_PATHS entry would be dropped silently on the way in
+    # and still be there on the way out, so fail on the request instead.
+    monkeypatch.setattr(repair, "ROOT", tmp_path)
+    backlog = tmp_path / "projects" / "dream-cycle" / "backlog"
+    backlog.mkdir(parents=True)
+    monkeypatch.setattr(repair, "BACKLOG", backlog)
+    _built_bundle(backlog)
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
+    request_path = tmp_path / "2026-09-01-bad-request.json"
+    request = {"scope": "all-built", "extra_fields": {"2026-08-30": ["locations[0].smell"]}}
+    request_path.write_text(json.dumps(request), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="unknown field"):
+        repair._apply_batch(request_path, request)
