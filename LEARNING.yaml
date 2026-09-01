@@ -12024,3 +12024,36 @@ records:
     guards' regexes (not just add a new one) since the fixed condition's shape legitimately
     changed -- worth checking whether a new guard should tighten or loosen a prior one
     when a fix's shape evolves, rather than always adding purely-additive checks.
+- date: '2026-09-01'
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A recurring task's note: field narrated a merge and a "re-arming to ready" no-op
+    cycle that its status: field never actually recorded -- the narrative outran the
+    machine-readable state by at least one cycle before check_pr_merged_drift.py's
+    merged-implementation_pr-vs-claimed-status check caught it. A cycle that intends
+    to re-arm a recurring task should verify the status: field actually changed, not
+    just that the note says it did.
+- date: '2026-09-01'
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Cycle 77: a new doc-comment's own prose can trip a regex-based static guard that
+    scans for keywords without distinguishing code from comments -- verifyModelBuilder
+    CompletionGate.ts's `\bawait\b`-based "find the function's first await" heuristic
+    matched the bare word inside this cycle's own explanatory comment ("per-item-await
+    loops"), shifting its notion of where real async work starts and flagging an
+    unrelated pre-existing comment 20+ lines later as an ungated write. A regex-based
+    guard against source text is exactly as blind to comments/strings as the pattern
+    it's matching, so a new comment near guarded code should be checked against every
+    such guard's actual matching logic, not just eyeballed for correctness.
