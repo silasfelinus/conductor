@@ -826,7 +826,7 @@ tasks:
   owner: null
   passes: 0
   stakes: outward-facing
-  implementation_pr: 'silasfelinus/kind_robots#2285'
+  implementation_pr: 'silasfelinus/kind_robots#2285, silasfelinus/kind_robots#2289 (pending)'
   note: >-
     FOR SILAS: kind_robots PR #2285 ("Add first-party BFF delegation for Rainbow") adds a
     new server-to-server auth mechanism — a 7-day, non-admin JWT ("first-party delegation
@@ -862,6 +862,27 @@ tasks:
     merge, or set `status: ready` with revised instructions if you want it reworked further.
     Nothing downstream depends on this task, but PR #2285 stays unmerged on kind_robots
     until it's resolved one way or another.
+
+    UPDATE (conductor scheduled Agent run, 2026-09-01T08:35Z): kind_robots#2285 merged
+    (squash, merged_by silasfelinus, merged_at 08:20:15Z) WITH the requireHumanApiUser fix
+    in place -- its guard blocked both `agent-credential` AND `first-party-delegation` at
+    merge time, so the originally-flagged self-escalation path was closed when this landed.
+    Point (1)-(3) design questions above may still be open; unclear whether Silas decided
+    them explicitly or merged once satisfied the blocking bug was fixed.
+
+    NEW, more urgent: kind_robots#2289 ("Allow Rainbow BFF delegation through human-owned
+    API guard", opened 08:27Z by a different session/PR, not yet merged) explicitly REMOVES
+    the `first-party-delegation` block from `requireHumanApiUser`, reopening the exact gap
+    this task flagged -- confirmed every AgentCredential/AgentProfile write endpoint
+    (agent-credentials/index.post.ts, [id].delete.ts; agent-profiles/index.post.ts,
+    [id].patch.ts, [id].delete.ts) still uses requireHumanApiUser as its only guard, so this
+    would let a first-party-delegation token (obtainable via the still-unrate-limited
+    password.post.ts endpoint) mint itself a new, longer-lived AgentCredential again. Posted
+    a blocking comment on kind_robots#2289 explaining this and proposing narrower
+    alternatives (scope the allowance away from agent-credentials/agent-profiles
+    specifically, or wait for this task's resolution); did not merge or reject it myself
+    since it's the same open security decision. kind_robots#2289 must not merge as-is
+    without addressing this.
   claimed_by: null
   claimed_at: null
-  updated: '2026-09-01T06:44:00Z'
+  updated: '2026-09-01T08:35:00Z'
