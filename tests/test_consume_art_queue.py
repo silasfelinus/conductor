@@ -1,42 +1,15 @@
 import base64
-from pathlib import Path
 
 import pytest
 
 import scripts.consume_art_queue as consumer
 
 
-# The engine builders resolve their model constants through the Kind Robots
-# Resource registry (consume_art_queue_core.resolve_model), which means an
-# unstubbed entry_to_job() call reaches out to the live production API. That is
-# wrong twice over: the suite should not need the network, and an assertion
-# about a workflow's model name should not silently change meaning when someone
-# edits a Resource row. Pin the index to a fixture covering exactly the models
-# the engine constants name. Registering a new engine model means adding it
-# here too -- if you do not, resolve_model warns and passes the logical name
-# through, and the test sees a name ComfyUI would reject.
-FAKE_RESOURCE_INDEX = {
-    "DIFFUSION_MODEL": {
-        "flux2_dev_fp8mixed": "flux2_dev_fp8mixed.safetensors",
-        "krea2-turbo": "Krea-2-Turbo-Q5_K_S.gguf",
-    },
-    "TEXT_ENCODER": {
-        "mistral_3_small_flux2_bf16": "mistral_3_small_flux2_bf16.safetensors",
-        "qwen_3_8b": "qwen_3_8b.safetensors",
-    },
-    "VAE": {
-        "flux2-vae": "flux2-vae.safetensors",
-        "krea2-vae": "krea2_vae.safetensors",
-    },
-}
-
-
-@pytest.fixture(autouse=True)
-def _stub_resource_registry(monkeypatch):
-    # `scripts/consume_art_queue.py` ends with `sys.modules[__name__] = _core`,
-    # so `consumer` IS the core module and this patches the real global.
-    monkeypatch.setattr(consumer, "_RESOURCE_INDEX", dict(FAKE_RESOURCE_INDEX))
-    yield
+# The registry stub that keeps this suite off the network now lives in
+# tests/conftest.py and applies to every test, not just this file -- which is
+# why this file's tests were the only ones that did NOT fail when production
+# 502'd on 2026-09-01. See tests/fake_resource_registry.py for the measurements.
+from tests.fake_resource_registry import FAKE_RESOURCE_INDEX
 
 
 def _resolved(logical, kind):

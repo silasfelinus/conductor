@@ -4521,6 +4521,64 @@ tasks:
     time cost -- previously unverified whether merging past this stall was even safe, now confirmed it is, at least for a
     diff this session already validated locally (`validate_roadmaps.py`, direct `yaml.safe_load` parse, `ruff check`, manual
     script execution) before pushing.
+
+    EVIDENCE FOR (b), 2026-09-01, from an unrelated PR (conductor#3414, a
+    roadmap-note-only diff). The `Python test suite` job failed with 17 tests
+    erroring identically: `RuntimeError: cannot read the Resource registry at
+    https://kindrobots.org/api/resources (HTTP 502)`. Production was verified
+    healthy from that session a minute or two later (`/`, `/api/resources` and
+    `/api/showcase/home` all 200) and a re-run of the same commit passed, so it
+    was a momentary upstream blip rather than the PR.
+    So (b) is CONFIRMED in one direction: the suite does make unstubbed live HTTP
+    calls to kindrobots.org. `scripts/consume_art_queue_core.py`
+    `_load_resource_index()` calls `http_json("GET", KR_BASE_URL + "/api/resources")`
+    with no fixture, and ten test files reference KR_BASE_URL/kindrobots.org.
+    AND IT SUGGESTS A MECHANISM FOR THE STALL ITSELF, which is the part worth
+    testing. `_load_resource_index` memoizes into a module global but only ON
+    SUCCESS -- the raise happens before `_RESOURCE_INDEX = index`. So a failing
+    or slow registry is retried by every test that reaches `resolve_model`, not
+    once per process; those 17 failures were 17 separate HTTP requests.
+    `http_json` defaults to `timeout=60`, so an endpoint that HANGS rather than
+    502s costs up to 60s per test, and 17 x 60s is about 17 minutes against the
+    20+ minute stall this task was filed for. Hypothesis, not proof -- nobody has
+    caught the stall in the act with timings -- but it is consistent with the
+    stall hitting a docs-only PR, since these tests run regardless of the diff.
+    Cheapest fix if it holds: stub the registry in the suite (a conftest fixture
+    setting `_RESOURCE_INDEX`, or monkeypatching `http_json`), which removes both
+    the outright-failure and the stall modes and takes CI off a dependency on
+    production being up. Caching the failure, or lowering the timeout, would only
+    shrink the blast radius rather than remove it.
+
+    TESTED AND FIXED, 2026-09-01, on Silas's go-ahead. Reproduced against a local
+    stand-in registry so nothing touched production:
+    (1) FAILURE IS NOT CACHED -- CONFIRMED. Pointing KR_BASE_URL at a counting
+    server that answers 502 reproduced the same 17 failures exactly, and the
+    server logged 18 requests, not 1. Every test that reaches `resolve_model`
+    re-fetches, because the raise in `_load_resource_index` precedes
+    `_RESOURCE_INDEX = index`.
+    (2) THE 60s COST IS REAL AND ADDITIVE -- CONFIRMED. Against a server that
+    accepts and never answers, one test took 60.27s and two took 120.43s. So the
+    pre-fix exposure was 18 x 60s = about 18 minutes of stall, against the 20+
+    minutes this task was filed for. The mechanism proposed above holds.
+    THE FIX, which is the pattern the repo already had in one place: the registry
+    stub that lived inside test_consume_art_queue.py is now
+    tests/conftest.py + tests/fake_resource_registry.py, autouse across the whole
+    suite. That file's tests were the only ones that did NOT fail on 2026-09-01
+    precisely because it alone was protected; a test should not have to know that
+    building a job hits an HTTP API in order to be insulated from it.
+    RESULT: full suite green with production unreachable -- 1525 passed, 1
+    skipped, 35 subtests -- and registry requests fell from 18 to 1. Against the
+    HANGING server the whole suite now finishes in 116s versus a 101s healthy
+    baseline: the stall exposure is +15s rather than +18 minutes.
+    THE REMAINING ONE CALL is `drain_failed_art_backlog.registered_model_basenames`
+    (its own `GET /api/resources?pageSize=500`, a different code path the
+    `_RESOURCE_INDEX` stub does not cover). It is deliberately failure-tolerant --
+    it returns None so a caller can tell "not registered" from "could not check"
+    -- so it degrades rather than failing, and it is one call rather than
+    eighteen. Left alone on purpose: nineteen test files use `http_json` and ten
+    monkeypatch it themselves, so a blanket conftest override of `http_json`
+    risks fixture-ordering conflicts for a much smaller benefit than the change
+    above. Worth doing if the residual 60s ever matters.
   updated: '2026-08-24T18:55:43Z'
 
 - id: t-125
