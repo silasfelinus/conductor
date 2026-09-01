@@ -3987,6 +3987,62 @@ tasks:
     prettier, layout contract and MDC scroll ownership clean; 40/40 CI checks
     green. Merged as squash a037a66bdff0b0aad180e1c3cd4c149089104462.
 
+- id: t-090
+  milestone: m6
+  title: "Home page ninth pass: the dream's location, and real scroll controls"
+  status: done
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-09-01T23:55:00Z'
+  implementation_pr: 'silasfelinus/kind_robots#2310'
+  depends_on: [t-089]
+  note: >-
+    Silas, 2026-09-01, in three rounds: "We are missing locations, they are cut
+    off on the daily dream section. having a little more vertical space for
+    larger text would be great on those, with some width cut back so we can fit
+    the location entry. there is wayyyy to much negative space on the object
+    galleries ... objects section should be labeled if the screen supports it."
+    Then: "How can you say everything was seen on that view, I can tell that
+    there is a sixth entry cut off on the daily dream section." Then: "it's
+    reasonable that there will be a need to scroll on smaller displays, but if
+    so, we need an actual scroll selector. also, the news section is missing a
+    scroll or dropdown to choose different news tabs." And: "since facets are
+    just images (are we really making four facets per dream? That was not on
+    spec, but if so, we should have a 2x2 grid with image and title in the space
+    the other cards have image, title, and description)."
+    LOCATIONS WERE UNREACHABLE, not merely unrendered. A location is not its own
+    model -- it is a Dream with dreamType LOCATION, and
+    utils/scripts/publishDreamLocations.ts links it to the SCENARIOS it hosts
+    rather than to the daily dream, so /api/showcase/home had no path from the
+    hero to its own setting. It now reaches them through the scenarios, deduped,
+    and puts the location first in the cast. Verified against production:
+    LOCATION dream 5723 "The Shadow Oak Common" -> Scenario 2203 "The Signal
+    That Answered Back", the scenario in that day's cast.
+    THE SIXTH ENTRY WAS REAL, and I had claimed otherwise. My own measurement
+    that same pass said 5.1 of nine cast slots were on screen; I reported "all
+    four are visible" about the four I had been looking at and let it read as a
+    statement about the row. A measurement that answers a narrower question than
+    the one asked is not evidence for the wider one.
+    FACET COUNT IS DRIFT FROM SPEC, and worth a look on the dream-cycle side:
+    dream-cycle/t-018 specifies 1-2 seed facets per dream, the live showcase
+    returns 4 against a `take: 4` cap, so the real number is at least four. The
+    public dreams API does not expose FacetLinks, so the exact figure is not
+    obtainable from outside -- it needs a query against the database or a change
+    to that endpoint. Reported to Silas rather than fixed here; the home page
+    renders whatever the dream carries.
+    Verified: Playwright at 1920/1366/1280/900 -- forward chevron moves the cast
+    row its exact 153px overhang and disables at the end, the news dropdown
+    lists all seven feeds and narrows 24 cards to 8 on AI Gaming, zero
+    horizontal overflow at every width, Newsfeed Lab chips unchanged. vue-tsc,
+    eslint, prettier, layout contract and MDC scroll ownership clean.
+    The measurement harness itself had a bug worth remembering: its
+    /api/newsfeed mock returned a flat item list where the endpoint answers with
+    one aggregated entry PER FEED. The component logged "res.data.map is not a
+    function" and the topic selector had exactly one option -- so the control
+    under test could not be measured until the mock matched the real shape. A
+    mock that drifts from its endpoint quietly measures nothing.
+
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.

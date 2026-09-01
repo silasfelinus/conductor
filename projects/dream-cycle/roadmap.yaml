@@ -669,3 +669,32 @@ tasks:
     runs), stop auto-retrying and surface it explicitly (a needs-human note, or at
     minimum a distinct stderr/receipt marker a human sweep would notice) rather than
     let it recur unnoticed indefinitely.
+- id: t-026
+  milestone: m5
+  title: Facets per dream have drifted past the 1-2 the seed spec asks for
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-09-01T23:55:00Z'
+  depends_on: [t-018]
+  note: >
+    Silas, 2026-09-01, looking at the home page's dream hero: "are we really making four
+    facets per dream? That was not on spec". He is right that it is not on spec -- t-018
+    above specifies seeding each daily dream from 1-2 live facets -- and the home page is
+    showing four.
+    WHAT IS ACTUALLY KNOWN, and what is not. /api/showcase/home reads FacetLinks with
+    `take: 4` and gets four back, so the real number is AT LEAST four; the cap means it
+    could be more. The public dreams endpoint does not expose FacetLinks at all, so the
+    exact count cannot be obtained from outside -- it needs a query against the database,
+    or a small addition to that endpoint. Nothing here has been measured beyond ">= 4",
+    and the note should not be read as saying the number is exactly four.
+    THE WORK: find where the count is actually set (build_dream_proposal.py's seed_facets,
+    the build step that writes FacetLinks, or a later enrichment pass that adds more), and
+    report the real distribution across the last week or two of dreams. That much is
+    mechanical. Whether 1-2 is still the right target, or the spec should move to match
+    what the cycle has been doing, is Silas's creative call -- bring him the numbers and
+    the cause, not a change to the count.
+    The home page renders whatever a dream carries and needs no change either way: as of
+    silasfelinus/kind_robots#2310 the facets share one cast card's slot as a 2x2 of
+    picture-and-title, which reads correctly at one facet or at four.
