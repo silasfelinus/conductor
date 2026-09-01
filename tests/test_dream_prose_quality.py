@@ -339,3 +339,20 @@ def test_schema_vocabulary_never_reaches_card_copy():
     )
 
     assert any("names the schema out loud" in p for p in prose.complaints(proposal))
+
+
+def test_a_scenario_schema_complaint_says_to_keep_the_vibe_title():
+    # The setup is structurally required to contain the vibe title, so a repair
+    # that sheds the schema noun by dropping the title fails the whole batch.
+    # Run 33463517245 did exactly that, twice, and aborted 17 bundles. The
+    # complaint text is what the repair model is handed, so it carries the fix.
+    proposal = _quality_sample()
+    proposal["scenarios"][0]["setup"] = (
+        "Under the dream vibe Refracted Testimony, a clerk is mid-stamp when the real "
+        "inspector wades ashore holding a decade of forged authorizations."
+    )
+
+    problems = [p for p in prose.complaints(proposal) if "names the schema" in p]
+
+    assert problems, "the schema noun must still be flagged"
+    assert "KEEP the vibe title" in problems[0]

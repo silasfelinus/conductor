@@ -207,10 +207,20 @@ def _schema_leak(label: str, value: Any) -> list[str]:
     match = SCHEMA_VOCABULARY.search(value)
     if not match:
         return []
-    return [
-        f"{label} names the schema out loud ({match.group(0)!r}); a reader sees the "
-        "card, not our field names, so write it as ordinary prose"
-    ]
+    fix = (
+        "; a reader sees the card, not our field names, so write it as ordinary prose"
+    )
+    if label.startswith("scenarios"):
+        # The setup must still contain the vibe title verbatim -- that is a
+        # structural rule in validate_proposal, and a repair that drops the title
+        # to shed the schema noun fails the whole batch. Say so here, because this
+        # text is what the repair model is handed.
+        fix = (
+            "; drop the schema noun but KEEP the vibe title, which the setup is "
+            "structurally required to contain. Use the catalog's own opening, "
+            "\"In <Vibe Title>, ...\""
+        )
+    return [f"{label} names the schema out loud ({match.group(0)!r}){fix}"]
 
 
 def _borrowed_names(proposal: dict) -> list[str]:

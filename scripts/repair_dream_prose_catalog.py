@@ -201,7 +201,13 @@ Bramble draft and stamp ..." is welded to one person. Describe the bearer generi
 a synthesis piece and may name the vibe, location, character, and rewards freely.
 
 Never name our own schema in copy a reader sees: no "the vibe", "this facet", "the
-proposal", "the bundle". A scenario opens in the story, not with "Under the vibe X, ...".
+proposal", "the bundle". This bans the schema NOUN, not the titles. A scenario setup
+must STILL contain the vibe title, the location title, and the character name verbatim --
+that is a structural requirement, and dropping any of them fails validation outright. The
+catalog convention is simply to open "In <Vibe Title>, ..." with no schema noun in front,
+which 30 of 34 built scenarios already do. So "Under the dream vibe Sincerely, Wrongly
+Remembered, Theodora Kade receives ..." becomes "In Sincerely, Wrongly Remembered,
+Theodora Kade receives ...".
 
 Fields that failed the current quality contract:
 {json.dumps(complaints, ensure_ascii=False, indent=2)}
