@@ -661,6 +661,7 @@ def _apply_batch(request_path: Path, request: dict[str, Any]) -> list[dict[str, 
         raise ValueError(f"extra_fields names unknown field(s): {sorted(set(unknown))}")
 
     authored: list[dict[str, Any]] = []
+    failed: list[dict[str, Any]] = []
     for bundle in bundles:
         proposal = bundle["proposal"]
         fields = _complaint_fields(proposal)
@@ -670,7 +671,20 @@ def _apply_batch(request_path: Path, request: dict[str, Any]) -> list[dict[str, 
                 fields.append(label)
         if not fields:
             continue
-        patch, candidate = _author_patch(proposal, fields, api_key, notes)
+        try:
+            patch, candidate = _author_patch(proposal, fields, api_key, notes)
+        except RuntimeError as error:
+            # Atomicity that matters is PER BUNDLE, not per batch: a bundle is
+            # either fully repaired and validated or untouched. Failing the whole
+            # batch buys nothing beyond that and costs everything -- three
+            # batches in a row were discarded because one bundle came back empty,
+            # taking 13 good repairs with them each time. A bundle that fails
+            # stays exactly as it was and stays flagged in the audit, so nothing
+            # is lost or silently hidden; it is simply retried next run.
+            failed.append({"day": bundle["day"], "title": proposal.get("title"),
+                           "fields": fields, "error": str(error)})
+            print(f"FAILED, left untouched: {proposal.get('title')} -- {error}", file=sys.stderr)
+            continue
         authored.append({**bundle, "fields": fields, "patch": patch, "candidate": candidate})
         print(f"authored prose repair: {proposal.get('title')} ({', '.join(fields)})")
 
@@ -722,6 +736,7 @@ def _apply_batch(request_path: Path, request: dict[str, Any]) -> list[dict[str, 
             "repaired_bundles": len(results),
             "results": results,
             "remaining_complaints": audit(),
+            "failed_bundles": failed,
             # Consumed by `--publish` after this source is pushed. Each entry is
             # re-resolved from the committed file, so publishing never depends on
             # runner state that a failed push would discard.
@@ -733,8 +748,16 @@ def _apply_batch(request_path: Path, request: dict[str, Any]) -> list[dict[str, 
     receipt_path = request_path.with_name(request_path.name.replace("-request.json", "-applied.json"))
     receipt_path.write_text(json.dumps(receipt, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     request_path.unlink()
-    if receipt["remaining_complaints"]:
-        raise RuntimeError("catalog still has prose-quality complaints after repair")
+    if not results:
+        raise RuntimeError(
+            "no bundle could be repaired: "
+            + "; ".join(f"{row['title']}: {row['error']}" for row in failed[:3])
+        )
+    if failed:
+        print(
+            f"{len(failed)} bundle(s) left untouched and still flagged; they retry next run",
+            file=sys.stderr,
+        )
     return results
 
 

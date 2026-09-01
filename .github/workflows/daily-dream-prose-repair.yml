@@ -107,7 +107,12 @@ jobs:
 
       - name: Verify catalog prose contract
         if: steps.pending.outputs.found == 'true'
-        run: python scripts/repair_dream_prose_catalog.py --audit --strict
+        # Informational, not a gate. A partial batch is now a legitimate
+        # outcome: bundles that failed are left untouched and stay flagged, so
+        # complaints remaining here is expected and the receipt's
+        # failed_bundles records exactly which. Per-bundle validation inside the
+        # authoring step is what guarantees nothing half-repaired is written.
+        run: python scripts/repair_dream_prose_catalog.py --audit
 
       - name: Commit prose-repair evidence
         if: steps.pending.outputs.found == 'true'
