@@ -3157,59 +3157,60 @@ tasks:
   milestone: m6
   title: "Home page visual iteration with Silas"
   status: needs-human
+  owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-08-29T23:55:00Z'
-  depends_on: [t-077, t-080, t-081, t-082, t-083, t-084]
-  note: |-
-    FOR SILAS: The back-and-forth t-077 shipped a first draft for. Silas, 2026-08-28: "this part may take some back and forth, I want it to look great ... this is going to be the first thing people see when the site loads, so I want it to be special."
-    needs-human because the remaining question is aesthetic judgement, and only Silas can supply it.
-    REWRITTEN AFTER EACH PASS -- t-080 through t-084 -- because a needs-human note describing a version no longer on main invites a decision about something that does not exist. What is live now, with the top band MEASURED at 1920x1080 rather than estimated (see t-084 for why that distinction earned its own task):
-    1. TOP BAND, one definite height, all three columns filling it exactly:
-       dream card 384px (20.0% of screen, stated as 20vw clamped to
-       [14rem,26rem]); cast of 4.5rem tiles in three rows flowing sideways,
-       224px total; Needs-you 1238px (64.5%).
-    2. NEEDS YOU is a composer, not a list of links. Each gate expands in
-       place to a textarea and three actions. "Send to agent" writes the note
-       AND releases the task to `ready`, so the next Worker cycle picks it up
-       carrying the answer. "Note only" keeps it parked and conductor's audit
-       surfaces it. "Approve" closes it. At its current width it shows about
-       twelve gates at once in container columns.
-    3. RAILS: art spans two grid rows and toggles between finished art and the
-       live ArtJob queue with a status filter; six object shelves in a 3x2
-       beside it. Headers are one icon plus a count; chevrons replaced the
-       scrollbar gutters.
-    4. CLICKING AN OBJECT opens an interstitial with its description, its
-       attributes and its reviews; clicking outside returns. Tiles are still
-       anchors, so middle-click and cmd-click navigate.
-    5. PROJECTS: title, one-letter priority, progress joined to conductor's
-       own figure.
-    6. NEWSFEED: bounded scroller; cards keep their summary and spend one thin
-       line on source and time; topic chips, controls, heading and lab link
-       all on one row.
-    7. NAV: brand line plus the page's tabMessage, or its subtitle where no
-       tabMessage is authored. Renders on every page now.
-
-    Page height 1049px: 1.03 screens at 1080, 1.48 at 768. Inside his "not larger than two" either way.
+  updated: '2026-09-01T08:35:00Z'
+  depends_on: [t-077, t-080, t-081, t-082, t-083, t-084, t-088]
+  note: >-
+    The back-and-forth t-077 shipped a first draft for. Silas, 2026-08-28: "this
+    part may take some back and forth, I want it to look great ... this is going
+    to be the first thing people see when the site loads, so I want it to be
+    special." needs-human because the remaining question is aesthetic judgement,
+    and only Silas can supply it.
+    REWRITTEN AFTER EACH PASS -- t-080 through t-084, now t-088 -- because a
+    needs-human note describing a version no longer on main invites a decision
+    about something that does not exist. What is live now, MEASURED at
+    1920x1080 rather than estimated (see t-084 for why that distinction earned
+    its own task):
+    TOP BAND, one definite height, all columns filling it: dream card 384px
+    (20.0% of screen, stated as 20vw clamped to [14rem,26rem]); the cast as one
+    horizontally scrolling row of full-height 239x358 portrait cards filling the
+    middle at 833px; Needs-you 629px (32.8%, a third at xl and a half at lg) as
+    a single vertically scrolling column.
+    NEEDS YOU is a composer, not a list of links. Each gate expands in place to
+    a textarea and three actions. "Send to agent" writes the note AND releases
+    the task to `ready`, so conductor's next Worker cycle picks it up carrying
+    the answer. "Note only" keeps it parked and conductor's audit surfaces it.
+    "Approve" closes it.
+    SHELVES are one horizontally scrolling row: seven shelves, four visible,
+    three a chevron away. Headers are a single icon plus a count. The art shelf
+    toggles between finished art and the live ArtJob queue with a status filter.
+    CLICKING AN OBJECT opens an interstitial with its description, attributes
+    and reviews; clicking outside returns. Tiles are plain anchors, so
+    middle-click and cmd-click still navigate.
+    PROJECTS: title, one-letter priority, progress joined to conductor's own
+    figure. NEWSFEED: bounded scroller; compact cards are picture, then a
+    three-line headline, then one provenance line, with no summary; topic chips,
+    controls, heading and lab link all on one row. NAV: brand line plus the
+    page's tabMessage, or its subtitle where none is authored.
+    Page height 865px: well inside his "not larger than two screens".
     OPEN FOR HIM, in rough order of how much it would change:
-    - IS 64% THE RIGHT SHARE FOR NEEDS-YOU? He asked twice for the dream to
-      give up width to it and it now has nearly two thirds of the band. That
-      is a big swing from 17%, and it is the number most likely to be wrong in
-      the other direction. Easy to dial: the hero sizes to its contents, so
-      the split follows the cast's tile size and row count.
-    - Whether "Send to agent" should be able to close a gate outright, or
-      whether releasing to `ready` with the answer attached is the right
-      ceiling for a one-click action on the coordination system of record.
-    - Whether the hero should server-render. It loads client-side in
-      home-page.vue's onMounted, so the first paint of the front page is a
-      skeleton.
-    - The cast tiles are now 4.5rem wide and about 117px tall, which is close
-      to the 2:3 portrait these objects are drawn at. If they read as too
-      small at that size, the band height is the dial, not the tile width.
-
-
-    Oversight reconciliation: the home-page implementation work is complete and the remaining hold is Silas's aesthetic/product judgment on the visual composition. This is a soft review gate only; it does not authorize any new outward-facing, production, or irreversible action.
-  soft_gate: true
+    (1) Whether the band's three-way split now feels right. Every number in it
+    has been moved at his request at least once, and this is the first version
+    where all three were satisfied simultaneously rather than traded off, so it
+    is worth a fresh look rather than assuming it has converged.
+    (2) Whether "Send to agent" should be able to close a gate outright, or
+    whether releasing to `ready` with the answer attached is the right ceiling
+    for a one-click action on the coordination system of record.
+    (3) Whether the hero should server-render. It loads client-side in
+    home-page.vue's onMounted, so the first paint of the front page is a
+    skeleton.
+    (4) The cast row has no visible scrollbar and no chevrons -- the partial card
+    at the right edge is the only affordance, on the same argument home-rail.vue
+    makes. The shelves below DO have chevrons, so the two rows are inconsistent
+    on purpose; if that reads as an oversight rather than a choice, the shelves'
+    chevrons are one prop away.
 
 - id: t-079
   milestone: m6
@@ -3828,5 +3829,76 @@ tasks:
     can't land without their generated client, or (c) both. Whichever is
     chosen, this task's implementer should regenerate now as the first
     concrete step regardless.
+
+- id: t-088
+  milestone: m6
+  title: "Home page sixth pass: one shelf row, cast cards fill the middle, and the popup that navigated away"
+  status: done
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-09-01T08:35:00Z'
+  implementation_pr: 'silasfelinus/kind_robots#2288'
+  depends_on: [t-084]
+  note: >-
+    Silas, 2026-08-30: "The needs you section is too large, it should be 1/3
+    the size on xl screens, 1/2 as large on medium ... let's have one row
+    instead of two for the art and objects sections, with a scroll to show us
+    the other three object sets hidden ... newsfeed needs to allow more of the
+    headline...in fact, it might be best if we have the image, then the
+    headline, but not any of the article unless clicked ... right now if I ckck
+    something, I see a popup start, but then it jumps me to the dedicated page
+    for that object." Then, answering the question t-084 left open: "the dream
+    cards for the latest gen should fill up the rest of the space. It's the
+    hero that we wanted to limit."
+    THE POPUP BUG IS THE ENTRY WORTH KEEPING. The tile was a NuxtLink with an
+    @click calling preventDefault. RouterLink renders its OWN click handler, and
+    a parent's fallthrough listener is merged AFTER it -- so RouterLink's
+    navigate ran first, saw defaultPrevented === false, and routed away; the
+    handler then opened the sheet on a page already leaving. `.capture` does not
+    fix it either: for listeners on the event's own target, capture and bubble
+    both fire in registration order, so a capture listener registered second
+    still runs second.
+    GENERALISABLE: you cannot reliably pre-empt a component's own DOM handler
+    from a parent listener on the same element. The fix is not a modifier, it is
+    removing the competing handler -- a plain anchor has none, so preventDefault
+    becomes the whole decision, and router.push covers the case that still wants
+    SPA navigation. Verified with Playwright rather than by eye: clicking a
+    shelf tile and a hero cast tile both leave the URL at "/" and open the
+    dialog, where before both navigated.
+    MEASURED AT 1920x1080, reusing the harness built for t-084 (which is the
+    point of having built it): dream card 384px (20.0%) unchanged; cast 224px
+    across three rows became 833px (43.4%) in one row that scrolls 1118px
+    further; a cast tile went from 72x117 to 239x358, a card rather than a
+    thumbnail; Needs-you 64.5% became 32.8% (a third at xl, 48.6% at lg);
+    shelves went from a two-row grid to one row of seven with four visible; page
+    height 1049px became 865px.
+    SIZING FROM THE HEIGHT retired two earlier workarounds at once. Each cast
+    tile is `h-full` plus `aspect-2/3`: as tall as the band, width derived from
+    the portrait shape. Nothing can stretch a tile whose width comes from its
+    aspect ratio -- which was the `minmax(X,1fr)` trap that made an earlier
+    "slimmer tiles" change move zero pixels (t-084) -- and a full-height row
+    cannot end up shorter than the row it sits in, which was the other
+    complaint. Two problems closed by choosing a different axis to size on.
+    t-084 had parked about 35% of the band in whitespace because the numbers
+    given did not say which element should absorb it, and flagged that rather
+    than guessing. Silas answered it in one sentence. Flagging the ambiguity was
+    cheaper than a seventh pass.
+    NEWSFEED CARDS could not go through kr-entity-card-body for the
+    picture-then-headline shape: its `hero` variant puts the title INSIDE the
+    plate's scrim, clamped to one line when compact, which was exactly the
+    truncation being reported. The compact card renders its own plate, a
+    three-line headline beneath it, and one provenance line; the Newsfeed Lab
+    path is untouched.
+    Merged origin/main mid-flight; resolved in favour of #2251's
+    `kr-panel-flat` gate card and dropped the `[grid-column:1/-1]` that came
+    with it, dead now the gate list is a single column. Separately hit the
+    stale-generated-client drift already tracked as t-087, and left it there
+    rather than sweeping a 340-line generated diff into a layout PR.
+    Verified: measured at 1920x1080 and 1150x800, no horizontal overflow at
+    either; vue-tsc, eslint, prettier, layout contract and MDC scroll ownership
+    clean; 37/37 CI checks green. Merged as squash
+    b13573ebe30e980a215b88b0f4ba6226b0f5d5d5.
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
