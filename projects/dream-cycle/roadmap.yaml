@@ -622,3 +622,24 @@ tasks:
     proposals, tracked by re-running scripts/audit_dream_catalog.py rather than by a
     standing task.
   implementation_pr: 'silasfelinus/conductor#3189'
+- id: t-024
+  milestone: m5
+  title: >-
+    Wire repair_dream_prose_catalog.py --verify-live into the recurring t-006 maintenance
+    pass so composed-field drift surfaces automatically
+  status: ready
+  owner:
+  passes: 0
+  stakes: reversible
+  updated: '2026-09-01T00:00:00Z'
+  note: >
+    Kaizen from PR #3386 (conductor sweep, 2026-09-01): two live character rows
+    (3295, 3314) sat with a garbled `backstory` for two days after the 2026-08-31
+    builder de-stemming fix, because the repair lane only rewrites `backstory` when
+    it rewrites `carries` -- neither bundle needed a prose repair, so nothing ever
+    looked at them again. Silas noticed on a live card; recomposition_findings()/
+    `--verify-live` now exist to recompute the deterministic backstory/desc fields
+    and diff against live, but nothing calls it on a schedule. Add a
+    `--verify-live --strict` check to t-006's recurring pass (or a dedicated CI job)
+    so the next builder-fix-that-doesn't-back-propagate is caught the same cycle,
+    not the next time it happens to appear on a card.
