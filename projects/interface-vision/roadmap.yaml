@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3314,7 +3314,23 @@ tasks:
     kind_robots PR #2277 confirmed merged (squash 4e34337, all 37 checks green including the
     previously-hung 'Contract verifiers' required check). Returning umbrella to ready for
     the next bounded slice.
-  updated: '2026-09-01T04:31:20Z'
+
+    Slice merged as silasfelinus/kind_robots#2281 (squash d7e8d5a) from exact head f83e858.
+    Migrated 3 remaining hand-rolled 'rounded-2xl border border-base-300 bg-base-100'
+    sticky/overlay panels onto kr-panel-flat, preserving each one's bg-base-100/<opacity>
+    override, padding, shadow, and backdrop-blur: components/pages/mermaids-page.vue (admin
+    writing/preview toolbar), components/dreams/daily-digest-object-dialog.vue (sticky save
+    bar), components/dreams/dream-card.vue (image debug details panel). No geometry or
+    behavior change. eslint on the 3 changed files showed 2 pre-existing errors confirmed
+    present on main via git stash (unrelated); vue-tsc clean; layout-contract held at 207
+    baseline. All 38 kind_robots PR checks green. Grep for the same 'rounded-2xl border
+    border-base-300 bg-base-100' shape found one remaining non-button candidate not covered
+    this slice: components/conductor/project-front-page.vue:97 (a bg-base-100/70 pill, px-3
+    py-1.5, backdrop-blur) -- left for the next cycle since the other project-front-page.vue
+    match at line 79 is a btn-ghost button, not a panel surface, and shouldn't take kr-
+    panel-flat. Return the non-recurring consistency umbrella to ready for the next bounded
+    slice.
+  updated: '2026-09-01T04:34:56Z'
   implementation_pr: 'silasfelinus/kind_robots#2281'
   owner: worker
   claimed_by: claude-scheduled-20260901T042800Z-iv104-slice2
