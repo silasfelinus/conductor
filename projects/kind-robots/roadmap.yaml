@@ -3802,8 +3802,8 @@ tasks:
 - id: t-087
   milestone: m6
   title: "Checked-in prisma/generated/ output is stale relative to prisma/schema.prisma (missing AgentProfile models)"
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >-
@@ -3829,6 +3829,9 @@ tasks:
     can't land without their generated client, or (c) both. Whichever is
     chosen, this task's implementer should regenerate now as the first
     concrete step regardless.
+  claimed_by: claude-scheduled-20260901T101500Z-kr-t087
+  claimed_at: '2026-09-01T10:31:25Z'
+  updated: '2026-09-01T10:31:25Z'
 
 - id: t-088
   milestone: m6
