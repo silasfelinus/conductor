@@ -1,0 +1,689 @@
+{
+  "scope": "all-built",
+  "reason": "Re-filed after run 33450722225. That run repaired 16 bundles and PATCHED the live Kind Robots rows, then GitHub rejected the evidence push three times with a server-side 'fatal error in commit_refs', leaving live ahead of source. The repaired best_used_when values are unrecoverable from live (build_dream_records never writes that field to a Reward row), so re-running is the only complete way to converge the two. Scope also widens: the best_used_when check now catches 'It works best when' / 'It serves best when' / 'It shines when' as well as 'Reach for it when' -- the same construction, and the previous pattern deliberately excluded openings starting with 'It' to protect 'It gives ...', which 27 rewards then sat inside. 28 bundles now flag: 47 best_used_when, 6 idea restating vibe.line, 4 grants padding. Silas, 2026-09-01: 'I just care about quality. Are we being effective with what is being said?'",
+  "send_digest": false,
+  "status": "source-written",
+  "applied_at": "2026-09-01T02:15:52.894491+00:00",
+  "repaired_bundles": 28,
+  "results": [
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-16-comet-market.md",
+      "day": "2026-07-16",
+      "title": "Rulewriter's Season",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "It works best when you have already committed to the wrong line.",
+        "skill_best_used_when": "It works best when the existing wording is being obeyed and abused at once."
+      },
+      "after": {
+        "item_best_used_when": "The worst moment is just after committing to the wrong line, with no way back but time itself.",
+        "skill_best_used_when": "The moment comes when a rule is technically being obeyed while its whole purpose is being gutted."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-18-kite-string-exchange.md",
+      "day": "2026-07-18",
+      "title": "The Reactor Dragon",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when",
+        "idea"
+      ],
+      "before": {
+        "item_best_used_when": "It matters most when you have chosen to stand somewhere you should not.",
+        "skill_best_used_when": "It works when the decision has already been handed to a machine.",
+        "idea": "Everything that keeps a frontier station warm is asleep, armed, and coiled around the reactor — and the analyst who just sold its targeting codes to the wrong buyer has one shift to wake it politely."
+      },
+      "after": {
+        "item_best_used_when": "Standing somewhere you should not have gone is precisely the situation this was made for.",
+        "skill_best_used_when": "An automated system has already been handed the final call, with no human left in the loop to overrule it.",
+        "idea": "Marisol Quintero sold the reactor-guardian's targeting codes to the wrong buyer, and now has one shift before the strike window opens to talk the sleeping, fully-armed coils around the reactor into standing down without a fight."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-30-stitch-echo.md",
+      "day": "2026-07-30",
+      "title": "The Bridge From Next Century",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "Reach for it when a bad fast fix would hold just long enough to kill someone.",
+        "skill_best_used_when": "Call on it when the whole structure is going and you only need a minute more."
+      },
+      "after": {
+        "item_best_used_when": "The moment calls for it when a bad fast fix would hold just long enough to kill someone.",
+        "skill_best_used_when": "The situation demands it when the whole structure is going and only a minute more is needed."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-31-silverfish-concierge.md",
+      "day": "2026-07-31",
+      "title": "Sincerely, Wrongly Remembered",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].grants",
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "Reach for it when a record is too damaged to save and writing someone back into existence is the only alternative to losing them.",
+        "skill_grants": "It grants the ability to infer what a blank or half-eaten card once said from pressure marks, handwriting, dust, and neighboring cross-references.",
+        "skill_best_used_when": "Rely on it when a guest's history must be reconstructed before the desk-mind fills the gap with a more charming lie."
+      },
+      "after": {
+        "item_best_used_when": "A record too damaged to save leaves writing someone back into existence as the only alternative to losing them entirely.",
+        "skill_grants": "Pressure marks, handwriting, dust, and neighboring cross-references yield up what a blank or half-eaten card once said.",
+        "skill_best_used_when": "A guest's history must be reconstructed before the desk-mind fills the gap with a more charming lie."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-01-the-filing-echidna.md",
+      "day": "2026-08-01",
+      "title": "The Filing Echidna",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "Reach for it when a soul or creature must be legitimized on the spot before the tide turns and the crossing closes.",
+        "skill_best_used_when": "It shines when an inspector or hostile authority demands proof of jurisdiction that officially does not exist."
+      },
+      "after": {
+        "item_best_used_when": "A soul or creature needs to be legitimized on the spot before the tide turns and the crossing closes for good.",
+        "skill_best_used_when": "An inspector or hostile authority is demanding proof of jurisdiction that officially does not exist."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-02-choir-of-the-drowned-kingdom.md",
+      "day": "2026-08-02",
+      "title": "The Island That Started Swimming",
+      "fields": [
+        "rewards[item].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "It matters most when nobody can agree whether there is still time to cut one more house free."
+      },
+      "after": {
+        "item_best_used_when": "The worst arguments break out on deck when no one can agree whether there is still time to cut one more house free."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-03-undermoon-bloom.md",
+      "day": "2026-08-03",
+      "title": "Undermoon Bloom",
+      "fields": [
+        "rewards[skill].grants",
+        "rewards[skill].best_used_when",
+        "idea"
+      ],
+      "before": {
+        "skill_grants": "It grants the ability to speak the old ancestor-names that calm a spreading bloom.",
+        "skill_best_used_when": "It works best when a spore-field is about to bolt past the reclamation line.",
+        "idea": "The moon has drifted close enough to seed the world every night, and the last orc settlement survives by wrangling drones through the bloom."
+      },
+      "after": {
+        "skill_grants": "Speaking the old ancestor-names in the right order calms a spreading bloom before it can swallow the line.",
+        "skill_best_used_when": "A spore-field is on the verge of surging past the reclamation line and swallowing the route.",
+        "idea": "A colossal lunar mass hangs just above the skyline, raining luminous spores across the ruins each dusk, and the last surviving orc settlement stays alive only because its salvagers can herd drones through the living bloom before it swallows their supply routes."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-04-lucky-ladle.md",
+      "day": "2026-08-04",
+      "title": "The Lucky Ladle",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "It shines brightest when a mystery needs an unspoken truth brought to the surface.",
+        "skill_best_used_when": "It works best when you need to nudge a fate gently instead of forcing it."
+      },
+      "after": {
+        "item_best_used_when": "A mystery thick with an unspoken truth, one that only needs a little steam to rise to the surface, calls for it most.",
+        "skill_best_used_when": "A fate teetering on the edge, needing only the gentlest nudge rather than a forceful rewrite, is when this skill proves its worth."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-05-spire-that-remembers.md",
+      "day": "2026-08-05",
+      "title": "Bloomline",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "Reach for it when a room smells ordinary and should not.",
+        "skill_best_used_when": "Call on it when an answer arrives too quickly and too completely to trust."
+      },
+      "after": {
+        "item_best_used_when": "A room smells ordinary and should not, its air too clean for the growth that supposedly filled it.",
+        "skill_best_used_when": "An answer arrives too quickly and too completely to trust, smoother than the truth ever comes."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-06-salt-memory.md",
+      "day": "2026-08-06",
+      "title": "Salt Memory",
+      "fields": [
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "skill_best_used_when": "It serves best when navigating a structure that no living engineer ever designed, where instinct alone cannot be trusted."
+      },
+      "after": {
+        "skill_best_used_when": "Navigating a structure that no living engineer ever designed, where instinct alone cannot be trusted, is exactly the moment Tide Telemetry proves most valuable."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-07-corsairs-aria.md",
+      "day": "2026-08-07",
+      "title": "Corsairs' Aria",
+      "fields": [
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "skill_best_used_when": "Call on it when a raid depends on total silence, with no note allowed to betray the approach."
+      },
+      "after": {
+        "skill_best_used_when": "A raid depends on total silence, with no note allowed to betray the approach."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-08-vinehorn-verdict.md",
+      "day": "2026-08-08",
+      "title": "The Noon Mirrors",
+      "fields": [
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "skill_best_used_when": "It serves best when everyone agrees on what happened but not when it happened."
+      },
+      "after": {
+        "skill_best_used_when": "Everyone agrees on what happened but not on when it happened."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-09-static-marsh.md",
+      "day": "2026-08-09",
+      "title": "Static Marsh",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "Reach for it when you can't tell if what's approaching is still a person.",
+        "skill_best_used_when": "Call on it when the count is about to become the story."
+      },
+      "after": {
+        "item_best_used_when": "Something is approaching through the fog and it's no longer clear whether it still counts as a person.",
+        "skill_best_used_when": "An outbreak is spreading fast enough that the count itself is about to become the story."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-10-spire-static.md",
+      "day": "2026-08-10",
+      "title": "Lullaby Run",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when",
+        "idea"
+      ],
+      "before": {
+        "item_best_used_when": "It works best when something very large has begun to stir and needs to be settled fast.",
+        "skill_best_used_when": "It works best when the gap you need only opens and closes on its own unpredictable schedule.",
+        "idea": "A coastal town's whole economy is keeping one enormous sleeping thing asleep, and the crop-duster pilot who flies sleep-spore between its ribs every dusk has just been told the mainland wants it awake."
+      },
+      "after": {
+        "item_best_used_when": "Something colossal beneath the water has begun to stir, and the tremor needs to be smoothed over before it reaches the surface.",
+        "skill_best_used_when": "The gap you need only opens and closes on its own unpredictable rhythm, never on command.",
+        "idea": "Every dusk, Maret Solvang flies a crop duster between the ribs of a slumbering giant curled beneath the bay, dusting it with spores to keep the whole coastal economy from waking to disaster, until the mainland orders her to let it stir."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-14-the-frill-crested-bracket.md",
+      "day": "2026-08-14",
+      "title": "The Frill-Crested Bracket",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].grants"
+      ],
+      "before": {
+        "item_best_used_when": "It serves best when searching flooded ruins or coastal tunnels beneath the coliseum roots for a smuggled escape route.",
+        "skill_grants": "It grants the ability to read a crowd, a bracket, or a battlefield and spot the one hidden variable everyone else missed."
+      },
+      "after": {
+        "item_best_used_when": "A flooded ruin or coastal tunnel beneath the coliseum roots, searched for a smuggled escape route, is where this compass earns its keep.",
+        "skill_grants": "It reads a crowd, a bracket, or a battlefield in a single glance, exposing the one hidden variable everyone else missed."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-15-the-slow-bell-of-ninth-ledger.md",
+      "day": "2026-08-15",
+      "title": "Salvage Rights",
+      "fields": [
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "skill_best_used_when": "It matters most when what you are owed is too heavy to carry out yourself."
+      },
+      "after": {
+        "skill_best_used_when": "The situation calls for it when a debt is too heavy to carry out by hand and the shortest route to it runs straight through danger."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-17-ever-after-files.md",
+      "day": "2026-08-17",
+      "title": "Third-Act Money",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "It works best when you need to be somewhere your face is not welcome.",
+        "skill_best_used_when": "It works best when the room has already committed to a version of events."
+      },
+      "after": {
+        "item_best_used_when": "The shawl earns its keep in a room where the wearer's own face would get them thrown out before they said a word.",
+        "skill_best_used_when": "The moment to invoke it is right after a scene has locked into an ending everyone in the room already believes."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-18-tideglass-reliquary.md",
+      "day": "2026-08-18",
+      "title": "Spawning Tide",
+      "fields": [
+        "rewards[item].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "It works best when the true way out is not the direction you are currently facing."
+      },
+      "after": {
+        "item_best_used_when": "The true way out is not the direction you are currently facing, and the stone knows it even when you don't."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-19-the-tally-of-small-suns.md",
+      "day": "2026-08-19",
+      "title": "The Silk Bargain",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "It works best when two people need to trust each other faster than trust normally takes.",
+        "skill_best_used_when": "It works best when both sides are certain and neither is lying."
+      },
+      "after": {
+        "item_best_used_when": "Two people need to trust each other faster than trust normally takes, with no time to prove themselves the slow way.",
+        "skill_best_used_when": "Both sides are certain of their own account and neither one is lying, only remembering the same events differently."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-21-kelp-ink-transfer.md",
+      "day": "2026-08-21",
+      "title": "The Deep Shift",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "Ring it when the water has gone quiet in a way that feels deliberate, not empty.",
+        "skill_best_used_when": "Call on it once every instrument on you has failed and the dark gives you nothing else to navigate by."
+      },
+      "after": {
+        "item_best_used_when": "The water has gone quiet in a way that feels deliberate, not empty, the kind of stillness that means something is choosing not to move.",
+        "skill_best_used_when": "Every instrument has failed and the dark offers nothing else to navigate by, only a straight line down through water with no landmarks left."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-22-marshlight-draw.md",
+      "day": "2026-08-22",
+      "title": "The Dusk Drive",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when",
+        "idea"
+      ],
+      "before": {
+        "item_best_used_when": "Reach for it when there is no time left to earn that trust honestly.",
+        "skill_best_used_when": "Call on it when the only working thing left standing was built two centuries ago.",
+        "idea": "On a Martian bog colony the water only goes where the unicorn-touched herd walks, and the herd only walks at dusk — so moving them across a dry basin in one night is the difference between a district that drinks and a district that does not."
+      },
+      "after": {
+        "item_best_used_when": "There is no time left on the clock to earn that trust the honest way, only to wear someone else's.",
+        "skill_best_used_when": "The only functioning machine for the job was built two centuries ago and no living crew remembers how to run it.",
+        "idea": "On Mars, a colony's only water source is a herd of unicorn-touched animals that seed the bog wherever their hooves fall, and they will only walk at dusk, so driving them across a dry basin in a single night decides whether a whole district fills its cisterns or goes dry until the next herd run."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-23-the-orchids-dare.md",
+      "day": "2026-08-23",
+      "title": "The Orchid's Dare",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].grants",
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "It serves best when sealing a bargain, a courtship, or a truce that both parties intend to actually keep.",
+        "skill_grants": "It grants the ability to lasso, wrangle, or disarm anything without changing expression, which somehow makes the feat funnier and more effective.",
+        "skill_best_used_when": "It shines when a situation has become too dangerous to take seriously and needs to be defused through sheer nerve."
+      },
+      "after": {
+        "item_best_used_when": "A bargain, a courtship, or a truce that both parties genuinely intend to keep is the moment this locket's promise takes hold.",
+        "skill_grants": "It lassos, wrangles, or disarms any target while the user's face stays perfectly flat, which somehow makes the feat funnier and more effective.",
+        "skill_best_used_when": "A situation gone too dangerous to take seriously, one that only sheer nerve can defuse, is exactly where this draw belongs."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-24-the-hollow-charter.md",
+      "day": "2026-08-24",
+      "title": "The Ironback Braid",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when",
+        "idea"
+      ],
+      "before": {
+        "item_best_used_when": "It works best when everyone in the room wants the whole thing opened at once.",
+        "skill_best_used_when": "It works best when both sides are still standing and neither has sat down.",
+        "idea": "Two lineages tied their old agreement into a braided rope and sealed it inside the carcass of a dead terraforming leviathan. The hull engineer whose plated hands finally open that chamber walks straight into both of their claims at once."
+      },
+      "after": {
+        "item_best_used_when": "Every delegate is in the chamber at once, each one demanding the whole braid come loose in a single motion rather than one turn at a time.",
+        "skill_best_used_when": "Both delegations are still on their feet, weapons within reach and neither side willing to be the first to sit down.",
+        "idea": "Two rival hull-clans wove an old pact as a braided cable of black wood and wire, then sealed it inside the gutted carcass of a dead terraforming leviathan. The engineer whose plated hands finally pry open that chamber collides with both clans' claims at once."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-25-filing-office-end-of-history.md",
+      "day": "2026-08-25",
+      "title": "The Hundredth Procession",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when",
+        "idea"
+      ],
+      "before": {
+        "item_best_used_when": "It works best when the crowd is more certain than you are.",
+        "skill_best_used_when": "It shines when everyone else knows what happens next and you do not.",
+        "idea": "A treaty holds only as long as its procession is walked exactly as it has always been walked, and this year the machine that remembers every previous year is showing one of them turning the wrong way."
+      },
+      "after": {
+        "item_best_used_when": "The crowd around you is more certain of the ritual than you could ever be, and their conviction is what actually gets it done.",
+        "skill_best_used_when": "Everyone else already knows what happens next in the ceremony, and only you are faking your way through it.",
+        "idea": "The Repeating Mile preserves every procession it has ever hosted as a ghost layered in its mirrored walls, and this year one of those ghostly years veers left instead of right, threatening the treaty that depends on their perfect match."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-26-tide-ledger-miracles.md",
+      "day": "2026-08-26",
+      "title": "Six Minutes of Dry Ocean",
+      "fields": [
+        "rewards[item].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "It works best when the coast has gone completely dark and no other light remains."
+      },
+      "after": {
+        "item_best_used_when": "The coast has gone completely dark, with no other light left to relight the beacon."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-27-the-moonpool-matinee.md",
+      "day": "2026-08-27",
+      "title": "The Moonpool Matinee",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "Reach for it when the wrong person has been cast as the monster or the hero.",
+        "skill_best_used_when": "Call it when the cast is trapped inside a scene that has become real."
+      },
+      "after": {
+        "item_best_used_when": "The wrong person has been cast as the monster or the hero, and the roles must trade places before the scene resolves.",
+        "skill_best_used_when": "The cast is trapped inside a scene that has turned physically real, with no exit but a new rule for the room."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-28-tasting-menu-eats-back.md",
+      "day": "2026-08-28",
+      "title": "The Tasting Menu Eats Back",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "It shines when an ingredient balks at being eaten and starts pleading its case mid-course.",
+        "skill_best_used_when": "It matters most when facing a totally unknown ingredient with no precedent in the house promises."
+      },
+      "after": {
+        "item_best_used_when": "An ingredient balking at being eaten and pleading its case mid-course is exactly the moment this ladle earns its keep.",
+        "skill_best_used_when": "A totally unknown ingredient with no precedent in the house promises is when this treaty proves most valuable."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-29-emberfair-vow.md",
+      "day": "2026-08-29",
+      "title": "The Emberfair Vow",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "It serves best when the show needs the herd to arrive early, or somewhere it has never crossed before.",
+        "skill_best_used_when": "It serves best when the herd's arrival needs to be timed to the second for a performance cue."
+      },
+      "after": {
+        "item_best_used_when": "A production needs the herd to arrive ahead of schedule, or to cross ground it has never touched before.",
+        "skill_best_used_when": "A performance cue depends on knowing the herd's arrival down to the second."
+      }
+    }
+  ],
+  "remaining_complaints": [],
+  "pending_live": [
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-16-comet-market.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-18-kite-string-exchange.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when",
+        "idea"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-30-stitch-echo.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-31-silverfish-concierge.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].grants",
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-01-the-filing-echidna.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-02-choir-of-the-drowned-kingdom.md",
+      "fields": [
+        "rewards[item].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-03-undermoon-bloom.md",
+      "fields": [
+        "rewards[skill].grants",
+        "rewards[skill].best_used_when",
+        "idea"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-04-lucky-ladle.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-05-spire-that-remembers.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-06-salt-memory.md",
+      "fields": [
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-07-corsairs-aria.md",
+      "fields": [
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-08-vinehorn-verdict.md",
+      "fields": [
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-09-static-marsh.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-10-spire-static.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when",
+        "idea"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-14-the-frill-crested-bracket.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].grants"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-15-the-slow-bell-of-ninth-ledger.md",
+      "fields": [
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-17-ever-after-files.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-18-tideglass-reliquary.md",
+      "fields": [
+        "rewards[item].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-19-the-tally-of-small-suns.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-21-kelp-ink-transfer.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-22-marshlight-draw.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when",
+        "idea"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-23-the-orchids-dare.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].grants",
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-24-the-hollow-charter.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when",
+        "idea"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-25-filing-office-end-of-history.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when",
+        "idea"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-26-tide-ledger-miracles.md",
+      "fields": [
+        "rewards[item].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-27-the-moonpool-matinee.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-28-tasting-menu-eats-back.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-29-emberfair-vow.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ]
+    }
+  ]
+}
