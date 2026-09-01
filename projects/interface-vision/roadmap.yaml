@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3397,11 +3397,75 @@ tasks:
     no-op re-sweep cycle re-arming for the next slice. Flagged by check_pr_merged_drift.py.
     Flipping status to ready per the recurring-task convention; claimed_by/owner left as-is
     per established pattern in other recurring tasks (e.g. animation-manager).
+
+    No-op cycle (conductor scheduled Agent run): re-confirmed the three established narrow
+    pools (kr-container/kr-panel-* exact-match, translucent rounded-2xl/3xl border/bg-base-100
+    panels, raw min-h-0 flex-1 overflow-y-auto overscroll-contain outside .kr-scroll, and
+    .kr-toolbar exact-matches) are all still empty. Also checked a fourth candidate pool this
+    cycle: hand-rolled equivalents of kr-note/kr-note-{info,success,warning,error}
+    (`rounded-2xl border p-4 text-sm font-semibold` + tint) -- found only status/icon-badge
+    tint mappings (conductor-page.vue, project-detail.vue, mermaids-pdf-purchase.vue,
+    scenario-interact.vue, avatar-picker.vue) that reuse the same info/success/warning/error
+    color tokens but for icon-wrapper classes (different base shape, not a kr-note verbatim
+    duplicate), and a handful of near-miss text callouts (login-page.vue p-3, workspace-
+    sheet.vue backdrop-blur, conductor-pitch-manager.vue px-4 py-3) that don't match kr-note's
+    exact `rounded-2xl border p-4 text-sm font-semibold` shape -- so none qualify as a bounded
+    exact-match slice under this task's established discipline. No new candidates surfaced.
+    Re-arming to ready without opening a PR.
+
+    The flagged rounded-3xl/p-5/shadow-sm page-section shape (16 files confirmed this cycle:
+    coloring-book-{production-history,production-toolbar,package-readiness,cover-studio,
+    studio,readiness}.vue, conductor/{coat-dance,project-gallery-strip,project-deliverables-
+    panel,voice-lab,davinci,challenge-center,sketchy,conductor-app,newsfeed}-page.vue,
+    academy-style-detail.vue) has now been independently re-flagged as needing a real design
+    decision by at least 4 separate cycles/sessions today without ever being escalated to a
+    visible gate -- it was only ever recorded in this task's own note, so it kept getting
+    silently re-deferred instead of actually reaching Silas. Spun out as interface-vision/t-123
+    (soft needs-human) so it gets real visibility via audit_human_gates.py rather than
+    continuing to recycle here. This task does not depend on t-123; whoever picks the next
+    slice should treat the rounded-3xl pool as still out of scope until t-123 resolves.
   updated: '2026-09-01T16:28:20Z'
   implementation_pr: 'silasfelinus/kind_robots#2296'
   owner: worker
   claimed_by: claude-scheduled-20260901T162813Z-iv-t104-run2
   claimed_at: '2026-09-01T16:28:20Z'
+
+- id: t-123
+  milestone: m5
+  title: "Decide: introduce a new kr-* page-section primitive for the repeated rounded-3xl/p-5/shadow-sm shape, or leave it hand-rolled"
+  status: needs-human
+  soft_gate: true
+  passes: 0
+  stakes: reversible
+  note: >-
+    FOR SILAS: t-104's recurring front-end-consistency sweep found the same hand-rolled
+    surface -- `rounded-3xl border border-base-300 bg-base-100 p-5 shadow-sm` -- repeated
+    verbatim across 16 page-section components: the 6 coloring-book production/studio panels,
+    9 conductor-app project pages (coat-dance, project-gallery-strip, project-deliverables-
+    panel, voice-lab, davinci, challenge-center, sketchy, conductor-app, newsfeed), and
+    academy-style-detail.vue.
+
+    What it contains: it does NOT match any existing kr-* primitive verbatim. `.kr-panel`
+    and `.kr-panel-flat` are both `rounded-2xl` with different padding (`p-6` / none), not
+    `rounded-3xl p-5`. Migrating it as-is would mean either overriding a kr-panel's own
+    corner radius per-instance (a pattern prior slices only accepted for background opacity,
+    never for radius) or defining a brand-new named primitive and re-pointing 16 files at it.
+
+    TO APPROVE: pick one --
+    (a) approve a new primitive, e.g. `.kr-panel-section { rounded-3xl border border-base-300
+        bg-base-100 p-5 shadow-sm }` in assets/css/tailwind.css, and set status: done with a
+        note naming the class -- the Worker will then migrate the 16 files across bounded
+        slices same as every other kr-* migration;
+    (b) say this shape should stay hand-rolled (not worth a shared primitive) and set status:
+        done with that note -- t-104 will stop flagging it; or
+    (c) propose a different name/shape.
+    Either way, set approved_by_human: true and status: done with your choice recorded in
+    this note.
+
+    What unblocks when he does: t-104's next cycle picks up the decision from this note and
+    either starts migrating (option a) or drops the pool permanently (option b/c).
+  owner: null
+  claimed_by: null
 
 - id: t-105
   milestone: m6
