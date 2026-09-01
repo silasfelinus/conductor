@@ -862,6 +862,27 @@ tasks:
     merge, or set `status: ready` with revised instructions if you want it reworked further.
     Nothing downstream depends on this task, but PR #2285 stays unmerged on kind_robots
     until it's resolved one way or another.
+
+    UPDATE (conductor scheduled Agent run, 2026-09-01 ~08:30 UTC): kind_robots#2285 has since
+    merged (08:20:15Z) WITH the `requireHumanApiUser` fix in place — `auth.kind ===
+    'first-party-delegation'` is blocked alongside `'agent-credential'` on main now, so the
+    self-escalation path described above is closed as shipped. Points (1)-(3) are still your
+    call and still open.
+
+    NEW: a separate PR, kind_robots#2289 ("Allow Rainbow BFF delegation through human-owned
+    API guard", branch `worker/rainbow-bff-human-boundary-20260901`), appeared ~7 minutes
+    after #2285 merged and tries to remove `first-party-delegation` from that same block-list
+    again — framed as fixing a legitimate integration bug (Rainbow's delegation token 403s on
+    AgentProfile management). The framing is real but the fix as written reopens the gap:
+    `requireHumanApiUser` is the *shared* guard for both `agent-profiles/**` and
+    `agent-credentials/**` (confirmed via code search — 8 route files use it, 3 of them
+    `agent-credentials/*`), so unblocking the auth *kind* unblocks every route behind the
+    guard, `agent-credentials/index.post.ts` (create) included — the identical
+    self-escalation path, not a narrower one. Declined to merge #2289; posted the same
+    analysis directly on it as a PR comment and proposed the real fix instead: split the
+    guard so only `agent-profiles/**` accepts a delegation token, while `agent-credentials/**`
+    keeps the strict human-only check #2285 shipped. #2289 is unmerged and awaiting either
+    your call or a rescoped follow-up.
   claimed_by: null
   claimed_at: null
-  updated: '2026-09-01T06:44:00Z'
+  updated: '2026-09-01T08:32:00Z'
