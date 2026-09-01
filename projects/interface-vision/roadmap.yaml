@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3353,7 +3353,28 @@ tasks:
     watched, unmerged until kindrobots.org connectivity from GitHub Actions recovers --
     merge once the Contract verifiers check clears on its own rerun, no further code
     changes expected.
-  updated: '2026-09-01T09:27:56Z'
+
+    Reconciled by conductor sweep: kind_robots PR #2287 confirmed merged (2026-09-01T08:17:18Z), not "unmerged/blocked" as the prior note's last line recorded -- the connectivity-outage Contract-verifiers flake cleared on a later rerun and the PR merged, closing out the translucent-panel migration pool documented by the two preceding slices.
+
+    Re-swept for the next bounded slice this cycle: repo-wide grep for the established narrow contract shapes all came back empty --
+    - `rounded-(2xl|3xl) border border-base-300 bg-base-100/<opacity>` (the translucent sticky/overlay-panel shape prior slices targeted): zero un-migrated candidates outside the two already-excluded btn-ghost buttons (project-front-page.vue:79, chat-gallery.vue:21,48).
+    - `min-h-0 flex-1 overflow-y-auto overscroll-contain` outside `.kr-scroll`: zero candidates.
+    - No un-migrated `.kr-toolbar` exact-match candidates remain (matches the prior slice's own finding).
+
+    Did not start a new migration pattern this cycle: a large, separate, consistently-applied
+    `rounded-3xl border border-base-300 bg-base-100 p-5 shadow-sm` shape recurs across dozens of
+    page-section components (academy/*, coloring/*, conductor/*-page.vue, watchlist/*, and more).
+    It does NOT match any existing kr-* primitive verbatim -- `.kr-panel`/`.kr-panel-flat` are both
+    `rounded-2xl` with different padding (`p-6`/none), not `rounded-3xl p-5` -- so treating it as a
+    "hand-rolled duplicate" the way prior slices did for the translucent-panel/kr-scroll/kr-toolbar
+    shapes would mean either fighting a new utility's own base radius with a per-instance override
+    (the same pattern prior slices only accepted for background-opacity, not corner-radius) or
+    introducing a brand-new `kr-*` utility and re-pointing dozens of files at it -- a real design
+    decision (name it, decide whether `p-5`/`rounded-3xl` becomes the new page-section primitive),
+    not a bounded reversible slice. Flagging it here as the most promising next pool rather than
+    acting on it unreviewed; a future cycle (or Silas) should decide whether it warrants a new
+    `kr-*` primitive before any migration starts.
+  updated: '2026-09-01T09:30:41Z'
   implementation_pr: 'silasfelinus/kind_robots#2287'
   owner: reviewer
   claimed_by: 2026-09-01T092756Z-interface-vision-t-104-e6323a
