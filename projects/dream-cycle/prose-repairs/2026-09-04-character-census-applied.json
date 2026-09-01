@@ -1,0 +1,714 @@
+{
+  "scope": "all-built",
+  "reason": "Census of the three character fields: all 34 role_drive, carries and complication values read side by side. The writing is strong -- 'She picks fights with the one person she wants to keep, mistaking every soft moment for a dare she has to win', 'She is keeping one promise she has told absolutely no one about', 'He is entirely confident he can hand this off to somebody senior, and there is nobody senior.' Two defect classes. (1) Seven of 34 role_drive values open by naming the character: 'Dolan must find who re-aimed the mirrors', 'Grudge Fenrik keeps the reclamation yard's drone fleet flying'. The card prints the name directly above, so the subject is spent on what the reader just read -- the third field this same rule applies to, after known_for and grants. The catalog's own convention is already the pronoun: 27 of 34 open 'She ...' or 'He ...'. (2) One complication opens by editorializing ('Unfortunately, ...') when the sentence already carries the judgement. Five more go in as extra_fields notes, all shapes no regex generalizes honestly. Two candidate checks were investigated and DROPPED rather than added: a carries/complication word-overlap score separated the two real redundancies at 0.38 but the next value down sits at 0.22 and is good writing that builds on its object rather than restating it, so the distinction is semantic and a threshold would eventually churn good prose; and a noun-phrase-fragment detector produced 41 hits of which only a handful were real, because 'A tremor spooks the herd right before showtime' is a perfectly good sentence.",
+  "send_digest": false,
+  "extra_fields": {
+    "2026-08-11": {
+      "characters[0].role_drive": "Not a sentence. 'A tournament physician who treats the fallen between rounds, keeping every fighter alive long enough to fight again, unable to stop even as the arena's watching things start to recognize her by name' is a noun phrase with no main verb. It punctuates like a sentence and passes every automated check without parsing as one. Rewrite with a subject and a finite verb, keeping the between-rounds treatment, the compulsion she cannot stop, and the watching things learning her name.",
+      "characters[0].carries": "Not a sentence. 'A cracked leather medical satchel stitched shut with silver wire, worn slung low against her hip like a marsupial pouch, its buckles replaced with small bones' is a noun phrase with no main verb. Rewrite as a proper sentence, keeping the satchel, the silver wire, the marsupial-pouch carry, and the bone buckles."
+    },
+    "2026-08-03": {
+      "characters[0].complication": "The first clause repeats `carries` almost word for word -- carries is 'a cracked heavensteel whistle that calls the drones home' and this opens 'the same whistle that calls the drones home'. On the character card both are shown, so the reader is told twice. Keep only the new information: that the whistle also calls the spores, so every rescue invites the bloom."
+    },
+    "2026-08-10": {
+      "characters[0].complication": "Restates `carries` rather than complicating it. carries already says she reads the townsfolk's letters aloud over the open radio on every run; this says she narrates every worry out loud and the radio carries it down to the town. Same fact twice. Give the complication something carries does not already establish -- what it costs her, or what the town does with what it hears."
+    },
+    "2026-08-07": {
+      "characters[0].complication": "Two problems. It is a non-sequitur against role_drive, which is about recovering her mother's stolen voice in the opera's haunted acoustics, while this is about a childhood imaginary friend turning out to be real. And 'the ship's navigator' is a definite reference to a ship the card never establishes. Tie the complication to the voice she is chasing, and either introduce the ship or drop it."
+    }
+  },
+  "status": "source-written",
+  "applied_at": "2026-09-01T15:02:52.530771+00:00",
+  "repaired_bundles": 31,
+  "results": [
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-16-comet-market.md",
+      "day": "2026-07-16",
+      "title": "Rulewriter's Season",
+      "fields": [
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_carries": "She carries a chalk-stick and the rule-board she refuses to let anyone else letter."
+      },
+      "after": {
+        "character_carries": "A chalk-stick and a rule-board travel with her always, the board's surface hers alone to letter since she trusts no other hand with the wording."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-17-marrow-library.md",
+      "day": "2026-07-17",
+      "title": "The Dowry of Stones",
+      "fields": [
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_carries": "He carries a folding brass scale, a bag of counting stones worn smooth, and the night's accounts held entirely in his head."
+      },
+      "after": {
+        "character_carries": "A folding brass scale hangs at his wrist, a bag of counting stones worn smooth rides one pocket, and the night's whole accounting stays kept entirely in his head."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-18-kite-string-exchange.md",
+      "day": "2026-07-18",
+      "title": "The Reactor Dragon",
+      "fields": [
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_carries": "She carries an analyst's slate holding three days of targeting solutions she cannot explain."
+      },
+      "after": {
+        "character_carries": "A cracked analyst's slate strapped to her forearm holds three days of targeting solutions she cannot explain."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-30-stitch-echo.md",
+      "day": "2026-07-30",
+      "title": "The Bridge From Next Century",
+      "fields": [
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_carries": "She carries a cracked lab slate and a vial of dormant repair-motes she rations by the grain."
+      },
+      "after": {
+        "character_carries": "A cracked lab slate and a vial of dormant repair-motes travel with her, the motes rationed out by the grain."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-31-silverfish-concierge.md",
+      "day": "2026-07-31",
+      "title": "Sincerely, Wrongly Remembered",
+      "fields": [
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_carries": "She carries a brass loupe, cedar shavings, and a ledger of every guest she has had to half-invent."
+      },
+      "after": {
+        "character_carries": "A brass loupe, a handful of cedar shavings, and a ledger of every guest she has had to half-invent weigh down her cardigan pockets."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-01-the-filing-echidna.md",
+      "day": "2026-08-01",
+      "title": "The Filing Echidna",
+      "fields": [
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_carries": "She keeps a coral stamp kit, a ledger bound in old quill-leather, and a jar of starlight powder for sealing permits."
+      },
+      "after": {
+        "character_carries": "A coral stamp kit rides alongside a ledger bound in old quill-leather and a jar of starlight powder for sealing permits, all she needs to make a crossing official."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-02-choir-of-the-drowned-kingdom.md",
+      "day": "2026-08-02",
+      "title": "The Island That Started Swimming",
+      "fields": [
+        "characters[0].role_drive",
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_role_drive": "Ines has to cut the last houses free before the god sounds, working cable by cable against a deck that will not stay level.",
+        "character_carries": "She carries a chalk float-board covered edge to edge in letters she has never sent home."
+      },
+      "after": {
+        "character_role_drive": "She has to cut the last houses free before the god sounds, working cable by cable against a deck that will not stay level.",
+        "character_carries": "A chalk float-board, its surface covered edge to edge in letters she has never sent home, rides roped across her back wherever she goes."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-03-undermoon-bloom.md",
+      "day": "2026-08-03",
+      "title": "Undermoon Bloom",
+      "fields": [
+        "characters[0].complication",
+        "characters[0].role_drive",
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_complication": "Unfortunately, the same whistle that calls the drones home also calls the spores, so every rescue risks inviting the bloom straight to his door.",
+        "character_role_drive": "Grudge Fenrik keeps the reclamation yard's drone fleet flying and the settlement fed.",
+        "character_carries": "He carries a cracked heavensteel whistle that calls the drones home."
+      },
+      "after": {
+        "character_complication": "That same whistle draws the spores in as well, so every rescue risks calling the bloom straight to his door.",
+        "character_role_drive": "He keeps the reclamation yard's drone fleet flying and the settlement fed.",
+        "character_carries": "A cracked heavensteel whistle, its seams still humming despite the damage, calls the drones home across the wastes."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-04-lucky-ladle.md",
+      "day": "2026-08-04",
+      "title": "The Lucky Ladle",
+      "fields": [
+        "characters[0].role_drive",
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_role_drive": "Rook Calloway rigs a Luck Dragon's shed scales into nanotech seasoning, scheming to corner the market on fortune itself.",
+        "character_carries": "He carries a saddlebag of self-assembling dragon-scale nanite spice, ready to season any dish with stolen luck."
+      },
+      "after": {
+        "character_role_drive": "He rigs a Luck Dragon's shed scales into nanotech seasoning, scheming to corner the market on fortune itself.",
+        "character_carries": "A saddlebag of self-assembling dragon-scale nanite spice rides at his hip, ready to season any dish with stolen luck."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-05-spire-that-remembers.md",
+      "day": "2026-08-05",
+      "title": "Bloomline",
+      "fields": [
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_carries": "She keeps a pocketful of seed envelopes that she is always refilling and never plants."
+      },
+      "after": {
+        "character_carries": "A pocketful of seed envelopes, always refilled and never once opened to plant anything."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-07-corsairs-aria.md",
+      "day": "2026-08-07",
+      "title": "Corsairs' Aria",
+      "fields": [
+        "characters[0].role_drive",
+        "characters[0].carries",
+        "characters[0].complication"
+      ],
+      "before": {
+        "character_role_drive": "Thess Marrow is driven to recover her mother's stolen voice, torn away and trapped somewhere inside the opera's haunted acoustics.",
+        "character_carries": "She keeps a jar of singing cactus spines at her belt, each one humming faintly with a note it refuses to let go of.",
+        "character_complication": "The imaginary friend she invented as a lonely child turns out to be real, and worse, he has been the ship's navigator for twenty years."
+      },
+      "after": {
+        "character_role_drive": "She is driven to recover her mother's stolen voice, torn away and trapped somewhere inside the opera's haunted acoustics.",
+        "character_carries": "A jar of singing cactus spines rides at her belt, each one humming faintly with a note it refuses to let go of.",
+        "character_complication": "The imaginary friend she invented as a lonely child turns out to be real, and it is his voice, not her mother's, that answers when she calls into the haunted acoustics."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-08-vinehorn-verdict.md",
+      "day": "2026-08-08",
+      "title": "The Noon Mirrors",
+      "fields": [
+        "characters[0].role_drive",
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_role_drive": "Dolan must find who re-aimed the mirrors before the next dawn burn.",
+        "character_carries": "He carries a folded leather hood and two spare hands wrapped in oilcloth."
+      },
+      "after": {
+        "character_role_drive": "He must find who re-aimed the mirrors before the next dawn burn.",
+        "character_carries": "A folded leather hood and two spare hands wrapped in oilcloth ride against his belt, ready to replace what the light takes."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-09-static-marsh.md",
+      "day": "2026-08-09",
+      "title": "Static Marsh",
+      "fields": [
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_carries": "She carries a cracked fulgurite dosimeter clipped to the canvas strap of her satchel, its needle rarely still."
+      },
+      "after": {
+        "character_carries": "A cracked fulgurite dosimeter hangs clipped to the canvas strap of her satchel, its needle rarely still."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-11-the-hollow-bracket.md",
+      "day": "2026-08-11",
+      "title": "The Hollow Bracket",
+      "fields": [
+        "characters[0].role_drive",
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_role_drive": "A tournament physician who treats the fallen between rounds, keeping every fighter alive long enough to fight again, unable to stop even as the arena's watching things start to recognize her by name.",
+        "character_carries": "A cracked leather medical satchel stitched shut with silver wire, worn slung low against her hip like a marsupial pouch, its buckles replaced with small bones."
+      },
+      "after": {
+        "character_role_drive": "She works as the tournament physician, treating the fallen between rounds and keeping every fighter alive long enough to fight again, and she cannot stop even as the arena's watching things begin to recognize her by name.",
+        "character_carries": "She slings a cracked leather medical satchel low against her hip like a marsupial pouch, its seams stitched shut with silver wire and its buckles replaced with small bones."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-12-the-chittering-archive.md",
+      "day": "2026-08-12",
+      "title": "Monsoon Static",
+      "fields": [
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_carries": "She carries a battered throat-mic rig spliced into a chinchilla-carried relay pack."
+      },
+      "after": {
+        "character_carries": "A battered throat-mic rig spliced into a chinchilla-carried relay pack hangs from her collar, wired straight into the line."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-13-the-quota-of-bones.md",
+      "day": "2026-08-13",
+      "title": "The Salt Rebellion",
+      "fields": [
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_carries": "She carries a ladle the length of an arm and the camp's last two blocks of grey salt."
+      },
+      "after": {
+        "character_carries": "A ladle the length of an arm hangs at her hip, worn smooth from years of stirring, alongside the camp's last two blocks of grey salt wrapped tight against the damp."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-14-the-frill-crested-bracket.md",
+      "day": "2026-08-14",
+      "title": "The Frill-Crested Bracket",
+      "fields": [
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_carries": "She carries a cracked void-sextant repurposed as a torch, its brass casing packed with a nub of captured solar flame."
+      },
+      "after": {
+        "character_carries": "A cracked void-sextant serves as her torch, its brass casing packed with a nub of captured solar flame."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-15-the-slow-bell-of-ninth-ledger.md",
+      "day": "2026-08-15",
+      "title": "Salvage Rights",
+      "fields": [
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_carries": "She carries a spool of scale-plated tow cable and somebody else's borrowed camera rig."
+      },
+      "after": {
+        "character_carries": "A spool of scale-plated tow cable rides across her back, tethered to somebody else's borrowed camera rig she is not supposed to lose."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-16-fault-line-follies.md",
+      "day": "2026-08-16",
+      "title": "Fault Line Follies",
+      "fields": [
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_carries": "She carries a coil of dragon-scale rope worn smooth at the grip."
+      },
+      "after": {
+        "character_carries": "A coil of dragon-scale rope hangs worn smooth at the grip, kept close for the moment a herd bolts."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-17-ever-after-files.md",
+      "day": "2026-08-17",
+      "title": "Third-Act Money",
+      "fields": [
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_carries": "She carries the only surviving copy of her original third act, folded into eight."
+      },
+      "after": {
+        "character_carries": "A single folded manuscript, eight times over, holds the only surviving copy of her original third act."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-18-tideglass-reliquary.md",
+      "day": "2026-08-18",
+      "title": "Spawning Tide",
+      "fields": [
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_carries": "She carries a surveyor's tape, a hooded lamp, and a client's letter she still has not opened."
+      },
+      "after": {
+        "character_carries": "A surveyor's tape, a hooded lamp, and a client's letter still sealed sit close at hand, the last of them unopened since the day it was pressed into her palm."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-19-the-tally-of-small-suns.md",
+      "day": "2026-08-19",
+      "title": "The Silk Bargain",
+      "fields": [
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_carries": "She carries nothing written down, only a spare undyed sash for anyone who arrives without one."
+      },
+      "after": {
+        "character_carries": "A spare undyed sash rests folded over her arm, ready for anyone who arrives without one of their own, for she carries nothing written down."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-20-canopy-permit-office.md",
+      "day": "2026-08-20",
+      "title": "Boundary Day",
+      "fields": [
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_carries": "She carries a strap of green cuttings taken from her own arm, ready to graft wherever the line has died back."
+      },
+      "after": {
+        "character_carries": "A strap of green cuttings, sliced fresh from her own arm, ready to graft wherever the border has died back."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-22-marshlight-draw.md",
+      "day": "2026-08-22",
+      "title": "The Dusk Drive",
+      "fields": [
+        "characters[0].role_drive",
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_role_drive": "Tobiah must walk the herd across the entire dry basin before dusk fades to full dark.",
+        "character_carries": "He carries a splice-cable that plugs directly into his own jaw so he can hear what the herd hears."
+      },
+      "after": {
+        "character_role_drive": "He must walk the herd across the entire dry basin before dusk fades to full dark.",
+        "character_carries": "A splice-cable runs from a coiled reel into his own jaw port, letting him hear exactly what the herd hears."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-23-the-orchids-dare.md",
+      "day": "2026-08-23",
+      "title": "The Orchid's Dare",
+      "fields": [
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_carries": "She carries a cured cactus-spine rapier, its blade ribbed like a dried stem, hilt wrapped in brimstone-cured leather."
+      },
+      "after": {
+        "character_carries": "A cured cactus-spine rapier hangs at her hip, its blade ribbed like a dried stem and its hilt wrapped in brimstone-cured leather."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-24-the-hollow-charter.md",
+      "day": "2026-08-24",
+      "title": "The Ironback Braid",
+      "fields": [
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_carries": "He carries a wrist-mounted breach kit of magnetised picks on a short lanyard."
+      },
+      "after": {
+        "character_carries": "A wrist-mounted breach kit of magnetised picks hangs on a short lanyard, worn smooth from constant use against stubborn seals."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-25-filing-office-end-of-history.md",
+      "day": "2026-08-25",
+      "title": "The Hundredth Procession",
+      "fields": [
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_carries": "He carries a borrowed sash of office and a carnival ticket stub he keeps nervously checking."
+      },
+      "after": {
+        "character_carries": "A borrowed sash of office slips off his shoulder, paired with a carnival ticket stub he keeps nervously checking as if it might explain everything."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-26-tide-ledger-miracles.md",
+      "day": "2026-08-26",
+      "title": "Six Minutes of Dry Ocean",
+      "fields": [
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_carries": "She carries a folding prism spear built from salvaged survey technology."
+      },
+      "after": {
+        "character_carries": "A folding prism spear, built from salvaged survey technology, rides locked across her back."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-27-the-moonpool-matinee.md",
+      "day": "2026-08-27",
+      "title": "The Moonpool Matinee",
+      "fields": [
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_carries": "She carries a battered microcassette recorder and a wooden rehearsal sword that becomes real steel beneath the footlights."
+      },
+      "after": {
+        "character_carries": "A battered microcassette recorder hangs from her canvas strap alongside a wooden rehearsal sword that turns to real steel beneath the footlights."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-28-tasting-menu-eats-back.md",
+      "day": "2026-08-28",
+      "title": "The Tasting Menu Eats Back",
+      "fields": [
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_carries": "He carries a dishwater-stained tasting spoon and a dog-eared list of house promises he half-understands."
+      },
+      "after": {
+        "character_carries": "A dishwater-stained tasting spoon and a dog-eared list of house promises he half-understands are never far from his hands."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-29-emberfair-vow.md",
+      "day": "2026-08-29",
+      "title": "The Emberfair Vow",
+      "fields": [
+        "characters[0].carries"
+      ],
+      "before": {
+        "character_carries": "She carries a cracked handheld analyzer rebuilt from her landing craft's instruments, hidden inside a false-bottomed prop trunk."
+      },
+      "after": {
+        "character_carries": "A cracked handheld analyzer, rebuilt from her landing craft's salvaged instruments, rides hidden inside a false-bottomed prop trunk."
+      }
+    }
+  ],
+  "remaining_complaints": [
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-10-spire-static.md",
+      "day": "2026-08-10",
+      "title": "Lullaby Run",
+      "fields": [
+        "characters[0].role_drive",
+        "characters[0].carries"
+      ],
+      "complaints": [
+        "characters[0].role_drive opens by naming the character ('Maret'); the card prints the name directly above, so open with the pronoun as the rest of the catalog does",
+        "characters[0].carries opens on the carry-verb formula; this is the first sentence of the character's backstory and 31 of 34 begin the same way, so lead with the object and what it is instead"
+      ],
+      "current": {
+        "character_role_drive": "Maret flies the dusk spore run each evening, threading the ribs without ever waking what she is dusting.",
+        "character_carries": "She carries a canvas satchel stuffed with townsfolk's letters, reading them aloud over the open radio on every run."
+      }
+    }
+  ],
+  "failed_bundles": [
+    {
+      "day": "2026-08-10",
+      "title": "Lullaby Run",
+      "fields": [
+        "characters[0].role_drive",
+        "characters[0].carries",
+        "characters[0].complication"
+      ],
+      "error": "could not author a valid prose repair after 2 attempts: Claude returned an empty completion ({'stop_reason': 'refusal', 'block_types': [], 'usage': {'input_tokens': 2692, 'cache_creation_input_tokens': 0, 'cache_read_input_tokens': 0, 'cache_creation': {'ephemeral_5m_input_tokens': 0, 'ephemeral_1h_input_tokens': 0}, 'output_tokens': 0, 'output_tokens_details': {'thinking_tokens': 0}, 'service_tier': 'standard', 'inference_geo': 'global'}})."
+    }
+  ],
+  "pending_live": [
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-16-comet-market.md",
+      "fields": [
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-17-marrow-library.md",
+      "fields": [
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-18-kite-string-exchange.md",
+      "fields": [
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-30-stitch-echo.md",
+      "fields": [
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-31-silverfish-concierge.md",
+      "fields": [
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-01-the-filing-echidna.md",
+      "fields": [
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-02-choir-of-the-drowned-kingdom.md",
+      "fields": [
+        "characters[0].role_drive",
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-03-undermoon-bloom.md",
+      "fields": [
+        "characters[0].complication",
+        "characters[0].role_drive",
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-04-lucky-ladle.md",
+      "fields": [
+        "characters[0].role_drive",
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-05-spire-that-remembers.md",
+      "fields": [
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-07-corsairs-aria.md",
+      "fields": [
+        "characters[0].role_drive",
+        "characters[0].carries",
+        "characters[0].complication"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-08-vinehorn-verdict.md",
+      "fields": [
+        "characters[0].role_drive",
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-09-static-marsh.md",
+      "fields": [
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-11-the-hollow-bracket.md",
+      "fields": [
+        "characters[0].role_drive",
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-12-the-chittering-archive.md",
+      "fields": [
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-13-the-quota-of-bones.md",
+      "fields": [
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-14-the-frill-crested-bracket.md",
+      "fields": [
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-15-the-slow-bell-of-ninth-ledger.md",
+      "fields": [
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-16-fault-line-follies.md",
+      "fields": [
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-17-ever-after-files.md",
+      "fields": [
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-18-tideglass-reliquary.md",
+      "fields": [
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-19-the-tally-of-small-suns.md",
+      "fields": [
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-20-canopy-permit-office.md",
+      "fields": [
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-22-marshlight-draw.md",
+      "fields": [
+        "characters[0].role_drive",
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-23-the-orchids-dare.md",
+      "fields": [
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-24-the-hollow-charter.md",
+      "fields": [
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-25-filing-office-end-of-history.md",
+      "fields": [
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-26-tide-ledger-miracles.md",
+      "fields": [
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-27-the-moonpool-matinee.md",
+      "fields": [
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-28-tasting-menu-eats-back.md",
+      "fields": [
+        "characters[0].carries"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-29-emberfair-vow.md",
+      "fields": [
+        "characters[0].carries"
+      ]
+    }
+  ]
+}
