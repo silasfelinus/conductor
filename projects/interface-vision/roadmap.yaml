@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3378,7 +3378,11 @@ tasks:
     Cycle: migrated the 4 add-bot/add-character/add-reward/add-scenario root panels
     (identical hand-rolled rounded-2xl border border-base-300 bg-base-200 p-4) to kr-panel-
     muted p-4, closing out this exact-shape pool. kind_robots PR #2296 opened, watching CI.
-  updated: '2026-09-01T13:03:34Z'
+
+    kind_robots PR #2296 merged squash 6bcedc3fa12c953bb70684f5d9e69cc98a4527f2, all 39
+    checks green, mergeable_state clean before merge. Re-arming this recurring consistency
+    task for the next bounded slice.
+  updated: '2026-09-01T13:10:20Z'
   implementation_pr: 'silasfelinus/kind_robots#2296'
   owner: worker
   claimed_by: claude-scheduled-20260901T125615Z-ifv-t104
