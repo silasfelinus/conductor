@@ -1,0 +1,30 @@
+{
+  "mode": "recompose",
+  "scope": "all-built",
+  "reason": "Silas, 2026-09-01: 'what is up with multiple recent character builds all starting with \"she carries...\" Oleta Kanu even has a typo, the description is \"Carries She carries a coil of dragon-scale rope worn smooth at the grip..\"'. Two live character rows still carry the pre-de-stemming composition: a leftover 'Carries' stem, the value's own subject behind it, and a doubled period. The builder was fixed on 2026-08-31 and every row built after it is correct; these two were built before and nothing ever looked at them again, because the repair lane only rewrites backstory when it rewrites carries, and neither bundle needed a prose repair. Deterministic and model-free: backstory and desc are joined from authored fields, so the correct value is recomputed from committed source rather than rewritten.",
+  "send_digest": false,
+  "status": "applied",
+  "applied_at": "2026-09-01T10:17:39.317099+00:00",
+  "repaired_bundles": 2,
+  "results": [
+    {
+      "day": "2026-08-11",
+      "kind": "characters",
+      "endpoint": "/api/characters",
+      "record_id": 3295,
+      "field": "backstory",
+      "live": "Carries A cracked leather medical satchel stitched shut with silver wire, worn slung low against her hip like a marsupial pouch, its buckles replaced with small bones.. She has learned to lie as still as her patients to move unseen through the arena after dark, and the stillness is starting to last longer than she means it to.",
+      "expected": "A cracked leather medical satchel stitched shut with silver wire, worn slung low against her hip like a marsupial pouch, its buckles replaced with small bones. She has learned to lie as still as her patients to move unseen through the arena after dark, and the stillness is starting to last longer than she means it to."
+    },
+    {
+      "day": "2026-08-16",
+      "kind": "characters",
+      "endpoint": "/api/characters",
+      "record_id": 3314,
+      "field": "backstory",
+      "live": "Carries She carries a coil of dragon-scale rope worn smooth at the grip.. Her herd is bred from the last wild cactus line, and every hardened prod she uses risks becoming their apocalypse.",
+      "expected": "She carries a coil of dragon-scale rope worn smooth at the grip. Her herd is bred from the last wild cactus line, and every hardened prod she uses risks becoming their apocalypse."
+    }
+  ],
+  "remaining": []
+}
