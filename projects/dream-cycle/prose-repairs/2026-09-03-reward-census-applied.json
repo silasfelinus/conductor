@@ -1,0 +1,391 @@
+{
+  "scope": "all-built",
+  "reason": "Census of the two fields that sit beside best_used_when on the reward card: all 68 grants and all 68 catch values, read side by side rather than sampled. catch is the strongest writing in the catalog and needs almost nothing -- 'The borrowed verse is the last thing its previous owner ever said', 'The number it gives you is always correct and is never, ever welcome'. grants is where the defects are. (1) 16 of 68 open by naming the reward: 'The Dawnpin locks any hinge', 'Tide Telemetry lets its holder read a hull's stress lines'. The card prints the name directly above, so the subject is spent on what the reader just read -- the identical rule the authoring prompt already enforces for known_for, never applied to grants. (2) Two describe the reward as granting itself: 'It grants a sealed jar' where the reward IS the jar. (3) Four use a gendered pronoun with nobody for it to refer to ('She starts to feel the next breath coming in her own chest'), the pronoun form of the hard-coded-name defect, since a reward card shows the reward alone. (4) One opens on our own taxonomy: 'This skill lets you reprogram edible nanites'. Silas, 2026-09-01, on method: read exhaustively rather than sample, then check the negative space -- all 45 unflagged grants and all 64 unflagged catch values were read and confirmed sound before trusting these checks.",
+  "send_digest": false,
+  "extra_fields": {
+    "2026-08-11": {
+      "rewards[item].grants": "Not a sentence. 'A single vial of thick green fluid that closes wounds by growing living tissue over them within minutes, visibly rooting and pulsing as it works' is a noun phrase with no main verb -- it punctuates like a sentence and passes every automated check, but it does not parse as one. Rewrite so it has a subject and a finite verb, keeping the vial, the regrowth, and the visible rooting.",
+      "rewards[skill].grants": "Not a sentence. 'The ability to read a fighter's injuries and lies at a glance, seeing fractures and fear both laid bare in the same look' is a noun phrase with no main verb. Rewrite as a proper sentence, keeping the injuries-and-lies reading and the single-glance framing."
+    }
+  },
+  "status": "source-written",
+  "applied_at": "2026-09-01T06:21:58.844475+00:00",
+  "repaired_bundles": 17,
+  "results": [
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-31-silverfish-concierge.md",
+      "day": "2026-07-31",
+      "title": "Sincerely, Wrongly Remembered",
+      "fields": [
+        "rewards[item].grants"
+      ],
+      "before": {
+        "item_grants": "It grants a working punch-stylus that can inscribe a new Bone Glass card and feed it directly into the desk-mind's memory."
+      },
+      "after": {
+        "item_grants": "It lets its holder inscribe a brand-new Bone Glass card by hand and feed the fabricated record directly into the desk-mind's memory as though it had always been there."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-01-the-filing-echidna.md",
+      "day": "2026-08-01",
+      "title": "The Filing Echidna",
+      "fields": [
+        "rewards[item].grants"
+      ],
+      "before": {
+        "item_grants": "This hand-carved coral stamp seals a permit in glowing starlight powder, recognized as binding by every spirit and tide in the reef whether or not any bureau approves it."
+      },
+      "after": {
+        "item_grants": "Sealing a permit in glowing starlight powder, it is recognized as binding by every spirit and tide in the reef whether or not any bureau approves it."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-02-choir-of-the-drowned-kingdom.md",
+      "day": "2026-08-02",
+      "title": "The Island That Started Swimming",
+      "fields": [
+        "rewards[item].grants"
+      ],
+      "before": {
+        "item_grants": "The cord goes taut a few seconds before the god dives, giving one last warning breath to whoever is holding it."
+      },
+      "after": {
+        "item_grants": "A few seconds before the god dives, the taut fiber gives its holder one last warning breath to act on."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-03-undermoon-bloom.md",
+      "day": "2026-08-03",
+      "title": "Undermoon Bloom",
+      "fields": [
+        "rewards[item].grants"
+      ],
+      "before": {
+        "item_grants": "It grants a sealed jar that stores one breath of bloom-air, safe to study up close."
+      },
+      "after": {
+        "item_grants": "A sealed breath of bloom-air drifts inside, letting its holder study the spores up close without ever breathing them in."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-04-lucky-ladle.md",
+      "day": "2026-08-04",
+      "title": "The Lucky Ladle",
+      "fields": [
+        "rewards[skill].grants",
+        "rewards[item].grants"
+      ],
+      "before": {
+        "skill_grants": "This skill lets you reprogram edible nanites on the fly, seasoning a meal toward any outcome you choose.",
+        "item_grants": "Stirred through any dish, the ladle surfaces the hidden fortune buried in a person or object."
+      },
+      "after": {
+        "skill_grants": "Edible nanites reprogram on the fly, seasoning a meal toward any outcome its cook chooses.",
+        "item_grants": "Stirred through any dish, it surfaces the hidden fortune buried in a person or object."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-06-salt-memory.md",
+      "day": "2026-08-06",
+      "title": "Salt Memory",
+      "fields": [
+        "rewards[item].grants",
+        "rewards[skill].grants",
+        "rewards[skill].catch"
+      ],
+      "before": {
+        "item_grants": "The Drowned God's Bolt reattaches severed pulse-metal to living tissue, fusing wound and metal into a single healed whole.",
+        "skill_grants": "Tide Telemetry lets its holder read a hull's stress lines the way sailors once read starcharts, revealing the ship's hidden intentions.",
+        "skill_catch": "The readings have a way of drifting toward wherever the old myth wants her to go, whether she chooses that path or not."
+      },
+      "after": {
+        "item_grants": "Severed pulse-metal fuses back to living tissue, knitting wound and metal into a single healed whole.",
+        "skill_grants": "A hull's stress lines become readable as luminous constellations, the way sailors once read starcharts, revealing the ship's hidden intentions.",
+        "skill_catch": "The readings have a way of drifting toward wherever the old myth wants its holder to go, whether that path is chosen or not."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-07-corsairs-aria.md",
+      "day": "2026-08-07",
+      "title": "Corsairs' Aria",
+      "fields": [
+        "rewards[item].grants",
+        "rewards[skill].grants"
+      ],
+      "before": {
+        "item_grants": "The Corsair's Encore replays any sound it has captured exactly once, rendering the moment back with perfect, uncanny fidelity.",
+        "skill_grants": "Thorn-Tide Boarding lets a crew slip silently through fields of singing coral, leaving the resonant thorns undisturbed and mute."
+      },
+      "after": {
+        "item_grants": "It replays any sound it has captured exactly once, rendering the moment back with perfect, uncanny fidelity.",
+        "skill_grants": "It lets a crew slip silently through fields of singing coral, leaving the resonant thorns undisturbed and mute."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-08-vinehorn-verdict.md",
+      "day": "2026-08-08",
+      "title": "The Noon Mirrors",
+      "fields": [
+        "rewards[item].grants",
+        "rewards[skill].grants"
+      ],
+      "before": {
+        "item_grants": "The Dawnpin locks any hinge, joint, or mirror exactly where it stands.",
+        "skill_grants": "Reading the Burn reveals the hour a scorch was made from the colour along its edge."
+      },
+      "after": {
+        "item_grants": "Any hinge, joint, or mirror it touches locks exactly where it stands, immovable until released.",
+        "skill_grants": "The hour a scorch was made surfaces from the colour along its edge, plain to whoever reads it."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-09-static-marsh.md",
+      "day": "2026-08-09",
+      "title": "Static Marsh",
+      "fields": [
+        "rewards[item].grants",
+        "rewards[skill].grants"
+      ],
+      "before": {
+        "item_grants": "The Handshake Coil greets anything nearby in its own language, badly, translating first and asking questions never.",
+        "skill_grants": "Full Containment Stance locks down a spreading outbreak in a single held breath."
+      },
+      "after": {
+        "item_grants": "It greets anything nearby in its own language, badly, translating first and asking questions never.",
+        "skill_grants": "It locks down a spreading outbreak in a single held breath."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-10-spire-static.md",
+      "day": "2026-08-10",
+      "title": "Lullaby Run",
+      "fields": [
+        "rewards[skill].catch"
+      ],
+      "before": {
+        "skill_catch": "She starts to feel the next breath coming in her own chest, whether she wants to or not."
+      },
+      "after": {
+        "skill_catch": "Whoever uses it starts to feel the next breath coming in their own chest, whether they want to or not."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-11-the-hollow-bracket.md",
+      "day": "2026-08-11",
+      "title": "The Hollow Bracket",
+      "fields": [
+        "rewards[item].grants",
+        "rewards[skill].grants"
+      ],
+      "before": {
+        "item_grants": "A single vial of thick green fluid that closes wounds by growing living tissue over them within minutes, visibly rooting and pulsing as it works.",
+        "skill_grants": "The ability to read a fighter's injuries and lies at a glance, seeing fractures and fear both laid bare in the same look."
+      },
+      "after": {
+        "item_grants": "Uncorking the vial releases a thick green fluid that closes wounds by growing living tissue over them within minutes, visibly rooting and pulsing as it works.",
+        "skill_grants": "Its user can read a fighter's injuries and lies at a glance, seeing fractures and fear both laid bare in the same look."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-12-the-chittering-archive.md",
+      "day": "2026-08-12",
+      "title": "Monsoon Static",
+      "fields": [
+        "rewards[skill].catch"
+      ],
+      "before": {
+        "skill_catch": "The crowd feels every jolt she draws through them."
+      },
+      "after": {
+        "skill_catch": "The crowd feels every jolt its user draws through them."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-15-the-slow-bell-of-ninth-ledger.md",
+      "day": "2026-08-15",
+      "title": "Salvage Rights",
+      "fields": [
+        "rewards[item].grants"
+      ],
+      "before": {
+        "item_grants": "The strongbox always floats upright and keeps whatever is inside it dry."
+      },
+      "after": {
+        "item_grants": "Stays floating upright on its own and keeps whatever is sealed inside it perfectly dry."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-24-the-hollow-charter.md",
+      "day": "2026-08-24",
+      "title": "The Ironback Braid",
+      "fields": [
+        "rewards[item].grants"
+      ],
+      "before": {
+        "item_grants": "The spindle unwinds exactly one turn of a braid at a time and holds it there."
+      },
+      "after": {
+        "item_grants": "One turn of a braid unwinds at a time and holds steady there, no matter how hard the whole length is pulled."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-26-tide-ledger-miracles.md",
+      "day": "2026-08-26",
+      "title": "Six Minutes of Dry Ocean",
+      "fields": [
+        "rewards[skill].grants"
+      ],
+      "before": {
+        "skill_grants": "It lets her read hidden currents through subtle pressure changes underfoot as she runs."
+      },
+      "after": {
+        "skill_grants": "It lets its holder read hidden currents through subtle pressure changes underfoot while running."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-27-the-moonpool-matinee.md",
+      "day": "2026-08-27",
+      "title": "The Moonpool Matinee",
+      "fields": [
+        "rewards[item].grants",
+        "rewards[skill].grants"
+      ],
+      "before": {
+        "item_grants": "The Wolfglass Mask swaps one role in the current scene between two people.",
+        "skill_grants": "Gaslight Cue lets the performer speak one stage direction that briefly changes the room's physical rules."
+      },
+      "after": {
+        "item_grants": "Wearing it swaps one role in the current scene between two people, casting hero as monster or monster as hero for as long as the trait lingers.",
+        "skill_grants": "Speaking a single stage direction briefly rewrites the room's physical rules for whoever performs it."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-29-emberfair-vow.md",
+      "day": "2026-08-29",
+      "title": "The Emberfair Vow",
+      "fields": [
+        "rewards[item].grants"
+      ],
+      "before": {
+        "item_grants": "The horn calls the herd off its usual path for one performance, from any direction the horn is pointed."
+      },
+      "after": {
+        "item_grants": "It calls the herd off its usual path for one performance, from whatever direction it is pointed."
+      }
+    }
+  ],
+  "remaining_complaints": [],
+  "pending_live": [
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-31-silverfish-concierge.md",
+      "fields": [
+        "rewards[item].grants"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-01-the-filing-echidna.md",
+      "fields": [
+        "rewards[item].grants"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-02-choir-of-the-drowned-kingdom.md",
+      "fields": [
+        "rewards[item].grants"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-03-undermoon-bloom.md",
+      "fields": [
+        "rewards[item].grants"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-04-lucky-ladle.md",
+      "fields": [
+        "rewards[skill].grants",
+        "rewards[item].grants"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-06-salt-memory.md",
+      "fields": [
+        "rewards[item].grants",
+        "rewards[skill].grants",
+        "rewards[skill].catch"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-07-corsairs-aria.md",
+      "fields": [
+        "rewards[item].grants",
+        "rewards[skill].grants"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-08-vinehorn-verdict.md",
+      "fields": [
+        "rewards[item].grants",
+        "rewards[skill].grants"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-09-static-marsh.md",
+      "fields": [
+        "rewards[item].grants",
+        "rewards[skill].grants"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-10-spire-static.md",
+      "fields": [
+        "rewards[skill].catch"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-11-the-hollow-bracket.md",
+      "fields": [
+        "rewards[item].grants",
+        "rewards[skill].grants"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-12-the-chittering-archive.md",
+      "fields": [
+        "rewards[skill].catch"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-15-the-slow-bell-of-ninth-ledger.md",
+      "fields": [
+        "rewards[item].grants"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-24-the-hollow-charter.md",
+      "fields": [
+        "rewards[item].grants"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-26-tide-ledger-miracles.md",
+      "fields": [
+        "rewards[skill].grants"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-27-the-moonpool-matinee.md",
+      "fields": [
+        "rewards[item].grants",
+        "rewards[skill].grants"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-29-emberfair-vow.md",
+      "fields": [
+        "rewards[item].grants"
+      ]
+    }
+  ]
+}
