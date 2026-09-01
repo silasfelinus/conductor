@@ -142,7 +142,10 @@ IMPERATIVE_OPENERS = (
 # God, Bramble Osei is mid-stamp ..." opens a scenario by naming our own field.
 SCHEMA_VOCABULARY = re.compile(
     r"\b(?:(?:the|this)\s+(?:dream\s+)?vibe|(?:the|this)\s+facet"
-    r"|the\s+proposal|the\s+bundle|reward\s+type)\b",
+    r"|the\s+proposal|the\s+bundle|reward\s+type"
+    # The card is headed by the reward's name, not its type. "This skill lets
+    # you reprogram edible nanites" opens on our own taxonomy.
+    r"|(?:the|this)\s+(?:skill|item|reward))\b",
     re.IGNORECASE,
 )
 
@@ -268,6 +271,104 @@ def _borrowed_names(proposal: dict) -> list[str]:
     return problems
 
 
+# A person the reader can attach a pronoun to. Collective nouns are deliberately
+# absent: a crowd is not a "she".
+PERSON_REFERENT = re.compile(
+    r"\b(?:owner|wearer|holder|user|bearer|carrier|keeper|performer|caster|diver"
+    r"|someone|somebody|anyone|everyone|whoever|person|player|reader|speaker|rider"
+    r"|driver|clerk|diplomat|specialist|divider|outsider|stranger|singer|guest"
+    r"|sailor|fighter|opponent|wrangler|archivist|exorcist|lender)\b",
+    re.IGNORECASE,
+)
+GENDERED_PRONOUN = re.compile(r"\b(?:she|her|hers|he|him|his)\b", re.IGNORECASE)
+
+_NAME_STOPWORDS = {"the", "a", "an", "of", "and", "for", "on", "in", "to"}
+
+
+def _name_words(name: str) -> list[str]:
+    return [w for w in re.findall(r"[A-Za-z][\w'-]*", name) if w.lower() not in _NAME_STOPWORDS]
+
+
+def _self_named(name: str, grants: str) -> str:
+    """Return the echo when `grants` opens by naming the reward it belongs to.
+
+    Same defect the authoring prompt already bans for `known_for` -- the card
+    prints the name directly above the value, so "The Dawnpin locks any hinge"
+    spends its subject on what the reader just read. It was simply never applied
+    to `grants`, where 16 of 68 do it.
+    """
+    words = _name_words(name)
+    if not words or not grants.strip():
+        return ""
+    bare = re.sub(r"^The\s+", "", name).strip()
+    if bare and re.search(rf"\b{re.escape(bare)}\b", " ".join(grants.split()[:8]), re.IGNORECASE):
+        return name
+    head = words[-1].lower()
+    # Subject position only. "The ability TO read ..." is the verb `read`, not
+    # Cold Read naming itself, so an infinitive or relative marker disqualifies.
+    match = re.match(
+        rf"^(?:\W*\w+[^,]*,\s*)?(?:the|this)\s+((?:[\w'-]+\s+){{0,3}}?){re.escape(head)}s?\b",
+        grants,
+        re.IGNORECASE,
+    )
+    if match and not re.search(r"\b(?:to|that|which)\b", match.group(1) or "", re.IGNORECASE):
+        return head
+    return ""
+
+
+def _circular_grant(name: str, grants: str) -> str:
+    """Return the echo when a reward is described as granting itself.
+
+    "It grants a sealed jar that stores one breath of bloom-air" -- the reward is
+    the jar. The sentence spends its verb handing over the thing the reader is
+    already looking at.
+    """
+    words = _name_words(name)
+    if not words:
+        return ""
+    head = words[-1].lower()
+    if re.search(
+        rf"\b(?:grants?|gives?|provides?)\s+(?:a|an|one)\b[^.]{{0,40}}?\b\w*{re.escape(head)}s?\b",
+        grants,
+        re.IGNORECASE,
+    ):
+        return head
+    return ""
+
+
+def _reward_self_reference(proposal: dict) -> list[str]:
+    problems: list[str] = []
+    rewards = proposal.get("rewards") if isinstance(proposal.get("rewards"), list) else []
+    for row in rewards:
+        if not isinstance(row, dict):
+            continue
+        kind = str(row.get("reward_type") or "").lower() or "reward"
+        name = str(row.get("name") or "")
+        grants = str(row.get("grants") or "")
+        echo = _self_named(name, grants)
+        if echo:
+            problems.append(
+                f"rewards[{kind}].grants opens by naming the reward ({echo!r}); the card "
+                "prints the name directly above, so start at what it actually does"
+            )
+        circular = _circular_grant(name, grants)
+        if circular and not echo:
+            problems.append(
+                f"rewards[{kind}].grants describes the reward as granting itself "
+                f"({circular!r}); say what it does, not what it is"
+            )
+        for field in ("grants", "catch"):
+            value = str(row.get(field) or "")
+            match = GENDERED_PRONOUN.search(value)
+            if match and not PERSON_REFERENT.search(value[: match.start()]):
+                problems.append(
+                    f"rewards[{kind}].{field} uses {match.group(0)!r} with nobody for it to "
+                    "refer to; the card shows this reward alone, so name whoever is meant "
+                    "generically instead"
+                )
+    return problems
+
+
 def _padding(label: str, value: Any) -> list[str]:
     if isinstance(value, str) and PADDING_PATTERN.search(value):
         return [
@@ -354,4 +455,5 @@ def complaints(proposal: Any) -> list[str]:
             problems.extend(_padding(label, value))
     problems.extend(_vibe_echo(proposal))
     problems.extend(_borrowed_names(proposal))
+    problems.extend(_reward_self_reference(proposal))
     return problems

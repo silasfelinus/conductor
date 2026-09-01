@@ -356,3 +356,64 @@ def test_a_scenario_schema_complaint_says_to_keep_the_vibe_title():
 
     assert problems, "the schema noun must still be flagged"
     assert "KEEP the vibe title" in problems[0]
+
+
+def test_grants_may_not_open_by_naming_its_own_reward():
+    # The card prints the reward name directly above `grants`, so "The Dawnpin
+    # locks any hinge" spends its subject on what the reader just read. The
+    # authoring prompt already banned exactly this for `known_for`; it was never
+    # applied to `grants`, where a census found 16 of 68 doing it.
+    proposal = _quality_sample()
+    item = next(r for r in proposal["rewards"] if r["reward_type"] == "ITEM")
+    for opening in ("The Spectrum Lens reveals", "The lens reveals", "This cracked lens reveals"):
+        item["name"] = "The Spectrum Lens"
+        item["grants"] = f"{opening} which hue a witness actually spoke before the room repainted it."
+        assert any("opens by naming the reward" in p for p in prose.complaints(proposal)), opening
+
+
+def test_grants_naming_a_verb_that_matches_the_reward_is_not_self_naming():
+    # "Cold Read" + "The ability to read ..." -- `read` there is the verb, not
+    # the reward naming itself. Subject position is what makes it an echo.
+    proposal = _quality_sample()
+    item = next(r for r in proposal["rewards"] if r["reward_type"] == "ITEM")
+    item["name"] = "Cold Read"
+    item["grants"] = "It reads a witness's injuries and lies in a single glance."
+    assert not any("opens by naming" in p for p in prose.complaints(proposal))
+
+
+def test_a_reward_may_not_be_described_as_granting_itself():
+    proposal = _quality_sample()
+    item = next(r for r in proposal["rewards"] if r["reward_type"] == "ITEM")
+    item["name"] = "Heavensteel Spore Jar"
+    item["grants"] = "It grants a sealed jar that stores one breath of bloom-air, safe to study."
+    assert any("granting itself" in p for p in prose.complaints(proposal))
+
+
+def test_reward_copy_may_not_use_a_gendered_pronoun_with_no_antecedent():
+    # The card shows the reward alone, so "She starts to feel the next breath"
+    # refers to nobody the reader has met.
+    proposal = _quality_sample()
+    skill = next(r for r in proposal["rewards"] if r["reward_type"] == "SKILL")
+    skill["catch"] = "She starts to feel the next answer forming in her own chest, whether she wants to or not."
+    assert any("with nobody for it to refer to" in p for p in prose.complaints(proposal))
+
+
+def test_a_pronoun_bound_inside_its_own_sentence_is_left_alone():
+    # "Its previous owner was trusted ... around him" is properly anchored, and
+    # so is a singular they. Eleven of fifteen pronoun hits were this shape.
+    proposal = _quality_sample()
+    skill = next(r for r in proposal["rewards"] if r["reward_type"] == "SKILL")
+    for value in (
+        "Its previous owner was trusted by everyone around him, right up until that trust got him killed.",
+        "It carries an outsider through a hearing they were never taught to survive.",
+        "It only works if the performer lets the tremor move through their own body first.",
+    ):
+        skill["catch"] = value
+        assert not any("refer to" in p for p in prose.complaints(proposal)), value
+
+
+def test_the_reward_type_noun_is_schema_vocabulary_too():
+    proposal = _quality_sample()
+    skill = next(r for r in proposal["rewards"] if r["reward_type"] == "SKILL")
+    skill["grants"] = "This skill lets you reprogram a hue on the fly, seasoning testimony toward any verdict."
+    assert any("names the schema out loud" in p for p in prose.complaints(proposal))
