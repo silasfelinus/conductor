@@ -494,6 +494,91 @@ def _get_or_none(proposal: dict[str, Any], label: str) -> Any:
         return None
 
 
+def _composed_live_fields(proposal: dict[str, Any]) -> dict[str, str]:
+    """What build_dream_records would write today for the deterministic fields.
+
+    Character `backstory` and location `desc` are not authored -- they are joined
+    from fields that are. So they can be recomputed and compared, which is the
+    only way a builder change reaches rows that were built before it.
+    """
+    character = (proposal.get("characters") or [{}])[0]
+    location = (proposal.get("locations") or [{}])[0]
+    return {
+        "backstory": " ".join(
+            str(part).strip()
+            for part in (character.get("carries", ""), character.get("complication", ""))
+            if str(part).strip()
+        ),
+        "desc": " ".join(
+            str(part).strip()
+            for part in (location.get("known_for", ""), location.get("local_rule", ""),
+                         location.get("best_scene", ""))
+            if str(part).strip()
+        ),
+    }
+
+
+def recomposition_findings(backlog: Path | None = None) -> list[dict[str, Any]]:
+    """Live rows whose composed fields no longer match what the builder writes.
+
+    The 2026-08-31 de-stemming fix corrected the builder and every row built
+    after it, and silently left the rows built before. Two live characters still
+    read "Carries She carries a coil of dragon-scale rope worn smooth at the
+    grip.." -- a dropped label stem, the value's own subject behind it, and a
+    doubled period. Nothing looked at them again because the repair lane only
+    rewrites `backstory` when it rewrites `carries`, and those bundles never
+    needed a prose repair.
+    """
+    if not records.KR_API_TOKEN:
+        raise RuntimeError("KR_API_TOKEN is required to compare live records")
+    rows: list[dict[str, Any]] = []
+    for bundle in _load_built_catalog(backlog):
+        want = _composed_live_fields(bundle["proposal"])
+        built_records = (bundle["built"].get("records") or {})
+        for kind, endpoint, field in (("characters", "/api/characters", "backstory"),
+                                      ("locations", "/api/locations", "desc")):
+            for row in built_records.get(kind, []) or []:
+                record_id = _record_id(row)
+                status, data = records.http_json(
+                    "GET", f"{records.KR_BASE_URL}{endpoint}/{record_id}"
+                )
+                live = data.get(kind[:-1]) or data.get("data") or data
+                if not isinstance(live, dict):
+                    continue
+                got = str(live.get(field) or "")
+                if got and got != want[field]:
+                    rows.append({
+                        "day": bundle["day"], "kind": kind, "endpoint": endpoint,
+                        "record_id": record_id, "field": field,
+                        "live": got, "expected": want[field],
+                    })
+    return rows
+
+
+def _apply_recomposition(request_path: Path, request: dict[str, Any]) -> list[dict[str, Any]]:
+    """Deterministic, model-free repair of composed live fields.
+
+    Source is already correct here -- only the live row is stale -- so there is
+    nothing to persist before touching production and the two-phase ordering
+    does not apply.
+    """
+    findings = recomposition_findings()
+    now = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    for row in findings:
+        revision._patch(row["endpoint"], row["record_id"], {row["field"]: row["expected"]})
+        print(f"recomposed {row['kind'][:-1]} {row['record_id']} ({row['day']})")
+    receipt = dict(request)
+    receipt.update({"status": "applied", "applied_at": now,
+                    "repaired_bundles": len(findings), "results": findings,
+                    "remaining": recomposition_findings()})
+    receipt_path = request_path.with_name(request_path.name.replace("-request.json", "-applied.json"))
+    receipt_path.write_text(json.dumps(receipt, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    request_path.unlink()
+    if receipt["remaining"]:
+        raise RuntimeError("live rows still differ from the builder after recomposition")
+    return findings
+
+
 def _apply_typography(request_path: Path, request: dict[str, Any]) -> list[dict[str, Any]]:
     """Deterministic, model-free presentational pass over built card copy.
 
@@ -548,6 +633,8 @@ def _apply_typography(request_path: Path, request: dict[str, Any]) -> list[dict[
 def _apply_batch(request_path: Path, request: dict[str, Any]) -> list[dict[str, Any]]:
     if str(request.get("mode") or "") == "typography":
         return _apply_typography(request_path, request)
+    if str(request.get("mode") or "") == "recompose":
+        return _apply_recomposition(request_path, request)
     if request.get("scope") != "all-built":
         raise ValueError("only scope='all-built' is supported")
     api_key = os.getenv("ANTHROPIC_API_KEY", "").strip()
@@ -722,9 +809,20 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--strict", action="store_true", help="return nonzero when audit finds complaints")
     parser.add_argument("--publish", type=Path, metavar="RECEIPT",
                         help="phase two: patch live rows from an already-committed receipt")
+    parser.add_argument("--verify-live", action="store_true",
+                        help="report live rows whose composed fields no longer match the builder")
     parser.add_argument("--resume-pending", action="store_true",
                         help="publish any receipt whose live phase never finished")
     args = parser.parse_args(argv)
+
+    if args.verify_live:
+        try:
+            drift = recomposition_findings()
+        except (OSError, RuntimeError, ValueError) as error:
+            print(f"Daily Dream live verification failed: {error}", file=sys.stderr)
+            return 2
+        print(json.dumps({"drifted": len(drift), "rows": drift}, indent=2, ensure_ascii=False))
+        return 1 if (drift and args.strict) else 0
 
     if args.resume_pending:
         receipt_path = stranded_receipt()

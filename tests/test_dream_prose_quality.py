@@ -454,3 +454,22 @@ def test_card_copy_may_not_open_by_editorializing():
         "Unfortunately, the same lens that clears a hue also fixes it in place for good."
     )
     assert any("opens by editorializing" in p for p in prose.complaints(proposal))
+
+
+def test_carries_may_not_open_on_the_carry_verb_formula():
+    # Not a per-card judgement but a catalog-wide one: `carries` is the first
+    # sentence of every character's backstory, and 31 of 34 opened "She carries"
+    # or "He carries". This check was skipped once by looking at a single value
+    # instead of the column.
+    proposal = _quality_sample()
+    for opening in ("She carries", "He carries", "They carry", "She keeps", "He wears"):
+        proposal["characters"][0]["carries"] = f"{opening} a cracked spectrum lens that still holds her testimony."
+        assert any("carry-verb formula" in p for p in prose.complaints(proposal)), opening
+
+
+def test_carries_leading_with_the_object_is_the_target_register():
+    proposal = _quality_sample()
+    proposal["characters"][0]["carries"] = (
+        "A cracked spectrum lens rides at her hip, still holding the testimony she was made to delete."
+    )
+    assert not any("carry-verb formula" in p for p in prose.complaints(proposal))

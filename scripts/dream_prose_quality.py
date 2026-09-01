@@ -346,6 +346,37 @@ EDITORIALIZING_OPENER = re.compile(
 )
 
 
+# `carries` is the FIRST sentence of every character's backstory, so its opening
+# is not a per-card question but a catalog-wide one: 31 of 34 begin "She carries"
+# or "He carries", and a reader meeting them in sequence meets the same three
+# words every time. This check was deliberately skipped once, on the reasoning
+# that "She carries a coil of rope" reads fine in an unlabelled field. It does --
+# on one card. That judgement was made by looking at a single value instead of
+# the column, which is the whole reason the census method exists. The one bundle
+# that breaks the pattern shows what the formula costs: "A socket wrench has
+# fused permanently into her regrown forearm, grown back into her flesh like just
+# another part of the ship."
+CARRIES_FORMULA = re.compile(
+    r"^(?:she|he|they)\s+(?:carries|carry|keeps|keep|wears|wear)\b", re.IGNORECASE
+)
+
+
+def _carries_opening(proposal: dict) -> list[str]:
+    problems: list[str] = []
+    characters = proposal.get("characters") if isinstance(proposal.get("characters"), list) else []
+    for index, row in enumerate(characters):
+        if not isinstance(row, dict):
+            continue
+        value = str(row.get("carries") or "").strip()
+        if value and CARRIES_FORMULA.match(value):
+            problems.append(
+                f"characters[{index}].carries opens on the carry-verb formula; this is the "
+                "first sentence of the character's backstory and 31 of 34 begin the same "
+                "way, so lead with the object and what it is instead"
+            )
+    return problems
+
+
 def _character_self_reference(proposal: dict) -> list[str]:
     """Flag a role_drive that opens by naming the character it belongs to.
 
@@ -508,4 +539,5 @@ def complaints(proposal: Any) -> list[str]:
     problems.extend(_borrowed_names(proposal))
     problems.extend(_reward_self_reference(proposal))
     problems.extend(_character_self_reference(proposal))
+    problems.extend(_carries_opening(proposal))
     return problems
