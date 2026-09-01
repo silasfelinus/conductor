@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 49
   stakes: reversible
   note: >-
@@ -262,7 +262,42 @@ tasks:
     verifyStorybookDuplicateResumeGuard, verifyStorybookLibrarySessionConsistencyGuard);
     read call sites into it this cycle but not its internals -- worth a full end-to-end read
     to confirm those guards' assumptions hold against the real implementation.
-  updated: '2026-09-01T02:30:10Z'
+
+    Cycle 50 (no-op, real investigation): Read stores/helpers/storybookLibraryHelper.ts end-
+    to-end and traced verifyStorybookLibraryPhantomSessionGuard.mjs,
+    verifyStorybookDuplicateResumeGuard.mjs, and
+    verifyStorybookLibrarySessionConsistencyGuard.mjs (all under utils/scripts/, not
+    scripts/) against the real implementation line-by-line, plus
+    verifyStorybookDuplicateArtCarryoverGuard.mjs since remapDuplicate()'s comments
+    reference it directly. All four guards' literal assertions hold exactly against current
+    source (upsert()'s zero-beat refusal at helper line 142, the watcher's dual
+    next/previous routing at lines 400-408, duplicateStory()'s setSession-then-
+    resumeNarrativeArtJobs ordering at lines 295/312, cloneSession()'s stateDelta backfill
+    at line 58, openStory()'s live-session-preference at line 190) and all four scripts pass
+    when run directly. Beyond the guards' literal checks, traced five further candidates for
+    an uncovered assumption mismatch: MAX_LIBRARY_SESSIONS-eviction-of-the-live-session
+    (provably unreachable -- every session-switch path that could add a 21st library entry
+    also displaces the live session first), restartStory(sessionId) clobbering a different
+    live session via beginStory's unconditional session overwrite (reachable only through a
+    code path with no current UI call site -- storybook-library-page.vue always calls
+    restartStory() with no argument), remapDuplicate()'s permanent art-loss for a beat still
+    in the 'queueing' window at duplicate time (real and reachable, but already explicitly
+    documented and accepted as a known gap by
+    verifyStorybookDuplicateArtCarryoverGuard.mjs's own comments from a prior cycle, not a
+    fresh find), dedupe-key format drift between remapDuplicate's hand-rolled key and
+    buildNarrativeArtDedupeKey() in utils/narrativeArtJobs.ts (no drift, exact match), and
+    the child/parent mount-order interaction between restoreFromLocalStorage() and
+    initializeLibrary() (safe -- initialize() is synchronous and completes before Vue's
+    deferred watcher callback for the just-restored session fires). No reachable,
+    unmitigated bug found; no code changes made. Verified: all four guard scripts run
+    directly and pass; working tree left clean, nothing to commit. Cycle 51 lead: read
+    plugins/narrative-milestone-art.client.ts's scanStoryBeats()/scanTaskBeats() end-to-end
+    against verifyNarrativeArtMilestones.ts and the narrative-art-milestone-contract.yml
+    guard -- the per-session seenStoryBeats/seenTaskBeats Map is process-lifetime (not
+    persisted), so check whether a page reload's first scan-and-seed pass (which silently
+    seeds all existing beats as "seen" without ever generating art for them) can skip a beat
+    that legitimately still needed a milestone-art request from before the reload.
+  updated: '2026-09-01T02:37:54Z'
   owner: worker
   claimed_by: claude-scheduled-20260901T0230-sb-t010
   claimed_at: '2026-09-01T02:30:10Z'
